@@ -49,3 +49,25 @@ def test_provider_failure(proof):
     google._local.request=fail
     with pytest.raises(AuthError) as e:google.verify_google(token,nonce)
     assert e.value.code=='AUTH_PROVIDER_UNAVAILABLE' and e.value.status==503
+
+
+def test_rejection_log_contains_no_token_or_claims(proof,caplog):
+    token,nonce=proof(azp='private-diagnostic-client')
+    with pytest.raises(AuthError):google.verify_google(token,nonce)
+    assert 'stage=azp_allowlist' in caplog.text
+    assert token not in caplog.text
+    assert 'private-diagnostic-client' not in caplog.text
+    assert nonce not in caplog.text
+
+
+def test_confirmed_debug_azp_only(proof,monkeypatch):
+    from dataclasses import replace
+    debug='574337852234-pje249p14id708ieg1t4q6fa9tmljih5.apps.googleusercontent.com'
+    monkeypatch.setattr(google,'settings',replace(settings,google_azp=(debug,)))
+    token,nonce=proof(azp=debug)
+    assert google.verify_google(token,nonce)=='subject'
+    token,nonce=proof(azp='unregistered.apps.googleusercontent.com')
+    with pytest.raises(AuthError) as e:google.verify_google(token,nonce)
+    assert e.value.code=='GOOGLE_PROOF_INVALID'
+    token,nonce=proof(azp=debug,aud='wrong-audience')
+    with pytest.raises(AuthError):google.verify_google(token,nonce)

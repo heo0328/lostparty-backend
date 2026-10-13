@@ -6,7 +6,7 @@
 |---|---|
 | 실행 기반 | Python 3.12·FastAPI·PostgreSQL 17·Docker Compose. [README](../../README.md), [개발 흐름](../DEVELOPMENT_WORKFLOW.md) |
 | 기존 health | DB 연결 /health 유지. `app/main.py`, [원본 OpenAPI](../../openapi/openapi.yaml) |
-| Google 인증·세션 | 6개 API·DB migration·자동 검증 구현, 실제 Google/Flutter는 공동 인수 대기. `app/auth`, `app/core`, [인증 개발 안내](../AUTH_DEVELOPMENT.md) |
+| Google 인증·세션 | 6개 API·DB migration·자동 검증 구현, debug azp 설정 후 emulator 로그인 성공·회원 저장 확인, 전체 세션/실기기 인수 대기. `app/auth`, `app/core`, [인증 개발 안내](../AUTH_DEVELOPMENT.md) |
 | API·데이터 정책 | [합의 계약](../ISSUE_2_AUTH_CONTRACT_DRAFT.md), [복구 설계](../ISSUE_2_REFRESH_RECOVERY.md), [Issue #2](https://github.com/heo0328/lostparty-backend/issues/2) |
 | 설계 근거 | [초기 모델 제안](../ISSUE_2_GOOGLE_AUTH_PROPOSAL.md), [구현 계획 이력](../ISSUE_2_IMPLEMENTATION_PLAN.md).현재 할 일은 NEXT_WORK가 기준 |
 | 테스트·migration | `tests`, `compose.test.yaml`, `alembic/versions/0001_auth.py`. 실행 방법은 인증 개발 안내, 검증 기록은 DEV_LOG |

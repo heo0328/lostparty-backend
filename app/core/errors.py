@@ -1,4 +1,5 @@
 import uuid
+import logging
 from fastapi import Request
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
@@ -11,6 +12,9 @@ class AuthError(Exception):
 
 
 def response(request, code, status):
+    request_id = str(uuid.uuid4())
+    if status >= 400:
+        logging.getLogger(__name__).warning("API rejected code=%s status=%s request_id=%s", code, status, request_id)
     headers = {"Cache-Control": "no-store"}
     if status == 401:
         headers["WWW-Authenticate"] = "Bearer"
@@ -18,7 +22,7 @@ def response(request, code, status):
         headers["Retry-After"] = "60"
     return JSONResponse(status_code=status, headers=headers,
                         content={"error": {"code": code, "message": code,
-                                  "request_id": str(uuid.uuid4())}})
+                                  "request_id": request_id}})
 
 
 def register(app):
