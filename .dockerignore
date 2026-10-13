@@ -5,3 +5,5 @@ work
 backups
 __pycache__
 .venv
+.secrets
+.pytest_cache

@@ -1,6 +1,8 @@
 # Issue #2: Android Google 인증·회원·세션 제안
 
-상태: **합의 전 제안**. 현재 `/health` 외 API는 미구현이며 이 문서는 실행 가능한 계약이 아닙니다. 기존 `openapi/openapi.yaml`, 업무 코드, 의존성, DB는 변경하지 않습니다. 합의 후 구현과 OpenAPI를 같은 작업에서 반영합니다.
+현재 상태: 합의된 6개 인증 API와 migration 구현 및 격리 PostgreSQL 자동 검증 완료. 실제 원본은 `openapi/openapi.yaml`이며, 아래 기획 당시의 미구현 설명은 설계 이력입니다. 최신 실행·미검증 범위는 [인증 개발 안내](AUTH_DEVELOPMENT.md)를 참고합니다.
+
+상태: **초기 설계 이력 / 최종 합의·구현 완료**. 실제 계약은 `openapi/openapi.yaml`이며 최신 검증 상태는 인증 개발 안내를 참고합니다.
 
 Flutter의 [회신](https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6147579206)을 반영했습니다. 정확한 DTO·오류·만료 의미는 [후속 계약 초안](ISSUE_2_AUTH_CONTRACT_DRAFT.md)에 있습니다. TTL은 사용자 확정 완료이며 refresh는 [제한된 재시도 복구안](ISSUE_2_REFRESH_RECOVERY.md)을 먼저 설계합니다. 복구 세부 정책은 검토 전이며 탈퇴는 분리·보류합니다.
 
@@ -16,7 +18,7 @@ Flutter 기준은 Issue가 제시한 `64b09bfb515ea5e81e798175b99d293a9a8a9a35`�
 
 ## 2. 추천 인증 흐름과 선행 확인
 
-**Android native Google ID-token 교환**을 1차 후보로 유지합니다. 거래마다 새 nonce를 Google 요청에 전달하고 ID-token claim으로 받아야 합니다. Flutter 회신에 따르면 후보 `google_sign_in 7.2.0` / Android `7.2.17`은 초기화 때 nonce를 받지만 거래별 교체 경로가 미확정입니다. 이 조사 결과는 Flutter 측 보고이며 Backend에서 소스나 실기기를 직접 확인한 것은 아닙니다. 반복 initialize·nonce 재사용·nonce 생략을 전제로 하지 않습니다. 요청별 nonce를 받는 native Credential Manager bridge 등 지원되는 경로를 Flutter가 확정해야 하며, 필요한 경우에만 code+PKCE 대안을 재설계합니다.
+**Android native Google ID-token 교환**으로 진행할 최종 초안입니다. [최신 Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6149284949)에 따라 MethodChannel → Android Credential Manager의 Google 버튼 흐름에서 거래별 `GetSignInWithGoogleOption.setNonce`를 사용합니다. Flutter가 보고한 bridge 경계 테스트·Kotlin 컴파일 통과와 실제 Google nonce claim 검증은 구분합니다. 반복 initialize나 nonce 재사용을 사용하지 않습니다.
 
 1. 앱이 무작위 transaction secret을 생성하고 SHA-256 digest만 challenge 요청에 전달합니다.
 2. 서버는 회원과 무관한 5분짜리 인증 transaction과 무작위 nonce를 발급합니다. 이는 임시 사용자 ID가 아니며 로그인 취소 시 회원을 생성하지 않습니다. 만료 transaction은 정리합니다.
@@ -27,11 +29,12 @@ Flutter 기준은 Issue가 제시한 `64b09bfb515ea5e81e798175b99d293a9a8a9a35`�
 
 native ID-token 흐름에서는 OAuth redirect/callback, authorization code, PKCE와 브라우저 state를 사용하지 않습니다. 대신 서버 nonce와 transaction secret이 거래를 묶습니다. 앱 client secret도 필요하지 않습니다. 동일 Google 증거는 소비된 transaction에서 재발급하지 않으며 로그인 응답 유실 시 새 transaction으로 로그인합니다. 미전달 세션은 만료 또는 다음 로그인 시 정리할 정책을 적용합니다.
 
-필요한 비밀이 아닌 입력:
-- 사용할 Flutter Google 로그인 플러그인·버전과 nonce 설정/반환 지원 여부
-- Android applicationId `kr.co.heowork0921.lostparty` 확인, debug/release 및 Play App Signing SHA-1/SHA-256 등록 상태
-- Android OAuth client ID와 server/web client ID, consent screen의 테스트/공개 상태 및 테스트 계정 허용 여부
-- 개발 API 접근 주소와 향후 HTTPS 도메인. 실제 ID token, refresh token, secret, 서비스 계정 키는 Issue에 첨부하지 않음
+전달받은 개발 입력:
+- Google 프로젝트 `lost-party`, Android package `kr.co.heowork0921.lostparty`
+- Web/server client ID `574337852234-vdkvdobbq8es2rdpumc1icqt6ja3a3cr.apps.googleusercontent.com`
+- debug 서명 등록 일치, 외부/프로덕션 상태는 Flutter·사용자 보고로 확인. release/Play 서명과 Google 실인증은 미검증
+- 로컬 HTTP 서버·Android 에뮬레이터 우선. 외부 HTTPS 터널은 이번 개발 범위에서 제외
+- 프로필·lastSeen 제외 수용. 약관 URL과 탈퇴 정책은 출시 전 후속 항목
 
 ## 3. 최소 데이터 모델
 
@@ -103,12 +106,12 @@ pytest 대상: 잘못된 서명·issuer·audience·만료·nonce·transaction se
 
 ## 7. 합의가 필요한 입력
 
-1. Flutter 인증 플러그인·버전과 nonce 지원, Google 공개 client ID 및 Android 서명 등록 상태
+1. native bridge 방향·Web client ID·debug 등록 확인 완료. 실제 claim과 release 등록은 후속 검증
 2. native ID-token+server nonce 선택, `/v1` 경로·오류 형식. TTL은 사용자 확정 완료
-3. refresh single-flight + 제한된 재시도 복구의 저장·오류 세부 설계 검토. 60초·추가 2회는 사용자 확정 완료
+3. 최종 DTO·오류·복구 저장 설계의 Flutter 확인. 60초·추가 2회와 single-flight·pending 보관 방향은 확인 완료
 4. 최소 프로필·lastSeen 제외, 탈퇴/정지/재가입/보관 및 약관 정책
 
-현재 단계는 제안 작성뿐이며 실제 인증·pytest·migration·신규 API 검증은 미실행입니다.
+pytest·migration·신규 API 검증은 완료했으며 실제 Google 및 Android 공동 인수는 미실행입니다.
 
 ## 공식 근거
 

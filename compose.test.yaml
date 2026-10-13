@@ -1,0 +1,26 @@
+name: lostparty-auth-test
+services:
+  test-db:
+    image: postgres:17-bookworm
+    environment:
+      POSTGRES_DB: lostparty_test
+      POSTGRES_PASSWORD: test-only-password
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U postgres -d lostparty_test"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    environment:
+      DATABASE_URL: postgresql+psycopg://postgres:test-only-password@test-db/lostparty_test
+      POSTGRES_DB: lostparty_test
+      APP_DB_PASSWORD: test-only-password
+      AUTH_SECRET_DIR: /tmp/auth-test-keys
+    depends_on:
+      test-db:
+        condition: service_healthy

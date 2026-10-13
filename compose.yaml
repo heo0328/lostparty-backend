@@ -33,8 +33,14 @@ services:
     environment:
       POSTGRES_DB: ${POSTGRES_DB:?Set POSTGRES_DB}
       APP_DB_PASSWORD: ${APP_DB_PASSWORD:?Set APP_DB_PASSWORD}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-574337852234-vdkvdobbq8es2rdpumc1icqt6ja3a3cr.apps.googleusercontent.com}
+      GOOGLE_AZP_ALLOWLIST: ${GOOGLE_AZP_ALLOWLIST:-}
+      JWT_KEY_ID: ${JWT_KEY_ID:-local-1}
+      RECOVERY_KEY_ID: ${RECOVERY_KEY_ID:-local-1}
     ports:
       - "127.0.0.1:${API_PORT:-8000}:8000"
+    volumes:
+      - ./.secrets:/run/secrets:ro
     depends_on:
       db:
         condition: service_healthy

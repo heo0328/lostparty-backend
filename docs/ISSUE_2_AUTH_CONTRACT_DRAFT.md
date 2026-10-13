@@ -1,8 +1,10 @@
-# Issue #2 후속 계약 초안
+# Issue #2 최종 계약 검토안
 
-**합의 전·미구현 문서**입니다. 실제 계약 원본 `openapi/openapi.yaml`은 `/health`만 유지합니다. 이 초안은 Flutter 회신의 오류·만료·반복 로그아웃 의미를 보완하며, 인증 방식·refresh 복구 세부 정책·운영 정책의 최종 승인을 대신하지 않습니다. 로그인 TTL은 사용자 확정값이며 refresh는 제한된 재시도 복구안을 먼저 설계하기로 했습니다.
+현재 상태: 합의된 6개 인증 API와 migration 구현 및 격리 PostgreSQL 자동 검증 완료. 실제 원본은 `openapi/openapi.yaml`이며, 아래 기획 당시의 미구현 설명은 설계 이력입니다. 최신 실행·미검증 범위는 [인증 개발 안내](AUTH_DEVELOPMENT.md)를 참고합니다.
 
-근거: [Flutter 회신](https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6147579206), [기존 모델·인증 제안](ISSUE_2_GOOGLE_AUTH_PROPOSAL.md).
+**계약 합의 완료·구현 반영 문서**입니다. [Flutter 최종 동의](https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6149615842)를 근거로 [구현 계획](ISSUE_2_IMPLEMENTATION_PLAN.md)을 진행합니다. 실제 계약 원본 `openapi/openapi.yaml`에는 `/health`와 합의된 6개 인증 API가 있습니다. 이 초안은 Flutter 회신의 오류·만료·반복 로그아웃 의미를 보완하며, 인증 방식·refresh 복구 세부 정책·운영 정책의 최종 승인을 대신하지 않습니다. 로그인 TTL은 사용자 확정값이며 refresh는 제한된 재시도 복구안을 먼저 설계하기로 했습니다.
+
+근거: [Flutter 회신](https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6149284949), [기존 모델·인증 제안](ISSUE_2_GOOGLE_AUTH_PROPOSAL.md).
 
 ## 공통 DTO 규칙
 
@@ -59,7 +61,7 @@ Google proof 검증 실패·provider 장애·입력 거절 시 회원을 만들�
 | 401 REFRESH_INVALID | 비어 있지 않지만 DB에 해당 hash가 없는 credential, 또는 보관 종료 후 더 이상 식별 불가 | 현재 credential 정리, 로그인 안내 |
 | 401 REFRESH_EXPIRED | 식별 가능한 credential/session의 absolute 또는 idle 만료 | 현재 credential 정리, 로그인 안내 |
 | 401 SESSION_REVOKED | 유효 hash를 식별했지만 session이 로그아웃·관리자 조치 등으로 폐기 | 현재 credential 정리; Google 자동 재로그인 금지 |
-| 401 REFRESH_REUSED | 이미 소비된 hash 재제출. 제한된 재시도 복구 조건 밖의 replay는 해당 family 폐기하는 후보안 | 복구 조건에 해당하면 동일 결과 수신, 조건 밖이면 로그인 안내. 세부 조건은 복구 설계 합의 필요 |
+| 401 REFRESH_REUSED | 이미 소비된 hash 재제출. 제한된 재시도 복구 조건 밖의 replay는 해당 family 폐기하는 후보안 | 복구 조건에 해당하면 동일 결과 수신, 조건 밖이면 로그인 안내. 동일 요청의 복구 종료는 409로 구분하며 다른 request ID의 소비 token 제출만 401/REFRESH_REUSED |
 | 403 ACCOUNT_DISABLED | 회원이 정지 상태 | 갱신 반복 금지, 차단 상태 안내 |
 | 429 RATE_LIMITED | 서버 요청 제한 | Retry-After를 참고하되 refresh 재제출 여부는 최종 정책에 따름 |
 | 503 SERVICE_UNAVAILABLE / 네트워크 오류 | 서버·네트워크 장애, refresh 소비commit 여부를 알 수 없음 | 인증 실패로 단정하지 않음. 같은 요청 ID와 같은 refresh로 정해진 복구 범위 내 재시도하는 설계 후보. 즉시 인증 실패로 처리하지 않음 |
@@ -85,17 +87,43 @@ Google proof 검증 실패·provider 장애·입력 거절 시 회원을 만들�
 - `/me`, `/auth/session`: 401 ACCESS_INVALID / ACCESS_EXPIRED / SESSION_EXPIRED / SESSION_REVOKED; 403 ACCOUNT_DISABLED. access 만료 때만 보유 refresh를 이용한 갱신 후보이며 403/장애를 무조건 refresh로 처리하지 않음.
 - 기존 `/health`의 응답은 위 신규 오류 형식으로 바꾸지 않음.
 
-## 개발 접속·미확정 사항
+## 개발 접속과 완료 단계
 
-현재 Compose 확인 결과 API·DB는 healthy, API는 **127.0.0.1:8000**에만 바인딩되어 있습니다. WSL 내부 `/health` 주소는 `http://127.0.0.1:8000/health`입니다. 조회된 WSL eth0 주소는 `172.29.72.78`이지만 이 주소로 API가 공개된 상태는 아니며 재시작 시 달라질 수 있습니다.
+사용자와 Flutter가 로컬 HTTP·Android 에뮬레이터 우선을 선택했습니다. Compose의 API는 호스트 `127.0.0.1:8000`에 유지합니다. Windows 호스트 후보는 `http://localhost:8000`, Android 에뮬레이터 후보는 `http://10.0.2.2:8000`이며 Windows→WSL 전달과 에뮬레이터 연결은 실제 검증 전입니다. WSL eth0 주소를 공개 API 주소로 인계하지 않습니다.
 
-Android 실기기·에뮬레이터의 접속 주소는 아직 검증하지 않았습니다. 후보는 Windows에서 adb reverse와 WSL 루프백 전달을 확인하거나, 별도 승인된 개발 HTTPS 터널을 구성하는 방식입니다. 실제 접속 성공 전에 주소를 확정해서 인계하지 않습니다. 현재 서버는 HTTP이며 Google 증거·credential을 실기기에서 전송할 환경은 별도 HTTPS 접속 구성 검증이 필요합니다. Windows 호스트·adb·방화벽·포트 전달은 이번 작업에서 변경하지 않았습니다.
+Flutter debug에서 필요한 로컬 주소만 HTTP를 허용합니다. release는 HTTPS를 사용하며 HTTP 전체 허용을 적용하지 않습니다. 실기기는 별도 연결 검증 대상으로 남기고 외부 터널·방화벽 공개를 임의로 구성하지 않습니다.
 
-필요한 입력:
-1. Flutter가 거래별 nonce를 전달할 구현 선택과 실기기 claim 검증. 반복 initialize/nonce 재사용 우회는 없음.
-2. 운영자가 확인한 Android/Web 공개 client ID, 서명 fingerprint 등록 상태, consent screen 설정. 비밀자료는 Issue에 첨부하지 않음.
-3. TTL과 refresh 복구 60초·추가 2회는 사용자 확정 완료. 저장 방식·오류 DTO와 Flutter 구현 합의가 필요.
-4. 실기기 연결 방식·개발 HTTPS 주소. 운영 HTTPS 도메인·Caddy는 아직 구성하지 않음.
-5. 탈퇴·재가입·보관·약관 URL/정책. 이번 1차 초안에서 탈퇴 API와 삭제 관련 상태는 제외하고 배포 전 의존성으로 유지.
+Google 프로젝트 `lost-party`, package `kr.co.heowork0921.lostparty`, server audience `574337852234-vdkvdobbq8es2rdpumc1icqt6ja3a3cr.apps.googleusercontent.com`를 사용합니다. native bridge의 거래별 nonce 전달 방향과 debug 서명 일치는 Flutter 인계로 확인했습니다. Backend Google 검증의 audience는 이 서버 설정값만 사용하고 요청에서 받은 audience/client ID로 바꾸지 않습니다. release 등록과 실제 token claim은 후속 검증입니다.
 
-이 입력을 기다리는 동안 DB/API를 미합의 정책으로 구현하지 않습니다. 계약 초안 검토와 확정 정책에 의존하지 않는 조사·검증 준비는 계속할 수 있습니다.
+탈퇴·약관·재가입·운영 정지 절차는 별도 정책 작업입니다. `disabled` 상태에 대한 인증 거절은 구현하되 이번 범위에 운영자 정지 API를 추가하지 않습니다. 배포 전 정책 결정 의존성을 유지합니다.
+
+## 인코딩과 검증 세부 정의
+
+- transaction_secret, nonce, refresh_token, refresh_request_id: 각각 32바이트 난수의 canonical base64url, padding 없음, 43자. 허용 문자는 A-Z/a-z/0-9/_/-이며 디코드 후 32바이트와 재인코드 일치를 검사합니다.
+- transaction_secret_hash: 전달된 secret의 ASCII 바이트를 SHA-256한 소문자 hex64자. raw 난수 바이트를 hash한 값과 혼용하지 않습니다.
+- refresh_request_id도 ASCII SHA-256 digest로 DB에 저장합니다. error.request_id는 별도의 서버 진단 UUID이며 재시도 식별자와 다릅니다.
+- Google ID token: JWT 문자열, 최대 16384자. access token도 최대 16384자. refresh/token/secret에 실제 값 예시를 첨부하지 않습니다.
+- 요청은 strict 타입·extra 필드 금지. remember_me는 JSON boolean이며 문자열/숫자를 강제 변환하지 않습니다. User.status의 응답은 로그인 성공 시 active이며 disabled는 서버 계정 상태 값으로 보호 요청에서 403 처리합니다.
+- challenge는 5분으로 Backend 기본안을 제시합니다. Google 증거 검증 시 서명·RS256·issuer 두 허용 표기·고정 audience·exp·iat·subject·nonce 검사. clock skew 30초는 Google 증거 검증에만 적용하고 DB 세션 만료와 자체 access exp에는 적용하지 않습니다.
+- azp가 존재하면 등록된 client allowlist로 제한합니다. 아직 전사되지 않은 Android client ID가 실제 token의 azp로 나타나면 이를 추정해 허용하지 않고 공개 client ID 확인 후 반영합니다.
+- 최초 가입/로그인 응답은 200으로 통일하고 is_new_user로 구분합니다. User와 session의 ID는 별개이며 원정대 권한이나 Firebase ID를 포함하지 않습니다.
+
+## refresh 409와 상태 우선순위
+
+인코딩 검증 → hash 식별 → 회원 정지 → session 폐기 → session 만료 → 사용 상태 및 request ID → 후속 generation 상태 → 복구 시간 → 복구 횟수 → 암호문 반환 순으로 판단합니다.
+
+| 조건 | HTTP/code | 결과 |
+|---|---|---|
+| 소비 old token + 다른 request ID | 401 REFRESH_REUSED | 해당 session 폐기, 다른 기기는 유지 |
+| 동일 요청 + 후속 token 이미 소비 | 409 REFRESH_RESULT_SUPERSEDED | 더 최신 credential을 덮어쓰지 않음 |
+| 동일 요청 + 복구 시각 도달 | 409 REFRESH_RECOVERY_EXPIRED | 재발급 없음, 이 이유만으로 family 폐기하지 않음 |
+| 동일 요청 + 추가 재전송 2회 사용 | 409 REFRESH_RECOVERY_LIMITED | 재발급 없음, 이 이유만으로 family 폐기하지 않음 |
+| 동일 요청 + 모든 조건 유효 | 200 최초 Tokens | 동일 credential·동일 만료 재전송 |
+
+네트워크/503는 계정 무효를 뜻하지 않습니다. 재시도는 동일 old token·request ID, 최대 3회 총 전송으로 제한합니다. 오류/뒤늦은 응답은 현재 session·generation·pending 작업과 일치할 때만 적용합니다. 이미 더 최신 credential을 받은 경우 오래된 작업의 409나 401로 새 상태를 지우지 않습니다. 정상 logout 또는 서버 폐기는 확인된 현재 상태에 적용합니다.
+
+## 구현·검증 착수 기준
+
+Backend의 계약 검토안 정리는 완료했습니다. Flutter가 DTO·인코딩·409·오류 처리와 DB 시간 계측 제약을 수용했습니다. 최종 합의는 확인했으며 구현 단계에서 코드·migration·실제 OpenAPI를 함께 반영합니다. 현재 실제 계약은 6개 인증 API를 포함하며 실제 Google·Flutter 적용 완료와는 구분합니다.
+
+검증은 분리된 PostgreSQL에서 동시 가입/회전/rollback, mock Google 증거 실패, 실제 Google 서명·nonce, Windows→WSL 및 에뮬레이터 접속, Flutter 재시작·secure pending·늦은 응답 격리를 구분합니다. mock-only 통과를 실인증 성공으로 보고하지 않습니다.

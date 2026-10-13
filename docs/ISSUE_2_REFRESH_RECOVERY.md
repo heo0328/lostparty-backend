@@ -1,6 +1,8 @@
 # Issue #2: refresh 제한된 재시도 복구 설계
 
-상태: **TTL·복구 시간·횟수 사용자 확정, 나머지 세부 설계 제안·미구현**. 사용자는 로그인 TTL과 제한된 재시도 복구 방향, 최초 성공 commit 후 60초·추가 재시도 최대 2회를 확정했습니다. 보관 방식·오류 DTO 등은 Flutter 검토가 필요한 제안이며 실제 OpenAPI 계약은 변경하지 않습니다.
+현재 상태: 합의된 6개 인증 API와 migration 구현 및 격리 PostgreSQL 자동 검증 완료. 실제 원본은 `openapi/openapi.yaml`이며, 아래 기획 당시의 미구현 설명은 설계 이력입니다. 최신 실행·미검증 범위는 [인증 개발 안내](AUTH_DEVELOPMENT.md)를 참고합니다.
+
+상태: **TTL·복구 시간·횟수 사용자 확정, 세부 설계 Flutter 합의·구현 완료**. 사용자는 로그인 TTL과 제한된 재시도 복구 방향, 최초 성공 commit 후 60초·추가 재시도 최대 2회를 확정했습니다. 보관 방식·오류 DTO·시간 계측 제약은 [Flutter 최종 동의](https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6149615842)에서 수용했으며 실제 OpenAPI 계약에 구현을 반영했습니다.
 
 ## 확정한 초기 기간
 
@@ -59,6 +61,22 @@ PostgreSQL에 복구 자료를 보관하고 Redis는 도입하지 않는 후보�
 
 PostgreSQL에서 동시 동일 요청·다른 요청 ID replay, commit 전 실패·commit 후 응답 유실, 60초 경계·재전송 횟수, 후속 token 사용 뒤 지연 응답, logout·정지·만료 후 재전송 거절, 암호화 키 실패·청소 지연·rollback을 검증합니다. Flutter는 재시도 값 유지와 single-flight, secure storage 교체, 재시작 복구, 오래된 응답으로 최신 token을 덮어쓰지 않는 동작을 검증합니다.
 
-60초·추가 2회는 사용자 확정값으로 Flutter에 인계합니다. Flutter에는 pending 보관 지원과 오류 처리 등 구현 가능 여부를 확인 요청합니다. 서버 암호화 보관·키 관리와 테스트 설계를 검토한 뒤 API 구현과 OpenAPI를 반영합니다. 이 문서 작성은 구현·실인증·배포 완료가 아닙니다.
+60초·추가 2회와 single-flight·secure pending/메모리 보관·늦은 응답 격리는 최신 Flutter 인계에서 수용했습니다. 정확한 DTO·409 처리와 아래 저장 절차를 최종 확인 요청합니다. 서버 암호화 보관·키 관리와 테스트 설계를 검토한 뒤 API 구현과 OpenAPI를 반영합니다. 이 문서 작성은 구현·실인증·배포 완료가 아닙니다.
 
 회전과 replay 탐지는 [RFC 9700 §4.14](https://www.rfc-editor.org/rfc/rfc9700.html#section-4.14)를 참고합니다. 60초·추가 2회는 RFC가 정한 값이 아니라 사용자가 확정한 프로젝트 정책입니다.
+
+## Backend 저장·원자성·정리 최종 검토안
+
+- 복구 응답은 `cryptography`의 AES-256-GCM으로 암호화합니다. 키는 32바이트, 암호화 nonce는 매 암호화마다 새 12바이트 난수입니다. Google 로그인 nonce와는 별개입니다. `(key_id, encryption_nonce)` UNIQUE로 재사용을 막고 충돌 시 새 nonce를 생성합니다.
+- AAD는 버전·session UUID·old credential UUID·후속 generation·request digest를 canonical JSON UTF-8로 직렬화합니다. 이 값이나 암호문 변경은 인증 오류로 처리합니다. 응답은 최초 Tokens JSON 바이트 전체를 암호화하여 재전송 시 내용·만료를 바꾸지 않습니다.
+- JWT 서명 키와 복구 암호화 키는 분리합니다. 서버 런타임으로 주입하고 DB·Git·로그에는 저장하지 않습니다. `key_id`로 구키를 찾으며 키가 없거나 복호화에 실패하면 503을 반환합니다. 평문 저장이나 token 재발급으로 복구하지 않습니다.
+- `refresh_recoveries`는 old credential FK UNIQUE, request digest, successor credential FK, recovery_expires_at, resend_count(0..2), key_id, encryption_nonce, ciphertext를 갖습니다. old credential의 소비 기록과 request digest는 family의 absolute 만료까지 보관하며 암호문은 별도 단기 행으로 관리합니다.
+- 잠금 순서는 user → session → credential → recovery로 통일합니다. 최초 교환은 후속 hash 삽입, old 소비 표시, session idle 갱신, 암호화 결과 기록을 하나의 transaction으로 commit합니다. 실패는 모두 rollback하고 HTTP 200은 commit 성공 후에만 전송합니다.
+- DB의 실제 commit 완료 시각을 동일 transaction에서 미래 값으로 알 수는 없습니다. 구현에서는 마지막 저장 단계의 DB `clock_timestamp()`를 복구 기준 시각으로 기록하고 즉시 commit하는 보수적 방식으로 60초 상한을 지킵니다. 이로 인해 commit 지연만큼 실제 응답 후 복구 시간이 짧아질 수 있습니다. 정확한 사후 commit 시각을 얻으려 별도 commit으로 복구 기록을 만드는 방식은 사용하지 않습니다. 이는 시간 계측에 관한 구현 제약이며 사용자 기간을 늘리는 정책 변경이 아닙니다.
+- 동일 요청 재전송은 잠금 상태에서 회원·session·후속 상태·시간·횟수·복호화를 검사하고 resend_count 증가를 commit한 뒤 전송합니다. 전송 유실도 허용 횟수에 포함하며 증가는 rollback된 경우만 취소됩니다.
+- 정리는 30초 주기로 최대 500개 단위의 만료 복구 행을 제거하는 서버 작업으로 설계합니다. 여러 프로세스에서도 DB 잠금으로 충돌을 피합니다. 요청마다 만료 검사를 하기 때문에 정리 지연이 token 반환 허용 기간을 늘리지 않습니다. 암호문 삭제와 replay 이력 삭제는 별개입니다.
+- logout·정지·후속 refresh 소비 시 관련 복구 암호문을 같은 transaction에서 삭제하고 소비 이력은 보존합니다. session/credential/replay 자료는 absolute 만료 이후 정리하며, 이 시각 이후 logout은 401/REFRESH_INVALID로 통일합니다.
+- 새로운 refresh generation마다 request ID를 새로 생성하며 `(session_id, request_digest)`를 재사용하지 않습니다. 소비되지 않은 token으로 이전 generation의 request ID를 보내면 400/INVALID_REQUEST로 거절하고 발급하지 않습니다.
+- 409로 복구 불가가 확정됐는데 클라이언트에 새 token이 없다면 재로그인합니다. 서버가 세션을 그 이유만으로 폐기하지 않아 유실된 session은 만료까지 남을 수 있습니다. 임의로 다른 기기를 폐기하거나 silent Google login으로 재생성하지 않습니다.
+
+암호화 API 근거: https://cryptography.io/en/latest/hazmat/primitives/aead/#cryptography.hazmat.primitives.ciphers.aead.AESGCM . 이 절은 구현 근거이며 코드·로컬 키·청소 작업을 구성했습니다. 운영 키·배포는 별도입니다.
