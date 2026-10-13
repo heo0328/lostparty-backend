@@ -2,17 +2,9 @@
 
 ## 현재 상태와 초기 방향
 
-문서 작성 시 확인한 기준 커밋은 `026eb74`입니다. 시작 당시 main 작업 트리는 깨끗했고 기존 AGENTS.md와 별도 작업 이력 문서는 없었습니다. 이번 문서는 `docs/development-rules`에서 작성합니다. 원격의 최신 상태는 이번 문서 작업에서 조회하지 않았습니다.
+현재 기능 상태는 [AI_CONTEXT](project/AI_CONTEXT.md), 승인된 작업과 다음 순서는 [NEXT_WORK](project/NEXT_WORK.md), 변경·검증 이력은 [DEV_LOG](project/DEV_LOG.md)를 기준으로 확인합니다. 이 문서는 장기 작업·Git·검증 원칙을 관리합니다.
 
-| 구분 | 확인 내용 |
-|---|---|
-| 실행 기준 | `.python-version`과 Dockerfile은 Python 3.12, 호스트 Python은 3.14.4 |
-| 현재 구성 | FastAPI, Pydantic 응답 모델, psycopg, PostgreSQL 17, Docker Compose |
-| 현재 API | `GET /health`, 200·503 응답 |
-| 검증 도구 | `scripts/check_openapi.py`, 컨테이너·DB를 변경하는 `scripts/verify.py` |
-| 아직 없는 구성 | SQLAlchemy·Alembic·pytest 설정, 업무 모델, 인증, WebSocket 계약·구현, CI/CD |
-
-첨부 지침의 기술 선택은 초기 개발 방향으로 유지합니다. Pydantic v2, SQLAlchemy 2, Alembic, pytest와 기능별 모듈형 모놀리스를 목표로 하되, 필요한 기능 작업에서 도입합니다. REST와 WebSocket, Discord·Google·Apple OAuth2/OIDC 및 자체 Access·Refresh Token도 향후 방향이며 이번 문서로 구현하지 않습니다.
+Python 3.12와 Docker Compose를 실행 기준으로 사용합니다. FastAPI·Pydantic v2·SQLAlchemy 2·Alembic·PostgreSQL·pytest를 사용하며 기능별 모듈형 모놀리스를 유지합니다. Google 인증은 구현됐고 다른 공급자와 WebSocket은 별도 승인 작업입니다.
 
 기존 Firebase 사용자·데이터 이관이나 UID 연결을 전제로 하지 않고 신규 서버의 데이터를 별도로 관리합니다. 이는 기존 개발 DB를 초기화하거나 Firebase를 삭제하라는 지시가 아닙니다. 비로그인 앱 실행과 합의된 공개 조회를 허용하되 임시 UID·익명 회원·사용자별 데이터를 자동 생성하지 않는 방향으로 설계합니다. 사용자 식별이 필요한 기능의 인증·권한은 서버에서 검증합니다.
 
@@ -20,23 +12,23 @@
 
 ## 작업과 Git
 
-1. 요청 범위와 완료 조건, 관련 Issue·코드·계약, 현재 브랜치와 변경 사항을 확인합니다.
+1. AGENTS → 협업 규칙 → NEXT_WORK → AI_CONTEXT → 관련 계약 순서로 확인한 뒤 요청 범위·완료 조건과 실제 Issue·Git·코드를 대조합니다. 불일치는 근거를 확인해 문서를 갱신합니다.
 2. 적합한 기존 작업 브랜치가 없으면 `feat/`, `fix/`, `refactor/`, `test/`, `docs/`, `chore/` 중 목적에 맞게 만듭니다. 실제 Issue가 있으면 번호를 포함하고 임의 번호는 만들지 않습니다.
 3. 작은 변경은 짧은 설명으로 진행합니다. 인증·데이터 구조·공용 계약에 영향을 주면 필요한 수준의 설계와 검증 계획을 Issue나 PR에 남깁니다. 제품 결정이 부족하면 자료를 요청하되 독립적으로 가능한 조사는 계속합니다.
 4. 범위 안의 수정과 검증을 수행합니다. 오류는 재현·로그·직전 변경을 근거로 분석하고 같은 실패를 반복하면 접근을 재검토합니다.
 5. 게시가 승인되면 최신 원격 main과 충돌 여부를 확인하고 PR로 통합합니다. 예상하지 못한 원격 변경은 임의로 덮어쓰지 않습니다. 운영 배포 버전은 향후 태그나 배포 기록으로 식별합니다.
-6. 완료 보고에 변경 파일, 검증 결과, 남은 문제, 브랜치와 commit·push·PR·merge 여부를 구분합니다.
+6. 단계 종료 시 NEXT_WORK는 다음 실행 계획으로 갱신하고 상세 완료·결정·검증·장애는 DEV_LOG에 누적합니다. AI_CONTEXT는 핵심 상태·링크만 유지합니다. 완료 보고와 문서에서 브랜치·commit·push·PR·merge·배포와 남은 로컬 변경을 구분합니다.
 
 일반 구현 선택마다 추가 승인을 요구하지 않습니다. 별도 승인 대상은 데이터 파괴, 운영 변경, 외부 게시 등 실제 영향과 현재 사용자 요청 범위를 기준으로 판단합니다. 긴급 수정도 작업 브랜치와 필요한 검증을 유지합니다. 사용자 변경·로컬 자료를 덮어쓰거나 임의로 reset·브랜치 삭제하지 않습니다.
 
-작업 정보는 GitHub Issue·PR에 기록합니다. 초기에는 별도 상태·완료 이력 문서를 중복 관리하지 않습니다. Flutter 저장소의 브랜치 규칙은 Backend에 자동 적용하지 않습니다.
+외부 요구·합의·인계는 GitHub Issue·PR, 내부 실행 계획은 NEXT_WORK, 영구 이력은 DEV_LOG, 전체 지도는 AI_CONTEXT에 기록합니다. 상세 실행 방법과 장기 계약은 기존 문서로 연결하고 동일 내용을 중복 관리하지 않습니다. Flutter 저장소의 브랜치 규칙은 Backend에 자동 적용하지 않습니다.
 
 ## 검증과 데이터 보호
 
-Docker Compose가 기본 실행 환경이며 WSL 시스템 Python을 변경하지 않습니다. 기능 변경에는 의미 있는 최소 검증을 적용합니다. pytest는 후속 도입 대상입니다. 인증·타인 자원 접근·권한 위조, 동시성·중복 요청·원자성·실패 시 rollback은 해당 기능을 구현할 때 검증합니다.
+Docker Compose가 기본 실행 환경이며 WSL 시스템 Python을 변경하지 않습니다. 기능 변경에는 의미 있는 최소 검증을 적용합니다. pytest는 격리 PostgreSQL 테스트 환경에서 사용합니다. 인증·타인 자원 접근·권한 위조, 동시성·중복 요청·원자성·실패 시 rollback은 해당 기능을 구현할 때 검증합니다.
 
-PostgreSQL 제약과 트랜잭션을 검증할 때는 개발·운영 DB와 분리된 PostgreSQL을 사용합니다. mock이나 다른 DB 결과만으로 PostgreSQL 동작을 검증했다고 보고하지 않습니다. 향후 DB 구조 변경은 Alembic 도입과 적용·복구 계획을 함께 검토합니다.
+PostgreSQL 제약과 트랜잭션을 검증할 때는 개발·운영 DB와 분리된 PostgreSQL을 사용합니다. mock이나 다른 DB 결과만으로 PostgreSQL 동작을 검증했다고 보고하지 않습니다. DB 구조 변경은 Alembic migration과 적용·복구 계획을 함께 검토합니다.
 
-`scripts/verify.py`는 DB 쓰기와 컨테이너 중지·재생성을 포함하므로 단순 상태 확인용으로 실행하지 않습니다. API 변경은 [계약 검증 절차](API_COLLABORATION.md)를 따르고 문서 변경은 참조 경로와 `git diff --check`를 확인합니다. 실패·미실행·기존 실패를 구분합니다. OAuth 모의 검증과 실제 제공자·모바일 callback 검증도 구분해 인계합니다.
+`scripts/verify.py`는 DB 쓰기와 컨테이너 중지·재생성을 포함하므로 단순 상태 확인용으로 실행하지 않습니다. API 변경은 [계약 검증 절차](API_COLLABORATION.md)를 따르고 문서만 변경하면 내용·참조 경로·`git diff --check`를 확인하고 코드 테스트를 불필요하게 반복하지 않습니다. 실패·미실행·기존 실패를 구분합니다. OAuth 모의 검증과 실제 제공자·모바일 callback 검증도 구분해 인계합니다.
 
 운영 배포는 별도 작업입니다. 대상과 승인 범위를 확인하고 개발·테스트·운영 자격 증명을 분리하며, 관련 테스트·계약·마이그레이션·백업·복구·롤백을 검토합니다. 백업 파일 존재와 복원 검증은 다릅니다. 운영 비밀정보 변경과 데이터 삭제는 별도 승인 대상입니다. 자동 배포·모니터링·백업은 현재 구현된 것으로 간주하지 않습니다.

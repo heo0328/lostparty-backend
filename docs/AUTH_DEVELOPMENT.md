@@ -32,7 +32,7 @@ docker compose -f compose.test.yaml run --rm tests
 
 test-db는 별도 프로젝트·네트워크·`lostparty_test` DB·tmpfs를 사용하며 개발 volume을 연결하지 않습니다. 테스트 내부에서 해당 DB의 인증 테이블을 초기화합니다. 운영/개발에서 이 초기화 코드를 사용하지 않습니다. 테스트 키는 일회성 컨테이너의 /tmp에만 생성합니다. 전체 환경 제거 대신 테스트 DB를 멈추려면 `docker compose -f compose.test.yaml stop test-db`를 사용하며 tmpfs 테스트 자료는 유실될 수 있습니다.
 
-실행 결과: 44개 테스트 통과. Google 증거는 로컬 RSA 서명과 모의 공개키 전송으로 검증했으며 실제 Google 인증이 아닙니다. anyio/Starlette 테스트 도구의 deprecation 경고 1개가 남아 있습니다.
+테스트 실행 결과와 장애·경고는 [DEV_LOG](project/DEV_LOG.md)에 누적합니다. 모의 Google 증거 검증과 실제 Google 인증을 구분합니다.
 
 ## API·접속·검증 범위
 
@@ -47,7 +47,7 @@ test-db는 별도 프로젝트·네트워크·`lostparty_test` DB·tmpfs를 사�
 
 기간은 합의값을 코드에 적용했습니다. 기간을 환경별로 바꾸는 설정 기능은 아직 없으며 변경 시 계약과 Flutter 영향을 다시 확인합니다.
 
-현재 확인: /health 200, challenge 201/no-store, 미인증 /me 401, 잘못된 refresh 입력 400, migration 0001_auth, pip check, 전체 계약 비교, 기존 테이블 행 수 보존. 개발 DB에서 mock 회원/session을 만들지 않았습니다.
+실행한 HTTP·migration·계약 검증과 기존 흐름 보존 결과는 [DEV_LOG](project/DEV_LOG.md)를 참고합니다. 현재 남은 공동 검증 순서는 [NEXT_WORK](project/NEXT_WORK.md)에 있습니다.
 
 후속 확인: 실제 Google 서명·nonce·azp, Windows localhost→WSL와 Android 10.0.2.2 접근, Flutter 화면/bootstrap·secure pending·앱 재시작·늦은 응답 격리. 현재 host 루프백 HTTP만 확인했으며 외부 터널/포트 공개는 하지 않았습니다. 탈퇴·약관·release 등록·운영 배포는 별도 작업입니다.
 

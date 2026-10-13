@@ -1,0 +1,49 @@
+# 영구 개발 이력
+
+핵심 변경·결정·검증·장애를 날짜와 작업 제목으로 누적합니다. 현재 실행 계획은 [NEXT_WORK](NEXT_WORK.md), 기능 지도는 [AI_CONTEXT](AI_CONTEXT.md)에 둡니다. 비밀정보·개인정보·원시 로그를 첨부하지 않습니다.
+
+## 2026-10-14 — Google 인증·복구 세션 구현과 로컬 커밋
+
+### 목적·변경·결정
+
+[Issue #2 최종 동의](https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6149615842)에 따라 6개 인증 API, 회원/identity/transaction/session/credential/recovery 모델, additive migration `0001_auth`, 테스트 환경과 원본 OpenAPI를 구현했습니다. 코드 위치는 `app/auth`, `app/core`, `alembic`, `tests`; 실행 방법은 [인증 개발 안내](../AUTH_DEVELOPMENT.md), 설계 근거는 [계약](../ISSUE_2_AUTH_CONTRACT_DRAFT.md)과 [복구 설계](../ISSUE_2_REFRESH_RECOVERY.md)입니다.
+
+TTL·거래별 nonce·refresh 60초/추가2회·DB 시간 계측 제약은 합의됐습니다. 자세한 장기 정책은 위 계약 문서에서 관리합니다. 자체 인증을 추가해 Google proof를 일반 API의 Bearer로 쓰지 않고 세션 폐기를 서버가 검증하도록 했습니다.
+
+### 새로 가능해진 흐름
+
+challenge → Google 증거 검증 → 최초 회원 생성/동일 identity 재로그인 → 자체 세션 발급, 본인·현재 세션 조회, 회전과 동일 요청 복구, 현재 기기 로그아웃·만료 정리. 자동 검증은 모의 Google 증거에 기반하며 실제 Google 로그인 성공을 뜻하지 않습니다.
+
+### 보존 확인한 기존 흐름
+
+기존 /health의 경로·200/503 계약 유지 및 실제 200 응답, 기존 개발 DB 테이블 행 수 보존, DB volume 유지. Firebase·Flutter 로컬 자료를 수정하거나 신규 guest 회원을 생성하지 않았습니다.
+
+### 실행한 검증·결과
+
+- 개발과 분리된 PostgreSQL 17에서 **44개 pytest 통과**. `tests/test_auth.py`, `tests/test_google.py`에 검증 코드가 있습니다.
+- 동시 첫 가입 중복 방지, refresh 회전·응답 유실·재전송 제한·replay 폐기 commit, 만료 equality·commit 지연·rollback·logout·정지·정리·키 오류 검증.
+- Google 증거는 로컬 RSA 서명·모의 공개키 전송으로 signature/issuer/audience/iat/exp/nonce/azp 검사. 실제 Google는 미검증.
+- OpenAPI 전체 비교, pip check, git diff --check·민감정보 검사 통과. 실제 HTTP /health 200·challenge 201/no-store·미인증 me 401·잘못된 refresh 400 확인.
+- [구현 결과 댓글](https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6150036341)에 당시 결과를 기록했습니다.
+
+### 장애와 한계
+
+이번 변경의 첫 pytest 수집은 app 모듈 경로 미설정으로 실패했고 `pytest.ini`의 pythonpath로 해결했습니다. 키 생성은 Compose 읽기 전용 마운트 때문에 실패했고 초기화용 단일 컨테이너 쓰기 마운트로 해결했습니다. 두 오류는 재검증 통과했습니다.
+
+기존 FastAPI/Starlette와 설치된 anyio 테스트 도구 조합의 deprecation 경고 1개가 남았으며 기능 실패는 아닙니다. Git HTTPS 인증 연동 부재로 일반 push가 실패한 이전 이력이 있지만 인증 기능의 실패와 구분합니다. 이번 구현은 push를 시도하지 않았습니다.
+
+실제 Google·Windows→WSL·Android·Flutter 적용은 미확인입니다. 단일 프로세스 rate limit, 기간 설정 확장, JWT 구키 자동 검증·운영 역할 분리·배포·탈퇴·약관은 운영 준비 또는 후속 항목입니다.
+
+### Git·인계 상태
+
+로컬 브랜치 `feat/2-google-auth`, 구현/계약 커밋 **`519c609495966a3d785c6671c09bf513b28875a6`**. 코드 commit은 완료, push·PR·main/dev 통합·운영 배포는 미실행입니다. 2026-10-14 원격 조회에서 main/dev/작업 브랜치는 모두 `4ad30520f0afd52d1d5b6f27b103b83ebf1b1667`입니다.
+
+구현 결과 댓글은 커밋 전에 작성되어 “새 계약 SHA 없음”을 기록했습니다. 이후 로컬 커밋은 생성됐지만 원격 게시와 SHA 인계가 아직 남았습니다. 계약 내용 SHA-256은 Git 커밋 SHA와 다릅니다. Flutter 요구 검토·합의·Backend 구현·자동 검증은 완료, 계약 SHA 인계·Flutter 적용·실인증은 별도 대기입니다.
+
+## 2026-10-14 — 문서 기록 체계 정비
+
+기존 AGENTS·개발 흐름·협업 규칙·인증 실행 안내·Issue 설계 문서를 조사했습니다. 상시 현재 계획/영구 이력/기능 지도 역할의 문서는 없어 docs/project에 NEXT_WORK·DEV_LOG·AI_CONTEXT를 추가했습니다. Issue 구현 계획은 설계 이력으로 재사용하고 상세 실행 명령·장기 정책은 복제하지 않았습니다.
+
+AGENTS 시작 순서와 종료 기록 규칙을 추가하고 기존 개발 흐름의 “pytest·인증 미도입” 설명과 별도 이력 미관리 원칙을 실제 상태와 새 지시에 맞게 정리했습니다. 기능 코드·DB·설정은 변경하지 않았습니다.
+
+이 작업은 문서 내용·상호 링크·git diff --check·민감정보 검사를 확인합니다. 코드 테스트·서버 재시작·DB 작업은 재실행하지 않습니다. 현재 브랜치는 feat/2-google-auth이고 이 문서 정비는 미커밋이며 push·통합·배포하지 않았습니다. 다음 작업은 NEXT_WORK의 계약 게시 승인과 공동 인수 준비입니다.
