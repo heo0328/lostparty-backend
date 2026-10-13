@@ -80,3 +80,10 @@ AGENTS 시작 순서와 종료 기록 규칙을 추가하고 기존 개발 흐�
 사용자가 에뮬레이터 로그인 완료를 보고했습니다. 개발 PostgreSQL을 읽기 전용으로 조회해 회원1개·Google identity1개·session3개·refresh hash3개, 활성 회원에 연결된 Google identity1개와 유효 session2개를 확인했습니다. 개인정보·Google subject·credential 원문은 출력하지 않았습니다.
 
 실제 최초 가입/로그인과 DB 저장은 확인했습니다. 반복 로그인은 회원을 늘리지 않고 세션을 발급하는 구조입니다. Flutter secure pending·응답 유실 복구·앱 재시작·실기기/release·운영 인수 전체가 완료됐다고 확대하지 않습니다. 이번 확인은 데이터 수정·commit/push·배포 없이 진행했습니다.
+
+
+## 2026-10-14 — Google 인증 dev 통합·push·계약 인계
+
+사용자 승인으로 진단·테스트·성공 기록을27f1e0b로 커밋하고 dev에 fast-forward 통합했습니다. dev와 feat/2-google-auth 모두 일반 push 성공, main4ad3052는 유지했습니다. 기존46개 검증 결과를 사용했고 계약 비교·diff·민감정보 검사는 재확인했습니다. .env·로컬 인증키는 제외했습니다.
+
+[Issue 인계](https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6151318353)에 원격 계약과 계약 커밋519c609495966a3d785c6671c09bf513b28875a6, 실제 emulator 로그인·회원 저장 결과, 남은 Flutter 검증을 전달했습니다. NEXT_WORK를 세션 공동 검증 중심으로 정리했습니다. 전체 세션·실기기/release·운영 인수 완료로 확대하지 않았고 배포·데이터 초기화는 수행하지 않았습니다.
