@@ -87,3 +87,12 @@ AGENTS 시작 순서와 종료 기록 규칙을 추가하고 기존 개발 흐�
 사용자 승인으로 진단·테스트·성공 기록을27f1e0b로 커밋하고 dev에 fast-forward 통합했습니다. dev와 feat/2-google-auth 모두 일반 push 성공, main4ad3052는 유지했습니다. 기존46개 검증 결과를 사용했고 계약 비교·diff·민감정보 검사는 재확인했습니다. .env·로컬 인증키는 제외했습니다.
 
 [Issue 인계](https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6151318353)에 원격 계약과 계약 커밋519c609495966a3d785c6671c09bf513b28875a6, 실제 emulator 로그인·회원 저장 결과, 남은 Flutter 검증을 전달했습니다. NEXT_WORK를 세션 공동 검증 중심으로 정리했습니다. 전체 세션·실기기/release·운영 인수 완료로 확대하지 않았고 배포·데이터 초기화는 수행하지 않았습니다.
+
+
+## 2026-10-14 — 완료 작업 브랜치 정리 규칙 수립과 기존 브랜치 정리
+
+사용자 지시에 따라 main·dev와 진행 중인 작업 브랜치만 유지하고, 작업 완료·dev 병합·원격 push 확인 후 작업 브랜치를 로컬·원격에서 삭제하는 상시 규칙을 AGENTS와 DEVELOPMENT_WORKFLOW에 추가했습니다. 병행 작업 브랜치는 여러 개를 허용하며 미완료·미통합 작업은 보존합니다.
+
+dev와 origin/dev가 e18b71a이고 원격 작업 브랜치도 같은 커밋임을 확인했습니다. 기존3개 작업 브랜치가 dev에 포함되고 다른 worktree가 없는 것을 확인한 뒤 feat/2-google-auth를 로컬·원격에서, docs/2-google-auth-proposal과 docs/development-rules를 로컬에서 삭제했습니다. 강제 삭제·main/dev 변경은 하지 않았습니다.
+
+현재 로컬 브랜치는 main, dev, docs/branch-lifecycle입니다. 새 문서 작업 브랜치는 dev의 e18b71a에서 분기했습니다. 이번 규칙 문서 변경은 미커밋·미push이며 원격 작업 브랜치 삭제만 수행했습니다. 내용·문서 링크·git diff --check를 검증하며 기능 테스트·DB·운영 배포는 수행하지 않습니다.

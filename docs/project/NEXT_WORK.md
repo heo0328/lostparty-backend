@@ -17,13 +17,15 @@
 |---|---|
 | 요구 검토·계약 합의 | 완료, Issue 최종 동의 근거 있음 |
 | Backend 구현·자동 검증 | 완료, 로컬 인증 API·migration·46개 테스트 및 계약 비교 기록 있음 |
-| 로컬 커밋 | 완료, `feat/2-google-auth`의 `519c609` |
-| 원격 게시·통합 | 작업 브랜치와 dev 게시·통합 완료. main은4ad3052 유지 |
+| 로컬 커밋 | 인증 계약519c609·진단 포함dev e18b71a. 완료 작업 브랜치는 삭제 |
+| 원격 게시·통합 | dev e18b71a 게시 완료. 완료 작업 브랜치 삭제, main4ad3052 유지 |
 | 계약 인계 | [dev 통합·계약 SHA 인계](https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6151318353) 완료. Flutter 소비 확인 대기 |
 | Flutter 적용·실제 Google·Android 인수 | emulator Google 로그인 성공 보고 및 회원/identity 저장 확인. 전체 세션·실기기 인수는 대기 |
 | 운영 배포 | 미실행 |
 
 이 문서 작성 시 코드 테스트나 서버·DB 검증을 반복하지 않았습니다. 위 자동 검증은 [기록된 이전 결과](DEV_LOG.md)를 기준으로 합니다.
+
+현재 문서 규칙 작업 브랜치는 `docs/branch-lifecycle`이며 변경은 미커밋입니다. 이 문서 작업도 승인된 병합·push까지 끝나면 브랜치를 정리합니다. 후속 기능 수정은 최신 dev에서 새 작업 브랜치를 분기합니다.
 
 ## 다음 실행 순서
 
