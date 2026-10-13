@@ -96,3 +96,12 @@ AGENTS 시작 순서와 종료 기록 규칙을 추가하고 기존 개발 흐�
 dev와 origin/dev가 e18b71a이고 원격 작업 브랜치도 같은 커밋임을 확인했습니다. 기존3개 작업 브랜치가 dev에 포함되고 다른 worktree가 없는 것을 확인한 뒤 feat/2-google-auth를 로컬·원격에서, docs/2-google-auth-proposal과 docs/development-rules를 로컬에서 삭제했습니다. 강제 삭제·main/dev 변경은 하지 않았습니다.
 
 현재 로컬 브랜치는 main, dev, docs/branch-lifecycle입니다. 새 문서 작업 브랜치는 dev의 e18b71a에서 분기했습니다. 이번 규칙 문서 변경은 미커밋·미push이며 원격 작업 브랜치 삭제만 수행했습니다. 내용·문서 링크·git diff --check를 검증하며 기능 테스트·DB·운영 배포는 수행하지 않습니다.
+
+
+## 2026-10-14 — 브랜치 규칙 문서 반영과 main/dev 최신화
+
+사용자 승인으로 AGENTS·개발 흐름·프로젝트 기록을9410955로 커밋하고 dev에 fast-forward 통합한 뒤 main도 동일 커밋으로 맞췄습니다. 두 원격 브랜치의 일반 push가 성공했습니다. 인증 구현·진단·성공 기록과 문서 체계를 main에서도 사용할 수 있습니다.
+
+NEXT_WORK·AI_CONTEXT의 과거 미커밋/main 미통합 설명을 현재 완료 상태로 갱신합니다. 이 기록의 commit·main/dev 병합·push를 확인한 뒤 docs/branch-lifecycle을 삭제하고 main/dev만 유지합니다. 후속 작업은 dev에서 새 브랜치로 시작합니다.
+
+문서 내용·상호 링크·git diff --check와 Git 이력 포함 여부를 확인했습니다. 이번 변경은 문서뿐이므로 코드 테스트·서버/DB 작업을 반복하지 않았고 새 배포·데이터 수정은 수행하지 않았습니다. 실제 Google emulator 로그인/회원 저장 확인과 전체 세션·실기기/release·운영 미검증 구분을 유지합니다.
