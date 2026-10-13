@@ -8,6 +8,8 @@ Flutter 앱은 별도의 Windows 개발 환경과 GitHub 저장소에서 개발�
 
 ## Flutter와 API 계약 협업
 
+작업 원칙은 [AGENTS.md](AGENTS.md), 상세 흐름은 [개발 작업 규칙](docs/DEVELOPMENT_WORKFLOW.md)과 [API 협업 규칙](docs/API_COLLABORATION.md)에 정리합니다.
+
 OpenAPI 계약의 원본은 이 저장소의 `openapi/openapi.yaml`입니다. 현재 계약은 `GET /health`의 200·503 응답을 정의합니다.
 
 API 추가·변경은 GitHub Issues에서 요청·응답과 호환성 영향을 합의하고 관련 Flutter Issue/PR을 연결합니다. Backend 구현과 계약은 함께 변경하며, Docker API를 갱신한 뒤 `python3 scripts/check_openapi.py`로 일치 여부를 검증합니다.
