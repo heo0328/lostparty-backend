@@ -173,3 +173,31 @@ OpenAPI원본에신규12operation을반영했습니다(전체16경로/19operatio
 현재 구현·OpenAPI·migration·테스트·협업/설계 문서30파일을 `254cb5de125ab1bcb2aa084e091eae976e9a078a`로 커밋했습니다. `feat/3-account-restoration` 원격 신규 브랜치 일반push가 성공했으며 tracking을 해당 브랜치로 설정했습니다. 처음 기본Git 인증 도우미 부재로 push실패 후 기존GitHub CLI 인증 도우미를 명령에만 지정해 재시도 성공했습니다. 비밀값출력/저장·force push 없음입니다.
 
 기존114개통과 기록을 사용했고 게시직전OpenAPI비교·staged diff/파일목록·embedded JWT/private key 검사를 통과했습니다. .env/.secrets는stage하지 않았습니다. main/dev는e6c72e4로 유지,PR/병합/운영배포없음입니다. dev미통합이므로 작업브랜치를보존합니다. NEXT_WORK/AI_CONTEXT/실행안내를게시상태와정확한SHA로갱신하고기록도추가commit/push합니다. Issue에는원격계약/구현SHA·검증과실provider/Flutter남은테스트를인계합니다.
+
+## 2026-10-14 — 사용자 모바일1차완료 보고·후속 Backend 요청 조회
+
+사용자가 모바일1차완료를 알려주며 추가Issue내용/Backend작업 확인을 요청했습니다. Backend저장소Issue목록과 #3/#2최신댓글을 조회했습니다. #3의이전Backend게시인계 이후 새모바일댓글은없고 #2추가결과도없어 새Backend 버그/계약변경 요청은 확인되지 않았습니다. Flutter로컬소스는읽지않았습니다.
+
+[모바일1차결과인계요청](https://github.com/heo0328/lostparty-backend/issues/3#issuecomment-6161587868)에 소비계약SHA/Flutter구현상태·자동검증/실Backend/기기범위·구체실패code/request_id를 요청했습니다. 이미성공한영역에추가자료를강제하지않고 재현가능한후속수정을 진행하도록 구분했습니다. 사용자보고를 전체업무API실인수완료로확대하지않았습니다.
+
+실행중API의LOSTARK_API_TOKEN은비어있음을 존재bool만읽어확인했습니다. key값/개인정보출력없음. 실provider/장비후속은그대로남아있습니다. 이번에는 코드/API/DB/계약변경·테스트재실행·commit/push·Issue종료없음, NEXT_WORK/AI_CONTEXT에보고상태를갱신했습니다. 기존114개는이전검증기록이며 문서diff/링크를 확인했습니다.
+
+## 2026-10-14 — Flutter 조회 인계 확인·등록 관리 후속 기획
+
+[최신Flutter인계](https://github.com/heo0328/lostparty-backend/issues/3#issuecomment-6161970774)에서 계약254cb5d소비·조회구현6f97190/dev3cedd9d·1159자동검증/에뮬레이터빈등록/로그아웃/로컬보존 보고를 확인했습니다. 두GET만연결됐으며등록/수정/제거/refresh·장비/활동쓰기는다음범위,재현된Backend결함없음을기록했습니다. Flutter로컬소스는읽지않았습니다.
+
+실행중app/alembic py hash와게시254cb5d 전체source를비교해일치,읽기전용DBrevision0002·health200·OpenAPI전체일치·runtime server key 비어있음을bool로확인했습니다. DB쓰기/삽입·서버재시작·114전체재실행없음입니다.
+
+ISSUE_3_REGISTRATION_FOLLOWUP_PLAN.md에 기존API 재사용·준비인계→lease실패header좁은보완→Flutter등록연결/key안전준비→실siblings대조→등록관리인수·대상수정 순서를작성했습니다. 정적코드검토상commit_result의REQUEST_IN_PROGRESS header누락분기를확인했으나새코드수정/대상검증은아직미실행입니다. 장비증거전체인수를등록UI선행조건으로두지않습니다.
+
+[준비·기획회신](https://github.com/heo0328/lostparty-backend/issues/3#issuecomment-6162036042)에실행버전·key미설정·로컬.env 변수/키적용API재생성절차·직접시험조건과미실증범위를인계했습니다. NEXT_WORK/AI_CONTEXT를최신보고와후속실행으로갱신했고문서diff/링크를확인했습니다. 기존문서변경보존,코드/계약/DB변경·commit/push/merge/Issue종료없음입니다.
+
+## 2026-10-14 — 등록관리 후속계획 실행·lease Retry-After 보완
+
+사용자계획실행지시로기존feat/3-account-restoration에서문서변경을보존하고commit_result의lease generation/만료REQUEST_IN_PROGRESS에 Retry-After2를지정했습니다. 격리PostgreSQL의새HTTP2사례로수정전누락을재현했고수정후대상회귀10개통과/106개제외(4.12초,기존Starlette/anyio경고1개),업무label/version rollback·새worker상태보존과기존lease/멱등/DELETE replay/장애복구/권한/계약을확인했습니다. 전체114개는이전결과이며이번전체116개통과라고확대하지않습니다.
+
+처음대상테스트CLI에compose up의command override를잘못전달해실행되지않았고run --build --rm tests pytest로교정했습니다. 각run사이격리tmpfs test-db만종료해fresh migration환경을유지했고개발DB초기화/fixture삽입없음입니다.
+
+최신API를로컬에build/재생성적용,sourcehash일치·health200·개발DBrevision0002·기존인증6테이블건수전후동일·scripts/check_openapi.py전체일치확인했습니다. 원본openapi파일은254cb5d게시파일과byte동일하며public경로/DTO변경없음입니다. 로컬.env/실행환경LOSTARK_API_TOKEN은비어있음을존재bool만확인했습니다. key값/개인정보출력없음.
+
+독립보완/인계는완료하고key준비후실siblings·명시등록관리인수만후속으로남깁니다. 장비증거인수를등록UI선행조건으로두지않으며공개mock/개발DB성공자료위조는없습니다. 계획/실행안내/NEXT_WORK/AI_CONTEXT를갱신하고Issue에실행결과/Flutter병행범위를인계합니다. 코드/문서미커밋·미push,main/dev미변경·운영배포/Issue종료없음입니다.

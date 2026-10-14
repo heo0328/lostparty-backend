@@ -100,3 +100,5 @@ provider 제한80/min은DB공통·rolling window이며 proof조회는siblings와
 빈회원조회/미인증등록상태, 본·부전환/삭제/중복·오류,전체페이지draft·세version변경/409,같은key/응답유실/DELETE replay,challenge현재상태/종료,활동·대표한번저장/재조회/늦은응답,로컬캐릭터/빌드보존을확인한다. 사용할계약SHA/구현SHA·재현흐름·안전한code/request_id를Issue로남긴다.
 
 key/schema실증전에는완전한실인증/이전을Flutter에서완료할수없다. 공개mock API를만들어우회하지않는다. Backend자동검증·가능한DTO/UI연결은먼저완료하고실장비/소유권·누락관찰은공동준비후검증한다. issue종료·운영준비완료와구분한다.
+
+등록관리 후속 실행에서 lease 만료/generation 거절에도 REQUEST_IN_PROGRESS409·Retry-After2를 반환하도록 로컬보완했다. 대상10개검증·로컬적용완료,원본계약254cb5d는변경없음이며수정implementation SHA는미커밋으로아직없다. 상세범위는 [등록후속 계획](ISSUE_3_REGISTRATION_FOLLOWUP_PLAN.md)을 확인한다.

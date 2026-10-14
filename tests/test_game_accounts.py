@@ -460,3 +460,46 @@ def test_power_null_preserves_value_and_marks_stale(client,world):
     row=next(i for i in p['characters']['items'] if i['character_name']=='a0')
     assert row['combat_power']=='12345.67' and row['power_stale'] is True
     assert row['power_fetched_at'] is not None
+
+
+@pytest.mark.parametrize('lease_failure', ['expired', 'taken_over'])
+def test_lease_rejection_returns_retry_after_and_rolls_back(client, world, monkeypatch, lease_failure):
+    from app.auth.service import principal
+    from app.game_accounts.support import reserve
+
+    headers, _ = world
+    registration = register(client, headers)
+    rid = registration['registration_id']
+    actor = principal(headers['Authorization'].split()[1])
+    key = uuid.uuid4()
+    body = {'label': 'changed', 'expected_version': registration['version']}
+    payload = {'target': rid, 'body': body}
+    old_ticket, _ = reserve(actor, 'patch', key, payload)
+    with session() as db, db.begin():
+        db.get(RequestResult, old_ticket[0]).lease_expires_at = now(db) - timedelta(seconds=1)
+    if lease_failure == 'taken_over':
+        new_ticket, _ = reserve(actor, 'patch', key, payload)
+        assert new_ticket[1] > old_ticket[1]
+    with session() as db:
+        row = db.get(RequestResult, old_ticket[0])
+        generation_before = row.generation
+        expiry_before = row.lease_expires_at
+
+    # The old worker has already acquired its ticket; resume it at the actual
+    # HTTP mutation path after expiry/takeover by a separate transaction.
+    monkeypatch.setattr(service, 'reserve', lambda *args: (old_ticket, None))
+    response = change(client, headers, 'patch', BASE + '/' + rid, body, key)
+    assert response.status_code == 409
+    assert response.json()['error']['code'] == 'REQUEST_IN_PROGRESS'
+    assert response.headers.get('retry-after') == '2'
+    assert response.headers['cache-control'] == 'no-store'
+    with session() as db:
+        stored = db.get(Registration, uuid.UUID(rid))
+        assert stored.label == registration['label']
+        assert stored.version == registration['version']
+        row = db.get(RequestResult, old_ticket[0])
+        assert row.generation == generation_before
+        assert row.lease_expires_at == expiry_before
+        assert row.completed_at is None
+        if lease_failure == 'taken_over':
+            assert row.state == 'running'

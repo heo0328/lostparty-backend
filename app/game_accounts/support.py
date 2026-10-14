@@ -92,7 +92,7 @@ def reserve(principal, operation, key, payload):
 def commit_result(db, ticket, status, result):
     r = db.scalar(select(RequestResult).where(RequestResult.id == ticket[0]).with_for_update())
     if r is None or r.generation != ticket[1] or r.state != 'running' or now(db) >= r.lease_expires_at:
-        fail('REQUEST_IN_PROGRESS')
+        raise GameError('REQUEST_IN_PROGRESS', 409, 2)
     r.state, r.completed_at, r.status, r.result = 'completed', now(db), status, jsonable_encoder(result)
     return status, r.result
 
