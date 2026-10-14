@@ -277,3 +277,17 @@ ISSUE_4_LIVE_VALIDATION.md/계획·NEXT_WORK/AI_CONTEXT에동작/키준비/실�
 fetch 후 local/origin dev e807a6f·작업브랜치/origin 4afbb0b 일치 및 다른 worktree 없음 확인. 인증 후속 문서5파일을 a6d25aa5be34af983c65f1eba72f7fab4846477c로 커밋하고 dev를 e807a6f→a6d25aa fast-forward 병합·일반push했다. local/origin dev 일치·clean·local/remote 작업브랜치 dev포함을 확인하고 upstream 해제/local branch -d/remote --delete로 feat/4-registration-integration 정리. main 유지,forcepush없음.
 
 이번 신규변경은 문서뿐이며 코드/계약은 이미 검증된 d3cb697과 동일해 테스트·서버/DB·외부호출 반복없음. 현재기준/대기상태를 문서에 기록해 dev에 게시하고 #4에 통합결과를 인계한다. #3/#4 OPEN·Flutter 실인수 및 인증후속 미완료 유지. 사용자 대기지시로 자동 polling/새작업을 수행하지 않는다.
+
+## 2026-10-14 — 큰 작업 범위 기준 브랜치명·협업 유지 규칙
+
+사용자가 현재 브랜치를 변경하지 않는 문서작업으로 이슈번호 없는 큰 범위의 브랜치명과 네이티브 협업 중 불필요한 분기/전환 방지를 지시했다. dev를 유지하며 AGENTS/DEVELOPMENT_WORKFLOW에 같은범위 여러이슈의 기존브랜치 재사용·이슈연결은 commit/문서/댓글 추적·필요한 별도범위만 추가분기 규칙을 반영했다. 개별이슈완료를 진행중인 큰범위 완료로 취급하지 않도록 명시하고 NEXT_WORK의 다음분기 지침도 맞췄다. 기존브랜치 이름/삭제/통합 기록은 당시이력으로 보존. 문서diff만 확인,branch변경·코드/서버/DB/테스트·commit/push없음.
+
+## 2026-10-14 — Flutter/Backend 공식 Issue 협업 공통규칙 문서화
+
+사용자 요청9개를 AGENTS/API_COLLABORATION/DEVELOPMENT_WORKFLOW/API_COLLABORATION_WORKFLOW에 반영했다. 공식채널을 heo0328/lostparty-backend Issues로 명시하고 시작/인계시본문·최신댓글확인,필요한요청만수행/반복검증요청방지,받은요청은같은Issue결과회신,인계SHA/branch/push/계약영향,자동·실서버·사용자검증분리,후속담당/완료조건/대기사유/링크와댓글권한경계·민감자료비게시를명시했다. Flutter참조2bc70d8의 dev반영/push는 사용자보고로기록했다.
+
+기존미커밋 브랜치명규칙 변경보존·현재dev유지. 문서내용/링크/diff 확인,기능/API/DB/서버/테스트·Issue게시·commit/push없음. 상대작업에필요한새인계나Issue에서받은요청이없는이번문서단계에는기능Issue에변화없는댓글을추가하지않았다.
+
+## 2026-10-14 — 협업·브랜치 규칙 문서 게시 승인
+
+사용자 commit/push 지시로 dev의 협업규칙9개·큰범위브랜치명 규칙 문서6파일을 게시한다. fetch 후 HEAD/origin dev b3ad67f일치·원격추가변경없음 확인. 문서diff/링크검증 근거를 사용하고 기능/API/DB/서버/테스트변경은없다. 브랜치전환/main변경/기능Issue 반복댓글 없이 dev 일반push로 인계한다.
