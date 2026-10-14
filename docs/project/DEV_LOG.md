@@ -167,3 +167,9 @@ OpenAPI원본에신규12operation을반영했습니다(전체16경로/19operatio
 ## 2026-10-14 — Issue #3 작업 브랜치 commit/push 승인·게시 준비
 
 사용자가 현재작업 commit/push를 요청했습니다. origin fetch 후 main/dev 기준 e6c72e4 유지와 새원격작업브랜치없음을 확인했습니다. 작업브랜치만 게시하며 main/dev 병합·PR·배포는 수행하지 않습니다. 기존114개검증결과를 사용하고 게시전 OpenAPI비교·diff검사를 재확인했습니다. .env/.secrets가 ignore대상이고 stage목록에없음을 확인합니다. 게시완료SHA·인계결과는 후속기록으로 남깁니다.
+
+## 2026-10-14 — Issue #3 구현/계약 커밋·작업 브랜치 push 완료
+
+현재 구현·OpenAPI·migration·테스트·협업/설계 문서30파일을 `254cb5de125ab1bcb2aa084e091eae976e9a078a`로 커밋했습니다. `feat/3-account-restoration` 원격 신규 브랜치 일반push가 성공했으며 tracking을 해당 브랜치로 설정했습니다. 처음 기본Git 인증 도우미 부재로 push실패 후 기존GitHub CLI 인증 도우미를 명령에만 지정해 재시도 성공했습니다. 비밀값출력/저장·force push 없음입니다.
+
+기존114개통과 기록을 사용했고 게시직전OpenAPI비교·staged diff/파일목록·embedded JWT/private key 검사를 통과했습니다. .env/.secrets는stage하지 않았습니다. main/dev는e6c72e4로 유지,PR/병합/운영배포없음입니다. dev미통합이므로 작업브랜치를보존합니다. NEXT_WORK/AI_CONTEXT/실행안내를게시상태와정확한SHA로갱신하고기록도추가commit/push합니다. Issue에는원격계약/구현SHA·검증과실provider/Flutter남은테스트를인계합니다.

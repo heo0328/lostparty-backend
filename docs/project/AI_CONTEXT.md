@@ -11,10 +11,10 @@
 | 설계 근거 | [초기 모델 제안](../ISSUE_2_GOOGLE_AUTH_PROPOSAL.md), [구현 계획 이력](../ISSUE_2_IMPLEMENTATION_PLAN.md).현재 할 일은 NEXT_WORK가 기준 |
 | 테스트·migration | `tests`, `compose.test.yaml`, `alembic/versions/0001_auth.py`. 실행 방법은 인증 개발 안내, 검증 기록은 DEV_LOG |
 | 협업 | [API_COLLABORATION](../API_COLLABORATION.md)·[작업 단계/진행 경계](../API_COLLABORATION_WORKFLOW.md). Backend Issues와 계약 SHA 기준, Flutter 소스 직접 수정 없음 |
-| 내 계정 복원 #3 | 로컬12 API·0002의11테이블·원본OpenAPI 구현, 격리PostgreSQL114테스트·로컬계약 비교 확인. 미게시, 실provider/Flutter 인수 대기. [실행/인계](../ISSUE_3_DEVELOPMENT.md)·[설계](../ISSUE_3_IMPLEMENTATION_PLAN.md)·[Issue #3](https://github.com/heo0328/lostparty-backend/issues/3) |
+| 내 계정 복원 #3 | 로컬12 API·0002의11테이블·원본OpenAPI 구현, 격리PostgreSQL114테스트·로컬계약 비교 확인. 작업 브랜치 구현/계약254cb5d 게시, 실provider/Flutter 인수 대기. [실행/인계](../ISSUE_3_DEVELOPMENT.md)·[설계](../ISSUE_3_IMPLEMENTATION_PLAN.md)·[Issue #3](https://github.com/heo0328/lostparty-backend/issues/3) |
 | 후속 기능 | 탈퇴·약관·모집·파티·그룹·Apple/Discord·WebSocket은 구현에 없음 |
 | 운영 | Lightsail 배포 예정, 운영 HTTPS·배포·키 관리 준비는 완료로 간주하지 않음 |
 
 인증 구현·진단·문서 기록은 main과 dev의 동일 최신 기준으로 통합·게시됐습니다. 완료 작업 브랜치는 push 확인 후 정리하며, 다음 작업은 최신 dev에서 분기합니다. 계약 소비·전체 Flutter 인수·운영 배포 완료와 저장소 최신화를 구분합니다.
 
-현재 신규 작업 브랜치는 `feat/3-account-restoration`(dev e6c72e4 기준)이며 변경은 미커밋·미push입니다. #3의 원본 OpenAPI·로컬구현/자동검증은 반영됐으며 원격게시/계약SHA와 실provider·Flutter 인수는 후속입니다. #2 전체 세션/실기기 인수 잔여 작업은 NEXT_WORK에 연결해 보존합니다.
+현재 신규 작업 브랜치는 `feat/3-account-restoration`(dev e6c72e4 기준)이며 구현/계약 `254cb5de125ab1bcb2aa084e091eae976e9a078a`을 원격 작업 브랜치에 게시했습니다. #3의 원본 OpenAPI·로컬구현/자동검증은 반영됐으며 dev/main 통합·실provider/Flutter 인수는 후속입니다. #2 전체 세션/실기기 인수 잔여 작업은 NEXT_WORK에 연결해 보존합니다.

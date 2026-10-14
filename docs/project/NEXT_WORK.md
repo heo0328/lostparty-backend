@@ -6,7 +6,7 @@
 
 [Issue #3](https://github.com/heo0328/lostparty-backend/issues/3), [Flutter 수용](https://github.com/heo0328/lostparty-backend/issues/3#issuecomment-6159847616), [설계](../ISSUE_3_IMPLEMENTATION_PLAN.md), [실행/인계 안내](../ISSUE_3_DEVELOPMENT.md), [원본 OpenAPI](../../openapi/openapi.yaml)가 기준입니다. [협업 작업 단계](../API_COLLABORATION_WORKFLOW.md)에 따라 구현 가능한 영역을 먼저 완료하고 실검증 입력을 분리했습니다.
 
-브랜치 `feat/3-account-restoration`, 기준 dev `e6c72e4`. 변경은 미커밋·미push이며 원격 계약/구현 SHA는 아직 없습니다. dev/main은 변경하지 않았습니다.
+브랜치 `feat/3-account-restoration`, 기준 dev `e6c72e4`. 구현·계약 커밋 `254cb5de125ab1bcb2aa084e091eae976e9a078a`을 원격 작업 브랜치에 게시했습니다. dev/main은 변경하지 않았으며 병합은 별도 후속입니다.
 
 ## 현재 상태
 
@@ -17,7 +17,7 @@
 | DB/원본 계약 | additive0002의11개테이블, 기존7경로/인증schema 보존·신규12operation 반영 |
 | Backend 자동 검증 | 격리 PostgreSQL17 pytest114개 통과(기존46+판정/transport37+업무API31), 기존 경고1개. migration 전후 기존회원 행 보존·권한/경쟁/rollback/TTL 검증 |
 | 로컬 API 적용 | 개발DB additive migration·API 갱신, 기존 인증6테이블 건수 보존, health200/미인증업무401·전체OpenAPI 일치 확인 |
-| 원격 게시/계약 SHA 인계 | 미완료. [로컬 구현·검증 인계 댓글](https://github.com/heo0328/lostparty-backend/issues/3#issuecomment-6160605157)은 게시했으며 원격 계약은 승인 범위 확보 후 진행 |
+| 원격 게시/계약 SHA 인계 | 작업 브랜치 push 완료. 구현/계약 `254cb5de125ab1bcb2aa084e091eae976e9a078a`이 기준. Issue에 정확한 SHA로 인계 |
 | Flutter 업무 API 적용 | 미확인. #3 계약 연결/화면 테스트는 후속 |
 | 실provider/장비 | 키/schema/해제표현·quota/지연 미확인. live확정은pending 증거보류, 감소roster 자동missing/이전 보류 |
 | 운영 배포 | 미실행 |
@@ -26,7 +26,7 @@ mock proof는 pytest dependency에서만 주입하며 공개 API/임의env 우�
 
 ## 다음 실행
 
-1. 사용자 승인으로 작업 브랜치의 변경을 commit/push하고 원격 OpenAPI/구현 SHA로 정확히 인계한다. dev/main 병합은 이번 승인에 포함하지 않으며 별도 후속이다. 미게시 로컬 파일을 원격에서 사용할 수 있다고 안내하지 않는다.
+1. Flutter는 게시된 구현/계약 SHA254cb5d를 소비한다. dev/main 병합은 이번 승인에 포함하지 않으며 별도 후속이다. 작업 브랜치는 미통합이므로 보존한다.
 2. Flutter가 사용한 계약버전을 기록하고 가능한 빈등록/CRUD/상태/페이지·세version/409/유실·삭제replay·로컬보존 흐름을 연결·테스트한다. Backend는 결과를 재현·수정·대상회귀로 검증한다.
 3. 사용자·Backend가 서버 LOSTARK_API_TOKEN을 안전한 로컬 설정으로 준비한다. 값은 Issue/앱에 공유하지 않는다. Backend가 실제 siblings/Armory schema·수치/null·장비해제·실quota/지연을 확인한다.
 4. 실증 후 adapter 품질판정을 보완하고 사용자 수동 장비조작으로 실제 인증/이전·누락 관찰 기준을 공동 검증한다. 불완전roster 이전/자동missing은 합의한 근거가 생길 때만 허용한다.
