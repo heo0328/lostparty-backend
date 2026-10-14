@@ -323,3 +323,15 @@ GAME_DEFAULTS/ISSUE_5_COMBAT_POWER_PLAN·프로젝트문서를추가/최신화�
 ## 2026-10-14 — #5 구현·계약 게시 완료
 
 사용자승인으로21파일을 39188d5dca2d394f4e8b3fcbfe332274812285bf에커밋하고origin/feat/account-management에일반push/upstream 설정·local/remote일치 확인. 원본OpenAPI·실행안내/공통기준의새SHA를Flutter에전달한다. 게시기록커밋에서power_service파일끝공백경고를정리하고문서현재상태를맞춘다(동작/계약불변). dev/main추가병합/배포·개발데이터삭제없음. 기존42개/후속3개를재사용하며테스트반복없음.
+
+## 2026-10-14 — 네이티브 확인 요청 전 작업 구간 게시 규칙
+
+사용자가 Backend작업후네이티브테스트/확인요청은1회commit/push게시후수행하도록상시규칙을추가했다. AGENTS·협업/개발/단계문서에검증→작업구간게시/원격확인→Issue인계를명시하고승인된작업구간인계용게시의반복허가질문을없앴다. 구현전요구/계약검토·진행회신과구분,내부변경마다게시/이미게시상태재커밋없음·merge/배포/범위확대/자료삭제별도기준유지. 현재feat/account-management유지·문서diff확인만수행,코드/API/DB/서버/테스트·commit/push없음.
+
+## 2026-10-14 — #5 Flutter 연결·신규사용자확인회신
+
+[6167414628](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6167414628)·[6167529348](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6167529348)확인. 39188d5소비/DTO·POST/GET/로컬카드·역할우선/회원격리연결·전체1204/후속국소70자동과사용자신규3흐름정상보고를구분해기록. 새Backend수정/반복테스트요청없음. Flutter미커밋/미push/dev미반영·Git인계만후속,나이스단앱시작자동갱신은별도. Backend원본schema/모든실장애검증으로확대하지않고같은Issue확인회신·프로젝트문서최신화. 기존미커밋작업규칙보존,코드/API/DB/테스트·commit/push·Issue종료없음.
+
+## 2026-10-14 — #5 인계확인·문서최신화/dev통합 승인
+
+사용자가Issue인계확인→문서최신화→dev병합/push를지시했다. 최신6167414628/6167529348의39188d5소비·연결/자동1204후속70·사용자3흐름정상과6167564129결과회신확인. FlutterGit게시SHA는아직회신없어후속유지한다. fetch후dev/origin78a5494·work/originb8e81f3일치,다른worktree없음. 기존네이티브확인전게시상시규칙/결과문서8파일변경보존·최신화해커밋한후devfast-forward/generalpush한다. code/contract추가변경없어기존42+후속3개근거를사용하고문서diff만확인,서버/DB/테스트재실행없음.

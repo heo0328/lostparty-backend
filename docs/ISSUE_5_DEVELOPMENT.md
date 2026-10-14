@@ -57,3 +57,9 @@ HTTP200 body=`{items:[...]}`. items는 중복제거한 입력 순서다.
 ## 2026-10-14 게시 완료
 
 사용자 승인으로 `feat/account-management`에 commit/push 완료. 실제 구현·원본OpenAPI SHA: `39188d5dca2d394f4e8b3fcbfe332274812285bf`. 앞선 미커밋/미push·새SHA없음 설명은 게시 전 이력이며 현재 Flutter 소비 기준은 이 SHA다. dev/main 병합·배포·Issue종료는 하지 않았다. 기존42개/후속3개·로컬0003/API 적용 근거 유지,실profile/Flutter신규인수후속. 게시기록후속은파일끝공백정리와문서상태만 바꾸며새API동작/계약변경없음.
+
+## 2026-10-14 Flutter 연결·사용자 확인
+
+[연결회신](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6167414628)의39188d5원본소비·StrictDTO/POST/GET·전용30초·1700/20명·로컬카드역할snapshot우선/회원격리연결과전체1204테스트·국소후속70/분석0/debug11.4초보고를확인했다. 전체1206통과로확대하지않는다. [사용자확인](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6167529348)에서서버전투력확인/표시·로컬카드역할값유지·로그아웃/재로그인표시캐시3흐름모두정상. 원본profileschema/모든장애상한실인수로확대하지않는다.
+
+Flutter feature/character-combat-power 미커밋·미push/dev미반영·새적용SHA없음. 새Backend수정/테스트요청없음·성공시험반복없음. 나이스단앱시작자동갱신Backend연결은별도후속이며이번수동API확인에포함하지않는다.
