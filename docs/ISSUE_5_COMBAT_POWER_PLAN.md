@@ -31,3 +31,7 @@
 ## Flutter 동의 후 실행
 
 [6166739099](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6166739099)에서1700/20명/부분결과·cache방향동의. 0003 캐시테이블·POST/GET상태/대표overlay·quota/lease/시간예산·권한재검사 구현. 위 미구현/미합의 문구는착수당시이력이며정확한최신wire/실행한계는 [실행안내](ISSUE_5_DEVELOPMENT.md)를따른다. 미커밋/미push·새SHA없음은유지.
+
+## 2026-10-14 게시 완료
+
+사용자 승인으로 `feat/account-management`에 commit/push 완료. 실제 구현·원본OpenAPI SHA: `39188d5dca2d394f4e8b3fcbfe332274812285bf`. 앞선 미커밋/미push·새SHA없음 설명은 게시 전 이력이며 현재 Flutter 소비 기준은 이 SHA다. dev/main 병합·배포·Issue종료는 하지 않았다. 기존42개/후속3개·로컬0003/API 적용 근거 유지,실profile/Flutter신규인수후속. 게시기록후속은파일끝공백정리와문서상태만 바꾸며새API동작/계약변경없음.

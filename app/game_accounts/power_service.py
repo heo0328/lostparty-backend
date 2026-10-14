@@ -189,4 +189,3 @@ def refresh(principal, rid, key, payload):
         release_claims(claims)
         release(ticket)
         raise
-

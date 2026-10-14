@@ -1,12 +1,12 @@
 # 현재 작업과 다음 실행
 
-기준일2026-10-14. 현재그룹: **전투력 갱신 API/cache 구현·자동검증·로컬적용 완료, 계약 게시/Flutter 연결·실provider 인수 후속**.
+기준일2026-10-14. 현재그룹: **전투력 갱신 API/cache 구현·자동검증·로컬적용 완료, 계약 게시 완료·Flutter 연결/실provider 인수 후속**.
 
 ## 기준 상태
 
 - [Issue5](https://github.com/heo0328/lostparty-backend/issues/5), [Flutter동의](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6166739099), [실행/정확한wire](../ISSUE_5_DEVELOPMENT.md), [계획](../ISSUE_5_COMBAT_POWER_PLAN.md), [공통기준](../GAME_DEFAULTS.md).
 - [구현결과회신](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6166983632)에서정확한wire·예산한계·후속을인계했다.
-- feat/account-management(dev78a5494기준). 코드/계약/0003/문서 미커밋·미push,새구현/계약SHA없음. Backend 구현완료와 원격 인계를 구분한다.
+- feat/account-management(dev78a5494기준). 코드/계약/0003/문서 게시 SHA `39188d5dca2d394f4e8b3fcbfe332274812285bf`. origin/feat/account-management 추적·push 확인. Backend 구현완료와 원격 인계를 구분한다.
 - DEFAULT_MIN_ITEM_LEVEL=Decimal1700,20명input·TTL30분·회원별cache·POST/GET관찰상태·대표수치overlay·부분실패보존·quota80/동시2·lease/멱등·회원/등록/소유차수재검사 구현.
 - 대상42개통과(9.29초,경고1개),마지막null레벨reason/retention/상수계약변경후3개통과(3.37초,경고1개). 처음22/중간33은이전검증으로구분,전체기존테스트재실행없음.
 - 로컬API적용·OpenAPI전체일치PASS·health200·DB0003_power_cache·runtime키존재true,기존18테이블집계건수보존/새cache0 확인. 개발fixture/자료삭제/DB초기화없음.
@@ -14,7 +14,7 @@
 
 ## 다음 실행
 
-1. 사용자commit/push승인범위로새구현/계약SHA를게시·Issue인계한다. 아직미게시인계약을Flutter가원격에서가져올수있다고안내하지않는다. 기존d3cb697은전투력새계약SHA가아니다.
+1. Flutter가 게시된 새 구현/계약 `39188d5dca2d394f4e8b3fcbfe332274812285bf`를 소비한다. 기존d3cb697/기준78a5494는전투력계약SHA가아니다.
 2. Flutter는게시된계약으로POST/새 GET3필드·요청전용30초receiveTimeout·20명순차묶음/부분결과·1700선별을연결한다. profile없는값/실패/oldstale·deferred·로컬역할snapshot우선와로그아웃격리검증.
 3. 사용자시험대상준비후실profile응답을safe형태로확인하고차이가있으면대상만보완한다. Flutter연결뒤신규전투력/캐시·관련실패인수를진행하며성공등록/이름시험반복없음.
 

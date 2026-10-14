@@ -53,3 +53,7 @@ HTTP200 body=`{items:[...]}`. items는 중복제거한 입력 순서다.
 현재검증: 대상42개통과(9.29초/기존경고1개),이후null레벨reason·retention·상수메타데이터후속3개통과(3.37초/경고1개). 이전22개/중간33개와별도실행이며전체기존테스트반복없음. migration/model일치·기존authschema보존·guest/타인/미인증/canonical·20명·부분실패·중복조회/fencing·등록version/삭제/session폐기·기한뒤늦은값미반영·quota·summary값시각보존 검증. 로컬OpenAPI전체일치PASS/health200/DB0003·18기존테이블집계보존·새cache0/runtime키존재true. 실제profile미호출/Flutter미인수,미commit/push.
 
 게시 전 [Flutter 인계 확인](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6167001322): 기존 Flutter Strict DTO는 추가 CharacterOut 필드를 거절한다. 로컬 Backend 적용을 기존 앱 호환/연결 완료로 표시하지 않는다. 새 게시 계약을 소비한 Flutter DTO/화면 구현 후 연동한다. 추가 서버 수정/테스트 요청은 없으며 기존 자동 검증 근거를 유지한다.
+
+## 2026-10-14 게시 완료
+
+사용자 승인으로 `feat/account-management`에 commit/push 완료. 실제 구현·원본OpenAPI SHA: `39188d5dca2d394f4e8b3fcbfe332274812285bf`. 앞선 미커밋/미push·새SHA없음 설명은 게시 전 이력이며 현재 Flutter 소비 기준은 이 SHA다. dev/main 병합·배포·Issue종료는 하지 않았다. 기존42개/후속3개·로컬0003/API 적용 근거 유지,실profile/Flutter신규인수후속. 게시기록후속은파일끝공백정리와문서상태만 바꾸며새API동작/계약변경없음.
