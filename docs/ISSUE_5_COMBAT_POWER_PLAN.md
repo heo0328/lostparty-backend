@@ -39,3 +39,5 @@
 ## 2026-10-14 dev 통합·정리
 
 사용자 승인으로 #5작업/문서·인계규칙을 dev87751537bd63f13605fb8f0eacbca749c0898285에fast-forward 통합·push했다. 완료 feat/account-management는로컬/원격삭제. 위작업브랜치/미통합 설명은당시이력이며실제구현/계약39188d5는유지된다. Flutter연결·사용자3흐름은확인됐고Git게시SHA미회신/별도미확인범위는후속이다. 이번통합에코드/계약추가변경없음·반복검증없음.
+
+2026-10-14 [Flutter Git인계](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6168115419) 추가확인: 구현6beb55e3f6f301873d200ff8cbfd6a764d33f547·dev통합ccc6b23f24c1f438c79ce683a8c9f3af35c8af06·push완료보고,소비39188d5유지. 앞선Git미회신대기는해소됐다. 자동1204/후속70·사용자3흐름근거유지/추가Backend요청없음. 다음나이스단설정/앱실행1회자동갱신은설계후보이며현재수동API인수·새API구현과구분한다.
