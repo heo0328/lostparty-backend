@@ -4,7 +4,7 @@ from uuid import UUID
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StringConstraints, model_validator
 
 Name = Annotated[str, StringConstraints(strict=True, min_length=1, max_length=64, strip_whitespace=True)]
-Label = Annotated[str, StringConstraints(strict=True, min_length=1, max_length=40, strip_whitespace=True)]
+Label = Annotated[str, StringConstraints(strict=True, min_length=0, max_length=40, strip_whitespace=True)]
 Version = Annotated[StrictInt, Field(ge=1)]
 
 
@@ -22,12 +22,13 @@ class PreviewIn(DTO):
 
 class RegisterIn(DTO):
     lookup_character_name: Name
-    label: Label
+    label: Label = Field(default='', description='Stored custom name. Omitted or blank selects automatic display; null is rejected.')
     is_main: StrictBool = False
 
 
 class PatchIn(DTO):
-    label: Label | None = None
+    # The internal default marks omission; explicit null is not a valid string.
+    label: Label = Field(default=None, description='Omitted preserves the name; blank clears it for automatic display. Explicit null is rejected.')
     is_main: StrictBool | None = None
     expected_version: Version
 
@@ -97,7 +98,7 @@ class SettingsOut(DTO):
 
 class RegistrationOut(DTO):
     registration_id: UUID
-    label: str
+    label: str = Field(description='Stored custom name, or empty string for automatic display. Never a generated display name.')
     is_main: bool
     version: int
     game_account_id: UUID | None

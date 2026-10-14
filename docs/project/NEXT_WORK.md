@@ -1,49 +1,43 @@
 # 현재 작업과 다음 실행 계획
 
-기준일: 2026-10-14. 현재 그룹은 **Issue #3 조회 인계 완료 후 등록 관리 구간 준비·대상 보완**입니다.
+기준일: 2026-10-14. 현재 그룹은 **Issue #4 빈 이름 자동 표시 Backend 구현·대상16개 통과·새 계약 인계 후속**입니다.
 
-## 근거·범위
+## 목표·근거·범위
 
-[Issue #3](https://github.com/heo0328/lostparty-backend/issues/3), [Flutter 수용](https://github.com/heo0328/lostparty-backend/issues/3#issuecomment-6159847616), [설계](../ISSUE_3_IMPLEMENTATION_PLAN.md), [실행/인계 안내](../ISSUE_3_DEVELOPMENT.md), [원본 OpenAPI](../../openapi/openapi.yaml)가 기준입니다. [협업 작업 단계](../API_COLLABORATION_WORKFLOW.md)에 따라 구현 가능한 영역을 먼저 완료하고 실검증 입력을 분리했습니다.
+[Issue #4](https://github.com/heo0328/lostparty-backend/issues/4), [작업 계획](../ISSUE_4_REGISTRATION_INTEGRATION_PLAN.md), [기존 실행 안내](../ISSUE_3_DEVELOPMENT.md), [원본 OpenAPI](../../openapi/openapi.yaml)가 기준입니다. #3의 기존 구현/보완을 다시 개발하지 않고 등록 구간의 준비·실provider 관찰·모바일인수·발견차이만 #4에서 추적합니다.
 
-[등록 관리 후속 계획](../ISSUE_3_REGISTRATION_FOLLOWUP_PLAN.md)이 이번 구간 실행 기준입니다.
+현재 브랜치 `feat/4-registration-integration`, 기준 `dev`의 `e807a6f002222cdff7beb07bfbe5cae65b97df43`. 사용자 승인으로 #3 구현/문서/헤더보완 및 이슈종료기록을 dev에 fast-forward 통합·push했습니다. 완료 feat/3-account-restoration은 local/remote 삭제, main은 e6c72e4 유지. #4 준비문서는 미커밋·미push입니다.
 
-브랜치 `feat/3-account-restoration`, 기준 dev `e6c72e4`. 구현·계약 커밋 `254cb5de125ab1bcb2aa084e091eae976e9a078a`을 원격 작업 브랜치에 게시했습니다. dev/main은 변경하지 않았으며 병합은 별도 후속입니다.
+## 기준 상태
 
-## 현재 상태
-
-| 단계 | 상태 |
+| 영역 | 상태 |
 |---|---|
-| 요구/계약 방향 합의 | A/B·버전·멱등·등록·대표·보존/제한 수용 회신 확보 |
-| Backend 로컬 구현 | 12개 업무API, auth 재검사, 등록/전체설정/pagination, challenge/identity/소유권/audit, atomic 활동/대표, TTL/quota/summary합류 구현 |
-| DB/원본 계약 | additive0002의11개테이블, 기존7경로/인증schema 보존·신규12operation 반영 |
-| Backend 자동 검증 | 이전전체114개통과. 이번lease헤더보완 대상10개통과/106개제외,기존경고1개. 두새HTTP사례·rollback/worker상태보존 검증 |
-| 로컬 API 적용 | 개발DB additive migration·API 갱신, 기존 인증6테이블 건수 보존, health200/미인증업무401·전체OpenAPI 일치 확인 |
-| 원격 게시/계약 SHA 인계 | 작업 브랜치 push 완료. 구현/계약 `254cb5de125ab1bcb2aa084e091eae976e9a078a`이 기준. Issue에 정확한 SHA로 인계 |
-| Flutter 업무 API 적용 | [최신 인계](https://github.com/heo0328/lostparty-backend/issues/3#issuecomment-6161970774): 계약254cb5d, 두GET 연결·dev3cedd9d·1159자동검증/빈등록·로그아웃·로컬보존 보고. 쓰기 미연결 |
-| 실provider/장비 | 키/schema/해제표현·quota/지연 미확인. live확정은pending 증거보류, 감소roster 자동missing/이전 보류 |
-| 운영 배포 | 미실행 |
+| Backend | 기존12업무API/0002 구현·로컬적용·dev통합 완료. 기반contract254cb5d/db0f3ae. 새 로컬 label 계약 구현(미커밋·미push) |
+| 검증 | 이전전체114개+후속대상10개통과/106개미실행. 이번dev통합전OpenAPI전체비교·diff확인,기능테스트반복없음 |
+| 실행/DB | 기존로컬source/health200·DB0002·인증데이터보존근거 있음. 이번Git작업에서서버/DB변경없음 |
+| server key/실provider | local/runtime key설정 확인·접두사없음·health200. 수동진단CLI·대상13개검증완료. 사용자 live siblings 4개/parser passed,등록인수미실행 |
+| Flutter | #4보고dev69d3aaa,두GET/로그인빈목록·로그아웃/로컬보존 및디자인기준확인. 등록쓰기UI 보고 미확인. 빈이름 최종요청6163006876 적용 |
+| 이슈 | #1/#2 Completed, #3 OPEN(전체계정/장비·활동후속), #4 OPEN(등록관리실연동) |
+| 운영 | 배포/외부공개·DB초기화·Firebase변경미실행 |
 
-mock proof는 pytest dependency에서만 주입하며 공개 API/임의env 우회가 없습니다. 소유권 transaction은 구현·자동 검증했고 실제 미실증 입력의 성공 판정만 보류합니다. 현재 game 쓰기는 짧은 전역advisory lock으로 직렬화하며 네트워크는 밖에서 수행합니다. 처리량 개선은 실사용 근거에 따라 후속 검토합니다.
+## 다음 실행 순서
 
-## 다음 실행
+1. [#4 준비 인계](https://github.com/heo0328/lostparty-backend/issues/4#issuecomment-6162462300)에 dev통합·계약/보완SHA·기존근거·시험조건·key준비절차를게시했다. 새요구/환경변경이없으면완료검증을반복하지않는다.
+2. 새 최종요청의 빈 label wire 계약을 적용한다(POST 생략/빈값 자동, PATCH 생략 유지/빈값 clear/null 거절). 지정이름 포함 전체 부계정 안정순서로 Flutter가 자동이름을 계산한다. 상세는 작업계획의 「최종 요청: 빈 이름 자동 표시 계약」. 새 commit SHA는 미발급이다. Flutter는디자인을유지해preview/등록/PATCH/DELETE/refresh의UI·Repository와동일key/payload복구·세션격리·예상503/409를연결한다. 장비증거인수를선행조건으로두지않는다.
+3. 키 local/runtime 반영과 사용자 실 siblings 조회가 완료됐다. 관찰된 4개 행의 필드 타입/수치/중복/입력존재 검증을 통과했고 parser 수정은 필요 없다. 동일 자료를 다시 요청하거나 진단을 반복하지 않는다. [실검증 기록](../ISSUE_4_LIVE_VALIDATION.md)을 기준으로 Flutter 테스트를 진행한다.
+4. 사용자명시동작으로검색→등록→두조회→표시명/main전환→refresh→제거→재조회를공동인수한다. Flutter로컬캐릭터/빌드보존은별도보고한다.
+5. 재현된code/request_id·기대/실제결과로서버/계약차이를최소보완한다. 변경시계약유지/변경·구현SHA·실제대상검증을인계하고신규게시/통합은승인범위를따른다.
 
-1. lease generation/만료 REQUEST_IN_PROGRESS의 Retry-After2 보완·대상10개회귀·로컬적용은 완료했다. 기존계약254cb5d는유지하며 보완구현 `db0f3ae438021b4f5fa3738b76fd926687871b0d`을 작업브랜치에게시했다. main/dev통합은별도후속이다.
-2. Flutter는 기존 preview/등록/PATCH/DELETE/refresh를 연결하며 동일key/payload·GET복구·503제한·로컬보존을 구현한다. 장비인증 인수를 선행조건으로 두지 않는다.
-3. 사용자·Backend가 로컬 .env의 LOSTARK_API_TOKEN을 안전하게 준비하고 API만 재생성한다. key값/개인정보는 출력·Issue게시하지 않는다.
-4. key 준비 후 Backend가 실제 siblings를 parser와 대조한다. 기대schema와 같으면 추가코드변경 없이 preview→등록→두GET→수정/본계정전환→refresh→명시제거의 공동인수를 진행한다. 실차이가 있을 때 해당adapter/오류만 대상검증·수정한다.
-5. 신규수정은 구현SHA/계약변경 여부·대상검증을 인계한다. commit/push·dev/main통합은 승인범위를 따르고 아직미통합작업브랜치는보존한다.
+## 남은 입력·완료 기준
 
-이번보완은로컬API에적용됐다(보완구현 db0f3ae438021b4f5fa3738b76fd926687871b0d). DB0002·health200·원본계약254cb5d/런타임OpenAPI일치·기존인증6테이블건수보존·server key비어있음확인. 테스트는격리DB대상10개통과/106개미실행,114전체반복없음. 개발DB자료삽입/초기화·migration재적용없음. 장비/소유권/활동쓰기 Flutter연결은 이후별도그룹이다.
+server key는 로컬/runtime 반영 완료. 실 siblings 관찰도 완료. 남은 입력은 명시등록관리테스트·Flutter쓰기연결결과입니다. 미준비는실증만보류하며 독립구현/연결을중단시키지않습니다. 완료는준비/실행버전·실provider근거/제한·등록변경갱신제거의GET반영과로컬보존인수기록입니다. Issue를임의종료하지않습니다.
 
-## 후속 입력과 완료 기준
+장비challenge/소유권이전·활동/대표Flutter쓰기는후속그룹입니다. PROVIDER_EVIDENCE_PENDING/ROSTER_EVIDENCE_PENDING·suspect보류와기존인증6API/두조회API를보존합니다. 실기기/release·운영HTTPS/배포·탈퇴/약관·전체세션실인수는 #2 종료와별도잔여로유지합니다.
 
-기존 구현/계약 commit/push는 완료했다. 새 입력은 안전한 server key 준비와 실제siblings 근거·등록 관리 Flutter 테스트 결과이며 조회 인계/소비SHA는 확보했다. 신규수정 게시·dev/main통합은 기존 승인범위를 확인한다. 같은 미확인 자료를 반복요청하며 Backend 구현을 미루지 않습니다. 실제인수/Flutter적용/운영완료는 자동테스트 통과와 별도입니다. Issue는 임의 종료하지 않습니다.
+이번새코드는진단CLI/대상테스트이며미커밋·미push다. 13개대상테스트와키미준비CLI종료2·최신image schema일치를확인했다. 이전전체114/후속10은기존기록이다. 진단 구현 당시 외부호출은 없었고, 이후 사용자 실조회 1회 통과가 추가됐다. Backend agent의 개발DB쓰기·서버재생성·기존API변경은없다.
 
-#2 인증 원본 SHA `519c609495966a3d785c6671c09bf513b28875a6`은 기존인증 기준입니다. #3의 새로운 업무 계약 SHA로 사용하지 않습니다. #2의 전체세션/실기기/release 인수는 기존잔여작업으로 보존하며 Flutter 최신 회신의 로그인/재실행/로그아웃 성공보고는 독립 실검증의 참고 근거입니다.
+2026-10-14 키 설정 후 확인: local/runtime 존재 true·Bearer 접두사 false, local JWT 형태 3부분, health200. 이미 runtime 반영돼 API 재생성은 하지 않았다. 키 값/본문 출력·외부 호출·DB 쓰기 없음. 이후 사용자 수동진단 passed 결과를 확인했다. 다음은 Flutter 등록관리 연결/인수다.
 
-## 이슈 종료 상태와 인증 후속
+Flutter 연결/인수 세부 요청 형식과 성공/재조회 기준은 작업 계획의 「Flutter 연결·사용자 인수 순서」를 따른다. 최신 이슈에 빈 이름 자동 표시 최종 요청이 추가돼 Backend 계약/구현을 보완했다. 새 wire 계약/구현 게시와 Flutter 연결/실인수를 다음 단계로 진행한다.
 
-사용자승인으로 [#1 협업연결테스트](https://github.com/heo0328/lostparty-backend/issues/1#issuecomment-6162336853)와 [#2 합의된Backend인증1차범위](https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6162337920)를Completed로닫았다. #3은등록관리/실provider·Flutter인수작업이남아OPEN이다. 이슈/댓글을삭제하지않았다.
-
-#2 종료후에도실기기/release·운영HTTPS/배포·탈퇴/약관,모든로그인유지선택별실기기재시작·실제refresh유실복구/늦은응답격리의전체인수는별도잔여다. 기본로그인/재실행/로그아웃성공보고와자동검증을전체실기기인수로확대하지않는다. 실제인증결함이나오면이슈재개또는후속이슈로관리한다. 이번종료검토는기존근거를사용했고테스트/서버/DB를재실행하지않았다.
+빈label 로컬API 적용 완료: OpenAPI 전체일치 PASS·health200·runtime키존재true·DB0002. 대상16개/27개미실행. 다음은 변경 commit/push 승인 범위의 게시 및 새계약SHA 전달→Flutter 새wire 연결/실제 인수→발견차이 보완. 개발자료 삭제/초기화 없음.

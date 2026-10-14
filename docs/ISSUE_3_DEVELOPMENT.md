@@ -1,6 +1,6 @@
 # Issue #3 내 계정 API 실행·검증·Flutter 인계
 
-상태: 로컬 구현·작업 브랜치 게시. 구현/계약 SHA `254cb5de125ab1bcb2aa084e091eae976e9a078a`. dev/main 미통합, 실provider·Flutter 인수 후속. 원본은 [OpenAPI](../openapi/openapi.yaml), 요구·수용은 [Issue #3](https://github.com/heo0328/lostparty-backend/issues/3#issuecomment-6159847616), 설계는 [구현 계획](ISSUE_3_IMPLEMENTATION_PLAN.md)이다. 실제 검증 결과와 브랜치/게시 상태는 [DEV_LOG](project/DEV_LOG.md), 다음 실행은 [NEXT_WORK](project/NEXT_WORK.md)를 확인한다.
+상태: 로컬 구현·작업 브랜치 게시. 구현/계약 SHA `254cb5de125ab1bcb2aa084e091eae976e9a078a`. dev 통합 완료, main 미통합. 실provider·Flutter 등록관리 인수는 [Issue #4 계획](ISSUE_4_REGISTRATION_INTEGRATION_PLAN.md)에서 후속 추적. 원본은 [OpenAPI](../openapi/openapi.yaml), 요구·수용은 [Issue #3](https://github.com/heo0328/lostparty-backend/issues/3#issuecomment-6159847616), 설계는 [구현 계획](ISSUE_3_IMPLEMENTATION_PLAN.md)이다. 실제 검증 결과와 브랜치/게시 상태는 [DEV_LOG](project/DEV_LOG.md), 다음 실행은 [NEXT_WORK](project/NEXT_WORK.md)를 확인한다.
 
 ## 제공 범위와 현재 실연동 경계
 
@@ -102,3 +102,5 @@ provider 제한80/min은DB공통·rolling window이며 proof조회는siblings와
 key/schema실증전에는완전한실인증/이전을Flutter에서완료할수없다. 공개mock API를만들어우회하지않는다. Backend자동검증·가능한DTO/UI연결은먼저완료하고실장비/소유권·누락관찰은공동준비후검증한다. issue종료·운영준비완료와구분한다.
 
 등록관리 후속 실행에서 lease 만료/generation 거절에도 REQUEST_IN_PROGRESS409·Retry-After2를 반환하도록 로컬보완했다. 대상10개검증·로컬적용완료,원본계약254cb5d는변경없음이며보완implementation SHA는 `db0f3ae438021b4f5fa3738b76fd926687871b0d`으로작업브랜치에게시됐다. 상세범위는 [등록후속 계획](ISSUE_3_REGISTRATION_FOLLOWUP_PLAN.md)을 확인한다.
+
+현재 #4의 [빈 label 최종요청 적용](ISSUE_4_REGISTRATION_INTEGRATION_PLAN.md)에 POST 이름 생략/빈값 및 PATCH 이름 clear wire 변경을 기록했다. 이전254cb5d 계약에는 이 변경이 없으며 새 로컬 openapi가 기준이다(아직 미커밋·미push). DB 필드/자료 초기화는 필요하지 않다.

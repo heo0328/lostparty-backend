@@ -221,3 +221,45 @@ ISSUE_3_REGISTRATION_FOLLOWUP_PLAN.md에 기존API 재사용·준비인계→lea
 사용자가현재작업브랜치의dev병합/push와Issue #4준비를지시했습니다. fetch후origin/dev와local dev e6c72e4,작업브랜치/원격f5b4a2a 일치·다른worktree없음을확인했습니다. 기존이슈종료문서4파일을보존해커밋한뒤fast-forward로통합합니다. 기존전체114/대상10개검증기록을사용하고통합전OpenAPI전체일치·diff를확인했습니다. 코드새변경없어테스트를반복하지않습니다. main통합/운영배포는범위외입니다.
 
 Issue #4는기존등록API의실provider/모바일등록관리인수를분리추적하는작업이며기존lease보완재개발을요구하지않습니다. devpush와통합포함확인후상시규칙에따라완료#3브랜치를정리하고최신dev에서새#4작업브랜치를분기합니다. key/사용자시험준비를Backend/Flutter독립작업의선행조건으로두지않으며#3은자동종료하지않습니다.
+
+## 2026-10-14 — dev fast-forward 통합/push·완료브랜치정리·#4분기
+
+사용자승인으로이슈종료기록/통합준비문서를e807a6f002222cdff7beb07bfbe5cae65b97df43로커밋하고dev를e6c72e4→e807a6f fast-forward 병합·일반push했습니다. origin/dev일치·현재clean·oldbranch dev포함·remote oldbranch f5b4a2a예상값과다른worktree미사용을확인했습니다. 완료 feat/3-account-restoration의upstream을해제한뒤local branch -d와remote --delete로정리했습니다. 강제삭제/forcepush없음,main e6c72e4유지입니다.
+
+최신dev에서feat/4-registration-integration을분기했습니다. Issue #4본문/기존계약·코드를확인하고ISSUE_4_REGISTRATION_INTEGRATION_PLAN.md와NEXT_WORK를새단일그룹으로준비했습니다. 기존contract254cb5d/보완implementation db0f3ae는유지되며key/실siblings·사용자명시등록관리·Flutter연결이후속입니다. #3은OPEN유지,기존완료lease수정재개발없음입니다.
+
+이번에는코드새변경/서버/DB/기능테스트재실행없이기존114전체/10대상기록과통합전OpenAPI일치·문서diff/링크검사를사용했습니다. #4준비문서는새브랜치에미커밋·미push로남기고통합/분기결과를관련Issue에인계합니다. PR/운영배포·DB초기화·개인정보출력없음입니다.
+
+[#3 통합/정리 인계](https://github.com/heo0328/lostparty-backend/issues/3#issuecomment-6162460687)와 [#4 준비 인계](https://github.com/heo0328/lostparty-backend/issues/4#issuecomment-6162462300)를게시했습니다. 최종remote dev e807a6f·main e6c72e4·oldremote branch없음확인. 새#4브랜치준비문서만로컬변경으로남아있습니다.
+
+## 2026-10-14 — Issue #4 실응답 진단 도구·대상13개 검증
+
+사용자작업진행지시로최신#4댓글/local·runtime key존재를확인했습니다. 새요청없고key비어있음. 비밀값없이준비확인을요청하고사용자의로아API키인지질문에공식OpenAPI JWT·Bearer접두사없는env설정을안내했습니다. 공식getting-started의발급절차를확인해문서로연결했습니다.
+
+app/game_accounts/diagnostics.py에수동한번siblings조회·표준parser대조CLI를구현했습니다. 이름은로컬숨김프롬프트,비TTY는입력거절,타입/missing/null/개수만허용값으로출력하며raw이름/숫자/JSON/키/URL/예외원문없음. DB/Auth/장비proof/캐시저장·공개mock/API추가없음. tests/test_lostark_diagnostics.py와기존parser대상13개통과(2.89초,기존경고1개),격리tmpfs DB에서실행후종료했습니다.
+
+실제one-off CLI는key없어종료2/UPSTREAM_NOT_CONFIGURED,외부요청없음. 최신image의OpenAPI객체와원본254cb5d파일불변을확인했습니다. 새REST/schema/DB/migration/서버재생성·개발자료삽입없음. 이전114/10개는이전실행이고전체새테스트통과로확대하지않습니다.
+
+ISSUE_4_LIVE_VALIDATION.md/계획·NEXT_WORK/AI_CONTEXT에동작/키준비/실검증경계를기록했습니다. 실제key/시험대상·모바일쓰기연결후live대조/사용자명시등록관리인수를계속하며#4는OPEN입니다. 현재코드/문서미커밋·미push,추가통합/운영배포없음입니다.
+
+## 2026-10-14 — Issue #4 사용자 키 설정·runtime 반영 확인
+
+사용자 키 설정 완료 보고 후 local/runtime LOSTARK_API_TOKEN 존재 true·Bearer 접두사 false, local JWT 3부분 형태를 값 없이 확인했다. 실행 중인 API health200. 이미 runtime 설정돼 API 재생성/DB 변경은 하지 않았다. #4 최신댓글에 새 요청/Flutter 쓰기완료 보고는 없었다. 키 유효성/실 siblings는 아직 미검증이며 다음은 사용자 로컬 숨김 캐릭터 입력으로 수동진단 실행이다. 기존 자동검증을 반복하지 않았고 commit/push 없음.
+
+## 2026-10-14 — Issue #4 사용자 실제 siblings 4개/parser 통과
+
+사용자가 로컬 수동진단 출력(status passed)을 공유했다. array/객체4행, ServerName·CharacterName·CharacterClassName·ItemAvgLevel string각4개, CharacterLevel integer4개, null item_level0개. 해당 실제 호출에서 키/provider 접근 성공과 기존 parser 검증 통과를 확인했다. 개인정보/raw값 없이 결과를 기록했으며 해당 관찰에 adapter 수정이 필요하지 않다. null 실제사례·소유권·roster전체성·업무API 등록/변경/갱신/제거/Flutter 인수는 별도다.
+
+최신 #4에 Flutter 쓰기완료 새보고없음을 확인하고 실관찰 근거와 Flutter 다음 실행 요청을 댓글로 인계한다. 같은 키/샘플 자료요청·외부재호출·테스트반복 없이 문서만 최신화했으며 code/contract/DB 변경·commit/push·이슈종료 없음.
+
+## 2026-10-14 — Issue #4 Flutter 등록관리 실행 인계 구체화
+
+사용자 진행 지시 후 #4 최신 본문/댓글·Git 상태·원본 계약/DTO/router/service를 확인했다. Flutter 새답변/재현된서버차이는없다. 기존 API 재개발 대신 작업계획에 검색/등록/두GET/PATCH/refresh/DELETE 요청형식·성공코드·최신version/목록재조회·미인증정상상태·동일요청복구 기준을 정리하고 Flutter 실행/답변 항목을 이슈로 인계했다. 문서 diff 확인만 수행했고 기존 테스트/실조회 반복, Flutter소스/기기조작, DB쓰기, commit/push는없다.
+
+## 2026-10-14 — Issue #4 빈 이름 자동 표시 최종 요청 구현·로컬적용
+
+최신 최종요청6163006876에서 custom_label/보존migration 제안취소·기존label 빈값 활용을 확인하고 사용자 작업지시로 적용했다. RegisterIn label 기본값 빈문자열/min0, PatchIn 생략유지/빈값clear·explicitnull거절, RegistrationOut 저장값 설명과 등록label 정책을 원본OpenAPI에 반영했다. 기존service/model의 label저장·본계정전환불변·created_at/id정렬을 재사용했고 새field/endpoint/migration/자동이름저장/과거이름판별없음. 자료삭제를 실행하지 않았다.
+
+이전API이미지에서 신규빈이름5개400실패를 확인한뒤 최신API빌드/테스트이미지재빌드로 대상16개통과/27개미실행(7.89초,기존경고1개). 실제 PostgreSQL의 빈값저장/GET/replay·PATCH생략유지/clear·main전환이름보존·version충돌·null/타입/길이거절·페이지안정순서를 검증했다. 초기이전이미지검증을최신구현실패로확대하지않는다.
+
+로컬API만재생성/healthy 적용,OpenAPI전체일치PASS·health200·runtime키존재true·DBrevision0002확인. 개발DB fixture쓰기/초기화·외부API재조회·기기조작없음. 격리test-db중지. 계획/NEXT_WORK/AI_CONTEXT/실행안내를최신화하고Flutter에요청/응답스키마·전체목록자동번호·실제적용/검증과새SHA미발급을인계한다. 아직commit/push/새계약·구현SHA없으며기존254cb5d를새빈이름계약SHA로안내하지않는다. Flutter새wire연결/실인수후속,#4OPEN유지.

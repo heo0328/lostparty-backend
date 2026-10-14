@@ -503,3 +503,83 @@ def test_lease_rejection_returns_retry_after_and_rolls_back(client, world, monke
         assert row.completed_at is None
         if lease_failure == 'taken_over':
             assert row.state == 'running'
+
+
+@pytest.mark.parametrize('provided', [{}, {'label': ''}, {'label': '   '}, {'label': '  내 이름  '}])
+def test_registration_optional_label_saved_and_replayed(client, world, provided):
+    h, _ = world
+    key = uuid.uuid4()
+    body = {'lookup_character_name': 'a0', **provided}
+    expected = provided.get('label', '').strip()
+    first = change(client, h, 'post', BASE, body, key)
+    assert first.status_code == 201
+    assert first.json()['label'] == expected
+    assert change(client, h, 'post', BASE, body, key).json() == first.json()
+    assert client.get(BASE, headers=h).json()['items'][0]['label'] == expected
+    with session() as db:
+        assert db.get(Registration, first.json()['registration_id']).label == expected
+    other = {**body, 'label': 'different'}
+    assert change(client, h, 'post', BASE, other, key).json()['error']['code'] == 'IDEMPOTENCY_CONFLICT'
+
+
+def test_label_clear_preserve_switch_and_stale_version(client, world):
+    h, state = world
+    first = register(client, h, main=True)
+    state['group'] = 'b'
+    second = register(client, h, 'b0')
+    path = BASE + '/' + first['registration_id']
+    key = uuid.uuid4()
+    clear = {'expected_version': first['version'], 'label': ''}
+    cleared = change(client, h, 'patch', path, clear, key)
+    assert cleared.status_code == 200 and cleared.json()['label'] == ''
+    assert change(client, h, 'patch', path, clear, key).json() == cleared.json()
+    stale = change(client, h, 'patch', path, {'expected_version': first['version'], 'label': 'stale'})
+    assert stale.json()['error']['code'] == 'REVISION_CONFLICT'
+    switched = change(client, h, 'patch', BASE + '/' + second['registration_id'],
+                      {'expected_version': second['version'], 'is_main': True})
+    assert switched.status_code == 200 and switched.json()['label'] == 'sample'
+    rows = client.get(BASE, headers=h).json()['items']
+    assert [row['registration_id'] for row in rows] == [first['registration_id'], second['registration_id']]
+    assert [row['label'] for row in rows] == ['', 'sample']
+    assert [row['is_main'] for row in rows] == [False, True]
+    # Main switching also changed the old main's version; use the refreshed value.
+    current = rows[0]
+    renamed = change(client, h, 'patch', path, {'expected_version': current['version'], 'label': '  복원 이름  '})
+    assert renamed.status_code == 200 and renamed.json()['label'] == '복원 이름'
+    final = change(client, h, 'patch', path, {'expected_version': renamed.json()['version'], 'label': '  '})
+    assert final.status_code == 200 and final.json()['label'] == ''
+
+
+@pytest.mark.parametrize('bad', [None, 1, True, 'x' * 41])
+def test_label_invalid_does_not_change_registration(client, world, bad):
+    h, _ = world
+    assert change(client, h, 'post', BASE, {'lookup_character_name': 'a0', 'label': bad}).status_code == 400
+    r = register(client, h)
+    response = change(client, h, 'patch', BASE + '/' + r['registration_id'],
+                      {'expected_version': r['version'], 'label': bad})
+    assert response.status_code == 400
+    stored = client.get(BASE, headers=h).json()['items'][0]
+    assert stored['label'] == r['label'] and stored['version'] == r['version']
+
+
+def test_automatic_label_order_includes_named_rows_across_pages(client, world):
+    h, state = world
+    ids = []
+    for group, label in [('a', ''), ('b', 'custom'), ('c', '')]:
+        state['group'] = group
+        response = change(client, h, 'post', BASE, {'lookup_character_name': group + '0', 'label': label})
+        assert response.status_code == 201
+        ids.append(response.json()['registration_id'])
+    rows = []
+    cursor = None
+    while True:
+        params = {'limit': 1, **({'cursor': cursor} if cursor else {})}
+        response = client.get(BASE, headers=h, params=params)
+        assert response.status_code == 200
+        rows.extend(response.json()['items'])
+        cursor = response.json()['next_cursor']
+        if cursor is None:
+            break
+    assert [row['registration_id'] for row in rows] == ids
+    assert [row['label'] for row in rows] == ['', 'custom', '']
+    assert all(row['is_main'] is False for row in rows)

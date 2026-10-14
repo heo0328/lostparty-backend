@@ -88,3 +88,5 @@ lease 만료·다른 worker takeover 두 HTTP 사례를 추가해 수정 전409�
 최신image를로컬API에적용했고 source hash·health200·기존인증6테이블건수동일·DB0002·OpenAPI전체일치를확인했다. openapi파일은게시254cb5d와byte단위동일,경로/DTO/필수헤더/schema변경없음이다. 보완implementation `db0f3ae438021b4f5fa3738b76fd926687871b0d`을작업브랜치에게시했다. 실행중API에도동일코드가적용됐다. 원본계약SHA254cb5d는그대로이며dev/main통합은별도다.
 
 로컬.env와실행환경의LOSTARK_API_TOKEN은비어있음을값없이확인했다. D/E/F의key·실siblings·수동등록인수만후속입력에의존한다. 개발DB에fixture/임의등록을삽입하지않았고DB초기화·migration재적용·운영변경없음이다. Flutter는기존계약으로등록UI/Repository연결을진행할수있다.
+
+등록관리의이후추적창구는 [Issue #4](https://github.com/heo0328/lostparty-backend/issues/4)와 [#4 계획](ISSUE_4_REGISTRATION_INTEGRATION_PLAN.md)으로이동했다. #3구현은dev e807a6f에통합/push됐으며완료작업브랜치는로컬/원격정리했다. 위소스/분기/게시설명은당시이력이고현재작업은feat/4-registration-integration에서계속한다.
