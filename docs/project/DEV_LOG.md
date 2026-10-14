@@ -201,3 +201,9 @@ ISSUE_3_REGISTRATION_FOLLOWUP_PLAN.md에 기존API 재사용·준비인계→lea
 최신API를로컬에build/재생성적용,sourcehash일치·health200·개발DBrevision0002·기존인증6테이블건수전후동일·scripts/check_openapi.py전체일치확인했습니다. 원본openapi파일은254cb5d게시파일과byte동일하며public경로/DTO변경없음입니다. 로컬.env/실행환경LOSTARK_API_TOKEN은비어있음을존재bool만확인했습니다. key값/개인정보출력없음.
 
 독립보완/인계는완료하고key준비후실siblings·명시등록관리인수만후속으로남깁니다. 장비증거인수를등록UI선행조건으로두지않으며공개mock/개발DB성공자료위조는없습니다. 계획/실행안내/NEXT_WORK/AI_CONTEXT를갱신하고Issue에실행결과/Flutter병행범위를인계합니다. 코드/문서미커밋·미push,main/dev미변경·운영배포/Issue종료없음입니다.
+
+## 2026-10-14 — 등록후속 보완 커밋·push
+
+사용자현재상태게시승인으로헤더수정/새HTTP테스트·등록후속계획/문서를 `db0f3ae438021b4f5fa3738b76fd926687871b0d`로커밋하고 feat/3-account-restoration에일반push했습니다. fetch전후예상원격변경없음과원격기준406004e를확인했습니다. 기존GitHub CLI 인증도우미를명령단위로사용했으며force push/비밀값출력없음입니다. 게시전OpenAPI비교·staged diff/민감파일제외검사통과,테스트는직전대상10개결과를사용했습니다.
+
+계약파일은254cb5d와동일,새보완구현SHA를Flutter에인계합니다. 게시상태문서도추가commit/push합니다. main/dev미변경·미통합브랜치보존·PR/배포없음입니다.

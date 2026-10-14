@@ -101,4 +101,4 @@ provider 제한80/min은DB공통·rolling window이며 proof조회는siblings와
 
 key/schema실증전에는완전한실인증/이전을Flutter에서완료할수없다. 공개mock API를만들어우회하지않는다. Backend자동검증·가능한DTO/UI연결은먼저완료하고실장비/소유권·누락관찰은공동준비후검증한다. issue종료·운영준비완료와구분한다.
 
-등록관리 후속 실행에서 lease 만료/generation 거절에도 REQUEST_IN_PROGRESS409·Retry-After2를 반환하도록 로컬보완했다. 대상10개검증·로컬적용완료,원본계약254cb5d는변경없음이며수정implementation SHA는미커밋으로아직없다. 상세범위는 [등록후속 계획](ISSUE_3_REGISTRATION_FOLLOWUP_PLAN.md)을 확인한다.
+등록관리 후속 실행에서 lease 만료/generation 거절에도 REQUEST_IN_PROGRESS409·Retry-After2를 반환하도록 로컬보완했다. 대상10개검증·로컬적용완료,원본계약254cb5d는변경없음이며보완implementation SHA는 `db0f3ae438021b4f5fa3738b76fd926687871b0d`으로작업브랜치에게시됐다. 상세범위는 [등록후속 계획](ISSUE_3_REGISTRATION_FOLLOWUP_PLAN.md)을 확인한다.

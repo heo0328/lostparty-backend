@@ -85,6 +85,6 @@ docker compose up -d --no-deps --force-recreate --wait --wait-timeout 180 api
 
 lease 만료·다른 worker takeover 두 HTTP 사례를 추가해 수정 전409의 Retry-After누락을 실제로재현했다. commit_result의 해당거절을 GameError(REQUEST_IN_PROGRESS,409,2)로수정했다. 대상회귀10개통과(106개제외,기존경고1개): 새HTTP2사례·rollback/처리권보존,기존lease/멱등/DELETE replay/장애복구/권한/계약경계. 이전114전체를반복하지않았으며현재전체116개통과라고표시하지않는다.
 
-최신image를로컬API에적용했고 source hash·health200·기존인증6테이블건수동일·DB0002·OpenAPI전체일치를확인했다. openapi파일은게시254cb5d와byte단위동일,경로/DTO/필수헤더/schema변경없음이다. 이번implementation보완은미커밋·미push이며새구현SHA없음. 실행중API는254cb5d기반+이로컬수정이다.
+최신image를로컬API에적용했고 source hash·health200·기존인증6테이블건수동일·DB0002·OpenAPI전체일치를확인했다. openapi파일은게시254cb5d와byte단위동일,경로/DTO/필수헤더/schema변경없음이다. 보완implementation `db0f3ae438021b4f5fa3738b76fd926687871b0d`을작업브랜치에게시했다. 실행중API에도동일코드가적용됐다. 원본계약SHA254cb5d는그대로이며dev/main통합은별도다.
 
 로컬.env와실행환경의LOSTARK_API_TOKEN은비어있음을값없이확인했다. D/E/F의key·실siblings·수동등록인수만후속입력에의존한다. 개발DB에fixture/임의등록을삽입하지않았고DB초기화·migration재적용·운영변경없음이다. Flutter는기존계약으로등록UI/Repository연결을진행할수있다.

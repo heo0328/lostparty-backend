@@ -28,13 +28,13 @@ mock proof는 pytest dependency에서만 주입하며 공개 API/임의env 우�
 
 ## 다음 실행
 
-1. lease generation/만료 REQUEST_IN_PROGRESS의 Retry-After2 보완·대상10개회귀·로컬적용은 완료했다. 기존계약254cb5d는유지하며 이번코드/문서는미커밋·미push 상태다. 신규구현SHA 게시가필요하면승인범위에서수행한다.
+1. lease generation/만료 REQUEST_IN_PROGRESS의 Retry-After2 보완·대상10개회귀·로컬적용은 완료했다. 기존계약254cb5d는유지하며 보완구현 `db0f3ae438021b4f5fa3738b76fd926687871b0d`을 작업브랜치에게시했다. main/dev통합은별도후속이다.
 2. Flutter는 기존 preview/등록/PATCH/DELETE/refresh를 연결하며 동일key/payload·GET복구·503제한·로컬보존을 구현한다. 장비인증 인수를 선행조건으로 두지 않는다.
 3. 사용자·Backend가 로컬 .env의 LOSTARK_API_TOKEN을 안전하게 준비하고 API만 재생성한다. key값/개인정보는 출력·Issue게시하지 않는다.
 4. key 준비 후 Backend가 실제 siblings를 parser와 대조한다. 기대schema와 같으면 추가코드변경 없이 preview→등록→두GET→수정/본계정전환→refresh→명시제거의 공동인수를 진행한다. 실차이가 있을 때 해당adapter/오류만 대상검증·수정한다.
 5. 신규수정은 구현SHA/계약변경 여부·대상검증을 인계한다. commit/push·dev/main통합은 승인범위를 따르고 아직미통합작업브랜치는보존한다.
 
-이번보완은로컬API에적용됐다(254cb5d기반+support.py 헤더수정). DB0002·health200·원본계약254cb5d/런타임OpenAPI일치·기존인증6테이블건수보존·server key비어있음확인. 테스트는격리DB대상10개통과/106개미실행,114전체반복없음. 개발DB자료삽입/초기화·migration재적용없음. 장비/소유권/활동쓰기 Flutter연결은 이후별도그룹이다.
+이번보완은로컬API에적용됐다(보완구현 db0f3ae438021b4f5fa3738b76fd926687871b0d). DB0002·health200·원본계약254cb5d/런타임OpenAPI일치·기존인증6테이블건수보존·server key비어있음확인. 테스트는격리DB대상10개통과/106개미실행,114전체반복없음. 개발DB자료삽입/초기화·migration재적용없음. 장비/소유권/활동쓰기 Flutter연결은 이후별도그룹이다.
 
 ## 후속 입력과 완료 기준
 
