@@ -67,6 +67,13 @@ def refresh(registration_id:UUID,data:s.Empty,principal:Principal,key:Key):
     return result(principal,'refresh',key,{},s.RefreshOut,registration_id)
 
 
+@router.post('/me/game-accounts/{registration_id}/combat-power/refresh',response_model=s.PowerRefreshOut,responses=common)
+def refresh_power(registration_id:UUID,data:s.PowerRefreshIn,principal:Principal,key:Key):
+    from app.game_accounts.power_service import refresh
+    status, body = refresh(principal, registration_id, key, data.model_dump())
+    return JSONResponse(status_code=status,content=jsonable_encoder(s.PowerRefreshOut.model_validate(body)))
+
+
 @router.post('/me/game-account-verifications',response_model=s.VerificationOut,status_code=201,responses=common)
 def start(data:s.StartIn,principal:Principal,key:Key):
     return result(principal,'start',key,data.model_dump(),s.VerificationOut)

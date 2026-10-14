@@ -14,9 +14,10 @@
 | 협업 | [API_COLLABORATION](../API_COLLABORATION.md)·[작업 단계/진행 경계](../API_COLLABORATION_WORKFLOW.md). Backend Issues와 계약 SHA 기준, #1 연결테스트Completed·#2 Backend1차Completed·#3/#4 OPEN, Flutter 소스 직접 수정 없음 |
 | 내 계정 복원 #3 | 로컬12 API·0002의11테이블·원본OpenAPI 구현, 격리PostgreSQL114테스트·로컬계약 비교 확인. 작업 브랜치 구현/계약254cb5d 게시, Flutter 두GET/계약SHA·1159검증/빈등록인수 보고확인. 등록후속 lease헤더보완·대상10개통과/로컬적용,보완구현db0f3ae게시·현재 키/실응답 상태는 #4 기준. [등록후속 계획](../ISSUE_3_REGISTRATION_FOLLOWUP_PLAN.md)·[실행/인계](../ISSUE_3_DEVELOPMENT.md)·[설계](../ISSUE_3_IMPLEMENTATION_PLAN.md)·[Issue #3](https://github.com/heo0328/lostparty-backend/issues/3) |
 | 등록관리 실연동 #4 | 기존 API 재사용, 수동siblings형태진단CLI·대상13개검증. local/runtime key반영·사용자 실 siblings 4개/parser 통과 확인. 빈 label POST/PATCH 계약·구현 및 대상16개 통과, 게시 SHA d3cb697bb6ebb988b63bd99c588bc1b64a93650d. Flutter d3cb697 소비·1193자동검증/빈이름 사용자인수 보고 확인,Flutter 구현5fe636e/dev266a7e2 게시보고 확인·삭제후로컬보존 후속. [작업계획](../ISSUE_4_REGISTRATION_INTEGRATION_PLAN.md)·[실검증 안내](../ISSUE_4_LIVE_VALIDATION.md)·[Issue #4](https://github.com/heo0328/lostparty-backend/issues/4) |
+| 전투력 수집 #5 | 1700공통기준·POST/cache/GET상태·0003 구현·대상42개/후속3개·로컬적용완료. 미게시/실provider·Flutter후속. [실행](../ISSUE_5_DEVELOPMENT.md). [기본값](../GAME_DEFAULTS.md)·[계획](../ISSUE_5_COMBAT_POWER_PLAN.md)·[Issue5](https://github.com/heo0328/lostparty-backend/issues/5) |
 | 후속 기능 | 탈퇴·약관·모집·파티·그룹·Apple/Discord·WebSocket은 구현에 없음 |
 | 운영 | Lightsail 배포 예정, 운영 HTTPS·배포·키 관리 준비는 완료로 간주하지 않음 |
 
 인증 1차는 main/dev에 통합됐으며 이후 계정 업무·새label·진단/후속문서는 dev에 통합·게시됐습니다. 완료 작업 브랜치는 push 확인 후 정리하며, 다음 작업은 최신 dev에서 분기합니다. 계약 소비·전체 Flutter 인수·운영 배포 완료와 저장소 최신화를 구분합니다.
 
-현재 브랜치는 `dev`이며 #4 구현/계약·문서 및 #2 후속 문서를 `a6d25aa5be34af983c65f1eba72f7fab4846477c`로 fast-forward 통합·push했습니다. 완료 #4 작업 브랜치는 로컬/원격 정리했습니다. main은 e6c72e4 유지, 실제 구현·계약 SHA는 d3cb697입니다. 사용자 지시로 대기하며 Flutter 빈이름 실인수는 확인됐으며 Flutter Git게시도 확인됐고 삭제후로컬보존·#3 장비/활동·#2 인증 후속은 미완료로 보존합니다.
+현재 브랜치는 `feat/account-management`(dev78a5494 기준)이며 사용자 승인으로 #5 공통기준·전투력 기반작업을 시작했습니다. 이슈번호 없는 큰범위브랜치에서 관련협업을 이어갑니다. 전투력REST/DBcache/계약·문서는미커밋·미push이고로컬DB0003/API적용완료,실provider/Flutter인수후속입니다. #4소비계약d3cb697과기존인수근거,#3장비/활동·#2인증후속을보존합니다.

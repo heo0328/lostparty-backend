@@ -114,11 +114,16 @@ def reg_out(db, uid, r):
     count = len(list(db.scalars(select(Character.id).where(Character.account_id == a.id)))) if a else len(r.preview)
     conf = config(db,uid,a.id) if a and state=='owned' else None
     rep = db.get(Character,conf.representative_id) if conf and conf.representative_id else None
+    representative = None
+    if rep:
+        from app.game_accounts.power_service import overlay
+        representative = dict(rep.summary)
+        representative['combat_power'] = overlay(db, uid, dict(rep.summary, power_fetched_at=rep.power_fetched_at))['combat_power']
     return dict(registration_id=r.id, label=r.label, is_main=r.is_main, version=r.version,
                 game_account_id=a.id if a else None, verification_status='verified' if a else 'unverified',
                 ownership_status=state, ownership_revision=a.ownership_revision if a else None,
                 roster_revision=a.roster_revision if a else None, settings=settings_out(db, uid, r),
-                representative_summary=rep.summary if rep else None, character_count=count, server_fetched_at=r.fetched_at)
+                representative_summary=representative, character_count=count, server_fetched_at=r.fetched_at)
 
 
 def make_main(db, uid, r):
@@ -194,6 +199,9 @@ def characters(principal, rid, limit, cursor):
         else:
             items = [dict(**v, character_id=None, roster_status='preview', summary_fetched_at=r.fetched_at,
                           last_confirmed_at=None, requires_refresh=True, eligible=False, power_stale=True, power_fetched_at=None) for v in r.preview]
+        from app.game_accounts.power_service import overlay
+        for item in items:
+            item.update(overlay(db, uid, item))
         following = offset+limit
         return dict(characters=dict(items=items[offset:following], next_cursor=cursor_encode(dict(scope=scope,revision=revision,offset=following)) if following<len(items) else None),
                     settings=settings_out(db, uid, r), ownership_status=state, roster_revision=revision, server_fetched_at=r.fetched_at)

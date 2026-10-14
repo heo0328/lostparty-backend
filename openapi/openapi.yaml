@@ -2276,6 +2276,217 @@
         }
       }
     },
+    "/v1/me/game-accounts/{registration_id}/combat-power/refresh": {
+      "post": {
+        "tags": [
+          "game-accounts"
+        ],
+        "summary": "Refresh Power",
+        "operationId": "refresh_power_v1_me_game_accounts__registration_id__combat_power_refresh_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "registration_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Registration Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid4",
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PowerRefreshIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PowerRefreshOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Too Many Requests",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/me/game-account-verifications": {
       "post": {
         "tags": [
@@ -3462,6 +3673,39 @@
               }
             ],
             "title": "Power Fetched At"
+          },
+          "power_checked_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Power Checked At"
+          },
+          "power_status": {
+            "type": "string",
+            "enum": [
+              "unknown",
+              "available",
+              "unavailable",
+              "failed"
+            ],
+            "title": "Power Status"
+          },
+          "power_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Power Reason"
           }
         },
         "additionalProperties": false,
@@ -3478,7 +3722,10 @@
           "last_confirmed_at",
           "requires_refresh",
           "eligible",
-          "power_fetched_at"
+          "power_fetched_at",
+          "power_checked_at",
+          "power_status",
+          "power_reason"
         ],
         "title": "CharacterOut"
       },
@@ -3811,6 +4058,179 @@
           "expected_version"
         ],
         "title": "PatchIn"
+      },
+      "PowerRefreshIn": {
+        "properties": {
+          "characters": {
+            "items": {
+              "$ref": "#/components/schemas/PowerTarget"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Characters"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "characters"
+        ],
+        "title": "PowerRefreshIn"
+      },
+      "PowerRefreshOut": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/PowerResult"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "items"
+        ],
+        "title": "PowerRefreshOut"
+      },
+      "PowerResult": {
+        "properties": {
+          "server_name": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Server Name"
+          },
+          "character_name": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Character Name"
+          },
+          "combat_power": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Combat Power"
+          },
+          "power_fetched_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Power Fetched At"
+          },
+          "power_checked_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Power Checked At"
+          },
+          "power_stale": {
+            "type": "boolean",
+            "title": "Power Stale"
+          },
+          "power_status": {
+            "type": "string",
+            "enum": [
+              "unknown",
+              "available",
+              "unavailable",
+              "failed"
+            ],
+            "title": "Power Status"
+          },
+          "power_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Power Reason"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "updated",
+              "cached",
+              "unavailable",
+              "failed",
+              "skipped",
+              "deferred"
+            ],
+            "title": "Status"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "server_name",
+          "character_name",
+          "combat_power",
+          "power_fetched_at",
+          "power_checked_at",
+          "power_stale",
+          "power_status",
+          "power_reason",
+          "status",
+          "reason"
+        ],
+        "title": "PowerResult"
+      },
+      "PowerTarget": {
+        "properties": {
+          "server_name": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Server Name"
+          },
+          "character_name": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Character Name"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "server_name",
+          "character_name"
+        ],
+        "title": "PowerTarget"
       },
       "PreviewIn": {
         "properties": {
@@ -4599,6 +5019,25 @@
       "display": "Flutter calculates 메인 계정 / 부계정 N from current is_main and full registration order",
       "subaccount_order": "created_at ascending, registration_id ascending; custom labels count toward numbering",
       "main_switch": "labels unchanged; refetch full registration list"
+    },
+    "combat_power": {
+      "default_min_item_level": "1700",
+      "max_input_characters": 20,
+      "cache_seconds": 1800,
+      "failed_retry_seconds": 10,
+      "observation_retention_seconds": 7776000,
+      "request_budget_seconds": 20,
+      "network_wait_seconds": 19,
+      "budget": "includes orchestration and in-flight network waits; 1 second reserved for commit; DB statements/locks capped at 500ms; not a hard OS scheduling guarantee",
+      "worker_completion": "timed-out worker transport may finish; discarded results never write DB",
+      "shared_provider_per_minute": 80,
+      "concurrency": 2,
+      "identity": "member + server_name + character_name; no ownership/activity rights",
+      "normal_get": "read cache only; power_status unknown/available/unavailable/failed",
+      "failure": "preserve last good value/time; checked_at records latest applied observation; stale=true",
+      "deferred": "no observation applied; same key replays original result; explicit next batch uses new key",
+      "conflict": "REVISION_CONFLICT if registration/version/roster/ownership changes; revoked session 401; deleted registration 404",
+      "revisions": "power-only write never changes registration/roster/ownership/settings revisions"
     },
     "live_evidence": "equipment schema proof not validated; live ownership confirmation held pending",
     "live_roster_decrease": "suspect only; missing/transfer require validated observation criteria",

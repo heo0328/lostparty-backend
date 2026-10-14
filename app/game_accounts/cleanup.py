@@ -1,9 +1,9 @@
 from datetime import timedelta
-from sqlalchemy import select, delete, update
+from sqlalchemy import select, delete, update, or_, and_
 from app.core.database import session, now
 from app.game_accounts.support import lock
 from app.game_accounts.models import (RequestResult, Verification, PreviewCache, LimitEvent,
-                                     Audit, Registration, FetchLease)
+                                     Audit, Registration, FetchLease, PowerCache)
 
 
 def clean():
@@ -29,3 +29,7 @@ def clean():
         db.execute(delete(PreviewCache).where(PreviewCache.fetched_at<=current-timedelta(minutes=90)))
         db.execute(delete(LimitEvent).where(LimitEvent.created_at<=current-timedelta(minutes=2)))
         db.execute(delete(Audit).where(Audit.created_at<=current-timedelta(days=90)))
+        db.execute(delete(PowerCache).where(
+            or_(PowerCache.lease_expires_at.is_(None), PowerCache.lease_expires_at <= current),
+            or_(PowerCache.checked_at <= current-timedelta(days=90),
+                and_(PowerCache.status == 'unknown', PowerCache.value.is_(None)))))

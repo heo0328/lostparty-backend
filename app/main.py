@@ -11,6 +11,7 @@ from app.auth.router import router
 from app.auth.cleanup import run
 from app.game_accounts.router import router as game_router
 from app.core.errors import register
+from app.core.game_policy import DEFAULT_MIN_ITEM_LEVEL
 
 
 @asynccontextmanager
@@ -86,6 +87,19 @@ def openapi():
                                'display': 'Flutter calculates 메인 계정 / 부계정 N from current is_main and full registration order',
                                'subaccount_order': 'created_at ascending, registration_id ascending; custom labels count toward numbering',
                                'main_switch': 'labels unchanged; refetch full registration list'},
+        'combat_power': {'default_min_item_level': str(DEFAULT_MIN_ITEM_LEVEL), 'max_input_characters': 20,
+                         'cache_seconds': 1800, 'failed_retry_seconds': 10,
+                         'observation_retention_seconds': 7776000,
+                         'request_budget_seconds': 20, 'network_wait_seconds': 19,
+                         'budget': 'includes orchestration and in-flight network waits; 1 second reserved for commit; DB statements/locks capped at 500ms; not a hard OS scheduling guarantee',
+                         'worker_completion': 'timed-out worker transport may finish; discarded results never write DB',
+                         'shared_provider_per_minute': 80, 'concurrency': 2,
+                         'identity': 'member + server_name + character_name; no ownership/activity rights',
+                         'normal_get': 'read cache only; power_status unknown/available/unavailable/failed',
+                         'failure': 'preserve last good value/time; checked_at records latest applied observation; stale=true',
+                         'deferred': 'no observation applied; same key replays original result; explicit next batch uses new key',
+                         'conflict': 'REVISION_CONFLICT if registration/version/roster/ownership changes; revoked session 401; deleted registration 404',
+                         'revisions': 'power-only write never changes registration/roster/ownership/settings revisions'},
         'live_evidence': 'equipment schema proof not validated; live ownership confirmation held pending',
         'live_roster_decrease': 'suspect only; missing/transfer require validated observation criteria',
         'mutation_locking': 'initial global game transaction advisory lock; no network under lock',

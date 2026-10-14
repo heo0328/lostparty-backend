@@ -299,3 +299,23 @@ fetch 후 local/origin dev e807a6f·작업브랜치/origin 4afbb0b 일치 및 �
 ## 2026-10-14 — Flutter dev 게시 인계 확인·결과문서 게시 승인
 
 사용자가문서최신화/commit/push후대기를지시했다. 최신 #4 [6166359575](https://github.com/heo0328/lostparty-backend/issues/4#issuecomment-6166359575)의Flutter구현5fe636e/dev266a7e2·push·d3cb697소비확인으로기존Git대기해소. 빈이름자동/사용자인수와다른미확인범위를분리했다. NEXT_WORK/AI_CONTEXT/계획을최신화하고사용자승인으로문서4파일만dev게시한다. fetch후HEAD/origin40aea9b일치,문서링크/diff확인. 코드/API/DB/테스트·서버/외부재호출없음. #4OPEN유지·새Backend요청없으며다음전투력후보는범위승인으로취급하지않는다. 게시후다음지시대기.
+
+## 2026-10-14 — 사용자1700기준·전투력 작업 착수
+
+사용자가앱기본최소itemlevel1700공통변수정의/작업착수를지시했다. 최신#5본문/댓글없음·Gitclean/dev78a5494와원격을확인하고feat/account-management분기. app/core/game_policy.py DEFAULT_MIN_ITEM_LEVEL Decimal1700과combat_power.py선별/profile식별·numberparser경계추가. 새대상22개통과/기존경고1개(2.59초),최신one-off이미지기존OpenAPI전체일치. 개발DB/서버재생성/실provider호출없음,격리test-db종료.
+
+GAME_DEFAULTS/ISSUE_5_COMBAT_POWER_PLAN·프로젝트문서를추가/최신화하고 [#5착수/계약검토](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6166675659)에회신. 상수기준은확정·wire20명/20초·부분상태/cache안은Flutter소비검토후속이며REST/DB캐시미구현. 사용자1700기준재확인요청/성공테스트반복없음. 현재미커밋·미push/새SHA없음.
+
+## 2026-10-14 — #5 Flutter동의 후 전투력REST/캐시 구현·로컬적용
+
+6166739099동의확인,app/game_accounts/power_service에최대20명·member/server/name캐시·동시2/profileonlytransport·DBquota80·20초처리예산/19초network대기·partial/deferred·leasegeneration·동일요청replay/원자cachecommit·active/session/등록/roster/소유차수재검사 구현. 캐시1테이블0003additive·GET3관찰필드/대표수치overlay·정리90일,1700공통상수참조·null/저레벨skipped. 기존경로/authpolicy·schema(CharacterOut추가3필드외)보존검사.
+
+새대상+직접영향42개통과(9.29초경고1개),마지막nullreason/retention/상수정책후3개통과(3.37초경고1개). 이전22/중간33은별도이전결과. migrationmodel일치·기존user행보존fixture·guest/타인/20명·member격리/canonical/대표·실패/미제공·summary값/시각유지·기한/lease/revocation/삭제/version·중복fetch/quota검증. 공개OpenAPI전체비교PASS.
+
+기존18테이블집계기록후0003테이블추가만실행·API만재생성,health200/DB0003/runtime키존재true·집계건수모두보존/새cache0확인. 개발fixture/초기화/자료삭제·실profile호출없음. test-db중지. 미커밋/미push/새SHA없음,FlutterstrictDTO/newwire연결·실인수후속. 20초예산은OS/DB접속/response전송까지harddeadline보장아님을문서/Issue에명시,늦게끝난worker는DB쓰기없이결과폐기.
+
+[#5 구현결과회신](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6166983632) 게시완료. 새commit/push승인전미게시상태와live/Flutter후속·20초예산한계를함께인계했다.
+
+## 2026-10-14 — #5 최신회신 확인·게시 승인
+
+사용자 지시로 [6167001322](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6167001322)를확인했다. 새SHA/OpenAPI대기·기존StrictDTO새GET거절·새수정/반복시험요청없음으로코드변경없이호환성문서만명시했다. fetch후HEAD/origin dev78a5494일치·원격해당작업브랜치없음. 비밀파일제외명시파일을커밋·feat/account-management일반push해새실제SHA를인계한다. 기존42개/후속3개와로컬API/DB0003/계약일치근거사용,게시때문에기능테스트/서버/DB반복실행없음.

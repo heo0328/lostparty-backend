@@ -151,3 +151,18 @@ class FetchLease(Base):
     completed = mapped_column(Boolean, nullable=False, default=False)
     roster = mapped_column(JSONB, nullable=True)
     fetched_at = stamp(nullable=True)
+
+
+class PowerCache(Base):
+    __tablename__ = 'character_power_cache'
+    actor_id = mapped_column(ForeignKey('users.id'), primary_key=True)
+    server_name = mapped_column(String(64), primary_key=True)
+    character_name = mapped_column(String(64), primary_key=True)
+    value = mapped_column(String(64), nullable=True)
+    fetched_at = stamp(nullable=True)
+    checked_at = stamp(nullable=True)
+    status = mapped_column(String(16), nullable=False, default='unknown')
+    reason = mapped_column(String(40), nullable=True)
+    generation = mapped_column(Integer, nullable=False, default=0)
+    lease_expires_at = stamp(nullable=True)
+    __table_args__ = (CheckConstraint("status IN ('unknown','available','unavailable','failed') AND generation >= 0"),)

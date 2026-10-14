@@ -34,6 +34,9 @@ class LostArkProvider:
     def armory(self, character_name: str):
         return self._fetch(character_name, 'armories/characters', '')
 
+    def profile(self, character_name: str):
+        return self._fetch(character_name, 'armories/characters', '/profiles')
+
     def _fetch(self, name, prefix, suffix):
         if not isinstance(name, str) or not name.strip() or len(name) > 64 or any(ord(c) < 32 for c in name):
             raise ValueError('INVALID_CHARACTER_NAME')

@@ -83,6 +83,9 @@ class CharacterOut(Summary):
     eligible: bool
     power_stale: bool = True
     power_fetched_at: datetime | None
+    power_checked_at: datetime | None
+    power_status: Literal['unknown', 'available', 'unavailable', 'failed']
+    power_reason: str | None
 
 
 class SettingsOut(DTO):
@@ -141,6 +144,30 @@ class RefreshOut(DTO):
     added_count: int
     suspect_count: int
     requires_refresh: bool
+
+
+class PowerTarget(DTO):
+    server_name: Name
+    character_name: Name
+
+
+class PowerRefreshIn(DTO):
+    characters: Annotated[list[PowerTarget], Field(min_length=1, max_length=20)]
+
+
+class PowerResult(PowerTarget):
+    combat_power: str | None
+    power_fetched_at: datetime | None
+    power_checked_at: datetime | None
+    power_stale: bool
+    power_status: Literal['unknown', 'available', 'unavailable', 'failed']
+    power_reason: str | None
+    status: Literal['updated', 'cached', 'unavailable', 'failed', 'skipped', 'deferred']
+    reason: str | None
+
+
+class PowerRefreshOut(DTO):
+    items: list[PowerResult]
 
 
 class VerificationOut(DTO):
