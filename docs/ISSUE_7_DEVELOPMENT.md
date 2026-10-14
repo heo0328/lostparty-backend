@@ -90,3 +90,5 @@ Flutter 전체1246개PASS 후 국소보완12개PASS·최종분석0·debugAPK 성
 ## Backend dev 통합 지시
 
 사용자가 결과 문서 최신화 후 dev 병합·push를 지시했다. 기존 #7 사용자 결과/Flutter 게시 확인과 #6 최종 인계·CLOSED 상태를 반영하고, dev4eb23f5에서 작업 브랜치까지 fast-forward 가능함을 확인했다. 코드/API 계약 변경 없이 문서 diff를 확인하며 기존 자동검증/로컬0006 근거를 유지한다. 서버/DB/기능 테스트 반복 없음. 실제 dev 게시·브랜치 정리 결과는 DEV_LOG와 같은 Issue 결과 댓글에 기록한다.
+
+통합 결과: dev4eb23f5→772b90e fast-forward·origin/dev push 확인. app/OpenAPI/alembic/tests는 검증 게시9e1a255와 동일함을 비교했다. 포함·clean·다른worktree없음을 확인한뒤 feat/member-settings 로컬/원격을 정리했다. 현재dev이며 main/Issue7OPEN은유지한다. 통합완료기록은dev에추가게시한다.

@@ -22,6 +22,6 @@
 
 인증 1차는 main/dev에 통합됐으며 이후 계정 업무·새label·진단/후속문서는 dev에 통합·게시됐습니다. 완료 작업 브랜치는 push 확인 후 정리하며, 다음 작업은 최신 dev에서 분기합니다. 계약 소비·전체 Flutter 인수·운영 배포 완료와 저장소 최신화를 구분합니다.
 
-현재 통합 구간은 회원설정 #6과 개인 Lost Ark 키/복원/호출대기 #7이다. 사용자 지시로 feat/member-settings의 결과 문서를 최신화해 dev 통합·push하며, 완료 브랜치는 게시/포함 확인 후 정리한다. main은 유지한다. 실제 Git 결과는 DEV_LOG와 Issue #7 인계 댓글이 기준이다.
+현재 통합 구간은 회원설정 #6과 개인 Lost Ark 키/복원/호출대기 #7이다. 결과 문서를 포함해 dev772b90e로 통합·push 완료, 현재 dev이며 feat/member-settings는 로컬·원격 정리했다. main은 유지한다. 실제 Git 결과는 DEV_LOG와 Issue #7 인계 댓글이 기준이다.
 
 #7 Backend9e1a255·로컬0006·Flutter8644c81/devcc6a0b0 push·현재 구간 사용자 정상 보고 확인. Backend 추가 수정 없음. 재설치/별도기기·실provider한도/헤더·운영TLS는 후속 미확인, 전체빌드/역할저장 설계는 별도다. Issue #7 OPEN 유지.

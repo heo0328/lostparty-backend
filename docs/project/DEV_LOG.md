@@ -415,3 +415,7 @@ GAME_DEFAULTS/ISSUE_5_COMBAT_POWER_PLAN·프로젝트문서를추가/최신화�
 ## 2026-10-15 — 회원설정/개인 키 결과 문서 최신화·dev 통합 지시
 
 사용자가 문서 최신화→dev병합/push 지시. fetch후 dev/origin4eb23f5·work/origin9e1a255 일치,worktree1개·사용자 결과문서4파일 외 코드변경없음/fast-forward가능 확인. #7최신6174013475/6174038857에새서버요청없음. 함께통합할#6의6170497743/6170736672를확인해 사용자3흐름성공·Flutter2e0764f/dev5cee9648 게시·Issue이미CLOSED인점으로오래된대기기록정정. 기존사용자결과/#7인계문서변경보존. 문서diffcheck·통합코드불변검사만사용,서버/DB/기능시험반복없음. 결과문서커밋후dev fast-forward/generalpush하고포함/원격일치/clean확인후완료workbranch로컬·원격정리한다. main/Issue7종료·키/자료변경없음.
+
+## 2026-10-15 — dev 통합/push·회원설정 작업 브랜치 정리 완료
+
+결과문서5파일을772b90e로커밋,dev4eb23f5→772b90e fast-forward·일반push완료. local/origin dev일치·clean,검증게시9e1a255와app/openapi/alembic/tests차이0·workbranch가origin/dev에포함됨을확인했다. upstream해제/local-d/remote--delete로feat/member-settings정리완료,남은브랜치는main/dev. main e6c72e4불변·force/운영배포/자료변경/Issue7종료없음. NEXT_WORK/AI_CONTEXT/실행안내에현재dev/통합완료/브랜치정리상태를기록하고dev에추가게시한다. 기능테스트·서버/DB반복실행없음.
