@@ -2,6 +2,8 @@
 
 Issue #2의 합의된 6개 API는 `app/auth`, DB 연결·설정·오류는 `app/core`에 있습니다. 실제 원본 계약은 `openapi/openapi.yaml`이며 공개 Swagger/OpenAPI HTTP 경로는 계속 꺼져 있습니다.
 
+합의된 Backend 1차는 완료했고 #2는 종료했습니다. 나중에 구현할 탈퇴/재가입·약관·운영 정지와 실기기/release·전체 세션·운영 인수는 [인증 후속 목록](ISSUE_2_FOLLOWUP.md)에 담당·착수 조건·완료 기준으로 기록합니다.
+
 ## 최초 준비와 실행
 
 Ubuntu WSL2의 프로젝트 루트에서 실행합니다. 기존 `.env`와 DB volume은 유지하고 인증 키는 Git·Docker 빌드에서 제외되는 `.secrets`에 둡니다.
@@ -49,7 +51,7 @@ test-db는 별도 프로젝트·네트워크·`lostparty_test` DB·tmpfs를 사�
 
 실행한 HTTP·migration·계약 검증과 기존 흐름 보존 결과는 [DEV_LOG](project/DEV_LOG.md)를 참고합니다. 현재 남은 공동 검증 순서는 [NEXT_WORK](project/NEXT_WORK.md)에 있습니다.
 
-후속 확인: 실제 Google 서명·nonce·azp, Windows localhost→WSL와 Android 10.0.2.2 접근, Flutter 화면/bootstrap·secure pending·앱 재시작·늦은 응답 격리. 현재 host 루프백 HTTP만 확인했으며 외부 터널/포트 공개는 하지 않았습니다. 탈퇴·약관·release 등록·운영 배포는 별도 작업입니다.
+실제 debug 에뮬레이터 Google 로그인·Backend 회원/identity/session 저장과 기본 재실행/로그아웃·로컬 화면 보존은 확인됐습니다. 전체 세션 복구/늦은 응답의 실제 기기 인수와 release 등록·운영 HTTPS·탈퇴/약관 등은 [후속 목록](ISSUE_2_FOLLOWUP.md)을 따릅니다. 외부 터널/포트 공개는 수행하지 않았습니다.
 
 ## 키 설정과 갱신
 

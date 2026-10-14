@@ -8,6 +8,7 @@
 | 기존 health | DB 연결 /health 유지. `app/main.py`, [원본 OpenAPI](../../openapi/openapi.yaml) |
 | Google 인증·세션 | 6개 API·DB migration·검증/인계 완료, #2 Backend1차범위Completed. emulator 로그인·회원저장/모바일기본흐름 보고확인,전체세션/실기기/release는별도후속. `app/auth`, `app/core`, [인증 개발 안내](../AUTH_DEVELOPMENT.md) |
 | API·데이터 정책 | [합의 계약](../ISSUE_2_AUTH_CONTRACT_DRAFT.md), [복구 설계](../ISSUE_2_REFRESH_RECOVERY.md), [Issue #2](https://github.com/heo0328/lostparty-backend/issues/2) |
+| 인증 후속 #2 | 탈퇴/재가입·약관·운영 정지 정책/구현, 실기기/release·전체세션·운영 인수는 [후속 목록](../ISSUE_2_FOLLOWUP.md) AUTH-F01~F06으로 추적. #2 Backend1차 완료와 분리 |
 | 설계 근거 | [초기 모델 제안](../ISSUE_2_GOOGLE_AUTH_PROPOSAL.md), [구현 계획 이력](../ISSUE_2_IMPLEMENTATION_PLAN.md).현재 할 일은 NEXT_WORK가 기준 |
 | 테스트·migration | `tests`, `compose.test.yaml`, `alembic/versions/0001_auth.py`. 실행 방법은 인증 개발 안내, 검증 기록은 DEV_LOG |
 | 협업 | [API_COLLABORATION](../API_COLLABORATION.md)·[작업 단계/진행 경계](../API_COLLABORATION_WORKFLOW.md). Backend Issues와 계약 SHA 기준, #1 연결테스트Completed·#2 Backend1차Completed·#3/#4 OPEN, Flutter 소스 직접 수정 없음 |

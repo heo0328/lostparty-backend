@@ -267,3 +267,7 @@ ISSUE_4_LIVE_VALIDATION.md/계획·NEXT_WORK/AI_CONTEXT에동작/키준비/실�
 ## 2026-10-14 — Issue #4 구현·계약 커밋/원격 push
 
 사용자가 commit/push를 승인했다. fetch 후 원격에 #4브랜치없음·현재 기존기준 e807a6f를 확인하고 비밀파일 제외 지정13파일/diff를 검토했다. d3cb697bb6ebb988b63bd99c588bc1b64a93650d로 빈label 계약/구현·안전진단CLI·대상테스트·협업문서를 커밋하고 origin/feat/4-registration-integration에 일반push/upstream 설정했다. 원격추적일치 확인. 새 실제 구현/계약 SHA를 #4에 인계하며 게시기록문서는 별도 커밋한다. dev/main병합·branch삭제·실Flutter인수·배포없음. 이미검증된코드추가변경없어 테스트반복없이 diff확인만 수행했다.
+
+## 2026-10-14 — Issue #2 후속 구현·검증 목록 문서화
+
+사용자 지시로 종료된 #2의 완료범위와 후속을 ISSUE_2_FOLLOWUP.md에 분리했다. 탈퇴/재가입·약관·운영정지의 미합의정책/미구현과 실기기/release·전체세션·운영준비의 미확인인수를 AUTH-F01~F06으로 기록하고 담당/착수조건/완료기준·추후Issue전환을 명시했다. AUTH_DEVELOPMENT의 오래된 debug실인증 미확인 설명을 현재근거로 수정하고 NEXT_WORK/AI_CONTEXT에 연결했다. 현재 #4 진행 유지,문서만변경. 서버/DB/테스트재실행·Issue변경·commit/push없음.
