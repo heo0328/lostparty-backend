@@ -35,3 +35,7 @@
 ## 2026-10-14 게시 완료
 
 사용자 승인으로 `feat/account-management`에 commit/push 완료. 실제 구현·원본OpenAPI SHA: `39188d5dca2d394f4e8b3fcbfe332274812285bf`. 앞선 미커밋/미push·새SHA없음 설명은 게시 전 이력이며 현재 Flutter 소비 기준은 이 SHA다. dev/main 병합·배포·Issue종료는 하지 않았다. 기존42개/후속3개·로컬0003/API 적용 근거 유지,실profile/Flutter신규인수후속. 게시기록후속은파일끝공백정리와문서상태만 바꾸며새API동작/계약변경없음.
+
+## 2026-10-14 dev 통합·정리
+
+사용자 승인으로 #5작업/문서·인계규칙을 dev87751537bd63f13605fb8f0eacbca749c0898285에fast-forward 통합·push했다. 완료 feat/account-management는로컬/원격삭제. 위작업브랜치/미통합 설명은당시이력이며실제구현/계약39188d5는유지된다. Flutter연결·사용자3흐름은확인됐고Git게시SHA미회신/별도미확인범위는후속이다. 이번통합에코드/계약추가변경없음·반복검증없음.

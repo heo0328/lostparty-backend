@@ -63,3 +63,7 @@ HTTP200 body=`{items:[...]}`. items는 중복제거한 입력 순서다.
 [연결회신](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6167414628)의39188d5원본소비·StrictDTO/POST/GET·전용30초·1700/20명·로컬카드역할snapshot우선/회원격리연결과전체1204테스트·국소후속70/분석0/debug11.4초보고를확인했다. 전체1206통과로확대하지않는다. [사용자확인](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6167529348)에서서버전투력확인/표시·로컬카드역할값유지·로그아웃/재로그인표시캐시3흐름모두정상. 원본profileschema/모든장애상한실인수로확대하지않는다.
 
 Flutter feature/character-combat-power 미커밋·미push/dev미반영·새적용SHA없음. 새Backend수정/테스트요청없음·성공시험반복없음. 나이스단앱시작자동갱신Backend연결은별도후속이며이번수동API확인에포함하지않는다.
+
+## 2026-10-14 dev 통합·정리
+
+사용자 승인으로 #5작업/문서·인계규칙을 dev87751537bd63f13605fb8f0eacbca749c0898285에fast-forward 통합·push했다. 완료 feat/account-management는로컬/원격삭제. 위작업브랜치/미통합 설명은당시이력이며실제구현/계약39188d5는유지된다. Flutter연결·사용자3흐름은확인됐고Git게시SHA미회신/별도미확인범위는후속이다. 이번통합에코드/계약추가변경없음·반복검증없음.

@@ -335,3 +335,7 @@ GAME_DEFAULTS/ISSUE_5_COMBAT_POWER_PLAN·프로젝트문서를추가/최신화�
 ## 2026-10-14 — #5 인계확인·문서최신화/dev통합 승인
 
 사용자가Issue인계확인→문서최신화→dev병합/push를지시했다. 최신6167414628/6167529348의39188d5소비·연결/자동1204후속70·사용자3흐름정상과6167564129결과회신확인. FlutterGit게시SHA는아직회신없어후속유지한다. fetch후dev/origin78a5494·work/originb8e81f3일치,다른worktree없음. 기존네이티브확인전게시상시규칙/결과문서8파일변경보존·최신화해커밋한후devfast-forward/generalpush한다. code/contract추가변경없어기존42+후속3개근거를사용하고문서diff만확인,서버/DB/테스트재실행없음.
+
+## 2026-10-14 — dev 통합/push·계정관리 완료브랜치 정리
+
+문서/네이티브확인전게시규칙8파일을87751537bd63f13605fb8f0eacbca749c0898285로커밋하고dev78a5494→8775153 fast-forward병합·일반push. local/origin dev일치·clean·workbranch/local원격dev포함확인후upstream해제/local-d/remote--delete로feat/account-management정리. main유지·forcepush없음. 최신Issue5에FlutterGit게시추가회신없음확인,기존연결/사용자인수·Git후속구분을유지해통합결과회신한다. 통합기록문서는dev에추가게시한다. 코드/계약추가변경/테스트/서버/DB재실행·외부조회없음,#5임의종료없음.
