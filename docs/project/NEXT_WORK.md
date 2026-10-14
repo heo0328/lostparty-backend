@@ -41,3 +41,9 @@ mock proof는 pytest dependency에서만 주입하며 공개 API/임의env 우�
 기존 구현/계약 commit/push는 완료했다. 새 입력은 안전한 server key 준비와 실제siblings 근거·등록 관리 Flutter 테스트 결과이며 조회 인계/소비SHA는 확보했다. 신규수정 게시·dev/main통합은 기존 승인범위를 확인한다. 같은 미확인 자료를 반복요청하며 Backend 구현을 미루지 않습니다. 실제인수/Flutter적용/운영완료는 자동테스트 통과와 별도입니다. Issue는 임의 종료하지 않습니다.
 
 #2 인증 원본 SHA `519c609495966a3d785c6671c09bf513b28875a6`은 기존인증 기준입니다. #3의 새로운 업무 계약 SHA로 사용하지 않습니다. #2의 전체세션/실기기/release 인수는 기존잔여작업으로 보존하며 Flutter 최신 회신의 로그인/재실행/로그아웃 성공보고는 독립 실검증의 참고 근거입니다.
+
+## 이슈 종료 상태와 인증 후속
+
+사용자승인으로 [#1 협업연결테스트](https://github.com/heo0328/lostparty-backend/issues/1#issuecomment-6162336853)와 [#2 합의된Backend인증1차범위](https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6162337920)를Completed로닫았다. #3은등록관리/실provider·Flutter인수작업이남아OPEN이다. 이슈/댓글을삭제하지않았다.
+
+#2 종료후에도실기기/release·운영HTTPS/배포·탈퇴/약관,모든로그인유지선택별실기기재시작·실제refresh유실복구/늦은응답격리의전체인수는별도잔여다. 기본로그인/재실행/로그아웃성공보고와자동검증을전체실기기인수로확대하지않는다. 실제인증결함이나오면이슈재개또는후속이슈로관리한다. 이번종료검토는기존근거를사용했고테스트/서버/DB를재실행하지않았다.

@@ -207,3 +207,17 @@ ISSUE_3_REGISTRATION_FOLLOWUP_PLAN.md에 기존API 재사용·준비인계→lea
 사용자현재상태게시승인으로헤더수정/새HTTP테스트·등록후속계획/문서를 `db0f3ae438021b4f5fa3738b76fd926687871b0d`로커밋하고 feat/3-account-restoration에일반push했습니다. fetch전후예상원격변경없음과원격기준406004e를확인했습니다. 기존GitHub CLI 인증도우미를명령단위로사용했으며force push/비밀값출력없음입니다. 게시전OpenAPI비교·staged diff/민감파일제외검사통과,테스트는직전대상10개결과를사용했습니다.
 
 계약파일은254cb5d와동일,새보완구현SHA를Flutter에인계합니다. 게시상태문서도추가commit/push합니다. main/dev미변경·미통합브랜치보존·PR/배포없음입니다.
+
+## 2026-10-14 — 사용자승인 이슈 #1/#2 완료검토·Completed종료
+
+사용자가 #1/#2 완료확인후 완료시Close를지시했습니다. #1은조회/댓글응답성공6146663044로협업연결테스트범위충족. #2는원문완료조건과최종합의6149615842의Backend1차6API/모델/migration/검증/계약인계범위,46개검증·실Google emulator로그인/DB저장·인계6151318353 및 #3의모바일기본흐름/계약소비보고를대조해완료로판정했습니다. 원문에서Flutter/실기기후속은별도단계며탈퇴/약관/운영도합의제외범위임을확인했습니다.
+
+[#1 완료댓글](https://github.com/heo0328/lostparty-backend/issues/1#issuecomment-6162336853)·[#2 완료/후속댓글](https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6162337920)을게시하고두이슈를 reason=completed로닫았습니다. 삭제하지않았고 #3은OPEN으로유지합니다. 전체세션실유실복구/실기기/release·운영·탈퇴/약관이완료됐다고표시하지않고NEXT_WORK에후속을보존했습니다.
+
+기존증거검토만수행했고코드/계약/DB/서버/테스트재실행·commit/push/merge/배포없음입니다. 협업문서의계약소비미확인설명과프로젝트상태를최신근거로교정했고문서diff/링크를확인했습니다.
+
+## 2026-10-14 — dev 통합 승인·이슈 #4 준비 착수
+
+사용자가현재작업브랜치의dev병합/push와Issue #4준비를지시했습니다. fetch후origin/dev와local dev e6c72e4,작업브랜치/원격f5b4a2a 일치·다른worktree없음을확인했습니다. 기존이슈종료문서4파일을보존해커밋한뒤fast-forward로통합합니다. 기존전체114/대상10개검증기록을사용하고통합전OpenAPI전체일치·diff를확인했습니다. 코드새변경없어테스트를반복하지않습니다. main통합/운영배포는범위외입니다.
+
+Issue #4는기존등록API의실provider/모바일등록관리인수를분리추적하는작업이며기존lease보완재개발을요구하지않습니다. devpush와통합포함확인후상시규칙에따라완료#3브랜치를정리하고최신dev에서새#4작업브랜치를분기합니다. key/사용자시험준비를Backend/Flutter독립작업의선행조건으로두지않으며#3은자동종료하지않습니다.

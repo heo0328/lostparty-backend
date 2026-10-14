@@ -44,4 +44,4 @@ WebSocket은 아직 미구현입니다. 도입 시 OpenAPI와 별도 메시지 �
 
 ## 후속 결정 항목
 
-Issue #2의 Google 흐름·TTL·복구·/v1 정책은 합의됐으며 [계약 문서](ISSUE_2_AUTH_CONTRACT_DRAFT.md)가 기준입니다. Flutter 저장소는 heo0328/LostParty_flutter로 인계됐으나 새 인증 계약의 소비 SHA·적용 완료·실기기 결과는 아직 확인하지 않았습니다. 추가 공급자·공개 필드·계정 연결·최초 운영자·탈퇴·약관·운영 정책은 별도 작업에서 결정합니다.
+Issue #2의 Google 흐름·TTL·복구·/v1 정책은 합의됐으며 [계약 문서](ISSUE_2_AUTH_CONTRACT_DRAFT.md)가 기준입니다. Flutter 저장소 heo0328/LostParty_flutter의 계약 소비와 기본 로그인/재실행/로그아웃 보고는 [후속 인계](https://github.com/heo0328/lostparty-backend/issues/3#issuecomment-6161970774) 등에서 확인했습니다. #2는 [합의된 Backend 1차 완료](https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6162337920)로 종료했으며 전체 세션 실인수·실기기/release 결과는 별도 후속입니다. 추가 공급자·공개 필드·계정 연결·최초 운영자·탈퇴·약관·운영 정책은 별도 작업에서 결정합니다.
