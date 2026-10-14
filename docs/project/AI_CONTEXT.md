@@ -12,10 +12,10 @@
 | 테스트·migration | `tests`, `compose.test.yaml`, `alembic/versions/0001_auth.py`. 실행 방법은 인증 개발 안내, 검증 기록은 DEV_LOG |
 | 협업 | [API_COLLABORATION](../API_COLLABORATION.md)·[작업 단계/진행 경계](../API_COLLABORATION_WORKFLOW.md). Backend Issues와 계약 SHA 기준, #1 연결테스트Completed·#2 Backend1차Completed·#3/#4 OPEN, Flutter 소스 직접 수정 없음 |
 | 내 계정 복원 #3 | 로컬12 API·0002의11테이블·원본OpenAPI 구현, 격리PostgreSQL114테스트·로컬계약 비교 확인. 작업 브랜치 구현/계약254cb5d 게시, Flutter 두GET/계약SHA·1159검증/빈등록인수 보고확인. 등록후속 lease헤더보완·대상10개통과/로컬적용,보완구현db0f3ae게시·현재 키/실응답 상태는 #4 기준. [등록후속 계획](../ISSUE_3_REGISTRATION_FOLLOWUP_PLAN.md)·[실행/인계](../ISSUE_3_DEVELOPMENT.md)·[설계](../ISSUE_3_IMPLEMENTATION_PLAN.md)·[Issue #3](https://github.com/heo0328/lostparty-backend/issues/3) |
-| 등록관리 실연동 #4 | 기존 API 재사용, 수동siblings형태진단CLI·대상13개검증. local/runtime key반영·사용자 실 siblings 4개/parser 통과 확인. 빈 label POST/PATCH 계약·구현 및 대상16개 통과, 미커밋/새SHA미발급. Flutter 새계약 연결/인수후속. [작업계획](../ISSUE_4_REGISTRATION_INTEGRATION_PLAN.md)·[실검증 안내](../ISSUE_4_LIVE_VALIDATION.md)·[Issue #4](https://github.com/heo0328/lostparty-backend/issues/4) |
+| 등록관리 실연동 #4 | 기존 API 재사용, 수동siblings형태진단CLI·대상13개검증. local/runtime key반영·사용자 실 siblings 4개/parser 통과 확인. 빈 label POST/PATCH 계약·구현 및 대상16개 통과, 게시 SHA d3cb697bb6ebb988b63bd99c588bc1b64a93650d. Flutter 새계약 연결/인수후속. [작업계획](../ISSUE_4_REGISTRATION_INTEGRATION_PLAN.md)·[실검증 안내](../ISSUE_4_LIVE_VALIDATION.md)·[Issue #4](https://github.com/heo0328/lostparty-backend/issues/4) |
 | 후속 기능 | 탈퇴·약관·모집·파티·그룹·Apple/Discord·WebSocket은 구현에 없음 |
 | 운영 | Lightsail 배포 예정, 운영 HTTPS·배포·키 관리 준비는 완료로 간주하지 않음 |
 
 인증 구현·진단·문서 기록은 main과 dev의 동일 최신 기준으로 통합·게시됐습니다. 완료 작업 브랜치는 push 확인 후 정리하며, 다음 작업은 최신 dev에서 분기합니다. 계약 소비·전체 Flutter 인수·운영 배포 완료와 저장소 최신화를 구분합니다.
 
-현재 작업 브랜치는 `feat/4-registration-integration`, 기준 dev `e807a6f002222cdff7beb07bfbe5cae65b97df43`입니다. #3 구현·보완·문서가 dev에통합/push됐고 완료feat/3-account-restoration은로컬/원격삭제했습니다. main은기존e6c72e4이며#4준비문서는미게시입니다. 기존contract254cb5d·보완implementation db0f3ae가 기반이며 #4 빈label 계약/구현은 로컬에 추가됐습니다. 실provider·모바일등록관리인수는 #4,장비/활동과인증실기기후속은별도로유지합니다.
+현재 작업 브랜치는 `feat/4-registration-integration`, 기준 dev `e807a6f002222cdff7beb07bfbe5cae65b97df43`입니다. #3 구현·보완·문서가 dev에통합/push됐고 완료feat/3-account-restoration은로컬/원격삭제했습니다. main은기존e6c72e4이며#4 구현·계약·진단문서는 작업브랜치에 게시됐으며 새 SHA는 d3cb697bb6ebb988b63bd99c588bc1b64a93650d입니다. 기존contract254cb5d·보완implementation db0f3ae가 기반이며 #4 빈label 계약/구현은 작업브랜치에 게시됐습니다. 실provider·모바일등록관리인수는 #4,장비/활동과인증실기기후속은별도로유지합니다.

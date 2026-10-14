@@ -99,3 +99,7 @@ Flutter 답변은 적용 commit/계약 SHA, 연결한 흐름, 자동검증 결�
 원본 OpenAPI의 RegisterIn/PatchIn/RegistrationOut label과 x-game-account-policy.registration_label만 변경했다. 경로/인증계약/기타정책 유지. 이전 계약254cb5d는 이 변경의 기반이며 빈 이름 wire는 새 로컬 계약을 적용해야 한다. 아직 commit/push가 없어 새 계약/실제 구현 commit SHA는 미발급이다.
 
 최신 API 이미지 기반 격리 PostgreSQL 대상16개 통과/27개 미실행(7.89초,기존 경고1개). 최초 이전 API 이미지에서는 새 동작5개가400으로 실패했고 최신 이미지 빌드 후 통과했다. 신규10개는 POST생략/빈값/공백/사용자이름의 DB 저장·GET·replay, PATCH명시clear/생략유지/본계정전환·stale version, 잘못된값 rollback, 지정이름 포함 페이지 안정순서를 검증한다. 기존6개는 strict/멱등/본계정/DELETE replay다. 실제 Flutter 빈이름 인수는 후속이다.
+
+## 2026-10-14 게시 상태
+
+사용자 승인으로 `feat/4-registration-integration`에 구현/새 label 계약/진단도구/검증/문서를 커밋·push했다. 실제 구현·계약 SHA: `d3cb697bb6ebb988b63bd99c588bc1b64a93650d`. 앞선 미커밋/새SHA미발급 설명은 게시 전 이력이며 현재 소비 기준은 이 SHA다. dev/main 추가병합·실제 Flutter 인수는 후속이다. 기존 대상16개·진단13개/실 siblings 4개 근거를 유지하며 이번 게시에서 테스트를 반복하지 않았다.

@@ -58,3 +58,7 @@ Issue에는 식별정보가 없는 결과만 인계한다. 실패 이유가 sche
 사용자가 제공한 수동 CLI 실행 결과를 확인했다(agent 재호출 아님). root=array, character_count=4, non_object_items=0. ServerName/CharacterName/CharacterClassName/ItemAvgLevel은 각각 string 4개, CharacterLevel은 integer 4개이며 null_item_levels=0, status=passed다. 기존 parser의 수치·중복·입력존재·상한 검증을 통과했으므로 해당 관찰에서 수정할 차이는 없다.
 
 ownership_proof=false, roster_completeness_proven=false는 진단 범위에 맞는 정상 결과다. 실제 nullable 사례/장비소유권/전체성까지 증명한 것으로 확대하지 않는다. 이제 Flutter 기존 계약의 검색→등록→두조회→표시명/main 변경→갱신→제거→재조회와 로컬 자료 보존을 시험하고 재현된 서버 차이만 보완한다.
+
+## 2026-10-14 게시 상태
+
+사용자 승인으로 `feat/4-registration-integration`에 구현/새 label 계약/진단도구/검증/문서를 커밋·push했다. 실제 구현·계약 SHA: `d3cb697bb6ebb988b63bd99c588bc1b64a93650d`. 앞선 미커밋/새SHA미발급 설명은 게시 전 이력이며 현재 소비 기준은 이 SHA다. dev/main 추가병합·실제 Flutter 인수는 후속이다. 기존 대상16개·진단13개/실 siblings 4개 근거를 유지하며 이번 게시에서 테스트를 반복하지 않았다.

@@ -104,3 +104,7 @@ key/schema실증전에는완전한실인증/이전을Flutter에서완료할수�
 등록관리 후속 실행에서 lease 만료/generation 거절에도 REQUEST_IN_PROGRESS409·Retry-After2를 반환하도록 로컬보완했다. 대상10개검증·로컬적용완료,원본계약254cb5d는변경없음이며보완implementation SHA는 `db0f3ae438021b4f5fa3738b76fd926687871b0d`으로작업브랜치에게시됐다. 상세범위는 [등록후속 계획](ISSUE_3_REGISTRATION_FOLLOWUP_PLAN.md)을 확인한다.
 
 현재 #4의 [빈 label 최종요청 적용](ISSUE_4_REGISTRATION_INTEGRATION_PLAN.md)에 POST 이름 생략/빈값 및 PATCH 이름 clear wire 변경을 기록했다. 이전254cb5d 계약에는 이 변경이 없으며 새 로컬 openapi가 기준이다(아직 미커밋·미push). DB 필드/자료 초기화는 필요하지 않다.
+
+## 2026-10-14 게시 상태
+
+사용자 승인으로 `feat/4-registration-integration`에 구현/새 label 계약/진단도구/검증/문서를 커밋·push했다. 실제 구현·계약 SHA: `d3cb697bb6ebb988b63bd99c588bc1b64a93650d`. 앞선 미커밋/새SHA미발급 설명은 게시 전 이력이며 현재 소비 기준은 이 SHA다. dev/main 추가병합·실제 Flutter 인수는 후속이다. 기존 대상16개·진단13개/실 siblings 4개 근거를 유지하며 이번 게시에서 테스트를 반복하지 않았다.

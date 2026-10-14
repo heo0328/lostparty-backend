@@ -263,3 +263,7 @@ ISSUE_4_LIVE_VALIDATION.md/계획·NEXT_WORK/AI_CONTEXT에동작/키준비/실�
 이전API이미지에서 신규빈이름5개400실패를 확인한뒤 최신API빌드/테스트이미지재빌드로 대상16개통과/27개미실행(7.89초,기존경고1개). 실제 PostgreSQL의 빈값저장/GET/replay·PATCH생략유지/clear·main전환이름보존·version충돌·null/타입/길이거절·페이지안정순서를 검증했다. 초기이전이미지검증을최신구현실패로확대하지않는다.
 
 로컬API만재생성/healthy 적용,OpenAPI전체일치PASS·health200·runtime키존재true·DBrevision0002확인. 개발DB fixture쓰기/초기화·외부API재조회·기기조작없음. 격리test-db중지. 계획/NEXT_WORK/AI_CONTEXT/실행안내를최신화하고Flutter에요청/응답스키마·전체목록자동번호·실제적용/검증과새SHA미발급을인계한다. 아직commit/push/새계약·구현SHA없으며기존254cb5d를새빈이름계약SHA로안내하지않는다. Flutter새wire연결/실인수후속,#4OPEN유지.
+
+## 2026-10-14 — Issue #4 구현·계약 커밋/원격 push
+
+사용자가 commit/push를 승인했다. fetch 후 원격에 #4브랜치없음·현재 기존기준 e807a6f를 확인하고 비밀파일 제외 지정13파일/diff를 검토했다. d3cb697bb6ebb988b63bd99c588bc1b64a93650d로 빈label 계약/구현·안전진단CLI·대상테스트·협업문서를 커밋하고 origin/feat/4-registration-integration에 일반push/upstream 설정했다. 원격추적일치 확인. 새 실제 구현/계약 SHA를 #4에 인계하며 게시기록문서는 별도 커밋한다. dev/main병합·branch삭제·실Flutter인수·배포없음. 이미검증된코드추가변경없어 테스트반복없이 diff확인만 수행했다.
