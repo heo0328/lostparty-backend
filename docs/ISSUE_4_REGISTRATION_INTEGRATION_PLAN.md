@@ -105,3 +105,13 @@ Flutter 답변은 적용 commit/계약 SHA, 연결한 흐름, 자동검증 결�
 사용자 승인으로 `feat/4-registration-integration`에 구현/새 label 계약/진단도구/검증/문서를 커밋·push했다. 실제 구현·계약 SHA: `d3cb697bb6ebb988b63bd99c588bc1b64a93650d`. 앞선 미커밋/새SHA미발급 설명은 게시 전 이력이며 현재 소비 기준은 이 SHA다. dev/main 추가병합·실제 Flutter 인수는 후속이다. 기존 대상16개·진단13개/실 siblings 4개 근거를 유지하며 이번 게시에서 테스트를 반복하지 않았다.
 
 2026-10-14 사용자 승인 통합: #4 구현/계약·문서와 #2 후속 문서가 dev a6d25aa에 포함돼 push 완료. 완료 feat/4-registration-integration은 로컬/원격 삭제했다. 위 작업브랜치 게시/미통합 설명은 당시 이력이다. 실제 계약/구현 SHA d3cb697은 유지되며 Flutter 실인수·장비/활동 후속은 별도다. 현재 dev에서 사용자 지시로 대기한다.
+
+## 2026-10-14 Flutter 결과 회신 확인
+
+[기존등록결과6164864407](https://github.com/heo0328/lostparty-backend/issues/4#issuecomment-6164864407): 등록/삭제·동일회원 재로그인 캐릭터표시·갱신 실제보고 확인. [새계약구현6166099894](https://github.com/heo0328/lostparty-backend/issues/4#issuecomment-6166099894): d3cb697 소비,전체1193테스트·분석0·debug APK33.4초 성공 보고(Backend 재실행 아님). [사용자인수6166283832](https://github.com/heo0328/lostparty-backend/issues/4#issuecomment-6166283832): 미입력등록/지정이름/clear/본부전환·지정이름유지/지정이름포함번호 모두정상.
+
+새 Backend 수정/추가테스트 요청없음. 같은자료·성공테스트 반복요청없음. Flutter feature/account-backend-registration 미커밋·미push/dev통합전·새적용SHA없음이며Git정리후인계예정. 삭제후로컬자료보존은기존미확인으로남고재설치/장비·소유권/활동·대표/전투력전체수집은별도후속. 기존Flutter인수대기설명은이최신기록으로대체하며#4OPEN유지.
+
+## 2026-10-14 Flutter Git 인계 추가 확인·대기
+
+[추가회신6166359575](https://github.com/heo0328/lostparty-backend/issues/4#issuecomment-6166359575)에서 Flutter 구현 `5fe636eee4725adf8a063e8a119be9742ecbcc82`, dev통합 `266a7e20f4f397981d61753084f88df881c0e377`,push완료·소비계약d3cb697을 확인했다(Flutter보고). 앞선 미커밋/Git대기는 해소됐다. 빈label연결·1193자동검증과사용자신규4흐름인수는 유지하고 반복검증없음. 삭제후로컬보존 등 다른미확인은별도후속이며새Backend요청없음. 전투력협업은다음설계후보일뿐미합의API를추가하지않는다. Backend결과문서를dev에게시후다음사용자지시를대기한다.
