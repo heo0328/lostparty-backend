@@ -6,7 +6,7 @@ from app.core.config import database_url
 
 @lru_cache
 def engine():
-    return create_engine(database_url(), pool_pre_ping=True,
+    return create_engine(database_url(), pool_pre_ping=True, hide_parameters=True,
                          connect_args={"connect_timeout": 3, "options": "-c statement_timeout=10000 -c lock_timeout=5000"})
 
 

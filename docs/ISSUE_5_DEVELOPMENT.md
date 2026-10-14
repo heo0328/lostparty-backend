@@ -36,7 +36,7 @@ HTTP200 body=`{items:[...]}`. items는 중복제거한 입력 순서다.
 
 ## 시간·동시성·복구
 
-- 공식client100/min과구분하여 기존DB공유provider80/min/transport동시2·connect3/read5초·stream기한8초·1MiB를재사용한다. 기존HTTP재시도/redirect없음 유지.
+- 공식client100/min과구분하여 Issue #7 이후 token HMAC fingerprint별 DB공유80/min/transport동시2·connect3/read5초·stream기한8초·1MiB를재사용한다. 기존HTTP재시도/redirect없음 유지.
 - 요청진입시20초처리예산,초기등록/캐시확인·quota·진행중profile대기도예산에포함. 네트워크결과대기는진입19초까지,최종DBcommit에1초여유. 이 서비스DBstatement/lock은500ms 제한. OS스케줄링/DB연결·응답전송까지정확히20.000초를강제하는proxyharddeadline은아니다. Flutter는동의한새요청전용30초receiveTimeout사용.
 - 시간안에아직처리하지않았거나대기결과를수용하지못한대상은deferred/TIME_BUDGET_EXCEEDED. 이미실행된blockingHTTP는transport정리후종료할수있지만worker에DB쓰기없고그결과는폐기해뒤늦은적용없음. 별도jobqueue/polling없음.
 - 같은회원/캐릭터진행중조회는cachelease로중복외부호출억제,다른명령에는deferred/FETCH_IN_PROGRESS. quota부족은deferred/RATE_LIMITED로즉시응답하고할당량리셋까지sleep하지않는다. skipped는ITEM_LEVEL_BELOW_DEFAULT 또는ITEM_LEVEL_UNAVAILABLE.
@@ -69,3 +69,5 @@ Flutter feature/character-combat-power 미커밋·미push/dev미반영·새적�
 사용자 승인으로 #5작업/문서·인계규칙을 dev87751537bd63f13605fb8f0eacbca749c0898285에fast-forward 통합·push했다. 완료 feat/account-management는로컬/원격삭제. 위작업브랜치/미통합 설명은당시이력이며실제구현/계약39188d5는유지된다. Flutter연결·사용자3흐름은확인됐고Git게시SHA미회신/별도미확인범위는후속이다. 이번통합에코드/계약추가변경없음·반복검증없음.
 
 2026-10-14 [Flutter Git인계](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6168115419) 추가확인: 구현6beb55e3f6f301873d200ff8cbfd6a764d33f547·dev통합ccc6b23f24c1f438c79ce683a8c9f3af35c8af06·push완료보고,소비39188d5유지. 앞선Git미회신대기는해소됐다. 자동1204/후속70·사용자3흐름근거유지/추가Backend요청없음. 다음나이스단설정/앱실행1회자동갱신은설계후보이며현재수동API인수·새API구현과구분한다.
+
+Issue #7 이후 profile도 회원 개인 키를 사용한다. 공용 fallback은 없으며 cache hit eligibility/lease를 credential version으로 구분한다. 키 변경409·키거절 item reason 등은 [개인 키 실행 안내](ISSUE_7_DEVELOPMENT.md)가 현재 기준이다. 과거 정상 숫자/시각은 유지한다.

@@ -6,15 +6,7 @@
 
 필요한 값은 Google 인증 키가 아닌 **로스트아크 공식 Open API JWT**다. [공식 시작 안내](https://developer-lostark.game.onstove.com/getting-started)의 절차에 따라 사용자가 STOVE 계정으로 로그인하고 client를 생성해 발급 값을 확인한다. client 정보와 필수 약관은 사용자가 직접 확인·입력한다. 발급·동의 작업을 agent가 대신 수행하지 않는다.
 
-Backend 로컬 `.env`에 변수 `LOSTARK_API_TOKEN`을 설정한다. 값은 JWT 자체이며 `Bearer ` 접두사를 넣지 않는다. transport가 Authorization 헤더의 접두사를 붙인다. 키 값/.env 본문은 채팅·Issue·앱에 전달하지 않는다. 기존 파일 권한을 유지한다.
-
-앱의 실제 Backend 호출에도 설정을 반영하려면, 키 설정 후 API 환경만 재생성한다.
-
-```bash
-docker compose up -d --no-deps --force-recreate --wait --wait-timeout 180 api
-```
-
-key 유효성과 provider 성공은 health200으로 증명되지 않는다. 키가 준비되지 않은 동안 Flutter UI/Repository·503 처리는 기존 계약으로 구현할 수 있다.
+Issue #7 이후 REST는 [회원별 암호화 키](ISSUE_7_DEVELOPMENT.md)를 사용하며 서버 공용 `.env` JWT는 제거했다. 회원은 앱에서 명시 등록한다. 아래 CLI는 서버 회원 키를 다운로드하지 않으며 terminal에서 사용자 JWT와 캐릭터명을 hidden prompt로 각각 받는다. 공용 환경키를 자동 사용하지 않는다. 실제키/캐릭터명을 채팅·Issue에 게시하지 않는다. CLI는 형태 관찰만 하며 회원 키 저장이나 실제 등록 인수를 대신하지 않는다.
 
 ## 한 번의 로컬 응답 점검
 

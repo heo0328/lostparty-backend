@@ -97,7 +97,7 @@ def test_upstream_failures_not_empty_roster(status):
     wire, response = transport(status=status)
     with pytest.raises(ProviderUnavailable) as error:
         LostArkProvider('test-only', wire).siblings('sample')
-    assert error.value.reason == ('UPSTREAM_RATE_LIMITED' if status == 429 else 'UPSTREAM_UNAVAILABLE')
+    assert error.value.reason == ('LOSTARK_KEY_REJECTED' if status in (401,403) else 'UPSTREAM_RATE_LIMITED' if status == 429 else 'UPSTREAM_UNAVAILABLE')
     response.iter_content.assert_not_called()
     assert wire.get.call_count == 1
 

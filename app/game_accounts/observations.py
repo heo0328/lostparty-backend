@@ -1,5 +1,4 @@
 """Typed provider boundary. Live schema proof is deliberately not implied."""
-import os
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
@@ -53,11 +52,13 @@ def roster(raw, name):
     return sorted(rows, key=lambda r: (r['server_name'], r['character_name']))
 
 
-def fetch(name, proof=False):
-    provider = LostArkProvider(os.getenv('LOSTARK_API_TOKEN', ''))
+def fetch(name, proof=False, *, token, before_armory=None):
+    provider = LostArkProvider(token)
     rows = roster(provider.siblings(name), name)
     gear = None
     if proof:
+        if before_armory is not None:
+            before_armory()
         raw = provider.armory(name)
         profile = raw.get('ArmoryProfile') if isinstance(raw, dict) else None
         matching = next(r for r in rows if r['character_name'] == name)

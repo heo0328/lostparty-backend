@@ -13,6 +13,7 @@ from app.game_accounts.router import router as game_router
 from app.core.errors import register
 from app.core.game_policy import DEFAULT_MIN_ITEM_LEVEL
 from app.member_settings.router import router as settings_router
+from app.lostark_keys.router import router as lostark_keys_router
 
 
 @asynccontextmanager
@@ -28,6 +29,7 @@ app = FastAPI(title="LostParty API", docs_url=None, redoc_url=None, openapi_url=
 app.include_router(router)
 app.include_router(game_router)
 app.include_router(settings_router)
+app.include_router(lostark_keys_router)
 register(app)
 
 
@@ -51,7 +53,7 @@ def openapi():
                     headers["Cache-Control"] = {"schema": {"type": "string", "const": "no-store"}}
                     if status == "429":
                         headers["Retry-After"] = {"schema": {"type": "integer", "minimum": 1}} if "game-accounts" in operation.get("tags", []) else {"schema": {"type": "integer", "const": 60}}
-                    if status == "409" and set(operation.get("tags", [])) & {"game-accounts", "member-settings"}:
+                    if status == "409" and set(operation.get("tags", [])) & {"game-accounts", "member-settings", "lostark-keys"}:
                         headers["Retry-After"] = {"description": "REQUEST_IN_PROGRESS only", "schema": {"type": "integer", "const": 2}}
                     if status == "401":
                         headers["WWW-Authenticate"] = {"schema": {"type": "string", "const": "Bearer"}}
@@ -78,7 +80,7 @@ def openapi():
         'preview_seconds': 1800, 'preview_cleanup_grace_seconds': 3600,
         'terminal_challenge_retention_seconds': 86400, 'audit_seconds': 7776000,
         'rate_limits': {'shared_backend': 'PostgreSQL rolling windows',
-                        'provider_per_minute': 80, 'start_actor_per_minute': 3,
+                        'provider_per_minute': 80, 'provider_scope': 'token HMAC fingerprint', 'start_actor_per_minute': 3,
                         'confirm_actor_per_minute': 12, 'confirm_interval_seconds': 5,
                         'manual_refresh_interval_seconds': 10,
                         'transport_concurrency': '2 per process'},
@@ -95,7 +97,7 @@ def openapi():
                          'request_budget_seconds': 20, 'network_wait_seconds': 19,
                          'budget': 'includes orchestration and in-flight network waits; 1 second reserved for commit; DB statements/locks capped at 500ms; not a hard OS scheduling guarantee',
                          'worker_completion': 'timed-out worker transport may finish; discarded results never write DB',
-                         'shared_provider_per_minute': 80, 'concurrency': 2,
+                         'shared_provider_per_minute': 80, 'provider_scope': 'token HMAC fingerprint', 'concurrency': 2,
                          'identity': 'member + server_name + character_name; no ownership/activity rights',
                          'normal_get': 'read cache only; power_status unknown/available/unavailable/failed',
                          'failure': 'preserve last good value/time; checked_at records latest applied observation; stale=true',
@@ -117,6 +119,24 @@ def openapi():
         'idempotency': 'existing result/tombstone/lease/generation-fencing policy; REQUEST_IN_PROGRESS 409 Retry-After 2',
         'logout': 'preserves stored preference; GET failure must never trigger default PUT',
         'provider': 'no external Lost Ark calls; no build refresh triggered',
+    }
+    schema['x-lostark-key-policy'] = {
+        'scope': 'authenticated member; app Bearer distinct from PUT token',
+        'default': {'configured': False, 'version': 1, 'updated_at': None},
+        'metadata': 'configured/version/updated_at only; no token retrieval; GET read-only',
+        'validation': 'strict compact JWT format only; PUT no provider call/claims/exp validation',
+        'version': 'every new PUT increments; DELETE increments only when configured; stale version rejected',
+        'idempotency': 'UUIDv4; HMAC token fingerprint, never raw token; 24h historical metadata replay',
+        'credential_errors': {'LOSTARK_KEY_NOT_CONFIGURED': 409, 'LOSTARK_KEY_REJECTED': 409,
+                              'LOSTARK_KEY_CHANGED': 409, 'LOSTARK_KEY_UNAVAILABLE': 503},
+        'provider_401_403': 'key rejected; never app HTTP401/logout',
+        'cache': 'member + credential version; old successful power preserved for GET only',
+        'changed': '409; old in-flight observations discarded before final commit; new decision/key',
+        'power_failure': 'failed key rejection/upstream rate limit; unstarted items deferred with same reason',
+        'quota': '80/min per HMAC token fingerprint shared across members/versions; transport 2/process',
+        'quota_limit': 'provider 100/min/client includes local direct calls; server budget is not a guarantee',
+        'logout': 'preserves credential; DELETE removes current secret only',
+        'fallback': 'none; no environment Lost Ark JWT for REST or diagnostic',
     }
     return schema
 app.openapi = openapi

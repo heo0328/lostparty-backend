@@ -47,3 +47,9 @@ additive `0004_member_settings`: 회원당user_id PK/FK·boolean·version·updat
 GET/PUT·엄격DTO·회원별설정·멱등/버전·0004 구현완료. 격리PostgreSQL 대상22개통과(9.61초,기존경고1개): 미설정read-onlyfalse·true/false/no-op/replay/키충돌/version충돌·세션폐기후같은회원새session유지·회원격리·guest/만료/폐기/정지·strict/quota없는provider독립·동시기기한승자·fencingrollback/동일key복구·migration/model/원래인증계약보존. Google증거는mock이며실기기/재설치UI인수는미실행. 기존등록/이름/전투력회귀전체재실행없음.
 
 로컬API healthy200·DB0004_member_settings·OpenAPI전체일치PASS·기존19테이블집계보존/새설정테이블0확인. 개발fixture/자료이관·삭제·DB초기화/외부호출없음. 검증된현재코드/계약/문서를작업브랜치에1회commit/push해인계한다. 실제immutable구현/계약SHA와push확인은같은Issue의게시결과회신에서추적한다. dev/main병합·배포/Issue종료는범위외다.
+
+## Flutter 연결 회신 확인
+
+[최신 회신](https://github.com/heo0328/lostparty-backend/issues/6#issuecomment-6170276194)에서 Backend 계약 `79255f0f77602c26a215bf0340331eb697417ff4` 소비를 확인했다. 사용자 확정 UX는 기존 캐릭터관리 화면의 스위치 변경 즉시 저장이며 하단 캐릭터 저장/취소와 독립한다. GET 복원·명시 PUT·실패와 false 구분·멱등 복구/현재 GET·충돌/회원·세션 격리 연결 완료 보고다.
+
+Flutter 자동 검증은 전체1219개 이후 국소 보완 관련32개, 최종 분석0·debug APK 성공 보고이며 전체1220개 재검증으로 표현하지 않는다. Flutter feature/member-settings 변경은 미커밋·미push·dev 미반영이다. 실제 Backend 설정 쓰기·사용자 새환경 복원은 미실행. 사용자 ON/OFF 저장·화면 재진입·동일회원 재로그인/가능한 새환경 복원 결과와 Flutter 게시 SHA를 기다린다. 새 Backend 수정/반복 시험 요청은 없다. 전체 Armory 자동 갱신·역할별 빌드 복원은 후속으로 유지한다.

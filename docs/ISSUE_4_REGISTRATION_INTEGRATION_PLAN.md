@@ -1,5 +1,8 @@
 # Issue #4 서버 계정 등록 관리 연동 준비·검증 계획
 
+> 서버 공용 키 관련 내용은 당시 계획 이력이다. 현재는 [Issue #7 회원별 키](ISSUE_7_DEVELOPMENT.md)로 전환했고 공용 JWT는 제거했다. 새 설정은 현재 안내를 따른다.
+
+
 작성: 2026-10-14. 상태: **실응답 점검 도구·대상검증 완료, 빈 label 요청 구현·대상검증 통과, 새 계약 Flutter 적용 후속**.
 
 근거: [Issue #4](https://github.com/heo0328/lostparty-backend/issues/4). #3의 [실행 안내](ISSUE_3_DEVELOPMENT.md)와 [등록 후속 계획](ISSUE_3_REGISTRATION_FOLLOWUP_PLAN.md)을 재사용한다. 이후 등록 구간의 준비/실검증/재현 차이/인계는 #4에 기록하며 기존 #3 자료와 완료된 보완을 다시 수행하지 않는다.

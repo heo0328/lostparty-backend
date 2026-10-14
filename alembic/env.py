@@ -1,3 +1,4 @@
+import app.lostark_keys.models
 from alembic import context
 from app.auth.models import Base
 import app.game_accounts.models

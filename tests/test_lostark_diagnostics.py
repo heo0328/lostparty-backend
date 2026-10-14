@@ -43,12 +43,13 @@ def test_probe_failure_hides_untrusted_exception_message():
 
 
 def test_missing_key_never_prompts_or_calls_provider(monkeypatch,capsys):
-    monkeypatch.delenv('LOSTARK_API_TOKEN',raising=False)
+    monkeypatch.setenv('LOSTARK_API_TOKEN','must-not-be-used')
+    monkeypatch.setattr(diagnostics.sys.stdin,'isatty',lambda:False)
     provider=Mock();prompt=Mock()
     monkeypatch.setattr(diagnostics,'LostArkProvider',provider)
     monkeypatch.setattr(diagnostics.getpass,'getpass',prompt)
     assert diagnostics.main()==2
-    assert json.loads(capsys.readouterr().out)['reason']=='UPSTREAM_NOT_CONFIGURED'
+    assert json.loads(capsys.readouterr().out)['reason']=='INTERACTIVE_TERMINAL_REQUIRED'
     provider.assert_not_called();prompt.assert_not_called()
 
 

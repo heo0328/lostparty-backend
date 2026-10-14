@@ -1,7 +1,6 @@
 """One manual siblings request; print shape only, without DB or REST writes."""
 import getpass
 import json
-import os
 import sys
 from collections import Counter
 from app.game_accounts.observations import roster
@@ -64,15 +63,12 @@ def check_summary(provider, character_name):
 
 
 def main():
-    token = os.getenv('LOSTARK_API_TOKEN', '')
-    if not token.strip():
-        print(json.dumps({'status': 'not_ready', 'reason': 'UPSTREAM_NOT_CONFIGURED'}))
-        return 2
     # Refuse getpass's non-terminal fallback, which could echo the character.
     if not sys.stdin.isatty() or not sys.stderr.isatty():
         print(json.dumps({'status': 'not_ready', 'reason': 'INTERACTIVE_TERMINAL_REQUIRED'}))
         return 2
     try:
+        token = getpass.getpass('Lost Ark JWT (hidden, local only): ')
         name = getpass.getpass('Test character name (hidden, local only): ').strip()
         code, report = check_summary(LostArkProvider(token), name)
     except (EOFError, KeyboardInterrupt):

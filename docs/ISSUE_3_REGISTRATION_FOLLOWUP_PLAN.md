@@ -1,5 +1,8 @@
 # Issue #3 모바일 조회 인계 이후 등록 관리 구간 계획
 
+> 서버 공용 키 관련 내용은 당시 계획 이력이다. 현재는 [Issue #7 회원별 키](ISSUE_7_DEVELOPMENT.md)로 전환했고 공용 JWT는 제거했다. 새 설정은 현재 안내를 따른다.
+
+
 작성: 2026-10-14. 상태: **준비 인계·lease 헤더 보완·대상검증·로컬 적용 완료, server key/실등록 인수 후속**.
 
 근거: [Flutter 조회 결과·등록 구간 요청](https://github.com/heo0328/lostparty-backend/issues/3#issuecomment-6161970774). 구현/계약은 `254cb5de125ab1bcb2aa084e091eae976e9a078a`, Backend 게시 기록은406004e. [현재 API 안내](ISSUE_3_DEVELOPMENT.md)와 [협업 단계](API_COLLABORATION_WORKFLOW.md)를 따른다. 이전 구현을 재작성하거나 동일 API를 추가하지 않는다.

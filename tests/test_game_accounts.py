@@ -21,11 +21,13 @@ VERIFY='/v1/me/game-account-verifications'
 
 
 @pytest.fixture
-def world(monkeypatch, login):
+def world(monkeypatch, login, client):
     auth,_=login()
     headers=PrivateHeaders(Authorization='Bearer '+auth['access_token'])
+    assert client.put('/v1/me/lostark-api-key', headers={**headers, 'Idempotency-Key': str(uuid.uuid4())},
+                      json={'token': 'test.member.signature', 'expected_version': 1}).status_code == 200
     state={'removed':(), 'validated':True, 'missing':(), 'count':3, 'group':'a', 'calls':0}
-    def fetch(name, proof=False):
+    def fetch(name, proof=False, **kwargs):
         state['calls']+=1
         rows=[dict(server_name='sample-server',character_name=f"{state['group']}{i}",class_name='sample-class',
                    character_level=60,item_level='1700.00',combat_power=None) for i in range(state['count']) if i not in state['missing']]
@@ -231,7 +233,7 @@ def test_concurrent_same_registration(client,world):
 
 def test_upstream_failure_can_retry_same_key(client,world,monkeypatch):
     h,state=world; original=observations.fetch
-    monkeypatch.setattr(observations,'fetch',lambda *args: (_ for _ in ()).throw(ProviderUnavailable()))
+    monkeypatch.setattr(observations,'fetch',lambda *args, **kwargs: (_ for _ in ()).throw(ProviderUnavailable()))
     key=uuid.uuid4();data=dict(lookup_character_name='a0',label='sample',is_main=False)
     assert change(client,h,'post',BASE,data,key).status_code==503
     with session() as db:
@@ -266,11 +268,14 @@ def test_provider_parser_does_not_accept_partial_or_duplicate():
         with pytest.raises(ProviderUnavailable):observations.roster(raw,'sample')
 
 
-def another_user(login,monkeypatch):
+def another_user(login,monkeypatch,client):
     from app.auth import service as auth_service
-    monkeypatch.setattr(auth_service,'verify_google',lambda *args:'other-subject')
+    monkeypatch.setattr(auth_service,'verify_google',lambda *args, **kwargs:'other-subject')
     auth,_=login()
-    return PrivateHeaders(Authorization='Bearer '+auth['access_token'])
+    headers=PrivateHeaders(Authorization='Bearer '+auth['access_token'])
+    assert client.put('/v1/me/lostark-api-key',headers={**headers,'Idempotency-Key':str(uuid.uuid4())},
+                      json={'token':'other.member.signature','expected_version':1}).status_code==200
+    return headers
 
 
 def test_transfer_is_atomic_and_old_owner_cannot_save(client,world,login,monkeypatch):
@@ -278,7 +283,7 @@ def test_transfer_is_atomic_and_old_owner_cannot_save(client,world,login,monkeyp
     p=page(client,h,r['registration_id'])
     assert change(client,h,'put',BASE+'/'+r['registration_id']+'/character-settings',save_data(p)).status_code==200
     old=page(client,h,r['registration_id']);old_save=save_data(old)
-    other=another_user(login,monkeypatch)
+    other=another_user(login,monkeypatch,client)
     # No information about someone else's registration or challenge.
     assert client.get(BASE+'/'+r['registration_id']+'/characters',headers=other).status_code==404
     transferred=verify(client,other,state)
@@ -299,7 +304,7 @@ def test_transfer_is_atomic_and_old_owner_cannot_save(client,world,login,monkeyp
 
 def test_simultaneous_challenges_only_one_revision_wins(client,world,login,monkeypatch):
     h,state=world;r=register(client,h);verify(client,h,state,r['registration_id'])
-    other=another_user(login,monkeypatch)
+    other=another_user(login,monkeypatch,client)
     # Make required slots deterministic for this transaction concurrency test.
     monkeypatch.setattr(service,'required_slots',lambda _:('무기',))
     one=start(client,other);two=start(client,other)
@@ -314,7 +319,7 @@ def test_simultaneous_challenges_only_one_revision_wins(client,world,login,monke
 
 def test_incomplete_roster_never_transfers(client,world,login,monkeypatch):
     h,state=world;r=register(client,h);verify(client,h,state,r['registration_id'])
-    other=another_user(login,monkeypatch);v=start(client,other)
+    other=another_user(login,monkeypatch,client);v=start(client,other)
     state['missing']=(2,);state['removed']=v['required_slots']
     response=change(client,other,'post',VERIFY+'/'+v['challenge_id']+'/confirm',{})
     assert response.json()['result_code']=='ROSTER_EVIDENCE_PENDING'
@@ -345,11 +350,11 @@ def test_authorization_rechecked_after_provider_wait(client,world,monkeypatch):
     from app.auth.models import Session as AuthSession
     h,_=world
     original=observations.fetch
-    def revoke_then_fetch(*args):
+    def revoke_then_fetch(*args, **kwargs):
         with session() as db,db.begin():
             for s in db.scalars(select(AuthSession)):
                 s.revoked_at=now(db)
-        return original(*args)
+        return original(*args, **kwargs)
     monkeypatch.setattr(observations,'fetch',revoke_then_fetch)
     r=change(client,h,'post',BASE,dict(lookup_character_name='a0',label='sample',is_main=False))
     assert r.status_code==401,r.text
@@ -415,15 +420,18 @@ def test_fresh_summary_requests_are_coalesced(world,monkeypatch):
     entered,finished=Event(),Event()
     original=observations.fetch
     calls=[]
-    def delayed(*args):
+    def delayed(*args, **kwargs):
         calls.append(1);entered.set()
         assert finished.wait(5)
-        return original(*args)
+        return original(*args, **kwargs)
     monkeypatch.setattr(observations,'fetch',delayed)
+    from app.auth.service import principal
+    from app.lostark_keys import service as credentials
+    p = principal(world[0]['Authorization'].split()[1]); snapshot = credentials.capture(p)
     with ThreadPoolExecutor(2) as pool:
-        first=pool.submit(service.lookup,'a0')
+        first=pool.submit(service.lookup,p,snapshot,'a0')
         assert entered.wait(5)
-        second=pool.submit(service.lookup,'a0')
+        second=pool.submit(service.lookup,p,snapshot,'a0')
         # Wait until second observes the lease, then complete the provider call.
         import time
         time.sleep(0.15)
@@ -487,7 +495,7 @@ def test_lease_rejection_returns_retry_after_and_rolls_back(client, world, monke
 
     # The old worker has already acquired its ticket; resume it at the actual
     # HTTP mutation path after expiry/takeover by a separate transaction.
-    monkeypatch.setattr(service, 'reserve', lambda *args: (old_ticket, None))
+    monkeypatch.setattr(service, 'reserve', lambda *args, **kwargs: (old_ticket, None))
     response = change(client, headers, 'patch', BASE + '/' + rid, body, key)
     assert response.status_code == 409
     assert response.json()['error']['code'] == 'REQUEST_IN_PROGRESS'

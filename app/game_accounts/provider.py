@@ -50,7 +50,8 @@ class LostArkProvider:
                 timeout=(3, 5), allow_redirects=False, stream=True,
             ) as response:
                 if response.status_code != 200:
-                    reason = 'UPSTREAM_RATE_LIMITED' if response.status_code == 429 else 'UPSTREAM_UNAVAILABLE'
+                    reason = ('LOSTARK_KEY_REJECTED' if response.status_code in (401, 403) else
+                              'UPSTREAM_RATE_LIMITED' if response.status_code == 429 else 'UPSTREAM_UNAVAILABLE')
                     raise ProviderUnavailable(reason)
                 media = response.headers.get('Content-Type', '').split(';')[0].strip().lower()
                 if media != 'application/json':

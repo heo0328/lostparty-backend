@@ -15,6 +15,8 @@ def setup_database():
     private = rsa.generate_private_key(public_exponent=65537, key_size=2048)
     (directory/'jwt.pem').write_bytes(private.private_bytes(serialization.Encoding.PEM, serialization.PrivateFormat.PKCS8, serialization.NoEncryption()))
     (directory/'recovery.key').write_bytes(os.urandom(32))
+    (directory/'lostark-credential.key').write_bytes(os.urandom(32))
+    (directory/'lostark-fingerprint.key').write_bytes(os.urandom(32))
     subprocess.run(['alembic','upgrade','0001_auth'], check=True, capture_output=True)
     from app.core.database import engine
     import uuid

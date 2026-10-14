@@ -4,6 +4,8 @@ from datetime import timedelta
 from sqlalchemy import select, delete
 from app.core.database import session, now
 from app.game_accounts import observations
+from app.lostark_keys import service as credentials
+from app.lostark_keys.models import MemberPreview, MemberFetch
 from app.game_accounts.models import (Account, Registration, Character, Configuration, Activity,
                                      Verification, Audit, PreviewCache, FetchLease)
 from app.game_accounts.support import authorize, fail, quota, reserve, commit_result, release, cursor_encode, cursor_decode
@@ -11,26 +13,28 @@ from app.game_accounts.provider import ProviderUnavailable
 from app.game_accounts.equipment import EquipmentItem, required_slots, compare_equipment, EquipmentIncomplete
 
 
-def lookup(name, proof=False, cached=False):
-    # Equipment proof is always fetched independently; summaries can share an
-    # already running fresh request without holding DB locks over the network.
-    if cached:
-        with session() as db:
-            c = db.get(PreviewCache, name)
-            if c and now(db) < c.fetched_at+timedelta(minutes=30):
-                return observations.Observation(c.roster, c.fetched_at)
+def lookup(principal, snapshot, name, proof=False, cached=False):
+    identity = snapshot.user_id, snapshot.version, name
+    scope = f'fetch:{snapshot.user_id}:{snapshot.version}:{name}'
     owner, generation = True, None
-    if not proof:
-        from app.game_accounts.support import lock
-        with session() as db, db.begin():
-            lock(db, 'fetch:'+name)
-            lease = db.get(FetchLease, name)
+    with session() as db, db.begin():
+        authorize(db, principal, write=True)
+        credentials.check(db, principal, snapshot)
+        if cached:
+            c = db.get(MemberPreview, identity)
+            if c and now(db) < c.fetched_at + timedelta(minutes=30):
+                return observations.Observation(c.roster, c.fetched_at)
+        if not proof:
+            from app.game_accounts.support import lock
+            lock(db, scope)
+            lease = db.get(MemberFetch, identity)
             current = now(db)
             if lease and not lease.completed and current < lease.expires_at:
                 owner, generation = False, lease.generation
             else:
                 if lease is None:
-                    lease = FetchLease(name=name, generation=1, expires_at=current+timedelta(seconds=30))
+                    lease = MemberFetch(user_id=snapshot.user_id, credential_version=snapshot.version,
+                                        name=name, generation=1, expires_at=current+timedelta(seconds=30))
                     db.add(lease)
                 else:
                     lease.generation += 1
@@ -40,8 +44,10 @@ def lookup(name, proof=False, cached=False):
     if not owner:
         deadline = time.monotonic()+10
         while time.monotonic() < deadline:
-            with session() as db:
-                lease = db.get(FetchLease, name)
+            with session() as db, db.begin():
+                authorize(db, principal, write=True)
+                credentials.check(db, principal, snapshot)
+                lease = db.get(MemberFetch, identity)
                 if lease is None or lease.generation != generation:
                     fail('UPSTREAM_UNAVAILABLE',503)
                 if lease.completed:
@@ -51,34 +57,41 @@ def lookup(name, proof=False, cached=False):
             time.sleep(0.05)
         fail('UPSTREAM_UNAVAILABLE',503)
     try:
-        quota('provider-global', 80)
-        if proof:
-            quota('provider-global', 80)
-        result = observations.fetch(name, proof)
-        if not proof:
-            with session() as db, db.begin():
+        credentials.before_call(principal, snapshot)
+        result = observations.fetch(name, proof, token=snapshot.token,
+                                    before_armory=lambda: credentials.before_call(principal, snapshot))
+        with session() as db, db.begin():
+            authorize(db, principal, write=True)
+            credentials.check(db, principal, snapshot)
+            if not proof:
                 from app.game_accounts.support import lock
-                lock(db, 'fetch:'+name)
-                lease = db.get(FetchLease, name)
+                lock(db, scope)
+                lease = db.get(MemberFetch, identity)
                 if lease.generation != generation or now(db) >= lease.expires_at:
                     fail('UPSTREAM_UNAVAILABLE',503)
                 lease.completed, lease.roster, lease.fetched_at = True, result.roster, result.fetched_at
-                c = db.get(PreviewCache,name)
+                c = db.get(MemberPreview, identity)
                 if c:
                     c.roster,c.fetched_at = result.roster,result.fetched_at
                 else:
-                    db.add(PreviewCache(name=name,roster=result.roster,fetched_at=result.fetched_at))
+                    db.add(MemberPreview(user_id=snapshot.user_id, credential_version=snapshot.version,
+                                         name=name, roster=result.roster, fetched_at=result.fetched_at))
         return result
     except Exception as error:
         if not proof:
             with session() as db, db.begin():
                 from app.game_accounts.support import lock
-                lock(db, 'fetch:'+name)
-                lease = db.get(FetchLease,name)
+                lock(db, scope)
+                lease = db.get(MemberFetch, identity)
                 if lease and lease.generation == generation:
                     lease.completed,lease.roster = True,None
-        if isinstance(error,ProviderUnavailable):
-            fail('UPSTREAM_UNAVAILABLE',503)
+        # A changed key takes precedence over provider failure, without applying it.
+        with session() as db, db.begin():
+            authorize(db, principal, write=True)
+            credentials.check(db, principal, snapshot)
+        if isinstance(error, ProviderUnavailable):
+            fail(error.reason if error.reason in ('LOSTARK_KEY_REJECTED', 'UPSTREAM_RATE_LIMITED') else 'UPSTREAM_UNAVAILABLE',
+                 409 if error.reason == 'LOSTARK_KEY_REJECTED' else 503)
         raise
 
 
@@ -164,7 +177,8 @@ def create_registration(db, uid, name, label, main, obs):
 
 def preview(principal, data):
     quota('preview:'+str(principal[0].id), 30)
-    obs = lookup(data.character_name, cached=True)
+    snapshot = credentials.capture(principal)
+    obs = lookup(principal, snapshot, data.character_name, cached=True)
     return dict(characters=obs.roster, server_fetched_at=obs.fetched_at, expires_at=obs.fetched_at+timedelta(minutes=30))
 
 
@@ -230,9 +244,11 @@ def mutate(principal, operation, key, payload, rid=None):
         return replay
     try:
         obs = None
+        snapshot = None
         baseline_revision = None
         if operation == 'register':
-            obs = lookup(payload['lookup_character_name'])
+            snapshot = credentials.capture(principal)
+            obs = lookup(principal, snapshot, payload['lookup_character_name'])
         elif operation in ('refresh','start','confirm'):
             with session() as db:
                 uid = authorize(db, principal)
@@ -262,9 +278,12 @@ def mutate(principal, operation, key, payload, rid=None):
                 quota('confirm-user:'+str(principal[0].id),12)
                 quota('confirm:'+str(rid),1,5)
             if name:
-                obs = lookup(name, proof=operation != 'refresh')
+                snapshot = credentials.capture(principal)
+                obs = lookup(principal, snapshot, name, proof=operation != 'refresh')
         with session() as db, db.begin():
             uid = authorize(db, principal, write=True)
+            if snapshot is not None:
+                credentials.check(db, principal, snapshot)
             status, result = apply(db, uid, operation, payload, rid, obs, baseline_revision)
             return commit_result(db, ticket, status, result)
     except Exception:

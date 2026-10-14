@@ -165,4 +165,5 @@ class PowerCache(Base):
     reason = mapped_column(String(40), nullable=True)
     generation = mapped_column(Integer, nullable=False, default=0)
     lease_expires_at = stamp(nullable=True)
+    credential_version = mapped_column(Integer, nullable=True)
     __table_args__ = (CheckConstraint("status IN ('unknown','available','unavailable','failed') AND generation >= 0"),)

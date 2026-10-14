@@ -1,5 +1,4 @@
 """Display-only power observations. Workers never write DB or grant ownership."""
-import os
 import time
 from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
 from datetime import timedelta
@@ -9,13 +8,14 @@ from app.core.database import session, now
 from app.game_accounts.models import Character, PowerCache
 from app.game_accounts.combat_power import default_collection_target, parse_profile_power
 from app.game_accounts.provider import LostArkProvider, ProviderUnavailable
-from app.game_accounts.support import (authorize, lock, fail, quota, reserve,
+from app.lostark_keys import service as credentials
+from app.game_accounts.support import (authorize, lock, fail, reserve,
                                        commit_result, release, GameError)
 
 TTL = timedelta(minutes=30)
 BUDGET_SECONDS = 20
 SAFE_REASONS = {'UPSTREAM_UNAVAILABLE', 'UPSTREAM_NOT_CONFIGURED', 'UPSTREAM_RATE_LIMITED',
-                'UPSTREAM_INVALID_RESPONSE', 'UPSTREAM_BUSY', 'UPSTREAM_RESPONSE_TOO_LARGE'}
+                'UPSTREAM_INVALID_RESPONSE', 'UPSTREAM_BUSY', 'UPSTREAM_RESPONSE_TOO_LARGE', 'LOSTARK_KEY_REJECTED'}
 
 
 def scoped(db):
@@ -58,9 +58,9 @@ def overlay(db, uid, row):
                 power_status=status, power_reason=reason, power_stale=stale)
 
 
-def fetch_power(pair):
+def fetch_power(pair, token):
     try:
-        raw = LostArkProvider(os.getenv('LOSTARK_API_TOKEN', '')).profile(pair[1])
+        raw = LostArkProvider(token).profile(pair[1])
         value = parse_profile_power(raw, *pair)
         return ('available', value, None) if value is not None else ('unavailable', None, 'COMBAT_POWER_UNAVAILABLE')
     except ProviderUnavailable as error:
@@ -91,10 +91,14 @@ def refresh(principal, rid, key, payload):
         return replay
     claims, outcomes, ready = {}, {}, []
     try:
+        with session() as db:
+            current_roster(db, authorize(db, principal), rid)
+        snapshot = credentials.capture(principal)
         pairs = list(dict.fromkeys((v['server_name'], v['character_name']) for v in payload['characters']))
         with session() as db, db.begin():
             scoped(db)
             uid = authorize(db, principal, write=True)
+            credentials.check(db, principal, snapshot)
             fingerprint, roster = current_roster(db, uid, rid)
             if any(pair not in roster for pair in pairs):
                 fail('CHARACTER_OUT_OF_SCOPE', 400)
@@ -106,10 +110,10 @@ def refresh(principal, rid, key, payload):
                 ident = key_for(uid, pair)
                 c = db.get(PowerCache, ident)
                 current = now(db)
-                if c and c.checked_at and c.checked_at >= row['summary_fetched_at'] and current < c.checked_at + (timedelta(seconds=10) if c.status == 'failed' else TTL):
+                if c and c.credential_version == snapshot.version and c.checked_at and c.checked_at >= row['summary_fetched_at'] and current < c.checked_at + (timedelta(seconds=10) if c.status == 'failed' else TTL):
                     outcomes[pair] = ('cached' if c.status == 'available' else c.status, c.reason)
                     continue
-                if c and c.lease_expires_at and current < c.lease_expires_at:
+                if c and c.credential_version == snapshot.version and c.lease_expires_at and current < c.lease_expires_at:
                     outcomes[pair] = ('deferred', 'FETCH_IN_PROGRESS')
                     continue
                 if not c:
@@ -117,6 +121,9 @@ def refresh(principal, rid, key, payload):
                                    generation=0, status='unknown', value=row.get('combat_power'),
                                    fetched_at=row.get('power_fetched_at'))
                     db.add(c)
+                if c.credential_version != snapshot.version:
+                    c.checked_at, c.status, c.reason = None, 'unknown', None
+                c.credential_version = snapshot.version
                 c.generation += 1
                 c.lease_expires_at = current + timedelta(seconds=30)
                 claims[pair] = ident, c.generation
@@ -129,7 +136,7 @@ def refresh(principal, rid, key, payload):
                 while ready and len(pending) < 2 and time.monotonic() < deadline - 1:
                     pair = ready.pop(0)
                     try:
-                        quota('provider-global', 80)
+                        credentials.before_call(principal, snapshot)
                     except GameError as error:
                         if error.status != 429:
                             raise
@@ -138,7 +145,7 @@ def refresh(principal, rid, key, payload):
                             outcomes[rest] = ('deferred', 'RATE_LIMITED')
                         ready.clear()
                         break
-                    pending[pool.submit(fetch_power, pair)] = pair
+                    pending[pool.submit(fetch_power, pair, snapshot.token)] = pair
                 remaining = deadline - 1 - time.monotonic()
                 if remaining <= 0 or not pending:
                     break
@@ -148,6 +155,11 @@ def refresh(principal, rid, key, payload):
                 for future in done:
                     pair = pending.pop(future)
                     observed[pair] = future.result()
+                    reason = observed[pair][2]
+                    if reason in ('LOSTARK_KEY_REJECTED', 'UPSTREAM_RATE_LIMITED'):
+                        for rest in ready:
+                            outcomes[rest] = ('deferred', reason)
+                        ready.clear()
             for pair in ready:
                 outcomes[pair] = ('deferred', 'TIME_BUDGET_EXCEEDED')
             for future, pair in pending.items():
@@ -160,6 +172,7 @@ def refresh(principal, rid, key, payload):
         with session() as db, db.begin():
             scoped(db)
             authorize(db, principal, write=True)
+            credentials.check(db, principal, snapshot)
             actual, roster_now = current_roster(db, uid, rid)
             if actual != fingerprint:
                 fail('REVISION_CONFLICT')

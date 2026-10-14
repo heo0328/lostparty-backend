@@ -1,6 +1,7 @@
 from datetime import timedelta
 from sqlalchemy import select, delete, update, or_, and_
 from app.core.database import session, now
+from app.lostark_keys.models import MemberPreview, MemberFetch
 from app.game_accounts.support import lock
 from app.game_accounts.models import (RequestResult, Verification, PreviewCache, LimitEvent,
                                      Audit, Registration, FetchLease, PowerCache)
@@ -27,6 +28,8 @@ def clean():
             r.label='[deleted]'
         db.execute(delete(FetchLease).where(FetchLease.expires_at<=current-timedelta(minutes=90)))
         db.execute(delete(PreviewCache).where(PreviewCache.fetched_at<=current-timedelta(minutes=90)))
+        db.execute(delete(MemberFetch).where(MemberFetch.expires_at<=current-timedelta(minutes=90)))
+        db.execute(delete(MemberPreview).where(MemberPreview.fetched_at<=current-timedelta(minutes=90)))
         db.execute(delete(LimitEvent).where(LimitEvent.created_at<=current-timedelta(minutes=2)))
         db.execute(delete(Audit).where(Audit.created_at<=current-timedelta(days=90)))
         db.execute(delete(PowerCache).where(

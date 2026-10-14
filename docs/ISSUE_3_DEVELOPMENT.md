@@ -6,7 +6,7 @@
 
 12개 업무 API를 자체 Bearer session으로 제공한다. 로그인만으로 등록·canonical 계정·활동을 만들지 않는다. Firebase 연결·이관이나 Flutter 로컬 데이터 변경은 없다. 조회/등록/인증/소유권/활동 상태를 분리한다.
 
-서버 `LOSTARK_API_TOKEN`이 없으면 외부 조회가 필요한 요청은503 UPSTREAM_UNAVAILABLE다. 값은 안전한 로컬 `.env` 또는 실행환경에서만 준비하며 Issue/앱에 올리지 않는다. 현재 live adapter의 장비 schema/해제 표현은 미실증이므로 장비 비교가 일치해도 `pending + PROVIDER_EVIDENCE_PENDING`으로 소유권 확정을 보류한다. canonical roster 감소를 이용한 이전은 `ROSTER_EVIDENCE_PENDING`, refresh 누락은suspect이며 자동missing 확정은 하지 않는다. 서버의 실제 증거 검증 코드를 보완한 뒤 해당 분기를 좁힌다. 클라이언트가 verified/proof/owner를 제출하거나 mock으로 전환할 API는 없다.
+Issue #7 이후 외부 조회는 [회원별 키 계약](ISSUE_7_DEVELOPMENT.md)을 사용한다. 미등록은409 LOSTARK_KEY_NOT_CONFIGURED이며 서버 공용 환경키 fallback은 없다. 회원은 앱의 명시 등록으로 키를 보내며 저장자료 GET은 키 없이 유지한다. 현재 live adapter의 장비 schema/해제 표현은 미실증이므로 장비 비교가 일치해도 `pending + PROVIDER_EVIDENCE_PENDING`으로 소유권 확정을 보류한다. canonical roster 감소를 이용한 이전은 `ROSTER_EVIDENCE_PENDING`, refresh 누락은suspect이며 자동missing 확정은 하지 않는다. 서버의 실제 증거 검증 코드를 보완한 뒤 해당 분기를 좁힌다. 클라이언트가 verified/proof/owner를 제출하거나 mock으로 전환할 API는 없다.
 
 DB·인증·소유권 transaction·활동/대표의 정상/실패 흐름은 격리 pytest의 dependency 교체로 검증한다. 이 결과는 실제 Lost Ark/장비/Flutter 인수와 별개다.
 

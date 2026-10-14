@@ -37,7 +37,7 @@ services:
       GOOGLE_AZP_ALLOWLIST: ${GOOGLE_AZP_ALLOWLIST:-}
       JWT_KEY_ID: ${JWT_KEY_ID:-local-1}
       RECOVERY_KEY_ID: ${RECOVERY_KEY_ID:-local-1}
-      LOSTARK_API_TOKEN: ${LOSTARK_API_TOKEN:-}
+      LOSTARK_CREDENTIAL_KEY_ID: ${LOSTARK_CREDENTIAL_KEY_ID:-local-1}
     ports:
       - "127.0.0.1:${API_PORT:-8000}:8000"
     volumes:

@@ -351,3 +351,33 @@ GAME_DEFAULTS/ISSUE_5_COMBAT_POWER_PLAN·프로젝트문서를추가/최신화�
 격리PostgreSQL대상22개통과9.61초/기존경고1개. 기본read-only/명시변경/no-op/멱등hist replay·회원/newsession격리/세션폐기보존·만료/정지/guest/strict·동시승자/fencingrollback/retry·metadata/migration일치 검증. 모의Google·서버session검증과기기변경/재설치실인수구분. 개발기존19테이블건수기록후additive0004·API만적용,OpenAPI전체일치·health200·집계모두보존/새table0. 격리test-db중지,fixture/이관/초기화/자료삭제/외부호출없음.
 
 새검증/코드수정추가없이정리된작업구간을네이티브확인전게시상시승인으로1회commit/push하고원격반영후실제SHA/branch/push/dev미통합·검증/실미확인을같은Issue에인계한다. 별도merge/배포/종료없음.
+
+## 2026-10-14 — #6 Flutter 설정 연결·자동 검증 회신 확인
+
+[계약 수신/UX 협의](https://github.com/heo0328/lostparty-backend/issues/6#issuecomment-6170086847)와 [연결 완료 회신](https://github.com/heo0328/lostparty-backend/issues/6#issuecomment-6170276194)을 확인했다. Backend 79255f0 소비, 기존 캐릭터관리 스위치 즉시 저장·GET 복원/명시 PUT/멱등·버전 충돌/회원·세션 격리 연결 보고를 기록했다. 전체1219 후 국소 보완 관련32개·최종분석0·debug APK 성공은 Flutter 보고이며 실제 서버 쓰기/사용자 복원 인수와 구분한다. Flutter feature/member-settings는 미커밋·미push·dev 미반영, 적용 SHA 미정. 사용자 인수 결과와 Flutter Git 게시 회신 대기이며 새 Backend 수정/반복 테스트 요청 없음. 문서만 최신화하고 같은 이슈에 확인 회신한다. 코드/API/DB·테스트/서버 재실행·commit/push/merge·Issue 종료 없음.
+
+## 2026-10-15 — #7 회원별 Lost Ark JWT 요구 확인
+
+사용자 지시로 [Issue #7](https://github.com/heo0328/lostparty-backend/issues/7) 본문과 댓글 없음 상태를 확인했다. 현재 observations/power_service의 환경 공통 키, name 기반 siblings cache/lease 및 provider-global quota와 요구 차이를 확인했다. 회원별 암호화 저장/상태·명시 PUT/DELETE, 모든 외부 호출 개인 키 전환, fallback 금지, 앱 세션과 키 오류 분리, credential version 기준 캐시/진행 결과, 비밀 미반환/미기록을 독립 선행 범위로 기록했다. 원본 OpenAPI에 세부 미합의 계약은 추가하지 않았으며 기능/DB/브랜치·commit/push 변경 없음. 기존 #6 미커밋 문서 보존.
+
+## 2026-10-15 — #7 개인 키 저장·조회 전환 계약 설계
+
+사용자 설계 지시로 이슈 본문/최신 요구 확인 댓글과 기존 암호화·오류·멱등/조회/캐시/부분 결과 코드를 검토했다. ISSUE_7_LOSTARK_KEY_CONTRACT_DRAFT에 GET/PUT/DELETE200 metadata, 형식 검사 후 외부 미검증 저장, 버전/삭제 tombstone·HMAC 멱등, 독립 AES-GCM/HMAC 키 설정, 회원·credential version cache/진행 결과 fencing, token fingerprint별80/min·외부client/로컬직접조회 한계, 키 오류/부분결과를 구체 제안했다. cryptography와 Lost Ark 공식 문서 근거 확인. 같은 이슈에 계약 검토를 요청하되 구현 전 검토로 구분한다. 문서 diff 확인만 수행하며 기능/OpenAPI·DB·환경 비밀·브랜치·commit/push/서버/테스트 변경 없음. 기존 #6 결과 기록 보존.
+
+[계약 제안·Flutter 검토 요청](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6172016640) 게시 완료. 코드/API/DB 미변경 상태와 미커밋·미push를 명시했고 작업 문서에 대기 근거를 연결했다.
+
+## 2026-10-15 — #7 계약 수용·공용 키 제거 요청 확인
+
+[Flutter 회신](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6172158382)에서 제안 계약 전체 수용/Backend 구현 요청을 확인했다. 사용자가 공용 Lost Ark JWT 주입 원천/실행환경 제거와 API 재생성을 승인했다고 명시한 내용을 기록했다. 자동 회원 키 등록 없이 사용자 직접 등록, 미등록 새 조회는 공용 캐시 유무와 무관 차단, 저장자료 GET 보존이 추가 기준이다. 발급키 폐기/인증·암호화 키 삭제·DB 초기화와 구분한다. diagnostic 자동 공용 값 사용도 제거 대상으로 계약 정정. Flutter 로컬 UX 협의는 구현 대기 조건 아님. 이번은 회신 확인/문서 정리이며 코드/OpenAPI·DB/환경/서버/commit/push 변경 없음.
+
+## 2026-10-15 — #7 회원 키 저장·전 호출 전환·공용 JWT 제거
+
+사용자 진행 지시로 기존 feat/member-settings에서 합의 계약 구현. AESGCM/AAD·독립HMAC·원문없는 GET/멱등·명시 PUT/DELETE·버전/키오류, 모든 preview/등록/refresh/proof/profile 회원 snapshot 주입, 회원/version별 cache/lease·늦은 결과 fencing·token별80/min 구현. 기존 power 숫자/시각 유지, 새버전fresh hit 차단. 기존 DTO/path·auth/member 정책 전체 보존, 새3API/policy와외부조회quota 의미 추가. 0005 credential/cache/lease3table·power version1column additive, 공용 캐시 보존.
+
+초기 테스트 old API image collection 오류와 키행 중간 autoflush 및 변경된 fixture 경계 수정 후 최신 이미지 대상180개 통과44.55초/기존경고1. 키API/암호문·회원AAD/원문없는오류·키수정중결과차단·전체REST각회원키/미등록공용cache 차단·quota·멱등/버전·기존계정/전투력/member설정/provider/diagnostic/계약/metadata 회귀 포함. 실제Google/provider와사용자키등록은미실행.
+
+승인된 공용 JWT 실제 .env assignment와Compose주입 제거, API만 재생성. 개발DB0005전후 기존20테이블 집계모두보존/신규credential0 확인, health/OpenAPI전체일치PASS. 전용파일생성 rootDAC/read-only mount오류 후 API사용자·별도 /key-setup:rw 마운트로 해결, encryption/HMAC읽기32byte true·runtime공용키false/설정assignmentfalse. 기존auth/서명키/DB자료/발급client폐기없음·기존키자동회원등록없음. 격리test-db중지.
+
+인계용상시승인으로한구간commit/push/원격확인후실제SHA를Issue7에전달한다. Flutter연결/사용자actualprovider·기존#6인수후속과구분, dev/main merge/배포/Issue종료없음.
+
+최종 contract token pattern 명시·GET/DELETE body 거절 경계 후 관련27개/10.27초·기존경고1 통과. API 최신 이미지 재생성·OpenAPI일치 재확인, test-db중지. 기존180개와별도 실행이며 전체207개 단일검증으로 확대하지 않는다.
