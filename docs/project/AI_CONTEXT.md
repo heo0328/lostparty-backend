@@ -19,4 +19,4 @@
 
 인증 구현·진단·문서 기록은 main과 dev의 동일 최신 기준으로 통합·게시됐습니다. 완료 작업 브랜치는 push 확인 후 정리하며, 다음 작업은 최신 dev에서 분기합니다. 계약 소비·전체 Flutter 인수·운영 배포 완료와 저장소 최신화를 구분합니다.
 
-현재 작업 브랜치는 `feat/4-registration-integration`, 기준 dev `e807a6f002222cdff7beb07bfbe5cae65b97df43`입니다. #3 구현·보완·문서가 dev에통합/push됐고 완료feat/3-account-restoration은로컬/원격삭제했습니다. main은기존e6c72e4이며#4 구현·계약·진단문서는 작업브랜치에 게시됐으며 새 SHA는 d3cb697bb6ebb988b63bd99c588bc1b64a93650d입니다. 기존contract254cb5d·보완implementation db0f3ae가 기반이며 #4 빈label 계약/구현은 작업브랜치에 게시됐습니다. 실provider·모바일등록관리인수는 #4,장비/활동과인증실기기후속은별도로유지합니다.
+현재 브랜치는 `dev`이며 #4 구현/계약·문서 및 #2 후속 문서를 `a6d25aa5be34af983c65f1eba72f7fab4846477c`로 fast-forward 통합·push했습니다. 완료 #4 작업 브랜치는 로컬/원격 정리했습니다. main은 e6c72e4 유지, 실제 구현·계약 SHA는 d3cb697입니다. 사용자 지시로 대기하며 Flutter 실인수·#3 장비/활동·#2 인증 후속은 미완료로 보존합니다.

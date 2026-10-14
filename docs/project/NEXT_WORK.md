@@ -1,19 +1,21 @@
 # 현재 작업과 다음 실행 계획
 
-기준일: 2026-10-14. 현재 그룹은 **Issue #4 Backend 게시 완료·Flutter 새 계약 연결/실제 등록관리 인수 후속**이다.
+기준일: 2026-10-14. 현재 그룹은 **dev 통합·push 완료·사용자 지시로 대기**이다.
 
 ## 현재 기준
 
 - [Issue #4](https://github.com/heo0328/lostparty-backend/issues/4), [작업 계획](../ISSUE_4_REGISTRATION_INTEGRATION_PLAN.md), [실검증 안내](../ISSUE_4_LIVE_VALIDATION.md), [원본 OpenAPI](../../openapi/openapi.yaml).
-- 브랜치: `feat/4-registration-integration`(origin 동일 추적). 새 구현·계약 SHA: `d3cb697bb6ebb988b63bd99c588bc1b64a93650d`. 사용자가 commit/push를 승인해 게시했다.
-- dev는 #3 통합 `e807a6f`, main은 `e6c72e4`. #4를 dev/main에 병합하지 않았다. 이전 완료 #3 브랜치는 로컬/원격 정리됐다.
+- 현재 브랜치: `dev`. #4 실제 구현·계약 SHA: `d3cb697bb6ebb988b63bd99c588bc1b64a93650d`. 인증 후속 문서까지 `a6d25aa5be34af983c65f1eba72f7fab4846477c`로 통합·push 완료.
+- dev에 #4 구현/문서 및 #2 후속 문서를 fast-forward 병합·push했다. main은 `e6c72e4` 유지. 완료 #4 브랜치는 dev 포함/원격 반영 확인 후 로컬·원격 삭제했다.
 - 기존12개 업무 API/DB0002 유지. 새 label 계약: POST 생략/빈값은 `""`, PATCH 생략은 유지/빈값은 clear/null 거절. Flutter가 전체목록의 안정 부계정 순서(지정이름 포함)로 표시이름 계산. 새 필드/endpoint/migration 없음.
 - 로컬 API에 새 label 구현 적용, OpenAPI 전체일치 PASS·health200·runtime키존재·DB0002 확인. 키 값 출력 없음.
 - 대상 검증은 빈이름/관련회귀16개 통과·27개 미실행, 진단도구13개 통과. 기존 전체114개/lease후속10개는 이전 실행이며 전체 재실행으로 표시하지 않는다.
 - 사용자 실제 siblings 4개/parser 통과 확인. 소유권·roster전체성 증명과 실제 업무 API 등록관리 성공은 별도다.
 - Flutter 마지막 확인 기준 dev69d3aaa의 두GET/로그인빈목록·로그아웃·로컬보존 보고. 새 등록쓰기/빈이름 wire 연결·실인수는 아직 보고 미확인.
 
-## 다음 실행
+## 대기 후 다음 실행
+
+사용자 지시로 현재 작업을 마치고 대기한다. 자동 polling/새 기능 구현을 시작하지 않는다. 다음 지시에서 최신 dev로 작업 브랜치를 분기하고 관련 이슈 최신 답변을 확인한다.
 
 1. Flutter가 새 계약 SHA `d3cb697bb6ebb988b63bd99c588bc1b64a93650d`를 소비해 확정 디자인의 preview/등록/PATCH/DELETE/refresh UI·Repository를 연결한다. 기존254cb5d를 빈이름 계약 SHA로 사용하지 않는다. [최종요청](https://github.com/heo0328/lostparty-backend/issues/4#issuecomment-6163006876)·작업계획의 요청형식/재시도/전체목록표시 규칙을 따른다.
 2. 적용 commit/소비SHA·자동검증·실제 사용자 시험/미실행을 이슈 댓글에서 확인한다. 키나 동일 siblings 샘플을 다시 요청하지 않으며 장비 인증을 선행조건으로 두지 않는다.

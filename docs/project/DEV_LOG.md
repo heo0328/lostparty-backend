@@ -271,3 +271,9 @@ ISSUE_4_LIVE_VALIDATION.md/계획·NEXT_WORK/AI_CONTEXT에동작/키준비/실�
 ## 2026-10-14 — Issue #2 후속 구현·검증 목록 문서화
 
 사용자 지시로 종료된 #2의 완료범위와 후속을 ISSUE_2_FOLLOWUP.md에 분리했다. 탈퇴/재가입·약관·운영정지의 미합의정책/미구현과 실기기/release·전체세션·운영준비의 미확인인수를 AUTH-F01~F06으로 기록하고 담당/착수조건/완료기준·추후Issue전환을 명시했다. AUTH_DEVELOPMENT의 오래된 debug실인증 미확인 설명을 현재근거로 수정하고 NEXT_WORK/AI_CONTEXT에 연결했다. 현재 #4 진행 유지,문서만변경. 서버/DB/테스트재실행·Issue변경·commit/push없음.
+
+## 2026-10-14 — 사용자 승인 dev 병합·push·완료 브랜치 정리·대기
+
+fetch 후 local/origin dev e807a6f·작업브랜치/origin 4afbb0b 일치 및 다른 worktree 없음 확인. 인증 후속 문서5파일을 a6d25aa5be34af983c65f1eba72f7fab4846477c로 커밋하고 dev를 e807a6f→a6d25aa fast-forward 병합·일반push했다. local/origin dev 일치·clean·local/remote 작업브랜치 dev포함을 확인하고 upstream 해제/local branch -d/remote --delete로 feat/4-registration-integration 정리. main 유지,forcepush없음.
+
+이번 신규변경은 문서뿐이며 코드/계약은 이미 검증된 d3cb697과 동일해 테스트·서버/DB·외부호출 반복없음. 현재기준/대기상태를 문서에 기록해 dev에 게시하고 #4에 통합결과를 인계한다. #3/#4 OPEN·Flutter 실인수 및 인증후속 미완료 유지. 사용자 대기지시로 자동 polling/새작업을 수행하지 않는다.

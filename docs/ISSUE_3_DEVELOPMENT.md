@@ -108,3 +108,5 @@ key/schema실증전에는완전한실인증/이전을Flutter에서완료할수�
 ## 2026-10-14 게시 상태
 
 사용자 승인으로 `feat/4-registration-integration`에 구현/새 label 계약/진단도구/검증/문서를 커밋·push했다. 실제 구현·계약 SHA: `d3cb697bb6ebb988b63bd99c588bc1b64a93650d`. 앞선 미커밋/새SHA미발급 설명은 게시 전 이력이며 현재 소비 기준은 이 SHA다. dev/main 추가병합·실제 Flutter 인수는 후속이다. 기존 대상16개·진단13개/실 siblings 4개 근거를 유지하며 이번 게시에서 테스트를 반복하지 않았다.
+
+2026-10-14 사용자 승인 통합: #4 구현/계약·문서와 #2 후속 문서가 dev a6d25aa에 포함돼 push 완료. 완료 feat/4-registration-integration은 로컬/원격 삭제했다. 위 작업브랜치 게시/미통합 설명은 당시 이력이다. 실제 계약/구현 SHA d3cb697은 유지되며 Flutter 실인수·장비/활동 후속은 별도다. 현재 dev에서 사용자 지시로 대기한다.
