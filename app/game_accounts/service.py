@@ -5,10 +5,11 @@ from sqlalchemy import select, delete
 from app.core.database import session, now
 from app.game_accounts import observations
 from app.lostark_keys import service as credentials
+from app.lostark_keys import rate_limits
 from app.lostark_keys.models import MemberPreview, MemberFetch
 from app.game_accounts.models import (Account, Registration, Character, Configuration, Activity,
                                      Verification, Audit, PreviewCache, FetchLease)
-from app.game_accounts.support import authorize, fail, quota, reserve, commit_result, release, cursor_encode, cursor_decode
+from app.game_accounts.support import authorize, fail, quota, reserve, commit_result, release, cursor_encode, cursor_decode, GameError
 from app.game_accounts.provider import ProviderUnavailable
 from app.game_accounts.equipment import EquipmentItem, required_slots, compare_equipment, EquipmentIncomplete
 
@@ -52,6 +53,7 @@ def lookup(principal, snapshot, name, proof=False, cached=False):
                     fail('UPSTREAM_UNAVAILABLE',503)
                 if lease.completed:
                     if lease.roster is None:
+                        rate_limits.reject_wait(db, snapshot.fingerprint)
                         fail('UPSTREAM_UNAVAILABLE',503)
                     return observations.Observation(lease.roster,lease.fetched_at)
             time.sleep(0.05)
@@ -59,7 +61,8 @@ def lookup(principal, snapshot, name, proof=False, cached=False):
     try:
         credentials.before_call(principal, snapshot)
         result = observations.fetch(name, proof, token=snapshot.token,
-                                    before_armory=lambda: credentials.before_call(principal, snapshot))
+                                    before_armory=lambda: credentials.before_call(principal, snapshot),
+                                    observer=rate_limits.observer(snapshot.fingerprint))
         with session() as db, db.begin():
             authorize(db, principal, write=True)
             credentials.check(db, principal, snapshot)
@@ -90,6 +93,10 @@ def lookup(principal, snapshot, name, proof=False, cached=False):
             authorize(db, principal, write=True)
             credentials.check(db, principal, snapshot)
         if isinstance(error, ProviderUnavailable):
+            if error.reason == 'UPSTREAM_RATE_LIMITED':
+                with session() as db:
+                    retry = rate_limits.metadata(db, snapshot.fingerprint, error.reason)
+                raise GameError(error.reason, 503, retry['retry_after_seconds'], retry['retry_at'])
             fail(error.reason if error.reason in ('LOSTARK_KEY_REJECTED', 'UPSTREAM_RATE_LIMITED') else 'UPSTREAM_UNAVAILABLE',
                  409 if error.reason == 'LOSTARK_KEY_REJECTED' else 503)
         raise

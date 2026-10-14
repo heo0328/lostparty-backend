@@ -38,3 +38,9 @@ class MemberFetch(Base):
     completed = mapped_column(Boolean, nullable=False, default=False)
     roster = mapped_column(JSONB, nullable=True)
     fetched_at = stamp(nullable=True)
+
+
+class ProviderLimit(Base):
+    __tablename__ = 'lostark_provider_limits'
+    fingerprint = mapped_column(String(64), primary_key=True)
+    blocked_until = stamp(index=True)

@@ -138,6 +138,27 @@ def openapi():
         'logout': 'preserves credential; DELETE removes current secret only',
         'fallback': 'none; no environment Lost Ark JWT for REST or diagnostic',
     }
+    schema['x-lostark-key-policy']['restore'] = {
+        'path': '/v1/me/lostark-api-key/restore', 'method': 'POST',
+        'body': 'strict expected_version; read-only; no Idempotency-Key/result storage',
+        'response': 'token/version from same locked member credential; no-store; secret response not logged',
+        'conflict': 'absent 409 NOT_CONFIGURED; changed 409 CHANGED; unreadable 503 UNAVAILABLE',
+        'metadata_get': 'unchanged; no token',
+    }
+    schema['x-lostark-key-policy']['provider_wait'] = {
+        'reset': 'UNIX epoch seconds; valid future <=300s; otherwise observed time +60s',
+        'trigger': '429 or successful 200 Remaining=0; successful response stays successful',
+        'scope': 'token HMAC fingerprint; deadline max; no extension without new provider observation',
+        'late': 'only independent token limiter state; never business/cache/idempotent-success writes',
+        'single': 'error retry_after_seconds/retry_at for rate limits; Retry-After matches seconds',
+        'batch': 'PowerResult required nullable retry_after_seconds/retry_at; no batch200 Retry-After',
+        'retry': 'explicit new command; historical replay keeps original retry_at; no automatic provider retries',
+    }
+    for path, operations in schema['paths'].items():
+        for operation in operations.values():
+            if 'game-accounts' in operation.get('tags', []) and '503' in operation.get('responses', {}):
+                operation['responses']['503']['headers']['Retry-After'] = {
+                    'description': 'UPSTREAM_RATE_LIMITED only', 'schema': {'type': 'integer', 'minimum': 1}}
     return schema
 app.openapi = openapi
 

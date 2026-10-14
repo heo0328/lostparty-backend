@@ -1,6 +1,6 @@
 """Uncached server-side transport. No logging, retry, redirects or DB writes.
 
-Not wired to REST. Typed roster/Armory parsing awaits provider schema evidence.
+Member REST transport; ownership proof still awaits provider schema evidence.
 """
 import json
 from time import monotonic
@@ -22,9 +22,10 @@ class ProviderUnavailable(Exception):
 
 
 class LostArkProvider:
-    def __init__(self, token: str, transport=None):
+    def __init__(self, token: str, transport=None, observer=None):
         if not isinstance(token, str) or not token.strip() or '\r' in token or '\n' in token:
             raise ProviderUnavailable('UPSTREAM_NOT_CONFIGURED')
+        self._observer = observer
         self._token = token
         self._transport = transport or requests
 
@@ -49,6 +50,8 @@ class LostArkProvider:
                 headers={'Accept': 'application/json', 'Authorization': f'Bearer {self._token}'},
                 timeout=(3, 5), allow_redirects=False, stream=True,
             ) as response:
+                if self._observer is not None:
+                    self._observer(response.status_code, response.headers)
                 if response.status_code != 200:
                     reason = ('LOSTARK_KEY_REJECTED' if response.status_code in (401, 403) else
                               'UPSTREAM_RATE_LIMITED' if response.status_code == 429 else 'UPSTREAM_UNAVAILABLE')

@@ -35,7 +35,7 @@ def isolated():
     from app.auth.router import _limits
     _limits.clear()
     with engine().begin() as c:
-        c.execute(text('TRUNCATE game_account_fetch_leases, game_account_cache, game_account_limit_events, refresh_recoveries, refresh_credentials, auth_sessions, auth_transactions, auth_identities, users CASCADE'))
+        c.execute(text('TRUNCATE lostark_provider_limits, game_account_fetch_leases, game_account_cache, game_account_limit_events, refresh_recoveries, refresh_credentials, auth_sessions, auth_transactions, auth_identities, users CASCADE'))
 
 @pytest.fixture
 def client():

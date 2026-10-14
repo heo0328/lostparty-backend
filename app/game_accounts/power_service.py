@@ -1,4 +1,4 @@
-"""Display-only power observations. Workers never write DB or grant ownership."""
+"""Display-only power observations. Workers never write business data or grant ownership."""
 import time
 from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
 from datetime import timedelta
@@ -9,6 +9,7 @@ from app.game_accounts.models import Character, PowerCache
 from app.game_accounts.combat_power import default_collection_target, parse_profile_power
 from app.game_accounts.provider import LostArkProvider, ProviderUnavailable
 from app.lostark_keys import service as credentials
+from app.lostark_keys import rate_limits
 from app.game_accounts.support import (authorize, lock, fail, reserve,
                                        commit_result, release, GameError)
 
@@ -58,9 +59,9 @@ def overlay(db, uid, row):
                 power_status=status, power_reason=reason, power_stale=stale)
 
 
-def fetch_power(pair, token):
+def fetch_power(pair, token, observer=None):
     try:
-        raw = LostArkProvider(token).profile(pair[1])
+        raw = LostArkProvider(token, observer=observer).profile(pair[1])
         value = parse_profile_power(raw, *pair)
         return ('available', value, None) if value is not None else ('unavailable', None, 'COMBAT_POWER_UNAVAILABLE')
     except ProviderUnavailable as error:
@@ -110,7 +111,11 @@ def refresh(principal, rid, key, payload):
                 ident = key_for(uid, pair)
                 c = db.get(PowerCache, ident)
                 current = now(db)
-                if c and c.credential_version == snapshot.version and c.checked_at and c.checked_at >= row['summary_fetched_at'] and current < c.checked_at + (timedelta(seconds=10) if c.status == 'failed' else TTL):
+                cached = c and c.credential_version == snapshot.version and c.checked_at and c.checked_at >= row['summary_fetched_at'] and current < c.checked_at + (timedelta(seconds=10) if c.status == 'failed' else TTL)
+                if cached and c.reason == 'UPSTREAM_RATE_LIMITED':
+                    _, blocked_until, _ = rate_limits.state(db, snapshot.fingerprint)
+                    cached = blocked_until is not None
+                if cached:
                     outcomes[pair] = ('cached' if c.status == 'available' else c.status, c.reason)
                     continue
                 if c and c.credential_version == snapshot.version and c.lease_expires_at and current < c.lease_expires_at:
@@ -138,14 +143,14 @@ def refresh(principal, rid, key, payload):
                     try:
                         credentials.before_call(principal, snapshot)
                     except GameError as error:
-                        if error.status != 429:
+                        if error.code not in ('RATE_LIMITED', 'UPSTREAM_RATE_LIMITED'):
                             raise
-                        outcomes[pair] = ('deferred', 'RATE_LIMITED')
+                        outcomes[pair] = ('deferred', error.code)
                         for rest in ready:
-                            outcomes[rest] = ('deferred', 'RATE_LIMITED')
+                            outcomes[rest] = ('deferred', error.code)
                         ready.clear()
                         break
-                    pending[pool.submit(fetch_power, pair, snapshot.token)] = pair
+                    pending[pool.submit(fetch_power, pair, snapshot.token, rate_limits.observer(snapshot.fingerprint))] = pair
                 remaining = deadline - 1 - time.monotonic()
                 if remaining <= 0 or not pending:
                     break
@@ -193,8 +198,9 @@ def refresh(principal, rid, key, payload):
             for pair in pairs:
                 data = overlay(db, uid, roster_now[pair])
                 state, reason = outcomes[pair]
+                retry = rate_limits.metadata(db, snapshot.fingerprint, reason) if reason in ('RATE_LIMITED', 'UPSTREAM_RATE_LIMITED') else {'retry_after_seconds': None, 'retry_at': None}
                 items.append(dict(server_name=pair[0], character_name=pair[1], **data,
-                                  status=state, reason=reason))
+                                  status=state, reason=reason, **retry))
             result = commit_result(db, ticket, 200, dict(items=items))
         claims.clear()
         return result

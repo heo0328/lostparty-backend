@@ -164,6 +164,8 @@ class PowerResult(PowerTarget):
     power_reason: str | None
     status: Literal['updated', 'cached', 'unavailable', 'failed', 'skipped', 'deferred']
     reason: str | None
+    retry_after_seconds: Annotated[StrictInt, Field(ge=1)] | None
+    retry_at: datetime | None
 
 
 class PowerRefreshOut(DTO):
@@ -185,6 +187,8 @@ class GameErrorDetail(DTO):
     code: str
     message: str
     request_id: UUID
+    retry_after_seconds: Annotated[StrictInt, Field(ge=1)] | None = None
+    retry_at: datetime | None = None
 
 
 class GameErrorOut(DTO):

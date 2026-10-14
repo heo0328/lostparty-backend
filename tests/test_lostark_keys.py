@@ -152,14 +152,14 @@ def test_new_session_restores_key_without_disclosing_it(client, member, login):
 
 def test_power_key_change_preserves_existing_value(client, world, monkeypatch):
     h,_=world; r=register(client,h)
-    def fetch(pair,token): return 'available','100',None
+    def fetch(pair,token,observer=None): return 'available','100',None
     from app.game_accounts import power_service
     monkeypatch.setattr(power_service,'fetch_power',fetch)
     path=BASE+'/'+r['registration_id']+'/combat-power/refresh'
     data={'characters':[{'server_name':'sample-server','character_name':'a0'}]}
     assert change(client,h,'post',path,data).status_code==200
     assert put(client,h,version=2).status_code==200
-    def racing(pair,token):
+    def racing(pair,token,observer=None):
         assert delete(client,h,3).status_code==200
         return 'available','999',None
     monkeypatch.setattr(power_service,'fetch_power',racing)
@@ -232,10 +232,10 @@ def test_key_failure_partial_and_fresh_cache_not_reused_after_replace(client, wo
     h,_=world;r=register(client,h)
     path=BASE+'/'+r['registration_id']+'/combat-power/refresh'
     data={'characters':[{'server_name':'sample-server','character_name':'a0'}]}
-    monkeypatch.setattr(power_service,'fetch_power',lambda pair,token: ('available','100',None))
+    monkeypatch.setattr(power_service,'fetch_power',lambda pair,token,observer=None: ('available','100',None))
     assert change(client,h,'post',path,data).status_code==200
     put(client,h,version=2)
-    monkeypatch.setattr(power_service,'fetch_power',lambda pair,token: ('failed',None,'LOSTARK_KEY_REJECTED'))
+    monkeypatch.setattr(power_service,'fetch_power',lambda pair,token,observer=None: ('failed',None,'LOSTARK_KEY_REJECTED'))
     response=change(client,h,'post',path,data)
     item=response.json()['items'][0]
     assert response.status_code==200 and item['status']=='failed' and item['reason']=='LOSTARK_KEY_REJECTED'

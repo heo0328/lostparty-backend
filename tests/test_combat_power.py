@@ -62,7 +62,7 @@ def body(*names):
 
 def seed_provider(monkeypatch, value='1234.56'):
     calls = []
-    def fetch(pair, token):
+    def fetch(pair, token, observer=None):
         calls.append(pair)
         return 'available', value, None
     monkeypatch.setattr(power_service, 'fetch_power', fetch)
@@ -101,7 +101,7 @@ def test_power_partial_unavailable_failure_preserves_good_value(client, world, m
     with session() as db, db.begin():
         for c in db.scalars(select(PowerCache)):
             c.checked_at -= timedelta(hours=1)
-    def fetch(pair, token):
+    def fetch(pair, token, observer=None):
         return ('unavailable', None, 'COMBAT_POWER_UNAVAILABLE') if pair[1] == 'a0' else ('failed', None, 'UPSTREAM_UNAVAILABLE')
     monkeypatch.setattr(power_service, 'fetch_power', fetch)
     response = change(client, h, 'post', endpoint(r), body('a0', 'a1', 'a2'))
@@ -143,7 +143,7 @@ def test_power_budget_deferred_does_not_late_write(client, world, monkeypatch):
     from threading import Event
     h, _ = world; r = register(client, h)
     entered, finish = Event(), Event()
-    def fetch(pair, token):
+    def fetch(pair, token, observer=None):
         entered.set(); finish.wait(5)
         return 'available', '999', None
     monkeypatch.setattr(power_service, 'fetch_power', fetch)
@@ -158,7 +158,7 @@ def test_power_budget_deferred_does_not_late_write(client, world, monkeypatch):
 
 def test_power_revision_changed_during_network_rolls_back(client, world, monkeypatch):
     h, _ = world; r = register(client, h)
-    def fetch(pair, token):
+    def fetch(pair, token, observer=None):
         with session() as db, db.begin():
             reg = db.get(Registration, uuid.UUID(r['registration_id']))
             reg.version += 1
@@ -217,7 +217,7 @@ def test_power_twenty_targets_and_membership_session_isolation(client, world, mo
 def test_power_rechecks_deleted_session_and_fencing(client, world, monkeypatch, change_kind):
     from app.auth.models import Session
     h, _ = world; r = register(client, h)
-    def fetch(pair, token):
+    def fetch(pair, token, observer=None):
         with session() as db, db.begin():
             if change_kind == 'delete':
                 reg = db.get(Registration, uuid.UUID(r['registration_id']))
@@ -242,7 +242,7 @@ def test_power_overlap_merges_without_duplicate_profile_call(client, world, monk
     h, _ = world; r = register(client, h)
     entered, finish = Event(), Event()
     calls = []
-    def fetch(pair, token):
+    def fetch(pair, token, observer=None):
         calls.append(pair); entered.set(); finish.wait(5)
         return 'available', '123', None
     monkeypatch.setattr(power_service, 'fetch_power', fetch)
@@ -263,7 +263,7 @@ def test_power_profile_only_transport_and_safe_failure(monkeypatch):
     assert LostArkProvider('test-only', wire).profile('sample')['CombatPower'] == '0'
     assert wire.get.call_args.args[0].endswith('/armories/characters/sample/profiles')
     class Broken:
-        def __init__(self, token): pass
+        def __init__(self, token, observer=None): pass
         def profile(self, name): raise RuntimeError('private credential/profile')
     monkeypatch.setattr(power_service, 'LostArkProvider', Broken)
     assert power_service.fetch_power(('sample-server', 'sample'), 'test-only') == ('failed', None, 'UPSTREAM_UNAVAILABLE')

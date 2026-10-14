@@ -52,8 +52,8 @@ def roster(raw, name):
     return sorted(rows, key=lambda r: (r['server_name'], r['character_name']))
 
 
-def fetch(name, proof=False, *, token, before_armory=None):
-    provider = LostArkProvider(token)
+def fetch(name, proof=False, *, token, before_armory=None, observer=None):
+    provider = LostArkProvider(token, observer=observer)
     rows = roster(provider.siblings(name), name)
     gear = None
     if proof:

@@ -25,3 +25,5 @@
 현재 브랜치는 `feat/member-settings`(dev4eb23f5 기준). #6 회원설정 GET/PUT·0004 구현/검증·79255f0 push 완료. Flutter 연결/자동검증 완료 보고를 확인했으며 Flutter 게시 SHA·사용자 실인수는 대기한다. 로컬DB0004/API적용완료,기존DTO변경없음·실기기복원인수후속. #5구현39188d5·양측Git인계/사용자인수와#4/#3/#2후속을보존한다.
 
 #7은 기존 feat/member-settings에서 함께 구현, 회원별 키 저장 및 전 외부 호출 전환 완료. 공용 JWT 제거·독립 암호화/HMAC 준비·새 credential0, 인계용 게시 후 Flutter 연결/실provider 확인이 후속이다. dev/main 통합은 미수행.
+
+#7 추가: [호출대기/키기기복원 제안](../ISSUE_7_RETRY_RESTORE_CONTRACT_DRAFT.md). 38d66da 구현/push완료 후 provider제한retry시간·별도본인원문restore요구를확인,Flutter 추가계약 수용 후Backend 보완구현/검증,로컬0006·새게시후Flutter연결/실인수.

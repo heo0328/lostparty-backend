@@ -381,3 +381,21 @@ GAME_DEFAULTS/ISSUE_5_COMBAT_POWER_PLAN·프로젝트문서를추가/최신화�
 인계용상시승인으로한구간commit/push/원격확인후실제SHA를Issue7에전달한다. Flutter연결/사용자actualprovider·기존#6인수후속과구분, dev/main merge/배포/Issue종료없음.
 
 최종 contract token pattern 명시·GET/DELETE body 거절 경계 후 관련27개/10.27초·기존경고1 통과. API 최신 이미지 재생성·OpenAPI일치 재확인, test-db중지. 기존180개와별도 실행이며 전체207개 단일검증으로 확대하지 않는다.
+
+## 2026-10-15 — #7 JWT 추가 회신 확인·최소 계약 제안
+
+[6172594991](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6172594991)에서38d66da인계수신/공용제거확인·Flutter미연결,token별provider대기/앱retry시간및본인원문기기복원새방향을확인했다. 공식usage guide Reset1668659557/UNIX timestamp근거확인,실키관찰/한도소진없음. 추가계약문서에단건오류optionalnullable시간/PowerResult필수nullable시간·60초fallback/미래범위300초·별도readonlyPOST restore와metadata불변/기기부분성공을제안했다. 코드/OpenAPI·DB/서버/테스트·commit/push변경없음.
+
+[추가 계약 제안](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6172711200)을 게시하고 작업 문서에 후속 담당·대기 링크를 기록했다. 문서는 미커밋이며 기존 게시코드는 변경하지 않았다.
+
+## 2026-10-15 — #7 추가 계약 수용 회신 확인
+
+[6172746952](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6172746952)에서대기시간/readonlyrestore계약전체수용·Backend보완진행요청확인. 성공200 Remaining0유지,늦은제한정보token별max/새키격리·업무기한/fencing유지와현재Flutter strict필드비호환주의를구현기준에명시했다. 다음은Backend보완구현/새SHA인계→Flutter연결이며수용을기능완료로확대하지않는다. 이번회신확인은문서만갱신,코드/OpenAPI·DB/서버/테스트·commit/push변경없음.
+
+## 2026-10-15 — #7 retry 시간·본인 키 restore 보완 구현/검증/로컬적용
+
+합의/진행지시로feat/member-settings유지. tokenfingerprint별blocked deadline1table0006·provider429/200Remaining0관찰/UNIX초300초범위·60초fallback/max·추가호출대기/정상성공cache유지,단건error optionalnullable시간/RetryAfter일치·PowerResultrequirednullable2필드/부분성공·기한뒤control observer만옛token대기반영 구현. 원정대동일조회waiter도알려진대기전달,전투력10초failurecache가만료대기를숨기지않게보완. readonlyrestore POST는본인잠금회원행/expectedversion/tokenversion/no-store·멱등원문보관없음. 기존metadataGET/auth/member/CharacterOut불변,현재FlutterstrictPowerResult비호환주의기록.
+
+초기mock requests예외class/테스트간ProviderLimit잔존분리후151개47.44초·기존경고1PASS. waiter/local+upstreammax후24개7.04초,최종cachedrate만료국소4개3.88초PASS(각기존경고1). 별도실행,179단일suite주장없음. 복원권한/키변경삭제/무결성/원문미로그,정상badReset/성공Remaining0/제한headerJSON/부분결과/replay/lateoldtoken분리·직접영향회귀와migration검증. Google/provider는mock·실키/실한도시험없음.
+
+로컬0006additive1table·기존23table집계전부보존/새limiter0,API만재생성healthy·OpenAPI전체일치PASS,test-db중지. secretfiles/기존credential/공용키제거유지·자료초기화/fixture/원문로그없음. 상시인계승인으로한구간commit/push후sameIssue에새SHA로Flutter연결인계,dev/mainmerge·배포/종료없음.

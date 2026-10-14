@@ -11,7 +11,7 @@ class AuthError(Exception):
         self.code, self.status = code, status
 
 
-def response(request, code, status, retry_after=None):
+def response(request, code, status, retry_after=None, retry_at=None):
     request_id = str(uuid.uuid4())
     if status >= 400:
         logging.getLogger(__name__).warning("API rejected code=%s status=%s request_id=%s", code, status, request_id)
@@ -22,15 +22,16 @@ def response(request, code, status, retry_after=None):
         headers["Retry-After"] = "60"
     if retry_after is not None:
         headers["Retry-After"] = str(retry_after)
-    return JSONResponse(status_code=status, headers=headers,
-                        content={"error": {"code": code, "message": code,
-                                  "request_id": request_id}})
+    detail = {"code": code, "message": code, "request_id": request_id}
+    if retry_at is not None and code in ('RATE_LIMITED', 'UPSTREAM_RATE_LIMITED'):
+        detail.update(retry_after_seconds=retry_after, retry_at=retry_at.isoformat())
+    return JSONResponse(status_code=status, headers=headers, content={"error": detail})
 
 
 def register(app):
     @app.exception_handler(AuthError)
     async def auth_error(request: Request, error: AuthError):
-        return response(request, error.code, error.status, getattr(error, "retry_after", None))
+        return response(request, error.code, error.status, getattr(error, "retry_after", None), getattr(error, "retry_at", None))
 
     @app.exception_handler(RequestValidationError)
     async def validation(request: Request, error: RequestValidationError):

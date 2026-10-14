@@ -4,7 +4,7 @@
 
 ## 공개 계약
 
-`GET /v1/me/lostark-api-key`는 앱 Bearer로 `{configured:boolean,version:integer>=1,updated_at:UTC|null}`만 반환한다. 초기 false/1/null, 행 생성·복호화·외부 호출 없음. 원문 키는 다운로드하지 않는다.
+`GET /v1/me/lostark-api-key`는 앱 Bearer로 `{configured:boolean,version:integer>=1,updated_at:UTC|null}`만 반환한다. 초기 false/1/null, 행 생성·복호화·외부 호출 없음. metadata GET은 원문을 반환하지 않는다. 추가합의로 본인 기기복원은 별도 POST restore에서 제공한다.
 
 `PUT`은 앱 Bearer·UUIDv4 Idempotency-Key·엄격 `{token:string,expected_version:integer>=1}`. compact JWT 3구간 ASCII base64url 문자·최대16KiB, 공백/개행/Bearer 접두사 불가. 형식 검사 후 암호화 저장만 하며 provider 유효성/서명/claims/exp를 검증하지 않는다. 모든 새 PUT은 같은 token이어도 version+1, 첫 PUT은2.
 
@@ -46,3 +46,20 @@ API는 원래 `/run/secrets:ro`로 읽는다. 생성 시 API 사용자 권한으
 로컬 migration0005·기존20테이블 건수 보존·새 credential0 확인. API healthy/계약전체 일치PASS. 공용 JWT 설정/실행환경 없음, encryption/HMAC 각각32byte 읽기 준비 true. 최초생성의 root DAC/read-only mount 오류는 API 사용자·별도쓰기 mount로 해결했다. 테스트DB 중지. DB 초기화/개발 fixture/캐릭터 삭제·자료이관 없음.
 
 다음은 Flutter가 게시 SHA/OpenAPI를 소비하고 상태/명시등록·교체·삭제/키오류·재시도·회원 격리를 연결하는 일이다. 이후 사용자가 자신의 키를 앱에서 명시 등록해 실제 서버 조회를 확인한다. 로컬직접조회와 서버등록 UX는 Flutter/사용자 협의로 유지한다. 실제 provider/사용자 인수·전체빌드자동갱신은 미확인/미구현이며 동일 등록/이름/전투력 테스트를 일괄 재요청하지 않는다.
+
+## 추가 합의 — 본인 키 복원·호출 제한 시간
+
+[수용 회신](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6172746952)·[정확한 추가 계약](ISSUE_7_RETRY_RESTORE_CONTRACT_DRAFT.md)을 구현했다. 기존 metadataGET/PUT/DELETE와캐릭터GET DTO는유지한다.
+
+POST /v1/me/lostark-api-key/restore: 앱Bearer·엄격 `{expected_version:integer>=1}`, 200 `{token:string,version:integer>=1}`. 같은locked회원행에서복호화·no-store·readonly·외부호출/버전증가없음. Idempotency-Key불필요/RequestResult에원문저장없음. absent409 NOT_CONFIGURED,stale409 CHANGED, unreadable503 UNAVAILABLE,앱401/403기존. 원문은Flutter보안저장에만사용하고등록화면/로그에표시하지않는다. 전기기실시간동기화보장없음,회원/서버/세션/버전/generation late응답차단은Flutter담당이다.
+
+외부429 또는성공200Remaining0은token별limiter에절대deadline max기록. UNIX초Reset이관찰시점기준미래300초이내면사용,누락/invalid/past/과도미래는관찰+60초. 같은token재등록/다른회원도대기공유·새token독립. 로컬차단만으로deadline연장없음. 성공200은성공유지/이후새호출보류,정상cache/저장GET유지. 늦은worker의control observer는독립limiter만기록·업무자료는기한/fencing그대로다.
+
+GameErrorDetail은optionalnullable retry_after_seconds/retry_at,제한오류엔필수쌍,단건Retry-After와초값동일. PowerResult는requirednullable두필드추가·그외reason은null쌍·200batch전체Retry-After없음. seconds는max(1,ceil(deadline-DBnow)),retry_at은UTC절대시각. 서버80/min과upstream대기가겹치면deadline max/upstream활성시codeUPSTREAM_RATE_LIMITED. 실패cache10초로만료된upstream대기를숨기지않음.
+
+**현재 Flutter strict ServerPowerResult와 새 required필드 응답은 비호환**이다. 새게시OpenAPI소비/DTO·오류·복원/대기연결후사용자확인해야하며Backend게시만으로현재앱정상인수라고보고하지않는다. 새입력계약으로복원된키를로그/Issue에보내지않는다. 기존공용키제거확인을반복요청하지않고추가복원/대기구간만인계한다.
+
+
+추가구간 검증: 대상151개 통과47.44초(기존경고1),동일조회대기자·local/upstreammax후24개 통과7.04초,제한만료시cache우회최종국소4개 통과3.88초. 각각별도실행이며전체179개단일실행으로확대하지않는다. 정상/누락/invalid/past/ms모양/과도미래Reset·Remaining0성공·token격리/max/기간만료·단건503/429헤더JSON일치·부분결과시간/replay·late관찰옛token만반영/업무값미쓰기·restore본인/세션/형식/키교체삭제/무결성·no-store/원문미로그/멱등미저장·직접영향계정/전투력/member설정/스키마migration검증. 초기mock예외/테스트간limiter상태잔존은수정후통과했다. provider와Google증거는mock이며실한도소진/실키복원은미실행.
+
+로컬DB0006_provider_limits·새limiter1테이블만추가/기존23테이블건수보존·새행0확인. 최신APIhealth정상/원본OpenAPI전체일치PASS·test-db중지. 기존credential/암호화키/공용JWT제거상태보존,자료초기화/fixture·키파일변경/실provider호출없음. 게시구간은검증후작업브랜치에1회commit/push/원격확인하고Issue7의실제새SHA로인계한다. Flutter연결/실사용후속·dev/main미병합.

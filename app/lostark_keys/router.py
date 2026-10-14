@@ -64,3 +64,25 @@ def put(data: LostArkKeyIn, principal: Principal, key: Key):
 def delete(principal: Principal, key: Key, expected_version: Annotated[int, Query(ge=1)]):
     status, body = service.mutate(principal, key, expected_version)
     return JSONResponse(status_code=status, content=jsonable_encoder(body))
+
+
+class LostArkKeyRestoreIn(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    expected_version: Annotated[StrictInt, Field(ge=1)]
+
+
+class LostArkKeyRestoreOut(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    token: StrictStr
+    version: Annotated[StrictInt, Field(ge=1)]
+
+    def __repr__(self):
+        return '<LostArkKeyRestoreOut redacted>'
+
+    def __str__(self):
+        return self.__repr__()
+
+
+@router.post('/restore', response_model=LostArkKeyRestoreOut, responses=common)
+def restore(data: LostArkKeyRestoreIn, principal: Principal):
+    return service.restore(principal, data.expected_version)

@@ -28,3 +28,13 @@
 3. 사용자가 앱에서 개인 키를 직접 등록하고 실제 서버 조회를 확인한다. 키를 채팅/Issue로 요청하지 않는다. 등록 성공은 암호화 저장 완료이며 provider 유효성 증명이 아니다. actual provider/사용자 확인은 현재 미실행이다.
 
 #6은 기존 연결/자동검증 보고 확인·Flutter 게시/사용자 인수 대기를 보존한다. 전체빌드자동갱신·역할Snapshot 저장·로컬직접조회 제거·장비proof 보류 해제·운영배포/Issue 종료는 이번 범위가 아니다. dev/main 미병합.
+
+## #7 추가 구현 — 다음 실행
+
+[Flutter 수용](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6172746952)·[정확한 계약](../ISSUE_7_RETRY_RESTORE_CONTRACT_DRAFT.md). Backend가token별deadline/60초fallback/max·단건/부분결과시간·readonly본인restore를구현했다. 38d66da는기존개인키SHA이며이번보완은새게시SHA로인계한다.
+
+1. 보완구간검증·로컬0006/API/원본계약일치확인후상시인계규칙으로1회commit/push·원격확인,같은Issue에실제SHA/branch/push/dev미병합과검증/실미확인을전달한다.
+2. Flutter가새PowerResult required2필드/오류DTO·restore/보안저장·회원/late응답/부분성공·대기UI를연결한다. 현재strict빌드가새응답을소비할수없음을명시하고양측연결전실인수완료로표시하지않는다.
+3. 사용자가새연결후자신의키등록/기기복원·명시교체삭제를확인한다. 실제한도소진시험/원문자료요청없음. 서버429/단위/fallback검증은mock+공식근거이며실provider확인과구분한다.
+
+#6기존연결/인수후속·전체빌드/역할저장미구현은보존한다. 브랜치feat/member-settings유지·dev/main미병합,키파일변경/자료초기화없음. 최신게시결과/대기근거는 [Issue #7](https://github.com/heo0328/lostparty-backend/issues/7) 최신Backend인계댓글이기준이다.

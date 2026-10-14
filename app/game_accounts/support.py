@@ -16,9 +16,10 @@ from app.game_accounts.models import RequestResult, LimitEvent
 
 
 class GameError(AuthError):
-    def __init__(self, code, status=409, retry_after=None):
+    def __init__(self, code, status=409, retry_after=None, retry_at=None):
         super().__init__(code, status)
         self.retry_after = retry_after
+        self.retry_at = retry_at
 
 
 def fail(code, status=409):
@@ -58,7 +59,7 @@ def quota(scope, maximum, seconds=60):
         events = list(db.scalars(select(LimitEvent.created_at).where(LimitEvent.scope == scope).order_by(LimitEvent.created_at)))
         if len(events) >= maximum:
             wait = max(1, ceil((events[-maximum]+timedelta(seconds=seconds)-current).total_seconds()))
-            raise GameError('RATE_LIMITED', 429, wait)
+            raise GameError('RATE_LIMITED', 429, wait, events[-maximum]+timedelta(seconds=seconds))
         db.add(LimitEvent(scope=scope, created_at=current))
 
 

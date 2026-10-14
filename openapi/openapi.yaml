@@ -1012,6 +1012,13 @@
                   "type": "string",
                   "const": "no-store"
                 }
+              },
+              "Retry-After": {
+                "description": "UPSTREAM_RATE_LIMITED only",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
               }
             }
           }
@@ -1227,6 +1234,13 @@
                   "type": "string",
                   "const": "no-store"
                 }
+              },
+              "Retry-After": {
+                "description": "UPSTREAM_RATE_LIMITED only",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
               }
             }
           }
@@ -1425,6 +1439,13 @@
                 "schema": {
                   "type": "string",
                   "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "UPSTREAM_RATE_LIMITED only",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
                 }
               }
             }
@@ -1637,6 +1658,13 @@
                   "type": "string",
                   "const": "no-store"
                 }
+              },
+              "Retry-After": {
+                "description": "UPSTREAM_RATE_LIMITED only",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
               }
             }
           }
@@ -1838,6 +1866,13 @@
                 "schema": {
                   "type": "string",
                   "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "UPSTREAM_RATE_LIMITED only",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
                 }
               }
             }
@@ -2059,6 +2094,13 @@
                   "type": "string",
                   "const": "no-store"
                 }
+              },
+              "Retry-After": {
+                "description": "UPSTREAM_RATE_LIMITED only",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
               }
             }
           }
@@ -2269,6 +2311,13 @@
                 "schema": {
                   "type": "string",
                   "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "UPSTREAM_RATE_LIMITED only",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
                 }
               }
             }
@@ -2481,6 +2530,13 @@
                   "type": "string",
                   "const": "no-store"
                 }
+              },
+              "Retry-After": {
+                "description": "UPSTREAM_RATE_LIMITED only",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
               }
             }
           }
@@ -2682,6 +2738,13 @@
                   "type": "string",
                   "const": "no-store"
                 }
+              },
+              "Retry-After": {
+                "description": "UPSTREAM_RATE_LIMITED only",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
               }
             }
           }
@@ -2872,6 +2935,13 @@
                 "schema": {
                   "type": "string",
                   "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "UPSTREAM_RATE_LIMITED only",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
                 }
               }
             }
@@ -3064,6 +3134,13 @@
                 "schema": {
                   "type": "string",
                   "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "UPSTREAM_RATE_LIMITED only",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
                 }
               }
             }
@@ -3276,6 +3353,13 @@
                   "type": "string",
                   "const": "no-store"
                 }
+              },
+              "Retry-After": {
+                "description": "UPSTREAM_RATE_LIMITED only",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
               }
             }
           }
@@ -3486,6 +3570,13 @@
                 "schema": {
                   "type": "string",
                   "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "UPSTREAM_RATE_LIMITED only",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
                 }
               }
             }
@@ -4238,6 +4329,153 @@
         }
       }
     },
+    "/v1/me/lostark-api-key/restore": {
+      "post": {
+        "tags": [
+          "lostark-keys"
+        ],
+        "summary": "Restore",
+        "operationId": "restore_v1_me_lostark_api_key_restore_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LostArkKeyRestoreIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LostArkKeyRestoreOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/health": {
       "get": {
         "summary": "Health",
@@ -4620,6 +4858,30 @@
             "type": "string",
             "format": "uuid",
             "title": "Request Id"
+          },
+          "retry_after_seconds": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retry After Seconds"
+          },
+          "retry_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retry At"
           }
         },
         "additionalProperties": false,
@@ -4827,6 +5089,41 @@
         ],
         "title": "LostArkKeyOut"
       },
+      "LostArkKeyRestoreIn": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version"
+        ],
+        "title": "LostArkKeyRestoreIn"
+      },
+      "LostArkKeyRestoreOut": {
+        "properties": {
+          "token": {
+            "type": "string",
+            "title": "Token"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Version"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "token",
+          "version"
+        ],
+        "title": "LostArkKeyRestoreOut"
+      },
       "MemberSettingsIn": {
         "properties": {
           "nice_group_auto_refresh_enabled": {
@@ -5032,6 +5329,30 @@
               }
             ],
             "title": "Reason"
+          },
+          "retry_after_seconds": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retry After Seconds"
+          },
+          "retry_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retry At"
           }
         },
         "additionalProperties": false,
@@ -5046,7 +5367,9 @@
           "power_status",
           "power_reason",
           "status",
-          "reason"
+          "reason",
+          "retry_after_seconds",
+          "retry_at"
         ],
         "title": "PowerResult"
       },
@@ -5925,6 +6248,23 @@
     "quota": "80/min per HMAC token fingerprint shared across members/versions; transport 2/process",
     "quota_limit": "provider 100/min/client includes local direct calls; server budget is not a guarantee",
     "logout": "preserves credential; DELETE removes current secret only",
-    "fallback": "none; no environment Lost Ark JWT for REST or diagnostic"
+    "fallback": "none; no environment Lost Ark JWT for REST or diagnostic",
+    "restore": {
+      "path": "/v1/me/lostark-api-key/restore",
+      "method": "POST",
+      "body": "strict expected_version; read-only; no Idempotency-Key/result storage",
+      "response": "token/version from same locked member credential; no-store; secret response not logged",
+      "conflict": "absent 409 NOT_CONFIGURED; changed 409 CHANGED; unreadable 503 UNAVAILABLE",
+      "metadata_get": "unchanged; no token"
+    },
+    "provider_wait": {
+      "reset": "UNIX epoch seconds; valid future <=300s; otherwise observed time +60s",
+      "trigger": "429 or successful 200 Remaining=0; successful response stays successful",
+      "scope": "token HMAC fingerprint; deadline max; no extension without new provider observation",
+      "late": "only independent token limiter state; never business/cache/idempotent-success writes",
+      "single": "error retry_after_seconds/retry_at for rate limits; Retry-After matches seconds",
+      "batch": "PowerResult required nullable retry_after_seconds/retry_at; no batch200 Retry-After",
+      "retry": "explicit new command; historical replay keeps original retry_at; no automatic provider retries"
+    }
   }
 }

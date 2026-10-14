@@ -99,14 +99,30 @@ def capture(principal):
         row = db.get(Credential, uid)
         if row is None or row.ciphertext is None:
             fail('LOSTARK_KEY_NOT_CONFIGURED')
-        try:
-            token = AESGCM(material('encryption', row.key_id)).decrypt(row.nonce, row.ciphertext,
-                         aad(uid, row.version, row.key_id)).decode('ascii')
-            if not hmac.compare_digest(row.fingerprint, fingerprint(token)):
-                raise ValueError()
-            return Snapshot(uid, row.version, row.fingerprint, token)
-        except Exception:
-            fail('LOSTARK_KEY_UNAVAILABLE', 503)
+        return decrypt(row, uid)
+
+
+def decrypt(row, uid):
+    try:
+        token = AESGCM(material('encryption', row.key_id)).decrypt(row.nonce, row.ciphertext,
+                     aad(uid, row.version, row.key_id)).decode('ascii')
+        if not hmac.compare_digest(row.fingerprint, fingerprint(token)):
+            raise ValueError()
+        return Snapshot(uid, row.version, row.fingerprint, token)
+    except Exception:
+        fail('LOSTARK_KEY_UNAVAILABLE', 503)
+
+
+def restore(principal, expected_version):
+    with session() as db, db.begin():
+        uid = authorize(db, principal, write=True)
+        row = db.get(Credential, uid)
+        if row is None or row.ciphertext is None:
+            fail('LOSTARK_KEY_NOT_CONFIGURED')
+        if row.version != expected_version:
+            fail('LOSTARK_KEY_CHANGED')
+        snapshot = decrypt(row, uid)
+        return {'token': snapshot.token, 'version': snapshot.version}
 
 
 def check(db, principal, snapshot):
@@ -120,4 +136,5 @@ def check(db, principal, snapshot):
 def before_call(principal, snapshot):
     with session() as db, db.begin():
         check(db, principal, snapshot)
-    quota('lostark-token:' + snapshot.fingerprint, 80)
+    from app.lostark_keys.rate_limits import acquire
+    acquire(snapshot.fingerprint)

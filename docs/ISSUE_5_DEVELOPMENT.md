@@ -71,3 +71,5 @@ Flutter feature/character-combat-power 미커밋·미push/dev미반영·새적�
 2026-10-14 [Flutter Git인계](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6168115419) 추가확인: 구현6beb55e3f6f301873d200ff8cbfd6a764d33f547·dev통합ccc6b23f24c1f438c79ce683a8c9f3af35c8af06·push완료보고,소비39188d5유지. 앞선Git미회신대기는해소됐다. 자동1204/후속70·사용자3흐름근거유지/추가Backend요청없음. 다음나이스단설정/앱실행1회자동갱신은설계후보이며현재수동API인수·새API구현과구분한다.
 
 Issue #7 이후 profile도 회원 개인 키를 사용한다. 공용 fallback은 없으며 cache hit eligibility/lease를 credential version으로 구분한다. 키 변경409·키거절 item reason 등은 [개인 키 실행 안내](ISSUE_7_DEVELOPMENT.md)가 현재 기준이다. 과거 정상 숫자/시각은 유지한다.
+
+Issue #7 추가합의에서 PowerResult에 requirednullable retry_after_seconds/retry_at을추가했다. 현재Flutter strictDTO업데이트가필요하며일반CharacterOut은불변이다. 상세는[retry/restore계약](ISSUE_7_RETRY_RESTORE_CONTRACT_DRAFT.md). 늦은worker는캐릭터/cache/멱등성공을쓰지않지만별도token제한관찰만보존한다.
