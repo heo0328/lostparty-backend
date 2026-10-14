@@ -9,6 +9,7 @@ from pydantic import BaseModel
 
 from app.auth.router import router
 from app.auth.cleanup import run
+from app.game_accounts.router import router as game_router
 from app.core.errors import register
 
 
@@ -23,6 +24,7 @@ async def lifespan(app):
 
 app = FastAPI(title="LostParty API", docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
 app.include_router(router)
+app.include_router(game_router)
 register(app)
 
 
@@ -45,7 +47,9 @@ def openapi():
                     headers = result.setdefault("headers", {})
                     headers["Cache-Control"] = {"schema": {"type": "string", "const": "no-store"}}
                     if status == "429":
-                        headers["Retry-After"] = {"schema": {"type": "integer", "const": 60}}
+                        headers["Retry-After"] = {"schema": {"type": "integer", "minimum": 1}} if "game-accounts" in operation.get("tags", []) else {"schema": {"type": "integer", "const": 60}}
+                    if status == "409" and "game-accounts" in operation.get("tags", []):
+                        headers["Retry-After"] = {"description": "REQUEST_IN_PROGRESS only", "schema": {"type": "integer", "const": 2}}
                     if status == "401":
                         headers["WWW-Authenticate"] = {"schema": {"type": "string", "const": "Bearer"}}
     schema.get("components", {}).get("schemas", {}).pop("HTTPValidationError", None)
@@ -55,6 +59,31 @@ def openapi():
                               "memory_absolute_seconds": 43200, "memory_idle_seconds": 7200,
                               "recovery_seconds": 60, "recovery_additional_attempts": 2,
                               "recovery_time_origin": "database clock at final write before successful commit"}
+    schema['x-game-account-policy'] = {
+        'idempotency': {'key': 'UUIDv4', 'scope': 'actor + operation',
+                        'hash': 'normalized method/path target/query/body',
+                        'result_seconds': 86400, 'tombstone_seconds': 86400,
+                        'lease_seconds': 30, 'generation_fencing': True,
+                        'in_progress_status': 409, 'retry_after_seconds': 2,
+                        'delete_replay': 'same actor saved 204; live row not required',
+                        'failure_retry': 'same key/hash after retryable failure or lease expiry',
+                        'pending_confirm_replay': 'original observation; new explicit check uses new key'},
+        'challenge_seconds': 600, 'representative_cooldown_seconds': 300,
+        'first_representative_starts_cooldown': False,
+        'max_registrations': 20, 'max_characters': 200,
+        'page_default': 50, 'page_max': 100,
+        'preview_seconds': 1800, 'preview_cleanup_grace_seconds': 3600,
+        'terminal_challenge_retention_seconds': 86400, 'audit_seconds': 7776000,
+        'rate_limits': {'shared_backend': 'PostgreSQL rolling windows',
+                        'provider_per_minute': 80, 'start_actor_per_minute': 3,
+                        'confirm_actor_per_minute': 12, 'confirm_interval_seconds': 5,
+                        'manual_refresh_interval_seconds': 10,
+                        'transport_concurrency': '2 per process'},
+        'pagination': 'full settings on every page; compare roster/settings/ownership versions across pages',
+        'live_evidence': 'equipment schema proof not validated; live ownership confirmation held pending',
+        'live_roster_decrease': 'suspect only; missing/transfer require validated observation criteria',
+        'mutation_locking': 'initial global game transaction advisory lock; no network under lock',
+    }
     return schema
 app.openapi = openapi
 

@@ -35,6 +35,8 @@ async def run():
         await asyncio.sleep(30)
         try:
             await asyncio.to_thread(cleanup)
+            from app.game_accounts.cleanup import clean
+            await asyncio.to_thread(clean)
         except Exception:
             # No SQL, parameters, or credentials in background error output.
             logging.getLogger(__name__).warning("Authentication cleanup failed")

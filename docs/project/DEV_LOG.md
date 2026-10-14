@@ -105,3 +105,65 @@ dev와 origin/dev가 e18b71a이고 원격 작업 브랜치도 같은 커밋임�
 NEXT_WORK·AI_CONTEXT의 과거 미커밋/main 미통합 설명을 현재 완료 상태로 갱신합니다. 이 기록의 commit·main/dev 병합·push를 확인한 뒤 docs/branch-lifecycle을 삭제하고 main/dev만 유지합니다. 후속 작업은 dev에서 새 브랜치로 시작합니다.
 
 문서 내용·상호 링크·git diff --check와 Git 이력 포함 여부를 확인했습니다. 이번 변경은 문서뿐이므로 코드 테스트·서버/DB 작업을 반복하지 않았고 새 배포·데이터 수정은 수행하지 않았습니다. 실제 Google emulator 로그인/회원 저장 확인과 전체 세션·실기기/release·운영 미검증 구분을 유지합니다.
+
+## 2026-10-14 — Issue #3 분기·계약 제안·독립 기반 검증
+
+사용자가 #3 작업 브랜치 분기·Flutter 요청 댓글·가능 영역 진행을 지시했습니다. 원격 fetch 후 main/dev/origin 두 기준 e6c72e4와 clean 상태를 확인하고 `feat/3-account-restoration`을 origin/dev에서 분기했습니다. Git metadata 변경은 sandbox escalation으로 실행했습니다. commit/push/PR/merge/배포 없음.
+
+[계약 검토/확인 요청](https://github.com/heo0328/lostparty-backend/issues/3#issuecomment-6159594831)을 게시했습니다. 상세 후보·한계는 ISSUE_3_ACCOUNT_CONTRACT_DRAFT.md에 기록했습니다. REST/DDL·등록 제거/대표·dedup/상한은 미합의이며 OpenAPI·migration·기존 HTTP 동작은 변경하지 않았습니다. Flutter 로컬 소스는 읽거나 수정하지 않았습니다.
+
+`app/game_accounts`에 순수6부위 판정(Type/Name/Grade·Tooltip 제외), 안전 난수1~3부위 선택, malformed/null/중복/unknown Type 거절, 비지정 부위 변경 차단을 구현했습니다. 판정 자체로 소유권을 부여하지 않으며 장비 Type 후보는 실제 sanitized fixture 확인 대기입니다. 고정 HTTPS origin·path encoding·redirect 금지·connect3/read5초·1MiB 상한·전역 동시2·자동재시도 없음의 uncached provider transport를 구현했습니다. 아직 typed roster/Armory parsing·route/DB에는 연결하지 않았습니다. 동시 제한은 프로세스 단위이며 전체 quota/요청 합치기는 후속 계약 구현입니다.
+
+서버 .env에 LOSTARK_API_TOKEN/LOSTARK_API_KEY 항목이 없음을 이름만 검사했습니다. secret 값은 출력하지 않았고 별도 key 준비는 미확인입니다. 공식 usage-guide/changelog를 확인했으나 영속 ID·schema-valid 부분 roster의 전체성·실제 quota를 확정하지 않았습니다. 전체성 보장을 추정해 roster를 reconciliation하지 않습니다.
+
+검증: `docker compose build api` 후 격리 tmpfs PostgreSQL17 테스트 프로젝트에서 `docker compose -f compose.test.yaml up --build --abort-on-container-exit --exit-code-from tests` 종료0, **83개 통과(기존46+신규37), 기존 Starlette/anyio 경고1개**. 신규 테스트는 장비 해제 모든1~3개 조합·나머지변경/누락·invalid/중복/Tooltip/슬롯 조작 및 transport timeout/429/redirect/invalid JSON/용량/동시상한/비밀 예외문구 보호를 검증합니다. 신규 DB 구조/소유권 경쟁 검증을 완료한 것은 아닙니다.
+
+최신 API 이미지의 임시 one-off 컨테이너에서 app.openapi() 전체 객체를 원본과 비교해 일치, 테스트 이미지 pip check 통과, compileall·git diff --check 확인. 개발 API 재생성·개발 DB 변경/volume 삭제 없음. 테스트 tmpfs DB만 종료됐습니다. 실 provider/API key/실장비/Flutter 화면/운영은 미검증. NEXT_WORK를 #3 다음 실행 중심으로 교체하고 #2 전체 세션/실기기 잔여 검증을 보존했습니다.
+
+## 2026-10-14 — Issue #3 Flutter 회신 검토·전체 설정/roster 추가 정의
+
+[Flutter 회신](https://github.com/heo0328/lostparty-backend/issues/3#issuecomment-6159759288)을 확인했습니다. 경로/UUID/dedup/버전/상한의 소비 가능, 등록 제거/직접입력/동일 owner 재인증 설정 보존을 기록했습니다. 누락 대표 cooldown 우회는 이번에 도입하지 않는 안으로 정리했습니다. siblings 필드/nullable ItemAvgLevel, ArmoryProfile nullable CombatPower와6부위 Type은 기존 Flutter 파서 정보이며 실provider schema·해제 표현/영속ID/전체성 보장이 아님을 구분했습니다. 서버 key 준비는 여전히 미확인입니다.
+
+[후속 댓글](https://github.com/heo0328/lostparty-backend/issues/3#issuecomment-6159800130)에 페이지 독립 전체settings, roster_revision/cursor stale/PUT 조건, 전체 페이지 draft/save 흐름, dedup path/query/body scope·처리중/lease·권한 재검증·응답유실 복구, suspect 부적격/needs_reconfiguration과 실제 근거 확보 전 missing/이전 보류를 제안했습니다. preview/challenge/result/dedup/audit 보존값·프로세스 동시 제한과 인스턴스 공통 rate-limit 구현안을 구분했습니다. Flutter에는 A/B 소비 가능 확인과 수정사항만 요청하고, 없다고 밝힌 실제 자료를 이미 확보한 것으로 취급하지 않았습니다. 서버 key는 사용자·Backend 안전한 준비 후 Backend가 실provider 근거를 확보하는 후속 입력입니다.
+
+계약 초안/NEXT_WORK/AI_CONTEXT를 최신 회신과 남은 입력 중심으로 갱신했습니다. 이번 변경은 문서뿐이며 서버·DB·테스트를 재실행하지 않았습니다. git diff --check와 문서 상대 링크를 확인합니다. 기존83개 통과는 이전 실행 결과입니다. feat/3-account-restoration의 기존 사용자/작업 변경 보존, 미커밋·미push·신규OpenAPI/DDL 없음.
+
+## 2026-10-14 — 협업 단계·실검증 대기와 구현 경계 명문화
+
+사용자 지시로 API_COLLABORATION_WORKFLOW.md를 작성했습니다. 요청→답변→API 구현/Backend 검증→Flutter 테스트→Backend 후속 수정의 담당·산출물을 구분하고, 미합의 정책/지금 자동 검증 가능한 구현/실provider 확인/Flutter 테스트 후 확인/별도 승인 항목을 분류했습니다. 실검증 자료 부족은 직접 의존하는 판정만 보류하며 등록·migration·멱등·활동·소유권 transaction과 DB 경쟁 테스트까지 멈추지 않는 기준입니다. 자료 요청만 반복하거나 이미 수용한 항목의 동의를 재요청하지 않습니다.
+
+#3 최신 Flutter 수용 회신6159847616을 근거로 NEXT_WORK의 순서를 합의 기반 구현·자동 검증 우선으로 교정했습니다. 전체settings/세version 비교·DELETE replay·lease/crash 경계를 구현할 항목으로 기록하고 실제 key/schema/장비·누락/이전 관찰은 별도 실검증 입력으로 분리했습니다. 협업 문서와 AI_CONTEXT에 새 기준 링크를 연결했습니다.
+
+이번 작업은 문서 작성/정비만 수행했습니다. 기존 코드 변경을 보존하고 서버·DB·기능 테스트를 재실행하지 않았습니다. 문서 상대 링크와 git diff --check를 확인했습니다. 미커밋·미push이며 기존83개 통과는 이전 결과입니다.
+
+## 2026-10-14 — Issue #3 구현 설계·검증 단위 기획
+
+사용자 지시로 ISSUE_3_IMPLEMENTATION_PLAN.md를 작성했습니다. 최신 Flutter 수용 회신6159847616과 현재 auth/game_accounts 코드를 기준으로12개API, 데이터모델/FK/partial UNIQUE/additive0002, 쓰기권한 재검사, lease generation/crash복구/DELETE replay, pagination·세version, identity/소유권/audit transaction, 활동·대표/roster, TTL/quota 및 단위별 PostgreSQL 검증을 설계했습니다.
+
+구현순서는 모델/공통기반·등록→조회/refresh→인증/소유권→활동/대표→통합 인계입니다. 내부구현은 Backend가 결정·검증하고 새공개 입력/enum/오류만 계약차이로 명시합니다. 실provider키/schema/장비·전체성은 후속실증이며 정상transaction은fixture로 먼저 구현/검증, live불완전roster 판정만 보류합니다. 계획·계약초안·NEXT_WORK·AI_CONTEXT를 연결했습니다.
+
+이번 단계는 설계문서 작성입니다. 신규API/DDL/테스트를 구현·실행한 것은 아니며 기존83개는 이전기초검증입니다. 문서링크·git diff --check 확인, 서버/DB 재실행·commit/push/통합/배포 없음. 기존작업 변경을 보존했습니다.
+
+## 2026-10-14 — Issue #3 API/DB 구현·114개 검증·로컬 적용
+
+사용자의 설계 실행 지시에 따라 feat/3-account-restoration에서12개업무API와11개신규테이블의고정 additive migration0002를 구현했습니다. strict DTO/Bearer·commit전세션상태재검사,등록/본계정전환/삭제,미인증preview,전체settings/pagination·세version,challenge/identity/소유권이전/audit,atomic활동/대표·cooldown,nullable전투력보존/시각,TTL청소·공통quota/summary호출합류를 연결했습니다. baseline/rawprivate장비는응답하지않습니다.
+
+멱등은actor/operation/key+정규화target/body/query의hash,lease30초/generation fencing,처리중409+Retry-After2,동일actor DELETE성공replay,upstream/rollback/crash같은key복구를 구현했습니다. 청소실행과무관 challenge/result/dedup TTL을 요청에서도검사합니다. game업무쓰기만짧은전역advisory lock으로직렬화하여경쟁안전을확보하고외부호출은밖에서수행합니다. 이는초기단계내부구현선택이며독립계정처리량은후속관찰대상입니다.
+
+최종 격리 tmpfs PostgreSQL17의 pytest **114개 통과(기존인증46+판정/transport37+업무API31), 기존Starlette/anyio deprecation경고1개**입니다. migration0001에기존회원행을넣은뒤0002를적용하여동일행보존확인,등록중복/상한/본계정경쟁·DELETE replay·해시충돌/24시간경계·lease takeover,동시인증1개 revision확정·이전/늦은저장거절·다른계정설정보존·실패전체rollback·provider대기후session폐기거절·suspect/복귀·세revision/pagination·cooldown·nullpower·quota·live증거보류를 검증했습니다.
+
+검증 중 기존API경로7개고정검사를 기존경로보존+전체19operation으로 수정했고,random UUID정렬과대표목록순서를동일하다고가정한cooldown 테스트를실제현재대표와다른ID선택으로 수정했습니다. fixture표시에모의token이나타날수있어Authorization repr도가렸습니다. 최종기능실패없음이며상세원문token/비밀값은이력에복사하지않습니다.
+
+OpenAPI원본에신규12operation을반영했습니다(전체16경로/19operation). 이전health/auth7경로의전체operation·기존component schema·x-auth-policy 객체가변하지않았음을비교했습니다. 최신로컬API에서scripts/check_openapi.py전체객체비교통과,테스트image pip check·compileall·git diff --check·문서링크확인통과입니다.
+
+개발Compose DB에0002만additive적용하고API를갱신했습니다. 기존인증6테이블건수전후동일·migrationhead0002·localhost health200와미인증내등록401 확인. DBvolume삭제/초기화·기존행import·Firebase/Flutter소스변경·운영배포없음입니다. 최종TTL보완도로컬API에반영합니다.
+
+실provider key/장비해제schema/실quota·지연과Flutter새업무API인수는미확인입니다. live adapter는proof_validated=false이며정상장비비교라도pending PROVIDER_EVIDENCE_PENDING,불완전roster이전은ROSTER_EVIDENCE_PENDING으로보류합니다. mock증거는pytest주입만허용하고공개/환경우회는없습니다. canonical소유권transaction은구현·자동검증완료이며live판정만보류했습니다.
+
+실행/오류/예제·인계범위는ISSUE_3_DEVELOPMENT.md,원본은openapi/openapi.yaml입니다. NEXT_WORK를원격계약인계/Flutter테스트·실provider후속으로교체했습니다. 변경은미커밋·미push이며main/dev미변경,새계약/구현commit SHA미발행·Issue미종료입니다.
+
+[Issue #3 구현·검증 인계 댓글](https://github.com/heo0328/lostparty-backend/issues/3#issuecomment-6160605157)을 게시했습니다. 최종TTL보완포함114개통과(23.72초),로컬API재적용후전체OpenAPI재비교통과. 업무코드/테스트/원본에embedded JWT/private key가없음을검사했습니다. 인계댓글은원격코드게시/commitSHA인계를대신하지않습니다.
+
+## 2026-10-14 — Issue #3 작업 브랜치 commit/push 승인·게시 준비
+
+사용자가 현재작업 commit/push를 요청했습니다. origin fetch 후 main/dev 기준 e6c72e4 유지와 새원격작업브랜치없음을 확인했습니다. 작업브랜치만 게시하며 main/dev 병합·PR·배포는 수행하지 않습니다. 기존114개검증결과를 사용하고 게시전 OpenAPI비교·diff검사를 재확인했습니다. .env/.secrets가 ignore대상이고 stage목록에없음을 확인합니다. 게시완료SHA·인계결과는 후속기록으로 남깁니다.

@@ -1,5 +1,6 @@
 from alembic import context
 from app.auth.models import Base
+import app.game_accounts.models
 from app.core.database import engine
 
 if context.is_offline_mode():

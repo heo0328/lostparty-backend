@@ -15,6 +15,8 @@ Flutter 요구사항은 **Backend 저장소의 GitHub Issue**로 접수합니다
 
 ## 진행과 인계
 
+단계별 담당·산출물과 미확인 항목의 진행 경계는 [Issue 기반 작업 단계](API_COLLABORATION_WORKFLOW.md)를 따릅니다. 합의된 구현·자동 검증을 먼저 진행하고 Flutter 테스트 후 확인할 사실은 후속 검증으로 분리합니다. 자료 요청은 직접 의존하는 동작만 보류하며 독립적인 API·DB·테스트 작업은 계속합니다.
+
 요구사항 검토 → 계약 제안 → 합의 → 구현·검증 → 계약 인계 → Flutter 적용 순서로 진행합니다. 작은 변경은 Issue의 짧은 논의로 합의할 수 있습니다. Issue 등록 자체가 미합의 계약이나 운영 변경의 승인은 아닙니다.
 
 사용자가 작업을 지시한 관련 Issue에는 필요한 질문·제안·진행 상황·검증 결과를 별도 허가 없이 댓글로 남깁니다. 확인 요청은 필요한 자료와 결정 항목을 구체적으로 적고 상대방에게 확인·응답을 안내합니다. 댓글 게시 후 결과를 사용자에게 보고하며, Issue 종료나 다른 Issue 변경은 이 권한에 포함하지 않습니다. commit·push·PR·merge·배포는 기존 승인 범위를 따릅니다.
@@ -25,7 +27,7 @@ Issue·PR·계약 커밋을 연결합니다. Backend 완료와 Flutter 적용 �
 
 ## 계약 원본과 검증
 
-REST 계약의 단일 원본은 [openapi/openapi.yaml](../openapi/openapi.yaml)입니다. `/health`와 Issue #2의 6개 인증 API를 포함하며 YAML에서 유효한 JSON 형식으로 저장합니다. FastAPI의 `app.openapi()`는 구현에서 생성되는 비교 대상입니다. HTTP OpenAPI·Swagger 경로는 비활성화되어 있습니다. 실제 연동·자동 검증의 범위는 [인증 개발 안내](AUTH_DEVELOPMENT.md)에 있습니다.
+REST 계약의 단일 원본은 [openapi/openapi.yaml](../openapi/openapi.yaml)입니다. `/health`, Issue #2의 6개 인증 API, Issue #3의 12개 내 계정 업무 API를 포함하며 YAML에서 유효한 JSON 형식으로 저장합니다. FastAPI의 `app.openapi()`는 구현에서 생성되는 비교 대상입니다. HTTP OpenAPI·Swagger 경로는 비활성화되어 있습니다. 실제 연동·자동 검증의 범위는 [인증 개발 안내](AUTH_DEVELOPMENT.md)와 [내 계정 API 안내](ISSUE_3_DEVELOPMENT.md)에 있습니다.
 
 API 구현·계약을 변경한 경우 최신 API 이미지에서 다음 검증을 실행합니다.
 
