@@ -63,3 +63,30 @@ GameErrorDetail은optionalnullable retry_after_seconds/retry_at,제한오류엔�
 추가구간 검증: 대상151개 통과47.44초(기존경고1),동일조회대기자·local/upstreammax후24개 통과7.04초,제한만료시cache우회최종국소4개 통과3.88초. 각각별도실행이며전체179개단일실행으로확대하지않는다. 정상/누락/invalid/past/ms모양/과도미래Reset·Remaining0성공·token격리/max/기간만료·단건503/429헤더JSON일치·부분결과시간/replay·late관찰옛token만반영/업무값미쓰기·restore본인/세션/형식/키교체삭제/무결성·no-store/원문미로그/멱등미저장·직접영향계정/전투력/member설정/스키마migration검증. 초기mock예외/테스트간limiter상태잔존은수정후통과했다. provider와Google증거는mock이며실한도소진/실키복원은미실행.
 
 로컬DB0006_provider_limits·새limiter1테이블만추가/기존23테이블건수보존·새행0확인. 최신APIhealth정상/원본OpenAPI전체일치PASS·test-db중지. 기존credential/암호화키/공용JWT제거상태보존,자료초기화/fixture·키파일변경/실provider호출없음. 게시구간은검증후작업브랜치에1회commit/push/원격확인하고Issue7의실제새SHA로인계한다. Flutter연결/실사용후속·dev/main미병합.
+
+
+## Flutter 연결 결과 확인
+
+[회신](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6173350024)에서 Backend9e1a255 소비·회원 키 등록/교체/삭제·GET/restore/보안저장·회원/세션/버전 late응답·서버/기기 부분성공·호출대기/명시retry/strictDTO 연결 완료를 확인했다. 직접조회는 복원한 기기 키 사용, 자동 업로드/공용 배정 없음 보고다.
+
+Flutter 전체1246개PASS 후 국소보완12개PASS·최종분석0·debugAPK 성공 보고이며 표적58개도 별도 결과다. 실제provider/개인 키·기기 설치/조작·재설치/별도기기는 미실행이다. feature/member-lostark-key 변경은 미커밋·미push·dev 미반영으로 적용 SHA 미정이다. Backend 추가 수정/재시험 요청 없음. 사용자 새 빌드 인수 결과와 Flutter Git 게시 회신을 기다리며 기존 성공 시험을 반복 요청하지 않는다.
+
+
+## 현재 구간 사용자 정상 동작 확인
+
+[최종 사용자 결과](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6173934017)에서 키 등록/삭제에 이어 캐릭터 검색 등 현재 구현 구간이 정상 동작한다고 보고했다. Flutter의 코드 연결 재확인상 로그인 회원의 직접 검색/상세는 restore로 기기에 저장한 회원 키로 Lost Ark를 직접 호출하고, 서버 원정대/전투력 갱신은 앱 Bearer→Backend 회원 키 선택 경로다. 이는 Flutter 코드 확인/사용자 일반 동작 보고이며 실제 패킷/원문 키 관찰이나 모든 API 경로 실인수로 확대하지 않는다.
+
+앞선 [부분 확인/문구 정리](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6173742113)의 관련46개PASS/분석0/debugAPK 성공은 Flutter 국소 검증이다. 기존1246/국소12와 별도 결과로 유지한다. 현재 구간 정상 보고 후 사용자에게 키 저장 위치/HTTP 경로를 구분하는 추가 시험을 요구하지 않는다. 재설치/별도기기·실provider429 한도 소진은 별도 미확인이며 앱 전체 문구 점검은 Flutter 후속이다.
+
+남은 인계는 Flutter feature/member-lostark-key의 문서 최종화·Git 게시/통합과 적용 SHA 회신이다. 아직 미커밋·미push·dev 미반영. Backend 추가 변경/재시험 요청 없음. 이번 확인으로 Issue를 종료하거나 dev에 병합하지 않았다.
+
+
+## Flutter Git 게시·dev 통합 확인
+
+[최종 Git 인계](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6174013475): 구현 `8644c81fbd16b3a035531c71498a30c0f4869ce5`, feature/member-lostark-key 원격 게시/유지, dev 통합 `cc6a0b0ffdd11bb87d186f56e79238f59f99f76c` push, 소비 Backend9e1a255. Backend에서 GitHub 원격 dev가 같은 SHA인 점과 compare상 구현 포함/ahead1·behind0·changed_files0을 직접 확인했다. Flutter 로컬 소스는 읽거나 수정하지 않았다.
+
+이 확인으로 앞선 Flutter 미커밋/게시 대기 상태를 대체한다. 기존 자동검증·사용자 현재 구간 정상 보고를 재사용하며 병합 때문에 재시험하지 않았다. Backend 추가 수정 요청 없음. 재설치/별도기기·실provider한도/헤더·운영TLS 및 Flutter 전체앱문구/전체빌드자동갱신 설계는 별도 후속이다. Backend 결과문서는 미커밋, Backend dev/main 미병합·Issue7OPEN이다.
+
+## Backend dev 통합 지시
+
+사용자가 결과 문서 최신화 후 dev 병합·push를 지시했다. 기존 #7 사용자 결과/Flutter 게시 확인과 #6 최종 인계·CLOSED 상태를 반영하고, dev4eb23f5에서 작업 브랜치까지 fast-forward 가능함을 확인했다. 코드/API 계약 변경 없이 문서 diff를 확인하며 기존 자동검증/로컬0006 근거를 유지한다. 서버/DB/기능 테스트 반복 없음. 실제 dev 게시·브랜치 정리 결과는 DEV_LOG와 같은 Issue 결과 댓글에 기록한다.

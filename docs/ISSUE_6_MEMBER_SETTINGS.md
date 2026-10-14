@@ -53,3 +53,7 @@ GET/PUT·엄격DTO·회원별설정·멱등/버전·0004 구현완료. 격리Pos
 [최신 회신](https://github.com/heo0328/lostparty-backend/issues/6#issuecomment-6170276194)에서 Backend 계약 `79255f0f77602c26a215bf0340331eb697417ff4` 소비를 확인했다. 사용자 확정 UX는 기존 캐릭터관리 화면의 스위치 변경 즉시 저장이며 하단 캐릭터 저장/취소와 독립한다. GET 복원·명시 PUT·실패와 false 구분·멱등 복구/현재 GET·충돌/회원·세션 격리 연결 완료 보고다.
 
 Flutter 자동 검증은 전체1219개 이후 국소 보완 관련32개, 최종 분석0·debug APK 성공 보고이며 전체1220개 재검증으로 표현하지 않는다. Flutter feature/member-settings 변경은 미커밋·미push·dev 미반영이다. 실제 Backend 설정 쓰기·사용자 새환경 복원은 미실행. 사용자 ON/OFF 저장·화면 재진입·동일회원 재로그인/가능한 새환경 복원 결과와 Flutter 게시 SHA를 기다린다. 새 Backend 수정/반복 시험 요청은 없다. 전체 Armory 자동 갱신·역할별 빌드 복원은 후속으로 유지한다.
+
+## 최종 Flutter 인계·Issue 종료 확인
+
+2026-10-15 dev 통합 준비 중 [최종 인계](https://github.com/heo0328/lostparty-backend/issues/6#issuecomment-6170736672)를 확인했다. Flutter 기능2e0764f·dev5cee9648fe53ff259f967e402edfebd1f0a9a001 push, 소비 Backend79255f0, 사용자 ON/OFF 즉시저장·관리재진입·같은회원 재로그인3흐름 성공 보고다. Issue는 Flutter 측 사용자 마무리 지시로 이미 CLOSED이며 Backend가 새로 종료한 것이 아니다. 이전 미게시/인수 대기 기록은 이 확인으로 대체한다. 재설치/다른기기·전체Armory자동갱신/역할복원은 별도 후속이다. Backend는 사용자 지시에 따라 이 설정 구현을 #7과 함께 dev에 통합한다.

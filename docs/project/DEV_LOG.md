@@ -399,3 +399,19 @@ GAME_DEFAULTS/ISSUE_5_COMBAT_POWER_PLAN·프로젝트문서를추가/최신화�
 초기mock requests예외class/테스트간ProviderLimit잔존분리후151개47.44초·기존경고1PASS. waiter/local+upstreammax후24개7.04초,최종cachedrate만료국소4개3.88초PASS(각기존경고1). 별도실행,179단일suite주장없음. 복원권한/키변경삭제/무결성/원문미로그,정상badReset/성공Remaining0/제한headerJSON/부분결과/replay/lateoldtoken분리·직접영향회귀와migration검증. Google/provider는mock·실키/실한도시험없음.
 
 로컬0006additive1table·기존23table집계전부보존/새limiter0,API만재생성healthy·OpenAPI전체일치PASS,test-db중지. secretfiles/기존credential/공용키제거유지·자료초기화/fixture/원문로그없음. 상시인계승인으로한구간commit/push후sameIssue에새SHA로Flutter연결인계,dev/mainmerge·배포/종료없음.
+
+## 2026-10-15 — #7 Flutter 회원 키·복원·호출 대기 연결 회신 확인
+
+[인계 수신](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6173015145) 및 [최신 결과](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6173350024) 확인. 9e1a255 소비·등록/교체삭제/복원/보안저장/부분실패/회원·late응답/호출대기·retry/strictDTO 연결 보고를 기록했다. Flutter 전체1246PASS 후 국소12PASS·최종분석0/debugAPK 성공, 별도표적58 결과를 구분하며 실키/provider·사용자/별도기기 인수로 확대하지 않는다. Flutter feature/member-lostark-key 미커밋·미push·dev 미반영/구현 SHA 미정. Backend 새수정/반복시험 요청 없어 사용자 인수/Flutter 게시 회신 대기. 문서만 최신화·sameIssue확인 회신, 코드/API/DB/서버/테스트·commit/push/merge/Issue종료 없음.
+
+## 2026-10-15 — #7 사용자 정상 동작 결과 확인
+
+[부분 확인/문구 보완](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6173742113) 및 [현재 구간 정상 보고](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6173934017) 확인. 키 등록/삭제·캐릭터 검색 등 사용자 정상 동작으로 기록하고 직접조회(기기복원키)와서버원정대/전투력(Backend회원키)의 코드연결재확인 보고를 구분했다. 실제패킷/원문키관찰·재설치/별도기기·실429인수로확대하지않는다. 문구국소46검증은기존1246/12와별도. 내부경로구분 사용자추가시험/정상반복시험없음. 다음은Flutter미커밋·미push구간Git게시/통합·적용SHA회신,Backend수정요청없음. 문서만갱신·sameIssue회신,코드/API/DB/서버/테스트·commit/push/merge/Issue종료없음.
+
+## 2026-10-15 — #7 Flutter 게시·dev 통합 확인
+
+[6174013475](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6174013475)에서 Flutter구현8644c81fbd16b3a035531c71498a30c0f4869ce5·devcc6a0b0ffdd11bb87d186f56e79238f59f99f76c push/소비9e1a255를확인했다. gh API로원격dev SHA일치·구현...통합compare ahead1/behind0/changed_files0 직접확인,로컬Flutter소스접근없음. 기존Flutter미게시기록을대체하고사용자정상/자동검증근거유지·중복시험요청없음. Backend추가수정없고재설치/별도기기/실provider한도·헤더/TLS·Flutter문구/전체빌드시작순서설계는후속유지. 문서만최신화·sameIssue회신,Backendcommit/push/merge·Issue종료없음.
+
+## 2026-10-15 — 회원설정/개인 키 결과 문서 최신화·dev 통합 지시
+
+사용자가 문서 최신화→dev병합/push 지시. fetch후 dev/origin4eb23f5·work/origin9e1a255 일치,worktree1개·사용자 결과문서4파일 외 코드변경없음/fast-forward가능 확인. #7최신6174013475/6174038857에새서버요청없음. 함께통합할#6의6170497743/6170736672를확인해 사용자3흐름성공·Flutter2e0764f/dev5cee9648 게시·Issue이미CLOSED인점으로오래된대기기록정정. 기존사용자결과/#7인계문서변경보존. 문서diffcheck·통합코드불변검사만사용,서버/DB/기능시험반복없음. 결과문서커밋후dev fast-forward/generalpush하고포함/원격일치/clean확인후완료workbranch로컬·원격정리한다. main/Issue7종료·키/자료변경없음.
