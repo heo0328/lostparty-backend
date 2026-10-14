@@ -12,6 +12,7 @@ from app.auth.cleanup import run
 from app.game_accounts.router import router as game_router
 from app.core.errors import register
 from app.core.game_policy import DEFAULT_MIN_ITEM_LEVEL
+from app.member_settings.router import router as settings_router
 
 
 @asynccontextmanager
@@ -26,6 +27,7 @@ async def lifespan(app):
 app = FastAPI(title="LostParty API", docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
 app.include_router(router)
 app.include_router(game_router)
+app.include_router(settings_router)
 register(app)
 
 
@@ -49,7 +51,7 @@ def openapi():
                     headers["Cache-Control"] = {"schema": {"type": "string", "const": "no-store"}}
                     if status == "429":
                         headers["Retry-After"] = {"schema": {"type": "integer", "minimum": 1}} if "game-accounts" in operation.get("tags", []) else {"schema": {"type": "integer", "const": 60}}
-                    if status == "409" and "game-accounts" in operation.get("tags", []):
+                    if status == "409" and set(operation.get("tags", [])) & {"game-accounts", "member-settings"}:
                         headers["Retry-After"] = {"description": "REQUEST_IN_PROGRESS only", "schema": {"type": "integer", "const": 2}}
                     if status == "401":
                         headers["WWW-Authenticate"] = {"schema": {"type": "string", "const": "Bearer"}}
@@ -103,6 +105,18 @@ def openapi():
         'live_evidence': 'equipment schema proof not validated; live ownership confirmation held pending',
         'live_roster_decrease': 'suspect only; missing/transfer require validated observation criteria',
         'mutation_locking': 'initial global game transaction advisory lock; no network under lock',
+    }
+    schema['x-member-settings-policy'] = {
+        'scope': 'authenticated member; independent of registration/device/session',
+        'default': {'nice_group_auto_refresh_enabled': False, 'version': 1},
+        'get': 'read-only; unset returns default without inserting',
+        'put': 'explicit strict boolean + expected_version + UUIDv4 Idempotency-Key',
+        'version': 'increment on value change only; stale expected_version rejected even for same value',
+        'conflict': '409 REVISION_CONFLICT; GET then explicit new decision/key',
+        'replay': 'same member/key/body returns original success for 24h; current state requires GET',
+        'idempotency': 'existing result/tombstone/lease/generation-fencing policy; REQUEST_IN_PROGRESS 409 Retry-After 2',
+        'logout': 'preserves stored preference; GET failure must never trigger default PUT',
+        'provider': 'no external Lost Ark calls; no build refresh triggered',
     }
     return schema
 app.openapi = openapi

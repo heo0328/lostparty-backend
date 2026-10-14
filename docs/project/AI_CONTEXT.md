@@ -15,9 +15,10 @@
 | 내 계정 복원 #3 | 로컬12 API·0002의11테이블·원본OpenAPI 구현, 격리PostgreSQL114테스트·로컬계약 비교 확인. 작업 브랜치 구현/계약254cb5d 게시, Flutter 두GET/계약SHA·1159검증/빈등록인수 보고확인. 등록후속 lease헤더보완·대상10개통과/로컬적용,보완구현db0f3ae게시·현재 키/실응답 상태는 #4 기준. [등록후속 계획](../ISSUE_3_REGISTRATION_FOLLOWUP_PLAN.md)·[실행/인계](../ISSUE_3_DEVELOPMENT.md)·[설계](../ISSUE_3_IMPLEMENTATION_PLAN.md)·[Issue #3](https://github.com/heo0328/lostparty-backend/issues/3) |
 | 등록관리 실연동 #4 | 기존 API 재사용, 수동siblings형태진단CLI·대상13개검증. local/runtime key반영·사용자 실 siblings 4개/parser 통과 확인. 빈 label POST/PATCH 계약·구현 및 대상16개 통과, 게시 SHA d3cb697bb6ebb988b63bd99c588bc1b64a93650d. Flutter d3cb697 소비·1193자동검증/빈이름 사용자인수 보고 확인,Flutter 구현5fe636e/dev266a7e2 게시보고 확인·삭제후로컬보존 후속. [작업계획](../ISSUE_4_REGISTRATION_INTEGRATION_PLAN.md)·[실검증 안내](../ISSUE_4_LIVE_VALIDATION.md)·[Issue #4](https://github.com/heo0328/lostparty-backend/issues/4) |
 | 전투력 수집 #5 | 1700공통기준·POST/cache/GET상태·0003 구현·대상42개/후속3개·로컬적용완료. 게시SHA 39188d5dca2d394f4e8b3fcbfe332274812285bf·Flutter1204/후속70자동·신규3흐름사용자확인보고,Flutter 구현6beb55e/devccc6b23·push인계확인 완료. [실행](../ISSUE_5_DEVELOPMENT.md). [기본값](../GAME_DEFAULTS.md)·[계획](../ISSUE_5_COMBAT_POWER_PLAN.md)·[Issue5](https://github.com/heo0328/lostparty-backend/issues/5) |
+| 회원 설정 #6 | GET/PUT·기본false/version·0004 구현/대상22개·로컬적용완료. 작업브랜치게시 후 Flutter연결/실인수후속. [실행/계약](../ISSUE_6_MEMBER_SETTINGS.md)·[Issue6](https://github.com/heo0328/lostparty-backend/issues/6) |
 | 후속 기능 | 탈퇴·약관·모집·파티·그룹·Apple/Discord·WebSocket은 구현에 없음 |
 | 운영 | Lightsail 배포 예정, 운영 HTTPS·배포·키 관리 준비는 완료로 간주하지 않음 |
 
 인증 1차는 main/dev에 통합됐으며 이후 계정 업무·새label·진단/후속문서는 dev에 통합·게시됐습니다. 완료 작업 브랜치는 push 확인 후 정리하며, 다음 작업은 최신 dev에서 분기합니다. 계약 소비·전체 Flutter 인수·운영 배포 완료와 저장소 최신화를 구분합니다.
 
-현재 브랜치는 `dev`. #5 전투력 구현/계약·0003·문서/인계게시규칙은8775153으로통합·push했고 완료feat/account-management는로컬/원격삭제했습니다. 실제구현/계약SHA39188d5유지. Flutter새DTO/표시·역할우선/세션격리사용자확인완료보고,FlutterGit 구현6beb55e/devccc6b23·push인계도확인완료. 다음지시대기하며#4로컬보존·#3장비/활동·#2인증후속을보존합니다.
+현재 브랜치는 `feat/member-settings`(dev4eb23f5 기준). #6회원설정GET/PUT·0004/문서를구현·검증하고인계용상시승인으로작업브랜치에1회게시한다. 로컬DB0004/API적용완료,기존DTO변경없음·실기기복원인수후속. #5구현39188d5·양측Git인계/사용자인수와#4/#3/#2후속을보존한다.

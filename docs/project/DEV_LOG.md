@@ -343,3 +343,11 @@ GAME_DEFAULTS/ISSUE_5_COMBAT_POWER_PLAN·프로젝트문서를추가/최신화�
 ## 2026-10-14 — Flutter Git인계 추가확인·미회신기록 정정
 
 사용자확인지시로[#5 6168115419](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6168115419)의Flutter구현6beb55e3f6f301873d200ff8cbfd6a764d33f547/devccc6b23f24c1f438c79ce683a8c9f3af35c8af06·push완료/소비39188d5를확인했다. 직전통합문서/댓글의미회신기록은이확인으로대체. 최근인계확인후문서최신화/dev게시승인범위로문서5파일정정게시하고같은Issue에결과회신. 코드/API/DB/서버/테스트·branch변경/배포/Issue종료없음. 다음설정저장/자동갱신설계후보와현재완료구간구분.
+
+## 2026-10-14 — #6 회원설정 구현·검증·로컬적용·인계용 게시
+
+사용자진행지시/확정회원flag범위에따라feat/member-settings(dev4eb23f5)분기. 같은Issue6168785700에GET/PUT /v1/me/settings·false/version1·strictboolean/expectedversion·UUIDv4/key24시간replay·409동시수정/no-opversion·scope/세션보존을정리했다. app/member_settings·0004최소테이블을추가하고기존auth/gamepath/DTO/정책전체불변과새계약만추가확인. 자동빌드/역할snapshot전체복원은후속계약표로분리해UI결정대기없이확정설정구현.
+
+격리PostgreSQL대상22개통과9.61초/기존경고1개. 기본read-only/명시변경/no-op/멱등hist replay·회원/newsession격리/세션폐기보존·만료/정지/guest/strict·동시승자/fencingrollback/retry·metadata/migration일치 검증. 모의Google·서버session검증과기기변경/재설치실인수구분. 개발기존19테이블건수기록후additive0004·API만적용,OpenAPI전체일치·health200·집계모두보존/새table0. 격리test-db중지,fixture/이관/초기화/자료삭제/외부호출없음.
+
+새검증/코드수정추가없이정리된작업구간을네이티브확인전게시상시승인으로1회commit/push하고원격반영후실제SHA/branch/push/dev미통합·검증/실미확인을같은Issue에인계한다. 별도merge/배포/종료없음.
