@@ -11,7 +11,7 @@
 
 ## 다음 실행
 
-- [Issue #8](https://github.com/heo0328/lostparty-backend/issues/8) [대표 계약 수용/구현 요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6184322765)에 따라 대표 GET/PUT·기존5분제한 제거를 독립 구현했다. [계약](../ISSUE_8_REPRESENTATIVE_CONTRACT_DRAFT.md)·[실행/검증](../ISSUE_8_REPRESENTATIVE_DEVELOPMENT.md). 표적75개 후 보완37개 각각PASS·개발API healthy/OpenAPI전체일치, DBmigration없음. feat/representative-selection에서 인계용commit/push·원격확인후 같은Issue에 SHA/branch/dev미통합과 실제결과를 인계한다. 다음은 Flutter의 strictDTO·왕관/알럿·GET/멱등복구·관리draft경합 연결/인수 회신이다. 소유/활동/ID매핑 준비·실기기인수는 별도이며 인증우회하지 않는다. #8 lifecycle전체·NameClaim/V2/소멸정리와 공식증거조사는 별도미수용/미완료로 유지한다.
+- [Issue #8](https://github.com/heo0328/lostparty-backend/issues/8) [대표 계약 수용/구현 요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6184322765)에 따라 대표 GET/PUT·기존5분제한 제거를 독립 구현했다. [계약](../ISSUE_8_REPRESENTATIVE_CONTRACT_DRAFT.md)·[실행/검증](../ISSUE_8_REPRESENTATIVE_DEVELOPMENT.md). 표적75개 후 보완37개 각각PASS·개발API healthy/OpenAPI전체일치, DBmigration없음. feat/representative-selection 구현/OpenAPI `cd3e003eb058ee5de761563d25c418d0e45ac526` commit/push·원격일치·[인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6184483999) 완료, dev/main 미통합. 다음은 Flutter의 strictDTO·왕관/알럿·GET/멱등복구·관리draft경합 연결/인수 회신이다. 소유/활동/ID매핑 준비·실기기인수는 별도이며 인증우회하지 않는다. #8 lifecycle전체·NameClaim/V2/소멸정리와 공식증거조사는 별도미수용/미완료로 유지한다.
 
 1. #7 Flutter 구현 게시/통합과 현재 구간 사용자 정상 보고는 확인 완료다. 같은 자료/정상 흐름의 반복 테스트를 요청하지 않는다. Backend 새 수정 요청 없음.
 2. Backend dev 통합·원격 게시·완료 브랜치 정리를 확인했다. #8 계약 검토를 다음 후보로 추적한다. 사용자 지시로 Backend에서 #7을 Completed 종료하고 CLOSED를 확인했다([종료 근거](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6183029637)). Backend 추가 구현/시험은 대기하지 않는다.

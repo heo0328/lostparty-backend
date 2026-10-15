@@ -465,3 +465,7 @@ GitHub Issue 전체 상태·본문·최신 댓글과 로컬/원격 Git을 읽기
 [Flutter6184322765](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6184322765)의 대표GET/PUT·cooldown제거 수용/착수요청 확인 후 기존docs/character-lifecycle을feat/representative-selection으로rename하여 사용자문서/기존#7종료기록보존. 대표전용service·strict5입력/10응답·기대4revision·메인/소유/활동/confirmed검사·전체설정과settingsversion공유·no-op/replay/rollback·GET일관snapshot, 기존PUT/GETnext_change_atnull·5분판정제거 구현. 새테이블/migration없이기존모델사용. 과거settings성공replay의폐지된시각만null로투영/저장이력불변을후속보완. 원본OpenAPI는기존path/schema불변·대표경로2operation/DTO2개·정책/cooldown차이만검토해반영.
 
 최신이미지격리PostgreSQL 대표/직접영향계정업무·metadata75PASS30.09초, 과거replay/추가경계보완후대표/즉시변경/스키마37PASS11.33초(각기존경고1·별도실행). 외부호출/키복호화0·DBfixture조건검증이며실Google/provider/기기사용자인수와구분. 개발API만재생성healthy·원본OpenAPI전체일치PASS·test-db중지. 개발DBmigration/fixture/실대표변경·자료초기화/삭제/키파일변경/운영배포없음. 인계상시승인으로이작업구간commit/push·원격확인후sameIssue에실SHA·branch/dev미통합·검증/미확인/Flutter담당후속전달. main/dev병합·Issue종료는포함하지않음.
+
+## 2026-10-15 — 대표 구현 원격 게시·같은Issue 인계 완료
+
+18파일1419추가/21삭제를 `cd3e003eb058ee5de761563d25c418d0e45ac526`로커밋하고origin/feat/representative-selection 일반push·upstream/원격SHA일치·clean 확인. 검증된기능/원본OpenAPI SHA와개발API적용·75/별도37PASS·미확인범위/Flutter후속을 [#8댓글](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6184483999)로회신했다. dev/main병합·운영배포·Issue종료없음. 인계게시링크/SHA를실행안내/NEXT_WORK/AI_CONTEXT에기록하는문서만추가게시한다. 코드불변으로기능테스트/서버/DB반복실행없음.

@@ -31,3 +31,7 @@ docker compose -f compose.test.yaml stop test-db
 ## 담당별 후속
 
 Backend: 인계상시승인으로검증구간commit/push·원격확인후정확한SHA/branch/dev미통합·계약변경/검증/미확인을같은Issue에회신한다. Flutter: 원격원본계약소비·strictDTO/왕관/알럿·현재GET/응답유실/전체설정draft경합·회원/메인late응답연결, 자동검증/사용자결과를같은Issue로회신한다. 소유/활동·서버ID/기기ID매핑 선행은Flutter후속이며이API로우회하지않는다. Backend추가수정은재현/새요청이있을때수행한다. #8전체lifecycle증거조사/계약대조는별도남는다.
+
+## 실제 게시 기록
+
+구현/원본OpenAPI `cd3e003eb058ee5de761563d25c418d0e45ac526`·feat/representative-selection 일반push/원격일치 확인. [같은Issue 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6184483999) 게시완료. dev/main미통합. 다음은Flutter계약소비/연결/자동검증·실사용회신이며live소유/활동/IDmapping선행은별도유지한다. 이게시결과문서만추가커밋/push하며기능재검증/서버재실행은반복하지않는다.
