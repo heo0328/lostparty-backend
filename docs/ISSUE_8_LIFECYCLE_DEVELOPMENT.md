@@ -53,3 +53,7 @@ L1a 최종: 최신 API/test 이미지의 격리 PostgreSQL17에서 `test_charact
 최신이미지격리PostgreSQL의V2읽기·L1a/대표/계정직접영향·metadata/스키마 **113 passed, 1 기존경고, 48.64초**. preview필수null·모든DTO필드required·cursor구조차원/settingsstale·claim불일치/소유상실·회원이력격리·모의퇴역historypage·GET쓰기0/외부호출0·V1wire불변을확인했다. L1a185개와별도실행이며누적단일suite로표현하지않는다. network-none이미지에서원본전체일치, L1a대비추가GET2개/DTO4개/읽기정책만변경. 실제DB/실행API미변경·실provider/실기기미인수. L1b를별도게시/인계한다.
 
 L1b 추가 보완: preview의canonical사용불가와표시용profile관찰신선도를분리했다. 같은previewgeneration에서관찰한fresh수치는usable=false여도power_stale=false일수있다. L1a에서생긴eligible=false와신선도의결합을제거해기존표시의미를보존했다. 최신이미지의V2조회·전투력표적 **57 passed, 1 기존경고, 16.29초**. 앞선113개와별도실행이며합산단일검증이아니다. 원본OpenAPIshape는불변이다.
+
+### 실제 L1b 게시
+
+구현/OpenAPI `c91af2e003877daacb833aaa0c109eae11b72816`·feat/representative-selection 일반push/원격일치/clean확인. [L1b별도인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6186143574) 완료. dev/main미통합·실제DB0007미적용·실행API미재시작. Flutter의계약소비/metadata·활동/대표연결회신과후속서버전환준비가다음이다. 게시기록문서만추가커밋/push하며기능검증/서버조작을반복하지않는다.

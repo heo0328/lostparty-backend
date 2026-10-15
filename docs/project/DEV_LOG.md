@@ -501,3 +501,7 @@ L1a22파일을6f3d029d4e06a70ebed2244040e17b300bbab82c로커밋/일반push·원�
 ## 2026-10-15 — L1b preview관찰신선도 호환 보완·57PASS
 
 V2검토중preview가canonical사용자격없다는이유로fresh profile까지stale로표시되는L1a결합을분리했다. 사용가능성과관찰신선도는별개이며같은previewgeneration의fresh수치는V1/V2둘다표시한다. 최신이미지V2조회·전투력표적57PASS16.29초·기존경고1, 앞선113개와별도결과다. 코드보완후이미지OpenAPI전체일치재확인/문서diff후L1b게시, 실DB/실행API미변경.
+
+## 2026-10-15 — L1b 실제 게시·분리 인계 완료
+
+L1b13파일1594추가/343삭제를 `c91af2e003877daacb833aaa0c109eae11b72816`로커밋/일반push·origin동일SHA/clean확인후 [#8별도댓글](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6186143574)에최종경로/11필드envelope·12필드이력/usable의기본자격의미·nullable/cursor·113/별도57PASS와실DB/API미적용을인계했다. L1a6f3d029와구분했고현재서버에서V2즉시호출불가·후속전환은별도승인임을명시했다. 사용자요청범위의두구간구현/격리검증/게시완료,dev/main병합·실DB적용/재기동/배포·liveproof/퇴역·Issue종료없음. 실제SHA/인계링크문서만추가게시하고코드불변으로시험/이미지/DB를재실행하지않는다.
