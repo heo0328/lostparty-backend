@@ -7,7 +7,7 @@ from sqlalchemy import select, func
 from app.auth.models import User, Session
 from app.core.database import session, now
 from app.game_accounts import representative as service
-from app.game_accounts.models import Account, Registration, Character, Configuration, Activity, RequestResult
+from app.game_accounts.models import Account, Registration, Character, Configuration, Activity, RequestResult, NameClaim
 from app.game_accounts.support import GameError
 from tests.test_game_accounts import PrivateHeaders, change, BASE
 
@@ -31,6 +31,7 @@ def selection(login):
                                              item_level='1700', combat_power=None),
                                 fetched_at=current, confirmed_at=current) for i in range(3)]
         db.add_all(characters); db.flush()
+        db.add_all([NameClaim(server_name=c.server_name,character_name=c.character_name,character_id=c.id) for c in characters])
         configuration = Configuration(user_id=uid, account_id=account.id, representative_id=characters[0].id,
                                       state='configured', next_change_at=current+timedelta(minutes=5))
         db.add(configuration); db.flush()

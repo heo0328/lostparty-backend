@@ -4,7 +4,7 @@ from app.core.database import session, now
 from app.lostark_keys.models import MemberPreview, MemberFetch, ProviderLimit
 from app.game_accounts.support import lock
 from app.game_accounts.models import (RequestResult, Verification, PreviewCache, LimitEvent,
-                                     Audit, Registration, FetchLease, PowerCache)
+                                     Audit, Registration, FetchLease, PowerCache, ScopedPowerCache, ScopedRosterCache, ScopedRosterLease)
 
 
 def clean():
@@ -29,11 +29,14 @@ def clean():
         db.execute(delete(FetchLease).where(FetchLease.expires_at<=current-timedelta(minutes=90)))
         db.execute(delete(PreviewCache).where(PreviewCache.fetched_at<=current-timedelta(minutes=90)))
         db.execute(delete(ProviderLimit).where(ProviderLimit.blocked_until<=current-timedelta(minutes=2)))
+        db.execute(delete(ScopedRosterLease).where(ScopedRosterLease.expires_at<=current-timedelta(minutes=90)))
+        db.execute(delete(ScopedRosterCache).where(ScopedRosterCache.fetched_at<=current-timedelta(minutes=90)))
         db.execute(delete(MemberFetch).where(MemberFetch.expires_at<=current-timedelta(minutes=90)))
         db.execute(delete(MemberPreview).where(MemberPreview.fetched_at<=current-timedelta(minutes=90)))
         db.execute(delete(LimitEvent).where(LimitEvent.created_at<=current-timedelta(minutes=2)))
         db.execute(delete(Audit).where(Audit.created_at<=current-timedelta(days=90)))
-        db.execute(delete(PowerCache).where(
-            or_(PowerCache.lease_expires_at.is_(None), PowerCache.lease_expires_at <= current),
-            or_(PowerCache.checked_at <= current-timedelta(days=90),
-                and_(PowerCache.status == 'unknown', PowerCache.value.is_(None)))))
+        for cache in (PowerCache,ScopedPowerCache):
+            db.execute(delete(cache).where(
+                or_(cache.lease_expires_at.is_(None), cache.lease_expires_at <= current),
+                or_(cache.checked_at <= current-timedelta(days=90),
+                    and_(cache.status == 'unknown', cache.value.is_(None)))))

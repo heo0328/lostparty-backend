@@ -8,7 +8,7 @@ from sqlalchemy import select, func
 from app.core.database import session, now
 from app.lostark_keys import rate_limits, service
 from app.lostark_keys.models import ProviderLimit, Credential
-from app.game_accounts.models import PowerCache, RequestResult
+from app.game_accounts.models import ScopedPowerCache as PowerCache, RequestResult
 from app.game_accounts.support import GameError
 from app.game_accounts import power_service
 from app.game_accounts.provider import LostArkProvider

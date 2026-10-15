@@ -469,3 +469,27 @@ GitHub Issue 전체 상태·본문·최신 댓글과 로컬/원격 Git을 읽기
 ## 2026-10-15 — 대표 구현 원격 게시·같은Issue 인계 완료
 
 18파일1419추가/21삭제를 `cd3e003eb058ee5de761563d25c418d0e45ac526`로커밋하고origin/feat/representative-selection 일반push·upstream/원격SHA일치·clean 확인. 검증된기능/원본OpenAPI SHA와개발API적용·75/별도37PASS·미확인범위/Flutter후속을 [#8댓글](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6184483999)로회신했다. dev/main병합·운영배포·Issue종료없음. 인계게시링크/SHA를실행안내/NEXT_WORK/AI_CONTEXT에기록하는문서만추가게시한다. 코드불변으로기능테스트/서버/DB반복실행없음.
+
+## 2026-10-15 — #8 대표 외 원래 범위·Flutter 인증 선행 회신 확인
+
+사용자 지시로 #8 원본문/A/B/C·최근댓글을 재확인하고 [Flutter6184482730](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6184482730)의 인증호출 기반 독립작업을 확인했다. start/GET/confirm/DELETE strict8필드·불변명령/세션격리·표적24PASS/분석0은Flutter보고이며미커밋/미push·새SHA없음. UI/Router/소유active/IDmapping/활동저장/실provider완료로확대하지않는다. Backend수정요청없음. 대표API외공식schema/연결/전체성/영구ID근거판정과NameClaim/이력/V1V2검토가여전히남아있음을NEXT_WORK/AI_CONTEXT에담당별명시했다. 대표인계결과만으로Backend전체대기또는#8완료로표시하지않는다. 문서diffcheck만수행·기능/계약/DB/시험·댓글/commit/push없음.
+
+## 2026-10-15 — #8 공식 Swagger 원문 확보·제공가능성 판정 완료
+
+사용자 진행 지시로 기존 사용자문서3파일변경을 보존하며공식문서조사를계속했다. 웹본문추출실패후공식시작안내HTML의SwaggerUIBundle설정을읽어 실제소문자 /swagger-doc/endpoints/characters·armories를인증없이조회했다. 처음대문자경로의빈schema를실제근거에서제외하고소문자HTTP200의Swagger2.0/info.versionv1·paths1/12·definitions1/38 및원문SHA를기록했다. CharacterInfo5필드·profile/equipment형태/required미선언·영구ID/생성세대/전체성인증/해제표현의보장미기재를코드와대조했다. 공식FAQ도공개조회해수분동기화지연안내/30분문의기준이최신성보장이아님을기록했다. 조사접근대기는종료/미기재는미기재로판정하고 [#8회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6184587789)에제공가능성표·L1기반구현/L2실장비관찰/L3정책전제와담당/완료조건을분리했다. 사용자JWT/캐릭터자료/DB/키/기기접근·실provider데이터호출없음, 코드/OpenAPI/테스트/서버/migration·commit/push없음. 문서diff/링크/공개schema구조·해시확인만수행. 다음은Flutter판정대조·L1구간수용/수정이며대표API연결후속은독립유지한다.
+
+## 2026-10-15 — #8 최신 Flutter 인증 화면/상태 연결 회신 확인
+
+[6184636914](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6184636914)에서대표cd3e003/개발API적용·검증·과거replaynull/GET우선인계수신과공식schema조사수신을확인했다. Flutter기존인증진입점/Router·명시confirm/취소/GET·앱수명불변명령복구·세션/late격리연결, 전체1282PASS/분석0은fakeHTTP/세션검증보고다. 코드/문서미커밋/미push·dev미반영/적용SHA없음,실장비/실기기/provider소유인수·ID/활동저장·대표왕관완료로확대하지않는다. 다음Flutter는안전한ID연결/서버활동선택·대표DTO/왕관별도,Backend는L1구간전체대조/수용후속이며추가수정요청없음. NEXT_WORK/AI_CONTEXT만최신화하고diffcheck,기능/계약/DB/시험·댓글/commit/push없음.
+
+## 2026-10-15 — #8 L1a/L1b 한정 수용·구현 요청 확인
+
+사용자 회신확인지시로 [6185091368](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6185091368)을읽었다. 공식조사/긍정증거분리와V1의이름단독추론/복구제한·suspect차단의미변화를수용하고L1a기반/migration격리검증/게시→L1b V2현재상태/이력GET독립인계를요청했다. 이전L1미수용/Backend수정요청없음은이범위로대체. API재기동/배포·실DBmigration/backfill/자료삭제·live퇴역/claim해제·장비보류해제·V2refresh/recovery·파티전체/종료는명시제외한다. Flutter선행완료/로컬문서게시를착수조건으로두지않는다. 이번은요청확인과NEXT_WORK/AI_CONTEXT갱신만수행,새코드/OpenAPI/migration/DB/서버/테스트·댓글/commit/push없음.
+
+## 2026-10-15 — L1a 기반 구현·격리 검증 진행
+
+0007 lifecycle/claim/이력 및 새 scoped캐시·lease migration파일/모델, 내부BindingEvidence, canonical이름단독연결차단/같은ID복구증거검사, 등록·소유·roster·캐릭터/claim snapshot·키version fencing·V1suspect사용차단/retired운영조회제외를구현했다. 기존UUID/FK·대표cooldown0을보존하고live퇴역/claim해제호출은두지않았다. 초기168개167PASS/1FAIL→신규185개183PASS/2FAIL은모두테스트입력/기대값을새불변식에맞춰고쳤으며최종검증중. migration사전충돌/기존missing보존·모의퇴역rollback/이름재사용/claim경합·late결과를격리시험에추가. 최신network-none이미지에서OpenAPI기존paths/components전체불변·새의미정책추가만확인했다. 실행API재시작·실DB적용·실provider/키조회없음.
+
+## 2026-10-15 — L1a 최종185PASS·게시 준비
+
+최신이미지격리PostgreSQL 최종185PASS60.71초·기존경고1. 테스트입력/수치기대값보완뒤모든대상통과했고metadata/migration일치확인. 기존APIshape/기존components불변·새lifecycle의미정책만추가해원본OpenAPI반영. 실제DB0007미적용/실자료backfill없음·실행API대표구간유지/재시작없음. L1a를개발브랜치에게시·정확한SHA로sameIssue인계후L1b구현을이어간다. 기존조사문서/사용자변경보존.

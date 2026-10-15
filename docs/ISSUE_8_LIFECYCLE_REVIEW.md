@@ -210,3 +210,7 @@ Flutter는 긍정증거 기준의 신규 추가 분리와 위 전환 순서/lega
 ## 대표 API 독립 구간 수용/구현
 
 [Flutter 수용](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6184322765)으로 대표GET/PUT·5분제한 제거만 독립 구현했다. feat/representative-selection으로 기존 작업 브랜치 이름을 변경하고 문서/기존 #7 종료 기록을 보존했다. [대표 구현/검증 안내](ISSUE_8_REPRESENTATIVE_DEVELOPMENT.md). 이 수용은 본 문서의 전체 lifecycle/NameClaim/V2/정리 계약 수용이 아니다.
+
+## 공식 schema 조사 완료 — 이전 접근불가 기록 보완
+
+[실제 원문 확보/판정](ISSUE_8_PROVIDER_EVIDENCE_REVIEW.md)·[Issue 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6184587789). 공식 시작안내 HTML에서 Swagger 소문자 경로를 확인해 Characters/Armories JSON을 확보했다. 이전 문서접근 실패는 최종 조사 결과가 아니다. 필드형태는 확인했으나 영구ID/생성세대/전체성인증/장비해제 의미보장은 미기재, FAQ도 데이터반영지연을 안내한다. 증거없는 자동소멸/같은ID복구는 현재합의대로 보류한다. L1비활성기반구현은 별도구간수용을 기다린다.

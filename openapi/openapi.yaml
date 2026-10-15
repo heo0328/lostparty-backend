@@ -6762,6 +6762,22 @@
     "live_roster_decrease": "suspect only; missing/transfer require validated observation criteria",
     "mutation_locking": "initial global game transaction advisory lock; no network under lock"
   },
+  "x-character-lifecycle-policy": {
+    "migration": "0007 files/isolated validation only; real DB application and API restart require separate approval",
+    "identity": "preserve UUID/FK; name claim is conflict detection, never ownership/account continuity proof",
+    "evidence": "live adapter provides no account binding/continuity evidence; 409 ACCOUNT_BINDING_EVIDENCE_PENDING",
+    "state": "active/suspect/retired internally; V1 enum unchanged; retired excluded from operating views",
+    "recovery": "suspect same ID requires internal continuity evidence; no live retirement or claim release API",
+    "cache": "new scoped tables; canonical member/ID/lifecycle/key version, preview member/registration/version/name/key version",
+    "legacy_cache": "preserved, never copied to new identities; preview refresh begins a new unproven generation",
+    "fencing": "registration/main/ownership/roster/character/claim snapshot before external work and final commit",
+    "errors": {
+      "ACCOUNT_BINDING_EVIDENCE_PENDING": 409,
+      "CHARACTER_UNUSABLE": 409,
+      "IDENTITY_CONFLICT": 409,
+      "REVISION_CONFLICT": 409
+    }
+  },
   "x-member-settings-policy": {
     "scope": "authenticated member; independent of registration/device/session",
     "default": {

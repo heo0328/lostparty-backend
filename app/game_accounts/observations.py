@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
 from app.game_accounts.provider import LostArkProvider, ProviderUnavailable
 from app.game_accounts.equipment import parse_equipment, InvalidSnapshot
+from app.game_accounts.lifecycle import BindingEvidence
 
 
 @dataclass(frozen=True)
@@ -14,6 +15,7 @@ class Observation:
     # Only an injected test adapter can currently provide validated proof.
     proof_validated: bool = False
     disappearance_validated: bool = False
+    binding: BindingEvidence | None = None
 
 
 def number(value):

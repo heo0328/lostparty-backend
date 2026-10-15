@@ -45,7 +45,7 @@ def test_profile_identity_must_match(raw):
 # Reuse isolated PostgreSQL registration fixtures without Flutter sources.
 from tests.test_game_accounts import world, register, change, BASE, page, verify
 from app.core.database import session, now
-from app.game_accounts.models import PowerCache, Character, Registration
+from app.game_accounts.models import ScopedPowerCache as PowerCache, Character, Registration
 from app.game_accounts import power_service
 from datetime import timedelta
 from sqlalchemy import select, func
@@ -69,7 +69,7 @@ def seed_provider(monkeypatch, value='1234.56'):
     return calls
 
 
-def test_power_unverified_cache_replay_and_summary_preserves(client, world, monkeypatch):
+def test_power_unverified_cache_replay_and_summary_starts_new_generation(client, world, monkeypatch):
     h, _ = world
     r = register(client, h)
     calls = seed_provider(monkeypatch, '0')
@@ -89,7 +89,7 @@ def test_power_unverified_cache_replay_and_summary_preserves(client, world, monk
     initial = items[0]['power_fetched_at']
     assert change(client, h, 'post', BASE + '/' + r['registration_id'] + '/refresh', {}).status_code == 200
     p = page(client, h, r['registration_id'])['characters']['items'][0]
-    assert p['combat_power'] == '0' and p['power_fetched_at'] == initial
+    assert p['combat_power'] is None and p['power_fetched_at'] is None
     with session() as db:
         assert db.scalar(select(func.count()).select_from(Character)) == 0
 

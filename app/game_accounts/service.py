@@ -6,21 +6,30 @@ from app.core.database import session, now
 from app.game_accounts import observations
 from app.lostark_keys import service as credentials
 from app.lostark_keys import rate_limits
-from app.lostark_keys.models import MemberPreview, MemberFetch
+from app.game_accounts.models import ScopedRosterCache as MemberPreview, ScopedRosterLease as MemberFetch
+from app.game_accounts import lifecycle
 from app.game_accounts.models import (Account, Registration, Character, Configuration, Activity,
-                                     Verification, Audit, PreviewCache, FetchLease)
+                                     Verification, Audit, PreviewCache, FetchLease, NameClaim)
 from app.game_accounts.support import authorize, fail, quota, reserve, commit_result, release, cursor_encode, cursor_decode, GameError
 from app.game_accounts.provider import ProviderUnavailable
 from app.game_accounts.equipment import EquipmentItem, required_slots, compare_equipment, EquipmentIncomplete
 
 
-def lookup(principal, snapshot, name, proof=False, cached=False):
-    identity = snapshot.user_id, snapshot.version, name
-    scope = f'fetch:{snapshot.user_id}:{snapshot.version}:{name}'
+def lookup(principal, snapshot, name, proof=False, cached=False, *, context='direct', guard=None):
+    context_key = lifecycle.digest(context)
+    identity = snapshot.user_id, snapshot.version, context_key, name
+    scope = f'fetch:{snapshot.user_id}:{snapshot.version}:{context_key}:{name}'
+    def check_context(db):
+        if guard:
+            rid, expected = guard
+            r = reg(db, principal[0].id, rid)
+            if lifecycle.digest(lifecycle.registration_stamp(db, r)) != expected:
+                fail('REVISION_CONFLICT')
     owner, generation = True, None
     with session() as db, db.begin():
         authorize(db, principal, write=True)
         credentials.check(db, principal, snapshot)
+        check_context(db)
         if cached:
             c = db.get(MemberPreview, identity)
             if c and now(db) < c.fetched_at + timedelta(minutes=30):
@@ -34,7 +43,7 @@ def lookup(principal, snapshot, name, proof=False, cached=False):
                 owner, generation = False, lease.generation
             else:
                 if lease is None:
-                    lease = MemberFetch(user_id=snapshot.user_id, credential_version=snapshot.version,
+                    lease = MemberFetch(user_id=snapshot.user_id, credential_version=snapshot.version, scope_key=context_key,
                                         name=name, generation=1, expires_at=current+timedelta(seconds=30))
                     db.add(lease)
                 else:
@@ -48,6 +57,7 @@ def lookup(principal, snapshot, name, proof=False, cached=False):
             with session() as db, db.begin():
                 authorize(db, principal, write=True)
                 credentials.check(db, principal, snapshot)
+                check_context(db)
                 lease = db.get(MemberFetch, identity)
                 if lease is None or lease.generation != generation:
                     fail('UPSTREAM_UNAVAILABLE',503)
@@ -58,14 +68,21 @@ def lookup(principal, snapshot, name, proof=False, cached=False):
                     return observations.Observation(lease.roster,lease.fetched_at)
             time.sleep(0.05)
         fail('UPSTREAM_UNAVAILABLE',503)
+    def before_call():
+        credentials.before_call(principal,snapshot)
+        if guard:
+            with session() as db:
+                authorize(db,principal)
+                check_context(db)
     try:
-        credentials.before_call(principal, snapshot)
+        before_call()
         result = observations.fetch(name, proof, token=snapshot.token,
-                                    before_armory=lambda: credentials.before_call(principal, snapshot),
+                                    before_armory=before_call,
                                     observer=rate_limits.observer(snapshot.fingerprint))
         with session() as db, db.begin():
             authorize(db, principal, write=True)
             credentials.check(db, principal, snapshot)
+            check_context(db)
             if not proof:
                 from app.game_accounts.support import lock
                 lock(db, scope)
@@ -77,7 +94,7 @@ def lookup(principal, snapshot, name, proof=False, cached=False):
                 if c:
                     c.roster,c.fetched_at = result.roster,result.fetched_at
                 else:
-                    db.add(MemberPreview(user_id=snapshot.user_id, credential_version=snapshot.version,
+                    db.add(MemberPreview(user_id=snapshot.user_id, credential_version=snapshot.version, scope_key=context_key,
                                          name=name, roster=result.roster, fetched_at=result.fetched_at))
         return result
     except Exception as error:
@@ -123,6 +140,7 @@ def settings_out(db, uid, r):
     c = config(db, uid, a.id) if a and status == 'owned' else None
     chosen = list(db.scalars(select(Activity.character_id).where(Activity.settings_id == c.id).order_by(Activity.character_id))) if c else []
     eligible = set(db.scalars(select(Character.id).where(Character.account_id == a.id, Character.status == 'confirmed'))) if c else set()
+    eligible = {i for i in eligible if lifecycle.usable(db, db.get(Character, i))}
     return dict(configuration_state=c.state if c else 'unconfigured', activity_character_ids=chosen,
                 representative_character_id=c.representative_id if c else None, settings_version=c.version if c else 1,
                 ownership_revision=a.ownership_revision if a else None, next_change_at=None,
@@ -131,14 +149,14 @@ def settings_out(db, uid, r):
 
 def reg_out(db, uid, r):
     a, state = ownership(db, uid, r)
-    count = len(list(db.scalars(select(Character.id).where(Character.account_id == a.id)))) if a else len(r.preview)
+    count = len(list(db.scalars(select(Character.id).where(Character.account_id == a.id, Character.lifecycle_state != 'retired')))) if a else len(r.preview)
     conf = config(db,uid,a.id) if a and state=='owned' else None
     rep = db.get(Character,conf.representative_id) if conf and conf.representative_id else None
     representative = None
-    if rep:
+    if rep and rep.lifecycle_state != 'retired':
         from app.game_accounts.power_service import overlay
         representative = dict(rep.summary)
-        representative['combat_power'] = overlay(db, uid, dict(rep.summary, power_fetched_at=rep.power_fetched_at))['combat_power']
+        representative['combat_power'] = overlay(db, uid, dict(rep.summary, power_fetched_at=rep.power_fetched_at), lifecycle.power_scope(r, rep))['combat_power']
     return dict(registration_id=r.id, label=r.label, is_main=r.is_main, version=r.version,
                 game_account_id=a.id if a else None, verification_status='verified' if a else 'unverified',
                 ownership_status=state, ownership_revision=a.ownership_revision if a else None,
@@ -194,7 +212,7 @@ def registrations(principal, limit, cursor):
         db.connection(execution_options={'isolation_level':'REPEATABLE READ'})
         uid = authorize(db, principal)
         rows = list(db.scalars(select(Registration).where(Registration.user_id == uid, Registration.deleted_at.is_(None)).order_by(Registration.created_at, Registration.id)))
-        revision = [(str(r.id), r.version) for r in rows]
+        revision = [(str(r.id), lifecycle.digest(lifecycle.registration_stamp(db,r)), settings_out(db,uid,r)['settings_version']) for r in rows]
         # JSON cursor converts tuples to arrays.
         revision = [list(v) for v in revision]
         scope = 'registrations:'+str(uid)
@@ -212,19 +230,22 @@ def characters(principal, rid, limit, cursor):
         a, state = ownership(db, uid, r)
         scope = 'characters:'+str(uid)+':'+str(rid)
         revision = a.roster_revision if a else r.version
-        offset = cursor_decode(cursor, scope, revision) if cursor else 0
+        cursor_revision = lifecycle.digest((lifecycle.registration_stamp(db,r),settings_out(db,uid,r)['settings_version']))
+        offset = cursor_decode(cursor, scope, cursor_revision) if cursor else 0
         if a and state == 'owned':
-            rows = list(db.scalars(select(Character).where(Character.account_id == a.id).order_by(Character.server_name, Character.character_name, Character.id)))
+            rows = list(db.scalars(select(Character).where(Character.account_id == a.id, Character.lifecycle_state != 'retired').order_by(Character.server_name, Character.character_name, Character.id)))
+            scopes = [lifecycle.power_scope(r,c) for c in rows]
             items = [dict(**c.summary, character_id=c.id, roster_status=c.status, summary_fetched_at=c.fetched_at,
-                          last_confirmed_at=c.confirmed_at, requires_refresh=c.status != 'confirmed', eligible=c.status == 'confirmed', power_stale=c.power_fetched_at is None or c.power_fetched_at<c.fetched_at, power_fetched_at=c.power_fetched_at) for c in rows]
+                          last_confirmed_at=c.confirmed_at, requires_refresh=c.status != 'confirmed', eligible=lifecycle.usable(db,c), power_stale=c.power_fetched_at is None or c.power_fetched_at<c.fetched_at, power_fetched_at=c.power_fetched_at) for c in rows]
         else:
+            scopes = [lifecycle.power_scope(r) for _ in r.preview]
             items = [dict(**v, character_id=None, roster_status='preview', summary_fetched_at=r.fetched_at,
                           last_confirmed_at=None, requires_refresh=True, eligible=False, power_stale=True, power_fetched_at=None) for v in r.preview]
         from app.game_accounts.power_service import overlay
-        for item in items:
-            item.update(overlay(db, uid, item))
+        for item, cache_scope in zip(items, scopes):
+            item.update(overlay(db, uid, item, cache_scope))
         following = offset+limit
-        return dict(characters=dict(items=items[offset:following], next_cursor=cursor_encode(dict(scope=scope,revision=revision,offset=following)) if following<len(items) else None),
+        return dict(characters=dict(items=items[offset:following], next_cursor=cursor_encode(dict(scope=scope,revision=cursor_revision,offset=following)) if following<len(items) else None),
                     settings=settings_out(db, uid, r), ownership_status=state, roster_revision=revision, server_fetched_at=r.fetched_at)
 
 
@@ -257,9 +278,11 @@ def mutate(principal, operation, key, payload, rid=None):
         obs = None
         snapshot = None
         baseline_revision = None
+        guard = None
+        context = operation + ":" + str(key)
         if operation == 'register':
             snapshot = credentials.capture(principal)
-            obs = lookup(principal, snapshot, payload['lookup_character_name'])
+            obs = lookup(principal, snapshot, payload['lookup_character_name'], context=context)
         elif operation in ('refresh','start','confirm'):
             with session() as db:
                 uid = authorize(db, principal)
@@ -281,6 +304,18 @@ def mutate(principal, operation, key, payload, rid=None):
                     # Terminal/expired challenges never call the provider.
                     if v.status != 'pending' or now(db) >= v.expires_at:
                         name = None
+            with session() as db:
+                if operation in ('refresh', 'start') and (operation == 'refresh' or payload['source'] == 'registration'):
+                    target = rid if operation == 'refresh' else uuid.UUID(payload['registration_id'])
+                    r = reg(db, authorize(db,principal), target)
+                    guard = (target, lifecycle.digest(lifecycle.registration_stamp(db,r)))
+                elif operation == 'confirm':
+                    v = db.get(Verification,rid)
+                    if v and v.registration_id:
+                        r = reg(db,authorize(db,principal),v.registration_id)
+                        guard = (r.id,lifecycle.digest(lifecycle.registration_stamp(db,r)))
+                if guard:
+                    context = list(map(str,guard))
             if operation == 'refresh':
                 quota('manual:'+str(principal[0].id)+':'+str(rid),1,10)
             elif operation == 'start':
@@ -290,54 +325,70 @@ def mutate(principal, operation, key, payload, rid=None):
                 quota('confirm:'+str(rid),1,5)
             if name:
                 snapshot = credentials.capture(principal)
-                obs = lookup(principal, snapshot, name, proof=operation != 'refresh')
+                if operation=='confirm':
+                    with session() as db:
+                        v=db.get(Verification,rid)
+                        if v.identity_snapshot is None: fail('ACCOUNT_BINDING_EVIDENCE_PENDING')
+                        if v.identity_snapshot.get('credential_version')!=snapshot.version: fail('LOSTARK_KEY_CHANGED')
+                obs = lookup(principal, snapshot, name, proof=operation != 'refresh', context=context, guard=guard)
         with session() as db, db.begin():
             uid = authorize(db, principal, write=True)
             if snapshot is not None:
                 credentials.check(db, principal, snapshot)
-            status, result = apply(db, uid, operation, payload, rid, obs, baseline_revision)
+            if guard and lifecycle.digest(lifecycle.registration_stamp(db, reg(db,uid,guard[0]))) != guard[1]:
+                fail('REVISION_CONFLICT')
+            status, result = apply(db, uid, operation, payload, rid, obs, baseline_revision, snapshot.version if snapshot else None)
             return commit_result(db, ticket, status, result)
     except Exception:
         release(ticket)
         raise
 
 
-def reconcile(db, a, obs):
-    existing = { (c.server_name,c.character_name):c for c in db.scalars(select(Character).where(Character.account_id==a.id)) }
+def reconcile(db, a, obs, *, fresh=False):
+    if not fresh:
+        lifecycle.validate_binding(db,a,obs.binding)
+    existing = {(c.server_name,c.character_name):c for c in db.scalars(select(Character).where(
+        Character.account_id==a.id,Character.lifecycle_state!='retired'))}
     if len(set(existing) | keys(obs.roster)) > 200:
-        fail('CHARACTER_LIMIT', 400)
+        fail('CHARACTER_LIMIT',400)
     additions, suspects = 0, 0
     for row in obs.roster:
         k = row['server_name'],row['character_name']
         c = existing.pop(k,None)
         if c:
-            summary = dict(row)
-            if summary.get('combat_power') is not None:
-                c.power_fetched_at=obs.fetched_at
-            if summary.get('combat_power') is None:
-                summary['combat_power'] = c.summary.get('combat_power')
-            c.summary, c.status, c.fetched_at, c.confirmed_at = summary,'confirmed',obs.fetched_at,obs.fetched_at
+            claim=db.get(NameClaim,k)
+            if not claim or claim.character_id!=c.id: fail('IDENTITY_CONFLICT')
+            if not lifecycle.usable(db,c):
+                if not obs.binding or str(c.id) not in obs.binding.continuity_ids:
+                    suspects+=1
+                    continue
+                c.lifecycle_revision+=1
+            summary=dict(row)
+            if summary.get('combat_power') is not None: c.power_fetched_at=obs.fetched_at
+            else: summary['combat_power']=c.summary.get('combat_power')
+            c.summary,c.status,c.lifecycle_state=summary,'confirmed','active'
+            c.fetched_at,c.confirmed_at=obs.fetched_at,obs.fetched_at
         else:
-            other = db.scalar(select(Character).where(Character.server_name==k[0],Character.character_name==k[1]))
-            if other:
-                fail('IDENTITY_CONFLICT')
-            c = Character(account_id=a.id, server_name=k[0], character_name=k[1], summary=row,
-                          fetched_at=obs.fetched_at, confirmed_at=obs.fetched_at, power_fetched_at=obs.fetched_at if row.get('combat_power') is not None else None)
-            db.add(c)
-            additions += 1
+            if db.get(NameClaim,k): fail('IDENTITY_CONFLICT')
+            c=Character(account_id=a.id,server_name=k[0],character_name=k[1],summary=row,
+                        fetched_at=obs.fetched_at,confirmed_at=obs.fetched_at,
+                        power_fetched_at=obs.fetched_at if row.get('combat_power') is not None else None)
+            db.add(c); db.flush()
+            db.add(NameClaim(server_name=k[0],character_name=k[1],character_id=c.id))
+            additions+=1
     for c in existing.values():
-        c.status = 'missing' if obs.disappearance_validated else 'suspect'
-        c.fetched_at = obs.fetched_at
-        suspects += 1
-    a.roster_revision += 1
+        # Absence is suspect only. No live retirement/claim release path here.
+        if c.status=='confirmed' and c.lifecycle_state=='active': c.lifecycle_revision+=1
+        c.status,c.lifecycle_state,c.fetched_at='suspect','suspect',obs.fetched_at
+        suspects+=1
+    a.roster_revision+=1
     db.flush()
-    bad = {c.id for c in db.scalars(select(Character).where(Character.account_id==a.id,Character.status!='confirmed'))}
+    bad={c.id for c in db.scalars(select(Character).where(Character.account_id==a.id)) if not lifecycle.usable(db,c)}
     for conf in db.scalars(select(Configuration).where(Configuration.account_id==a.id,Configuration.ended_at.is_(None))):
-        selected = set(db.scalars(select(Activity.character_id).where(Activity.settings_id==conf.id)))
-        if selected & bad and conf.state != 'needs_reconfiguration':
-            conf.state = 'needs_reconfiguration'
-            conf.version += 1
-    return additions, suspects
+        selected=set(db.scalars(select(Activity.character_id).where(Activity.settings_id==conf.id)))
+        if selected & bad and conf.state!='needs_reconfiguration':
+            conf.state='needs_reconfiguration'; conf.version+=1
+    return additions,suspects
 
 
 def retained(v, current):
@@ -365,7 +416,7 @@ def verification(principal, vid):
         return verification_out(v,current)
 
 
-def apply(db, uid, op, data, rid, obs, baseline_revision):
+def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=None):
     current = now(db)
     if op == 'register':
         r = create_registration(db,uid,data['lookup_character_name'],data['label'],data['is_main'],obs)
@@ -419,7 +470,7 @@ def apply(db, uid, op, data, rid, obs, baseline_revision):
             fail('INVALID_REQUEST',400)
         if representative not in selected:
             fail('REPRESENTATIVE_REQUIRED',400)
-        valid=set(db.scalars(select(Character.id).where(Character.account_id==a.id,Character.status=='confirmed')))
+        valid={c.id for c in db.scalars(select(Character).where(Character.account_id==a.id)) if lifecycle.usable(db,c)}
         if not set(selected)<=valid:
             fail('CHARACTER_NOT_FOUND',404)
         previous=set(db.scalars(select(Activity.character_id).where(Activity.settings_id==c.id)))
@@ -439,11 +490,14 @@ def apply(db, uid, op, data, rid, obs, baseline_revision):
             slots=required_slots(obs.equipment or {})
         except EquipmentIncomplete:
             fail('EQUIPMENT_INCOMPLETE',400)
-        candidate=canonical_candidate(db,obs.roster)
+        candidate=canonical_candidate(db,obs.roster,obs.binding)
         v=Verification(actor_id=uid,registration_id=r.id if r else None,lookup_name=r.lookup_name if data['source']=='registration' else data['character_name'],
                        candidate_id=candidate.id if candidate else None,revision=candidate.ownership_revision if candidate else None,
                        roster=obs.roster,baseline={k:dict(name=e.name,grade=e.grade) for k,e in obs.equipment.items()},
-                       slots=list(slots),created_at=current,expires_at=current+timedelta(minutes=10))
+                       slots=list(slots),identity_snapshot={'registration':lifecycle.digest(lifecycle.registration_stamp(db,r)) if r else None,
+                           'account':lifecycle.digest(lifecycle.account_stamp(db,candidate)) if candidate else None,
+                           'credential_version':credential_version},
+                       created_at=current,expires_at=current+timedelta(minutes=10))
         db.add(v); db.flush()
         return 201,verification_out(v,current)
     v=db.get(Verification,rid)
@@ -461,6 +515,17 @@ def apply(db, uid, op, data, rid, obs, baseline_revision):
     if v.status!='pending':
         # Terminal outcome commits together with dedup and cannot run proof.
         return 409,{'error':dict(code='VERIFICATION_'+v.status.upper(),message='Challenge is terminal',request_id=str(uuid.uuid4()))}
+    if v.identity_snapshot is None:
+        fail('ACCOUNT_BINDING_EVIDENCE_PENDING')
+    if v.identity_snapshot.get('credential_version') != credential_version:
+        fail('LOSTARK_KEY_CHANGED')
+    source = reg(db,uid,v.registration_id) if v.registration_id else None
+    if source and v.identity_snapshot['registration'] != lifecycle.digest(lifecycle.registration_stamp(db,source)):
+        fail('REVISION_CONFLICT')
+    if v.candidate_id:
+        candidate=db.get(Account,v.candidate_id)
+        if candidate is None or v.identity_snapshot['account']!=lifecycle.digest(lifecycle.account_stamp(db,candidate)):
+            fail('REVISION_CONFLICT')
     v.attempt_count+=1; v.last_checked_at=current
     baseline={k:EquipmentItem(**e) for k,e in v.baseline.items()}
     if obs is None or obs.equipment is None:
@@ -470,7 +535,7 @@ def apply(db, uid, op, data, rid, obs, baseline_revision):
         return 200,verification_out(v,current,code)
     if not obs.proof_validated:
         return 200,verification_out(v,current,'PROVIDER_EVIDENCE_PENDING')
-    candidate=canonical_candidate(db,obs.roster)
+    candidate=canonical_candidate(db,obs.roster,obs.binding)
     if (candidate.id if candidate else None)!=v.candidate_id or (candidate.ownership_revision if candidate else None)!=v.revision:
         fail('REVISION_CONFLICT')
     if v.registration_id:
@@ -478,7 +543,7 @@ def apply(db, uid, op, data, rid, obs, baseline_revision):
         if source_registration.account_id and (candidate is None or candidate.id!=source_registration.account_id):
             fail('IDENTITY_CONFLICT')
     if candidate:
-        current_keys={(c.server_name,c.character_name) for c in db.scalars(select(Character).where(Character.account_id==candidate.id))}
+        current_keys={(c.server_name,c.character_name) for c in db.scalars(select(Character).where(Character.account_id==candidate.id,Character.lifecycle_state!='retired'))}
         if not current_keys<=keys(obs.roster) and not obs.disappearance_validated:
             return 200,verification_out(v,current,'ROSTER_EVIDENCE_PENDING')
     r=reg(db,uid,v.registration_id) if v.registration_id else existing_registration(db,uid,obs.roster)
@@ -496,7 +561,10 @@ def apply(db, uid, op, data, rid, obs, baseline_revision):
     duplicate=db.scalar(select(Registration).where(Registration.user_id==uid,Registration.account_id==a.id,Registration.deleted_at.is_(None),Registration.id!=r.id))
     if duplicate:
         fail('REGISTRATION_EXISTS')
-    reconcile(db,a,obs)
+    if candidate and previous!=uid:
+        from dataclasses import replace
+        obs=replace(obs,binding=lifecycle.evidence(db,a,continuity_ids=obs.binding.continuity_ids,complete=obs.binding.complete))
+    reconcile(db,a,obs,fresh=candidate is None)
     a.verified_at=current
     r.account_id,r.preview,r.fetched_at=a.id,obs.roster,obs.fetched_at
     r.version+=1
@@ -510,14 +578,17 @@ def apply(db, uid, op, data, rid, obs, baseline_revision):
     return 200,verification_out(v,current)
 
 
-def canonical_candidate(db, rows):
-    observed=keys(rows)
-    ids=set()
-    # At most 200 keys; identity is observed, never inferred by name alone.
-    for server,name in observed:
-        aid=db.scalar(select(Character.account_id).where(Character.server_name==server,Character.character_name==name))
-        if aid:
-            ids.add(aid)
-    if len(ids)>1:
-        fail('IDENTITY_CONFLICT')
-    return db.get(Account,next(iter(ids))) if ids else None
+def canonical_candidate(db, rows, evidence=None):
+    # Names identify conflicts, never authority or account continuity.
+    claims=[db.get(NameClaim,(row['server_name'],row['character_name'])) for row in rows]
+    if evidence is None:
+        if any(claims): fail('ACCOUNT_BINDING_EVIDENCE_PENDING')
+        return None
+    if type(evidence) is not lifecycle.BindingEvidence: fail('ACCOUNT_BINDING_EVIDENCE_PENDING')
+    account=db.get(Account,uuid.UUID(evidence.account_id))
+    if account is None: fail('IDENTITY_CONFLICT')
+    lifecycle.validate_binding(db,account,evidence)
+    for claim in claims:
+        if claim and db.get(Character,claim.character_id).account_id!=account.id:
+            fail('IDENTITY_CONFLICT')
+    return account

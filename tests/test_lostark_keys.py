@@ -6,8 +6,9 @@ import pytest
 from sqlalchemy import select, func
 from app.core.database import session, now
 from app.lostark_keys import service
-from app.lostark_keys.models import Credential, MemberPreview, MemberFetch
-from app.game_accounts.models import RequestResult, PowerCache, PreviewCache, LimitEvent
+from app.lostark_keys.models import Credential
+from app.game_accounts.models import ScopedRosterCache as MemberPreview, ScopedRosterLease as MemberFetch
+from app.game_accounts.models import RequestResult, ScopedPowerCache as PowerCache, PreviewCache, LimitEvent
 from app.game_accounts.provider import LostArkProvider, ProviderUnavailable
 from app.game_accounts.support import quota, GameError
 from tests.test_game_accounts import PrivateHeaders, world, register, change, BASE, page
