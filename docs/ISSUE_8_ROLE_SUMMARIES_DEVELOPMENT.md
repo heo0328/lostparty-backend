@@ -43,4 +43,4 @@ replay는현재회원/세션·본인활성등록/소유/NameClaim 및원래요�
 
 1차최신이미지격리PostgreSQL P1/기존V2읽기/회원설정/metadata **108PASS, 61.72초, 기존경고1**. 추가 세션/같은이름새UUID/lease takeover/DB장애/실제기존행migration 경계 및 생명주기·대표·전투력/metadata 회귀 최종 **171PASS, 79.99초, 기존경고1**. 두실행을합산한단일suite로표현하지않는다. 실제provider/기기인수가아니다.
 
-network-none이미지OpenAPI와원본대조, 기존모든paths/components/policy불변·새GET/PUT와새 schema/policy만추가확인. 검증후작업단위commit/push·원격동일SHA확인후Issue에정확한원본SHA/미구현P2·실환경경계/Flutter후속을회신한다.
+network-none이미지OpenAPI와원본대조, 기존모든paths/components/policy불변·새GET/PUT와새 schema/policy만추가확인. 구현/원본 OpenAPI `6e4f625c3b62c92ec412373b33ed8a3441af8149`를 작업브랜치 commit/일반push·원격동일SHA로 확인하고 [P1 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6194881739)를 게시했다. dev/main 미통합, 실제DB/API미전환이다. 다음 Flutter는 이 원본 P1을 소비해 adapter/역할별scoped저장·영속대기/오류·충돌 검증을 연결하고 같은Issue에 결과를 회신한다. P2는 별도후속요청을 따른다. 기존 별도미커밋 lifecycle 전환준비문서는 보존했으며 구현/계약 게시와 구분한다.

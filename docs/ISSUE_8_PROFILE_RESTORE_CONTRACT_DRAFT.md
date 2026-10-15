@@ -153,3 +153,7 @@ Flutter의 부분수용을 반영해 역할핵심수치·version/멱등/격리 �
 [최초 Backend 검토 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6191634445) 이후 본 수정안이 충돌하는 항목을 대체한다. 나머지 strict/상한/독립version/lease·충돌·출처/수명·실행경계는 유지한다. 문서 미커밋·미push·dev미반영·새구현/OpenAPI SHA 없음.
 
 [Backend 2차 계약 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6193183186) 게시 완료. Flutter 수정안 대조/수용 후속.
+
+## P1 구현 게시 상태
+
+수용된 P1 구현/원본OpenAPI `6e4f625c3b62c92ec412373b33ed8a3441af8149` 일반push·원격확인·[인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6194881739) 완료. 검토 당시 미커밋/미구현 표현은 이 범위에서 대체한다. P2는 수용 계약만 있으며 미구현, preferences는 P1 고정 가상기본값이다. 실행/검증/후속은 [P1 실행안내](ISSUE_8_ROLE_SUMMARIES_DEVELOPMENT.md)를 따른다. 실제DB/API전환·dev/main통합은 없다.

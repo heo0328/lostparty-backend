@@ -530,3 +530,8 @@ L1b13파일1594추가/343삭제를 `c91af2e003877daacb833aaa0c109eae11b72816`로
 ## 2026-10-15 — #8 P1 역할요약 구현·최종171PASS/게시 준비
 
 사용자 진행 승인과 [Flutter 계약수용/P1요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6193638580)을 확인했다. 기존문서변경을보존하며현작업브랜치에서0008 character_role_summaries·GET personal-profile/PUT role-summaries·strict11필드summary/무결성4상태·UTC/nullable·파싱전32KiB·회원/활성등록/소유/NameClaim/수명·독립version/no-op·현재접근replay/업무ACK원자성을구현했다. P2preferences는가상고정기본값만제공하고PUT/표시API/정리후처리는확대하지않았다. 기존provider/활동/대표/키코드불변. 최신이미지격리PostgreSQL17에서1차108PASS61.72초·최종추가경계/직접영향171PASS79.99초(각기존경고1·별도실행). 기존자료가있는0007위0008이관보존/제약·metadata일치·세션/UUID/소유수명/lease takeover·동시기기한승자·rollback/replay경계통과. network-none이미지OpenAPI기존paths/components/policy불변·GET/PUT/새스키마정책만추가했다. 실제DB0007/0008·실행API/기기/실provider/배포/삭제미실행. 검증구간commit/push·원격일치후정확한SHA/P2미구현/실환경경계를sameIssue인계한다. 기존미커밋 lifecycle 전환준비문서 변경은 별도보존한다.
+
+
+## 2026-10-15 — #8 P1 원격 게시·Flutter 인계 완료
+
+구현/OpenAPI/관련문서13파일을 `6e4f625c3b62c92ec412373b33ed8a3441af8149`로커밋했다. 기본Git HTTPS인증helper미설정으로첫push가실패했으나기존gh인증을일회성credential helper로사용한일반push로완료, git ls-remote와SHA일치를확인했다. 토큰출력/인증설정영구변경/force없음. [P1 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6194881739)에불변원본·정확한P1 GET/PUT/DTO·P2고정기본값/미구현·108/별도171PASS·실제DB/API미전환을전달했다. 다음Flutter는P1 adapter/영속대기연결과모의검증결과회신, P2는후속별도요청이다. 기존미커밋 docs/ISSUE_8_LIFECYCLE_DEVELOPMENT.md 변경은선택stage에서제외해보존했다. main/dev통합·실DB/API/기기·배포/삭제·Issue종료없음. 게시상태기록문서만추가커밋/push하며기능시험/이미지/DB재실행없음.
