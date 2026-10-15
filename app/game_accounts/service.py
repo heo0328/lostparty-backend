@@ -125,7 +125,7 @@ def settings_out(db, uid, r):
     eligible = set(db.scalars(select(Character.id).where(Character.account_id == a.id, Character.status == 'confirmed'))) if c else set()
     return dict(configuration_state=c.state if c else 'unconfigured', activity_character_ids=chosen,
                 representative_character_id=c.representative_id if c else None, settings_version=c.version if c else 1,
-                ownership_revision=a.ownership_revision if a else None, next_change_at=c.next_change_at if c else None,
+                ownership_revision=a.ownership_revision if a else None, next_change_at=None,
                 selection_complete=True, ineligible_character_ids=[i for i in chosen if i not in eligible])
 
 
@@ -248,6 +248,10 @@ def mutate(principal, operation, key, payload, rid=None):
     ticket, replay = reserve(principal, operation, key, {'target':str(rid) if rid else None, 'body':payload})
     if replay:
         replay_access(principal, operation, rid)
+        if operation == 'settings':
+            # Old saved successes can predate cooldown removal. Do not rewrite
+            # their state or version; only retire the obsolete timer in the DTO.
+            return replay[0], dict(replay[1], next_change_at=None)
         return replay
     try:
         obs = None
@@ -419,10 +423,7 @@ def apply(db, uid, op, data, rid, obs, baseline_revision):
         if not set(selected)<=valid:
             fail('CHARACTER_NOT_FOUND',404)
         previous=set(db.scalars(select(Activity.character_id).where(Activity.settings_id==c.id)))
-        if c.representative_id and c.representative_id!=representative:
-            if c.next_change_at and current<c.next_change_at:
-                fail('REPRESENTATIVE_COOLDOWN')
-            c.next_change_at=current+timedelta(minutes=5)
+        c.next_change_at=None
         if previous!=set(selected) or c.representative_id!=representative or c.state!='configured':
             db.execute(delete(Activity).where(Activity.settings_id==c.id))
             db.add_all([Activity(settings_id=c.id,account_id=a.id,character_id=i) for i in selected])

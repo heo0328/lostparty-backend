@@ -193,3 +193,24 @@ class GameErrorDetail(DTO):
 
 class GameErrorOut(DTO):
     error: GameErrorDetail
+
+
+class RepresentativeIn(DTO):
+    character_id: UUID
+    expected_registration_version: Version
+    expected_settings_version: Version
+    expected_ownership_revision: Version
+    expected_roster_revision: Version
+
+
+class RepresentativeOut(DTO):
+    registration_id: UUID
+    game_account_id: UUID
+    is_main: StrictBool
+    registration_version: Version
+    settings_version: Version
+    ownership_revision: Version
+    roster_revision: Version
+    representative_character_id: UUID | None
+    configuration_state: Literal['unconfigured', 'configured', 'needs_reconfiguration']
+    next_change_at: None

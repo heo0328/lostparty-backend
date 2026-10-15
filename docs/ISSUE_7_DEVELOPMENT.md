@@ -96,3 +96,5 @@ Flutter 전체1246개PASS 후 국소보완12개PASS·최종분석0·debugAPK 성
 ## 현재 완료·종료 인계 상태
 
 2026-10-15 사용자 보고: #7 작업이 완료되어 네이티브에 이슈 종료 처리를 지시했다. GitHub 조회 시 아직 OPEN이며 실제 종료 처리는 네이티브 담당이다. [최신 Backend 통합 회신](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6174087672) 기준 양측 dev 게시·현재 구간 사용자 정상 보고 확인 완료, 추가 Backend 수정/반복 시험 요청 없음. 이전 단계의 게시/인수 대기 기록은 이후 완료 기록으로 대체한다. 재설치/별도기기·실provider 제한/헤더·운영TLS와 전체빌드/역할저장 설계는 별도 후속으로 보존한다. Backend는 문서 최신화·dev 반영/push 후 새 합의 요청 또는 실제 결함 보고를 기다린다.
+
+2026-10-15 11:29 KST: 사용자 확인/종료 지시로 본문·최신 댓글의 완료 근거 및 추가 수정 요청 없음을 재확인했다. Backend에서 완료 사유 댓글과 함께 종료해 CLOSED/COMPLETED를 확인했다. [종료 댓글](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6183029637). 앞선 네이티브 종료 대기 상태를 대체하며 별도 후속 미확인은 유지한다.

@@ -127,7 +127,7 @@ def test_registration_strict_input(client,world,extra):
     assert change(client,h,'post',BASE,data).status_code==400
 
 
-def test_ownership_first_seed_cooldown_atomicity(client,world):
+def test_ownership_first_seed_no_cooldown_atomicity(client,world):
     h,state=world; r=register(client,h)
     initial=page(client,h,r['registration_id'])
     assert all(i['character_id'] is None for i in initial['characters']['items'])
@@ -142,11 +142,13 @@ def test_ownership_first_seed_cooldown_atomicity(client,world):
     replacement=next(i for i in ids if i != original_rep)
     second=change(client,h,'put',BASE+'/'+r['registration_id']+'/character-settings',save_data(p,ids,replacement))
     assert second.status_code==200,second.text
-    assert second.json()['next_change_at'] is not None
+    assert second.json()['next_change_at'] is None
     p=page(client,h,r['registration_id'])
     attempted=change(client,h,'put',BASE+'/'+r['registration_id']+'/character-settings',save_data(p,[original_rep],original_rep))
-    assert attempted.json()['error']['code']=='REPRESENTATIVE_COOLDOWN'
-    assert page(client,h,r['registration_id'])['settings']==p['settings']
+    assert attempted.status_code==200
+    assert attempted.json()['next_change_at'] is None
+    p=page(client,h,r['registration_id'])
+    assert p['settings']['activity_character_ids']==[original_rep]
     # Re-authentication does not reset a valid selection or ownership revision.
     verify(client,h,state,r['registration_id'])
     after=page(client,h,r['registration_id'])

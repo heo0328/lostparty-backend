@@ -17,11 +17,12 @@
 | 전투력 수집 #5 | 1700공통기준·POST/cache/GET상태·0003 구현·대상42개/후속3개·로컬적용완료. 게시SHA 39188d5dca2d394f4e8b3fcbfe332274812285bf·Flutter1204/후속70자동·신규3흐름사용자확인보고,Flutter 구현6beb55e/devccc6b23·push인계확인 완료. [실행](../ISSUE_5_DEVELOPMENT.md). [기본값](../GAME_DEFAULTS.md)·[계획](../ISSUE_5_COMBAT_POWER_PLAN.md)·[Issue5](https://github.com/heo0328/lostparty-backend/issues/5) |
 | 회원 설정 #6 | Backend79255f0·Flutter2e0764f/dev5cee9648 게시·사용자3흐름 확인, Issue CLOSED. 전체자동빌드/새환경은 별도. [최종 인계](https://github.com/heo0328/lostparty-backend/issues/6#issuecomment-6170736672)·[실행](../ISSUE_6_MEMBER_SETTINGS.md) |
 | 회원별 Lost Ark 키 #7 | [Issue #7](https://github.com/heo0328/lostparty-backend/issues/7) [계약 제안](../ISSUE_7_LOSTARK_KEY_CONTRACT_DRAFT.md) Flutter 수용 후 Backend 구현 완료. 암호화 저장/전 호출 개인 키 전환·회원·키 버전 cache/결과 fencing·token별 quota. Backend9e1a255·로컬0006 게시, Flutter1246/후속12 자동검증·연결 보고 확인, 현재 구간 사용자 정상·Flutter 구현8644c81/devcc6a0b0 push 확인. [회신](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6173350024). [실행](../ISSUE_7_DEVELOPMENT.md) |
+| 캐릭터 생명주기 #8 | [Issue #8](https://github.com/heo0328/lostparty-backend/issues/8) [A/B/C 검토안](../ISSUE_8_LIFECYCLE_REVIEW.md)·[회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6183753309) 게시. [보완1/3 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6183941103) 게시·Flutter 대조/구간 수용 대기. 대표 cooldown 폐지·메인왕관 UX/[계약 수용](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6184322765) 후 독립구현/75개+별도37개 표적PASS·개발API/OpenAPI일치. [실행/인계](../ISSUE_8_REPRESENTATIVE_DEVELOPMENT.md). Flutter연결/실인수후속, lifecycle전체합의별도 |
 | 후속 기능 | 탈퇴·약관·모집·파티·그룹·Apple/Discord·WebSocket은 구현에 없음 |
 | 운영 | Lightsail 배포 예정, 운영 HTTPS·배포·키 관리 준비는 완료로 간주하지 않음 |
 
 인증 1차는 main/dev에 통합됐으며 이후 계정 업무·새label·진단/후속문서는 dev에 통합·게시됐습니다. 완료 작업 브랜치는 push 확인 후 정리하며, 다음 작업은 최신 dev에서 분기합니다. 계약 소비·전체 Flutter 인수·운영 배포 완료와 저장소 최신화를 구분합니다.
 
-현재 통합 구간은 회원설정 #6과 개인 Lost Ark 키/복원/호출대기 #7이다. 결과 문서를 포함해 dev772b90e로 통합 후 결과 기록72f6301까지 push 완료, 현재 dev이며 feat/member-settings는 로컬·원격 정리했다. main은 유지한다. 실제 Git 결과는 DEV_LOG와 Issue #7 인계 댓글이 기준이다.
+현재 통합 구간은 회원설정 #6과 개인 Lost Ark 키/복원/호출대기 #7이다. 결과 문서를 포함해 dev772b90e로 통합 후 결과 기록72f6301까지 push 완료, 현재 feat/representative-selection에서 #8 대표 독립구간 구현/인계 중이며 feat/member-settings는 로컬·원격 정리했다. main은 유지한다. 실제 Git 결과는 DEV_LOG와 Issue #7 인계 댓글이 기준이다.
 
-#7 Backend9e1a255·로컬0006·Flutter8644c81/devcc6a0b0 push·현재 구간 사용자 정상 보고 확인. Backend 추가 수정 없음. 재설치/별도기기·실provider한도/헤더·운영TLS는 후속 미확인, 전체빌드/역할저장 설계는 별도다. Issue #7 작업 완료·네이티브 측 종료 지시 전달(사용자 보고). GitHub 조회 시 아직 OPEN이며 실제 종료 처리는 네이티브 담당이다.
+#7 Backend9e1a255·로컬0006·Flutter8644c81/devcc6a0b0 push·현재 구간 사용자 정상 보고 확인. Backend 추가 수정 없음. 재설치/별도기기·실provider한도/헤더·운영TLS는 후속 미확인, 전체빌드/역할저장 설계는 별도다. Issue #7은 사용자 지시로 Completed 종료했다([종료 기록](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6183029637)).

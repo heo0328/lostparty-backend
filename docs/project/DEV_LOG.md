@@ -427,3 +427,41 @@ GitHub Issue 전체 상태·본문·최신 댓글과 로컬/원격 Git을 읽기
 ## 2026-10-15 — #7 완료·네이티브 종료 지시 반영
 
 사용자가 #7 작업 완료로 네이티브에 종료 처리를 지시했다고 보고하고 문서 최신화·dev 병합/push 후 대기를 요청했다. 조회 시 #7은 아직 OPEN/closedAt null이며 실제 종료는 네이티브 담당으로 기록했다. NEXT_WORK·AI_CONTEXT·#7 실행 안내를 완료/후속 대기 상태로 최신화하고 이전 문서 정정도 함께 반영한다. docs/project-status에서 문서만 커밋 후 dev fast-forward·일반push하고 원격 일치/clean 확인 후 임시 작업 브랜치를 정리한다. main/기능/계약/DB/키 변경 없음. git diff --check 및 문서 참조 확인을 수행하며 기능 테스트·서버/DB 재실행은 하지 않는다.
+
+## 2026-10-15 — #7 Completed 종료 확인
+
+사용자가 완료 여부 확인 후 종료 시도를 요청했다. 본문·최신5개 댓글에서 합의 구현/검증·양측 dev 게시·사용자 정상 보고 및 추가 Backend 수정 요청 없음을 확인했다. gh issue close --reason completed 성공, 11:29 KST CLOSED/COMPLETED를 재조회했다. [종료 근거 댓글](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6183029637). 이 WSL 세션의 CLI 종료 권한/인증은 정상 동작했다. NEXT_WORK·AI_CONTEXT·실행 안내의 종료 대기를 실제 완료로 정정했다. 기능/계약/서버/DB/시험 변경 없음. 문서는 미커밋·미push다.
+
+## 2026-10-15 — 신규 #8 계약 검토 요청 확인
+
+사용자 지시로 [Issue #8](https://github.com/heo0328/lostparty-backend/issues/8) 본문과 댓글 없음/OPEN을 확인했다. 이번은 구현 전 A/B/C 계약 검토 요청이며 기능/migration/자료 삭제/파티 전체구현 요청이 아님을 구분했다. Character 서버+이름 전역 unique, reconcile의 suspect/missing 구분, Observation.disappearance_validated 기본false와 ROSTER_EVIDENCE_PENDING을 코드에서 확인했다. 상세 설계/계약 회신은 아직 수행하지 않았으며 다음 작업으로 NEXT_WORK에 기록했다. 기존 #7 종료 문서 변경 보존. 코드/OpenAPI/DB/서버/테스트·Issue 댓글·commit/push 없음.
+
+## 2026-10-15 — #8 A/B/C 계약 검토·Issue 회신
+
+사용자 진행 지시로 docs/character-lifecycle에서 기존 #7 종료 문서 변경을 보존하며 모델/reconcile/canonical_candidate·provider/관찰·활동settings·멱등/커서·power cache/fencing을 대조했다. 공식 changelog의 siblings 설명을 확인했으나 상세 API 페이지는 접근 실패해 전체성/영구ID 근거 미확보로 구분했다. lifecycle/claim/retirement·구간별 증거 보류·조회순서/동시성·V2 초안/기기정리 재적용·구버전 영향·구현단위/최소검증을 ISSUE_8_LIFECYCLE_REVIEW에 제안하고 [전체 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6183753309)을 게시했다. Flutter 대조/수용이 다음 입력이며 구현 승인을 받은 것으로 보지 않는다. 문서 diff/참조/댓글 크기 확인, 기능/OpenAPI/migration/실provider/서버/DB/자동테스트·commit/push 없음.
+
+## 2026-10-15 — #8 Flutter 보완 질문 확인
+
+[6183781483](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6183781483)을 확인했다. 상태/ID·이름점유 분리·membership/Snapshot 보존·ID mapping 없는 기기자료 자동삭제 금지는 방향 일치이며 전체 wire/구현 수용은 아니다. Backend 보완 요청은 live 가능성/증거 조사 및 신규추가의 독립 조건, cooldown 유지/예외의 경계, V1/V2·DTO/profile/ID mapping/cache 전환 최소 범위의3항목이다. 대표 cooldown 예외는 미수용 제품 제안으로 유지하고 Flutter가 사용자와 결정한다. 다음 실행을 보완 회신으로 갱신했으며 이번에는 질문 확인만 수행했다. 기능/OpenAPI/DB/서버/시험·Issue 댓글·commit/push 없음.
+
+## 2026-10-15 — 대표 cooldown 폐지·빠른 선택 UX 설계 의뢰
+
+사용자가 대표 변경5분 cooldown 불필요를 결정하고 내 계정의 사용 선택/표시 캐릭터 아이콘 터치로 대표만 바꾸는 기능 및 별도 API 제공 방향을 확정했다. 최신 #8 회신을 확인 후 [같은 Issue에 정책 전달·Flutter UI/UX 설계 의뢰](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6183888735)를 게시했다. 원정대별/회원전체 대표 범위는 현행 원정대별을 임의 변경하지 않고 Flutter가 명시하도록 요청했다. 상태표현/연속터치·실패/다른설정과 동기화 등을 설계 회신 후 API 계약으로 구체화한다. 복구 한정 예외 제안은 폐기했으며 실제 서버5분 로직은 아직 유지됨을 구분했다. #8의 live 증거/최소 전환 질문은 Backend 보완 잔여다. 문서diff 검증, 기능/OpenAPI/DB/테스트·commit/push 없음.
+
+## 2026-10-15 — #8 live 경로·최소 전환 보완 답변 게시
+
+사용자 답변 게시 지시로 최신 #8 댓글·router/DTO/settings/대표/power overlay를 재대조했다. 공식 changelog/시작 안내는 확인했으나 상세 Characters 문서 접근은 실패/시작안내 연결로 schema 미확보를 유지했다. 신규추가에 소멸용 전체성을 일괄 요구한 과도한 조건을 긍정관찰+검증된 원정대 연결로 축소하고 live 가능/보류 표, 조사 담당/종료 판정·대안의 보증 한계, P0~P3 및 경로별 V1/V2·profile/ID mapping/cache 전환을 [같은 Issue에 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6183941103)했다. 이력5값으로 V1 required character_level 등을 복원할 수 없어 retired 투영 제안을 폐기/운영목록 제외의 합의 필요로 정정했다. 대표 cooldown 전체 폐지/전용API는 사용자 결정·UX회신 후 계약 확정으로 연결했다. 다음은 Flutter 대조/구간 수용·대표 UX회신과 Backend 증거 표 정리다. 기능/OpenAPI/migration/DB/서버/자동테스트·commit/push 없음. 문서 diff/댓글 길이 검증.
+
+## 2026-10-15 — Flutter 대표 빠른 선택 UX 회신 확인
+
+[6183971014](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6183971014) 확인. 사용자 확정 UI는 메인 원정대 표시 캐릭터의 이름옆 왕관·현재대표 파스텔노랑/다른후보 윤곽·확인알럿 취소왼쪽/변경오른쪽이다. 본인활동/유효serverID검증·진행잠금·서버확인후표시·모호실패 동일명령복구/GET우선·draft충돌/settings_version공유 설계를 기록했다. Backend 다음은 대표전용API 계약 제안이며 실제구현 요청/기능완료가 아니다. lifecycle 전체 제안은 별도 대조 상태, live근거 조사도 남는다. NEXT_WORK에 다음실행 갱신. 이번은 회신 확인만 수행, 추가댓글/기능/OpenAPI/DB/테스트·commit/push 없음.
+
+## 2026-10-15 — 대표 빠른 선택 전용 API 계약 제안 게시
+
+사용자 제안 진행 지시로 최신 #8 UX/현행 등록·설정·멱등/replay·권한·경로를 대조했다. 신규GET/PUT /v1/me/game-accounts/{registration_id}/representative, 메인한정·본인소유/활동/대상자격·기대4revision·기존settings_version공유·no-op/replay/현재GET복구·main전환ABA·cooldown제거/requirednull을 문서화해 [같은 Issue에 게시](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6184022477)했다. 새테이블/migration 없이 제공하는 안이며 live proof보류/초기자격 제한과 #8 lifecycle전체 분리를 명시했다. Flutter수용/수정 회신후 독립구현 구간이며 현재기능/OpenAPI/DB/서버/자동테스트·commit/push 없음. 문서diff와댓글크기검증만 수행, 기존미커밋문서보존.
+
+## 2026-10-15 — #8 대표 계약 수용·독립 구현/표적 검증·개발API 적용
+
+[Flutter6184322765](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6184322765)의 대표GET/PUT·cooldown제거 수용/착수요청 확인 후 기존docs/character-lifecycle을feat/representative-selection으로rename하여 사용자문서/기존#7종료기록보존. 대표전용service·strict5입력/10응답·기대4revision·메인/소유/활동/confirmed검사·전체설정과settingsversion공유·no-op/replay/rollback·GET일관snapshot, 기존PUT/GETnext_change_atnull·5분판정제거 구현. 새테이블/migration없이기존모델사용. 과거settings성공replay의폐지된시각만null로투영/저장이력불변을후속보완. 원본OpenAPI는기존path/schema불변·대표경로2operation/DTO2개·정책/cooldown차이만검토해반영.
+
+최신이미지격리PostgreSQL 대표/직접영향계정업무·metadata75PASS30.09초, 과거replay/추가경계보완후대표/즉시변경/스키마37PASS11.33초(각기존경고1·별도실행). 외부호출/키복호화0·DBfixture조건검증이며실Google/provider/기기사용자인수와구분. 개발API만재생성healthy·원본OpenAPI전체일치PASS·test-db중지. 개발DBmigration/fixture/실대표변경·자료초기화/삭제/키파일변경/운영배포없음. 인계상시승인으로이작업구간commit/push·원격확인후sameIssue에실SHA·branch/dev미통합·검증/미확인/Flutter담당후속전달. main/dev병합·Issue종료는포함하지않음.
