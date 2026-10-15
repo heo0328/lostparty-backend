@@ -66,4 +66,4 @@ preferences replay도 현재 회원/등록/소유/NameClaim 및 원래 소유/li
 
 ### 최종 직접 영향 검증
 
-추가 같은key 복구/원정대replay 소유수명과 P2·생명주기·V2조회·대표·회원설정/metadata **143PASS, 75.80초, 기존경고1**. 앞선128개와 별도 실행이며 합산 단일suite로 표현하지 않는다. 초기 오류는 보완 후 최종 실행에서 모두 통과했다. test-db만 중지하고 실제DB/API를 변경하지 않는다. 다음은 이 구현·정확한원본OpenAPI를 작업브랜치에 commit/push·원격일치확인 후 같은Issue 인계다.
+추가 같은key 복구/원정대replay 소유수명과 P2·생명주기·V2조회·대표·회원설정/metadata **143PASS, 75.80초, 기존경고1**. 앞선128개와 별도 실행이며 합산 단일suite로 표현하지 않는다. 초기 오류는 보완 후 최종 실행에서 모두 통과했다. test-db만 중지하고 실제DB/API를 변경하지 않는다. 구현/정확한원본OpenAPI `7027f0b690e1c232fafc5d09faa9d6c169c99962`를 commit/일반push·원격동일SHA로확인하고 [P2 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6195735441)를게시했다. dev/main미통합·실제DB/API미전환이다. 다음Flutter는이원본으로preferences실제복원/표시설정adapter·저장/대기·모의검증을연결하고같은Issue에결과를회신한다.

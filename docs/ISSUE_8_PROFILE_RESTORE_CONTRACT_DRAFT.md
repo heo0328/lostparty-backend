@@ -157,3 +157,7 @@ Flutter의 부분수용을 반영해 역할핵심수치·version/멱등/격리 �
 ## P1 구현 게시 상태
 
 수용된 P1 구현/원본OpenAPI `6e4f625c3b62c92ec412373b33ed8a3441af8149` 일반push·원격확인·[인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6194881739) 완료. 검토 당시 미커밋/미구현 표현은 이 범위에서 대체한다. 이 문단의 P2 미구현/가상기본값은 P1 게시 당시 범위다. P2 구현/정확한 호환 경계는 [P2 실행안내](ISSUE_8_PERSONAL_PRESENTATION_DEVELOPMENT.md)를 따른다. 실행/검증/후속은 [P1 실행안내](ISSUE_8_ROLE_SUMMARIES_DEVELOPMENT.md)를 따른다. 실제DB/API전환·dev/main통합은 없다.
+
+## P2 구현 게시 상태
+
+P2 구현/원본OpenAPI `7027f0b690e1c232fafc5d09faa9d6c169c99962` 일반push·원격확인·[인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6195735441) 완료. preferences는실제복원스키마로전환했고개인설정PUT/원정대표시GET/PUT·내부정리기반을제공한다. 검토당시미구현표현은이범위에서대체하며 [P2 실행/호환](ISSUE_8_PERSONAL_PRESENTATION_DEVELOPMENT.md)이현재기준이다. dev/main미통합·실제DB/API/live퇴역은미전환이다.

@@ -545,3 +545,8 @@ L1b13파일1594추가/343삭제를 `c91af2e003877daacb833aaa0c109eae11b72816`로
 ## 2026-10-16 — #8 P2 최종143PASS·게시 준비
 
 추가같은key실패후복구·원정대replay현재소유수명 및 P2/생명주기/V2조회/대표/회원설정/metadata 격리최종143PASS75.80초·기존경고1. 앞선수정후128PASS와별도실행이며초기18FAIL은보완후최종전체통과했다. 최신network-none이미지OpenAPI원본일치·기존paths/P1역할schema불변·preferences참조교체/새5schema/새2paths3operations호환차이를검토했다. 실제DB/API/실provider·기기와구분하고test-db만중지한다. 검증구간commit/push·원격확인후정확한SHA/호환범위/Flutter후속을sameIssue에게시한다. 기존미커밋lifecycle문서는별도보존/미stage한다.
+
+
+## 2026-10-16 — #8 P2 원격 게시·Flutter 인계 완료
+
+구현/OpenAPI/관련문서18파일을 `7027f0b690e1c232fafc5d09faa9d6c169c99962`로커밋/일반push·원격동일SHA확인했다. [같은Issue P2 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6195735441)에불변원본·PersonalProfileOut.preferences참조교체/P1const제거·5새schema/새2paths3operations·128/별도143PASS·초기오류수정·실환경미전환을명시했다. 다음Flutter는P2strictadapter/실제개인설정·원정대표시저장/복원/대기·모의검증결과회신이다. 기록문서만추가commit/push하며코드불변으로시험/이미지/DB를반복하지않는다. 기존미커밋lifecycle전환준비문서는계속보존·미stage, main/dev통합·실DB/API·실provider/기기·live퇴역/배포/자료삭제/Issue종료없음.
