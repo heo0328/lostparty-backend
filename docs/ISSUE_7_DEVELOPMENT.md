@@ -1,6 +1,6 @@
 # 회원별 Lost Ark 키 실행·인계
 
-2026-10-15. [Issue #7](https://github.com/heo0328/lostparty-backend/issues/7)·[수용된 계약](ISSUE_7_LOSTARK_KEY_CONTRACT_DRAFT.md) 기준. 회원 공통 설정과 관련된 기존 `feat/member-settings`에서 이어 구현했다. 회원별 키와 모든 외부 REST 호출 전환을 한 구간으로 인계한다. 실제 구현/OpenAPI SHA·push 상태는 같은 이슈의 게시 결과 댓글이 기준이며 dev/main 미병합이다.
+2026-10-15. [Issue #7](https://github.com/heo0328/lostparty-backend/issues/7)·[수용된 계약](ISSUE_7_LOSTARK_KEY_CONTRACT_DRAFT.md) 기준. 회원 공통 설정과 관련된 기존 `feat/member-settings`에서 이어 구현했다. 회원별 키와 모든 외부 REST 호출 전환을 한 구간으로 인계한다. 기능/OpenAPI9e1a255·dev 통합772b90e·결과 기록72f6301 게시 완료. 아래 단계별 기록은 당시 상태이며 현재 완료/종료 상태는 마지막 절을 따른다.
 
 ## 공개 계약
 
@@ -92,3 +92,7 @@ Flutter 전체1246개PASS 후 국소보완12개PASS·최종분석0·debugAPK 성
 사용자가 결과 문서 최신화 후 dev 병합·push를 지시했다. 기존 #7 사용자 결과/Flutter 게시 확인과 #6 최종 인계·CLOSED 상태를 반영하고, dev4eb23f5에서 작업 브랜치까지 fast-forward 가능함을 확인했다. 코드/API 계약 변경 없이 문서 diff를 확인하며 기존 자동검증/로컬0006 근거를 유지한다. 서버/DB/기능 테스트 반복 없음. 실제 dev 게시·브랜치 정리 결과는 DEV_LOG와 같은 Issue 결과 댓글에 기록한다.
 
 통합 결과: dev4eb23f5→772b90e fast-forward·origin/dev push 확인. app/OpenAPI/alembic/tests는 검증 게시9e1a255와 동일함을 비교했다. 포함·clean·다른worktree없음을 확인한뒤 feat/member-settings 로컬/원격을 정리했다. 현재dev이며 main/Issue7OPEN은유지한다. 통합완료기록은dev에추가게시한다.
+
+## 현재 완료·종료 인계 상태
+
+2026-10-15 사용자 보고: #7 작업이 완료되어 네이티브에 이슈 종료 처리를 지시했다. GitHub 조회 시 아직 OPEN이며 실제 종료 처리는 네이티브 담당이다. [최신 Backend 통합 회신](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6174087672) 기준 양측 dev 게시·현재 구간 사용자 정상 보고 확인 완료, 추가 Backend 수정/반복 시험 요청 없음. 이전 단계의 게시/인수 대기 기록은 이후 완료 기록으로 대체한다. 재설치/별도기기·실provider 제한/헤더·운영TLS와 전체빌드/역할저장 설계는 별도 후속으로 보존한다. Backend는 문서 최신화·dev 반영/push 후 새 합의 요청 또는 실제 결함 보고를 기다린다.

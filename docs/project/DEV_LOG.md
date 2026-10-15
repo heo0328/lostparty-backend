@@ -419,3 +419,11 @@ GAME_DEFAULTS/ISSUE_5_COMBAT_POWER_PLAN·프로젝트문서를추가/최신화�
 ## 2026-10-15 — dev 통합/push·회원설정 작업 브랜치 정리 완료
 
 결과문서5파일을772b90e로커밋,dev4eb23f5→772b90e fast-forward·일반push완료. local/origin dev일치·clean,검증게시9e1a255와app/openapi/alembic/tests차이0·workbranch가origin/dev에포함됨을확인했다. upstream해제/local-d/remote--delete로feat/member-settings정리완료,남은브랜치는main/dev. main e6c72e4불변·force/운영배포/자료변경/Issue7종료없음. NEXT_WORK/AI_CONTEXT/실행안내에현재dev/통합완료/브랜치정리상태를기록하고dev에추가게시한다. 기능테스트·서버/DB반복실행없음.
+
+## 2026-10-15 — 문서·최신 Issue 대기 상태 대조
+
+GitHub Issue 전체 상태·본문·최신 댓글과 로컬/원격 Git을 읽기 전용 대조했다. #1~#6 CLOSED, #7 OPEN이며 [최신 통합 회신](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6174087672) 이후 새 Backend 수정 요청은 없다. dev/origin72f6301·main/origin e6c72e4 일치, app/openapi/alembic/tests는 검증 게시9e1a255와 차이0. AI_CONTEXT의 오래된 #3/#4 OPEN 표기를 종료/Flutter 주도 후속 분리로 정정하고 NEXT_WORK에 종료 근거와 최종 기록 SHA를 보완했다. 다음 입력은 Flutter 후속 설계에서 확정된 서버 요구 또는 실제 결함 보고이며, 인증 정책/운영·실기기 미확인은 별도 보존한다. 문서 diff 확인만 수행, 기능 시험/서버/DB 재실행·Issue 댓글/종료·commit/push 없음.
+
+## 2026-10-15 — #7 완료·네이티브 종료 지시 반영
+
+사용자가 #7 작업 완료로 네이티브에 종료 처리를 지시했다고 보고하고 문서 최신화·dev 병합/push 후 대기를 요청했다. 조회 시 #7은 아직 OPEN/closedAt null이며 실제 종료는 네이티브 담당으로 기록했다. NEXT_WORK·AI_CONTEXT·#7 실행 안내를 완료/후속 대기 상태로 최신화하고 이전 문서 정정도 함께 반영한다. docs/project-status에서 문서만 커밋 후 dev fast-forward·일반push하고 원격 일치/clean 확인 후 임시 작업 브랜치를 정리한다. main/기능/계약/DB/키 변경 없음. git diff --check 및 문서 참조 확인을 수행하며 기능 테스트·서버/DB 재실행은 하지 않는다.

@@ -11,7 +11,7 @@
 | 인증 후속 #2 | 탈퇴/재가입·약관·운영 정지 정책/구현, 실기기/release·전체세션·운영 인수는 [후속 목록](../ISSUE_2_FOLLOWUP.md) AUTH-F01~F06으로 추적. #2 Backend1차 완료와 분리 |
 | 설계 근거 | [초기 모델 제안](../ISSUE_2_GOOGLE_AUTH_PROPOSAL.md), [구현 계획 이력](../ISSUE_2_IMPLEMENTATION_PLAN.md).현재 할 일은 NEXT_WORK가 기준 |
 | 테스트·migration | `tests`, `compose.test.yaml`, `alembic/versions/0001_auth.py`. 실행 방법은 인증 개발 안내, 검증 기록은 DEV_LOG |
-| 협업 | [API_COLLABORATION](../API_COLLABORATION.md)·[작업 단계/진행 경계](../API_COLLABORATION_WORKFLOW.md). Backend Issues와 계약 SHA 기준, #1 연결테스트Completed·#2 Backend1차Completed·#3/#4 OPEN, Flutter 소스 직접 수정 없음 |
+| 협업 | [API_COLLABORATION](../API_COLLABORATION.md)·[작업 단계/진행 경계](../API_COLLABORATION_WORKFLOW.md). Backend Issues와 계약 SHA 기준, #1 연결테스트Completed·#2 Backend1차Completed·#3/#4 Completed(Flutter 주도 후속 분리), Flutter 소스 직접 수정 없음 |
 | 내 계정 복원 #3 | 로컬12 API·0002의11테이블·원본OpenAPI 구현, 격리PostgreSQL114테스트·로컬계약 비교 확인. 작업 브랜치 구현/계약254cb5d 게시, Flutter 두GET/계약SHA·1159검증/빈등록인수 보고확인. 등록후속 lease헤더보완·대상10개통과/로컬적용,보완구현db0f3ae게시·현재 키/실응답 상태는 #4 기준. [등록후속 계획](../ISSUE_3_REGISTRATION_FOLLOWUP_PLAN.md)·[실행/인계](../ISSUE_3_DEVELOPMENT.md)·[설계](../ISSUE_3_IMPLEMENTATION_PLAN.md)·[Issue #3](https://github.com/heo0328/lostparty-backend/issues/3) |
 | 등록관리 실연동 #4 | 기존 API 재사용, 수동siblings형태진단CLI·대상13개검증. local/runtime key반영·사용자 실 siblings 4개/parser 통과 확인. 빈 label POST/PATCH 계약·구현 및 대상16개 통과, 게시 SHA d3cb697bb6ebb988b63bd99c588bc1b64a93650d. Flutter d3cb697 소비·1193자동검증/빈이름 사용자인수 보고 확인,Flutter 구현5fe636e/dev266a7e2 게시보고 확인·삭제후로컬보존 후속. [작업계획](../ISSUE_4_REGISTRATION_INTEGRATION_PLAN.md)·[실검증 안내](../ISSUE_4_LIVE_VALIDATION.md)·[Issue #4](https://github.com/heo0328/lostparty-backend/issues/4) |
 | 전투력 수집 #5 | 1700공통기준·POST/cache/GET상태·0003 구현·대상42개/후속3개·로컬적용완료. 게시SHA 39188d5dca2d394f4e8b3fcbfe332274812285bf·Flutter1204/후속70자동·신규3흐름사용자확인보고,Flutter 구현6beb55e/devccc6b23·push인계확인 완료. [실행](../ISSUE_5_DEVELOPMENT.md). [기본값](../GAME_DEFAULTS.md)·[계획](../ISSUE_5_COMBAT_POWER_PLAN.md)·[Issue5](https://github.com/heo0328/lostparty-backend/issues/5) |
@@ -22,6 +22,6 @@
 
 인증 1차는 main/dev에 통합됐으며 이후 계정 업무·새label·진단/후속문서는 dev에 통합·게시됐습니다. 완료 작업 브랜치는 push 확인 후 정리하며, 다음 작업은 최신 dev에서 분기합니다. 계약 소비·전체 Flutter 인수·운영 배포 완료와 저장소 최신화를 구분합니다.
 
-현재 통합 구간은 회원설정 #6과 개인 Lost Ark 키/복원/호출대기 #7이다. 결과 문서를 포함해 dev772b90e로 통합·push 완료, 현재 dev이며 feat/member-settings는 로컬·원격 정리했다. main은 유지한다. 실제 Git 결과는 DEV_LOG와 Issue #7 인계 댓글이 기준이다.
+현재 통합 구간은 회원설정 #6과 개인 Lost Ark 키/복원/호출대기 #7이다. 결과 문서를 포함해 dev772b90e로 통합 후 결과 기록72f6301까지 push 완료, 현재 dev이며 feat/member-settings는 로컬·원격 정리했다. main은 유지한다. 실제 Git 결과는 DEV_LOG와 Issue #7 인계 댓글이 기준이다.
 
-#7 Backend9e1a255·로컬0006·Flutter8644c81/devcc6a0b0 push·현재 구간 사용자 정상 보고 확인. Backend 추가 수정 없음. 재설치/별도기기·실provider한도/헤더·운영TLS는 후속 미확인, 전체빌드/역할저장 설계는 별도다. Issue #7 OPEN 유지.
+#7 Backend9e1a255·로컬0006·Flutter8644c81/devcc6a0b0 push·현재 구간 사용자 정상 보고 확인. Backend 추가 수정 없음. 재설치/별도기기·실provider한도/헤더·운영TLS는 후속 미확인, 전체빌드/역할저장 설계는 별도다. Issue #7 작업 완료·네이티브 측 종료 지시 전달(사용자 보고). GitHub 조회 시 아직 OPEN이며 실제 종료 처리는 네이티브 담당이다.
