@@ -10,6 +10,7 @@ from pydantic import BaseModel
 from app.auth.router import router
 from app.auth.cleanup import run
 from app.game_accounts.router import router as game_router
+from app.game_accounts.lifecycle_router import router as lifecycle_router
 from app.core.errors import register
 from app.core.game_policy import DEFAULT_MIN_ITEM_LEVEL
 from app.member_settings.router import router as settings_router
@@ -28,6 +29,7 @@ async def lifespan(app):
 app = FastAPI(title="LostParty API", docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
 app.include_router(router)
 app.include_router(game_router)
+app.include_router(lifecycle_router)
 app.include_router(settings_router)
 app.include_router(lostark_keys_router)
 register(app)
@@ -36,7 +38,7 @@ register(app)
 @app.middleware("http")
 async def no_store(request, call_next):
     response = await call_next(request)
-    if request.url.path.startswith("/v1/"):
+    if request.url.path.startswith(("/v1/", "/v2/")):
         response.headers["Cache-Control"] = "no-store"
     return response
 
@@ -45,7 +47,7 @@ _original_openapi = app.openapi
 def openapi():
     schema = _original_openapi()
     for path, operations in schema["paths"].items():
-        if path.startswith("/v1/"):
+        if path.startswith(("/v1/", "/v2/")):
             for operation in operations.values():
                 operation.get("responses", {}).pop("422", None)
                 for status, result in operation.get("responses", {}).items():
@@ -135,6 +137,16 @@ def openapi():
         'fencing': 'registration/main/ownership/roster/character/claim snapshot before external work and final commit',
         'errors': {'ACCOUNT_BINDING_EVIDENCE_PENDING': 409, 'CHARACTER_UNUSABLE': 409,
                    'IDENTITY_CONFLICT': 409, 'REVISION_CONFLICT': 409},
+    }
+    schema['x-character-lifecycle-policy']['reads'] = {
+        'paths': ['/v2/me/game-accounts/{registration_id}/characters','/v2/me/character-retirements'],
+        'write': 'none; no evidence/provider/credential lookup or default/head insertion',
+        'preview': 'required null character_id/lifecycle_revision; usable=false; ownership-required reason',
+        'usable': 'base current ownership/state/claim eligibility only; activity/raid/schedule validated by final command',
+        'retired': 'excluded from operating list/count/summary; history scoped to member at retirement, not current account owner',
+        'cursor': 'signed member/path scope and current registration/ownership/roster/claim/settings or member-history revision; stale 409',
+        'limit': 'default/max 50; next_cursor always present nullable; history empty revision1 without inserting',
+        'observations': 'structure revisions fenced; stored power observations may advance without roster revision',
     }
     schema['x-member-settings-policy'] = {
         'scope': 'authenticated member; independent of registration/device/session',

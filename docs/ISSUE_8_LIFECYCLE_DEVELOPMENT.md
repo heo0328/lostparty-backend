@@ -26,7 +26,15 @@ V1 영향은 새필드/enum 추가가 아니라 사용 제한과 출처 분리�
 
 ## L1b — 현재 상태/이력 읽기
 
-L1a 게시 후 별도 구현/인계한다. V2 refresh/lookup-recovery·실소멸 적용·기기삭제는 이번 범위가 아니다.
+GET `/v2/me/game-accounts/{registration_id}/characters`, GET `/v2/me/character-retirements`를 추가했다. V2 refresh/lookup-recovery·실소멸 적용·기기삭제는 이번 범위가 아니다.
+
+두 경로는 Bearer/no-store·외부호출/키복호화/기본행생성 없음, limit기본/최대50·cursor optional·알수없는/중복query/GETbody400이다. 원본OpenAPI의4개DTO는 모든필드필수이며 값없음은nullable로명시한다.
+
+현재상태 envelope11필드: registration_id, game_account_id(UUID|null), is_main, registration_version, ownership_status, ownership_revision(int|null), roster_revision, settings(전체SettingsOut), items, next_cursor(string|null), server_fetched_at. settings_version은settings안에있다. item은기존CharacterOut관찰필드에lifecycle_state(preview/active/suspect/retired), lifecycle_revision(int|null), usable, blocked_reason을추가한다. preview/소유상실은character_id/lifecycle_revision필수null·usablefalse·OWNERSHIP_REQUIRED. 정상canonical은기존UUID/현재세대, suspect는CHARACTER_UNUSABLE·claim불일치는IDENTITY_CONFLICT. retired는운영목록에서제외한다.
+
+usable은본인소유·현재상태·claim의기본자격이며활동선택/레이드/일정전체허가가아니다. Flutter는전체settings.activity와함께확인하고최종명령이현재자격을재검사한다. 구조cursor는회원/경로·등록/main/소유/roster/캐릭터·claim/settingsrevision에묶여바뀌면409CURSOR_STALE. 관찰용power값은rosterrevision없이갱신될수있으므로여러페이지의수치까지같은시각snapshot을보장하지않는다.
+
+이력envelope는items/next_cursor/history_revision. item12필드: history_id, character_id, game_account_id, server_name, character_name, class_name, combat_power(string|null), item_level(string|null), power_fetched_at(UTC|null), item_level_fetched_at(UTC|null), retired_at(UTC), lifecycle_revision. 이력은퇴역당시회원귀속으로고정해현재owner변경으로타인에게공개하지않는다. 회원historyrevision/cursor가새이력시stale, 다른회원cursor400/임의user_id400. 이력없음은빈items/next_cursornull/revision1이며head행을생성하지않는다. 기기정리ACK/쓰기API는없다.
 
 ## 검증·게시 기록
 
@@ -35,3 +43,13 @@ L1a 게시 후 별도 구현/인계한다. V2 refresh/lookup-recovery·실소멸
 추가185개 실행에서는183PASS/2FAIL(61.00초·기존경고1). 둘은 테스트의 활동선택에suspect를빼면서대표로보내던 입력과 원문수치1700.00을1700으로기대하던항목으로, suspect를선택집합에포함해사용차단을검증하고수치문자열보존을검사하도록수정했다. 장비challenge의시작키version고정·매외부호출전context검사도보완후최종검증중이다.
 
 L1a 최종: 최신 API/test 이미지의 격리 PostgreSQL17에서 `test_character_lifecycle`, 계정/대표/전투력/회원키/제한복원 직접영향 회귀 및 metadata 비교 **185 passed, 1 기존경고, 60.71초**. 초기 실패2회와 구분하며 최종 실행은 모두통과했다. network-none 이미지 OpenAPI는 기존 paths/components 전체불변·lifecycle정책추가만반영/원본일치 확인. 실제DB migration·실자료backfill·API재시작/배포·실provider호출은하지않았다. L1a게시후 L1b를이어간다.
+
+### 실제 L1a 게시
+
+구현/OpenAPI `6f3d029d4e06a70ebed2244040e17b300bbab82c`·작업브랜치일반push/원격일치확인, [선행 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6186038066) 완료. dev/main미통합·실제0007미적용·실행API미재시작이다.
+
+### L1b 최종 검증
+
+최신이미지격리PostgreSQL의V2읽기·L1a/대표/계정직접영향·metadata/스키마 **113 passed, 1 기존경고, 48.64초**. preview필수null·모든DTO필드required·cursor구조차원/settingsstale·claim불일치/소유상실·회원이력격리·모의퇴역historypage·GET쓰기0/외부호출0·V1wire불변을확인했다. L1a185개와별도실행이며누적단일suite로표현하지않는다. network-none이미지에서원본전체일치, L1a대비추가GET2개/DTO4개/읽기정책만변경. 실제DB/실행API미변경·실provider/실기기미인수. L1b를별도게시/인계한다.
+
+L1b 추가 보완: preview의canonical사용불가와표시용profile관찰신선도를분리했다. 같은previewgeneration에서관찰한fresh수치는usable=false여도power_stale=false일수있다. L1a에서생긴eligible=false와신선도의결합을제거해기존표시의미를보존했다. 최신이미지의V2조회·전투력표적 **57 passed, 1 기존경고, 16.29초**. 앞선113개와별도실행이며합산단일검증이아니다. 원본OpenAPIshape는불변이다.

@@ -214,3 +214,47 @@ class RepresentativeOut(DTO):
     representative_character_id: UUID | None
     configuration_state: Literal['unconfigured', 'configured', 'needs_reconfiguration']
     next_change_at: None
+
+
+class LifecycleCharacterOut(CharacterOut):
+    combat_power: str | None
+    power_stale: StrictBool
+    lifecycle_state: Literal['preview', 'active', 'suspect', 'retired']
+    lifecycle_revision: Version | None
+    usable: StrictBool
+    blocked_reason: Literal['OWNERSHIP_REQUIRED', 'CHARACTER_UNUSABLE', 'IDENTITY_CONFLICT'] | None
+
+
+class LifecycleCharactersOut(DTO):
+    registration_id: UUID
+    game_account_id: UUID | None
+    is_main: StrictBool
+    registration_version: Version
+    ownership_status: Literal['unverified', 'owned', 'ownership_lost']
+    ownership_revision: Version | None
+    roster_revision: Version
+    settings: SettingsOut
+    items: list[LifecycleCharacterOut]
+    next_cursor: str | None
+    server_fetched_at: datetime
+
+
+class RetirementOut(DTO):
+    history_id: UUID
+    character_id: UUID
+    game_account_id: UUID
+    server_name: str
+    character_name: str
+    class_name: str
+    combat_power: str | None
+    item_level: str | None
+    power_fetched_at: datetime | None
+    item_level_fetched_at: datetime | None
+    retired_at: datetime
+    lifecycle_revision: Version
+
+
+class RetirementPage(DTO):
+    items: list[RetirementOut]
+    next_cursor: str | None
+    history_revision: Version

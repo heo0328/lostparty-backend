@@ -66,7 +66,7 @@ def overlay(db, uid, row, scope=None):
     checked=c.checked_at if c else fetched
     reason=c.reason if c else None
     stale=(fetched is None or now(db)>=fetched+TTL or status in ('unavailable','failed') or
-           fetched<row.get('summary_fetched_at',fetched) or row.get('eligible') is False or row.get('_usable') is False)
+           fetched<row.get('summary_fetched_at',fetched) or row.get('_usable') is False)
     return dict(combat_power=value,power_fetched_at=fetched,power_checked_at=checked,
                 power_status=status,power_reason=reason,power_stale=stale)
 

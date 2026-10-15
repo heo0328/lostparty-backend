@@ -493,3 +493,11 @@ GitHub Issue 전체 상태·본문·최신 댓글과 로컬/원격 Git을 읽기
 ## 2026-10-15 — L1a 최종185PASS·게시 준비
 
 최신이미지격리PostgreSQL 최종185PASS60.71초·기존경고1. 테스트입력/수치기대값보완뒤모든대상통과했고metadata/migration일치확인. 기존APIshape/기존components불변·새lifecycle의미정책만추가해원본OpenAPI반영. 실제DB0007미적용/실자료backfill없음·실행API대표구간유지/재시작없음. L1a를개발브랜치에게시·정확한SHA로sameIssue인계후L1b구현을이어간다. 기존조사문서/사용자변경보존.
+
+## 2026-10-15 — L1a 선행 게시·L1b V2조회 구현/113PASS
+
+L1a22파일을6f3d029d4e06a70ebed2244040e17b300bbab82c로커밋/일반push·원격일치/clean후 [같은Issue](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6186038066)에185PASS·V1의미변화·실DB/API미적용을인계했다. 이어L1b GET /v2/me/game-accounts/{registration_id}/characters·/v2/me/character-retirements와strictDTO4개/no-store/전체필수nullable·회원/현재revisioncursor·모의이력GET·읽기전용을구현했다. 최신이미지격리113PASS48.64초·기존경고1(별도실행). 원본OpenAPI는V1전체불변·GET2개/DTO4개/읽기정책만검토추가했다. 사용자자료/실DB/실행API재시작·실provider·보류해제없음. L1b별도게시/SHA인계후Flutter소비/연결을후속으로남긴다.
+
+## 2026-10-15 — L1b preview관찰신선도 호환 보완·57PASS
+
+V2검토중preview가canonical사용자격없다는이유로fresh profile까지stale로표시되는L1a결합을분리했다. 사용가능성과관찰신선도는별개이며같은previewgeneration의fresh수치는V1/V2둘다표시한다. 최신이미지V2조회·전투력표적57PASS16.29초·기존경고1, 앞선113개와별도결과다. 코드보완후이미지OpenAPI전체일치재확인/문서diff후L1b게시, 실DB/실행API미변경.
