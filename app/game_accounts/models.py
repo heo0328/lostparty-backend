@@ -186,6 +186,19 @@ class NameClaim(Base):
     )
 
 
+class CharacterRoleSummary(Base):
+    __tablename__ = 'character_role_summaries'
+    user_id = mapped_column(ForeignKey('users.id'), primary_key=True)
+    character_id = mapped_column(ForeignKey('game_characters.id'), primary_key=True)
+    ownership_revision = mapped_column(Integer, primary_key=True)
+    role = mapped_column(String(16), primary_key=True)
+    version = mapped_column(Integer, nullable=False)
+    summary = mapped_column(JSONB, nullable=False)
+    saved_at = stamp()
+    __table_args__ = (CheckConstraint("role IN ('dealer','support')"),
+                      CheckConstraint('ownership_revision > 0 AND version >= 1'))
+
+
 class CharacterHistoryHead(Base):
     __tablename__ = 'character_history_heads'
     user_id = mapped_column(ForeignKey('users.id'), primary_key=True)

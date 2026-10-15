@@ -4442,6 +4442,409 @@
         }
       }
     },
+    "/v2/me/characters/{character_id}/personal-profile": {
+      "get": {
+        "tags": [
+          "character-profiles"
+        ],
+        "summary": "Get",
+        "operationId": "get_v2_me_characters__character_id__personal_profile_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "character_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Character Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonalProfileOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Request Entity Too Large",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/me/characters/{character_id}/role-summaries/{role}": {
+      "put": {
+        "tags": [
+          "character-profiles"
+        ],
+        "summary": "Put",
+        "operationId": "put_v2_me_characters__character_id__role_summaries__role__put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "character_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Character Id"
+            }
+          },
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "enum": [
+                "dealer",
+                "support"
+              ],
+              "type": "string",
+              "title": "Role"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid4",
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleSummaryIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleSummaryOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Request Entity Too Large",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/me/settings": {
       "get": {
         "tags": [
@@ -5365,6 +5768,32 @@
   },
   "components": {
     "schemas": {
+      "AnalysisIssue": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[A-Z0-9_]+$",
+            "title": "Code"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "warning",
+              "error"
+            ],
+            "title": "Severity"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "code",
+          "severity"
+        ],
+        "title": "AnalysisIssue"
+      },
       "ChallengeIn": {
         "properties": {
           "transaction_secret_hash": {
@@ -6359,6 +6788,97 @@
         ],
         "title": "PatchIn"
       },
+      "PendingPersonalPreferences": {
+        "properties": {
+          "version": {
+            "type": "integer",
+            "const": 1,
+            "title": "Version"
+          },
+          "preferred_role": {
+            "type": "null",
+            "title": "Preferred Role"
+          },
+          "visible": {
+            "type": "boolean",
+            "const": true,
+            "title": "Visible"
+          },
+          "display_order": {
+            "type": "null",
+            "title": "Display Order"
+          },
+          "saved_at": {
+            "type": "null",
+            "title": "Saved At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "version",
+          "preferred_role",
+          "visible",
+          "display_order",
+          "saved_at"
+        ],
+        "title": "PendingPersonalPreferences",
+        "description": "P2 not implemented: read-only virtual defaults, no persistence."
+      },
+      "PersonalProfileOut": {
+        "properties": {
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "game_account_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Game Account Id"
+          },
+          "ownership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Ownership Revision"
+          },
+          "lifecycle_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Lifecycle Revision"
+          },
+          "lifecycle_state": {
+            "type": "string",
+            "enum": [
+              "active",
+              "suspect"
+            ],
+            "title": "Lifecycle State"
+          },
+          "dealer": {
+            "$ref": "#/components/schemas/StoredRoleSummary"
+          },
+          "support": {
+            "$ref": "#/components/schemas/StoredRoleSummary"
+          },
+          "preferences": {
+            "$ref": "#/components/schemas/PendingPersonalPreferences"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "character_id",
+          "game_account_id",
+          "ownership_revision",
+          "lifecycle_revision",
+          "lifecycle_state",
+          "dealer",
+          "support",
+          "preferences"
+        ],
+        "title": "PersonalProfileOut"
+      },
       "PowerRefreshIn": {
         "properties": {
           "characters": {
@@ -7083,6 +7603,215 @@
         ],
         "title": "RetirementPage"
       },
+      "RoleSummary": {
+        "properties": {
+          "source": {
+            "type": "string",
+            "const": "flutter_analysis",
+            "title": "Source"
+          },
+          "analysis_rules_version": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9._-]+$",
+            "title": "Analysis Rules Version"
+          },
+          "analyzed_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Analyzed At"
+          },
+          "combat_power": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 32,
+                "minLength": 1,
+                "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Combat Power"
+          },
+          "item_level": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 32,
+                "minLength": 1,
+                "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Level"
+          },
+          "combat_power_observed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Combat Power Observed At"
+          },
+          "item_level_observed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Level Observed At"
+          },
+          "integrity_status": {
+            "type": "string",
+            "enum": [
+              "clean",
+              "review",
+              "error",
+              "unavailable"
+            ],
+            "title": "Integrity Status"
+          },
+          "catalog_version": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 64,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9._-]+$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Catalog Version"
+          },
+          "issues": {
+            "items": {
+              "$ref": "#/components/schemas/AnalysisIssue"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Issues"
+          },
+          "observed_lifecycle_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Observed Lifecycle Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "source",
+          "analysis_rules_version",
+          "analyzed_at",
+          "combat_power",
+          "item_level",
+          "combat_power_observed_at",
+          "item_level_observed_at",
+          "integrity_status",
+          "catalog_version",
+          "issues",
+          "observed_lifecycle_revision"
+        ],
+        "title": "RoleSummary"
+      },
+      "RoleSummaryIn": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "expected_ownership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Ownership Revision"
+          },
+          "expected_lifecycle_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Lifecycle Revision"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/RoleSummary"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "expected_ownership_revision",
+          "expected_lifecycle_revision",
+          "summary"
+        ],
+        "title": "RoleSummaryIn"
+      },
+      "RoleSummaryOut": {
+        "properties": {
+          "version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Version"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/RoleSummary"
+          },
+          "saved_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Saved At"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "dealer",
+              "support"
+            ],
+            "title": "Role"
+          },
+          "ownership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Ownership Revision"
+          },
+          "lifecycle_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Lifecycle Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "version",
+          "summary",
+          "saved_at",
+          "character_id",
+          "role",
+          "ownership_revision",
+          "lifecycle_revision"
+        ],
+        "title": "RoleSummaryOut"
+      },
       "SessionOut": {
         "properties": {
           "id": {
@@ -7305,6 +8034,45 @@
           "source"
         ],
         "title": "StartIn"
+      },
+      "StoredRoleSummary": {
+        "properties": {
+          "version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Version"
+          },
+          "summary": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RoleSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "saved_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Saved At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "version",
+          "summary",
+          "saved_at"
+        ],
+        "title": "StoredRoleSummary"
       },
       "Summary": {
         "properties": {
@@ -7677,6 +8445,59 @@
       "limit": "default/max 50; next_cursor always present nullable; history empty revision1 without inserting",
       "observations": "structure revisions fenced; stored power observations may advance without roster revision"
     }
+  },
+  "x-character-profile-policy": {
+    "phase": "P1 role summaries only; P2 preference/presentation writes and cleanup are not implemented",
+    "identity": "member + canonical character UUID + ownership_revision + role; no name-based inheritance",
+    "get": "read-only coherent snapshot; owned active/suspect with current NameClaim; retired 409",
+    "put": "owned active/confirmed canonical with current NameClaim and expected role/ownership/lifecycle revisions",
+    "p2_defaults": {
+      "version": 1,
+      "preferred_role": null,
+      "visible": true,
+      "display_order": null,
+      "saved_at": null
+    },
+    "unset_role": {
+      "version": 1,
+      "summary": null,
+      "saved_at": null
+    },
+    "version": "first summary version2; change-only increment; stale expected rejected even for no-op; roles independent",
+    "source": "flutter_analysis; never provider observations, ownership/activity/representative authority, or retirement values",
+    "integrity": {
+      "clean": "no issues",
+      "review": "one or more warnings, no errors",
+      "error": "one or more errors, warnings allowed",
+      "unavailable": "no errors; zero or more warnings; never infer clean from empty issues"
+    },
+    "catalog": "required nullable opaque ASCII identifier, separate from analysis_rules_version and schema version",
+    "timestamps": "UTC RFC3339; client analysis/observation provenance separate from server saved_at; not conflict ordering",
+    "limits": {
+      "put_body_bytes": 32768,
+      "decimal_string_length": 32,
+      "issues": 20,
+      "identifier_length": 64
+    },
+    "replay": "historical ACK after current session/active registration/ownership/NameClaim and same ownership/lifecycle checks; no role version recheck or reapplication",
+    "idempotency": "role-summary operation; actor/key digest includes character/role/body; 30s lease, 24h success + 24h tombstone",
+    "pending": "immutable same-key/body recovery; conservative 24h from first send; stale pending never auto rebased on new version",
+    "nice_group": "existing member bool controls new automatic analysis only; valid old pending and summaries preserved; no new per-character switch",
+    "provider": "no external calls, credential lookup, or nice-group/activity prerequisites for storage",
+    "errors": {
+      "INVALID_REQUEST": 400,
+      "CHARACTER_NOT_FOUND": 404,
+      "OWNERSHIP_REQUIRED": 403,
+      "CHARACTER_UNUSABLE": 409,
+      "IDENTITY_CONFLICT": 409,
+      "REVISION_CONFLICT": 409,
+      "IDEMPOTENCY_CONFLICT": 409,
+      "IDEMPOTENCY_EXPIRED": 409,
+      "REQUEST_IN_PROGRESS": 409,
+      "REQUEST_TOO_LARGE": 413,
+      "SERVICE_UNAVAILABLE": 503
+    },
+    "deployment": "0008 additive migration and isolated tests only; real DB/API transition requires separate approval"
   },
   "x-member-settings-policy": {
     "scope": "authenticated member; independent of registration/device/session",

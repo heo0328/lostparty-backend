@@ -505,3 +505,28 @@ V2검토중preview가canonical사용자격없다는이유로fresh profile까지s
 ## 2026-10-15 — L1b 실제 게시·분리 인계 완료
 
 L1b13파일1594추가/343삭제를 `c91af2e003877daacb833aaa0c109eae11b72816`로커밋/일반push·origin동일SHA/clean확인후 [#8별도댓글](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6186143574)에최종경로/11필드envelope·12필드이력/usable의기본자격의미·nullable/cursor·113/별도57PASS와실DB/API미적용을인계했다. L1a6f3d029와구분했고현재서버에서V2즉시호출불가·후속전환은별도승인임을명시했다. 사용자요청범위의두구간구현/격리검증/게시완료,dev/main병합·실DB적용/재기동/배포·liveproof/퇴역·Issue종료없음. 실제SHA/인계링크문서만추가게시하고코드불변으로시험/이미지/DB를재실행하지않는다.
+
+
+## 2026-10-15 — 네이티브 비의존 보완 점검·현재 상태 정리
+
+사용자 요청으로 최신 #8 및 lifecycle 읽기/내부 evidence·퇴역 처리/0007 migration·격리 migration 시험을 대조했다. 이번 정적 검토 범위에서 즉시 수정할 코드 결함은 확인하지 못했다. NEXT_WORK/AI_CONTEXT의 L1미수용·구현예정·공식조사미완료 문구를 실제 게시 완료 상태로 바로잡고 [Flutter S1 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6187076006)의1311PASS/분석0·미게시·다음S2를 반영했다. 0007 downgrade 미지원과 실제 전환 전 격리 백업복원 리허설·쓰기차단·적용순서·복구 기준을 기존 실행 문서에 추가했다. 합성 DB 시험과 실제 복원본 검증을 구분하고 서버 전환 승인을 확대하지 않았다. 문서만 변경, 기능/OpenAPI/실제DB/API/merge/Issue댓글/commit/push 없음. 내용·링크·diffcheck로 검증하며 기존 자동시험은 반복하지 않는다.
+
+
+## 2026-10-15 — Flutter S2 완료 회신 확인
+
+[S2 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6187403079)에서 c91af2e V2 DTO4개·조회/401복구·전체페이지 검증/S1 원자반영·이력 continuation 구현과 최종전체1353PASS/분석0을 확인했다. Flutter 보고의 메모리SQLite/모의HTTP 검증이며 실제 서버/기기 인수·실행화면 연결이 아니다. feature/scoped-account-cache 미커밋/미push/dev미반영·새SHA없음. 다음은 Flutter S3 실행 연결 설계이며 추가 Backend 수정/반복시험 요청없음. NEXT_WORK/AI_CONTEXT 갱신·diffcheck만 수행, 이전 문서 정리를 보존했다. 기능/계약/DB/API/댓글/commit/push 없음.
+
+
+## 2026-10-15 — #8 역할요약·개인표시 저장/복원 계약 검토 회신
+
+사용자 진행 승인으로 [신규 요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6191438610)과 원본문·최신댓글/c91af2e OpenAPI·현재코드·회원설정/멱등/cleanup·퇴역경계를 대조했다. 기존 wire에 역할요약/개인표시 복원이 없음을 확인하고 ISSUE_8_PROFILE_RESTORE_CONTRACT_DRAFT에 역할별 독립version·소유수명/출처·저장상한·멱등24+24시간/30초lease·영속대기/다중기기충돌·개인표시/DDL을 제안했다. 회원bool과 캐릭터별OFF 차이는 임의구현하지 않고 Flutter 확인항목으로 남겼다. [전체계약 Issue 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6191634445) 게시 완료, 새기능/원본OpenAPI SHA 없음. S3b1394PASS/분석0은 Flutter 모의검증 보고이며 실서버/기기미인수·기본OFF·미게시를 구분했다. 기존 미커밋4문서 보존/상태기록 최신화. 문서내용/참조·코드블록·diffcheck 확인, 기능시험/실DB/API/코드/OpenAPI/migration·commit/push/merge/배포/Issue종료 없음. 다음 Flutter는 수치/오류모델·기본값/정렬·per-character OFF 대조/수용·수정, Backend는 합의후 구현단위를 진행한다.
+
+
+## 2026-10-15 — #8 저장/복원 2차 계약 보완 회신
+
+사용자 진행 승인으로 [Flutter6192838766](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6192838766)·최신댓글/현재Git·등록/소유검사와 기존계약안을 대조했다. outcome을 integrity_status(clean/review/error/unavailable) 및 nullable catalog_version으로 대체하고 허용issues조합/출처/실패구분을 명시했다. 전역표시안을 폐기하고 원정대별presentation GET/PUT·7필드DTO·기본6/1~200·회원/account/소유수명키·등록versionfence·등록해제/동일수명재등록/replay를 제안했다. 원정대내rank/기존fallback 및 나이스단회원bool/NiceGroupPolicy·OFF시유효pending보존을 반영했다. [같은Issue2차회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6193183186) 게시 완료. 다음Flutter는 상태/issue/catalog·표시범위/정렬/상한 대조·수용/필요수정 후 P1/P2 구현구간 별도요청이다. 기존사용자문서변경보존, 문서JSON예시/필드수·코드블록/링크/diffcheck 확인. 기능코드/OpenAPI/DDL·기능시험/DB/API/플래그·commit/push/merge/배포/자료삭제/Issue종료 없음, 문서미커밋·미push·새구현SHA없음.
+
+
+## 2026-10-15 — #8 P1 역할요약 구현·최종171PASS/게시 준비
+
+사용자 진행 승인과 [Flutter 계약수용/P1요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6193638580)을 확인했다. 기존문서변경을보존하며현작업브랜치에서0008 character_role_summaries·GET personal-profile/PUT role-summaries·strict11필드summary/무결성4상태·UTC/nullable·파싱전32KiB·회원/활성등록/소유/NameClaim/수명·독립version/no-op·현재접근replay/업무ACK원자성을구현했다. P2preferences는가상고정기본값만제공하고PUT/표시API/정리후처리는확대하지않았다. 기존provider/활동/대표/키코드불변. 최신이미지격리PostgreSQL17에서1차108PASS61.72초·최종추가경계/직접영향171PASS79.99초(각기존경고1·별도실행). 기존자료가있는0007위0008이관보존/제약·metadata일치·세션/UUID/소유수명/lease takeover·동시기기한승자·rollback/replay경계통과. network-none이미지OpenAPI기존paths/components/policy불변·GET/PUT/새스키마정책만추가했다. 실제DB0007/0008·실행API/기기/실provider/배포/삭제미실행. 검증구간commit/push·원격일치후정확한SHA/P2미구현/실환경경계를sameIssue인계한다. 기존미커밋 lifecycle 전환준비문서 변경은 별도보존한다.

@@ -11,6 +11,7 @@ from app.auth.router import router
 from app.auth.cleanup import run
 from app.game_accounts.router import router as game_router
 from app.game_accounts.lifecycle_router import router as lifecycle_router
+from app.game_accounts.profile_router import router as profile_router
 from app.core.errors import register
 from app.core.game_policy import DEFAULT_MIN_ITEM_LEVEL
 from app.member_settings.router import router as settings_router
@@ -30,6 +31,7 @@ app = FastAPI(title="LostParty API", docs_url=None, redoc_url=None, openapi_url=
 app.include_router(router)
 app.include_router(game_router)
 app.include_router(lifecycle_router)
+app.include_router(profile_router)
 app.include_router(settings_router)
 app.include_router(lostark_keys_router)
 register(app)
@@ -55,7 +57,7 @@ def openapi():
                     headers["Cache-Control"] = {"schema": {"type": "string", "const": "no-store"}}
                     if status == "429":
                         headers["Retry-After"] = {"schema": {"type": "integer", "minimum": 1}} if "game-accounts" in operation.get("tags", []) else {"schema": {"type": "integer", "const": 60}}
-                    if status == "409" and set(operation.get("tags", [])) & {"game-accounts", "member-settings", "lostark-keys"}:
+                    if status == "409" and set(operation.get("tags", [])) & {"game-accounts", "member-settings", "lostark-keys", "character-profiles"}:
                         headers["Retry-After"] = {"description": "REQUEST_IN_PROGRESS only", "schema": {"type": "integer", "const": 2}}
                     if status == "401":
                         headers["WWW-Authenticate"] = {"schema": {"type": "string", "const": "Bearer"}}
@@ -147,6 +149,32 @@ def openapi():
         'cursor': 'signed member/path scope and current registration/ownership/roster/claim/settings or member-history revision; stale 409',
         'limit': 'default/max 50; next_cursor always present nullable; history empty revision1 without inserting',
         'observations': 'structure revisions fenced; stored power observations may advance without roster revision',
+    }
+    schema['x-character-profile-policy'] = {
+        'phase': 'P1 role summaries only; P2 preference/presentation writes and cleanup are not implemented',
+        'identity': 'member + canonical character UUID + ownership_revision + role; no name-based inheritance',
+        'get': 'read-only coherent snapshot; owned active/suspect with current NameClaim; retired 409',
+        'put': 'owned active/confirmed canonical with current NameClaim and expected role/ownership/lifecycle revisions',
+        'p2_defaults': {'version': 1, 'preferred_role': None, 'visible': True, 'display_order': None, 'saved_at': None},
+        'unset_role': {'version': 1, 'summary': None, 'saved_at': None},
+        'version': 'first summary version2; change-only increment; stale expected rejected even for no-op; roles independent',
+        'source': 'flutter_analysis; never provider observations, ownership/activity/representative authority, or retirement values',
+        'integrity': {'clean': 'no issues', 'review': 'one or more warnings, no errors',
+                      'error': 'one or more errors, warnings allowed',
+                      'unavailable': 'no errors; zero or more warnings; never infer clean from empty issues'},
+        'catalog': 'required nullable opaque ASCII identifier, separate from analysis_rules_version and schema version',
+        'timestamps': 'UTC RFC3339; client analysis/observation provenance separate from server saved_at; not conflict ordering',
+        'limits': {'put_body_bytes': 32768, 'decimal_string_length': 32, 'issues': 20, 'identifier_length': 64},
+        'replay': 'historical ACK after current session/active registration/ownership/NameClaim and same ownership/lifecycle checks; no role version recheck or reapplication',
+        'idempotency': 'role-summary operation; actor/key digest includes character/role/body; 30s lease, 24h success + 24h tombstone',
+        'pending': 'immutable same-key/body recovery; conservative 24h from first send; stale pending never auto rebased on new version',
+        'nice_group': 'existing member bool controls new automatic analysis only; valid old pending and summaries preserved; no new per-character switch',
+        'provider': 'no external calls, credential lookup, or nice-group/activity prerequisites for storage',
+        'errors': {'INVALID_REQUEST': 400, 'CHARACTER_NOT_FOUND': 404, 'OWNERSHIP_REQUIRED': 403,
+                   'CHARACTER_UNUSABLE': 409, 'IDENTITY_CONFLICT': 409, 'REVISION_CONFLICT': 409,
+                   'IDEMPOTENCY_CONFLICT': 409, 'IDEMPOTENCY_EXPIRED': 409, 'REQUEST_IN_PROGRESS': 409,
+                   'REQUEST_TOO_LARGE': 413, 'SERVICE_UNAVAILABLE': 503},
+        'deployment': '0008 additive migration and isolated tests only; real DB/API transition requires separate approval',
     }
     schema['x-member-settings-policy'] = {
         'scope': 'authenticated member; independent of registration/device/session',
