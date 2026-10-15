@@ -535,3 +535,13 @@ L1b13파일1594추가/343삭제를 `c91af2e003877daacb833aaa0c109eae11b72816`로
 ## 2026-10-15 — #8 P1 원격 게시·Flutter 인계 완료
 
 구현/OpenAPI/관련문서13파일을 `6e4f625c3b62c92ec412373b33ed8a3441af8149`로커밋했다. 기본Git HTTPS인증helper미설정으로첫push가실패했으나기존gh인증을일회성credential helper로사용한일반push로완료, git ls-remote와SHA일치를확인했다. 토큰출력/인증설정영구변경/force없음. [P1 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6194881739)에불변원본·정확한P1 GET/PUT/DTO·P2고정기본값/미구현·108/별도171PASS·실제DB/API미전환을전달했다. 다음Flutter는P1 adapter/영속대기연결과모의검증결과회신, P2는후속별도요청이다. 기존미커밋 docs/ISSUE_8_LIFECYCLE_DEVELOPMENT.md 변경은선택stage에서제외해보존했다. main/dev통합·실DB/API/기기·배포/삭제·Issue종료없음. 게시상태기록문서만추가커밋/push하며기능시험/이미지/DB재실행없음.
+
+
+## 2026-10-16 — #8 P2 구현·초기오류수정/128PASS
+
+사용자진행지시와 [P2구현/원본게시요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6195124835)을최신댓글/수용계약·현Git/코드와대조했다. 같은작업브랜치에서0009 additive2테이블·개인preferences PUT/실제GET복원·원정대표시GET/PUT·4KiB/독립version/소유수명·등록fence/replay 및 내부retire의해당UUID모든소유수명역할요약/개인설정정리를구현했다. live퇴역/공개caller는추가하지않고다른UUID/account표시/간략이력을보존한다. P1constpreferences를실제nullable/strict PersonalPreferences로교체하되P1역할schema/기존paths는불변을확인했다. 첫127개109PASS/18FAIL82.05초는오래된등록versionfixture 및saved_at설정전now조회autoflush오류로,현재등록GET사용/행add전시각확보로수정했다. 수정후P1/P2/metadata128PASS96.19초·기존경고1. 추가복구경계·생명주기/대표/조회/회원설정회귀최종검증중이며결과는별도기록한다. 최신network-none이미지와원본OpenAPI일치·문서/diffcheck. 실제DB0007~0009/실행API재시작·배포/기기/실provider/자료삭제없음,기존미커밋lifecycle전환준비문서보존. 검증후상시인계승인으로작업단위commit/push·sameIssue정확한SHA/호환범위인계예정이다.
+
+
+## 2026-10-16 — #8 P2 최종143PASS·게시 준비
+
+추가같은key실패후복구·원정대replay현재소유수명 및 P2/생명주기/V2조회/대표/회원설정/metadata 격리최종143PASS75.80초·기존경고1. 앞선수정후128PASS와별도실행이며초기18FAIL은보완후최종전체통과했다. 최신network-none이미지OpenAPI원본일치·기존paths/P1역할schema불변·preferences참조교체/새5schema/새2paths3operations호환차이를검토했다. 실제DB/API/실provider·기기와구분하고test-db만중지한다. 검증구간commit/push·원격확인후정확한SHA/호환범위/Flutter후속을sameIssue에게시한다. 기존미커밋lifecycle문서는별도보존/미stage한다.

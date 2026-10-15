@@ -199,6 +199,33 @@ class CharacterRoleSummary(Base):
                       CheckConstraint('ownership_revision > 0 AND version >= 1'))
 
 
+class CharacterPersonalPreferences(Base):
+    __tablename__ = 'character_personal_preferences'
+    user_id = mapped_column(ForeignKey('users.id'), primary_key=True)
+    character_id = mapped_column(ForeignKey('game_characters.id'), primary_key=True)
+    ownership_revision = mapped_column(Integer, primary_key=True)
+    preferred_role = mapped_column(String(16), nullable=True)
+    visible = mapped_column(Boolean, nullable=False)
+    display_order = mapped_column(Integer, nullable=True)
+    version = mapped_column(Integer, nullable=False)
+    saved_at = stamp()
+    __table_args__ = (CheckConstraint("preferred_role IS NULL OR preferred_role IN ('dealer','support')"),
+                      CheckConstraint('display_order IS NULL OR display_order >= 0'),
+                      CheckConstraint('ownership_revision > 0 AND version >= 1'))
+
+
+class AccountCharacterPresentation(Base):
+    __tablename__ = 'account_character_presentation'
+    user_id = mapped_column(ForeignKey('users.id'), primary_key=True)
+    game_account_id = mapped_column(ForeignKey('game_accounts.id'), primary_key=True)
+    ownership_revision = mapped_column(Integer, primary_key=True)
+    visible_count = mapped_column(Integer, nullable=False)
+    version = mapped_column(Integer, nullable=False)
+    saved_at = stamp()
+    __table_args__ = (CheckConstraint('visible_count >= 1 AND visible_count <= 200'),
+                      CheckConstraint('ownership_revision > 0 AND version >= 1'))
+
+
 class CharacterHistoryHead(Base):
     __tablename__ = 'character_history_heads'
     user_id = mapped_column(ForeignKey('users.id'), primary_key=True)

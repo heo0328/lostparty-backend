@@ -234,17 +234,16 @@ def test_commit_fence_rollback_then_same_key_recovery(client, owned, monkeypatch
     assert put(client,h,cid,key=key).json()['error']['code']=='IDEMPOTENCY_EXPIRED'
 
 
-def test_schema_p1_only_required_nullable_and_p2_defaults():
+def test_role_schema_preserved_and_preferences_now_persisted():
     from app.main import app
     schema=app.openapi(); models=schema['components']['schemas']
     for name in ('RoleSummary','AnalysisIssue','RoleSummaryIn','StoredRoleSummary','RoleSummaryOut',
-                 'PersonalProfileOut','PendingPersonalPreferences'):
+                 'PersonalProfileOut','PersonalPreferences'):
         assert set(models[name]['required'])==set(models[name]['properties'])
         assert models[name]['additionalProperties'] is False
     assert 'outcome' not in models['RoleSummary']['properties']
-    assert models['PendingPersonalPreferences']['properties']['visible']['const'] is True
-    for url in schema['paths']:
-        assert not url.endswith('/personal-preferences') and not url.endswith('/presentation-settings')
+    assert models['PersonalPreferences']['properties']['visible']['type'] == 'boolean'
+    assert 'PendingPersonalPreferences' not in models
     put_schema=schema['paths']['/v2/me/characters/{character_id}/role-summaries/{role}']['put']
     assert '413' in put_schema['responses'] and '422' not in put_schema['responses']
     assert put_schema['responses']['409']['headers']['Retry-After']['schema']['const']==2

@@ -11,7 +11,7 @@ from app.auth.router import router
 from app.auth.cleanup import run
 from app.game_accounts.router import router as game_router
 from app.game_accounts.lifecycle_router import router as lifecycle_router
-from app.game_accounts.profile_router import router as profile_router
+from app.game_accounts.profile_router import router as profile_router, preferences_router, presentation_router
 from app.core.errors import register
 from app.core.game_policy import DEFAULT_MIN_ITEM_LEVEL
 from app.member_settings.router import router as settings_router
@@ -32,6 +32,8 @@ app.include_router(router)
 app.include_router(game_router)
 app.include_router(lifecycle_router)
 app.include_router(profile_router)
+app.include_router(preferences_router)
+app.include_router(presentation_router)
 app.include_router(settings_router)
 app.include_router(lostark_keys_router)
 register(app)
@@ -151,11 +153,11 @@ def openapi():
         'observations': 'structure revisions fenced; stored power observations may advance without roster revision',
     }
     schema['x-character-profile-policy'] = {
-        'phase': 'P1 role summaries only; P2 preference/presentation writes and cleanup are not implemented',
+        'phase': 'P1 role summaries + P2 personal preferences/account presentation and internal retirement cleanup',
         'identity': 'member + canonical character UUID + ownership_revision + role; no name-based inheritance',
         'get': 'read-only coherent snapshot; owned active/suspect with current NameClaim; retired 409',
         'put': 'owned active/confirmed canonical with current NameClaim and expected role/ownership/lifecycle revisions',
-        'p2_defaults': {'version': 1, 'preferred_role': None, 'visible': True, 'display_order': None, 'saved_at': None},
+        'preference_defaults': {'version': 1, 'preferred_role': None, 'visible': True, 'display_order': None, 'saved_at': None},
         'unset_role': {'version': 1, 'summary': None, 'saved_at': None},
         'version': 'first summary version2; change-only increment; stale expected rejected even for no-op; roles independent',
         'source': 'flutter_analysis; never provider observations, ownership/activity/representative authority, or retirement values',
@@ -176,6 +178,29 @@ def openapi():
                    'REQUEST_TOO_LARGE': 413, 'SERVICE_UNAVAILABLE': 503},
         'deployment': '0008 additive migration and isolated tests only; real DB/API transition requires separate approval',
     }
+    schema['x-character-profile-policy']['personal_preferences'] = {
+        'get': 'personal-profile.preferences now reads persisted member/character/ownership-lifetime values; P1 virtual const schema replaced',
+        'put': 'strict full preferred_role/visible/display_order + expected preference/ownership/lifecycle versions; 409 for suspect writes',
+        'scope': 'rank scoped to member + canonical account ownership lifetime, no cross-account reorder or activity/representative changes',
+        'version': 'default version1/no insertion on default no-op; actual change increments only this resource, saved_at UTC',
+        'limit_bytes': 4096,
+    }
+    schema['x-character-profile-policy']['presentation'] = {
+        'path': '/v2/me/game-accounts/{registration_id}/presentation-settings',
+        'scope': 'member + canonical game_account_id + ownership_revision; registration path is access/version fence',
+        'default': {'version': 1, 'visible_count': 6, 'saved_at': None},
+        'count': 'strict integer 1..200, not nullable; render min(count, available visible rows) without rewriting stored count',
+        'put': 'expected version + registration_version + ownership_revision; independent of settings/activity/representative/main',
+        'replay': 'current active owned registration and same ownership lifetime; historical registration_version allowed; never reapply',
+        'reregistration': 'same member/account/ownership lifetime can read old settings through new active registration; old path remains 404',
+        'unverified': '403 OWNERSHIP_REQUIRED; deleted/other registration 404 REGISTRATION_NOT_FOUND',
+        'sort': 'Flutter within account: visible filter, representative first, rank asc/null last, item level desc/null last, name asc, UUID asc; hidden representative stays hidden',
+        'limit_bytes': 4096,
+    }
+    schema['x-character-profile-policy']['retirement_cleanup'] = (
+        'internal validated complete retirement transaction deletes role summaries/preferences for retiring UUID across owner lifetimes; '
+        'preserves account presentation, other UUIDs and history/FKs; rollback atomic; no live caller or claim-release activation')
+    schema['x-character-profile-policy']['deployment'] = '0008/0009 files/isolated tests only; no real DB migration or API transition'
     schema['x-member-settings-policy'] = {
         'scope': 'authenticated member; independent of registration/device/session',
         'default': {'nice_group_auto_refresh_enabled': False, 'version': 1},

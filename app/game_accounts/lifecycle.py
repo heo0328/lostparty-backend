@@ -5,7 +5,8 @@ from dataclasses import dataclass
 from sqlalchemy import select, delete
 from app.core.database import now
 from app.game_accounts.models import (Account, Registration, Character, NameClaim, Configuration,
-                                     Activity, CharacterRetirement, CharacterHistoryHead, ScopedPowerCache)
+                                     Activity, CharacterRetirement, CharacterHistoryHead, ScopedPowerCache,
+                                     CharacterRoleSummary, CharacterPersonalPreferences)
 from app.game_accounts.support import fail
 
 
@@ -102,6 +103,10 @@ def retire(db, account, character, proof):
             if selected: db.delete(selected)
             if conf.representative_id == character.id: conf.representative_id = None
             conf.state = 'needs_reconfiguration'; conf.version += 1
+    # Only the retiring canonical UUID; preserve account presentation and all other IDs.
+    # This internal transaction still has no live/public caller.
+    for model in (CharacterRoleSummary, CharacterPersonalPreferences):
+        db.execute(delete(model).where(model.character_id == character.id))
     db.delete(claim)
     character.lifecycle_state, character.status = 'retired', 'missing'
     character.lifecycle_revision += 1

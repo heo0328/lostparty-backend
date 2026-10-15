@@ -1,7 +1,8 @@
 """Member-owned analysis storage, independent of provider power/activity."""
 from sqlalchemy import select
 from app.core.database import session, now
-from app.game_accounts.models import Account, Character, Registration, NameClaim, CharacterRoleSummary
+from app.game_accounts.models import (Account, Character, Registration, NameClaim, CharacterRoleSummary,
+                                     CharacterPersonalPreferences)
 from app.game_accounts.support import authorize, fail, reserve, commit_result, release
 
 
@@ -31,6 +32,12 @@ def stored(row):
                 saved_at=row.saved_at if row else None)
 
 
+def preferences(row):
+    return dict(version=row.version if row else 1, preferred_role=row.preferred_role if row else None,
+                visible=row.visible if row else True, display_order=row.display_order if row else None,
+                saved_at=row.saved_at if row else None)
+
+
 def get(principal, cid):
     with session() as db, db.begin():
         db.connection(execution_options={'isolation_level': 'REPEATABLE READ'})
@@ -41,8 +48,8 @@ def get(principal, cid):
         return dict(character_id=cid, game_account_id=account.id,
                     ownership_revision=account.ownership_revision,
                     lifecycle_revision=character.lifecycle_revision, lifecycle_state=character.lifecycle_state,
-                    **roles, preferences=dict(version=1, preferred_role=None, visible=True,
-                                              display_order=None, saved_at=None))
+                    **roles, preferences=preferences(db.get(CharacterPersonalPreferences,
+                                                          (uid, cid, account.ownership_revision))))
 
 
 def put(principal, cid, role, key, data):
@@ -78,6 +85,47 @@ def put(principal, cid, role, key, data):
             db.flush()
             result = dict(character_id=cid, role=role, ownership_revision=account.ownership_revision,
                           lifecycle_revision=character.lifecycle_revision, **stored(row))
+            return commit_result(db, ticket, 200, result)
+    except Exception:
+        release(ticket)
+        raise
+
+
+def put_preferences(principal, cid, key, data):
+    ticket, replay = reserve(principal, 'character-preferences', key, {'target': str(cid), 'body': data})
+    if replay:
+        with session() as db, db.begin():
+            db.connection(execution_options={'isolation_level': 'REPEATABLE READ'})
+            account, character = owned_character(db, authorize(db, principal), cid)
+            if (account.ownership_revision != data['expected_ownership_revision'] or
+                    character.lifecycle_revision != data['expected_lifecycle_revision']):
+                fail('REVISION_CONFLICT')
+        return replay
+    try:
+        with session() as db, db.begin():
+            uid = authorize(db, principal, write=True)
+            account, character = owned_character(db, uid, cid, write=True)
+            if (account.ownership_revision != data['expected_ownership_revision'] or
+                    character.lifecycle_revision != data['expected_lifecycle_revision']):
+                fail('REVISION_CONFLICT')
+            row = db.get(CharacterPersonalPreferences, (uid, cid, account.ownership_revision))
+            current = preferences(row)
+            if current['version'] != data['expected_version']:
+                fail('REVISION_CONFLICT')
+            fields = ('preferred_role', 'visible', 'display_order')
+            if any(current[field] != data[field] for field in fields):
+                saved_at = now(db)
+                if row is None:
+                    row = CharacterPersonalPreferences(user_id=uid, character_id=cid,
+                                                       ownership_revision=account.ownership_revision, version=1)
+                    db.add(row)
+                for field in fields:
+                    setattr(row, field, data[field])
+                row.version += 1
+                row.saved_at = saved_at
+            db.flush()
+            result = dict(character_id=cid, ownership_revision=account.ownership_revision,
+                          lifecycle_revision=character.lifecycle_revision, **preferences(row))
             return commit_result(db, ticket, 200, result)
     except Exception:
         release(ticket)

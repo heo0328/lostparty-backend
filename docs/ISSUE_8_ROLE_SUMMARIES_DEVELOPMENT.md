@@ -2,6 +2,8 @@
 
 2026-10-15. [수정 계약 수용/P1 구현 요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6193638580), [수용 계약](ISSUE_8_PROFILE_RESTORE_CONTRACT_DRAFT.md) 기준. feat/representative-selection에서 진행하며 P2는 이번 구현에서 제외한다.
 
+P1 게시 이후 P2 구현 상태·preferences 실제 복원/호환 경계는 [P2 실행 안내](ISSUE_8_PERSONAL_PRESENTATION_DEVELOPMENT.md)를 따른다. 아래 P2 미구현 설명은 P1 불변 SHA 당시 범위다.
+
 ## 제공 범위
 
 - GET `/v2/me/characters/{character_id}/personal-profile`

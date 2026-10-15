@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from typing import Annotated, Literal
 from uuid import UUID
 
-from pydantic import Field, StrictInt, StrictStr, field_validator, model_validator
+from pydantic import Field, StrictBool, StrictInt, StrictStr, field_validator, model_validator
 from app.game_accounts.schemas import DTO, Version
 
 Role = Literal['dealer', 'support']
@@ -83,13 +83,44 @@ class StoredRoleSummary(DTO):
     saved_at: datetime | None
 
 
-class PendingPersonalPreferences(DTO):
-    """P2 not implemented: read-only virtual defaults, no persistence."""
-    version: Literal[1]
-    preferred_role: Literal[None]
-    visible: Literal[True]
-    display_order: Literal[None]
-    saved_at: Literal[None]
+class PersonalPreferences(DTO):
+    version: Version
+    preferred_role: Role | None
+    visible: StrictBool
+    display_order: Annotated[StrictInt, Field(ge=0, le=2147483647)] | None
+    saved_at: datetime | None
+
+
+class PersonalPreferencesIn(DTO):
+    expected_version: Version
+    expected_ownership_revision: Version
+    expected_lifecycle_revision: Version
+    preferred_role: Role | None
+    visible: StrictBool
+    display_order: Annotated[StrictInt, Field(ge=0, le=2147483647)] | None
+
+
+class PersonalPreferencesOut(PersonalPreferences):
+    character_id: UUID
+    ownership_revision: Version
+    lifecycle_revision: Version
+
+
+class PresentationIn(DTO):
+    expected_version: Version
+    expected_registration_version: Version
+    expected_ownership_revision: Version
+    visible_count: Annotated[StrictInt, Field(ge=1, le=200)]
+
+
+class PresentationOut(DTO):
+    registration_id: UUID
+    game_account_id: UUID
+    registration_version: Version
+    ownership_revision: Version
+    version: Version
+    visible_count: Annotated[StrictInt, Field(ge=1, le=200)]
+    saved_at: datetime | None
 
 
 class PersonalProfileOut(DTO):
@@ -100,7 +131,7 @@ class PersonalProfileOut(DTO):
     lifecycle_state: Literal['active', 'suspect']
     dealer: StoredRoleSummary
     support: StoredRoleSummary
-    preferences: PendingPersonalPreferences
+    preferences: PersonalPreferences
 
 
 class RoleSummaryOut(StoredRoleSummary):
