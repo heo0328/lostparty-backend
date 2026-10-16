@@ -765,3 +765,6 @@ paths/DTO/enum/DB구조불변, OpenAPI live_evidence/challenge_context 설명2�
 첫직접새scope/실제collector·모의HTTP/격리PG계정·생명주기·장비검증128PASS/60.18초. 이후조회중owner/키/등록삭제변경을추가해최종목록/인증·이력·장비·대상검사/계정/생명주기/V2/역할/개인설정/회원키/활동정책/전투력/복원 **422PASS·기존경고1·230.32초**, 실패없음. 이전의본인refresh binding보류/suspect외부증거필수라는시험기대를76번째정책에맞춰정정하고누락시험의lookup생존조건·200개상한fixture를정상API형태로바꿨다. 실행은합산하지않으며실제provider/게임/기기시험은아니다.
 
 paths/DTO/enum/DB구조불변·owned_roster_refresh/lifecycle evidence/recovery정책설명만변경. 새이미지전체OpenAPI일치·paths/components불변PASS. 기존8000API만반영·healthy/실행전체OpenAPI/새모듈로드·health/DB0010유지확인·test-db만중지. 자료초기화/삭제/복원/이관·별도환경/Flutterflag·운영/통합/Issue종료변경없음. 다음Flutter는게시된POST를회원/환경별1회목록갱신→최신canonical/settings재조회→유효활동집합→상세/빌드에연결한다. 나이스단OFF도목록갱신유지·실패준비미소진/명시재시도·late차단유지. requires_refresh는미해소suspect존재이며명령진행중이아니다. 본인장비재인증/타소유pending도전·퇴역/claim정리/운영은별도후속이다.
+
+
+구현/계약/시험·누적검토문서15파일을3c8e7998f90e77180fc522bca461004b98c3007f로commit/push·원격일치확인했다. [82번째Backend결과/Flutter자동연결인계6213790275](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6213790275)를게시하고전체댓글조회로81/82번째순번을확인했다. 정확한POST/빈body/멱등·응답의suspect/명령완료구분·GET재조회/cursor·404최대3복구/미제공·실제인수미실행을인계했다. 다음Flutter자동준비연결이며Backend본인장비재인증/타소유pending도전은별도후속이다. 인계링크/게시상태만추가갱신하고시험/서버는반복하지않는다.

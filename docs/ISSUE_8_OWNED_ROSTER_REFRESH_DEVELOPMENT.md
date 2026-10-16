@@ -49,3 +49,5 @@ Flutter 순서: 환경/회원별1회 준비 → 현재소유 각 원정대 refre
 기존8000/DB0010/개발자료를 유지하며 API만 반영한다. 실제 게임/기기 관찰은 사용자 결정대로 나중이다. 본인 장비 재인증/타소유pending 도전·퇴역/claim 정리·24시간 분쟁/이전·운영은 별도 후속이다. Flutter자동실행연결/실사용·운영완료와 이번 Backend완료를 구분한다.
 
 최종 격리 PostgreSQL **422PASS·기존경고1·230.32초**, 초기 실패 없음. 첫 직접128PASS/60.18초 후 조회중 소유/키/등록삭제 변화 거절을 추가하고 전투력/설정/생명주기/인증·복원 회귀를 검증했다. 실행을 합산하지 않는다. 기존8000 API 반영·실행전체OpenAPI/health·새모듈·DB0010 유지 확인. 실제 provider/장비/기기 인수와 Flutter 자동 실행 연결은 미실행이다.
+
+구현/계약3c8e7998f90e77180fc522bca461004b98c3007f·feat/representative-selection push/원격일치/dev미통합. [82번째Backend결과/Flutter연결요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6213790275). Flutter자동준비연결은다음 단계이며본인장비재인증/타소유pending은Backend독립후속이다.

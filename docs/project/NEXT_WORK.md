@@ -10,7 +10,7 @@
 |---|---|
 | 통합 기준 | dev `821c758`, main `e6c72e4`. #1~#7 CLOSED. #8은 dev/main 미통합 |
 | #8 Backend | 대표 `cd3e003`, L1a/L1b `6f3d029`/`c91af2e`, P1/P2 `6e4f625`/`7027f0b` 구현·격리검증·원격 인계 완료. P2 계약 유지 |
-| 현재 작업 브랜치 | `feat/representative-selection`, 준비구현 `4bdaea6`, 권한/비노출 `59b8c23`·활동1700 `47a2ce4`·인증대상검사 `78d3d1a`·인증이력 `ccd2e6a`·장비증거 `13d9f68` push·[최신 결과 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6211928415) 완료 |
+| 현재 작업 브랜치 | `feat/representative-selection`, 준비구현 `4bdaea6`, 권한/비노출 `59b8c23`·활동1700 `47a2ce4`·인증대상검사 `78d3d1a`·인증이력 `ccd2e6a`·장비증거 `13d9f68`·본인목록 `3c8e799` push·[최신 결과 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6213790275) 완료 |
 | 사용하던 개발환경 | 기존 Docker/포트8000/DB 자료를 유지해 0007~0010·최신 API 반영 완료. DB0010·API/DB healthy·health ok·OpenAPI 전체일치·기존 전 테이블의 원래 컬럼/행 내용 동일 확인. 초기화/새환경 전환 없음 |
 | 별도8001 환경 | 구성했던 작업 이력이며 현재 개발의 기본 경로/채택 대상/선행조건이 아니다. 이번 정정으로 컨테이너/volume을 삭제·재설정하지 않는다 |
 | Flutter 최신 | [기존관리/초기대표/인증전환 연결](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209931176)·[Backend검토](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209973965) 완료. 최종전체1560PASS/분석0 보고·ON경로구현/기본OFF·미게시/실인수미확인. feature/scoped-account-cache/HEADcc6a0b0 위 미커밋·미push·dev미반영. 앱재실행을넘는미확정원명령종결보장은미확인 |
@@ -24,7 +24,7 @@
 
 ## 최신 협업 순서
 
-본문제외댓글순번: 73번째Backend제안 → 74번째Flutter미결정대조 → 75번째인증대상소멸/원정대인증유지정정 → **[76번째Flutter사용자정책확정](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6212824900)** → **[77번째Flutter앱실행목록갱신누락](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6212848615)** → **[78번째Backend검토/담당확정](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6213197093)**. 다음담당은Backend 본인provider목록refresh제공→게시후Flutter자동준비연결이다. 사용자결정/Flutter자료대기는해소됐다. 원정대구성은API목록기준·인증대상소실로원정대인증을해제하지않는다. 새구현은아직없으며기존13d9f68/317PASS·8000/DB0010·자료/flag를유지한다.
+본문제외순번: 79번째Flutter핵심정의 → 80번째Backend수신 → [81번째Backend갱신착수](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6213586779) → **[82번째Backend갱신완료/Flutter인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6213790275)**. 구현3c8e7998f90e77180fc522bca461004b98c3007f는feat/representative-selection push/원격일치·기존8000반영·격리422PASS/실행전체OpenAPI일치·DB0010유지, dev/main미통합이다. 다음담당은**Flutter회원별1회자동준비의provider목록갱신선행연결**, Backend의본인장비재인증/타소유pending도전은독립후속이다. 사용자새결정/기초기능반복시험대기는없다. 실제provider/게임/기기인수는나중이며Flutter연결완료와Backend완료를구분한다.
 
 ## 기존 Flutter 장비 인증 재사용 설계 — 최신 회신 검토
 
