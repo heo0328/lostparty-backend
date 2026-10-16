@@ -7,7 +7,7 @@ from app.game_accounts import observations
 from app.lostark_keys import service as credentials
 from app.lostark_keys import rate_limits
 from app.game_accounts.models import ScopedRosterCache as MemberPreview, ScopedRosterLease as MemberFetch
-from app.game_accounts import lifecycle, activity_policy, verification_context
+from app.game_accounts import lifecycle, activity_policy, verification_context, verification_history
 from app.game_accounts.models import (Account, Registration, Character, Configuration, Activity,
                                      Verification, Audit, PreviewCache, FetchLease, NameClaim)
 from app.game_accounts.support import authorize, fail, quota, reserve, commit_result, release, cursor_encode, cursor_decode, GameError
@@ -285,6 +285,8 @@ def mutate(principal, operation, key, payload, rid=None):
             return replay[0], dict(replay[1], next_change_at=None)
         return replay
     try:
+        if operation in verification_history.OPERATIONS:
+            verification_history.begin(principal, ticket, operation, payload, rid)
         obs = None
         snapshot = None
         baseline_revision = None
@@ -341,6 +343,8 @@ def mutate(principal, operation, key, payload, rid=None):
                         if v.identity_snapshot is None: fail('ACCOUNT_BINDING_EVIDENCE_PENDING')
                         if v.identity_snapshot.get('credential_version')!=snapshot.version: fail('LOSTARK_KEY_CHANGED')
                 obs = lookup(principal, snapshot, name, proof=operation != 'refresh', context=context, guard=guard)
+                if operation in verification_history.OPERATIONS:
+                    verification_history.observed(principal, ticket, obs)
         with session() as db, db.begin():
             uid = authorize(db, principal, write=True)
             if snapshot is not None:
@@ -348,8 +352,13 @@ def mutate(principal, operation, key, payload, rid=None):
             if guard and lifecycle.digest(lifecycle.registration_stamp(db, reg(db,uid,guard[0]))) != guard[1]:
                 fail('REVISION_CONFLICT')
             status, result = apply(db, uid, operation, payload, rid, obs, baseline_revision, snapshot.version if snapshot else None)
-            return commit_result(db, ticket, status, result)
-    except Exception:
+            response = commit_result(db, ticket, status, result)
+            if operation in verification_history.OPERATIONS:
+                verification_history.complete(db, ticket, *response)
+            return response
+    except Exception as error:
+        if operation in verification_history.OPERATIONS:
+            verification_history.failed(ticket, error)
         release(ticket)
         raise
 

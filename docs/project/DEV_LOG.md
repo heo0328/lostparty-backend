@@ -687,3 +687,28 @@ verification_context가challenge시작의대상서버/이름·목록주소정렬
 누적사용자요청인AGENTS의댓글순번/작성측/작업단계구분규칙과62/63번째결과수신기록을보존해함께게시한다. 현재남은것은실제관찰해석/수용근거후server증거발급연결과기존원정대연속성근거이며기존false를단순해제하지않는다. 이를완료된관리UI/기본등록개발의되돌림/새Flutter검토대기로표현하지않는다.
 
 구현/계약/시험/누적문서11파일을78d3d1abfa84331773f275e1c3433545b34aff2c로commit/push·원격일치확인하고 [65번째 Backend 결과/대기이유](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6210346204)를게시했다. 전체댓글조회로순번을확인했고NEXT_WORK에작업단계/다음담당과구분기록했다. 인계기록만추가게시하며시험/서버는반복하지않는다.
+
+
+## 2026-10-16 — 기존 Flutter 장비 인증 정보 재사용 요청
+
+사용자 지시에 따라 Issue #8 본문/전체65댓글과 기존 인증 보고8·11·51번째를 확인했다. 해당 보고는 최근 Backend 연동/mock 중심이므로 이전 Flutter 장비 인증의 실제 흐름·비교 필드·해제 표현·지연/실패 처리·기존 확인 경험을 별도 요청했다. [66번째 Backend 자료 요청6210508071](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6210508071) 게시 후 전체 댓글 조회로 순번을 확인했다. 다음 담당은 Flutter 기존 기록 회신 → Backend 재사용/서버 보완 설계 대조다. 기존 UI/명시 확인 흐름과 현재 서버 장비 비교/대상 고정을 출발점으로 삼고 미확인 비교/관찰 사실을 추정하지 않는다. 현재 캐릭터 제어 확인과 과거 ID 연속성/소멸 확정을 구분한다.
+
+NEXT_WORK/AI_CONTEXT에 최신 지시와 의존 정보를 기록했다. 코드/API·서버/DB·자료·flag 변경, 게임 관찰/반복시험·commit/push는 수행하지 않았다. 문서 변경만으로 자동 테스트/서버 재실행은 하지 않고 diff 검사를 수행한다.
+
+
+## 2026-10-16 — 67번째 Flutter 장비 인증 자료 수신·68번째 Backend 검토
+
+[Flutter6210605354](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6210605354)에서 과거8f4209d 코드/계약 원격 근거와 Android 사용자 성공 기록을 전달했다. 기준6부위/무작위1~3해제·Type/Name/Grade 비교·10분·명시 확인을 현재 equipment/service/models/observations 코드와 대조했다. 과거 실사용 경험은 수용하며 현재 Backend live 성공·반영시간/원본 응답 전체 검증으로 확대하지 않는다. Flutter 로컬 소스는 읽지 않았다.
+
+현재 서버의 장비 비교/대상 고정·회원/기한·확인 횟수는 재사용 가능하다. 다른 소유 원정대의 claim/binding 보류가 start의 Verification 생성 전 발생할 수 있어 도전 이력이 누락됨을 확인했다. 성공 Audit/횟수 필드만으로 사전 거절/provider 실패 등 전체 이력을 충족하지 못한다. 다음 Backend는 이력 최소 범위·소유관계 snapshot·멱등 설계 후 live 증거 발급 연결을 진행한다. 10분 장비 challenge와24시간 운영자 수동 분쟁은 구분하고 새 분쟁 시스템/자동이전을 확정하지 않았다.
+
+[68번째 Backend 검토6211222550](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6211222550)으로 회신하고 전체 댓글 조회로 순번을 확인했다. 추가 Flutter 자료/반복시험 대기는 없고 다음 담당 Backend다. NEXT_WORK/AI_CONTEXT 최신화 및 diff 검사만 수행했다. 코드/API·서버/DB·자료·flag·commit/push 변경이나 자동시험/실게임 관찰은 없다. 기존 미커밋 문서 변경을 보존했다.
+
+
+## 2026-10-16 — 인증 도전 실행 이력 구현·격리300PASS
+
+사용자 진행 지시로 최신 Issue68댓글/규칙/문서·코드 상태를 확인하고 기존 미커밋 문서3개를 보존했다. [착수6211452444](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6211452444)에 내부 이력 범위·원자성/실패보관·계약/소유판정 불변을 공유했다. verification_executions/0010은 actor·command/generation·인가된 대상/challenge·시각/상태/code·참고 소유관계 snapshot을 추가하며 기존 행을 backfill/삭제하지 않는다. 요청/등록/challenge 인가 후 수집하고 타회원 내부 상세를 복사하지 않는다. 완료 replay/동시중복은 기록0건 추가, retryable 재실행은 같은 명령 다음 세대로 실패를 보존한다. 성공은 업무/멱등/이력 atomic, 예외는 업무 rollback 뒤 실패만 기록한다. 타소유 claim/binding 보류가 challenge 생성 전에 나도 이력이 남는다. 원문/토큰/장비/예외문구 저장 없음. 프로세스/DB 장애 시 running은 미확정으로 보존하며 성공/실패를 추정하지 않는다. 기존 challenge/dedup 정리 후 기술 UUID 유지·새 자동정리정책/공개이력API 없음.
+
+첫 직접검증107PASS/37.20초 후 예측불가500와DB503 기록을 분리하고 동시중복/입력·멱등거절 제외/기존대상 snapshot을 보완했다. 최종 PostgreSQL 인증이력/계정/대상검사/장비기본/생명주기/V2읽기/역할/개인설정/회원키 **300PASS·기존경고1·139.09초**, 실패 없음. 이미지 전체OpenAPI 동일 PASS(네트워크차단). 각 실행은 합산하지 않는다. 모의 provider/증거 기반이며 실제 장비/소유 성공 테스트가 아니다.
+
+기존 개발DB0009에 테이블/인덱스만 추가해0010 적용. 기존33테이블 원래 컬럼/행의 메모리 지문 일치·모델/실제 schema 정합 PASS(persistence_probe는 기존 unmanaged 테이블로 보존). 백업/복원/자료출력·초기화/삭제 없음. 기존8000 API 이미지 반영·실제 전체OpenAPI/health 확인 및 격리test-db만 중지한다. 별도8001/Flutterflag·운영/통합/Issue종료 변경 없음. 다음 Backend는 기존 Flutter 자료를 근거로 live 장비 증거 발급 연결·만료 경계를 진행하고 과거 ID연속성/이전·소멸은 별도로 다룬다. 사용자게임관찰은 나중·추가Flutter자료대기는없음.

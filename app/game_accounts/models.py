@@ -105,6 +105,29 @@ class Verification(Base):
     __table_args__ = (CheckConstraint("status IN ('pending','verified','expired','cancelled')"),)
 
 
+class VerificationExecution(Base):
+    """Internal execution history; references survive challenge/dedup cleanup."""
+    __tablename__ = 'verification_executions'
+    command_id = mapped_column(UUID, primary_key=True)
+    generation = mapped_column(Integer, primary_key=True)
+    actor_id = mapped_column(ForeignKey('users.id'), nullable=False, index=True)
+    operation = mapped_column(String(16), nullable=False)
+    requested_target = mapped_column(UUID, nullable=True)
+    challenge_id = mapped_column(UUID, nullable=True, index=True)
+    lookup_name = mapped_column(String(64), nullable=True)
+    target_snapshot = mapped_column(JSONB, nullable=True)
+    started_at = stamp()
+    finished_at = stamp(nullable=True)
+    state = mapped_column(String(16), nullable=False, default='running')
+    http_status = mapped_column(Integer, nullable=True)
+    outcome_code = mapped_column(String(64), nullable=True)
+    __table_args__ = (
+        CheckConstraint('generation > 0'),
+        CheckConstraint("operation IN ('start','confirm','cancel')"),
+        CheckConstraint("state IN ('running','completed','failed')"),
+    )
+
+
 class Audit(Base):
     __tablename__ = 'ownership_audits'
     id = pk()
