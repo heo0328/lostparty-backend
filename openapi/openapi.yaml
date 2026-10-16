@@ -9273,7 +9273,14 @@
     },
     "live_evidence": "equipment schema proof not validated; live ownership confirmation held pending",
     "live_roster_decrease": "suspect only; missing/transfer require validated observation criteria",
-    "mutation_locking": "initial global game transaction advisory lock; no network under lock"
+    "mutation_locking": "initial global game transaction advisory lock; no network under lock",
+    "activity_selection": {
+      "minimum_item_level": "1700",
+      "validation": "new full-settings selection and representative target require usable canonical ID and finite known item_level >= shared minimum; otherwise 409 CHARACTER_UNUSABLE",
+      "stored": "no bulk removal or automatic representative replacement; selected below-minimum/unknown IDs appear in ineligible_character_ids",
+      "initial_representative": "existing explicit full-settings command saves selected UUIDs and representative atomically with CAS; reads/refresh never auto-select; existing representative preserved unless explicitly changed",
+      "identity": "V1 eligible/V2 usable describe lifecycle/claim; activity selection additionally applies minimum item level"
+    }
   },
   "x-character-lifecycle-policy": {
     "migration": "0007 files/isolated validation only; real DB application and API restart require separate approval",

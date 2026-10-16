@@ -3,7 +3,7 @@ import uuid
 from sqlalchemy import select
 from app.core.database import session
 from app.game_accounts.models import Character, Activity
-from app.game_accounts import service, lifecycle
+from app.game_accounts import service, activity_policy
 from app.game_accounts.support import authorize, fail, reserve, commit_result, release
 
 
@@ -63,7 +63,7 @@ def put(principal, rid, key, data):
                 fail('CHARACTER_NOT_FOUND', 404)
             if character.id not in selected:
                 fail('CHARACTER_NOT_ACTIVE')
-            lifecycle.require_usable(db,character)
+            activity_policy.require_eligible(db,character)
             if configuration.representative_id != character.id:
                 configuration.representative_id = character.id
                 configuration.version += 1

@@ -81,6 +81,13 @@ def openapi():
                         'pending_confirm_replay': 'original observation; new explicit check uses new key'},
         'challenge_seconds': 600, 'representative_cooldown_seconds': 0,
         'first_representative_starts_cooldown': False,
+        'activity_selection': {
+            'minimum_item_level': str(DEFAULT_MIN_ITEM_LEVEL),
+            'validation': 'new full-settings selection and representative target require usable canonical ID and finite known item_level >= shared minimum; otherwise 409 CHARACTER_UNUSABLE',
+            'stored': 'no bulk removal or automatic representative replacement; selected below-minimum/unknown IDs appear in ineligible_character_ids',
+            'initial_representative': 'existing explicit full-settings command saves selected UUIDs and representative atomically with CAS; reads/refresh never auto-select; existing representative preserved unless explicitly changed',
+            'identity': 'V1 eligible/V2 usable describe lifecycle/claim; activity selection additionally applies minimum item level',
+        },
         'max_registrations': 20, 'max_characters': 200,
         'page_default': 50, 'page_max': 100,
         'preview_seconds': 1800, 'preview_cleanup_grace_seconds': 3600,

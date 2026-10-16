@@ -7,7 +7,7 @@ from app.game_accounts import observations
 from app.lostark_keys import service as credentials
 from app.lostark_keys import rate_limits
 from app.game_accounts.models import ScopedRosterCache as MemberPreview, ScopedRosterLease as MemberFetch
-from app.game_accounts import lifecycle
+from app.game_accounts import lifecycle, activity_policy
 from app.game_accounts.models import (Account, Registration, Character, Configuration, Activity,
                                      Verification, Audit, PreviewCache, FetchLease, NameClaim)
 from app.game_accounts.support import authorize, fail, quota, reserve, commit_result, release, cursor_encode, cursor_decode, GameError
@@ -140,7 +140,7 @@ def settings_out(db, uid, r):
     c = config(db, uid, a.id) if a and status == 'owned' else None
     chosen = list(db.scalars(select(Activity.character_id).where(Activity.settings_id == c.id).order_by(Activity.character_id))) if c else []
     eligible = set(db.scalars(select(Character.id).where(Character.account_id == a.id, Character.status == 'confirmed'))) if c else set()
-    eligible = {i for i in eligible if lifecycle.usable(db, db.get(Character, i))}
+    eligible = {i for i in eligible if activity_policy.eligible(db, db.get(Character, i))}
     return dict(configuration_state=c.state if c else 'unconfigured', activity_character_ids=chosen,
                 representative_character_id=c.representative_id if c else None, settings_version=c.version if c else 1,
                 ownership_revision=a.ownership_revision if a else None, next_change_at=None,
@@ -393,7 +393,7 @@ def reconcile(db, a, obs, *, fresh=False):
         suspects+=1
     a.roster_revision+=1
     db.flush()
-    bad={c.id for c in db.scalars(select(Character).where(Character.account_id==a.id)) if not lifecycle.usable(db,c)}
+    bad={c.id for c in db.scalars(select(Character).where(Character.account_id==a.id)) if not activity_policy.eligible(db,c)}
     for conf in db.scalars(select(Configuration).where(Configuration.account_id==a.id,Configuration.ended_at.is_(None))):
         selected=set(db.scalars(select(Activity.character_id).where(Activity.settings_id==conf.id)))
         if selected & bad and conf.state!='needs_reconfiguration':
@@ -483,6 +483,8 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
         valid={c.id for c in db.scalars(select(Character).where(Character.account_id==a.id)) if lifecycle.usable(db,c)}
         if not set(selected)<=valid:
             fail('CHARACTER_NOT_FOUND',404)
+        for character_id in selected:
+            activity_policy.require_eligible(db, db.get(Character, character_id))
         previous=set(db.scalars(select(Activity.character_id).where(Activity.settings_id==c.id)))
         c.next_change_at=None
         if previous!=set(selected) or c.representative_id!=representative or c.state!='configured':
