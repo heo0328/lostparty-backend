@@ -24,7 +24,7 @@
 
 ## 최신 협업 순서
 
-본문 제외 순번: 94번째 Flutter 공용문구 정정 → 95번째 Backend 진단 보완 인계 → **[96번째 Backend 실제 실패 확인](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216859456)**. 사용자 1회 재시도(KST22:43:34)는 외부HTTP200 뒤 `armory_equipment`/UPSTREAM_INVALID_RESPONSE에서 실패했다. 수집542.705ms·실행이력0.637초/503 UPSTREAM_UNAVAILABLE·도전없음/retryable. 연결실패/10초 timeout 사례가 아니다. Backend 현재 Armory 1회 형식 조회에서17항목 중 나침반/부적/보주/완갑4종을 미지원Type으로 거절하는 원인을 재현했다. 실제 확인한4종만 인증제외목록에 추가해185PASS·기존8000반영·현재실응답의수정전실패/수정후통과를확인했다. 기존6부위/미지Type 거절은유지한다. 과거원문 재생과 현재응답 재현은 구분한다. 구현63c2d1f·HEAD0509ab3·기존8000/DB0010 유지, 이번은 읽기확인·실인증 성공 미확인이다.
+본문 제외 순번: 95번째 Backend 진단 보완 → 96번째 Backend 실제 실패 확인 → **[97번째 Backend 장비 분류 호환 수정 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217014833)**. 구현 `8404c6c269e0f0916ec90b4ec687a9148914729a`·feat/representative-selection commit/push/원격일치·185PASS·기존8000반영·health/OpenAPI일치·DB0010유지. 현재Armory17항목의나침반/부적/보주/완갑 미지원Type 거절을 재현하고4종만인증제외분류로추가,같은실응답에서수정전거절/수정후6부위통과확인. **다음은 사용자 기존 동일명령 복구로 start도전/지정부위안내 확인 → Backend 결과확인**이다. 실제앱start201·장비해제/소유인증성공은미확인이며POST/게임조작을대신실행하지않았다. Flutter새DTO/데이터·키·요청초기화/새환경은필요없다.
 
 ## 기존 Flutter 장비 인증 재사용 설계 — 최신 회신 검토
 
