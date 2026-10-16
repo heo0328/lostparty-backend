@@ -5,7 +5,9 @@ from typing import Mapping
 
 SLOTS = ('무기', '투구', '어깨', '상의', '하의', '장갑')
 # Unknown provider Types are never interpreted as unequipped slots.
-OTHER_TYPES = frozenset(('목걸이', '귀걸이', '반지', '어빌리티 스톤', '팔찌'))
+# Also returned by live Armory; these never participate in the six-slot proof.
+OTHER_TYPES = frozenset(('목걸이', '귀걸이', '반지', '어빌리티 스톤', '팔찌',
+                         '나침반', '부적', '보주', '완갑'))
 
 
 class InvalidSnapshot(ValueError):

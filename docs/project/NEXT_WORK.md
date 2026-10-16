@@ -24,7 +24,7 @@
 
 ## 최신 협업 순서
 
-본문 제외 순번: 91번째 Flutter picker 연결/50PASS → 92번째 실제 시작 오류 → 93번째 Backend 읽기 진단 → [94번째 Flutter 공용문구 정정](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216700068) → **[95번째 Backend 진단 보완 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216806126)**. 구현 `63c2d1f42df18b5464455026ec661309c14ba022`·feat/representative-selection commit/push/원격일치·격리174PASS·기존8000반영·health/전체OpenAPI일치·DB0010유지. 다음 실제 인증 시작의 기존 동일명령 복구 요청을 받아 Backend가 새request_id의 실패 단계/reason/detail/status/수집ms로 원인을 확인한다. 실제 요청은 이번에 재실행하지 않았고 과거 세부 원인/실인증 성공은 미확인이다. Flutter는 오류문구 구분 후속이 있으며 실제 기기 transport 자료는 미확인이다. 새 key/요청초기화·데이터/키/flag 변경·새환경/운영배포 없음.
+본문 제외 순번: 94번째 Flutter 공용문구 정정 → 95번째 Backend 진단 보완 인계 → **[96번째 Backend 실제 실패 확인](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216859456)**. 사용자 1회 재시도(KST22:43:34)는 외부HTTP200 뒤 `armory_equipment`/UPSTREAM_INVALID_RESPONSE에서 실패했다. 수집542.705ms·실행이력0.637초/503 UPSTREAM_UNAVAILABLE·도전없음/retryable. 연결실패/10초 timeout 사례가 아니다. Backend 현재 Armory 1회 형식 조회에서17항목 중 나침반/부적/보주/완갑4종을 미지원Type으로 거절하는 원인을 재현했다. 실제 확인한4종만 인증제외목록에 추가해185PASS·기존8000반영·현재실응답의수정전실패/수정후통과를확인했다. 기존6부위/미지Type 거절은유지한다. 과거원문 재생과 현재응답 재현은 구분한다. 구현63c2d1f·HEAD0509ab3·기존8000/DB0010 유지, 이번은 읽기확인·실인증 성공 미확인이다.
 
 ## 기존 Flutter 장비 인증 재사용 설계 — 최신 회신 검토
 
@@ -42,7 +42,7 @@
 
 ## 다음 개발과 담당
 
-1. **다음 — 보완 반영 후 실제 실패 기록으로 원인 확정.** Backend가 외부 조회 실패 단계/reason/detail·외부status·수집시간을 비밀정보 없이 기록하고 기존 error.request_id에 연결하도록 구현했다. 기존 실패의 상세 사유를 소급 복원한 것은 아니다. 같은 요청 복구로 다음 실제 start가 들어오면 Backend가 해당 request_id의 진단으로 필요한 수정을 정한다. 새 key·강제 요청 초기화는 하지 않는다. Flutter94번째에 따라 외부조회/연결실패의 동일 안내 문구는 코드 확인 근거가 아니며, 실제 transport 자료는 미확인이다. 실제503 해결·장비 인증 성공은 계속 미확인이다.
+1. **다음 — 기존 인증 시작 명령 복구로 실제 앱 경로 확인.** Backend는 현재 Armory17개 항목 중 나침반/부적/보주/완갑 미지원이 파서 거절 원인임을 재현해 인증 제외목록에4종만 추가했다. 격리185PASS·기존8000반영·health/OpenAPI일치/DB0010 유지, 실제 현재응답1건에서 수정전거절/수정후6부위인식 통과 확인. 같은key/body로 시작을 복구하고 도전/지정부위 안내까지 진행되는지 확인하는 단계다. 실제 장비 해제·소유인증 성공은 미확인이며 자동 실행하지 않았다. Flutter 새계약 소비나 데이터/키/요청초기화는 필요 없다.
 2. **Flutter 기존 관리 화면 연결·초기 대표 정책 대조.** [사용자 UX 정정6209360031](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209360031): 기존 CharacterManagementPage/ViewModel을 회원/등록/canonical·저장 API에 연결한다. 별도선택/복구화면을추가하지않으며미확정명령일관성은내부처리한다. 현재대표는유지·없을때만사용가능캐릭터최고item level로초기1회선정·공통사용기준1700. 전체활동자동추가/메인전환없음. [서버활동검증](../ISSUE_8_ACTIVITY_SELECTION_DEVELOPMENT.md)은전체선택/대표변경1700기준·ineligible보고·선택보존을구현해격리192PASS·기존8000반영·`47a2ce4` [인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209623492) 완료했다. 초기후보는Flutter기존관리화면에서최고레벨draft를정하고활동집합/대표를기존PUT/CAS로명시저장하는연결을 [대조요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209535500)했고 [연결완료보고](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209931176)/최종1560PASS와 [검토](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209973965)를수신했다. 원격게시/실소유/ON실인수는미확인이다. 서버읽기/refresh/null입력자동선정은추가하지않았다. 최신정정은기존별도E2화면/복구UX선행설명을대체한다.
 3. **실제 장비 관찰은 나중에 수행한다.** [관찰 CLI](../ISSUE_8_OWNERSHIP_READINESS.md)는 준비됐다. 관찰 결과와 서버에서 검증 가능한 증거/연결 규칙을 검토해야 하며 ready_for_review만으로 인증을 확정하지 않는다. 이 후속으로 독립 개발을 막지 않는다.
 4. **변경한 구간의 영향 검증만 수행한다.** 실제 소유/canonical·현재 등록/roster·활동 대상이 필요한 새 기능 실검증만 조건 충족 후 진행한다. 기존 완료 흐름을 처음부터 재인수하지 않는다. Flutter 변경분의 게시/통합 상태는 구현 완료와 별도로 추적한다.

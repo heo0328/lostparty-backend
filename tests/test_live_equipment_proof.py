@@ -27,6 +27,10 @@ def live(world, monkeypatch):
                          CharacterLevel=60, ItemAvgLevel='1700.00')]
         else:
             gear = [dict(Type=s, Name='sample-'+s, Grade='고대', Tooltip='variable') for s in SLOTS if s not in state['removed']]
+            # Live Armory has these non-proof categories alongside the six slots.
+            gear += [dict(Type=s, Name='sample-extra', Grade='유물')
+                     for s in ('목걸이', '귀걸이', '귀걸이', '반지', '반지',
+                               '어빌리티 스톤', '팔찌', '나침반', '부적', '보주', '완갑')]
             if state['changed']:
                 next(item for item in gear if item['Type'] == state['changed'])['Name'] = 'changed-item'
             if state['malformed'] == 'null': gear = None

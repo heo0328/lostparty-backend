@@ -27,3 +27,14 @@
 최종 격리 PostgreSQL **317PASS·기존 경고1·188.52초**, 앞선 직접검증125PASS/52.34초와 합산하지 않는다. 추가 늦은 동시 확인 경계도 통과했고 초기 실패는 없다. 기존8000 API 반영·실행 전체OpenAPI 일치·health/새모듈 로드·DB0010 유지 확인, test-db만 중지. 실제게임/기기는 미실행이다.
 
 구현/계약 `13d9f6801c90adb691a6a1a8b0abbbe2cdc4ed04`, feat/representative-selection push·원격일치 확인/dev미통합. [72번째 Backend 결과 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6211928415). 다음 Backend 기존ID 연결근거 검토, Flutter 실제 계약차이 대조는 필수선행 대기가 아니다.
+
+
+## 2026-10-16 — 실제 Armory 장비 분류 호환 보완
+
+[96번째 실제 실패 확인](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216859456) 후 사용자의 진행 지시로 실패 대상의 현재 Armory를 기존 저장 회원 키와 정상 token quota/observer를 적용해 1회 조회했다. 원문/키/캐릭터명/아이템명은 출력·저장하지 않고 장비 Type별 개수·형식 검사 결과만 대조했다. 실제 응답17개는 기존6부위+기존보조7항목+나침반/부적/보주/완갑 각1개였고, 네 분류가 OTHER_TYPES에 없어 InvalidSnapshot으로 거절됐다. 다른 목록/항목/부위중복/필수Name·Grade 형식 문제는 이 관찰에서 없었다. 이 관찰은 과거원문 재생이 아니라 현재 응답으로 같은 파서 거절을 재현한 근거다.
+
+OTHER_TYPES에 실제 확인한 네 분류만 추가해 기존 장신구처럼 인증 비교 대상에서 제외한다. 인증 대상 SLOTS6개·무작위1~3개 해제·비요청부위 유지·완전착용/대상·회원·시각/기한 검사는 유지한다. 추가 분류로 누락된 무기/방어구를 대신할 수 없으며 미지 Type/형식오류/중복은 여전히 거절한다. 원문응답/새Type을 자동 통과시키지 않고 공개계약/오류/DB/timeout·소유판정을 바꾸지 않는다.
+
+자동검증은 실제17항목 구조를 일반 가짜 이름/등급 fixture로 재구성한 collector/모의HTTP 시작·확인·재시도/성공/거절 경로와 네 분류 변경/제거 무관·6부위 누락 대체불가·미지Type 거절을 포함한다. 실응답 parser 확인과 실제 소유인증/기기 성공은 별도이며 장비 변경을 자동 수행하지 않는다. 최종수·게시SHA·반영 상태는 DEV_LOG와 결과댓글에 기록한다.
+
+최종 격리 PostgreSQL **185PASS·기존경고1·67.80초**, 실패없음. 대상은 primitives/live_equipment_proof/provider_diagnostics/verification_history/verification_targets/verification_context/game_accounts/owned_roster_refresh다. 기존8000 API만 반영·healthy/health API·DB ok·전체OpenAPI일치·DB0010 유지·실행4종 로드 확인, test-db만 중지했다. 반영 후 현재 Armory를1회 더 조회해 같은 메모리 응답에서 기존목록은거절/수정목록은수용·6부위완전·profile대상이름일치·17개항목을확인했다. 실제 GET2회는 정상quota/observer를적용했고 인증POST/게임장비변경/소유판정은 실행하지 않았다. 사용자 앱의 기존명령복구와 실제장비인증 성공은 후속이다.

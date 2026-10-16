@@ -816,3 +816,19 @@ live 본인명시소유등록은내부registration/account/owner로재인증범�
 기존8000 API만 새 이미지로 반영해 healthy/health API·DB ok·전체OpenAPI일치/실행진단모듈·DB0010 유지 확인, 격리test-db만 중지했다. DB migration/초기화/삭제/원본자료·키·Flutterflag 변경·새환경 채택·실제POST/provider 조회 재실행은 하지 않았다. 다음 실제 동일명령 복구 시 Backend가 새request_id 진단으로 원인을 좁힌다.
 
 진단 구현/시험/문서10파일 `63c2d1f42df18b5464455026ec661309c14ba022` commit/push·원격일치 확인. [95번째 Backend 진단 보완 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216806126)를 게시하고 전체댓글로 실제 순번95 확인했다. Flutter94번째 정정 수용·고정SHA·계약불변/개발반영/174PASS·과거원인 미확정 및 다음 실제 동일명령 복구→Backend 진단 순서를 인계했다. 실제POST/provider 재실행·전체 재인수/강제초기화 요청은 없으며 실제503 해결/장비 인증 성공은 미확인이다.
+
+
+## 2026-10-16 — 실제 1회 재시도: 장비 파싱 실패 확인
+
+사용자 요청으로 새 로그/최신 실행 이력을 읽기 확인했다. KST22:43:34, request_id6ffa8ba7-c6b9-4447-b70f-6468276735bf. start 실행0.637초/failed503 UPSTREAM_UNAVAILABLE·도전없음/retryable/generation1. 새 진단은 UPSTREAM_INVALID_RESPONSE/armory_equipment·외부HTTP200, 전체수집542.705ms(siblings245.721/Armory274.412/장비파싱0.034ms). 목록/프로필 검사를 지난 Backend 장비 파서 거절이며 연결실패/10초timeout으로 보지 않는다. 목록/항목/Type/중복/Name·Grade 중 세부 거절 사유는 기존 기록에 없고 원문을 저장하지 않아 아직 미확정이다.
+
+[96번째 Backend 실제 실패 확인](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216859456)을 회신하고 순번 확인. 다음 Backend 실제 장비 응답 형식/파서 호환성 조사·필요 최소 수정이며 추가 사용자 장비변경/반복재시도는 요청하지 않았다. 코드/계약/서버/DB내용·키/자료 변경·추가POST/provider호출·시험/재시작·commit/push 없이 문서 갱신. HEAD0509ab3/구현63c2d1f/기존8000·DB0010 유지. 실제 소유 인증 성공은 미확인이다.
+
+
+## 2026-10-16 — 실제 장비4분류 누락 원인 재현·호환 수정/185PASS
+
+사용자 진행 지시로 현재 규칙/문서·96번째댓글·HEAD0509ab3와 기존미커밋문서3개를 확인/보존했다. 실패 대상의현재 Armory를 저장회원키/정상quota·observer로1회조회하고 Type개수·형식검사만확인했다. 17항목중6부위와기존보조7개는정상이고나침반/부적/보주/완갑각1개가OTHER_TYPES누락으로거절됐다. 원문/캐릭터명/아이템명/키는출력·저장하지않았다. 과거응답은미보관이므로현재응답의동일거절재현으로구분한다. 실제확인한4종만인증제외분류에추가했고기존6부위·미지Type/형식/중복거절·미착용과부분응답보호·기존소유/명령경계를유지했다.
+
+실제17항목구조를가짜값fixture로재구성해collector/모의HTTP인증성공/거절·replay/최종만료와이력/선택/컨텍스트/계정/본인목록회귀,4분류변경/제거무관·6부위누락대체불가·미지Type거절을검증했다. 최종 **185PASS·기존경고1·67.80초**, 실패없음/이전실행합산없음. 기존8000API만반영·healthy/health API·DB ok·전체OpenAPI일치·DB0010/4분류로드유지확인·test-db만중지. 이후현재Armory1회추가조회로같은메모리응답의기존파서거절/수정파서수용·6부위완전/17개·profile대상이름일치를확인했다. 실제조회총2회정상quota차감/관측상태는기존대로처리, 사용자/원정대/인증명령/키데이터의초기화·삭제·재설정은없다.
+
+공개API/오류/DB/OpenAPI계약변경없음. 인증POST/사용자장비해제·소유갱신을대신실행하지않았으며실제앱의start도전생성/전체소유인증성공은미확인이다. 다음기존동일key/body명령복구→실제도전안내/장비확인,Flutter새DTO소비나timeout상향·새환경은필요없다.
