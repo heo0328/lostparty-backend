@@ -31,7 +31,7 @@ def begin(principal, ticket, operation, payload, rid):
                 target = uuid.UUID(payload['registration_id'])
                 r = db.get(Registration, target)
                 if r and r.user_id == uid and not r.deleted_at:
-                    name = r.lookup_name
+                    name = payload.get('target_character', {}).get('character_name', r.lookup_name)
                     initial = dict(source='stored_registration',
                         context=verification_context.capture(name, r.preview),
                         conflicting_accounts=owners(db, [r.account_id]) if r.account_id else [])

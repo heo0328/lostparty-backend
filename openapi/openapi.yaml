@@ -8881,6 +8881,30 @@
               }
             ],
             "title": "Character Name"
+          },
+          "target_character": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/VerificationTarget"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Registration-only selected server/name from saved full roster; requires expected_registration_version. Omit for legacy lookup target; explicit null rejected."
+          },
+          "expected_registration_version": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Registration Version",
+            "description": "Required together with target_character; registration version from current GET. Omit both for legacy requests; direct_input forbids both."
           }
         },
         "additionalProperties": false,
@@ -9159,6 +9183,29 @@
           "registration_id"
         ],
         "title": "VerificationOut"
+      },
+      "VerificationTarget": {
+        "properties": {
+          "server_name": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Server Name"
+          },
+          "character_name": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Character Name"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "server_name",
+          "character_name"
+        ],
+        "title": "VerificationTarget"
       }
     },
     "securitySchemes": {
@@ -9197,6 +9244,13 @@
     "challenge_seconds": 600,
     "representative_cooldown_seconds": 0,
     "first_representative_starts_cooldown": false,
+    "activity_selection": {
+      "minimum_item_level": "1700",
+      "validation": "new full-settings selection and representative target require usable canonical ID and finite known item_level >= shared minimum; otherwise 409 CHARACTER_UNUSABLE",
+      "stored": "no bulk removal or automatic representative replacement; selected below-minimum/unknown IDs appear in ineligible_character_ids",
+      "initial_representative": "existing explicit full-settings command saves selected UUIDs and representative atomically with CAS; reads/refresh never auto-select; existing representative preserved unless explicitly changed",
+      "identity": "V1 eligible/V2 usable describe lifecycle/claim; activity selection additionally applies minimum item level"
+    },
     "max_registrations": 20,
     "max_characters": 200,
     "page_default": 50,
@@ -9229,6 +9283,9 @@
     "combat_power": {
       "default_min_item_level": "1700",
       "max_input_characters": 20,
+      "access": "current owned registration required; unverified/ownership_lost 403 OWNERSHIP_REQUIRED before credentials/provider and on replay/commit; activity selection not required",
+      "preview": "retain stored data; unverified/ownership_lost V1/V2 power value/times/reason null, status unknown, stale true; direct preview combat_power null; registration mutation replay hides representative_summary after ownership loss",
+      "replay_access": "current member/session and owned registration rechecked under game write lock; historical success never bypasses lost ownership",
       "cache_seconds": 1800,
       "failed_retry_seconds": 10,
       "observation_retention_seconds": 7776000,
@@ -9244,10 +9301,7 @@
       "failure": "preserve last good value/time; checked_at records latest applied observation; stale=true",
       "deferred": "no observation applied; same key replays original result; explicit next batch uses new key",
       "conflict": "REVISION_CONFLICT if registration/version/roster/ownership changes; revoked session 401; deleted registration 404",
-      "revisions": "power-only write never changes registration/roster/ownership/settings revisions",
-      "access": "current owned registration required; unverified/ownership_lost 403 OWNERSHIP_REQUIRED before credentials/provider and on replay/commit; activity selection not required",
-      "preview": "retain stored data; unverified/ownership_lost V1/V2 power value/times/reason null, status unknown, stale true; direct preview combat_power null; registration mutation replay hides representative_summary after ownership loss",
-      "replay_access": "current member/session and owned registration rechecked under game write lock; historical success never bypasses lost ownership"
+      "revisions": "power-only write never changes registration/roster/ownership/settings revisions"
     },
     "representative": {
       "path": "/v1/me/game-accounts/{registration_id}/representative",
@@ -9271,17 +9325,26 @@
         "SERVICE_UNAVAILABLE": 503
       }
     },
-    "live_evidence": "server-equipment-removal-v1: uncached parsed siblings/Armory receipts at start and confirm; six baseline slots, random 1-3 removals, unchanged other Name/Grade, pinned target/roster and collection times within server 10-minute challenge; final expiry rollback; new unclaimed accounts may verify; existing identity binding and disappearance remain pending; no client proof input",
-    "live_roster_decrease": "suspect only; missing/transfer require validated observation criteria",
-    "mutation_locking": "initial global game transaction advisory lock; no network under lock",
-    "activity_selection": {
-      "minimum_item_level": "1700",
-      "validation": "new full-settings selection and representative target require usable canonical ID and finite known item_level >= shared minimum; otherwise 409 CHARACTER_UNUSABLE",
-      "stored": "no bulk removal or automatic representative replacement; selected below-minimum/unknown IDs appear in ineligible_character_ids",
-      "initial_representative": "existing explicit full-settings command saves selected UUIDs and representative atomically with CAS; reads/refresh never auto-select; existing representative preserved unless explicitly changed",
-      "identity": "V1 eligible/V2 usable describe lifecycle/claim; activity selection additionally applies minimum item level"
+    "live_evidence": "server-equipment-removal-v1: uncached parsed siblings/Armory receipts at start and confirm; six baseline slots, random 1-3 removals, unchanged other Name/Grade, pinned target/roster/claims and collection times within server 10-minute challenge; final expiry rollback; new unclaimed accounts and explicit current-owned registrations may verify; unresolved claims issue pending challenge and remain pending after equipment control with ACCOUNT_BINDING_EVIDENCE_PENDING, never live transfer; no client proof input",
+    "verification_target": {
+      "registration": "optional target_character server_name/character_name plus required paired expected_registration_version; names strict trimmed 1-64 chars, version strict integer >=1; explicit null/unpaired/direct-input target fields rejected",
+      "membership": "saved registration full preview or current-owned non-retired canonical/current-claim membership before provider; fresh siblings/Armory must match selected server/name; no activity, representative, visibility/count or 1700 filter",
+      "legacy": "registration_id-only retains operational lookup target and exact old normalized request digest; omitted new null defaults do not enter dedup body; direct_input unchanged",
+      "response": "VerificationOut eight fields unchanged; original command retains target display context; no new status-query endpoint or journal",
+      "errors": {
+        "INVALID_REQUEST": 400,
+        "REGISTRATION_NOT_FOUND": 404,
+        "CHARACTER_NOT_FOUND": 404,
+        "REVISION_CONFLICT": 409,
+        "IDENTITY_CONFLICT": 409,
+        "EQUIPMENT_INCOMPLETE": 400
+      },
+      "owned": "explicit owned registration reauth keeps same account/character IDs/owner/revision; API roster may update current non-retired claims and suspect states; audit/verified_at/registration version update; no automatic activity/representative/operational lookup change",
+      "unresolved": "start201 pending; matched equipment confirm200 pending ACCOUNT_BINDING_EVIDENCE_PENDING; control observation time and owner/claim snapshot recorded, GET retains pending code; no ownership/account/registration/activity/claim transfer; cancel/expiry remain terminal",
+      "recovery": "lost start response uses same POST/key/normalized body; saved201 replays without new provider/challenge; REQUEST_IN_PROGRESS/Retry-After retains command; after ID recovery GET current state/time; no reset/new key solely on network failure"
     },
     "challenge_context": "pin lookup server/name and roster addresses at start; matched equipment with changed/invalid roster returns ROSTER_EVIDENCE_PENDING; missing old snapshot context or server baseline receipt returns PROVIDER_EVIDENCE_PENDING; live equipment receipts bind target/roster/equipment/time; legacy trusted adapter marker must be boolean True; equality alone never proves ownership/continuity/completeness",
+    "live_roster_decrease": "suspect only; missing/transfer require validated observation criteria",
     "owned_roster_refresh": {
       "source": "existing refresh command fetches provider siblings; list GETs read saved DB only; API roster is the product membership basis, no unavailable upstream permanent-ID evidence required",
       "scope": "explicit current owned registration/account/owner and registration/account/claim snapshot; query anchor must be current active confirmed claim; foreign account claims reject atomically",
@@ -9291,12 +9354,13 @@
       "result": "200 means roster applied; registration.version and account.roster_revision advance, ownership_revision/verified_at unchanged; suspect_count counts unresolved non-retired records; requires_refresh means unresolved suspect records, not command still running; GET latest canonical/settings after command or replay",
       "selection": "activity/representative IDs preserved; newly added IDs never auto-selected; blocked selected IDs set needs_reconfiguration; recovery does not auto-save settings",
       "startup": "Flutter member/environment once: owned provider roster refresh then current revisions/canonical list then valid activity targets then detail/build checks; nice-off excludes details, not roster refresh; failures remain incomplete"
-    }
+    },
+    "mutation_locking": "initial global game transaction advisory lock; no network under lock"
   },
   "x-character-lifecycle-policy": {
     "migration": "0007 files/isolated validation only; real DB application and API restart require separate approval",
     "identity": "preserve UUID/FK; name claim is conflict detection, never ownership/account continuity proof",
-    "evidence": "live adapter provides no transfer BindingEvidence; current-owned API roster refresh uses internal registration/owner scope and API-list policy separately; unresolved verification attachment remains 409 ACCOUNT_BINDING_EVIDENCE_PENDING",
+    "evidence": "live adapter provides no transfer BindingEvidence; owned roster refresh/explicit registration reauth use internal owner scope and API-list policy separately; unresolved verification now starts pending and confirms pending ACCOUNT_BINDING_EVIDENCE_PENDING without transfer",
     "state": "active/suspect/retired internally; V1 enum unchanged; retired excluded from operating views",
     "recovery": "normal scoped current-owned API observation can restore non-retired suspect with its current same-account claim; other recovery requires internal continuity evidence; no retired-ID revival, live retirement or claim release API",
     "cache": "new scoped tables; canonical member/ID/lifecycle/key version, preview member/registration/version/name/key version",

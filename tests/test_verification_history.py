@@ -21,16 +21,16 @@ def test_other_owner_rejection_has_durable_snapshot_without_transfer(client, wor
     other = another_user(login, monkeypatch, client)
     state['binding'] = False
     response = change(client, other, 'post', VERIFY, dict(source='direct_input', character_name='a0'))
-    assert response.status_code == 409
+    assert response.status_code == 201
     e = events()[-1]
-    assert e.state == 'failed' and e.outcome_code == 'ACCOUNT_BINDING_EVIDENCE_PENDING'
-    assert e.lookup_name == 'a0' and e.challenge_id is None
+    assert e.state == 'completed' and e.outcome_code == 'PENDING'
+    assert e.lookup_name == 'a0' and e.challenge_id == uuid.UUID(response.json()['challenge_id'])
     assert e.target_snapshot['context']['target'] == ['sample-server', 'a0']
     with session() as db:
         a = db.scalar(select(Account))
         assert e.actor_id != a.owner_id
         assert e.target_snapshot['conflicting_accounts'] == [dict(account_id=str(a.id), owner_id=str(a.owner_id), ownership_revision=a.ownership_revision)]
-        assert db.scalar(select(func.count()).select_from(Verification)) == 1
+        assert db.scalar(select(func.count()).select_from(Verification)) == 2
         assert db.scalar(select(func.count()).select_from(Audit)) == 1
 
 

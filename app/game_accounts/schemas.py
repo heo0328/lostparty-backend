@@ -41,17 +41,28 @@ class PatchIn(DTO):
         return self
 
 
+class VerificationTarget(DTO):
+    server_name: Name
+    character_name: Name
+
+
 class StartIn(DTO):
     source: Literal['registration', 'direct_input']
     registration_id: UUID | None = None
     character_name: Name | None = None
+    target_character: VerificationTarget | None = Field(default=None, description='Registration-only selected server/name from saved full roster; requires expected_registration_version. Omit for legacy lookup target; explicit null rejected.')
+    expected_registration_version: Version | None = Field(default=None, description='Required together with target_character; registration version from current GET. Omit both for legacy requests; direct_input forbids both.')
 
     @model_validator(mode='after')
     def source_matches(self):
         if self.source == 'registration':
             valid = self.registration_id is not None and self.character_name is None
+            specified = {'target_character', 'expected_registration_version'} & self.model_fields_set
+            if specified:
+                valid = valid and self.target_character is not None and self.expected_registration_version is not None
         else:
             valid = self.character_name is not None and self.registration_id is None
+            valid = valid and not ({'target_character', 'expected_registration_version'} & self.model_fields_set)
         if not valid:
             raise ValueError('Exactly one source required')
         return self

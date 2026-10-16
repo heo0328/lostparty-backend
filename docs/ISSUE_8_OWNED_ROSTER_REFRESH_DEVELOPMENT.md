@@ -1,5 +1,7 @@
 # Issue #8 — 본인 원정대 API 목록 갱신
 
+> 후속: [인증 대상 선택/본인 재인증·타소유 도전](ISSUE_8_VERIFICATION_TARGET_DEVELOPMENT.md)으로현재본인등록재인증과미연결claim의start201/pending·장비확인후pending경로까지구현했다. 아래start409/본인재인증미완료는당시이력이며소유이전/24시간분쟁·퇴역은여전히별도다.
+
 2026-10-16. [76번째 API목록 기준 확정](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6212824900)·[77번째 자동실행 누락](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6212848615)·[79번째 데이터 정의](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6213474915) 및 사용자 진행 지시에 따른 구현이다. [착수](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6213586779)에 범위를 공유했다.
 
 ## 제공하는 명령

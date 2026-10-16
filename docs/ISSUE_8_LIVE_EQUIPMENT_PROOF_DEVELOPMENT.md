@@ -1,5 +1,7 @@
 # Issue #8 — 서버 장비 해제 인증 연결
 
+> 후속: [인증 대상 선택/본인 재인증·타소유 도전](ISSUE_8_VERIFICATION_TARGET_DEVELOPMENT.md)으로현재본인등록재인증과미연결claim의start201/pending·장비확인후pending경로까지구현했다. 아래start409/본인재인증미완료는당시이력이며소유이전/24시간분쟁·퇴역은여전히별도다.
+
 2026-10-16. 사용자 연결 진행 지시와 [기존 Flutter 자료](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6210605354)·[70번째 후속](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6211581766)에 따른 작업이다. [착수](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6211773213)에 신규 원정대 성공과 기존 ID 연결 보류를 구분했다. 기존 Flutter `8f4209deb980660e227134bf1241677875d02e06`의6부위·무작위1~3해제·Type/Name/Grade·10분·명시 확인 흐름과 과거 Android 확인 경험을 근거로 사용한다.
 
 ## 서버가 확인하는 내용

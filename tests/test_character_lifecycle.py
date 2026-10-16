@@ -32,7 +32,7 @@ def test_owned_api_refresh_does_not_authorize_name_based_attachment(client,world
     after=page(client,h,r['registration_id'])
     assert [c['character_id'] for c in after['characters']['items']]==[c['character_id'] for c in before['characters']['items']]
     response=change(client,h,'post',VERIFY,{'source':'direct_input','character_name':'a0'})
-    assert response.status_code==409 and response.json()['error']['code']=='ACCOUNT_BINDING_EVIDENCE_PENDING'
+    assert response.status_code==201 and response.json()['status']=='pending'
     assert page(client,h,r['registration_id'])==after
 
 

@@ -8,7 +8,7 @@ from app.game_accounts import observations
 from app.lostark_keys import service as credentials
 from app.lostark_keys import rate_limits
 from app.game_accounts.models import ScopedRosterCache as MemberPreview, ScopedRosterLease as MemberFetch
-from app.game_accounts import lifecycle, activity_policy, verification_context, verification_history, equipment_proof, owned_refresh
+from app.game_accounts import lifecycle, activity_policy, verification_context, verification_history, equipment_proof, owned_refresh, verification_targets
 from app.game_accounts.models import (Account, Registration, Character, Configuration, Activity,
                                      Verification, Audit, PreviewCache, FetchLease, NameClaim)
 from app.game_accounts.support import authorize, fail, quota, reserve, commit_result, release, cursor_encode, cursor_decode, GameError
@@ -272,6 +272,8 @@ def replay_access(principal, operation, rid):
 
 
 def mutate(principal, operation, key, payload, rid=None):
+    if operation == 'start':
+        payload = verification_targets.normalize(payload)
     ticket, replay = reserve(principal, operation, key, {'target':str(rid) if rid else None, 'body':payload})
     if replay:
         owned = replay_access(principal, operation, rid)
@@ -308,7 +310,7 @@ def mutate(principal, operation, key, payload, rid=None):
                 elif operation == 'start':
                     if payload['source'] == 'registration':
                         r = reg(db, uid, uuid.UUID(payload['registration_id']))
-                        name, baseline_revision = r.lookup_name, r.version
+                        name, baseline_revision = verification_targets.selected(db, uid, r, payload), r.version
                     else:
                         name = payload['character_name']
                 else:
@@ -367,7 +369,7 @@ def mutate(principal, operation, key, payload, rid=None):
                 if operation == 'confirm':
                     db.flush()
                 expired = (confirmation_was_pending and obs is not None and status == 200
-                           and result.get('status') == 'verified'
+                           and (result.get('status') == 'verified' or result.get('result_code') == 'ACCOUNT_BINDING_EVIDENCE_PENDING')
                            and now(db) >= db.get(Verification, rid).expires_at)
                 if expired:
                     # Undo *all* ownership/registration/character/audit writes.
@@ -445,9 +447,10 @@ def retained(v, current):
 def verification_out(v, current, code=None):
     status = 'expired' if v.status=='pending' and current>=v.expires_at else v.status
     result = v.result or {}
+    persisted_code = result.get('pending_code') if status=='pending' else None
     return dict(challenge_id=v.id,status=status,required_slots=v.slots,expires_at=v.expires_at,
                 remaining_seconds=max(0,int((v.expires_at-current).total_seconds())) if status=='pending' else 0,
-                result_code=code, result_reference=result.get('result_reference'),registration_id=result.get('registration_id') or v.registration_id)
+                result_code=code if code is not None else persisted_code, result_reference=result.get('result_reference'),registration_id=result.get('registration_id') or v.registration_id)
 
 
 def verification(principal, vid):
@@ -539,17 +542,29 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
             slots=required_slots(obs.equipment or {})
         except EquipmentIncomplete:
             fail('EQUIPMENT_INCOMPLETE',400)
-        lookup_name=r.lookup_name if data['source']=='registration' else data['character_name']
+        lookup_name=verification_targets.selected(db,uid,r,data) if data['source']=='registration' else data['character_name']
         proof_context=verification_context.capture(lookup_name,obs.roster)
         if proof_context is None:
             fail('UPSTREAM_INVALID_RESPONSE',503)
-        candidate=canonical_candidate(db,obs.roster,obs.binding)
-        v=Verification(actor_id=uid,registration_id=r.id if r else None,lookup_name=r.lookup_name if data['source']=='registration' else data['character_name'],
+        target=data.get('target_character')
+        if target and proof_context['target'] != [target['server_name'],target['character_name']]:
+            fail('IDENTITY_CONFLICT')
+        mode='legacy'
+        if obs.binding is not None:
+            candidate=canonical_candidate(db,obs.roster,obs.binding)
+        else:
+            candidate=verification_targets.owned_candidate(db,uid,r,proof_context,obs.roster) if data['source']=='registration' else None
+            if candidate:
+                mode='owned_registration'
+            else:
+                mode='pending' if any(db.get(NameClaim,k) for k in keys(obs.roster)) or (r and r.account_id) else 'fresh'
+        v=Verification(actor_id=uid,registration_id=r.id if r else None,lookup_name=lookup_name,
                        candidate_id=candidate.id if candidate else None,revision=candidate.ownership_revision if candidate else None,
                        roster=obs.roster,baseline={k:dict(name=e.name,grade=e.grade) for k,e in obs.equipment.items()},
                        slots=list(slots),identity_snapshot={'registration':lifecycle.digest(lifecycle.registration_stamp(db,r)) if r else None,
                            'account':lifecycle.digest(lifecycle.account_stamp(db,candidate)) if candidate else None,
                            'credential_version':credential_version,'proof_context':proof_context,
+                           'binding_mode':mode,'claim_snapshot':verification_targets.claims(db,obs.roster),
                            'server_equipment_baseline':equipment_proof.baseline(obs,lookup_name,current)},
                        created_at=current,expires_at=current+timedelta(minutes=10))
         db.add(v); db.flush()
@@ -592,14 +607,26 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
         return 200,verification_out(v,current,pending)
     if not equipment_proof.validated(v,obs,current):
         return 200,verification_out(v,current,'PROVIDER_EVIDENCE_PENDING')
-    candidate=canonical_candidate(db,obs.roster,obs.binding)
+    mode=v.identity_snapshot.get('binding_mode','legacy')
+    saved_claims=v.identity_snapshot.get('claim_snapshot')
+    if saved_claims is not None and saved_claims != verification_targets.claims(db,obs.roster):
+        fail('REVISION_CONFLICT')
+    if mode=='pending':
+        v.result={'pending_code':'ACCOUNT_BINDING_EVIDENCE_PENDING'}
+        v.identity_snapshot=dict(v.identity_snapshot,equipment_control_verified_at=current.isoformat())
+        return 200,verification_out(v,current,'ACCOUNT_BINDING_EVIDENCE_PENDING')
+    if mode=='owned_registration':
+        candidate=verification_targets.owned_candidate(db,uid,source,v.identity_snapshot['proof_context'],obs.roster)
+        if candidate is None: fail('REVISION_CONFLICT')
+    else:
+        candidate=canonical_candidate(db,obs.roster,obs.binding)
     if (candidate.id if candidate else None)!=v.candidate_id or (candidate.ownership_revision if candidate else None)!=v.revision:
         fail('REVISION_CONFLICT')
     if v.registration_id:
         source_registration=reg(db,uid,v.registration_id)
         if source_registration.account_id and (candidate is None or candidate.id!=source_registration.account_id):
             fail('IDENTITY_CONFLICT')
-    if candidate:
+    if candidate and mode!='owned_registration':
         current_keys={(c.server_name,c.character_name) for c in db.scalars(select(Character).where(Character.account_id==candidate.id,Character.lifecycle_state!='retired'))}
         if not current_keys<=keys(obs.roster) and not obs.disappearance_validated:
             return 200,verification_out(v,current,'ROSTER_EVIDENCE_PENDING')
@@ -621,7 +648,7 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
     if candidate and previous!=uid:
         from dataclasses import replace
         obs=replace(obs,binding=lifecycle.evidence(db,a,continuity_ids=obs.binding.continuity_ids,complete=obs.binding.complete))
-    reconcile(db,a,obs,fresh=candidate is None)
+    reconcile(db,a,obs,fresh=candidate is None,owned=mode=='owned_registration')
     a.verified_at=current
     r.account_id,r.preview,r.fetched_at=a.id,obs.roster,obs.fetched_at
     r.version+=1

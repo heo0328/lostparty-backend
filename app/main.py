@@ -136,7 +136,17 @@ def openapi():
                        'OWNERSHIP_REQUIRED': 403, 'REGISTRATION_NOT_FOUND': 404,
                        'SERVICE_UNAVAILABLE': 503},
         },
-        'live_evidence': 'server-equipment-removal-v1: uncached parsed siblings/Armory receipts at start and confirm; six baseline slots, random 1-3 removals, unchanged other Name/Grade, pinned target/roster and collection times within server 10-minute challenge; final expiry rollback; new unclaimed accounts may verify; existing identity binding and disappearance remain pending; no client proof input',
+        'live_evidence': 'server-equipment-removal-v1: uncached parsed siblings/Armory receipts at start and confirm; six baseline slots, random 1-3 removals, unchanged other Name/Grade, pinned target/roster/claims and collection times within server 10-minute challenge; final expiry rollback; new unclaimed accounts and explicit current-owned registrations may verify; unresolved claims issue pending challenge and remain pending after equipment control with ACCOUNT_BINDING_EVIDENCE_PENDING, never live transfer; no client proof input',
+        'verification_target': {
+            'registration': 'optional target_character server_name/character_name plus required paired expected_registration_version; names strict trimmed 1-64 chars, version strict integer >=1; explicit null/unpaired/direct-input target fields rejected',
+            'membership': 'saved registration full preview or current-owned non-retired canonical/current-claim membership before provider; fresh siblings/Armory must match selected server/name; no activity, representative, visibility/count or 1700 filter',
+            'legacy': 'registration_id-only retains operational lookup target and exact old normalized request digest; omitted new null defaults do not enter dedup body; direct_input unchanged',
+            'response': 'VerificationOut eight fields unchanged; original command retains target display context; no new status-query endpoint or journal',
+            'errors': {'INVALID_REQUEST': 400, 'REGISTRATION_NOT_FOUND': 404, 'CHARACTER_NOT_FOUND': 404, 'REVISION_CONFLICT': 409, 'IDENTITY_CONFLICT': 409, 'EQUIPMENT_INCOMPLETE': 400},
+            'owned': 'explicit owned registration reauth keeps same account/character IDs/owner/revision; API roster may update current non-retired claims and suspect states; audit/verified_at/registration version update; no automatic activity/representative/operational lookup change',
+            'unresolved': 'start201 pending; matched equipment confirm200 pending ACCOUNT_BINDING_EVIDENCE_PENDING; control observation time and owner/claim snapshot recorded, GET retains pending code; no ownership/account/registration/activity/claim transfer; cancel/expiry remain terminal',
+            'recovery': 'lost start response uses same POST/key/normalized body; saved201 replays without new provider/challenge; REQUEST_IN_PROGRESS/Retry-After retains command; after ID recovery GET current state/time; no reset/new key solely on network failure',
+        },
         'challenge_context': 'pin lookup server/name and roster addresses at start; matched equipment with changed/invalid roster returns ROSTER_EVIDENCE_PENDING; missing old snapshot context or server baseline receipt returns PROVIDER_EVIDENCE_PENDING; live equipment receipts bind target/roster/equipment/time; legacy trusted adapter marker must be boolean True; equality alone never proves ownership/continuity/completeness',
         'live_roster_decrease': 'suspect only; missing/transfer require validated observation criteria',
         'owned_roster_refresh': {
@@ -154,7 +164,7 @@ def openapi():
     schema['x-character-lifecycle-policy'] = {
         'migration': '0007 files/isolated validation only; real DB application and API restart require separate approval',
         'identity': 'preserve UUID/FK; name claim is conflict detection, never ownership/account continuity proof',
-        'evidence': 'live adapter provides no transfer BindingEvidence; current-owned API roster refresh uses internal registration/owner scope and API-list policy separately; unresolved verification attachment remains 409 ACCOUNT_BINDING_EVIDENCE_PENDING',
+        'evidence': 'live adapter provides no transfer BindingEvidence; owned roster refresh/explicit registration reauth use internal owner scope and API-list policy separately; unresolved verification now starts pending and confirms pending ACCOUNT_BINDING_EVIDENCE_PENDING without transfer',
         'state': 'active/suspect/retired internally; V1 enum unchanged; retired excluded from operating views',
         'recovery': 'normal scoped current-owned API observation can restore non-retired suspect with its current same-account claim; other recovery requires internal continuity evidence; no retired-ID revival, live retirement or claim release API',
         'cache': 'new scoped tables; canonical member/ID/lifecycle/key version, preview member/registration/version/name/key version',

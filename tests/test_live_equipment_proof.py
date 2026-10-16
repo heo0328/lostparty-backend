@@ -165,7 +165,10 @@ def test_claimed_roster_still_requires_separate_binding(client, live):
     assert confirm(client, h, v).json()['status'] == 'verified'
     state['removed'] = ()
     response = change(client, h, 'post', VERIFY, dict(source='direct_input', character_name='a0'))
-    assert response.status_code == 409 and response.json()['error']['code'] == 'ACCOUNT_BINDING_EVIDENCE_PENDING'
+    assert response.status_code == 201 and response.json()['status'] == 'pending'
+    state['removed'] = response.json()['required_slots']
+    result = confirm(client,h,response.json())
+    assert result.status_code == 200 and result.json()['result_code'] == 'ACCOUNT_BINDING_EVIDENCE_PENDING'
     with session() as db:
         assert db.scalar(select(func.count()).select_from(Account)) == 1
         assert db.scalar(select(func.count()).select_from(Audit)) == 1

@@ -768,3 +768,30 @@ paths/DTO/enum/DB구조불변·owned_roster_refresh/lifecycle evidence/recovery�
 
 
 구현/계약/시험·누적검토문서15파일을3c8e7998f90e77180fc522bca461004b98c3007f로commit/push·원격일치확인했다. [82번째Backend결과/Flutter자동연결인계6213790275](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6213790275)를게시하고전체댓글조회로81/82번째순번을확인했다. 정확한POST/빈body/멱등·응답의suspect/명령완료구분·GET재조회/cursor·404최대3복구/미제공·실제인수미실행을인계했다. 다음Flutter자동준비연결이며Backend본인장비재인증/타소유pending도전은별도후속이다. 인계링크/게시상태만추가갱신하고시험/서버는반복하지않는다.
+
+
+## 2026-10-16 — 83번째 결과 수신·84번째 인증 선택/유실 검토·85번째 회신
+
+사용자의84댓글확인지시로전체84댓글을실제조회하고StartIn/start·멱등reserve/replay·GET/취소경로를대조했다.83번째Flutter는목록선행연결/ACK/미완료/late경계·최종1567PASS/분석0을보고했으며모의HTTP/SQLite·미커밋/미push·기본OFF/실인수미확인을유지한다.84번째는등록캐릭터picker누락과start유실/id없음에서재진입선택영역숨김UX결함을보고하고등록범위내대상선택입력과복구계약을질문했다.최초연결실패서버원인은미확정이다.
+
+[85번째Backend6215438091](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6215438091)에등록+target_character주소/expected_registration_version의하위호환초안·미인증UUID없음/저장목록과fresh대상검증·활동/1700독립·자동대표/활동변경0을제안했다.새DTO는미구현/검토안이며옛동일명령digest를새optional None필드로바꾸지않는경계도명시했다.현재동일POST/key/body재시도가저장201/id를회수하고현재GET으로상태를확인하는복구이며별도key결과GET/최근challenge조회는없다. running/Retry-After·replayTTL/미확정유지·앱종료시key/body소실영속복구미제공을구분했다.추가결과조회API/DB/journal을이번UX수정필수로요구하지않았다.
+
+전체조회로85순번을확인했고NEXT_WORK/AI_CONTEXT를최신화했다.다음Flutter대상입력/복구대조→Backend합의계약/본인재인증/타소유pending구현이다.이번은읽기/문서/회신으로코드/OpenAPI/시험·서버/DB/자료/flag·commit/push/통합/배포변경없음.기존3c8e799/422PASS·8000/DB0010·실게임나중기준유지·문서diff검사만수행했다.
+
+
+## 2026-10-16 — 86번째 새 인증 계약 합의·87번째 복구UX 결과 수신
+
+사용자의87댓글/새계약확인지시로전체87댓글과StartIn·start/멱등·실행이력코드를대조했다.86번째는85번째target_character서버/이름+expected_registration_version·구요청/digest보존·활동/1700독립·동일POST복구/현재GET안을수용하고추가사용자결정없음을인계했다.87번째는기존계약안의재진입/원대상·동일명령복구·ACK후GET만재시도/없는GET안내금지·세션문맥제거를구현해42PASS/3파일분석0을보고했다.전체1567PASS와합산하지않으며picker/실기기미완료·미게시/기본OFF는유지한다.
+
+[88번째Backend6215857575](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6215857575)으로합의/결과수신과다음Backend구현을회신했다.기존Name엄격문자열trim1~64/Version엄격정수1이상·target시version필수/direct금지·INVALID_REQUEST400/REVISION_CONFLICT409/저장목록밖CHARACTER_NOT_FOUND404의기존code활용·응답8필드보존·새조회API/journal불요를정리했다.최종wire/오류는구현검증후고정SHA로인계하며현재새DTO가게시된것으로표시하지않는다.전체조회로88순번확인·기존미커밋문서변경보존/NEXT_WORK·AI_CONTEXT최신화·diff검사.이번은코드/OpenAPI/시험·서버/DB/자료/flag·commit/push/통합/배포변경없음.다음Backend합의구현/게시→Flutter picker연결·실게임나중기준유지다.
+
+
+## 2026-10-16 — 인증 캐릭터 선택·본인 재인증·타소유pending 구현/449PASS
+
+사용자진행지시로규칙/문서·최신88댓글/현재b6d27f2·기존미커밋문서3개를확인/보존했다. [89번째Backend착수6216006619](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216006619)에범위공유. StartIn에registration-only target_character(엄격Name2개)/expected_registration_version(엄격정수1이상)을쌍으로추가하고명시null/미완전짝/direct혼입은거절한다. 저장범위·기대version을provider전/최종apply에서확인하며fresh서버/이름일치/6부위/현재회원·키·등록·claim/account snapshot을고정한다. 후보에활동/표시/1700필터없음. 새optional기본null은dedup입력에서빼구형source/등록/character_name null포함정규화와digest/replay를보존한다. 응답8필드/paths/DB구조불변·새요청component/정책만변경.
+
+live 본인명시소유등록은내부registration/account/owner로재인증범위를고정하고API목록기준으로같은비퇴역ID를갱신한다. owner/ownershiprevision·활동/대표·운영lookup불변·필요시needs_reconfiguration·verified_at/새감사/등록version/roster갱신. live미연결/타소유claim은candidate를권한으로추론하지않고start201/pending으로도전발급·장비확인후confirm200/pending+ACCOUNT_BINDING_EVIDENCE_PENDING, GET보류사유/서버제어확인시각/현재소유snapshot이력보존·소유/등록/기존ID/활동/claim쓰기0. mode는도전수명동안고정해GET/replay로소유성공으로승격하지않는다. 기존trusted BindingEvidence 내부시험의이전경로는유지하지만실제provider는발급하지않는다. claim/account 변화는REVISION_CONFLICT이고최종flush후만료는verified와장비확인pending모두savepoint rollback/expired만반영한다.
+
+직접새계약/등록/장비/대상/이력/생명주기130PASS/61.41초후활동보존·등록/claim소유변화·보류제어확인의최종만료경계를추가했다. 최종격리PostgreSQL 인증선택/목록/장비·이력·대상/계정/생명주기/V2/역할/개인설정/키/활동/전투력/복원 **449PASS·기존경고1·194.55초**, 실패없음. 실제collector/transport parser+모의HTTP로테스트했으며실제게임/provider/기기인수와구분한다. 구형등록/direct_input의기존정규화hash일치·유실동일명령replay에서provider/도전추가0·8응답필드유지·target바뀐동일key거절도확인했다. 타소유start409기대만새합의의201/pending으로정정하고권한불변검증은보존했다. 실행은합산하지않는다.
+
+새이미지schema에서합의StartIn/VerificationTarget·정책만반영했고paths/VerificationOut/다른응답동일·전체OpenAPI일치PASS. 기존8000API만반영·healthy/실행전체OpenAPI/새요청필드/응답8/health·DB0010유지확인·test-db만중지. DB초기화/삭제/이관/복원·별도환경/Flutterflag·운영/통합/Issue종료변경없음. 다음Flutter는고정SHA를소비해picker/버전선택·불변중첩command와기존87번째복구UX를연결한다. 결과조회endpoint/새journal/앱재시작우회없음·실게임은나중·최초연결실패원인은미확정이다.
