@@ -458,7 +458,7 @@ def test_strict_query_and_rollback_character_limit(client,world):
     r=register(client,h);verify(client,h,state,r['registration_id'])
     # A complete 200-row synthetic observation has one new name and omits one
     # existing identity; it must not silently exceed the canonical bound.
-    state['count']=201; state['missing']=(0,)
+    state['count']=201; state['missing']=(199,)
     result=change(client,h,'post',BASE+'/'+r['registration_id']+'/refresh',{})
     assert result.status_code==400 and result.json()['error']['code']=='CHARACTER_LIMIT'
     with session() as db:

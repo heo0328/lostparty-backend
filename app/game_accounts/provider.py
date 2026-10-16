@@ -15,10 +15,11 @@ _capacity = BoundedSemaphore(2)
 
 
 class ProviderUnavailable(Exception):
-    def __init__(self, reason='UPSTREAM_UNAVAILABLE'):
+    def __init__(self, reason='UPSTREAM_UNAVAILABLE', *, http_status=None):
         # Keep exception text free of request URL, credentials and response bodies.
         super().__init__(reason)
         self.reason = reason
+        self.http_status = http_status
 
 
 class LostArkProvider:
@@ -55,7 +56,7 @@ class LostArkProvider:
                 if response.status_code != 200:
                     reason = ('LOSTARK_KEY_REJECTED' if response.status_code in (401, 403) else
                               'UPSTREAM_RATE_LIMITED' if response.status_code == 429 else 'UPSTREAM_UNAVAILABLE')
-                    raise ProviderUnavailable(reason)
+                    raise ProviderUnavailable(reason, http_status=response.status_code)
                 media = response.headers.get('Content-Type', '').split(';')[0].strip().lower()
                 if media != 'application/json':
                     raise ProviderUnavailable('UPSTREAM_INVALID_RESPONSE')

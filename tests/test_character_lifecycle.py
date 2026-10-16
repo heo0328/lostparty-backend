@@ -23,21 +23,27 @@ def owned(client,world):
     return h,state,registration
 
 
-def test_names_alone_cannot_attach_transfer_or_refresh(client,world):
+def test_owned_api_refresh_does_not_authorize_name_based_attachment(client,world):
     h,state,r=owned(client,world)
     state['binding']=False
     before=page(client,h,r['registration_id'])
     response=change(client,h,'post',BASE+'/'+r['registration_id']+'/refresh',{})
-    assert response.status_code==409 and response.json()['error']['code']=='ACCOUNT_BINDING_EVIDENCE_PENDING'
+    assert response.status_code==200
+    after=page(client,h,r['registration_id'])
+    assert [c['character_id'] for c in after['characters']['items']]==[c['character_id'] for c in before['characters']['items']]
     response=change(client,h,'post',VERIFY,{'source':'direct_input','character_name':'a0'})
     assert response.status_code==409 and response.json()['error']['code']=='ACCOUNT_BINDING_EVIDENCE_PENDING'
-    assert page(client,h,r['registration_id'])==before
+    assert page(client,h,r['registration_id'])==after
 
 
-def test_suspect_requires_continuity_and_is_blocked_everywhere(client,world):
+def test_suspect_is_blocked_until_normal_owned_api_observation(client,world):
     h,state,r=owned(client,world)
     p=page(client,h,r['registration_id'])
     assert change(client,h,'put',BASE+'/'+r['registration_id']+'/character-settings',save_data(p)).status_code==200
+    # Observe removal of a0 through a surviving sibling, as a valid provider
+    # response must include the lookup character itself.
+    with session() as db,db.begin():
+        db.get(Registration,uuid.UUID(r['registration_id'])).lookup_name='a1'
     state['missing']=(0,)
     assert change(client,h,'post',BASE+'/'+r['registration_id']+'/refresh',{}).status_code==200
     p=page(client,h,r['registration_id']); suspect=next(c for c in p['characters']['items'] if c['character_name']=='a0')
@@ -53,10 +59,8 @@ def test_suspect_requires_continuity_and_is_blocked_everywhere(client,world):
     with session() as db,db.begin(): db.query(LimitEvent).delete()
     state['missing']=();state['continuity']=False
     assert change(client,h,'post',BASE+'/'+r['registration_id']+'/refresh',{}).status_code==200
-    assert next(c for c in page(client,h,r['registration_id'])['characters']['items'] if c['character_name']=='a0')['roster_status']=='suspect'
-    with session() as db,db.begin(): db.query(LimitEvent).delete()
-    state['continuity']=True
-    assert change(client,h,'post',BASE+'/'+r['registration_id']+'/refresh',{}).status_code==200
+    # User's API-list policy permits a currently claimed, non-retired record
+    # to recover on a normal observation in its already owned account.
     recovered=next(c for c in page(client,h,r['registration_id'])['characters']['items'] if c['character_name']=='a0')
     assert recovered['character_id']==suspect['character_id'] and recovered['eligible']
 

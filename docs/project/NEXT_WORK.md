@@ -24,7 +24,7 @@
 
 ## 최신 협업 순서
 
-본문 제외 전체 댓글 순번은 70번째 Backend 실행이력 결과 → [71번째 Backend 장비 증거 연결 착수](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6211773213) → **[72번째 Backend 연결 완료/계약 대조 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6211928415)**다. 댓글 순번과 Backend 작업 단계 번호는 별개다. 구현 `13d9f6801c90adb691a6a1a8b0abbbe2cdc4ed04`는 feat/representative-selection push·원격일치/기존8000 반영, 최종격리317PASS·전체OpenAPI일치·DB0010유지 확인. dev/main 미통합·실게임/기기 인수미실행이다. 다음 담당은 **Backend 기존 account/캐릭터 ID 연결 근거 검토**, Flutter는 기존 성공/보류/취소·새시작 연결의 실제 계약 차이만 대조하며 회신은 Backend 후속의 필수 선행이 아니다.
+본문제외댓글순번: 73번째Backend제안 → 74번째Flutter미결정대조 → 75번째인증대상소멸/원정대인증유지정정 → **[76번째Flutter사용자정책확정](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6212824900)** → **[77번째Flutter앱실행목록갱신누락](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6212848615)** → **[78번째Backend검토/담당확정](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6213197093)**. 다음담당은Backend 본인provider목록refresh제공→게시후Flutter자동준비연결이다. 사용자결정/Flutter자료대기는해소됐다. 원정대구성은API목록기준·인증대상소실로원정대인증을해제하지않는다. 새구현은아직없으며기존13d9f68/317PASS·8000/DB0010·자료/flag를유지한다.
 
 ## 기존 Flutter 장비 인증 재사용 설계 — 최신 회신 검토
 
@@ -36,9 +36,15 @@
 
 현재 캐릭터 제어 확인과 과거 원정대/캐릭터 ID 연결·소멸 확정은 별도다. 10분 장비 challenge와 24시간 운영자 수동 분쟁 방어를 합치지 않는다. 후자는 기존 의미만 설계 근거로 보존하며 새 분쟁 API/통지·자동 이전을 임의 구현하지 않는다. 새 UI/반복시험·Firebase 자료 이관·환경 전환은 요청하지 않았다.
 
+## 핵심 데이터 정의 — 79번째 보충
+
+[79번째 Flutter 정의](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6213474915)·[80번째 Backend 코드 대조](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6213521483): 앱 회원1명은 실제 게임 원정대 여러 개를 등록/인증한다. 실제 소속 전체 목록은API기준이며 앱의임의캐릭터그룹/활동선택/표시개수와다르다. 서버는최소요약/설정을저장해반복provider호출을줄인다. 기존목록GET은DB만읽고provider를호출하지않으며유지한다. 실제provider갱신은앱실행회원별1회등합의시점에수행하고이후저장자료를사용한다. 전체Armory원문/Firebase자료이전없음. 78번째Backend구현→Flutter자동연결순서/사용자결정대기해소는그대로다. 이번은검토이며새owned refresh구현완료가아니다.
+
 ## 다음 개발과 담당
 
-1. **Backend — 신규 원정대의 서버 장비 증거 연결을 구현했다.** [서버 장비 해제 인증](../ISSUE_8_LIVE_EQUIPMENT_PROOF_DEVELOPMENT.md)은 uncached 수집 근거/시각·기준/지정/유지 장비·대상/회원/키·기한 검사와 최종 소유반영 만료 rollback을 구현한다. 신규이며 이름 claim 충돌 없는 경우 기존 verified/등록/캐릭터/감사 경로를 사용하며 활동/대표는 자동 쓰지 않는다. 실제 게임/기기 인수는 사용자 결정대로 나중이다. **다음 Backend는 기존 account/캐릭터 ID 연속성·본인 재인증/owned refresh·타소유 연결의 근거/허용 범위를 검토한다.** 이 구간의 live binding=None·소멸 확정/퇴역 보류는 유지한다. 같은 이름/목록·장비 제어를 과거 ID동일성으로 바꾸지 않는다. Flutter 추가자료 대기/새환경/기초재인수는 선행조건이 아니다. 실행 이력 ccd2e6a/DB0010은 유지한다.
+1. **Flutter 다음 — 앱 실행 provider 목록 갱신 선행 연결.** [Backend 본인 목록 갱신](../ISSUE_8_OWNED_ROSTER_REFRESH_DEVELOPMENT.md)을 기존POST에 구현했다. 내부현재소유등록/API목록기준의추가·누락·현재claim의비퇴역suspect복구·실패보존·명확404대체조회(최대3기준)를제공하며본인재인증/타소유이전증거와구분한다. Backend게시후환경/회원별1회준비→현재소유원정대refresh→최신등록/roster/settings·canonical목록전체재조회→유효활동집합확정→상세/빌드검사를연결한다. 표시/count/나이스단OFF로목록갱신을생략하지않으며나이스단OFF는해당상세/빌드만제외한다. 실패준비미소진·동일실행멱등/명시미완료재시도·회원전환late차단유지. `requires_refresh=true`는반영후미해소suspect존재이며200명령이진행중이라는뜻이아니다. 일반목록GET의provider호출은없다.
+
+   **Backend 독립 후속 — 해당등록 범위 본인 장비 재인증·타소유 도전 pending.** 목록refresh가가능해졌다는것이기존장비start의binding보류도해소됐다는뜻은아니다. 74·76번째합의대로구현하고기존owner/ID불변·장비제어확인과소유이전/24시간수동분쟁을분리한다. 조회기준전체소실/3회복구불가·퇴역/claim해제/소멸이력정리는실제미제공범위로유지하며추가API외증거를일상목록갱신에재요구하지않는다.
 2. **Flutter 기존 관리 화면 연결·초기 대표 정책 대조.** [사용자 UX 정정6209360031](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209360031): 기존 CharacterManagementPage/ViewModel을 회원/등록/canonical·저장 API에 연결한다. 별도선택/복구화면을추가하지않으며미확정명령일관성은내부처리한다. 현재대표는유지·없을때만사용가능캐릭터최고item level로초기1회선정·공통사용기준1700. 전체활동자동추가/메인전환없음. [서버활동검증](../ISSUE_8_ACTIVITY_SELECTION_DEVELOPMENT.md)은전체선택/대표변경1700기준·ineligible보고·선택보존을구현해격리192PASS·기존8000반영·`47a2ce4` [인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209623492) 완료했다. 초기후보는Flutter기존관리화면에서최고레벨draft를정하고활동집합/대표를기존PUT/CAS로명시저장하는연결을 [대조요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209535500)했고 [연결완료보고](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209931176)/최종1560PASS와 [검토](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209973965)를수신했다. 원격게시/실소유/ON실인수는미확인이다. 서버읽기/refresh/null입력자동선정은추가하지않았다. 최신정정은기존별도E2화면/복구UX선행설명을대체한다.
 3. **실제 장비 관찰은 나중에 수행한다.** [관찰 CLI](../ISSUE_8_OWNERSHIP_READINESS.md)는 준비됐다. 관찰 결과와 서버에서 검증 가능한 증거/연결 규칙을 검토해야 하며 ready_for_review만으로 인증을 확정하지 않는다. 이 후속으로 독립 개발을 막지 않는다.
 4. **변경한 구간의 영향 검증만 수행한다.** 실제 소유/canonical·현재 등록/roster·활동 대상이 필요한 새 기능 실검증만 조건 충족 후 진행한다. 기존 완료 흐름을 처음부터 재인수하지 않는다. Flutter 변경분의 게시/통합 상태는 구현 완료와 별도로 추적한다.

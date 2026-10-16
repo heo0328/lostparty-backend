@@ -6,6 +6,7 @@ from app.game_accounts.provider import LostArkProvider, ProviderUnavailable
 from app.game_accounts.equipment import parse_equipment, InvalidSnapshot
 from app.game_accounts.lifecycle import BindingEvidence
 from app.game_accounts import equipment_proof
+from app.game_accounts.owned_refresh import OwnedObservation
 
 
 @dataclass(frozen=True)
@@ -18,6 +19,7 @@ class Observation:
     disappearance_validated: bool = False
     binding: BindingEvidence | None = None
     equipment_evidence: equipment_proof.ServerEquipmentObservation | None = None
+    owned_observation: OwnedObservation | None = None
 
 
 def number(value):

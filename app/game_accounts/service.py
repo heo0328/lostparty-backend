@@ -8,7 +8,7 @@ from app.game_accounts import observations
 from app.lostark_keys import service as credentials
 from app.lostark_keys import rate_limits
 from app.game_accounts.models import ScopedRosterCache as MemberPreview, ScopedRosterLease as MemberFetch
-from app.game_accounts import lifecycle, activity_policy, verification_context, verification_history, equipment_proof
+from app.game_accounts import lifecycle, activity_policy, verification_context, verification_history, equipment_proof, owned_refresh
 from app.game_accounts.models import (Account, Registration, Character, Configuration, Activity,
                                      Verification, Audit, PreviewCache, FetchLease, NameClaim)
 from app.game_accounts.support import authorize, fail, quota, reserve, commit_result, release, cursor_encode, cursor_decode, GameError
@@ -115,8 +115,10 @@ def lookup(principal, snapshot, name, proof=False, cached=False, *, context='dir
                 with session() as db:
                     retry = rate_limits.metadata(db, snapshot.fingerprint, error.reason)
                 raise GameError(error.reason, 503, retry['retry_after_seconds'], retry['retry_at'])
-            fail(error.reason if error.reason in ('LOSTARK_KEY_REJECTED', 'UPSTREAM_RATE_LIMITED') else 'UPSTREAM_UNAVAILABLE',
-                 409 if error.reason == 'LOSTARK_KEY_REJECTED' else 503)
+            rejected = GameError(error.reason if error.reason in ('LOSTARK_KEY_REJECTED', 'UPSTREAM_RATE_LIMITED') else 'UPSTREAM_UNAVAILABLE',
+                                 409 if error.reason == 'LOSTARK_KEY_REJECTED' else 503)
+            rejected.provider_not_found = error.http_status == 404
+            raise rejected
         raise
 
 
@@ -292,6 +294,7 @@ def mutate(principal, operation, key, payload, rid=None):
         snapshot = None
         baseline_revision = None
         guard = None
+        owned_scope = None
         context = operation + ":" + str(key)
         if operation == 'register':
             snapshot = credentials.capture(principal)
@@ -322,6 +325,8 @@ def mutate(principal, operation, key, payload, rid=None):
                     target = rid if operation == 'refresh' else uuid.UUID(payload['registration_id'])
                     r = reg(db, authorize(db,principal), target)
                     guard = (target, lifecycle.digest(lifecycle.registration_stamp(db,r)))
+                    if operation == 'refresh':
+                        owned_scope = owned_refresh.capture(db, principal[0].id, r)
                 elif operation == 'confirm':
                     v = db.get(Verification,rid)
                     if v and v.registration_id:
@@ -343,7 +348,10 @@ def mutate(principal, operation, key, payload, rid=None):
                         v=db.get(Verification,rid)
                         if v.identity_snapshot is None: fail('ACCOUNT_BINDING_EVIDENCE_PENDING')
                         if v.identity_snapshot.get('credential_version')!=snapshot.version: fail('LOSTARK_KEY_CHANGED')
-                obs = lookup(principal, snapshot, name, proof=operation != 'refresh', context=context, guard=guard)
+                if owned_scope is not None:
+                    obs = owned_refresh.fetch(principal, snapshot, name, owned_scope, context=context, guard=guard)
+                else:
+                    obs = lookup(principal, snapshot, name, proof=operation != 'refresh', context=context, guard=guard)
                 if operation in verification_history.OPERATIONS:
                     verification_history.observed(principal, ticket, obs)
         with session() as db, db.begin():
@@ -381,8 +389,8 @@ def mutate(principal, operation, key, payload, rid=None):
         raise
 
 
-def reconcile(db, a, obs, *, fresh=False):
-    if not fresh:
+def reconcile(db, a, obs, *, fresh=False, owned=False):
+    if not fresh and not owned:
         lifecycle.validate_binding(db,a,obs.binding)
     existing = {(c.server_name,c.character_name):c for c in db.scalars(select(Character).where(
         Character.account_id==a.id,Character.lifecycle_state!='retired'))}
@@ -396,7 +404,7 @@ def reconcile(db, a, obs, *, fresh=False):
             claim=db.get(NameClaim,k)
             if not claim or claim.character_id!=c.id: fail('IDENTITY_CONFLICT')
             if not lifecycle.usable(db,c):
-                if not obs.binding or str(c.id) not in obs.binding.continuity_ids:
+                if not owned and (not obs.binding or str(c.id) not in obs.binding.continuity_ids):
                     suspects+=1
                     continue
                 c.lifecycle_revision+=1
@@ -487,7 +495,9 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
             # Refresh never silently attaches or transfers a canonical account.
             added,suspects=0,0
             if a and state=='owned':
-                added,suspects=reconcile(db,a,obs)
+                owned_refresh.validate(db, uid, r, obs)
+                added,suspects=reconcile(db,a,obs,owned=True)
+                r.lookup_name = obs.owned_observation.target[1]
             r.preview,r.fetched_at=obs.roster,obs.fetched_at
             r.version+=1
             return 200,dict(registration=reg_out(db,uid,r),added_count=added,suspect_count=suspects,requires_refresh=bool(suspects))

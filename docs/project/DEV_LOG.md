@@ -729,3 +729,39 @@ paths/DTO/enum/DB구조불변, OpenAPI live_evidence/challenge_context 설명2�
 
 
 구현/계약/검증/문서13파일을13d9f6801c90adb691a6a1a8b0abbbe2cdc4ed04로commit/push·원격일치확인했다. [72번째 Backend 결과/실제 계약 대조6211928415](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6211928415)를게시하고전체댓글조회로71번째착수/72번째결과순번을확인했다. Flutter에는기존verified/registration_id→관리화면·old challenge취소/새시작안내의실제차이만대조요청했고새UI/반복전체시험/실게임/flag변경을요청하지않았다. 다음Backend는기존ID연결근거검토이며Flutter회신필수대기아니다. 링크/게시기록만추가갱신하고시험/서버는반복하지않는다.
+
+
+## 2026-10-16 — 기존 원정대 재인증/갱신/이전 연결 검토
+
+사용자 진행 지시로 규칙/문서·최신Issue본문/72댓글·현재코드를 대조했다. Git489c8b6/작업트리clean에서 시작했으며 Flutter추가회신은없었다. Registration.user_id/account_id와Account.owner_id는 이미내부귀속을표현하지만 canonical_candidate의claim/binding거절과reconcile의필수binding으로본인재인증/owned refresh가차단됨을확인했다. 새환경/기초기능재개발·사용자키/실게임관찰부재가원인이아니다.
+
+[기존원정대연결검토](../ISSUE_8_EXISTING_ACCOUNT_BINDING_REVIEW.md)에본인내부등록범위/active기준/타계정충돌검사후현재ID유지·미점유새이름신규ID·누락suspect까지만일상관찰적용하는안과타소유도전start201/pending·장비통과후에도binding보류를분리하는안을작성했다. 같은이름삭제/재생성의식별불가한계수용은기존합의근거를확인해야하며이름만으로BindingEvidence를만들어현재금지를우회하지않는다. suspect복구·퇴역/claim해제·24시간자동이전은별도다.
+
+[73번째Backend검토/계약대조요청6212414683](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6212414683)을게시하고전체댓글조회로실제순번을확인했다. 다음Flutter두항목대조후Backend합의범위구현이며기존과거구현자료/전체시험반복요청과구분했다. 새사용자정책결정은Flutter회신만으로대체하지않도록명시했다. 이번은설계/문서/회신이며새코드/원본OpenAPI/시험/서버/DB·자료/flag·commit/push/통합/배포/Issue종료변경없음. 문서참조/diff검사만수행하며신규인증13d9f68/기존8000/DB0010/317PASS와실게임나중기준을유지한다.
+
+
+## 2026-10-16 — 74~77번째 회신 수신·78번째 Backend 검토
+
+사용자 회신 확인 지시로 최신Issue본문/전체77댓글과 기존refresh코드를 대조했다. 74번째미결정은75번째C소멸시B인증유지정정·76번째API목록기준사용자최종확정으로해소됐다. API에없는영구ID/생성세대증거를본인일상갱신/해당등록재인증의추가필수조건으로요구하지않으며관찰상같은주소의현재기록유지범위를수용한다. 공급자의세대구분보장으로주장하지않고개명자동승계/종료ID이름부활/타회원ID권한승계금지를유지한다. 인증대상소멸과원정대인증/owner유지를분리하고확인가능한같은원정대조회기준복구를후속구현한다.
+
+77번째Flutter는RuntimeStartupRefreshSource.prepare의metadata/V2 GET과상세Armory검사사이에provider siblings refresh POST가없음을보고했다. 과거1560PASS는이선행을검증한것이아니다. Backend의기존POST는siblings호출은있으나owned reconcile binding필수검사로실제반영불가·대체lookup복구미구현을확인했다. 다음Backend본인refresh정상/실패/revision/조회기준복구구현·게시→Flutter회원/환경별1회provider목록갱신/최신canonical/유효활동집합/상세검사순서로확정했다. 나이스단OFF는상세/빌드만제외·목록갱신생략아님·실패준비미소진/명시재시도/멱등/late응답차단유지. 타소유도전pending은74번째계약대로독립후속이며소유이전/24시간분쟁승인은별도다.
+
+[78번째Backend검토6213197093](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6213197093)을게시하고전체댓글조회로순번을확인했다. 사용자결정/Flutter자료대기를다시전체선행으로두지않는다. 기존미커밋문서4개를보존·최신화했다. 이번은검토/회신/문서이며코드/OpenAPI·서버/DB/자료/flag·자동시험/실게임·commit/push/통합/배포/Issue종료변경없음. 문서diff검사만수행하고기존13d9f68/317PASS·8000/DB0010·Flutter1560PASS/기본OFF·실게임나중기준을유지했다.
+
+
+## 2026-10-16 — 구현 전79번째 핵심 데이터 정의 수신
+
+사용자가구현전새댓글확인을지시해전체79댓글을조회했다. [79번째Flutter6213474915](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6213474915)는회원1명/복수실제게임원정대·API전체소속목록·회원귀속/인증·활동·표시설정분리와서버최소요약저장을확정정의로보충했다. Account/Registration제약과등록/V1/V2캐릭터GET을대조해복수원정대가능·목록GET의provider호출없음을확인했다. 합의된시점의provider갱신후서버저장자료를사용하며전체Armory/Firebase이관으로확대하지않는다.
+
+[80번째Backend6213521483](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6213521483)으로수신/코드대조결과와78번째구현순서유지를회신하고전체조회로순번을확인했다. 기존미커밋문서를보존하며NEXT_WORK/AI_CONTEXT/연결검토를보충했다. 이번은코드읽기/문서/회신만으로코드/OpenAPI/시험·서버/DB/자료/flag·commit/push/통합/배포변경없음. owned refresh는아직구현전이며다음Backend구현→Flutter자동연결·실게임나중기준은유지한다.
+
+
+## 2026-10-16 — 본인 원정대 API목록 갱신 구현·최종422PASS
+
+사용자진행지시로규칙/문서·전체80댓글/원격489c8b6·기존미커밋문서4개를확인/보존했다. [81번째Backend착수6213586779](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6213586779)에76~80번째합의범위를게시했다. OwnedScope는명시본인등록/account/owner·registration/account/claim snapshot과usable조회기준을고정하며BindingEvidence와분리한다. 기존POST refresh의현재소유분기에서정상API목록을반영해같은현재claim의비퇴역ID유지/새주소신규UUID·빈개인자료/누락suspect·정상재등장복구를구현했다. 76번째기준에따라현재관찰유지/같은소유scope에서의suspect해소에새외부영구ID근거를요구하지않고retired ID를이름만으로복구하지않는다. 활동/대표는ID유지·부적격선택시needs_reconfiguration이며자동추가/대체/메인전환없음.
+
+현재lookup이usable면우선사용하고명확provider404에만같은account의다른usable기준을시도한다(명령당최대3). 성공은운영lookup만바꾸며인증이력대상/owner/ownershiprevision/verified_at불변. 다른account claim혼입은같은회원소유여도원자거절한다. 타임아웃/429/키/형식/빈·대상누락/서버변경은대체조회없이자료/인증보존·실패. 기준복구불가/전체소실은조회미완료이지소유상실이아니다. 기존세션/키/등록guard/멱등lease·generationfencing을유지했다. 일반목록GET은DB만조회·provider호출0이며preview/타소유갱신이소유관계를바꾸지않는다.
+
+첫직접새scope/실제collector·모의HTTP/격리PG계정·생명주기·장비검증128PASS/60.18초. 이후조회중owner/키/등록삭제변경을추가해최종목록/인증·이력·장비·대상검사/계정/생명주기/V2/역할/개인설정/회원키/활동정책/전투력/복원 **422PASS·기존경고1·230.32초**, 실패없음. 이전의본인refresh binding보류/suspect외부증거필수라는시험기대를76번째정책에맞춰정정하고누락시험의lookup생존조건·200개상한fixture를정상API형태로바꿨다. 실행은합산하지않으며실제provider/게임/기기시험은아니다.
+
+paths/DTO/enum/DB구조불변·owned_roster_refresh/lifecycle evidence/recovery정책설명만변경. 새이미지전체OpenAPI일치·paths/components불변PASS. 기존8000API만반영·healthy/실행전체OpenAPI/새모듈로드·health/DB0010유지확인·test-db만중지. 자료초기화/삭제/복원/이관·별도환경/Flutterflag·운영/통합/Issue종료변경없음. 다음Flutter는게시된POST를회원/환경별1회목록갱신→최신canonical/settings재조회→유효활동집합→상세/빌드에연결한다. 나이스단OFF도목록갱신유지·실패준비미소진/명시재시도·late차단유지. requires_refresh는미해소suspect존재이며명령진행중이아니다. 본인장비재인증/타소유pending도전·퇴역/claim정리/운영은별도후속이다.
