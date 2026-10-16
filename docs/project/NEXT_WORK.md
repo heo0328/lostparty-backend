@@ -10,7 +10,7 @@
 |---|---|
 | 통합 기준 | dev `821c758`, main `e6c72e4`. #1~#7 CLOSED. #8은 dev/main 미통합 |
 | #8 Backend | 대표 `cd3e003`, L1a/L1b `6f3d029`/`c91af2e`, P1/P2 `6e4f625`/`7027f0b` 구현·격리검증·원격 인계 완료. P2 계약 유지 |
-| 현재 작업 브랜치 | `feat/representative-selection`, 준비구현 `4bdaea6`, 권한/비노출 `59b8c23`·활동1700구현/계약 `47a2ce4` push·[결과 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209623492) 완료 |
+| 현재 작업 브랜치 | `feat/representative-selection`, 준비구현 `4bdaea6`, 권한/비노출 `59b8c23`·활동1700 `47a2ce4`·인증대상검사 `78d3d1a` push·[결과 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209623492) 완료 |
 | 사용하던 개발환경 | 기존 Docker/포트8000/DB 자료를 유지해 0007~0009·최신P2 API 반영 완료. DB0009·API/DB healthy·health ok·OpenAPI 전체일치·기존 전 테이블의 원래 컬럼/행 내용 동일 확인. 초기화/새환경 전환 없음 |
 | 별도8001 환경 | 구성했던 작업 이력이며 현재 개발의 기본 경로/채택 대상/선행조건이 아니다. 이번 정정으로 컨테이너/volume을 삭제·재설정하지 않는다 |
 | Flutter 최신 | [기존관리/초기대표/인증전환 연결](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209931176)·[Backend검토](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209973965) 완료. 최종전체1560PASS/분석0 보고·ON경로구현/기본OFF·미게시/실인수미확인. feature/scoped-account-cache/HEADcc6a0b0 위 미커밋·미push·dev미반영. 앱재실행을넘는미확정원명령종결보장은미확인 |
@@ -24,7 +24,7 @@
 
 ## 최신 협업 순서
 
-본문을 제외한 전체댓글작성순서: **61번째 Backend 서버1700검증 인계**6209623492 → **62번째 Flutter 기존관리/초기대표/인증전환 완료보고**6209931176 → **63번째 Backend 검토완료**6209973965. 댓글순번은작업단계번호가아니다. 59번째최종정리의관리화면/초기대표/인증전환개발은후속보고로연결완료됐으며, 현재다음담당은Backend의실제소유증거/원정대연결미완료구간이다. 사용자게임관찰/실소유조건이필요한실인수만나중이며새Flutter검토답변을필수선행으로기다리지않는다. Flutter미게시/기본OFF·실인수미확인상태는별도유지한다.
+본문제외댓글작성순서: 62번째Flutter기존관리/초기대표/인증전환1560PASS보고 → 63번째Backend검토 → 64번째Backend대상고정검사착수 → **65번째 Backend 검사결과/다음담당인계** [6210346204](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6210346204). 댓글순번은작업단계번호가아니다. 현재대상고정검사는78d3d1a로게시/기존8000반영완료. 다음Backend증거발급/원정대연결은실제관찰해석·수용근거/연속성근거가필요하며사용자관찰나중지시에따라live활성/실인수는보류한다. Flutter검토응답대기는해소됐고기존완료기능을초기단계로되돌리지않는다.
 
 ## 다음 개발과 담당
 
