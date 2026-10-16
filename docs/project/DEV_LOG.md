@@ -798,3 +798,19 @@ live 본인명시소유등록은내부registration/account/owner로재인증범�
 
 
 구현/계약/시험/누적문서16파일을cc372bfa77edb102450cd9addbfe29ea3b0375d0로commit/push·원격일치확인했다. [90번째Backend결과/Flutter picker인계6216253151](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216253151)를게시하고전체댓글조회로89/90순번을확인했다. 최종wire/Name·Version·source/필드제약·8응답/정규화호환·오류code/status/실제owner변경0·proof보류/재시도·고정SHA/OpenAPI와기존8000반영상태를인계했다. 다음Flutter picker/오류·복구연결이며추가사용자결정/Backend게시대기는해소됐다. 인계기록만추가하고시험/서버는반복하지않는다.
+
+
+## 2026-10-16 — 91/92번째 회신 확인·실제 인증 시작 실패 읽기 진단
+
+[91번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216421322)는 picker/target-version/오류·복구 연결 최종50PASS·분석0, 미게시를 보고했다. [92번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216571492)의 사용자 NETWORK_UNAVAILABLE 진단 요청에 기존 API 로그와 실행/명령 이력을 읽기 전용 조회했다. KST22:14:34.321→1.062초, 최신22:27:19.760→0.660초에 failed/503 UPSTREAM_UNAVAILABLE이며 access log에도 각503 응답이 있다. 최신 응답 request_id 71c6fe2a-23ee-4253-a4f7-a8274387e91f. 인증 도전 없고 명령 retryable. 이전 동일명령 두 세대도0.941/0.770초에 같은 오류. 개인정보/키/원문 출력·게시 없음. 실행 시작→실패 저장 시간은 HTTP 전체 측정값과 구분하며 서버 응답 기록이 기기 수신까지 증명하지 않는다. 관찰 완료 전 실패지만 상세 provider 단계/reason은 현재 기록에 없어 복원 불가·10초 지연 정상완료 가설로 단정 불가다.
+
+[93번째 Backend 진단 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216654121)을 게시하고 전체댓글로 순번 확인했다. 다음 Backend 최소 진단 보완/외부 조회 원인 세분화, Flutter 기존 확보 DioException.type·응답 유무/status/code/request_id 대조 요청. 해당 사용자 요청 대응 시각의 최종 매칭과 실제 성공은 미확인. 코드/계약·서버/DB 내용·키/요청/자료 변경·재시작·외부호출·POST 재실행·시험·commit/push 없이 문서3개만 갱신했다. cc372bf 구현/HEAD0e3d9c5/feat/representative-selection 유지.
+
+
+## 2026-10-16 — 외부 조회 실패 진단 구현·174PASS
+
+사용자 진행 지시로 최신 규칙/Issue본문·94번째 Flutter 정정을 확인했다. 외부조회/연결실패가 같은 문구라는 정정을 수용해 transport 불일치 단정을 철회한다. ProviderUnavailable에 고정 내부 detail과 관찰 단계·monotonic 단계/전체수집ms를 붙이고 lookup에서 허용 목록 메타데이터만 Provider failure warning으로 기록한다. 서버 생성request_id를 공개 오류 및 API rejected 로그와 연결했다. 외부200 뒤 roster/profile/equipment 파싱 실패와 비200/timeout/connection/content_type/body_size/json 등을 구분하며 URL/이름·토큰/키/원문/장비/예외문·회원/등록/멱등key는 기록하지 않는다. 공개API/오류status/code/DB/timeout/용량·장비 검증·retryable/replay 정책 불변이다.
+
+첫 대상 검증10실패/164PASS는 신규시험이 키저장 완료명령을 읽은 테스트 조회 오류였다. operation=start 필터로 수정 후 같은 최종범위(진단/transport/장비/이력/선택/계정/키) **174PASS·기존경고1·58.66초**. 10종 실제collector+모의HTTP 실패에 로그/공개request_id 일치·단계/외부status/detail/수집시간·비밀정보 비노출·도전없음/retryable/실행이력을 검증하고 기존 성공/replay/인증 회귀를 확인했다. 허용 목록 밖 문자열/NaN/Infinity가 로그에 유출되지 않는 검사도 통과했다. 실제provider/기기 원인 확정·장비 인증 성공은 미확인이다.
+
+기존8000 API만 새 이미지로 반영해 healthy/health API·DB ok·전체OpenAPI일치/실행진단모듈·DB0010 유지 확인, 격리test-db만 중지했다. DB migration/초기화/삭제/원본자료·키·Flutterflag 변경·새환경 채택·실제POST/provider 조회 재실행은 하지 않았다. 다음 실제 동일명령 복구 시 Backend가 새request_id 진단으로 원인을 좁힌다.

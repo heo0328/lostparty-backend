@@ -4,7 +4,7 @@ from contextlib import nullcontext
 from datetime import timedelta
 from sqlalchemy import select, delete
 from app.core.database import session, now
-from app.game_accounts import observations
+from app.game_accounts import observations, provider_diagnostics
 from app.lostark_keys import service as credentials
 from app.lostark_keys import rate_limits
 from app.game_accounts.models import ScopedRosterCache as MemberPreview, ScopedRosterLease as MemberFetch
@@ -111,13 +111,17 @@ def lookup(principal, snapshot, name, proof=False, cached=False, *, context='dir
             authorize(db, principal, write=True)
             credentials.check(db, principal, snapshot)
         if isinstance(error, ProviderUnavailable):
+            request_id = provider_diagnostics.record(error)
             if error.reason == 'UPSTREAM_RATE_LIMITED':
                 with session() as db:
                     retry = rate_limits.metadata(db, snapshot.fingerprint, error.reason)
-                raise GameError(error.reason, 503, retry['retry_after_seconds'], retry['retry_at'])
+                rejected = GameError(error.reason, 503, retry['retry_after_seconds'], retry['retry_at'])
+                rejected.request_id = request_id
+                raise rejected
             rejected = GameError(error.reason if error.reason in ('LOSTARK_KEY_REJECTED', 'UPSTREAM_RATE_LIMITED') else 'UPSTREAM_UNAVAILABLE',
                                  409 if error.reason == 'LOSTARK_KEY_REJECTED' else 503)
             rejected.provider_not_found = error.http_status == 404
+            rejected.request_id = request_id
             raise rejected
         raise
 

@@ -11,8 +11,8 @@ class AuthError(Exception):
         self.code, self.status = code, status
 
 
-def response(request, code, status, retry_after=None, retry_at=None):
-    request_id = str(uuid.uuid4())
+def response(request, code, status, retry_after=None, retry_at=None, request_id=None):
+    request_id = request_id or str(uuid.uuid4())
     if status >= 400:
         logging.getLogger(__name__).warning("API rejected code=%s status=%s request_id=%s", code, status, request_id)
     headers = {"Cache-Control": "no-store"}
@@ -31,7 +31,7 @@ def response(request, code, status, retry_after=None, retry_at=None):
 def register(app):
     @app.exception_handler(AuthError)
     async def auth_error(request: Request, error: AuthError):
-        return response(request, error.code, error.status, getattr(error, "retry_after", None), getattr(error, "retry_at", None))
+        return response(request, error.code, error.status, getattr(error, "retry_after", None), getattr(error, "retry_at", None), getattr(error, "request_id", None))
 
     @app.exception_handler(RequestValidationError)
     async def validation(request: Request, error: RequestValidationError):

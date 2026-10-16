@@ -24,7 +24,7 @@
 
 ## 최신 협업 순서
 
-본문제외순번: 86번째Flutter계약합의 → 87번째Flutter복구UX42PASS → 88번째Backend수신 → [89번째Backend대상계약착수](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216006619) → **[90번째Backend구현/Flutter picker인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216253151)**. 구현cc372bfa77edb102450cd9addbfe29ea3b0375d0는feat/representative-selection push/원격일치·기존8000반영·격리449PASS/실행전체OpenAPI일치·응답8/DB0010유지, dev/main미통합이다. 다음담당은**Flutter picker/새target-version·오류/복구연결**이다. 기존87번째42PASS·전체1567PASS는별도모의보고이며미게시/기본OFF·실게임/기기미확인경계를유지한다. 추가사용자결정/새Backend계약게시대기는해소됐다.
+본문 제외 순번: [90번째 Backend 구현 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216253151) → [91번째 Flutter picker 연결/50PASS](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216421322) → [92번째 Flutter 실제 시작 오류 진단 요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216571492) → **[93번째 Backend 읽기 진단 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216654121)**. Flutter picker 계약 소비는 완료 보고됐고 미커밋·미push/실인증 성공 미확인이다. 최신 서버 start는 KST22:27:19.760에 실행 시작, 0.660초에 failed/503 UPSTREAM_UNAVAILABLE, 22:27:20.427 access log 응답 기록. 인증 도전 없음·명령 retryable. 실행 구간 시간이며 HTTP 전체 duration은 미계측, provider 상세 단계/reason은 기존 기록으로 복원 불가다. [94번째 Flutter 정정](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216700068)으로 두 오류가 같은 문구임을 확인했으며, 화면만으로 NETWORK_UNAVAILABLE 코드/transport 불일치를 단정하지 않는다. 실제 기기 transport 자료는 미확인이다. Backend는 비밀정보 없는 실패 단계/reason/detail/외부status/수집시간·동일 error.request_id 진단 구현/격리174PASS·기존8000반영·health/전체OpenAPI일치·DB0010유지를 확인했다. 과거 원인 확정과 실제 인증 성공은 미확인이다. timeout 초과 정상완료로 단정하거나 요청/키/자료를 초기화하지 않는다. 이번 진단은 읽기만 수행했고 cc372bf/0e3d9c5·기존8000/DB0010을 유지한다.
 
 ## 기존 Flutter 장비 인증 재사용 설계 — 최신 회신 검토
 
@@ -42,11 +42,7 @@
 
 ## 다음 개발과 담당
 
-1. **Flutter 다음 — 인증 캐릭터 picker/새 계약 연결.** [인증 대상 선택/재인증 구현](../ISSUE_8_VERIFICATION_TARGET_DEVELOPMENT.md)은등록target서버/이름+기대version·저장목록/fresh대상검사·구형digest/응답8필드보존·본인현재소유등록재인증·타소유pending도전을제공한다. 아직Flutter에서새target을전송/선택하는연결은미완료이며게시된고정SHA/StartIn/오류표를소비해구현한다. 대상선택은활동/1700/표시와독립·최신version목록에서선택·불변중첩body/key유지다. 기존87번째복구UX42PASS(미게시/실기기미확인)를재사용하고전체정상기능반복시험을요청하지않는다.
-
-   **서버 완료 경계:** 본인등록재인증은같은account/owner/ownershiprevision·캐릭터ID/활동·대표·운영lookup을보존하며API목록/verified_at/감사/등록revision을갱신한다. 타소유/미연결claim은start201/pending·장비확인후confirm200/pending+ACCOUNT_BINDING_EVIDENCE_PENDING과GET보류사유/제어확인시각·실행이력을제공하며소유이전/24시간분쟁은활성화하지않는다. 기존갱신/선택/증거를실게임완료로보고하지않는다.
-
-   **기존복구유지:** ID없는시작유실은동일POST/key/body로저장201/id회수→현재GET, ACK후GET실패는GET만재시도한다. 구형optional없음digest불변·target/version변경은동일key멱등충돌이다. 별도결과GET/journal·앱종료시key/body소실영속복구는추가하지않았다. 최초연결실패원인은근거없이단정하지않으며실게임/ON인수는사용자결정대로나중이다.
+1. **다음 — 보완 반영 후 실제 실패 기록으로 원인 확정.** Backend가 외부 조회 실패 단계/reason/detail·외부status·수집시간을 비밀정보 없이 기록하고 기존 error.request_id에 연결하도록 구현했다. 기존 실패의 상세 사유를 소급 복원한 것은 아니다. 같은 요청 복구로 다음 실제 start가 들어오면 Backend가 해당 request_id의 진단으로 필요한 수정을 정한다. 새 key·강제 요청 초기화는 하지 않는다. Flutter94번째에 따라 외부조회/연결실패의 동일 안내 문구는 코드 확인 근거가 아니며, 실제 transport 자료는 미확인이다. 실제503 해결·장비 인증 성공은 계속 미확인이다.
 2. **Flutter 기존 관리 화면 연결·초기 대표 정책 대조.** [사용자 UX 정정6209360031](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209360031): 기존 CharacterManagementPage/ViewModel을 회원/등록/canonical·저장 API에 연결한다. 별도선택/복구화면을추가하지않으며미확정명령일관성은내부처리한다. 현재대표는유지·없을때만사용가능캐릭터최고item level로초기1회선정·공통사용기준1700. 전체활동자동추가/메인전환없음. [서버활동검증](../ISSUE_8_ACTIVITY_SELECTION_DEVELOPMENT.md)은전체선택/대표변경1700기준·ineligible보고·선택보존을구현해격리192PASS·기존8000반영·`47a2ce4` [인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209623492) 완료했다. 초기후보는Flutter기존관리화면에서최고레벨draft를정하고활동집합/대표를기존PUT/CAS로명시저장하는연결을 [대조요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209535500)했고 [연결완료보고](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209931176)/최종1560PASS와 [검토](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209973965)를수신했다. 원격게시/실소유/ON실인수는미확인이다. 서버읽기/refresh/null입력자동선정은추가하지않았다. 최신정정은기존별도E2화면/복구UX선행설명을대체한다.
 3. **실제 장비 관찰은 나중에 수행한다.** [관찰 CLI](../ISSUE_8_OWNERSHIP_READINESS.md)는 준비됐다. 관찰 결과와 서버에서 검증 가능한 증거/연결 규칙을 검토해야 하며 ready_for_review만으로 인증을 확정하지 않는다. 이 후속으로 독립 개발을 막지 않는다.
 4. **변경한 구간의 영향 검증만 수행한다.** 실제 소유/canonical·현재 등록/roster·활동 대상이 필요한 새 기능 실검증만 조건 충족 후 진행한다. 기존 완료 흐름을 처음부터 재인수하지 않는다. Flutter 변경분의 게시/통합 상태는 구현 완료와 별도로 추적한다.

@@ -64,3 +64,14 @@ StartIn/VerificationTarget만요청schema를보완하고공개paths/기존응답
 최종 격리 PostgreSQL **449PASS·기존경고1·194.55초**, 첫 직접130PASS/61.41초와합산하지않으며실패없음. 활동보존/목록수치변경·조회중등록변화·pending소유관계변화·보류증거최종만료를추가검증했다. 기존8000API반영·실행전체OpenAPI/새StartIn/응답8필드/health·DB0010유지확인·test-db만중지했다. 실제provider/게임/기기와Flutter picker는미확인/미연결이다.
 
 구현/계약cc372bfa77edb102450cd9addbfe29ea3b0375d0·feat/representative-selection push/원격일치·dev/main미통합. [90번째Backend결과/Flutter picker인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216253151). 다음 담당Flutter선택입력/새계약·오류/기존복구UX연결이다.
+
+
+## 실제 시작 실패 진단 보완 (2026-10-16)
+
+[93번째 Backend 진단](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216654121)에서 실제 start503/UPSTREAM_UNAVAILABLE·도전 없음/retryable을 확인했다. [94번째 Flutter 정정](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216700068)은 외부조회/네트워크 실패의 공용 문구 때문에 화면만으로 NETWORK_UNAVAILABLE 코드나 transport 불일치를 단정할 수 없다고 밝혔다. 실제 기기 Dio 자료는 미확인이다.
+
+관찰 수집기 실패에 provider_init/siblings_transport/siblings_schema/before_armory/armory_transport/armory_profile/armory_equipment/equipment_receipt 단계와 monotonic 단계별·전체 수집 경과 ms를 붙인다. ProviderUnavailable만 수집하며 통신 timeout/connection/other, content_type/body_deadline/body_size/json_decode/body_shape를 고정 내부 detail로 구분한다. 관찰 형식/프로필·장비 파싱 단계에서 실패하면 직전 외부 HTTP200도 구분한다. 이 시간은 HTTP 전체 또는 DB 전체 시간이 아니다.
+
+service.lookup의 현재 회원·키 재검사 후 외부 실패를 공개 오류로 매핑할 때 Provider failure JSON을 warning으로 기록한다. 로그 필드는 허용 목록 단계/reason/detail·숫자 외부status/시간·서버 생성 request_id뿐이다. 키/토큰·요청 URL/이름·본문/장비·예외 원문·quota 헤더·회원/등록ID·멱등key를 기록하지 않는다. 이 request_id를 기존 error.request_id에 그대로 반환해 API rejected 로그와 대조한다. 새 응답 필드/오류code/status/timeout/용량 제한·기존 retryable/replay/인증 정책·DB schema는 바꾸지 않는다. 성공/완료 replay는 진단 때문에 외부 조회를 추가하지 않는다.
+
+기존 과거 기록의 상세 사유는 소급 복원할 수 없다. 보완 반영 후 실제 요청이 들어오면 같은 요청의 error.request_id로 Provider failure 기록을 찾아 실패 단계/reason/detail/외부status/시간을 확인한다. 새 key/요청 초기화 대신 기존 동일 명령 복구를 유지한다. 진단 구현 완료를 실제 원인 확정·503 해결 또는 장비 인증 성공으로 보고하지 않는다.
