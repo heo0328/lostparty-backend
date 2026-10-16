@@ -27,6 +27,6 @@
 
 인증 1차는 main/dev에 통합됐으며 이후 계정 업무·새label·진단/후속문서는 dev에 통합·게시됐습니다. 완료 작업 브랜치는 push 확인 후 정리하며, 다음 작업은 최신 dev에서 분기합니다. 계약 소비·전체 Flutter 인수·운영 배포 완료와 저장소 최신화를 구분합니다.
 
-현재 통합 구간은 회원설정 #6과 개인 Lost Ark 키/복원/호출대기 #7이다. 결과 문서를 포함해 dev772b90e로 통합 후 결과 기록72f6301까지 push 완료, 현재 feat/representative-selection에서 #8 대표·L1a/L1b·P1/P2 구현/게시를 완료했고 HEAD906e0ef까지 push됐다. Flutter A1/A2/B/C 코드 연결·모의검증 완료 보고 후 서버 전환 준비/사용자 인수 후속이며 feat/member-settings는 로컬·원격 정리했다. main은 유지한다. 실제 Git 결과는 DEV_LOG와 Issue #7 인계 댓글이 기준이다.
+현재 통합 구간은 회원설정 #6과 개인 Lost Ark 키/복원/호출대기 #7이다. 결과 문서를 포함해 dev772b90e로 통합 후 결과 기록72f6301까지 push 완료, 현재 feat/representative-selection에서 #8 대표·L1a/L1b·P1/P2 구현/게시를 완료했고 준비구현4bdaea6까지 push·[결과인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207306535)됐다. Flutter A1/A2/B/C 코드 연결·모의검증 완료 보고 후 서버 전환 준비/사용자 인수 후속이며 feat/member-settings는 로컬·원격 정리했다. main은 유지한다. 실제 Git 결과는 DEV_LOG와 Issue #7 인계 댓글이 기준이다.
 
 #7 Backend9e1a255·로컬0006·Flutter8644c81/devcc6a0b0 push·현재 구간 사용자 정상 보고 확인. Backend 추가 수정 없음. 재설치/별도기기·실provider한도/헤더·운영TLS는 후속 미확인, 역할요약/개인표시 저장과 자동갱신 실행·회원목록 코드는 #8 P1/P2 및 Flutter A1/A2/B/C로 연결 보고됐으나 실환경 전환/운영 인수는 별도다. Issue #7은 사용자 지시로 Completed 종료했다([종료 기록](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6183029637)).

@@ -7,7 +7,7 @@
 | 구간 | 구현/계약·상태 |
 |---|---|
 | 통합 기준 | dev `821c758`, main `e6c72e4`. #1~#7 CLOSED, #6/#7까지 dev 통합·게시 완료 |
-| #8 작업 브랜치 | `feat/representative-selection`, 게시 HEAD `906e0ef`(P2 인계 기록). #8 구간은 dev/main 미통합 |
+| #8 작업 브랜치 | `feat/representative-selection`, 준비 구현 `4bdaea6` push·[결과 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207306535) 완료. #8 구간은 dev/main 미통합 |
 | 대표 선택 | `cd3e003`: GET/PUT·cooldown 제거, 개발 API 적용·[인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6184483999) 완료 |
 | L1a/L1b | `6f3d029`/`c91af2e`: 생명주기/세대 기반·V2 현재/이력 조회, 격리검증·[인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6186143574) 완료 |
 | P1/P2 | `6e4f625`/`7027f0b`: 역할요약·개인설정/원정대 표시·내부 정리, 격리검증·[P1](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6194881739)/[P2](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6195735441) 인계 완료 |
@@ -43,4 +43,4 @@ Flutter C는 앱 수명 실행기·canonical 회원 주목록·역할/개인설�
 
 #3/#4에서 분리한 활동/장비·삭제 후 로컬 보존, [인증 후속](../ISSUE_2_FOLLOWUP.md), 재설치/별도기기·실provider 한도/헤더·운영 TLS·탈퇴/약관·모집/파티/그룹·운영 배포는 각 후속 범위다. 완료 작업 브랜치 feat/member-settings는 정리됐으며 진행 중 #8 브랜치는 미통합이므로 유지한다.
 
-이번 구간은 도구·새 환경 구성을 검증해 작업 브랜치에 게시·같은 Issue에 인계한다. P2 REST/OpenAPI 계약 변경은 없다. Git 통합/운영배포/자료삭제/Issue 종료는 수행하지 않는다.
+도구·새 환경 구성은 `4bdaea6`으로 게시하고 [같은 Issue에 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207306535)했다. P2 REST/OpenAPI 계약 변경은 없다. Git 통합/운영배포/자료삭제/Issue 종료는 수행하지 않는다.
