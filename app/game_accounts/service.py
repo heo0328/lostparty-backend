@@ -7,7 +7,7 @@ from app.game_accounts import observations
 from app.lostark_keys import service as credentials
 from app.lostark_keys import rate_limits
 from app.game_accounts.models import ScopedRosterCache as MemberPreview, ScopedRosterLease as MemberFetch
-from app.game_accounts import lifecycle, activity_policy
+from app.game_accounts import lifecycle, activity_policy, verification_context
 from app.game_accounts.models import (Account, Registration, Character, Configuration, Activity,
                                      Verification, Audit, PreviewCache, FetchLease, NameClaim)
 from app.game_accounts.support import authorize, fail, quota, reserve, commit_result, release, cursor_encode, cursor_decode, GameError
@@ -502,13 +502,17 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
             slots=required_slots(obs.equipment or {})
         except EquipmentIncomplete:
             fail('EQUIPMENT_INCOMPLETE',400)
+        lookup_name=r.lookup_name if data['source']=='registration' else data['character_name']
+        proof_context=verification_context.capture(lookup_name,obs.roster)
+        if proof_context is None:
+            fail('UPSTREAM_INVALID_RESPONSE',503)
         candidate=canonical_candidate(db,obs.roster,obs.binding)
         v=Verification(actor_id=uid,registration_id=r.id if r else None,lookup_name=r.lookup_name if data['source']=='registration' else data['character_name'],
                        candidate_id=candidate.id if candidate else None,revision=candidate.ownership_revision if candidate else None,
                        roster=obs.roster,baseline={k:dict(name=e.name,grade=e.grade) for k,e in obs.equipment.items()},
                        slots=list(slots),identity_snapshot={'registration':lifecycle.digest(lifecycle.registration_stamp(db,r)) if r else None,
                            'account':lifecycle.digest(lifecycle.account_stamp(db,candidate)) if candidate else None,
-                           'credential_version':credential_version},
+                           'credential_version':credential_version,'proof_context':proof_context},
                        created_at=current,expires_at=current+timedelta(minutes=10))
         db.add(v); db.flush()
         return 201,verification_out(v,current)
@@ -545,7 +549,10 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
     code=compare_equipment(baseline,tuple(v.slots),obs.equipment)
     if code!='EQUIPMENT_MATCHED':
         return 200,verification_out(v,current,code)
-    if not obs.proof_validated:
+    pending=verification_context.pending_code(v.identity_snapshot,v.lookup_name,obs.roster)
+    if pending:
+        return 200,verification_out(v,current,pending)
+    if obs.proof_validated is not True:
         return 200,verification_out(v,current,'PROVIDER_EVIDENCE_PENDING')
     candidate=canonical_candidate(db,obs.roster,obs.binding)
     if (candidate.id if candidate else None)!=v.candidate_id or (candidate.ownership_revision if candidate else None)!=v.revision:

@@ -9280,7 +9280,8 @@
       "stored": "no bulk removal or automatic representative replacement; selected below-minimum/unknown IDs appear in ineligible_character_ids",
       "initial_representative": "existing explicit full-settings command saves selected UUIDs and representative atomically with CAS; reads/refresh never auto-select; existing representative preserved unless explicitly changed",
       "identity": "V1 eligible/V2 usable describe lifecycle/claim; activity selection additionally applies minimum item level"
-    }
+    },
+    "challenge_context": "pin lookup server/name and roster addresses at start; matched equipment with changed/invalid roster returns ROSTER_EVIDENCE_PENDING; missing old snapshot context returns PROVIDER_EVIDENCE_PENDING; only boolean True is a validated adapter marker; equality never proves ownership/continuity/completeness"
   },
   "x-character-lifecycle-policy": {
     "migration": "0007 files/isolated validation only; real DB application and API restart require separate approval",

@@ -1,5 +1,7 @@
 # Issue #8 — 공식 provider schema 조사·제공 가능성 판정
 
+> **현재 상태 구분:** 아래는 최초 조사 당시 기록이다. 이후 L1에서 canonical의 이름단독추론 차단·세대/claim·쓰기검사를 구현했고, D10에서 미인증 전투력/표시용profile 허용을 철회했다. 현재 완료/보류는 [NEXT_WORK](project/NEXT_WORK.md), 인증 대상 고정은 [후속 구현](ISSUE_8_VERIFICATION_CONTEXT_DEVELOPMENT.md)을 따른다. 과거 ‘L1 미구현/Flutter 수용 대기’를 현재 대기로 반복하지 않는다.
+
 2026-10-15. [#8 요청](https://github.com/heo0328/lostparty-backend/issues/8)과 [보완 질문](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6183781483)의 독립 Backend 조사 결과다. **공개 공식 Swagger 원문 확보·schema/현재 코드 대조 완료**. 기능 구현/실provider 캐릭터 관찰·소유권 검증 완료가 아니다. 대표 API 구현cd3e003·인계기록c4e21bf와 별개이며 현재 feat/representative-selection의 문서 변경이다.
 
 ## 1. 실제 원문 위치·버전·재현

@@ -669,3 +669,19 @@ activity_policy가공통DEFAULT_MIN_ITEM_LEVEL/기존수치parser를재사용해
 격리PostgreSQL 신규15경계·기존대표/전체설정/생명주기/V2/개인설정/기본권한/모델·계약직접회귀 **192PASS·기존경고1·94.07초**, 초기실패없음. 현재8000API만갱신해healthy·실행계약/검증소스일치·호스트health·DB0009유지확인. test-db만중지. DBmigration/자료초기화/원정대자동연결·활동자동추가/메인전환·Flutter화면변경·실게임/소유증거/기기인수·운영/통합/Issue종료없음. 검증구간을게시하고현재서버완료와Flutter초기선정연결대기를분리인계한다.
 
 구현/OpenAPI/검증/관련문서11파일을47a2ce4d8d55b1b07cb103e95d9c89fbaa9a926e로commit/push·원격일치확인하고 [Issue8 서버검증/초기대표 경계인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209623492)를게시했다. 현재서버1700검증완료와Flutter초기최고후보선정/기존관리화면연결미확인을구분했다. 인계기록만추가게시하며시험/서버를반복하지않는다.
+
+
+## 2026-10-16 — Flutter 기존관리/초기대표/인증전환 연결완료 검토
+
+[결과6209931176](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209931176)에서기존CharacterManagement화면본/부회원canonical/원자설정연결·초기선택내최고후보/선택없음시1명draft·기존대표유지·1700/finite검사·표시설정outbox·등록대상/인증성공후해당관리화면전환을보고했다. 직접66PASS후경계보완·최종전체1560PASS/분석0은Flutter모의HTTP/SQLite보고다. ON경로구현/기본OFF·미커밋/미push/dev미반영·실소유/provider/기기미확인을구분했다. [검토회신6209973965](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209973965)으로계약방향수용·추가API/제품질문없음·회신대기해소와앱재실행을넘는원PUT종결보장미확인제한을기록했다. 별도복구UX/시스템신설요청/기존전체시험반복없음. NEXT_WORK/AI_CONTEXT최신화·diffcheck, 코드/계약/시험/서버/DB/자료/flag·commit/push/통합/배포/Issue종료없음.
+
+
+## 2026-10-16 — 64번째 Backend 착수/인증 대상·관찰목록 고정 검사
+
+사용자진행지시로AGENTS/협업/NEXT/AI와최신Issue63댓글·현재livefalse/bindingNone경계를확인했다. 공식공개FAQ/Swagger재확인에서characters/armories SHA는기존과동일했고새안정식별자/전체성보장을확보하지않았다. 사용자키/게임관찰은실행하지않았다. [64번째Backend착수6210224869](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6210224869)에독립서버보완범위를공유했다.
+
+verification_context가challenge시작의대상서버/이름·목록주소정렬digest를기존JSON snapshot에고정하고장비일치뒤확인시불일치·누락/추가/중복·서버변경을ROSTER_EVIDENCE_PENDING으로보류한다. old context없음은PROVIDER_EVIDENCE_PENDING, adapter표식은is True만인정한다. 동일순서/레벨표시변경은다루지않고관찰동일성을권한/영구성증거로승격하지않는다. paths/DTO/enum/DB구조불변·기존code재사용·challenge_context설명만추가했고네트워크차단이미지계약전체일치/변경범위확인PASS.
+
+격리PostgreSQL 신규16경계·계정/생명주기/역할/개인설정/회원키/관찰/모델·계약직접회귀 **250PASS·기존경고1·122.88초**, 초기실패없음. 실제250건은모의증거로대상변경시소유생성/이전0·기존권한보존·엄격표식/old challenge/정상표시변경을확인한것이며live소유인증성공시험이아니다. 기존8000API만반영해healthy/전체OpenAPI/검증소스동일/health·DB0009유지를확인한다. test-db만중지·DB구조/초기화/자료삭제·Flutter주소/flag·게임/기기/실provider·운영/통합/Issue종료없음.
+
+누적사용자요청인AGENTS의댓글순번/작성측/작업단계구분규칙과62/63번째결과수신기록을보존해함께게시한다. 현재남은것은실제관찰해석/수용근거후server증거발급연결과기존원정대연속성근거이며기존false를단순해제하지않는다. 이를완료된관리UI/기본등록개발의되돌림/새Flutter검토대기로표현하지않는다.

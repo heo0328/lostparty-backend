@@ -137,6 +137,7 @@ def openapi():
                        'SERVICE_UNAVAILABLE': 503},
         },
         'live_evidence': 'equipment schema proof not validated; live ownership confirmation held pending',
+        'challenge_context': 'pin lookup server/name and roster addresses at start; matched equipment with changed/invalid roster returns ROSTER_EVIDENCE_PENDING; missing old snapshot context returns PROVIDER_EVIDENCE_PENDING; only boolean True is a validated adapter marker; equality never proves ownership/continuity/completeness',
         'live_roster_decrease': 'suspect only; missing/transfer require validated observation criteria',
         'mutation_locking': 'initial global game transaction advisory lock; no network under lock',
     }
