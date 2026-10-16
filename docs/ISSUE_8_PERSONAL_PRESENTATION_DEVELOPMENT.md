@@ -1,5 +1,9 @@
 # Issue #8 — P2 개인설정·원정대 표시 구현/검증
 
+> **현재 서버 반영 완료(2026-10-16):** 사용자 진행 지시로 사용하던 Docker/포트8000/기존DB에 0007~0009와 최신 P2 API를 반영했다. 기존 전 테이블의 원래 컬럼/행 내용 동일·애플리케이션 모델 정합·API/DB healthy·health/P2 OpenAPI 전체일치 및 신규 GET4개 인증차단401을 확인했다. 아래 미적용/별도승인 대기는 각 단계 당시 이력이다. DB내용 초기화·새환경 채택·실provider/소유인수는 수행하지 않았다.
+
+> **2026-10-16 실행 기준 정정:** [최신 지시](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207542428)에 따라 현재 사용하던 환경과 개발자료로 개발을 계속한다. 아래 별도8001 구성·채택/기본 재인수 안내는 작업 이력이며 현재 실행 순서가 아니다. 별도환경 삭제/재설정도 실행하지 않는다. 현재 필요한 기능별 schema/API 작업과 개발자료 초기화를 구분한다. Flutter 별도DB/키 연결은 원래 연결로 복구됐고 최종1524PASS다.
+
 2026-10-16. [P2 별도 구현 요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6195124835)과 [수용 계약](ISSUE_8_PROFILE_RESTORE_CONTRACT_DRAFT.md)이 기준이다. feat/representative-selection에서 P1 6e4f625 이후 이어간다. 실제 DB/API 전환과 live 퇴역은 포함하지 않는다.
 
 ## 제공 경로와 P1 호환 경계

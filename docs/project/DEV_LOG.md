@@ -596,3 +596,26 @@ NEXT_WORK를완료이력나열에서실제서버전환준비→별도승인/적�
 최종 격리검증 **65 passed, 1 warning, 3.02초**. CLI/기존진단/장비parser/모델-DB일치를 확인했고 테스트DB만 중지한다. API/OpenAPI 동작 변경 없음. 준비한 작업은 feat/representative-selection에서 commit/push 후 같은Issue 결과로 인계한다. dev/main merge·운영배포·삭제·Issue종료는 하지 않는다.
 
 구현/구성/관련문서12파일을 `4bdaea6976d209c85e0388e7a2b56ecab8a4b9a2`로 commit/일반push·원격일치 확인했다. [Issue8 준비결과 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207306535)에 Flutter D 수용·새환경8001/0009/P2·65PASS·실검증나중/소유서버미완료·다음담당/완료조건을 회신했다. 문서에 게시기록만 추가하며 코드/시험/서버를 반복하지 않는다.
+
+
+## 2026-10-16 — Issue8 최신 통합 정리 검토
+
+사용자 요청으로 [통합 정리6207398915](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207398915)를 구현/구성·원격과 대조했다. 정책/기본인수·소유후속 독립/실인수보류에 이견·추가제품질문/P2변경요청없음. 구현4bdaea6 이후 문서3개만 변경된 최신 원격HEAD ee0023a를 확인해 [검토회신6207472610](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207472610)에 Git표기보완과 대상기기/실접속BaseURL 확인 필요를 남겼다. 8001loopback은 모바일LAN도달 보장이 아니며 현재노출변경없음. NEXT_WORK에 지금기본앱인수준비·실게임관찰나중 기준/링크를 반영했다. 문서만 로컬 변경·diffcheck, 기능/OpenAPI·시험·서버/DB·commit/push/merge·자료삭제/배포/Issue종료없음.
+
+
+## 2026-10-16 — 현재 개발환경/자료 유지 지시로 실행 기준 재정정
+
+사용자가 Issue8의 다수 정정을 다시 확인하도록 지시했다. 전체 댓글44건과 수정된 통합댓글/본문을 확보하고 Flutter6207523104·최신6207542428을 읽었다. 현재 환경/개발자료 유지·베타 직전 DB 내용만 초기화가 기준이며, Backend가 새환경 채택/기본인수를 선행으로 확대했던 판단과 앞선 검토수용6207472610을 철회했다. 완료 앱실행/Google로그인/키/설정/캐릭터갱신/원정대저장·L1/P1/P2·Flutter S/A/B/C 성과를 초기상태로 돌리지 않는다.
+
+Flutter는 별도 BackendLocalData/DB/guest키 namespace 연결/helper·전용시험4개 제거 및 원래 AccountDatabase/SecureApiTokenStore 연결 복구를 보고했다. 최신1524PASS·lib/test분석0, 미커밋/미push/dev미반영이다. 과거1528PASS를 현재결과로 사용하지 않는다. 기존 제품/회원scoped/UI/자동갱신/권한 경계는 유지한다. 실제게임관찰은 나중이며 소유/canonical/퇴역의 미완료 범위만 구분한다. 별도8001은 작업이력일뿐 현재개발채택대상/필수선행이아니고 이번정정으로삭제/재설정하지않는다.
+
+[Backend 정정회신6207867594](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207867594)에 Backend 자신의 설계/반복안내 오류·철회범위와 현재개발기준을 명시했다. NEXT_WORK를현재개발중심으로정리하고AI_CONTEXT/관련안내상단정정·관찰문서보완. 기존미커밋문서보존·diffcheck, 코드/OpenAPI·시험·DB/서버/설정/flag·commit/push/merge·배포/삭제/Issue종료없음. 문서정정은로컬미커밋이며실행변경으로안내하지않는다.
+
+
+## 2026-10-16 — 사용하던 개발 서버에 #8 구조/P2 API 반영
+
+사용자 진행 지시로 기존 lostparty-backend/포트8000/기존postgres volume에서 작업했다. 최신Issue8 후속변경없음·원격게시된P2/기존코드·미커밋정정문서보존확인. API/DB healthy·revision0006·이름중복0을 읽기점검하고 기존API이미지를빌드했다. API만잠시중지한뒤 일회성컨테이너에서 기존전테이블의원래컬럼/행내용을메모리내집계지문으로기록→alembic upgrade head→0009확인→동일내용대조통과했다. 원본행/키/응답/지문을출력·파일export하지않았다. dump/복원·새환경채택·초기화/자료삭제없음.
+
+첫검증은데이터동일대조후MODEL_SCHEMA_MISMATCH로중단했다. 확인결과기존점검용persistence_probe테이블1개가애플리케이션metadata밖에있어remove_table차이로잡힌것이었다. 해당테이블을그대로보존하고애플리케이션소유테이블전체를비교해차이0을확인했다. 이초기실패는migration실패/자료변경이아니며삭제로해결하지않았다.
+
+같은8000에최신API재생성/healthy확인. scripts/check_openapi.py전체일치PASS·호스트health status/database ok·신규V2현재목록/퇴역이력/개인profile/표시설정 GET4개미인증401확인. 새회원/seed/provider를사용하지않았다. 기존격리자동검증은이전게시결과이며이번에재실행한것으로표현하지않는다. 실제소유/전체저장·자동갱신/기기인수·퇴역보류유지. 정정문서와현재서버상태를함께게시/Issue인계한다. Flutter주소/flag·별도8001/volume·main/dev·운영을변경하지않았다.

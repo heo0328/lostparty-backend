@@ -25,3 +25,5 @@ docker run --rm -it lostparty-backend-api:latest python -m app.game_accounts.own
 격리 PostgreSQL에서 도구/기존 진단/장비 parser/모델-DB 일치 검증 **65 PASS**. 최초 실행은 63 PASS/1 FAIL: 기존 모델 대조 시험이 API client 없이 실행되면 일부 모델을 등록하지 않는 순서 의존이 있었다. 시험에 전체 모델 import를 명시한 후 동일 구간64PASS, 숨김 입력 실패 검증 추가 후 최종65PASS였다. Starlette의 기존 deprecation warning 1건이다. 실제 provider·게임 해제/원복·소유 인증 성공·전체 저장/자동갱신/복원은 미확인이다.
 
 다음 Backend 작업은 사용자 준비 시 이 도구로 실제 반영 형태를 확인하고 소유/연결 근거의 충족 여부를 검토하는 것이다. Flutter는 [D 완료 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207225790)을 보냈으며 이 관찰을 대신할 필요가 없다.
+
+현재 개발 순서는 [최신 정정](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207542428)을 따른다. 실제 게임 관찰은 사용자 결정대로 나중이며 현재 환경에서 진행 가능한 미완료 기능 개발을 막지 않는다. 도구 준비를 별도8001 환경 채택이나 기본 기능 재인수 조건으로 사용하지 않는다. Flutter 최종 결과는 별도저장 연결 복구 후1524PASS다.
