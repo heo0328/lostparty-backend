@@ -23,3 +23,5 @@
 실제 수집기·HTTP parser를 사용하되 외부 HTTP 응답은 모의로 제공하고 PostgreSQL은 격리 DB를 사용한다. 신규 등록/직접입력 성공·replay/소유1회·활동자동저장0·null/중복/잘못된 응답/서버 불일치·수집 근거 없음/변형/시각 오류·미해제/타부위변경·최종DB작업중만료의rollback·기존claim보류·HTTP success표식거절을 검증한다. 이는 실제 게임/기기 인수 결과가 아니며 사용자 장비 관찰은 결정대로 나중이다. 실제 실행 결과·게시 SHA/원격 및 API 반영 상태는 DEV_LOG/결과 댓글에 기록한다.
 
 최종 격리 PostgreSQL **317PASS·기존 경고1·188.52초**, 앞선 직접검증125PASS/52.34초와 합산하지 않는다. 추가 늦은 동시 확인 경계도 통과했고 초기 실패는 없다. 기존8000 API 반영·실행 전체OpenAPI 일치·health/새모듈 로드·DB0010 유지 확인, test-db만 중지. 실제게임/기기는 미실행이다.
+
+구현/계약 `13d9f6801c90adb691a6a1a8b0abbbe2cdc4ed04`, feat/representative-selection push·원격일치 확인/dev미통합. [72번째 Backend 결과 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6211928415). 다음 Backend 기존ID 연결근거 검토, Flutter 실제 계약차이 대조는 필수선행 대기가 아니다.
