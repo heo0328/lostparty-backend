@@ -619,3 +619,5 @@ Flutter는 별도 BackendLocalData/DB/guest키 namespace 연결/helper·전용�
 첫검증은데이터동일대조후MODEL_SCHEMA_MISMATCH로중단했다. 확인결과기존점검용persistence_probe테이블1개가애플리케이션metadata밖에있어remove_table차이로잡힌것이었다. 해당테이블을그대로보존하고애플리케이션소유테이블전체를비교해차이0을확인했다. 이초기실패는migration실패/자료변경이아니며삭제로해결하지않았다.
 
 같은8000에최신API재생성/healthy확인. scripts/check_openapi.py전체일치PASS·호스트health status/database ok·신규V2현재목록/퇴역이력/개인profile/표시설정 GET4개미인증401확인. 새회원/seed/provider를사용하지않았다. 기존격리자동검증은이전게시결과이며이번에재실행한것으로표현하지않는다. 실제소유/전체저장·자동갱신/기기인수·퇴역보류유지. 정정문서와현재서버상태를함께게시/Issue인계한다. Flutter주소/flag·별도8001/volume·main/dev·운영을변경하지않았다.
+
+서버반영/정정문서8파일을848f51a5dab82f6fb951a231d64c591be21c8e70으로commit/push·원격일치확인하고 [Issue8 결과인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6208224731)를게시했다. 후속게시기록만추가하며시험/서버를반복하지않는다.

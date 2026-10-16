@@ -10,7 +10,7 @@
 |---|---|
 | 통합 기준 | dev `821c758`, main `e6c72e4`. #1~#7 CLOSED. #8은 dev/main 미통합 |
 | #8 Backend | 대표 `cd3e003`, L1a/L1b `6f3d029`/`c91af2e`, P1/P2 `6e4f625`/`7027f0b` 구현·격리검증·원격 인계 완료. P2 계약 유지 |
-| 현재 작업 브랜치 | `feat/representative-selection`, 준비구현 `4bdaea6`, 최신 게시 문서 HEAD `ee0023a`. 현재 개발 서버 반영/정정 문서 인계 준비 |
+| 현재 작업 브랜치 | `feat/representative-selection`, 준비구현 `4bdaea6`, 서버반영/정정문서 `848f51a` push·[결과 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6208224731) 완료 |
 | 사용하던 개발환경 | 기존 Docker/포트8000/DB 자료를 유지해 0007~0009·최신P2 API 반영 완료. DB0009·API/DB healthy·health ok·OpenAPI 전체일치·기존 전 테이블의 원래 컬럼/행 내용 동일 확인. 초기화/새환경 전환 없음 |
 | 별도8001 환경 | 구성했던 작업 이력이며 현재 개발의 기본 경로/채택 대상/선행조건이 아니다. 이번 정정으로 컨테이너/volume을 삭제·재설정하지 않는다 |
 | Flutter 최신 | [정정 완료](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207542428): 별도 BackendLocalData/DB/guest키 namespace 연결·전용시험4개 제거, 원래 AccountDatabase/SecureApiTokenStore 연결 복구. **최종1524PASS·lib/test분석0**. feature/scoped-account-cache 미커밋·미push·dev미반영 |
