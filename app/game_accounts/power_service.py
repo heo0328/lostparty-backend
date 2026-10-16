@@ -29,14 +29,12 @@ def current_roster(db, uid, rid):
     from app.game_accounts.service import reg, ownership
     r = reg(db, uid, rid)
     account, state = ownership(db, uid, r)
+    if state != 'owned':
+        fail('OWNERSHIP_REQUIRED', 403)
     fingerprint = lifecycle.digest(lifecycle.registration_stamp(db,r))
-    if account and state == 'owned':
-        rows = [dict(c.summary, power_fetched_at=c.power_fetched_at, summary_fetched_at=c.fetched_at,
-                     _scope=lifecycle.power_scope(r,c), _usable=lifecycle.usable(db,c))
-                for c in db.scalars(select(Character).where(Character.account_id==account.id,Character.lifecycle_state!='retired'))]
-    else:
-        rows = [dict(row, power_fetched_at=None, summary_fetched_at=r.fetched_at,
-                     _scope=lifecycle.power_scope(r), _usable=True) for row in r.preview]
+    rows = [dict(c.summary, power_fetched_at=c.power_fetched_at, summary_fetched_at=c.fetched_at,
+                 _scope=lifecycle.power_scope(r,c), _usable=lifecycle.usable(db,c))
+            for c in db.scalars(select(Character).where(Character.account_id==account.id,Character.lifecycle_state!='retired'))]
     return fingerprint, {(row['server_name'],row['character_name']):row for row in rows}
 
 
@@ -47,6 +45,10 @@ def key_for(uid, pair, scope, version):
 
 
 def overlay(db, uid, row, scope=None):
+    if scope and scope['character_id'] is None:
+        # Stored preview/cache contents are retained but never grant detail access.
+        return dict(combat_power=None, power_fetched_at=None, power_checked_at=None,
+                    power_status='unknown', power_reason=None, power_stale=True)
     candidates=[]
     if scope:
         query=select(PowerCache).where(PowerCache.actor_id==uid)
@@ -97,10 +99,13 @@ def release_claims(claims):
 
 def refresh(principal, rid, key, payload):
     deadline = time.monotonic() + BUDGET_SECONDS
+    # Check before dedup, credentials, cache or provider access, including replays.
+    with session() as db:
+        current_roster(db, authorize(db, principal), rid)
     ticket, replay = reserve(principal, 'power', key, {'target': str(rid), 'body': payload})
     if replay:
-        from app.game_accounts.service import replay_access
-        replay_access(principal, 'power', rid)
+        with session() as db, db.begin():
+            current_roster(db, authorize(db, principal, write=True), rid)
         return replay
     claims, outcomes, ready = {}, {}, []
     try:

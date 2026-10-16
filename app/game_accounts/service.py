@@ -204,7 +204,8 @@ def preview(principal, data):
     quota('preview:'+str(principal[0].id), 30)
     snapshot = credentials.capture(principal)
     obs = lookup(principal, snapshot, data.character_name, cached=True)
-    return dict(characters=obs.roster, server_fetched_at=obs.fetched_at, expires_at=obs.fetched_at+timedelta(minutes=30))
+    return dict(characters=[dict(row, combat_power=None) for row in obs.roster],
+                server_fetched_at=obs.fetched_at, expires_at=obs.fetched_at+timedelta(minutes=30))
 
 
 def registrations(principal, limit, cursor):
@@ -261,14 +262,23 @@ def replay_access(principal, operation, rid):
             retained(v,now(db))
         else:
             r = reg(db, uid, rid)
-            if operation == 'settings' and ownership(db, uid, r)[1] != 'owned':
+            owned = ownership(db, uid, r)[1] == 'owned'
+            if operation == 'settings' and not owned:
                 fail('OWNERSHIP_REQUIRED',403)
+            return owned
 
 
 def mutate(principal, operation, key, payload, rid=None):
     ticket, replay = reserve(principal, operation, key, {'target':str(rid) if rid else None, 'body':payload})
     if replay:
-        replay_access(principal, operation, rid)
+        owned = replay_access(principal, operation, rid)
+        if not owned and operation in ('patch', 'refresh'):
+            result = dict(replay[1])
+            if operation == 'refresh':
+                result['registration'] = dict(result['registration'], representative_summary=None)
+            else:
+                result['representative_summary'] = None
+            return replay[0], result
         if operation == 'settings':
             # Old saved successes can predate cooldown removal. Do not rewrite
             # their state or version; only retire the obsolete timer in the DTO.

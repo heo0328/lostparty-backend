@@ -621,3 +621,38 @@ Flutter는 별도 BackendLocalData/DB/guest키 namespace 연결/helper·전용�
 같은8000에최신API재생성/healthy확인. scripts/check_openapi.py전체일치PASS·호스트health status/database ok·신규V2현재목록/퇴역이력/개인profile/표시설정 GET4개미인증401확인. 새회원/seed/provider를사용하지않았다. 기존격리자동검증은이전게시결과이며이번에재실행한것으로표현하지않는다. 실제소유/전체저장·자동갱신/기기인수·퇴역보류유지. 정정문서와현재서버상태를함께게시/Issue인계한다. Flutter주소/flag·별도8001/volume·main/dev·운영을변경하지않았다.
 
 서버반영/정정문서8파일을848f51a5dab82f6fb951a231d64c591be21c8e70으로commit/push·원격일치확인하고 [Issue8 결과인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6208224731)를게시했다. 후속게시기록만추가하며시험/서버를반복하지않는다.
+
+
+## 2026-10-16 — Flutter E1 왕관 결과 별도 검토 누락 보완
+
+사용자가Flutter의별도검토답변대기보고를전달했다. 최신E1 6208245362를대표계약/representative.py/L1자격과대조했고서버반영회신6208224731이E1검토응답이아님을확인했다. [검토회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6208670274)에서Backend대응누락을명시하고왕관/확인창·대표전용필드·4revision/권한·현재GET/late응답차단방향을수용했다. 응답유실의“또는현재GET”은GET만으로원명령완료를확정할수없으므로미확정명령/늦은commit과새key PUT경합차단조건의구현여부를한건질문했다. 사용자추가정책질문/기존전체시험반복요청없음·E2독립진행가능.
+
+Flutter검증은전체1531통과/신규fixture1실패→mock코드/Map보완후직접영향18/18통과(신규8포함)/분석0로기록했다. 최종전체PASS·실기기인수로확대하지않고미커밋/미push/dev미반영상태유지. NEXT_WORK/AI_CONTEXT에서왕관미구현표기를E1보고/복구확인대기로정정했다. 이번문서만로컬수정·diffcheck, 코드/OpenAPI·시험/서버/DB·commit/push/통합/배포/자료삭제없음.
+
+
+## 2026-10-16 — 소유 인증/원정대 연결 서버 흐름·Flutter UI/UX 재검토 요청
+
+사용자가 해당서버구간진행과등록원정대/인증/앱사용캐릭터등록 UI/UX재검토를명시요청했다. 최신Issue에E1검토이후새답변없음을확인하고현재service/observations/lifecycle/schemas·기존계약을대조했다. 등록preview·장비challenge·유효내부증거의소유연결transaction·별도활동전체설정저장기반은구현돼있으나liveproof/binding은미공급임을분리했다. [Flutter요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6208702210)에화면/액션/API/구현상태/기존자동검증·실기기미확인대응표를요청했다. 인증성공후활동/대표자동선택없음·부원정대설정/메인한정왕관구분·보류/만료/충돌/late응답을포함하고반복시험/환경변경/키원문/실게임요청없음. 서버검토문서·NEXT_WORK/AI_CONTEXT반영·diffcheck, 코드/계약·시험·실서버/DB·commit/push/배포/자료삭제/Issue종료없음. 실제게임관찰은나중이며현재후속을인증완료로표현하지않는다.
+
+
+## 2026-10-16 — Flutter 연결 누락 결과/미인증 기본조회 정책 수신
+
+새Issue8항목6208744179/6208967265확인. 등록별인증사전선택·성공→E2·활동전체편집미연결, E1GET revision/넓은오류종결/재진입복구보완필요답변수신. 사용자채택미인증기본조회/로그인조회용Registration저장유지·전투력/상세소유인증후정책을power_service/서비스목록/V2읽기/profile권한과대조했다. 미인증power갱신·replay/캐시노출변경필요·역할저장기존권한재사용을 [공식회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6208988839)에기록했다. NEXT_WORK/흐름문서반영·diffcheck. 코드/계약·시험/서버/DB/자료/Git게시·배포변경없음. 다음은최소권한/노출계약보완범위확정/구현.
+
+
+## 2026-10-16 — Flutter R1 구현 결과/항목별 답변 검토
+
+사용자최신결과확인지시로6209153163/6209178794를수신했다. basicOnly siblings만조회·로컬과거수치/빌드비노출·deep link차단·수동POST전후/동일key현재소유대조·현재자료비파괴방향을수용했다. 초기1538PASS/4FAIL→정책기대/fixture/진입보완·직접149PASS→최종전체1542PASS/분석0보고를구분하고미게시/실서버·실기기미확인유지. [Backend 검토회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209205051)에결과수용과서버권한/replay/응답투영미완료·E1복구/E2·인증진입후속을명시했다. NEXT_WORK/AI_CONTEXT반영·diffcheck. 기능/계약·시험/서버/DB·게시/통합/배포/자료변경없음.
+
+
+## 2026-10-16 — 미인증 전투력 권한/기본 조회 비노출 구현
+
+사용자 진행 지시/정책6208967265·Flutter6209178794기준으로power_service의현재소유검사를dedup/키접근전·성공replay반환직전(game write lock)·기존외부호출전/최종commit에적용했다. 미인증/소유상실403 OWNERSHIP_REQUIRED, owned미선택수동조회허용을유지한다. preview overlay는cache읽기전null전투력/시각/reason·unknown/status·stale=true투영, 직접preview값null·소유상실후등록PATCH/refresh성공replay대표요약null을적용했다. 원본/멱등결과/DB자료를수정·삭제하지않는다. 기존profile/역할저장소유권검사와인증용장비조회는유지한다.
+
+paths/DTO/enum전체불변·기존403/code재사용·OpenAPI권한/비노출/replay정책3항목만추가했다. 네트워크차단API이미지의생성계약전체일치PASS, 기존계약과차이범위도비교확인했다. 신규권한/과거cache보존/소유상실경합/원본멱등결과불변시험을추가하고기존전투력시험의대상을모의소유인증대상으로맞췄다. liveprovider토큰전송시험은증거보류를우회하지않고전송함수와미인증명령거절을분리했다.
+
+최초격리회귀256건은251PASS/5FAIL(111.24초): 신규원본보존비교3건이HTTP의Z와저장값+00:00표기를동일시했고, 기존캐시분리시험1건이미인증수동허용전제였으며, 기존인증schema시험1건의operation개수30이실제게시된P2의35보다오래된기대였다. 저장전후원본비교·모의소유대상·현재operation개수로시험을보완했다. 제품권한검사를완화하지않았고같은256건을재검증한다. 최종결과와실행반영/게시상태는아래기록을따른다.
+
+최종같은직접영향/회귀256건 **256PASS·기존경고1·113.56초**. 테스트DB만중지했다. 기존lostparty-backend API만재생성·8000에서healthy확인했으며DB/migration/volume·자료초기화는없다. 실행계약전체일치/검증소스hash동일/호스트health·DB0009유지를최종확인한뒤원격게시/Issue인계한다. 실제provider/소유인증/기기인수는시행하지않았다.
+
+인계전추가수신6209360031: 기존관리화면재사용·별도선택/복구UX신설철회·대표없을때만최고item level초기1회·공통사용1700정책. 현재권한/비노출수정과별개후속으로추적한다. 서버현재settings는대표선택집합포함을요구하나자동최초대표선정·활동저장1700강제는없음을확인해차이로인계한다. 현재구간에해당정책구현/검증완료를섞지않는다.

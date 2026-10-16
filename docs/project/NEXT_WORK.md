@@ -13,13 +13,19 @@
 | 현재 작업 브랜치 | `feat/representative-selection`, 준비구현 `4bdaea6`, 서버반영/정정문서 `848f51a` push·[결과 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6208224731) 완료 |
 | 사용하던 개발환경 | 기존 Docker/포트8000/DB 자료를 유지해 0007~0009·최신P2 API 반영 완료. DB0009·API/DB healthy·health ok·OpenAPI 전체일치·기존 전 테이블의 원래 컬럼/행 내용 동일 확인. 초기화/새환경 전환 없음 |
 | 별도8001 환경 | 구성했던 작업 이력이며 현재 개발의 기본 경로/채택 대상/선행조건이 아니다. 이번 정정으로 컨테이너/volume을 삭제·재설정하지 않는다 |
-| Flutter 최신 | [정정 완료](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207542428): 별도 BackendLocalData/DB/guest키 namespace 연결·전용시험4개 제거, 원래 AccountDatabase/SecureApiTokenStore 연결 복구. **최종1524PASS·lib/test분석0**. feature/scoped-account-cache 미커밋·미push·dev미반영 |
+| Flutter 최신 | [R1 완료6209153163](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209153163): basicOnly/미인증기본조회·과거상세비노출·직접요청권한대조. 최종전체1542PASS·분석0 보고. [항목답변6209178794](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209178794) 및 [Backend 검토](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209205051) 완료. feature/scoped-account-cache/HEADcc6a0b0 위 미커밋·미push·dev미반영. E1복구/E2·인증전환은후속 |
 | 소유 증거 | 관찰 도구 자동65PASS/게시 완료. 실제 게임 관찰은 사용자 결정대로 나중. live 소유/canonical·퇴역은 미완료/보류. 이를 기존 기능 전체 미완료로 확대하지 않는다 |
+
+## 최신 사용자 채택 정책과 재검토 결과
+
+[정책6208967265](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6208967265): guest는 기본 로컬조회만, 로그인 미인증은 조회용Registration 저장/복원 유지·전투력/상세 제한, 소유인증 후 본인 상세/역할저장 및 별도 활동subset/대표 명시저장. 검색 주액션 ‘인증하고 사용하기’/보조 ‘조회 목록에 저장’. DB/캐시삭제 없이 비노출 처리한다. [Backend 현재차이 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6208988839): 미인증power refresh/replay 및 V1/V2 preview cache노출의 서버권한/응답 변경 필요. 소유profile/역할저장은 기존권한을재사용한다. [Backend 구현](../ISSUE_8_BASIC_ACCESS_DEVELOPMENT.md): 미인증/소유상실power 갱신/replay403·목록/preview 과거수치 비노출 완료, 격리256PASS·기존8000 반영. Flutter R1 소비값과 일치하며 paths/DTO/enum불변·OpenAPI 정책3항목 보완. 실제소유증거구현과별개다.
+
+[Flutter6208744179](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6208744179): 등록/인증UI는 있으나 registration_id 사전선택·인증성공→E2 전환/전체활동편집 미연결, E1 GET revision에의한pending해제·넓은오류종결판정·재진입미보존 보완필요. 기존질문반복없이 실제보완결과를대기한다.
 
 ## 다음 개발과 담당
 
-1. **현재 서버 반영 완료 후 미완료 개발을 이어간다.** 기존8000/DB에 #8 구조·API 반영 및 영향 검증은 완료됐다. 완료 흐름을 재개발하거나 근거 없이 반복 시험하지 않는다. Backend는 기존 #8 완료 코드와 실제 미완료 서버 경로를 구분해 직접 필요한 구현 단위를 정한다. 실제 소유/원정대 연결 서버 후속 중 게임 관찰 없이 진행 가능한 개발을 구분하며, 자료/환경 변경이 필요한 경우 해당 기능의 구체적 필요만 다룬다.
-2. **Flutter 독립 미구현 연결을 이어간다.** [순서 정정](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207523104) 기준으로 활동 선택/대표 왕관 등 기존 합의된 남은 연결 범위를 대조한다. 새 UX 결정·기능 전체 재설계·새환경 인수 대기를 요구하지 않는다. 실제 작업 구간/게시 SHA는 아직 미회신이다.
+1. **소유 인증·원정대 연결 서버 후속과 UI/UX 대조.** [현재 코드/단계 검토](../ISSUE_8_OWNERSHIP_FLOW_REVIEW.md) 완료. 등록≠소유인증≠활동/대표설정이며 live증거/기존원정대연결이 미완료다. [Flutter 재검토 요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6208702210)으로 회원 등록원정대→인증→canonical목록→사용캐릭터/대표 명시저장 및 보류·만료·충돌·소유상실/late응답의 실제 화면/API/검증대응표를 요청했다. 완료/일부/미연결을 대조해 직접 필요한 서버 규칙/구현을 확정한다. 기존정상흐름을기초재인수하지않는다.
+2. **Flutter 기존 관리 화면 연결·초기 대표 정책 대조.** [사용자 UX 정정6209360031](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209360031): 기존 CharacterManagementPage/ViewModel을 회원/등록/canonical·저장 API에 연결한다. 별도선택/복구화면을추가하지않으며미확정명령일관성은내부처리한다. 현재대표는유지·없을때만사용가능캐릭터최고item level로초기1회선정·공통사용기준1700. 전체활동자동추가/메인전환없음. 서버현재전체설정은대표가선택집합안이어야하고자동최초선정은없으며활동저장에1700필터를직접강제하지않으므로실제연결/권한차이를후속대조한다. 최신정정은기존별도E2화면/복구UX선행설명을대체한다.
 3. **실제 장비 관찰은 나중에 수행한다.** [관찰 CLI](../ISSUE_8_OWNERSHIP_READINESS.md)는 준비됐다. 관찰 결과와 서버에서 검증 가능한 증거/연결 규칙을 검토해야 하며 ready_for_review만으로 인증을 확정하지 않는다. 이 후속으로 독립 개발을 막지 않는다.
 4. **변경한 구간의 영향 검증만 수행한다.** 실제 소유/canonical·현재 등록/roster·활동 대상이 필요한 새 기능 실검증만 조건 충족 후 진행한다. 기존 완료 흐름을 처음부터 재인수하지 않는다. Flutter 변경분의 게시/통합 상태는 구현 완료와 별도로 추적한다.
 

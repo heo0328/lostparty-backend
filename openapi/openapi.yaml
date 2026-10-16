@@ -9244,7 +9244,10 @@
       "failure": "preserve last good value/time; checked_at records latest applied observation; stale=true",
       "deferred": "no observation applied; same key replays original result; explicit next batch uses new key",
       "conflict": "REVISION_CONFLICT if registration/version/roster/ownership changes; revoked session 401; deleted registration 404",
-      "revisions": "power-only write never changes registration/roster/ownership/settings revisions"
+      "revisions": "power-only write never changes registration/roster/ownership/settings revisions",
+      "access": "current owned registration required; unverified/ownership_lost 403 OWNERSHIP_REQUIRED before credentials/provider and on replay/commit; activity selection not required",
+      "preview": "retain stored data; unverified/ownership_lost V1/V2 power value/times/reason null, status unknown, stale true; direct preview combat_power null; registration mutation replay hides representative_summary after ownership loss",
+      "replay_access": "current member/session and owned registration rechecked under game write lock; historical success never bypasses lost ownership"
     },
     "representative": {
       "path": "/v1/me/game-accounts/{registration_id}/representative",

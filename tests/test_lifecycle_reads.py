@@ -163,13 +163,13 @@ def test_v2_required_nullable_contract_and_legacy_schema_unchanged():
         assert paths[path]['get']['responses']['200']['headers']['Cache-Control']['schema']['const']=='no-store'
 
 
-def test_preview_eligibility_is_separate_from_power_freshness(client,world,monkeypatch):
+def test_preview_eligibility_never_grants_power_access(client,world,monkeypatch):
     from tests.test_combat_power import seed_provider,endpoint,body
     h,state=world;r=register(client,h)
     seed_provider(monkeypatch,'123')
-    assert change(client,h,'post',endpoint(r),body('a0')).status_code==200
+    assert change(client,h,'post',endpoint(r),body('a0')).status_code==403
     legacy=page(client,h,r['registration_id'])['characters']['items'][0]
     current=client.get(path(r),headers=h).json()['items'][0]
     assert legacy['eligible'] is False and current['usable'] is False
-    assert legacy['combat_power']==current['combat_power']=='123'
-    assert legacy['power_stale'] is False and current['power_stale'] is False
+    assert legacy['combat_power'] is current['combat_power'] is None
+    assert legacy['power_stale'] is True and current['power_stale'] is True

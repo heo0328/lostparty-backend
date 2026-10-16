@@ -11,7 +11,7 @@ from app.game_accounts.models import ScopedRosterCache as MemberPreview, ScopedR
 from app.game_accounts.models import RequestResult, ScopedPowerCache as PowerCache, PreviewCache, LimitEvent
 from app.game_accounts.provider import LostArkProvider, ProviderUnavailable
 from app.game_accounts.support import quota, GameError
-from tests.test_game_accounts import PrivateHeaders, world, register, change, BASE, page
+from tests.test_game_accounts import PrivateHeaders, world, register, change, BASE, page, verify
 
 URL = '/v1/me/lostark-api-key'
 TOKEN = 'mock.personal.signature'
@@ -152,7 +152,7 @@ def test_new_session_restores_key_without_disclosing_it(client, member, login):
 
 
 def test_power_key_change_preserves_existing_value(client, world, monkeypatch):
-    h,_=world; r=register(client,h)
+    h,state=world; r=register(client,h); verify(client,h,state,r['registration_id'])
     def fetch(pair,token,observer=None): return 'available','100',None
     from app.game_accounts import power_service
     monkeypatch.setattr(power_service,'fetch_power',fetch)
@@ -204,14 +204,16 @@ def test_all_rest_paths_inject_member_token(client, member, monkeypatch):
     assert change(client,member,'post',verify+'/'+v.json()['challenge_id']+'/confirm',{}).status_code==200
     path=BASE+'/'+r['registration_id']+'/combat-power/refresh'
     response=change(client,member,'post',path,{'characters':[{'server_name':'sample-server','character_name':'sample'}]})
-    assert response.status_code==200
+    assert response.status_code==403 and response.json()['error']['code']=='OWNERSHIP_REQUIRED'
+    from app.game_accounts.power_service import fetch_power
+    assert fetch_power(('sample-server','sample'),TOKEN)==('available','100',None)
     assert {'siblings','armory','profile'}=={method for method,_ in seen}
     assert all(token==TOKEN for _,token in seen)
     assert delete(client,member,2).status_code==200
     # Cached power and completed key replay must not authorize a fresh external command.
-    assert change(client,member,'post',path,{'characters':[{'server_name':'sample-server','character_name':'sample'}]}).json()['error']['code']=='LOSTARK_KEY_NOT_CONFIGURED'
+    assert change(client,member,'post',path,{'characters':[{'server_name':'sample-server','character_name':'sample'}]}).json()['error']['code']=='OWNERSHIP_REQUIRED'
     assert client.get(BASE,headers=member).status_code==200
-    assert page(client,member,r['registration_id'])['characters']['items'][0]['combat_power']=='100'
+    assert page(client,member,r['registration_id'])['characters']['items'][0]['combat_power'] is None
 
 
 def test_aad_member_binding_and_same_token_budget(client, member, login, monkeypatch):
@@ -230,7 +232,7 @@ def test_aad_member_binding_and_same_token_budget(client, member, login, monkeyp
 
 def test_key_failure_partial_and_fresh_cache_not_reused_after_replace(client, world, monkeypatch):
     from app.game_accounts import power_service
-    h,_=world;r=register(client,h)
+    h,state=world;r=register(client,h); verify(client,h,state,r['registration_id'])
     path=BASE+'/'+r['registration_id']+'/combat-power/refresh'
     data={'characters':[{'server_name':'sample-server','character_name':'a0'}]}
     monkeypatch.setattr(power_service,'fetch_power',lambda pair,token,observer=None: ('available','100',None))

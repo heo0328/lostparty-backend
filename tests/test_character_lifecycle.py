@@ -212,6 +212,7 @@ def test_old_name_cache_not_imported_into_new_scope(client,world,monkeypatch):
         db.add(LegacyPower(actor_id=uid,server_name='sample-server',character_name='a0',value='9999',status='available',generation=0,
                            fetched_at=now(db),checked_at=now(db),credential_version=2))
     assert page(client,h,r['registration_id'])['characters']['items'][0]['combat_power'] is None
+    verify(client,h,state,r['registration_id'])
     seed_provider(monkeypatch,'123')
     assert change(client,h,'post',endpoint(r),power_body('a0')).status_code==200
     with session() as db:
