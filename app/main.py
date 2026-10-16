@@ -136,8 +136,8 @@ def openapi():
                        'OWNERSHIP_REQUIRED': 403, 'REGISTRATION_NOT_FOUND': 404,
                        'SERVICE_UNAVAILABLE': 503},
         },
-        'live_evidence': 'equipment schema proof not validated; live ownership confirmation held pending',
-        'challenge_context': 'pin lookup server/name and roster addresses at start; matched equipment with changed/invalid roster returns ROSTER_EVIDENCE_PENDING; missing old snapshot context returns PROVIDER_EVIDENCE_PENDING; only boolean True is a validated adapter marker; equality never proves ownership/continuity/completeness',
+        'live_evidence': 'server-equipment-removal-v1: uncached parsed siblings/Armory receipts at start and confirm; six baseline slots, random 1-3 removals, unchanged other Name/Grade, pinned target/roster and collection times within server 10-minute challenge; final expiry rollback; new unclaimed accounts may verify; existing identity binding and disappearance remain pending; no client proof input',
+        'challenge_context': 'pin lookup server/name and roster addresses at start; matched equipment with changed/invalid roster returns ROSTER_EVIDENCE_PENDING; missing old snapshot context or server baseline receipt returns PROVIDER_EVIDENCE_PENDING; live equipment receipts bind target/roster/equipment/time; legacy trusted adapter marker must be boolean True; equality alone never proves ownership/continuity/completeness',
         'live_roster_decrease': 'suspect only; missing/transfer require validated observation criteria',
         'mutation_locking': 'initial global game transaction advisory lock; no network under lock',
     }

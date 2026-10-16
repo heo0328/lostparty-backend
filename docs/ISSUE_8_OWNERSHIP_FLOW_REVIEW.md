@@ -1,5 +1,7 @@
 # Issue #8 — 원정대 등록·소유 인증·사용 캐릭터 연결 검토
 
+> 후속: [서버 장비 해제 인증 연결](ISSUE_8_LIVE_EQUIPMENT_PROOF_DEVELOPMENT.md)로 신규/이름 claim 충돌 없는 원정대의 서버 수집·검증 성공 경로를 구현했다. 아래 live=false 설명은 당시 상태다. 기존 ID 연속성/타소유 이전·퇴역은 계속 별도이며 실제 게임 인수는 나중이다.
+
 2026-10-16 사용자 지시로 현재 코드/계약을 대조했다. [Flutter UI/UX 재검토 요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6208702210)을 게시했다. 현재 환경/자료를 유지하고, 실제 게임 관찰은 나중에 진행한다. 기존 완료 기능 재개발·기초 인수 요청이 아니다.
 
 ## 현재 서버 단계와 경계

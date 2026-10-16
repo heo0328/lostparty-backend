@@ -4,7 +4,7 @@ from secrets import SystemRandom
 from typing import Mapping
 
 SLOTS = ('무기', '투구', '어깨', '상의', '하의', '장갑')
-# Provider Types must be checked against sanitized live fixtures before wiring APIs.
+# Unknown provider Types are never interpreted as unequipped slots.
 OTHER_TYPES = frozenset(('목걸이', '귀걸이', '반지', '어빌리티 스톤', '팔찌'))
 
 

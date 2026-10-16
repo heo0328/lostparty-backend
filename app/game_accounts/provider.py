@@ -1,6 +1,6 @@
 """Uncached server-side transport. No logging, retry, redirects or DB writes.
 
-Member REST transport; ownership proof still awaits provider schema evidence.
+Member REST transport; control proof and identity binding are separate callers.
 """
 import json
 from time import monotonic

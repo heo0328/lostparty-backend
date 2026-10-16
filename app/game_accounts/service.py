@@ -1,5 +1,6 @@
 import uuid
 import time
+from contextlib import nullcontext
 from datetime import timedelta
 from sqlalchemy import select, delete
 from app.core.database import session, now
@@ -7,7 +8,7 @@ from app.game_accounts import observations
 from app.lostark_keys import service as credentials
 from app.lostark_keys import rate_limits
 from app.game_accounts.models import ScopedRosterCache as MemberPreview, ScopedRosterLease as MemberFetch
-from app.game_accounts import lifecycle, activity_policy, verification_context, verification_history
+from app.game_accounts import lifecycle, activity_policy, verification_context, verification_history, equipment_proof
 from app.game_accounts.models import (Account, Registration, Character, Configuration, Activity,
                                      Verification, Audit, PreviewCache, FetchLease, NameClaim)
 from app.game_accounts.support import authorize, fail, quota, reserve, commit_result, release, cursor_encode, cursor_decode, GameError
@@ -351,7 +352,24 @@ def mutate(principal, operation, key, payload, rid=None):
                 credentials.check(db, principal, snapshot)
             if guard and lifecycle.digest(lifecycle.registration_stamp(db, reg(db,uid,guard[0]))) != guard[1]:
                 fail('REVISION_CONFLICT')
-            status, result = apply(db, uid, operation, payload, rid, obs, baseline_revision, snapshot.version if snapshot else None)
+            confirmation_was_pending = (operation == 'confirm' and
+                (challenge := db.get(Verification, rid)) is not None and challenge.status == 'pending')
+            with (db.begin_nested() if operation == 'confirm' else nullcontext()) as attempt:
+                status, result = apply(db, uid, operation, payload, rid, obs, baseline_revision, snapshot.version if snapshot else None)
+                if operation == 'confirm':
+                    db.flush()
+                expired = (confirmation_was_pending and obs is not None and status == 200
+                           and result.get('status') == 'verified'
+                           and now(db) >= db.get(Verification, rid).expires_at)
+                if expired:
+                    # Undo *all* ownership/registration/character/audit writes.
+                    attempt.rollback()
+            if expired:
+                v = db.get(Verification, rid)
+                v.status, v.terminal_at = 'expired', now(db)
+                v.attempt_count += 1
+                v.last_checked_at = v.terminal_at
+                status, result = 409, {'error': dict(code='VERIFICATION_EXPIRED', message='Challenge is terminal', request_id=str(uuid.uuid4()))}
             response = commit_result(db, ticket, status, result)
             if operation in verification_history.OPERATIONS:
                 verification_history.complete(db, ticket, *response)
@@ -521,7 +539,8 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
                        roster=obs.roster,baseline={k:dict(name=e.name,grade=e.grade) for k,e in obs.equipment.items()},
                        slots=list(slots),identity_snapshot={'registration':lifecycle.digest(lifecycle.registration_stamp(db,r)) if r else None,
                            'account':lifecycle.digest(lifecycle.account_stamp(db,candidate)) if candidate else None,
-                           'credential_version':credential_version,'proof_context':proof_context},
+                           'credential_version':credential_version,'proof_context':proof_context,
+                           'server_equipment_baseline':equipment_proof.baseline(obs,lookup_name,current)},
                        created_at=current,expires_at=current+timedelta(minutes=10))
         db.add(v); db.flush()
         return 201,verification_out(v,current)
@@ -561,7 +580,7 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
     pending=verification_context.pending_code(v.identity_snapshot,v.lookup_name,obs.roster)
     if pending:
         return 200,verification_out(v,current,pending)
-    if obs.proof_validated is not True:
+    if not equipment_proof.validated(v,obs,current):
         return 200,verification_out(v,current,'PROVIDER_EVIDENCE_PENDING')
     candidate=canonical_candidate(db,obs.roster,obs.binding)
     if (candidate.id if candidate else None)!=v.candidate_id or (candidate.ownership_revision if candidate else None)!=v.revision:

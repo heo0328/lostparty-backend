@@ -14,7 +14,7 @@
 | 사용하던 개발환경 | 기존 Docker/포트8000/DB 자료를 유지해 0007~0010·최신 API 반영 완료. DB0010·API/DB healthy·health ok·OpenAPI 전체일치·기존 전 테이블의 원래 컬럼/행 내용 동일 확인. 초기화/새환경 전환 없음 |
 | 별도8001 환경 | 구성했던 작업 이력이며 현재 개발의 기본 경로/채택 대상/선행조건이 아니다. 이번 정정으로 컨테이너/volume을 삭제·재설정하지 않는다 |
 | Flutter 최신 | [기존관리/초기대표/인증전환 연결](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209931176)·[Backend검토](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209973965) 완료. 최종전체1560PASS/분석0 보고·ON경로구현/기본OFF·미게시/실인수미확인. feature/scoped-account-cache/HEADcc6a0b0 위 미커밋·미push·dev미반영. 앱재실행을넘는미확정원명령종결보장은미확인 |
-| 소유 증거 | 관찰 도구 자동65PASS/게시 완료. 실제 게임 관찰은 사용자 결정대로 나중. live 소유/canonical·퇴역은 미완료/보류. 이를 기존 기능 전체 미완료로 확대하지 않는다 |
+| 소유 증거 | [서버 장비 해제 연결](../ISSUE_8_LIVE_EQUIPMENT_PROOF_DEVELOPMENT.md)로 신규/claim충돌 없음의 검증·소유생성 경로 구현. 기존ID binding/퇴역은 별도 보류, 실제 게임 관찰은 사용자 결정대로 나중 |
 
 ## 최신 사용자 채택 정책과 재검토 결과
 
@@ -28,7 +28,7 @@
 
 ## 기존 Flutter 장비 인증 재사용 설계 — 최신 회신 검토
 
-**후속 완료:** 아래 이력 누락 차이는 [실행 이력 구현](../ISSUE_8_VERIFICATION_HISTORY_DEVELOPMENT.md)으로 보완·검증·기존8000에 반영했다. 다음은 live 장비 증거 발급 연결이다.
+**후속 완료:** 아래 이력 누락 차이는 [실행 이력 구현](../ISSUE_8_VERIFICATION_HISTORY_DEVELOPMENT.md)으로 보완·검증·기존8000에 반영했다. 후속 [서버 장비 해제 연결](../ISSUE_8_LIVE_EQUIPMENT_PROOF_DEVELOPMENT.md)을 구현했다. 기존 ID 연속성/타소유 연결과 실제 게임 인수는 별도다.
 
 [67번째 Flutter 기존 구현 자료 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6210605354)을 수신하고 [68번째 Backend 검토 결과](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6211222550)를 게시했다. 자료 대기는 해소됐으며 **다음 담당은 Backend 설계·구현**이다. 기존 Flutter `8f4209deb980660e227134bf1241677875d02e06`의 기준6부위·무작위1~3부위 해제·Type/Name/Grade 비교·10분·명시 재확인 흐름을 활용한다. 과거 Android 사용자 인증 성공 기록은 제품 경험으로 수용한다. 현재 Backend live 성공/원본 응답·정확한 반영시간은 미확인이며 사용자 실게임 관찰은 나중이다.
 
@@ -38,7 +38,7 @@
 
 ## 다음 개발과 담당
 
-1. **Backend — live 장비 증거 발급 연결이 다음 작업이다.** [인증 실행 이력](../ISSUE_8_VERIFICATION_HISTORY_DEVELOPMENT.md) 구현·격리300PASS·기존8000/DB0010 반영 완료. 기존33테이블 원래 컬럼/행 동일·모델정합 확인. 타소유 start 보류가 challenge 생성 전에 발생해도 요청/대상/관찰 소유관계/결과가 남는다. 기존6부위/무작위1~3해제·Type/Name/Grade·10분 흐름을 근거로 서버 증거 발급을 연결하고 최종 권한 반영까지 만료 경계를 점검한다. 추가 Flutter 자료 대기는 없다. 실제 장비 관찰은 사용자 지시대로 나중이며 현재 live proof=false/binding=None이다. 기존 원정대/캐릭터 ID 연속성·타소유 이전/소멸 확정은 장비 제어 확인과 구분해 근거 없이 활성화하지 않는다.
+1. **Backend — 신규 원정대의 서버 장비 증거 연결을 구현했다.** [서버 장비 해제 인증](../ISSUE_8_LIVE_EQUIPMENT_PROOF_DEVELOPMENT.md)은 uncached 수집 근거/시각·기준/지정/유지 장비·대상/회원/키·기한 검사와 최종 소유반영 만료 rollback을 구현한다. 신규이며 이름 claim 충돌 없는 경우 기존 verified/등록/캐릭터/감사 경로를 사용하며 활동/대표는 자동 쓰지 않는다. 실제 게임/기기 인수는 사용자 결정대로 나중이다. **다음 Backend는 기존 account/캐릭터 ID 연속성·본인 재인증/owned refresh·타소유 연결의 근거/허용 범위를 검토한다.** 이 구간의 live binding=None·소멸 확정/퇴역 보류는 유지한다. 같은 이름/목록·장비 제어를 과거 ID동일성으로 바꾸지 않는다. Flutter 추가자료 대기/새환경/기초재인수는 선행조건이 아니다. 실행 이력 ccd2e6a/DB0010은 유지한다.
 2. **Flutter 기존 관리 화면 연결·초기 대표 정책 대조.** [사용자 UX 정정6209360031](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209360031): 기존 CharacterManagementPage/ViewModel을 회원/등록/canonical·저장 API에 연결한다. 별도선택/복구화면을추가하지않으며미확정명령일관성은내부처리한다. 현재대표는유지·없을때만사용가능캐릭터최고item level로초기1회선정·공통사용기준1700. 전체활동자동추가/메인전환없음. [서버활동검증](../ISSUE_8_ACTIVITY_SELECTION_DEVELOPMENT.md)은전체선택/대표변경1700기준·ineligible보고·선택보존을구현해격리192PASS·기존8000반영·`47a2ce4` [인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209623492) 완료했다. 초기후보는Flutter기존관리화면에서최고레벨draft를정하고활동집합/대표를기존PUT/CAS로명시저장하는연결을 [대조요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209535500)했고 [연결완료보고](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209931176)/최종1560PASS와 [검토](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209973965)를수신했다. 원격게시/실소유/ON실인수는미확인이다. 서버읽기/refresh/null입력자동선정은추가하지않았다. 최신정정은기존별도E2화면/복구UX선행설명을대체한다.
 3. **실제 장비 관찰은 나중에 수행한다.** [관찰 CLI](../ISSUE_8_OWNERSHIP_READINESS.md)는 준비됐다. 관찰 결과와 서버에서 검증 가능한 증거/연결 규칙을 검토해야 하며 ready_for_review만으로 인증을 확정하지 않는다. 이 후속으로 독립 개발을 막지 않는다.
 4. **변경한 구간의 영향 검증만 수행한다.** 실제 소유/canonical·현재 등록/roster·활동 대상이 필요한 새 기능 실검증만 조건 충족 후 진행한다. 기존 완료 흐름을 처음부터 재인수하지 않는다. Flutter 변경분의 게시/통합 상태는 구현 완료와 별도로 추적한다.
@@ -51,7 +51,7 @@
 
 - Backend L1a 185PASS, L1b 113PASS/보완57PASS, P1 108PASS/최종171PASS, P2 수정후128PASS/최종143PASS는 각각 별도 격리 PostgreSQL/mock 실행이다. 실제 결과/초기 실패와 보완은 [L1](../ISSUE_8_LIFECYCLE_DEVELOPMENT.md), [P1](../ISSUE_8_ROLE_SUMMARIES_DEVELOPMENT.md), [P2](../ISSUE_8_PERSONAL_PRESENTATION_DEVELOPMENT.md) 안내와 DEV_LOG가 기준이다.
 - Flutter [A1](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6196135272) 1432PASS, [A2](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6196639685) 전체1479PASS 이후 국소47/2PASS, [B](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6197379381) 전체1514PASS 이후 B35PASS, [C](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6197881822) 최종전체1524PASS 보고다. 각 실행을 합산하지 않는다. 최종 lib/test 분석 문제0, 저장소 전체 analyze는 기존 사용자 tools의 info3건이 남는다. 임시 SQLite/모의 backend·provider HTTP 결과이며 Backend 자동검증/실기기 인수와 구분한다.
-- live 소유/장비 proof·소멸 확정/퇴역/claim 해제는 보류다. 내부 모의 retirement 정리 구현을 실제 자료 삭제·provider 전체성 증명으로 확대하지 않는다. 전체 자동 갱신의 코드 연결과 실제 운영/사용자 완료는 별도다.
+- 신규/claim충돌 없는 원정대의 서버 장비 검증 경로는 구현됐고 실제 게임 인수는 미실행이다. 기존ID 연결·소멸 확정/퇴역/claim 해제는 보류다. 내부 모의 retirement 정리 구현을 실제 자료 삭제·provider 전체성 증명으로 확대하지 않는다. 전체 자동 갱신의 코드 연결과 실제 운영/사용자 완료는 별도다.
 
 ## 다른 범위와 보존
 

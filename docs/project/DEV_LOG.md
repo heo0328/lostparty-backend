@@ -715,3 +715,14 @@ NEXT_WORK/AI_CONTEXT에 최신 지시와 의존 정보를 기록했다. 코드/A
 
 
 구현/시험/문서9파일을 ccd2e6a28dfb4295dc3f36be972111d4228eeb69로commit/push·원격일치 확인했다. [70번째 Backend 완료/다음 구간6211581766](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6211581766)을 게시하고 전체댓글조회로69번째착수/70번째결과 순번을 확인했다. 다음 담당 Backend의live증거발급연결이며Flutter추가자료/반복시험대기는아니다. 인계링크/게시상태만추가기록하며시험/서버는반복하지않는다.
+
+
+## 2026-10-16 — 서버 장비 해제 증거 연결·최종317PASS
+
+사용자 연결 진행 지시로 규칙/최신문서·Issue70댓글/기존코드 상태를 확인했고 [71번째 Backend 착수6211773213](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6211773213)에 범위를 공유했다. equipment_proof의ServerEquipmentObservation은 uncached siblings/Armory transport·엄격 parser/대상 검사를 통과한 서버 수집 근거이며 대상/목록·장비digest·시각을 고정한다. 시작 baseline을 기존 JSON에 저장하고 confirm의 요청부위해제·비요청장비유지·문맥/수집시각/회원/키/기한 검사 뒤 수용한다. live proof_validated 상수는 False를 유지하며 내부 수집 근거로 검증한다. 옛 baseline없음/변형/시간오류는기존pending. legacy trusted 모의 adapter의 엄격True 경계는 유지한다.
+
+신규/claim충돌없음 원정대는 기존verified/등록/canonical캐릭터/감사 transaction으로 연결되며 활동/대표 자동저장0. 기존ID binding/owned refresh·타소유 이전/소멸확정/퇴역은 이번 장비 제어 확인과 구분해 보류를 유지한다. confirm만 savepoint에 두고 소유반영 flush후 만료면 전체 변경 rollback·expired/실행이력만 저장한다. 늦은 확인이 기존verified를expired로 강등하지 않게 기존pending 조건도 검사했다. 직접입력 대상이 바뀐다는 중간 해석은 대조 후 기존 코드가 맞음을 확인해 되돌렸으며 이 부분 동작 변경은 없다.
+
+실제 서버 수집기/HTTP transport parser와 모의HTTP·격리PostgreSQL 직접125PASS·52.34초 후 만료보호를confirm에만 한정하고 늦은 동시확인 경계를 추가했다. 최종 장비/이력/대상/계정/생명주기/V2읽기/역할/개인설정/회원키 **317PASS·기존 경고1·188.52초**, 실패 없음. 두 실행은 합산하지 않는다. 실제provider/장비/기기 인수는 사용자 결정대로 나중이며 자동 성공과 혼동하지 않는다.
+
+paths/DTO/enum/DB구조불변, OpenAPI live_evidence/challenge_context 설명2개만 변경. paths/components 및 다른정책동일·새이미지전체계약일치PASS. 기존8000API만반영·healthy/실행전체OpenAPI·새모듈로드/health·DB0010유지PASS. 테스트DB만중지·DB초기화/삭제/복원/이관/별도환경·Flutterflag·운영/통합/Issue종료 변경없음. 다음Backend는기존account/캐릭터ID연속성·본인재인증/owned refresh·타소유연결근거/허용범위를검토한다. Flutter새자료/기초기능반복시험은선행조건아니다.

@@ -5,6 +5,7 @@ from decimal import Decimal, InvalidOperation
 from app.game_accounts.provider import LostArkProvider, ProviderUnavailable
 from app.game_accounts.equipment import parse_equipment, InvalidSnapshot
 from app.game_accounts.lifecycle import BindingEvidence
+from app.game_accounts import equipment_proof
 
 
 @dataclass(frozen=True)
@@ -12,10 +13,11 @@ class Observation:
     roster: list[dict]
     fetched_at: datetime
     equipment: dict | None = None
-    # Only an injected test adapter can currently provide validated proof.
+    # Legacy trusted test-adapter marker; live uses server equipment receipts.
     proof_validated: bool = False
     disappearance_validated: bool = False
     binding: BindingEvidence | None = None
+    equipment_evidence: equipment_proof.ServerEquipmentObservation | None = None
 
 
 def number(value):
@@ -71,4 +73,6 @@ def fetch(name, proof=False, *, token, before_armory=None, observer=None):
             gear = parse_equipment(raw.get('ArmoryEquipment'))
         except InvalidSnapshot:
             raise ProviderUnavailable('UPSTREAM_INVALID_RESPONSE') from None
-    return Observation(rows, datetime.now(timezone.utc), gear)
+    collected_at = datetime.now(timezone.utc)
+    receipt = equipment_proof.collect(name, rows, gear, collected_at) if proof else None
+    return Observation(rows, collected_at, gear, equipment_evidence=receipt)
