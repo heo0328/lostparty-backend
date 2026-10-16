@@ -814,3 +814,5 @@ live 본인명시소유등록은내부registration/account/owner로재인증범�
 첫 대상 검증10실패/164PASS는 신규시험이 키저장 완료명령을 읽은 테스트 조회 오류였다. operation=start 필터로 수정 후 같은 최종범위(진단/transport/장비/이력/선택/계정/키) **174PASS·기존경고1·58.66초**. 10종 실제collector+모의HTTP 실패에 로그/공개request_id 일치·단계/외부status/detail/수집시간·비밀정보 비노출·도전없음/retryable/실행이력을 검증하고 기존 성공/replay/인증 회귀를 확인했다. 허용 목록 밖 문자열/NaN/Infinity가 로그에 유출되지 않는 검사도 통과했다. 실제provider/기기 원인 확정·장비 인증 성공은 미확인이다.
 
 기존8000 API만 새 이미지로 반영해 healthy/health API·DB ok·전체OpenAPI일치/실행진단모듈·DB0010 유지 확인, 격리test-db만 중지했다. DB migration/초기화/삭제/원본자료·키·Flutterflag 변경·새환경 채택·실제POST/provider 조회 재실행은 하지 않았다. 다음 실제 동일명령 복구 시 Backend가 새request_id 진단으로 원인을 좁힌다.
+
+진단 구현/시험/문서10파일 `63c2d1f42df18b5464455026ec661309c14ba022` commit/push·원격일치 확인. [95번째 Backend 진단 보완 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216806126)를 게시하고 전체댓글로 실제 순번95 확인했다. Flutter94번째 정정 수용·고정SHA·계약불변/개발반영/174PASS·과거원인 미확정 및 다음 실제 동일명령 복구→Backend 진단 순서를 인계했다. 실제POST/provider 재실행·전체 재인수/강제초기화 요청은 없으며 실제503 해결/장비 인증 성공은 미확인이다.
