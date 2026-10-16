@@ -27,3 +27,5 @@ migration `0010_verification_executions`는 테이블/인덱스만 추가하고 
 다음 Backend 구간은 기존6부위/1~3해제·Type/Name/Grade·10분 기준을 활용한 live 증거 발급 연결이다. 기존 원정대/캐릭터 ID 연속성과 타소유 이전의 판단은 별도로 유지한다. 추가 Flutter 자료 회신을 기다리지 않는다.
 
 최종 격리 검증300PASS·기존경고1·139.09초. 기존8000/DB0010 적용·기존33테이블 원래 자료 동일/모델정합·실행API healthy/전체OpenAPI 일치 확인. 실제 장비/소유 성공 인수는 미실행이다.
+
+구현 `ccd2e6a28dfb4295dc3f36be972111d4228eeb69`, feat/representative-selection push·원격일치 확인, dev/main 미통합. [70번째 Backend 결과 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6211581766).

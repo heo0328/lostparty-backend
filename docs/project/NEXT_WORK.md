@@ -10,7 +10,7 @@
 |---|---|
 | 통합 기준 | dev `821c758`, main `e6c72e4`. #1~#7 CLOSED. #8은 dev/main 미통합 |
 | #8 Backend | 대표 `cd3e003`, L1a/L1b `6f3d029`/`c91af2e`, P1/P2 `6e4f625`/`7027f0b` 구현·격리검증·원격 인계 완료. P2 계약 유지 |
-| 현재 작업 브랜치 | `feat/representative-selection`, 준비구현 `4bdaea6`, 권한/비노출 `59b8c23`·활동1700 `47a2ce4`·인증대상검사 `78d3d1a` push·[결과 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209623492) 완료 |
+| 현재 작업 브랜치 | `feat/representative-selection`, 준비구현 `4bdaea6`, 권한/비노출 `59b8c23`·활동1700 `47a2ce4`·인증대상검사 `78d3d1a`·인증이력 `ccd2e6a` push·[최신 결과 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6211581766) 완료 |
 | 사용하던 개발환경 | 기존 Docker/포트8000/DB 자료를 유지해 0007~0010·최신 API 반영 완료. DB0010·API/DB healthy·health ok·OpenAPI 전체일치·기존 전 테이블의 원래 컬럼/행 내용 동일 확인. 초기화/새환경 전환 없음 |
 | 별도8001 환경 | 구성했던 작업 이력이며 현재 개발의 기본 경로/채택 대상/선행조건이 아니다. 이번 정정으로 컨테이너/volume을 삭제·재설정하지 않는다 |
 | Flutter 최신 | [기존관리/초기대표/인증전환 연결](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209931176)·[Backend검토](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209973965) 완료. 최종전체1560PASS/분석0 보고·ON경로구현/기본OFF·미게시/실인수미확인. feature/scoped-account-cache/HEADcc6a0b0 위 미커밋·미push·dev미반영. 앱재실행을넘는미확정원명령종결보장은미확인 |
@@ -24,7 +24,7 @@
 
 ## 최신 협업 순서
 
-본문 제외 전체 댓글 순번은 67번째 Flutter 과거 장비 인증 자료 → 68번째 Backend 검토 → [69번째 Backend 실행 이력 보완 착수](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6211452444)다. 구현/인계 결과와 실제 순번은 단계 종료 시 갱신한다. 댓글 순번과 Backend 작업 단계 번호는 별개다. 자료 회신 대기는 해소됐으며 다음 담당은 Backend다.
+본문 제외 전체 댓글 순번은 67번째 Flutter 과거 장비 인증 자료 → 68번째 Backend 검토 → [69번째 Backend 실행 이력 보완 착수](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6211452444)다. **[70번째 Backend 결과/다음 구간 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6211581766) 완료. 구현 ccd2e6a는 feat/representative-selection에 push·원격일치 확인했고 dev/main 미통합이다.** 댓글 순번과 Backend 작업 단계 번호는 별개다. 자료 회신 대기는 해소됐으며 다음 담당은 Backend다.
 
 ## 기존 Flutter 장비 인증 재사용 설계 — 최신 회신 검토
 
