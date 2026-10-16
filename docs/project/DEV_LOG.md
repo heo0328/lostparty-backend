@@ -667,3 +667,5 @@ paths/DTO/enum전체불변·기존403/code재사용·OpenAPI권한/비노출/rep
 activity_policy가공통DEFAULT_MIN_ITEM_LEVEL/기존수치parser를재사용해전체선택/대표전용PUT(동일대상no-op포함)의현재canonical/lifecycle/claim+유효1700기준을검사한다. 미달/불명확은기존409 CHARACTER_UNUSABLE. 현재저장된부적격선택은ineligible로보고하고정상roster갱신때기존needs_reconfiguration으로표시하지만대표/선택을자동삭제·재선정하지않는다. 기존V1eligible/V2usable의lifecycle의미와활동최소레벨추가검사를계약에구분했다. paths/DTO/enum/DB구조불변·activity_selection정책만추가, 네트워크차단이미지OpenAPI전체일치/차이범위확인PASS.
 
 격리PostgreSQL 신규15경계·기존대표/전체설정/생명주기/V2/개인설정/기본권한/모델·계약직접회귀 **192PASS·기존경고1·94.07초**, 초기실패없음. 현재8000API만갱신해healthy·실행계약/검증소스일치·호스트health·DB0009유지확인. test-db만중지. DBmigration/자료초기화/원정대자동연결·활동자동추가/메인전환·Flutter화면변경·실게임/소유증거/기기인수·운영/통합/Issue종료없음. 검증구간을게시하고현재서버완료와Flutter초기선정연결대기를분리인계한다.
+
+구현/OpenAPI/검증/관련문서11파일을47a2ce4d8d55b1b07cb103e95d9c89fbaa9a926e로commit/push·원격일치확인하고 [Issue8 서버검증/초기대표 경계인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209623492)를게시했다. 현재서버1700검증완료와Flutter초기최고후보선정/기존관리화면연결미확인을구분했다. 인계기록만추가게시하며시험/서버를반복하지않는다.

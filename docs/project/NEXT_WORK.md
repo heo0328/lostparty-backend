@@ -10,7 +10,7 @@
 |---|---|
 | 통합 기준 | dev `821c758`, main `e6c72e4`. #1~#7 CLOSED. #8은 dev/main 미통합 |
 | #8 Backend | 대표 `cd3e003`, L1a/L1b `6f3d029`/`c91af2e`, P1/P2 `6e4f625`/`7027f0b` 구현·격리검증·원격 인계 완료. P2 계약 유지 |
-| 현재 작업 브랜치 | `feat/representative-selection`, 준비구현 `4bdaea6`, 권한/비노출 구현·계약 `59b8c23` push·[결과 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209379848) 완료 |
+| 현재 작업 브랜치 | `feat/representative-selection`, 준비구현 `4bdaea6`, 권한/비노출 `59b8c23`·활동1700구현/계약 `47a2ce4` push·[결과 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209623492) 완료 |
 | 사용하던 개발환경 | 기존 Docker/포트8000/DB 자료를 유지해 0007~0009·최신P2 API 반영 완료. DB0009·API/DB healthy·health ok·OpenAPI 전체일치·기존 전 테이블의 원래 컬럼/행 내용 동일 확인. 초기화/새환경 전환 없음 |
 | 별도8001 환경 | 구성했던 작업 이력이며 현재 개발의 기본 경로/채택 대상/선행조건이 아니다. 이번 정정으로 컨테이너/volume을 삭제·재설정하지 않는다 |
 | Flutter 최신 | [R1 완료6209153163](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209153163): basicOnly/미인증기본조회·과거상세비노출·직접요청권한대조. 최종전체1542PASS·분석0 보고. [항목답변6209178794](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209178794) 및 [Backend 검토](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209205051) 완료. feature/scoped-account-cache/HEADcc6a0b0 위 미커밋·미push·dev미반영. E1복구/E2·인증전환은후속 |
@@ -25,7 +25,7 @@
 ## 다음 개발과 담당
 
 1. **소유 인증·원정대 연결 서버 후속과 UI/UX 대조.** [현재 코드/단계 검토](../ISSUE_8_OWNERSHIP_FLOW_REVIEW.md) 완료. 등록≠소유인증≠활동/대표설정이며 live증거/기존원정대연결이 미완료다. [Flutter 재검토 요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6208702210)으로 회원 등록원정대→인증→canonical목록→사용캐릭터/대표 명시저장 및 보류·만료·충돌·소유상실/late응답의 실제 화면/API/검증대응표를 요청했다. 완료/일부/미연결을 대조해 직접 필요한 서버 규칙/구현을 확정한다. 기존정상흐름을기초재인수하지않는다.
-2. **Flutter 기존 관리 화면 연결·초기 대표 정책 대조.** [사용자 UX 정정6209360031](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209360031): 기존 CharacterManagementPage/ViewModel을 회원/등록/canonical·저장 API에 연결한다. 별도선택/복구화면을추가하지않으며미확정명령일관성은내부처리한다. 현재대표는유지·없을때만사용가능캐릭터최고item level로초기1회선정·공통사용기준1700. 전체활동자동추가/메인전환없음. [서버활동검증](../ISSUE_8_ACTIVITY_SELECTION_DEVELOPMENT.md)은전체선택/대표변경1700기준·ineligible보고·선택보존을구현해격리192PASS·기존8000반영했다. 초기후보는Flutter기존관리화면에서최고레벨draft를정하고활동집합/대표를기존PUT/CAS로명시저장하는연결을 [대조요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209535500)했으며아직회신없음. 서버읽기/refresh/null입력자동선정은추가하지않았다. 최신정정은기존별도E2화면/복구UX선행설명을대체한다.
+2. **Flutter 기존 관리 화면 연결·초기 대표 정책 대조.** [사용자 UX 정정6209360031](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209360031): 기존 CharacterManagementPage/ViewModel을 회원/등록/canonical·저장 API에 연결한다. 별도선택/복구화면을추가하지않으며미확정명령일관성은내부처리한다. 현재대표는유지·없을때만사용가능캐릭터최고item level로초기1회선정·공통사용기준1700. 전체활동자동추가/메인전환없음. [서버활동검증](../ISSUE_8_ACTIVITY_SELECTION_DEVELOPMENT.md)은전체선택/대표변경1700기준·ineligible보고·선택보존을구현해격리192PASS·기존8000반영·`47a2ce4` [인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209623492) 완료했다. 초기후보는Flutter기존관리화면에서최고레벨draft를정하고활동집합/대표를기존PUT/CAS로명시저장하는연결을 [대조요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209535500)했으며아직회신없음. 서버읽기/refresh/null입력자동선정은추가하지않았다. 최신정정은기존별도E2화면/복구UX선행설명을대체한다.
 3. **실제 장비 관찰은 나중에 수행한다.** [관찰 CLI](../ISSUE_8_OWNERSHIP_READINESS.md)는 준비됐다. 관찰 결과와 서버에서 검증 가능한 증거/연결 규칙을 검토해야 하며 ready_for_review만으로 인증을 확정하지 않는다. 이 후속으로 독립 개발을 막지 않는다.
 4. **변경한 구간의 영향 검증만 수행한다.** 실제 소유/canonical·현재 등록/roster·활동 대상이 필요한 새 기능 실검증만 조건 충족 후 진행한다. 기존 완료 흐름을 처음부터 재인수하지 않는다. Flutter 변경분의 게시/통합 상태는 구현 완료와 별도로 추적한다.
 
