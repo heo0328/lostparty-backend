@@ -62,3 +62,5 @@ ID없는시작응답유실은같은POST/key/정규화body재시도로저장201/c
 StartIn/VerificationTarget만요청schema를보완하고공개paths/기존응답schema/DB구조는유지한다. OpenAPI정책설명은본인재인증과미연결pending에맞춰갱신한다. 기존8000API/DB0010·현재자료/키/flag를유지한다. 실제게임/provider/기기인수는사용자결정대로나중이며Flutter picker는검증코드/고정SHA게시후상대측이연결한다. 실행수/실패/실행반영/게시상태는DEV_LOG와결과댓글을따른다.
 
 최종 격리 PostgreSQL **449PASS·기존경고1·194.55초**, 첫 직접130PASS/61.41초와합산하지않으며실패없음. 활동보존/목록수치변경·조회중등록변화·pending소유관계변화·보류증거최종만료를추가검증했다. 기존8000API반영·실행전체OpenAPI/새StartIn/응답8필드/health·DB0010유지확인·test-db만중지했다. 실제provider/게임/기기와Flutter picker는미확인/미연결이다.
+
+구현/계약cc372bfa77edb102450cd9addbfe29ea3b0375d0·feat/representative-selection push/원격일치·dev/main미통합. [90번째Backend결과/Flutter picker인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216253151). 다음 담당Flutter선택입력/새계약·오류/기존복구UX연결이다.

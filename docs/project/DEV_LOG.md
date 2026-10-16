@@ -795,3 +795,6 @@ live 본인명시소유등록은내부registration/account/owner로재인증범�
 직접새계약/등록/장비/대상/이력/생명주기130PASS/61.41초후활동보존·등록/claim소유변화·보류제어확인의최종만료경계를추가했다. 최종격리PostgreSQL 인증선택/목록/장비·이력·대상/계정/생명주기/V2/역할/개인설정/키/활동/전투력/복원 **449PASS·기존경고1·194.55초**, 실패없음. 실제collector/transport parser+모의HTTP로테스트했으며실제게임/provider/기기인수와구분한다. 구형등록/direct_input의기존정규화hash일치·유실동일명령replay에서provider/도전추가0·8응답필드유지·target바뀐동일key거절도확인했다. 타소유start409기대만새합의의201/pending으로정정하고권한불변검증은보존했다. 실행은합산하지않는다.
 
 새이미지schema에서합의StartIn/VerificationTarget·정책만반영했고paths/VerificationOut/다른응답동일·전체OpenAPI일치PASS. 기존8000API만반영·healthy/실행전체OpenAPI/새요청필드/응답8/health·DB0010유지확인·test-db만중지. DB초기화/삭제/이관/복원·별도환경/Flutterflag·운영/통합/Issue종료변경없음. 다음Flutter는고정SHA를소비해picker/버전선택·불변중첩command와기존87번째복구UX를연결한다. 결과조회endpoint/새journal/앱재시작우회없음·실게임은나중·최초연결실패원인은미확정이다.
+
+
+구현/계약/시험/누적문서16파일을cc372bfa77edb102450cd9addbfe29ea3b0375d0로commit/push·원격일치확인했다. [90번째Backend결과/Flutter picker인계6216253151](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216253151)를게시하고전체댓글조회로89/90순번을확인했다. 최종wire/Name·Version·source/필드제약·8응답/정규화호환·오류code/status/실제owner변경0·proof보류/재시도·고정SHA/OpenAPI와기존8000반영상태를인계했다. 다음Flutter picker/오류·복구연결이며추가사용자결정/Backend게시대기는해소됐다. 인계기록만추가하고시험/서버는반복하지않는다.
