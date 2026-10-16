@@ -45,4 +45,16 @@ replay는현재회원/세션·본인활성등록/소유/NameClaim 및원래요�
 
 1차최신이미지격리PostgreSQL P1/기존V2읽기/회원설정/metadata **108PASS, 61.72초, 기존경고1**. 추가 세션/같은이름새UUID/lease takeover/DB장애/실제기존행migration 경계 및 생명주기·대표·전투력/metadata 회귀 최종 **171PASS, 79.99초, 기존경고1**. 두실행을합산한단일suite로표현하지않는다. 실제provider/기기인수가아니다.
 
-network-none이미지OpenAPI와원본대조, 기존모든paths/components/policy불변·새GET/PUT와새 schema/policy만추가확인. 구현/원본 OpenAPI `6e4f625c3b62c92ec412373b33ed8a3441af8149`를 작업브랜치 commit/일반push·원격동일SHA로 확인하고 [P1 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6194881739)를 게시했다. dev/main 미통합, 실제DB/API미전환이다. 다음 Flutter는 이 원본 P1을 소비해 adapter/역할별scoped저장·영속대기/오류·충돌 검증을 연결하고 같은Issue에 결과를 회신한다. P2는 별도후속요청을 따른다. 기존 별도미커밋 lifecycle 전환준비문서는 보존했으며 구현/계약 게시와 구분한다.
+network-none이미지OpenAPI와원본대조, 기존모든paths/components/policy불변·새GET/PUT와새 schema/policy만추가확인. 구현/원본 OpenAPI `6e4f625c3b62c92ec412373b33ed8a3441af8149`를 작업브랜치 commit/일반push·원격동일SHA로 확인하고 [P1 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6194881739)를 게시했다. dev/main 미통합, 실제DB/API미전환이다. P1 인계 당시 다음 Flutter adapter는 아래 A1 회신으로 완료 보고됐다. P2도 별도 구현/게시됐으며 현재 상태는 P2 실행안내/아래 회신을 따른다. 기존 별도미커밋 lifecycle 전환준비문서는 보존했으며 구현/계약 게시와 구분한다.
+
+
+## Flutter 소비 결과 — 2026-10-16 확인
+
+[A1 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6196135272)에서 P1 `6e4f625` strict GET/역할PUT·scoped 역할기록/불변명령·응답유실/재실행/충돌/24시간 경계 연결과 최종전체1432PASS/lib-test분석0을 보고했다. [A2](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6196639685)는 P2 `7027f0b` 실제 preferences로 parser를 전환했다. P1 가상기본값을 개인설정 ACK로 적용하지 않는 경계를 수신 확인했다.
+
+이후 [B](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6197379381) 실행기와 [C](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6197881822) 앱 수명/회원 주목록·진행 UI까지 코드 연결/모의검증 완료 보고다. Flutter feature/scoped-account-cache/기준cc6a0b0에서 미커밋·미push·dev미반영이며 새 인계SHA없음, 기본flagOFF·실서버/provider/기기 인수미확인이다. 현재 추가Backend수정/반복mock시험요청없음. 실제 서버 전환 준비·별도승인/적용과 사용자 인수는 [NEXT_WORK](project/NEXT_WORK.md)를 따른다.
+
+
+## 최신 실행 상태 — 새 환경 준비
+
+위의 DB/API 미적용 표기는 각 구현 인계 당시 기록이다. 2026-10-16 사용자 진행 지시 후 별도 `lostparty-fresh-dev`에 새 빈 DB0009/P2 API8001을 구성했고 health/원본 계약 일치·사용자자료0건을 확인했다. 원본8000/0006은 유지했다. [새 환경](ISSUE_8_LOCAL_TRANSITION_READINESS.md)·[관찰 도구](ISSUE_8_OWNERSHIP_READINESS.md)가 현재 기준이다. 실제 게임 검증은 사용자 결정으로 나중에 진행하며 소유/canonical·퇴역/전체 인수는 보류다. Flutter D는 [1528PASS/미게시 완료 보고](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207225790)이며 실기기 인수와 구분한다.

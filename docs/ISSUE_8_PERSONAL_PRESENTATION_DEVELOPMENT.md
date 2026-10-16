@@ -66,4 +66,20 @@ preferences replay도 현재 회원/등록/소유/NameClaim 및 원래 소유/li
 
 ### 최종 직접 영향 검증
 
-추가 같은key 복구/원정대replay 소유수명과 P2·생명주기·V2조회·대표·회원설정/metadata **143PASS, 75.80초, 기존경고1**. 앞선128개와 별도 실행이며 합산 단일suite로 표현하지 않는다. 초기 오류는 보완 후 최종 실행에서 모두 통과했다. test-db만 중지하고 실제DB/API를 변경하지 않는다. 구현/정확한원본OpenAPI `7027f0b690e1c232fafc5d09faa9d6c169c99962`를 commit/일반push·원격동일SHA로확인하고 [P2 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6195735441)를게시했다. dev/main미통합·실제DB/API미전환이다. 다음Flutter는이원본으로preferences실제복원/표시설정adapter·저장/대기·모의검증을연결하고같은Issue에결과를회신한다.
+추가 같은key 복구/원정대replay 소유수명과 P2·생명주기·V2조회·대표·회원설정/metadata **143PASS, 75.80초, 기존경고1**. 앞선128개와 별도 실행이며 합산 단일suite로 표현하지 않는다. 초기 오류는 보완 후 최종 실행에서 모두 통과했다. test-db만 중지하고 실제DB/API를 변경하지 않는다. 구현/정확한원본OpenAPI `7027f0b690e1c232fafc5d09faa9d6c169c99962`를 commit/일반push·원격동일SHA로확인하고 [P2 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6195735441)를게시했다. dev/main미통합·실제DB/API미전환이다. 인계 당시 Flutter 후속은 아래 A2/B/C 회신으로 코드 연결/모의검증 완료 보고됐다. 실제환경 전환/사용자 인수는 별도다.
+
+
+## Flutter A2/B/C 결과와 현재 후속 — 2026-10-16 확인
+
+[A2 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6196639685)에서 P2 `7027f0b` 원본 대조·preferences 실제 복원/개인설정·원정대표시 adapter·scoped schema3/설정명령·불변key/body/경로·같은소유수명재등록·표시용캐시·충돌/부분rank ACK 연결을 보고했다. 전체1479PASS 이후 스타일 정리 관련47PASS, 전송직전session guard보강 관련2PASS와 최종lib/test분석0을 각각 확인했다는 보고이며 합산한 단일suite가 아니다.
+
+[B 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6197379381)에서 활성 UUID 전체 상세→분석/로컬저장→서버요약·미완료상세/서버저장 각각의재시도·환경/회원별앱수명1회 실행기 연결을 보고했다. 표시count/숨김은 자동대상을 줄이지 않고 나이스단 회원bool OFF 대상은 제외·기존값보존이다. 전체1514PASS 이후 국소보완 B35PASS/최종lib-test분석0은 별도 결과다.
+
+[C 최신 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6197881822)에서 동일runtime/API/session/설정·키/gate의 앱수명주입, canonical회원주목록 하나·기존기기자료별도경로, 역할/P2설정복원·비차단진행/재시도/충돌해결 UI 연결을 보고했다. 최종전체1524PASS·lib/test분석문제0, 전체analyze는 기존사용자tools의info3건만남는다. 임시SQLite/모의backend·provider HTTP 결과이며 Backend143PASS와 합산하거나 실제provider/기기인수로표현하지않는다.
+
+Flutter는 feature/scoped-account-cache/기준cc6a0b0·C포함미커밋/미push/dev미반영·새인계SHA없음, 기본BACKEND_LIFECYCLE_READS_ENABLED=false다. 추가Backend기능수정/반복mock시험·사용자제품결정요청은없다. 이후 사용자 지시로 기존테스트자료/Firebase 미승계 기준이 확인돼 백업복원/기존자료보존리허설 계획은 폐기했다. 다음은 새DB/최신API 환경 구성 기준 재정리와 새환경사용자인수이며 저장소게시/통합인계도남았다. 현재실환경미전환·liveproof/퇴역/claim해제보류·IssueOPEN을유지한다. 다음실행과남은입력은 [NEXT_WORK](project/NEXT_WORK.md)가기준이다.
+
+
+## 최신 실행 상태 — 새 환경 준비
+
+위의 DB/API 미적용 표기는 각 구현 인계 당시 기록이다. 2026-10-16 사용자 진행 지시 후 별도 `lostparty-fresh-dev`에 새 빈 DB0009/P2 API8001을 구성했고 health/원본 계약 일치·사용자자료0건을 확인했다. 원본8000/0006은 유지했다. [새 환경](ISSUE_8_LOCAL_TRANSITION_READINESS.md)·[관찰 도구](ISSUE_8_OWNERSHIP_READINESS.md)가 현재 기준이다. 실제 게임 검증은 사용자 결정으로 나중에 진행하며 소유/canonical·퇴역/전체 인수는 보류다. Flutter D는 [1528PASS/미게시 완료 보고](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207225790)이며 실기기 인수와 구분한다.

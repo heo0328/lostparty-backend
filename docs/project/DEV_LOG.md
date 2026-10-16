@@ -550,3 +550,47 @@ L1b13파일1594추가/343삭제를 `c91af2e003877daacb833aaa0c109eae11b72816`로
 ## 2026-10-16 — #8 P2 원격 게시·Flutter 인계 완료
 
 구현/OpenAPI/관련문서18파일을 `7027f0b690e1c232fafc5d09faa9d6c169c99962`로커밋/일반push·원격동일SHA확인했다. [같은Issue P2 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6195735441)에불변원본·PersonalProfileOut.preferences참조교체/P1const제거·5새schema/새2paths3operations·128/별도143PASS·초기오류수정·실환경미전환을명시했다. 다음Flutter는P2strictadapter/실제개인설정·원정대표시저장/복원/대기·모의검증결과회신이다. 기록문서만추가commit/push하며코드불변으로시험/이미지/DB를반복하지않는다. 기존미커밋lifecycle전환준비문서는계속보존·미stage, main/dev통합·실DB/API·실provider/기기·live퇴역/배포/자료삭제/Issue종료없음.
+
+
+## 2026-10-16 — Flutter A1/A2/B/C 최신 회신 반영·문서 최신화
+
+사용자 문서최신화 지시로 [A1](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6196135272)·[A2](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6196639685)·[B](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6197379381)·[C](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6197881822) 원문을 재확인했다. P1 6e4f625/P2 7027f0b 소비·역할/개인표시설정adapter·영속대기·자동실행기·앱수명/회원주목록/진행UI까지 구현·모의자동검증 완료보고를 반영했다. A1전체1432PASS, A2전체1479후국소47/2PASS, B전체1514후B35PASS, C최종전체1524PASS는각실행으로구분하고 Backend검증과합산하지않는다. C lib/test분석0과전체analyze기존사용자tools info3건, 임시SQLite/모의HTTP와실provider/실기기미확인을명시했다. Flutter feature/scoped-account-cache/기준cc6a0b0 미커밋/미push/dev미반영·새SHA없음·기본OFF·실서버/기기인수미확인, Backend추가수정/반복mock시험요청없음을기록했다.
+
+NEXT_WORK를완료이력나열에서실제서버전환준비→별도승인/적용→ON사용자인수·Flutter게시인계와남은입력중심으로정리하고, AI_CONTEXT/P1/P2실행안내를최신화했다. 기존미커밋 lifecycle 전환준비문구를보존하며현재범위0007~0009/코드·원본SHA/복원·복구기준으로보완했다. 로컬Git/추적ref는work906e0ef/dev821c758/maine6c72e4, #8 dev/main미통합유지. 이번은문서만변경·참조/diffcheck/코드불변확인, 기능시험/서버/DB·commit/push/merge/Issue댓글·종료/배포/기기조작/자료삭제없음. 문서수정은로컬미커밋·미push이며별도게시완료로안내하지않는다.
+
+
+## 2026-10-16 — 로컬 서버 시작 후 현재 상태 재확인
+
+전환 준비 점검 중 DB중지/마운트오류·APIunhealthy를 관찰했으나, 사용자가 로컬 서버 시작을 잊었다고 설명하고 켠 뒤 재확인을 지시했다. 읽기 재점검 결과 API/DB 모두running/healthy, 실제revision0006_provider_limits·신설claim/역할/개인설정테이블없음, 실행API계약cd3e003전체일치/P2불일치·V2경로0개를 확인했다. 이전 오류는 시작 전 관찰 이력으로 구분하고 신규컨테이너재생성/복구는현재불필요로준비초안정정. 다음은백업/격리복원·0007~0009리허설 준비이며 실제실행없음. 재시작/DB변경/백업·commit/push/Issue게시없이읽기확인·관련문서정정만수행했다.
+
+
+## 2026-10-16 — 기존 테스트 자료 보존 전환 계획 폐기·경위 정정
+
+사용자가 현재 테스트자료/기존Firebase시스템폐기 방침을 이미 설명했다고 지적하고 백업/격리복원migration계획 폐기·경위설명을 지시했다. Backend가 그 폐기 전제를 작업기준으로 적용하지 않고 일반적인 자료보존 절차를확대해필수선행으로정한 판단오류를 인정했다. Flutter P1/P2 요청6193638580/6195124835를재확인한결과신규PostgreSQL구조additive migration코드/격리시험요청은있으나기존테스트DB백업·실복원리허설요청은없었다. Firebase자료이관코드는구현하지않았다. 준비초안의실행계획을제거해폐기표시하고NEXT_WORK/AI_CONTEXT/L1/P2문서의향후작업기준을신규DB/최신API·테스트자료/Firebase미승계로정정했다. 과거검증이력은유지하며코드전체취소나실제자료즉시삭제로확대하지않았다. 실제dump/복원/0007~0009원본적용·Firebase조작·DB/볼륨/기기자료삭제·재시작/commit/push/Issue게시없음.
+
+
+## 2026-10-16 — 사용자 폐기/미승계 방침 Flutter 공식 전달
+
+사용자명시지시로최신C회신6197881822를확인후 [Issue8 댓글](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6206662757)에테스트자료/Firebase미승계·Backend백업/복원리허설폐기와경위를전달했다. Flutter에게device-characters/legacy정수ID·schema13/구writer유지전제의충돌·제거/유지범위/새환경테스트준비를대조해sameIssue회신요청했다. 새시스템의정상회원별저장/복원·scoped/영속대기는유지함을명시하고실제Firebase/기기/DB삭제일괄지시로확대하지않았다. NEXT_WORK/AI_CONTEXT/폐기문서에댓글링크/담당/회신대기기록. 문서만정정·diffcheck, 기능코드/OpenAPI/DB·commit/push/merge/배포/Issue종료없음.
+
+
+## 2026-10-16 — Flutter 단계정책/D범위 회신 수신·canonical 인수 경계 확인
+
+[Flutter6206739088](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6206739088)에서개발중생성/삭제·베타직전개발사용자/서버기록초기화·베타자료운영승계정책과D구실행/DI/정수ID/기기자료경로분리계획을수신했다. 아직D코드미변경·A1/A2/B/C유지·P2API변경없음·미게시를구분했다. 현재adapter proof_validated=false/confirm PROVIDER_EVIDENCE_PENDING 코드를대조해 [같은Issue 확인](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6206816156)으로새빈DB/새회원의실소유/canonical선행인수항목과지금가능한기본preview흐름을구분요청했다. fixture우회/live보류해제나Flutterprovider증거대행요구없음·독립D/새DB구성준비계속가능을명시했다. 문서기준/댓글링크·회신대기만갱신, 코드/OpenAPI/DB·삭제/재시작/commit/push/배포/Issue종료없음.
+
+
+## 2026-10-16 — Flutter 제품/UX 공유 Backend 검토 회신 완료
+
+사용자가Flutter검토회신대기를지적해최신6206946439/기본인수답변6206873992를현재인증/회원설정/P2저장·liveproof코드와대조하고 [같은Issue 검토회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207049997)을게시했다. 기능/guest UX유지·Firebase전용의존제거를수용하고로컬DB/정수ID/분석mapper자체폐기로해석하지않도록이전Backend표현을정정했다. P2계약변경불필요·현재추가제품질문없음·canonical인수확인대기해소, 실소유proof후속/활동왕관미완료·파티/수동인증/운영자후속을분리했다. FlutterD/Backend새DB준비는독립진행가능하며같은정책반복회신요청없음. NEXT_WORK/AI_CONTEXT/폐기문서에근거/후속반영·diffcheck, 기능코드/OpenAPI/DB·commit/push/merge/배포/자료삭제/Issue종료없음.
+
+## 2026-10-16 — 소유 관찰 도구·새 빈 DB/P2 API 준비 및 Flutter D 회신
+
+사용자 두 구간 진행 지시에 따라 [우선순위/Flutter D 독립 진행](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207154064)을 먼저 인계했다. 실제 게임 참여 질문에는 “도구 준비 후 나중에 검증” 답변을 수신했다. 따라서 이번에는 숨김 입력의 수동 장비 관찰 CLI와 자동 검증을 구현했으며 실제 사용자 키/캐릭터 입력·게임 조작·provider 호출은 하지 않았다. 공식 Swagger characters/armories 재조회 hash는 기존과 동일하며 새로운 안정 식별자/전체성 근거는 확인하지 못했다. live proof/canonical/퇴역을 해제하지 않았다.
+
+`compose.fresh.yaml`로 별도 lostparty-fresh-dev 프로젝트/volume/network·API8001을 생성했다. 신규 DB만 alembic upgrade head → 0009_personal_presentation, P2 실행 계약 전체일치·API/DB healthy·호스트 health ok, users/등록/캐릭터/역할/개인설정/표시 각0건을 확인했다. 원본8000 API/DB healthy·0006_provider_limits 유지, 백업/복원/import·원본삭제/기기/Firebase/운영 조작 없다. Compose 설정은 비밀값을 출력하지 않고 검토했다. 처음 최종 점검은 호스트 python 명령 부재로 실행되지 않아 python3로 변경했고, 이미지에 없는 openapi 파일 참조는 호스트 원본과 실행 schema 비교로 고쳐 확인했다.
+
+도구는 장착 기준/지정1~3부위 해제/재장착의 수동3호출·10분 기한·자동폴링/재시도 없음·원본/식별정보 출력 없음·DB쓰기 없음이다. 숨김 입력이 불가능한 터미널에서는 입력을 중단한다. ready_for_review는 관찰 결과일 뿐 서버 소유 증거가 아니다. 최초 선택 실행63PASS/1FAIL은 모델 대조 시험의 일부모델 import 누락/실행순서 의존이었고 전체 모델 명시 후64PASS, 이후 숨김 입력 실패 검증을 추가했다. 최종 결과는 아래 게시 기록을 따른다. Starlette 기존 deprecation warning 1건이며 실제 provider/실기기 시험과 구분한다.
+
+[Flutter D 완료6207225790](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207225790) 수신: 환경별 새 로컬DB/guest키·구자료 진입 제거·제품/guest 기능 유지·최종1528PASS/lib-test분석0 보고다. D 포함 미커밋·미push·새 SHA 없음·기본OFF·실기기 미확인이다. 추가 계약 요청은 없으며 Backend는 Flutter 소스에 접근하지 않았다. 기본 로그인/키/설정/preview 인수와 소유/canonical/활동 대상이 필요한 전체저장/갱신/복원 실인수는 구분해 NEXT_WORK/AI_CONTEXT·P1/P2/L1/준비문서를 최신화했다.
+
+최종 격리검증 **65 passed, 1 warning, 3.02초**. CLI/기존진단/장비parser/모델-DB일치를 확인했고 테스트DB만 중지한다. API/OpenAPI 동작 변경 없음. 준비한 작업은 feat/representative-selection에서 commit/push 후 같은Issue 결과로 인계한다. dev/main merge·운영배포·삭제·Issue종료는 하지 않는다.

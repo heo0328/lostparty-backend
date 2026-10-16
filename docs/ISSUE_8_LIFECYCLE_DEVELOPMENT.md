@@ -57,3 +57,17 @@ L1b 추가 보완: preview의canonical사용불가와표시용profile관찰신�
 ### 실제 L1b 게시
 
 구현/OpenAPI `c91af2e003877daacb833aaa0c109eae11b72816`·feat/representative-selection 일반push/원격일치/clean확인. [L1b별도인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6186143574) 완료. dev/main미통합·실제DB0007미적용·실행API미재시작. Flutter의계약소비/metadata·활동/대표연결회신과후속서버전환준비가다음이다. 게시기록문서만추가커밋/push하며기능검증/서버조작을반복하지않는다.
+
+
+## 실제 DB/API 전환 기준 — 기존 자료 보존 계획 폐기
+
+2026-10-16 사용자 확인: 현재 테스트 자료와 기존 Firebase 시스템은 폐기하고 새 시스템에 승계하지 않는다. 이전에 이 절에서 요구했던 테스트 DB 백업·격리 복원·기존 행 보존 리허설은 Backend 판단으로 추가한 절차였으며 폐기했다. 이를 다음 작업의 필수조건으로 사용하지 않는다.
+
+Flutter의 P1/P2 요청에 따른 0007~0009 Alembic 파일은 신규 PostgreSQL 구조 정의이고 Firebase 자료 이관 구현은 아니다. 합성 fixture에서 검증한 기존 UUID/FK/권한 동작은 새 시스템의 기능 검증 이력이며 실제 테스트 자료 승계나 Firebase 연동을 뜻하지 않는다.
+
+후속은 테스트 자료를 승계하지 않는 새 DB 초기 구성과 최신 API 실행 환경 기준으로 재정리한다. 현재 실제 DB0006/API대표구간·건강 상태는 읽기 확인했으며 신규구조 실제 적용/DB·볼륨 삭제/Firebase/기기 조작은 실행하지 않았다. [폐기 경위](ISSUE_8_LOCAL_TRANSITION_READINESS.md), 다음 실행은 [NEXT_WORK](project/NEXT_WORK.md)를 따른다.
+
+
+## 최신 실행 상태 — 새 환경 준비
+
+위의 DB/API 미적용 표기는 각 구현 인계 당시 기록이다. 2026-10-16 사용자 진행 지시 후 별도 `lostparty-fresh-dev`에 새 빈 DB0009/P2 API8001을 구성했고 health/원본 계약 일치·사용자자료0건을 확인했다. 원본8000/0006은 유지했다. [새 환경](ISSUE_8_LOCAL_TRANSITION_READINESS.md)·[관찰 도구](ISSUE_8_OWNERSHIP_READINESS.md)가 현재 기준이다. 실제 게임 검증은 사용자 결정으로 나중에 진행하며 소유/canonical·퇴역/전체 인수는 보류다. Flutter D는 [1528PASS/미게시 완료 보고](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207225790)이며 실기기 인수와 구분한다.

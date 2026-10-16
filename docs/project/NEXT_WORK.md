@@ -1,31 +1,46 @@
 # 현재 작업과 다음 실행
 
-기준일 2026-10-16. **#8 대표 GET/PUT·cooldown 제거 독립 구간 수용·구현/검증·개발 API 적용 완료. L1a/L1b·P1 역할요약·P2 개인설정/원정대표시 작업브랜치 구현/격리검증·게시/인계 완료, Flutter 연결 후속 단계. #7 Completed 종료 확인**.
+기준일 2026-10-16. **#8 Backend L1a/L1b·P1/P2 구현·격리검증·원격 인계 완료, Flutter S1~S3/A1/A2/B/C 코드 연결·모의 자동검증 완료 보고. 기존 테스트 자료/Firebase 시스템은 폐기·미승계 기준이며, 별도 새 빈 DB/최신 P2 API 구성과 장비 관찰 도구 준비를 완료했다. 실제 게임 검증은 사용자 결정으로 나중에 진행한다.** Issue #8은 OPEN이며 실소유/canonical 증거 보류와 Flutter 실인수는 남아 있다.
 
 ## 현재 기준
 
-- Backend 구현/계약 `9e1a255b87b430bca314e8f718fb4176bfe322c8`, 결과 문서를 포함해 dev 통합772b90e, 최종 통합기록72f6301·문서821c758 push 완료. 현재 작업브랜치feat/representative-selection의 L1a6f3d029/L1bc91af2e는 별도게시·dev미통합이며, feat/member-settings 로컬·원격 정리 완료. main은 유지한다. [인계](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6172992882)·[실행/계약](../ISSUE_7_DEVELOPMENT.md).
-- 회원별 암호화 키·전체 REST 개인 키 전환·공용 JWT 제거, 별도 restore POST·token별 대기시간·오류/PowerResult 시간 필드 구현. 로컬 DB0006/API/OpenAPI 일치, 기존 자료 보존. Backend 검증은 실행 안내의 단계별 실제 결과가 기준.
-- [Flutter 최신 결과 회신](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6173350024): 같은 9e1a255 계약 소비, feature/member-lostark-key에서 등록/교체/삭제·복원/보안저장·회원/late 응답·부분실패·제한 안내/명시 재시도·strict DTO 연결 완료 보고.
-- Flutter 전체1246개PASS 후 metadata조회실패 보완 관련12개PASS·최종analyze0·debugAPK 성공 보고. 표적58개도 별도 결과이며 전체1258개 단일검증으로 표현하지 않는다. **Flutter 구현8644c81·dev통합cc6a0b0 push 완료**. [최종 Git 인계](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6174013475)와 GitHub 원격 dev/compare로 확인했다(구현 포함·파일차이0). 이후 [사용자 결과](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6173934017)로 키 등록/삭제·캐릭터 검색 등 현재 구간 정상 동작을 확인했다. 실제 패킷/원문 키 관찰로 확대하지 않으며 재설치/별도기기는 후속 미확인. Backend 추가 수정/재시험 요청 없음.
+| 구간 | 구현/계약·상태 |
+|---|---|
+| 통합 기준 | dev `821c758`, main `e6c72e4`. #1~#7 CLOSED, #6/#7까지 dev 통합·게시 완료 |
+| #8 작업 브랜치 | `feat/representative-selection`, 게시 HEAD `906e0ef`(P2 인계 기록). #8 구간은 dev/main 미통합 |
+| 대표 선택 | `cd3e003`: GET/PUT·cooldown 제거, 개발 API 적용·[인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6184483999) 완료 |
+| L1a/L1b | `6f3d029`/`c91af2e`: 생명주기/세대 기반·V2 현재/이력 조회, 격리검증·[인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6186143574) 완료 |
+| P1/P2 | `6e4f625`/`7027f0b`: 역할요약·개인설정/원정대 표시·내부 정리, 격리검증·[P1](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6194881739)/[P2](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6195735441) 인계 완료 |
+| 실제 실행 환경 | 원본8000/DB0006 healthy 유지. 새 `lostparty-fresh-dev` API8001/DB0009 healthy·P2 계약 전체일치·사용자/등록/캐릭터/개인자료 각0건 확인. 구자료 import 없음. [구성](../ISSUE_8_LOCAL_TRANSITION_READINESS.md) |
+| Flutter 최신 | [D 완료 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207225790)1528PASS 보고, 소비 P2 `7027f0b`. `feature/scoped-account-cache`/기준 `cc6a0b0`, D 포함 미커밋·미push·dev 미반영·새 인계 SHA 없음 |
 
-## 다음 실행
+Flutter C는 앱 수명 실행기·canonical 회원 주목록·역할/개인설정 복원·진행/상세 재시도와 서버 전송 재시도·충돌 해결 UI까지 연결했다. C 당시 구 기기자료 별도 경로가 남았으나 아래 제품/UX 기준으로 D 정리 대상과 필요한 공유 로직을 구분한다. 기본 `BACKEND_LIFECYCLE_READS_ENABLED=false`이고 실서버/provider·기기/재설치 인수는 미확인이다. 대표 왕관 변경·활동 선택의 별도 연동/인수는 이 읽기·개인설정 연결 완료로 간주하지 않는다.
 
-- [Issue #8](https://github.com/heo0328/lostparty-backend/issues/8) [대표 계약 수용/구현 요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6184322765)에 따라 대표 GET/PUT·기존5분제한 제거를 독립 구현했다. [계약](../ISSUE_8_REPRESENTATIVE_CONTRACT_DRAFT.md)·[실행/검증](../ISSUE_8_REPRESENTATIVE_DEVELOPMENT.md). 표적75개 후 보완37개 각각PASS·개발API healthy/OpenAPI전체일치, DBmigration없음. feat/representative-selection 구현/OpenAPI `cd3e003eb058ee5de761563d25c418d0e45ac526` commit/push·원격일치·[인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6184483999) 완료, dev/main 미통합. 다음은 Flutter의 strictDTO·왕관/알럿·GET/멱등복구·관리draft경합 연결/인수 회신이다. 소유/활동/ID매핑 준비·실기기인수는 별도이며 인증우회하지 않는다. #8 L1a 기반·L1b V2조회는 아래와 같이 완료했다. 공식 증거 조사도 완료했으며, 실제 소멸 확정·정리와 live 증거 확보는 별도 보류다.
+## 개발/베타/운영 기준과 추가 확인
 
-- **Backend L1a/L1b 구현·게시 완료**: [최신 수용/구현 요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6185091368)으로 이전 L1미수용/수정요청없음 상태를 대체한다. L1a의 기존UUID/FK보존·lifecycle/revision·NameClaim/이력기반/migration파일·이름단독추론/복구차단·세대별캐시/lease·쓰기 fencing을 구현하고 격리검증·원격게시·인계했다. 이어 L1b V2현재상태/퇴역이력GET·필수nullable/현재revision/cursor/읽기전용도 구현·검증·원본OpenAPI게시했다. V1새필드/enum추가없음·의미변화/오류는인계에열거. 실제개발/운영DBmigration/backfill/삭제·API재기동/배포·live퇴역/claim해제·장비보류해제·V2refresh/lookup-recovery·파티전체·Issue종료는이번범위밖이다. FlutterUI/로컬문서게시를착수조건으로두지않는다. L1a 구현/OpenAPI6f3d029·격리185PASS·[선행인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6186038066) 완료. L1b V2현재상태/이력GET2개·113PASS 후preview신선도보완관련57PASS(별도실행)·이미지OpenAPI일치검증 완료. [실행/인계](../ISSUE_8_LIFECYCLE_DEVELOPMENT.md). L1b 구현/OpenAPI `c91af2e003877daacb833aaa0c109eae11b72816`도일반push·[별도인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6186143574) 완료. Flutter의게시계약소비·서버ID/활동/대표연결회신이후속이다. 실제개발DB/실행API는기존대표구간이며재시작하지않는다.
-- **Flutter S3b 구현·모의검증 완료**: [최신 구현 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6190026125)에서 S1/S2/S3a에 이어 gated 앱 DI/Router·현재상태/회원이력 화면 연결 완료, 최종전체1394PASS/분석0을 보고했다. 모의HTTP/SQLite 결과이며 실제 V2 서버/실기기 인수는 미확인이다. feature/scoped-account-cache(cc6a0b0 기반), 미커밋·미push·dev미반영·새SHA없음. 시작 플래그 기본OFF·왕관변경/활동선택 연결은 별도. 실제DB/API전환은 별도 승인/준비 후다.
-- **역할요약 P1 구현·격리검증·게시/인계 완료**: [계약수용/P1 요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6193638580)에 따라 GET personal-profile·PUT role-summaries/dealer|support·0008 additive migration·원본OpenAPI를 구현했다. [실행/범위](../ISSUE_8_ROLE_SUMMARIES_DEVELOPMENT.md). 격리108PASS 후 세션/UUID/lease/migration 추가 및 직접영향171PASS(별도실행), 기존paths/components/policy불변·이미지OpenAPI일치. preferences는 P2미구현고정기본값이며개인설정PUT/원정대표시API·정리후처리미제공. 구현/OpenAPI `6e4f625c3b62c92ec412373b33ed8a3441af8149` 일반push·원격동일SHA 확인·[P1 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6194881739) 완료, dev/main미통합. 다음Flutter가 이 게시원본으로adapter/영속대기를연결하고sameIssue에결과를회신한다. P2는아래별도구현/게시완료, 실제0007/0008DB/API전환·플래그ON/배포·liveproof/퇴역/삭제는별도다.
-- **P2 개인설정/원정대 표시 구현·격리검증·게시/인계 완료**: [P1 수신/P2 요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6195124835)에 따라 선호역할/visible/rank PUT·personal-profile 실제복원·원정대표시 GET/PUT·0009 additive migration·내부퇴역 UUID 대상 역할요약/개인설정 정리를 구현했다. [실행/경계](../ISSUE_8_PERSONAL_PRESENTATION_DEVELOPMENT.md). P1 가상preferences const를 PersonalPreferences로 교체하는 schema 호환변경이며 역할요약 wire는 유지한다. 수정후128PASS 및 추가복구/직접영향143PASS(별도실행), 최신이미지OpenAPI전체일치. 구현/OpenAPI `7027f0b690e1c232fafc5d09faa9d6c169c99962` 일반push·원격동일SHA확인·[P2 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6195735441) 완료/dev/main미통합. 다음Flutter는이게시원본으로실제preferences/원정대표시adapter·저장/대기·모의검증결과를sameIssue에회신한다. Flutter P1 adapter는 독립진행, P2는 게시원본 소비 후 연결한다. 실제0007/0008/0009DB/API전환·liveproof/퇴역/삭제는범위밖이다.
-- **Backend 독립 준비**: [실제 DB/API 전환 준비·복구 기준](../ISSUE_8_LIFECYCLE_DEVELOPMENT.md#실제-dbapi-전환-전-준비와-복구-기준)을 정리했다. 준비 문서 작성과 실제 적용을 구분한다. 0007은 downgrade 불가이므로 향후 전환 승인 전에 복원 검증과 쓰기 중단/복구 범위를 정해야 한다. 현재는 실제 DB/API 조작 없이 P1 게시/Flutter 계약 소비와 별도 전환 승인을 추적한다.
+[Flutter 방침 대조 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6206739088)을 수신했다. 개발 중 자료 생성/삭제→베타 직전 개발 사용자/서버 기록 전체초기화→문제없으면 베타 자료를 보존해 운영으로 이어간다. 현재 즉시 모든 자료 삭제를 지시한 것으로 확대하지 않는다. Firebase/구자료 승계·보존형 백업/복원리허설은 필수조건에서 제외한다.
 
-1. #7 Flutter 구현 게시/통합과 현재 구간 사용자 정상 보고는 확인 완료다. 같은 자료/정상 흐름의 반복 테스트를 요청하지 않는다. Backend 새 수정 요청 없음.
-2. Backend dev 통합·원격 게시·완료 브랜치 정리를 확인했다. #8은 Backend L1a/L1b 게시 완료 이후 Flutter S3b 연결 완료·신규 역할요약/개인표시 계약 검토·활동/대표 연결과 별도 서버 전환을 추적한다. 사용자 지시로 Backend에서 #7을 Completed 종료하고 CLOSED를 확인했다([종료 근거](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6183029637)). Backend 추가 구현/시험은 대기하지 않는다.
-3. 재설치/별도기기·실provider429/헤더·운영TLS는 별도 미확인. 전체앱 문구점검·전체빌드자동갱신 시작순서는 Flutter 후속이다. 이번 구간의 추가시험/구현 요청이 아니며 원문자료·한도소진시험을 요구하지 않는다.
+[제품/UX 공유](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6206946439)와 [인수 경계 답변](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6206873992)을 대조해 [Backend 검토 수용](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207049997)을 회신했다. 기능/비로그인 UX는 유지하고 Firebase 전용 연결/실행·구자료 승계만을 위한 의존을 분리한다. Drift/로컬DB·정수ID·순수분석mapper는 그 자체가 폐기 대상이 아니다. [D 완료 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207225790): 환경별 새 로컬DB/guest키·구자료 진입 제거, 제품 기능 유지. 최종1528PASS/lib-test분석0 보고이며 미커밋·미push·실기기 미확인이다.
 
-## 다른 범위
+추가 canonical 인수 질문은 답변 수신으로 해소됐고 현재 추가 제품 질문/P2 계약 변경 요청이 없다. 새 로그인/키/설정/preview·보류 안내와 실제 소유/canonical·활동 대상 준비가 필요한 저장/자동갱신/복원 실인수를 분리한다. live proof는 Backend 후속으로 남지만 독립적인 D/새 DB 구성 준비를 막지 않는다. Flutter는 실제 D 결과/새 계약 차이가 생길 때 회신하며 같은 정책 대조를 반복 요청하지 않는다.
 
-- #6: [최종 인계](https://github.com/heo0328/lostparty-backend/issues/6#issuecomment-6170736672) 확인. Flutter2e0764f/dev5cee9648 push·사용자3흐름 성공, Issue CLOSED. 기존 게시/인수 대기 기록은 이 확인으로 대체한다. 전체 자동빌드/새환경 인수는 별도다.
-- #5: 전투력39188d5·Flutter6beb55e/devccc6b23 Git 인계·사용자3흐름 확인, dev 통합 완료.
-- #3/#4/#5는 CLOSED이며 미완료 연계는 Flutter 주도로 분리됐다([#3 종료·후속](https://github.com/heo0328/lostparty-backend/issues/3#issuecomment-6168888648), [#4 종료·후속](https://github.com/heo0328/lostparty-backend/issues/4#issuecomment-6168889958), [#5 종료·후속](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6168891346)). #4 삭제 후 로컬 보존, #3 장비/활동, #2 [인증 후속](../ISSUE_2_FOLLOWUP.md)은 별도.
-- 전체빌드 자동갱신·역할Snapshot/표시환경 전체복원·운영 배포는 이번 키 연결 완료로 확대하지 않는다. #7 Completed 종료 확인. main 변경/키파일 변경/자료 초기화 없음.
+## 다음 실행과 담당
+
+1. **Backend/사용자 — 실제 장비 관찰 후 근거 검토.** [관찰 CLI](../ISSUE_8_OWNERSHIP_READINESS.md) 준비·자동65PASS. 사용자 응답은 “도구 준비 후 나중에 검증”. 준비 시 숨김 로컬 입력으로 장착→지정 부위 해제→재장착을 관찰한다. live proof/canonical 연결·퇴역은 여전히 보류이며 결과를 검토한 뒤 필요한 서버 증거 구현/계약을 정한다. 단순 bool/seed로 해제하지 않는다.
+2. **Backend — 새 빈 환경 준비 완료.** [구성](../ISSUE_8_LOCAL_TRANSITION_READINESS.md): 별도 project/volume, 8001 API·0009/P2 일치, 각 사용자자료0건. 기존8000/0006은 유지했다. 원본 삭제/자료복원/운영배포는 없다. 이후 변경은 새 환경을 대상으로 명시한다.
+3. **Flutter/사용자 — D 이후 기본 실인수·게시.** [D 결과](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207225790) 1528PASS는 Flutter 모의/임시SQLite 검증 보고다. 새 API8001에 도달하는 모바일/에뮬레이터 주소를 확인한 뒤 로그인·키·설정·preview/보류 안내·guest 새 자료 흐름을 검증한다. 기본OFF를 임의로 성공 조건으로 바꾸지 않는다. D 포함 실제 커밋 SHA·push/dev 상태는 아직 미회신이다.
+4. **양측 — 소유 필요 실인수는 준비 후.** 실제 소유/canonical·현재 등록/roster·활동 대상이 준비된 후 역할/표시 저장·자동갱신/나이스단 OFF 제외·재로그인/새 기기 복원을 확인한다. 활동/왕관 UI는 별도 미완료다. 빈0건/fixture로 완료 처리하지 않는다.
+
+## 검증 근거와 완료 경계
+
+- Backend L1a 185PASS, L1b 113PASS/보완57PASS, P1 108PASS/최종171PASS, P2 수정후128PASS/최종143PASS는 각각 별도 격리 PostgreSQL/mock 실행이다. 실제 결과/초기 실패와 보완은 [L1](../ISSUE_8_LIFECYCLE_DEVELOPMENT.md), [P1](../ISSUE_8_ROLE_SUMMARIES_DEVELOPMENT.md), [P2](../ISSUE_8_PERSONAL_PRESENTATION_DEVELOPMENT.md) 안내와 DEV_LOG가 기준이다.
+- Flutter [A1](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6196135272) 1432PASS, [A2](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6196639685) 전체1479PASS 이후 국소47/2PASS, [B](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6197379381) 전체1514PASS 이후 B35PASS, [C](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6197881822) 최종전체1524PASS 보고다. 각 실행을 합산하지 않는다. 최종 lib/test 분석 문제0, 저장소 전체 analyze는 기존 사용자 tools의 info3건이 남는다. 임시 SQLite/모의 backend·provider HTTP 결과이며 Backend 자동검증/실기기 인수와 구분한다.
+- live 소유/장비 proof·소멸 확정/퇴역/claim 해제는 보류다. 내부 모의 retirement 정리 구현을 실제 자료 삭제·provider 전체성 증명으로 확대하지 않는다. 전체 자동 갱신의 코드 연결과 실제 운영/사용자 완료는 별도다.
+
+## 다른 범위와 보존
+
+#7 회원키 `9e1a255`·Flutter `8644c81`/dev `cc6a0b0` 게시·현재 구간 사용자 정상 보고와 Completed 종료는 확인 완료다. #6 회원설정 `79255f0`·Flutter `2e0764f`/dev `5cee9648` 게시·사용자3흐름·CLOSED, #5 전투력 `39188d5`·Flutter `6beb55e`/dev `ccc6b23` 게시·사용자3흐름·CLOSED다. 같은 정상 결과의 반복 시험을 요청하지 않는다.
+
+#3/#4에서 분리한 활동/장비·삭제 후 로컬 보존, [인증 후속](../ISSUE_2_FOLLOWUP.md), 재설치/별도기기·실provider 한도/헤더·운영 TLS·탈퇴/약관·모집/파티/그룹·운영 배포는 각 후속 범위다. 완료 작업 브랜치 feat/member-settings는 정리됐으며 진행 중 #8 브랜치는 미통합이므로 유지한다.
+
+이번 구간은 도구·새 환경 구성을 검증해 작업 브랜치에 게시·같은 Issue에 인계한다. P2 REST/OpenAPI 계약 변경은 없다. Git 통합/운영배포/자료삭제/Issue 종료는 수행하지 않는다.

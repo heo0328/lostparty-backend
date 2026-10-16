@@ -326,6 +326,10 @@ def test_model_migration_consistency():
     from alembic.migration import MigrationContext
     from app.core.database import engine
     from app.auth.models import Base
+    # Load every model even when this test runs without an API client fixture.
+    from app.game_accounts import models as game_models
+    from app.lostark_keys import models as key_models
+    from app.member_settings import models as settings_models
     with engine().connect() as connection:
         # Application-owned external tables are absent in isolated test DB.
         assert compare_metadata(MigrationContext.configure(connection),Base.metadata)==[]
