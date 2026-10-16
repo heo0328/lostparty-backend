@@ -10,7 +10,7 @@
 |---|---|
 | 통합 기준 | dev `821c758`, main `e6c72e4`. #1~#7 CLOSED. #8은 dev/main 미통합 |
 | #8 Backend | 대표 `cd3e003`, L1a/L1b `6f3d029`/`c91af2e`, P1/P2 `6e4f625`/`7027f0b` 구현·격리검증·원격 인계 완료. P2 계약 유지 |
-| 현재 작업 브랜치 | `feat/representative-selection`, 준비구현 `4bdaea6`, 서버반영/정정문서 `848f51a` push·[결과 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6208224731) 완료 |
+| 현재 작업 브랜치 | `feat/representative-selection`, 준비구현 `4bdaea6`, 권한/비노출 구현·계약 `59b8c23` push·[결과 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209379848) 완료 |
 | 사용하던 개발환경 | 기존 Docker/포트8000/DB 자료를 유지해 0007~0009·최신P2 API 반영 완료. DB0009·API/DB healthy·health ok·OpenAPI 전체일치·기존 전 테이블의 원래 컬럼/행 내용 동일 확인. 초기화/새환경 전환 없음 |
 | 별도8001 환경 | 구성했던 작업 이력이며 현재 개발의 기본 경로/채택 대상/선행조건이 아니다. 이번 정정으로 컨테이너/volume을 삭제·재설정하지 않는다 |
 | Flutter 최신 | [R1 완료6209153163](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209153163): basicOnly/미인증기본조회·과거상세비노출·직접요청권한대조. 최종전체1542PASS·분석0 보고. [항목답변6209178794](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209178794) 및 [Backend 검토](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209205051) 완료. feature/scoped-account-cache/HEADcc6a0b0 위 미커밋·미push·dev미반영. E1복구/E2·인증전환은후속 |
@@ -18,7 +18,7 @@
 
 ## 최신 사용자 채택 정책과 재검토 결과
 
-[정책6208967265](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6208967265): guest는 기본 로컬조회만, 로그인 미인증은 조회용Registration 저장/복원 유지·전투력/상세 제한, 소유인증 후 본인 상세/역할저장 및 별도 활동subset/대표 명시저장. 검색 주액션 ‘인증하고 사용하기’/보조 ‘조회 목록에 저장’. DB/캐시삭제 없이 비노출 처리한다. [Backend 현재차이 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6208988839): 미인증power refresh/replay 및 V1/V2 preview cache노출의 서버권한/응답 변경 필요. 소유profile/역할저장은 기존권한을재사용한다. [Backend 구현](../ISSUE_8_BASIC_ACCESS_DEVELOPMENT.md): 미인증/소유상실power 갱신/replay403·목록/preview 과거수치 비노출 완료, 격리256PASS·기존8000 반영. Flutter R1 소비값과 일치하며 paths/DTO/enum불변·OpenAPI 정책3항목 보완. 실제소유증거구현과별개다.
+[정책6208967265](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6208967265): guest는 기본 로컬조회만, 로그인 미인증은 조회용Registration 저장/복원 유지·전투력/상세 제한, 소유인증 후 본인 상세/역할저장 및 별도 활동subset/대표 명시저장. 검색 주액션 ‘인증하고 사용하기’/보조 ‘조회 목록에 저장’. DB/캐시삭제 없이 비노출 처리한다. [Backend 현재차이 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6208988839): 미인증power refresh/replay 및 V1/V2 preview cache노출의 서버권한/응답 변경 필요. 소유profile/역할저장은 기존권한을재사용한다. [Backend 구현](../ISSUE_8_BASIC_ACCESS_DEVELOPMENT.md): 미인증/소유상실power 갱신/replay403·목록/preview 과거수치 비노출 완료, 격리256PASS·기존8000 반영·`59b8c23` [인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209379848) 완료. Flutter R1 소비값과 일치하며 paths/DTO/enum불변·OpenAPI 정책3항목 보완. 실제소유증거구현과별개다.
 
 [Flutter6208744179](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6208744179): 등록/인증UI는 있으나 registration_id 사전선택·인증성공→E2 전환/전체활동편집 미연결, E1 GET revision에의한pending해제·넓은오류종결판정·재진입미보존 보완필요. 기존질문반복없이 실제보완결과를대기한다.
 
