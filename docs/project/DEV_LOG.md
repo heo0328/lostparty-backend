@@ -882,3 +882,5 @@ Flutter인증관련51PASS후Router영향최종전체1579PASS/분석0·format/dif
 최종관련18시험파일 **483PASS·기존경고1·221.38초**,실패없음/이전실행합산없음. 실제collector+모의HTTP/격리PostgreSQL의본인차단/새이름·Armory0/기발급pending/완료replay·타회원/소유상실도전·삭제재등록/새설정/과거연결부재/퇴역·복수계정·owner경합/최종재검사와기존인증/이력/활동/역할/개인표시/목록/전투력/키회귀를확인했다. 실제기기새정책/개발자료삭제재등록·provider/인증POST/게임장비변경은미실행이다.
 
 개발API반영초기health503으로120초대기가실패했다. 상태확인상기존개발DB컨테이너가API반영보다먼저약36분전Exited(127)로중지돼있었고API기동자체는정상이었다. 기존db컨테이너를start(재생성/볼륨삭제없음)한뒤health API/database ok·DB0010·기존verified소유유지를재확인했다. 읽기전용현재소유정책probe는409 ALREADY_VERIFIED였고실제인증POST가아니다. 전체OpenAPI비교PASS·격리test-db중지,개발자료/키·등록/인증/소유명령을추가실행/초기화하지않았다.
+
+구현/계약/시험/기존결과문서17파일을 `19c2dcc33630078fa0d88a1dd60e11857a44472b`로commit/push·원격일치확인했다. [105번째 Backend 구현/계약인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6228173800) 게시·전체댓글조회로실제순번105확인. 고정SHA·공개409 ALREADY_VERIFIED/등록201 owned·거절우선순위/완료replay·pending확인·타회원/소유상실경계·복구안전조건/모호시unverified·483PASS/실기기미확인·DB기동상태해소를인계했다. 다음Flutter서버오류/복구응답소비·필요구간검증/회신대기. 새실인증/전체시험/새API·키/자료초기화·통합/배포요청없음. 인계기록만갱신하며통과한시험/서버를반복실행하지않는다.

@@ -31,3 +31,5 @@
 최종 관련격리PostgreSQL **483PASS·기존경고1·221.38초**. 앞선직접2실패/84PASS·넓은2실패/480PASS는불가능한NOT NULL fixture와대체된과거본인재인증허용기대였으며정정후최종범위전부통과했다. 실행합산없음. 기존8000개발API만반영·health/전체OpenAPI·DB0010확인. 실제기기새정책/삭제재등록실행·타회원실게임분쟁은미실행이며최초실인증성공과별도다. 게시SHA/Issue링크는결과인계·DEV_LOG에남긴다.
 
 반영시기존개발DB가작업전부터중지돼초기health는503이었다. 기존DB컨테이너를동일볼륨으로start한뒤health/API·DB ok·DB0010·기존소유자료유지와읽기전용정책probe409를확인했다. 이는실제start요청/장비시험을대신한것이아니다.
+
+구현/계약 `19c2dcc33630078fa0d88a1dd60e11857a44472b`·feat/representative-selection commit/push·원격일치/dev-main미통합. [105번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6228173800)로Flutter서버ALREADY/재등록201 owned 소비·기존replay/타인도전경계확인을요청했다. 다음Flutter구간회신대기이며반복실인증/전체기능재시험요청은없다.
