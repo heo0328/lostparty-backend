@@ -11,7 +11,7 @@
 - 이미 needs_reconfiguration인 설정은 GET으로 덮지 않고 기존 선택/대표/revision을 보존한다. 현재 유효한 선택을 기존 명시 전체설정PUT으로 저장하면 configured가 된다. DB 보정/migration/초기화는 없다.
 - OpenAPI x-game-account-policy.activity_selection의 minimum_item_level은 initial_selection_minimum_item_level로 바꾸고1700이 초기기본선택임을 명시한다. HTTP 경로·DTO와 다른 정책은 보존한다.
 
-구체 검증·게시·서버 반영 결과는 [설계/결과](ISSUE_8_MANUAL_ACTIVITY_POLICY_PLAN.md)와 [DEV_LOG](project/DEV_LOG.md), 해당 구현 인계 댓글이 기준이다. 아래는 당시 구현/검증 이력이며 현재 수동 자격으로 적용하지 않는다.
+구현/계약d33f873 push·로컬8000반영·실행OpenAPI일치/health·DB0011유지, [119번째 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6230483893)를완료했다. 활동20/직접회귀244PASS와실제Flutter저장대기를구분한다. 구체 검증·게시·서버 반영 결과는 [설계/결과](ISSUE_8_MANUAL_ACTIVITY_POLICY_PLAN.md)와 [DEV_LOG](project/DEV_LOG.md), 해당 구현 인계 댓글이 기준이다. 아래는 당시 구현/검증 이력이며 현재 수동 자격으로 적용하지 않는다.
 
 # 과거 기록 — 활동 저장1700 검증·초기 대표 연결
 

@@ -1,6 +1,6 @@
 # 수동 활동·대표 선택 정책 정정 작업 구간
 
-2026-10-17. 상태: **구현·자동 검증 완료, 원격 게시/실행 반영 준비**. [118번째 Backend 설계 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6230431817)에 공유했다. 현재 브랜치 `feat/raid-services`, 기준 코드 `ac79ce4`(주간 구현 `bce6133` 포함). 기존 로컬 문서 변경은 보존한다.
+2026-10-17. 상태: **구현·자동 검증·push·로컬 API 반영 완료, Flutter 실제 저장 확인 대기**. [119번째 Backend 구현 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6230483893). [118번째 Backend 설계 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6230431817)에 공유했다. 현재 브랜치 `feat/raid-services`, 기준 코드 `ac79ce4`(주간 구현 `bce6133` 포함). 기존 로컬 문서 변경은 보존한다.
 
 기준은 [115번째 Flutter 사용자 정책 정정](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6230281148), [116번째 Flutter 구현 결과](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6230345749), [117번째 Backend 코드 대조](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6230374459)다. 조회 시 #8 댓글117개, #11 댓글2개, #12/#13 댓글0개였고 #13 본문의 수동 활동 정책도 정정된 것을 확인했다. 댓글 순번과 아래 작업 순서는 다른 의미다.
 
@@ -52,4 +52,4 @@
 - 최초 관련9파일 실행은260PASS/5FAIL/114.83초였다. 실패는신규활동테스트의잘못된자료형1개·NameClaim제약과충돌한fixture1개·명시선택집합과다른helper요청3개였다. 기능의권한차단을완화하지않고테스트자료/요청만수정했다.
 - 보완한 활동파일 **20PASS/12.26초**. 최초실행의다른8파일244PASS와합쳐현재유효한검증범위는총264개이며 단일실행264PASS라고보고하지않는다. 기존Starlette/AnyIO경고1개가있다. 개발DB와분리된PostgreSQL에서실행했고실제사용자저레벨저장시험과구분한다.
 - 최종대상: test_activity_policy / test_representative / test_game_accounts / test_lifecycle_reads / test_owned_roster_refresh / test_power_ownership / test_combat_power / test_raid_catalog / test_raid_weekly. 같은코드의전체483개는반복하지않았다.
-- 원격 게시 후 기존8000 API반영·실행OpenAPI/health/DB0011을확인하고이슈로회신한다. 아직현재단계에사용자실기기성공보고는없다.
+- 구현/계약 `d33f87350f7ef93a19ca800120107194a7a5ee21`을push·원격확인 후 기존8000 API반영·실행OpenAPI전체일치/health/DB0011유지를확인하고 [119번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6230483893)로회신했다. 실행이미지의내부helper확인과실제회원HTTP저장은구분하며사용자실기기성공보고는아직없다.

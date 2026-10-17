@@ -968,3 +968,5 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 최초관련9파일260PASS/5FAIL/114.83초: 신규테스트의잘못된자료형·claim제약불일치·명시선택집합과다른요청이실패원인이었다. 자료/요청을고친활동파일20PASS/12.26초. 다른8파일244PASS와합쳐최종유효검증264개이며단일실행264PASS로표현하지않는다. 기존StarletteAnyIO경고1개. 격리PostgreSQL을사용했고개발DB에시험쓰기는하지않았다.
 - 관련검증은저레벨/레벨미상수동저장·대표변경/no-op·재조회/replay·정상레벨하락선택보존·기존needs_reconfiguration의명시저장정상화·생명주기/claim거절·초기명시draft/타인/소유상실/CAS/rollback과전투력·카탈로그·주간회귀를포함한다. 실제Flutter실기기저장·게임호출성공과구분한다.
 - 테스트완료한구간을같은작업브랜치에commit/push·원격확인후로컬8000 API반영/계약검증·#8결과회신을진행한다. DB0011자료/키유지·migration/초기화없음. 다음독립Backend구간은#12G1명세다.
+
+- 구현/계약 `d33f87350f7ef93a19ca800120107194a7a5ee21`을feat/raid-services로push·원격SHA확인후로컬8000 API반영했다. 실행OpenAPI전체일치/API·DBhealth/카탈로그·주차HTTP200/DB0011유지확인. 실행이미지내부helper의저레벨eligible/전투력기본값분리는확인했지만실제회원저장HTTP성공/실기기로보지않는다. 격리테스트DB중지완료. [119번째 Backend 구현 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6230483893)의순번을실제조회로확인했다. 후행문서도같은브랜치로게시하며dev/main860c84a는유지한다.
