@@ -8,12 +8,12 @@ from sqlalchemy import select, func
 from app.core.database import session, now
 from app.lostark_keys import rate_limits, service
 from app.lostark_keys.models import ProviderLimit, Credential
-from app.game_accounts.models import PowerCache, RequestResult
+from app.game_accounts.models import ScopedPowerCache as PowerCache, RequestResult
 from app.game_accounts.support import GameError
 from app.game_accounts import power_service
 from app.game_accounts.provider import LostArkProvider
 from tests.test_lostark_keys import member, put, delete, TOKEN, URL
-from tests.test_game_accounts import world, change, BASE, register, page, PrivateHeaders
+from tests.test_game_accounts import world, change, BASE, register, page, PrivateHeaders, verify
 
 RESTORE=URL+'/restore'
 
@@ -140,7 +140,7 @@ def test_success_remaining_zero_keeps_current_success(client,member,monkeypatch)
 
 
 def test_batch_partial_timing_and_original_replay(client,world,monkeypatch):
-    h,_=world;r=register(client,h); fp=service.fingerprint('test.member.signature')
+    h,state=world;r=register(client,h);verify(client,h,state,r['registration_id']); fp=service.fingerprint('test.member.signature')
     def fetch(pair,token,observer=None):
         if pair[1]=='a0': return 'available','100',None
         observer(429,{})
@@ -159,7 +159,7 @@ def test_batch_partial_timing_and_original_replay(client,world,monkeypatch):
 
 
 def test_late_transport_limiter_keeps_old_token_only(client,world,monkeypatch):
-    h,_=world;r=register(client,h)
+    h,state=world;r=register(client,h);verify(client,h,state,r['registration_id'])
     entered,finish,recorded=Event(),Event(),Event()
     oldfp=service.fingerprint('test.member.signature')
     def delayed(pair,token,observer=None):
@@ -221,7 +221,7 @@ def test_server_quota_and_upstream_max_deadline_json(client,member,monkeypatch):
 
 
 def test_expired_upstream_wait_not_hidden_by_failure_cache(client,world,monkeypatch):
-    h,_=world;r=register(client,h);fp=service.fingerprint('test.member.signature')
+    h,state=world;r=register(client,h);verify(client,h,state,r['registration_id']);fp=service.fingerprint('test.member.signature')
     path=BASE+'/'+r['registration_id']+'/combat-power/refresh'
     data={'characters':[{'server_name':'sample-server','character_name':'a0'}]}
     def limited(pair,token,observer=None):

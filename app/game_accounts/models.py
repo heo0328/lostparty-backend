@@ -47,7 +47,10 @@ class Character(Base):
     fetched_at = stamp()
     confirmed_at = stamp()
     power_fetched_at = stamp(nullable=True)
-    __table_args__ = (UniqueConstraint('server_name', 'character_name'), UniqueConstraint('account_id', 'id'),
+    lifecycle_state = mapped_column(String(16), nullable=False, default='active')
+    lifecycle_revision = mapped_column(Integer, nullable=False, default=1)
+    __table_args__ = (UniqueConstraint('id', 'server_name', 'character_name', name='uq_character_identity_address'),
+                      CheckConstraint("lifecycle_state IN ('active','suspect','retired') AND lifecycle_revision > 0", name='ck_character_lifecycle'), UniqueConstraint('account_id', 'id'),
                       CheckConstraint("status IN ('confirmed','suspect','missing')"))
 
 
@@ -96,9 +99,33 @@ class Verification(Base):
     expires_at = stamp(index=True)
     terminal_at = stamp(nullable=True)
     result = mapped_column(JSONB, nullable=True)
+    identity_snapshot = mapped_column(JSONB, nullable=True)
     attempt_count = mapped_column(Integer, nullable=False, default=0)
     last_checked_at = stamp(nullable=True)
     __table_args__ = (CheckConstraint("status IN ('pending','verified','expired','cancelled')"),)
+
+
+class VerificationExecution(Base):
+    """Internal execution history; references survive challenge/dedup cleanup."""
+    __tablename__ = 'verification_executions'
+    command_id = mapped_column(UUID, primary_key=True)
+    generation = mapped_column(Integer, primary_key=True)
+    actor_id = mapped_column(ForeignKey('users.id'), nullable=False, index=True)
+    operation = mapped_column(String(16), nullable=False)
+    requested_target = mapped_column(UUID, nullable=True)
+    challenge_id = mapped_column(UUID, nullable=True, index=True)
+    lookup_name = mapped_column(String(64), nullable=True)
+    target_snapshot = mapped_column(JSONB, nullable=True)
+    started_at = stamp()
+    finished_at = stamp(nullable=True)
+    state = mapped_column(String(16), nullable=False, default='running')
+    http_status = mapped_column(Integer, nullable=True)
+    outcome_code = mapped_column(String(64), nullable=True)
+    __table_args__ = (
+        CheckConstraint('generation > 0'),
+        CheckConstraint("operation IN ('start','confirm','cancel')"),
+        CheckConstraint("state IN ('running','completed','failed')"),
+    )
 
 
 class Audit(Base):
@@ -167,3 +194,129 @@ class PowerCache(Base):
     lease_expires_at = stamp(nullable=True)
     credential_version = mapped_column(Integer, nullable=True)
     __table_args__ = (CheckConstraint("status IN ('unknown','available','unavailable','failed') AND generation >= 0"),)
+
+
+class NameClaim(Base):
+    __tablename__ = 'character_name_claims'
+    server_name = mapped_column(String(64), primary_key=True)
+    character_name = mapped_column(String(64), primary_key=True)
+    character_id = mapped_column(UUID, nullable=False, unique=True)
+    revision = mapped_column(Integer, nullable=False, default=1)
+    __table_args__ = (
+        ForeignKeyConstraint(['character_id', 'server_name', 'character_name'],
+                             ['game_characters.id', 'game_characters.server_name', 'game_characters.character_name']),
+        CheckConstraint('revision > 0'),
+    )
+
+
+class CharacterRoleSummary(Base):
+    __tablename__ = 'character_role_summaries'
+    user_id = mapped_column(ForeignKey('users.id'), primary_key=True)
+    character_id = mapped_column(ForeignKey('game_characters.id'), primary_key=True)
+    ownership_revision = mapped_column(Integer, primary_key=True)
+    role = mapped_column(String(16), primary_key=True)
+    version = mapped_column(Integer, nullable=False)
+    summary = mapped_column(JSONB, nullable=False)
+    saved_at = stamp()
+    __table_args__ = (CheckConstraint("role IN ('dealer','support')"),
+                      CheckConstraint('ownership_revision > 0 AND version >= 1'))
+
+
+class CharacterPersonalPreferences(Base):
+    __tablename__ = 'character_personal_preferences'
+    user_id = mapped_column(ForeignKey('users.id'), primary_key=True)
+    character_id = mapped_column(ForeignKey('game_characters.id'), primary_key=True)
+    ownership_revision = mapped_column(Integer, primary_key=True)
+    preferred_role = mapped_column(String(16), nullable=True)
+    visible = mapped_column(Boolean, nullable=False)
+    display_order = mapped_column(Integer, nullable=True)
+    version = mapped_column(Integer, nullable=False)
+    saved_at = stamp()
+    __table_args__ = (CheckConstraint("preferred_role IS NULL OR preferred_role IN ('dealer','support')"),
+                      CheckConstraint('display_order IS NULL OR display_order >= 0'),
+                      CheckConstraint('ownership_revision > 0 AND version >= 1'))
+
+
+class AccountCharacterPresentation(Base):
+    __tablename__ = 'account_character_presentation'
+    user_id = mapped_column(ForeignKey('users.id'), primary_key=True)
+    game_account_id = mapped_column(ForeignKey('game_accounts.id'), primary_key=True)
+    ownership_revision = mapped_column(Integer, primary_key=True)
+    visible_count = mapped_column(Integer, nullable=False)
+    version = mapped_column(Integer, nullable=False)
+    saved_at = stamp()
+    __table_args__ = (CheckConstraint('visible_count >= 1 AND visible_count <= 200'),
+                      CheckConstraint('ownership_revision > 0 AND version >= 1'))
+
+
+class CharacterHistoryHead(Base):
+    __tablename__ = 'character_history_heads'
+    user_id = mapped_column(ForeignKey('users.id'), primary_key=True)
+    revision = mapped_column(Integer, nullable=False, default=1)
+    __table_args__ = (CheckConstraint('revision > 0'),)
+
+
+class CharacterRetirement(Base):
+    __tablename__ = 'character_retirements'
+    id = pk()
+    character_id = mapped_column(ForeignKey('game_characters.id'), nullable=False, unique=True)
+    user_id = mapped_column(ForeignKey('users.id'), nullable=False, index=True)
+    account_id = mapped_column(ForeignKey('game_accounts.id'), nullable=False)
+    server_name = mapped_column(String(64), nullable=False)
+    character_name = mapped_column(String(64), nullable=False)
+    class_name = mapped_column(String(64), nullable=False)
+    combat_power = mapped_column(String(64), nullable=True)
+    item_level = mapped_column(String(64), nullable=True)
+    power_fetched_at = stamp(nullable=True)
+    item_level_fetched_at = stamp(nullable=True)
+    retired_at = stamp()
+    lifecycle_revision = mapped_column(Integer, nullable=False)
+    history_revision = mapped_column(Integer, nullable=False)
+    __table_args__ = (CheckConstraint('lifecycle_revision > 0 AND history_revision > 0'),)
+
+
+class ScopedPowerCache(Base):
+    __tablename__ = 'scoped_character_power_cache'
+    actor_id = mapped_column(ForeignKey('users.id'), primary_key=True)
+    scope_key = mapped_column(String(64), primary_key=True)
+    character_id = mapped_column(ForeignKey('game_characters.id'), nullable=True)
+    lifecycle_revision = mapped_column(Integer, nullable=True)
+    registration_id = mapped_column(ForeignKey('game_account_registrations.id'), nullable=False)
+    preview_version = mapped_column(Integer, nullable=True)
+    credential_version = mapped_column(Integer, nullable=False)
+    server_name = mapped_column(String(64), nullable=False)
+    character_name = mapped_column(String(64), nullable=False)
+    value = mapped_column(String(64), nullable=True)
+    fetched_at = stamp(nullable=True)
+    checked_at = stamp(nullable=True)
+    status = mapped_column(String(16), nullable=False, default='unknown')
+    reason = mapped_column(String(40), nullable=True)
+    generation = mapped_column(Integer, nullable=False, default=0)
+    lease_expires_at = stamp(nullable=True)
+    __table_args__ = (CheckConstraint("status IN ('unknown','available','unavailable','failed') AND generation >= 0"),
+                     CheckConstraint('credential_version > 0'),
+                     CheckConstraint('(character_id IS NOT NULL AND lifecycle_revision IS NOT NULL AND lifecycle_revision > 0 AND preview_version IS NULL) OR '
+                                     '(character_id IS NULL AND lifecycle_revision IS NULL AND preview_version IS NOT NULL AND preview_version > 0)'))
+
+
+class ScopedRosterCache(Base):
+    __tablename__ = 'scoped_roster_cache'
+    user_id = mapped_column(ForeignKey('users.id'), primary_key=True)
+    credential_version = mapped_column(Integer, primary_key=True)
+    scope_key = mapped_column(String(64), primary_key=True)
+    name = mapped_column(String(64), primary_key=True)
+    roster = mapped_column(JSONB, nullable=False)
+    fetched_at = stamp(index=True)
+
+
+class ScopedRosterLease(Base):
+    __tablename__ = 'scoped_roster_leases'
+    user_id = mapped_column(ForeignKey('users.id'), primary_key=True)
+    credential_version = mapped_column(Integer, primary_key=True)
+    scope_key = mapped_column(String(64), primary_key=True)
+    name = mapped_column(String(64), primary_key=True)
+    generation = mapped_column(Integer, nullable=False, default=1)
+    expires_at = stamp(index=True)
+    completed = mapped_column(Boolean, nullable=False, default=False)
+    roster = mapped_column(JSONB, nullable=True)
+    fetched_at = stamp(nullable=True)

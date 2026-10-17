@@ -61,6 +61,19 @@ def test_tooltip_and_accessories_do_not_affect_proof():
     assert compare_equipment(parse_equipment(gear()), ('무기',), parse_equipment(raw)) == 'EQUIPMENT_MATCHED'
 
 
+@pytest.mark.parametrize('kind', ['나침반', '부적', '보주', '완갑'])
+def test_live_nonproof_categories_do_not_change_six_slot_proof(kind):
+    baseline = parse_equipment(gear() + [dict(Type=kind, Name='old', Grade='유물')])
+    changed = gear()[1:] + [dict(Type=kind, Name='new', Grade='고대')]
+    assert set(baseline) == set(SLOTS)
+    assert compare_equipment(baseline, ('무기',), parse_equipment(changed)) == 'EQUIPMENT_MATCHED'
+    assert compare_equipment(baseline, ('무기',), parse_equipment(gear()[1:])) == 'EQUIPMENT_MATCHED'
+    with pytest.raises(EquipmentIncomplete):
+        required_slots(parse_equipment(gear()[1:] + [dict(Type=kind)]))
+    with pytest.raises(InvalidSnapshot):
+        parse_equipment(gear() + [dict(Type=kind), dict(Type='unrecognized-slot')])
+
+
 @pytest.mark.parametrize('chosen', [(), ('무기', '무기'), ('other',), SLOTS])
 def test_invalid_required_slots(chosen):
     with pytest.raises(InvalidSnapshot):

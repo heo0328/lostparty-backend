@@ -1,0 +1,8 @@
+# New empty local environment. Use with compose.yaml; never import old DB data.
+# docker compose -f compose.yaml -f compose.fresh.yaml ...
+name: lostparty-fresh-dev
+services:
+  api:
+    image: lostparty-backend-api:latest
+    ports: !override
+      - "127.0.0.1:${FRESH_API_PORT:-8001}:8000"

@@ -45,7 +45,7 @@ def test_profile_identity_must_match(raw):
 # Reuse isolated PostgreSQL registration fixtures without Flutter sources.
 from tests.test_game_accounts import world, register, change, BASE, page, verify
 from app.core.database import session, now
-from app.game_accounts.models import PowerCache, Character, Registration
+from app.game_accounts.models import ScopedPowerCache as PowerCache, Character, Registration
 from app.game_accounts import power_service
 from datetime import timedelta
 from sqlalchemy import select, func
@@ -69,9 +69,15 @@ def seed_provider(monkeypatch, value='1234.56'):
     return calls
 
 
-def test_power_unverified_cache_replay_and_summary_preserves(client, world, monkeypatch):
-    h, _ = world
-    r = register(client, h)
+def owned_registration(client, headers, state):
+    registration = register(client, headers)
+    verify(client, headers, state, registration['registration_id'])
+    return registration
+
+
+def test_power_owned_cache_replay_without_activity_selection(client, world, monkeypatch):
+    h, state = world
+    r = owned_registration(client, h, state)
     calls = seed_provider(monkeypatch, '0')
     key = uuid.uuid4()
     response = change(client, h, 'post', endpoint(r), body('a0', 'a0', 'a1'), key)
@@ -84,18 +90,18 @@ def test_power_unverified_cache_replay_and_summary_preserves(client, world, monk
     assert cached.json()['items'][0]['status'] == 'cached'
     assert len(calls) == 2
     p = page(client, h, r['registration_id'])
-    assert p['characters']['items'][0]['character_id'] is None
+    assert p['characters']['items'][0]['character_id'] is not None
     assert p['characters']['items'][0]['power_status'] == 'available'
     initial = items[0]['power_fetched_at']
     assert change(client, h, 'post', BASE + '/' + r['registration_id'] + '/refresh', {}).status_code == 200
     p = page(client, h, r['registration_id'])['characters']['items'][0]
     assert p['combat_power'] == '0' and p['power_fetched_at'] == initial
     with session() as db:
-        assert db.scalar(select(func.count()).select_from(Character)) == 0
+        assert db.scalar(select(func.count()).select_from(Character)) == 3
 
 
 def test_power_partial_unavailable_failure_preserves_good_value(client, world, monkeypatch):
-    h, _ = world; r = register(client, h)
+    h, state = world; r = owned_registration(client, h, state)
     seed_provider(monkeypatch)
     assert change(client, h, 'post', endpoint(r), body('a0', 'a1')).status_code == 200
     with session() as db, db.begin():
@@ -118,19 +124,18 @@ def test_power_partial_unavailable_failure_preserves_good_value(client, world, m
 @pytest.mark.parametrize('bad', [body('a0', 'outside'), {'characters': []}, body(*(['a0'] * 21)),
     {'characters': [{'server_name': 'sample-server', 'character_name': 'a0', 'combat_power': '100'}]}])
 def test_power_whole_input_scope_and_boundaries(client, world, monkeypatch, bad):
-    h, _ = world; r = register(client, h)
+    h, state = world; r = owned_registration(client, h, state)
     calls = seed_provider(monkeypatch)
     assert change(client, h, 'post', endpoint(r), bad).status_code == 400
     assert calls == []
 
 
 def test_power_default_level_skips_without_external_call(client, world, monkeypatch):
-    h, _ = world; r = register(client, h)
+    h, state = world; r = owned_registration(client, h, state)
     with session() as db, db.begin():
-        reg = db.get(Registration, uuid.UUID(r['registration_id']))
-        rows = [dict(v) for v in reg.preview]
-        rows[0]['item_level'], rows[1]['item_level'] = '1699.99', None
-        reg.preview = rows
+        for character in db.scalars(select(Character)):
+            if character.character_name in ('a0', 'a1'):
+                character.summary = dict(character.summary, item_level='1699.99' if character.character_name=='a0' else None)
     calls = seed_provider(monkeypatch)
     response = change(client, h, 'post', endpoint(r), body('a0', 'a1', 'a2'))
     assert response.status_code == 200
@@ -141,7 +146,7 @@ def test_power_default_level_skips_without_external_call(client, world, monkeypa
 
 def test_power_budget_deferred_does_not_late_write(client, world, monkeypatch):
     from threading import Event
-    h, _ = world; r = register(client, h)
+    h, state = world; r = owned_registration(client, h, state)
     entered, finish = Event(), Event()
     def fetch(pair, token, observer=None):
         entered.set(); finish.wait(5)
@@ -157,7 +162,7 @@ def test_power_budget_deferred_does_not_late_write(client, world, monkeypatch):
 
 
 def test_power_revision_changed_during_network_rolls_back(client, world, monkeypatch):
-    h, _ = world; r = register(client, h)
+    h, state = world; r = owned_registration(client, h, state)
     def fetch(pair, token, observer=None):
         with session() as db, db.begin():
             reg = db.get(Registration, uuid.UUID(r['registration_id']))
@@ -172,7 +177,7 @@ def test_power_revision_changed_during_network_rolls_back(client, world, monkeyp
 
 def test_power_quota_exhaustion_deferred_no_call(client, world, monkeypatch):
     from app.game_accounts.support import GameError
-    h, _ = world; r = register(client, h)
+    h, state = world; r = owned_registration(client, h, state)
     calls = seed_provider(monkeypatch)
     def quota(*args): raise GameError('RATE_LIMITED', 429, 2)
     monkeypatch.setattr(power_service.credentials, 'before_call', quota)
@@ -184,8 +189,7 @@ def test_power_quota_exhaustion_deferred_no_call(client, world, monkeypatch):
 
 def test_power_owned_get_and_representative_overlay(client, world, monkeypatch):
     from tests.test_game_accounts import save_data
-    h, state = world; r = register(client, h)
-    verify(client, h, state, r['registration_id'])
+    h, state = world; r = owned_registration(client, h, state)
     p = page(client, h, r['registration_id'])
     assert change(client, h, 'put', BASE + '/' + r['registration_id'] + '/character-settings', save_data(p)).status_code == 200
     seed_provider(monkeypatch, '777')
@@ -198,7 +202,7 @@ def test_power_twenty_targets_and_membership_session_isolation(client, world, mo
     from tests.test_game_accounts import PrivateHeaders
     from app.auth import service as auth_service
     h, state = world; state['count'] = 20
-    r = register(client, h); calls = seed_provider(monkeypatch)
+    r = owned_registration(client, h, state); calls = seed_provider(monkeypatch)
     assert change(client, h, 'post', endpoint(r), body(*[f'a{i}' for i in range(20)])).status_code == 200
     assert len(calls) == 20
     assert client.post(endpoint(r), json=body('a0')).status_code == 401
@@ -216,7 +220,7 @@ def test_power_twenty_targets_and_membership_session_isolation(client, world, mo
 @pytest.mark.parametrize('change_kind', ['delete', 'logout', 'lease'])
 def test_power_rechecks_deleted_session_and_fencing(client, world, monkeypatch, change_kind):
     from app.auth.models import Session
-    h, _ = world; r = register(client, h)
+    h, state = world; r = owned_registration(client, h, state)
     def fetch(pair, token, observer=None):
         with session() as db, db.begin():
             if change_kind == 'delete':
@@ -239,7 +243,7 @@ def test_power_rechecks_deleted_session_and_fencing(client, world, monkeypatch, 
 def test_power_overlap_merges_without_duplicate_profile_call(client, world, monkeypatch):
     from concurrent.futures import ThreadPoolExecutor
     from threading import Event
-    h, _ = world; r = register(client, h)
+    h, state = world; r = owned_registration(client, h, state)
     entered, finish = Event(), Event()
     calls = []
     def fetch(pair, token, observer=None):
@@ -272,7 +276,7 @@ def test_power_profile_only_transport_and_safe_failure(monkeypatch):
 
 def test_power_retention_keeps_good_and_active_claims(client, world, monkeypatch):
     from app.game_accounts.cleanup import clean
-    h, _ = world; r = register(client, h)
+    h, state = world; r = owned_registration(client, h, state)
     seed_provider(monkeypatch)
     assert change(client, h, 'post', endpoint(r), body('a0', 'a1')).status_code == 200
     with session() as db, db.begin():

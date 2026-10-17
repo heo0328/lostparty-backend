@@ -41,17 +41,28 @@ class PatchIn(DTO):
         return self
 
 
+class VerificationTarget(DTO):
+    server_name: Name
+    character_name: Name
+
+
 class StartIn(DTO):
     source: Literal['registration', 'direct_input']
     registration_id: UUID | None = None
     character_name: Name | None = None
+    target_character: VerificationTarget | None = Field(default=None, description='Registration-only selected server/name from saved full roster; requires expected_registration_version. Omit for legacy lookup target; explicit null rejected.')
+    expected_registration_version: Version | None = Field(default=None, description='Required together with target_character; registration version from current GET. Omit both for legacy requests; direct_input forbids both.')
 
     @model_validator(mode='after')
     def source_matches(self):
         if self.source == 'registration':
             valid = self.registration_id is not None and self.character_name is None
+            specified = {'target_character', 'expected_registration_version'} & self.model_fields_set
+            if specified:
+                valid = valid and self.target_character is not None and self.expected_registration_version is not None
         else:
             valid = self.character_name is not None and self.registration_id is None
+            valid = valid and not ({'target_character', 'expected_registration_version'} & self.model_fields_set)
         if not valid:
             raise ValueError('Exactly one source required')
         return self
@@ -193,3 +204,68 @@ class GameErrorDetail(DTO):
 
 class GameErrorOut(DTO):
     error: GameErrorDetail
+
+
+class RepresentativeIn(DTO):
+    character_id: UUID
+    expected_registration_version: Version
+    expected_settings_version: Version
+    expected_ownership_revision: Version
+    expected_roster_revision: Version
+
+
+class RepresentativeOut(DTO):
+    registration_id: UUID
+    game_account_id: UUID
+    is_main: StrictBool
+    registration_version: Version
+    settings_version: Version
+    ownership_revision: Version
+    roster_revision: Version
+    representative_character_id: UUID | None
+    configuration_state: Literal['unconfigured', 'configured', 'needs_reconfiguration']
+    next_change_at: None
+
+
+class LifecycleCharacterOut(CharacterOut):
+    combat_power: str | None
+    power_stale: StrictBool
+    lifecycle_state: Literal['preview', 'active', 'suspect', 'retired']
+    lifecycle_revision: Version | None
+    usable: StrictBool
+    blocked_reason: Literal['OWNERSHIP_REQUIRED', 'CHARACTER_UNUSABLE', 'IDENTITY_CONFLICT'] | None
+
+
+class LifecycleCharactersOut(DTO):
+    registration_id: UUID
+    game_account_id: UUID | None
+    is_main: StrictBool
+    registration_version: Version
+    ownership_status: Literal['unverified', 'owned', 'ownership_lost']
+    ownership_revision: Version | None
+    roster_revision: Version
+    settings: SettingsOut
+    items: list[LifecycleCharacterOut]
+    next_cursor: str | None
+    server_fetched_at: datetime
+
+
+class RetirementOut(DTO):
+    history_id: UUID
+    character_id: UUID
+    game_account_id: UUID
+    server_name: str
+    character_name: str
+    class_name: str
+    combat_power: str | None
+    item_level: str | None
+    power_fetched_at: datetime | None
+    item_level_fetched_at: datetime | None
+    retired_at: datetime
+    lifecycle_revision: Version
+
+
+class RetirementPage(DTO):
+    items: list[RetirementOut]
+    next_cursor: str | None
+    history_revision: Version

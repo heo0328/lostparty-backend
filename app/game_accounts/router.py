@@ -97,3 +97,27 @@ def cancel(challenge_id:UUID,principal:Principal,key:Key):
 @router.put('/me/game-accounts/{registration_id}/character-settings',response_model=s.SettingsOut,responses=common)
 def save(registration_id:UUID,data:s.SettingsIn,principal:Principal,key:Key):
     return result(principal,'settings',key,data.model_dump(),s.SettingsOut,registration_id)
+
+
+async def representative_request(request: Request):
+    from app.game_accounts.support import fail
+    if request.query_params or (request.method == 'GET' and await request.body()):
+        fail('INVALID_REQUEST', 400)
+
+
+@router.get('/me/game-accounts/{registration_id}/representative',
+            response_model=s.RepresentativeOut, responses=common,
+            dependencies=[Depends(representative_request)])
+def representative(registration_id: UUID, principal: Principal):
+    from app.game_accounts import representative as rep
+    return rep.get(principal, registration_id)
+
+
+@router.put('/me/game-accounts/{registration_id}/representative',
+            response_model=s.RepresentativeOut, responses=common,
+            dependencies=[Depends(representative_request)])
+def set_representative(registration_id: UUID, data: s.RepresentativeIn,
+                       principal: Principal, key: Key):
+    from app.game_accounts import representative as rep
+    status, body = rep.put(principal, registration_id, key, jsonable_encoder(data))
+    return JSONResponse(status_code=status, content=jsonable_encoder(s.RepresentativeOut.model_validate(body)))

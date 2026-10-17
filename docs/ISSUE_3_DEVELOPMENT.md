@@ -58,7 +58,7 @@ mutation에는 `Idempotency-Key: UUIDv4`, DTO는 snake_case/unknown field 거절
 }
 ```
 
-current owner/confirmed/같은 계정/최소1명/대표 포함·중복 없음과 세version을 한transaction에서 검사한다. 첫seed는 cooldown없음, 대표가 실제로 바뀐 다음부터5분. 같은대표 재전송은 시각을 바꾸지 않는다. 누락대표 복구도 cooldown우회 없음. 실패는 전체설정을 보존하고 GET next_change_at를 안내한다.
+current owner/confirmed/같은 계정/최소1명/대표 포함·중복 없음과 세version을 한transaction에서 검사한다. #8 수용 계약으로 대표 변경 cooldown을 제거했으며 next_change_at은 항상null이다. 실패는 전체설정을 보존한다. 대표만 바꾸는 메인 원정대 전용 GET/PUT은 [실행 안내](ISSUE_8_REPRESENTATIVE_DEVELOPMENT.md)를 따른다.
 
 configuration_state(unconfigured/configured/needs_reconfiguration)와 ownership_status(unverified/owned/ownership_lost)를 구분한다. suspect/missing 기존ID/선택/대표를 보존하되 부적격ID를 반환하고 자격을 중지한다. 명시적인 유효 설정 저장만 복구하며 빈선택을 성공으로 처리하지 않는다.
 
@@ -83,7 +83,7 @@ register/patch/delete/settings는같은key재시도와관련GET,confirm/cancel�
 | 404 REGISTRATION_NOT_FOUND/CHARACTER_NOT_FOUND/VERIFICATION_NOT_FOUND | 비노출/현재 상태 확인, 다른 회원 자료 추정 금지 |
 | 409 REVISION_CONFLICT/CURSOR_STALE | 최신자료 재조회·사용자 확인 후 명시 save |
 | 409 REGISTRATION_EXISTS/IDENTITY_CONFLICT | 중복/충돌 안내, 자동 병합/이전 금지 |
-| 409 REPRESENTATIVE_COOLDOWN | 설정 보존, GET next_change_at 안내 |
+| 대표 cooldown | #8에서 제거, next_change_at=null. 기존 설정 성공 replay도 폐지된 시각만null로 투영 |
 | 409 REQUEST_IN_PROGRESS | 같은key/payload로 Retry-After 이후 복구 |
 | 409 IDEMPOTENCY_CONFLICT/IDEMPOTENCY_EXPIRED | key 전용/무조건 새key재제출 금지, 상태 확인 |
 | 409 VERIFICATION_EXPIRED/VERIFICATION_CANCELLED | 진행 종료, 자동confirm 없음 |

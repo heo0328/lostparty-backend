@@ -1,6 +1,6 @@
-"""Uncached server-side transport. No logging, retry, redirects or DB writes.
+"""Uncached server-side transport. No retry, redirects or DB writes.
 
-Member REST transport; ownership proof still awaits provider schema evidence.
+Member REST transport; control proof and identity binding are separate callers.
 """
 import json
 from time import monotonic
@@ -15,10 +15,12 @@ _capacity = BoundedSemaphore(2)
 
 
 class ProviderUnavailable(Exception):
-    def __init__(self, reason='UPSTREAM_UNAVAILABLE'):
+    def __init__(self, reason='UPSTREAM_UNAVAILABLE', *, http_status=None, diagnostic_reason=None):
         # Keep exception text free of request URL, credentials and response bodies.
         super().__init__(reason)
         self.reason = reason
+        self.http_status = http_status
+        self.diagnostic_reason = diagnostic_reason
 
 
 class LostArkProvider:
@@ -43,6 +45,7 @@ class LostArkProvider:
             raise ValueError('INVALID_CHARACTER_NAME')
         if not _capacity.acquire(blocking=False):
             raise ProviderUnavailable('UPSTREAM_BUSY')
+        response_status = None
         try:
             deadline = monotonic() + 8
             with self._transport.get(
@@ -50,30 +53,39 @@ class LostArkProvider:
                 headers={'Accept': 'application/json', 'Authorization': f'Bearer {self._token}'},
                 timeout=(3, 5), allow_redirects=False, stream=True,
             ) as response:
+                response_status = response.status_code
                 if self._observer is not None:
                     self._observer(response.status_code, response.headers)
                 if response.status_code != 200:
                     reason = ('LOSTARK_KEY_REJECTED' if response.status_code in (401, 403) else
                               'UPSTREAM_RATE_LIMITED' if response.status_code == 429 else 'UPSTREAM_UNAVAILABLE')
-                    raise ProviderUnavailable(reason)
+                    raise ProviderUnavailable(reason, http_status=response.status_code)
                 media = response.headers.get('Content-Type', '').split(';')[0].strip().lower()
                 if media != 'application/json':
-                    raise ProviderUnavailable('UPSTREAM_INVALID_RESPONSE')
+                    raise ProviderUnavailable('UPSTREAM_INVALID_RESPONSE', diagnostic_reason='content_type')
                 body = bytearray()
                 for chunk in response.iter_content(chunk_size=8192):
                     if monotonic() >= deadline:
-                        raise ProviderUnavailable()
+                        raise ProviderUnavailable(diagnostic_reason='body_deadline')
                     if len(body) + len(chunk) > MAX_BODY_BYTES:
-                        raise ProviderUnavailable('UPSTREAM_RESPONSE_TOO_LARGE')
+                        raise ProviderUnavailable('UPSTREAM_RESPONSE_TOO_LARGE', diagnostic_reason='body_size')
                     body.extend(chunk)
                 try:
                     data = json.loads(body)
                 except (ValueError, UnicodeError, RecursionError):
-                    raise ProviderUnavailable('UPSTREAM_INVALID_RESPONSE') from None
+                    raise ProviderUnavailable('UPSTREAM_INVALID_RESPONSE', diagnostic_reason='json_decode') from None
                 if not isinstance(data, (list, dict)) or not data:
-                    raise ProviderUnavailable('UPSTREAM_INVALID_RESPONSE')
+                    raise ProviderUnavailable('UPSTREAM_INVALID_RESPONSE', diagnostic_reason='body_shape')
                 return data
+        except ProviderUnavailable as error:
+            if error.http_status is None:
+                error.http_status = response_status
+            raise
+        except requests.Timeout:
+            raise ProviderUnavailable(diagnostic_reason='transport_timeout') from None
+        except requests.ConnectionError:
+            raise ProviderUnavailable(diagnostic_reason='transport_connection') from None
         except requests.RequestException:
-            raise ProviderUnavailable() from None
+            raise ProviderUnavailable(diagnostic_reason='transport_other') from None
         finally:
             _capacity.release()

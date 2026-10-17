@@ -1,23 +1,39 @@
 # 현재 작업과 다음 실행
 
-기준일 2026-10-15. **#7 양측 회원 키·복원·호출 제한 구현/자동 검증 완료, 현재 구간 사용자 정상 동작·Flutter dev 게시 확인 완료, Backend dev 통합·push 완료, 네이티브 측 #7 종료 지시 전달**.
+기준일 2026-10-17. 현재 사용하던 로컬 Docker/포트8000·개발자료로 개발을 계속한다. 기본 앱 실행·로그인·키·등록/갱신·인증 완료를 유지하며 새 환경·초기 설정·기본 기능 재인수로 되돌리지 않는다.
 
-## 현재 기준
+## 현재 완료 구간과 통합
 
-- Backend 구현/계약 `9e1a255b87b430bca314e8f718fb4176bfe322c8`, 결과 문서를 포함해 dev 통합772b90e, 최종 기록72f6301·push 완료. 현재 브랜치dev, feat/member-settings 로컬·원격 정리 완료. main은 유지한다. [인계](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6172992882)·[실행/계약](../ISSUE_7_DEVELOPMENT.md).
-- 회원별 암호화 키·전체 REST 개인 키 전환·공용 JWT 제거, 별도 restore POST·token별 대기시간·오류/PowerResult 시간 필드 구현. 로컬 DB0006/API/OpenAPI 일치, 기존 자료 보존. Backend 검증은 실행 안내의 단계별 실제 결과가 기준.
-- [Flutter 최신 결과 회신](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6173350024): 같은 9e1a255 계약 소비, feature/member-lostark-key에서 등록/교체/삭제·복원/보안저장·회원/late 응답·부분실패·제한 안내/명시 재시도·strict DTO 연결 완료 보고.
-- Flutter 전체1246개PASS 후 metadata조회실패 보완 관련12개PASS·최종analyze0·debugAPK 성공 보고. 표적58개도 별도 결과이며 전체1258개 단일검증으로 표현하지 않는다. **Flutter 구현8644c81·dev통합cc6a0b0 push 완료**. [최종 Git 인계](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6174013475)와 GitHub 원격 dev/compare로 확인했다(구현 포함·파일차이0). 이후 [사용자 결과](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6173934017)로 키 등록/삭제·캐릭터 검색 등 현재 구간 정상 동작을 확인했다. 실제 패킷/원문 키 관찰로 확대하지 않으며 재설치/별도기기는 후속 미확인. Backend 추가 수정/재시험 요청 없음.
+- Backend #8의 대표/활동 정책, 캐릭터 생명주기·현재/이력 조회, 역할 요약·개인 설정/표시, 인증 실행 이력·서버 장비 증거, 본인 목록 갱신/조회 기준 복구, 인증 대상 선택, 장비 분류 호환, 현재 소유자 차단·같은 회원 재등록 연결까지 이번 구간 완료다.
+- 최신 구현/계약은 `19c2dcc33630078fa0d88a1dd60e11857a44472b`. [105번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6228173800), [현재 소유자 정책](../ISSUE_8_CURRENT_OWNER_POLICY_DEVELOPMENT.md)이 기준이다. 현재 본인 유효인증의 start/pending confirm은409 ALREADY_VERIFIED, 타회원/소유상실 도전은 허용·장비 확인 후 소유 연결 보류, 완료된 원명령 ACK/현재GET은 유지한다. 같은 회원의 삭제 후 재등록은 확인 가능한 기존 소유에 장비 재인증 없이 연결한다.
+- 최종 관련 격리 PostgreSQL/모의HTTP **483PASS**와 실행 OpenAPI 일치가 검증 기준이다. 이번 문서·통합 작업은 기능 코드를 변경하지 않으며 동일 코드의 테스트를 반복하지 않는다.
+- [98번째 실제1회 인증 성공](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217275533)은 사용자 결과와 서버verified/현재소유/감사1개를 대조했다. 새 정책의 모든 기기 경합/삭제재등록·분쟁 인수까지 확인한 결과는 아니다.
+- 사용자가 현재 구간의 문서 최신화·dev 병합/push·main 동기화·작업 브랜치 정리를 승인했다. 현재 `feat/representative-selection`을 PR로 dev에 통합하고 main을 같은 통합 HEAD로 맞추는 중이다. 최종 SHA/브랜치 정리 결과는 DEV_LOG와 Issue 통합 회신에 기록한다.
 
-## 다음 실행
+## Flutter 완료와 남은 후속
 
-1. #7 Flutter 구현 게시/통합과 현재 구간 사용자 정상 보고는 확인 완료다. 같은 자료/정상 흐름의 반복 테스트를 요청하지 않는다. Backend 새 수정 요청 없음.
-2. Backend dev 통합·원격 게시·완료 브랜치 정리를 확인했다. 새 합의 작업/실제 서버 차이가 보고될 때까지 대기한다. 사용자가 네이티브에 #7 종료 처리를 지시했다고 보고했다. 조회 시 아직 OPEN이며 실제 종료 처리는 네이티브 담당이다. Backend 추가 구현/시험은 대기하지 않는다.
-3. 재설치/별도기기·실provider429/헤더·운영TLS는 별도 미확인. 전체앱 문구점검·전체빌드자동갱신 시작순서는 Flutter 후속이다. 이번 구간의 추가시험/구현 요청이 아니며 원문자료·한도소진시험을 요구하지 않는다.
+본문 제외 댓글 순번은 Backend 작업 단계 번호가 아니다.
 
-## 다른 범위
+| 댓글 | 작성 측·단계 | 상태 |
+|---|---|---|
+| [106번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6228427796) | Flutter 서버ALREADY/재등록201 owned 소비 | 전체1590PASS·분석0 보고, pending 실제상태/ACK복구·새등록ID·unconfigured 정상처리 |
+| [107번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6228564592) | Flutter 상태/숫자 표시 | 최종전체1591PASS·분석0 보고. 정수부/쉼표는 표시만 변경·원본 소수/자격/정렬 보존 |
+| [108번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6228832537) | 사용자 새 기기 확인 수신 | 같은 회원의 서버 원정대 목록·인증 상태와 표시 정상. 전체 캐릭터/활동·역할·자동상세 복원 인수와 구분 |
+| [109번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6228853681) | Flutter dev 통합·후속 분석 | 기능209ce85/dev0a11b71 push/원격일치 보고. 기본flag OFF의 관리 진입/회원 캐릭터 로컬 복원 공백 확인 |
 
-- #6: [최종 인계](https://github.com/heo0328/lostparty-backend/issues/6#issuecomment-6170736672) 확인. Flutter2e0764f/dev5cee9648 push·사용자3흐름 성공, Issue CLOSED. 기존 게시/인수 대기 기록은 이 확인으로 대체한다. 전체 자동빌드/새환경 인수는 별도다.
-- #5: 전투력39188d5·Flutter6beb55e/devccc6b23 Git 인계·사용자3흐름 확인, dev 통합 완료.
-- #3/#4/#5는 CLOSED이며 미완료 연계는 Flutter 주도로 분리됐다([#3 종료·후속](https://github.com/heo0328/lostparty-backend/issues/3#issuecomment-6168888648), [#4 종료·후속](https://github.com/heo0328/lostparty-backend/issues/4#issuecomment-6168889958), [#5 종료·후속](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6168891346)). #4 삭제 후 로컬 보존, #3 장비/활동, #2 [인증 후속](../ISSUE_2_FOLLOWUP.md)은 별도.
-- 전체빌드 자동갱신·역할Snapshot/표시환경 전체복원·운영 배포는 이번 키 연결 완료로 확대하지 않는다. #7 작업 완료·네이티브 종료 처리만 남음. main 변경/키파일 변경/자료 초기화 없음.
+**다음 담당은 Flutter**다. 현재 추가 Backend 구현/재시험/회신 요청은 없다.
+
+1. 기본 `BACKEND_LIFECYCLE_READS_ENABLED=false`에서 `MyAccountPage(basicOnly:true)`가 먼저 반환해 숨겨진 기존 이름 편집·활동 캐릭터 관리 진입을 노출한다. 기존 기능을 새로 만들지 않는다.
+2. 이름 오른쪽 작은 인증 버튼·긴 이름 두 줄을 적용하고 서버 원정대→canonical 전체 목록→역할 요약/개인 설정의 회원·환경별 로컬 복원 연결을 보완한다. 저장 요약 복원과 새 Armory 상세 갱신을 구분한다.
+3. 후속 구현/검증·실기기 확인을 Issue로 인계하면 Backend는 새 요청 범위만 검토한다. flag를 임의 전환하거나 반복 실인증·전체 기본 시험을 선행조건으로 요구하지 않는다.
+
+활동/대표는 명시 저장이다. 대표는 기존 값 유지·없을 때만 유효 후보의 최고 아이템레벨로 초기 draft를 정하고 공통1700 기준을 적용한다. 전체 활동 자동추가/대표 자동저장·메인 자동전환은 하지 않는다.
+
+## 남은 별도 범위와 실행 원칙
+
+- 타회원 분쟁·소유권 이전/24시간 수동 방어·자동 소멸확정/퇴역은 별도 보류다. 현재 타인 챌린지/장비 제어 확인을 소유 이전 완료로 보지 않는다.
+- 앱 프로세스 종료로 원 key/body가 소실된 미확정명령의 영속복구는 미제공이다. 앱 수명 내 동일명령 복구와 구분하며 새 journal/API를 임의 추가하지 않는다.
+- Issue #8은 후속 추적을 위해 열린 상태를 유지한다. 현재 Backend 구간 완료가 Flutter 후속·Issue 전체·운영 완료를 뜻하지 않는다.
+- 다음 Backend 변경이 필요하면 최신 dev에서 목적별 작업 브랜치를 만들고 같은 Issue의 최신 합의를 확인한다.
+- 기존 DB0010·개발자료/키를 유지한다. 사용자 지시의 베타 직전 시점에만 DB 내용 초기화를 별도 수행한다. Firebase/기기자료 삭제·이름 기반 병합·이관, 별도8001 채택·백업/복원 마이그레이션은 하지 않는다.
+- Lightsail 운영 배포는 별도다. 이번 Git 통합으로 서버/DB 재시작·배포·자료 삭제를 실행하지 않는다. 상세 검증/장애/결정은 [DEV_LOG](DEV_LOG.md), 기능별 기준은 [AI_CONTEXT](AI_CONTEXT.md)를 따른다.

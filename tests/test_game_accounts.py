@@ -26,13 +26,21 @@ def world(monkeypatch, login, client):
     headers=PrivateHeaders(Authorization='Bearer '+auth['access_token'])
     assert client.put('/v1/me/lostark-api-key', headers={**headers, 'Idempotency-Key': str(uuid.uuid4())},
                       json={'token': 'test.member.signature', 'expected_version': 1}).status_code == 200
-    state={'removed':(), 'validated':True, 'missing':(), 'count':3, 'group':'a', 'calls':0}
+    state={'binding':True, 'continuity':True, 'removed':(), 'validated':True, 'missing':(), 'count':3, 'group':'a', 'calls':0}
     def fetch(name, proof=False, **kwargs):
         state['calls']+=1
         rows=[dict(server_name='sample-server',character_name=f"{state['group']}{i}",class_name='sample-class',
                    character_level=60,item_level='1700.00',combat_power=None) for i in range(state['count']) if i not in state['missing']]
         gear=parse_equipment([dict(Type=s,Name='sample-'+s,Grade='고대') for s in SLOTS if s not in state['removed']]) if proof else None
-        return observations.Observation(rows,datetime.now(timezone.utc),gear,state['validated'])
+        binding=None
+        if state['binding']:
+            from app.game_accounts import lifecycle
+            with session() as db:
+                candidate=db.scalar(select(Account).join(Character).where(Character.character_name.like(state['group']+'%')))
+                if candidate:
+                    ids=list(db.scalars(select(Character.id).where(Character.account_id==candidate.id))) if state['continuity'] else []
+                    binding=lifecycle.evidence(db,candidate,continuity_ids=ids)
+        return observations.Observation(rows,datetime.now(timezone.utc),gear,state['validated'],binding=binding)
     monkeypatch.setattr(observations,'fetch',fetch)
     return headers,state
 
@@ -127,7 +135,7 @@ def test_registration_strict_input(client,world,extra):
     assert change(client,h,'post',BASE,data).status_code==400
 
 
-def test_ownership_first_seed_cooldown_atomicity(client,world):
+def test_ownership_first_seed_no_cooldown_atomicity(client,world):
     h,state=world; r=register(client,h)
     initial=page(client,h,r['registration_id'])
     assert all(i['character_id'] is None for i in initial['characters']['items'])
@@ -142,13 +150,16 @@ def test_ownership_first_seed_cooldown_atomicity(client,world):
     replacement=next(i for i in ids if i != original_rep)
     second=change(client,h,'put',BASE+'/'+r['registration_id']+'/character-settings',save_data(p,ids,replacement))
     assert second.status_code==200,second.text
-    assert second.json()['next_change_at'] is not None
+    assert second.json()['next_change_at'] is None
     p=page(client,h,r['registration_id'])
     attempted=change(client,h,'put',BASE+'/'+r['registration_id']+'/character-settings',save_data(p,[original_rep],original_rep))
-    assert attempted.json()['error']['code']=='REPRESENTATIVE_COOLDOWN'
-    assert page(client,h,r['registration_id'])['settings']==p['settings']
-    # Re-authentication does not reset a valid selection or ownership revision.
-    verify(client,h,state,r['registration_id'])
+    assert attempted.status_code==200
+    assert attempted.json()['next_change_at'] is None
+    p=page(client,h,r['registration_id'])
+    assert p['settings']['activity_character_ids']==[original_rep]
+    # A blocked repeated start does not reset valid settings or ownership.
+    blocked=change(client,h,'post',VERIFY,dict(source='registration',registration_id=r['registration_id']))
+    assert blocked.status_code==409 and blocked.json()['error']['code']=='ALREADY_VERIFIED'
     after=page(client,h,r['registration_id'])
     assert after['settings']==p['settings']
 
@@ -446,11 +457,9 @@ def test_strict_query_and_rollback_character_limit(client,world):
     assert client.get(BASE+'?limit=1&limit=2',headers=h).status_code==400
     state['count']=200
     r=register(client,h);verify(client,h,state,r['registration_id'])
-    with session() as db,db.begin():
-        # Existing 200 canonical identities are retained; new rows cannot silently
-        # push the account over the bound while an older identity becomes suspect.
-        first=db.scalar(select(Character).order_by(Character.character_name))
-        first.character_name='old-name'
+    # A complete 200-row synthetic observation has one new name and omits one
+    # existing identity; it must not silently exceed the canonical bound.
+    state['count']=201; state['missing']=(199,)
     result=change(client,h,'post',BASE+'/'+r['registration_id']+'/refresh',{})
     assert result.status_code==400 and result.json()['error']['code']=='CHARACTER_LIMIT'
     with session() as db:

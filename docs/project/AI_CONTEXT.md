@@ -1,27 +1,28 @@
 # LostParty Backend 프로젝트 지도
 
-기준일 2026-10-15. 실행 계획은 [NEXT_WORK](NEXT_WORK.md), 완료·장애·검증 이력은 [DEV_LOG](DEV_LOG.md)에 둡니다. 이 지도에 긴 계획이나 실행 결과를 복제하지 않습니다.
+기준일 2026-10-17. 다음 실행은 [NEXT_WORK](NEXT_WORK.md), 완료·검증·장애·Git 이력은 [DEV_LOG](DEV_LOG.md)가 기준이다. 아래는 현재 기능 상태와 기준 링크이며 과거 구현 문서의 당시 미완료/브랜치 상태와 구분한다.
 
-| 영역 | 핵심 상태·기준 위치 |
+## 기준 상태
+
+현재 Backend #8 작업 구간은 완료했다. 사용자 승인으로 작업 브랜치를 dev에 PR 통합하고 main을 같은 HEAD로 동기화·완료 브랜치 정리 중이다. 최종 결과는 NEXT_WORK·DEV_LOG·Issue 통합 회신에 기록한다. 최신 구현/계약 `19c2dcc`는 기존 로컬 Docker/포트8000·DB0010에 반영됐고 관련 격리483PASS/전체OpenAPI 일치를 확인했다. 이번 통합은 코드·실행환경/자료·키/flag를 변경하지 않는다.
+
+| 영역 | 현재 상태·기준 |
 |---|---|
-| 실행 기반 | Python 3.12·FastAPI·PostgreSQL 17·Docker Compose. [README](../../README.md), [개발 흐름](../DEVELOPMENT_WORKFLOW.md) |
-| 기존 health | DB 연결 /health 유지. `app/main.py`, [원본 OpenAPI](../../openapi/openapi.yaml) |
-| Google 인증·세션 | 6개 API·DB migration·검증/인계 완료, #2 Backend1차범위Completed. emulator 로그인·회원저장/모바일기본흐름 보고확인,전체세션/실기기/release는별도후속. `app/auth`, `app/core`, [인증 개발 안내](../AUTH_DEVELOPMENT.md) |
-| API·데이터 정책 | [합의 계약](../ISSUE_2_AUTH_CONTRACT_DRAFT.md), [복구 설계](../ISSUE_2_REFRESH_RECOVERY.md), [Issue #2](https://github.com/heo0328/lostparty-backend/issues/2) |
-| 인증 후속 #2 | 탈퇴/재가입·약관·운영 정지 정책/구현, 실기기/release·전체세션·운영 인수는 [후속 목록](../ISSUE_2_FOLLOWUP.md) AUTH-F01~F06으로 추적. #2 Backend1차 완료와 분리 |
-| 설계 근거 | [초기 모델 제안](../ISSUE_2_GOOGLE_AUTH_PROPOSAL.md), [구현 계획 이력](../ISSUE_2_IMPLEMENTATION_PLAN.md).현재 할 일은 NEXT_WORK가 기준 |
-| 테스트·migration | `tests`, `compose.test.yaml`, `alembic/versions/0001_auth.py`. 실행 방법은 인증 개발 안내, 검증 기록은 DEV_LOG |
-| 협업 | [API_COLLABORATION](../API_COLLABORATION.md)·[작업 단계/진행 경계](../API_COLLABORATION_WORKFLOW.md). Backend Issues와 계약 SHA 기준, #1 연결테스트Completed·#2 Backend1차Completed·#3/#4 Completed(Flutter 주도 후속 분리), Flutter 소스 직접 수정 없음 |
-| 내 계정 복원 #3 | 로컬12 API·0002의11테이블·원본OpenAPI 구현, 격리PostgreSQL114테스트·로컬계약 비교 확인. 작업 브랜치 구현/계약254cb5d 게시, Flutter 두GET/계약SHA·1159검증/빈등록인수 보고확인. 등록후속 lease헤더보완·대상10개통과/로컬적용,보완구현db0f3ae게시·현재 키/실응답 상태는 #4 기준. [등록후속 계획](../ISSUE_3_REGISTRATION_FOLLOWUP_PLAN.md)·[실행/인계](../ISSUE_3_DEVELOPMENT.md)·[설계](../ISSUE_3_IMPLEMENTATION_PLAN.md)·[Issue #3](https://github.com/heo0328/lostparty-backend/issues/3) |
-| 등록관리 실연동 #4 | 기존 API 재사용, 수동siblings형태진단CLI·대상13개검증. local/runtime key반영·사용자 실 siblings 4개/parser 통과 확인. 빈 label POST/PATCH 계약·구현 및 대상16개 통과, 게시 SHA d3cb697bb6ebb988b63bd99c588bc1b64a93650d. Flutter d3cb697 소비·1193자동검증/빈이름 사용자인수 보고 확인,Flutter 구현5fe636e/dev266a7e2 게시보고 확인·삭제후로컬보존 후속. [작업계획](../ISSUE_4_REGISTRATION_INTEGRATION_PLAN.md)·[실검증 안내](../ISSUE_4_LIVE_VALIDATION.md)·[Issue #4](https://github.com/heo0328/lostparty-backend/issues/4) |
-| 전투력 수집 #5 | 1700공통기준·POST/cache/GET상태·0003 구현·대상42개/후속3개·로컬적용완료. 게시SHA 39188d5dca2d394f4e8b3fcbfe332274812285bf·Flutter1204/후속70자동·신규3흐름사용자확인보고,Flutter 구현6beb55e/devccc6b23·push인계확인 완료. [실행](../ISSUE_5_DEVELOPMENT.md). [기본값](../GAME_DEFAULTS.md)·[계획](../ISSUE_5_COMBAT_POWER_PLAN.md)·[Issue5](https://github.com/heo0328/lostparty-backend/issues/5) |
-| 회원 설정 #6 | Backend79255f0·Flutter2e0764f/dev5cee9648 게시·사용자3흐름 확인, Issue CLOSED. 전체자동빌드/새환경은 별도. [최종 인계](https://github.com/heo0328/lostparty-backend/issues/6#issuecomment-6170736672)·[실행](../ISSUE_6_MEMBER_SETTINGS.md) |
-| 회원별 Lost Ark 키 #7 | [Issue #7](https://github.com/heo0328/lostparty-backend/issues/7) [계약 제안](../ISSUE_7_LOSTARK_KEY_CONTRACT_DRAFT.md) Flutter 수용 후 Backend 구현 완료. 암호화 저장/전 호출 개인 키 전환·회원·키 버전 cache/결과 fencing·token별 quota. Backend9e1a255·로컬0006 게시, Flutter1246/후속12 자동검증·연결 보고 확인, 현재 구간 사용자 정상·Flutter 구현8644c81/devcc6a0b0 push 확인. [회신](https://github.com/heo0328/lostparty-backend/issues/7#issuecomment-6173350024). [실행](../ISSUE_7_DEVELOPMENT.md) |
-| 후속 기능 | 탈퇴·약관·모집·파티·그룹·Apple/Discord·WebSocket은 구현에 없음 |
-| 운영 | Lightsail 배포 예정, 운영 HTTPS·배포·키 관리 준비는 완료로 간주하지 않음 |
+| 실행·협업 | Python3.12/FastAPI/PostgreSQL17/Docker Compose. [README](../../README.md), [개발 흐름](../DEVELOPMENT_WORKFLOW.md), [API 협업](../API_COLLABORATION.md). 공식 채널은 [Backend Issues](https://github.com/heo0328/lostparty-backend/issues), Flutter 로컬 소스 접근/수정 없음 |
+| API 원본 | [openapi/openapi.yaml](../../openapi/openapi.yaml). app.openapi()와 전체 비교. 공개paths/DTO·정책/오류를 함께 검토 |
+| Google 인증·세션 #2 | 6 API·세션/복구 구현·초기범위 완료. [인증 개발](../AUTH_DEVELOPMENT.md), [후속 AUTH-F01~F06](../ISSUE_2_FOLLOWUP.md). 탈퇴/약관·전체release/운영 인수는 별도 |
+| 원정대 등록·복원 #3/#4 | 로그인 회원의 서버 등록/목록·개인키·명령복구 연결 완료, 등록/이름/메인/삭제/중복/version 정책 유지. [계정 API](../ISSUE_3_DEVELOPMENT.md), [등록 연동](../ISSUE_4_REGISTRATION_INTEGRATION_PLAN.md) |
+| 전투력·기본 권한 #5/#8 | 캐시/POST 갱신 구현. 미인증·소유상실 상세/power 차단/기존수치 비노출, 원본 자료는 보존. [전투력](../ISSUE_5_DEVELOPMENT.md), [기본 접근](../ISSUE_8_BASIC_ACCESS_DEVELOPMENT.md) |
+| 회원 설정 #6·개인키 #7 | 서버 설정/회원별 암호화 키·개인 호출/복원·키version fencing 완료, #1~#7 CLOSED. [회원 설정](../ISSUE_6_MEMBER_SETTINGS.md), [개인키](../ISSUE_7_DEVELOPMENT.md) |
+| 생명주기·현재/이력 #8 | UUID/NameClaim/의심·사용차단/V2 현재/퇴역이력·내부정리 구현. live 누락은suspect이며 자동퇴역/claim해제는 비활성. [L1 개발](../ISSUE_8_LIFECYCLE_DEVELOPMENT.md) |
+| 대표·활동 #8 | 대표전용 GET/PUT·cooldown제거·기존관리의 명시 전체저장/대표선정, 활동공통1700/부적격보고/선택보존. [대표 계약](../ISSUE_8_REPRESENTATIVE_CONTRACT_DRAFT.md), [활동](../ISSUE_8_ACTIVITY_SELECTION_DEVELOPMENT.md) |
+| 역할·개인설정/표시 P1/P2 | 서버 역할요약/개인설정/원정대표시 복원·소유수명/version/명령격리. [역할](../ISSUE_8_ROLE_SUMMARIES_DEVELOPMENT.md), [개인표시](../ISSUE_8_PERSONAL_PRESENTATION_DEVELOPMENT.md) |
+| 본인 원정대 목록 갱신 #8 | 현재소유등록의 정상API목록 기준 추가/누락·현재비퇴역claim 재등장,404조회기준최대3개 대체·실패시소유보존. GET은DB만조회. [구현](../ISSUE_8_OWNED_ROSTER_REFRESH_DEVELOPMENT.md) |
+| 장비 소유 인증 #8 | 서버siblings/Armory·6부위/1~3해제·10분/대상·시각/최종만료rollback·실행이력·진단·4장비분류호환. [장비](../ISSUE_8_LIVE_EQUIPMENT_PROOF_DEVELOPMENT.md), [이력](../ISSUE_8_VERIFICATION_HISTORY_DEVELOPMENT.md), [대상/원명령](../ISSUE_8_VERIFICATION_TARGET_DEVELOPMENT.md) |
+| 현재 소유자/재등록 #8 | 본인유효소유 start/pending confirm은409 ALREADY_VERIFIED,타회원/소유상실도전·완료replay유지. 같은회원 삭제후등록POST201 owned 재연결·소유/ID/감사유지·활동/대표자동복원없음. [현재정책](../ISSUE_8_CURRENT_OWNER_POLICY_DEVELOPMENT.md), [105번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6228173800) |
+| 실제 확인 | [98번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217275533) 사용자실제1회인증/서버verified·현재소유·감사1개일치. [108번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6228832537) 새기기동일회원목록/인증상태·표시정상보고. 전체캐릭터/활동/자동상세·분쟁인수와구분 |
+| Flutter 완료·후속 | [106번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6228427796) 계약소비완료·1590PASS,표시수정후최종1591PASS/분석0. [109번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6228853681) 기능209ce85/dev0a11b71 push보고. 기본flag OFF/basicOnly의관리진입/회원canonical·역할·개인설정로컬복원공백은Flutter후속,현재Backend추가요청없음 |
+| 남은 별도 기능 | 타회원소유이전/분쟁·24시간방어/통지·자동소멸확정/퇴역·프로세스종료후미확정명령영속복구는 미완료/보류. 모집/파티/그룹·Apple/Discord·WebSocket도 신규구현하지 않음 |
+| 자료·운영 | 현재개발자료/키유지·베타직전초기화는별도사용자지시. 새8001 채택/기초재인수·Firebase이관/삭제·이름기반자료병합없음. Lightsail 운영배포는예정/별도범위 |
 
-인증 1차는 main/dev에 통합됐으며 이후 계정 업무·새label·진단/후속문서는 dev에 통합·게시됐습니다. 완료 작업 브랜치는 push 확인 후 정리하며, 다음 작업은 최신 dev에서 분기합니다. 계약 소비·전체 Flutter 인수·운영 배포 완료와 저장소 최신화를 구분합니다.
-
-현재 통합 구간은 회원설정 #6과 개인 Lost Ark 키/복원/호출대기 #7이다. 결과 문서를 포함해 dev772b90e로 통합 후 결과 기록72f6301까지 push 완료, 현재 dev이며 feat/member-settings는 로컬·원격 정리했다. main은 유지한다. 실제 Git 결과는 DEV_LOG와 Issue #7 인계 댓글이 기준이다.
-
-#7 Backend9e1a255·로컬0006·Flutter8644c81/devcc6a0b0 push·현재 구간 사용자 정상 보고 확인. Backend 추가 수정 없음. 재설치/별도기기·실provider한도/헤더·운영TLS는 후속 미확인, 전체빌드/역할저장 설계는 별도다. Issue #7 작업 완료·네이티브 측 종료 지시 전달(사용자 보고). GitHub 조회 시 아직 OPEN이며 실제 종료 처리는 네이티브 담당이다.
+상세 합의는 Issue #8의 최신댓글과 현재정책 문서가 우선이다. 과거90번째의본인재인증허용은102번째정책과19c2dcc 구현으로 대체됐다. 완료 구간의 통합과 실제환경/운영 전체인수를 혼동하지 않으며 다음 코드변경은 최신dev의 목적별 작업브랜치에서 진행한다.

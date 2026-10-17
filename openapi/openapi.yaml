@@ -3584,6 +3584,1860 @@
         }
       }
     },
+    "/v1/me/game-accounts/{registration_id}/representative": {
+      "get": {
+        "tags": [
+          "game-accounts"
+        ],
+        "summary": "Representative",
+        "operationId": "representative_v1_me_game_accounts__registration_id__representative_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "registration_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Registration Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RepresentativeOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Too Many Requests",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "UPSTREAM_RATE_LIMITED only",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "game-accounts"
+        ],
+        "summary": "Set Representative",
+        "operationId": "set_representative_v1_me_game_accounts__registration_id__representative_put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "registration_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Registration Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid4",
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RepresentativeIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RepresentativeOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Too Many Requests",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "UPSTREAM_RATE_LIMITED only",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/me/game-accounts/{registration_id}/characters": {
+      "get": {
+        "tags": [
+          "game-accounts"
+        ],
+        "summary": "Characters",
+        "operationId": "characters_v2_me_game_accounts__registration_id__characters_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "registration_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Registration Id"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 2048
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LifecycleCharactersOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Too Many Requests",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "UPSTREAM_RATE_LIMITED only",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/me/character-retirements": {
+      "get": {
+        "tags": [
+          "game-accounts"
+        ],
+        "summary": "Retirements",
+        "operationId": "retirements_v2_me_character_retirements_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 2048
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetirementPage"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Too Many Requests",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "UPSTREAM_RATE_LIMITED only",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/me/characters/{character_id}/personal-profile": {
+      "get": {
+        "tags": [
+          "character-profiles"
+        ],
+        "summary": "Get",
+        "operationId": "get_v2_me_characters__character_id__personal_profile_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "character_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Character Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonalProfileOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Request Entity Too Large",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/me/characters/{character_id}/role-summaries/{role}": {
+      "put": {
+        "tags": [
+          "character-profiles"
+        ],
+        "summary": "Put",
+        "operationId": "put_v2_me_characters__character_id__role_summaries__role__put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "character_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Character Id"
+            }
+          },
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "enum": [
+                "dealer",
+                "support"
+              ],
+              "type": "string",
+              "title": "Role"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid4",
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleSummaryIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleSummaryOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Request Entity Too Large",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/me/characters/{character_id}/personal-preferences": {
+      "put": {
+        "tags": [
+          "character-profiles"
+        ],
+        "summary": "Put Preferences",
+        "operationId": "put_preferences_v2_me_characters__character_id__personal_preferences_put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "character_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Character Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid4",
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonalPreferencesIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonalPreferencesOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Request Entity Too Large",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/me/game-accounts/{registration_id}/presentation-settings": {
+      "get": {
+        "tags": [
+          "character-profiles"
+        ],
+        "summary": "Get Presentation",
+        "operationId": "get_presentation_v2_me_game_accounts__registration_id__presentation_settings_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "registration_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Registration Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PresentationOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Request Entity Too Large",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "character-profiles"
+        ],
+        "summary": "Put Presentation",
+        "operationId": "put_presentation_v2_me_game_accounts__registration_id__presentation_settings_put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "registration_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Registration Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid4",
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PresentationIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PresentationOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Request Entity Too Large",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/me/settings": {
       "get": {
         "tags": [
@@ -4507,6 +6361,32 @@
   },
   "components": {
     "schemas": {
+      "AnalysisIssue": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[A-Z0-9_]+$",
+            "title": "Code"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "warning",
+              "error"
+            ],
+            "title": "Severity"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "code",
+          "severity"
+        ],
+        "title": "AnalysisIssue"
+      },
       "ChallengeIn": {
         "properties": {
           "transaction_secret_hash": {
@@ -4961,6 +6841,310 @@
         ],
         "title": "HealthResponse"
       },
+      "LifecycleCharacterOut": {
+        "properties": {
+          "server_name": {
+            "type": "string",
+            "title": "Server Name"
+          },
+          "character_name": {
+            "type": "string",
+            "title": "Character Name"
+          },
+          "class_name": {
+            "type": "string",
+            "title": "Class Name"
+          },
+          "character_level": {
+            "type": "integer",
+            "title": "Character Level"
+          },
+          "item_level": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Level"
+          },
+          "combat_power": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Combat Power"
+          },
+          "character_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Character Id"
+          },
+          "roster_status": {
+            "type": "string",
+            "enum": [
+              "preview",
+              "confirmed",
+              "suspect",
+              "missing"
+            ],
+            "title": "Roster Status"
+          },
+          "summary_fetched_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Summary Fetched At"
+          },
+          "last_confirmed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Confirmed At"
+          },
+          "requires_refresh": {
+            "type": "boolean",
+            "title": "Requires Refresh"
+          },
+          "eligible": {
+            "type": "boolean",
+            "title": "Eligible"
+          },
+          "power_stale": {
+            "type": "boolean",
+            "title": "Power Stale"
+          },
+          "power_fetched_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Power Fetched At"
+          },
+          "power_checked_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Power Checked At"
+          },
+          "power_status": {
+            "type": "string",
+            "enum": [
+              "unknown",
+              "available",
+              "unavailable",
+              "failed"
+            ],
+            "title": "Power Status"
+          },
+          "power_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Power Reason"
+          },
+          "lifecycle_state": {
+            "type": "string",
+            "enum": [
+              "preview",
+              "active",
+              "suspect",
+              "retired"
+            ],
+            "title": "Lifecycle State"
+          },
+          "lifecycle_revision": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lifecycle Revision"
+          },
+          "usable": {
+            "type": "boolean",
+            "title": "Usable"
+          },
+          "blocked_reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "OWNERSHIP_REQUIRED",
+                  "CHARACTER_UNUSABLE",
+                  "IDENTITY_CONFLICT"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Blocked Reason"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "server_name",
+          "character_name",
+          "class_name",
+          "character_level",
+          "item_level",
+          "combat_power",
+          "character_id",
+          "roster_status",
+          "summary_fetched_at",
+          "last_confirmed_at",
+          "requires_refresh",
+          "eligible",
+          "power_stale",
+          "power_fetched_at",
+          "power_checked_at",
+          "power_status",
+          "power_reason",
+          "lifecycle_state",
+          "lifecycle_revision",
+          "usable",
+          "blocked_reason"
+        ],
+        "title": "LifecycleCharacterOut"
+      },
+      "LifecycleCharactersOut": {
+        "properties": {
+          "registration_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Registration Id"
+          },
+          "game_account_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Game Account Id"
+          },
+          "is_main": {
+            "type": "boolean",
+            "title": "Is Main"
+          },
+          "registration_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Registration Version"
+          },
+          "ownership_status": {
+            "type": "string",
+            "enum": [
+              "unverified",
+              "owned",
+              "ownership_lost"
+            ],
+            "title": "Ownership Status"
+          },
+          "ownership_revision": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ownership Revision"
+          },
+          "roster_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Roster Revision"
+          },
+          "settings": {
+            "$ref": "#/components/schemas/SettingsOut"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/LifecycleCharacterOut"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          },
+          "server_fetched_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Server Fetched At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "registration_id",
+          "game_account_id",
+          "is_main",
+          "registration_version",
+          "ownership_status",
+          "ownership_revision",
+          "roster_revision",
+          "settings",
+          "items",
+          "next_cursor",
+          "server_fetched_at"
+        ],
+        "title": "LifecycleCharactersOut"
+      },
       "LoginOut": {
         "properties": {
           "token_type": {
@@ -5197,6 +7381,266 @@
         ],
         "title": "PatchIn"
       },
+      "PersonalPreferences": {
+        "properties": {
+          "version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Version"
+          },
+          "preferred_role": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "dealer",
+                  "support"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Preferred Role"
+          },
+          "visible": {
+            "type": "boolean",
+            "title": "Visible"
+          },
+          "display_order": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2147483647.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Order"
+          },
+          "saved_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Saved At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "version",
+          "preferred_role",
+          "visible",
+          "display_order",
+          "saved_at"
+        ],
+        "title": "PersonalPreferences"
+      },
+      "PersonalPreferencesIn": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "expected_ownership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Ownership Revision"
+          },
+          "expected_lifecycle_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Lifecycle Revision"
+          },
+          "preferred_role": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "dealer",
+                  "support"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Preferred Role"
+          },
+          "visible": {
+            "type": "boolean",
+            "title": "Visible"
+          },
+          "display_order": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2147483647.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Order"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "expected_ownership_revision",
+          "expected_lifecycle_revision",
+          "preferred_role",
+          "visible",
+          "display_order"
+        ],
+        "title": "PersonalPreferencesIn"
+      },
+      "PersonalPreferencesOut": {
+        "properties": {
+          "version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Version"
+          },
+          "preferred_role": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "dealer",
+                  "support"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Preferred Role"
+          },
+          "visible": {
+            "type": "boolean",
+            "title": "Visible"
+          },
+          "display_order": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2147483647.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Order"
+          },
+          "saved_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Saved At"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "ownership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Ownership Revision"
+          },
+          "lifecycle_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Lifecycle Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "version",
+          "preferred_role",
+          "visible",
+          "display_order",
+          "saved_at",
+          "character_id",
+          "ownership_revision",
+          "lifecycle_revision"
+        ],
+        "title": "PersonalPreferencesOut"
+      },
+      "PersonalProfileOut": {
+        "properties": {
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "game_account_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Game Account Id"
+          },
+          "ownership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Ownership Revision"
+          },
+          "lifecycle_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Lifecycle Revision"
+          },
+          "lifecycle_state": {
+            "type": "string",
+            "enum": [
+              "active",
+              "suspect"
+            ],
+            "title": "Lifecycle State"
+          },
+          "dealer": {
+            "$ref": "#/components/schemas/StoredRoleSummary"
+          },
+          "support": {
+            "$ref": "#/components/schemas/StoredRoleSummary"
+          },
+          "preferences": {
+            "$ref": "#/components/schemas/PersonalPreferences"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "character_id",
+          "game_account_id",
+          "ownership_revision",
+          "lifecycle_revision",
+          "lifecycle_state",
+          "dealer",
+          "support",
+          "preferences"
+        ],
+        "title": "PersonalProfileOut"
+      },
       "PowerRefreshIn": {
         "properties": {
           "characters": {
@@ -5395,6 +7839,99 @@
           "character_name"
         ],
         "title": "PowerTarget"
+      },
+      "PresentationIn": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "expected_registration_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Registration Version"
+          },
+          "expected_ownership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Ownership Revision"
+          },
+          "visible_count": {
+            "type": "integer",
+            "maximum": 200.0,
+            "minimum": 1.0,
+            "title": "Visible Count"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "expected_registration_version",
+          "expected_ownership_revision",
+          "visible_count"
+        ],
+        "title": "PresentationIn"
+      },
+      "PresentationOut": {
+        "properties": {
+          "registration_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Registration Id"
+          },
+          "game_account_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Game Account Id"
+          },
+          "registration_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Registration Version"
+          },
+          "ownership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Ownership Revision"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Version"
+          },
+          "visible_count": {
+            "type": "integer",
+            "maximum": 200.0,
+            "minimum": 1.0,
+            "title": "Visible Count"
+          },
+          "saved_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Saved At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "registration_id",
+          "game_account_id",
+          "registration_version",
+          "ownership_revision",
+          "version",
+          "visible_count",
+          "saved_at"
+        ],
+        "title": "PresentationOut"
       },
       "PreviewIn": {
         "properties": {
@@ -5665,6 +8202,471 @@
         ],
         "title": "RegistrationPage"
       },
+      "RepresentativeIn": {
+        "properties": {
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "expected_registration_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Registration Version"
+          },
+          "expected_settings_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Settings Version"
+          },
+          "expected_ownership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Ownership Revision"
+          },
+          "expected_roster_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Roster Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "character_id",
+          "expected_registration_version",
+          "expected_settings_version",
+          "expected_ownership_revision",
+          "expected_roster_revision"
+        ],
+        "title": "RepresentativeIn"
+      },
+      "RepresentativeOut": {
+        "properties": {
+          "registration_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Registration Id"
+          },
+          "game_account_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Game Account Id"
+          },
+          "is_main": {
+            "type": "boolean",
+            "title": "Is Main"
+          },
+          "registration_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Registration Version"
+          },
+          "settings_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Settings Version"
+          },
+          "ownership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Ownership Revision"
+          },
+          "roster_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Roster Revision"
+          },
+          "representative_character_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Representative Character Id"
+          },
+          "configuration_state": {
+            "type": "string",
+            "enum": [
+              "unconfigured",
+              "configured",
+              "needs_reconfiguration"
+            ],
+            "title": "Configuration State"
+          },
+          "next_change_at": {
+            "type": "null",
+            "title": "Next Change At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "registration_id",
+          "game_account_id",
+          "is_main",
+          "registration_version",
+          "settings_version",
+          "ownership_revision",
+          "roster_revision",
+          "representative_character_id",
+          "configuration_state",
+          "next_change_at"
+        ],
+        "title": "RepresentativeOut"
+      },
+      "RetirementOut": {
+        "properties": {
+          "history_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "History Id"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "game_account_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Game Account Id"
+          },
+          "server_name": {
+            "type": "string",
+            "title": "Server Name"
+          },
+          "character_name": {
+            "type": "string",
+            "title": "Character Name"
+          },
+          "class_name": {
+            "type": "string",
+            "title": "Class Name"
+          },
+          "combat_power": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Combat Power"
+          },
+          "item_level": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Level"
+          },
+          "power_fetched_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Power Fetched At"
+          },
+          "item_level_fetched_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Level Fetched At"
+          },
+          "retired_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Retired At"
+          },
+          "lifecycle_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Lifecycle Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "history_id",
+          "character_id",
+          "game_account_id",
+          "server_name",
+          "character_name",
+          "class_name",
+          "combat_power",
+          "item_level",
+          "power_fetched_at",
+          "item_level_fetched_at",
+          "retired_at",
+          "lifecycle_revision"
+        ],
+        "title": "RetirementOut"
+      },
+      "RetirementPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/RetirementOut"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          },
+          "history_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "History Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "items",
+          "next_cursor",
+          "history_revision"
+        ],
+        "title": "RetirementPage"
+      },
+      "RoleSummary": {
+        "properties": {
+          "source": {
+            "type": "string",
+            "const": "flutter_analysis",
+            "title": "Source"
+          },
+          "analysis_rules_version": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9._-]+$",
+            "title": "Analysis Rules Version"
+          },
+          "analyzed_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Analyzed At"
+          },
+          "combat_power": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 32,
+                "minLength": 1,
+                "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Combat Power"
+          },
+          "item_level": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 32,
+                "minLength": 1,
+                "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Level"
+          },
+          "combat_power_observed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Combat Power Observed At"
+          },
+          "item_level_observed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Level Observed At"
+          },
+          "integrity_status": {
+            "type": "string",
+            "enum": [
+              "clean",
+              "review",
+              "error",
+              "unavailable"
+            ],
+            "title": "Integrity Status"
+          },
+          "catalog_version": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 64,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9._-]+$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Catalog Version"
+          },
+          "issues": {
+            "items": {
+              "$ref": "#/components/schemas/AnalysisIssue"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Issues"
+          },
+          "observed_lifecycle_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Observed Lifecycle Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "source",
+          "analysis_rules_version",
+          "analyzed_at",
+          "combat_power",
+          "item_level",
+          "combat_power_observed_at",
+          "item_level_observed_at",
+          "integrity_status",
+          "catalog_version",
+          "issues",
+          "observed_lifecycle_revision"
+        ],
+        "title": "RoleSummary"
+      },
+      "RoleSummaryIn": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "expected_ownership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Ownership Revision"
+          },
+          "expected_lifecycle_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Lifecycle Revision"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/RoleSummary"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "expected_ownership_revision",
+          "expected_lifecycle_revision",
+          "summary"
+        ],
+        "title": "RoleSummaryIn"
+      },
+      "RoleSummaryOut": {
+        "properties": {
+          "version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Version"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/RoleSummary"
+          },
+          "saved_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Saved At"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "dealer",
+              "support"
+            ],
+            "title": "Role"
+          },
+          "ownership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Ownership Revision"
+          },
+          "lifecycle_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Lifecycle Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "version",
+          "summary",
+          "saved_at",
+          "character_id",
+          "role",
+          "ownership_revision",
+          "lifecycle_revision"
+        ],
+        "title": "RoleSummaryOut"
+      },
       "SessionOut": {
         "properties": {
           "id": {
@@ -5879,6 +8881,30 @@
               }
             ],
             "title": "Character Name"
+          },
+          "target_character": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/VerificationTarget"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Registration-only selected server/name from saved full roster; requires expected_registration_version. Omit for legacy lookup target; explicit null rejected."
+          },
+          "expected_registration_version": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Registration Version",
+            "description": "Required together with target_character; registration version from current GET. Omit both for legacy requests; direct_input forbids both."
           }
         },
         "additionalProperties": false,
@@ -5887,6 +8913,45 @@
           "source"
         ],
         "title": "StartIn"
+      },
+      "StoredRoleSummary": {
+        "properties": {
+          "version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Version"
+          },
+          "summary": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RoleSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "saved_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Saved At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "version",
+          "summary",
+          "saved_at"
+        ],
+        "title": "StoredRoleSummary"
       },
       "Summary": {
         "properties": {
@@ -6118,6 +9183,29 @@
           "registration_id"
         ],
         "title": "VerificationOut"
+      },
+      "VerificationTarget": {
+        "properties": {
+          "server_name": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Server Name"
+          },
+          "character_name": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Character Name"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "server_name",
+          "character_name"
+        ],
+        "title": "VerificationTarget"
       }
     },
     "securitySchemes": {
@@ -6154,8 +9242,15 @@
       "pending_confirm_replay": "original observation; new explicit check uses new key"
     },
     "challenge_seconds": 600,
-    "representative_cooldown_seconds": 300,
+    "representative_cooldown_seconds": 0,
     "first_representative_starts_cooldown": false,
+    "activity_selection": {
+      "minimum_item_level": "1700",
+      "validation": "new full-settings selection and representative target require usable canonical ID and finite known item_level >= shared minimum; otherwise 409 CHARACTER_UNUSABLE",
+      "stored": "no bulk removal or automatic representative replacement; selected below-minimum/unknown IDs appear in ineligible_character_ids",
+      "initial_representative": "existing explicit full-settings command saves selected UUIDs and representative atomically with CAS; reads/refresh never auto-select; existing representative preserved unless explicitly changed",
+      "identity": "V1 eligible/V2 usable describe lifecycle/claim; activity selection additionally applies minimum item level"
+    },
     "max_registrations": 20,
     "max_characters": 200,
     "page_default": 50,
@@ -6188,6 +9283,9 @@
     "combat_power": {
       "default_min_item_level": "1700",
       "max_input_characters": 20,
+      "access": "current owned registration required; unverified/ownership_lost 403 OWNERSHIP_REQUIRED before credentials/provider and on replay/commit; activity selection not required",
+      "preview": "retain stored data; unverified/ownership_lost V1/V2 power value/times/reason null, status unknown, stale true; direct preview combat_power null; registration mutation replay hides representative_summary after ownership loss",
+      "replay_access": "current member/session and owned registration rechecked under game write lock; historical success never bypasses lost ownership",
       "cache_seconds": 1800,
       "failed_retry_seconds": 10,
       "observation_retention_seconds": 7776000,
@@ -6205,9 +9303,173 @@
       "conflict": "REVISION_CONFLICT if registration/version/roster/ownership changes; revoked session 401; deleted registration 404",
       "revisions": "power-only write never changes registration/roster/ownership/settings revisions"
     },
-    "live_evidence": "equipment schema proof not validated; live ownership confirmation held pending",
+    "representative": {
+      "path": "/v1/me/game-accounts/{registration_id}/representative",
+      "get": "read-only owned registration, including non-main; coherent version snapshot",
+      "put": "main owned registration; confirmed canonical character already selected in activity",
+      "expected": "registration_version + settings_version + ownership_revision + roster_revision",
+      "change": "representative only; settings_version increments on change; configuration_state and activity preserved",
+      "noop": "all expected revisions and eligibility checked first; version unchanged",
+      "cooldown": "removed for representative PUT and character-settings PUT; next_change_at always null",
+      "provider": "no external calls or credential decryption; no automatic ownership/activity creation",
+      "replay": "original success after current session/registration/ownership checks; current main not required; GET latest",
+      "errors": {
+        "MAIN_REGISTRATION_CHANGED": 409,
+        "REVISION_CONFLICT": 409,
+        "SETTINGS_NOT_CONFIGURED": 409,
+        "CHARACTER_NOT_FOUND": 404,
+        "CHARACTER_NOT_ACTIVE": 409,
+        "CHARACTER_UNUSABLE": 409,
+        "OWNERSHIP_REQUIRED": 403,
+        "REGISTRATION_NOT_FOUND": 404,
+        "SERVICE_UNAVAILABLE": 503
+      }
+    },
+    "live_evidence": "server-equipment-removal-v1: uncached parsed siblings/Armory receipts at start and confirm; six baseline slots, random 1-3 removals, unchanged other Name/Grade, pinned target/roster/claims and collection times within server 10-minute challenge; final expiry rollback; new unclaimed accounts may verify; current valid owners cannot start another challenge; unresolved claims issue pending challenge and remain pending after equipment control with ACCOUNT_BINDING_EVIDENCE_PENDING, never live transfer; no client proof input",
+    "verification_target": {
+      "registration": "optional target_character server_name/character_name plus required paired expected_registration_version; names strict trimmed 1-64 chars, version strict integer >=1; explicit null/unpaired/direct-input target fields rejected",
+      "membership": "saved registration full preview or current-owned non-retired canonical/current-claim membership before provider; fresh siblings/Armory must match selected server/name; no activity, representative, visibility/count or 1700 filter",
+      "legacy": "registration_id-only retains operational lookup target and exact old normalized request digest; omitted new null defaults do not enter dedup body; direct_input wire unchanged",
+      "response": "VerificationOut eight fields unchanged; original command retains target display context; no new status-query endpoint or journal",
+      "errors": {
+        "INVALID_REQUEST": 400,
+        "REGISTRATION_NOT_FOUND": 404,
+        "CHARACTER_NOT_FOUND": 404,
+        "REVISION_CONFLICT": 409,
+        "IDENTITY_CONFLICT": 409,
+        "EQUIPMENT_INCOMPLETE": 400,
+        "ALREADY_VERIFIED": 409
+      },
+      "owned": "409 ALREADY_VERIFIED for current owner with valid verified_at; linked registration checked before provider/target-version checks, other starts resolve fresh siblings against one current non-retired claim account and member registration history before Armory and recheck before challenge commit; other members and ownership_lost may challenge; pending confirm rechecks current owner without new audit; completed original-command replay and current GET preserved",
+      "unresolved": "start201 pending; matched equipment confirm200 pending ACCOUNT_BINDING_EVIDENCE_PENDING; control observation time and owner/claim snapshot recorded, GET retains pending code; no ownership/account/registration/activity/claim transfer; cancel/expiry remain terminal",
+      "recovery": "lost start response uses same POST/key/normalized body; saved201 replays without new provider/challenge; REQUEST_IN_PROGRESS/Retry-After retains command; after ID recovery GET current state/time; no reset/new key solely on network failure"
+    },
+    "registration_restore": {
+      "command": "existing registration POST; same RegistrationOut and 201, no new endpoint or equipment challenge",
+      "authority": "fresh parsed siblings must resolve existing claims to one non-retired canonical account, current owner and verified_at must match member with persisted registration history; ambiguous/foreign/no-anchor observations remain unverified",
+      "fencing": "member/key plus historical registration/account/claim snapshot rechecked under mutation lock after network; changed context returns 409 REVISION_CONFLICT",
+      "preserve": "same account/character IDs, owner, verified_at, ownership and roster revisions; no new ownership audit; new active configuration unconfigured with no automatic activity/representative selection; existing personal data retained",
+      "duplicate": "active same-account registration remains 409 REGISTRATION_EXISTS; deleted registration/key/path never revived or reused"
+    },
+    "challenge_context": "pin lookup server/name and roster addresses at start; matched equipment with changed/invalid roster returns ROSTER_EVIDENCE_PENDING; missing old snapshot context or server baseline receipt returns PROVIDER_EVIDENCE_PENDING; live equipment receipts bind target/roster/equipment/time; legacy trusted adapter marker must be boolean True; equality alone never proves ownership/continuity/completeness",
     "live_roster_decrease": "suspect only; missing/transfer require validated observation criteria",
+    "owned_roster_refresh": {
+      "source": "existing refresh command fetches provider siblings; list GETs read saved DB only; API roster is the product membership basis, no unavailable upstream permanent-ID evidence required",
+      "scope": "explicit current owned registration/account/owner and registration/account/claim snapshot; query anchor must be current active confirmed claim; foreign account claims reject atomically",
+      "apply": "same current non-retired claims retain IDs; new unclaimed addresses get new UUID and empty personal data; absent records become suspect; same-owned normal API reappearance restores non-retired currently claimed suspect IDs; retired IDs never revive",
+      "lookup_recovery": "only explicit upstream HTTP404 tries another stored active confirmed anchor in the same account; at most 3 anchors per command; success saves operational lookup name without changing historical verification target, activity or representative; failure retains data and ownership",
+      "failure": "timeout, malformed/empty/duplicate/missing-target roster, key/quota errors or foreign claims do not apply roster or revoke ownership; no fallback on non404; unresolved anchors remain incomplete, never empty success",
+      "result": "200 means roster applied; registration.version and account.roster_revision advance, ownership_revision/verified_at unchanged; suspect_count counts unresolved non-retired records; requires_refresh means unresolved suspect records, not command still running; GET latest canonical/settings after command or replay",
+      "selection": "activity/representative IDs preserved; newly added IDs never auto-selected; blocked selected IDs set needs_reconfiguration; recovery does not auto-save settings",
+      "startup": "Flutter member/environment once: owned provider roster refresh then current revisions/canonical list then valid activity targets then detail/build checks; nice-off excludes details, not roster refresh; failures remain incomplete"
+    },
     "mutation_locking": "initial global game transaction advisory lock; no network under lock"
+  },
+  "x-character-lifecycle-policy": {
+    "migration": "0007 files/isolated validation only; real DB application and API restart require separate approval",
+    "identity": "preserve UUID/FK; name claim is conflict detection, never ownership/account continuity proof",
+    "evidence": "live adapter provides no transfer BindingEvidence; owned roster refresh/explicit registration reauth use internal owner scope and API-list policy separately; unresolved verification now starts pending and confirms pending ACCOUNT_BINDING_EVIDENCE_PENDING without transfer",
+    "state": "active/suspect/retired internally; V1 enum unchanged; retired excluded from operating views",
+    "recovery": "normal scoped current-owned API observation can restore non-retired suspect with its current same-account claim; other recovery requires internal continuity evidence; no retired-ID revival, live retirement or claim release API",
+    "cache": "new scoped tables; canonical member/ID/lifecycle/key version, preview member/registration/version/name/key version",
+    "legacy_cache": "preserved, never copied to new identities; preview refresh begins a new unproven generation",
+    "fencing": "registration/main/ownership/roster/character/claim snapshot before external work and final commit",
+    "errors": {
+      "ACCOUNT_BINDING_EVIDENCE_PENDING": 409,
+      "CHARACTER_UNUSABLE": 409,
+      "IDENTITY_CONFLICT": 409,
+      "REVISION_CONFLICT": 409
+    },
+    "reads": {
+      "paths": [
+        "/v2/me/game-accounts/{registration_id}/characters",
+        "/v2/me/character-retirements"
+      ],
+      "write": "none; no evidence/provider/credential lookup or default/head insertion",
+      "preview": "required null character_id/lifecycle_revision; usable=false; ownership-required reason",
+      "usable": "base current ownership/state/claim eligibility only; activity/raid/schedule validated by final command",
+      "retired": "excluded from operating list/count/summary; history scoped to member at retirement, not current account owner",
+      "cursor": "signed member/path scope and current registration/ownership/roster/claim/settings or member-history revision; stale 409",
+      "limit": "default/max 50; next_cursor always present nullable; history empty revision1 without inserting",
+      "observations": "structure revisions fenced; stored power observations may advance without roster revision"
+    }
+  },
+  "x-character-profile-policy": {
+    "phase": "P1 role summaries + P2 personal preferences/account presentation and internal retirement cleanup",
+    "identity": "member + canonical character UUID + ownership_revision + role; no name-based inheritance",
+    "get": "read-only coherent snapshot; owned active/suspect with current NameClaim; retired 409",
+    "put": "owned active/confirmed canonical with current NameClaim and expected role/ownership/lifecycle revisions",
+    "preference_defaults": {
+      "version": 1,
+      "preferred_role": null,
+      "visible": true,
+      "display_order": null,
+      "saved_at": null
+    },
+    "unset_role": {
+      "version": 1,
+      "summary": null,
+      "saved_at": null
+    },
+    "version": "first summary version2; change-only increment; stale expected rejected even for no-op; roles independent",
+    "source": "flutter_analysis; never provider observations, ownership/activity/representative authority, or retirement values",
+    "integrity": {
+      "clean": "no issues",
+      "review": "one or more warnings, no errors",
+      "error": "one or more errors, warnings allowed",
+      "unavailable": "no errors; zero or more warnings; never infer clean from empty issues"
+    },
+    "catalog": "required nullable opaque ASCII identifier, separate from analysis_rules_version and schema version",
+    "timestamps": "UTC RFC3339; client analysis/observation provenance separate from server saved_at; not conflict ordering",
+    "limits": {
+      "put_body_bytes": 32768,
+      "decimal_string_length": 32,
+      "issues": 20,
+      "identifier_length": 64
+    },
+    "replay": "historical ACK after current session/active registration/ownership/NameClaim and same ownership/lifecycle checks; no role version recheck or reapplication",
+    "idempotency": "role-summary operation; actor/key digest includes character/role/body; 30s lease, 24h success + 24h tombstone",
+    "pending": "immutable same-key/body recovery; conservative 24h from first send; stale pending never auto rebased on new version",
+    "nice_group": "existing member bool controls new automatic analysis only; valid old pending and summaries preserved; no new per-character switch",
+    "provider": "no external calls, credential lookup, or nice-group/activity prerequisites for storage",
+    "errors": {
+      "INVALID_REQUEST": 400,
+      "CHARACTER_NOT_FOUND": 404,
+      "OWNERSHIP_REQUIRED": 403,
+      "CHARACTER_UNUSABLE": 409,
+      "IDENTITY_CONFLICT": 409,
+      "REVISION_CONFLICT": 409,
+      "IDEMPOTENCY_CONFLICT": 409,
+      "IDEMPOTENCY_EXPIRED": 409,
+      "REQUEST_IN_PROGRESS": 409,
+      "REQUEST_TOO_LARGE": 413,
+      "SERVICE_UNAVAILABLE": 503
+    },
+    "deployment": "0008/0009 files/isolated tests only; no real DB migration or API transition",
+    "personal_preferences": {
+      "get": "personal-profile.preferences now reads persisted member/character/ownership-lifetime values; P1 virtual const schema replaced",
+      "put": "strict full preferred_role/visible/display_order + expected preference/ownership/lifecycle versions; 409 for suspect writes",
+      "scope": "rank scoped to member + canonical account ownership lifetime, no cross-account reorder or activity/representative changes",
+      "version": "default version1/no insertion on default no-op; actual change increments only this resource, saved_at UTC",
+      "limit_bytes": 4096
+    },
+    "presentation": {
+      "path": "/v2/me/game-accounts/{registration_id}/presentation-settings",
+      "scope": "member + canonical game_account_id + ownership_revision; registration path is access/version fence",
+      "default": {
+        "version": 1,
+        "visible_count": 6,
+        "saved_at": null
+      },
+      "count": "strict integer 1..200, not nullable; render min(count, available visible rows) without rewriting stored count",
+      "put": "expected version + registration_version + ownership_revision; independent of settings/activity/representative/main",
+      "replay": "current active owned registration and same ownership lifetime; historical registration_version allowed; never reapply",
+      "reregistration": "same member/account/ownership lifetime can read old settings through new active registration; old path remains 404",
+      "unverified": "403 OWNERSHIP_REQUIRED; deleted/other registration 404 REGISTRATION_NOT_FOUND",
+      "sort": "Flutter within account: visible filter, representative first, rank asc/null last, item level desc/null last, name asc, UUID asc; hidden representative stays hidden",
+      "limit_bytes": 4096
+    },
+    "retirement_cleanup": "internal validated complete retirement transaction deletes role summaries/preferences for retiring UUID across owner lifetimes; preserves account presentation, other UUIDs and history/FKs; rollback atomic; no live caller or claim-release activation"
   },
   "x-member-settings-policy": {
     "scope": "authenticated member; independent of registration/device/session",
