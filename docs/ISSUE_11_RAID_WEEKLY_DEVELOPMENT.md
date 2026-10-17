@@ -44,6 +44,6 @@
 
 ### DB 적용·복구 및 후속
 
-`0011_raid_weekly_states`는 신규 원장 테이블만 추가하며 기존 업무 테이블을 변경하거나 자료를 복사하지 않는다. 로컬DB에0010→0011을 적용하고 기존 회원/원정대/등록/캐릭터 개수 보존과 신규 원장0행을 확인했다. 실행OpenAPI 전체 일치, 실제HTTP의 새 경로 비인증401/Bearer/no-store·기존 카탈로그/주차200·API/DBhealth를 확인했다. 회원 완료 실제 쓰기·Flutter 실기기는 아직 검증하지 않았다. 게시SHA는 DEV_LOG와 구현 인계에 기록한다. 자료를 지우는 downgrade는 거절한다. 이전 API 이미지로 되돌려도 추가 원장/과거 자료를 보존하고, 이후 수정 migration으로 전진한다. 백업·격리 복원·Firebase 자료 이관이나 DB 초기화를 설계/실행하는 작업이 아니다.
+`0011_raid_weekly_states`는 신규 원장 테이블만 추가하며 기존 업무 테이블을 변경하거나 자료를 복사하지 않는다. 로컬DB에0010→0011을 적용하고 기존 회원/원정대/등록/캐릭터 개수 보존과 신규 원장0행을 확인했다. 실행OpenAPI 전체 일치, 실제HTTP의 새 경로 비인증401/Bearer/no-store·기존 카탈로그/주차200·API/DBhealth를 확인했다. 회원 완료 실제 쓰기·Flutter 실기기는 아직 검증하지 않았다. 구현/계약 `bce6133fcdcfd70d42691e3a4376c2eeaed69f0b`을feat/raid-services로push·원격확인 후 [두 번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/11#issuecomment-6230329942)로 회신했다. dev/main 미병합이다. 자료를 지우는 downgrade는 거절한다. 이전 API 이미지로 되돌려도 추가 원장/과거 자료를 보존하고, 이후 수정 migration으로 전진한다. 백업·격리 복원·Firebase 자료 이관이나 DB 초기화를 설계/실행하는 작업이 아니다.
 
 Flutter는 서버 자료로 주간 체크를 연결하고 원키/본문 응답 유실 복구와 현재 GET을 구분한다. 표시할 레이드 선택/순서는 완료 원장과 다른 설정이다. 실제 Flutter 연동·기기 확인은 별도다. Backend 다음 독립 구간은 #12 그룹 G1 기초 명세다. #13 참가 확정은 위 내부 가드와 동일 transaction에 주간 점유/슬롯을 연결한다. 점유 중 개인 완료의 영향 확인/명시 실행, 책임자/슬롯 정리, 전체 완료 권한은 후속으로 남긴다.

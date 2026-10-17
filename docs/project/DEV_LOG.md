@@ -941,3 +941,5 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 기존 OpenAPI 경로/DTO/정책값을 보존하고 두 신규경로/DTO만 추가했다. 실행이미지 전체OpenAPI일치와 로컬HTTP 비인증새GET401/Bearer/no-store·기존카탈로그/주차200·API/DBhealth를 확인했다.
 - additive0011은 새raid_weekly_states테이블만 추가하며 개발DB0010→0011 적용완료. 전후기존회원/원정대/등록/캐릭터행수 동일·주간원장0행을 확인했다. 기존자료/키/DB볼륨을 보존했고 초기화·이관·백업/격리복원은 하지 않았다. 실제 회원 완료 쓰기를 하지 않았고 격리테스트DB는 중지했다. 복구는 이전API이미지/추가자료보존이며 삭제downgrade는 거절한다.
 - 구현을 작업브랜치commit/push·원격 확인한 뒤 #11로 인계한다. dev/main merge/운영배포는 하지 않는다. 다음Backend는#12그룹G1명세다. #11점유중영향확인/명시실행·실제파티/슬롯 연결과 전체완료권한은#13후속이며 Flutter연동은별도다.
+
+- 구현/계약 `bce6133fcdcfd70d42691e3a4376c2eeaed69f0b`을feat/raid-services로commit/push·원격동일SHA확인 후 [#11 두 번째 댓글·Backend 첫 구간 인계](https://github.com/heo0328/lostparty-backend/issues/11#issuecomment-6230329942)를 게시했다. 첫명세/둘째결과순번은실제조회로확인했다. 후행인계문서도같은브랜치로게시하며dev/main은860c84a를유지한다.
