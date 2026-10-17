@@ -4,7 +4,7 @@
 
 ## 기준 상태
 
-현재 Backend #8 작업 구간은 [PR #9](https://github.com/heo0328/lostparty-backend/pull/9)/병합ea1384d로 dev에 통합했다. 최종 문서 기록을 포함해 main/dev는 같은 HEAD로 동기화하며 완료 작업 브랜치는 로컬·원격 삭제했다. [110번째 Backend 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6228957999)과 DEV_LOG가 최종 SHA/정리 기준이다. 최신 구현/계약 `19c2dcc`는 기존 로컬 Docker/포트8000·DB0010에 반영됐고 관련 격리483PASS/전체OpenAPI 일치를 확인했다. 이번 통합은 코드·실행환경/자료·키/flag를 변경하지 않는다.
+현재 Backend #8 작업 구간은 [PR #9](https://github.com/heo0328/lostparty-backend/pull/9)/병합ea1384d로 dev에 통합했다. 최종 문서 기록을 포함해 main/dev는 같은 HEAD로 동기화하며 완료 작업 브랜치는 로컬·원격 삭제했다. [110번째 Backend 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6228957999)과 DEV_LOG가 최종 SHA/정리 기준이다. 당시 #8 구현/계약 `19c2dcc`는 기존 로컬 Docker/포트8000·DB0010에 반영됐고 관련 격리483PASS/전체OpenAPI 일치를 확인했다. 해당 통합은 코드·실행환경/자료·키/flag를 변경하지 않았다. 현재 레이드 작업은 feat/raid-services에서 이어가며 로컬API의 #10/#11과 신규 주간테이블0011을 반영했다. 기존 자료/키/flag는 유지한다.
 
 | 영역 | 현재 상태·기준 |
 |---|---|
@@ -22,8 +22,9 @@
 | 현재 소유자/재등록 #8 | 본인유효소유 start/pending confirm은409 ALREADY_VERIFIED,타회원/소유상실도전·완료replay유지. 같은회원 삭제후등록POST201 owned 재연결·소유/ID/감사유지·활동/대표자동복원없음. [현재정책](../ISSUE_8_CURRENT_OWNER_POLICY_DEVELOPMENT.md), [105번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6228173800) |
 | 실제 확인 | [98번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217275533) 사용자실제1회인증/서버verified·현재소유·감사1개일치. [108번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6228832537) 새기기동일회원목록/인증상태·표시정상보고. 전체캐릭터/활동/자동상세·분쟁인수와구분 |
 | Flutter 완료·후속 | [109번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6228853681) 이전 구간 기능209ce85/dev0a11b71 push보고. [111번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6229534730) 회원 저장자료 로컬 복원/관리진입 구현, [112번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6229647060) 취소 오류·카드 UI 회귀 수정 후 최신1598PASS/분석0 보고. 새 변경은feature/scoped-account-cache 기준5eef0d2·미커밋/미push/dev미반영, 수정 실기기 확인 대기. [113번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6229801409) 최초unconfigured에 한한 유효후보 전체 기본선택/최고레벨 대표 저장으로 정정·최신1601PASS 보고. 계정UX 외 신규Backend 요청은 아래 별도 행 참조 |
-| 신규 분야별 요청 | [114번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6229923232): #10 카탈로그/주차 P0 → #11 주간·#12 그룹 기초 P1 → #13 모집/파티 P2. 본문 검토 완료. #10은feat/raid-services의d7f762f로push완료·공개카탈로그/주차GET 구현·31PASS/실행OpenAPI 일치/로컬HTTP 확인. [두 번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/10#issuecomment-6230019531), Flutter연동대기. #11~#13 명세/구현 미착수. [#10 안내](../ISSUE_10_RAID_CATALOG_DEVELOPMENT.md). 상세 다음 실행은NEXT_WORK 참조 |
+| 신규 분야별 요청 | [114번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6229923232): #10 카탈로그/주차 P0 → #11 주간·#12 그룹 기초 P1 → #13 모집/파티 P2. 본문 검토 완료. #10은feat/raid-services의d7f762f로push완료·공개카탈로그/주차GET 구현·31PASS/실행OpenAPI 일치/로컬HTTP 확인. [두 번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/10#issuecomment-6230019531), Flutter연동대기. #11 첫 구간은 아래 행, #12~#13 명세/구현 미착수. [#10 안내](../ISSUE_10_RAID_CATALOG_DEVELOPMENT.md). 상세 다음 실행은NEXT_WORK 참조 |
+| 주간 원장 #11 | 본인 최대50캐릭터 배치GET/현재주차 manual 완료·정정PUT과 난이도 공유권리/분리근거·점유 가드 구현. [첫 계약](https://github.com/heo0328/lostparty-backend/issues/11#issuecomment-6230283275), [개발 안내](../ISSUE_11_RAID_WEEKLY_DEVELOPMENT.md). 주간51+카탈로그31+모델/migration1=83PASS·실행OpenAPI 일치·로컬0011/health/비인증401 확인. 점유 중 영향확인/명시실행·실제파티연결 및 Flutter연동은 후속 |
 | 남은 별도 기능 | 타회원소유이전/분쟁·24시간방어/통지·자동소멸확정/퇴역·프로세스종료후미확정명령영속복구는 미완료/보류. 모집/파티/그룹은 신규 #10~#13 요청으로 분리하며 아직 미구현. Apple/Discord·WebSocket은 별도 |
 | 자료·운영 | 현재개발자료/키유지·베타직전초기화는별도사용자지시. 새8001 채택/기초재인수·Firebase이관/삭제·이름기반자료병합없음. Lightsail 운영배포는예정/별도범위 |
 
-상세 합의는 Issue #8의 최신댓글과 현재정책 문서가 우선이다. 과거90번째의본인재인증허용은102번째정책과19c2dcc 구현으로 대체됐다. 완료 구간의 통합과 실제환경/운영 전체인수를 혼동하지 않으며 다음 코드변경은 최신dev의 목적별 작업브랜치에서 진행한다.
+상세 합의는 Issue #8의 최신댓글과 현재정책 문서가 우선이다. 과거90번째의본인재인증허용은102번째정책과19c2dcc 구현으로 대체됐다. 완료 구간의 통합과 실제환경/운영 전체인수를 혼동하지 않으며 현재 레이드 후속은feat/raid-services에서 진행한다.

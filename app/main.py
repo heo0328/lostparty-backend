@@ -17,6 +17,7 @@ from app.core.game_policy import DEFAULT_MIN_ITEM_LEVEL
 from app.member_settings.router import router as settings_router
 from app.lostark_keys.router import router as lostark_keys_router
 from app.raids.router import router as raid_router
+from app.raid_weekly.router import router as raid_weekly_router
 
 
 @asynccontextmanager
@@ -38,6 +39,7 @@ app.include_router(presentation_router)
 app.include_router(settings_router)
 app.include_router(lostark_keys_router)
 app.include_router(raid_router)
+app.include_router(raid_weekly_router)
 register(app)
 
 
@@ -61,7 +63,7 @@ def openapi():
                     headers["Cache-Control"] = {"schema": {"type": "string", "const": "no-store"}}
                     if status == "429":
                         headers["Retry-After"] = {"schema": {"type": "integer", "minimum": 1}} if "game-accounts" in operation.get("tags", []) else {"schema": {"type": "integer", "const": 60}}
-                    if status == "409" and set(operation.get("tags", [])) & {"game-accounts", "member-settings", "lostark-keys", "character-profiles"}:
+                    if status == "409" and set(operation.get("tags", [])) & {"game-accounts", "member-settings", "lostark-keys", "character-profiles", "raid-weekly"}:
                         headers["Retry-After"] = {"description": "REQUEST_IN_PROGRESS only", "schema": {"type": "integer", "const": 2}}
                     if status == "401":
                         headers["WWW-Authenticate"] = {"schema": {"type": "string", "const": "Bearer"}}

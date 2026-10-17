@@ -931,3 +931,13 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 구현인계는작업브랜치commit/push·원격확인후#10에남긴다. dev/main병합·운영배포·Flutter연동확인은별도다. 다음Backend는#11주간원장/비점유개인완료명세이며#12그룹기초도독립가능하다.
 
 - 구현/계약커밋 `d7f762f1b13f6d5e5c4f7aae8c1b2c19d984de8c`을feat/raid-services에push하고원격동일SHA를확인했다. [#10 두 번째 댓글·Backend 구현 인계](https://github.com/heo0328/lostparty-backend/issues/10#issuecomment-6230019531)로회신완료. 첫 번째명세/두 번째구현인계순번을실제조회로확인했다. 후행문서기록은같은브랜치에추가하며dev/main은860c84a로보존한다.
+
+
+## 2026-10-17 — #11 주간 원장·비점유 개인 완료 첫 구간
+
+- 사용자 진행 승인 후 #11 본문/댓글0개, #10 댓글2개, #8 댓글114개와 기존 코드/멱등/소유 경계를 재확인했다. 같은 feat/raid-services에서 [#11 첫 번째 Backend 명세](https://github.com/heo0328/lostparty-backend/issues/11#issuecomment-6230283275)를 먼저 게시했다.
+- GET /v1/me/raid-weekly-states(본인UUID1~50, 현재/과거주차), PUT /v1/me/characters/{character_id}/raid-weekly-states/{raid_id}/manual-completion(현재주차·엄격CAS·UUID멱등키)을 추가했다. actor+canonicalUUID+raid+cycle PK로 난이도 중복을 막고 manual/party완료 근거와 현재 점유를 분리했다. manual정정은 party근거/점유를 바꾸지 않는다. 점유중true는영향확인필요409이며 자동탈퇴없음. 외부호출/활동·표시 설정 변경없음.
+- 관련 주간51+카탈로그31+모델/migration1 = **83PASS/34.57초**, 기존 StarletteAnyIO경고1개. 격리PostgreSQL에서 형식/권한·타회원/현재소유/replay/CAS/난이도공유/정정/주차경계rollback/과거보존·무점유완료와같은락의내부참가모의명령경합·DB제약을 확인했다. 실제 모집/슬롯/최대8인전체완료나 Flutter 실기기 시험으로 보지 않는다.
+- 기존 OpenAPI 경로/DTO/정책값을 보존하고 두 신규경로/DTO만 추가했다. 실행이미지 전체OpenAPI일치와 로컬HTTP 비인증새GET401/Bearer/no-store·기존카탈로그/주차200·API/DBhealth를 확인했다.
+- additive0011은 새raid_weekly_states테이블만 추가하며 개발DB0010→0011 적용완료. 전후기존회원/원정대/등록/캐릭터행수 동일·주간원장0행을 확인했다. 기존자료/키/DB볼륨을 보존했고 초기화·이관·백업/격리복원은 하지 않았다. 실제 회원 완료 쓰기를 하지 않았고 격리테스트DB는 중지했다. 복구는 이전API이미지/추가자료보존이며 삭제downgrade는 거절한다.
+- 구현을 작업브랜치commit/push·원격 확인한 뒤 #11로 인계한다. dev/main merge/운영배포는 하지 않는다. 다음Backend는#12그룹G1명세다. #11점유중영향확인/명시실행·실제파티/슬롯 연결과 전체완료권한은#13후속이며 Flutter연동은별도다.

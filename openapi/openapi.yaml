@@ -6424,6 +6424,391 @@
         }
       }
     },
+    "/v1/me/raid-weekly-states": {
+      "get": {
+        "tags": [
+          "raid-weekly"
+        ],
+        "summary": "Weekly States",
+        "operationId": "weekly_states_v1_me_raid_weekly_states_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "character_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "minItems": 1,
+              "maxItems": 50,
+              "title": "Character Id"
+            }
+          },
+          {
+            "name": "cycle_key",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cycle Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeeklyStates"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/me/characters/{character_id}/raid-weekly-states/{raid_id}/manual-completion": {
+      "put": {
+        "tags": [
+          "raid-weekly"
+        ],
+        "summary": "Manual Completion",
+        "operationId": "manual_completion_v1_me_characters__character_id__raid_weekly_states__raid_id__manual_completion_put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "character_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Character Id"
+            }
+          },
+          {
+            "name": "raid_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Raid Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid4",
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManualCompletionIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeeklyEntry"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/health": {
       "get": {
         "summary": "Health",
@@ -6752,6 +7137,58 @@
           "server_fetched_at"
         ],
         "title": "CharactersOut"
+      },
+      "CompletionSource": {
+        "properties": {
+          "source": {
+            "type": "string",
+            "enum": [
+              "manual",
+              "party"
+            ],
+            "title": "Source"
+          },
+          "completed_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Completed At"
+          },
+          "difficulty_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 64,
+                "minLength": 1,
+                "pattern": "^[a-z0-9_]+$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Difficulty Id"
+          },
+          "party_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Party Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "source",
+          "completed_at",
+          "difficulty_id",
+          "party_id"
+        ],
+        "title": "CompletionSource"
       },
       "Empty": {
         "properties": {},
@@ -7402,6 +7839,66 @@
         ],
         "title": "LostArkKeyRestoreOut"
       },
+      "ManualCompletionIn": {
+        "properties": {
+          "completed": {
+            "type": "boolean",
+            "title": "Completed"
+          },
+          "difficulty_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 64,
+                "minLength": 1,
+                "pattern": "^[a-z0-9_]+$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Difficulty Id"
+          },
+          "expected_cycle_key": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Expected Cycle Key"
+          },
+          "expected_catalog_version": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Expected Catalog Version"
+          },
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Revision"
+          },
+          "expected_ownership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Ownership Revision"
+          },
+          "expected_lifecycle_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Lifecycle Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "completed",
+          "difficulty_id",
+          "expected_cycle_key",
+          "expected_catalog_version",
+          "expected_revision",
+          "expected_ownership_revision",
+          "expected_lifecycle_revision"
+        ],
+        "title": "ManualCompletionIn"
+      },
       "MemberSettingsIn": {
         "properties": {
           "nice_group_auto_refresh_enabled": {
@@ -7441,6 +7938,35 @@
           "version"
         ],
         "title": "MemberSettingsOut"
+      },
+      "Participation": {
+        "properties": {
+          "party_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Party Id"
+          },
+          "difficulty_id": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-z0-9_]+$",
+            "title": "Difficulty Id"
+          },
+          "joined_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Joined At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "party_id",
+          "difficulty_id",
+          "joined_at"
+        ],
+        "title": "Participation"
       },
       "PatchIn": {
         "properties": {
@@ -9523,6 +10049,144 @@
           "character_name"
         ],
         "title": "VerificationTarget"
+      },
+      "WeeklyEntry": {
+        "properties": {
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "raid_id": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-z0-9_]+$",
+            "title": "Raid Id"
+          },
+          "cycle_key": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Cycle Key"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "ownership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Ownership Revision"
+          },
+          "lifecycle_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Lifecycle Revision"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "incomplete",
+              "participating",
+              "completed"
+            ],
+            "title": "State"
+          },
+          "completion_sources": {
+            "items": {
+              "$ref": "#/components/schemas/CompletionSource"
+            },
+            "type": "array",
+            "title": "Completion Sources"
+          },
+          "participation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Participation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "can_mark_completed": {
+            "type": "boolean",
+            "title": "Can Mark Completed"
+          },
+          "can_clear_manual_completion": {
+            "type": "boolean",
+            "title": "Can Clear Manual Completion"
+          },
+          "mark_blocked_reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "CURRENT_CYCLE_REQUIRED",
+                  "RAID_INACTIVE",
+                  "CHARACTER_UNUSABLE",
+                  "PARTICIPATION_CONFIRMATION_REQUIRED"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mark Blocked Reason"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "character_id",
+          "raid_id",
+          "cycle_key",
+          "revision",
+          "ownership_revision",
+          "lifecycle_revision",
+          "state",
+          "completion_sources",
+          "participation",
+          "can_mark_completed",
+          "can_clear_manual_completion",
+          "mark_blocked_reason"
+        ],
+        "title": "WeeklyEntry"
+      },
+      "WeeklyStates": {
+        "properties": {
+          "current_cycle": {
+            "$ref": "#/components/schemas/RaidCycle"
+          },
+          "cycle_key": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Cycle Key"
+          },
+          "catalog_version": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Catalog Version"
+          },
+          "entries": {
+            "items": {
+              "$ref": "#/components/schemas/WeeklyEntry"
+            },
+            "type": "array",
+            "title": "Entries"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "current_cycle",
+          "cycle_key",
+          "catalog_version",
+          "entries"
+        ],
+        "title": "WeeklyStates"
       }
     },
     "securitySchemes": {

@@ -330,6 +330,7 @@ def test_model_migration_consistency():
     from app.game_accounts import models as game_models
     from app.lostark_keys import models as key_models
     from app.member_settings import models as settings_models
+    from app.raid_weekly import models as weekly_models
     with engine().connect() as connection:
         # Application-owned external tables are absent in isolated test DB.
         assert compare_metadata(MigrationContext.configure(connection),Base.metadata)==[]
