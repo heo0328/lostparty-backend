@@ -52,3 +52,5 @@ G2초대/가입/신청/코드·G3탈퇴/추방/이전/해산·실제#13방진행
 관련격리검증164PASS/56.09초, 이름생략/null의OpenAPI표현을맞춘최종이미지에서G1 HTTP·기초·모델일치59PASS/13.87초다. 두검증범위는중복이며합산해고유223개라고보고하지않는다. 기존Starlette/AnyIO경고1개만있다. 최초161PASS/2FAIL은테스트가인증오류를ACCESS_INVALID대신다른이름으로기대한문제와검색문자fixture가canonical/NameClaim FK를위반한문제였다. fixture는기존이름을수정하지않고새canonical/claim/Activity로구성했고최종통과했다.
 
 실제로기존로컬DB에0012/0013추가적용·API이미지를반영했다. 기존회원/원정대/등록/캐릭터/설정/활동/주간행수보존과새그룹/회원/한도/head/감사0행·directory1행을확인했다. 실행OpenAPI전체일치와실제HTTP의공개목록/검색200·잘못된limit400·없는그룹404·회원4GET/POST/PATCH의401/Bearer/no-store·기존health/catalog/cycle200을확인했다. 개발실제회원으로생성/이름쓰기·Flutter연결/실기기는미확인이며자동HTTP/모의로그인테스트와구분한다. 테스트DB만중지했고기존개발자료/키/flag를유지했다.
+
+구현/계약SHA `73744bef0e0f1cab391bbee6f750148712d3ee65`·feat/raid-services push/원격일치확인, [#12 전체12번째 Backend 구현 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6234628340). dev/main미병합·후행문서는게시기록만이다.

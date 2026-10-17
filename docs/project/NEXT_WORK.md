@@ -61,3 +61,5 @@
 ## 최신 실행 기준 — G1
 
 이전L0단락의HTTP미연결/DB0011은당시상태다. 현재G1 HTTP8동작·0013/기존서버반영완료이며구간인계SHA/댓글은후행기록에남긴다. 주간통계의귀속/조회안검토는G1적용과독립이다. dev/main통합은이번지시범위에없어수행하지않는다.
+
+G1구현/계약 `73744bef0e0f1cab391bbee6f750148712d3ee65`를feat/raid-services에push·원격확인후 [#12 전체12번째 Backend — G1구현인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6234628340)로회신했다. 다음Flutter계약소비·연결/결과회신, Backend소비충돌보완·G2/G3후속명세. 후행문서는게시링크기록이며기능/서버/DB·dev/main은추가변경하지않는다.

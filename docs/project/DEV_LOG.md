@@ -1038,3 +1038,5 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 관련첫실행161PASS/2FAIL(55.95초):테스트의기존인증오류명오인/이름변경fixture의NameClaim복합FK위반. 테스트만기존ACCESS_INVALID·새canonical/claim/Activityfixture로수정하고멤버페이지actor/revision/비그룹장거부를추가했다. 관련164PASS/56.09초. 생성name의생략가능/명시null거부를OpenAPIstring에도맞춘최종이미지G1 HTTP/기초/모델검증59PASS/13.87초. 두범위는중복이며합산고유숫자로보고하지않는다. 기존Starlette/AnyIO경고1개.
 - 기존모든paths/DTO/정책객체가불변임을호스트에서대조하고6새경로/8동작·필요DTO만계약에추가했다. 최종이미지의실행OpenAPI와원본전체일치.
 - 기존로컬개발DB0011→0012→0013추가적용·기존API이미지반영. 회원/원정대/등록/캐릭터/설정/활동/주간원장행수전후동일·신규그룹/멤버/한도/head/감사0행·directory1행을확인했다. 실제HTTP공개목록/검색200·invalidlimit400·없는group404·회원GET4종/POST/PATCH401/Bearer/no-store·기존health/catalog/cycle200확인. 실제개발회원쓰기/Flutter실기기는미실행이다. 기존자료/키/flag/포트8000을보존했고테스트DB만중지했다. 초기화/백업복원이관/운영배포/merge는없다. 게시SHA/댓글후행기록참조.
+
+- G1인계완료: 구현/계약 `73744bef0e0f1cab391bbee6f750148712d3ee65`를feat/raid-services에commit/push·원격SHA일치확인후 [#12 전체12번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6234628340) 게시. 전체댓글재조회로12번째를확인했다. 경로/DTO 변경·검증/실제HTTP/미확인·다음Flutter계약소비요청을기록했다. 후행커밋은문서의게시링크/담당기록만이며dev/main/운영미변경이다.

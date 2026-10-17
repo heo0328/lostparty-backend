@@ -42,3 +42,5 @@
 ## G1 최신 실행 상태
 
 [그룹 G1 안내](../ISSUE_12_GROUP_G1_DEVELOPMENT.md): 그룹7동작/본인한도GET·활동/현재한도CAS·공개/회원권한·서명cursor/검색·이름수정구현. 관련164PASS·최종이미지G1중복범위59PASS, 실행OpenAPI전체일치. 기존로컬포트8000반영·DB0013(0012/0013추가테이블만), 기존업무행수보존·공개HTTP/회원401확인. 실제회원쓰기/Flutter연결·실기기는미확인. 위과거HTTP미연결/개발DB0011설명을대체한다. 다음Flutter계약소비/연결, Backend보완/G2G3명세. 신규G1기획결정대기없음. 실제방제한/주간통계는후속이다.
+
+G1구현/계약73744be 작업브랜치push·원격확인, [#12 12번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6234628340) 게시. Flutter적용/실기기는후속이며BackendG1완료와구분한다.
