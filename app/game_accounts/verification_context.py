@@ -3,6 +3,19 @@ import hashlib
 import json
 
 
+def resolve_input(lookup_name, rows):
+    """Resolve only ASCII input casing; never normalize identity or pinned context."""
+    if not isinstance(lookup_name, str) or not isinstance(rows, list):
+        return None
+    fold = str.maketrans('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')
+    matches = [row.get('character_name') for row in rows if isinstance(row, dict)
+               and isinstance(row.get('character_name'), str)
+               and row['character_name'].translate(fold) == lookup_name.translate(fold)]
+    if len(matches) != 1 or capture(matches[0], rows) is None:
+        return None
+    return matches[0]
+
+
 def capture(lookup_name, rows):
     if not isinstance(lookup_name, str) or not isinstance(rows, list) or not 1 <= len(rows) <= 200:
         return None

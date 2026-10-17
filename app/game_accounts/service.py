@@ -194,6 +194,9 @@ def existing_registration(db, uid, rows):
 
 
 def create_registration(db, uid, name, label, main, obs):
+    name = verification_context.resolve_input(name, obs.roster)
+    if name is None:
+        fail('UPSTREAM_INVALID_RESPONSE',503)
     if existing_registration(db, uid, obs.roster):
         fail('REGISTRATION_EXISTS')
     rows = list(db.scalars(select(Registration.id).where(Registration.user_id == uid, Registration.deleted_at.is_(None))))
@@ -574,6 +577,7 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
         except EquipmentIncomplete:
             fail('EQUIPMENT_INCOMPLETE',400)
         lookup_name=verification_targets.selected(db,uid,r,data) if data['source']=='registration' else data['character_name']
+        lookup_name=verification_context.resolve_input(lookup_name,obs.roster)
         proof_context=verification_context.capture(lookup_name,obs.roster)
         if proof_context is None:
             fail('UPSTREAM_INVALID_RESPONSE',503)

@@ -40,3 +40,11 @@ OTHER_TYPES에 실제 확인한 네 분류만 추가해 기존 장신구처럼 �
 최종 격리 PostgreSQL **185PASS·기존경고1·67.80초**, 실패없음. 대상은 primitives/live_equipment_proof/provider_diagnostics/verification_history/verification_targets/verification_context/game_accounts/owned_roster_refresh다. 기존8000 API만 반영·healthy/health API·DB ok·전체OpenAPI일치·DB0010 유지·실행4종 로드 확인, test-db만 중지했다. 반영 후 현재 Armory를1회 더 조회해 같은 메모리 응답에서 기존목록은거절/수정목록은수용·6부위완전·profile대상이름일치·17개항목을확인했다. 실제 GET2회는 정상quota/observer를적용했고 인증POST/게임장비변경/소유판정은 실행하지 않았다. 사용자 앱의 기존명령복구와 실제장비인증 성공은 후속이다.
 
 후속 실제 검증: [98번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217275533)에서 사용자 실제1회성공 보고와 서버start201→confirm200/completed VERIFIED·도전verified/attempt_count1·등록→account현재소유일치/verified_at·소유감사1개를 대조했다. 이번 대상 실제장비인증 성공이며 전체환경/모든원정대/활동·갱신·운영인수와구분한다.
+
+## 2026-10-18 — 검색 입력의 영어 대소문자 해석
+
+[#8 전체131번째 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6236509023)에 따라 입력 해석과 인증 대상 비교를 분리했다. `verification_context.resolve_input`은 siblings 목록에서 ASCII A-Z만 대소문자를 무시해 유일한 API 원문 이름을 선택한다. 일치 없음·다중 후보는 거절한다. Unicode casefold/NFC 변환이나 이름 기반 canonical UUID 병합은 하지 않는다.
+
+미리보기는 API 원문을 반환하고 신규 등록의 조회명·신규 챌린지 조회명은 원문을 저장한다. 기존 등록 조회명이 다른 대소문자로 남아 있어도 시작 시 원문을 해석한다. Armory 호출/프로필 검사·장비 receipt·시작 감사 context에 원문을 전달한다. `capture`와 확정된 target/server/roster digest·claim/UUID/lifecycle 비교는 exact를 유지한다. 인증 중 API 표기가 바뀌면 기존 챌린지로 소유권을 부여하지 않는다.
+
+요청 본문·멱등 digest·입력 preview cache key는 변경하지 않는다. 기존 DB 자료/조회명/과거 챌린지를 일괄 수정하지 않으며 DDL은 없다. owned refresh는 기존 현재 UUID/claim anchor 정책을 그대로 사용한다. OpenAPI는 새 경로/DTO 없이 `x-game-account-policy.input_name_resolution`만 추가했다. 검증/로컬 반영·인계 결과는 [DEV_LOG](project/DEV_LOG.md)의 같은 날짜 기록을 따른다.

@@ -1,6 +1,6 @@
 # 다음 실행
 
-기준일2026-10-17. 기존로컬Docker/포트8000·현재개발자료/키로계속개발한다. 기본로그인/키/등록·갱신/장비인증을처음부터다시시작하지않는다. 개발DB는0014다.
+기준일2026-10-18. 기존로컬Docker/포트8000·현재개발자료/키로계속개발한다. 기본로그인/키/등록·갱신/장비인증을처음부터다시시작하지않는다. 개발DB는0014다.
 
 ## 현재 완료·인계
 
@@ -8,6 +8,12 @@
 - **G1 Backend 완료/로컬반영:** 생성·검색/공개요약·내그룹/상세·멤버·이름수정/본인한도8동작. [개발안내](../ISSUE_12_GROUP_G1_DEVELOPMENT.md), [#12 12번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6234628340). 현재활동·현재소유/usable·가입한도/CAS,공개/회원DTO·검색/서명cursor를검사한다.
 - **G2 Backend 완료/로컬반영:** [계약](../ISSUE_12_GROUP_G2_SPEC.md)·[개발/검증](../ISSUE_12_GROUP_G2_DEVELOPMENT.md), [#12 14번째 Backend 명세](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6235086630). 초대/신청·수락/승인/거절/취소·차단/해제·코드20동작. 관련190PASS/77.70초·기존API/DTO/정책불변·실행OpenAPI전체일치. 실제HTTP20동작비로그인차단/기존공개200확인. 실제개발회원쓰기·Flutter연결/실기기는미확인이다.
 - 0014는새G2세테이블과현재membership부분unique다. 기존업무/그룹/한도행수를보존했고재가입은새membership UUID로과거종료행을보존한다. 데이터이관/초기화는없다. 테스트DB만중지했다.
+
+## 우선 보완 — #8 영어 입력 이름
+
+[#8 전체131번째 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6236509023)의 ASCII 입력 대소문자 해석을 구현·검증하고 기존 로컬 API에 반영했다. 관련241PASS/105.29초·실행OpenAPI전체일치·DB0014/전테이블행수보존을확인했다. API 원문을 신규 등록/챌린지·Armory/receipt에 전달하며 고정 대상·서버·UUID/claim은 exact다. [장비 안내](../ISSUE_8_LIVE_EQUIPMENT_PROOF_DEVELOPMENT.md)·DEV_LOG에 검증과 인계를 기록한다. 다음 Flutter는 이 변경의 기기 영어 이름 검색 확인이며 기존 로그인/키/기초 인증을 다시 준비하는 단계가 아니다.
+
+[#8 128번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6235202558)의 이전 HTTP 오류3건은 현재 보존 컨테이너 시작 전이다. 당시 원인/서버 재시작 영향은 확정 불가하며 현재200응답만으로 클라이언트 timeout을 배제하지 않는다. 130번째 새 HTTP오류0 실측과 이후 preview503 3건은 별도다. 새 서버 계측/timeout 변경 요청은 없다. Flutter 주간 체크 조기 조회·캐릭터별 갱신 UI는 Flutter 후속이다.
 
 ## 다음 담당·순서
 

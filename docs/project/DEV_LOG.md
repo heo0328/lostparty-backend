@@ -1053,3 +1053,13 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - NEXT_WORK/AI_CONTEXT는과거누적상태를현재기준/다음실행중심으로정리했다. 상세기존이력은DEV_LOG/기능문서를보존했다. G3명세/소비충돌후속,Flutter시작준비우선/G1G2연결별도다. 게시SHA/댓글은후행기록에남긴다. dev/main통합·운영배포·자료초기화/이관은없다.
 
 - 게시완료: 구현/계약 `c06d3d2ec6663cb3412294db6a02354f3ab03e1c`를feat/raid-services에commit/push하고원격SHA일치확인후 [#12 전체15번째 Backend G2결과](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6235311908)를게시했다. 전체댓글재조회로14번째명세/15번째결과순번을확인했다. 사용자코드정책/경로·DTO·SHA·테스트/실제HTTP/미확인·다음담당을기록했다. 후행문서커밋은게시링크기록이며기능/DB/API·dev/main추가변경없다.
+
+## 2026-10-18 — #8 영어 이름 입력 해석·이전 HTTP 오류 조사
+
+- 사용자진행승인 후 AGENTS→협업→NEXT_WORK→AI_CONTEXT·관련계약/Git·코드를확인했다. 작업시작Git은깨끗했고feat/raid-services/29fcb1b에서이어갔다. #8최신131개댓글을재조회해128~130번째로그조사/서버작업맥락·131번째Flutter영어검색보완요청을대조했다. G3는이번구간에착수하지않았다.
+- resolve_input은ASCII A-Z만접어유일한siblings API원문이름을선택한다. observations는Armory요청/프로필exact검사/receipt에원문을전달하고신규등록/챌린지조회명·시작감사context를일치시킨다. 기존등록의입력대소문자도시작에서해석한다. capture/pending_context·명시target·server/UUID/claim/lifecycle와소유권정책은그대로엄격하다. Unicode casefold/이름기반병합·기존데이터일괄보정은없다. 요청멱등본문/캐시key불변,새API/DTO/DDL없음·OpenAPI정책필드1개추가다.
+- 이전HTTP오류조사는API교체전읽기전용으로수행했다. 보존API컨테이너시작은2026-10-17 23:43:30 KST,보존access범위23:43:36~10/18 01:23:27이다. 128번째보고는컨테이너시작전이므로당시3건은현재로그에서특정할수없다. 서버작업영향/클라이언트timeout을확정하거나배제하지않는다. 보존personal-profile42·대표1·표시설정1 GET은모두200이지만당시3건무오류근거는아니다. access처리시간/요청대응관계가없어DB대기/정확한서버시간을분리하지못한다.
+- 별도보존503진단은4건: siblings_transport timeout1(6547.83ms),siblings_schema/upstreamHTTP200/INVALID_RESPONSE3(268.834/153.028/159.826ms). 이후preview503 3건은이전활동복원HTTP오류3건과동일하다고주장하지않고원본응답이없어이번영어불일치와동일원인으로도확정하지않는다. 보존범위에서ASGI예외/DB lock timeout·statement timeout·deadlock/connection slots신호는관찰되지않았다. 원문URL/이름/UUID/키·응답을출력/게시하지않았다. 새진단/미들웨어/timeout변경은없고뒤의API교체는로그조사때문이아닌승인된수정반영이다.
+- 첫격리테스트는이전API이미지를기반으로빌드한것을발견해중단했다. API→test순서재빌드후최신수정으로다시검증했다. 테스트코드의registration version필드명은실제DTO의version에맞췄다. 최종검증·로컬반영·게시결과는아래후행기록을따른다.
+- 최종관련 **241PASS/105.29초**:새입력해석20개와원정대/대상/감사/실HTTP모의장비수집/owned refresh/소유정책/생명주기회귀. mixed/lower/upper×직접/등록·기존대소문자조회명·preview cache/멱등원문보존·타이름/다중대상/Unicode확장거절·프로필exact·고정서버/표기변경pending·명시targetexact를검증했다. 기존Starlette/AnyIO경고1개. 실제게임API/회원인증실행이아닌격리PostgreSQL/모의HTTP다.
+- 빌드이미지와기존로컬반영후실행OpenAPI전체일치. 기존paths/DTO/모든정책은불변이고입력해석정책1개만추가했음을대조했다. 기존API이미지만교체·DB0014/전체테이블행수전후동일확인·자료/키/flag보존. 실제HTTP health/catalog200·회원목록미로그인401. 이번수정의실제게임/Flutter기기영문검색은후속확인이며기존사용자인증성공기록은유지한다. 격리test-db만중지하며dev/main병합·운영배포·DB초기화는없다. 게시SHA/댓글은후행기록참조.

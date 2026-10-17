@@ -162,6 +162,7 @@ def openapi():
             'preserve': 'same account/character IDs, owner, verified_at, ownership and roster revisions; no new ownership audit; new active configuration unconfigured with no automatic activity/representative selection; existing personal data retained',
             'duplicate': 'active same-account registration remains 409 REGISTRATION_EXISTS; deleted registration/key/path never revived or reused',
         },
+        'input_name_resolution': 'preview/register/start resolve a unique siblings name using ASCII A-Z case-insensitive input matching only; retain API spelling in new registrations/challenges, Armory requests, receipts and history context; reject ambiguous/missing matches; Armory profile server/name and explicit target/pinned challenge/UUID/claims remain exact; request digests and input cache keys unchanged; no identity merging or stored-data migration',
         'challenge_context': 'pin lookup server/name and roster addresses at start; matched equipment with changed/invalid roster returns ROSTER_EVIDENCE_PENDING; missing old snapshot context or server baseline receipt returns PROVIDER_EVIDENCE_PENDING; live equipment receipts bind target/roster/equipment/time; legacy trusted adapter marker must be boolean True; equality alone never proves ownership/continuity/completeness',
         'live_roster_decrease': 'suspect only; missing/transfer require validated observation criteria',
         'owned_roster_refresh': {

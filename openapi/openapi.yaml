@@ -17626,7 +17626,8 @@
       "selection": "activity/representative IDs preserved; newly added IDs never auto-selected; blocked selected IDs set needs_reconfiguration; recovery does not auto-save settings",
       "startup": "Flutter member/environment once: owned provider roster refresh then current revisions/canonical list then valid activity targets then detail/build checks; nice-off excludes details, not roster refresh; failures remain incomplete"
     },
-    "mutation_locking": "initial global game transaction advisory lock; no network under lock"
+    "mutation_locking": "initial global game transaction advisory lock; no network under lock",
+    "input_name_resolution": "preview/register/start resolve a unique siblings name using ASCII A-Z case-insensitive input matching only; retain API spelling in new registrations/challenges, Armory requests, receipts and history context; reject ambiguous/missing matches; Armory profile server/name and explicit target/pinned challenge/UUID/claims remain exact; request digests and input cache keys unchanged; no identity merging or stored-data migration"
   },
   "x-character-lifecycle-policy": {
     "migration": "0007 files/isolated validation only; real DB application and API restart require separate approval",

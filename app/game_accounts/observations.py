@@ -6,7 +6,7 @@ from time import monotonic
 from app.game_accounts.provider import LostArkProvider, ProviderUnavailable
 from app.game_accounts.equipment import parse_equipment, InvalidSnapshot
 from app.game_accounts.lifecycle import BindingEvidence
-from app.game_accounts import equipment_proof
+from app.game_accounts import equipment_proof, verification_context
 from app.game_accounts.owned_refresh import OwnedObservation
 
 
@@ -54,7 +54,7 @@ def roster(raw, name):
         keys.add(key)
         rows.append(dict(server_name=fields[0], character_name=fields[1], class_name=fields[2],
                          character_level=level, item_level=number(item.get('ItemAvgLevel')), combat_power=None))
-    if sum(r['character_name'] == name for r in rows) != 1:
+    if verification_context.resolve_input(name, rows) is None:
         raise ProviderUnavailable('UPSTREAM_INVALID_RESPONSE')
     return sorted(rows, key=lambda r: (r['server_name'], r['character_name']))
 
@@ -77,6 +77,7 @@ def fetch(name, proof=False, *, token, before_armory=None, observer=None, on_ros
         raw_roster = provider.siblings(name)
         enter('siblings_schema')
         rows = roster(raw_roster, name)
+        canonical_name = verification_context.resolve_input(name, rows)
         gear = None
         if proof:
             enter('before_armory')
@@ -85,11 +86,11 @@ def fetch(name, proof=False, *, token, before_armory=None, observer=None, on_ros
             if before_armory is not None:
                 before_armory()
             enter('armory_transport')
-            raw = provider.armory(name)
+            raw = provider.armory(canonical_name)
             enter('armory_profile')
             profile = raw.get('ArmoryProfile') if isinstance(raw, dict) else None
-            matching = next(r for r in rows if r['character_name'] == name)
-            if not isinstance(profile, dict) or profile.get('CharacterName') != name or profile.get('ServerName') != matching['server_name']:
+            matching = next(r for r in rows if r['character_name'] == canonical_name)
+            if not isinstance(profile, dict) or profile.get('CharacterName') != canonical_name or profile.get('ServerName') != matching['server_name']:
                 raise ProviderUnavailable('UPSTREAM_INVALID_RESPONSE')
             matching['combat_power'] = number(profile.get('CombatPower'))
             enter('armory_equipment')
@@ -99,7 +100,7 @@ def fetch(name, proof=False, *, token, before_armory=None, observer=None, on_ros
                 raise ProviderUnavailable('UPSTREAM_INVALID_RESPONSE') from None
         enter('equipment_receipt')
         collected_at = datetime.now(timezone.utc)
-        receipt = equipment_proof.collect(name, rows, gear, collected_at) if proof else None
+        receipt = equipment_proof.collect(canonical_name, rows, gear, collected_at) if proof else None
         return Observation(rows, collected_at, gear, equipment_evidence=receipt)
     except ProviderUnavailable as error:
         current = monotonic()
