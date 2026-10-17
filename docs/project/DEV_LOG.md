@@ -970,3 +970,30 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 테스트완료한구간을같은작업브랜치에commit/push·원격확인후로컬8000 API반영/계약검증·#8결과회신을진행한다. DB0011자료/키유지·migration/초기화없음. 다음독립Backend구간은#12G1명세다.
 
 - 구현/계약 `d33f87350f7ef93a19ca800120107194a7a5ee21`을feat/raid-services로push·원격SHA확인후로컬8000 API반영했다. 실행OpenAPI전체일치/API·DBhealth/카탈로그·주차HTTP200/DB0011유지확인. 실행이미지내부helper의저레벨eligible/전투력기본값분리는확인했지만실제회원저장HTTP성공/실기기로보지않는다. 격리테스트DB중지완료. [119번째 Backend 구현 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6230483893)의순번을실제조회로확인했다. 후행문서도같은브랜치로게시하며dev/main860c84a는유지한다.
+
+
+## 2026-10-17 — Flutter #8/#10/#11 새 결과 확인
+
+- 실제댓글조회: #8 120개/#10 3개/#11 3개/#12·#13 0개. [#8 120번째 Flutter 정책수용](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6230534018)은d33f873코드/OpenAPI직접대조일치·서버선행대기해소·추가서버요청없음 보고다.
+- [#10 세 번째 Flutter 카탈로그/주차연결](https://github.com/heo0328/lostparty-backend/issues/10#issuecomment-6230533662)과 [#11 세 번째 Flutter 주간원장연결](https://github.com/heo0328/lostparty-backend/issues/11#issuecomment-6230533862)은기존카드에공개카탈로그/주차·본인배치GET/manual완료·정정과명령영속복구를연결했다고보고했다. 최종전체1622PASS/분석0·모의HTTP/실제controller이며실제회원쓰기/실기기검증은아직없다. 표시preference는현재기기회원/환경별이며완료는서버원장이다.
+- Flutter새변경은feature/scoped-account-cache 기준5eef0d2·미커밋/미push/dev/main미반영이다. 다음사용자/Flutter는저레벨선택/대표저장·주간체크/정정/재진입·다른기기완료복원확인, Backend는독립적으로#12G1명세를이어갈수있다. 실제파티연결/점유중완료는별도후속이다.
+- 추가요청/계약충돌이없어중복확인댓글을게시하지않았다. 코드/서버/DB변경·테스트·commit/push없이현황문서만갱신했다.
+
+
+## 2026-10-17 — #12 그룹 G1 명세 작성/게시
+
+- 사용자G1명세요청에따라AGENTS/협업/NEXT/AI·Git/기존인증·멱등·canonical소유·프로필을대조했다. #12본문/댓글0개·#13댓글0개·#8최신120개를확인하고기존현황문서변경3개를보존했다.
+- [G1 명세](../ISSUE_12_GROUP_G1_SPEC.md)에생성/공개검색·요약/내그룹·상세/회원목록/이름수정7경로, strict DTO·필수nullable/예시, public/private권한, 그룹전용대표/회원snapshot, CAS/멱등/cursor·최소3테이블/원자성·검증을정리했다. 회원당그룹자리1개이며대표소유문제로그룹membership권한을자동제거하지않는다.
+- 공개GET무인증과생성시활동선택비필수는본문범위에따른명세안으로명시했다. 그룹50/회원50은충돌중인미확정정책이며수치를임의활성화하지않는다. G2초대/신청/코드/차단·G3이전/탈퇴/해산/대표변경과실제모집연계는이번명세활성범위와구분했다.
+- [#12 첫 번째 Backend 명세 댓글](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232074318)에검토가능한명세전체를게시하고실제순번1을확인했다. 다음Flutter는소비충돌검토, Backend는최신회신을대조해G1구현이다. 문서는미커밋/미push이며코드/OpenAPI/DDL/서버/DB를변경하지않았다.
+- 문서JSON요청/응답예시파싱·git diff --check통과. 코드테스트/서버재시작은실행하지않았다.
+
+
+## 2026-10-17 — #12 G1 내부 기초 선행 구현
+
+- 사용자큰틀선행작업승인후규칙/협업/NEXT/AI·G1명세·Git를확인했다. #12댓글1개/새회신없음을착수·인계전에확인했다. 기존현황문서변경3개와미커밋G1명세를보존했다.
+- app/groups에3모델·내부strict명령·현재소유/사용자격/CAS/정책필수주입·원자생성/내부회원조회/이름수정·제한된projection을구현했다. group+user unique와같은group의leader membership deferredFK, 원자group/member/head/멱등결과, 현재세션/membership replay와캐릭터소유상실후그룹권한보존을확인했다.
+- 공개인증·활동선택·최종인원제한은프로덕션기본정책을제공하지않고명시적policy인자를필수화했다. 테스트의허용hook/추가member·종료상태fixture를제품정책/G2/G3구현으로간주하지않는다. HTTP router/경로·OpenAPI를추가하지않았다.
+- 0012_group_foundation 파일은3테이블/제약과directory head만추가한다. 격리PostgreSQL에서적용·모델일치/제약검증완료, 개발DB0011·groups테이블없음을읽기전용확인했다. API재시작·개발DBmigration/자료쓰기·초기화·이관/백업복원은하지않았다. 빌드이미지는전체OpenAPI불변확인에사용했다.
+- 최초30PASS/2FAIL은기존인증예외의하위타입을잘못기대한테스트오류였으며AuthError의실제401/403을검증하도록수정했다. 최종기초31+모델1+대표/주간회귀 **118PASS/54.32초**, 기존StarletteAnyIO경고1개. 동시rename CAS/중복create와rollback·현재권한/소유/snapshot보존·DB복합FK/회원유일성을포함한다.
+- 결과를같은feat/raid-services로commit/push·원격확인후#12에회신한다. 아직실제Flutter호출가능API/실기기대상은없으며다음은계약회신대조·HTTP/목록/cursor/OpenAPI연결이다. dev/main병합·서버반영은별도다.
