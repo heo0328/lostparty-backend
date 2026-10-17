@@ -37,7 +37,7 @@
 - **#8 수동 활동/대표 레벨 정책 구현 완료**: [115번째 정책](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6230281148)·[118번째 구간 설계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6230431817), [설계/결과](../ISSUE_8_MANUAL_ACTIVITY_POLICY_PLAN.md). 공통수동자격은lifecycle/claim만검사하고, 저레벨저장·대표/no-op·ineligible/갱신판정을 함께 보완했다. 초기기본선택1700·레이드/전투력의별도기준·소유/CAS/멱등은 유지한다. 기존needs_reconfiguration은다음명시저장으로정상화하며DB보정은없다. 활동20PASS/직접회귀244PASS를확인하고 구현/계약d33f873을push·원격확인·로컬8000반영·전체OpenAPI일치/health·DB0011유지를확인했다. [119번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6230483893)완료, Flutter실제저장확인대기. dev/main미병합이다.
 - **#12 G1 내부 선행 구현·검증 완료, HTTP미연결**: [명세](../ISSUE_12_GROUP_G1_SPEC.md)·[기초구현](../ISSUE_12_GROUP_G1_FOUNDATION.md). 그룹/회원/디렉터리3모델·0012파일·내부생성/회원조회/이름수정·소유/권한/CAS/멱등/원자성을구현하고관련118PASS·기존OpenAPI전체불변을확인했다. 공개인증/활동선택/최종한계값은정책hook필수주입·HTTP미연결로분리했다. 0012는격리DB에서만검증했고개발DB는0011·기존API유지다. 구현e5e97c8을같은feat/raid-services로push·원격확인하고 [#12 두 번째 Backend 내부구현 회신](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232311355)을게시했다. 후행문서도같은브랜치로게시하며dev/main미병합이다.
 - **#12 제한정책 정정·L0 내부기초 완료:** [#12 아홉 번째 확정](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232797572) 기준으로 개인초과의 광범위 그룹상속을 제거했다. 개인레이드초과=직접참가 모든방, 개인그룹초과=직접참가 그룹전용방, 그룹정원초과=해당그룹 모든그룹전용방이다. 기존그룹운영/정확히한도의기존이용은유지한다. [계약](../ISSUE_12_MEMBER_LIMITS_CONTRACT_DRAFT.md)·[L0 내부기초](../ISSUE_12_MEMBER_LIMITS_FOUNDATION.md): 한도/usage head/감사3모델·0013파일·쓰기없는기본조회/실제그룹집계·서버권한callback/CAS/감사·G1내부생성의head원자갱신을구현했다. 관련137PASS/47.76초·기존OpenAPI전체불변. 모집은null/unavailable, 실제방제한/HTTP/개발DB미적용이다.
-- **다음 Backend는 G1 HTTP 완성:** 본인한도GET·현재활동필수/생성한도증가검사·예상limits/usage revision·검색/목록/cursor·공개/회원DTO/OpenAPI를이어간다. 현재내부기초를재사용하며0012/0013개발DB적용과API반영은해당완성구간에서검증후수행한다. 추가제품질문대기는없다. G2/G3회복·#13실제방/원장연결은후속이다. [주간통계선행설계](../ISSUE_13_WEEKLY_STATISTICS_DRAFT.md)는별도제안이며원천구간/결과snapshot/마감설정이력을실제명령과함께먼저보존하고집계/조회는그뒤진행한다. Flutter는통계귀속시점/조회안의소비충돌을검토하며이검토로G1전체를멈추지않는다.
+- **G1 HTTP 구현·검증·로컬반영 완료:** [개발 안내](../ISSUE_12_GROUP_G1_DEVELOPMENT.md). 본인한도GET·그룹생성/공개검색·요약/본인목록·상세/회원목록/이름수정8동작을연결했다. 현재활동·한도증가/CAS·공개/회원DTO·서명cursor·검색정규화/OpenAPI를구현했다. 관련164PASS/56.09초와최종이미지G1중복범위59PASS/13.87초, 실행OpenAPI전체일치다. 개발DB0012/0013추가적용·기존업무행수보존·실제공개HTTP/회원401/기존health확인완료. 실제회원쓰기/Flutter적용·실기기는미확인이다. 다음Flutter는게시계약소비·연결/필요한확인결과회신, Backend는소비충돌보완후G2/G3명세를단계진행한다. 새G1제품결정질문은없다. #13실제방/통계는후속별도다.
 - **#8 새입력**: [121번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6232169604) 지연조사는 [124번째Backend](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6232557892)로기존로그결과회신완료. 관련GET139회200/refresh2회200이지만duration없어개별서버시간/DB대기/클라이언트공백분리는불가다. [122번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6232394235) 신규/첫1700자동추가는수동제외/명시재선택·최초관찰/문턱통과·도입이전불명확자료를보존하는영속계약을별도설계한다. GET쓰기·과거미선택일괄추가·기기캐시/이름으로추정하지않는다. 기존수동저레벨/대표/표시설정은보존한다.
 - **#11/#13 후속**: #11네번째사용자실제manual true반영성공보고를확인했다. [#11일곱번째Backend](https://github.com/heo0328/lostparty-backend/issues/11#issuecomment-6232568654)와 [#13두번째Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6232561372)로수용회신했다. i는주간점유/완료와독립된현재방관계이며완료후잔류/다음주유지·탈퇴/해산을#13에서명세한다. #13세번째계정별모집10/초과방진행제한은#12공통계약과중복없이연결한다. 개인완료API/DB제약을현재임의완화하지않는다.
 - 각 분야의 최종 경로/DTO·응답/오류 예시와 확정/미확정 범위를 해당 이슈에 먼저 제안하고 합의된 단위로 구현·검증·게시한다. 전체 화면 UX를 기다리거나 #8의 분쟁/자동퇴역 전체를 선행조건으로 삼지 않는다.  #10 명세/구현·Backend 검증과 Flutter 실제 연동 완료를 구분한다.
@@ -50,9 +50,14 @@
 - 앱 프로세스 종료로 원 key/body가 소실된 미확정명령의 영속복구는 미제공이다. 앱 수명 내 동일명령 복구와 구분하며 새 journal/API를 임의 추가하지 않는다.
 - Issue #8은 후속 추적을 위해 열린 상태를 유지한다. 현재 Backend 구간 완료가 Flutter 후속·Issue 전체·운영 완료를 뜻하지 않는다.
 - 현재 레이드 범위는 feat/raid-services에서 이어간다. 다른 범위가 필요하면 최신 dev에서 목적별 작업 브랜치를 만들고 해당 Issue의 최신 합의를 확인한다.
-- 현재 개발DB는 신규 주간 테이블만 추가한0011이며0012/0013은격리검증만수행했다. 개발서버는재시작하지않았고 기존 개발자료/키를 유지한다. 사용자 지시의 베타 직전 시점에만 DB 내용 초기화를 별도 수행한다. Firebase/기기자료 삭제·이름 기반 병합·이관, 별도8001 채택·백업/복원 마이그레이션은 하지 않는다.
+- 현재 개발DB는0013이며그룹/한도신규테이블만추가했다. 기존포트8000/자료/키를유지한다. 베타직전DB내용초기화는별도사용자지시이며Firebase/기기자료삭제·이름기반이관·8001채택·백업/복원마이그레이션은하지않는다.
 - Lightsail 운영 배포는 별도다. 이전 Git 통합에서는 서버/DB를 변경하지 않았다. 이번 #10/#11은 로컬API를 반영했고 #11의0011 신규테이블만 추가했다. 개발DB 볼륨/기존 업무 자료·키는 보존했다. 상세 검증/장애/결정은 [DEV_LOG](DEV_LOG.md), 기능별 기준은 [AI_CONTEXT](AI_CONTEXT.md)를 따른다.
 
 ## 이번 인계 상태
 
 구현/계약문서 `fcbb8409f031a03fc5b57479f769bb4d0b4c328e`를 `feat/raid-services`에push·원격일치확인했다. [#12 전체11번째 Backend — 정정/L0완료](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232977320), [#13 전체8번째 Backend — 정정/통계선행안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6232977464) 게시·순번재조회완료다. 다음담당은Backend G1 HTTP/정책연결(작업가능), Flutter통계귀속·조회안검토(독립검토)다. 전체답변대기는아니다. 후행문서는링크/게시상태기록만변경하며개발서버/DB·dev/main미변경이다.
+
+
+## 최신 실행 기준 — G1
+
+이전L0단락의HTTP미연결/DB0011은당시상태다. 현재G1 HTTP8동작·0013/기존서버반영완료이며구간인계SHA/댓글은후행기록에남긴다. 주간통계의귀속/조회안검토는G1적용과독립이다. dev/main통합은이번지시범위에없어수행하지않는다.

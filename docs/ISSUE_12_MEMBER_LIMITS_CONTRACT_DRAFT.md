@@ -160,3 +160,8 @@ G3의해산은기존조건인1인·pending없음·활성연결모집없음을유
 4절의 영향범위는 사용자 확정이며 추가 제품결정 대기는 없다. DTO/오류/HTTP는 최종 G1 인계에서 구현과 함께 확정한다. L0 내부기초 결과는 NEXT_WORK/DEV_LOG를 따른다. 개발DB/API 적용·실제 모집 연결·통계는 별도 단계다. 기본로그인/장비인증 반복시험·결제/광고·기존자료 이관/초기화는 요청하지 않는다.
 
 정정/L0결과 게시: [#12 전체11번째 Backend](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232977320). 구현fcbb840/push확인·HTTP/개발DB미적용.
+
+
+## G1 연결 완료 구간
+
+본인한도GET·생성의expected_limits_revision/expected_usage_revision·현재활동/가입한도/그룹정원검사를G1 HTTP에연결했다. 그룹회원상세는capacity:{limit,used,remaining,state}로현재정원을안내하며공개요약/기존운영권한은유지한다. 미구현RoomDetail/access/방원인guard는선제노출하지않는다. 실제방/통계연계는별도이며최신실행상태/DTO는 [G1 안내](ISSUE_12_GROUP_G1_DEVELOPMENT.md)·NEXT_WORK/OpenAPI를따른다. 과거‘HTTP미적용/개발DB0011’은L0인계당시상태다.

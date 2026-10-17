@@ -1029,3 +1029,12 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 새이미지빌드/격리0013적용은개발API반영과다르다. 기존OpenAPI전체불변·개발DB0011/L0테이블없음을읽기전용확인하고기존포트8000/자료/키를유지했다. Git/Issue인계는후행기록참조.
 
 - 인계완료: 구현/문서 `fcbb8409f031a03fc5b57479f769bb4d0b4c328e`를feat/raid-services에commit/push하고원격SHA일치를확인했다. [#12 전체11번째 Backend](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232977320)에정정/L0결과, [#13 전체8번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6232977464)에통계명세원문과검토경계를게시했다. 전체댓글재조회로순번을확인했다. 격리test-db만중지했고개발서버/DB는유지했다. 후행문서커밋은게시링크/다음담당기록이며같은검증을반복하지않는다. dev/main미병합이다.
+
+
+## 2026-10-17 — G1 HTTP/한도 연결·격리검증·기존 로컬 반영
+
+- 사용자G1진행/기획질문사전확인요청. AGENTS→협업→NEXT_WORK→AI_CONTEXT→계약·Git/코드를확인했다. 최신#12본문/댓글11개·#13댓글8개에추가정정은없었다. G1에새기획결정은없으며공개범위·활동필수·기본15/5·차원별초과확정을적용했다. Flutter로컬소스는읽거나수정하지않았고원격5eef0d2의group_name_normalizer.dart만조회해검색기준을대조했다.
+- app/groups/http_service.py/router.py/schemas.py와member_limits/schemas.py:8동작연결,현재활동·limits/usage revision·현재가입수/정원검사. 공개최소요약과회원전용목록/상세/capacity/멤버를분리하고기존core원자성/멱등/현재권한재검사를재사용했다. 그룹이름/저장대표이름의NFC검색·SQL리터럴wildcard·순서/cursor/GET쓰기0. 실제G2/G3/모집/통계는미구현이며관련권한을광고하지않는다.
+- 관련첫실행161PASS/2FAIL(55.95초):테스트의기존인증오류명오인/이름변경fixture의NameClaim복합FK위반. 테스트만기존ACCESS_INVALID·새canonical/claim/Activityfixture로수정하고멤버페이지actor/revision/비그룹장거부를추가했다. 관련164PASS/56.09초. 생성name의생략가능/명시null거부를OpenAPIstring에도맞춘최종이미지G1 HTTP/기초/모델검증59PASS/13.87초. 두범위는중복이며합산고유숫자로보고하지않는다. 기존Starlette/AnyIO경고1개.
+- 기존모든paths/DTO/정책객체가불변임을호스트에서대조하고6새경로/8동작·필요DTO만계약에추가했다. 최종이미지의실행OpenAPI와원본전체일치.
+- 기존로컬개발DB0011→0012→0013추가적용·기존API이미지반영. 회원/원정대/등록/캐릭터/설정/활동/주간원장행수전후동일·신규그룹/멤버/한도/head/감사0행·directory1행을확인했다. 실제HTTP공개목록/검색200·invalidlimit400·없는group404·회원GET4종/POST/PATCH401/Bearer/no-store·기존health/catalog/cycle200확인. 실제개발회원쓰기/Flutter실기기는미실행이다. 기존자료/키/flag/포트8000을보존했고테스트DB만중지했다. 초기화/백업복원이관/운영배포/merge는없다. 게시SHA/댓글후행기록참조.

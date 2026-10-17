@@ -1,7 +1,7 @@
 """Internal commands, not a published HTTP contract."""
 import unicodedata
 from uuid import UUID
-from pydantic import StrictStr, field_validator
+from pydantic import Field, StrictStr, field_validator
 from app.game_accounts.schemas import DTO, Version
 
 
@@ -22,7 +22,8 @@ class CreateGroup(DTO):
     expected_roster_revision: Version
     expected_lifecycle_revision: Version
     # Omission is the default-name command; explicit null is not allowed.
-    name: StrictStr | None = None
+    name: StrictStr = Field(default=None, description='Omitted selects the automatic name; explicit null is rejected.',
+                            json_schema_extra=lambda schema: schema.pop('default', None))
 
     @field_validator('name', mode='before')
     @classmethod

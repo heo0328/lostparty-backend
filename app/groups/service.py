@@ -1,7 +1,7 @@
-"""Internal group foundation. A future HTTP adapter must bind reviewed policies.
+"""Transactional group core shared by the G1 adapter and isolated internal tests.
 
 CreationPolicy is mandatory: activity/limit decisions have no permissive default.
-No module in app.main exposes these functions through HTTP.
+The HTTP adapter supplies its policy, command scope and response projection.
 """
 import uuid
 from typing import Protocol
@@ -87,11 +87,12 @@ def advance_directory(db):
     head.revision += 1
 
 
-def create(principal, key, command: CreateGroup, *, policy: CreationPolicy):
+def create(principal, key, command: CreateGroup, *, policy: CreationPolicy,
+           _operation='group-core-create', _project=detail):
     # Required policy injection is intentional; no implicit unlimited/active-selection policy.
     if not callable(policy):
         raise TypeError('A reviewed creation policy must be explicitly supplied')
-    ticket, replay = reserve(principal, 'group-core-create', key,
+    ticket, replay = reserve(principal, _operation, key,
                              {'body': command.model_dump(exclude_unset=True)})
     if replay:
         with session() as db, db.begin():
@@ -134,15 +135,16 @@ def create(principal, key, command: CreateGroup, *, policy: CreationPolicy):
             from app.member_limits.service import record_group_membership_change
             record_group_membership_change(db, uid)
             advance_directory(db)
-            result = detail(db, value, membership)
+            result = _project(db, value, membership)
             return commit_result(db, ticket, 201, result)
     except Exception:
         release(ticket)
         raise
 
 
-def rename(principal, gid, key, command: RenameGroup):
-    ticket, replay = reserve(principal, 'group-core-rename', key,
+def rename(principal, gid, key, command: RenameGroup, *,
+           _operation='group-core-rename', _project=detail):
+    ticket, replay = reserve(principal, _operation, key,
                              {'target': str(gid), 'body': command.model_dump()})
     if replay:
         with session() as db, db.begin():
@@ -165,7 +167,7 @@ def rename(principal, gid, key, command: RenameGroup):
                 value.revision += 1
                 advance_directory(db)
             db.flush()
-            return commit_result(db, ticket, 200, detail(db, value, membership))
+            return commit_result(db, ticket, 200, _project(db, value, membership))
     except Exception:
         release(ticket)
         raise

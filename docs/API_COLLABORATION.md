@@ -42,7 +42,7 @@ Issue·댓글·PR·구현/계약 커밋을 연결합니다. Backend 완료와 Fl
 
 ## 계약 원본과 검증
 
-REST 계약의 단일 원본은 [openapi/openapi.yaml](../openapi/openapi.yaml)입니다. `/health`, Issue #2의 6개 인증 API, Issue #3의 12개 내 계정 업무 API와 Issue #5의 전투력 갱신 API 및 Issue #6의 회원 설정 GET/PUT 및 Issue #7 회원 키 GET/PUT/DELETE·본인 복원 POST·Issue #8의 대표 전용 GET/PUT·L1b V2현재상태/퇴역이력GET·P1 역할요약GET/PUT·P2 개인설정PUT/원정대표시GET/PUT과 Issue #10의 공개 카탈로그/서버 주차 GET과 Issue #11의 본인 주간 상태 GET/개인 완료 PUT을 포함하며 YAML에서 유효한 JSON 형식으로 저장합니다. FastAPI의 `app.openapi()`는 구현에서 생성되는 비교 대상입니다. HTTP OpenAPI·Swagger 경로는 비활성화되어 있습니다. 실제 연동·자동 검증의 범위는 [인증 개발 안내](AUTH_DEVELOPMENT.md)와 [내 계정 API 안내](ISSUE_3_DEVELOPMENT.md)에 있습니다.
+REST 계약의 단일 원본은 [openapi/openapi.yaml](../openapi/openapi.yaml)입니다. `/health`, Issue #2의 6개 인증 API, Issue #3의 12개 내 계정 업무 API와 Issue #5의 전투력 갱신 API 및 Issue #6의 회원 설정 GET/PUT 및 Issue #7 회원 키 GET/PUT/DELETE·본인 복원 POST·Issue #8의 대표 전용 GET/PUT·L1b V2현재상태/퇴역이력GET·P1 역할요약GET/PUT·P2 개인설정PUT/원정대표시GET/PUT과 Issue #10의 공개 카탈로그/서버 주차 GET과 Issue #11의 본인 주간 상태 GET/개인 완료 PUT과 Issue #12의 그룹 G1 7개 동작·본인한도 GET을 포함하며 YAML에서 유효한 JSON 형식으로 저장합니다. FastAPI의 `app.openapi()`는 구현에서 생성되는 비교 대상입니다. HTTP OpenAPI·Swagger 경로는 비활성화되어 있습니다. 실제 연동·자동 검증의 범위는 [인증 개발 안내](AUTH_DEVELOPMENT.md)와 [내 계정 API 안내](ISSUE_3_DEVELOPMENT.md)에 있습니다.
 
 API 구현·계약을 변경한 경우 최신 API 이미지에서 다음 검증을 실행합니다.
 

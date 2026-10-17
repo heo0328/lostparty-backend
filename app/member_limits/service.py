@@ -1,4 +1,6 @@
-"""L0 internal foundation, no HTTP endpoint or production room integration.
+"""Member limit foundation; G1 exposes self reads, writes remain server-internal.
+
+Production raid-room integration is a later stage.
 
 Writes share the game-mutations lock. Limit changes require an explicit trusted
 server authorization callback; this module does not grant an app user that power.

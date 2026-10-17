@@ -1,6 +1,6 @@
 # #12 그룹 G1 API 명세안
 
-2026-10-17. **명세 게시·검토 및 내부 기초 선행 구현, HTTP 구현 전**. [#12 첫 번째 Backend 명세 댓글](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232074318). 작업 브랜치 `feat/raid-services`, 기존 구현 HEAD `2297fba`. [Issue #12](https://github.com/heo0328/lostparty-backend/issues/12)의 본문과 댓글0개, #13 댓글0개, #8 최신120번째까지 확인했다. 기존 현황문서의 미커밋 변경3개를 보존한다. 이 문서는 검토용이며 실행 중인 OpenAPI에 미구현 경로를 추가하지 않는다.
+2026-10-17. **G1 HTTP 구현 구간. 최신 요청/응답·검증/적용 상태는 [개발 안내](ISSUE_12_GROUP_G1_DEVELOPMENT.md) 우선.** 최초 명세의 이력은 아래와 같다. [#12 첫 번째 Backend 명세 댓글](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232074318). 작업 브랜치 `feat/raid-services`, 기존 구현 HEAD `2297fba`. [Issue #12](https://github.com/heo0328/lostparty-backend/issues/12)의 본문과 댓글0개, #13 댓글0개, #8 최신120번째까지 확인했다. 기존 현황문서의 미커밋 변경3개를 보존한다. 이 문서는 검토용이며 실행 중인 OpenAPI에 미구현 경로를 추가하지 않는다.
 
 최신 정정: [#12 세 번째 Flutter 회신](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232491349)으로 **계정별 기본 그룹정원15명/현재가입5그룹, 생성·가입 캐릭터의 현재 활동집합 포함 필수, 그룹명 또는 그룹전용대표 캐릭터명 검색**을 확인했다. 아래 명세에 반영하되 내부기초코드/HTTP/개발DB에는 아직 이 정정을 적용하지 않았다.
 
@@ -41,7 +41,7 @@ G1은 생성/공개 검색·요약/내 그룹·상세/멤버 조회와 그룹명
 - expected_registration_version, expected_ownership_revision, expected_roster_revision, expected_lifecycle_revision: integer>=1
 - name: 선택 문자열. 생략만 자동 이름이며 null은 거부한다.
 
-registration은 actor의 현재 등록이어야 하며 character의 account와 일치해야 한다. actor/leader_user_id/member_id/role/client snapshot을 입력으로 받지 않는다. 생성자와 그룹 UUID는 서버가 결정한다. 대표/활동 settings_version은 그룹 생성에 관계없어 요청하지 않는다.
+registration은 actor의 현재 등록이어야 하며 character의 account와 일치해야 한다. actor/leader_user_id/member_id/role/client snapshot을 입력으로 받지 않는다. 생성자와 그룹 UUID는 서버가 결정한다. 대표/활동 settings_version은 입력받지 않으며 현재활동포함은 최종transaction에서 검사한다. 최신 생성DTO는 expected_limits_revision/expected_usage_revision도 필수다.
 
 `GroupRenameIn`: name:string(필수), expected_revision:integer>=1, expected_membership_revision:integer>=1. 현재 그룹장 여부와 actor membership을 최종 transaction에서 다시 검사한다. 그룹 대표의 현 상태가 나빠졌다는 이유로 이름 수정 등 현재 그룹 권한을 없애지 않는다.
 
@@ -162,3 +162,8 @@ G1의DDL/DTO·생성·공개/회원조회·이름수정·권한/cursor/재송신
 [#12 아홉 번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232797572)가 이전의 ‘개인초과→모든 그룹/연결방 제한’ 제안을 대체한다. 개인 레이드 초과는 직접 참가한 공개/그룹 방, 개인 그룹 초과는 직접 참가한 그룹전용 방에만 적용한다. 기존 그룹 운영은 유지한다. 그룹 자체 정원 초과만 그 그룹의 모든 그룹전용 방을 제한한다. 정확히 한도에서는 기존 이용 정상/해당 증가만 차단한다. 세 질문은 해소됐고 추가 사용자 결정 대기는 없다. 상세는 [공통계약4·6절](ISSUE_12_MEMBER_LIMITS_CONTRACT_DRAFT.md)이다. 위 과거 다섯 번째 기준의 광범위 제한 설명은 최신 확정으로 대체된다.
 
 주간 통계는 [별도 설계](ISSUE_13_WEEKLY_STATISTICS_DRAFT.md)를 따른다. 현재한도/사용량 head를 주간 통계 카운터로 사용하지 않는다.
+
+
+## G1 최종 HTTP 반영
+
+[개발 안내](ISSUE_12_GROUP_G1_DEVELOPMENT.md)와OpenAPI가최종구현형식이다. 본인한도GET와생성예상limits/usage revision을추가하고회원상세에는capacity를제공한다. 공개요약은유지한다. 과거HTTP미연결/정책미반영설명은당시상태이며최종검증·로컬적용여부는NEXT_WORK/DEV_LOG를따른다. G2/G3·실제방API·통계집계는이번구간에포함하지않는다.
