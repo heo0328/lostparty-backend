@@ -16,6 +16,7 @@ from app.core.errors import register
 from app.core.game_policy import DEFAULT_MIN_ITEM_LEVEL
 from app.member_settings.router import router as settings_router
 from app.lostark_keys.router import router as lostark_keys_router
+from app.raids.router import router as raid_router
 
 
 @asynccontextmanager
@@ -36,6 +37,7 @@ app.include_router(preferences_router)
 app.include_router(presentation_router)
 app.include_router(settings_router)
 app.include_router(lostark_keys_router)
+app.include_router(raid_router)
 register(app)
 
 

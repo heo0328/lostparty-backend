@@ -904,3 +904,28 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 문서정리5437fc53df829e33a63299dd8d1f129e86876508을작업브랜치에push하고[PR #9](https://github.com/heo0328/lostparty-backend/pull/9)를생성했다. base=dev/head고정5437fc5/mergeable·추가CI없음을확인해사용자승인대로merge했다. dev원격병합 **ea1384db236baf6d6738adce5db32f9a99b9f000**,최종featuretree와동일(diff0)/구현19c2dcc포함을확인했고main을fast-forward/push해양원격동일SHA를확인했다. force/squash/공유이력재작성없음.
 
 원격feature가최종5437fc5에서바뀌지않았고dev/main에포함·다른worktree사용없음/clean을재확인해feat/representative-selection을로컬-d/원격delete로정리했다. main/dev만남았다. [110번째 Backend 통합완료회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6228957999)을게시하고전체댓글로순번110확인. 현재구간완료와Flutter관리진입/회원캐릭터복원후속·분쟁/운영미완료를구분하고Issue#8은OPEN유지했다. 최종후행문서기록도dev/main동일HEAD로push하고회신본문의최종SHA를갱신한다. 이번은문서/PR/Git작업만수행·기능코드/테스트/실행서버·DB/자료/키/flag변경없음,기존관련483PASS/실행계약일치를재사용했다.
+
+
+## 2026-10-17 — Issue #8 Flutter 111·112번째 결과 확인
+
+- [111번째 Flutter 회원 주목록·복원/관리 진입](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6229534730): 기존 Backend 계약860c84a/19c2dcc으로 회원·환경별 서버 저장자료 로컬 복원과 관리 진입을 연결했다고 보고했다. 자동 실행 flag false·GET 복원/provider 실행 분리를 유지하며1596PASS/분석0 보고.
+- [112번째 Flutter UI 회귀 수정](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6229647060): 실제 사용자 보고의 표시 인원수 취소 오류를 재현해 입력 컨트롤러 수명 문제를 수정하고 기존 카드/하단 체크 영역을 복구했다. 최신 전체1598PASS/분석0은 Flutter 자동 검증 보고이며 수정 후 실기기 확인은 미수행이다.
+- 새 구현/수정은feature/scoped-account-cache 기준 HEAD5eef0d2의 미커밋·미push·dev/main 미반영이다. 앞선109번째의 이전 구간 게시 완료와 구분한다. 다음은 사용자/Flutter의 수정 화면·새 기기 캐릭터/설정 복원 및 저장 확인과 Flutter 게시다.
+- 두 댓글 모두 추가 Backend 이슈·구현·재시험 요청이 없다. 중복 확인 댓글을 게시하지 않았으며 Backend 코드·API·서버·DB는 변경하지 않았다. NEXT_WORK/AI_CONTEXT의 남은 Flutter 작업을 최신 보고에 맞췄다.
+
+
+## 2026-10-17 — Issue #8 113·114번째 및 신규 #10~#13 검토
+
+- [113번째 Flutter UX 정정](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6229801409): 최초unconfigured·현재소유·완전한목록에서만1700 유효후보 전체 기본 선택/최고레벨 대표 저장으로 사용자 승인 정책을 정정했다. 기존 선택/재설정은 보존·후보0 쓰기없음. 최신 자동1601PASS 보고, 실제 화면/조회실패 원인 미확인, 새 변경 미커밋·미push다.
+- [114번째 Flutter 신규 요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6229923232)과 연결된 #10 카탈로그/주차·#11 주간상태·#12 그룹·#13 모집/파티 본문을 모두 조회했다. 네 이슈는open·댓글0개이며 명세/독립 서버 구현 요청이다. 담당Backend, P0카탈로그→P1주간/그룹→P2모집 기초 순서다.
+- 공통 최종 경로/DTO/SQL은Backend 소유이며 분야별 이슈에 명세/예시를 먼저 게시한다. 전체완료권한·그룹50/50 제한·종료시간null·확장승인정책은 미확정으로 분리하며 기초 전체를 대기하지 않는다. 현재 계정/UUID/소유 계약·개발환경/DB를 재사용한다.
+- 이번은 내용 확인/작업문서 갱신이다. 신규 명세 확정·OpenAPI/구현·테스트·댓글 게시·서버/DB 변경은 수행하지 않았다. 기존 문서 변경을 보존했다.
+
+
+## 2026-10-17 — #10 P0 카탈로그·서버 주차 구현/검증
+
+- 사용자 진행 승인으로dev860c84a에서feat/raid-services를 생성했다. 앞선 댓글 확인의 문서 변경3개를 보존하고 함께 최신화했다. [#10 첫 번째 댓글·Backend 명세](https://github.com/heo0328/lostparty-backend/issues/10#issuecomment-6229990139)를 먼저 게시하고 위임된endpoint/DTO 설계 범위의 독립 구현을 진행했다.
+- 공개 GET /v1/raid-catalog와 /v1/raid-cycle 추가. 지정된Flutter5eef0d2 정적제품자료를 변환해5raid/13difficulty·보상/버전2026.08.20을 보존하고, 입장레벨은십진문자열로 제공한다. 원본을 최신패치 검증으로 보지 않는다. 주차는KST수요일06시·UTC반개구간·시작KST날짜키다. 순수 내부선택검증기는조합/활성/버전과정밀레벨을 검사하며 후속명령의 권한/점유검사를 대체하지 않는다.
+- 관련31PASS/2.79초·기존StarletteAnyIO경고1개. 격리PostgreSQL의공통fixture를 사용했고, 공개조회는DB/provider함수차단중통과. 개발DB자료를테스트로쓰지않았으며테스트DB는종료했다.
+- 기존OpenAPI paths/DTO/정책값을모두보존한두경로/신규DTO추가를대조했다. 로컬8000 API를새이미지로반영하고전체OpenAPI일치·실제HTTP5raid/13difficulty·UTC주차구간/no-store·API/DBhealth를확인했다. 개발DB는기존컨테이너/볼륨/0010스키마를유지했으며migration/초기화/이관/키/flag변경없음.
+- 구현인계는작업브랜치commit/push·원격확인후#10에남긴다. dev/main병합·운영배포·Flutter연동확인은별도다. 다음Backend는#11주간원장/비점유개인완료명세이며#12그룹기초도독립가능하다.
