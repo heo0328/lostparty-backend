@@ -943,3 +943,28 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 구현을 작업브랜치commit/push·원격 확인한 뒤 #11로 인계한다. dev/main merge/운영배포는 하지 않는다. 다음Backend는#12그룹G1명세다. #11점유중영향확인/명시실행·실제파티/슬롯 연결과 전체완료권한은#13후속이며 Flutter연동은별도다.
 
 - 구현/계약 `bce6133fcdcfd70d42691e3a4376c2eeaed69f0b`을feat/raid-services로commit/push·원격동일SHA확인 후 [#11 두 번째 댓글·Backend 첫 구간 인계](https://github.com/heo0328/lostparty-backend/issues/11#issuecomment-6230329942)를 게시했다. 첫명세/둘째결과순번은실제조회로확인했다. 후행인계문서도같은브랜치로게시하며dev/main은860c84a를유지한다.
+
+
+## 2026-10-17 — #8 115·116번째 신규 정책/결과 확인
+
+- #8은116번째까지 새Flutter댓글2개, #10은2개/#11은2개/#12는0개를 조회했다. 115번째는1700을최초기본선택에만사용·저레벨수동활동/대표허용의사용자정책정정이며116번째는Flutter1605PASS/모의HTTP22→9회 결과다. Flutter새변경은여전히미커밋·미push, 저레벨실제서버저장/기기속도미확인이다.
+- activity_policy와전체설정/대표/부적격projection·갱신호출부를대조해기존서버1700차단이남아있음을확인했다. #13본문도같은최신정책으로정정돼있다. endpoint/DTO/DB변경없이수동자격과초기기본선택/레이드입장을분리할수있다.
+- [117번째 Backend 검토 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6230374459)으로수정전상태와기존흐름보완을#12보다우선할것을전달했다. 코드/API/서버/DB/commit/push변경이나테스트는이번확인에서수행하지않았다.
+
+
+## 2026-10-17 — 수동 활동/대표 레벨 정책 수정 구간 설계
+
+- #8 최신117개/#11 2개/#12·#13 0개를 재조회했고 새 추가 회신은 없었다. activity_policy·전체설정/대표·settings_out/reconcile·V1/V2 조회·OpenAPI정책·기존활동테스트를 대조했다.
+- [설계문서](../ISSUE_8_MANUAL_ACTIVITY_POLICY_PLAN.md)에 수동활동/대표 자격·부적격projection/갱신·계약설명·회귀를 하나의 구현/인계 구간으로 정리했다. 1700초기기본선택·레이드/전투력 별도 조건과 현재권한/CAS/멱등을 유지한다. 레벨원인의기존needs_reconfiguration은자료보정/GET자동복구없이다음명시저장으로정상화한다.
+- [118번째 Backend 설계 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6230431817)에 필수설계·검증·완료/후속담당을공유했다. 실제조회로전체댓글순번을확인했다. 다음담당Backend구현이며 이후#12G1명세로복귀한다.
+- 사용자요청범위는설계다. 코드/OpenAPI실물/서버/DB변경·테스트·commit/push는하지않았다. 기존문서변경3개를보존하고새설계문서1개를추가했으며모두미커밋이다.
+
+
+## 2026-10-17 — 수동 활동/대표 레벨 하한 분리 구현·자동 검증
+
+- 사용자 구현 승인 후 #8 최신118개/추가댓글없음을 확인하고 기존feat/raid-services에서작업했다. 이전문서변경3개와미커밋설계문서를보존했다.
+- activity_policy의수동eligible/require_eligible에서레벨검사를제거해 lifecycle/claim만검사한다. 기존전체활동/대표저장과부적격projection/정상갱신판정에동일적용, 소유/UUID·active/confirmed/NameClaim/main·선택집합/CAS/멱등검사는유지했다. 공통1700상수/전투력/레이드입장기준은별도보존했다.
+- OpenAPI의activity_selection확장정책만정정했다. minimum_item_level→initial_selection_minimum_item_level1700과validation/stored/identity설명을분리하고HTTP경로/DTO·다른정책값전체보존을확인했다. 현재안내상단에최신정책을명시하고과거제한기록은이력으로보존했다.
+- 최초관련9파일260PASS/5FAIL/114.83초: 신규테스트의잘못된자료형·claim제약불일치·명시선택집합과다른요청이실패원인이었다. 자료/요청을고친활동파일20PASS/12.26초. 다른8파일244PASS와합쳐최종유효검증264개이며단일실행264PASS로표현하지않는다. 기존StarletteAnyIO경고1개. 격리PostgreSQL을사용했고개발DB에시험쓰기는하지않았다.
+- 관련검증은저레벨/레벨미상수동저장·대표변경/no-op·재조회/replay·정상레벨하락선택보존·기존needs_reconfiguration의명시저장정상화·생명주기/claim거절·초기명시draft/타인/소유상실/CAS/rollback과전투력·카탈로그·주간회귀를포함한다. 실제Flutter실기기저장·게임호출성공과구분한다.
+- 테스트완료한구간을같은작업브랜치에commit/push·원격확인후로컬8000 API반영/계약검증·#8결과회신을진행한다. DB0011자료/키유지·migration/초기화없음. 다음독립Backend구간은#12G1명세다.
