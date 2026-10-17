@@ -1027,3 +1027,5 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 격리PostgreSQL 초기검증134PASS/3FAIL(47.54초): 새한도행 변경에서 DB시각SELECT가미완성행을autoflush해updated_at NOT NULL위반. 시각을객체생성/변경전에읽도록실제구현을수정했다. 최종 L0 19개+그룹기초/모델migration/대표/주간회귀 총137PASS/47.76초·기존Starlette/AnyIO경고1개. 권한거부·CAS경합·감사unique/DB제약·감소시관계보존·재실행head불변·실패rollback을확인했다.
 - #12열번째/#13일곱번째의주간통계는별도계약안으로작성했다. 사용자/그룹UUID·주차별참가이용/결과snapshot·수요일06시함께하기설정이력·지연재처리/중복·관찰전null·권한을구분한다. 결과귀속/전환분류/마감실효값/조회형식은Backend제안으로표시했다. 통계모델/HTTP/worker는미구현이고기존개인체크는원천으로쓰지않는다.
 - 새이미지빌드/격리0013적용은개발API반영과다르다. 기존OpenAPI전체불변·개발DB0011/L0테이블없음을읽기전용확인하고기존포트8000/자료/키를유지했다. Git/Issue인계는후행기록참조.
+
+- 인계완료: 구현/문서 `fcbb8409f031a03fc5b57479f769bb4d0b4c328e`를feat/raid-services에commit/push하고원격SHA일치를확인했다. [#12 전체11번째 Backend](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232977320)에정정/L0결과, [#13 전체8번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6232977464)에통계명세원문과검토경계를게시했다. 전체댓글재조회로순번을확인했다. 격리test-db만중지했고개발서버/DB는유지했다. 후행문서커밋은게시링크/다음담당기록이며같은검증을반복하지않는다. dev/main미병합이다.

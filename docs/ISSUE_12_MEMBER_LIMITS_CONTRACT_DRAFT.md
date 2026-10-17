@@ -1,6 +1,6 @@
 # 계정별 이용 한도·방 제한 공통 계약안
 
-2026-10-17. **최신 사용자 확정 영향범위로 정정, L0 내부기초 작업. HTTP/실제 방 연결은 미구현**. [#12 일곱 번째 Backend 명세](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232669446). 기준은 [#12 다섯 번째 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232562970), [#13 세 번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6232565592)다. 최신 #12 10개/#13 7개를 확인했고, 아홉 번째 확정/일곱 번째 통계 요청을 반영한다. 현재 `feat/raid-services` HEAD `6cfe4a7`, 그룹 내부 기초 `e5e97c8`을 재사용한다. 기존 문서 변경4개를 보존한다. [#13 네 번째 Backend 연결범위 회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6232674169)으로 공통원본과 모집/개인체크 경계를 공유했다. 새 DTO/오류/경로는 아래 검토안이며 실행 OpenAPI에 아직 추가하지 않는다.
+2026-10-17. **최신 사용자 확정 영향범위로 정정, L0 내부기초 작업. HTTP/실제 방 연결은 미구현**. [#12 일곱 번째 Backend 명세](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232669446). 기준은 [#12 다섯 번째 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232562970), [#13 세 번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6232565592)다. 최신 #12 10개/#13 7개를 확인했고, 아홉 번째 확정/일곱 번째 통계 요청을 반영한다. 작업 시작 `feat/raid-services` HEAD `6cfe4a7`, 그룹 내부 기초 `e5e97c8`을 재사용한다. 기존 문서 변경4개를 보존한다. [#13 네 번째 Backend 연결범위 회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6232674169)으로 공통원본과 모집/개인체크 경계를 공유했다. 새 DTO/오류/경로는 아래 검토안이며 실행 OpenAPI에 아직 추가하지 않는다.
 
 ## 1. 기본 한도와 권위 상태
 
@@ -158,3 +158,5 @@ G3의해산은기존조건인1인·pending없음·활성연결모집없음을유
 단계별검증은기본값/개별조정·GET쓰기0·일반회원한도조작거부·현재종료관계제외·같은방중복집계0·주차무초기화·정확한한도/초과·동시증가/한도감소·다른회원진행제한·권한있는회복/권한없는추방거부·대표이전후정원·원인해제·부분실패rollback·과거ACK/완료snapshot불변·무관한개인체크보존을해당실제구현단계에서진행한다. 아직없는그룹/파티의모의검증을실연결완료로보고하지않는다.
 
 4절의 영향범위는 사용자 확정이며 추가 제품결정 대기는 없다. DTO/오류/HTTP는 최종 G1 인계에서 구현과 함께 확정한다. L0 내부기초 결과는 NEXT_WORK/DEV_LOG를 따른다. 개발DB/API 적용·실제 모집 연결·통계는 별도 단계다. 기본로그인/장비인증 반복시험·결제/광고·기존자료 이관/초기화는 요청하지 않는다.
+
+정정/L0결과 게시: [#12 전체11번째 Backend](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232977320). 구현fcbb840/push확인·HTTP/개발DB미적용.

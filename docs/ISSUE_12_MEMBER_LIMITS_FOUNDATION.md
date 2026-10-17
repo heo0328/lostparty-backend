@@ -13,3 +13,5 @@ L0는 저장·조회·버전·권한경계다. 현재 G1 생성은 기존의 필
 검증은 격리 PostgreSQL에만0013을 적용한다. 개발DB는0011·기존 포트8000/API를 유지한다. 새 이미지를 빌드했어도 실행 컨테이너 반영/개발DB 적용을 뜻하지 않는다. OpenAPI는 기존 전체 객체 불변을 확인한다. 세부 PASS·오류 수정/커밋·게시 링크는 DEV_LOG/NEXT_WORK의 해당 구간을 따른다.
 
 다음: 본인한도GET·생성시 현재활동/한도/CAS·공개/회원목록/검색/cursor·OpenAPI를 G1 단위로 완성한 뒤 로컬반영/Flutter 연동 인계한다. 주간 통계는 [별도 선행 설계](ISSUE_13_WEEKLY_STATISTICS_DRAFT.md)로 진행한다.
+
+구현/문서 `fcbb840` push·원격확인, 관련137PASS/47.76초·기존OpenAPI전체일치. [#12 전체11번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232977320), [#13 전체8번째 Backend 설계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6232977464).

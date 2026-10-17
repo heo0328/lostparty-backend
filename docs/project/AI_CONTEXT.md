@@ -35,3 +35,5 @@
 ## 최신 공통기초/통계 구간
 
 [#12 아홉 번째](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232797572)로 제한 영향범위 확정/질문 해소. 개인초과는 직접 참가방에만 차원별 적용하고 기존그룹운영은유지, 그룹자체정원초과만 해당그룹 모든그룹전용방 제한이다. 위 과거 광범위상속/검토대기 설명을 대체한다. [L0 내부기초](../ISSUE_12_MEMBER_LIMITS_FOUNDATION.md)는 한도/사용량head/감사·기본읽기·그룹집계·G1생성head원자갱신 구현, 관련137PASS. HTTP/실제방제한 미연결,0013격리검증만·개발DB0011유지. 다음은G1 HTTP/정책연결이다. [#13 일곱 번째 통계요구](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6232893737)는 [별도 선행 설계](../ISSUE_13_WEEKLY_STATISTICS_DRAFT.md)이며 구현/실기기 완료와 구분한다.
+
+구현/문서fcbb840 작업브랜치push·원격확인, [#12 11번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232977320)·[#13 8번째 Backend 통계제안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6232977464). Backend다음G1작업가능/Flutter통계검토, 개발DB0011·HTTP기존유지.

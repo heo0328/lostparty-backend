@@ -52,3 +52,7 @@
 - 현재 레이드 범위는 feat/raid-services에서 이어간다. 다른 범위가 필요하면 최신 dev에서 목적별 작업 브랜치를 만들고 해당 Issue의 최신 합의를 확인한다.
 - 현재 개발DB는 신규 주간 테이블만 추가한0011이며0012/0013은격리검증만수행했다. 개발서버는재시작하지않았고 기존 개발자료/키를 유지한다. 사용자 지시의 베타 직전 시점에만 DB 내용 초기화를 별도 수행한다. Firebase/기기자료 삭제·이름 기반 병합·이관, 별도8001 채택·백업/복원 마이그레이션은 하지 않는다.
 - Lightsail 운영 배포는 별도다. 이전 Git 통합에서는 서버/DB를 변경하지 않았다. 이번 #10/#11은 로컬API를 반영했고 #11의0011 신규테이블만 추가했다. 개발DB 볼륨/기존 업무 자료·키는 보존했다. 상세 검증/장애/결정은 [DEV_LOG](DEV_LOG.md), 기능별 기준은 [AI_CONTEXT](AI_CONTEXT.md)를 따른다.
+
+## 이번 인계 상태
+
+구현/계약문서 `fcbb8409f031a03fc5b57479f769bb4d0b4c328e`를 `feat/raid-services`에push·원격일치확인했다. [#12 전체11번째 Backend — 정정/L0완료](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232977320), [#13 전체8번째 Backend — 정정/통계선행안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6232977464) 게시·순번재조회완료다. 다음담당은Backend G1 HTTP/정책연결(작업가능), Flutter통계귀속·조회안검토(독립검토)다. 전체답변대기는아니다. 후행문서는링크/게시상태기록만변경하며개발서버/DB·dev/main미변경이다.
