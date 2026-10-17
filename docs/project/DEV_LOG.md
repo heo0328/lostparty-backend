@@ -997,3 +997,5 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 0012_group_foundation 파일은3테이블/제약과directory head만추가한다. 격리PostgreSQL에서적용·모델일치/제약검증완료, 개발DB0011·groups테이블없음을읽기전용확인했다. API재시작·개발DBmigration/자료쓰기·초기화·이관/백업복원은하지않았다. 빌드이미지는전체OpenAPI불변확인에사용했다.
 - 최초30PASS/2FAIL은기존인증예외의하위타입을잘못기대한테스트오류였으며AuthError의실제401/403을검증하도록수정했다. 최종기초31+모델1+대표/주간회귀 **118PASS/54.32초**, 기존StarletteAnyIO경고1개. 동시rename CAS/중복create와rollback·현재권한/소유/snapshot보존·DB복합FK/회원유일성을포함한다.
 - 결과를같은feat/raid-services로commit/push·원격확인후#12에회신한다. 아직실제Flutter호출가능API/실기기대상은없으며다음은계약회신대조·HTTP/목록/cursor/OpenAPI연결이다. dev/main병합·서버반영은별도다.
+
+- 구현 `e5e97c8a4db541ece7d37b9879f46fe0c88f20f2`을feat/raid-services로push·원격동일SHA확인후 [#12 두 번째 Backend 내부구현 회신](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232311355)을게시했다. 실제순번은첫명세1/이번결과2로확인했고테스트DB를중지했다. 후행기록도같은브랜치로push하며개발API/DB0011과dev/main860c84a를유지한다.

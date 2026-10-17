@@ -21,7 +21,7 @@
 
 `0012_group_foundation`은 새3테이블/제약과 directory head1행만 생성한다. 기존자료 복사·초기화는 없다. **파일 작성과 격리PostgreSQL 적용/모델 일치 검증만 수행하며 개발DB에는 미적용**이다. 현재 개발DB0011·기존API를 유지한다. downgrade로 그룹자료를 폐기하지 않고 이후 API이미지 복구/자료보존과 수정migration을 사용한다.
 
-관련 테스트는 내부 생성·그룹장동일그룹FK·회원유일성·정책필수주입·이름/기본명이상·각revision·소유/claim/생명주기·현재회원/private차단·정정/no-op/replay·동시경쟁·transaction rollback·표시snapshot/권한보존을 포함한다. 최종 관련118PASS/54.32초·기존Starlette/AnyIO경고1개다. 최초기초검증은30PASS/2FAIL이었고기존인증예외AuthError를하위GameError로잘못기대한테스트만수정했다. 최종실행은기초31개/모델일치1개와대표·주간회귀를포함한다. 원격게시SHA는DEV_LOG/구현결과댓글에기록한다. 테스트의 멤버추가/종료는 후속상태를 만든 fixture이며 G2/G3 실제명령 구현 결과로 보고하지 않는다.
+관련 테스트는 내부 생성·그룹장동일그룹FK·회원유일성·정책필수주입·이름/기본명이상·각revision·소유/claim/생명주기·현재회원/private차단·정정/no-op/replay·동시경쟁·transaction rollback·표시snapshot/권한보존을 포함한다. 최종 관련118PASS/54.32초·기존Starlette/AnyIO경고1개다. 최초기초검증은30PASS/2FAIL이었고기존인증예외AuthError를하위GameError로잘못기대한테스트만수정했다. 최종실행은기초31개/모델일치1개와대표·주간회귀를포함한다. 구현SHA `e5e97c8a4db541ece7d37b9879f46fe0c88f20f2`을push·원격확인하고 [#12 두 번째 Backend 내부구현 회신](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232311355)으로인계했다. dev/main미병합이다. 테스트의 멤버추가/종료는 후속상태를 만든 fixture이며 G2/G3 실제명령 구현 결과로 보고하지 않는다.
 
 ## 다음 구간
 
