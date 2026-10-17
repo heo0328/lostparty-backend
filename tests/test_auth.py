@@ -332,6 +332,7 @@ def test_model_migration_consistency():
     from app.member_settings import models as settings_models
     from app.raid_weekly import models as weekly_models
     from app.groups import models as group_models
+    from app.groups import admission_models as admission_models
     from app.member_limits import models as limit_models
     with engine().connect() as connection:
         # Application-owned external tables are absent in isolated test DB.

@@ -1040,3 +1040,14 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 기존로컬개발DB0011→0012→0013추가적용·기존API이미지반영. 회원/원정대/등록/캐릭터/설정/활동/주간원장행수전후동일·신규그룹/멤버/한도/head/감사0행·directory1행을확인했다. 실제HTTP공개목록/검색200·invalidlimit400·없는group404·회원GET4종/POST/PATCH401/Bearer/no-store·기존health/catalog/cycle200확인. 실제개발회원쓰기/Flutter실기기는미실행이다. 기존자료/키/flag/포트8000을보존했고테스트DB만중지했다. 초기화/백업복원이관/운영배포/merge는없다. 게시SHA/댓글후행기록참조.
 
 - G1인계완료: 구현/계약 `73744bef0e0f1cab391bbee6f750148712d3ee65`를feat/raid-services에commit/push·원격SHA일치확인후 [#12 전체12번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6234628340) 게시. 전체댓글재조회로12번째를확인했다. 경로/DTO 변경·검증/실제HTTP/미확인·다음Flutter계약소비요청을기록했다. 후행커밋은문서의게시링크/담당기록만이며dev/main/운영미변경이다.
+
+
+## 2026-10-17 — 그룹 G2 구현·정책확인·검증/로컬 반영
+
+- 사용자G2구현지시후협업문서/현재Git·G1/L0/최신#12본문·13개댓글확인. 기존feat/raid-services에서이어갔다. 원격Flutter5eef0d2 GROUP_PRODUCT_FLOW·코드/차단객체를참조했으며로컬Flutter소스는읽거나수정하지않았다. 오래된50/50·이관/자동종료정책을그대로채택하지않았다.
+- 사용자확정:일반그룹원직접초대유지. 그룹장코드관리·공개ON그룹원확인/복사,OFF는화면숨김만/기존코드사용가능. 6자리영문대문자+숫자각각1개이상·재생성10분·이전코드폐기·폐기후재생성우회금지. 추가제품결정대기없다. [#12 14번째 Backend 명세](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6235086630)를구현전게시하고최종사용자답변으로정정했다.
+- G2 20동작/19경로:캐릭터정확검색·일반멤버초대/취소·수신수락/거절·신청/승인/거절/취소·요청현황/관리·차단/해제·코드권한조회/생성/재생성/폐기/공개/확인/즉시가입. 현재소유/등록/claim/lifecycle/활동·현재정원/가입한도·역할/예상revision을최종락/transaction에서검사한다. pending24h/최종시각rollback·코드가입시관계종료/누적신청불변·회원별차단우회거부·원ACK복구/현재권한을구분했다.
+- 0014는subject/relation/encrypted-code3테이블과membership현재부분unique. 과거membership을덮지않고재가입은새ID,group/subject/대상회원·발신membership복합FK/상태제약을검증했다. 코드원문은HMAC/AES-GCM보관·metadata ACK/해결된code UUID만멱등저장,GET현재권한복호화다. 신청승인응답은Relation이고타인my_membership을반환하지않는다. 실제G3/모집/통계는미구현이다.
+- 첫격리실행81PASS/14FAIL(25.58초)은단일회원fixture가첫user UUID를재선택해다중회원의메인등록unique를위반한테스트자료문제다. 각실제로그인UUID/고유주소fixture로수정해G2 17PASS/15.55초. 경계·권한상실replay·차단우회/cursor·FK를추가한최종관련190PASS/77.70초(G226개+G1/L0/모델/대표/주간회귀),기존Starlette/AnyIO경고1개. 중복실행수를합산하지않는다.
+- 기존모든OpenAPI paths/DTO/정책객체불변을대조하고새19경로/20동작만추가,실행OpenAPI전체일치. 기존로컬DB0013→0014/API이미지반영,기존업무/그룹/회원/한도/head/감사행수전후동일·새G2세테이블0행확인. 실제HTTP새20동작401/Bearer/no-store·기존health/group/catalog/cycle200확인. 실제개발회원쓰기/Flutter연결·실기기미실행이다. 기존자료/키/flag/포트8000유지·격리test-db만중지했다.
+- NEXT_WORK/AI_CONTEXT는과거누적상태를현재기준/다음실행중심으로정리했다. 상세기존이력은DEV_LOG/기능문서를보존했다. G3명세/소비충돌후속,Flutter시작준비우선/G1G2연결별도다. 게시SHA/댓글은후행기록에남긴다. dev/main통합·운영배포·자료초기화/이관은없다.

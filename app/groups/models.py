@@ -1,4 +1,4 @@
-from sqlalchemy import CheckConstraint, ForeignKey, ForeignKeyConstraint, Integer, String, UniqueConstraint, UUID
+from sqlalchemy import CheckConstraint, ForeignKey, ForeignKeyConstraint, Integer, String, UniqueConstraint, UUID, Index, text
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import mapped_column
 from app.auth.models import Base, pk, stamp
@@ -37,7 +37,8 @@ class GroupMembership(Base):
     joined_at = stamp()
     ended_at = stamp(nullable=True)
     __table_args__ = (
-        UniqueConstraint('group_id', 'user_id', name='uq_group_member_user'),
+        Index('uq_active_group_member_user', 'group_id', 'user_id', unique=True,
+              postgresql_where=text('ended_at IS NULL')),
         UniqueConstraint('group_id', 'id', name='uq_group_member_identity'),
         CheckConstraint('revision >= 1', name='ck_group_member_revision'),
     )
