@@ -1063,3 +1063,5 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 첫격리테스트는이전API이미지를기반으로빌드한것을발견해중단했다. API→test순서재빌드후최신수정으로다시검증했다. 테스트코드의registration version필드명은실제DTO의version에맞췄다. 최종검증·로컬반영·게시결과는아래후행기록을따른다.
 - 최종관련 **241PASS/105.29초**:새입력해석20개와원정대/대상/감사/실HTTP모의장비수집/owned refresh/소유정책/생명주기회귀. mixed/lower/upper×직접/등록·기존대소문자조회명·preview cache/멱등원문보존·타이름/다중대상/Unicode확장거절·프로필exact·고정서버/표기변경pending·명시targetexact를검증했다. 기존Starlette/AnyIO경고1개. 실제게임API/회원인증실행이아닌격리PostgreSQL/모의HTTP다.
 - 빌드이미지와기존로컬반영후실행OpenAPI전체일치. 기존paths/DTO/모든정책은불변이고입력해석정책1개만추가했음을대조했다. 기존API이미지만교체·DB0014/전체테이블행수전후동일확인·자료/키/flag보존. 실제HTTP health/catalog200·회원목록미로그인401. 이번수정의실제게임/Flutter기기영문검색은후속확인이며기존사용자인증성공기록은유지한다. 격리test-db만중지하며dev/main병합·운영배포·DB초기화는없다. 게시SHA/댓글은후행기록참조.
+
+- 인계완료: 구현/계약 `28ea022a70548d392d1d1a278440d78deccdfa63`를feat/raid-services에commit/push·원격SHA일치확인후 [#8 전체132번째 Backend — 영어입력보완/로그조사결과](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6236684349)를게시했다. 댓글전체재조회로132번째/총132개를확인했다. 다음Flutter는이번영어입력기기확인,Backend이번구간완료/G3별도작업가능이다. 추가사용자결정대기는없다. 후행문서는게시이력만변경하며서버/DB추가반영은없다.

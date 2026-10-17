@@ -13,6 +13,8 @@
 
 [#8 전체131번째 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6236509023)의 ASCII 입력 대소문자 해석을 구현·검증하고 기존 로컬 API에 반영했다. 관련241PASS/105.29초·실행OpenAPI전체일치·DB0014/전테이블행수보존을확인했다. API 원문을 신규 등록/챌린지·Armory/receipt에 전달하며 고정 대상·서버·UUID/claim은 exact다. [장비 안내](../ISSUE_8_LIVE_EQUIPMENT_PROOF_DEVELOPMENT.md)·DEV_LOG에 검증과 인계를 기록한다. 다음 Flutter는 이 변경의 기기 영어 이름 검색 확인이며 기존 로그인/키/기초 인증을 다시 준비하는 단계가 아니다.
 
+구현/계약 `28ea022a70548d392d1d1a278440d78deccdfa63` 작업브랜치push·원격확인, [#8 전체132번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6236684349) 회신완료. **Backend 이번 보완 완료 / Flutter 영어검색 기기확인 후속**. 다음 일반 Backend 작업은 아래 G3명세다. dev/main미병합이다.
+
 [#8 128번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6235202558)의 이전 HTTP 오류3건은 현재 보존 컨테이너 시작 전이다. 당시 원인/서버 재시작 영향은 확정 불가하며 현재200응답만으로 클라이언트 timeout을 배제하지 않는다. 130번째 새 HTTP오류0 실측과 이후 preview503 3건은 별도다. 새 서버 계측/timeout 변경 요청은 없다. Flutter 주간 체크 조기 조회·캐릭터별 갱신 UI는 Flutter 후속이다.
 
 ## 다음 담당·순서
