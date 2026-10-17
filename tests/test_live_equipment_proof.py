@@ -9,7 +9,7 @@ from app.core.database import session, now
 from app.game_accounts import observations, provider, service
 from app.game_accounts.models import Account, Character, Audit, Verification, Registration, Configuration, VerificationExecution
 from app.game_accounts.equipment import SLOTS
-from tests.test_game_accounts import world, register, start, change, VERIFY, BASE
+from tests.test_game_accounts import world, register, start, change, VERIFY, BASE, another_user
 from tests.test_game_account_primitives import transport
 
 LIVE_FETCH = observations.fetch
@@ -162,16 +162,17 @@ def test_expiry_during_final_database_work_rolls_back_all_ownership(client, live
         assert e.outcome_code == 'VERIFICATION_EXPIRED'
 
 
-def test_claimed_roster_still_requires_separate_binding(client, live):
+def test_claimed_roster_still_requires_separate_binding(client, live, login, monkeypatch):
     h, state = live
     v = start(client, h)
     state['removed'] = v['required_slots']
     assert confirm(client, h, v).json()['status'] == 'verified'
     state['removed'] = ()
-    response = change(client, h, 'post', VERIFY, dict(source='direct_input', character_name='a0'))
+    other = another_user(login, monkeypatch, client)
+    response = change(client, other, 'post', VERIFY, dict(source='direct_input', character_name='a0'))
     assert response.status_code == 201 and response.json()['status'] == 'pending'
     state['removed'] = response.json()['required_slots']
-    result = confirm(client,h,response.json())
+    result = confirm(client,other,response.json())
     assert result.status_code == 200 and result.json()['result_code'] == 'ACCOUNT_BINDING_EVIDENCE_PENDING'
     with session() as db:
         assert db.scalar(select(func.count()).select_from(Account)) == 1

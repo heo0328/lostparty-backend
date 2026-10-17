@@ -70,13 +70,12 @@ def test_select_preview_character_below_activity_min_and_preserve_scope(client,t
         assert db.scalar(select(func.count()).select_from(Activity))==0
 
 
-def test_same_owned_registration_reauth_no_transfer_or_auto_selection(client,targets):
+def test_same_owned_registration_is_blocked_without_changing_settings(client,targets):
     h,r,wire=targets
     first=change(client,h,'post',VERIFY,body(r)).json()
     assert finish(client,h,wire,first).json()['status']=='verified'
     wire['removed']=()
-    # Existing explicit activity/representative choices survive reauth, even
-    # when the fresh API level makes them require reconfiguration.
+    # A blocked repeated start never refreshes or reconfigures saved choices.
     with session() as db,db.begin():
         for c in db.scalars(select(Character)):
             c.summary=dict(c.summary,item_level='1700')
@@ -88,22 +87,21 @@ def test_same_owned_registration_reauth_no_transfer_or_auto_selection(client,tar
     with session() as db:
         a=db.scalar(select(Account));before=(a.id,a.owner_id,a.ownership_revision)
         ids=set(db.scalars(select(Character.id)))
+    calls=len(wire['calls'])
     second=change(client,h,'post',VERIFY,body(current,'a2'))
-    assert second.status_code==201,second.text
-    with session() as db:
-        assert db.get(Verification,uuid.UUID(second.json()['challenge_id'])).identity_snapshot['binding_mode']=='owned_registration'
-    result=finish(client,h,wire,second.json())
-    assert result.status_code==200 and result.json()['status']=='verified',result.text
+    assert second.status_code==409 and second.json()['error']['code']=='ALREADY_VERIFIED'
+    assert len(wire['calls'])==calls
     with session() as db:
         a=db.scalar(select(Account));assert (a.id,a.owner_id,a.ownership_revision)==before
         assert set(db.scalars(select(Character.id)))==ids
-        assert db.scalar(select(func.count()).select_from(Audit))==2
-        assert db.scalar(select(func.count()).select_from(Registration))==1
+        assert db.scalar(select(func.count()).select_from(Audit))==1
+        assert db.scalar(select(func.count()).select_from(Verification))==1
         assert db.get(Registration,uuid.UUID(r['registration_id'])).lookup_name=='a0'
     settings=page(client,h,r['registration_id'])['settings']
     assert settings['activity_character_ids']==previous['activity_character_ids']
     assert settings['representative_character_id']==previous['representative_character_id']
-    assert settings['configuration_state']=='needs_reconfiguration'
+    assert settings['configuration_state']=='configured'
+
 
 
 @pytest.mark.parametrize('patch',[

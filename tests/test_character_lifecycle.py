@@ -12,7 +12,7 @@ from app.game_accounts import lifecycle, service, observations, power_service
 from app.game_accounts.models import (Account, Character, NameClaim, CharacterRetirement, CharacterHistoryHead,
                                      ScopedPowerCache, Registration, Configuration, Activity, LimitEvent)
 from app.game_accounts.support import GameError, lock
-from tests.test_game_accounts import world, register, verify, page, change, save_data, BASE, VERIFY, start
+from tests.test_game_accounts import world, register, verify, page, change, save_data, BASE, VERIFY, start, another_user
 from tests.test_combat_power import body as power_body, endpoint, seed_provider
 
 
@@ -23,7 +23,7 @@ def owned(client,world):
     return h,state,registration
 
 
-def test_owned_api_refresh_does_not_authorize_name_based_attachment(client,world):
+def test_owned_api_refresh_does_not_authorize_name_based_attachment(client,world,login,monkeypatch):
     h,state,r=owned(client,world)
     state['binding']=False
     before=page(client,h,r['registration_id'])
@@ -31,7 +31,8 @@ def test_owned_api_refresh_does_not_authorize_name_based_attachment(client,world
     assert response.status_code==200
     after=page(client,h,r['registration_id'])
     assert [c['character_id'] for c in after['characters']['items']]==[c['character_id'] for c in before['characters']['items']]
-    response=change(client,h,'post',VERIFY,{'source':'direct_input','character_name':'a0'})
+    other=another_user(login,monkeypatch,client)
+    response=change(client,other,'post',VERIFY,{'source':'direct_input','character_name':'a0'})
     assert response.status_code==201 and response.json()['status']=='pending'
     assert page(client,h,r['registration_id'])==after
 
@@ -192,8 +193,11 @@ def test_power_late_result_never_crosses_identity_context(client,world,monkeypat
     with session() as db: assert all(c.value is None for c in db.scalars(select(ScopedPowerCache)))
 
 
-def test_challenge_old_generation_or_key_cannot_confirm(client,world):
-    h,state,r=owned(client,world)
+def test_challenge_old_generation_or_key_cannot_confirm(client,world,login,monkeypatch):
+    _,state,_=owned(client,world)
+    # Only another member can open a new challenge for a currently owned roster.
+    h=another_user(login,monkeypatch,client)
+    r=register(client,h)
     v=start(client,h,r['registration_id']); state['removed']=v['required_slots']
     with session() as db,db.begin():
         c=db.scalar(select(Character).where(Character.character_name=='a0')); c.lifecycle_revision+=1

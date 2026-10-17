@@ -1,5 +1,9 @@
 # Issue #8 — 원정대 등록·소유 인증·사용 캐릭터 연결 검토
 
+> 최상위 후속: [102/103번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217677854)에서현재본인유효인증중반복인증금지(소유상실은재시도)와동일회원목록재등록을장비재인증없이복구하도록요청했다. [104번째Backend검토](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217953832)대로[현재 소유자 정책 구현](ISSUE_8_CURRENT_OWNER_POLICY_DEVELOPMENT.md)이서버최종차단/같은회원연결복구2구간을보완한다. Flutter선행UX56PASS와서버완료는구분한다.
+
+> 최신 완료/누락 점검: [100번째 Backend 검토](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217539527). 기본등록→장비인증/소유연결은사용자실제1회/서버verified로완료됐다. 아래초기표의live미완료/화면연결대기는역사이며현재미완료로반복하지않는다. 현재누락은동일회원이인증등록삭제후재등록하거나direct_input으로본인소유를재인증할때미연결claim/pending에머무는복구경로다. 격리2개로재현했고Flutter현재UI진입/안내대조후동일회원복구범위를검토한다. 타회원소유이전/분쟁은별도보류다.
+
 > 후속: [서버 장비 해제 인증 연결](ISSUE_8_LIVE_EQUIPMENT_PROOF_DEVELOPMENT.md)로 신규/이름 claim 충돌 없는 원정대의 서버 수집·검증 성공 경로를 구현했다. 아래 live=false 설명은 당시 상태다. 기존 ID 연속성/타소유 이전·퇴역은 계속 별도이며 실제 게임 인수는 나중이다.
 
 2026-10-16 사용자 지시로 현재 코드/계약을 대조했다. [Flutter UI/UX 재검토 요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6208702210)을 게시했다. 현재 환경/자료를 유지하고, 실제 게임 관찰은 나중에 진행한다. 기존 완료 기능 재개발·기초 인수 요청이 아니다.

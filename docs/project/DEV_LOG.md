@@ -834,3 +834,51 @@ live 본인명시소유등록은내부registration/account/owner로재인증범�
 공개API/오류/DB/OpenAPI계약변경없음. 인증POST/사용자장비해제·소유갱신을대신실행하지않았으며실제앱의start도전생성/전체소유인증성공은미확인이다. 다음기존동일key/body명령복구→실제도전안내/장비확인,Flutter새DTO소비나timeout상향·새환경은필요없다.
 
 구현/시험/문서7파일 `8404c6c269e0f0916ec90b4ec687a9148914729a` commit/push·원격일치확인. [97번째 Backend 장비 분류 호환 수정 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217014833)를게시하고전체댓글로순번97확인했다. 다음사용자기존동일명령복구→start도전/지정부위안내확인·Backend결과확인,실제소유인증성공은미확인이다. 새DTO소비/기초재인수/초기화·반복장비시험요청없음. 기존미커밋96번째진단문서도관련작업에보존/포함했다.
+
+
+## 2026-10-16 — 실제 장비 소유 인증1회 성공 확인
+
+사용자가 인증창정상표시후실제1회인증성공을보고했다. 기존API로그/DB를읽기대조해KST23:02:22.516start실행→23:02:24.025응답201/completed PENDING(1.497초),23:03:40.912confirm실행→23:03:42.653응답200/completed VERIFIED(1.708초),도전현재verified/attempt_count1을확인했다. 등록연결/등록요청회원일치·등록→account현재owner회원일치/verified_at존재·감사1개/감사account와등록account귀속일치/새owner회원일치를확인했다. 신규도전candidate_id는없을수있어실제등록→account기준으로확인했다. 개인정보/키/원문출력·게시없음.
+
+[98번째 Backend 실제 성공 확인](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217275533)을회신하고전체댓글로순번98확인했다. 97번째파서수정후실제장비인증까지이번1회성공이며모의185PASS와구분한다. 활동/대표저장·전체갱신/기기재시작/타소유분쟁/다른대상·운영전체인수로확대하지않고반복기본시험은요청하지않았다. 추가Backend수정요청없음·Flutter실제성공후관리등새회신은그범위에서확인한다. 이번은읽기확인/이슈회신·문서갱신이며코드/서버/DB내용·자료/키변경·재시작·추가POST/provider조회·시험/commit/push/통합/운영/Issue종료변경없음. 구현8404c6c/HEADd684aab·작업브랜치/기존8000/DB0010유지.
+
+
+## 2026-10-16 — 99번째 Flutter 실제 성공 수신·복귀UX 후속 보고 확인
+
+[99번째 Flutter 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217416791)을전체댓글조회로확인했다. 98번째서버결과/사용자1회실인증성공을수신했고최신사용자UX지시로성공후현재GET/회원·소유guard→이전페이지pop,이전경로없는직접진입만내계정으로이동하도록보완했다. flag OFF이동안함/ON관리강제이동을대체하고과거verified재진입/로그아웃·화면이탈후late결과자동이동은금지한다. 대상/해제장비/시간/현재오류·복구행동위주간결화·빨간정보갱신안내유지·인증화면에서외부조회실패/서버연결실패문구구분보고다.
+
+Flutter인증관련51PASS후Router영향최종전체1579PASS/분석0·format/diffcheck보고를확인했다(합산안함). 모의검증·이번복귀UI실기기미확인/feature브랜치미커밋·미push/dev미반영유지. Backend추가수정/새계약요청없고다음사용자새빌드복귀UI확인이다. 받은새Backend요청이없어변화없는수신댓글을추가하지않고문서/사용자브리핑으로정리했다. 코드/서버/DB/자료·키·flag/시험·commit/push변경없음,기존미커밋문서4개보존·NEXT_WORK/AI_CONTEXT/DEV_LOG갱신·diffcheck통과.
+
+
+## 2026-10-16 — 등록/인증 완료범위·누락 점검(동일회원 복구2경로)
+
+사용자완료여부/빠진작업확인지시로규칙→협업→NEXT→AI_CONTEXT/계약·코드·최신99댓글·Git상태를대조했다. 기본등록/캐릭터선택/장비인증·소유연결은98번째실제성공완료,99번째복귀UX는1579PASS/분석0보고·미게시/새UI실기기미확인이다. 현재DB읽기확인에서등록active·verified·owner일치/캐릭터18개,활동0/대표미선택/unconfigured를확인했다. 후자는인증자동선택없음정책에맞는별도설정단계다.
+
+코드의새등록account_id없음/기존claim보존·owned_candidate가명시연결된registration만허용하는경계에서동일회원삭제후재등록장비인증과본인소유direct_input재인증이pending에머무는것을발견했다. 임시테스트를/tmp에만작성하고기존test이미지/모의HTTP·실collector/격리PostgreSQL에서2개 **2PASS·기존경고1·6.56초**로두경로장비통과후ACCOUNT_BINDING_EVIDENCE_PENDING을재현했다. 원하는복구동작완료시험이아니다. 기존test_cross_account_preservation_and_remove_reregister는새등록/unconfigured/기존account보존까지만검증해실제재인증성공을보장하지않았다.
+
+[100번째 Backend 점검결과](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217539527)로완료/미완료복구경로·별도활동/대표/영속복구/게시·통합/타회원분쟁경계를공유하고Flutter에현재UI의삭제후재등록/direct_input진입·명시등록경유/추가미연결유무대조만요청했다. 추가전체시험/사용자실인증은요청하지않았다. 다음Flutter회신→동일회원복구범위검토이며미연결claim일괄허용/소유이전은미구현이다. 코드/OpenAPI·개발서버/DB/자료·키/flag변경·실제POST/provider호출·commit/push/통합/배포/Issue종료없음. 격리test-db만기동/중지·기존미커밋문서4개보존/문서최신화/diffcheck.
+
+
+## 2026-10-16 — 사용자 재인증 UX 제외 방향 반영
+
+사용자가이미인증한원정대의반복재인증은불필요해Flutter화면진입제외를구현중이라고알렸다. 최신전체댓글에서100번째이후새회신없음을확인하고[101번째 Backend 우선순위정정](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217634862)으로반영했다. 반복/직접입력재인증의Backend기능확장을우선추진하지않고기존서버API/권한·미연결claim보류는유지한다. 삭제후새등록은연결된인증원정대버튼과별개이므로100번째재현이UI제외만으로해결됐다고보지않고Flutter진행중처리/안내범위를기존요청에서대조한다. 추가계약/기능구현·사용자반복실인증요청없음. 문서/NEXT/AI만갱신·기존변경보존·diffcheck,코드/서버/DB/키·자료/시험/commit/push변경없음.
+
+
+## 2026-10-16 — 103번째까지최종정책/UX결과확인·다음Backend2구간정정
+
+사용자지시로최신본문상태OPEN·전체103댓글/102·103전문과코드를대조했다. [102번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217677854)는90번째owned재인증허용을폐기하고현재본인유효인증을등록/direct start에서서버도차단·소유상실은재시도가능·이름단독타회원차단/이전금지·기존완료replay와미확정복구분기를보존할공개code/status인계를요청했다. 삭제후같은회원재등록은장비재인증을늘리지않고기존owner유지아래연결복구를검토한다. [103번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217851176)는회색인증됨/선택불가·캐릭터검색/이미인증안내·상태별복구버튼·현재상태/세션가드를선행구현해56PASS/분석0보고,전체1579와합산안함/새UI실기기미확인/미게시유지다.
+
+[104번째Backend최종검토](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217953832)로정책/결과수신·101번째UI제외만으로완료해석철회·현재서버2구간미완료를회신했다. 다음Backend등록/direct최종차단과같은회원삭제후재등록연결복구이며owner/verified_at/소유수명·활동명시저장/타회원분쟁경계를유지한다. 기존account/현재owner·과거등록연결·정상siblings/currentclaim단일범위로확인가능한경우만검토,불명확관찰/복수계정/소유상실을이름으로연결하지않는다. 새wire미게시/고정SHA인계는향후구현후이며이번은계약/범위검토다. 코드/OpenAPI·서버/DB/자료/키/flag·실제POST/provider·시험/commit/push변경없음. NEXT/AI/관련계약상단의최신정정·기존미커밋문서보존·diffcheck.
+
+
+## 2026-10-17 — 현재소유자차단·동일회원등록복구 구현/검증 진행
+
+사용자작업진행지시로현재AGENTS→협업→NEXT→AI/관련계약·Git/최신Issue본문·104댓글을확인했다. 기존미커밋문서6개를보존하고같은feat/representative-selection에서구현했다. 새ownership_policy는현재owner/verified_at과현재정상siblings의단일비퇴역claim account·요청회원등록연결로본인여부를검사한다. 등록start는외부조회전409 ALREADY_VERIFIED, direct/새이름은siblings판정뒤Armory전·최종commit에서차단한다. pending확인도현재본인유효인증이면차단하되기존완료start/confirmreplay·현재GET/verified응답은보존한다. 타회원/소유상실도전은장비검증/pending을유지·소유이전없음.
+
+등록POST는네트워크전후회원의과거등록/account/claim snapshot을fencing하고현재owner·정상목록단일account/과거본인연결이확인되면새등록을기존account에연결한다. owner/verified_at/소유·rosterrevision/캐릭터ID·소유감사불변,기존활동설정종료상태유지/새unconfigured·대표/활동자동선택없음. 타회원/소유상실/noanchor/퇴역claim/복수계정/과거본인연결없음은unverified유지·자동이전없음. paths/DTO/DB는불변,OpenAPI최신소유정책/등록복구설명과ALREADY_VERIFIED409만보완했다.
+
+첫직접검증2실패/84PASS는신규시험이NOT NULL verified_at에None을쓰는유효하지않은fixture1건과과거본인재인증허용기대1건이었다. 불가능한fixture를제거하고새정책의차단/설정보존검사로정정했다. 넓은첫검증2실패/480PASS는추가로남은과거본인pending재인증허용기대2건이었다. 해당binding/refresh검증의도는타회원도전으로보존하고본인차단은새정책시험으로분리했다. 기발급pending차단/완료결과읽기경계도추가해최종코드/계약이미지로관련범위를재검증중이다. 반복실인증/실제provider호출·개발DB초기화/자료·키/flag변경·새환경·소유이전/배포/통합은없다.
+
+최종관련18시험파일 **483PASS·기존경고1·221.38초**,실패없음/이전실행합산없음. 실제collector+모의HTTP/격리PostgreSQL의본인차단/새이름·Armory0/기발급pending/완료replay·타회원/소유상실도전·삭제재등록/새설정/과거연결부재/퇴역·복수계정·owner경합/최종재검사와기존인증/이력/활동/역할/개인표시/목록/전투력/키회귀를확인했다. 실제기기새정책/개발자료삭제재등록·provider/인증POST/게임장비변경은미실행이다.
+
+개발API반영초기health503으로120초대기가실패했다. 상태확인상기존개발DB컨테이너가API반영보다먼저약36분전Exited(127)로중지돼있었고API기동자체는정상이었다. 기존db컨테이너를start(재생성/볼륨삭제없음)한뒤health API/database ok·DB0010·기존verified소유유지를재확인했다. 읽기전용현재소유정책probe는409 ALREADY_VERIFIED였고실제인증POST가아니다. 전체OpenAPI비교PASS·격리test-db중지,개발자료/키·등록/인증/소유명령을추가실행/초기화하지않았다.

@@ -157,8 +157,9 @@ def test_ownership_first_seed_no_cooldown_atomicity(client,world):
     assert attempted.json()['next_change_at'] is None
     p=page(client,h,r['registration_id'])
     assert p['settings']['activity_character_ids']==[original_rep]
-    # Re-authentication does not reset a valid selection or ownership revision.
-    verify(client,h,state,r['registration_id'])
+    # A blocked repeated start does not reset valid settings or ownership.
+    blocked=change(client,h,'post',VERIFY,dict(source='registration',registration_id=r['registration_id']))
+    assert blocked.status_code==409 and blocked.json()['error']['code']=='ALREADY_VERIFIED'
     after=page(client,h,r['registration_id'])
     assert after['settings']==p['settings']
 

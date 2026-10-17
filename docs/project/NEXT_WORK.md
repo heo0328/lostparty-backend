@@ -1,6 +1,6 @@
 # 현재 작업과 다음 실행
 
-기준일 2026-10-16. **현재 사용하던 로컬 개발환경과 개발자료로 개발을 계속한다. 완료한 앱 실행·Google 로그인·키/설정·캐릭터 갱신·원정대 저장과 #8 구현을 유지한다. 새 환경 채택·초기 설정·기본 기능 전체 재인수로 되돌리지 않는다.**
+기준일 2026-10-17. **현재 사용하던 로컬 개발환경과 개발자료로 개발을 계속한다. 완료한 앱 실행·Google 로그인·키/설정·캐릭터 갱신·원정대 저장과 #8 구현을 유지한다. 새 환경 채택·초기 설정·기본 기능 전체 재인수로 되돌리지 않는다.**
 
 최상위 실행 기준은 [긴급 정정](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207542428)이다. [Backend 실행 기준 정정](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207867594)도 게시했다. 이전 [통합 정리](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6207398915)의 새8001 채택/기초 재인수 순서와 이를 수용한 Backend6207472610은 철회된 순서다.
 
@@ -13,8 +13,8 @@
 | 현재 작업 브랜치 | `feat/representative-selection`, 준비구현 `4bdaea6`, 권한/비노출 `59b8c23`·활동1700 `47a2ce4`·인증대상검사 `78d3d1a`·인증이력 `ccd2e6a`·장비증거 `13d9f68`·본인목록 `3c8e799`·인증선택/재인증 `cc372bf` push·[최신 결과 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216253151) 완료 |
 | 사용하던 개발환경 | 기존 Docker/포트8000/DB 자료를 유지해 0007~0010·최신 API 반영 완료. DB0010·API/DB healthy·health ok·OpenAPI 전체일치·기존 전 테이블의 원래 컬럼/행 내용 동일 확인. 초기화/새환경 전환 없음 |
 | 별도8001 환경 | 구성했던 작업 이력이며 현재 개발의 기본 경로/채택 대상/선행조건이 아니다. 이번 정정으로 컨테이너/volume을 삭제·재설정하지 않는다 |
-| Flutter 최신 | [기존관리/초기대표/인증전환 연결](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209931176)·[Backend검토](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209973965) 완료. 최종전체1567PASS/분석0 보고·자동목록선행연결완료/ON경로구현/기본OFF·미게시/실인수미확인. feature/scoped-account-cache/HEADcc6a0b0 위 미커밋·미push·dev미반영. 앱재실행을넘는미확정원명령종결보장은미확인 |
-| 소유 증거 | [서버 장비 해제 연결](../ISSUE_8_LIVE_EQUIPMENT_PROOF_DEVELOPMENT.md)로 신규/claim충돌 없음의 검증·소유생성 경로 구현. 현재본인등록재인증/타소유pending도전까지구현·소유이전/퇴역은별도보류, 실제 게임 관찰은 사용자 결정대로 나중 |
+| Flutter 최신 | [기존관리/초기대표/인증전환 연결](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209931176)·[Backend검토](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209973965) 완료. 최신99번째전체1579PASS/분석0보고·자동목록선행연결/ON경로구현/기본OFF·미게시·실인증1회완료/복귀새UI실기기미확인. feature/scoped-account-cache/HEADcc6a0b0 위 미커밋·미push·dev미반영. 앱재실행을넘는미확정원명령종결보장은미확인 |
+| 소유 증거 | [서버 장비 해제 연결](../ISSUE_8_LIVE_EQUIPMENT_PROOF_DEVELOPMENT.md)로 신규/claim충돌 없음의 검증·소유생성 경로 구현. 현재본인등록재인증/타소유pending도전까지구현·소유이전/퇴역은별도보류, 이번 대상 실제1회인증성공은 [98번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217275533)로 확인·전체/다른대상 인수와 구분 |
 
 ## 최신 사용자 채택 정책과 재검토 결과
 
@@ -24,7 +24,7 @@
 
 ## 최신 협업 순서
 
-본문 제외 순번: 95번째 Backend 진단 보완 → 96번째 Backend 실제 실패 확인 → **[97번째 Backend 장비 분류 호환 수정 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217014833)**. 구현 `8404c6c269e0f0916ec90b4ec687a9148914729a`·feat/representative-selection commit/push/원격일치·185PASS·기존8000반영·health/OpenAPI일치·DB0010유지. 현재Armory17항목의나침반/부적/보주/완갑 미지원Type 거절을 재현하고4종만인증제외분류로추가,같은실응답에서수정전거절/수정후6부위통과확인. **다음은 사용자 기존 동일명령 복구로 start도전/지정부위안내 확인 → Backend 결과확인**이다. 실제앱start201·장비해제/소유인증성공은미확인이며POST/게임조작을대신실행하지않았다. Flutter새DTO/데이터·키·요청초기화/새환경은필요없다.
+본문 제외 순번: 100번째 누락점검 → 101번째 UX제외정정 → [102번째 Flutter 최신서버정책요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217677854) → [103번째 Flutter 선행UX/56PASS](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217851176) → **[104번째 Backend 최종정책검토](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217953832)**. 기본등록/최초장비인증은실제1회완료. Flutter는현재owned회색/선택불가·캐릭터검색/이미인증안내·복구버튼분리구현/56PASS/분석0보고·새UI실기기미확인/미게시. **다음담당은Backend: 현재본인유효인증의등록/direct start최종차단 + 같은회원삭제후재등록을반복인증없이기존소유로연결복구**다. 기존90번째owned재인증허용은102번째로대체되며101번째UI제외만으로완료가아니다. ownership_lost는과거verified로차단하지않고,완료된동일명령replay/현재GET을보존한다. 공개오류/새wire/연결복구는아직미구현·미게시. 새API/초기화·반복실인증/추가사용자결정은선행요구하지않는다.
 
 ## 기존 Flutter 장비 인증 재사용 설계 — 최신 회신 검토
 
@@ -42,9 +42,9 @@
 
 ## 다음 개발과 담당
 
-1. **다음 — 기존 인증 시작 명령 복구로 실제 앱 경로 확인.** Backend는 현재 Armory17개 항목 중 나침반/부적/보주/완갑 미지원이 파서 거절 원인임을 재현해 인증 제외목록에4종만 추가했다. 격리185PASS·기존8000반영·health/OpenAPI일치/DB0010 유지, 실제 현재응답1건에서 수정전거절/수정후6부위인식 통과 확인. 같은key/body로 시작을 복구하고 도전/지정부위 안내까지 진행되는지 확인하는 단계다. 실제 장비 해제·소유인증 성공은 미확인이며 자동 실행하지 않았다. Flutter 새계약 소비나 데이터/키/요청초기화는 필요 없다.
+1. **다음 — Flutter 공개오류/등록복구 응답 소비.** [현재 소유자 정책](../ISSUE_8_CURRENT_OWNER_POLICY_DEVELOPMENT.md)을구현해본인등록/direct start·기발급pending확인의현재유효소유를409 ALREADY_VERIFIED로차단한다. 타회원/소유상실도전·기존완료replay/현재GET은유지하며동일회원삭제후재등록은기존등록POST/201에서확인가능한기존account로복구한다. owner/verified_at/ID/소유·rosterrevision/감사보존·새활동/대표unconfigured. 최종격리483PASS·기존8000반영/실행계약·health·DB0010/기존소유유지확인,고정SHA/Issue인계후Flutter가서버ALREADY(검색/동시변경/기발급pending포함)와등록201 owned를소비한다. 실제기기의새정책/삭제재등록은미확인·반복실인증요청없음.
 2. **Flutter 기존 관리 화면 연결·초기 대표 정책 대조.** [사용자 UX 정정6209360031](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209360031): 기존 CharacterManagementPage/ViewModel을 회원/등록/canonical·저장 API에 연결한다. 별도선택/복구화면을추가하지않으며미확정명령일관성은내부처리한다. 현재대표는유지·없을때만사용가능캐릭터최고item level로초기1회선정·공통사용기준1700. 전체활동자동추가/메인전환없음. [서버활동검증](../ISSUE_8_ACTIVITY_SELECTION_DEVELOPMENT.md)은전체선택/대표변경1700기준·ineligible보고·선택보존을구현해격리192PASS·기존8000반영·`47a2ce4` [인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209623492) 완료했다. 초기후보는Flutter기존관리화면에서최고레벨draft를정하고활동집합/대표를기존PUT/CAS로명시저장하는연결을 [대조요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209535500)했고 [연결완료보고](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209931176)/최종1560PASS와 [검토](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209973965)를수신했다. 원격게시/실소유/ON실인수는미확인이다. 서버읽기/refresh/null입력자동선정은추가하지않았다. 최신정정은기존별도E2화면/복구UX선행설명을대체한다.
-3. **실제 장비 관찰은 나중에 수행한다.** [관찰 CLI](../ISSUE_8_OWNERSHIP_READINESS.md)는 준비됐다. 관찰 결과와 서버에서 검증 가능한 증거/연결 규칙을 검토해야 하며 ready_for_review만으로 인증을 확정하지 않는다. 이 후속으로 독립 개발을 막지 않는다.
+3. **최초 실제 장비 인증1회는 완료됐다.** 98번째 사용자결과/서버verified·소유·감사일치를유지한다. 이번본인차단/등록복구에반복장비시험을요구하지않는다. 타회원분쟁/소유이전·다른범위인수는별도이며기존관찰CLI가완료조건을확대하지않는다.
 4. **변경한 구간의 영향 검증만 수행한다.** 실제 소유/canonical·현재 등록/roster·활동 대상이 필요한 새 기능 실검증만 조건 충족 후 진행한다. 기존 완료 흐름을 처음부터 재인수하지 않는다. Flutter 변경분의 게시/통합 상태는 구현 완료와 별도로 추적한다.
 
 ## 자료 수명 기준

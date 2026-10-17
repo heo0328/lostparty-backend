@@ -38,3 +38,5 @@ OTHER_TYPES에 실제 확인한 네 분류만 추가해 기존 장신구처럼 �
 자동검증은 실제17항목 구조를 일반 가짜 이름/등급 fixture로 재구성한 collector/모의HTTP 시작·확인·재시도/성공/거절 경로와 네 분류 변경/제거 무관·6부위 누락 대체불가·미지Type 거절을 포함한다. 실응답 parser 확인과 실제 소유인증/기기 성공은 별도이며 장비 변경을 자동 수행하지 않는다. 최종수·게시SHA·반영 상태는 DEV_LOG와 결과댓글에 기록한다.
 
 최종 격리 PostgreSQL **185PASS·기존경고1·67.80초**, 실패없음. 대상은 primitives/live_equipment_proof/provider_diagnostics/verification_history/verification_targets/verification_context/game_accounts/owned_roster_refresh다. 기존8000 API만 반영·healthy/health API·DB ok·전체OpenAPI일치·DB0010 유지·실행4종 로드 확인, test-db만 중지했다. 반영 후 현재 Armory를1회 더 조회해 같은 메모리 응답에서 기존목록은거절/수정목록은수용·6부위완전·profile대상이름일치·17개항목을확인했다. 실제 GET2회는 정상quota/observer를적용했고 인증POST/게임장비변경/소유판정은 실행하지 않았다. 사용자 앱의 기존명령복구와 실제장비인증 성공은 후속이다.
+
+후속 실제 검증: [98번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217275533)에서 사용자 실제1회성공 보고와 서버start201→confirm200/completed VERIFIED·도전verified/attempt_count1·등록→account현재소유일치/verified_at·소유감사1개를 대조했다. 이번 대상 실제장비인증 성공이며 전체환경/모든원정대/활동·갱신·운영인수와구분한다.

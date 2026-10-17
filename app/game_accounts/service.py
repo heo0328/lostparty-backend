@@ -4,7 +4,7 @@ from contextlib import nullcontext
 from datetime import timedelta
 from sqlalchemy import select, delete
 from app.core.database import session, now
-from app.game_accounts import observations, provider_diagnostics
+from app.game_accounts import observations, provider_diagnostics, ownership_policy
 from app.lostark_keys import service as credentials
 from app.lostark_keys import rate_limits
 from app.game_accounts.models import ScopedRosterCache as MemberPreview, ScopedRosterLease as MemberFetch
@@ -16,7 +16,7 @@ from app.game_accounts.provider import ProviderUnavailable
 from app.game_accounts.equipment import EquipmentItem, required_slots, compare_equipment, EquipmentIncomplete
 
 
-def lookup(principal, snapshot, name, proof=False, cached=False, *, context='direct', guard=None):
+def lookup(principal, snapshot, name, proof=False, cached=False, *, context='direct', guard=None, on_roster=None):
     context_key = lifecycle.digest(context)
     identity = snapshot.user_id, snapshot.version, context_key, name
     scope = f'fetch:{snapshot.user_id}:{snapshot.version}:{context_key}:{name}'
@@ -77,9 +77,11 @@ def lookup(principal, snapshot, name, proof=False, cached=False, *, context='dir
                 check_context(db)
     try:
         before_call()
-        result = observations.fetch(name, proof, token=snapshot.token,
-                                    before_armory=before_call,
-                                    observer=rate_limits.observer(snapshot.fingerprint))
+        options = dict(token=snapshot.token, before_armory=before_call,
+                       observer=rate_limits.observer(snapshot.fingerprint))
+        if on_roster is not None:
+            options['on_roster'] = on_roster
+        result = observations.fetch(name, proof, **options)
         with session() as db, db.begin():
             authorize(db, principal, write=True)
             credentials.check(db, principal, snapshot)
@@ -301,8 +303,11 @@ def mutate(principal, operation, key, payload, rid=None):
         baseline_revision = None
         guard = None
         owned_scope = None
+        registration_links = None
         context = operation + ":" + str(key)
         if operation == 'register':
+            with session() as db:
+                registration_links = ownership_policy.links_stamp(db, authorize(db, principal))
             snapshot = credentials.capture(principal)
             obs = lookup(principal, snapshot, payload['lookup_character_name'], context=context)
         elif operation in ('refresh','start','confirm'):
@@ -314,6 +319,7 @@ def mutate(principal, operation, key, payload, rid=None):
                 elif operation == 'start':
                     if payload['source'] == 'registration':
                         r = reg(db, uid, uuid.UUID(payload['registration_id']))
+                        ownership_policy.reject_linked(db, uid, r)
                         name, baseline_revision = verification_targets.selected(db, uid, r, payload), r.version
                     else:
                         name = payload['character_name']
@@ -323,6 +329,8 @@ def mutate(principal, operation, key, payload, rid=None):
                         fail('VERIFICATION_NOT_FOUND',404)
                     retained(v,now(db))
                     name = v.lookup_name
+                    if v.status == 'pending' and now(db) < v.expires_at and v.registration_id:
+                        ownership_policy.reject_linked(db, uid, reg(db, uid, v.registration_id))
                     # Terminal/expired challenges never call the provider.
                     if v.status != 'pending' or now(db) >= v.expires_at:
                         name = None
@@ -357,13 +365,23 @@ def mutate(principal, operation, key, payload, rid=None):
                 if owned_scope is not None:
                     obs = owned_refresh.fetch(principal, snapshot, name, owned_scope, context=context, guard=guard)
                 else:
-                    obs = lookup(principal, snapshot, name, proof=operation != 'refresh', context=context, guard=guard)
+                    def check_roster(rows):
+                        with session() as db:
+                            uid = authorize(db, principal)
+                            credentials.check(db, principal, snapshot)
+                            if guard and lifecycle.digest(lifecycle.registration_stamp(db, reg(db,uid,guard[0]))) != guard[1]:
+                                fail('REVISION_CONFLICT')
+                            ownership_policy.reject_observed(db, uid, rows)
+                    obs = lookup(principal, snapshot, name, proof=operation != 'refresh', context=context,
+                                 guard=guard, on_roster=check_roster if operation in ('start', 'confirm') else None)
                 if operation in verification_history.OPERATIONS:
                     verification_history.observed(principal, ticket, obs)
         with session() as db, db.begin():
             uid = authorize(db, principal, write=True)
             if snapshot is not None:
                 credentials.check(db, principal, snapshot)
+            if registration_links is not None and registration_links != ownership_policy.links_stamp(db, uid):
+                fail('REVISION_CONFLICT')
             if guard and lifecycle.digest(lifecycle.registration_stamp(db, reg(db,uid,guard[0]))) != guard[1]:
                 fail('REVISION_CONFLICT')
             confirmation_was_pending = (operation == 'confirm' and
@@ -471,7 +489,13 @@ def verification(principal, vid):
 def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=None):
     current = now(db)
     if op == 'register':
+        restored = ownership_policy.restore(db, uid, obs.roster)
         r = create_registration(db,uid,data['lookup_character_name'],data['label'],data['is_main'],obs)
+        if restored:
+            r.account_id = restored.id
+            if config(db, uid, restored.id) is None:
+                db.add(Configuration(user_id=uid, account_id=restored.id))
+            db.flush()
         return 201,reg_out(db,uid,r)
     if op in ('patch','delete','refresh','settings'):
         r = reg(db,uid,rid)
@@ -540,6 +564,9 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
         return 200,settings_out(db,uid,r)
     if op=='start':
         r=reg(db,uid,uuid.UUID(data['registration_id'])) if data['source']=='registration' else existing_registration(db,uid,obs.roster)
+        if data['source']=='registration':
+            ownership_policy.reject_linked(db, uid, r)
+        ownership_policy.reject_observed(db, uid, obs.roster)
         if data['source']=='registration' and r.version!=baseline_revision:
             fail('REVISION_CONFLICT')
         try:
@@ -588,6 +615,8 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
     if v.status!='pending':
         # Terminal outcome commits together with dedup and cannot run proof.
         return 409,{'error':dict(code='VERIFICATION_'+v.status.upper(),message='Challenge is terminal',request_id=str(uuid.uuid4()))}
+    if obs is not None:
+        ownership_policy.reject_observed(db, uid, obs.roster)
     if v.identity_snapshot is None:
         fail('ACCOUNT_BINDING_EVIDENCE_PENDING')
     if v.identity_snapshot.get('credential_version') != credential_version:

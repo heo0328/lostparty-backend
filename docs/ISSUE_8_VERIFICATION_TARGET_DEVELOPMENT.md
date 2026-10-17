@@ -1,5 +1,7 @@
 # Issue #8 — 인증 대상 선택·본인 재인증·타소유 도전
 
+> 최신 정책 정정: [102번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217677854)로 아래90번째의현재본인owned재인증허용은대체됐다. 후속 [현재 소유자 정책 구현](ISSUE_8_CURRENT_OWNER_POLICY_DEVELOPMENT.md)에서등록/direct start의현재본인유효인증을409 ALREADY_VERIFIED로차단하도록보완한다. [103번째](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217851176)의Flutter회색/선택불가·검색사전안내56PASS는선행UI이며서버최종차단/새공개오류와동일회원삭제후재등록의무인증연결복구는미구현이다. [104번째검토](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217953832)를따른다.
+
 2026-10-16. [86번째 계약 합의](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6215477051)·[87번째 Flutter 복구UX 결과](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6215781843)·[88번째 Backend 확인](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6215857575) 후 사용자 진행 지시에 따른 구현이다. [착수](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6216006619)에 범위/호환성을 공유했다.
 
 ## 요청 계약

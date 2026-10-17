@@ -59,7 +59,7 @@ def roster(raw, name):
     return sorted(rows, key=lambda r: (r['server_name'], r['character_name']))
 
 
-def fetch(name, proof=False, *, token, before_armory=None, observer=None):
+def fetch(name, proof=False, *, token, before_armory=None, observer=None, on_roster=None):
     started = monotonic()
     stage = 'provider_init'
     timings = {}
@@ -80,6 +80,8 @@ def fetch(name, proof=False, *, token, before_armory=None, observer=None):
         gear = None
         if proof:
             enter('before_armory')
+            if on_roster is not None:
+                on_roster(rows)
             if before_armory is not None:
                 before_armory()
             enter('armory_transport')
