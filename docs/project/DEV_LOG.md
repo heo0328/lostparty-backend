@@ -929,3 +929,5 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 관련31PASS/2.79초·기존StarletteAnyIO경고1개. 격리PostgreSQL의공통fixture를 사용했고, 공개조회는DB/provider함수차단중통과. 개발DB자료를테스트로쓰지않았으며테스트DB는종료했다.
 - 기존OpenAPI paths/DTO/정책값을모두보존한두경로/신규DTO추가를대조했다. 로컬8000 API를새이미지로반영하고전체OpenAPI일치·실제HTTP5raid/13difficulty·UTC주차구간/no-store·API/DBhealth를확인했다. 개발DB는기존컨테이너/볼륨/0010스키마를유지했으며migration/초기화/이관/키/flag변경없음.
 - 구현인계는작업브랜치commit/push·원격확인후#10에남긴다. dev/main병합·운영배포·Flutter연동확인은별도다. 다음Backend는#11주간원장/비점유개인완료명세이며#12그룹기초도독립가능하다.
+
+- 구현/계약커밋 `d7f762f1b13f6d5e5c4f7aae8c1b2c19d984de8c`을feat/raid-services에push하고원격동일SHA를확인했다. [#10 두 번째 댓글·Backend 구현 인계](https://github.com/heo0328/lostparty-backend/issues/10#issuecomment-6230019531)로회신완료. 첫 번째명세/두 번째구현인계순번을실제조회로확인했다. 후행문서기록은같은브랜치에추가하며dev/main은860c84a로보존한다.

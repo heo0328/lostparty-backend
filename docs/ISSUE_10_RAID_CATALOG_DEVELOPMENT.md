@@ -30,7 +30,7 @@
 - `app/raids/catalog.json`: [Flutter 원본 제품 자료](https://github.com/heo0328/LostParty_flutter/blob/5eef0d2a16c422530b0698a80ecb3f5cdeb7ef2e/assets/raid_catalog/raid_catalog.v1.json)를 snake_case DTO로 변환하고 원본 배열 순서의display_order를 추가했다. 5개 레이드/13개 난이도·보상 원본은 보존했다. 최신 게임 패치 검증이나 새 보상 정책을 뜻하지 않는다.
 - `schemas.py`는 추가필드 거부/frozen 및 tuple 중첩으로 카탈로그를 보존한다. `service.py`는 패키지 자료 검증/순수 주차 계산과 후속 명령용 선택·정밀레벨 검증을 제공한다. 후속 쓰기는 현재 catalog_version과 현재 소유/활동/사용가능·역할/점유 등 별도 자격을 최종 transaction에서 재검사해야 한다. 카탈로그만으로 권한이 생기지 않는다.
 - `tests/test_raid_catalog.py` 관련31PASS, 기존 Starlette/AnyIO deprecation warning1개. 테스트는 격리 PostgreSQL 프로젝트의 공통 fixture를 사용했으며 조회 경로는 DB/provider 함수 차단 중에도 통과했다. 개발DB에는 테스트 쓰기를 하지 않았다.
-- 기존 OpenAPI paths/DTO/정책은 값까지 보존하고 두 경로와 신규 DTO만 추가한 것을 대조했다. 실행 이미지 OpenAPI 전체 일치 및 실제 로컬 HTTP 결과는 DEV_LOG/이슈의 구현 인계에서 최종 기록한다.
+- 기존 OpenAPI paths/DTO/정책은 값까지 보존하고 두 경로와 신규 DTO만 추가한 것을 대조했다. 실행 이미지 OpenAPI 전체 일치·실제 로컬HTTP 두 조회/health도 통과했다. 구현/계약d7f762f의push/원격확인과 [두 번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/10#issuecomment-6230019531)를 완료했으며 dev/main 미병합이다.
 
 ### 후속
 
