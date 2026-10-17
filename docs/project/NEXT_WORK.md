@@ -8,7 +8,7 @@
 - 최신 구현/계약은 `19c2dcc33630078fa0d88a1dd60e11857a44472b`. [105번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6228173800), [현재 소유자 정책](../ISSUE_8_CURRENT_OWNER_POLICY_DEVELOPMENT.md)이 기준이다. 현재 본인 유효인증의 start/pending confirm은409 ALREADY_VERIFIED, 타회원/소유상실 도전은 허용·장비 확인 후 소유 연결 보류, 완료된 원명령 ACK/현재GET은 유지한다. 같은 회원의 삭제 후 재등록은 확인 가능한 기존 소유에 장비 재인증 없이 연결한다.
 - 최종 관련 격리 PostgreSQL/모의HTTP **483PASS**와 실행 OpenAPI 일치가 검증 기준이다. 이번 문서·통합 작업은 기능 코드를 변경하지 않으며 동일 코드의 테스트를 반복하지 않는다.
 - [98번째 실제1회 인증 성공](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6217275533)은 사용자 결과와 서버verified/현재소유/감사1개를 대조했다. 새 정책의 모든 기기 경합/삭제재등록·분쟁 인수까지 확인한 결과는 아니다.
-- 사용자가 현재 구간의 문서 최신화·dev 병합/push·main 동기화·작업 브랜치 정리를 승인했다. 현재 `feat/representative-selection`을 PR로 dev에 통합하고 main을 같은 통합 HEAD로 맞추는 중이다. 최종 SHA/브랜치 정리 결과는 DEV_LOG와 Issue 통합 회신에 기록한다.
+- **통합/정리 완료:** [PR #9](https://github.com/heo0328/lostparty-backend/pull/9) 병합 `ea1384d`와 후행 문서 기록을 dev/main의 동일 HEAD로 동기화·push한다. 완료 브랜치 `feat/representative-selection`은 로컬·원격 삭제했고 main/dev만 유지한다. [110번째 Backend 통합 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6228957999)에 최종 원격 SHA·정리 상태를 기록한다. 구현/검증 기준은19c2dcc이며 통합·후행 기록은 문서만 변경한다.
 
 ## Flutter 완료와 남은 후속
 

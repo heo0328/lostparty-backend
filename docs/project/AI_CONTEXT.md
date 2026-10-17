@@ -4,7 +4,7 @@
 
 ## 기준 상태
 
-현재 Backend #8 작업 구간은 완료했다. 사용자 승인으로 작업 브랜치를 dev에 PR 통합하고 main을 같은 HEAD로 동기화·완료 브랜치 정리 중이다. 최종 결과는 NEXT_WORK·DEV_LOG·Issue 통합 회신에 기록한다. 최신 구현/계약 `19c2dcc`는 기존 로컬 Docker/포트8000·DB0010에 반영됐고 관련 격리483PASS/전체OpenAPI 일치를 확인했다. 이번 통합은 코드·실행환경/자료·키/flag를 변경하지 않는다.
+현재 Backend #8 작업 구간은 [PR #9](https://github.com/heo0328/lostparty-backend/pull/9)/병합ea1384d로 dev에 통합했다. 최종 문서 기록을 포함해 main/dev는 같은 HEAD로 동기화하며 완료 작업 브랜치는 로컬·원격 삭제했다. [110번째 Backend 회신](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6228957999)과 DEV_LOG가 최종 SHA/정리 기준이다. 최신 구현/계약 `19c2dcc`는 기존 로컬 Docker/포트8000·DB0010에 반영됐고 관련 격리483PASS/전체OpenAPI 일치를 확인했다. 이번 통합은 코드·실행환경/자료·키/flag를 변경하지 않는다.
 
 | 영역 | 현재 상태·기준 |
 |---|---|
