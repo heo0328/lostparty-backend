@@ -84,3 +84,5 @@ Relation은relation_id/subject_id/kind/state/revision/group(공개GroupSummary)/
 코드입력은trim·대문자화후6자리문자집합검사,실제생성은영문/숫자를각각최소1개포함한다. provider/키호출없음. 코드preview/join은인증회원20회/분·직접접속host60회/분제한(현단일프로세스auth limiter재사용),검색은회원30회/분으로저장자료추측을제한한다. 429 RATE_LIMITED/Retry-After60이다. 서버가프록시헤더IP를신뢰하지않으며다중프로세스운영전제한기저장소공유는운영후속이다.
 
 물리구조: group_join_subjects/relations/codes3테이블과group_memberships의현재행부분unique. subject/relation/초대발신membership의같은그룹복합FK·요청종류/선택제약을둔다. 원문은별도목적키로HMAC검색/AES-GCM보관하고과거key_id/이력을유지해원ACK복구를지원한다. 요청본문의rawcode대신해결된code UUID를멱등digest에넣어코드평문/사전추측본문을result에남기지않는다.
+
+구현/최종계약은c06d3d2로push·원격확인하고 [#12 전체15번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6235311908)로인계했다. 최초계약게시(14번째)와구현인계(15번째)를구분한다.

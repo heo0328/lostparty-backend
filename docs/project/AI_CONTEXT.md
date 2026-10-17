@@ -20,3 +20,5 @@
 | 별도/보존 | 자동퇴역·분쟁/소유이전/방어·모든명령영속복구·WebSocket/운영배포미완료. 기존개발자료/키/flag유지·베타직전초기화별도지시. Firebase이관/삭제·새8001/백업복원이관·기본재인수없음 |
 
 Backend완료·계약인계·Flutter적용·실기기·운영완료는서로별개다. 과거문서의당시미구현/브랜치/DB상태는현재기능상태로해석하지않는다.
+
+G2구현/계약c06d3d2 작업브랜치push·원격확인, [#12 전체15번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6235311908). 현재Backend구간완료/Flutter연결별도·다음G3명세작업가능이다.

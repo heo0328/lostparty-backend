@@ -29,3 +29,5 @@
 0014는이력보존방향이며downgrade로테이블/이력을삭제하지않는다. 코드복구시이전API이미지와추가자료를유지하고필요하면전진수정migration을사용한다. DB초기화/기존Firebase·기기자료이관/삭제/백업복원·운영배포는없다.
 
 구현/계약SHA·push/댓글결과는NEXT_WORK/DEV_LOG/최종인계댓글이기준이다. Flutter의현재시작준비작업우선을유지하고G1/G2를초기로딩에강제로추가하지않는다. 계약소비/연결은별도후속이며Backend다음은G3명세·소비충돌보완이다.
+
+구현/계약SHA `c06d3d2ec6663cb3412294db6a02354f3ab03e1c`·feat/raid-services push/원격일치확인, [#12 전체15번째 Backend 구현인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6235311908). 후행문서는게시기록이며dev/main미병합이다.

@@ -32,3 +32,5 @@
 타회원분쟁/소유이전·24시간방어/통지·자동퇴역확정·모든명령의프로세스종료후영속복구는별도다. Flutter주간원장journal을전체명령완료로확대해석하지않는다. 새8001/기초재인수·Firebase자료이관/삭제·백업복원마이그레이션·운영배포는없다. 베타직전DB내용초기화는대상/영향이명시된별도사용자지시에만수행한다.
 
 기능지도는 [AI_CONTEXT](AI_CONTEXT.md), 상세완료·검증·장애·Git/댓글이력은 [DEV_LOG](DEV_LOG.md)다.
+
+G2구현/계약 `c06d3d2ec6663cb3412294db6a02354f3ab03e1c`를feat/raid-services에push·원격SHA일치확인후 [#12 전체15번째 Backend — G2구현인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6235311908)로회신했다. 전체14번째는명세,15번째는구현결과다. 다음Backend G3명세/보완작업가능,Flutter현재시작준비우선/G1G2별도연결후속이다. 후행문서는게시기록만변경한다.

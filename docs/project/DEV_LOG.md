@@ -1051,3 +1051,5 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 첫격리실행81PASS/14FAIL(25.58초)은단일회원fixture가첫user UUID를재선택해다중회원의메인등록unique를위반한테스트자료문제다. 각실제로그인UUID/고유주소fixture로수정해G2 17PASS/15.55초. 경계·권한상실replay·차단우회/cursor·FK를추가한최종관련190PASS/77.70초(G226개+G1/L0/모델/대표/주간회귀),기존Starlette/AnyIO경고1개. 중복실행수를합산하지않는다.
 - 기존모든OpenAPI paths/DTO/정책객체불변을대조하고새19경로/20동작만추가,실행OpenAPI전체일치. 기존로컬DB0013→0014/API이미지반영,기존업무/그룹/회원/한도/head/감사행수전후동일·새G2세테이블0행확인. 실제HTTP새20동작401/Bearer/no-store·기존health/group/catalog/cycle200확인. 실제개발회원쓰기/Flutter연결·실기기미실행이다. 기존자료/키/flag/포트8000유지·격리test-db만중지했다.
 - NEXT_WORK/AI_CONTEXT는과거누적상태를현재기준/다음실행중심으로정리했다. 상세기존이력은DEV_LOG/기능문서를보존했다. G3명세/소비충돌후속,Flutter시작준비우선/G1G2연결별도다. 게시SHA/댓글은후행기록에남긴다. dev/main통합·운영배포·자료초기화/이관은없다.
+
+- 게시완료: 구현/계약 `c06d3d2ec6663cb3412294db6a02354f3ab03e1c`를feat/raid-services에commit/push하고원격SHA일치확인후 [#12 전체15번째 Backend G2결과](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6235311908)를게시했다. 전체댓글재조회로14번째명세/15번째결과순번을확인했다. 사용자코드정책/경로·DTO·SHA·테스트/실제HTTP/미확인·다음담당을기록했다. 후행문서커밋은게시링크기록이며기능/DB/API·dev/main추가변경없다.
