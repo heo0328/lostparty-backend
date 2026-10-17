@@ -999,3 +999,31 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 결과를같은feat/raid-services로commit/push·원격확인후#12에회신한다. 아직실제Flutter호출가능API/실기기대상은없으며다음은계약회신대조·HTTP/목록/cursor/OpenAPI연결이다. dev/main병합·서버반영은별도다.
 
 - 구현 `e5e97c8a4db541ece7d37b9879f46fe0c88f20f2`을feat/raid-services로push·원격동일SHA확인후 [#12 두 번째 Backend 내부구현 회신](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232311355)을게시했다. 실제순번은첫명세1/이번결과2로확인했고테스트DB를중지했다. 후행기록도같은브랜치로push하며개발API/DB0011과dev/main860c84a를유지한다.
+
+
+## 2026-10-17 — 최신 #8/#11/#12/#13 회신·추가 정책 확인
+
+- 신규Flutter댓글은#8 121~123(지연조사/자동추가계약/1628PASSUI·복원결과), #11 4~6(실제manual true성공/UI·i정정/주간일괄표시), #12 3(G1활동/검색/15·5), #13 1(i현재방관계)이었다. 조회중추가된#12 5(계정별한도/초과방제한)·#13 3(모집한도10연계)도확인했다. #10은3개/신규없음.
+- 기존보존API로그최근6시간/최대12000행을민감정보없이집계했다. 관련GET139회전부200·refresh2회200, 관찰범위KST15:04:01~18:31:52다. duration없어개별서버처리시간/DB대기·클라이언트공백은분리불가이며로그상401/429/5xx·timeout키워드미관찰을지연없음으로확대하지않았다. 요청재현/쓰기/계측코드·재시작없음. [#8 124번째Backend](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6232557892)로회신했다.
+- #8자동추가는현재선택집합만으로명시제외/최초기준통과구분불가를확인하고영속정책명세를후속으로기록했다. 과거미선택재활성화/GET쓰기·대표/표시초기화없음. 최신Flutter1628PASS는모의HTTP/controller이며실기기성능측정이아니다.
+- #12 4번째Backend로활동선택필수/그룹명·전용대표이름검색/15·5를수용한뒤추가5번째확장을 [6번째Backend](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232576104)로확인했다. 15/5/10은계정별기본값이며정확히한도는증가만거부·초과시관련전체방제한/권한있는회복경로/자료보존을공통계약으로먼저제안한다. BM/광고/일괄구현요청은아니다.
+- [#11 7번째Backend](https://github.com/heo0328/lostparty-backend/issues/11#issuecomment-6232568654)와 [#13 2번째Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6232561372)로실제manual true관찰및i=현재방관계정정을수용했다. 완료후잔류/다음주관계를주간점유/완료와별도명세하며개인완료제약은이번에완화하지않는다. #13의한도확장은#12공통정책과중복없이연결한다.
+- 사용자요청은최신확인이다. 코드/OpenAPI/서버/DB변경·테스트·commit/push는하지않고명세/현황문서만갱신했다. 실제댓글순번은조회로확인했다.
+
+
+## 2026-10-17 — 계정별 한도·방 제한 공통 명세 제안
+
+- 사용자진행승인에따라AGENTS/협업/NEXT/AI·현재그룹기초/개인완료경계를확인했다. #12댓글6개/#13 3개/#11 7개로추가정정없음을대조했다. #11초기네트워크조회가완료되지않아재조회한뒤확인했다. 기존문서변경4개를보존했다.
+- [공통계약안](../ISSUE_12_MEMBER_LIMITS_CONTRACT_DRAFT.md)에계정별기본15/5/10·한도권위/현재관계집계/사용량head·본인GET·권한있는내부한도조정/감사·원인/영향범위·permissions/회복표·동시성/CAS/replay·G1예상limits/usage revision·개인체크와방완료의경계를정리했다. 아직없는모집원장은정상0으로주장하지않고unavailable/null로표시하며활성원장장애는거부하는안을구분했다.
+- 정원초과는해당group/연결방, 개인초과는그회원의모든현재group/room과그룹연결방이라는구체상속범위와회복명령표를검토안으로명시했다. 권한없는추방/자동자료삭제·과거완료변경·무관한타회원의방으로무한연쇄를제안하지않는다. 개인manual일괄차단없이관련방우회경계를후속에합의한다.
+- [#12 일곱번째 Backend 전체명세](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232669446)를게시하고실제순번을확인했다. [#13 네번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6232674169)에는공통원본과모집/방관계·개인체크연결경계를회신하고실제순번4를확인했다. 다음Flutter는영향범위/회복표소비검토, Backend는L0공통기초준비이며G1→G2/G3→#13연결로구간을나눴다.
+- JSON예시파싱·git diff --check통과. 코드/실행OpenAPI/DDL/서버/DB/개발자료/키·flag변경/테스트·commit/push는수행하지않았다. 문서·제안게시만완료했고운영배포/BM/광고/이관·초기화는범위밖이다.
+
+
+## 2026-10-17 — #12 최신정정·L0 내부기초 / #13 주간통계 선행설계
+
+- 사용자 작업진행 승인 후 #12 10개/#13 7개 최신댓글을 재조회했다. #12아홉번째/#13여섯번째로 세질문은해소됐다. 기존 일곱번째Backend 제안의 개인초과→모든그룹/연결방상속을 정정했다. 개인레이드초과는직접참가공개/그룹방, 개인그룹초과는직접참가그룹방만, 그룹자체정원초과는해당그룹모든그룹전용방이다. 기존그룹운영유지/정확히한도증가만거부/원인OR·권한있는회복을유지한다.
+- L0: member_usage_limits/heads/audits 3모델·0013파일, 기본15/5/10·GET쓰기0·현재그룹관계집계·모집null/unavailable·내부한도변경의필수권한callback/전역락/CAS/감사·관계보존을구현했다. G1내부생성에usage head의동일transaction갱신을연결했고replay는추가갱신하지않는다. 실제G1활동/증가guard/HTTP·방제한은후속이다. 일반회원/운영자API·BM/키·자료초기화는없다.
+- 격리PostgreSQL 초기검증134PASS/3FAIL(47.54초): 새한도행 변경에서 DB시각SELECT가미완성행을autoflush해updated_at NOT NULL위반. 시각을객체생성/변경전에읽도록실제구현을수정했다. 최종 L0 19개+그룹기초/모델migration/대표/주간회귀 총137PASS/47.76초·기존Starlette/AnyIO경고1개. 권한거부·CAS경합·감사unique/DB제약·감소시관계보존·재실행head불변·실패rollback을확인했다.
+- #12열번째/#13일곱번째의주간통계는별도계약안으로작성했다. 사용자/그룹UUID·주차별참가이용/결과snapshot·수요일06시함께하기설정이력·지연재처리/중복·관찰전null·권한을구분한다. 결과귀속/전환분류/마감실효값/조회형식은Backend제안으로표시했다. 통계모델/HTTP/worker는미구현이고기존개인체크는원천으로쓰지않는다.
+- 새이미지빌드/격리0013적용은개발API반영과다르다. 기존OpenAPI전체불변·개발DB0011/L0테이블없음을읽기전용확인하고기존포트8000/자료/키를유지했다. Git/Issue인계는후행기록참조.

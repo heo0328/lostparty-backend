@@ -2,20 +2,22 @@
 
 2026-10-17. **명세 게시·검토 및 내부 기초 선행 구현, HTTP 구현 전**. [#12 첫 번째 Backend 명세 댓글](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232074318). 작업 브랜치 `feat/raid-services`, 기존 구현 HEAD `2297fba`. [Issue #12](https://github.com/heo0328/lostparty-backend/issues/12)의 본문과 댓글0개, #13 댓글0개, #8 최신120번째까지 확인했다. 기존 현황문서의 미커밋 변경3개를 보존한다. 이 문서는 검토용이며 실행 중인 OpenAPI에 미구현 경로를 추가하지 않는다.
 
+최신 정정: [#12 세 번째 Flutter 회신](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232491349)으로 **계정별 기본 그룹정원15명/현재가입5그룹, 생성·가입 캐릭터의 현재 활동집합 포함 필수, 그룹명 또는 그룹전용대표 캐릭터명 검색**을 확인했다. 아래 명세에 반영하되 내부기초코드/HTTP/개발DB에는 아직 이 정정을 적용하지 않았다.
+
 ## 1. 범위와 정책
 
 G1은 생성/공개 검색·요약/내 그룹·상세/멤버 조회와 그룹명 수정이다. 초대·신청·코드·차단은G2, 그룹장 이전·탈퇴·해산은G3다. 파티/모집·주간 원장과 결합하지 않는다. G1에서 일반 회원을 직접 가입시키는 명령은 없다.
 
 - 그룹은 원정대/캐릭터가 아닌 앱 회원의 모임이다. `group_id + user_id`는 유일하며 생성자는 그룹장 membership1개로 즉시 등록된다. 여러 원정대를 가졌다고 여러 자리가 생기지 않는다. 멤버 권한은 현재 서버 세션/그룹 membership에서 판정한다.
-- 생성 캐릭터는 요청 등록 범위의 현재 인증 소유·usable canonical UUID여야 한다. active/confirmed/정상NameClaim과 예상 revision을 검사한다. 별도1700 하한·레이드 입장레벨·표시 수·대표 여부·주간 완료를 그룹 생성 조건으로 추가하지 않는다. 본문에 없는 활동 선택 필수 조건도 추가하지 않는다.
+- 생성 캐릭터는 요청 등록 범위의 현재 인증 소유·usable canonical UUID여야 한다. active/confirmed/정상NameClaim과 예상 revision을 검사한다. 별도1700 하한·레이드 입장레벨·표시 수·대표 여부·주간 완료를 그룹 생성 조건으로 추가하지 않는다. 현재 활성 설정의 Activity 집합 포함을 생성/가입의 최종transaction에서 검사한다. 이후 활동해제만으로 기존membership/그룹장권한을 삭제하지 않는다.
 - 그룹 대표는 생성 시 선택한 캐릭터의 UUID/그 당시 표시 snapshot을 그룹에 별도로 보관한다. 사용자 대표 변경으로 바꾸지 않는다. 이름만으로 새 ID를 이어 주지 않는다. 현재 소유/생명주기/claim이 무효가 되면 `needs_update`를 표시하되 그룹·membership/그룹장 권한을 지우지 않는다. 대표 변경 명령·그룹장 이전 이후 선택 범위는G3에서 확정한다.
 - 현재 User 모델에는 공개 닉네임 필드가 없다. 새 회원 프로필 기능을 만들거나 계정 UUID를 이름처럼 표시하지 않는다. 그룹장 표시는 그룹 membership에 저장한 캐릭터 표시 snapshot으로 제공한다. G1에서 생성자의 표시와 그룹 대표 표시는 같은 snapshot으로 시작하지만 별개 기록이다.
 - 그룹명은 원문의 줄바꿈/줄 구분 문자·제어문자를 먼저 거부하고 trim 후 Unicode code point1~20자인지 검사한다. 이름 중복은 허용한다. NFC 변환·이름 기반 identity는 추가하지 않는다. 생성 요청의 name 생략은 선택 캐릭터명+`의 그룹`이다. 기본명이20자를 넘으면 자르지 않고400 GROUP_NAME_REQUIRED로 명시 이름을 받는다. null/빈 이름은400 INVALID_REQUEST다.
-- 그룹당50명/회원당50그룹과 예전 무제한 문서가 충돌한다. **최종 제품 제한은 미확정**이다. 임의50/50 강제나 무제한 최종 확정을 하지 않는다. 구현 시 한계 검증을 교체 가능하게 분리하고, 미확정 정책에 의존하는 한계 거절은 활성화하지 않는다. 조회의limit는 제품 인원 제한과 별개다.
+- 최신다섯번째회신에따라한계는계정별서버데이터다. 그룹정원은현재그룹장의기본15명(생성자/그룹장포함), 현재가입그룹은회원기본5개(직접생성포함/종료membership제외)다. 실제검사는유효한도/현재사용량/revision을읽고고정상수로영구확정하지않는다. G1 생성에서는현재가입5개를, G2가입/수락에서는그룹15명·회원5개를DB transaction/동시성경계에서검사한다. 과거50/50·제한미확정/무제한설명은최신정책이아니다. 조회limit와제품정원은별개다.
 
 ## 2. 경로와 접근 범위
 
-일반 공개 검색이라는 요구에 맞춰 공개 GET2개는 세션 없이 최소 정보만 제공하는 안이다. 회원 전용 경로는 현재 로그인·활성 membership을 검사한다. 공개 접근안이 Flutter 요구와 다르면 공개 GET 인증 여부만 조정하며 나머지 G1 구조를 막지 않는다.
+일반 공개 검색이라는 요구에 맞춰 공개 GET2개는 세션 없이 최소 정보만 제공하는 안이다. 회원 전용 경로는 현재 로그인·활성 membership을 검사한다. 세 번째 Flutter 회신은 공개최소요약/회원전용분리안이기존공개검색진입과충돌하지않음을확인했다.
 
 | Method/path | 인증/권한 | 입력·결과 |
 |---|---|---|
@@ -97,7 +99,7 @@ POST/PATCH에는 Idempotency-Key가 필수다. 두 명령의 scope는 각각 act
 
 ## 6. 목록과 revision
 
-- public 검색q는 선택이며 trim 후0~20자, 빈 값은 전체다. 부분 일치 검색에서 SQL wildcard `%`/`_`도 문자 그대로 취급한다. 알 수 없는 필터를 거부하며 public 경로에서 private 목록을 선택하지 못한다.
+- public 검색q는 선택이며 빈 값은 전체다. 그룹명 또는 저장된 그룹전용대표 캐릭터명을 대상으로 trim·대소문자·분리한글 정규화 검색키를 사용한다. 표시원문/UUID는 검색키로 대체하지 않고 원격Flutter 기준과 세부정규화를 대조한다. 부분 일치 검색에서 SQL wildcard `%`/`_`도 문자 그대로 취급한다. 알 수 없는 필터를 거부하며 public 경로에서 private 목록을 선택하지 못한다.
 - 모든 목록의limit는 기본20/최대50이다. public/my는created_at 내림차순+group_id 내림차순, members는joined_at 오름차순+membership_id 오름차순이다. next_cursor는 마지막 페이지에서null을 반드시 반환한다.
 - 기존 HMAC cursor를 재사용하고 path·public/member scope·actor(회원 전용)·정규화q·limit·revision·offset을 서명한다. 다른 회원/경로/변조cursor는400 INVALID_REQUEST다. 서명이 정상이더라도 목록 변경 후에는409 CURSOR_STALE로 처음부터 다시 조회한다.
 - directory_revision은 생성/이름 변경/후속membership·공개표시snapshot 갱신에서 증가하는 공유head다. my 목록도 같은head를 사용하므로 다른 그룹 변경에 따른 보수적인stale을 허용한다. members cursor는group revision+members_revision에 묶는다. cursor가 있어도 현재membership을 검사하므로 권한 상실을 우회하지 못한다.
@@ -129,7 +131,7 @@ POST/PATCH에는 Idempotency-Key가 필수다. 두 명령의 scope는 각각 act
 | 409 | CHARACTER_UNUSABLE/IDENTITY_CONFLICT/REVISION_CONFLICT/CURSOR_STALE/기존 멱등code | revision/cursor 충돌은 현재GET/처음부터 재조회 후 새 판단. 응답 불명은 원key/body 복구 우선 |
 | 503 | SERVICE_UNAVAILABLE | 같은 명령을backoff 후 재시도. 결과 불명으로 새key를 만들지 않음 |
 
-G1에 외부provider 호출/임의24시간TTL/미확정 제품 인원 제한 오류를 추가하지 않는다. private 자료를 오류 상세로 노출하지 않고 실제 그룹명/snapshot을 로그나 협업 댓글에 출력하지 않는다.
+G1에 외부provider 호출/임의24시간TTL/과거50/50을적용하지않고확정15/5제한거절을안정적인오류로연결한다. 최종오류code는HTTP연결인계에서정리한다. private 자료를 오류 상세로 노출하지 않고 실제 그룹명/snapshot을 로그나 협업 댓글에 출력하지 않는다.
 
 ## 9. 구현 구간·확인 사항
 
@@ -144,8 +146,19 @@ G1의DDL/DTO·생성·공개/회원조회·이름수정·권한/cursor/재송신
 5. 그룹 대표가 사용 불가여도snapshot/회원관계·leader권한을 보존하고needs_update 표시. 옛 이름 재사용 시 새character의 표시/권한을 승계하지 않음.
 6. 각 목록 순서·cursor stale/변조·GET쓰기0, DDL/model일치·기존API/OpenAPI유지. G2/G3 동시가입/마지막자리/이전/해산은 해당 구현에서 검증하며 G1 결과와 섞지 않음.
 
-공개GET 무인증안·생성 시 활동선택 비필수안과 DTO의 소비 충돌은 #12에서 확인받는다. 50/50 최종값, 가입 시 멤버표시와 대표변경 권한/대상, G3 모집연계는 후속 미확정으로 남긴다. G1에서 종료된 그룹이나 없는 G2/G3 동작 권한을 선제 허용하지 않는다.
+공개최소조회/회원전용DTO분리안은소비가능회신을받았고활동선택필수·계정별기본15/5·검색범위를정정했다. 다섯번째회신의모집기본10·계정별유효한도/초과관련전체방제한·회복명령은공통계약을먼저설계한다. 필수policy에이조건을연결한뒤HTTP/목록/cursor/OpenAPI를이어간다. 가입시멤버표시와대표변경권한/대상·G3모집연계는후속범위다. G1에서 종료된 그룹이나 없는 G2/G3 동작 권한을 선제 허용하지 않는다.
 
 내부 선행 구현/검증은 [기초 구현 기록](ISSUE_12_GROUP_G1_FOUNDATION.md)을 따른다. 아직 새HTTP/OpenAPI/서버반영은 없다. Flutter는 명세와 #12 게시내용의 소비 충돌을 회신한다. 기존 로그인/키/장비인증 재시험은 요청하지 않는다. 다음Backend는 G1 구현이며 Flutter 구현/실기기 완료와 별도 단계다.
 
 게시 상태: 명세 전체는 #12 첫 댓글에 게시했다. 내부 선행 구현과 문서를 같은 작업 브랜치로 게시하며 실제SHA/결과댓글은 기초 구현 기록과DEV_LOG에 남긴다. dev/main 통합과 HTTP 실행 반영은 별도다.
+
+최신 확장 입력: [#12 다섯 번째 Flutter 계정별 한도 요청](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232562970). 그룹15/가입5/모집10은기본값이며서버계정별조정·초과시관련전체방제한/정리후회복·타회원진행차단/회복권한표와#11개인완료우회방지를별도계약으로제안해야한다. 결제/광고/자료삭제는범위밖이다. 이문서의HTTP예시는아직그확장응답을반영한실행계약이아니다.
+
+공통계약의현재검토안은 [계정별이용한도/방제한명세](ISSUE_12_MEMBER_LIMITS_CONTRACT_DRAFT.md)와 [#12 일곱번째제안](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232669446)이다. G1본인한도GET·생성expected_limits_revision/expected_usage_revision·상세access/permissions의추가안을포함하며최종HTTP계약은이검토결과와함께정리한다. 현재내부명령/DB/서버는변경하지않았다.
+
+
+## 최신 정정 — #12 아홉 번째 확정
+
+[#12 아홉 번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232797572)가 이전의 ‘개인초과→모든 그룹/연결방 제한’ 제안을 대체한다. 개인 레이드 초과는 직접 참가한 공개/그룹 방, 개인 그룹 초과는 직접 참가한 그룹전용 방에만 적용한다. 기존 그룹 운영은 유지한다. 그룹 자체 정원 초과만 그 그룹의 모든 그룹전용 방을 제한한다. 정확히 한도에서는 기존 이용 정상/해당 증가만 차단한다. 세 질문은 해소됐고 추가 사용자 결정 대기는 없다. 상세는 [공통계약4·6절](ISSUE_12_MEMBER_LIMITS_CONTRACT_DRAFT.md)이다. 위 과거 다섯 번째 기준의 광범위 제한 설명은 최신 확정으로 대체된다.
+
+주간 통계는 [별도 설계](ISSUE_13_WEEKLY_STATISTICS_DRAFT.md)를 따른다. 현재한도/사용량 head를 주간 통계 카운터로 사용하지 않는다.

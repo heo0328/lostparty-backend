@@ -131,6 +131,8 @@ def create(principal, key, command: CreateGroup, *, policy: CreationPolicy):
             membership = GroupMembership(id=mid, group_id=gid, user_id=uid, character_id=character.id,
                                          display=dict(snapshot), revision=1, joined_at=stamp)
             db.add(membership); db.flush()
+            from app.member_limits.service import record_group_membership_change
+            record_group_membership_change(db, uid)
             advance_directory(db)
             result = detail(db, value, membership)
             return commit_result(db, ticket, 201, result)

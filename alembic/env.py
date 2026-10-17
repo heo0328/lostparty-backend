@@ -5,6 +5,7 @@ import app.game_accounts.models
 import app.member_settings.models
 import app.raid_weekly.models
 import app.groups.models
+import app.member_limits.models
 from app.core.database import engine
 
 if context.is_offline_mode():

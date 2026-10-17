@@ -26,3 +26,8 @@
 ## 다음 구간
 
 최신 #12 회신을 확인하고 공개 인증·활동선택 조건/DTO 충돌을 정리한 뒤 G1 HTTP adapter·목록/cursor·OpenAPI와 개발DB 적용/실행반영을 진행한다. 50/50 최종값 미확정 때문에 나머지 기초를 대기하지 않는다. 현재 결과는 내부 선행 구현이며 Flutter가 호출 가능한 API 완료나 실기기 통과가 아니다.
+
+
+## 최신 후속
+
+위50/50·활동필수 여부의 미확정 설명은 당시 선행구현 경계다. 최신은 [G1 명세](ISSUE_12_GROUP_G1_SPEC.md)와 [공통한도 계약](ISSUE_12_MEMBER_LIMITS_CONTRACT_DRAFT.md)의 계정별기본15/5/10·현재활동선택필수·원인별제한이다. [L0 내부기초](ISSUE_12_MEMBER_LIMITS_FOUNDATION.md)에서 생성transaction의 사용량head 갱신을 연결했다. 최종 생성guard/HTTP는 다음 구간이며 과거 무제한 정책을 현재 확정으로 쓰지 않는다.
