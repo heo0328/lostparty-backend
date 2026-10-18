@@ -1,5 +1,7 @@
 # 사용자·그룹 주간 이용 통계 선행 계약안
 
+현재 추적(2026-10-18): 통계 주제는 [Issue19](https://github.com/heo0328/lostparty-backend/issues/19)로 분리했다. 아래 #13/#12는 원요구/제안의 출처이며 앞으로 통계 검토·구현 회신은 #19에서 진행한다.
+
 2026-10-17. 요구 원본: [#13 일곱 번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6232893737), [#12 열 번째 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6232896201). **설계 제안이며 통계 DB/HTTP/집계·방 API 구현 완료가 아니다.** 현재 한도/주간 개인완료/방 참가관계와 분리한다. 아래 귀속 시점과 조회 형식은 Backend 제안으로 구분한다.
 
 ## 확정 요구

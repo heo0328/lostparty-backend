@@ -33,4 +33,6 @@ Flutter는 합의된 계약의 커밋을 기준으로 연동합니다. 버그 �
 
 WSL의 시스템 Python 3.14는 유지하며 백엔드는 Docker의 Python 3.12로 실행합니다. Python 라이브러리의 직접 의존성 버전은 `requirements.txt`, 컨테이너 구성은 `Dockerfile`과 `compose.yaml`에서 관리합니다.
 
+로컬 DB 확인용 클라이언트는 `127.0.0.1:5432`로 접속합니다. `compose.yaml`은 이 주소를 DB 컨테이너의 PostgreSQL 5432 포트에 연결하며, 접속 계정과 비밀번호는 로컬 설정을 사용합니다.
+
 현재 작업은 [NEXT_WORK](docs/project/NEXT_WORK.md), 개발 이력은 [DEV_LOG](docs/project/DEV_LOG.md), 프로젝트 지도는 [AI_CONTEXT](docs/project/AI_CONTEXT.md)에서 확인합니다.
