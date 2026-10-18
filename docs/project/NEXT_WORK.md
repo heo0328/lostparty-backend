@@ -19,7 +19,7 @@
 
 ## 다음 담당·순서
 
-0. **V2 Backend 구현·로컬 반영 완료 / 게시 인계 준비:** [141번째 계약](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6237543030)·[142번째 Flutter 수용](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6245421798)·[143번째 Backend 접수](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6245466325)를 기준으로 11동작/별도proof·분쟁/선택방어·최대3건·일괄방어·선성립worker/원자이전을 구현했다. [개발 안내](../ISSUE_8_OWNERSHIP_DISPUTE_DEVELOPMENT.md), 실행 계약은 OpenAPI 원본이다. 관련194PASS·권한/그룹/주간 포함333PASS·최종가드21PASS(중복 포함). 기존 로컬DB0016/API에 최종 이미지를 반영했다. 전체회귀844PASS/과거API개수검사1FAIL을 수정후 관련58PASS·실행계약일치·공개4개200/비로그인11개401이다. 고정SHA push/Issue 인계 후 Flutter가 V2 DTO·복원·최소UI를 연결한다. 상단 안내는 기존 owner/active 조회 소비이며 새 배너 API는 없다. 실제 게임/기기/24시간 실경과 인수는 미실행이다. 현재 파티 영향 adapter가 없고 active 관계가 있으면 review_required로 보류한다.
+0. **V2 Backend 구현·로컬 반영·게시 인계 완료 / Flutter 연결 후속:** [141번째 계약](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6237543030)·[142번째 Flutter 수용](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6245421798)·[143번째 Backend 접수](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6245466325)를 기준으로 11동작/별도proof·분쟁/선택방어·최대3건·일괄방어·선성립worker/원자이전을 구현했다. [개발 안내](../ISSUE_8_OWNERSHIP_DISPUTE_DEVELOPMENT.md), 실행 계약은 OpenAPI 원본이다. 관련194PASS·권한/그룹/주간 포함333PASS·최종가드21PASS(중복 포함). 기존 로컬DB0016/API에 최종 이미지를 반영했다. 전체회귀844PASS/과거API개수검사1FAIL을 수정후 관련58PASS·실행계약일치·공개4개200/비로그인11개401이다. 구현/계약 `7ba6297c5a574aa14c214bb9d3bf30edb692fc8f`를작업브랜치push·원격SHA확인후 [#8 전체144번째 Backend 구현인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6245920315)를게시했다. 다음Flutter가 V2 DTO·복원·최소UI를 연결한다. 상단 안내는 기존 owner/active 조회 소비이며 새 배너 API는 없다. 실제 게임/기기/24시간 실경과 인수는 미실행이다. 현재 파티 영향 adapter가 없고 active 관계가 있으면 review_required로 보류한다.
 
    **날짜 기록 추가:** 사용자 요청에 따라 [DB 공통 날짜 기준](../DATABASE_RECORD_TIMESTAMPS.md)의 생성/최종수정 시각을48개 업무표에 추가한다. 기존 확인가능 날짜만 복사·미상과거는NULL·실제 변경에만 DB trigger 갱신. 조회/API계약은 불변이다. V2 종료24h/90일 자동정리는 승인되지 않아 미추가이며 이번에도 자료 삭제/기간정책/자동정리 worker는 없다. 0016을 기존 로컬DB에 적용하고48표필드/trigger·49표행수보존/실행계약을 확인했다. 세부 지문 비교 한계는DEV_LOG를 따른다. 실제삭제를 추가하려면 대상·기간·참조관계/보존조건을 별도 확정한다.
 1. **Backend 작업가능:** G3명세(그룹장즉시이전·일반탈퇴·추방·조건부해산). 실제활성그룹모집의검사가없는상태를0건으로가정해해산하지않는다. #13원본연결이필요한동작만분리한다. 새구현전최신#12본문/댓글·기획정책을확인한다.
@@ -45,3 +45,5 @@
 기능지도는 [AI_CONTEXT](AI_CONTEXT.md), 상세완료·검증·장애·Git/댓글이력은 [DEV_LOG](DEV_LOG.md)다.
 
 G2구현/계약 `c06d3d2ec6663cb3412294db6a02354f3ab03e1c`를feat/raid-services에push·원격SHA일치확인후 [#12 전체15번째 Backend — G2구현인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6235311908)로회신했다. 전체14번째는명세,15번째는구현결과다. 다음Backend G3명세/보완작업가능,Flutter현재시작준비우선/G1G2별도연결후속이다. 후행문서는게시기록만변경한다.
+
+V2/공통날짜 구현·계약 게시SHA `7ba6297c5a574aa14c214bb9d3bf30edb692fc8f` / feat/raid-services / push·원격확인완료. #8 전체144번째는Backend구현인계이며Backend작업번호가아니다. 다음FlutterV2연결/최소UI·사용SHA/검증범위회신,Backend는관련보완대응또는독립G3설계가능. main/dev미병합이다.

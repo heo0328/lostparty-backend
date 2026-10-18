@@ -37,3 +37,5 @@ FastAPI lifespan은 기존 auth cleanup과 별도로5초 주기의 만기 worker
 - 관련194PASS·권한/그룹/주간333PASS 이후 최종 가드21PASS/29.43초. 공통 날짜 기록을 포함한 전체 회귀845건은844PASS/오래된 전체API개수 검사1FAIL/371.47초였다. 검사 수정 후 인증·공통날짜·V2 **58PASS/41.65초**다. 범위 중복을 합산하지 않는다.
 - 최종 이미지와 추가 날짜 기록0016을 기존로컬에 반영했다. DB업무48표 공통시각/trigger,실행OpenAPI전체일치,공개HTTP4개200/비로그인V2 11개401을 확인했다. 개발회원 인증쓰기/실게임장비변경·실제24h인수는 수행하지 않았다.
 - 0016은V2삭제정책과별개의 [공통날짜기록](DATABASE_RECORD_TIMESTAMPS.md)이다. 기존49표행수유지·48표업무내용지문일치이며,검증중기존멱등요청표1곳은적용전변화가있어전체내용동일로보고하지않는다. migration은관리필드외값을갱신하지않는다. 원인·비교한계는DEV_LOG기록을따른다.
+
+구현/계약 SHA `7ba6297c5a574aa14c214bb9d3bf30edb692fc8f` / feat/raid-services push·원격확인완료. [#8 전체144번째 Backend 구현인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6245920315) 후 다음담당은Flutter V2 소비/최소UI 연결이다. Backend 완료와 실제기기·운영완료는 구분한다.
