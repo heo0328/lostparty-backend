@@ -19,7 +19,7 @@
 | #12 공통한도 | 계정별기본15/5/10·쓰기없는조회·사용량head·서버변경권한/감사·실제그룹집계. [계약](../ISSUE_12_MEMBER_LIMITS_CONTRACT_DRAFT.md), [L0](../ISSUE_12_MEMBER_LIMITS_FOUNDATION.md). 모집은null/unavailable. 개인초과직접참가차원별제한/그룹자체정원초과그룹전용방전체제한확정,실제방guard미연결 |
 | #12 그룹 G2 | 초대/신청/수락·승인/거절·취소/차단·해제/코드20동작구현·관련190PASS/77.70초·실행OpenAPI일치·0014/기존로컬반영. [계약](../ISSUE_12_GROUP_G2_SPEC.md), [개발](../ISSUE_12_GROUP_G2_DEVELOPMENT.md). 일반멤버초대·권한코드조회/복사·공개OFF숨김만·10분재생성·이전코드폐기. 실제회원쓰기/Flutter/실기기는미확인. G3는후속 |
 | #13 방/통계 | 실제room/회차/신청·확정참가/주간연결미구현. [통계선행제안](../ISSUE_13_WEEKLY_STATISTICS_DRAFT.md)/8번째Backend,Flutter귀속/조회세부검토후원천→마감/집계. 개인수동체크/현재한도와통계는분리 |
-| 첫화면일괄조회/Flutter현재 | [145번째Flutter요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6247415075)·[개발](../ISSUE_8_ACCOUNT_BOOTSTRAP_DEVELOPMENT.md). GET /v2/me/account-bootstrap 구현/로컬8000·기존표READ ONLY/RR·권한/전체활동profile/주간일관성·한도오류/16MiB. 261PASS/실행계약일치·DB0016/행수보존. 고정SHA게시/인계준비→다음Flutter연결/동일조건기기비교. V2분쟁은144수신만/별도소비후속 |
+| 첫화면일괄조회/Flutter현재 | [145번째Flutter요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6247415075)·[개발](../ISSUE_8_ACCOUNT_BOOTSTRAP_DEVELOPMENT.md). GET /v2/me/account-bootstrap 구현/로컬8000·기존표READ ONLY/RR·권한/전체활동profile/주간일관성·한도오류/16MiB. 261PASS/실행계약일치·DB0016/행수보존. 8d03e96 push·원격확인/[전체146번째Backend인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6247620588)완료→다음Flutter연결/동일조건기기비교. V2분쟁은144수신만/별도소비후속 |
 | 별도/보존 | 자동퇴역·모든명령영속복구·WebSocket/운영배포미완료. 기존개발자료/키/flag유지·베타직전초기화별도지시. Firebase이관/삭제·새8001/백업복원이관·기본재인수없음 |
 
 Backend완료·계약인계·Flutter적용·실기기·운영완료는서로별개다. 과거문서의당시미구현/브랜치/DB상태는현재기능상태로해석하지않는다.

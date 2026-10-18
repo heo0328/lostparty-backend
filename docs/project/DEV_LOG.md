@@ -1173,3 +1173,11 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 단건투영일치·비활성회원403/폐기세션401·다른회원/소유상실/미인증·숨김/나이스단무관·미설정/불량저장값·동시소유/활동commit의RR스냅샷·주차경계/파티점유·최대/초과·캐시과거정상값/현재실패유지·직접DB지문전후쓰기0/외부HTTP0을확인했다. 문서의JSON2개와별도합성예시3개도실제OpenAPI로검증했다. 본인활동예시는현재카탈로그5개모두포함한다.
 - 같은로컬API8000을최종이미지로교체하고실행OpenAPI객체전체일치·공개health/catalog/cycle/groups4개200/새GET비로그인401을확인했다. 전후DB **0016/50표행수동일**이며신규migration/표/이중저장·초기화/자료이관/삭제/키변경/새환경/운영배포없다. 기존compose.yaml 사용자port변경은보존했다. 실제회원인증GET/실게임/provider/Flutter기기체감비교는미실행이다.
 - 인계직전#8전체145개재조회·145번째본문불변/추가정정없음을확인했다. 작업브랜치원격53e1a2a로예상밖변경없음. 다음은검증구간커밋/push·원격SHA확인→실계약/예시·제한/확인범위Issue인계→Flutterstrict소비/기기비교다.
+
+
+### 일괄 조회 게시/실계약 인계 완료
+
+- 구현/계약 `8d03e962b48917c4b0f0dec28d285ca993b9de2d`를feat/raid-services에커밋·push하고원격SHA일치를확인했다. 기존compose.yaml은스테이징/커밋에서제외하여사용자변경을보존했다. dev/main merge·운영배포는없다.
+- [#8 전체146번째 Backend — 145대응 첫화면일괄조회 구현인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6247620588)를게시하고전체146개재조회로실제작성순번을확인했다. Backend단계번호가아니다. 고정OpenAPI/완전합성예시·RR/READ ONLY·권한/nullable/전체성·16MiB/상한/fallback·unavailable명시·261PASS/최대범위격리측정·실제기기미확인을구분했다.
+- 다음Flutter는동일SHAstrict DTO/adapter·scoped writer/회원·환경/generation/pending/outbox/미저장편집보호를유지해연결하고동일기기/계정/설정의displayReady/weekly·Backend요청수를비교해회신한다. V2분쟁소비후속과분리하며기초정상기능/실키한도소진/초기화반복을요청하지않았다. Backend구현/계약/표적검증·로컬반영/게시구간완료이며Flutter적용/실기기완료는아니다.
+- 격리test-db만중지했고기존로컬API/개발DB는실행유지했다. 이후문서변경은게시SHA/댓글링크/다음담당기록뿐으로업무시험을반복하지않는다.

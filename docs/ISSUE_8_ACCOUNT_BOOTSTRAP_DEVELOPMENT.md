@@ -72,3 +72,5 @@ DB 조회는 자료 종류별 배치이며 캐릭터별 SELECT를 하지 않는�
 본인/타회원·미인증/소유상실/숨김·단건투영동일·기본행미생성·쓰기/외부HTTP0·기본미설정/누락/최대/크기초과·동시소유/활동 변경·주차경계/점유·캐시 선택과 관련 단건 권한을 격리 PostgreSQL로 검증한다. 실행 결과와 게시SHA/브랜치/push/실행8000 반영은 DEV_LOG 및 인계 댓글을 따른다. Flutter 기기에서 같은 계정/설정의 displayReady/weekly·요청 수 비교는 계약 연결 후 별도다. 최초서버수치만으로 체감 개선 완료를 보고하지 않는다.
 
 최종표적/관련회귀 **261PASS/158.21초**, 기존Starlette/AnyIO경고1개. 최대4000대상은10,607,440bytes·20statements·0.902초(격리PG/TestClient). 로컬8000최종이미지·실행OpenAPI전체일치·공개4개200/신규경로비로그인401·DB0016/50표행수전후동일을확인했다. 실제회원인증GET/Flutter연결/기기성능비교는미실행이다.
+
+구현/계약 `8d03e962b48917c4b0f0dec28d285ca993b9de2d` / feat/raid-services push·원격SHA확인완료. [#8 전체146번째 Backend 구현인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6247620588) 후 다음담당은Flutter 연결/관련표적검증·동일조건기기비교다. dev/main은미병합이다.
