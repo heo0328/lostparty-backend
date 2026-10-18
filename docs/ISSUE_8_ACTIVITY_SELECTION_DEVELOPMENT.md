@@ -1,4 +1,19 @@
-# Issue #8 — 활동 저장1700 검증·초기 대표 연결
+# Issue #8 — 수동 활동·대표 선택과 최초 기본 선택 분리
+
+2026-10-17. [115번째 사용자 정책](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6230281148)·[118번째 작업 설계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6230431817)가 아래 과거 수동1700 제한을 대체한다. 현재 작업은feat/raid-services에서 진행한다.
+
+## 현재 동작
+
+- 수동 활동/대표 선택은 현재 소유·등록 범위·canonical UUID·active/confirmed·정상NameClaim으로 판단하며 레벨 하한을 두지 않는다. 레벨 미상이나 잘못된 저장 수치만으로 정상 UUID의 활동 권한을 지우지 않는다. provider 파싱을 느슨하게 바꾸지는 않는다.
+- 1700은 Flutter의 최초unconfigured 기본 선택에 유지한다. 서버 GET/갱신은 자동 활동선택/대표 교체를 하지 않는다. 실제 레이드 입장레벨과 전투력 수집 기본값은 별도 정책이다.
+- 기존 전체설정PUT/대표전용PUT·DTO·CAS/소유/roster revision·멱등·원자성을 유지한다. 전용명령 main/대표의활동집합포함·타회원/소유상실·suspect/retired/claim 차단도 유지한다.
+- settings_out은 레벨만으로 ineligible_character_ids에 넣지 않으며 reconcile은 레벨 하락만으로 needs_reconfiguration을 만들지 않는다. V1 eligible/V2 usable의 lifecycle/claim 의미는 유지한다.
+- 이미 needs_reconfiguration인 설정은 GET으로 덮지 않고 기존 선택/대표/revision을 보존한다. 현재 유효한 선택을 기존 명시 전체설정PUT으로 저장하면 configured가 된다. DB 보정/migration/초기화는 없다.
+- OpenAPI x-game-account-policy.activity_selection의 minimum_item_level은 initial_selection_minimum_item_level로 바꾸고1700이 초기기본선택임을 명시한다. HTTP 경로·DTO와 다른 정책은 보존한다.
+
+구현/계약d33f873 push·로컬8000반영·실행OpenAPI일치/health·DB0011유지, [119번째 인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6230483893)를완료했다. 활동20/직접회귀244PASS와실제Flutter저장대기를구분한다. 구체 검증·게시·서버 반영 결과는 [설계/결과](ISSUE_8_MANUAL_ACTIVITY_POLICY_PLAN.md)와 [DEV_LOG](project/DEV_LOG.md), 해당 구현 인계 댓글이 기준이다. 아래는 당시 구현/검증 이력이며 현재 수동 자격으로 적용하지 않는다.
+
+# 과거 기록 — 활동 저장1700 검증·초기 대표 연결
 
 2026-10-16. [사용자 UX 정정](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209360031)·[최종 정리](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209491349) 및 사용자 진행 지시를 따른다. [Backend 착수/연결 대조](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6209535500)를 게시했다. 현재8000/DB0009/기존자료와 기존관리화면을 유지한다.
 

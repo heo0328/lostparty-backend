@@ -16,15 +16,26 @@ from app.core.errors import register
 from app.core.game_policy import DEFAULT_MIN_ITEM_LEVEL
 from app.member_settings.router import router as settings_router
 from app.lostark_keys.router import router as lostark_keys_router
+from app.raids.router import router as raid_router
+from app.raid_weekly.router import router as raid_weekly_router
+from app.groups.router import router as groups_router
+from app.groups.admission_router import router as group_admissions_router
+from app.ownership_disputes.router import router as ownership_disputes_router
+from app.ownership_disputes.worker import run as run_ownership_worker
+from app.game_accounts.bootstrap_router import router as bootstrap_router
 
 
 @asynccontextmanager
 async def lifespan(app):
     task = asyncio.create_task(run())
+    ownership_task = asyncio.create_task(run_ownership_worker())
     yield
     task.cancel()
+    ownership_task.cancel()
     with suppress(asyncio.CancelledError):
         await task
+    with suppress(asyncio.CancelledError):
+        await ownership_task
 
 
 app = FastAPI(title="LostParty API", docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
@@ -36,6 +47,12 @@ app.include_router(preferences_router)
 app.include_router(presentation_router)
 app.include_router(settings_router)
 app.include_router(lostark_keys_router)
+app.include_router(raid_router)
+app.include_router(raid_weekly_router)
+app.include_router(groups_router)
+app.include_router(group_admissions_router)
+app.include_router(ownership_disputes_router)
+app.include_router(bootstrap_router)
 register(app)
 
 
@@ -59,12 +76,20 @@ def openapi():
                     headers["Cache-Control"] = {"schema": {"type": "string", "const": "no-store"}}
                     if status == "429":
                         headers["Retry-After"] = {"schema": {"type": "integer", "minimum": 1}} if "game-accounts" in operation.get("tags", []) else {"schema": {"type": "integer", "const": 60}}
-                    if status == "409" and set(operation.get("tags", [])) & {"game-accounts", "member-settings", "lostark-keys", "character-profiles"}:
+                    if status == "409" and set(operation.get("tags", [])) & {"game-accounts", "member-settings", "lostark-keys", "character-profiles", "raid-weekly", "groups"}:
                         headers["Retry-After"] = {"description": "REQUEST_IN_PROGRESS only", "schema": {"type": "integer", "const": 2}}
                     if status == "401":
                         headers["WWW-Authenticate"] = {"schema": {"type": "string", "const": "Bearer"}}
     schema.get("components", {}).get("schemas", {}).pop("HTTPValidationError", None)
     schema.get("components", {}).get("schemas", {}).pop("ValidationError", None)
+    schema['x-ownership-dispute-policy'] = {
+        'max_active_per_account': 3, 'equipment_seconds': 600, 'defense_seconds': 86400,
+        'defense': 'same current account/owner revision, explicit usable character selection; success closes the entire cohort',
+        'settlement': 'oldest server sequence first; durable database leases; no provider I/O under game mutation lock; transfer and cohort invalidation are atomic',
+        'authority': 'server-collected equipment receipts and persisted product dispute policy; not provider permanent identity or completeness evidence',
+        'compatibility': 'V1 strict DTO/digests preserved; cross-owner legacy transfer denied; V2 typed proof/dispute restoration',
+        'retention': 'automatic V2 evidence/metadata deletion is not enabled; separate explicit data-deletion approval required',
+    }
     schema["x-auth-policy"] = {"challenge_seconds": 300, "access_seconds": 600,
                               "remember_absolute_seconds": 2592000, "remember_idle_seconds": 604800,
                               "memory_absolute_seconds": 43200, "memory_idle_seconds": 7200,
@@ -82,11 +107,11 @@ def openapi():
         'challenge_seconds': 600, 'representative_cooldown_seconds': 0,
         'first_representative_starts_cooldown': False,
         'activity_selection': {
-            'minimum_item_level': str(DEFAULT_MIN_ITEM_LEVEL),
-            'validation': 'new full-settings selection and representative target require usable canonical ID and finite known item_level >= shared minimum; otherwise 409 CHARACTER_UNUSABLE',
-            'stored': 'no bulk removal or automatic representative replacement; selected below-minimum/unknown IDs appear in ineligible_character_ids',
+            'initial_selection_minimum_item_level': str(DEFAULT_MIN_ITEM_LEVEL),
+            'validation': 'manual full-settings selection and representative target require current owned usable canonical IDs; no item-level floor; initial Flutter default and raid admission levels are separate',
+            'stored': 'no bulk removal or automatic representative replacement; ineligible_character_ids reflects lifecycle/claim eligibility, not item level; level-only drops never trigger needs_reconfiguration; existing state changes only on explicit full-settings save',
             'initial_representative': 'existing explicit full-settings command saves selected UUIDs and representative atomically with CAS; reads/refresh never auto-select; existing representative preserved unless explicitly changed',
-            'identity': 'V1 eligible/V2 usable describe lifecycle/claim; activity selection additionally applies minimum item level',
+            'identity': 'V1 eligible/V2 usable and manual activity eligibility describe lifecycle/claim; item level does not create or revoke manual activity rights',
         },
         'max_registrations': 20, 'max_characters': 200,
         'page_default': 50, 'page_max': 100,
@@ -154,6 +179,7 @@ def openapi():
             'preserve': 'same account/character IDs, owner, verified_at, ownership and roster revisions; no new ownership audit; new active configuration unconfigured with no automatic activity/representative selection; existing personal data retained',
             'duplicate': 'active same-account registration remains 409 REGISTRATION_EXISTS; deleted registration/key/path never revived or reused',
         },
+        'input_name_resolution': 'preview/register/start resolve a unique siblings name using ASCII A-Z case-insensitive input matching only; retain API spelling in new registrations/challenges, Armory requests, receipts and history context; reject ambiguous/missing matches; Armory profile server/name and explicit target/pinned challenge/UUID/claims remain exact; request digests and input cache keys unchanged; no identity merging or stored-data migration',
         'challenge_context': 'pin lookup server/name and roster addresses at start; matched equipment with changed/invalid roster returns ROSTER_EVIDENCE_PENDING; missing old snapshot context or server baseline receipt returns PROVIDER_EVIDENCE_PENDING; live equipment receipts bind target/roster/equipment/time; legacy trusted adapter marker must be boolean True; equality alone never proves ownership/continuity/completeness',
         'live_roster_decrease': 'suspect only; missing/transfer require validated observation criteria',
         'owned_roster_refresh': {

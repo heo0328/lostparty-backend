@@ -232,7 +232,10 @@ def test_schema_contract():
     schema=app.openapi()
     assert {'/health','/v1/auth/google/challenges','/v1/auth/google','/v1/me',
             '/v1/auth/session','/v1/auth/refresh','/v1/auth/logout'} <= set(schema['paths'])
-    assert sum(len(ops) for ops in schema['paths'].values()) == 35
+    # Authentication's contract must not count unrelated feature endpoints.
+    auth_paths={'/health','/v1/auth/google/challenges','/v1/auth/google','/v1/me',
+                '/v1/auth/session','/v1/auth/refresh','/v1/auth/logout'}
+    assert sum(len(schema['paths'][path]) for path in auth_paths) == 7
     assert all('422' not in op['responses'] for path,ops in schema['paths'].items() if path.startswith('/v1') for op in ops.values())
     assert schema['paths']['/v1/me']['get']['security']==[{'HTTPBearer':[]}]
 
@@ -330,6 +333,10 @@ def test_model_migration_consistency():
     from app.game_accounts import models as game_models
     from app.lostark_keys import models as key_models
     from app.member_settings import models as settings_models
+    from app.raid_weekly import models as weekly_models
+    from app.groups import models as group_models
+    from app.groups import admission_models as admission_models
+    from app.member_limits import models as limit_models
     with engine().connect() as connection:
         # Application-owned external tables are absent in isolated test DB.
         assert compare_metadata(MigrationContext.configure(connection),Base.metadata)==[]

@@ -52,7 +52,9 @@ def observed(principal, ticket, obs):
     with session() as db, db.begin():
         authorize(db, principal, write=True)
         event = db.get(VerificationExecution, ticket)
-        context = verification_context.capture(event.lookup_name, obs.roster)
+        name = (verification_context.resolve_input(event.lookup_name, obs.roster)
+                if event.operation == 'start' else event.lookup_name)
+        context = verification_context.capture(name, obs.roster)
         if context is None:
             return
         accounts = set()

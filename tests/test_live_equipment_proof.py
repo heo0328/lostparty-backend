@@ -18,13 +18,15 @@ LIVE_FETCH = observations.fetch
 @pytest.fixture
 def live(world, monkeypatch):
     h, _ = world
-    state = dict(removed=(), malformed=None, profile_server='sample-server', changed=None, calls=[])
+    state = dict(removed=(), malformed=None, profile_server='sample-server', changed=None, calls=[],
+                 canonical='a0', profile_name=None, roster_server='sample-server', extra_rows=[], urls=[])
     monkeypatch.setattr(observations, 'fetch', LIVE_FETCH)
     def get(url, **kwargs):
+        state['urls'].append(url)
         state['calls'].append('siblings' if url.endswith('/siblings') else 'armory')
         if url.endswith('/siblings'):
-            body = [dict(ServerName='sample-server', CharacterName='a0', CharacterClassName='sample-class',
-                         CharacterLevel=60, ItemAvgLevel='1700.00')]
+            body = [dict(ServerName=state['roster_server'], CharacterName=state['canonical'], CharacterClassName='sample-class',
+                         CharacterLevel=60, ItemAvgLevel='1700.00')] + state['extra_rows']
         else:
             gear = [dict(Type=s, Name='sample-'+s, Grade='고대', Tooltip='variable') for s in SLOTS if s not in state['removed']]
             # Live Armory has these non-proof categories alongside the six slots.
@@ -36,7 +38,8 @@ def live(world, monkeypatch):
             if state['malformed'] == 'null': gear = None
             if state['malformed'] == 'duplicate': gear.append(dict(gear[0]))
             if state['malformed'] == 'entry': gear.append(None)
-            body = dict(ArmoryProfile=dict(CharacterName='a0', ServerName=state['profile_server']), ArmoryEquipment=gear)
+            body = dict(ArmoryProfile=dict(CharacterName=state['profile_name'] or state['canonical'],
+                                          ServerName=state['profile_server']), ArmoryEquipment=gear)
         _, response = transport(body=json.dumps(body).encode())
         return response
     monkeypatch.setattr(provider.requests, 'get', get)

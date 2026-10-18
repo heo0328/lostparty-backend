@@ -1,0 +1,222 @@
+{
+  "schema_version": 2,
+  "catalog_version": "2026.08.20",
+  "updated_at": "2026-08-20T00:00:00Z",
+  "raids": [
+    {
+      "raid_id": "kazeros_act4",
+      "official_name": "카제로스 레이드 4막 : 파멸의 성채",
+      "display_name": "4막",
+      "aliases": [
+        "4막"
+      ],
+      "party_size": 8,
+      "party_count": 2,
+      "required_support_count": 2,
+      "max_dealer_count_per_class": 2,
+      "gate_count": 2,
+      "is_active": true,
+      "difficulties": [
+        {
+          "difficulty_id": "normal",
+          "name": "노말",
+          "display_alias": "4막노말",
+          "display_order": 1,
+          "min_item_level": "1700",
+          "clear_gold": 13500,
+          "bound_gold": 13500,
+          "is_active": true
+        },
+        {
+          "difficulty_id": "hard",
+          "name": "하드",
+          "display_alias": "4막하드",
+          "display_order": 2,
+          "min_item_level": "1720",
+          "clear_gold": 38000,
+          "bound_gold": 0,
+          "is_active": true
+        }
+      ],
+      "display_order": 1
+    },
+    {
+      "raid_id": "kazeros_finale",
+      "official_name": "카제로스 레이드 종막 : 최후의 날",
+      "display_name": "종막",
+      "aliases": [
+        "종막"
+      ],
+      "party_size": 8,
+      "party_count": 2,
+      "required_support_count": 2,
+      "max_dealer_count_per_class": 2,
+      "gate_count": 2,
+      "is_active": true,
+      "difficulties": [
+        {
+          "difficulty_id": "normal",
+          "name": "노말",
+          "display_alias": "카제노말",
+          "display_order": 1,
+          "min_item_level": "1710",
+          "clear_gold": 16000,
+          "bound_gold": 16000,
+          "is_active": true
+        },
+        {
+          "difficulty_id": "hard",
+          "name": "하드",
+          "display_alias": "카제하드",
+          "display_order": 2,
+          "min_item_level": "1730",
+          "clear_gold": 48000,
+          "bound_gold": 0,
+          "is_active": true
+        }
+      ],
+      "display_order": 2
+    },
+    {
+      "raid_id": "serca",
+      "official_name": "고통의 마녀, 세르카",
+      "display_name": "세르카",
+      "aliases": [
+        "세르카"
+      ],
+      "party_size": 4,
+      "party_count": 1,
+      "required_support_count": 1,
+      "max_dealer_count_per_class": 1,
+      "gate_count": 2,
+      "is_active": true,
+      "difficulties": [
+        {
+          "difficulty_id": "normal",
+          "name": "노말",
+          "display_alias": "노르카",
+          "display_order": 1,
+          "min_item_level": "1710",
+          "clear_gold": 16000,
+          "bound_gold": 16000,
+          "is_active": true
+        },
+        {
+          "difficulty_id": "hard",
+          "name": "하드",
+          "display_alias": "하르카",
+          "display_order": 2,
+          "min_item_level": "1730",
+          "clear_gold": 44000,
+          "bound_gold": 0,
+          "is_active": true
+        },
+        {
+          "difficulty_id": "nightmare",
+          "name": "나이트메어",
+          "display_alias": "나르카",
+          "display_order": 3,
+          "min_item_level": "1740",
+          "clear_gold": 54000,
+          "bound_gold": 0,
+          "is_active": true
+        }
+      ],
+      "display_order": 3
+    },
+    {
+      "raid_id": "horizon_cathedral",
+      "official_name": "어비스던전: 지평의 성당",
+      "display_name": "지평의 성당",
+      "aliases": [
+        "성당"
+      ],
+      "party_size": 4,
+      "party_count": 1,
+      "required_support_count": 1,
+      "max_dealer_count_per_class": 1,
+      "gate_count": 2,
+      "is_active": true,
+      "difficulties": [
+        {
+          "difficulty_id": "stage1",
+          "name": "1단계",
+          "display_alias": "지평1단",
+          "display_order": 1,
+          "min_item_level": "1700",
+          "clear_gold": 0,
+          "bound_gold": 30000,
+          "is_active": true
+        },
+        {
+          "difficulty_id": "stage2",
+          "name": "2단계",
+          "display_alias": "지평2단",
+          "display_order": 2,
+          "min_item_level": "1720",
+          "clear_gold": 0,
+          "bound_gold": 40000,
+          "is_active": true
+        },
+        {
+          "difficulty_id": "stage3",
+          "name": "3단계",
+          "display_alias": "지평3단",
+          "display_order": 3,
+          "min_item_level": "1750",
+          "clear_gold": 0,
+          "bound_gold": 50000,
+          "is_active": true
+        }
+      ],
+      "display_order": 4
+    },
+    {
+      "raid_id": "belgardin",
+      "official_name": "죽음의 계율자, 벨가르딘",
+      "display_name": "벨가르딘",
+      "aliases": [
+        "벨가"
+      ],
+      "party_size": 8,
+      "party_count": 2,
+      "required_support_count": 2,
+      "max_dealer_count_per_class": 2,
+      "gate_count": 2,
+      "is_active": true,
+      "difficulties": [
+        {
+          "difficulty_id": "normal",
+          "name": "노말",
+          "display_alias": "노르딘",
+          "display_order": 1,
+          "min_item_level": "1750",
+          "clear_gold": 50000,
+          "bound_gold": 0,
+          "is_active": true
+        },
+        {
+          "difficulty_id": "hard",
+          "name": "하드",
+          "display_alias": "하르딘",
+          "display_order": 2,
+          "min_item_level": "1770",
+          "clear_gold": 62000,
+          "bound_gold": 0,
+          "is_active": true
+        },
+        {
+          "difficulty_id": "nightmare",
+          "name": "나이트메어",
+          "display_alias": "나르딘",
+          "display_order": 3,
+          "min_item_level": "1780",
+          "clear_gold": 75000,
+          "bound_gold": 0,
+          "is_active": true
+        }
+      ],
+      "display_order": 5
+    }
+  ]
+}

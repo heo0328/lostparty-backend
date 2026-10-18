@@ -43,13 +43,18 @@ def get(principal, cid):
         db.connection(execution_options={'isolation_level': 'REPEATABLE READ'})
         uid = authorize(db, principal)
         account, character = owned_character(db, uid, cid)
-        roles = {role: stored(db.get(CharacterRoleSummary, (uid, cid, account.ownership_revision, role)))
-                 for role in ('dealer', 'support')}
-        return dict(character_id=cid, game_account_id=account.id,
-                    ownership_revision=account.ownership_revision,
-                    lifecycle_revision=character.lifecycle_revision, lifecycle_state=character.lifecycle_state,
-                    **roles, preferences=preferences(db.get(CharacterPersonalPreferences,
-                                                          (uid, cid, account.ownership_revision))))
+        return output(db, uid, account, character)
+
+
+def output(db, uid, account, character):
+    cid = character.id
+    roles = {role: stored(db.get(CharacterRoleSummary, (uid, cid, account.ownership_revision, role)))
+             for role in ('dealer', 'support')}
+    return dict(character_id=cid, game_account_id=account.id,
+                ownership_revision=account.ownership_revision,
+                lifecycle_revision=character.lifecycle_revision, lifecycle_state=character.lifecycle_state,
+                **roles, preferences=preferences(db.get(CharacterPersonalPreferences,
+                                                      (uid, cid, account.ownership_revision))))
 
 
 def put(principal, cid, role, key, data):

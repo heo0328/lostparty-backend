@@ -150,6 +150,10 @@ def settings_out(db, uid, r):
     chosen = list(db.scalars(select(Activity.character_id).where(Activity.settings_id == c.id).order_by(Activity.character_id))) if c else []
     eligible = set(db.scalars(select(Character.id).where(Character.account_id == a.id, Character.status == 'confirmed'))) if c else set()
     eligible = {i for i in eligible if activity_policy.eligible(db, db.get(Character, i))}
+    return settings_value(a, c, chosen, eligible)
+
+
+def settings_value(a, c, chosen, eligible):
     return dict(configuration_state=c.state if c else 'unconfigured', activity_character_ids=chosen,
                 representative_character_id=c.representative_id if c else None, settings_version=c.version if c else 1,
                 ownership_revision=a.ownership_revision if a else None, next_change_at=None,
@@ -194,6 +198,9 @@ def existing_registration(db, uid, rows):
 
 
 def create_registration(db, uid, name, label, main, obs):
+    name = verification_context.resolve_input(name, obs.roster)
+    if name is None:
+        fail('UPSTREAM_INVALID_RESPONSE',503)
     if existing_registration(db, uid, obs.roster):
         fail('REGISTRATION_EXISTS')
     rows = list(db.scalars(select(Registration.id).where(Registration.user_id == uid, Registration.deleted_at.is_(None))))
@@ -574,6 +581,7 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
         except EquipmentIncomplete:
             fail('EQUIPMENT_INCOMPLETE',400)
         lookup_name=verification_targets.selected(db,uid,r,data) if data['source']=='registration' else data['character_name']
+        lookup_name=verification_context.resolve_input(lookup_name,obs.roster)
         proof_context=verification_context.capture(lookup_name,obs.roster)
         if proof_context is None:
             fail('UPSTREAM_INVALID_RESPONSE',503)
@@ -672,15 +680,11 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
         db.add(a); db.flush()
     previous=a.owner_id if candidate else None
     if candidate and previous!=uid:
-        a.owner_id=uid; a.ownership_revision+=1
-        for old in db.scalars(select(Configuration).where(Configuration.account_id==a.id,Configuration.ended_at.is_(None))):
-            old.ended_at=current
+        # Only the persisted V2 dispute transition can change an existing owner.
+        fail('ACCOUNT_BINDING_EVIDENCE_PENDING')
     duplicate=db.scalar(select(Registration).where(Registration.user_id==uid,Registration.account_id==a.id,Registration.deleted_at.is_(None),Registration.id!=r.id))
     if duplicate:
         fail('REGISTRATION_EXISTS')
-    if candidate and previous!=uid:
-        from dataclasses import replace
-        obs=replace(obs,binding=lifecycle.evidence(db,a,continuity_ids=obs.binding.continuity_ids,complete=obs.binding.complete))
     reconcile(db,a,obs,fresh=candidate is None,owned=mode=='owned_registration')
     a.verified_at=current
     r.account_id,r.preview,r.fetched_at=a.id,obs.roster,obs.fetched_at

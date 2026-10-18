@@ -4,13 +4,13 @@
 
 Flutter 앱은 별도의 Windows 개발 환경과 GitHub 저장소에서 개발합니다. 이 저장소는 백엔드 구현과 OpenAPI 계약을 관리하며, 양쪽 저장소는 GitHub Issues와 API 계약을 기준으로 협업합니다.
 
-현재는 `/health`와 Google 인증·회원 조회·세션 갱신·로그아웃 API가 구현되어 있습니다. 실제 Google·Flutter 연동 검증은 후속 단계이며, AWS Lightsail의 Linux 서버에 배포할 예정입니다. 실행·검증 방법은 [인증 개발 안내](docs/AUTH_DEVELOPMENT.md)에 있습니다.
+현재 Google 인증·회원/원정대 등록과 갱신·장비 소유 인증·캐릭터 활동/대표/개인 설정, 카탈로그·서버 주차·개인 주간 원장, 그룹 G1/G2와 회원 한도, 소유권 분쟁 V2 및 첫 화면 일괄 저장 조회를 구현했습니다. 기존 로컬 Docker API8000/DB0016으로 개발하며, 기능별 Backend 완료·Flutter 적용·실기기 확인 범위는 [기능 지도](docs/project/AI_CONTEXT.md)를 따릅니다. 실제 로그인/최초 장비 인증과 일괄 조회의 사용자 기기 로그를 확인했으며 모든 기능의 실기기 인수를 뜻하지는 않습니다. AWS Lightsail 운영 배포는 후속입니다.
 
 ## Flutter와 API 계약 협업
 
 작업 원칙은 [AGENTS.md](AGENTS.md), 상세 흐름은 [개발 작업 규칙](docs/DEVELOPMENT_WORKFLOW.md)과 [API 협업 규칙](docs/API_COLLABORATION.md)에 정리합니다.
 
-OpenAPI 계약의 원본은 이 저장소의 `openapi/openapi.yaml`입니다. 현재 계약은 `/health`와 Issue #2의 6개 인증 API를 정의합니다.
+OpenAPI 계약의 원본은 이 저장소의 `openapi/openapi.yaml`입니다. 현재 계약은 인증·회원/원정대·캐릭터·주간 원장·그룹·소유권 분쟁·일괄 조회 API를 정의합니다. 일괄 조회 범위·읽기 스냅샷/크기 제한은 [개발 안내](docs/ISSUE_8_ACCOUNT_BOOTSTRAP_DEVELOPMENT.md)에 있습니다.
 
 API 추가·변경은 GitHub Issues에서 요청·응답과 호환성 영향을 합의하고 관련 Flutter Issue/PR을 연결합니다. Backend 구현과 계약은 함께 변경하며, Docker API를 갱신한 뒤 `python3 scripts/check_openapi.py`로 일치 여부를 검증합니다.
 

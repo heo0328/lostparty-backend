@@ -23,10 +23,19 @@ def setup_database():
     existing_id=uuid.uuid4()
     with engine().begin() as c:
         c.execute(text("INSERT INTO users (id,status,created_at,updated_at,last_login_at) VALUES (:id,'active',now(),now(),now())"),{'id':existing_id})
-        before=c.execute(text('SELECT * FROM users WHERE id=:id'),{'id':existing_id}).one()
+        c.execute(text("INSERT INTO auth_transactions (id,nonce_digest,secret_digest,expires_at) VALUES (:id,'legacy-test-nonce','legacy-test-secret',now()+interval '10 minutes')"), {'id':existing_id})
+        before=dict(c.execute(text('SELECT * FROM users WHERE id=:id'),{'id':existing_id}).mappings().one())
     subprocess.run(['alembic','upgrade','head'], check=True, capture_output=True)
     with engine().connect() as c:
-        assert c.execute(text('SELECT * FROM users WHERE id=:id'),{'id':existing_id}).one()==before
+        after=c.execute(text('SELECT * FROM users WHERE id=:id'),{'id':existing_id}).mappings().one()
+        assert {k:after[k] for k in before}==before
+        assert after['record_created_at']==before.get('record_created_at',before['created_at'])
+        assert after['record_updated_at']==before.get('record_updated_at',before['updated_at'])
+        legacy=c.execute(text('SELECT record_created_at,record_updated_at FROM auth_transactions WHERE id=:id'),{'id':existing_id}).one()
+        if 'record_created_at' not in before:
+            assert legacy==(None,None)
+        else:
+            assert legacy[0] is not None and legacy[1] is not None
 
 
 @pytest.fixture(autouse=True)

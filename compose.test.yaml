@@ -21,6 +21,7 @@ services:
       POSTGRES_DB: lostparty_test
       APP_DB_PASSWORD: test-only-password
       AUTH_SECRET_DIR: /tmp/auth-test-keys
+      OWNERSHIP_WORKER_ENABLED: "0"
     depends_on:
       test-db:
         condition: service_healthy
