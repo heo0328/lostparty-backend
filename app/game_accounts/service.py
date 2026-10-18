@@ -676,15 +676,11 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
         db.add(a); db.flush()
     previous=a.owner_id if candidate else None
     if candidate and previous!=uid:
-        a.owner_id=uid; a.ownership_revision+=1
-        for old in db.scalars(select(Configuration).where(Configuration.account_id==a.id,Configuration.ended_at.is_(None))):
-            old.ended_at=current
+        # Only the persisted V2 dispute transition can change an existing owner.
+        fail('ACCOUNT_BINDING_EVIDENCE_PENDING')
     duplicate=db.scalar(select(Registration).where(Registration.user_id==uid,Registration.account_id==a.id,Registration.deleted_at.is_(None),Registration.id!=r.id))
     if duplicate:
         fail('REGISTRATION_EXISTS')
-    if candidate and previous!=uid:
-        from dataclasses import replace
-        obs=replace(obs,binding=lifecycle.evidence(db,a,continuity_ids=obs.binding.continuity_ids,complete=obs.binding.complete))
     reconcile(db,a,obs,fresh=candidate is None,owned=mode=='owned_registration')
     a.verified_at=current
     r.account_id,r.preview,r.fetched_at=a.id,obs.roster,obs.fetched_at

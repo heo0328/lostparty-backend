@@ -289,42 +289,33 @@ def another_user(login,monkeypatch,client):
     return headers
 
 
-def test_transfer_is_atomic_and_old_owner_cannot_save(client,world,login,monkeypatch):
+def test_legacy_binding_cannot_bypass_v2_dispute_transfer(client,world,login,monkeypatch):
     h,state=world;r=register(client,h);verify(client,h,state,r['registration_id'])
     p=page(client,h,r['registration_id'])
     assert change(client,h,'put',BASE+'/'+r['registration_id']+'/character-settings',save_data(p)).status_code==200
-    old=page(client,h,r['registration_id']);old_save=save_data(old)
+    before=page(client,h,r['registration_id'])
     other=another_user(login,monkeypatch,client)
-    # No information about someone else's registration or challenge.
     assert client.get(BASE+'/'+r['registration_id']+'/characters',headers=other).status_code==404
-    transferred=verify(client,other,state)
-    new=page(client,other,transferred['registration_id'])
-    assert new['settings']['activity_character_ids']==[]
-    assert new['settings']['configuration_state']=='unconfigured'
-    assert new['settings']['ownership_revision']==old['settings']['ownership_revision']+1
-    lost=page(client,h,r['registration_id'])
-    assert lost['ownership_status']=='ownership_lost'
-    assert all(i['character_id'] is None for i in lost['characters']['items'])
-    assert lost['settings']['activity_character_ids']==[]
-    assert change(client,h,'put',BASE+'/'+r['registration_id']+'/character-settings',old_save).status_code==403
+    v=start(client,other);state['removed']=v['required_slots']
+    response=change(client,other,'post',VERIFY+'/'+v['challenge_id']+'/confirm',{})
+    assert response.status_code==409 and response.json()['error']['code']=='ACCOUNT_BINDING_EVIDENCE_PENDING'
+    after=page(client,h,r['registration_id'])
+    assert after['ownership_status']=='owned' and after['settings']==before['settings']
     with session() as db:
+        assert db.scalar(select(func.count()).select_from(Audit))==1
         assert db.scalar(select(func.count()).select_from(Account))==1
-        assert db.scalar(select(func.count()).select_from(Character))==3
-        assert db.scalar(select(func.count()).select_from(Audit))==2
 
 
-def test_simultaneous_challenges_only_one_revision_wins(client,world,login,monkeypatch):
+def test_concurrent_legacy_bindings_never_bypass_dispute_policy(client,world,login,monkeypatch):
     h,state=world;r=register(client,h);verify(client,h,state,r['registration_id'])
     other=another_user(login,monkeypatch,client)
-    # Make required slots deterministic for this transaction concurrency test.
     monkeypatch.setattr(service,'required_slots',lambda _:('무기',))
-    one=start(client,other);two=start(client,other)
-    state['removed']=('무기',)
+    one=start(client,other);two=start(client,other);state['removed']=('무기',)
     with ThreadPoolExecutor(2) as pool:
         results=list(pool.map(lambda v:change(client,other,'post',VERIFY+'/'+v['challenge_id']+'/confirm',{}),(one,two)))
-    assert sorted(r.status_code for r in results)==[200,409]
+    assert [r.status_code for r in results]==[409,409]
     with session() as db:
-        assert db.scalar(select(func.count()).select_from(Audit))==2
+        assert db.scalar(select(func.count()).select_from(Audit))==1
         assert db.scalar(select(func.count()).select_from(Account))==1
 
 

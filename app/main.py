@@ -20,15 +20,21 @@ from app.raids.router import router as raid_router
 from app.raid_weekly.router import router as raid_weekly_router
 from app.groups.router import router as groups_router
 from app.groups.admission_router import router as group_admissions_router
+from app.ownership_disputes.router import router as ownership_disputes_router
+from app.ownership_disputes.worker import run as run_ownership_worker
 
 
 @asynccontextmanager
 async def lifespan(app):
     task = asyncio.create_task(run())
+    ownership_task = asyncio.create_task(run_ownership_worker())
     yield
     task.cancel()
+    ownership_task.cancel()
     with suppress(asyncio.CancelledError):
         await task
+    with suppress(asyncio.CancelledError):
+        await ownership_task
 
 
 app = FastAPI(title="LostParty API", docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
@@ -44,6 +50,7 @@ app.include_router(raid_router)
 app.include_router(raid_weekly_router)
 app.include_router(groups_router)
 app.include_router(group_admissions_router)
+app.include_router(ownership_disputes_router)
 register(app)
 
 
@@ -73,6 +80,14 @@ def openapi():
                         headers["WWW-Authenticate"] = {"schema": {"type": "string", "const": "Bearer"}}
     schema.get("components", {}).get("schemas", {}).pop("HTTPValidationError", None)
     schema.get("components", {}).get("schemas", {}).pop("ValidationError", None)
+    schema['x-ownership-dispute-policy'] = {
+        'max_active_per_account': 3, 'equipment_seconds': 600, 'defense_seconds': 86400,
+        'defense': 'same current account/owner revision, explicit usable character selection; success closes the entire cohort',
+        'settlement': 'oldest server sequence first; durable database leases; no provider I/O under game mutation lock; transfer and cohort invalidation are atomic',
+        'authority': 'server-collected equipment receipts and persisted product dispute policy; not provider permanent identity or completeness evidence',
+        'compatibility': 'V1 strict DTO/digests preserved; cross-owner legacy transfer denied; V2 typed proof/dispute restoration',
+        'retention': 'automatic V2 evidence/metadata deletion is not enabled; separate explicit data-deletion approval required',
+    }
     schema["x-auth-policy"] = {"challenge_seconds": 300, "access_seconds": 600,
                               "remember_absolute_seconds": 2592000, "remember_idle_seconds": 604800,
                               "memory_absolute_seconds": 43200, "memory_idle_seconds": 7200,

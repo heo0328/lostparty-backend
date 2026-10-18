@@ -232,7 +232,10 @@ def test_schema_contract():
     schema=app.openapi()
     assert {'/health','/v1/auth/google/challenges','/v1/auth/google','/v1/me',
             '/v1/auth/session','/v1/auth/refresh','/v1/auth/logout'} <= set(schema['paths'])
-    assert sum(len(ops) for ops in schema['paths'].values()) == 35
+    # Authentication's contract must not count unrelated feature endpoints.
+    auth_paths={'/health','/v1/auth/google/challenges','/v1/auth/google','/v1/me',
+                '/v1/auth/session','/v1/auth/refresh','/v1/auth/logout'}
+    assert sum(len(schema['paths'][path]) for path in auth_paths) == 7
     assert all('422' not in op['responses'] for path,ops in schema['paths'].items() if path.startswith('/v1') for op in ops.values())
     assert schema['paths']['/v1/me']['get']['security']==[{'HTTPBearer':[]}]
 

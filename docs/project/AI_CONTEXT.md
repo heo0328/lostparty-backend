@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-2026-10-18. 다음실행/대기는 [NEXT_WORK](NEXT_WORK.md), 완료·검증·장애/Git이력은 [DEV_LOG](DEV_LOG.md). 기존로컬Docker/포트8000·DB0014·자료/키로개발을이어간다. 작업브랜치feat/raid-services,dev/main미병합. 이전#8구간은PR#9/dev-main860c84a로통합했다. 최신G2인계SHA/댓글은DEV_LOG기준이다.
+2026-10-18. 다음실행/대기는 [NEXT_WORK](NEXT_WORK.md), 완료·검증·장애/Git이력은 [DEV_LOG](DEV_LOG.md). 기존로컬Docker/포트8000·DB0016·자료/키로개발을이어간다. 작업브랜치feat/raid-services,dev/main미병합. 이전#8구간은PR#9/dev-main860c84a로통합했다. 최신G2인계SHA/댓글은DEV_LOG기준이다.
 
 | 영역 | 현재 상태·기준 |
 |---|---|
@@ -9,7 +9,9 @@
 | 원정대/회원 #3~#7 | 현재회원등록/복원·목록·전투력/회원설정/암호화개인키/본인키복원구현. [계정](../ISSUE_3_DEVELOPMENT.md), [전투력](../ISSUE_5_DEVELOPMENT.md), [회원설정](../ISSUE_6_MEMBER_SETTINGS.md), [키](../ISSUE_7_DEVELOPMENT.md) |
 | #8 대표/활동·표시 | 현재대표/활동선택·개인역할요약/표시서버저장구현. 수동레벨하한없음/초기기본선택1700. [대표계약](../ISSUE_8_REPRESENTATIVE_CONTRACT_DRAFT.md), [수동정책](../ISSUE_8_MANUAL_ACTIVITY_POLICY_PLAN.md), [개인표시](../ISSUE_8_PERSONAL_PRESENTATION_DEVELOPMENT.md). 신규/첫1700자동추가·수동제외영속정책은122번째후속/미구현 |
 | #8 소유/생명주기 | 현재/이력·claim·suspect/내부퇴역·실제목록갱신·서버장비인증/대상·현재본인ALREADY차단/동일회원재등록연결구현. [L1](../ISSUE_8_LIFECYCLE_DEVELOPMENT.md), [목록갱신](../ISSUE_8_OWNED_ROSTER_REFRESH_DEVELOPMENT.md), [장비](../ISSUE_8_LIVE_EQUIPMENT_PROOF_DEVELOPMENT.md), [현재소유정책](../ISSUE_8_CURRENT_OWNER_POLICY_DEVELOPMENT.md). 타회원챌린지허용과소유이전완료는별개 |
-| #8 영어 검색 입력 | 131번째 Flutter 요청 대응 구현/로컬반영·관련241PASS. ASCII 대소문자 입력만 유일한 API 원문으로 해석. 신규 등록/챌린지·Armory/receipt 원문 사용, exact 고정 대상/서버/UUID/claim·입력 cache/digest 유지. [장비 안내](../ISSUE_8_LIVE_EQUIPMENT_PROOF_DEVELOPMENT.md), [#8 전체132번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6236684349)/28ea022 push. Flutter 기기 확인 별도 |
+| #8 영어 검색 입력 | 131번째 Flutter 요청 대응 구현/로컬반영·관련241PASS. ASCII 대소문자 입력만 유일한 API 원문으로 해석. 신규 등록/챌린지·Armory/receipt 원문 사용, exact 고정 대상/서버/UUID/claim·입력 cache/digest 유지. [장비 안내](../ISSUE_8_LIVE_EQUIPMENT_PROOF_DEVELOPMENT.md), [#8 전체132번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6236684349)/28ea022 push. 134번째Flutter가사용자혼합검색성공확인(검색범위완료) |
+| #8 24시간 소유권 챌린지 | [V2개발](../ISSUE_8_OWNERSHIP_DISPUTE_DEVELOPMENT.md)·[기술합의](../ISSUE_8_OWNERSHIP_DISPUTE_V2_CONTRACT.md). 11동작/발견·복원/선택방어/최대3건·일괄방어·선성립worker/원자이전Backend구현·관련194/333/최종21PASS(중복). 최종이미지/DB0016로컬반영,전체844PASS/기존검사수정후관련58PASS·실행계약일치,push·Issue인계준비. [142번째Flutter](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6245421798)계약수용·실연결/UI후속. 실제파티active영향adapter부재는review_required. V2자동정리미구현 |
+| DB 공통 날짜 | [기준](../DATABASE_RECORD_TIMESTAMPS.md). 48개 업무표 record_created_at/record_updated_at·DB trigger·알려진과거만복사/미상NULL·기존업무일자/API불변. 0016/기존로컬반영·관련58PASS·49표행수보존(지문비교한계DEV_LOG). 미래기간별정리기반이며삭제/보관정책미추가 |
 | 실제확인 | #8 98번째사용자1회인증성공/서버대조,108번째새기기목록/인증표시정상. #11 manual true실제반영성공. 전체캐릭터자동복원/다른기기완료·수정UI/분쟁인수·모집실기기와구분 |
 | #10 카탈로그/주차 | 공개GET2개·5raid/13difficulty/2026.08.20초기자료·KST수요일06시cycle. [안내](../ISSUE_10_RAID_CATALOG_DEVELOPMENT.md). Backend/로컬완료,Flutter소비보고·실제최신게임패치검증과별개 |
 | #11 주간원장 | 본인최대50캐릭터배치GET/현재주차manual PUT·난이도공유원장/원자명령·점유가드구현. [안내](../ISSUE_11_RAID_WEEKLY_DEVELOPMENT.md). 실제파티/점유중영향확인실행미연결. i는별도현재방membership이며기존완료/점유제약유지 |
@@ -18,7 +20,7 @@
 | #12 그룹 G2 | 초대/신청/수락·승인/거절·취소/차단·해제/코드20동작구현·관련190PASS/77.70초·실행OpenAPI일치·0014/기존로컬반영. [계약](../ISSUE_12_GROUP_G2_SPEC.md), [개발](../ISSUE_12_GROUP_G2_DEVELOPMENT.md). 일반멤버초대·권한코드조회/복사·공개OFF숨김만·10분재생성·이전코드폐기. 실제회원쓰기/Flutter/실기기는미확인. G3는후속 |
 | #13 방/통계 | 실제room/회차/신청·확정참가/주간연결미구현. [통계선행제안](../ISSUE_13_WEEKLY_STATISTICS_DRAFT.md)/8번째Backend,Flutter귀속/조회세부검토후원천→마감/집계. 개인수동체크/현재한도와통계는분리 |
 | Flutter현재 | #12 13번째:시작화면뒤앱수명로그인/캐시/원정대·상세1회갱신우선,G1/G2연결은별도후속. #8 126번째실제로그화면12.936초/HTTP0캐시5.120초,개선후보확인·새Backend요청없음. 진단113/최신전체1628PASS보고와실제개선완료를구분 |
-| 별도/보존 | 자동퇴역·분쟁/소유이전/방어·모든명령영속복구·WebSocket/운영배포미완료. 기존개발자료/키/flag유지·베타직전초기화별도지시. Firebase이관/삭제·새8001/백업복원이관·기본재인수없음 |
+| 별도/보존 | 자동퇴역·모든명령영속복구·WebSocket/운영배포미완료. 기존개발자료/키/flag유지·베타직전초기화별도지시. Firebase이관/삭제·새8001/백업복원이관·기본재인수없음 |
 
 Backend완료·계약인계·Flutter적용·실기기·운영완료는서로별개다. 과거문서의당시미구현/브랜치/DB상태는현재기능상태로해석하지않는다.
 

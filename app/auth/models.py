@@ -1,11 +1,17 @@
 import uuid
-from sqlalchemy import String, Integer, Boolean, DateTime, ForeignKey, LargeBinary, UniqueConstraint, CheckConstraint
+from sqlalchemy import String, Integer, Boolean, DateTime, ForeignKey, LargeBinary, UniqueConstraint, CheckConstraint, func, FetchedValue
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import DeclarativeBase, mapped_column
 
 
 class Base(DeclarativeBase):
-    pass
+    # Storage metadata, separate from domain/API timestamps. NULL only for
+    # legacy dates that were never recorded. PostgreSQL enforces update timing.
+    record_created_at = mapped_column(DateTime(timezone=True), nullable=True,
+                                     server_default=func.clock_timestamp())
+    record_updated_at = mapped_column(DateTime(timezone=True), nullable=True,
+                                     server_default=func.clock_timestamp(),
+                                     server_onupdate=FetchedValue())
 
 
 def pk():
