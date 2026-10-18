@@ -22,6 +22,7 @@ from app.groups.router import router as groups_router
 from app.groups.admission_router import router as group_admissions_router
 from app.ownership_disputes.router import router as ownership_disputes_router
 from app.ownership_disputes.worker import run as run_ownership_worker
+from app.game_accounts.bootstrap_router import router as bootstrap_router
 
 
 @asynccontextmanager
@@ -51,6 +52,7 @@ app.include_router(raid_weekly_router)
 app.include_router(groups_router)
 app.include_router(group_admissions_router)
 app.include_router(ownership_disputes_router)
+app.include_router(bootstrap_router)
 register(app)
 
 

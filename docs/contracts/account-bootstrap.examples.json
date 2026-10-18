@@ -1,0 +1,246 @@
+{
+  "empty": {
+    "server_now": "2026-10-18T08:00:00Z",
+    "complete": true,
+    "registrations": [],
+    "weekly_states": {
+      "current_cycle": {
+        "server_time": "2026-10-18T08:00:00Z",
+        "cycle_key": "2026-10-14",
+        "starts_at": "2026-10-13T21:00:00Z",
+        "ends_at": "2026-10-20T21:00:00Z",
+        "timezone": "Asia/Seoul"
+      },
+      "cycle_key": "2026-10-14",
+      "catalog_version": "2026.08.20",
+      "entries": []
+    }
+  },
+  "owned_activity_defaults": {
+    "server_now": "2026-10-18T08:00:00Z",
+    "complete": true,
+    "registrations": [
+      {
+        "registration": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "label": "",
+          "is_main": true,
+          "version": 2,
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "verification_status": "verified",
+          "ownership_status": "owned",
+          "ownership_revision": 1,
+          "roster_revision": 1,
+          "settings": {
+            "configuration_state": "configured",
+            "activity_character_ids": [
+              "00000000-0000-4000-8000-000000000003"
+            ],
+            "representative_character_id": "00000000-0000-4000-8000-000000000003",
+            "settings_version": 2,
+            "ownership_revision": 1,
+            "next_change_at": null,
+            "selection_complete": true,
+            "ineligible_character_ids": []
+          },
+          "representative_summary": {
+            "server_name": "예시서버",
+            "character_name": "예시캐릭터",
+            "class_name": "예시직업",
+            "character_level": 60,
+            "item_level": "1700",
+            "combat_power": null
+          },
+          "character_count": 1,
+          "server_fetched_at": "2026-10-18T08:00:00Z"
+        },
+        "characters": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "is_main": true,
+          "registration_version": 2,
+          "ownership_status": "owned",
+          "ownership_revision": 1,
+          "roster_revision": 1,
+          "settings": {
+            "configuration_state": "configured",
+            "activity_character_ids": [
+              "00000000-0000-4000-8000-000000000003"
+            ],
+            "representative_character_id": "00000000-0000-4000-8000-000000000003",
+            "settings_version": 2,
+            "ownership_revision": 1,
+            "next_change_at": null,
+            "selection_complete": true,
+            "ineligible_character_ids": []
+          },
+          "items": [
+            {
+              "server_name": "예시서버",
+              "character_name": "예시캐릭터",
+              "class_name": "예시직업",
+              "character_level": 60,
+              "item_level": "1700",
+              "combat_power": null,
+              "character_id": "00000000-0000-4000-8000-000000000003",
+              "roster_status": "confirmed",
+              "summary_fetched_at": "2026-10-18T08:00:00Z",
+              "last_confirmed_at": "2026-10-18T08:00:00Z",
+              "requires_refresh": false,
+              "eligible": true,
+              "power_stale": true,
+              "power_fetched_at": null,
+              "power_checked_at": null,
+              "power_status": "unknown",
+              "power_reason": null,
+              "lifecycle_state": "active",
+              "lifecycle_revision": 1,
+              "usable": true,
+              "blocked_reason": null
+            }
+          ],
+          "next_cursor": null,
+          "server_fetched_at": "2026-10-18T08:00:00Z"
+        },
+        "representative": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "is_main": true,
+          "registration_version": 2,
+          "settings_version": 2,
+          "ownership_revision": 1,
+          "roster_revision": 1,
+          "representative_character_id": "00000000-0000-4000-8000-000000000003",
+          "configuration_state": "configured",
+          "next_change_at": null
+        },
+        "presentation": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 2,
+          "ownership_revision": 1,
+          "version": 1,
+          "visible_count": 6,
+          "saved_at": null
+        },
+        "personal_profiles": [
+          {
+            "character_id": "00000000-0000-4000-8000-000000000003",
+            "game_account_id": "00000000-0000-4000-8000-000000000002",
+            "ownership_revision": 1,
+            "lifecycle_revision": 1,
+            "lifecycle_state": "active",
+            "dealer": {
+              "version": 1,
+              "summary": null,
+              "saved_at": null
+            },
+            "support": {
+              "version": 1,
+              "summary": null,
+              "saved_at": null
+            },
+            "preferences": {
+              "version": 1,
+              "preferred_role": null,
+              "visible": true,
+              "display_order": null,
+              "saved_at": null
+            }
+          }
+        ],
+        "unavailable_characters": []
+      }
+    ],
+    "weekly_states": {
+      "current_cycle": {
+        "server_time": "2026-10-18T08:00:00Z",
+        "cycle_key": "2026-10-14",
+        "starts_at": "2026-10-13T21:00:00Z",
+        "ends_at": "2026-10-20T21:00:00Z",
+        "timezone": "Asia/Seoul"
+      },
+      "cycle_key": "2026-10-14",
+      "catalog_version": "2026.08.20",
+      "entries": [
+        {
+          "character_id": "00000000-0000-4000-8000-000000000003",
+          "raid_id": "kazeros_act4",
+          "cycle_key": "2026-10-14",
+          "revision": 1,
+          "ownership_revision": 1,
+          "lifecycle_revision": 1,
+          "state": "incomplete",
+          "completion_sources": [],
+          "participation": null,
+          "can_mark_completed": true,
+          "can_clear_manual_completion": false,
+          "mark_blocked_reason": null
+        },
+        {
+          "character_id": "00000000-0000-4000-8000-000000000003",
+          "raid_id": "kazeros_finale",
+          "cycle_key": "2026-10-14",
+          "revision": 1,
+          "ownership_revision": 1,
+          "lifecycle_revision": 1,
+          "state": "incomplete",
+          "completion_sources": [],
+          "participation": null,
+          "can_mark_completed": true,
+          "can_clear_manual_completion": false,
+          "mark_blocked_reason": null
+        },
+        {
+          "character_id": "00000000-0000-4000-8000-000000000003",
+          "raid_id": "serca",
+          "cycle_key": "2026-10-14",
+          "revision": 1,
+          "ownership_revision": 1,
+          "lifecycle_revision": 1,
+          "state": "incomplete",
+          "completion_sources": [],
+          "participation": null,
+          "can_mark_completed": true,
+          "can_clear_manual_completion": false,
+          "mark_blocked_reason": null
+        },
+        {
+          "character_id": "00000000-0000-4000-8000-000000000003",
+          "raid_id": "horizon_cathedral",
+          "cycle_key": "2026-10-14",
+          "revision": 1,
+          "ownership_revision": 1,
+          "lifecycle_revision": 1,
+          "state": "incomplete",
+          "completion_sources": [],
+          "participation": null,
+          "can_mark_completed": true,
+          "can_clear_manual_completion": false,
+          "mark_blocked_reason": null
+        },
+        {
+          "character_id": "00000000-0000-4000-8000-000000000003",
+          "raid_id": "belgardin",
+          "cycle_key": "2026-10-14",
+          "revision": 1,
+          "ownership_revision": 1,
+          "lifecycle_revision": 1,
+          "state": "incomplete",
+          "completion_sources": [],
+          "participation": null,
+          "can_mark_completed": true,
+          "can_clear_manual_completion": false,
+          "mark_blocked_reason": null
+        }
+      ]
+    }
+  },
+  "response_too_large": {
+    "error": {
+      "code": "BOOTSTRAP_RESPONSE_TOO_LARGE",
+      "message": "BOOTSTRAP_RESPONSE_TOO_LARGE",
+      "request_id": "00000000-0000-4000-8000-000000000004"
+    }
+  }
+}

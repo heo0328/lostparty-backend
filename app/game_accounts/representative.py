@@ -17,6 +17,10 @@ def owned(db, uid, rid):
 
 def output(db, uid, registration, account):
     configuration = service.config(db, uid, account.id)
+    return value(registration, account, configuration)
+
+
+def value(registration, account, configuration):
     return dict(registration_id=registration.id, game_account_id=account.id,
                 is_main=registration.is_main, registration_version=registration.version,
                 settings_version=configuration.version if configuration else 1,

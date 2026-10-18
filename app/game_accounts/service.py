@@ -150,6 +150,10 @@ def settings_out(db, uid, r):
     chosen = list(db.scalars(select(Activity.character_id).where(Activity.settings_id == c.id).order_by(Activity.character_id))) if c else []
     eligible = set(db.scalars(select(Character.id).where(Character.account_id == a.id, Character.status == 'confirmed'))) if c else set()
     eligible = {i for i in eligible if activity_policy.eligible(db, db.get(Character, i))}
+    return settings_value(a, c, chosen, eligible)
+
+
+def settings_value(a, c, chosen, eligible):
     return dict(configuration_state=c.state if c else 'unconfigured', activity_character_ids=chosen,
                 representative_character_id=c.representative_id if c else None, settings_version=c.version if c else 1,
                 ownership_revision=a.ownership_revision if a else None, next_change_at=None,

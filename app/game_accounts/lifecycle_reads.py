@@ -22,22 +22,9 @@ def characters(principal, rid, limit, cursor):
             rows=list(db.scalars(select(Character).where(Character.account_id==account.id,
                 Character.lifecycle_state!='retired').order_by(Character.server_name,Character.character_name,Character.id)))
             for c in rows:
-                usable=lifecycle.usable(db,c)
-                status='suspect' if c.status!='confirmed' or c.lifecycle_state=='suspect' else 'active'
-                blocked=None if usable else 'CHARACTER_UNUSABLE' if status=='suspect' else 'IDENTITY_CONFLICT'
-                item=dict(c.summary,character_id=c.id,roster_status=c.status,
-                    summary_fetched_at=c.fetched_at,last_confirmed_at=c.confirmed_at,requires_refresh=not usable,
-                    eligible=usable,power_fetched_at=c.power_fetched_at,lifecycle_state=status,
-                    lifecycle_revision=c.lifecycle_revision,usable=usable,blocked_reason=blocked)
-                item.update(overlay(db,uid,item,lifecycle.power_scope(registration,c)))
-                items.append(item)
+                items.append(current_item(db, uid, registration, c))
         else:
-            for row in registration.preview:
-                item=dict(row,character_id=None,roster_status='preview',summary_fetched_at=registration.fetched_at,
-                    last_confirmed_at=None,requires_refresh=True,eligible=False,power_fetched_at=None,
-                    lifecycle_state='preview',lifecycle_revision=None,usable=False,blocked_reason='OWNERSHIP_REQUIRED')
-                item.update(overlay(db,uid,item,lifecycle.power_scope(registration)))
-                items.append(item)
+            items = [preview_item(db, uid, registration, row) for row in registration.preview]
         following=offset+limit
         return dict(registration_id=registration.id,game_account_id=account.id if account else None,
             is_main=registration.is_main,registration_version=registration.version,ownership_status=state,
@@ -45,6 +32,27 @@ def characters(principal, rid, limit, cursor):
             roster_revision=account.roster_revision if account else registration.version,settings=settings,
             items=items[offset:following],next_cursor=cursor_encode(dict(scope=scope,revision=revision,offset=following)) if following<len(items) else None,
             server_fetched_at=registration.fetched_at)
+
+
+def current_item(db, uid, registration, character, *, candidates=None, at=None):
+    c = character
+    usable = lifecycle.usable(db, c)
+    status = 'suspect' if c.status != 'confirmed' or c.lifecycle_state == 'suspect' else 'active'
+    blocked = None if usable else 'CHARACTER_UNUSABLE' if status == 'suspect' else 'IDENTITY_CONFLICT'
+    item = dict(c.summary, character_id=c.id, roster_status=c.status,
+                summary_fetched_at=c.fetched_at, last_confirmed_at=c.confirmed_at, requires_refresh=not usable,
+                eligible=usable, power_fetched_at=c.power_fetched_at, lifecycle_state=status,
+                lifecycle_revision=c.lifecycle_revision, usable=usable, blocked_reason=blocked)
+    item.update(overlay(db, uid, item, lifecycle.power_scope(registration, c), candidates=candidates, at=at))
+    return item
+
+
+def preview_item(db, uid, registration, row):
+    item = dict(row, character_id=None, roster_status='preview', summary_fetched_at=registration.fetched_at,
+                last_confirmed_at=None, requires_refresh=True, eligible=False, power_fetched_at=None,
+                lifecycle_state='preview', lifecycle_revision=None, usable=False, blocked_reason='OWNERSHIP_REQUIRED')
+    item.update(overlay(db, uid, item, lifecycle.power_scope(registration)))
+    return item
 
 
 def retirements(principal, limit, cursor):

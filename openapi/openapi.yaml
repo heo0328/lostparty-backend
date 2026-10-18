@@ -14832,6 +14832,150 @@
         }
       }
     },
+    "/v2/me/account-bootstrap": {
+      "get": {
+        "tags": [
+          "game-accounts"
+        ],
+        "summary": "Account Bootstrap",
+        "operationId": "account_bootstrap_v2_me_account_bootstrap_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountBootstrap"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "UPSTREAM_RATE_LIMITED only",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/health": {
       "get": {
         "summary": "Health",
@@ -14937,6 +15081,40 @@
           "expected_usage_revision"
         ],
         "title": "AcceptIn"
+      },
+      "AccountBootstrap": {
+        "properties": {
+          "server_now": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Server Now"
+          },
+          "complete": {
+            "type": "boolean",
+            "const": true,
+            "title": "Complete"
+          },
+          "registrations": {
+            "items": {
+              "$ref": "#/components/schemas/BootstrapRegistration"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Registrations"
+          },
+          "weekly_states": {
+            "$ref": "#/components/schemas/WeeklyStates"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "server_now",
+          "complete",
+          "registrations",
+          "weekly_states"
+        ],
+        "title": "AccountBootstrap"
       },
       "AccountLimitIssue": {
         "properties": {
@@ -15109,6 +15287,85 @@
           "next_cursor"
         ],
         "title": "BlockPage"
+      },
+      "BootstrapRegistration": {
+        "properties": {
+          "registration": {
+            "$ref": "#/components/schemas/RegistrationOut"
+          },
+          "characters": {
+            "$ref": "#/components/schemas/LifecycleCharactersOut"
+          },
+          "representative": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RepresentativeOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "presentation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PresentationOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "personal_profiles": {
+            "items": {
+              "$ref": "#/components/schemas/PersonalProfileOut"
+            },
+            "type": "array",
+            "title": "Personal Profiles"
+          },
+          "unavailable_characters": {
+            "items": {
+              "$ref": "#/components/schemas/BootstrapUnavailable"
+            },
+            "type": "array",
+            "title": "Unavailable Characters"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "registration",
+          "characters",
+          "representative",
+          "presentation",
+          "personal_profiles",
+          "unavailable_characters"
+        ],
+        "title": "BootstrapRegistration"
+      },
+      "BootstrapUnavailable": {
+        "properties": {
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "code": {
+            "type": "string",
+            "enum": [
+              "CHARACTER_UNUSABLE",
+              "IDENTITY_CONFLICT"
+            ],
+            "title": "Code"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "character_id",
+          "code"
+        ],
+        "title": "BootstrapUnavailable"
       },
       "ChallengeIn": {
         "properties": {

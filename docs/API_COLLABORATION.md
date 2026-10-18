@@ -51,6 +51,8 @@ docker compose up -d --build --wait --wait-timeout 180
 python3 scripts/check_openapi.py
 ```
 
+Issue #8 V2 소유권 분쟁 11동작과 첫 화면 저장 정보 GET `/v2/me/account-bootstrap`도 원본에 포함한다. 일괄 조회의 범위·스냅샷·최대 크기/오류·실험 인계는 [개발 안내](ISSUE_8_ACCOUNT_BOOTSTRAP_DEVELOPMENT.md)를 따른다.
+
 현재 비교 도구는 JSON 객체 전체를 비교하며 키 순서는 무시하고 배열 순서와 값 차이는 검사합니다. 별도 정규화는 하지 않습니다. 불일치는 종료 코드 1과 diff로 보고합니다. 자동 생성 결과로 계약을 무조건 덮어쓰지 않고 합의된 내용과 구현을 함께 검토합니다.
 
 요청·응답·상태 코드·오류·인증·페이지·시간 의미를 바꾸면 클라이언트 영향을 확인합니다. 비호환 변경은 적용 순서와 전환 방안을 먼저 합의합니다. 확인되지 않은 API나 이벤트를 현재 계약에 추가하지 않습니다.

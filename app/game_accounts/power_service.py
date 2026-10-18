@@ -44,13 +44,14 @@ def key_for(uid, pair, scope, version):
     return uid, lifecycle.digest((identity,version))
 
 
-def overlay(db, uid, row, scope=None):
+def overlay(db, uid, row, scope=None, *, candidates=None, at=None):
     if scope and scope['character_id'] is None:
         # Stored preview/cache contents are retained but never grant detail access.
         return dict(combat_power=None, power_fetched_at=None, power_checked_at=None,
                     power_status='unknown', power_reason=None, power_stale=True)
-    candidates=[]
-    if scope:
+    loaded = candidates is not None
+    candidates = candidates if loaded else []
+    if scope and not loaded:
         query=select(PowerCache).where(PowerCache.actor_id==uid)
         if scope['character_id']:
             query=query.where(PowerCache.character_id==scope['character_id'])
@@ -67,7 +68,7 @@ def overlay(db, uid, row, scope=None):
     status=c.status if c else 'available' if fetched else 'unknown'
     checked=c.checked_at if c else fetched
     reason=c.reason if c else None
-    stale=(fetched is None or now(db)>=fetched+TTL or status in ('unavailable','failed') or
+    stale=(fetched is None or (at if at is not None else now(db))>=fetched+TTL or status in ('unavailable','failed') or
            fetched<row.get('summary_fetched_at',fetched) or row.get('_usable') is False)
     return dict(combat_power=value,power_fetched_at=fetched,power_checked_at=checked,
                 power_status=status,power_reason=reason,power_stale=stale)
