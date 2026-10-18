@@ -1,6 +1,6 @@
 # 다음 실행
 
-기준일2026-10-18. 기존 로컬 Docker API8000·PostgreSQL/DB0016·개발 자료와 키로 계속 개발한다. 현재 마감 대상은 `feat/raid-services`의 검증·게시 완료 구간이며 사용자 승인으로 dev/main 통합을 준비한다. 실제 통합 SHA·PR/정리 결과는 DEV_LOG 후행 기록을 따른다.
+기준일2026-10-18. 기존 로컬 Docker API8000·PostgreSQL/DB0016·개발 자료와 키로 계속 개발한다。 [PR14](https://github.com/heo0328/lostparty-backend/pull/14)로 현재 검증·인계 구간을 dev에 병합했고 main도 같은 위치로 맞춰 원격 확인했다. 코드 통합 merge SHA는 `a0e27995ad9d08fd46f7b593c4907f692cdd8226`이며 이후 마감 문서 커밋도 dev/main에 동일 반영한다. 완료된 feat/raid-services는 로컬·원격에서 정리했다. [#8 전체152번째 Backend 통합결과](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6249274152)를 기준으로 이어간다. 다음 목적 브랜치는 최신 dev 기반 `feat/group-management`다.
 
 ## 다음 Backend 작업
 
@@ -9,7 +9,7 @@
 3. **조건부 해산은 독립시키며 활성 그룹 모집을 0건으로 가정하지 않는다.** 본인1인/pending 없음과 실제 활성 모집 원본을 같은 transaction 정책으로 검사해야 한다. 원본이 없으면 해산을 허용하지 않는 경계를 제안한다. G3를 이유로 모집 API 전체를 먼저 구현하지 않는다.
 4. 다음 독립 후보는 [Issue13](https://github.com/heo0328/lostparty-backend/issues/13)의 R1/R2 기본 조회/생성·신청/그룹장 승인·즉시가입 명세와 기초다. 카탈로그/주간/회원 한도/그룹 권한을 재사용한다. 다중 동의·전체 완료 권한 충돌·불명확 일정·고급 이동은 해당 동작만 분리한다. [통계8번째 제안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6232977464)은 귀속/조회 검토와 실제 방 원천이 먼저이며 원천 없는 집계를 만들지 않는다.
 
-다음 목적 브랜치는 통합된 최신 dev에서 `feat/group-management`로 준비한다. 아직 G3 구현/새 계약/DB 변경에는 착수하지 않았다. 관련 이슈는 #12가 주이며 #13 원본이 필요한 동작만 연계한다.
+다음 작업 준비용 로컬 브랜치명은 통합된 최신 dev 기반 `feat/group-management`다. 아직 G3 구현/새 계약/DB 변경에는 착수하지 않았다. 관련 이슈는 #12가 주이며 #13 원본이 필요한 동작만 연계한다.
 
 ## 현재 마감 범위와 인계
 

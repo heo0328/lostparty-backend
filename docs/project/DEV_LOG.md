@@ -1207,3 +1207,12 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 기존검증의최종근거는직전261PASS/158.21초·앞선공통날짜포함844PASS/기존1검사수정후58PASS등각기록이다. 합산/전체재통과로확대하지않는다. 이번코드변경없음으로업무시험을반복하지않았고실행OpenAPI전체일치/merge-base/범위diffcheck를확인했다. DB/API재시작·migration/초기화/자료삭제/운영배포없다.
 - 기존compose.yaml의로컬DB127.0.0.1:5432공개2줄은사용자변경으로보존하고이번커밋/PR에포함하지않는다. 원본파일SHA256 210051674b671957e7adf224feb0a73043c5865684e6d5601fdbbc10a9fb104f·patch를임시영역에기록하여통합/branch전환뒤동일여부를검사한다.
 - 다음실행:문서커밋/push→PR로dev merge→main동일commit fast-forward/push→로컬/원격일치검사→통합완료기존브랜치정리→다음목적브랜치준비. 실제PR/SHA/댓글·정리완료는후행기록에남긴다.
+
+
+### PR14 dev/main 통합·완료브랜치 정리
+
+- 문서마감 `b50cebfb246ea2988a0ee97de44576eb58756f72` push후 [PR14](https://github.com/heo0328/lostparty-backend/pull/14)를생성했다. base=dev/HEAD일치·MERGEABLE/CLEAN·추가원격체크없음을확인하고사용자승인대로merge commit방식으로병합했다. 실제merge SHA `a0e27995ad9d08fd46f7b593c4907f692cdd8226`/PR MERGED를재조회했다.
+- 로컬dev를origin/dev로fast-forward하고main도dev로fast-forward/push했다. 로컬/원격dev/main모두동일merge SHA임을확인했다. force push/rebase/공유이력재작성은없다. dev포함·다른worktree미사용·미통합코드없음을확인해완료feat/raid-services를로컬/원격에서삭제했다. 이후ls-remote에서dev/main만존재함을확인했다.
+- [#8 전체152번째 Backend 통합마감결과](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6249274152)를게시하고전체152개조회로실제작성순번을확인했다. 작성측Backend/단계Git통합·정리완료/다음Backend G3명세·Flutter V2별도후속이다. 추가기초시험요청없이기존계약/실행환경/자료보존·G3미구현·Flutter완료범위를구분했다. 최종문서후행커밋을포함한동일HEAD는댓글에갱신한다.
+- 다음구간준비:최신dev를기준으로로컬feat/group-management를만들어G3명세작성부터이어간다. 아직G3서버/API계약/DB변경은없다. README/NEXT_WORK/AI_CONTEXT는통합완료/실행다음작업으로정리했고후행문서마감도dev/main동일HEAD에반영한다.
+- 기존compose.yaml의SHA256/patch가초기와동일함을branch전환/통합후확인했다. 해당사용자변경만미커밋으로보존한다. 업무코드·원본OpenAPI·migration은기존검증8d03e96과동일하며이번후행변경은통합기록뿐이다. 문서diff검사를수행하고서버/DB재실행이나업무시험을반복하지않는다.

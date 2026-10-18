@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-2026-10-18. 다음 실행/대기는 [NEXT_WORK](NEXT_WORK.md), 완료·검증·장애/Git이력은 [DEV_LOG](DEV_LOG.md). 기존로컬Docker/API8000·DB0016·자료/키로 개발한다. feat/raid-services 검증구간을 사용자 승인으로 dev/main 통합 준비 중이다. 다음은 통합dev 기반 feat/group-management에서 G3 명세 준비이며 G3 API계약/구현은 아직 없다. 최종 통합·정리 결과는 DEV_LOG 후행기록을 따른다.
+2026-10-18. 다음 실행/대기는 [NEXT_WORK](NEXT_WORK.md), 완료·검증·장애/Git이력은 [DEV_LOG](DEV_LOG.md). 기존로컬Docker/API8000·DB0016·자료/키로 개발한다. [PR14](https://github.com/heo0328/lostparty-backend/pull/14)에서dev병합/main동일위치push·원격확인완료(코드merge a0e2799/마감문서후행포함). 완료feat/raid-services로컬/원격정리. [#8 전체152번째Backend통합결과](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6249274152). 다음은최신dev기반feat/group-management의G3명세준비이며API계약/구현미착수다.
 
 | 영역 | 현재 상태·기준 |
 |---|---|
