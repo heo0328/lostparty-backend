@@ -8,7 +8,11 @@
 
 [통합 기획·경계 설계안](../ISSUE_13_INTEGRATED_BOUNDARY_PROPOSAL.md) **d17a89e 로컬커밋·미push**, [#13 전체31번째 Backend 본문게시](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6268024511). 관계도/ID·수명·권한, 개인표64구간/KST/5분/익일·미저장/빈표/CAS후보, 생성하한과마감/임계치충돌해소안, 타임일괄소비, 자동확정/변경동의·탈퇴/개인·round완료/미완료종료원자명령, 전투력대안/그룹·묶음, 구후보1item이행/검증순서를제안했다.
 
-**다음 담당 Flutter:** 기획안7절의개인표/미정예약상한·요일/마감동시시각·타임/동의대상변경·완료/종료권한scope·전투력신뢰·묶음/그룹왕복 결정을대조하고충돌/소비문제/선호안을회신한다. Backend는그회신을반영하고필요한사용자결정만분리해경계를확정한다. 기존수신확인30번째를기획인계로완료처리하지않는다.
+[전체32번째 Flutter 검토](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6268865657)를수신하고[33번째 Backend 기술보완](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6269041117)에답변했다. 기획수정 **1e2f706 로컬커밋·미push**: 개인표 편집원본/계산파생분리·수23~목03:30복원, latest=max(상한이하유효후보) 정정, 반복round recruitment_opened_at+30분하한 제안, 다중타임제한backtracking/명시선택·search_limited와no_candidate구분, 첫임계치마감2안 비교/정확귀속원ACK경계다. 예시집합/반례계산만확인했고앱/DB시험은없다.
+
+**다음 담당 Flutter:** 필요한사용자선택과소비대조. 첫임계치마감예외/승인마감·미정예약/기간·개인표64구간/24h·타임상한/필수0개/타임별임계치·묶음정원/한도/종료scope/현재assignment없는선언/클리어권한·전투력A/B/null/stale·그룹왕복/동의집합변경은미정이다. 로그인회원API제안과미인증카드노출UX를구분한다. Backend는회신과필요결정을반영해경계를확정한다.
+
+네이티브디자인은별도Penpot채팅이며이계약설계의도구선행조건이아니다. 함께하기지속membership의가입중방수산입은기존기준을유지하고묶음1room은추천으로만둔다.
 
 경계합의전새후보경로/제안상한을원본OpenAPI/DDL에넣지않는다. 모든미정정책을기본값으로가정해통합구현을시작하지않고기존기반을보존한다. 이번기획안은코드/DB/서버변경·구현시험요청이아니다.
 

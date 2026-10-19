@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+최신대조(2026-10-19): [#13 Flutter전체32번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6268865657) 기술보완요청에[Backend전체33번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6269041117)로답했다. [기획안9절](../ISSUE_13_INTEGRATED_BOUNDARY_PROPOSAL.md) 수정1e2f706 로컬/미push: 편집원본분리·latest후보계산정정·반복round하한·제한탐색/명시선택/계산한계·첫임계치두정책비교/귀속재검사다. 다음Flutter 제품선택/대조→Backend경계확정이며코드/DDL/실제API승인아니다. 다른열린이슈의추가회신은없다.
+
 통합기획게시(2026-10-19): [설계안](../ISSUE_13_INTEGRATED_BOUNDARY_PROPOSAL.md) d17a89e 로컬커밋/미push·[#13 전체31번째Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6268024511)에관계도·수명/권한/명령·개인표/일정/예약DTO·마감/임계치·완료/미완료·기존이행·필수결정표본문전체를게시했다. 다음Flutter대조/Backend보완·필요사용자결정후경계확정이며구현/최종API/서버활성화는아니다. 아래 ‘다음 Backend 설계’는 게시 전 기록이다.
 
 현재(2026-10-19): #13 Flutter전체24~29번째수신/기존후보대조. [수신대장](../ISSUE_13_INTEGRATED_REQUIREMENTS_INTAKE.md)·[전체30번째Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6267793280). 최신27번째통합목표(축소1차대체)와29번째현재참가자누구나방전체이번주미완료종료선언을보존했다. 다음Backend 통합경계설계→Flutter대조/필요결정→확정후구현이다. 실제코드/DDL/계약·서버활성화는미완료이며아래기본틀만유지/회신대기는당시기록이다.

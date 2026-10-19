@@ -135,6 +135,8 @@ room_id는공통진입/한도·지속그룹, item/round/session_id는명령대�
 
 ## 9. Flutter32번째 기술 보완·비교 예시
 
+[전체33번째 Backend 기술 보완 회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6269041117)에 아래 내용을 게시했다. 기술 수정1e2f706 로컬커밋·미push, 다음 Flutter 필요한 사용자결정/대조 및 Backend 계약반영이다.
+
 ### 편집행과 계산표
 
 편집 PUT 예시: {weekday:3,start:"23:00",end:"03:30",end_day_offset:1}. 같은 version의 GET intervals는 이 수요일23시~목요일03:30 행을 그대로 반환한다. normalized_intervals만 수[23:00,24:00)/목[00:00,03:30) 계산구간으로 분할한다. 목요일02:00~04:00 행이 추가되면 계산상 목요일[00:00,04:00)로 합쳐도 GET의 편집행2개는 그대로 복원한다. 실날짜 확장은 해당주 수23시~목03:30 UTC 변환을 한 번 적용한다. normalized의1440은 내부 끝 경계이며 편집 end="24:00"을 요구하지 않는다. 주말 wrap은 다음 ISO주 시작에 연결하고 실제검색cycle와 교차한다.
