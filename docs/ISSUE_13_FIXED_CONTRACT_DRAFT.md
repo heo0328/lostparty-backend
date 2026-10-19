@@ -1,5 +1,7 @@
 # #13 통합 모집 계약 고정 초안 R1
 
+후속: [Flutter44번째 대응 R0 소비 계약 보완안](ISSUE_13_R0_CONSUMER_CORRECTIONS.md)이 입력/세션 식별·버전/CAS 출처/전체 기능 지도·점수 보존의 해당 정의를 대체한다. 원래 초안의 누락 필드나 약칭을 최종 schema로 구현하지 않는다.
+
 2026-10-20 / Backend / feat/raid-recruitment / 검토 기준 7b10616. 설계 본문 로컬 커밋 35dd5f9·미push.
 
 공식 회신: [#13 전체43번째 Backend / R0 계약 고정 초안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271860507). 다음 담당은 Flutter 실제 소비 대조이며 최종 계약/구현은 미완료다.
