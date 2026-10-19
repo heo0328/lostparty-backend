@@ -9,11 +9,11 @@
 | 이슈 | 주제 | 다음 담당·상태/완료 조건 |
 |---|---|---|
 | [#12](https://github.com/heo0328/lostparty-backend/issues/12) | 그룹 G1/G2 Flutter 연결 | Backend 구현/통합 완료. Flutter 연결/관련 검증과 사용SHA 회신 미확인. 현재 Flutter 우선작업을 중단시키지 않음 |
-| [#13](https://github.com/heo0328/lostparty-backend/issues/13) | 실제 모집·참가·파티 관리 | F1 9664fb4/F2-A e74d850/F2-B 후보HTTP18동작9fb2058 로컬커밋·미push. 격리HTTP/PostgreSQL101PASS/[전체15번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6260695606). F3-A 내부준비 a0a515c/144PASS·[#13 전체19번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6263654624), 실제호출부미연결. 다음결정반영후계약/개발반영준비, main API/DB0016미변경·Flutter/실기기미인수. [전체17번째Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6263303080)검토·[전체18번째Backend설계/근거답변](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6263341047)반영. 독립F3-A준비와최초지원범위/전투력입력/그룹탈퇴제한·공개사용자결정을구분. 현재방/i·주간점유·완료분리/#11제약유지, 통계#19·반복/고급관리/그룹/V2/G3통합후속 |
+| [#13](https://github.com/heo0328/lostparty-backend/issues/13) | 통합모집·시간/참가/주간관리 | [요구수신](../ISSUE_13_INTEGRATED_REQUIREMENTS_INTAKE.md)·[전체30번째Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6267793280). Flutter24~29반영: 통합목표/현재참가자방전체미완료종료·다음Backend경계설계→대조/확정후구현. 실제API활성화미완료 |
 | [#15](https://github.com/heo0328/lostparty-backend/issues/15) | V2 Flutter 인증/분쟁 | #13 전체16번째Flutter 보고기준 D1~D4 dev반영·마감, 분쟁실기기는사용자판단보류. 이후 #13 전체17번째에서 로그인화면재구성수정 별도마감·계약검토전환을보고했으며분쟁실기기보류는별도 |
 | [#16](https://github.com/heo0328/lostparty-backend/issues/16) | G3 완료 구현/dev 통합·조건부 해산 후속 | 관리GET/이전/일반탈퇴는 구현332a8ab·인계349fb79/PR20 bb144e0 dev통합·원격확인/완료브랜치정리. 통합전45PASS·실행계약일치(기존148PASS와중복), [전체6번째 Backend 통합결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6262944673). 조건부해산은실제그룹모집원본후속·추방/대표변경미구현/Flutter연결·실기기별도, 이슈유지 |
 | [#17](https://github.com/heo0328/lostparty-backend/issues/17) | 캐릭터 소멸 근거·이력·이름 재사용 ID | Flutter전체1번째범위확인·Backend 현재기능/증거공백 검토·최소계약 보완. 기존L1/claim/조회 재사용. 실제삭제/보류해제 승인 아님 |
-| [#18](https://github.com/heo0328/lostparty-backend/issues/18) | 활동 자동추가·직접제외 보존 | Flutter전체1번째접수·Backend 신규발견/첫1700·명시제외 영속정책 명세. 도입이전 미선택 일괄활성화/GET쓰기 금지·구현 미착수 |
+| [#18](https://github.com/heo0328/lostparty-backend/issues/18) | 활동 자동추가·직접제외 보존 | 활동브랜치89a3248/설계5fff83b 로컬미push보존. [전체3번째Flutter](https://github.com/heo0328/lostparty-backend/issues/18#issuecomment-6264981603)는설계접수/별도소비검토대기이며미승인·구현전 |
 | [#19](https://github.com/heo0328/lostparty-backend/issues/19) | 사용자/그룹 주간 이용 통계 | Flutter전체1번째검토·type최초고정/함께집계·해산OFF/평균분모/그룹조회권한미확정·실제방원천선행. 집계/조회 미구현·개인manual결과 집계 금지 |
 
 ## 이번 종료

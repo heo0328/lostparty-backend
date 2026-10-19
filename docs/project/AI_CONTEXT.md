@@ -1,5 +1,9 @@
 # LostParty Backend 기능 지도
 
+현재(2026-10-19): #13 Flutter전체24~29번째수신/기존후보대조. [수신대장](../ISSUE_13_INTEGRATED_REQUIREMENTS_INTAKE.md)·[전체30번째Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6267793280). 최신27번째통합목표(축소1차대체)와29번째현재참가자누구나방전체이번주미완료종료선언을보존했다. 다음Backend 통합경계설계→Flutter대조/필요결정→확정후구현이다. 실제코드/DDL/계약·서버활성화는미완료이며아래기본틀만유지/회신대기는당시기록이다.
+
+현재브랜치feat/raid-recruitment. 활동설계feat/activity-selection/89a3248(설계5fff83b·#18전체3번째접수/별도소비검토대기)은로컬커밋/미push로별도보존한다. 기존F1/F2/F3기반을재사용하되유한단일Round/Membership/방시간겹침검사는통합모델완료가아니다. 상세다음작업은NEXT_WORK기준이다.
+
 현재 범위(2026-10-19 사용자 정정): [#13 전체20번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6264202734). 모집 조건을 네이티브와 협의 중이므로 기본 관계/조회·원자성/중복요청·사용량/보존검증·후보 정지/정리 기반까지만 유지한다. 기본 구현은 로컬 완료·미push, 조건 의존 후보는 변경 가능한 초안이며 최종계약/실제활성화는 협의 후 반영한다. 앞선 최초지원범위 선택 질문은 재요청하지 않는다. 아래 답변대기/다음실제연결은 정정 전 기록이다.
 
 후보 HTTP 정지 연결(2026-10-19): [준비 기록](../ISSUE_13_F3_PREPARATION.md) ffa3575 로컬커밋/미push·관련97PASS/31.73초. 후보 생성/신청/가입/승인·context/approve permissions에 정지제어를연결하고원ACK/조회/정리를유지했다. 실제main/usage GET/원본계약/개발서버DB미변경. 최초공개·현재주차유한일정·문턱없음지원결정을사용자에게질문했으며답변후실제연결한다. 아래준비기록의후보미연결은당시상태다.
