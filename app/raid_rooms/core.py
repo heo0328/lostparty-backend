@@ -19,7 +19,8 @@ from app.raid_rooms.models import Room, Round, Membership, DirectoryHead, Member
 
 def room(db, rid, *, active=True):
     row = db.get(Room, rid)
-    if row is None:
+    # No group-room access adapter is enabled yet, including recovery writes.
+    if row is None or row.scope != 'public' or row.group_id is not None:
         fail('ROOM_NOT_FOUND', 404)
     if active and row.ended_at is not None:
         fail('ROOM_NOT_ACTIVE')
