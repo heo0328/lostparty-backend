@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+통합기획게시(2026-10-19): [설계안](../ISSUE_13_INTEGRATED_BOUNDARY_PROPOSAL.md) d17a89e 로컬커밋/미push·[#13 전체31번째Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6268024511)에관계도·수명/권한/명령·개인표/일정/예약DTO·마감/임계치·완료/미완료·기존이행·필수결정표본문전체를게시했다. 다음Flutter대조/Backend보완·필요사용자결정후경계확정이며구현/최종API/서버활성화는아니다. 아래 ‘다음 Backend 설계’는 게시 전 기록이다.
+
 현재(2026-10-19): #13 Flutter전체24~29번째수신/기존후보대조. [수신대장](../ISSUE_13_INTEGRATED_REQUIREMENTS_INTAKE.md)·[전체30번째Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6267793280). 최신27번째통합목표(축소1차대체)와29번째현재참가자누구나방전체이번주미완료종료선언을보존했다. 다음Backend 통합경계설계→Flutter대조/필요결정→확정후구현이다. 실제코드/DDL/계약·서버활성화는미완료이며아래기본틀만유지/회신대기는당시기록이다.
 
 현재브랜치feat/raid-recruitment. 활동설계feat/activity-selection/89a3248(설계5fff83b·#18전체3번째접수/별도소비검토대기)은로컬커밋/미push로별도보존한다. 기존F1/F2/F3기반을재사용하되유한단일Round/Membership/방시간겹침검사는통합모델완료가아니다. 상세다음작업은NEXT_WORK기준이다.
