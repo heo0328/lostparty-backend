@@ -3,7 +3,7 @@ from typing import Annotated, Literal
 from uuid import UUID
 from pydantic import Field, StrictBool
 from app.game_accounts.schemas import DTO, Version
-from app.groups.commands import CreateGroup, RenameGroup
+from app.groups.commands import CreateGroup, RenameGroup, LeaveGroup, TransferLeadership
 from app.member_limits.schemas import Nonnegative
 
 
@@ -97,3 +97,43 @@ class GroupMemberPage(DTO):
     members_revision: Version
     items: list[GroupMember]
     next_cursor: str | None
+
+
+class LeaveGroupIn(LeaveGroup):
+    pass
+
+
+class TransferLeadershipIn(TransferLeadership):
+    pass
+
+
+class ManagementPermissions(DTO):
+    transfer_leadership: Permission
+    leave: Permission
+    disband: Permission
+
+
+class GroupManagement(DTO):
+    group_id: UUID
+    group_revision: Version
+    members_revision: Version
+    my_membership: MyMembership
+    permissions: ManagementPermissions
+
+
+class LeadershipTransferAck(DTO):
+    group_id: UUID
+    previous_leader_membership_id: UUID
+    leader_membership_id: UUID
+    group_revision: Version
+    members_revision: Version
+    previous_leader_membership_revision: Version
+    leader_membership_revision: Version
+    transferred_at: datetime
+
+
+class GroupLeaveAck(DTO):
+    group_id: UUID
+    membership_id: UUID
+    membership_revision: Version
+    ended_at: datetime

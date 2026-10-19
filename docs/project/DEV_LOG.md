@@ -1216,3 +1216,68 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - [#8 전체152번째 Backend 통합마감결과](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6249274152)를게시하고전체152개조회로실제작성순번을확인했다. 작성측Backend/단계Git통합·정리완료/다음Backend G3명세·Flutter V2별도후속이다. 추가기초시험요청없이기존계약/실행환경/자료보존·G3미구현·Flutter완료범위를구분했다. 최종문서후행커밋을포함한동일HEAD는댓글에갱신한다.
 - 다음구간준비:최신dev를기준으로로컬feat/group-management를만들어G3명세작성부터이어간다. 아직G3서버/API계약/DB변경은없다. README/NEXT_WORK/AI_CONTEXT는통합완료/실행다음작업으로정리했고후행문서마감도dev/main동일HEAD에반영한다.
 - 기존compose.yaml의SHA256/patch가초기와동일함을branch전환/통합후확인했다. 해당사용자변경만미커밋으로보존한다. 업무코드·원본OpenAPI·migration은기존검증8d03e96과동일하며이번후행변경은통합기록뿐이다. 문서diff검사를수행하고서버/DB재실행이나업무시험을반복하지않는다.
+
+
+## 2026-10-18 — 사용자 지시: 한 이슈 한 주제·완료/이관 종료
+
+- 사용자명시승인으로종료가능이슈정리와향후범위관리원칙을적용했다. AGENTS/협업/NEXT_WORK/AI_CONTEXT·전체이슈/최신8(153)/10(3)/11(7)/12(15)/13(8)/15(0)을검토했고추가본문/댓글변화없음을확인후원문보존상태로정리했다. feat/group-management/77a1fe5·기존compose.yaml변경보존이다.
+- 신규주제4건을원요구/합의·미완료/담당·완료조건과함께분리했다: [#16 G3](https://github.com/heo0328/lostparty-backend/issues/16), [#17 생명주기증거/이력/이름재사용](https://github.com/heo0328/lostparty-backend/issues/17), [#18 활동자동추가/수동제외](https://github.com/heo0328/lostparty-backend/issues/18), [#19 주간통계](https://github.com/heo0328/lostparty-backend/issues/19). 새기능범위확대/구현착수/자료삭제승인으로해석하지않는다.
+- #10은카탈로그/주차구현·31PASS/Flutter소비·후속실기기로그를근거로completed종료했다. #11은개인주간GET/비점유manual완료·정정구간구현/연결·manual true실제보고를근거로completed종료했고,현재membership/i·점유중완료영향확인/명시실행·슬롯/책임자/실제완료연계의미완료를#13본문에보존했다. 다른기기/정정/실제파티전체인수로확대하지않는다.
+- #8은댓글153개의다주제원본을not_planned(후속추적이관/보관)종료했다. 미완료요구를취소/기능전체완료로표시하지않고#15/#17/#18/#13추적을상단에명시했다. #12는G1/G2 Flutter소비미확인으로열어두고G3를#16으로분리했으며#13은실제room미구현으로유지/통계는#19로분리했다. 원문본문과기존댓글을지우지않았다.
+- 공식채널Backend정리회신을게시하고재조회로실제순번을확인했다: #8전체154번째(6249418070)/#10전체4번째(6249415959)/#11전체8번째(6249417104)/#12전체16번째(6249414405)/#13전체9번째(6249414899)/#15전체1번째(6249415434). 모두작성측Backend/단계정리·완료/이관이며Backend작업단계번호가아니다. #15에V2유효/다음Flutter D1·추가서버/기초시험요청없음과주제원칙을공유했다. 전체링크는 [이슈추적표](ISSUE_TRACKER.md)에기록했다.
+- #8 153번째에서Flutter dev/main deb2884dfcba6d105781036d174b2e085118606e동기화완료·V2전용브랜치/설계/기능미착수·#15분리를확인했고문서의예정상태를정정했다. 이관뒤V2/그룹등실연결을Backend가완료한것으로표시하지않았다.
+- AGENTS/API협업/작업흐름에한주제·직접필요연계만포함/독립후속분리·본문상태관리·반복진행/명세댓글억제·완료근거/추적이관보존·브랜치분리비자동원칙을추가했다. NEXT_WORK/AI_CONTEXT/통계문서의현재추적을맞췄다.
+- 변경은GitHub메타데이터/문서뿐이다. 기능코드/OpenAPI/DB/API/환경/키/자료/시험변경·commit/push/merge없음. 기존main/dev77a1fe5동기화기준은유지하고문서수정은현재작업브랜치에서미커밋상태다. git diff --check와링크/실제종료·원문보존을확인하며업무시험을반복하지않는다.
+
+
+## 2026-10-18 — 로컬 DB 접속 설정·이슈 정리 문서 게시
+
+- 사용자 지시에 따라 기존 `compose.yaml`의 로컬 DB 접속 포트 `127.0.0.1:5432:5432`와 미커밋 이슈 정리 문서를 함께 커밋·push하는 범위로 정리했다. 앞선 작업에서는 사용자 변경으로 별도 보존했으며, 이번에는 포함한다. 파일 시스템 경로가 아니라 호스트 루프백 포트와 컨테이너 PostgreSQL 포트의 연결이다.
+- README에 로컬 DB 접속 주소를 기록하고 NEXT_WORK의 통합 기준을 `77a1fe5`로 명확히 했다. 협업 규칙·이슈 추적표·현재 기능 상태·통계 추적 이관 문서도 함께 게시한다. 현재 브랜치는 `feat/group-management`이며 G3 명세/API 구현은 아직 시작하지 않았다.
+- `docker compose config --quiet`와 문서 내 로컬 링크 88개·`git diff --check` 검증이 통과했다. 이번 범위는 접속 설정과 문서 정리이므로 업무 테스트를 반복하거나 실행 중인 DB/API를 재시작하지 않는다. 게시 대상은 현재 작업 브랜치이며 dev/main 기준은 유지한다.
+
+
+## 2026-10-18 — G3 다음 작업 준비
+
+- 사용자 다음 작업 준비 지시로 규칙·현황문서·Git 상태를 확인했다. 현재 `feat/group-management`/`49cd8cc1f706893ff5d53fa426d2af1d95ed018d` 원격 추적·작업트리 clean에서 시작했다. 직전 로컬 DB 접속 설정과 이슈 정리 문서의 commit/push는 완료 상태다.
+- 공식 #16 본문/댓글 0개·#12 본문/댓글 16개를 재조회했고 새 댓글/정정은 없었다. G1/G2 계약·실제 모델/명령/멱등·한도와 대조하여 [G3 작업 준비](../ISSUE_16_GROUP_G3_PREPARATION.md)를 작성했다. 즉시 이전·일반 탈퇴의 명세를 우선하고 조건부 해산의 실제 모집 원본 부재·추방/대표 변경 정책 미확정을 분리했다.
+- 탈퇴 후 기존 현재 membership replay 검사를 그대로 사용할 수 없는 점, 재가입 membership 보호·발신 초대 종료·usage/cursor 변경·이전 뒤 정원 재평가와 동시성을 다음 명세의 구체 검토 대상으로 기록했다. 상세 endpoint/DTO/오류는 아직 확정하지 않았다. 다음 담당 Backend 명세 작성·#16 게시이며 Flutter 회신 대기는 아니다.
+- 준비 문서와 NEXT_WORK/AI_CONTEXT/추적표만 변경했다. 기능코드/OpenAPI/DB/서버 변경이나 업무시험·Issue 댓글·commit/push는 이번 준비에서 수행하지 않는다. git diff --check와 문서 로컬 링크 65개 검증이 통과했다.
+
+
+## 2026-10-18 — G3 상세 명세 제안·공식 검토 게시
+
+- 사용자 작업 진행 지시로 AGENTS→협업→NEXT_WORK→AI_CONTEXT→G3준비·G1/G2/한도 계약·실제 DTO/멱등 코드를 대조했다. 기존 준비 문서 변경을 보존했다. #16 본문/댓글0개와 #12 댓글16개를 재조회했고 새로운 정정은 없었다.
+- [G3 명세 제안](../ISSUE_16_GROUP_G3_SPEC.md)을 작성했다. 신규 관리 GET과 이전/탈퇴 POST 2개·기존 G1/G2 DTO 유지·최소 ACK·종료 membership/재가입 후 원성공 복구·actor membership ID CAS·현재 역할/대상 활성·revision/head/cursor/발신초대 종료/rollback을 구체화했다. 기존 한도 계약6절에서 새 그룹장 정원이 현재 인원을 수용해야 함을 확인해 준비 문서에도 명시했다. 초과 상태 이전을 임의 허용하지 않는다.
+- 실제 모집 원본이 없어 해산 쓰기 경로를 제안 범위에서 제외하고 관리 GET의 미지원 reason을 명시했다. 추방/대표 변경 정책은 해당 후속 구간에서 확인하며 두 명령에 묶어 확정하지 않았다. 그룹 탈퇴가 미구현 방 퇴장/슬롯/주간 완료를 처리했다고 주장하지 않는다.
+- [#16 전체1번째 Backend — G3 계약 검토](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6250563064)에 제안 원문을 게시하고 재조회로 실제 전체1번째/본문 일치를 확인했다. #16 상단에 현재 범위·검토/다음 담당을 갱신하고 최초 요구 본문을 보존했다. Backend 작업 단계 번호가 아니다. 다음 담당은 Flutter 신규 소비 방식 충돌 확인, Backend 합의 반영 후 구현이며 기존 G1/G2 연결/V2 우선을 바꾸거나 실기기 시험을 요청하지 않는다.
+- JSON 예시4개 파싱·요청/ACK ID·revision/permissions 일관성 검증이 통과했다. 문서 diff/로컬 링크 검사만 수행하며 기능코드/OpenAPI/DB/API/운영환경·키/자료 변경이나 업무시험은 없다. 준비/명세·상태 문서는 미커밋·미push이며 원격 feat/group-management 기준은49cd8cc다. 명세는 위 공식 댓글에서 읽을 수 있다.
+
+## 2026-10-19 — G3 내부 처리 작성·실행환경 장애
+
+사용자 G3 착수 지시에 따라 `feat/group-management`에서 `app/groups/management.py`의 내부 관리 조회·그룹장 이전·일반 탈퇴와 내부 명령/표적 테스트를 작성했다. HTTP 라우터·OpenAPI·migration·기존 API8000/DB는 변경하지 않았다. 코드/문서는 미커밋·미push이며 원격 기준은 `49cd8cc`다.
+
+- 다음 Backend: Docker/격리 PostgreSQL 사용 가능한 환경에서 `tests/test_group_management.py` 및 기존 G1/G2 관련 회귀를 실행·수정한다. 현재 환경의 Docker는 WSL 연동 부재 안내로 실행 불가다. PostgreSQL/pytest·실행 계약 검증은 미실행이며 Python 구문 컴파일과 `git diff --check`만 통과했다.
+- Flutter: #16의 신규 관리 GET/두 ACK 소비 충돌 확인은 미회신이다. 계약 확인 후 Backend가 HTTP/OpenAPI 연결·실행 검증·검증 구간 게시/인계를 진행한다. 현재 코드는 사용 가능한 API/Backend 검증 완료가 아니다.
+- 조건부 해산은 #13 실제 모집 원본 선행, 추방/대표 변경/실제 방 후처리는 미구현을 유지한다.
+- [#16 전체2번째 Backend — 내부 서버 처리·검증 준비](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6258840112)에 결과/장애를 회신했다. 다음 담당 Backend 실행검증·Flutter 소비계약 확인 대기이며 실기기 테스트 요청은 없다.
+
+## 2026-10-19 — G3 격리 검증 완료·Docker 장애 해소
+
+- #16 실제 전체2개 댓글을 조회했고 Flutter 소비 계약 회신은 없었다. 기존 사용자/로컬 변경을 보존하고 G3 내부 처리 시험을 진행했다.
+- Docker Desktop 엔진 정지를 확인했다. 설치된 Windows CLI의 `docker.exe desktop start`로 기존 엔진을 시작하자 WSL Docker가 사용 가능해졌다. 새 개발환경 구축·자료 이관·개발 DB 삭제/초기화는 하지 않았다.
+- 기존 테스트 이미지에 현재 app/tests만 읽기 전용 마운트하고 compose.test.yaml의 격리 PostgreSQL에서 최초 G3 **19 PASS/12.13초**를 확인했다. 이어 이전 ACK 실패 rollback·동시 탈퇴/초대수락·cursor·멱등 lease 검증을 보강했다.
+- 최종 실행: `docker compose -f compose.test.yaml run --rm -v "$PWD/app:/app/app:ro" -v "$PWD/tests:/app/tests:ro" tests pytest -q -p no:cacheprovider tests/test_group_management.py tests/test_group_admissions.py tests/test_groups_http.py tests/test_group_foundation.py tests/test_member_limits.py`. **126 PASS/45.65초**, 기존 Starlette/AnyIO 경고1개. G3는23개이며 최초19개와 중복 합산하지 않는다. Python compileall과 git diff --check도 통과했다.
+- 검증 후 격리 test-db만 stop했다. 기존 API8000/DB0016·자료/키·HTTP/OpenAPI/migration·개발용 API 이미지는 변경하지 않았다. 전체 Backend 테스트/실제 회원쓰기/provider/Flutter/실기기는 이번에 실행하지 않았다.
+- [#16 전체3번째 Backend — 내부 처리 자동 검증](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6258913698) 결과와 실제 작성순서를 확인했다. 다음 담당 Flutter 소비 계약 확인·Backend HTTP/OpenAPI 연결 후 검증/게시 인계. 현재 기능/시험/문서는 미커밋·미push이며 원격 기준49cd8cc다. 테스트 요청은 아직 하지 않았다.
+
+## 2026-10-19 — G3 HTTP 연결·개발 API 반영·계약 검증
+
+- #16 전체3개 댓글을 조회했고 Flutter 소비 회신은 없었다. 원본 #12가 Backend의 경로/DTO 설계·독립 구현을 요청하고 사용자도 G3 착수/계속 진행을 승인한 범위이므로 소비회신을 전체 HTTP 구현 선행조건으로 둔 이전 대기를 정정했다. Flutter 합의를 추정하거나 미확정 해산/추방/대표 변경을 추가하지 않았다.
+- 관리 GET·그룹장 이전/일반 탈퇴 POST3동작과 DTO6개를 연결했다. 기존 GroupDetail/멤버페이지·G1/G2 path/component schema 전체 불변을 변경 전 Git 계약과 대조했고 신규 항목만 OpenAPI에 추가했다.
+- G3 HTTP22개를 추가했다. 최초147 PASS/1 FAIL은 테스트 이미지에 없는 git 명령 사용에 따른 시험 구성 오류다. 테스트 계약 파일 COPY·실행계약 비교로 수정한 최종 이미지에서 **148 PASS/55.73초**(G3내부23+HTTP22+기존회귀103), 기존 Starlette/AnyIO 경고1개. 이전126/19와 중복 합산하지 않는다.
+- 기존 API8000을 docker compose up -d --build --wait --wait-timeout180으로 반영, 실행 OpenAPI 전체일치 PASS. DB 전후0016_record_timestamps·migration없음. 실제HTTP health200/신규3동작401 ACCESS_INVALID·Bearer/no-store 확인. 호스트 일반 sandbox의 HTTP소켓 제한은 승인된 로컬읽기로 재실행해 해소했다.
+- 실제 개발 회원 이전/탈퇴·전체 Backend시험·실provider/Flutter/실기기·운영배포는 미실행이다. 키/자료 초기화나 새 환경 구축은 없다. 검증된 구간을 작업브랜치에 게시하고 계약/결과를 #16에 인계한다.
+
+- G3 구현/계약 `332a8ab9697ca1a8e0d2ebcc147169c54ce9161c`를 `feat/group-management`에 commit/push하고 ls-remote SHA 일치를 확인했다. 최초 push의 기본 credential helper 부재는 기존 gh 인증 helper를 해당 명령에만 사용해 해소했고 인증정보는 출력/저장하지 않았다. main/dev/운영은 변경하지 않았다.
+- [#16 전체4번째 Backend — 구현·검증·게시 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6258994902) 게시 후 전체4개 댓글의 실제 순번/원문을 재조회했다. 다음 Flutter 별도 그룹 연결 구간 신규 소비/충돌 회신, Backend 소비보완·#13R1/R2 후속이다. 조건부 해산이 미완료라 #16은 유지한다. 격리 test-db만 stop했고 로컬 개발 API8000은 G3 반영 상태를 유지했다. 후행 문서에 구현SHA/댓글 링크/게시완료를 기록해 같은 브랜치에 게시한다.

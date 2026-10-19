@@ -4,6 +4,18 @@
 
 Flutter와 Backend를 동시에 개발하는 동안, 별도 협업툴이나 공유 방식을 채택하기 전까지 **[heo0328/lostparty-backend의 GitHub Issues](https://github.com/heo0328/lostparty-backend/issues)**를 공식 협업 채널로 사용합니다. Backend는 Issue와 합의된 계약을 기준으로 작업합니다. Flutter 로컬 경로나 특정 문서를 찾아 읽는 절차는 두지 않습니다.
 
+## 이슈 범위와 마감
+
+2026-10-18 사용자 지시: **한 이슈는 한 주제**로 사용한다. 기능 구현에 직접 필요한 권한·모델/조회·기존 API 연계 수정은 함께 처리하되, 독립 기능/별도 후속의 범위가 커지면 새 이슈로 분리한다. 숫자나 파일별로 잘게 나누는 것이 아니라 하나의 완료 조건을 기준으로 구분한다.
+
+- 본문 상단에 현재 범위·담당·완료/미완료·다음 행동을 유지한다. 이슈 제목/원문 변경 시 과거 요구와 결정 근거는 보존한다.
+- 분리 시 원본·소비 계약 SHA·기존 합의/검증·남은 결정과 다음 담당을 새 이슈에 옮기고 원본에 링크를 남긴다. 요구 이관을 취소/기능 완료로 해석하지 않는다.
+- 댓글은 필요한 질문/결정·버그/변경된 계약·검증 인계와 결과에 사용한다. 같은 명세/긴 JSON/변화 없는 상태를 반복 게시하지 않고 원본 계약과 고정 문서 링크를 활용한다.
+- 완료 근거가 있고 남은 독립 작업의 추적 위치가 명확하면 종료한다. Backend 완료/Flutter 적용/실기기 인수는 계속 구분한다. 주제 이관으로 닫은 원본은 참고 자료이며 새 구현 스레드로 재사용하지 않는다.
+- 이슈 분리만으로 브랜치를 늘리지 않는다. 관련 목적 브랜치에서 이어가고 필요할 때만 분리한다. 실제 댓글 순번/작성 측/단계/다음 담당 표시 규칙은 유지한다.
+
+현재 정리 결과와 각 주제는 [이슈 추적표](project/ISSUE_TRACKER.md)를 따른다. 미완료 그룹/모집·V2 연결은 계속 열어 두며, 완료/이관 이슈의 종료가 테스트 요청이나 구현 범위 확대가 되지는 않는다.
+
 ## 공통 협업 규칙
 
 1. 관련 작업을 시작하거나 인계할 때 기존 Issue 본문과 최신 댓글을 확인합니다. 이미 답변·수용·처리한 내용과 새 요청을 구분합니다.
@@ -42,7 +54,7 @@ Issue·댓글·PR·구현/계약 커밋을 연결합니다. Backend 완료와 Fl
 
 ## 계약 원본과 검증
 
-REST 계약의 단일 원본은 [openapi/openapi.yaml](../openapi/openapi.yaml)입니다. `/health`, Issue #2의 6개 인증 API, Issue #3의 12개 내 계정 업무 API와 Issue #5의 전투력 갱신 API 및 Issue #6의 회원 설정 GET/PUT 및 Issue #7 회원 키 GET/PUT/DELETE·본인 복원 POST·Issue #8의 대표 전용 GET/PUT·L1b V2현재상태/퇴역이력GET·P1 역할요약GET/PUT·P2 개인설정PUT/원정대표시GET/PUT과 Issue #10의 공개 카탈로그/서버 주차 GET과 Issue #11의 본인 주간 상태 GET/개인 완료 PUT과 Issue #12의 그룹 G1 7개 동작·본인한도 GET 및 G2 초대/신청/코드/차단20동작을 포함하며 YAML에서 유효한 JSON 형식으로 저장합니다. FastAPI의 `app.openapi()`는 구현에서 생성되는 비교 대상입니다. HTTP OpenAPI·Swagger 경로는 비활성화되어 있습니다. 실제 연동·자동 검증의 범위는 [인증 개발 안내](AUTH_DEVELOPMENT.md)와 [내 계정 API 안내](ISSUE_3_DEVELOPMENT.md)에 있습니다.
+REST 계약의 단일 원본은 [openapi/openapi.yaml](../openapi/openapi.yaml)입니다. `/health`, Issue #2의 6개 인증 API, Issue #3의 12개 내 계정 업무 API와 Issue #5의 전투력 갱신 API 및 Issue #6의 회원 설정 GET/PUT 및 Issue #7 회원 키 GET/PUT/DELETE·본인 복원 POST·Issue #8의 대표 전용 GET/PUT·L1b V2현재상태/퇴역이력GET·P1 역할요약GET/PUT·P2 개인설정PUT/원정대표시GET/PUT과 Issue #10의 공개 카탈로그/서버 주차 GET과 Issue #11의 본인 주간 상태 GET/개인 완료 PUT과 Issue #12의 그룹 G1 7개 동작·본인한도 GET 및 G2 초대/신청/코드/차단20동작과 Issue #16의 G3 관리조회·그룹장이전·일반탈퇴3동작을 포함하며 YAML에서 유효한 JSON 형식으로 저장합니다. FastAPI의 `app.openapi()`는 구현에서 생성되는 비교 대상입니다. HTTP OpenAPI·Swagger 경로는 비활성화되어 있습니다. 실제 연동·자동 검증의 범위는 [인증 개발 안내](AUTH_DEVELOPMENT.md)와 [내 계정 API 안내](ISSUE_3_DEVELOPMENT.md)에 있습니다.
 
 API 구현·계약을 변경한 경우 최신 API 이미지에서 다음 검증을 실행합니다.
 

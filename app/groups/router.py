@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, Query, Request
 from app.game_accounts.router import Principal, Key
 from app.game_accounts.schemas import GameErrorOut
 from app.game_accounts.support import fail
-from app.groups import schemas, http_service
+from app.groups import schemas, http_service, management
 from app.member_limits import schemas as limit_schemas, service as limits
 
 
@@ -66,3 +66,18 @@ def members(group_id: UUID, principal: Principal, limit: Limit = 20, cursor: Cur
 @router.patch('/groups/{group_id}', response_model=schemas.GroupDetail, responses=errors)
 def rename(group_id: UUID, data: schemas.GroupRenameIn, principal: Principal, key: Key):
     return http_service.rename(principal, group_id, key, data)[1]
+
+
+@router.get('/groups/{group_id}/management', response_model=schemas.GroupManagement, responses=errors)
+def group_management(group_id: UUID, principal: Principal):
+    return management.get(principal, group_id)
+
+
+@router.post('/groups/{group_id}/leadership-transfer', response_model=schemas.LeadershipTransferAck, responses=errors)
+def transfer_leadership(group_id: UUID, data: schemas.TransferLeadershipIn, principal: Principal, key: Key):
+    return management.transfer(principal, group_id, key, data)[1]
+
+
+@router.post('/groups/{group_id}/leave', response_model=schemas.GroupLeaveAck, responses=errors)
+def leave_group(group_id: UUID, data: schemas.LeaveGroupIn, principal: Principal, key: Key):
+    return management.leave(principal, group_id, key, data)[1]

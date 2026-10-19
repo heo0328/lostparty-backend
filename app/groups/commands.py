@@ -40,3 +40,15 @@ class RenameGroup(DTO):
     @classmethod
     def group_name(cls, value):
         return normalize_name(value)
+
+
+class LeaveGroup(DTO):
+    expected_group_revision: Version
+    expected_members_revision: Version
+    expected_membership_id: UUID
+    expected_membership_revision: Version
+
+
+class TransferLeadership(LeaveGroup):
+    target_membership_id: UUID
+    expected_target_membership_revision: Version

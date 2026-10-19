@@ -15003,6 +15003,547 @@
           }
         }
       }
+    },
+    "/v1/groups/{group_id}/management": {
+      "get": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Group Management",
+        "operationId": "group_management_v1_groups__group_id__management_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Group Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupManagement"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/groups/{group_id}/leadership-transfer": {
+      "post": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Transfer Leadership",
+        "operationId": "transfer_leadership_v1_groups__group_id__leadership_transfer_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Group Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid4",
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferLeadershipIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadershipTransferAck"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/groups/{group_id}/leave": {
+      "post": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Leave Group",
+        "operationId": "leave_group_v1_groups__group_id__leave_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Group Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid4",
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LeaveGroupIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupLeaveAck"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -20849,6 +21390,230 @@
           "entries"
         ],
         "title": "WeeklyStates"
+      },
+      "GroupLeaveAck": {
+        "properties": {
+          "group_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Group Id"
+          },
+          "membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Membership Id"
+          },
+          "membership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Membership Revision"
+          },
+          "ended_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Ended At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_id",
+          "membership_id",
+          "membership_revision",
+          "ended_at"
+        ],
+        "title": "GroupLeaveAck"
+      },
+      "GroupManagement": {
+        "properties": {
+          "group_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Group Id"
+          },
+          "group_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Group Revision"
+          },
+          "members_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Members Revision"
+          },
+          "my_membership": {
+            "$ref": "#/components/schemas/MyMembership"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/ManagementPermissions"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_id",
+          "group_revision",
+          "members_revision",
+          "my_membership",
+          "permissions"
+        ],
+        "title": "GroupManagement"
+      },
+      "LeadershipTransferAck": {
+        "properties": {
+          "group_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Group Id"
+          },
+          "previous_leader_membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Previous Leader Membership Id"
+          },
+          "leader_membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Leader Membership Id"
+          },
+          "group_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Group Revision"
+          },
+          "members_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Members Revision"
+          },
+          "previous_leader_membership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Previous Leader Membership Revision"
+          },
+          "leader_membership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Leader Membership Revision"
+          },
+          "transferred_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Transferred At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_id",
+          "previous_leader_membership_id",
+          "leader_membership_id",
+          "group_revision",
+          "members_revision",
+          "previous_leader_membership_revision",
+          "leader_membership_revision",
+          "transferred_at"
+        ],
+        "title": "LeadershipTransferAck"
+      },
+      "LeaveGroupIn": {
+        "properties": {
+          "expected_group_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Group Revision"
+          },
+          "expected_members_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Members Revision"
+          },
+          "expected_membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Expected Membership Id"
+          },
+          "expected_membership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Membership Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_group_revision",
+          "expected_members_revision",
+          "expected_membership_id",
+          "expected_membership_revision"
+        ],
+        "title": "LeaveGroupIn"
+      },
+      "ManagementPermissions": {
+        "properties": {
+          "transfer_leadership": {
+            "$ref": "#/components/schemas/Permission"
+          },
+          "leave": {
+            "$ref": "#/components/schemas/Permission"
+          },
+          "disband": {
+            "$ref": "#/components/schemas/Permission"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "transfer_leadership",
+          "leave",
+          "disband"
+        ],
+        "title": "ManagementPermissions"
+      },
+      "TransferLeadershipIn": {
+        "properties": {
+          "expected_group_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Group Revision"
+          },
+          "expected_members_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Members Revision"
+          },
+          "expected_membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Expected Membership Id"
+          },
+          "expected_membership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Membership Revision"
+          },
+          "target_membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Target Membership Id"
+          },
+          "expected_target_membership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Target Membership Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_group_revision",
+          "expected_members_revision",
+          "expected_membership_id",
+          "expected_membership_revision",
+          "target_membership_id",
+          "expected_target_membership_revision"
+        ],
+        "title": "TransferLeadershipIn"
       }
     },
     "securitySchemes": {
