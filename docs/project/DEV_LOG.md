@@ -1278,3 +1278,6 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - G3 HTTP22개를 추가했다. 최초147 PASS/1 FAIL은 테스트 이미지에 없는 git 명령 사용에 따른 시험 구성 오류다. 테스트 계약 파일 COPY·실행계약 비교로 수정한 최종 이미지에서 **148 PASS/55.73초**(G3내부23+HTTP22+기존회귀103), 기존 Starlette/AnyIO 경고1개. 이전126/19와 중복 합산하지 않는다.
 - 기존 API8000을 docker compose up -d --build --wait --wait-timeout180으로 반영, 실행 OpenAPI 전체일치 PASS. DB 전후0016_record_timestamps·migration없음. 실제HTTP health200/신규3동작401 ACCESS_INVALID·Bearer/no-store 확인. 호스트 일반 sandbox의 HTTP소켓 제한은 승인된 로컬읽기로 재실행해 해소했다.
 - 실제 개발 회원 이전/탈퇴·전체 Backend시험·실provider/Flutter/실기기·운영배포는 미실행이다. 키/자료 초기화나 새 환경 구축은 없다. 검증된 구간을 작업브랜치에 게시하고 계약/결과를 #16에 인계한다.
+
+- G3 구현/계약 `332a8ab9697ca1a8e0d2ebcc147169c54ce9161c`를 `feat/group-management`에 commit/push하고 ls-remote SHA 일치를 확인했다. 최초 push의 기본 credential helper 부재는 기존 gh 인증 helper를 해당 명령에만 사용해 해소했고 인증정보는 출력/저장하지 않았다. main/dev/운영은 변경하지 않았다.
+- [#16 전체4번째 Backend — 구현·검증·게시 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6258994902) 게시 후 전체4개 댓글의 실제 순번/원문을 재조회했다. 다음 Flutter 별도 그룹 연결 구간 신규 소비/충돌 회신, Backend 소비보완·#13R1/R2 후속이다. 조건부 해산이 미완료라 #16은 유지한다. 격리 test-db만 stop했고 로컬 개발 API8000은 G3 반영 상태를 유지했다. 후행 문서에 구현SHA/댓글 링크/게시완료를 기록해 같은 브랜치에 게시한다.

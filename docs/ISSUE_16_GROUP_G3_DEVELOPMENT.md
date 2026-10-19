@@ -2,6 +2,8 @@
 
 2026-10-19 / Backend / `feat/group-management` / [Issue16](https://github.com/heo0328/lostparty-backend/issues/16).
 
+구현·계약 SHA `332a8ab9697ca1a8e0d2ebcc147169c54ce9161c`, push·원격 SHA 일치 확인 완료. [전체4번째 Backend — 구현·검증·게시 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6258994902). main/dev 미병합, 후행 문서 커밋은 기능 계약 SHA와 구분한다.
+
 ## 제공 범위
 
 [명세](ISSUE_16_GROUP_G3_SPEC.md)와 [실행 계약](../openapi/openapi.yaml)의 관리 GET `/v1/groups/{group_id}/management`, 그룹장 이전 POST `/v1/groups/{group_id}/leadership-transfer`, 일반 탈퇴 POST `/v1/groups/{group_id}/leave`를 제공한다. 기존 G1/G2 경로·DTO·정책 객체는 그대로다. 소비 합의를 추정한 것이 아니라 원본 #12에서 Backend에 맡긴 경로/DTO 설계와 사용자 G3 착수·계속 진행 승인 범위로 구현했다. 이전 기록에서 소비 확인을 전체 구현의 선행조건으로 둔 부분은 정정한다.

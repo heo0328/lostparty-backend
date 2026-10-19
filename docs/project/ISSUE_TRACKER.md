@@ -9,7 +9,7 @@
 | [#12](https://github.com/heo0328/lostparty-backend/issues/12) | 그룹 G1/G2 Flutter 연결 | Backend 구현/통합 완료. Flutter 연결/관련 검증과 사용SHA 회신 미확인. V2 우선작업을 중단시키지 않음 |
 | [#13](https://github.com/heo0328/lostparty-backend/issues/13) | 실제 모집·참가·파티 관리 | Backend R1/R2 명세/실제 room 원본부터. #11 membership/i·점유중완료 명시실행·실제자리/완료연계 후속 포함. 통계는 제외 |
 | [#15](https://github.com/heo0328/lostparty-backend/issues/15) | V2 Flutter 인증/복원·도전/방어·앱내안내 | Flutter D1 계약/명령 기반부터. 현재 설계/Backend 추가 요청 없음. 기능 구현/기기완료와 구분 |
-| [#16](https://github.com/heo0328/lostparty-backend/issues/16) | G3 그룹장 이전·탈퇴·조건부 해산 | Backend 관리GET/이전/일반탈퇴3동작 구현·API8000/DB0016·관련148PASS/실행계약일치. [개발안내](../ISSUE_16_GROUP_G3_DEVELOPMENT.md). 검증구간게시/인계후 Flutter 연결별도. 조건부해산은#13원본선행·추방/대표변경미구현, 이슈유지 |
+| [#16](https://github.com/heo0328/lostparty-backend/issues/16) | G3 그룹장 이전·탈퇴·조건부 해산 | Backend 관리GET/이전/일반탈퇴3동작 구현·API8000/DB0016·관련148PASS/실행계약일치. [개발안내](../ISSUE_16_GROUP_G3_DEVELOPMENT.md). 332a8ab push/원격확인·[전체4번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6258994902)완료/Flutter 연결별도. 조건부해산은#13원본선행·추방/대표변경미구현, 이슈유지 |
 | [#17](https://github.com/heo0328/lostparty-backend/issues/17) | 캐릭터 소멸 근거·이력·이름 재사용 ID | Backend 현재기능/증거공백 검토·최소계약 보완. 기존L1/claim/조회 재사용. 실제삭제/보류해제 승인 아님 |
 | [#18](https://github.com/heo0328/lostparty-backend/issues/18) | 활동 자동추가·직접제외 보존 | Backend 신규발견/첫1700·명시제외 영속정책 명세. 도입이전 미선택 일괄활성화/GET쓰기 금지·구현 미착수 |
 | [#19](https://github.com/heo0328/lostparty-backend/issues/19) | 사용자/그룹 주간 이용 통계 | 귀속/조회 제안 소비검토와 실제방 원천 선행. 집계/조회 미구현·개인manual결과 집계 금지 |

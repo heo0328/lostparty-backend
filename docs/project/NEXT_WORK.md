@@ -4,7 +4,7 @@
 
 [개발 안내](../ISSUE_16_GROUP_G3_DEVELOPMENT.md)·[명세](../ISSUE_16_GROUP_G3_SPEC.md). 기존 API8000에 신규3동작 반영, DB0016 유지·migration 없음. 격리 PostgreSQL/HTTP 관련148 PASS/55.73초, 실행 OpenAPI 전체 일치. 기존 G1/G2 path/DTO 불변, 실제회원 이전/탈퇴·Flutter/실기기/운영은 미확인이다.
 
-1. 검증된 G3 구간을 현재 feat/group-management에서 커밋·push하고 원격 확인 후 #16에 계약 SHA/검증/후속을 인계한다. 단계 마감 시 게시 SHA와 실제 댓글 링크를 아래에 기록한다.
+1. G3 구현/계약 `332a8ab9697ca1a8e0d2ebcc147169c54ce9161c`·`feat/group-management` 커밋/push·원격 SHA 일치 및 [#16 전체4번째 Backend 구현 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6258994902) 완료. Backend API 구간 완료이며 Flutter 연결/실기기는 별도다. main/dev 미병합. 이 인계 결과 문서는 후행 문서 커밋으로 같은 브랜치에 게시한다.
 2. Flutter는 기존 #15 V2 우선 작업을 유지하며 #12 그룹 연결 구간에서 G3 관리/이전/탈퇴도 연계할 수 있다. 추가 재승인/기초 로그인·키/장비 반복시험은 요청하지 않는다. 실제 신규 소비 충돌/결과만 #16에 회신한다.
 3. 다음 Backend 독립 작업은 #13 R1/R2 명세·기초 구현이다. #16 해산은 실제 모집 원본을 검사할 수 있을 때 연결하고 추방/대표 변경은 해당 정책 설계 구간에서 다룬다. 이 후속이 남아 #16은 닫지 않는다.
 
