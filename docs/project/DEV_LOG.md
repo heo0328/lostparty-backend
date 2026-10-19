@@ -1360,3 +1360,16 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 다음은보존한feat/raid-recruitment의F3이며 dev기록을merge로반영해이어간다. Flutter #13전체16번째는F2접수·#15 D1~D4 dev마감/분쟁실기기사용자보류·현재로그인후내계정화면결함문서화를보고했다. Q1~Q3검토는여전히대기다. main통합/배포/자료삭제·Flutter/실기기인수로확대하지않는다.
 
 - 모집 브랜치 c41fd03에 dev/ce3064f를 이력 재작성 없이 merge했다. 충돌은 AI_CONTEXT/DEV_LOG/ISSUE_TRACKER/NEXT_WORK 네 진행 문서뿐이며 모집 F1/F2 기록과 G3 dev 통합 기록을 모두 보존했다. app/tests/alembic/OpenAPI 내용은 c41fd03 대비 동일함을 확인한다. dev 기준과의 차이에는 모집 코드/문서만 남고 G3 구현이 다시 포함되지 않는다. 문서/이력 반영이므로 기능시험을 반복하지 않는다.
+
+## 2026-10-19 — F3 활성화·복구 구간 설계
+
+- AGENTS/협업/NEXT_WORK/AI_CONTEXT·F2계약/실제코드와 #13전체16번째Flutter·#16전체6번째Backend를재조회했다. 신규Q1~Q3회신은없었다. feat/raid-recruitment/61ca90b의깨끗한상태에서설계했으며dev/ce3064f·main77a1fe5/완료그룹브랜치정리상태를보존했다.
+- [F3 설계](../ISSUE_13_F3_ACTIVATION_DESIGN.md): usage 순수집계공유와limits.snapshot의unavailable→실수치/초과issues 전환, 기존DTO/policy_version 유지·DB오류503/0fallback금지, main router·최종OpenAPI/기존계약diff와DB준비검사·앱권한검증을기록했다. bootstrap은usage를포함하지않아응답필드확대없음,주간참가/현재membership/완료분리와V2보류/G3해산미지원은유지한다.
+- 신규 참가 일시정지 설정 RAID_ROOM_ADMISSIONS_ENABLED(미설정false/전환시명시true)는미구현제안이다. 원ACK replay 뒤 최초실행분기에서새증가만막고실제사용량·기존조회/권한있는정리는유지한다. OpenAPI구조를환경true/false에따라바꾸지않는다.
+- F3-A구현→F3-B격리검증→F3-C보호된전환준비→F3-D개발API단기중지/기존DB유지·0017→0018/새이미지기동→F3-E최신이미지계약/게시인계로정리했다. 새업무자료가생긴뒤에는source를모르는구버전으로숨기거나삭제downgrade/강제stamp를하지않고정지가능한신버전에서전진수정한다. 백업생성/복원검증과개발/운영을구분한다.
+- 이번은문서설계이며코드/Compose/원본OpenAPI/DDL·이미지/서버/DB/자료변경·실행시험은없다. 기존101PASS를F3검증으로확대하지않으며문서참조·diff를확인한다. 다음Backend F3-A,Flutter현재로그인후화면결함대응/Q1~Q3검토대기·신규API시험요청없음이다.
+
+- 설계 공유 직후 댓글순번 확인에서 기대17과 실제18이 달라 추가 회신을 확인했다. [전체17번째 Flutter Q1~Q3 검토](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6263303080)가동시에추가됐고첫순번확인스크립트는assert에서중단해이슈본문수정은실행되지않았다. 실제공유댓글은전체18번째이며이를정정한다.
+- 신규회신의P1역할원본/신뢰·관측·stale/null 예시와그룹탈퇴최소정리DTO/후보없음·원인별영향표를설계7~9절에추가했다. 후보역할별문턱맵이기존단일nullable UI확정이아님을명시했다. 최초지원범위·전투력입력/수치·그룹탈퇴제한/공개를사용자결정으로분리하고독립F3-A 준비와실제활성화/계약고정을구분했다. Flutter화면재구성수정은전체17번째에서별도마감으로정정됐다.
+
+- [#13 전체18번째 Backend 설계·근거답변](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6263341047)을전체17번째수신요청에대한Q2필드/신뢰/예시·Q3최소정리/원인별영향답변으로보완하고실제순번/수정본문을재조회했다. 이슈상단도설계/독립F3-A와사용자결정·계약고정경계로갱신한다. 이번설계/진행기록은로컬커밋·미push로보존한다.
