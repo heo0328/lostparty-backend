@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+최신 수신: [#13 전체44번째 Flutter 소비 검토](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6272050056). 실제 Router/DI/Repository 대조 결과 기존 방향은 부합하나 입력 누락/세션·버전 식별/GET별 CAS 출처/기존 명령·조회 대응/P1 최근 성공 서버 보존/G 결정 예시 보완 요청이다. **다음 Backend 계약 보완→Flutter 재대조**, 최종 계약·통합 구현은 미완료다. 구체적 작업은 NEXT_WORK 기준이며 이번은 수신 확인으로 구현·서버 시험 요청이 아니다.
+
 최신2026-10-20: [R0 계약 고정 초안](../ISSUE_13_FIXED_CONTRACT_DRAFT.md) 35dd5f9 로컬/미push를 [#13 전체43번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271860507)에 본문 전체 게시했다. Flutter41/42번째에 대한 DTO·명령/권한/오류·원자 효과/부분 해제·호환/구현 순서 답변이다. 다음 Flutter 실제 Router/DI/Repository·구자료 대조 → Backend 누락 DTO/정확한 요청 schema·필요 G1~G7 보완 → 계약 고정. 확정된 점수 비교/기간 합산·06 운영/10 플레이는 재질문하지 않는다. 초안 게시 완료이며 최종 합의/통합 구현·API/DB 반영/Flutter 적용은 미완료다. 코드·DDL·원본 OpenAPI·서버/자료 변경이나 새 기능 시험은 없었다. 다음 실행은 [NEXT_WORK](NEXT_WORK.md)를 따른다.
 
 최신2026-10-20: [정책 보완안](../ISSUE_13_OCT20_POLICY_REVISION.md) c47afef 로컬/미push·[#13 전체40번째Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271452128)은Flutter34~39번째반영(게시후39추가확인/같은본문수정). 시간중복경고/자동추천회피·인원별동의수·초록pending본인확인→참가확인/예약생성·수10시반복재개·기간대체/합산·OFF갱신/경고차단철회·공개원pending외부승인·혼합일행4·인증회원개인표가최신기준이다. 다음Backend 고정DTO/명령/호환·내부구현순서정리/Flutter대조. 아래전원동의/배타예약·확인효과미정/수10시미정/과거회신대기는당시이력이다. 코드/DDL/서버/실행계약미변경.
