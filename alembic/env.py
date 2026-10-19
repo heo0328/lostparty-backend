@@ -4,6 +4,7 @@ from app.auth.models import Base
 import app.game_accounts.models
 import app.member_settings.models
 import app.raid_weekly.models
+import app.raid_rooms.models
 import app.groups.models
 import app.groups.admission_models
 import app.member_limits.models
