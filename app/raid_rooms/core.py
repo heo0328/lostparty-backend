@@ -72,8 +72,8 @@ def cas(room, round, command, membership=None):
 
 
 def room_count(db, uid):
-    return db.scalar(select(func.count()).select_from(Membership).join(Room, Room.id == Membership.room_id)
-        .where(Membership.user_id == uid, Membership.ended_at.is_(None), Room.ended_at.is_(None)))
+    from app.raid_rooms.usage import count
+    return count(db, uid)
 
 
 def issues(db, room):

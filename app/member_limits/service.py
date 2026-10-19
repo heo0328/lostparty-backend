@@ -45,12 +45,20 @@ def joined_group_count(db, uid):
         GroupMembership.user_id == uid, GroupMembership.ended_at.is_(None), Group.ended_at.is_(None)))
 
 
-def snapshot(db, uid):
+def snapshot(db, uid, *, room_count=None):
     """Caller must authorize and provide a consistent read transaction. Never inserts."""
     row, head = db.get(MemberUsageLimits, uid), db.get(MemberUsageHead, uid)
     limits = values(row)
     used = joined_group_count(db, uid)
+    if room_count is not None and not callable(room_count):
+        raise TypeError('Explicit room usage source must be callable')
+    rooms = room_count(db, uid) if room_count is not None else None
+    if room_count is not None and (type(rooms) is not int or rooms < 0):
+        fail('SERVICE_UNAVAILABLE', 503)
     issues = []
+    if rooms is not None and rooms > limits.raid_rooms:
+        issues.append(dict(code='MEMBER_RAID_LIMIT_EXCEEDED', dimension='raid_rooms',
+                           used=rooms, limit=limits.raid_rooms))
     if used > limits.joined_groups:
         issues.append(dict(code='MEMBER_GROUP_LIMIT_EXCEEDED', dimension='joined_groups',
                            used=used, limit=limits.joined_groups))
@@ -58,7 +66,7 @@ def snapshot(db, uid):
                 limits_revision=row.revision if row else 1, usage_revision=head.revision if head else 1,
                 limit_source='account' if row else 'default', updated_at=row.updated_at if row else None,
                 limits=asdict(limits), usage=dict(joined_groups=metric(used, limits.joined_groups),
-                                                raid_rooms=metric(None, limits.raid_rooms)), issues=issues)
+                                                raid_rooms=metric(rooms, limits.raid_rooms)), issues=issues)
 
 
 def get(principal):
