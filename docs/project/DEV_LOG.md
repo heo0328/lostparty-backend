@@ -1437,3 +1437,11 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 반복round별불변recruitment_opened_at/search_floor_at제안, 탐욕실패반례/제한backtracking·search_limited/명시전체시간선택, 첫임계치마감Backend안과Flutter예외안의09:00/09:30/09:35차이, assignment귀속generation/예약/원장revision·옛ACK재효과금지를보완했다. 64구간/24h·타임/기간·필수0개/묶음/완료/선언scope·전투력/그룹왕복은미정으로유지했다.
 - 기술수정1e2f706 로컬커밋·미push. [전체33번째 Backend 기술보완](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6269041117)에보완9절본문을게시하고이슈상단/작업문서를대조/필요사용자결정대기로갱신했다. 단순접수로응답을대신하지않았고네이티브디자인Penpot은계약설계선행조건이아님을기록했다.
 - latest후보예시2건/빈집합·A10/11+B10탐욕반례를표준Python집합/구간계산으로확인했다. 앱자동시험·서버/DB/실provider/기기검증은실행하지않았으며코드/DDL/OpenAPI·자료/이미지/배포변경없음이다. 문서검사후기록을로컬커밋으로보존한다.
+
+
+## 2026-10-19 — 기존 주간 이용횟수 요청·실제 서버 집계 유무 확인
+
+- 사용자확인지시로#13전체7번째Flutter원요구/8번째Backend제안과#19본문·전체1번째Flutter회신을재조회했다. 사용자UUID별원정대/캐릭터합산·주차고유room/group·공개/그룹완료/미완료·함께하기와그룹별실제생성/결과원천요구가있다. #19로분리돼있고설계제안/집계미구현상태다.
+- 기존API컨테이너의앱DB계정으로REPEATABLE READ/SET TRANSACTION READ ONLY를사용해메타데이터와집계값만조회했다. revision0016_record_timestamps, raid_weekly_states6행/manual완료4행·party_completed0/active_party0, groups/group_memberships0행이다. 모집4표는없고통계명칭표/실행통계API도없었다. 개별식별자/원본행·비밀정보는출력하지않았다.
+- 실행관련경로는주간상태GET/개인manual완료PUT/본인usage-limits뿐이다. 수동완료4행을모집완료/사용횟수로치환하지않는다. 로컬후보의Room/멤버십·usage.count는현재관계집계준비이며서버실적통계완료가아니다.
+- 코드/서버/DB/이미지/자료변경·신규HTTP쓰기/provider·자동시험은없었다. 읽기확인기록만로컬커밋/미push로남긴다. 새네이티브요청에대한답변이아니므로변화없는통계설계댓글/시험요청은추가하지않았다.
