@@ -2,6 +2,8 @@
 
 2026-10-19 / Backend / `feat/raid-recruitment` / [F2 설계](ISSUE_13_F2_IMPLEMENTATION_DESIGN.md)·[상세 제안](ISSUE_13_R1_R2_CONTRACT_DRAFT.md) 기준.
 
+현재 후속: [F2-B 후보 HTTP](ISSUE_13_F2_HTTP.md) 9fb2058/101PASS까지 진행했다. 아래는 F2-A 당시 결과이며 main 앱/개발DB 활성화는 여전히 F3다.
+
 ## 구현한 구간
 
 - `schemas.py`: 공개 요약/상세·현재/종료 본인관계·신청·최소관리·참가조건의 required/nullable 응답 DTO. 기존 CharacterDisplay/P1 RoleSummary를 재사용하며 전역 타인 user UUID·등록/소유 선택원문·개인키를 출력하지 않는다.

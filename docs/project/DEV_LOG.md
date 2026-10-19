@@ -1339,3 +1339,13 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 구현/시험9파일을 **e74d850** 로컬커밋했다. 이전F1 9664fb4/설계e509242와같은모집브랜치이며미push/원격추적없음이다. 사용자요청의구간별기록방식을이어갔고브랜치전환/G3변경은없다.
 - [#13 전체14번째 Backend — F2-A 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6260548709)에회신하고실제전체순번·게시본문을재조회,이슈상단상태/다음담당을갱신했다. 다음Backend F2-B 후보HTTP/strict입력·인증/헤더/응답schema격리검증이며Flutter #15 우선/Q1~Q3 확인유지·신규API테스트요청없음이다.
 - main 앱/router·원본OpenAPI·개발이미지/서버/DB0016·기존자료를변경하지않았다. 실제HTTP시험/전체Backend suite·실provider·실제개발회원쓰기/Flutter/실기기·운영검증/merge/배포는미실행이다. 사용한격리테스트DB만stop했다. 이후F3는0017+0018/source·앱/OpenAPI/실행이미지를동일검증구간으로맞춰게시후인계한다.
+
+## 2026-10-19 — F2-B 후보 모집 HTTP 연결·격리 검증
+
+- AGENTS→협업/NEXT_WORK/AI_CONTEXT·상세계약/F2설계를읽고깨끗한feat/raid-recruitment/5f4cb85에서착수했다. #13전체14개를재조회했고Q1~Q3새회신은없었다. 독립가능한공개/유한회차/문턱미설정18동작만연결했다.
+- [HTTP안내](../ISSUE_13_F2_HTTP.md): http_schemas/router에기존제안경로·required/nullable그룹CAS/min_combat_power·최소ACK, strict UTC/body/query/JSON중복키/header·세션actor/UUIDv4 key를연결했다. 원입력전체의digest·기존오류/헤더·no-store를유지하고main 앱에는등록하지않았다.
+- core.room은그룹방을존재하지않는방과같은404로처리한다. active/ended나명령/회복경로를통한그룹존재노출및미합의Q3철회권한선반영을차단했다. 그룹생성입력미지원과원성공최소ACK복구는구분한다.
+- 최초검증8실패/89통과는catalog_version에raid ID용정규식을적용한구현오류를기존카탈로그와같은길이제약문자열로수정했다. 이후그룹fixture가모집가입후오래된usage CAS1을보낸준비순서와커밋후유실시험의내부UTC +00:00/HTTP Z문자열비교를응답DTO기준으로정정했다. 최종 **101PASS/35.00초**(HTTP43+F2-A23+F1 32+시각3), 기존Starlette/AnyIO경고1개다. 이전실행의중복결과는합산하지않는다.
+- 실제후보HTTP에서생성→신청→승인→이전→탈퇴→종료·직접가입/재가입옛ACK·권한상실·거절/철회·잘못된입력/인증/헤더·private비노출·동시마지막자리/CAS·source변경후최종검사, ACK기록실패의전체rollback과커밋후응답유실의원ACK복구를검증했다. 기존F1경합/원자성·F2-A읽기snapshot/cursor·공통시각 및main app.openapi=원본/모집경로없음을포함한다.
+- 구현/시험4파일을 **9fb2058** 로컬커밋했다. [#13 전체15번째 Backend F2-B 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6260695606)에회신하고실제전체순번/게시본문을재조회,본문상단의범위/상태/다음담당을갱신했다. 다음Backend F3 최종계약·개발반영준비이며Flutter #15 우선/Q1~Q3 분리·신규API테스트요청없음이다.
+- 테스트DB만stop했고기존개발API/DB컨테이너healthy·/health HTTP200/status ok/database ok를읽기확인했다. main router·원본OpenAPI·개발이미지/DB0016·자료/키변경없음, push/merge/배포·전체Backend suite·실provider/실제회원쓰기·Flutter/실기기/운영검증은미실행이다. 후보schema의최종가공/원본비교·0017+0018/사용량source/앱·이미지반영은F3다.

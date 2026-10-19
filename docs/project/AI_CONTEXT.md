@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+모집 F2-B(2026-10-19): [후보 HTTP18동작](../ISSUE_13_F2_HTTP.md) 9fb2058 로컬커밋·미push, HTTP43+F2-A23+F1 32+시각3 **101PASS/35.00초**. [#13 전체15번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6260695606). 격리 앱에서생성/신청/승인·직접가입·조회·탈퇴/이전/종료와입력/인증·원ACK/경합/rollback검증완료다. main 앱/router/OpenAPI·개발DB0016/이미지/API8000은미반영·기존서버healthy/health200이다. 다음Backend F3 최종계약·개발반영준비, Q1~Q3/Flutter #15 우선유지. 아래는이전단계기록이다.
+
 모집 F2-A(2026-10-19): [내부 조회/권한·참가조건](../ISSUE_13_F2_READS.md) e74d850 로컬커밋·미push, 격리 PostgreSQL 조회23+F1 32+시각3 **58 PASS/23.38초**. [#13 전체14번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6260548709). 읽기전용snapshot/서명cursor·본인context·과거빌드 보존/0018 신청snapshot 열(격리DB만)이다. 다음Backend F2-B 후보HTTP연결이며 main 앱/router/OpenAPI·개발DB0016/서버는미반영, Q1~Q3/Flutter #15 우선유지. 아래 과거단계 기록과 구분한다.
 
 모집 후속 설계: [F2 구현설계](../ISSUE_13_F2_IMPLEMENTATION_DESIGN.md)에 조회/권한별응답·정책→격리HTTP검증→F3 DB/앱/계약반영·인계 순서를 기록했다. 이번은문서설계이며API/DB·기능코드변경없음.
@@ -26,7 +28,7 @@
 | #12 그룹 G1 | 그룹7동작/본인한도GET,현재활동/소유·가입한도/CAS·검색/서명cursor·공개/회원권한구현/로컬반영. [G1](../ISSUE_12_GROUP_G1_DEVELOPMENT.md), [12번째 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6234628340). Flutter13번째는접수만/연결후속 |
 | #12 공통한도 | 계정별기본15/5/10·쓰기없는조회·사용량head·서버변경권한/감사·실제그룹집계. [계약](../ISSUE_12_MEMBER_LIMITS_CONTRACT_DRAFT.md), [L0](../ISSUE_12_MEMBER_LIMITS_FOUNDATION.md). 모집은null/unavailable. 개인초과직접참가차원별제한/그룹자체정원초과그룹전용방전체제한확정,실제방guard미연결 |
 | #12 그룹 G2 | 초대/신청/수락·승인/거절·취소/차단·해제/코드20동작구현·관련190PASS/77.70초·실행OpenAPI일치·0014/기존로컬반영. [계약](../ISSUE_12_GROUP_G2_SPEC.md), [개발](../ISSUE_12_GROUP_G2_DEVELOPMENT.md). 일반멤버초대·권한코드조회/복사·공개OFF숨김만·10분재생성·이전코드폐기. 실제회원쓰기/Flutter/실기기는미확인. G3는#16후속/이#12는Flutter연결만유지 |
-| #13 방/통계 | F1 9664fb4/F2-A 조회·권한/context e74d850 로컬커밋·58PASS, HTTP/개발DB/Flutter연결은미완료. [통계선행제안](../ISSUE_13_WEEKLY_STATISTICS_DRAFT.md)은#19로분리/원본13의8번째Backend,Flutter귀속/조회검토후원천→마감/집계. 개인수동체크/현재한도와통계는분리 |
+| #13 방/통계 | F1 9664fb4/F2-A e74d850/F2-B후보HTTP 9fb2058 로컬커밋·101PASS, main API/개발DB/Flutter연결은미완료. [통계선행제안](../ISSUE_13_WEEKLY_STATISTICS_DRAFT.md)은#19로분리/원본13의8번째Backend,Flutter귀속/조회검토후원천→마감/집계. 개인수동체크/현재한도와통계는분리 |
 | 첫화면일괄조회/Flutter현재 | [145번째Flutter요청](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6247415075)·[개발](../ISSUE_8_ACCOUNT_BOOTSTRAP_DEVELOPMENT.md). GET /v2/me/account-bootstrap 구현/로컬8000·기존표READ ONLY/RR·권한/전체활동profile/주간일관성·한도오류/16MiB. 261PASS/실행계약일치·DB0016/행수보존. 8d03e96 push·원격확인/[전체146번째Backend인계](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6247620588)완료. [148번째Flutter실기기로그](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6248323346)로실회원GET1회·76→29요청관찰수신/추가Backend요청없음. [151번째Flutter마감](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6248792000)54bacd2 push/전체1662PASS·analyze0보고·현재개선수용,dev/main통합예정/전체동작인수별도. G3확정범위명세/독립서버처리→#13R1/R2계약/기초작업가능. V2분쟁은144수신만/별도소비후속 |
 | 별도/보존 | 자동퇴역·모든명령영속복구·WebSocket/운영배포미완료. 기존개발자료/키/flag유지·베타직전초기화별도지시. Firebase이관/삭제·새8001/백업복원이관·기본재인수없음 |
 
