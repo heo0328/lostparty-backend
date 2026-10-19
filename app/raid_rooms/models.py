@@ -88,6 +88,7 @@ class Application(Base):
     user_id = mapped_column(ForeignKey('users.id'), nullable=False)
     selection = mapped_column(JSONB, nullable=False)
     display = mapped_column(JSONB, nullable=False)
+    build = mapped_column(JSONB(none_as_null=True), nullable=True)
     state = mapped_column(String(16), nullable=False)
     revision = mapped_column(Integer, nullable=False, default=1)
     created_at = stamp()

@@ -119,8 +119,9 @@ def require_policy_snapshot(db, room, expected):
         fail('ROOM_RESTRICTED')
 
 
-def selection(db, uid, data, round, *, increasing):
-    user = db.scalar(select(User).where(User.id == uid).with_for_update())
+def selection(db, uid, data, round, *, increasing, lock=True):
+    query = select(User).where(User.id == uid)
+    user = db.scalar(query.with_for_update() if lock else query)
     if user is None or user.status != 'active':
         fail('ROOM_TARGET_UNAVAILABLE')
     character = groups.selected_character(db, uid, jsonable_encoder(data))
@@ -152,7 +153,8 @@ def selection(db, uid, data, round, *, increasing):
     if data.party_no > round.party_count:
         fail('ROOM_COMPOSITION_CONFLICT')
     # P1 is a client analysis snapshot only. Never replace provider level or impose power thresholds.
-    return character, jsonable_encoder(summary.summary) if summary else None
+    return character, jsonable_encoder(dict(version=summary.version if summary else 1,
+        summary=summary.summary if summary else None, saved_at=summary.saved_at if summary else None))
 
 
 def require_no_time_overlap(db, uid, round):

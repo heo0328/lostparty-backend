@@ -159,7 +159,7 @@ def admit(principal, rid, key, command, *, policy, applying=False):
                 finish_application(db, room, pending, 'expired', pending.expires_at)
                 db.flush()
             value = Application(room_id=rid, round_id=round.id, user_id=uid,
-                selection=jsonable_encoder(command.selection), display=groups.display(character),
+                selection=jsonable_encoder(command.selection), display=groups.display(character), build=build,
                 state='pending', revision=1, created_at=stamp, expires_at=min(stamp+timedelta(hours=24), cycle.ends_at))
             db.add(value); db.flush()
             room.applications_revision += 1
