@@ -1,6 +1,8 @@
 # #13 R0 소비 계약 보완안 R2
 
-2026-10-20 / Backend / feat/raid-recruitment / 기준1435b57.
+2026-10-20 / Backend / feat/raid-recruitment / 기준1435b57. 보완 본문 커밋 e806ee4·로컬/미push.
+
+공식 회신: [전체45번째 Backend / R0 소비 계약 보완2판](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6272271633). 다음 Flutter 재대조, 최종 계약·통합 구현 미완료.
 
 [전체44번째 Flutter 검토](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6272050056)에 대한 보완이다. [R1 초안](ISSUE_13_FIXED_CONTRACT_DRAFT.md)의 아래 해당 정의를 대체한다. 나머지 원자성·권한/개인정보·시간중복 경고·수06 운영/10 플레이·하위 기간 합산은 유지한다. **계약 고정 전 설계이며 구현/원본 OpenAPI/서버 반영이 아니다.** 새 경로·코드·수치 상한은 후보, G 결정은 미채택으로 구분한다.
 

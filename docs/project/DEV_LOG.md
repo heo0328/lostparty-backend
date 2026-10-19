@@ -1478,3 +1478,12 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 사용자 확인 지시로 이슈 본문/전체 댓글을 재조회해 신규 [전체44번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6272050056) 1건을 확인했다. 기존 43번째 초안과 대조해 유효한 누락/식별·버전 불명확성을 확인했다. Flutter의 실제 브랜치/6d3f617 대조 보고이며 Backend가 Flutter 소스를 읽거나 구현/연동을 검증한 것은 아니다.
 - 자동 확정 추가 인원수·후보 하루/선택일마다·최후 출발 제한/자동 활성화/숙련도 입력 누락, 세션별 proposal segment와 revision 구분, CAS GET 출처/승인 개인정보 경계, 전체 명령·조회/permissions 지도, 최근 성공 점수 서버 보존, 비대상 제안자 표와 미정 G 예시를 다음 Backend 작업으로 기록했다. 기존 승인 UX 두 종류/투표와 분리·공개 원 신청 예외를 보존한다.
 - NEXT_WORK/AI_CONTEXT/추적표를 Backend 보완 담당으로 전환했다. 이번은 수신/대조이며 보완 완료/계약 채택·구현 착수/새 시험 요청이 아니다. 결과 기술답변은 실제 보완본과 함께 #13에 게시하고 변화 없는 접수 댓글은 만들지 않았다. 코드/원본 OpenAPI·DB/서버/자료 변경과 앱/기기 시험 없음. 문서 검사 후 로컬 기록을 보존한다.
+
+
+## 2026-10-20 — #13 R0 소비 계약 보완2판·전체45번째 Backend 회신
+
+- 사용자 보완 진행 승인으로44번째의6개 보완 요구를 반영했다. 작업 전/게시 전 모두44개였고 게시 후 실제 [전체45번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6272271633)로 전문 게시를 확인했다. 설계 e806ee4 로컬커밋·미push, 후행 문서는 링크/상태를 기록한다.
+- [보완안](../ISSUE_13_R0_CONSUMER_CORRECTIONS.md)에 방/일정 그룹 설정 소유·후보 one_of/each·임계치/최후 출발 상한·숙련도 보존, 세션별 proposal/내용 버전과 aggregate CAS 분리, 새 다중item CharacterSelection/원장·party 분리/GET별 출처, 공대장 승인에서 신청자 개인 CAS 제거·서버 현재 재검사, 전체 기능별 후보 경로/권한·조회 DTO와 기존 필드 보존표를 작성했다.
+- P1 profile_schemas/models/profiles.put을 정적으로 확인해 nullable 쌍 지원/현재 head 덮어쓰기·최근 성공 별도 원천 부재를 확인했다. 성공 snapshot·head와 출처 버전/관측/경고 구분, null/실패/역할 변경/옛 관측/소유이전·이행 규칙을 제안했다. 현재 구현이 이미 보존한다고 보고하지 않는다. G1 비대상 공대장 표0 사례와 미확정G를 구분했고 과거 Domain/인터페이스 존재를 적용 완료로 삼지 않았다.
+- 상대 링크/공백/본문 언어·완전 JSON 그룹 예시와 후보19/22+상한21→19, 비대상 제안자 표/현재 대상2표, Decimal 정밀도, null·지연·낮아진 최신 성공 관측, 동일round/서로 다른session 식별 예시를 표준 Python으로 검사해 통과했다. 이는 설계 예시 검사이며 앱 동작 시험이 아니다.
+- 기능코드/원본OpenAPI/DDL·DB/서버/이미지/자료 변경과 앱/실DB/provider/Flutter/기기 검증은 없었다. Flutter 소스는 읽지 않았다. 다음 Flutter 소비 재대조/기존 숙련도 실제 값 제공→Backend 필요한 제품 결정과 정확한 schema 고정이며 새 서버 테스트/배포 요청이 아니다.

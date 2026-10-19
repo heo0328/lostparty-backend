@@ -131,3 +131,8 @@ P1제출분석의 신뢰한계는남는다. 서버저장version/CAS검사는게�
 ## 10. 계약 고정 초안 게시 — 전체43번째 Backend
 
 [고정 초안](ISSUE_13_FIXED_CONTRACT_DRAFT.md) 35dd5f9 로컬·미push를 [전체43번째 Backend R0 회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271860507)에 본문 전체로 게시했다. 다음은 Flutter 실제 Router/DI/Repository·구자료 대조다. 이후 정확한 요청 schema/전체 소비 DTO 누락과 G1~G7의 필요한 결정만 보완한다. 기존 확정 정책을 재질문하지 않으며 최종 합의·구현·서버 반영·시험 인수는 미완료다.
+
+
+## 11. R0 소비 계약 보완2판
+
+[전체45번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6272271633)에 [44번째 소비 검토 보완안](ISSUE_13_R0_CONSUMER_CORRECTIONS.md) e806ee4 로컬·미push 전문을 게시했다. R1의 입력 누락/세션 식별·버전/CAS 출처/기능 지도·점수 보존 정의는 해당 보완본으로 대체한다. 확정 정책은 유지하고 G1~G7은 미채택으로 구분한다. 다음 Flutter 재대조·숙련도 실제 값 대응 후 필요한 결정/정확한 schema를 고정한다. 구현/서버 반영은 미완료다.
