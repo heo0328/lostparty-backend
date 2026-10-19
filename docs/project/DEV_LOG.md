@@ -1328,3 +1328,14 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - F1 구현·0017 migration·격리 시험8파일을 `9664fb4`에 기록했다. R1/R2 구간설정·계약초안/F1 안내/F2 설계와 프로젝트 진행 문서는 후행 문서 커밋으로 묶는다. 후행 SHA는 git log에서 확인하며 자기 커밋 SHA를 본문에 기록하지 않는다.
 - #13 본문·최신 전체13번째까지 확인했고 신규 회신/요구 변경은 없었다. 내부 로컬 기록 정리이므로 댓글·테스트 요청을 추가하지 않았다. 원격에서 사용할 수 없는 SHA를 인계하지 않는다.
 - 이번 확인은 Python8파일 AST 구문·staged diff 공백·문서 참조 검사다. 기능 코드를 수정하지 않았으며 기존 F1 회귀233PASS/최종35PASS(중복)를 재실행한 것으로 표시하지 않는다. 서버/DB/API·OpenAPI·기존자료 변경 없이 push/merge/배포도 수행하지 않았다. 다음은 Backend F2-A이며 미정 Q1~Q3는 그대로 유지한다.
+
+## 2026-10-19 — F2-A 조회·권한·참가조건 구현/격리검증
+
+- #13 본문/최신전체13개를재조회했고새회신은없었다. feat/raid-recruitment의깨끗한e509242에서F2-A를시작했다. Q1미정/주차초과일정·Q2전투력문턱·Q3그룹탈퇴/조회adapter를확정없이활성화하지않았다.
+- [F2-A 안내](../ISSUE_13_F2_READS.md): schemas/queries/projections/policies에공개요약·현재참가상세·본인현재/종료관계·신청자/현재파티장신청·최소관리·본인context, allowlist·명시public/finite정책과서명cursor를구현했다. 모든읽기는DB READ ONLY+REPEATABLE READ·쓰기/행잠금/만료정리/예약/provider호출0이다.
+- F1선택검증의기본쓰기잠금은유지하고읽기에서만해제한다. build를version/summary/saved_at묶음으로보존하고신청build열은신규0018로추가했다. 0017수정/기존snapshot가짜backfill은없고0018은격리DB만적용했다. metadata없는상세는503이며공개요약/최소정리는유지한다.
+- 최초52PASS/1실패는소유상실fixture가캐릭터이름을직접바꿔기존claim FK를위반한것이었다. 업무코드회피없이fixture를summary변경으로정정했다. 후속56/57PASS(중복)뒤주차cursor를409 CURSOR_STALE로보완해최종F2-A23+F1 32+공통시각3 **58PASS/23.38초**, 기존Starlette/AnyIO경고1개다. 합산한신규suite로표시하지않는다.
+- 권한/노출·세션취소·파티장이전·서명/actor/필터/주차cursor·논리만료·타회원방변경·가입재검사·한도초과회복·소유상실/과거snapshot/stale·읽기SQL쓰기/행잠금0·다른transaction한도변경에도snapshot일관성을확인했다. F1경합/원자성/ACK 및 metadata/공통시각/app.openapi=원본검증을포함했다.
+- 구현/시험9파일을 **e74d850** 로컬커밋했다. 이전F1 9664fb4/설계e509242와같은모집브랜치이며미push/원격추적없음이다. 사용자요청의구간별기록방식을이어갔고브랜치전환/G3변경은없다.
+- [#13 전체14번째 Backend — F2-A 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6260548709)에회신하고실제전체순번·게시본문을재조회,이슈상단상태/다음담당을갱신했다. 다음Backend F2-B 후보HTTP/strict입력·인증/헤더/응답schema격리검증이며Flutter #15 우선/Q1~Q3 확인유지·신규API테스트요청없음이다.
+- main 앱/router·원본OpenAPI·개발이미지/서버/DB0016·기존자료를변경하지않았다. 실제HTTP시험/전체Backend suite·실provider·실제개발회원쓰기/Flutter/실기기·운영검증/merge/배포는미실행이다. 사용한격리테스트DB만stop했다. 이후F3는0017+0018/source·앱/OpenAPI/실행이미지를동일검증구간으로맞춰게시후인계한다.
