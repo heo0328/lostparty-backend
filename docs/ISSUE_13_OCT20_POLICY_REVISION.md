@@ -126,3 +126,8 @@ P1제출분석의 신뢰한계는남는다. 서버저장version/CAS검사는게�
 - 본인겹침은pair_count/affected_room_count/reservation_count를구분하며page밖상대의권한내최소정보도별도로제공. GET쓰기0/명시갱신·상시polling없음.
 
 고정계약게시후Flutter실제Router/DI/Repository·구자료대조→필요한새제품결정만질문한다. 이번회신확인에서위고정계약이완성된것은아니며코드/DB/API/시험변경도없다.
+
+
+## 10. 계약 고정 초안 게시 — 전체43번째 Backend
+
+[고정 초안](ISSUE_13_FIXED_CONTRACT_DRAFT.md) 35dd5f9 로컬·미push를 [전체43번째 Backend R0 회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271860507)에 본문 전체로 게시했다. 다음은 Flutter 실제 Router/DI/Repository·구자료 대조다. 이후 정확한 요청 schema/전체 소비 DTO 누락과 G1~G7의 필요한 결정만 보완한다. 기존 확정 정책을 재질문하지 않으며 최종 합의·구현·서버 반영·시험 인수는 미완료다.

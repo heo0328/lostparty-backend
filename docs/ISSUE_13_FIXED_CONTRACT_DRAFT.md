@@ -1,6 +1,8 @@
 # #13 통합 모집 계약 고정 초안 R1
 
-2026-10-20 / Backend / feat/raid-recruitment / 검토 기준 7b10616.
+2026-10-20 / Backend / feat/raid-recruitment / 검토 기준 7b10616. 설계 본문 로컬 커밋 35dd5f9·미push.
+
+공식 회신: [#13 전체43번째 Backend / R0 계약 고정 초안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271860507). 다음 담당은 Flutter 실제 소비 대조이며 최종 계약/구현은 미완료다.
 
 **계약을 확정하기 위한 초안이며 최종 합의·구현·OpenAPI 반영이 아니다.** [Flutter 전체41번째 정정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271510136), [전체42번째 대조](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271574011), [최신 정책](ISSUE_13_OCT20_POLICY_REVISION.md)을 기준으로 한다. 아래 경로·새 오류명은 후보이며 G1~G7의 미결정을 합의된 요구와 구분한다. 이 문서는 이전 31/33/40번째 설명과 충돌하는 부분을 대체한다.
 
