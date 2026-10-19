@@ -1,5 +1,7 @@
 # #13 통합 모집 경계·명령·소비 계약 기획안
 
+**10/20 정정:** [최신정책보완](ISSUE_13_OCT20_POLICY_REVISION.md)이전원동의/배타예약·OFF/미정기간·본인확인/다음주개시등상충부분을대체한다. 아래는원기획/기술보완의이력이므로최신정책으로그대로구현하지않는다.
+
 2026-10-19 / Backend / feat/raid-recruitment / 기준8178c87. **검토용 제안이며 경계 합의·최종 API·구현 완료가 아니다.** 근거와 정정 순서는 [수신대장](ISSUE_13_INTEGRATED_REQUIREMENTS_INTAKE.md)의 Flutter24~29번째 및21~22번째를 따른다. 27번째 통합목표를 유지하고 설계확정 뒤 내부 구현단계만 나눈다.
 
 공유: [#13 전체31번째 Backend 기획안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6268024511). 본문 전체를 게시했으며 네이티브가 원격 미게시 문서에 접근해야만 검토할 수 있는 상태로 두지 않았다. 설계 본문 d17a89e 로컬커밋·미push, 다음 Flutter 대조/Backend 보완이다.
