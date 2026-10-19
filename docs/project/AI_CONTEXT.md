@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+F3-B 독립 보존/권한시험(2026-10-19): [준비 기록](../ISSUE_13_F3_PREPARATION.md)·시험06a530f 로컬커밋/미push, 제한 LOGIN role의0016→0017→0018·합성 기존자료/시각·legacy 신청NULL 및 실제 서비스 조회/승인/정리 검증, 관련준비25PASS/9.88초. 개발DB/이미지/API/최종계약은 미변경. 다음은 필요한 제품결정 후 실제호출부/계약연결이며 #13전체17~19번째 협업경계를 유지한다.
+
 F3-A 독립 준비(2026-10-19): [사용량/준비검사/정지제어](../ISSUE_13_F3_PREPARATION.md) a0a515c 로컬커밋·미push·격리144PASS/42.77초, [#13 전체19번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6263654624). 기존 GET usage는unavailable, main/candidate router·permissions/context/lifespan은미연결·원본OpenAPI/개발서버DB미변경이다. 사용자결정과실제활성화/최종계약고정은별도이며아래설계기록과현재준비완료를구분한다.
 
 F3 설계(2026-10-19): [활성화 설계](../ISSUE_13_F3_ACTIVATION_DESIGN.md)에 공유 usage 집계·기존 한도 응답 실수치 전환, main router/최종 계약·DB 준비 검사, 신규 참가 정지/조회·정리 유지,0017→0018·이미지 전환/복구·게시 순서를 기록했다. 이번은 설계 문서이며 해당 코드/설정/DB/서버는 아직 미변경이다. 설계 중 추가된 #13 전체17번째 Flutter Q1~Q3 검토를 설계7~9절에 반영했고 #18 Backend 설계를 공유했다. 최초 실제지원범위/전투력입력·수치/그룹탈퇴제한·정리공개는 사용자결정이며 독립F3-A 준비와 실제활성화/계약고정을 구분한다.

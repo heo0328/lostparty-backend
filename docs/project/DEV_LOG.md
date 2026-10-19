@@ -1382,3 +1382,13 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 격리PostgreSQL/후보HTTP·기존모집F1/F2-A·한도/시각 **144PASS/42.77초**, 기존Starlette/AnyIO경고1개다. 실패없음, 이전101PASS등과중복이므로합산하지않는다. 기본/정확한도/초과·pending/주차·원ACK/정지재개·정리·읽기쓰기/행잠금0/오류·부족한schema/합성NOLOGIN role GRANT·REVOKE를검증했다. 역할/DDL변경은격리transactionrollback이며main OpenAPI=원본/모집경로미등록도확인했다.
 - 구현6파일을 **a0a515c** 로컬커밋했다. 검증후readiness의사용하지않는import/반복import위치만정리했으며기능변경은없고AST/diff를확인한다. 사용한격리test-db만stop했고실제개발서버·DB0016/이미지/Compose/OpenAPI·기존자료를변경하지않았다.
 - [#13 전체19번째 Backend 준비결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6263654624)에회신하고실제순번/본문과동시새회신없음을재조회했다. 다음은필요결정후실제호출부/계약연결·별도격리검증이며독립합성자료보존/권한검증준비는가능하다. 공개미지원/역할별문턱UI/그룹정책·실제lostparty_app migration/CRUD·실provider/실회원/Flutter/기기·전체Backend suite/운영검증·push/merge/배포는이번범위가아니다.
+
+
+## 2026-10-19 — F3-B 독립 migration 보존·앱 로그인 역할 시험
+
+- 사용자 진행 지시에 따라 제품 결정에 의존하지 않는 합성자료 보존/권한시험을 진행했다. #13 전체19개와 최신17~19번째의 결정 경계를 재조회했고 추가 회신은 없었다.
+- 테스트06a530f에서 compose.test 전용 host/DB/admin 조건을 검사하고 임시 DB/LOGIN role을 생성했다. production init과 같은 스키마 권한·제한 role로0016부터0017→0018까지 migration, 기존 합성회원/캐릭터/그룹/주간완료/한도와 모든 기존표의 전체행/열 해시 보존을 확인했다.
+- 0017 신청을 만든 후0018의NULL build/기존열·시각 보존, 준비검사, legacy 상세503/거절 가능, 새 신청·승인/빌드·시각/조회/탈퇴/종료/사용량 해제·기존그룹GET200을 검증했다. 실제앱로그인과SET ROLE을구분하고 모든 호출은제한계정으로진행했다. 합성role은개발lostparty_app자체가아니다.
+- 첫 실행의 테스트SQL JSON bind 오인 fixture 실패를 수정했다. 새migration시험+기존preparation 최종 **25PASS/9.88초**, 기존Starlette/AnyIO경고1개이며 이전144PASS와합산하지않는다. 제품코드/migration/원본OpenAPI변경은없다.
+- 시험용 임시DB/role을제거하고격리test-db만중지했다. 기존개발서버/DB/자료·이미지·환경은변경하지않았다. 내부독립시험이므로새이슈댓글/Flutter시험요청을추가하지않고기존#13전체19번째결과및17~18번째결정경계를유지했다.
+- 다음은최초지원범위·해당제품결정확인후공유usage/정지policy/context/permissions/main startup/router/최종OpenAPI실제연결이다. 실제개발계정/자료보존·백업복원·최신이미지/실회원/Flutter/기기·운영검증은이번결과가아니다. 시험·문서는작업브랜치로컬커밋/미push이며main/dev통합·배포는하지않았다.

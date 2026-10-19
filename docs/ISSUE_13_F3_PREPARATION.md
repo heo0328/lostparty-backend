@@ -8,7 +8,7 @@
 |---|---|---|
 | `usage.count` | 기존 F1 core.room_count가 동일 원본을 재사용 | scope/주차·캐릭터 수로 사용량을 잘못 줄이지 않고 동일 집계 유지 |
 | `usage.limits_snapshot` | 내부 명시 source adapter를 격리 검증 | 기존 한도 GET을 이 source에 연결하고 실수치 전환 계약/예시 검증 |
-| `readiness.require_ready` | 격리 DB의 읽기 검사·합성 제한 role 검증 | 실제 앱 계정 migration/CRUD 및 main startup 경계 설치 |
+| `readiness.require_ready` | 격리 DB의 읽기 검사·합성 제한 role 검증 | 앱 역할에 준한 격리 migration/CRUD 통과; 실제 개발 앱 계정 확인·main startup 경계 설치 |
 | `runtime.admission_policy` | 명시 policy를 감싼 최초 실행·정지/재개·replay 검증 | 후보/실제 명령 policy 주입, context/permissions의 정지 사유 연결 |
 
 ## 공유 사용량과 기존 동작
@@ -40,6 +40,17 @@ docker compose -f compose.test.yaml run --rm -v "$PWD/app:/app/app:ro" -v "$PWD/
 
 실제 개발/운영DB의 lostparty_app migration/CRUD·최신 개발 이미지 반영/실회원쓰기·실provider/Flutter/기기·전체 Backend suite는 이번 검증이 아니다. 기존 API8000/DB0016·자료는 변경하지 않았고 격리 테스트DB만 중지했다.
 
+## F3-B 독립 migration·앱 역할 검증
+
+2026-10-19 / 시험 `06a530f` 로컬 커밋·미push. `tests/test_raid_room_migrations.py`와 기존 preparation 시험 **25 PASS/9.88초**, 기존 Starlette/AnyIO 경고1개다. 이전144PASS와 일부 중복이므로 합산하지 않는다.
+
+- compose.test의 tmpfs PostgreSQL에 무작위 이름의 일회용 DB와 LOGIN role을 생성했다. `current_user=session_user`와 NOSUPERUSER/NOCREATEDB/NOCREATEROLE을 확인했고 docker/init-db.sh와 같은 public 스키마 USAGE/CREATE 권한으로 **0016부터0017→0018까지 migration을 그 계정으로 실행**했다. 관리자 SET ROLE이나 기존 개발DB migration 시험이 아니다.
+- 0016의 합성 로그인/회원·원정대/캐릭터·그룹/멤버십·주간 수동완료·개인한도 자료를 준비했다. 기존 모든 표의 전체 열/행을 해시 비교해0017 적용 전후 보존을 확인했다. 원본 행을 출력하지 않았다.
+- 0017에서 실제 service로 방을 만들고 build 열이 없는 신청을 SQL로 준비했다. 0018 적용 후 신청의 기존 모든 열과 공통시각이 같고 build는NULL임을 확인했다. 나머지 모든 표도 전체 열/행이 동일했다. 없는 build를 임의로 채우지 않는다.
+- 같은 제한 LOGIN 계정으로 readiness 성공, 기존 신청 상세503/거절 가능, 새 신청·승인/빌드 저장·공통시각, 공개 조회·본인 탈퇴·마지막 종료·사용량 해제를 확인했다. 기존 그룹 인증조회도200이었다. 서비스 정책은 기존 명시 test policy이며 미정 제품정책 승인 근거가 아니다.
+- 시험 중 첫 실패는 테스트 SQL의 JSON 리터럴을 bind로 오인한 fixture 오류였다. bind 입력으로 고쳤고 최종25PASS에 포함됐다. 제품 코드/migration 변경은 없었다.
+- 임시 DB/role은 fixture 종료 때 제거하고 격리 test-db만 중지했다. 개발 API/DB·원본OpenAPI·설정·기존자료는 변경하지 않았다. 실제 lostparty_app 권한/실자료 보존·백업복원·개발이미지 반영·Flutter/기기 검증은 별도다. 내부 독립 시험 결과이므로 이슈에 동일 명세/시험 요청 댓글을 추가하지 않았다. 협업 기준은 기존 #13 전체19번째 결과와17~18번째 결정 경계다.
+
 ## 다음 실행
 
-결정 전에도 합성 자료의 migration 보존·실제 앱 역할에 준한 격리검증 준비와 지원표/예시 대조를 이어갈 수 있다. 실제 API 연결/최종 계약 고정·개발 서버 활성화는 필요한 결정 후 F3-A/B 나머지 구간으로 진행한다. 문턱 UI·그룹 분기를 임의 구현하거나 F3 전체를 완료 처리하지 않는다. Backend 준비 결과에 대한 Flutter 신규/동일코드 테스트 요청은 없다.
+합성 자료의 migration 보존·앱 역할에 준한 격리검증은 완료했다. 다음은 최초 지원범위와 해당 제품 결정을 확인한 뒤 공유 usage·정지 policy/context/permissions·main startup/router·최종OpenAPI를 연결하는 구간이다. 실제 API 연결/최종 계약 고정·개발 서버 활성화는 필요한 결정 후 F3-A/B 나머지 구간으로 진행한다. 문턱 UI·그룹 분기를 임의 구현하거나 F3 전체를 완료 처리하지 않는다. Backend 준비 결과에 대한 Flutter 신규/동일코드 테스트 요청은 없다.
