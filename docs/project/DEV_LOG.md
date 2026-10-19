@@ -1281,3 +1281,50 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 
 - G3 구현/계약 `332a8ab9697ca1a8e0d2ebcc147169c54ce9161c`를 `feat/group-management`에 commit/push하고 ls-remote SHA 일치를 확인했다. 최초 push의 기본 credential helper 부재는 기존 gh 인증 helper를 해당 명령에만 사용해 해소했고 인증정보는 출력/저장하지 않았다. main/dev/운영은 변경하지 않았다.
 - [#16 전체4번째 Backend — 구현·검증·게시 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6258994902) 게시 후 전체4개 댓글의 실제 순번/원문을 재조회했다. 다음 Flutter 별도 그룹 연결 구간 신규 소비/충돌 회신, Backend 소비보완·#13R1/R2 후속이다. 조건부 해산이 미완료라 #16은 유지한다. 격리 test-db만 stop했고 로컬 개발 API8000은 G3 반영 상태를 유지했다. 후행 문서에 구현SHA/댓글 링크/게시완료를 기록해 같은 브랜치에 게시한다.
+
+## 2026-10-19 — 최신 Flutter 회신 확인·R1/R2 구간 설정
+
+- #12전체17개/#13전체10개/#15전체3개/#16전체5개/#17~19각전체1개 댓글을 실제조회했다. Flutter 로컬소스는읽지않았다. Git은 feat/group-management/349fb79·작업트리clean에서시작했다.
+- #13전체10번째는현재방/i·개인주간·종료이력분리/실제adapter보류와R1/R2독립진행을확인했다. 전체5~6번째정정에따른차원별한도영향표를재확인했다. #16전체5번째는332a8ab문서상차단충돌없음/실기기미확인, #12전체17번째는G1/G2접수/연결별도를확인했다. #15전체3번째D2의174고유테스트/분석0·미커밋/미push/다음D3·추가서버요청없음을반영했다.
+- #17/#18은각근거검토/최소영속정책초안후속이며자료삭제/보류해제가아니다. #19전체1번째가type최초고정·함께집계조건/해산OFF·평균분모·그룹조회권한을아직미확정으로명시해그대로유지했다.
+- [R1/R2작업구간](../ISSUE_13_R1_R2_WORK_SCOPE.md)을작성했다. 다음은상세계약설계/게시이며실제room/회차/membership·R1조회/생성·R2승인/즉시가입/신청정리·필수한도/주간/권한·최소회복경계와표적검증계획을완료조건으로뒀다. 상세API/DDL·구현은아직없다. 전체완료권한충돌·반복/고급관리·통계집계/해산/실제파티adapter후속을분리했다.
+- [#13전체11번째 Backend — 구간설정/구현전](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6259204298)에회신하고실제작성순서를확인했다. 다음담당Backend상세계약·Flutter#15우선유지이며추가전체승인/기초시험요청없다. 같은회신을모든이슈에중복게시하지않았다.
+- NEXT_WORK를다음실행중심으로정리하고AI_CONTEXT/추적표에최신회신을반영했다. 문서만변경/미커밋·미push·브랜치전환없음. 서버/DB/OpenAPI·기능코드·기존키/자료는변경하지않았고서버/DB/pytest는재실행하지않았다. 문서참조경로와git diff --check를 확인한다.
+
+## 2026-10-19 — R1/R2 상세 계약 초안 작성·게시
+
+- 기존로컬구간설정문서/미커밋작업을보존했다. #13최신전체11개댓글·기존room미구현/WeeklyState와자격/한도/P1·카탈로그구현을대조했다. 기존주간participation은점유이며현재roommembership과다르고, P1은flutter_analysis저장이므로provider검증/가입권한증거로승격할수없음을확인했다.
+- [상세초안](../ISSUE_13_R1_R2_CONTRACT_DRAFT.md)에room/단일round/현재membership/신청·R1조회/생성·R2승인/직접가입·최소정리/이전/마지막종료, 본인admission-context·strict입출력/필수nullable/페이지/권한·예시·원자성/멱등ACK·한도/회복·DDL/표적검증계획을작성했다. 기존G1~G3/#11DTO를덮지않고현재방/i·점유·완료를분리한다.
+- 좁힌검토는Q1미정/주차넘는일정의지원부분집합, Q2역할별최소전투력수치/판정근거, Q3그룹탈퇴후room잔류·진행/최소회복조회권한이다. 지원부분집합/TTL24h·title/page상한등은Backend제안이며사용자확정정책으로취급하지않았다. 실제검토가필요한분기만분리하고F1전체를대기시키지않는다.
+- [#13 전체12번째 Backend — 상세계약설계·게시](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6259336924)에원문을게시하고실제전체12개댓글/제안본문을재조회한다. 다음Backend F1내부transaction/명시policy·격리DB기반, Flutter는현재#15우선유지하며Q1~Q3의구체소비충돌만회신한다. 구현테스트/전체승인요청없음.
+- 문서JSON4개의파싱·생성public관련null·Selection/ACK/management식별자정합·참조경로·git diff --check를검사했다. 코드/OpenAPI/서버/DB/migration변경없음. pytest·provider/Flutter/기기검증은미실행이며문서/예시는실서버성공이아니다. 작업문서/상세초안은로컬미커밋·미push이며원격코드기준349fb79유지다.
+
+## 2026-10-19 — F1 내부 모집 기반 구현·격리 검증
+
+- AGENTS/협업/NEXT_WORK/AI_CONTEXT·관련모델/원자명령·DB시각기준을대조하고기존미커밋문서변경을보존했다. #13전체12개를재조회했고Q1~Q3회신없음을확인했다. 명시policy필수/F1공개방·유한회차의내부기반을진행하고해당미정분기를활성화하지않았다.
+- app/raid_rooms에Room/Round/Membership/Application/DirectoryHead/MemberHead6모델·strict내부명령·현재자격/입장level/P1분리·한도/일정/주간/slotguard·생성/신청/확정/거절/철회/탈퇴/이전/마지막종료·최소ACK복구를작성했다. 기존game-mutations락·소유/활동/카탈로그/WeeklyState·사용량head를재사용하며새HTTP라우터/기본허용policy는없다.
+- 0017고정DDL파일에새6표/unique/복합지연FK·공통시각trigger/초기head를담았다. 생성도구의첫실행은/tmp경로import문제로실패했고python -c의작업디렉터리import로재생성해고정SQL을검토했다. 개발DB에적용하지않고격리테스트DB에서만실제migration을실행했다.
+- 최초F1/시각23 PASS/10.78초. 보강F1+기존G1/G2/G3/한도·개인주간/시각 **233 PASS/107.48초**. 한도3원인전파추가1 PASS/3.96초후최종F1 32개+시각3개 **35 PASS/14.99초**, 기존Starlette/AnyIO경고1개. 각범위는중복되며합산한suite로보고하지않는다. 새대상테스트실패는없었다.
+- 8인당별구성/마지막자리·별도방동일캐릭터동시승인/일정인접·weekly점유/완료·P1위조분리·정확한도/3원인회복·원ACK/재가입·캐릭터상실후정리·GET쓰기0/논리만료·ACK실패/최종주차/철회기한경계의전체rollback·DBunique/지연FK/공통시각을검증했다. 그룹한도시험은직접격리fixture이며groupadapter완료가아니다.
+- 현재app/tests/alembic읽기전용mount로기존테스트이미지에서실행했다. 새코드OpenAPI=원본/모집경로없음자동시험PASS, 현재API의scripts/check_openapi.py도PASS다. 실행이미지를교체한검사가아님을구분한다. 개발DB0016_record_timestamps·raid_rooms없음(True)을읽기확인했고테스트DB만stop했다.
+- [#13 전체13번째 Backend — F1 내부구현/자동검증](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6259515470)에결과회신, 실제댓글순번/게시본문을재조회한다. 다음Backend F2지원범위/HTTP연결·Flutter Q1~Q3충돌확인/#15우선유지. 신규API테스트요청/commit·push/merge·개발DB적용·실제회원쓰기/전체Backend시험/provider/Flutter/기기검증·자료삭제/이관/운영은없다. 모든새코드/DDL/시험/문서는로컬미커밋·미push/원격기준349fb79다.
+
+## 2026-10-19 — 모집 목적 브랜치 분리
+
+- 사용자 지적으로 모집 F1/F2를 feat/group-management에서 이어간 범위 불일치를 바로잡았다. 원격 feat/raid-recruitment 부재와 기존 브랜치/worktree를 확인하고 현재 G3 기준349fb79에서 **feat/raid-recruitment**를 로컬 분기했다. 기존 G3 로컬/원격 브랜치와 main/dev는 변경하지 않았다.
+- 전환 전 미커밋 수정/새 파일15개의 SHA256 지문을 기록하고 전환 직후 모두 동일함을 검증했다. G3 ref와 새 HEAD349fb79도 동일함을 확인해 커밋과 F1 변경을 보존했다. stash/reset/cherry-pick/이력재작성 없이 전환했다.
+- 새 모집 브랜치는 로컬만 있고 원격/추적 설정이 없다. G3 미병합 기준을 상속한 상태이므로 이후 게시/통합 때 G3와 모집 변경 범위를 구분한다. 이번 작업은 branch 분리/기록 정정이며 commit/push/merge·서버/DB/기능 변경·재시험은 없다. 현재 문서/추적표와 #13 상단에 새 작업 위치를 반영한다.
+
+## 2026-10-19 — 리크룻 후속 구현 설계
+
+- feat/raid-recruitment의 기존 F1/미커밋 문서를 보존하고 #13 전체13번째까지 재조회했다. Q1~Q3 새 회신은 없었다. 기존 R1/R2 상세제안·F1을 다시 만드는 대신 F2 구현 구조/순서를 설계했다.
+- [F2 구현설계](../ISSUE_13_F2_IMPLEMENTATION_DESIGN.md)에 strict schemas·조회/권한별 projection·정책adapter·router와 기존 transaction core의 책임, snapshot/cursor·본인 admission-context·미정분기 격리를 기록했다. 파일 배치는 구현 필요에 맞춰 조정하며 계층을 형식적으로 늘리지 않는다.
+- F2-A 조회/지원정책→F2-B 격리 후보라우터 HTTP 검증→F3 0017/source·앱라우터·원본OpenAPI/개발이미지의 검증구간 반영으로 나눴다. DB없는 경로 선노출/실서버 사용가능 오안내를 방지하고 기존자료·기존API 보존 및 게시후 인계 순서를 유지한다.
+- 코드/DDL/OpenAPI·서버/DB/실행시험은 이번에 변경/재실행하지 않았다. 새 설계 문서는 로컬 미커밋·미push이며 기존 F1 PASS를 F2 구현시험으로 확대하지 않는다. 문서 참조·diff를 검사했다. 이번 변경은 내부 구현 순서 정리이며 외부 계약 변경·새 요청이 없어 #13에 반복 댓글을 게시하지 않았다. 다음 담당은 Backend F2-A다.
+
+## 2026-10-19 — 리크룻 미커밋 작업 구간 확정
+
+- 사용자 요청으로 feat/raid-recruitment의 기존 미커밋 변경을 구현과 설계·진행 기록으로 구분해 로컬 커밋했다. 기존 feat/group-management/349fb79와 main/dev를 변경하거나 브랜치를 다시 전환하지 않았다.
+- F1 구현·0017 migration·격리 시험8파일을 `9664fb4`에 기록했다. R1/R2 구간설정·계약초안/F1 안내/F2 설계와 프로젝트 진행 문서는 후행 문서 커밋으로 묶는다. 후행 SHA는 git log에서 확인하며 자기 커밋 SHA를 본문에 기록하지 않는다.
+- #13 본문·최신 전체13번째까지 확인했고 신규 회신/요구 변경은 없었다. 내부 로컬 기록 정리이므로 댓글·테스트 요청을 추가하지 않았다. 원격에서 사용할 수 없는 SHA를 인계하지 않는다.
+- 이번 확인은 Python8파일 AST 구문·staged diff 공백·문서 참조 검사다. 기능 코드를 수정하지 않았으며 기존 F1 회귀233PASS/최종35PASS(중복)를 재실행한 것으로 표시하지 않는다. 서버/DB/API·OpenAPI·기존자료 변경 없이 push/merge/배포도 수행하지 않았다. 다음은 Backend F2-A이며 미정 Q1~Q3는 그대로 유지한다.
