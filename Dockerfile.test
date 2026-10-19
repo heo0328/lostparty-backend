@@ -3,6 +3,7 @@ USER root
 COPY requirements-dev.txt requirements.txt ./
 RUN pip install --no-cache-dir -r requirements-dev.txt
 COPY tests ./tests
+COPY openapi ./openapi
 COPY pytest.ini ./pytest.ini
 USER appuser
 CMD ["pytest", "-q", "-p", "no:cacheprovider"]

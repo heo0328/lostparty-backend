@@ -1,6 +1,8 @@
 # LostParty Backend 기능 지도
 
-2026-10-18. 다음 실행/대기는 [NEXT_WORK](NEXT_WORK.md), 완료·검증·장애/Git이력은 [DEV_LOG](DEV_LOG.md). 기존로컬Docker/API8000·DB0016·자료/키로 개발한다. [PR14](https://github.com/heo0328/lostparty-backend/pull/14)에서dev병합/main동일위치push·원격확인완료(코드merge a0e2799/마감문서후행포함). 완료feat/raid-services로컬/원격정리. [#8 전체152번째Backend통합결과](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6249274152). 다음은최신dev기반feat/group-management의G3명세준비이며API계약/구현미착수다.
+2026-10-19 현재: G3 관리 GET·이전/일반 탈퇴 POST 구현/기존API8000 반영·DB0016 유지. 격리 PostgreSQL/HTTP148 PASS/55.73초·실행 OpenAPI 일치. [개발 안내](../ISSUE_16_GROUP_G3_DEVELOPMENT.md), [최신 다음 실행](NEXT_WORK.md). 원본 #12의 Backend 독립 설계/구현 요청에 따라 이전 소비회신 선행 대기를 정정했다. Flutter G3 수용/연결·실회원쓰기·실기기·운영은 별도 미확인, 조건부 해산/추방/대표 변경/실제 방 처리는 미구현이다. 아래10-18 기록과 구분한다. Flutter #15는 [전체2번째 D1](https://github.com/heo0328/lostparty-backend/issues/15#issuecomment-6258843502) API기반55PASS/분석0·미커밋/미push·UI미연결, 다음D2·추가Backend요청없음. 테스트 가능한 G3 구간의 게시/인계는 NEXT_WORK/DEV_LOG를 따른다.
+
+2026-10-18. 다음 실행/대기는 [NEXT_WORK](NEXT_WORK.md), 완료·검증·장애/Git이력은 [DEV_LOG](DEV_LOG.md). 기존로컬Docker/API8000·DB0016·자료/키로 개발한다. [PR14](https://github.com/heo0328/lostparty-backend/pull/14)에서dev병합/main동일위치push·원격확인완료(코드merge a0e2799/마감문서후행포함). 완료feat/raid-services로컬/원격정리. [#8 전체152번째Backend통합결과](https://github.com/heo0328/lostparty-backend/issues/8#issuecomment-6249274152). 현재feat/group-management는49cd8cc까지push완료다. [G3명세](../ISSUE_16_GROUP_G3_SPEC.md)를 [#16 전체1번째 Backend](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6250563064)에 제안 게시했다. Flutter소비계약검토/Backend합의반영후구현·실행API미반영이다.
 
 | 영역 | 현재 상태·기준 |
 |---|---|
@@ -27,4 +29,4 @@ Backend완료·계약인계·Flutter적용·실기기·운영완료는서로별�
 G2구현/계약c06d3d2 작업브랜치push·원격확인, [#12 전체15번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6235311908). 현재G2 Backend구간완료/#12는Flutter연결별도·다음#16 G3명세작업가능이다.
 
 
-2026-10-18 주제정리: #10/#11개인구간 완료종료, #8원본은미완료요구이관후보관종료. 열린주제/담당은 [이슈추적표](ISSUE_TRACKER.md) 기준(#12그룹Flutter/#13실제파티/#15V2Flutter/#16G3/#17생명주기/#18활동정책/#19통계). #8 153번째Flutter는dev/main deb2884d동기화/새V2브랜치설계·기능미착수를보고했다. 원본종료를요구폐기로확대하지않는다. 현재feat/group-management의다음명세게시대상은#16이며코드/DB변경은없다.
+2026-10-18 주제정리: #10/#11개인구간 완료종료, #8원본은미완료요구이관후보관종료. 열린주제/담당은 [이슈추적표](ISSUE_TRACKER.md) 기준(#12그룹Flutter/#13실제파티/#15V2Flutter/#16G3/#17생명주기/#18활동정책/#19통계). #8 153번째Flutter는dev/main deb2884d동기화/새V2브랜치설계·기능미착수를보고했다. 원본종료를요구폐기로확대하지않는다. 현재feat/group-management의G3명세는#16전체1번째에게시됐고코드/DB변경은없다. 명세문서미커밋/미push·실행OpenAPI미변경이며다음계약검토후구현이다.
