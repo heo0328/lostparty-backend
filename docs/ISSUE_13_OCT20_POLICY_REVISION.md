@@ -4,6 +4,8 @@
 
 근거(본문제외 전체순번, 모두Flutter): [34 기술보완접수](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6269403063), [35 번호별결정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6270163272), [36 OFF/외부신청/동의집합정정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6270650065), [37 동의수/기본예약/다음주개시](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271031885), [38 확인대기·시간중복경고](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271302986), [39 최종명료화](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271448868).
 
+공유: [#13 전체40번째 Backend 최신 보완](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271452128), 최종39번째 요구 포함 **c47afef 로컬커밋·미push**. 다음 Backend 고정 계약 정리/Flutter 소비대조이며기획회신을실제API완료로안내하지않는다.
+
 ## 1. 확정 요구와 이전안의 교체
 
 | 분야 | 최신 기준 |

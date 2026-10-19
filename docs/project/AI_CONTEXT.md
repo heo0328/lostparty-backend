@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+최신2026-10-20: [정책 보완안](../ISSUE_13_OCT20_POLICY_REVISION.md) c47afef 로컬/미push·[#13 전체40번째Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271452128)은Flutter34~39번째반영(게시후39추가확인/같은본문수정). 시간중복경고/자동추천회피·인원별동의수·초록pending본인확인→참가확인/예약생성·수10시반복재개·기간대체/합산·OFF갱신/경고차단철회·공개원pending외부승인·혼합일행4·인증회원개인표가최신기준이다. 다음Backend 고정DTO/명령/호환·내부구현순서정리/Flutter대조. 아래전원동의/배타예약·확인효과미정/수10시미정/과거회신대기는당시이력이다. 코드/DDL/서버/실행계약미변경.
+
 최신대조(2026-10-19): [#13 Flutter전체32번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6268865657) 기술보완요청에[Backend전체33번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6269041117)로답했다. [기획안9절](../ISSUE_13_INTEGRATED_BOUNDARY_PROPOSAL.md) 수정1e2f706 로컬/미push: 편집원본분리·latest후보계산정정·반복round하한·제한탐색/명시선택/계산한계·첫임계치두정책비교/귀속재검사다. 다음Flutter 제품선택/대조→Backend경계확정이며코드/DDL/실제API승인아니다. 다른열린이슈의추가회신은없다.
 
 통합기획게시(2026-10-19): [설계안](../ISSUE_13_INTEGRATED_BOUNDARY_PROPOSAL.md) d17a89e 로컬커밋/미push·[#13 전체31번째Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6268024511)에관계도·수명/권한/명령·개인표/일정/예약DTO·마감/임계치·완료/미완료·기존이행·필수결정표본문전체를게시했다. 다음Flutter대조/Backend보완·필요사용자결정후경계확정이며구현/최종API/서버활성화는아니다. 아래 ‘다음 Backend 설계’는 게시 전 기록이다.
