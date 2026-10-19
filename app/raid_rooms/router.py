@@ -9,7 +9,7 @@ from app.auth.router import authenticated, bearer
 from app.game_accounts.router import Principal, Key
 from app.game_accounts.schemas import GameErrorOut
 from app.game_accounts.support import fail
-from app.raid_rooms import queries, service, policies, schemas as s, http_schemas as h
+from app.raid_rooms import queries, service, policies, runtime, schemas as s, http_schemas as h
 
 
 def unique_object(pairs):
@@ -83,7 +83,7 @@ def room_list(principal: OptionalPrincipal, scope: Literal['public', 'group'] = 
 
 @router.post('/raid-rooms', status_code=201, response_model=h.RoomCommandAck, responses=errors)
 def create(data: h.RoomCreateIn, principal: Principal, key: Key):
-    return service.create(principal, key, data, policy=create_policy(data))[1]
+    return service.create(principal, key, data, policy=runtime.admission_policy(create_policy(data)))[1]
 
 
 @router.get('/raid-rooms/{room_id}', response_model=s.RoomSummary, responses=errors)
@@ -111,12 +111,12 @@ def context(room_id: UUID, character_id: UUID, selected_role: Literal['dealer', 
 
 @router.post('/raid-rooms/{room_id}/applications', status_code=201, response_model=h.ApplicationAck, responses=errors)
 def apply(room_id: UUID, data: h.AdmissionIn, principal: Principal, key: Key):
-    return service.admit(principal, room_id, key, data, applying=True, policy=policies.public_finite)[1]
+    return service.admit(principal, room_id, key, data, applying=True, policy=runtime.admission_policy(policies.public_finite))[1]
 
 
 @router.post('/raid-rooms/{room_id}/join', response_model=h.RoomCommandAck, responses=errors)
 def join(room_id: UUID, data: h.AdmissionIn, principal: Principal, key: Key):
-    return service.admit(principal, room_id, key, data, policy=policies.public_finite)[1]
+    return service.admit(principal, room_id, key, data, policy=runtime.admission_policy(policies.public_finite))[1]
 
 
 @router.get('/me/raid-room-applications', response_model=s.ApplicationPage, responses=errors)
@@ -138,7 +138,7 @@ def application(application_id: UUID, principal: Principal):
 
 @router.post('/raid-room-applications/{application_id}/approve', response_model=h.RoomCommandAck, responses=errors)
 def approve(application_id: UUID, data: h.DecisionIn, principal: Principal, key: Key):
-    return service.decide(principal, application_id, key, data, approve=True, policy=policies.public_finite)[1]
+    return service.decide(principal, application_id, key, data, approve=True, policy=runtime.admission_policy(policies.public_finite))[1]
 
 
 @router.post('/raid-room-applications/{application_id}/reject', response_model=h.ApplicationAck, responses=errors)

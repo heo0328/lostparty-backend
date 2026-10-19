@@ -1,4 +1,4 @@
-"""Prepared admission controls; not installed into the candidate/production router."""
+"""Admission controls for candidate HTTP; production routes remain unregistered."""
 import os
 from app.game_accounts.support import fail
 

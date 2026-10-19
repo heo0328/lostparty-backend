@@ -20,7 +20,8 @@ from app.member_limits.service import Limits
 
 
 @pytest.fixture
-def http():
+def http(monkeypatch):
+    monkeypatch.setenv("RAID_ROOM_ADMISSIONS_ENABLED", "true")
     from app.main import no_store
     candidate = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
     candidate.include_router(router)

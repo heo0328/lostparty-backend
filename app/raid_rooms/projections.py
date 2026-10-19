@@ -9,7 +9,7 @@ from app.game_accounts.support import GameError, fail
 from app.groups import admission_core as groups
 from app.groups.service import display
 from app.raids import service as raids
-from app.raid_rooms import core, service
+from app.raid_rooms import core, service, runtime
 from app.raid_rooms.models import Membership
 
 
@@ -161,6 +161,7 @@ def detail(db, room, round, mine, stamp):
             origin_group_id=room.group_id if issue['code'] == 'GROUP_CAPACITY_EXCEEDED' else None))
     reason = 'ROOM_LEADER_REQUIRED' if not is_leader else progress_reason(db, room, round, stamp)
     reason = reason or ('ROOM_FEATURE_UNSUPPORTED' if room.admission_mode != 'leader_only' else None)
+    reason = reason or runtime.admission_reason()
     reject = ('ROOM_LEADER_REQUIRED' if not is_leader else
               'ROOM_NOT_ACTIVE' if room.ended_at else
               'CYCLE_CHANGED' if phase(room, round, stamp) != 'current' else
@@ -198,6 +199,6 @@ def application(db, room, round, row, uid, stamp):
         character_id=data['character_id'], party_no=data['party_no'], selected_role=data['selected_role'],
         build=build(db, row.user_id, data['character_id'], data['expected_ownership_revision'],
                     data['selected_role'], row.build, data['expected_lifecycle_revision']),
-        permissions=dict(approve=permission(reason or progress_reason(db, room, round, stamp)),
+        permissions=dict(approve=permission(reason or progress_reason(db, room, round, stamp) or runtime.admission_reason()),
             reject=permission(reject), withdraw=permission('ROOM_APPLICATION_NOT_FOUND' if row.user_id != uid else
                                                          'APPLICATION_NOT_PENDING' if state != 'pending' else None)))

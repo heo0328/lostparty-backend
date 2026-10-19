@@ -11,7 +11,7 @@ from app.game_accounts.support import authorize, fail, cursor_encode, cursor_dec
 from app.member_limits.models import MemberUsageHead, MemberUsageLimits
 from app.raid_weekly.models import WeeklyState
 from app.raids import service as raids
-from app.raid_rooms import core, projections as p, schemas as s, policies, service
+from app.raid_rooms import core, projections as p, schemas as s, policies, service, runtime
 from app.raid_rooms.commands import Selection
 from app.raid_rooms.models import Room, Round, Membership, Application, DirectoryHead, MemberHead
 
@@ -222,6 +222,7 @@ def admission_context(principal, rid, *, character_id, selected_role, party_no, 
                     core.slot(db, uid, room, round, selection, character)
             except GameError as error:
                 reason = error.code
+        reason = reason or runtime.admission_reason()
         return encode(s.AdmissionContext, dict(room_id=room.id, round_id=round.id,
             room_revision=room.revision, round_revision=round.revision, members_revision=room.members_revision,
             policy_snapshot=core.policy_snapshot(db, room), catalog_version=round.catalog_version,

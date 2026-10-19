@@ -15,6 +15,11 @@ from tests.test_group_foundation import actor
 from tests.test_member_limits import change
 
 
+@pytest.fixture(autouse=True)
+def enabled_candidate_admissions(monkeypatch):
+    monkeypatch.setenv("RAID_ROOM_ADMISSIONS_ENABLED", "true")
+
+
 def rid(w, **kwargs):
     return uuid.UUID(create(w, **kwargs)[1]['room_id'])
 
