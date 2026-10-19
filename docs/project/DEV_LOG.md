@@ -1281,3 +1281,12 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 
 - G3 구현/계약 `332a8ab9697ca1a8e0d2ebcc147169c54ce9161c`를 `feat/group-management`에 commit/push하고 ls-remote SHA 일치를 확인했다. 최초 push의 기본 credential helper 부재는 기존 gh 인증 helper를 해당 명령에만 사용해 해소했고 인증정보는 출력/저장하지 않았다. main/dev/운영은 변경하지 않았다.
 - [#16 전체4번째 Backend — 구현·검증·게시 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6258994902) 게시 후 전체4개 댓글의 실제 순번/원문을 재조회했다. 다음 Flutter 별도 그룹 연결 구간 신규 소비/충돌 회신, Backend 소비보완·#13R1/R2 후속이다. 조건부 해산이 미완료라 #16은 유지한다. 격리 test-db만 stop했고 로컬 개발 API8000은 G3 반영 상태를 유지했다. 후행 문서에 구현SHA/댓글 링크/게시완료를 기록해 같은 브랜치에 게시한다.
+
+## 2026-10-19 — 완료 G3 dev 통합·그룹 브랜치 정리
+
+- 사용자진행승인으로완료된G3와후속기능을구분해통합했다. 원격fetch/실제refs·PR없음·단일worktree/미커밋없음, dev77a1fe5가그룹349fb79의조상이고그룹349fb79가모집c41fd03의조상임을확인했다. #16최신전체5번째Flutter의문서상차단충돌없음·실기기별도/해산보류를확인했다.
+- 정확한그룹349fb79로전환해현재app/tests/alembic/openapi RO mount의격리PostgreSQL에서G3내부/HTTP **45PASS/37.95초**, 기존Starlette/AnyIO경고1개와실행OpenAPI전체일치PASS를확인했다. 기존게시148PASS와중복이며새전기능실행으로합산하지않는다. 기능코드변경/개발서버재시작/DBmigration·실회원쓰기는없다.
+- [PR20](https://github.com/heo0328/lostparty-backend/pull/20)의head349fb79/base77a1fe5·21파일/충돌없음·필수CI없음을확인하고merge방식으로통합했다. merge **bb144e062720b05cff3aa0a9d3c2046ef5b7cb8d** dev원격일치·local ff-only를확인했다. main77a1fe5/모집F1·F2는PR에포함하지않았다. 공유이력재작성/force push없음이다.
+- dev포함/원격push·다른worktree없음·모집ref의349fb79보존을확인하고 feat/group-management를로컬/원격에서삭제했다. 기본main/dev와진행중모집브랜치만남겼다. 사용한격리테스트DB만stop했다.
+- [#16 전체6번째 Backend — 통합/정리결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6262944673)에회신하고실제순번/본문을재조회했다. 본문상단완료G3/dev통합·미완료조건부해산/추방/대표변경·다음담당을갱신했다. #16은종료하지않고없는그룹모집을0건으로보지않는다. 신규/동일코드재시험요청없음이다.
+- 다음은보존한feat/raid-recruitment의F3이며 dev기록을merge로반영해이어간다. Flutter #13전체16번째는F2접수·#15 D1~D4 dev마감/분쟁실기기사용자보류·현재로그인후내계정화면결함문서화를보고했다. Q1~Q3검토는여전히대기다. main통합/배포/자료삭제·Flutter/실기기인수로확대하지않는다.

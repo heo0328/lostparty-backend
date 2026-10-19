@@ -2,7 +2,7 @@
 
 2026-10-19 / Backend / `feat/group-management` / [Issue16](https://github.com/heo0328/lostparty-backend/issues/16).
 
-구현·계약 SHA `332a8ab9697ca1a8e0d2ebcc147169c54ce9161c`, push·원격 SHA 일치 확인 완료. [전체4번째 Backend — 구현·검증·게시 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6258994902). main/dev 미병합, 후행 문서 커밋은 기능 계약 SHA와 구분한다.
+구현·계약 SHA `332a8ab9697ca1a8e0d2ebcc147169c54ce9161c`, push·원격 SHA 일치 확인 완료. [전체4번째 Backend — 구현·검증·게시 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6258994902). dev는 [PR20](https://github.com/heo0328/lostparty-backend/pull/20)의 bb144e0로 통합·원격 확인했고 main은 미통합이다. 완료 feat/group-management는 로컬/원격 정리했으며 [전체6번째 Backend 통합 결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6262944673)와 후행 문서 커밋을 기능 계약 SHA와 구분한다.
 
 ## 제공 범위
 
