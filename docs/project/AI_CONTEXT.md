@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+현재 통합 기준(2026-10-19): G3 완료 관리GET/이전/일반탈퇴는 [PR20](https://github.com/heo0328/lostparty-backend/pull/20) bb144e0로 **dev 통합**, 후행 기록 ce3064f까지 원격확인했다. feat/group-management 로컬/원격 정리·main77a1fe5 유지, [#16 전체6번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6262944673). 기존 feat/raid-recruitment의 c41fd03/F1·F2 커밋을 보존하고 dev를 merge했다. 모집 코드는 미push/개발서버미반영이며 다음F3다. 아래 기존 main/dev 미병합 표기는 통합 전 당시 기록이다.
+
 모집 F2-B(2026-10-19): [후보 HTTP18동작](../ISSUE_13_F2_HTTP.md) 9fb2058 로컬커밋·미push, HTTP43+F2-A23+F1 32+시각3 **101PASS/35.00초**. [#13 전체15번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6260695606). 격리 앱에서생성/신청/승인·직접가입·조회·탈퇴/이전/종료와입력/인증·원ACK/경합/rollback검증완료다. main 앱/router/OpenAPI·개발DB0016/이미지/API8000은미반영·기존서버healthy/health200이다. 다음Backend F3 최종계약·개발반영준비, Q1~Q3/Flutter #15 우선유지. 아래는이전단계기록이다.
 
 모집 F2-A(2026-10-19): [내부 조회/권한·참가조건](../ISSUE_13_F2_READS.md) e74d850 로컬커밋·미push, 격리 PostgreSQL 조회23+F1 32+시각3 **58 PASS/23.38초**. [#13 전체14번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6260548709). 읽기전용snapshot/서명cursor·본인context·과거빌드 보존/0018 신청snapshot 열(격리DB만)이다. 다음Backend F2-B 후보HTTP연결이며 main 앱/router/OpenAPI·개발DB0016/서버는미반영, Q1~Q3/Flutter #15 우선유지. 아래 과거단계 기록과 구분한다.

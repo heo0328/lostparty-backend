@@ -1349,3 +1349,14 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 실제후보HTTP에서생성→신청→승인→이전→탈퇴→종료·직접가입/재가입옛ACK·권한상실·거절/철회·잘못된입력/인증/헤더·private비노출·동시마지막자리/CAS·source변경후최종검사, ACK기록실패의전체rollback과커밋후응답유실의원ACK복구를검증했다. 기존F1경합/원자성·F2-A읽기snapshot/cursor·공통시각 및main app.openapi=원본/모집경로없음을포함한다.
 - 구현/시험4파일을 **9fb2058** 로컬커밋했다. [#13 전체15번째 Backend F2-B 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6260695606)에회신하고실제전체순번/게시본문을재조회,본문상단의범위/상태/다음담당을갱신했다. 다음Backend F3 최종계약·개발반영준비이며Flutter #15 우선/Q1~Q3 분리·신규API테스트요청없음이다.
 - 테스트DB만stop했고기존개발API/DB컨테이너healthy·/health HTTP200/status ok/database ok를읽기확인했다. main router·원본OpenAPI·개발이미지/DB0016·자료/키변경없음, push/merge/배포·전체Backend suite·실provider/실제회원쓰기·Flutter/실기기/운영검증은미실행이다. 후보schema의최종가공/원본비교·0017+0018/사용량source/앱·이미지반영은F3다.
+
+## 2026-10-19 — 완료 G3 dev 통합·그룹 브랜치 정리
+
+- 사용자진행승인으로완료된G3와후속기능을구분해통합했다. 원격fetch/실제refs·PR없음·단일worktree/미커밋없음, dev77a1fe5가그룹349fb79의조상이고그룹349fb79가모집c41fd03의조상임을확인했다. #16최신전체5번째Flutter의문서상차단충돌없음·실기기별도/해산보류를확인했다.
+- 정확한그룹349fb79로전환해현재app/tests/alembic/openapi RO mount의격리PostgreSQL에서G3내부/HTTP **45PASS/37.95초**, 기존Starlette/AnyIO경고1개와실행OpenAPI전체일치PASS를확인했다. 기존게시148PASS와중복이며새전기능실행으로합산하지않는다. 기능코드변경/개발서버재시작/DBmigration·실회원쓰기는없다.
+- [PR20](https://github.com/heo0328/lostparty-backend/pull/20)의head349fb79/base77a1fe5·21파일/충돌없음·필수CI없음을확인하고merge방식으로통합했다. merge **bb144e062720b05cff3aa0a9d3c2046ef5b7cb8d** dev원격일치·local ff-only를확인했다. main77a1fe5/모집F1·F2는PR에포함하지않았다. 공유이력재작성/force push없음이다.
+- dev포함/원격push·다른worktree없음·모집ref의349fb79보존을확인하고 feat/group-management를로컬/원격에서삭제했다. 기본main/dev와진행중모집브랜치만남겼다. 사용한격리테스트DB만stop했다.
+- [#16 전체6번째 Backend — 통합/정리결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6262944673)에회신하고실제순번/본문을재조회했다. 본문상단완료G3/dev통합·미완료조건부해산/추방/대표변경·다음담당을갱신했다. #16은종료하지않고없는그룹모집을0건으로보지않는다. 신규/동일코드재시험요청없음이다.
+- 다음은보존한feat/raid-recruitment의F3이며 dev기록을merge로반영해이어간다. Flutter #13전체16번째는F2접수·#15 D1~D4 dev마감/분쟁실기기사용자보류·현재로그인후내계정화면결함문서화를보고했다. Q1~Q3검토는여전히대기다. main통합/배포/자료삭제·Flutter/실기기인수로확대하지않는다.
+
+- 모집 브랜치 c41fd03에 dev/ce3064f를 이력 재작성 없이 merge했다. 충돌은 AI_CONTEXT/DEV_LOG/ISSUE_TRACKER/NEXT_WORK 네 진행 문서뿐이며 모집 F1/F2 기록과 G3 dev 통합 기록을 모두 보존했다. app/tests/alembic/OpenAPI 내용은 c41fd03 대비 동일함을 확인한다. dev 기준과의 차이에는 모집 코드/문서만 남고 G3 구현이 다시 포함되지 않는다. 문서/이력 반영이므로 기능시험을 반복하지 않는다.

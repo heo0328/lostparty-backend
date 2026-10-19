@@ -1,10 +1,10 @@
 # 다음 실행
 
-2026-10-19. 현재 모집 작업 브랜치는 **`feat/raid-recruitment`**다. G3의 `feat/group-management`/원격 HEAD `349fb79`에서 로컬 분기했으며 아직 원격 브랜치/추적 설정이 없다. 기존 G3 브랜치와 커밋은 그대로 보존했다. G3 구현/계약 `332a8ab` 및 후행 문서는 게시 완료·main/dev 미병합이며, 새 모집 브랜치가 그 기준을 상속한 것을 G3 통합 완료로 해석하지 않는다. F1 내부코드/0017파일/시험은 `9664fb4`로 로컬 커밋했고 구간설정·상세명세·F2 설계 및 진행 기록은 후행 문서 커밋으로 구분한다. 모두 미push다. 개발 API/DB는 이번에 변경하지 않았다.
+2026-10-19. 현재 브랜치는 **feat/raid-recruitment**다. 완료 G3는 [PR20](https://github.com/heo0328/lostparty-backend/pull/20) bb144e0/dev 후행기록 ce3064f까지 원격 반영했고 feat/group-management는 로컬/원격 정리했다. main77a1fe5는 유지한다. [#16 전체6번째 Backend 통합결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6262944673). 기존 모집 c41fd03/F1·F2 커밋을 보존하고 dev를 merge했으며 모집 자체는 미push/원격추적없음이다. 기능코드·원본OpenAPI·개발서버/DB는 이번 통합에서 변경하지 않았다.
 
 ## 바로 다음 — #13 F3 최종 계약·개발 반영 준비
 
-F2-B 후보 HTTP18동작은 **9fb2058 로컬 커밋·미push**, 격리 PostgreSQL/HTTP **101 PASS/35.00초**(HTTP43+F2-A23+F1 32+시각3)다. [F2-B 안내](../ISSUE_13_F2_HTTP.md)·[#13 전체15번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6260695606). main 앱/router·원본OpenAPI·개발DB0016/이미지/API8000은 미반영이며 다음 Backend F3다. 서버/DB는 healthy, /health 200을 확인했다. Q1~Q3/Flutter #15 우선은 유지한다.
+F2-B 후보 HTTP18동작은 **9fb2058 로컬 커밋·미push**, 격리 PostgreSQL/HTTP **101 PASS/35.00초**(HTTP43+F2-A23+F1 32+시각3)다. [F2-B 안내](../ISSUE_13_F2_HTTP.md)·[#13 전체15번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6260695606). main 앱/router·원본OpenAPI·개발DB0016/이미지/API8000은 미반영이며 다음 Backend F3다. 서버/DB는 healthy, /health 200을 확인했다. Q1~Q3 미정/Flutter 현재 결함 대응 우선은 유지한다.
 
 이전 F2-A 구현 e74d850/기록5f4cb85의58PASS는 이번101PASS와 중복이다. [F2-A 안내](../ISSUE_13_F2_READS.md).
 
@@ -14,16 +14,16 @@ F1 내부room/회차/membership/slot/신청·head·공통한도/weekly·최소�
 
 1. [상세초안](../ISSUE_13_R1_R2_CONTRACT_DRAFT.md)·[#13 전체12번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6259336924)의경로/DTO·권한별projection/페이지·admission-context·정책adapter는F2-A에서내부구현했다. 후보router의strict입력/헤더·인증/HTTP응답은F2-B에서검증했다. 다음은최종지원표/계약과DB·source·main 앱반영을동일검증구간으로맞추는F3다. 내부반환값을그대로Flutter계약으로인계하지않는다.
 2. F1은생성/참가·신청·승인에명시policy가필수다. Q1종료불명/주차넘는일정, Q2역할별최소전투력근거, Q3그룹탈퇴후room잔류·회복/조회는미정이다. 회신없음을승인으로해석하지않고그룹adapter/미정일정/전투력문턱분기는활성화하지않는다. 내부기반은공개방/유한단일회차를검증한것으로영구제품정책/요구폐기가아니다.
-3. F3에서는후보OpenAPI를기존main 앱의422제거/공통헤더가공과동일하게맞추고새지원범위·응답/기존카탈로그·그룹·주간·bootstrap호환성을확인한다. 새제품결정이필요하면그동작만분리한다. Flutter는현재#15우선유지/Q1~Q3의기존소비충돌만확인한다.
+3. F3에서는후보OpenAPI를기존main 앱의422제거/공통헤더가공과동일하게맞추고새지원범위·응답/기존카탈로그·그룹·주간·bootstrap호환성을확인한다. 새제품결정이필요하면그동작만분리한다. Flutter는현재로그인후화면결함대응우선이며Q1~Q3의정책승인/모집인수는미완료다.
 4. F3 기존API/DB반영은별도실행구간이다. 0017/0018파일을개발DB에적용하지않았다. 실제HTTP검증구간완료→commit/push·원격확인→필요한신규소비인계순서를유지한다. 내부시험만으로구현API/Flutter·실기기/운영완료로표시하지않는다.
 
-현재검증명령/범위·실제미실행은F1안내/DEV_LOG를따른다. 구간설정·계약·현재코드전체는feat/raid-recruitment에보존한다. 이후 게시/통합 시 G3 기반과 모집 변경의 범위를 구분한다. 브랜치 분리 뒤 사용자 요청으로 F1 구현과 설계·진행 문서를 구분해 로컬 커밋했다. push/merge는 없다.
+현재검증명령/범위·실제미실행은F1안내/DEV_LOG를따른다. 구간설정·계약·현재코드전체는feat/raid-recruitment에보존한다. G3 기준은 dev 통합을 반영했으므로 이후 모집 PR에는 모집 변경만 포함하는지 확인한다. 브랜치 분리 뒤 사용자 요청으로 F1 구현과 설계·진행 문서를 구분해 로컬 커밋했다. 모집 코드는 미push/dev 미통합이며 이번에는 dev의 G3 기준만 merge로 반영했다.
 
 ## 회신 반영과 별도 후속
 
-- #16 [전체5번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6259125692): G3 최소ACK/관리GET에 문서상 차단 충돌 없음. G3 Backend148PASS/실행OpenAPI일치·API8000반영/DB0016유지·게시인계완료. Flutter 연결/실기기·main/dev통합은 별도다. [개발 안내](../ISSUE_16_GROUP_G3_DEVELOPMENT.md).
+- #16 [전체6번째 Backend](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6262944673): 완료 G3 dev통합/원격확인·완료브랜치정리. 통합전 G3 45PASS/실행OpenAPI일치(기존148PASS와중복). 조건부해산/추방/대표변경·Flutter연결/실기기는후속이며이슈는열린상태다.
 - #12 [전체17번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6259124455): G1/G2 인계 접수/연결 미완료. 앱 최초조회 추가·기초 반복시험 요청 없음.
-- #15 [전체3번째 Flutter D2](https://github.com/heo0328/lostparty-backend/issues/15#issuecomment-6259074435): 내부 연결174고유테스트/분석0보고·미커밋/미push, 기존UI V1. 다음D3인증UI→D4상단/최종영향검증, 추가Backend요청없음. 해당 우선작업을 유지한다.
+- #15/Flutter 현재: [#13 전체16번째 Flutter 보고](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6260778487)에서 D1~D4 dev반영·마감/분쟁실기기사용자보류를확인했다. 현재 우선은 로그인 후 내 계정 화면이 회원 데이터로 재구성되지 않는 결함 대응 문서화다. F2-A/F2-B 보고는 접수만이며 Q1~Q3 정책승인/Flutter연동·실서버인수가 아니다.
 - #17 [전체1번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6259126286): 공급API의 소멸근거/한계·suspect해소/재등장/대표404·최소ID/revision계약 검토가 독립 후순위다. HTTP200/시간경과만으로소멸확정·보류해제/삭제하지 않는다.
 - #18 [전체1번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/18#issuecomment-6259126990): 첫관측/첫1700·명시제외 영속정책/DTO·동시성 초안이 후순위다. 도입이전 미선택 일괄활성화·GET쓰기를 하지 않는다. 수동1700미만 선택/대표를 보존한다.
 - #19 [전체1번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/19#issuecomment-6259127594): type최초고정·함께집계조건/해산OFF·평균분모·그룹조회권한은 미확정이다. R1/R2 실제원천 보존을 막지 않으며 집계/마감worker·통계HTTP는 이번 제외다.
@@ -34,4 +34,4 @@ R3확장관리/R4완료·반복·공개전환/다중동의·정족수/일정불�
 
 기존 로컬Docker/API8000·DB0016·자료/키를 사용한다. 회원 기본그룹정원15/개인가입5/개인모집10·정확한도기존정상이 기준이며 실제방제한은 [한도 계약](../ISSUE_12_MEMBER_LIMITS_CONTRACT_DRAFT.md)과 #13전체6번째를 따른다. 네트워크실패/이름으로UUID·소유/과거설정·자리를이어붙이지않는다. 미확정통계정책/자동퇴역·운영삭제를이번에추가하지않는다.
 
-새환경/자료이관·DB초기화/볼륨삭제·기존Firebase/기기자료삭제·키변경·운영배포/merge는없다. [이슈추적표](ISSUE_TRACKER.md), [기능지도](AI_CONTEXT.md), [검증/결정이력](DEV_LOG.md)을 함께 확인한다.
+새환경/자료이관·DB초기화/볼륨삭제·기존Firebase/기기자료삭제·키변경·운영배포/main통합은없다. [이슈추적표](ISSUE_TRACKER.md), [기능지도](AI_CONTEXT.md), [검증/결정이력](DEV_LOG.md)을 함께 확인한다.
