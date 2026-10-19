@@ -12,9 +12,13 @@
 
 `06a530f` 로컬커밋·미push. [준비 기록 F3-B](../ISSUE_13_F3_PREPARATION.md)의 일회용 DB/실제 LOGIN 제한 role로0016→0017→0018 migration·기존 합성자료/시각 보존·legacy 신청NULL/거절·새 신청/승인/조회/탈퇴/종료·사용량 해제를 확인했다. 관련 preparation 포함25PASS/9.88초다. 개발DB/서버·원본계약은 미변경, 새 이슈 댓글/Flutter 시험 요청은 없다. 실제 개발 앱 계정/자료·최신이미지 인수는 별도다.
 
+## 추가 완료 — 후보 HTTP 정지 제어 연결
+
+`ffa3575` 로컬커밋·미push. [준비 기록](../ISSUE_13_F3_PREPARATION.md)에 후보 create/apply/join/approve wrapper와 context/approve permissions 연결을 기록했다. 기존 원ACK/조회/거절/철회/탈퇴/이전/종료·내부 실사용량은 유지하며 관련97PASS/31.73초다. 실제 main·usage GET·최종계약·개발서버/DB는미연결이다. [#13 본문](https://github.com/heo0328/lostparty-backend/issues/13) 상단에현재상태를반영했고추가댓글은없다(전체19개).
+
 ## 바로 다음 — #13 F3 최종 계약·개발 반영 준비
 
-[F3 활성화 설계](../ISSUE_13_F3_ACTIVATION_DESIGN.md)를 작성했다. 다음 실행은 **최초 지원범위·해당 제품 결정 확인 후 공유 usage·정지 policy/context/permissions·main startup/router·최종OpenAPI 연결**이다. 내부 기반과 독립 migration 보존·앱 역할 시험은 완료했으며 실호출부 연결이 남았다. 설계 중 확인한 [전체17번째 Flutter 검토](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6263303080)는 최초 지원범위·전투력 입력/수치·그룹탈퇴 제한/정리공개를 사용자 결정으로 분리했다. 독립 원본/격리작업은 가능하되 실제 활성화/계약 고정에 직접 필요한 결정을 먼저 확인한다. 이후 격리검증→개발 전환 준비→0017/0018·앱 반영→최신 이미지 계약 검증/게시·인계 순서다. 설계 이후 내부 준비 기반만 구현·격리검증했으며 OpenAPI/DB·서버는 변경하지 않았다. admissions=false여도 실제 사용량/원ACK·조회·정리는 유지하는 계획이고 신규 source를0/unavailable로 감추지 않는다.
+[F3 활성화 설계](../ISSUE_13_F3_ACTIVATION_DESIGN.md)를 작성했다. 다음 실행은 **최초 지원범위 답변 후 공유 usage·main startup/router·최종OpenAPI 연결**이다. 사용자에게 공개모집·현재주차 안 확정 시작/종료·문턱없음의 최초실제지원 여부를 질문했고 답변 대기다. #13전체17번째에서 필요한 사용자결정으로 남겼으므로 미응답으로 실제활성화하지 않는다. 내부기반/독립migration시험·후보policy/context/permissions 연결은 완료했다. 설계 중 확인한 [전체17번째 Flutter 검토](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6263303080)는 최초 지원범위·전투력 입력/수치·그룹탈퇴 제한/정리공개를 사용자 결정으로 분리했다. 독립 원본/격리작업은 가능하되 실제 활성화/계약 고정에 직접 필요한 결정을 먼저 확인한다. 이후 격리검증→개발 전환 준비→0017/0018·앱 반영→최신 이미지 계약 검증/게시·인계 순서다. 설계 이후 내부 준비 기반만 구현·격리검증했으며 OpenAPI/DB·서버는 변경하지 않았다. admissions=false여도 실제 사용량/원ACK·조회·정리는 유지하는 계획이고 신규 source를0/unavailable로 감추지 않는다.
 
 F2-B 후보 HTTP18동작은 **9fb2058 로컬 커밋·미push**, 격리 PostgreSQL/HTTP **101 PASS/35.00초**(HTTP43+F2-A23+F1 32+시각3)다. [F2-B 안내](../ISSUE_13_F2_HTTP.md)·[#13 전체15번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6260695606). main 앱/router·원본OpenAPI·개발DB0016/이미지/API8000은 미반영이며 다음 Backend F3다. 서버/DB는 healthy, /health 200을 확인했다. Q1~Q3 미정/Flutter 현재 결함 대응 우선은 유지한다.
 

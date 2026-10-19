@@ -1392,3 +1392,13 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 첫 실행의 테스트SQL JSON bind 오인 fixture 실패를 수정했다. 새migration시험+기존preparation 최종 **25PASS/9.88초**, 기존Starlette/AnyIO경고1개이며 이전144PASS와합산하지않는다. 제품코드/migration/원본OpenAPI변경은없다.
 - 시험용 임시DB/role을제거하고격리test-db만중지했다. 기존개발서버/DB/자료·이미지·환경은변경하지않았다. 내부독립시험이므로새이슈댓글/Flutter시험요청을추가하지않고기존#13전체19번째결과및17~18번째결정경계를유지했다.
 - 다음은최초지원범위·해당제품결정확인후공유usage/정지policy/context/permissions/main startup/router/최종OpenAPI실제연결이다. 실제개발계정/자료보존·백업복원·최신이미지/실회원/Flutter/기기·운영검증은이번결과가아니다. 시험·문서는작업브랜치로컬커밋/미push이며main/dev통합·배포는하지않았다.
+
+
+## 2026-10-19 — 후보 HTTP 신규 참가 정지·조회 권한 연결
+
+- 사용자 진행 지시 후 규칙/진행문서·#13본문/최신전체19개를 재조회했다. 신규 Flutter 회신은 없었고 전체17번째의 최초지원범위 결정이 남아 있었다. 공개·현재주차 내 확정일정·문턱없음으로 실제지원할지 사용자에게 질문하고, 응답 전 독립 후보연결을 진행했다.
+- 후보 생성/신청/직접가입/승인에 runtime wrapper를주입하고context/방·신청approve permissions에도정지사유를연결했다. 실제main/lifespan/usage GET/원본OpenAPI·Compose/환경·개발이미지/API/DB·자료는변경하지않았다. 정리/조회/원ACK는정지를적용하지않으며명시기존policy를유지한다.
+- 후보HTTP정지시험및기존HTTP/조회/preparation **97PASS/31.73초**, 기존Starlette/AnyIO경고1개다. 기본미설정/false/0/잘못된설정503·증가0·재개동일key/원ACK·context/permissions·승인/거절/철회·리더이전/탈퇴/종료·실제내부사용량·환경별동일schema/main원본일치를확인했다. 이전검증과중복이므로합산하지않는다.
+- `ffa3575` 로컬커밋/미push이며사용한격리test-db만중지했다. 후보내부연결을최종계약/실제활성화·Flutter인수로확대하지않는다. 다음은최초지원범위답변후실제source/main/계약연결이며역할별문턱UI/그룹분기는후속미정이다.
+
+- #13 본문 상단을 후보연결/최초지원결정대기로 갱신하고 기존상단/원문을당시기록으로보존했다. 추가댓글은없고전체댓글19개/최신19번째Backend그대로임을재조회했다. 신규시험요청은하지않았다.
