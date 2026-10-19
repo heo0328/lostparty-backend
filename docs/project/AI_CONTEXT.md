@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+최신수신2026-10-20: [#13 Flutter41번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271510136) 운영재개수06시/플레이10시정정, [42번째전체대조](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271574011) 확인/예약등방향부합·고정계약보완요청이다. [정책문서9절](../ISSUE_13_OCT20_POLICY_REVISION.md)에수신/다음산출물을반영했다. 다음Backend고정DTO/명령권한오류·부분해제/호환표를먼저게시→Flutter실제소비대조. 점수P1저장값비교/missing와하위기간합산은재질문하지않고bundle_totalUI강제안함. 아래수10시운영개시전제는정정전이력이다.
+
 최신2026-10-20: [정책 보완안](../ISSUE_13_OCT20_POLICY_REVISION.md) c47afef 로컬/미push·[#13 전체40번째Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271452128)은Flutter34~39번째반영(게시후39추가확인/같은본문수정). 시간중복경고/자동추천회피·인원별동의수·초록pending본인확인→참가확인/예약생성·수10시반복재개·기간대체/합산·OFF갱신/경고차단철회·공개원pending외부승인·혼합일행4·인증회원개인표가최신기준이다. 다음Backend 고정DTO/명령/호환·내부구현순서정리/Flutter대조. 아래전원동의/배타예약·확인효과미정/수10시미정/과거회신대기는당시이력이다. 코드/DDL/서버/실행계약미변경.
 
 최신대조(2026-10-19): [#13 Flutter전체32번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6268865657) 기술보완요청에[Backend전체33번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6269041117)로답했다. [기획안9절](../ISSUE_13_INTEGRATED_BOUNDARY_PROPOSAL.md) 수정1e2f706 로컬/미push: 편집원본분리·latest후보계산정정·반복round하한·제한탐색/명시선택/계산한계·첫임계치두정책비교/귀속재검사다. 다음Flutter 제품선택/대조→Backend경계확정이며코드/DDL/실제API승인아니다. 다른열린이슈의추가회신은없다.
