@@ -61,6 +61,8 @@ docker compose -f compose.test.yaml run --rm -v "$PWD/app:/app/app:ro" -v "$PWD/
 - 신규 HTTP 제어시험·기존 후보HTTP/조회/preparation **97 PASS/31.73초**, 기존Starlette/AnyIO경고1개. 이전 결과와 중복이므로 합산하지 않는다. 제품코드 외 검증 fixture는 기존 정상 시나리오에서만 명시 true를 설정하고 기본 미설정은 별도 HTTP시험으로 검증한다.
 - 실제 main/router/lifespan·usage GET·원본계약·Compose/환경·개발서버/DB는 미변경이다. 격리test-db는중지했다. Flutter 신규시험 요청/원격게시/운영반영은 없다.
 
-## 다음 실행
+## 다음 실행 — 사용자 범위 정정 반영
 
-합성 자료의 migration 보존·앱 역할에 준한 격리검증은 완료했다. 후보 policy/context/permissions까지 연결했다. 다음은 최초 지원범위 답변 후 공유 usage·main startup/router·최종OpenAPI를 연결하는 구간이다. 사용자에게 ‘공개 모집·현재주차 안 시작/종료가 확정된 일정·최소전투력 조건 없음’의 최초 실제지원 여부를 질문했다. #13 전체17번째가 이 결정을 명시적으로 남겼으므로 미응답을 승인으로 처리하지 않는다. 역할별 문턱/UI와 그룹 전용은 계속 후속이다. 실제 API 연결/최종 계약 고정·개발 서버 활성화는 필요한 결정 후 F3-A/B 나머지 구간으로 진행한다. 문턱 UI·그룹 분기를 임의 구현하거나 F3 전체를 완료 처리하지 않는다. Backend 준비 결과에 대한 Flutter 신규/동일코드 테스트 요청은 없다.
+모집 조건 수정·추가를 네이티브와 협의 중이므로 현재는 큰 틀의 기본 구현까지만 유지한다. [#13 전체20번째 Backend 범위 정정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6264202734). 공통 기반은 위 구현으로 준비했으며 세부 조건을 더 추가하거나 후보 지원범위를 실제 계약으로 고정하지 않는다. 앞선 최초지원안의 승인/미응답 상태가 아니라 협의 중이라는 사용자 답변을 받은 상태다.
+
+다음 Backend 작업은 #13에 새 합의가 반영되면 기존 후보의 조건·DTO·DB 제약을 대조하고 필요한 부분만 수정·검증하는 것이다. main/실제 usage·최종OpenAPI·개발DB/이미지 반영은 그 후다. 신규 협의 결과 전에 같은 지원범위 선택을 재질문하거나 중복 구현/추상화를 늘리지 않는다.

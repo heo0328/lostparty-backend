@@ -1,5 +1,13 @@
 # 다음 실행
 
+## 현재 작업 범위 — 공통 기반만 유지, 모집 조건 협의 후 반영
+
+2026-10-19 사용자 정정: 모집 조건 수정·추가를 네이티브와 협의 중이므로 최대한 큰 틀의 기본적인 부분만 구현한다. [#13 전체20번째 Backend 범위 정정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6264202734). 앞선 최초 공개·현재주차 유한일정·문턱없음 실제지원안의 승인이 아니며, 사용자 답변 대기/같은 선택 재질문을 다음 작업으로 두지 않는다.
+
+기본 관계/식별·snapshot/revision·권한별 조회·원자성/경합·중복요청 ACK 복구·사용량·DB 보존/앱 역할 검증·후보 정지/정리는 이미 구현했다. 세부 일정·전투력·그룹·구성/승인 등 조건 의존 후보는 변경 가능한 초안으로 유지한다. 새 정책 추가·최종OpenAPI/main/실제usage 연결·개발DB/이미지 활성화는 협의 결과 후 대조·설계해서 진행한다. 구현량을 늘리기 위한 추가 추상화나 중복 검증은 하지 않는다. 이슈 전체/Flutter 적용 완료가 아니다.
+
+다음 입력은 사용자·Flutter 협의 결과의 #13 반영이다. Backend는 새 합의가 오면 기존 feat/raid-recruitment의 후보 조건·DTO·DB 제약을 먼저 대조하고 영향 범위만 수정·검증한다. 아래 실제활성화/지원범위 답변대기 기록은 정정 전 이력이다.
+
 [F3 설계·근거 답변 — #13 전체18번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6263341047). 독립 F3-A 준비와 사용자 결정/실제 활성화·계약 고정을 구분하며 신규 시험 요청은 없다.
 
 2026-10-19. 현재 브랜치는 **feat/raid-recruitment**다. 완료 G3는 [PR20](https://github.com/heo0328/lostparty-backend/pull/20) bb144e0/dev 후행기록 ce3064f까지 원격 반영했고 feat/group-management는 로컬/원격 정리했다. main77a1fe5는 유지한다. [#16 전체6번째 Backend 통합결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6262944673). 기존 모집 c41fd03/F1·F2 커밋을 보존하고 dev를 merge했으며 모집 자체는 미push/원격추적없음이다. 기능코드·원본OpenAPI·개발서버/DB는 이번 통합에서 변경하지 않았다.
