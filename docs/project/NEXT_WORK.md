@@ -4,9 +4,13 @@
 
 2026-10-19. 현재 브랜치는 **feat/raid-recruitment**다. 완료 G3는 [PR20](https://github.com/heo0328/lostparty-backend/pull/20) bb144e0/dev 후행기록 ce3064f까지 원격 반영했고 feat/group-management는 로컬/원격 정리했다. main77a1fe5는 유지한다. [#16 전체6번째 Backend 통합결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6262944673). 기존 모집 c41fd03/F1·F2 커밋을 보존하고 dev를 merge했으며 모집 자체는 미push/원격추적없음이다. 기능코드·원본OpenAPI·개발서버/DB는 이번 통합에서 변경하지 않았다.
 
+## 준비 완료 — 독립 F3-A 내부 기반
+
+[공유 사용량·DB 준비/권한 검사·참가 정지 제어](../ISSUE_13_F3_PREPARATION.md)를 **a0a515c 로컬커밋·미push**, 격리144PASS/42.77초로 확인했다. [#13 전체19번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6263654624). 현재 사용량 GET은 unavailable/후보 router·main lifespan에는 새 기반 미연결이며 OpenAPI/Compose·개발 서버/DB는 그대로다. 독립 준비 완료와 F3 실제 활성화/계약 고정을 구분한다.
+
 ## 바로 다음 — #13 F3 최종 계약·개발 반영 준비
 
-[F3 활성화 설계](../ISSUE_13_F3_ACTIVATION_DESIGN.md)를 작성했다. 다음 실행은 **F3-A 공유 usage 원본·계약 초안/검증·DB 준비 검사·신규 참가 정지 설정 구현 준비**다. 설계 중 확인한 [전체17번째 Flutter 검토](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6263303080)는 최초 지원범위·전투력 입력/수치·그룹탈퇴 제한/정리공개를 사용자 결정으로 분리했다. 독립 원본/격리작업은 가능하되 실제 활성화/계약 고정에 직접 필요한 결정을 먼저 확인한다. 이후 격리검증→개발 전환 준비→0017/0018·앱 반영→최신 이미지 계약 검증/게시·인계 순서다. 이번은 설계만이며 기능코드/OpenAPI/DB·서버를 변경하지 않았다. admissions=false여도 실제 사용량/원ACK·조회·정리는 유지하는 계획이고 신규 source를0/unavailable로 감추지 않는다.
+[F3 활성화 설계](../ISSUE_13_F3_ACTIVATION_DESIGN.md)를 작성했다. 다음 실행은 **F3-A 공유 usage 원본·계약 초안/검증·DB 준비 검사·신규 참가 정지 설정 구현 준비**다. 설계 중 확인한 [전체17번째 Flutter 검토](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6263303080)는 최초 지원범위·전투력 입력/수치·그룹탈퇴 제한/정리공개를 사용자 결정으로 분리했다. 독립 원본/격리작업은 가능하되 실제 활성화/계약 고정에 직접 필요한 결정을 먼저 확인한다. 이후 격리검증→개발 전환 준비→0017/0018·앱 반영→최신 이미지 계약 검증/게시·인계 순서다. 설계 이후 내부 준비 기반만 구현·격리검증했으며 OpenAPI/DB·서버는 변경하지 않았다. admissions=false여도 실제 사용량/원ACK·조회·정리는 유지하는 계획이고 신규 source를0/unavailable로 감추지 않는다.
 
 F2-B 후보 HTTP18동작은 **9fb2058 로컬 커밋·미push**, 격리 PostgreSQL/HTTP **101 PASS/35.00초**(HTTP43+F2-A23+F1 32+시각3)다. [F2-B 안내](../ISSUE_13_F2_HTTP.md)·[#13 전체15번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6260695606). main 앱/router·원본OpenAPI·개발DB0016/이미지/API8000은 미반영이며 다음 Backend F3다. 서버/DB는 healthy, /health 200을 확인했다. Q1~Q3 미정/Flutter 현재 결함 대응 우선은 유지한다.
 

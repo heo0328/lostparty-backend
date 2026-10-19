@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+F3-A 독립 준비(2026-10-19): [사용량/준비검사/정지제어](../ISSUE_13_F3_PREPARATION.md) a0a515c 로컬커밋·미push·격리144PASS/42.77초, [#13 전체19번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6263654624). 기존 GET usage는unavailable, main/candidate router·permissions/context/lifespan은미연결·원본OpenAPI/개발서버DB미변경이다. 사용자결정과실제활성화/최종계약고정은별도이며아래설계기록과현재준비완료를구분한다.
+
 F3 설계(2026-10-19): [활성화 설계](../ISSUE_13_F3_ACTIVATION_DESIGN.md)에 공유 usage 집계·기존 한도 응답 실수치 전환, main router/최종 계약·DB 준비 검사, 신규 참가 정지/조회·정리 유지,0017→0018·이미지 전환/복구·게시 순서를 기록했다. 이번은 설계 문서이며 해당 코드/설정/DB/서버는 아직 미변경이다. 설계 중 추가된 #13 전체17번째 Flutter Q1~Q3 검토를 설계7~9절에 반영했고 #18 Backend 설계를 공유했다. 최초 실제지원범위/전투력입력·수치/그룹탈퇴제한·정리공개는 사용자결정이며 독립F3-A 준비와 실제활성화/계약고정을 구분한다.
 
 현재 통합 기준(2026-10-19): G3 완료 관리GET/이전/일반탈퇴는 [PR20](https://github.com/heo0328/lostparty-backend/pull/20) bb144e0로 **dev 통합**, 후행 기록 ce3064f까지 원격확인했다. feat/group-management 로컬/원격 정리·main77a1fe5 유지, [#16 전체6번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6262944673). 기존 feat/raid-recruitment의 c41fd03/F1·F2 커밋을 보존하고 dev를 merge했다. 모집 코드는 미push/개발서버미반영이며 다음F3다. 아래 기존 main/dev 미병합 표기는 통합 전 당시 기록이다.

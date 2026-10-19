@@ -1373,3 +1373,12 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 신규회신의P1역할원본/신뢰·관측·stale/null 예시와그룹탈퇴최소정리DTO/후보없음·원인별영향표를설계7~9절에추가했다. 후보역할별문턱맵이기존단일nullable UI확정이아님을명시했다. 최초지원범위·전투력입력/수치·그룹탈퇴제한/공개를사용자결정으로분리하고독립F3-A 준비와실제활성화/계약고정을구분했다. Flutter화면재구성수정은전체17번째에서별도마감으로정정됐다.
 
 - [#13 전체18번째 Backend 설계·근거답변](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6263341047)을전체17번째수신요청에대한Q2필드/신뢰/예시·Q3최소정리/원인별영향답변으로보완하고실제순번/수정본문을재조회했다. 이슈상단도설계/독립F3-A와사용자결정·계약고정경계로갱신한다. 이번설계/진행기록은로컬커밋·미push로보존한다.
+
+## 2026-10-19 — 독립 F3-A 구현 준비 기반·격리 검증
+
+- AGENTS/협업/NEXT_WORK/AI_CONTEXT/F3설계와 #13최신전체18개를확인했고추가회신없음이었다. feat/raid-recruitment/1834c3b에서독립내부기반만준비하고사용자결정/실제API연결·활성화를분리했다.
+- usage.count와명시limits_snapshot, 기존core 집계공유·limits.snapshot 내부callback 인자를구현했다. 실제 source를명시했을때만실수치/초과issue를주고실패/비정상count를0으로바꾸지않는다. 기존get호출은변경하지않아unavailable이며공개API전환이아니다.
+- readiness에정확한0018/필수열·타입/PK·FK/deferrable/unique/partial index/check수·활성공통시각trigger/head/현재role권한의읽기검사를준비했다. 전체DDL의미·trigger함수본문·실제개발앱migration/CRUD증명으로확대하지않는다. runtime에는기본정지/유효설정·명시policywrapper/정지사유를준비했지만실제router/permissions/context/lifespan에는연결하지않았다.
+- 격리PostgreSQL/후보HTTP·기존모집F1/F2-A·한도/시각 **144PASS/42.77초**, 기존Starlette/AnyIO경고1개다. 실패없음, 이전101PASS등과중복이므로합산하지않는다. 기본/정확한도/초과·pending/주차·원ACK/정지재개·정리·읽기쓰기/행잠금0/오류·부족한schema/합성NOLOGIN role GRANT·REVOKE를검증했다. 역할/DDL변경은격리transactionrollback이며main OpenAPI=원본/모집경로미등록도확인했다.
+- 구현6파일을 **a0a515c** 로컬커밋했다. 검증후readiness의사용하지않는import/반복import위치만정리했으며기능변경은없고AST/diff를확인한다. 사용한격리test-db만stop했고실제개발서버·DB0016/이미지/Compose/OpenAPI·기존자료를변경하지않았다.
+- [#13 전체19번째 Backend 준비결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6263654624)에회신하고실제순번/본문과동시새회신없음을재조회했다. 다음은필요결정후실제호출부/계약연결·별도격리검증이며독립합성자료보존/권한검증준비는가능하다. 공개미지원/역할별문턱UI/그룹정책·실제lostparty_app migration/CRUD·실provider/실회원/Flutter/기기·전체Backend suite/운영검증·push/merge/배포는이번범위가아니다.
