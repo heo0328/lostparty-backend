@@ -9,8 +9,8 @@ from app.game_accounts.support import fail
 from app.raid_rooms.models import Room, Round, Membership, Application, DirectoryHead, MemberHead
 
 REVISION = '0018_room_application_build'
-# 0019 is additive: legacy F2 schema/semantics stay intact.
-SUPPORTED_REVISIONS = (REVISION, '0019_integrated_recruitment')
+# Known additive source revisions; legacy F2 schema/semantics stay intact.
+SUPPORTED_REVISIONS = (REVISION, '0019_integrated_recruitment', '0020_recruitment_sources')
 MODELS = (Room, Round, Membership, Application, DirectoryHead, MemberHead)
 
 
@@ -36,13 +36,17 @@ def require_ready(db, *, integrated=False):
     require(len(versions) == 1 and versions[0] in SUPPORTED_REVISIONS)
     models = MODELS
     if integrated:
-        require(versions == ['0019_integrated_recruitment'])
+        require(versions[0] in ('0019_integrated_recruitment', '0020_recruitment_sources'))
         from app.raid_rooms.integrated_models import (
             RecruitmentRoom, RecruitmentItem, RecruitmentRound, RecruitmentMembership,
             RecruitmentAssignment, RecruitmentSession, RecruitmentSegment,
         )
         models += (RecruitmentRoom, RecruitmentItem, RecruitmentRound, RecruitmentMembership,
                    RecruitmentAssignment, RecruitmentSession, RecruitmentSegment)
+        if versions == ['0020_recruitment_sources']:
+            from app.raid_rooms.source_models import SOURCE_MODELS
+            from app.game_accounts.power_success import RolePowerSuccess
+            models += SOURCE_MODELS + (RolePowerSuccess,)
     for model in models:
         table = model.__table__
         name = table.name
@@ -64,6 +68,8 @@ def require_ready(db, *, integrated=False):
                        and v['referred_columns'] == [parts[-1] for parts in target]
                        and v['referred_schema'] in (None, 'public')]
             require(bool(matches))
+            if fk.ondelete:
+                require(matches[0]['options'].get('ondelete') == fk.ondelete)
             if fk.deferrable:
                 require(matches[0]['options'].get('deferrable') is True)
                 require(matches[0]['options'].get('initially') == fk.initially)

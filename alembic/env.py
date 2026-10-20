@@ -6,6 +6,8 @@ import app.member_settings.models
 import app.raid_weekly.models
 import app.raid_rooms.models
 import app.raid_rooms.integrated_models
+import app.raid_rooms.source_models
+import app.game_accounts.power_success
 import app.groups.models
 import app.groups.admission_models
 import app.member_limits.models

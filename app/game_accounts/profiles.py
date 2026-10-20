@@ -88,6 +88,9 @@ def put(principal, cid, role, key, data):
                 row.version += 1
                 row.saved_at = now(db)
             db.flush()
+            from app.game_accounts.power_success import capture
+            capture(db, row)
+            db.flush()
             result = dict(character_id=cid, role=role, ownership_revision=account.ownership_revision,
                           lifecycle_revision=character.lifecycle_revision, **stored(row))
             return commit_result(db, ticket, 200, result)
