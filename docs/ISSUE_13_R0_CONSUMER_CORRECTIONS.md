@@ -1,5 +1,7 @@
 # #13 R0 소비 계약 보완안 R2
 
+최신 기준: [46/47번째 반영 보완3판](ISSUE_13_R0_CONTRACT_R3.md). 이 문서의 G 미정/정각 포함 추천·item 단독 탈퇴/자동 기본값·합계 기간과 충돌하는 정의는3판으로 대체한다. 최종 소비 인수·구현과는 구분한다.
+
 2026-10-20 / Backend / feat/raid-recruitment / 기준1435b57. 보완 본문 커밋 e806ee4·로컬/미push.
 
 공식 회신: [전체45번째 Backend / R0 소비 계약 보완2판](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6272271633). 다음 Flutter 재대조, 최종 계약·통합 구현 미완료.
