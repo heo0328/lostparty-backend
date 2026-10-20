@@ -1,6 +1,6 @@
 # Issue #13 R3→R5 통합 작업 기록
 
-2026-10-20, feat/raid-recruitment. **구현·로컬 통합 검증 후 게시/인계 마무리 중**이다. 사용자 지시로 R3→R4→R5 네이티브 인계/확인까지 연속 진행한다. 이 문서는 완료 선언이 아니다.
+2026-10-20, feat/raid-recruitment. **구현66244da push·원격확인/[전체58번째 Backend R5 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6287055201) 완료·Flutter 확인 대기**다. 사용자 지시로 R3→R4→R5 네이티브 인계/확인까지 연속 진행한다. 이 문서는 완료 선언이 아니다.
 
 ## 구현한 범위
 
@@ -44,3 +44,7 @@ AEAD token 합성 실제 발급 크기는 **419 ASCII bytes**이며 내부 영�
 재개 후 최종 관련75PASS/159.28초. 추가 검증은 별도 실행으로 기록하며 이전1133PASS와 중복 합산하지 않는다. 합성키 context1000회 seal/unseal 측정0.0754초, 합성token410bytes(HTTP실제발급419bytes). 성능 숫자는 개발 환경 참고값이다.
 
 최종 추가54PASS/200.83초: 단독 DB모델/DDL 일치·R2 생성/참가/계약·최신 일정 group가드·관계/원장·원천·미래주차. 이전75개와 중복되므로 합산하지 않는다. 전체 회귀1133PASS/1FAIL의 과거 사용량 기대값은 수정 후75개 실행에서 통과했다. 최종 코드 전체를1134PASS로 재표기하지 않는다. 실제8000 readiness0023/health200/공개목록200·원본 OpenAPI 전체일치 재확인, 실제모집 room/weekly occupancy는0으로 실회원 쓰기 없음. 남은 정렬·자리 필터 매핑/Flutter 적용·실기기는 회신 대기다.
+
+## 게시·네이티브 확인 상태
+
+66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment push·ls-remote 동일SHA 확인. [#13 전체58번째 Backend·R5 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6287055201) 게시·실제순번조회 및 본문상단최신화완료. 게시후조회시 총58댓글로 Flutter 인계확인/입력매핑회신없음. 다음Flutter 원본계약연동/사용SHA·적용구간회신과 전체57번째정렬·자리wire입력회신, Backend 수신후보완/검증/게시·동일이슈결과답변. 이슈종료/main·dev merge/운영배포는없다. 후행문서기록은구현SHA와구분한다.

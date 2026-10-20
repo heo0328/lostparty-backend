@@ -1,10 +1,10 @@
 # 다음 실행
 
-2026-10-20, **feat/raid-recruitment**. R3 일정/예약·미래주차, R4 완료/종료·권한/검색, R5 main/worker·OpenAPI/DB 통합을 구현하고 **로컬 API8000·DB0023에 반영**했다. [상세 구현·검증](../ISSUE_13_R3_R5_IMPLEMENTATION.md). commit/push·원격 확인과 네이티브 인계는 현재 마무리 중이며 게시 결과는 후행 기록을 따른다. main/dev·활동 브랜치는 보존한다.
+2026-10-20, **feat/raid-recruitment**. R3 일정/예약·미래주차, R4 완료/종료·권한/검색, R5 main/worker·OpenAPI/DB 통합을 구현하고 **로컬 API8000·DB0023에 반영**했다. [상세 구현·검증](../ISSUE_13_R3_R5_IMPLEMENTATION.md). 구현 **66244da push·원격 SHA 확인 / [전체58번째 Backend R5 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6287055201) 완료**, Flutter 회신 대기다. main/dev·활동 브랜치는 보존한다.
 
 ## 다음 실행·완료 조건
 
-1. Backend 최종 추가 회귀 결과 기록→작업 브랜치 commit/push·원격 SHA 확인→이슈13 인계. 기존 전체 실행1133PASS/1FAIL에서 과거 usage 기대값 실패를 수정했고 관련 최신75PASS/159.28초. 마지막 모델/계약·일정/관계·미래주차 추가54PASS/200.83초. 결과를 중복 합산하지 않는다.
+1. 게시·인계 완료. Backend는 이슈13 최신 회신을 확인하고 아래 미완료 매핑/연동 결과를 같은 브랜치에서 처리한다. 기존 전체 실행1133PASS/1FAIL에서 과거 usage 기대값 실패를 수정했고 관련 최신75PASS/159.28초. 마지막 모델/계약·일정/관계·미래주차 추가54PASS/200.83초. 결과를 중복 합산하지 않는다.
 2. **Flutter 입력 회신 필요**: [#13 전체57번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6286046186)의 기존 정렬·자리 필터 키/enum/기본·동률 매핑. 현재 raid/difficulty 및 그룹OR·회원AND·회원별캐릭터OR 검색은 구현/검증했으나 기존 정렬·자리 입력 매핑은 미확인이다. 이 항목을 전체 검색 인수 완료로 표시하지 않는다. 회신 시 같은 브랜치 보완·검증·게시한다.
 3. 게시 후 Flutter는 원격 SHA/원본 OpenAPI 기준 실제 연동·변경 구간 확인 결과를 이슈13에 회신. Backend는 실제 회신을 조회하고 필요한 보완 결과를 같은 이슈에 답한다. 인계 게시와 Flutter 적용/실기기 인수는 별도다. 이슈 종료/merge/운영배포는 수행하지 않는다.
 
