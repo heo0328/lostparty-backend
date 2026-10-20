@@ -2,21 +2,21 @@
 
 2026-10-20. 현재 **feat/raid-recruitment**, 기존 초안35dd5f9/보완 본문 **e806ee4 로컬 커밋·미push**. main77a1fe5/dev ce3064f 유지. 별도 활동 브랜치 feat/activity-selection/89a3248 보존. 미커밋 변경을 다른 브랜치로 옮기지 않는다.
 
-## 현재 — #13 R0 소비 계약 보완2판 게시 / Flutter 재대조
+## 현재 — #13 Flutter46/47번째 수신 / Backend 최종 소비 계약 보완
 
 [계약 고정 초안](../ISSUE_13_FIXED_CONTRACT_DRAFT.md)을 [전체43번째 Backend 회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271860507)에 본문 전체로 게시했다. [Flutter41번째 정정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271510136)·[42번째 대조](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271574011)에 대한 기술 답변이다. 완료는 검토 초안 작성/게시이며 최종 계약·통합 구현·Flutter 적용은 미완료다.
 
-### 다음 담당·완료 조건
+### 다음 담당·완료 조건 — Flutter46/47번째 수신
 
-[44번째 Flutter 검토](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6272050056)에 대응한 [R0 소비 계약 보완2판](../ISSUE_13_R0_CONSUMER_CORRECTIONS.md) **e806ee4 로컬·미push**를 [전체45번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6272271633)에 전문 게시했다. 입력 누락·세션별 변경안/버전·GET별 CAS 출처·공대장 승인 개인정보 경계·전체 기능 지도·최근 성공 서버 보존 규칙을 보완했다. 기존43번째 초안의 충돌 정의는 이 보완본으로 대체한다.
+[46번째 소비 보완](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6282880292)와 [47번째 사용자 결정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283062852)을 확인했다. [정책 문서12절](../ISSUE_13_OCT20_POLICY_REVISION.md)에 확정10항목/남은 소비 보완을 기록했다. **다음 담당 Backend**이며 Flutter의 전체 회신 대기는 해소됐다. 이번은 수신/작업 순서 정리로 실제 계약 보완·기술 답변 완료는 아니다.
 
-1. **다음 Flutter**: 실제 Router/DI/Repository·구자료와 보완본을 재대조하고 DTO/버전/권한 누락 및 기존 experienceLevel 실제 wire 값·표시 대응을 회신한다. 현재 adapter/route는 여전히 pending이며 연결 완료로 추정하지 않는다.
-2. Backend: 새 회신을 확인해 필요한 제품 선택만 분리하고 정확한 schema/상한·G 결정을 고정한다. 모집 context/승인/role 성공 snapshot은 설계 후보이며 구현 전이다. 숙련도 enum/자동 기본값을 임의로 정하지 않는다.
-3. 계약 고정 후 기존 R1~R5 모델/보존→개인표·원장→예약/투표/다음주→완료/권한 원자성→OpenAPI/앱/DB 검증과 구현 구간 commit/push/원격 확인 후 필요한 소비 인계로 진행한다.
+1. 47번째 확정 정책부터 R2/최종 schema·권한/정족수·효과표에 반영한다. 방 구성원의 레이드 자체 불참 모드를 철회하고 필수/선택 타임과 분리한다. 세션별 정족수 모두 충족 후 원자 적용, 정각부터 마감, 혼합4인 규칙, A완료 상태 표시/B,C 유지, item 단독 탈퇴 금지/묶음 전체 탈퇴를 반영한다.
+2. 마지막 개인 완료의 ON/OFF·choice/위임·종료, 방 전체 이번주 미완료 중단·실제 참가자 선언, 자동OFF/06이전·이후 설정 효력, 타임별 묶음 합계24시간을 명시한다. 기존 G를 전부 미정으로 유지하거나 다시 사용자에게 묻지 않는다.
+3. 46번째의 nullable 숙련도 실제5종/null, personal-profile 역할 버전 출처 정정, 완전 미정/요일만/요일무제한 조율의 전체 생성 예시, 참가 전 그룹권한 내 필터·최소 projection/공개식별자 대응, 최종 CreateItem·생성/신청/승인 예시와0→1 좌석 adapter를 보완한다. 표 밖 명시참가 허용과 context 밖 조합 거절을 구분한다.
+4. N1 변경 제안은 아직 미확정이다. 생성자 수동지정/자동조율 추가인원 최소1과 구분해 필요한 기술 사례만 제시한다. 추가0 채택으로 해석하지 않는다. 기술 상한은 측정/근거로 제안한다.
+5. 보완 전문을 #13 게시→Flutter 소비 재대조→정확한 schema/OpenAPI와 통합 구현 R1~R5로 연결한다. 새 서버 테스트/배포 요청은 없다.
 
-P1 실제 모델/저장 코드를 확인했으며 현재는 nullable 요약 덮어쓰기만 있고 별도 최근 성공 보존은 없다. 추가 snapshot/관측·출처 버전 규칙은 G6 기술안이다. 공개 원 pending 예외·현재 그룹원 배지/권한은 분리한다. 현재45번째는 계약 검토이며 새 서버 테스트 요청이 아니다.
-
-G1 N1/세션별 quorum, G2 권위06시 이벤트/지연·마감 정각, G3 앱4인 구성, G4 부분 완료의 방 탈퇴 연동·중단 범위/선언 자격, G5 다음주 설정/blocked 정리, G6 최근 성공 저장 보존의 기존 P1 호환, G7 기술 상한은 대조할 항목이다. 확정된 저장 점수 비교·missing 판정/하위 기간 합산·수06 운영/10 플레이는 다시 질문하지 않는다. bundle_total 새 입력 UI는 필수 추가하지 않는다.
+P1 최근 성공 snapshot 방향은46번째에서 요구 부합으로 확인했으나 구현/이행·경합 검증은 미완료다. 모집 adapter/route도 여전히 pending이다. 네이티브 소스는 직접 읽지 않는다.
 
 ### 보존할 확정 경계·실제 상태
 
