@@ -2,21 +2,20 @@
 
 2026-10-20. 현재 **feat/raid-recruitment**, 최신 계약 보완 본문 **d1bdb47 로컬 커밋·미push**. main77a1fe5/dev ce3064f 유지. 별도 활동 브랜치 feat/activity-selection/89a3248 보존. 미커밋 변경을 다른 브랜치로 옮기지 않는다.
 
-## 현재 — #13 기술 계약 보완4판 게시 / Flutter 해당분 재대조
+## 현재 — #13 설계 소비 대조 완료 / Backend 명세 고정·통합 구현
 
 [계약 고정 초안](../ISSUE_13_FIXED_CONTRACT_DRAFT.md)을 [전체43번째 Backend 회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271860507)에 본문 전체로 게시했다. [Flutter41번째 정정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271510136)·[42번째 대조](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271574011)에 대한 기술 답변이다. 완료는 검토 초안 작성/게시이며 최종 계약·통합 구현·Flutter 적용은 미완료다.
 
-### 다음 담당·완료 조건 — 기술 보완4판 게시
+### 다음 담당·완료 조건 — Flutter51번째 설계 대조 마감
 
-[49번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283395513)의 두 경계를 [기술 계약 보완4판](../ISSUE_13_R0_TECHNICAL_BOUNDARIES_R4.md) **d1bdb47 로컬·미push**에 반영해 [전체50번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283620362)로 전문/JSON8개 인계했다. 이전 초안의 필터/그룹범위·종료완료 입력·N1 충돌 정의를 대체한다.
+[전체51번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283811575)에서49번째의 두 기술 경계 소비 검토를 마감했다. **제품 결정과 제시된 설계 대조는 완료**됐으며 같은 두 영역의 설계 전문/제품 협의를 반복 요청하지 않는다. 실제 API/암호화·DB동시성 인수는 구현 이후 별도다. 다음 담당은 **Backend 명세 고정·통합 구현**이다.
 
-1. **다음 Flutter**: 회원별캐릭터AND/OR·복수그룹 동일회원/커서·그룹연결과입장scope 분리, 권한내 영향context/암호화snapshot으로 생성하는 종료·완료 입력의 실제 소비 가능 여부만 재대조한다. 기존제품/기본상태/JSON9개 전체를 다시 요청하지 않는다.
-2. Backend: 회신된 실제 schema/권한·참조 차이를 보완하고 정확한 OpenAPI/구현 계약을 함께 고정한다. N1명시본인확인은 확정, 자동추가0은 금지다. 기술 상한/TTL·토큰/페이지·탐색비용은 Backend 근거/측정으로 확정한다.
-3. 통합 모델/추가migration·자료보존→개인표/관계/원장→예약·투표·다음주→완료/권한·잠금/원자성→실제앱·DB/계약 검증을 내부R1~R5로 진행한다. 검증된 구현 구간 commit/push/원격 확인 후 필요한 소비시험 인계를 한다.
+1. 정확한 OpenAPI/구현 schema: R4 검색에 기존 raidIds/difficultyIds와 적용 중인 정렬·자리 필터의 대응을 함께 명시한다. 다른 조회와 분리해도 회원조건과 페이지 전에 결합하며 로컬 재필터로 결과를 누락시키지 않는다. 이는 기존 기능 보존이며 새 제품 재협의가 아니다.
+2. 필드 required/null·permissions 거절·에러/ACK·읽기context, token 만료/크기·페이지/구간·탐색 상한을 Backend 측정 근거로 고정한다. 예시20건/5분을 확정 상한으로 삼지 않는다.
+3. 내부R1 모델·추가migration/기존자료 보존 → R2 개인표/관계·원장 → R3 예약/투표·다음주 → R4 완료·권한/잠금·원자성 → R5 실제앱/DB·OpenAPI 검증을 진행한다. 미합의초안을 공개API에 추가하는 단계가 아니라 합의된계약의 정확한구현을고정하는 단계다.
+4. 검증된 인계 가능 구간을 commit/push/원격 확인하고 API/DB 준비·미완료를 구분해 #13 전달한다. Flutter는 실제 구현계약/인계를 소비하며 현재token/DTO를추정해선연결하지않는다. 기존PendingRepository/Stream존재는연결완료가아니며상시polling을추가하지않는다.
 
-핵심 기준: member_ref는 조회자·선택그룹·권한세대 한정, 회원간AND/각회원캐릭터OR/그룹OR를 페이지전에 판정한다. group_id는연결그룹/scope는입장범위이며공개전환으로연결을지우지않는다. 전체종료/완료는타인원장버전배열을입력받지않고권한내context token으로내부영향집합을잠금검사/변경409전체rollback한다. GET는무쓰기/성공원ACK는만료token재실행보다우선한다.
-
-완료는 기술 보완안 작성/게시이며 최종 소비/API인수·통합구현/이행·실행OpenAPI·서버DB반영·Flutter연결은 미완료다. 이번은 설계예시/문서검사뿐이며 새 서버시험/배포요청은 없다. 네이티브 소스는 읽지 않았다.
+이번은51번째수신/단계전환기록이다. Backend코드/OpenAPI/서버DB를이미변경한것은아니다. Flutter도문서/JSON예시검증만보고했고실행코드·서버시험없음/HEAD6d3f617·미커밋미push다. 같은접수댓글을반복하지않고다음실제구현계약/결과로인계한다.
 
 ### 보존할 확정 경계·실제 상태
 
