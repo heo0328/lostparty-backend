@@ -337,6 +337,9 @@ def test_model_migration_consistency():
     from app.groups import models as group_models
     from app.groups import admission_models as admission_models
     from app.member_limits import models as limit_models
+    from app.ownership_disputes import models as ownership_models
+    from app.raid_rooms import models as room_models,integrated_models,source_models,weekly_links,schedule_heads,resume_models
+    from app.game_accounts import power_success
     with engine().connect() as connection:
         # Application-owned external tables are absent in isolated test DB.
         assert compare_metadata(MigrationContext.configure(connection),Base.metadata)==[]

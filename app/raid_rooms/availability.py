@@ -1,7 +1,8 @@
 """Explicit availability saves only. Reads never copy or create state.
 
 All writes share the game mutation lock, CAS and original-success transaction.
-No participation, reservation or weekly state is modified by these operations.
+Personal saves never propagate. An explicit room copy may satisfy an initial
+unconfirmed automatic plan; confirmed schedules and proposals are untouched.
 """
 from copy import deepcopy
 from sqlalchemy import select
@@ -140,9 +141,21 @@ def put(principal, key, data, rid=None):
                     row.intervals = deepcopy(personal.intervals)
                     row.normalized_intervals = deepcopy(personal.normalized_intervals)
                     row.submitted_at = stamp
+                    room=db.get(RecruitmentRoom,rid);room.plan_revision+=1;room.revision+=1
+                    from app.raid_rooms.core import directory
+                    directory(db)
                 result = submission_output(member, row)
             db.flush()
-            return commit_result(db, ticket, 200, result)
+            if rid is not None:
+                from app.raid_rooms.scheduling import evaluate_initial,ScheduleGroup
+                if db.scalar(select(ScheduleGroup.id).where(ScheduleGroup.room_id==rid).limit(1)) is not None:
+                    evaluate_initial(db,db.get(RecruitmentRoom,rid),stamp)
+            value=commit_result(db, ticket, 200, result)
+            db.flush()
+            if rid is not None:
+                from app.raids.service import cycle
+                if cycle(now(db)).cycle_key!=cycle(stamp).cycle_key:fail('CYCLE_CHANGED')
+            return value
     except Exception:
         release(ticket)
         raise

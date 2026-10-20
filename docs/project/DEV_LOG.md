@@ -1580,3 +1580,13 @@ R2-B 구현 **d25c26b**, feat/raid-recruitment/로컬·미push. [전체55번째 
 - 새 migration 없음(0021 원천 사용). 실제DB0016/서버·이미지/키·자료/Flutter 소스는 미변경, 배포/merge·실제 DB이행·Flutter 동작 시험 요청 없음. 다음 Backend R3 일정/예약·확인/제안/미래주차→R4 나머지 도메인/목록검색/완료 context→R5 원본 계약/main·실제 준비 검증/commit·push/원격 확인 후 필요한 Flutter 인계다. 동일 제품 설계 재협의 대기가 아니다.
 
 R2-C 구현 **841503d**, feat/raid-recruitment/로컬·미push. [전체56번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6285392591) 및 이슈 본문 상단에 완료/미완료·다음 Backend R3를 반영했다. Flutter 새 시험 요청 없음. 전용 lostparty-recruitment-r2ctest tmpfs 컨테이너/네트워크 정리 완료.
+
+## 2026-10-20 R3→R5 작업 중단/재개 확인
+
+사용자 중단 후 같은 feat/raid-recruitment의 미커밋 변경을 보존하고 실행 중이던 격리 전체 회귀 결과를 회수했다. 1133PASS/1FAIL/908.94초. 실패는 tests/test_raid_room_preparation.py의 과거 `unavailable` 기대값이며 R5 실제 모집 사용량 집계로 바뀐 계약에 맞춰 수정했다. 테스트 실행 당시 이후의 일정 조회 경로/DTO·주차와 권한 보완은 별도 재검증 중이다. 전체 최신 코드 통과로 오인하지 않는다. 실제 개발DB0016/API8000은 미반영·commit/push/인계 전이다. #13은 전체57번째 Backend의 기존 정렬·자리 입력 매핑 요청 이후 신규 댓글 없음(재개 시 실제 조회). 다음 통합 검증→보존 이행/실행 계약→게시·네이티브 인계/확인.
+
+## 2026-10-20 R3→R5 로컬 통합 검증·게시 준비
+
+[R3~R5 기록](../ISSUE_13_R3_R5_IMPLEMENTATION.md). 중단복구 후 최신 관련75PASS/159.28초, 추가54PASS/200.83초(중복 합산없음). 전체1133PASS/1FAIL에서 유일한 실패였던 과거 usage unavailable 기대값은 수정 후 관련 실행에서통과. 최종 전체1134PASS로표기하지않는다. 단독모델검사는 전체업무모델 import를 명시해 standalone으로도 DDL일치통과. 원본70경로 operation계약유지/모집44경로추가, 실제이미지OpenAPI전체일치.
+
+로컬0016→0023추가이행·API8000새이미지healthy·readiness0023/health200/공개목록200. 기존49표 중48전체행수/지문보존, game_account_requests90행수동일/지문차이는기존만료cleanup이동작하는환경으로원문동등성증명한계명시. 이행코드는해당표수정없음. 실회원모집쓰기/provider/기기·Firebase삭제/볼륨초기화없음, 실제신규room/원장link각0. 합성키context1000왕복0.0754초·410bytes/HTTP발급419bytes. 원격main77a1fe5/devce3064f확인,모집원격브랜치없음,다른작업브랜치보존. 작업브랜치게시후이슈13인계·회신확인을이어간다. 전체57번째Backend정렬/자리입력요청이후신규회신없음.

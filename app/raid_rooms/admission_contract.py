@@ -9,10 +9,10 @@ def draft_openapi():
     app.include_router(router)
     schema=app.openapi();decorate(schema)
     schema['x-recruitment-admission-policy']={
-        'activation':'unmounted; canonical OpenAPI and main integration at R5',
-        'implemented':'unscheduled creation, join, apply, approve, reject, withdraw, contexts, own plan and scoped application review',
-        'pending_scheduling':'nonempty schedule_groups, sessions or schedule targets never succeed; R3 integration required',
-        'pending_commands':'plan leave/transfer/end disabled until their implementation',
+        'activation':'mounted by R5 integration; canonical contract in openapi/openapi.yaml',
+        'implemented':'creation, admission and typed schedule graph; full integrated command surface is canonical OpenAPI',
+        'pending_scheduling':'R3 schedule groups, sessions, consent and reservations implemented',
+        'pending_commands':'R4 commands implemented; typed canonical paths describe the complete surface',
         'selection_token':'67 ASCII characters: s1. plus HMAC-SHA256 hex; opaque actor/action/cycle/source-version binding; no readable private payload',
         'selection_lifetime':'current cycle and exact source snapshot; server key rotation invalidates old contexts; no independent arbitrary TTL',
         'bounds':{'body_bytes':32768,'query_bytes':32768,'items':'unique raid IDs within current authoritative catalog'},

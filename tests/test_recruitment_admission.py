@@ -218,8 +218,11 @@ def test_all_reads_no_writes_and_scheduling_gate_is_atomic(ready,http):
         auto_confirm_additional_members=None,day_scope='selected_weekdays',alternatives=[dict(client_alternative_key='tue',
         existing_session_id=None,expected_session_revision=None,weekday=2,starts_local=None,leader_latest_start_local=None,item_order=['horizon_cathedral'])])]
     before=table_digests(target,{'recruitment_rooms','recruitment_weekly_occupancies'})
-    err(post(http,b,'raid-rooms',body),503,'RECRUITMENT_SCHEDULING_NOT_READY')
-    assert table_digests(target,set(before))==before
+    result=post(http,b,'raid-rooms',body)
+    assert result.status_code==201,result.text
+    rid=next(r['id'] for r in result.json()['revisions'] if r['resource']=='room')
+    restored=http.get(f'/v1/me/raid-rooms/{rid}/plan',headers=b['headers']).json()
+    assert len(restored['schedule_groups'])==1 and restored['sessions']==[]
 
 
 def test_draft_and_original_openapi_contracts(http):
@@ -230,7 +233,7 @@ def test_draft_and_original_openapi_contracts(http):
     assert draft==json.loads(Path('openapi/recruitment-admission.draft.json').read_text())
     assert set(draft['paths'])==set(http.app.openapi()['paths'])
     assert app.openapi()==json.loads(Path('openapi/openapi.yaml').read_text())
-    assert not any('raid-room' in route.path for route in app.routes)
+    assert any(route.path=='/v1/raid-rooms' for route in app.routes)
 
 
 def test_final_expiry_boundary_rolls_back_approval_and_ack(ready,http,monkeypatch):

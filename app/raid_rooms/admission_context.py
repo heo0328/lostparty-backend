@@ -115,9 +115,9 @@ def admission(db,uid,room,cid,role,intent,stamp):
     minimum=settings.dealer_min if role=='dealer' else settings.support_min
     comparison=core.power_comparison(db,uid,choice,minimum)
     snapshot=policy(db,room)
-    allowed=settings.admission_mode==('leader_only' if intent=='apply' else 'direct_join')
+    allowed=intent=='change_character' or settings.admission_mode==('leader_only' if intent=='apply' else 'direct_join')
     reason=None if allowed else 'ADMISSION_MODE_CHANGED'
-    if allowed:
+    if allowed and intent!='change_character':
         try:core.admit_bundle(db,uid,room,choice,targets,cycle.cycle_key,validate_only=True,pending=intent=='apply')
         except GameError as error:
             reason=error.code
@@ -127,9 +127,21 @@ def admission(db,uid,room,cid,role,intent,stamp):
                     core.admit_bundle(db,uid,room,choice,alternate,cycle.cycle_key,validate_only=True)
                     targets=alternate;reason=None
                 except GameError:pass
+    if intent=='change_character':
+        own=db.scalar(select(Member).where(Member.room_id==room.id,Member.user_id==uid,Member.ended_at.is_(None)))
+        if own is None:fail('ROOM_MEMBERSHIP_REQUIRED',403)
+    from app.raid_rooms import scheduling
+    session_choices=[]
+    for session in scheduling.sessions(db,room.id,stamp):
+        binding_row=db.get(scheduling.SessionBinding,session.id)
+        deadline=session.starts_at-scheduling.timedelta(minutes=30) if session.state=='confirmed' else None
+        closed=deadline is not None and stamp>=deadline
+        session_choices.append(dict(session_id=session.id,required=binding_row.required,join_deadline=deadline,
+            permission=dict(allowed=not closed,reason='RECRUITMENT_CLOSED' if closed else None)))
+        if closed and binding_row.required and intent!='change_character':reason=reason or 'RECRUITMENT_CLOSED'
     binding=[intent,str(uid),str(room.id),cycle.cycle_key,room.revision,room.members_revision,room.plan_revision,
-        snapshot,choice.model_dump(mode='json'),[t.model_dump(mode='json') for t in targets],comparison['power_revision']]
+        snapshot,choice.model_dump(mode='json'),[t.model_dump(mode='json') for t in targets],comparison['power_revision'],jsonable_encoder(session_choices)]
     return dict(room_id=room.id,room_revision=room.revision,members_revision=room.members_revision,plan_revision=room.plan_revision,
         expected_cycle_key=cycle.cycle_key,server_time=stamp,catalog_version=raids.catalog().catalog_version,
-        policy_snapshot=snapshot,context_token=token(binding),selection=choice,targets=targets,session_choices=[],
+        policy_snapshot=snapshot,context_token=token(binding),selection=choice,targets=targets,session_choices=session_choices,
         comparison=comparison,permissions={intent:dict(allowed=reason is None,reason=reason)})

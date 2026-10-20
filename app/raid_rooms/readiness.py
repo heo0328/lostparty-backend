@@ -10,7 +10,7 @@ from app.raid_rooms.models import Room, Round, Membership, Application, Director
 
 REVISION = '0018_room_application_build'
 # Known additive source revisions; legacy F2 schema/semantics stay intact.
-SUPPORTED_REVISIONS = (REVISION, '0019_integrated_recruitment', '0020_recruitment_sources', '0021_recruitment_weekly_links')
+SUPPORTED_REVISIONS = (REVISION, '0019_integrated_recruitment', '0020_recruitment_sources', '0021_recruitment_weekly_links','0022_recruitment_schedule_heads','0023_recruitment_resume')
 MODELS = (Room, Round, Membership, Application, DirectoryHead, MemberHead)
 
 
@@ -47,9 +47,15 @@ def require_ready(db, *, integrated=False):
             from app.raid_rooms.source_models import SOURCE_MODELS
             from app.game_accounts.power_success import RolePowerSuccess
             models += SOURCE_MODELS + (RolePowerSuccess,)
-        if versions == ['0021_recruitment_weekly_links']:
+        if versions[0] in SUPPORTED_REVISIONS[3:]:
             from app.raid_rooms.weekly_links import WeeklyOccupancy
             models += (WeeklyOccupancy,)
+        if versions[0] in SUPPORTED_REVISIONS[4:]:
+            from app.raid_rooms.schedule_heads import ScheduleHead
+            models += (ScheduleHead,)
+        if versions[0] in SUPPORTED_REVISIONS[5:]:
+            from app.raid_rooms.resume_models import ResumeProposal
+            models += (ResumeProposal,)
     for model in models:
         table = model.__table__
         name = table.name
@@ -79,12 +85,14 @@ def require_ready(db, *, integrated=False):
         unique = {tuple(v['column_names']) for v in schema.get_unique_constraints(name, schema='public')}
         for constraint in table.constraints:
             if isinstance(constraint, UniqueConstraint):
+                if versions[0]=='0019_integrated_recruitment' and constraint.name in ('uq_assignment_reservation_owner','uq_segment_reservation_owner'):
+                    continue
                 added_weekly_aliases = {
                     'recruitment_items': ('room_id','id','raid_id'),
                     'recruitment_rounds': ('room_id','item_id','id','cycle_key'),
                     'recruitment_assignments': ('room_id','item_id','round_id','id','user_id','character_id'),
                 }
-                if (versions != ['0021_recruitment_weekly_links'] and
+                if (versions[0] not in SUPPORTED_REVISIONS[3:] and
                         tuple(c.name for c in constraint.columns) == added_weekly_aliases.get(name)):
                     continue
                 require(tuple(c.name for c in constraint.columns) in unique)
@@ -118,3 +126,8 @@ def require_ready(db, *, integrated=False):
     require({m.__tablename__ for m in models} <= enabled)
     head = db.get(DirectoryHead, 1)
     require(head is not None and head.revision >= 1)
+
+
+def require_active(db):
+    require(list(db.scalars(text('SELECT version_num FROM public.alembic_version')))==['0023_recruitment_resume'])
+    require_ready(db,integrated=True)

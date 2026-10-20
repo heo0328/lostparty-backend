@@ -105,7 +105,7 @@ def _slot(db, room, round, selection, character, party_no):
     return next(n for n in range(1,5) if n not in {r.slot_no for r in rows})
 
 
-def admit_bundle(db, uid, room, selection, targets, expected_cycle_key, *, validate_only=False, pending=False, public_origin_application=None):
+def admit_bundle(db, uid, room, selection, targets, expected_cycle_key, *, validate_only=False, pending=False, public_origin_application=None, resume_item_ids=None):
     """Atomically attach every active item; caller must roll back on any rejection.
 
     Supports empty/unscheduled rooms without inventing sessions. Existing persistent
@@ -139,12 +139,16 @@ def admit_bundle(db, uid, room, selection, targets, expected_cycle_key, *, valid
         (Round.room_id==Item.room_id)&(Round.item_id==Item.id)).where(Item.room_id==room.id,
         Round.state=='active',Round.ended_at.is_(None),Round.cycle_key==weekly.parse_cycle(expected_cycle_key))))
     by_id={t.item_id:t for t in targets}
+    if resume_item_ids is not None:
+        # Internal resume command derives this set from stopped assignments;
+        # ordinary client admission can never request a partial bundle.
+        pairs=[(i,r) for i,r in pairs if i.id in resume_item_ids]
     if not pairs or len(by_id)!=len(targets) or set(by_id)!={i.id for i,r in pairs}:
         fail('ROOM_ITEMS_CHANGED')
     all_items=set(db.scalars(select(Item.id).where(Item.room_id==room.id)))
-    if set(by_id)!=all_items:fail('ROOM_ITEMS_CHANGED')
+    if set(by_id)!=(all_items if resume_item_ids is None else set(resume_item_ids)):fail('ROOM_ITEMS_CHANGED')
     if len({i.id for i,r in pairs})!=len(pairs):fail('ROOM_ITEMS_CHANGED')
-    if room.app_capacity!=(pairs[0][1].game_party_size if len(pairs)==1 else 4):
+    if room.app_capacity!=(pairs[0][1].game_party_size if len(all_items)==1 else 4):
         fail('ROOM_COMPOSITION_CONFLICT')
     plans=[]
     for item,round in pairs:

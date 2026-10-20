@@ -283,7 +283,8 @@
             "schema": {
               "enum": [
                 "apply",
-                "join"
+                "join",
+                "change_character"
               ],
               "type": "string",
               "title": "Intent"
@@ -2224,7 +2225,6 @@
               "type": "object"
             },
             "type": "array",
-            "maxItems": 0,
             "title": "Session Choices"
           },
           "comparison": {
@@ -2258,7 +2258,7 @@
         ],
         "title": "AdmissionContext"
       },
-      "Alternative": {
+      "Alternative-Input": {
         "properties": {
           "client_alternative_key": {
             "type": "string",
@@ -2342,6 +2342,74 @@
           "starts_local",
           "leader_latest_start_local",
           "item_order"
+        ],
+        "title": "Alternative"
+      },
+      "Alternative-Output": {
+        "properties": {
+          "alternative_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Alternative Id"
+          },
+          "session_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Session Id"
+          },
+          "weekday": {
+            "type": "integer",
+            "title": "Weekday"
+          },
+          "starts_local": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][05]$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Starts Local"
+          },
+          "leader_latest_start_local": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][05]$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Leader Latest Start Local"
+          },
+          "item_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "title": "Item Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "alternative_id",
+          "session_id",
+          "weekday",
+          "starts_local",
+          "leader_latest_start_local",
+          "item_ids"
         ],
         "title": "Alternative"
       },
@@ -2692,6 +2760,28 @@
           "completed_at"
         ],
         "title": "AssignmentView"
+      },
+      "BaseSchedule": {
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Session Id"
+          },
+          "schedule_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Schedule Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "session_id",
+          "schedule_revision"
+        ],
+        "title": "BaseSchedule"
       },
       "Combat": {
         "properties": {
@@ -3292,6 +3382,128 @@
         ],
         "title": "GameItem"
       },
+      "Group": {
+        "properties": {
+          "group_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Group Id"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "client_group_key": {
+            "type": "string",
+            "title": "Client Group Key"
+          },
+          "occurrence_mode": {
+            "type": "string",
+            "enum": [
+              "one_of",
+              "each"
+            ],
+            "title": "Occurrence Mode"
+          },
+          "planning_mode": {
+            "type": "string",
+            "enum": [
+              "unscheduled",
+              "manual",
+              "coordinated"
+            ],
+            "title": "Planning Mode"
+          },
+          "day_scope": {
+            "type": "string",
+            "enum": [
+              "any_current_cycle",
+              "selected_weekdays"
+            ],
+            "title": "Day Scope"
+          },
+          "required": {
+            "type": "boolean",
+            "title": "Required"
+          },
+          "auto_confirm_additional_members": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Auto Confirm Additional Members"
+          },
+          "alternatives": {
+            "items": {
+              "$ref": "#/components/schemas/Alternative-Output"
+            },
+            "type": "array",
+            "title": "Alternatives"
+          },
+          "selected_session_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selected Session Id"
+          },
+          "resolution": {
+            "type": "string",
+            "enum": [
+              "selected",
+              "all",
+              "unresolved"
+            ],
+            "title": "Resolution"
+          },
+          "candidate_state": {
+            "type": "string",
+            "enum": [
+              "ready",
+              "no_candidate",
+              "search_limited",
+              "not_evaluated"
+            ],
+            "title": "Candidate State"
+          },
+          "permissions": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Permission"
+            },
+            "type": "object",
+            "title": "Permissions"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_id",
+          "revision",
+          "client_group_key",
+          "occurrence_mode",
+          "planning_mode",
+          "day_scope",
+          "required",
+          "auto_confirm_additional_members",
+          "alternatives",
+          "selected_session_id",
+          "resolution",
+          "candidate_state",
+          "permissions"
+        ],
+        "title": "Group"
+      },
       "MyMembership": {
         "properties": {
           "membership_id": {
@@ -3327,6 +3539,135 @@
           "group_member"
         ],
         "title": "MyMembership"
+      },
+      "Participation": {
+        "properties": {
+          "participation_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Participation Id"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "session_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Session Id"
+          },
+          "assignment_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "title": "Assignment Ids"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "active",
+              "ended"
+            ],
+            "title": "State"
+          },
+          "required": {
+            "type": "boolean",
+            "title": "Required"
+          },
+          "participating": {
+            "type": "boolean",
+            "title": "Participating"
+          },
+          "confirmation_state": {
+            "type": "string",
+            "enum": [
+              "not_required",
+              "confirmation_pending",
+              "confirmed"
+            ],
+            "title": "Confirmation State"
+          },
+          "confirmed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confirmed At"
+          },
+          "confirmed_schedule_revision": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2147483647.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confirmed Schedule Revision"
+          },
+          "reservation_state": {
+            "type": "string",
+            "enum": [
+              "active",
+              "partial",
+              "released",
+              "none"
+            ],
+            "title": "Reservation State"
+          },
+          "overlap_warning": {
+            "type": "boolean",
+            "title": "Overlap Warning"
+          },
+          "warnings": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "TIME_OVERLAP",
+                "OUTSIDE_AVAILABILITY"
+              ]
+            },
+            "type": "array",
+            "title": "Warnings"
+          },
+          "permissions": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Permission"
+            },
+            "type": "object",
+            "title": "Permissions"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "participation_id",
+          "revision",
+          "session_id",
+          "assignment_ids",
+          "state",
+          "required",
+          "participating",
+          "confirmation_state",
+          "confirmed_at",
+          "confirmed_schedule_revision",
+          "reservation_state",
+          "overlap_warning",
+          "warnings",
+          "permissions"
+        ],
+        "title": "Participation"
       },
       "Permission": {
         "properties": {
@@ -3399,34 +3740,33 @@
           },
           "schedule_state": {
             "type": "string",
-            "const": "unscheduled",
+            "enum": [
+              "unscheduled",
+              "unconfirmed",
+              "confirmed",
+              "change_pending"
+            ],
             "title": "Schedule State"
           },
           "schedule_groups": {
             "items": {
-              "additionalProperties": true,
-              "type": "object"
+              "$ref": "#/components/schemas/Group"
             },
             "type": "array",
-            "maxItems": 0,
             "title": "Schedule Groups"
           },
           "sessions": {
             "items": {
-              "additionalProperties": true,
-              "type": "object"
+              "$ref": "#/components/schemas/Session"
             },
             "type": "array",
-            "maxItems": 0,
             "title": "Sessions"
           },
           "session_segments": {
             "items": {
-              "additionalProperties": true,
-              "type": "object"
+              "$ref": "#/components/schemas/SegmentSet"
             },
             "type": "array",
-            "maxItems": 0,
             "title": "Session Segments"
           },
           "my_membership": {
@@ -3441,20 +3781,23 @@
           },
           "my_participations": {
             "items": {
-              "additionalProperties": true,
-              "type": "object"
+              "$ref": "#/components/schemas/Participation"
             },
             "type": "array",
-            "maxItems": 0,
             "title": "My Participations"
           },
           "proposals": {
             "items": {
-              "additionalProperties": true,
-              "type": "object"
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/ScheduleProposal"
+                },
+                {
+                  "$ref": "#/components/schemas/ResumeProposal"
+                }
+              ]
             },
             "type": "array",
-            "maxItems": 0,
             "title": "Proposals"
           },
           "permissions": {
@@ -3638,7 +3981,15 @@
               "round",
               "membership",
               "assignment",
-              "application"
+              "application",
+              "session",
+              "participation",
+              "proposal",
+              "choice",
+              "weekly",
+              "continuation",
+              "ownership",
+              "settings"
             ],
             "title": "Resource"
           },
@@ -3662,6 +4013,174 @@
           "revision"
         ],
         "title": "ResourceRevision"
+      },
+      "Response": {
+        "properties": {
+          "proposal_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Proposal Id"
+          },
+          "proposal_plan_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Proposal Plan Revision"
+          },
+          "membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Membership Id"
+          },
+          "membership_generation": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Membership Generation"
+          },
+          "response": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "accept",
+              "reject"
+            ],
+            "title": "Response"
+          },
+          "response_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Response Revision"
+          },
+          "responded_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Responded At"
+          },
+          "response_set": {
+            "type": "string",
+            "enum": [
+              "existing",
+              "newcomer"
+            ],
+            "title": "Response Set"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "proposal_id",
+          "proposal_plan_revision",
+          "membership_id",
+          "membership_generation",
+          "response",
+          "response_revision",
+          "responded_at",
+          "response_set"
+        ],
+        "title": "Response"
+      },
+      "ResumeProposal": {
+        "properties": {
+          "proposal_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Proposal Id"
+          },
+          "kind": {
+            "type": "string",
+            "const": "weekly_resume",
+            "title": "Kind"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "proposal_plan_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Proposal Plan Revision"
+          },
+          "created_from_plan_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Created From Plan Revision"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "applied",
+              "obsolete"
+            ],
+            "title": "State"
+          },
+          "target_round_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "title": "Target Round Ids"
+          },
+          "eligible_count": {
+            "type": "integer",
+            "title": "Eligible Count"
+          },
+          "accepted_count": {
+            "type": "integer",
+            "title": "Accepted Count"
+          },
+          "required_votes": {
+            "type": "integer",
+            "title": "Required Votes"
+          },
+          "my_response": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "accept",
+              "reject"
+            ],
+            "title": "My Response"
+          },
+          "permissions": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Permission"
+            },
+            "type": "object",
+            "title": "Permissions"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "proposal_id",
+          "kind",
+          "revision",
+          "proposal_plan_revision",
+          "created_from_plan_revision",
+          "state",
+          "target_round_ids",
+          "eligible_count",
+          "accepted_count",
+          "required_votes",
+          "my_response",
+          "permissions"
+        ],
+        "title": "ResumeProposal"
       },
       "Review": {
         "properties": {
@@ -3792,7 +4311,7 @@
           },
           "alternatives": {
             "items": {
-              "$ref": "#/components/schemas/Alternative"
+              "$ref": "#/components/schemas/Alternative-Input"
             },
             "type": "array",
             "title": "Alternatives"
@@ -3812,6 +4331,217 @@
           "alternatives"
         ],
         "title": "ScheduleGroup"
+      },
+      "ScheduleProposal": {
+        "properties": {
+          "proposal_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Proposal Id"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "proposal_plan_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Proposal Plan Revision"
+          },
+          "created_from_plan_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Created From Plan Revision"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "applied",
+              "cancelled",
+              "obsolete"
+            ],
+            "title": "State"
+          },
+          "target_session_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "title": "Target Session Ids"
+          },
+          "base_schedules": {
+            "items": {
+              "$ref": "#/components/schemas/BaseSchedule"
+            },
+            "type": "array",
+            "title": "Base Schedules"
+          },
+          "proposed_sessions": {
+            "items": {
+              "$ref": "#/components/schemas/SegmentSet"
+            },
+            "type": "array",
+            "title": "Proposed Sessions"
+          },
+          "votes": {
+            "items": {
+              "$ref": "#/components/schemas/Vote"
+            },
+            "type": "array",
+            "title": "Votes"
+          },
+          "my_response": {
+            "$ref": "#/components/schemas/Response"
+          },
+          "permissions": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Permission"
+            },
+            "type": "object",
+            "title": "Permissions"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "proposal_id",
+          "revision",
+          "proposal_plan_revision",
+          "created_from_plan_revision",
+          "state",
+          "target_session_ids",
+          "base_schedules",
+          "proposed_sessions",
+          "votes",
+          "my_response",
+          "permissions"
+        ],
+        "title": "ScheduleProposal"
+      },
+      "Segment": {
+        "properties": {
+          "segment_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Segment Id"
+          },
+          "item_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Item Id"
+          },
+          "round_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Round Id"
+          },
+          "starts_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Starts At"
+          },
+          "ends_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ends At"
+          },
+          "duration_minutes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Duration Minutes"
+          },
+          "duration_source": {
+            "type": "string",
+            "title": "Duration Source"
+          },
+          "policy_version": {
+            "type": "string",
+            "title": "Policy Version"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "planned",
+              "released"
+            ],
+            "title": "State"
+          },
+          "released_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Released Reason"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "segment_id",
+          "item_id",
+          "round_id",
+          "starts_at",
+          "ends_at",
+          "duration_minutes",
+          "duration_source",
+          "policy_version",
+          "state",
+          "released_reason"
+        ],
+        "title": "Segment"
+      },
+      "SegmentSet": {
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Session Id"
+          },
+          "segments": {
+            "items": {
+              "$ref": "#/components/schemas/Segment"
+            },
+            "type": "array",
+            "title": "Segments"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "session_id",
+          "segments"
+        ],
+        "title": "SegmentSet"
       },
       "Selection": {
         "properties": {
@@ -3892,6 +4622,170 @@
         ],
         "title": "Selection"
       },
+      "Session": {
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Session Id"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "round_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "title": "Round Ids"
+          },
+          "required": {
+            "type": "boolean",
+            "title": "Required"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "unscheduled",
+              "manual",
+              "coordinated"
+            ],
+            "title": "Mode"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "unconfirmed",
+              "confirmed",
+              "finished",
+              "cancelled",
+              "legacy_review_required"
+            ],
+            "title": "State"
+          },
+          "schedule_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Schedule Revision"
+          },
+          "starts_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Starts At"
+          },
+          "ends_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ends At"
+          },
+          "duration_minutes": {
+            "type": "integer",
+            "title": "Duration Minutes"
+          },
+          "duration_source": {
+            "type": "string",
+            "title": "Duration Source"
+          },
+          "duration_policy_version": {
+            "type": "string",
+            "title": "Duration Policy Version"
+          },
+          "earliest_start": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Earliest Start"
+          },
+          "latest_start": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Start"
+          },
+          "join_deadline": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Join Deadline"
+          },
+          "candidate_state": {
+            "type": "string",
+            "enum": [
+              "ready",
+              "no_candidate",
+              "search_limited",
+              "not_evaluated"
+            ],
+            "title": "Candidate State"
+          },
+          "permissions": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Permission"
+            },
+            "type": "object",
+            "title": "Permissions"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "session_id",
+          "revision",
+          "round_ids",
+          "required",
+          "mode",
+          "state",
+          "schedule_revision",
+          "starts_at",
+          "ends_at",
+          "duration_minutes",
+          "duration_source",
+          "duration_policy_version",
+          "earliest_start",
+          "latest_start",
+          "join_deadline",
+          "candidate_state",
+          "permissions"
+        ],
+        "title": "Session"
+      },
       "Target": {
         "properties": {
           "item_id": {
@@ -3933,6 +4827,41 @@
           "expected_weekly_revision"
         ],
         "title": "Target"
+      },
+      "Vote": {
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Session Id"
+          },
+          "eligible_count": {
+            "type": "integer",
+            "title": "Eligible Count"
+          },
+          "accepted_count": {
+            "type": "integer",
+            "title": "Accepted Count"
+          },
+          "required_votes": {
+            "type": "integer",
+            "title": "Required Votes"
+          },
+          "satisfied": {
+            "type": "boolean",
+            "title": "Satisfied"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "session_id",
+          "eligible_count",
+          "accepted_count",
+          "required_votes",
+          "satisfied"
+        ],
+        "title": "Vote"
       }
     },
     "securitySchemes": {
@@ -3943,10 +4872,10 @@
     }
   },
   "x-recruitment-admission-policy": {
-    "activation": "unmounted; canonical OpenAPI and main integration at R5",
-    "implemented": "unscheduled creation, join, apply, approve, reject, withdraw, contexts, own plan and scoped application review",
-    "pending_scheduling": "nonempty schedule_groups, sessions or schedule targets never succeed; R3 integration required",
-    "pending_commands": "plan leave/transfer/end disabled until their implementation",
+    "activation": "mounted by R5 integration; canonical contract in openapi/openapi.yaml",
+    "implemented": "creation, admission and typed schedule graph; full integrated command surface is canonical OpenAPI",
+    "pending_scheduling": "R3 schedule groups, sessions, consent and reservations implemented",
+    "pending_commands": "R4 commands implemented; typed canonical paths describe the complete surface",
     "selection_token": "67 ASCII characters: s1. plus HMAC-SHA256 hex; opaque actor/action/cycle/source-version binding; no readable private payload",
     "selection_lifetime": "current cycle and exact source snapshot; server key rotation invalidates old contexts; no independent arbitrary TTL",
     "bounds": {

@@ -32,7 +32,7 @@ def creation_context(principal:Principal,character_id:UUID,selected_role:Role,it
 
 
 @router.get('/raid-rooms/{room_id}/admission-context',response_model=s.AdmissionContext,responses=errors)
-def admission_context(room_id:UUID,principal:Principal,character_id:UUID,selected_role:Role,intent:Literal['apply','join']):
+def admission_context(room_id:UUID,principal:Principal,character_id:UUID,selected_role:Role,intent:Literal['apply','join','change_character']):
     return service.admission_context(principal,room_id,character_id,selected_role,intent)
 
 

@@ -72,7 +72,10 @@ def snapshot(db, uid, *, room_count=None):
 def get(principal):
     with session() as db, db.begin():
         db.connection(execution_options={'isolation_level': 'REPEATABLE READ'})
-        return snapshot(db, authorize(db, principal))
+        from app.raid_rooms.participation_core import room_count
+        from app.raid_rooms.readiness import require_active
+        require_active(db)
+        return snapshot(db, authorize(db, principal),room_count=room_count)
 
 
 def record_group_membership_change(db, uid):

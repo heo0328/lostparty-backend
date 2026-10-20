@@ -106,4 +106,4 @@ def test_pause_does_not_change_candidate_contract_or_expose_main_routes(http, mo
     http.app.openapi_schema = None
     assert http.app.openapi() == before
     from app.main import app
-    assert not any('/raid-rooms' in path for path in app.openapi()['paths'])
+    assert all(getattr(route.endpoint,'__module__','')!='app.raid_rooms.router' for route in app.routes)

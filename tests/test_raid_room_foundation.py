@@ -425,7 +425,7 @@ def test_api_contract_not_extended_by_internal_models():
     from pathlib import Path
     from app.main import app
     assert app.openapi()==json.loads(Path('openapi/openapi.yaml').read_text())
-    assert not any('/raid-rooms' in path for path in app.openapi()['paths'])
+    assert all(getattr(route.endpoint,'__module__','')!='app.raid_rooms.router' for route in app.routes)
 
 
 def test_limit_causes_do_not_spread_to_unrelated_rooms(people,client):

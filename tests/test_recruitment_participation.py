@@ -30,7 +30,7 @@ def ready(sources,people):
     target,*_=sources
     old=set(inspect(target).get_table_names())-{'alembic_version'}
     before=table_digests(target,old)
-    out=subprocess.run(['alembic','upgrade','0021_recruitment_weekly_links'],env={**os.environ,
+    out=subprocess.run(['alembic','upgrade','0023_recruitment_resume'],env={**os.environ,
         'DATABASE_URL':target.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
     assert out.returncode==0,'Isolated weekly link migration failed'
     assert table_digests(target,old)==before

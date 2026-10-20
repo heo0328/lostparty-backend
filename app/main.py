@@ -23,19 +23,35 @@ from app.groups.admission_router import router as group_admissions_router
 from app.ownership_disputes.router import router as ownership_disputes_router
 from app.ownership_disputes.worker import run as run_ownership_worker
 from app.game_accounts.bootstrap_router import router as bootstrap_router
+from app.raid_rooms.admission_router import router as recruitment_router
+from app.raid_rooms.availability_router import router as availability_router
+from app.raid_rooms.schedule_router import router as schedule_router
+from app.raid_rooms.continuation_router import router as continuation_router
+from app.raid_rooms.completion_router import router as completion_router
+from app.raid_rooms.management_router import router as recruitment_management_router
+from app.raid_rooms.search_router import router as recruitment_search_router
+from app.raid_rooms.member_router import router as recruitment_reads_router
+from app.raid_rooms.worker import run as run_recruitment_worker
 
 
 @asynccontextmanager
 async def lifespan(app):
+    from app.core.database import session
+    from app.raid_rooms.readiness import require_active
+    with session() as db:require_active(db)
     task = asyncio.create_task(run())
     ownership_task = asyncio.create_task(run_ownership_worker())
+    recruitment_task = asyncio.create_task(run_recruitment_worker())
     yield
     task.cancel()
     ownership_task.cancel()
+    recruitment_task.cancel()
     with suppress(asyncio.CancelledError):
         await task
     with suppress(asyncio.CancelledError):
         await ownership_task
+    with suppress(asyncio.CancelledError):
+        await recruitment_task
 
 
 app = FastAPI(title="LostParty API", docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
@@ -53,6 +69,9 @@ app.include_router(groups_router)
 app.include_router(group_admissions_router)
 app.include_router(ownership_disputes_router)
 app.include_router(bootstrap_router)
+for recruitment_api in (recruitment_search_router,recruitment_reads_router,recruitment_router,availability_router,
+                        schedule_router,continuation_router,completion_router,recruitment_management_router):
+    app.include_router(recruitment_api)
 register(app)
 
 
@@ -76,7 +95,7 @@ def openapi():
                     headers["Cache-Control"] = {"schema": {"type": "string", "const": "no-store"}}
                     if status == "429":
                         headers["Retry-After"] = {"schema": {"type": "integer", "minimum": 1}} if "game-accounts" in operation.get("tags", []) else {"schema": {"type": "integer", "const": 60}}
-                    if status == "409" and set(operation.get("tags", [])) & {"game-accounts", "member-settings", "lostark-keys", "character-profiles", "raid-weekly", "groups"}:
+                    if status == "409" and (set(operation.get("tags", [])) & {"game-accounts", "member-settings", "lostark-keys", "character-profiles", "raid-weekly", "groups"} or any(t.startswith('recruitment-') for t in operation.get('tags',[]))):
                         headers["Retry-After"] = {"description": "REQUEST_IN_PROGRESS only", "schema": {"type": "integer", "const": 2}}
                     if status == "401":
                         headers["WWW-Authenticate"] = {"schema": {"type": "string", "const": "Bearer"}}
@@ -316,6 +335,19 @@ def openapi():
             if 'game-accounts' in operation.get('tags', []) and '503' in operation.get('responses', {}):
                 operation['responses']['503']['headers']['Retry-After'] = {
                     'description': 'UPSTREAM_RATE_LIMITED only', 'schema': {'type': 'integer', 'minimum': 1}}
+    schema['x-recruitment-policy']={
+        'schema_revision':'0023_recruitment_resume',
+        'cycle':'Asia/Seoul Wednesday 06:00; maintenance Wednesday [06:00,10:00)',
+        'time':'UTC, 5-minute ticks, positive at most 24h per session; stored authorized opening +30m floor',
+        'admission_deadline':'strictly before confirmed start minus 30m; initial threshold and existing participant confirmation are distinct',
+        'reservations':'exact active assignment/segment/schedule generation; explicit overlap allowed with warning, automatic candidates avoid busy',
+        'votes':'each affected session N1 explicit 1, otherwise max(2,ceil(N/2)); all targets atomic; reads never apply',
+        'completion':'personal item manual ledger vs leader item party ledger; preserve other segment times and completed history',
+        'continuation':'future choices are not current assignments; auto default off; boundary authority distinct from processed_at',
+        'command_context':{'algorithm':'AES-256-GCM','seconds':120,'max_token_bytes':4096,'replay':'original minimal ACK before new token expiry/source validation'},
+        'search':'visibility then group OR/member AND/within-member character OR, then stable created_at DESC/id DESC and pagination',
+        'bounds':{'request_bytes':32768,'page_max':50,'cursor_max':2048,'candidate_ticks_max':2016},
+    }
     return schema
 app.openapi = openapi
 

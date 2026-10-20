@@ -108,6 +108,7 @@ class RecruitmentAssignment(Base):
     ended_at = stamp(nullable=True)
     __table_args__ = (
         UniqueConstraint('round_id', 'membership_id'),
+        UniqueConstraint('room_id','id','membership_id','user_id','item_id','round_id',name='uq_assignment_reservation_owner'),
         UniqueConstraint('room_id', 'item_id', 'round_id', 'id', 'user_id', 'character_id'),
         ForeignKeyConstraint(['room_id', 'item_id', 'round_id'],
                              ['recruitment_rounds.room_id', 'recruitment_rounds.item_id', 'recruitment_rounds.id']),
@@ -154,6 +155,7 @@ class RecruitmentSegment(Base):
     ends_at = stamp(nullable=True)
     __table_args__ = (
         UniqueConstraint('session_id', 'ordinal'), UniqueConstraint('session_id', 'item_id'),
+        UniqueConstraint('room_id','id','session_id','item_id','round_id',name='uq_segment_reservation_owner'),
         ForeignKeyConstraint(['room_id', 'session_id'], ['recruitment_sessions.room_id', 'recruitment_sessions.id']),
         ForeignKeyConstraint(['room_id', 'item_id', 'round_id'],
                              ['recruitment_rounds.room_id', 'recruitment_rounds.item_id', 'recruitment_rounds.id']),

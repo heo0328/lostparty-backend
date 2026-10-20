@@ -24,10 +24,10 @@ def snapshot(w):
         return usage.limits_snapshot(db,w['uid'])
 
 
-def test_explicit_usage_source_ready_but_existing_public_source_unchanged(people):
+def test_explicit_and_public_usage_sources_are_ready(people):
     a=people('a'); before=rows()
     assert snapshot(a)['usage']['raid_rooms']==dict(used=0,remaining=10,state='within',can_increase=True)
-    assert limits.get(actor(a['uid']))['usage']['raid_rooms']['state']=='unavailable'
+    assert limits.get(actor(a['uid']))['usage']['raid_rooms']==dict(used=0,remaining=10,state='within',can_increase=True)
     assert rows()==before
 
 
@@ -192,4 +192,4 @@ def test_preparation_does_not_install_routes_or_change_openapi():
     import json
     from app.main import app
     assert app.openapi()==json.loads(open('openapi/openapi.yaml').read())
-    assert not any('raid-room' in route.path for route in app.routes)
+    assert all(getattr(route.endpoint,'__module__','')!='app.raid_rooms.router' for route in app.routes)

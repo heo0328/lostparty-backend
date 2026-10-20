@@ -7,6 +7,7 @@ from app.raid_rooms.availability_schemas import DTO, Version, Clock
 from app.raid_rooms.participation_commands import Selection, Target
 from app.raids.schemas import Identifier
 from app.game_accounts.profile_schemas import AnalysisIssue
+from app.raid_rooms import schedule_output as scheduling
 
 DecimalValue=Annotated[StrictStr,Field(max_length=32,pattern=r'^[0-9]+(?:\.[0-9]+)?$')]
 Experience=Literal['tryLevel','clearExp','multiClearExp','semiExperienced','experienced']
@@ -94,9 +95,9 @@ class Create(DTO):
 
     @model_validator(mode='after')
     def shape(self):
-        if (self.scope=='group') != (self.group_id is not None and self.expected_group_revision is not None):
+        if self.scope=='group' and self.group_id is None:
             raise ValueError('group scope requires matching group context')
-        if self.scope=='public' and (self.group_id is not None or self.expected_group_revision is not None):raise ValueError('public scope')
+        if (self.group_id is None)!=(self.expected_group_revision is None):raise ValueError('linked group context')
         if len({i.raid_id for i in self.items})!=len(self.items):raise ValueError('duplicate raid')
         if (self.app_mode=='single') != (len(self.items)==1):raise ValueError('app mode')
         return self
@@ -128,7 +129,7 @@ class ApplicationCAS(DTO):
 
 
 class ResourceRevision(DTO):
-    resource: Literal['room','members','plan','item','round','membership','assignment','application']
+    resource: Literal['room','members','plan','item','round','membership','assignment','application','session','participation','proposal','choice','weekly','continuation','ownership','settings']
     id: UUID
     revision: Version
 
@@ -206,7 +207,7 @@ class AdmissionContext(DTO):
     context_token: str
     selection: Selection
     targets: list[Target]
-    session_choices: Annotated[list[dict],Field(max_length=0)]
+    session_choices: list[dict]
     comparison: PowerComparison
     permissions: dict[str,Permission]
 
@@ -254,14 +255,14 @@ class Plan(DTO):
     server_time: datetime
     app_capacity: Literal[4,8]
     game_items: list[GameItem]
-    schedule_state: Literal['unscheduled']
-    schedule_groups: Annotated[list[dict],Field(max_length=0)]
-    sessions: Annotated[list[dict],Field(max_length=0)]
-    session_segments: Annotated[list[dict],Field(max_length=0)]
+    schedule_state: Literal['unscheduled','unconfirmed','confirmed','change_pending']
+    schedule_groups: list[scheduling.Group]
+    sessions: list[scheduling.Session]
+    session_segments: list[scheduling.SegmentSet]
     my_membership: MyMembership
     my_assignments: list[AssignmentView]
-    my_participations: Annotated[list[dict],Field(max_length=0)]
-    proposals: Annotated[list[dict],Field(max_length=0)]
+    my_participations: list[scheduling.Participation]
+    proposals: list[scheduling.ScheduleProposal|scheduling.ResumeProposal]
     permissions: dict[str,Permission]
 
 

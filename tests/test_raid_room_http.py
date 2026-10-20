@@ -280,7 +280,7 @@ def test_candidate_paths_and_dtos_do_not_activate_production_api(http):
     from app.main import app
     baseline=json.loads(open('openapi/openapi.yaml').read())
     assert app.openapi()==baseline
-    assert not any('raid-room' in route.path for route in app.routes)
+    assert all(getattr(route.endpoint,'__module__','')!='app.raid_rooms.router' for route in app.routes)
     schema=http.app.openapi()
     assert sum(len([v for v in ops if v in ('get','post')]) for ops in schema['paths'].values())==18
     models=schema['components']['schemas']

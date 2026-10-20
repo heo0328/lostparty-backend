@@ -47,8 +47,6 @@ def member(db,uid,row,leader=False):
 def unscheduled(db,row):
     if row.ended_at is not None:fail('ROOM_NOT_ACTIVE')
     if row.migration_state!='ready':fail('ROOM_REVIEW_REQUIRED')
-    if db.scalar(select(Session.id).where(Session.room_id==row.id)) is not None or db.scalar(select(ScheduleGroup.id).where(ScheduleGroup.room_id==row.id)) is not None:
-        fail('RECRUITMENT_SCHEDULING_NOT_READY',503)
 
 
 def cas(row,data):
@@ -76,6 +74,7 @@ def execute(principal,operation,key,payload,run):
             stamp=now(db);cycle=raids.cycle(stamp)
             outcome=run(db,uid,stamp)
             status,result=outcome[:2]
+            if result.get('outcome')!='noop':core.legacy.directory(db)
             value=commit_result(db,ticket,status,result)
             db.flush()
             final=now(db)
@@ -99,7 +98,6 @@ def admission_context(principal,rid,cid,role,intent):
 
 def create(principal,key,data):
     def run(db,uid,stamp):
-        if data.schedule_groups:fail('RECRUITMENT_SCHEDULING_NOT_READY',503)
         current=context.creation(db,uid,data.selection.character_id,data.selection.selected_role,
             [s.ItemChoice(raid_id=i.raid_id,difficulty_id=i.difficulty_id) for i in data.items],data.group_id,stamp)
         context.verify(data.selection_context.context_token,current['context_token'])
@@ -138,6 +136,9 @@ def create(principal,key,data):
             items.append(item);rounds.append(rd)
         db.flush()
         membership,assignments,_=core.admit_bundle(db,uid,row,data.selection,targets,current['expected_cycle_key'])
+        from app.raid_rooms import scheduling
+        scheduling.install(db,row,data.schedule_groups,stamp,creating=True)
+        scheduling.evaluate_initial(db,row,stamp)
         row.revision=row.members_revision=row.plan_revision=1
         result=ack(key,row,membership,assignments,stamp)
         result['revisions'] += [revision('item',i) for i in items]+[revision('round',r) for r in rounds]
@@ -148,7 +149,10 @@ def create(principal,key,data):
 def admit(principal,rid,key,data,*,applying=False):
     def run(db,uid,stamp):
         row=room(db,uid,rid);unscheduled(db,row);cas(row,data)
-        if data.target_session_ids:fail('INVALID_REQUEST',400)
+        from app.raid_rooms import scheduling,proposals
+        scheduling.deadlines(db,row,data.target_session_ids,stamp)
+        existing_deadlines=[s.starts_at-timedelta(minutes=30) for s in scheduling.sessions(db,rid)
+            if s.state=='confirmed' and (db.get(scheduling.SessionBinding,s.id).required or s.id in data.target_session_ids)]
         current=context.admission(db,uid,row,data.selection.character_id,data.selection.selected_role,'apply' if applying else 'join',stamp)
         context.verify(data.selection_context.context_token,current['context_token'])
         if data.selection!=current['selection']:fail('REVISION_CONFLICT')
@@ -157,7 +161,11 @@ def admit(principal,rid,key,data,*,applying=False):
         if data.expected_catalog_version!=current['catalog_version']:fail('CATALOG_VERSION_CONFLICT')
         permission=current['permissions']['apply' if applying else 'join']
         if not permission['allowed']:fail(permission['reason'])
-        if db.scalar(select(Member.id).where(Member.room_id==rid,Member.user_id==uid,Member.ended_at.is_(None))) is not None:fail('ROOM_MEMBER_EXISTS')
+        mine=db.scalar(select(Member).where(Member.room_id==rid,Member.user_id==uid,Member.ended_at.is_(None)))
+        if mine is not None and db.scalar(select(Assignment.id).join(Round,Round.id==Assignment.round_id).where(
+                Assignment.membership_id==mine.id,Assignment.state=='active',Round.cycle_key==core.weekly.parse_cycle(data.expected_cycle_key))) is not None:fail('ROOM_MEMBER_EXISTS')
+        session_ids={s.id for s in scheduling.sessions(db,rid)}
+        if len(set(data.target_session_ids))!=len(data.target_session_ids) or set(data.target_session_ids)-session_ids:fail('INVALID_REQUEST',400)
         membership,assignments,power=core.admit_bundle(db,uid,row,data.selection,data.target_items,data.expected_cycle_key,validate_only=applying,pending=applying)
         if applying:
             pending=db.scalar(select(Application).where(Application.room_id==rid,Application.user_id==uid,Application.state=='pending'))
@@ -170,14 +178,21 @@ def admit(principal,rid,key,data,*,applying=False):
             if source is not None:build['success_summary']=source.source_summary
             build['admission_origin']=dict(application_id=str(app_id),room_id=str(rid),actor_id=str(uid),
                 scope=row.scope,group_id=str(row.group_id) if row.group_id else None,scope_revision=row.revision,created_at=stamp.isoformat())
+            build['target_session_ids']=[str(i) for i in data.target_session_ids]
             value=Application(id=app_id,room_id=rid,user_id=uid,revision=1,
                 selection=jsonable_encoder(data.selection),targets=jsonable_encoder(data.target_items),
                 display=display(core.identity.selected_character(db,uid,jsonable_encoder(data.selection))),build=build,
                 origin_state='known',origin_scope=row.scope,origin_group_id=row.group_id,state='pending',
                 created_at=stamp,expires_at=raids.cycle(stamp).ends_at)
             db.add(value);core.legacy.touch_user(db,uid,application=True)
-            return 201,dict(command_id=key,room_id=rid,application_id=value.id,revision=1,state='pending',executed_at=stamp)
-        return 200,ack(key,row,membership,assignments,stamp)
+            result=(201,dict(command_id=key,room_id=rid,application_id=value.id,revision=1,state='pending',executed_at=stamp))
+        else:
+            scheduling.enrol(db,row,membership,data.target_session_ids,stamp)
+            scheduling.evaluate_initial(db,row,stamp);proposals.reevaluate(db,row,stamp)
+            result=(200,ack(key,row,membership,assignments,stamp))
+        def final(current):
+            if any(current>=deadline for deadline in existing_deadlines):fail('RECRUITMENT_CLOSED')
+        return *result,final
     return execute(principal,'apply' if applying else 'join',key,dict(room_id=str(rid),body=jsonable_encoder(data)),run)
 
 
@@ -191,6 +206,11 @@ def approve(principal,aid,key,data):
         if app.revision!=data.expected_application_revision:fail('REVISION_CONFLICT')
         if app.state!='pending' or stamp>=app.expires_at:fail('APPLICATION_NOT_PENDING')
         require_origin(app)
+        from app.raid_rooms import scheduling,proposals
+        selected=[uuid.UUID(i) for i in app.build.get('target_session_ids',[])]
+        scheduling.deadlines(db,row,selected,stamp)
+        existing_deadlines=[s.starts_at-timedelta(minutes=30) for s in scheduling.sessions(db,row.id)
+            if s.state=='confirmed' and (db.get(scheduling.SessionBinding,s.id).required or s.id in selected)]
         original=Selection.model_validate(app.selection)
         choice=context.selection(db,app.user_id,original.character_id,original.selected_role)
         if (choice.expected_ownership_revision!=original.expected_ownership_revision or
@@ -203,10 +223,12 @@ def approve(principal,aid,key,data):
             state=db.get(core.WeeklyState,(app.user_id,choice.character_id,item.raid_id,rd.cycle_key))
             targets.append(target.model_copy(update=dict(expected_round_revision=rd.revision,expected_weekly_revision=state.revision if state else 1)))
         membership,assignments,_=core.admit_bundle(db,app.user_id,row,choice,targets,data.expected_cycle_key,public_origin_application=app)
+        scheduling.enrol(db,row,membership,selected,stamp);scheduling.evaluate_initial(db,row,stamp);proposals.reevaluate(db,row,stamp)
         app.state='accepted';app.ended_at=stamp;app.revision+=1
         core.legacy.touch_user(db,app.user_id,application=True)
         def final(current):
             if current>=app.expires_at:fail('APPLICATION_NOT_PENDING')
+            if any(current>=deadline for deadline in existing_deadlines):fail('RECRUITMENT_CLOSED')
         return 200,ack(key,row,membership,assignments,stamp,application=app),final
     return execute(principal,'approve',key,dict(application_id=str(aid),body=jsonable_encoder(data)),run)
 
@@ -215,24 +237,36 @@ def plan(principal,rid):
     with snapshot(principal) as (db,uid,stamp):
         row=room(db,uid,rid);mine=member(db,uid,row);unscheduled(db,row)
         cycle=raids.cycle(stamp).cycle_key
-        items=[];rounds={}
+        items=[];rounds={};seen_items=set()
         for item,rd in db.execute(select(Item,Round).join(Round,Round.item_id==Item.id).where(
-                Item.room_id==rid,Round.cycle_key==core.weekly.parse_cycle(cycle)).order_by(Item.id)):
+                Item.room_id==rid,Round.cycle_key==core.weekly.parse_cycle(cycle)).order_by(Item.id,Round.created_at.desc(),Round.id.desc())):
             rounds[rd.id]=rd
+            if item.id in seen_items:continue
+            seen_items.add(item.id)
             items.append(dict(item_id=item.id,revision=item.revision,raid_id=item.raid_id,difficulty_id=rd.difficulty_id,
                 catalog_version=rd.catalog_version,game_party_size=rd.game_party_size,round_id=rd.id,round_revision=rd.revision,round_state=rd.state))
         assignments=[]
         for value in db.scalars(select(Assignment).where(Assignment.membership_id==mine.id,Assignment.round_id.in_(rounds)).order_by(Assignment.id)):
             assignments.append(dict(assignment_id=value.id,revision=value.revision,membership_id=mine.id,item_id=value.item_id,
                 round_id=value.round_id,cycle_key=cycle,character_id=value.character_id,selected_role=value.selected_role,
-                state=value.state,ended_at=value.ended_at,raid_participation_state=value.state,completion_source=None,completed_at=None))
+                state=value.state,ended_at=value.ended_at,raid_participation_state=value.state,
+                completion_source=(value.build or {}).get('completion_source'),completed_at=(value.build or {}).get('completed_at')))
         group_member=row.group_id is not None and db.scalar(select(GroupMembership.id).where(GroupMembership.group_id==row.group_id,
             GroupMembership.user_id==uid,GroupMembership.ended_at.is_(None))) is not None
-        return dict(room_id=rid,revision=row.plan_revision,members_revision=row.members_revision,cycle_key=cycle,server_time=stamp,
+        result=dict(room_id=rid,revision=row.plan_revision,members_revision=row.members_revision,cycle_key=cycle,server_time=stamp,
             app_capacity=row.app_capacity,game_items=items,schedule_state='unscheduled',schedule_groups=[],sessions=[],session_segments=[],
             my_membership=dict(membership_id=mine.id,revision=mine.revision,room_role='leader' if mine.id==row.leader_membership_id else 'member',group_member=group_member),
             my_assignments=assignments,my_participations=[],proposals=[],permissions={name:dict(allowed=False,reason='RECRUITMENT_COMMAND_NOT_READY')
                 for name in ('edit_schedule_groups','leave','transfer_leadership','end')})
+        from app.raid_rooms.schedule_views import fields
+        result.update(fields(db,row,mine,stamp))
+        leader=mine.id==row.leader_membership_id
+        active_members=list(db.scalars(select(Member.id).where(Member.room_id==rid,Member.ended_at.is_(None))))
+        for name,allowed,reason in [('edit_schedule_groups',leader and not any(s['state']=='confirmed' for s in result['sessions']),'SCHEDULE_PROPOSAL_REQUIRED' if leader else 'ROOM_LEADER_REQUIRED'),
+            ('leave',not leader,'LEADERSHIP_RESOLUTION_REQUIRED'),('transfer_leadership',leader and len(active_members)>1,'ROOM_TRANSFER_TARGET_INVALID'),
+            ('end',leader and len(active_members)==1,'ROOM_LAST_MEMBER_REQUIRED')]:
+            result['permissions'][name]=dict(allowed=allowed,reason=None if allowed else reason)
+        return result
 
 
 def require_origin(app):
