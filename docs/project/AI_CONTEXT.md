@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-최신2026-10-20: 모집 R3→R5 구현·로컬API8000/DB0023 통합 반영. [작업 기록](../ISSUE_13_R3_R5_IMPLEMENTATION.md)·[다음 실행](NEXT_WORK.md). 구현66244da push·원격확인/[전체58번째 Backend R5 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6287055201) 완료·Flutter회신대기이며 Flutter 전체59번째 정렬·자리 입력 수신→[최종 wire 보완](../ISSUE_13_SEARCH_SORT_SLOTS.md) 구현/5PASS·게시 회신 진행. 전체60번째 개인표 로컬 연결/48PASS 수신·실제 인수 전. 기존단계 기록의 미활성/DB0016은 당시 상태다. Backend 게시와 Flutter 적용/실기기 인수는 별도다.
+최신2026-10-20: 모집 R3→R5 구현·로컬API8000/DB0023 통합 반영. [작업 기록](../ISSUE_13_R3_R5_IMPLEMENTATION.md)·[다음 실행](NEXT_WORK.md). 구현66244da push·원격확인/[전체58번째 Backend R5 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6287055201) 완료·Flutter회신대기이며 Flutter 전체59번째 정렬·자리 입력 수신→[최종 wire 보완](../ISSUE_13_SEARCH_SORT_SLOTS.md) 구현cc003e9 push·원격/실행계약확인/5PASS·[전체61번째 회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6291232832) 완료. 전체60번째 개인표 로컬 연결/48PASS 수신·실제 인수 전. 기존단계 기록의 미활성/DB0016은 당시 상태다. Backend 게시와 Flutter 적용/실기기 인수는 별도다.
 
 현재 모집은 841503d 로컬·미push / [전체56번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6285392591) / [R2-C 기본 명령/미활성 HTTP](../ISSUE_13_R2C_ADMISSION_IMPLEMENTATION.md)까지 구현했다. 미정 생성/참가·신청/승인/거절·철회/context/본인 plan·신청/관리 검토·원 ACK/원자 연결이며 정확한 draft와 대조했다. 다음 Backend R3 일정·예약/확인·제안/다음주→R4 완료/권한·목록검색→R5 실제 통합·원격 인계. 원본 OpenAPI/main·실제API/개발DB0016은 유지/새 모집 통합·Flutter 적용은 미완료이며 네이티브 재설계 회신 대기는 아니다. 검증·Git은 NEXT_WORK/DEV_LOG 기준.
 

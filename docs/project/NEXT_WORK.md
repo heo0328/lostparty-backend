@@ -5,7 +5,7 @@
 ## 다음 실행·완료 조건
 
 1. 게시·인계 완료. Backend는 이슈13 최신 회신을 확인하고 아래 미완료 매핑/연동 결과를 같은 브랜치에서 처리한다. 기존 전체 실행1133PASS/1FAIL에서 과거 usage 기대값 실패를 수정했고 관련 최신75PASS/159.28초. 마지막 모델/계약·일정/관계·미래주차 추가54PASS/200.83초. 결과를 중복 합산하지 않는다.
-2. Flutter [전체59번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6287178945)의 정렬·남은자리 입력을 수신해 [최종 wire](../ISSUE_13_SEARCH_SORT_SLOTS.md)로 구현·계약 보완했다. 관련5PASS/25.69초, 로컬 실행 반영·commit/push 후 같은 이슈 회신 진행 중. sort.member_count/direction 및 remaining_slot_counts를 페이지 전 SQL에 결합하며 기존 입력 재질문 대기가 아니다.
+2. Flutter [전체59번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6287178945)의 정렬·남은자리 입력을 수신해 [최종 wire](../ISSUE_13_SEARCH_SORT_SLOTS.md)로 구현·계약 보완했다. 관련5PASS/25.69초, 구현cc003e9 push·원격확인/로컬8000반영/[전체61번째 Backend 회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6291232832) 완료. sort.member_count/direction 및 remaining_slot_counts를 페이지 전 SQL에 결합하며 기존 입력 재질문 대기가 아니다.
 
 3. 게시 후 Flutter는 원격 SHA/원본 OpenAPI 기준 실제 연동·변경 구간 확인 결과를 이슈13에 회신. Backend는 실제 회신을 조회하고 필요한 보완 결과를 같은 이슈에 답한다. 인계 게시와 Flutter 적용/실기기 인수는 별도다. 이슈 종료/merge/운영배포는 수행하지 않는다.
 

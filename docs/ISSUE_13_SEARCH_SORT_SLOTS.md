@@ -31,3 +31,5 @@ Flutter [전체60번째](https://github.com/heo0328/lostparty-backend/issues/13#
 격리 PostgreSQL/HTTP 기존검색3·새조합/정렬/자리/커서경계1·계약전체대조1 **5PASS/25.69초**. 테스트는 동일 그룹 내 2명/1명·동률인 방을 만들어 limit1로 페이지 순서/오름·내림·정확한 남은자리 및 만석을 검증한다. 배열 순서만 바꾼 같은 조건의 cursor 유지, 다른 정렬·새 membership세대의 cursor409와 boolean/0/8/중복자리/미지원정렬400도 확인했다.
 
 로컬 API8000 새이미지 healthy·실행OpenAPI전체일치, 새 sort/remaining_slot_counts 입력의 읽기전용 POST실응답200/no-store(실제방0), DB0023유지. DB migration·실회원모집쓰기/provider·기기시험 없음. 전체 회귀 재실행이나 네이티브 실제 적용·인수로 표시하지 않는다.
+
+구현cc003e94996bb4e2fdaef6911df24d055ae831b8 / feat/raid-recruitment push·ls-remote동일SHA, [전체61번째 Backend 회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6291232832) 게시·실제순번조회/본문상단최신화완료. 다음Flutter 최신계약매핑·기존계획구간연결/사용SHA·적용범위·실제검증결과회신, Backend수신후필요보완. 미확인정렬/자리입력대기는해소했으나Flutter실제적용/수동인수완료는아니다.
