@@ -1545,3 +1545,13 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 격리PostgreSQL17/제한LOGIN/모의provider·합성TestClient: 넓은회귀183PASS/146.04초; 최종기간출처2표/seed기록시각/FK삭제규칙준비검사반영후source/P1/준비·기록시각45PASS/48.93초. 일부중복이라합산하지않는다. 원본OpenAPI전체객체동일확인. 기존DeprecationWarning1건. 초기choice교체fixture중간autoflush수정도기록했다.
 - 전용tmpfs테스트환경만생성/정리했고실행main/API8000/개발DB0016·이미지/자료·원본OpenAPI는미변경이다. 실제서버/provider·Flutter/기기인수는미실행. 0020에맞춘코드적용/실행준비는R5의묶은소비구간에서확인한다.
 - 다음BackendR2개인표/제출표·관계/캐릭터/주간원장·HTTP계약, 이후R3/R4/R5통합검증/인계다. 저장원천완료를모집API/도메인transaction·Flutter연결완료로표시하지않는다.
+
+
+## 2026-10-20 — #13 R2-A 개인 가능표·방 제출표 저장/미활성 HTTP
+
+- feat/raid-recruitment 유지, R1-B/0020 위에 [R2-A](../ISSUE_13_R2A_AVAILABILITY_IMPLEMENTATION.md) 구현. 개인표의 편집 행/순서·주기 정규화/빈 저장/변경 시 버전·세 CAS 제출 snapshot/원 ACK·현재 인증/원정대·재가입 membership 세대·RR READ ONLY/크기·중복 JSON·strict DTO를 구현했다. 기존 주간/일정/참가·예약 자료 hash 보존 확인. 다음은 Backend R2-B 관계/캐릭터/슬롯·주간 원장 연결이며 R2 전체 완료가 아니다.
+- 미활성 HTTP 4동작의 정확한 openapi/recruitment-availability.draft.json을 생성·대조했다. 원본 openapi/openapi.yaml/main 실제 모집 경로는 계속 미활성. 개발DB0016/API8000/이미지·자료/외부 provider·Flutter/기기에는 반영·실행하지 않았다. 추가 migration/운영 변경 없음.
+- 최종 단일 실행: availability17 + source11 + P1성공7 + preparation24 = **59 PASS / 66.32초**, 기존 Starlette DeprecationWarning1. 전용 tmpfs PostgreSQL17/제한 LOGIN/합성자료·TestClient/모의 인증이다. 이전59PASS/65.83초는 일부 최종 보완 전 결과이므로 합산하지 않는다.
+- 개발 중 멱등 operation이 기존 varchar32를 넘겨 첫 HTTP 저장503을 발견하고 짧은 독립 operation 이름으로 수정했다. 추가 검증을 이전 실행과 겹쳐 임시 DB 초기화가 충돌한 setup 오류1회는 두 실행 종료 후 본 작업 소유 tmpfs DB만 재생성해 단일 최종 실행으로 해소했다. 실제 DB는 대상이 아니다.
+- 32KiB 내 compact32766bytes/분리519행의 DTO+정규화 500회 측정: median1.997ms/max20.181ms/출력519행. 구간 수 임의 상한 대신 streaming body32768bytes 제한과 정확 경계 HTTP 검증. 로컬 CPU 측정으로 실서버 부하/SLA를 보장하지 않는다.
+- 변경은 현재 목적 브랜치 로컬 커밋으로 보존하고 원격/Flutter 동작 시험 인계는 R5 준비 후 진행한다. R2-B·R3~R5/경고 표시·통합 활성화는 미완료이며 네이티브 회신 대기는 아니다.

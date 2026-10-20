@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+현재 모집은 [R2-A 개인표/제출표](../ISSUE_13_R2A_AVAILABILITY_IMPLEMENTATION.md) 저장·권한/CAS/원ACK·미활성HTTP/정확한draft 계약 구현까지 진행했다. 다음 Backend R2-B 관계/캐릭터/슬롯·주간 원장 연결이며 Flutter 회신 대기가 아니다. 원본 OpenAPI/main·API8000/개발DB0016은 유지하고 통합/Flutter 적용은 미완료다. 검증/Git은 NEXT_WORK·DEV_LOG 기준. 아래는 단계별 당시 기록이다.
+
 최신 구현: [#13 전체53번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6284451921)/[R1-B 추가원천·P1 성공보존](../ISSUE_13_R1B_SOURCES_IMPLEMENTATION.md) fbf1f2f 로컬·미push. 0020/추가17원천과P1쓰기transaction연결, NULL/실패보존·낮은최신관측/지연·동시성/퇴역정리·기존자료보존검증완료. 회귀183PASS/최종보완45PASS(일부중복). 다음BackendR2 개인표/제출·관계/원장·정확한HTTP계약. 기존OpenAPI·실행API/개발DB0016·이미지/자료미반영/새모집연결미완료/Flutter시험요청없음. NEXT_WORK기준.
 
 최신 구현: [#13 전체52번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6284008917) / [R1-A 원천·보존이행](../ISSUE_13_R1_STORAGE_IMPLEMENTATION.md) fdf2f58 로컬·미push. 7개모델/0019추가이행·기존전체자료/시각·표시빌드보존/제한계정·교차귀속/기간/슬롯/read-only준비검사등33PASS(28.78초). 다음Backend나머지원천/P1성공보존→개인표·관계원장/예약·투표·완료·필터/HTTP계약통합구현. R1전체/통합기능완료아님. 원본OpenAPI·실행API/개발DB0016·이미지/자료미변경, Flutter시험요청없음. NEXT_WORK기준.
