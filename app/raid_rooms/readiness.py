@@ -9,6 +9,8 @@ from app.game_accounts.support import fail
 from app.raid_rooms.models import Room, Round, Membership, Application, DirectoryHead, MemberHead
 
 REVISION = '0018_room_application_build'
+# 0019 is additive: legacy F2 schema/semantics stay intact.
+SUPPORTED_REVISIONS = (REVISION, '0019_integrated_recruitment')
 MODELS = (Room, Round, Membership, Application, DirectoryHead, MemberHead)
 
 
@@ -22,7 +24,7 @@ def require(value):
         fail('SERVICE_UNAVAILABLE', 503)
 
 
-def require_ready(db):
+def require_ready(db, *, integrated=False):
     """Inspect the caller's transaction and effective DB role, without any writes.
 
     SQL/privilege failures propagate to the existing 503 boundary. Unknown migration
@@ -30,8 +32,18 @@ def require_ready(db):
     """
     schema = inspect(db.connection())
     require(schema.has_table('alembic_version', schema='public'))
-    require(list(db.scalars(text('SELECT version_num FROM public.alembic_version'))) == [REVISION])
-    for model in MODELS:
+    versions = list(db.scalars(text('SELECT version_num FROM public.alembic_version')))
+    require(len(versions) == 1 and versions[0] in SUPPORTED_REVISIONS)
+    models = MODELS
+    if integrated:
+        require(versions == ['0019_integrated_recruitment'])
+        from app.raid_rooms.integrated_models import (
+            RecruitmentRoom, RecruitmentItem, RecruitmentRound, RecruitmentMembership,
+            RecruitmentAssignment, RecruitmentSession, RecruitmentSegment,
+        )
+        models += (RecruitmentRoom, RecruitmentItem, RecruitmentRound, RecruitmentMembership,
+                   RecruitmentAssignment, RecruitmentSession, RecruitmentSegment)
+    for model in models:
         table = model.__table__
         name = table.name
         require(schema.has_table(name, schema='public'))
@@ -85,6 +97,6 @@ def require_ready(db):
     enabled = {name for name, mode, kind, function, namespace in triggers
                if mode in ('O', 'A') and kind & 23 == 23
                and function == 'maintain_record_timestamps' and namespace == 'public'}
-    require({m.__tablename__ for m in MODELS} <= enabled)
+    require({m.__tablename__ for m in models} <= enabled)
     head = db.get(DirectoryHead, 1)
     require(head is not None and head.revision >= 1)
