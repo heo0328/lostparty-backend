@@ -1535,3 +1535,13 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 실제격리PostgreSQL17/제한LOGIN에서0018→0019 및모든기존표의행/시각hash동일보존, 모델타입/null·복합관계/슬롯/기간거절rollback, 그룹연결공개·별개겹침표현, READONLY구조검사와기존준비/이행회귀 **33PASS/28.78초**. 초기DDL%이스케이프수정과fixture의존/활동·사용량CAS순서/PG타입비교를바로잡은후최종재실행통과. 기존라이브러리DeprecationWarning1건. 원본행/비밀값출력없음.
 - 검증전용tmpfs환경만생성/정리했고개발DB0016/API/이미지·자료/원본OpenAPI는변경하지않았다. 별도활동브랜치migration이0016까지임을확인해head충돌없음이다. 실제서버/외부provider·Flutter/기기시험은미실행.
 - R1-A만완료이며R1전체나정확한HTTP/통합완료로표시하지않는다. 다음Backend나머지원천/최근성공snapshot·개인표/관계원장·예약/투표/완료·권한/필터·명세를내부R1~R5로이어간다. 이전후보와새원천을섞어사용량을이중집계하거나부분활성화하지않는다. 소비가능구간commit/push/원격·API/DB준비확인후필요시험인계를한다.
+
+
+## 2026-10-20 — #13 R1-B 추가 원천·P1 최근 성공 보존·53번째 결과
+
+- 사용자R1-B진행지시로작업전/게시전전체52개/새변경없음확인. [전체53번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6284451921)에실제구현범위/검증/미완료를기록했다. fbf1f2f 로컬커밋·미push이며새Flutter시험/설계재협의요청은아니다.
+- [구현기록](../ISSUE_13_R1B_SOURCES_IMPLEMENTATION.md): 설정/item/기간출처·일정그룹/대안·개인표/제출·참여/예약·제안/표·choice/개시·신청16원천+역할성공snapshot1개를고정DDL0020으로추가했다. 기존전체표/행·시각/신청snapshot보존, 불명접수는legacy_unknown으로보존하고일정/예약/개인표등미발생자료를만들지않았다.
+- 실제P1기존잠금/CAS/ACK쓰기안에서수치·관측/그버전의경고·출처버전을원자보존. NULL/실패/역할·소유격리·낮은최신값·같은관측고버전·지연관측/재송/동시승자·commit실패rollback을검증했다. 넓힌회귀가퇴역FK충돌을찾아부모head와같은수명으로정리하도록수정하고타캐릭터보존/rollback/ONDELETE준비거절검증을추가했다. 실제퇴역실행경로활성화/사용자자료삭제는없다.
+- 격리PostgreSQL17/제한LOGIN/모의provider·합성TestClient: 넓은회귀183PASS/146.04초; 최종기간출처2표/seed기록시각/FK삭제규칙준비검사반영후source/P1/준비·기록시각45PASS/48.93초. 일부중복이라합산하지않는다. 원본OpenAPI전체객체동일확인. 기존DeprecationWarning1건. 초기choice교체fixture중간autoflush수정도기록했다.
+- 전용tmpfs테스트환경만생성/정리했고실행main/API8000/개발DB0016·이미지/자료·원본OpenAPI는미변경이다. 실제서버/provider·Flutter/기기인수는미실행. 0020에맞춘코드적용/실행준비는R5의묶은소비구간에서확인한다.
+- 다음BackendR2개인표/제출표·관계/캐릭터/주간원장·HTTP계약, 이후R3/R4/R5통합검증/인계다. 저장원천완료를모집API/도메인transaction·Flutter연결완료로표시하지않는다.

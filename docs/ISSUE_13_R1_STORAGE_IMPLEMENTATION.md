@@ -1,5 +1,7 @@
 # #13 R1-A 통합 원천·보존 이행 구현
 
+후속: [R1-B 추가원천·P1 성공보존](ISSUE_13_R1B_SOURCES_IMPLEMENTATION.md) 구현/검증 완료. 현재 다음 작업은 NEXT_WORK를 따른다.
+
 2026-10-20 / feat/raid-recruitment / 기준 ef17b5a. 구현 fdf2f58 로컬 커밋·미push.
 
 공식 결과: [#13 전체52번째 Backend / R1-A 구현](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6284008917). 다음 Backend 후속 구현이며 Flutter 시험 요청은 없다.

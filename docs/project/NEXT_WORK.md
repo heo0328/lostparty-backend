@@ -1,23 +1,23 @@
 # 다음 실행
 
-2026-10-20. 현재 **feat/raid-recruitment**, 최신 구현 **fdf2f58 로컬 커밋·미push**. main77a1fe5/dev ce3064f 유지. 별도 활동 브랜치 feat/activity-selection/89a3248 보존. 미커밋 변경을 다른 브랜치로 옮기지 않는다.
+2026-10-20. 현재 **feat/raid-recruitment**, 최신 구현 **fbf1f2f 로컬 커밋·미push**. main77a1fe5/dev ce3064f 유지. 별도 활동 브랜치 feat/activity-selection/89a3248 보존. 미커밋 변경을 다른 브랜치로 옮기지 않는다.
 
-## 현재 — #13 R1-A 통합 원천·보존 이행 구현 / Backend 후속 구현
+## 현재 — #13 R1-B 추가 원천·P1 성공 보존 구현 / Backend R2
 
 [계약 고정 초안](../ISSUE_13_FIXED_CONTRACT_DRAFT.md)을 [전체43번째 Backend 회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271860507)에 본문 전체로 게시했다. [Flutter41번째 정정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271510136)·[42번째 대조](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271574011)에 대한 기술 답변이다. 완료는 검토 초안 작성/게시이며 최종 계약·통합 구현·Flutter 적용은 미완료다.
 
-### 다음 담당·완료 조건 — R1-A 실제 구현 완료
+### 다음 담당·완료 조건 — R1-B 추가 원천·P1 보존 구현
 
-[51번째 Flutter 설계대조완료](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283811575) 이후 [R1-A 통합원천/보존이행](../ISSUE_13_R1_STORAGE_IMPLEMENTATION.md) **fdf2f58 로컬커밋·미push**를 구현했다. [전체52번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6284008917)에 결과/미완료를 기록했다. 다음 담당은 계속 **Backend 구현**이며 네이티브 테스트/재설계 회신 대기가 아니다.
+[R1-B 구현기록](../ISSUE_13_R1B_SOURCES_IMPLEMENTATION.md) **fbf1f2f 로컬커밋·미push**를 [전체53번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6284451921)에 기록했다. 설정/item기간정책·일정/참여/예약/투표·choice/개시/신청 원천16개와P1성공snapshot1개/0020추가이행·P1저장transaction연결을구현했다. 다음은 **Backend R2**이며 네이티브시험/추가설계회신대기가아니다.
 
-1. R1-B: 설정/일정그룹·참여/예약/제안/choice/개시이벤트·P1최근성공 snapshot 등 나머지 원천/보존을 구현한다. 이번7개 표는 R1-A이며 R1 전체 완료가 아니다.
-2. R2: 개인표/제출표·관계/캐릭터선택·WeeklyState의 정확한 귀속/증가한도·원 ACK를 새 원천에 연결한다. legacy 후보 서비스는 아직 기존 표만 쓰므로 원천전환 전 이중쓰기/이중집계하지 않는다. 이전 일정은 legacy_review_required/예약없음이며 근거 없는 동의·완료를 만들지 않는다.
-3. R3/R4: 예약·정족수/확인·다음주, 부분완료/방전체종료·권한·암호화context·필터/원자성을 구현한다. 51번째에서 확인한 두 경계의 설계를 다시 요청하지 않는다.
-4. HTTP 구간에서 정확한 required/null/권한·거절/오류/ACK·기존raid/difficulty·정렬/자리필터와 측정상한을 OpenAPI/구현에 함께 고정한다. R5 실제앱/DB·계약 검증→구현구간 commit/push/원격확인→필요한Flutter동작 인계를 한다.
+1. R2 개인가능표/방제출표의정확한schema·정규화·편집복원/버전/원ACK와인증회원scope·읽기무쓰기/저장서비스를구현한다. 구간/페이지/탐색등기술상한은대표자료측정근거로고정한다.
+2. 지속관계/캐릭터선택·item/round/assignment와WeeklyState정확한귀속·현재슬롯/한도/정밀역할점수비교를새원천에연결한다. P1현재head와최근성공원천/관측·경고·버전을구분하고반대역할/최고값·강제갱신/TTL로대체하지않는다.
+3. HTTP구간의required/null·권한/거절/오류/ACK·기존검색raid/difficulty/정렬·자리필터와회원조건결합을원본OpenAPI/구현에함께고정한다. 원래legacy후보서비스는아직기존표만쓰므로이중집계/이중쓰기·부분활성화하지않는다. legacy_review_required/origin_unknown자료를근거없이확정/공개원신청으로승격하지않는다.
+4. R3 예약·후보/제안/정족수·확인·다음주, R4 부분완료/전체종료·암호화context/가시검색·원자성, R5 실제앱/DB·계약검증→구현구간commit/push/원격확인→필요Flutter동작인계를진행한다. 기존제품/두기술경계를재협의하지않는다.
 
-실제검증: 격리tmpfs PostgreSQL17·제한LOGIN 계정의0018→0019/전체기존행·시각hash보존/표시·빌드snapshot·잘못된귀속/슬롯/기간rollback·읽기전용구조검사/기존준비회귀 **33PASS/28.78초**. 모의provider/합성자료이며 실행서버·실provider/Flutter/기기검증은 아니다. 사용한 전용테스트환경은정리하고원래테스트DB는중지상태로돌렸다.
+실제검증: 격리PostgreSQL17/제한LOGIN·합성자료에서기존모든표의행·시각hash보존, source귀속/설정/활성예약·choice·floor/정책버전, P1NULL/낮은최신값/지연·재송/동시성/실패rollback/퇴역정리·타캐릭터보존과API회귀를확인했다. 넓은회귀183PASS/146.04초, 최종원천/P1·준비/기록시각45PASS/48.93초(일부중복,합산안함). 최종FK삭제규칙/seed시각·기간출처추가후검증통과다. 전용tmpfs환경정리완료.
 
-실행 main/API8000·개발DB0016·이미지/자료와 원본OpenAPI는미변경/모집미활성이다. 새0019는로컬migration/격리검증만완료했다. 구조검사통과가데이터확인/통합서비스활성화를뜻하지않는다. 해당작업의commit/push/실제API시험인계는묶은소비가능구간에서진행한다.
+원본OpenAPI와실행main/API8000/개발DB0016·이미지/자료는미변경이다.0020/P1보존은로컬코드/격리검증만완료했고신규코드실제적용은0020준비와함께해야한다. 새모집HTTP/통합기능·Flutter연결은미완료이며아직원격미push/동작시험요청없음이다.
 
 ### 보존할 확정 경계·실제 상태
 
