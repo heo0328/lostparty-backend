@@ -5,7 +5,8 @@
 ## 다음 실행·완료 조건
 
 1. 게시·인계 완료. Backend는 이슈13 최신 회신을 확인하고 아래 미완료 매핑/연동 결과를 같은 브랜치에서 처리한다. 기존 전체 실행1133PASS/1FAIL에서 과거 usage 기대값 실패를 수정했고 관련 최신75PASS/159.28초. 마지막 모델/계약·일정/관계·미래주차 추가54PASS/200.83초. 결과를 중복 합산하지 않는다.
-2. **Flutter 입력 회신 필요**: [#13 전체57번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6286046186)의 기존 정렬·자리 필터 키/enum/기본·동률 매핑. 현재 raid/difficulty 및 그룹OR·회원AND·회원별캐릭터OR 검색은 구현/검증했으나 기존 정렬·자리 입력 매핑은 미확인이다. 이 항목을 전체 검색 인수 완료로 표시하지 않는다. 회신 시 같은 브랜치 보완·검증·게시한다.
+2. Flutter [전체59번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6287178945)의 정렬·남은자리 입력을 수신해 [최종 wire](../ISSUE_13_SEARCH_SORT_SLOTS.md)로 구현·계약 보완했다. 관련5PASS/25.69초, 로컬 실행 반영·commit/push 후 같은 이슈 회신 진행 중. sort.member_count/direction 및 remaining_slot_counts를 페이지 전 SQL에 결합하며 기존 입력 재질문 대기가 아니다.
+
 3. 게시 후 Flutter는 원격 SHA/원본 OpenAPI 기준 실제 연동·변경 구간 확인 결과를 이슈13에 회신. Backend는 실제 회신을 조회하고 필요한 보완 결과를 같은 이슈에 답한다. 인계 게시와 Flutter 적용/실기기 인수는 별도다. 이슈 종료/merge/운영배포는 수행하지 않는다.
 
 ## 보존·검증 경계
@@ -22,3 +23,5 @@
 ## 주간 사용횟수 통계 확인 — #19
 
 2026-10-19 읽기확인: [#13전체7번째Flutter 원요구](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6232893737)는#19로이관됐으며아직통계구현/실제집계는없다. 실행DB0016에모집room/round/membership/application표와통계표·통계API가없다. 기존WeeklyState6행중manual완료4행·party완료/활성party는각0이며개인수동체크는모집이용/결과통계로전용하지않는다. 현재한도usage와주간누적이용도분리한다. 통합모집설계의실제생성/참가구간·결과/함께하기이력원천을확보하고#19귀속/마감/coverage정책확정뒤집계·조회로이어간다. 미지원자료는이용0으로보고하지않는다.
+
+Flutter 전체60번째 개인표 UI/GET·PUT 로컬 구현·합성48PASS 수신: 미커밋/미push·실제서버/실회원/기기수동인수전. 다음 Flutter 사용SHA·수동결과/적용범위회신, Backend 불필요한 동일시험 재요청 없음.

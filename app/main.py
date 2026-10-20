@@ -345,7 +345,7 @@ def openapi():
         'completion':'personal item manual ledger vs leader item party ledger; preserve other segment times and completed history',
         'continuation':'future choices are not current assignments; auto default off; boundary authority distinct from processed_at',
         'command_context':{'algorithm':'AES-256-GCM','seconds':120,'max_token_bytes':4096,'replay':'original minimal ACK before new token expiry/source validation'},
-        'search':'visibility then group OR/member AND/within-member character OR, then stable created_at DESC/id DESC and pagination',
+        'search':'visibility and raid/difficulty/group OR/member AND/within-member character OR, then exact remaining slots OR, member_count ascending/descending (default descending), created_at DESC/id DESC ties, then pagination; cursor binds full normalized conditions and directory/cycle/group generations',
         'bounds':{'request_bytes':32768,'page_max':50,'cursor_max':2048,'candidate_ticks_max':2016},
     }
     return schema

@@ -1,7 +1,7 @@
 from uuid import UUID
 from datetime import datetime
 from typing import Annotated,Literal
-from pydantic import Field,StrictInt
+from pydantic import Field,StrictInt,field_validator
 from fastapi import APIRouter,Query
 from app.game_accounts.router import Principal
 from app.raid_rooms.router import OptionalPrincipal
@@ -16,6 +16,11 @@ class Condition(DTO):
     character_ids: list[UUID]
 
 
+class Sort(DTO):
+    criterion: Literal['member_count']='member_count'
+    direction: Literal['ascending','descending']='descending'
+
+
 class Search(DTO):
     category: Literal['general','group_linked','all']
     admission_scope: Literal['public','group']|None
@@ -24,8 +29,16 @@ class Search(DTO):
     member_conditions: list[Condition]
     raid_ids: list[str]
     difficulty_ids: list[str]
+    sort: Sort=Field(default_factory=Sort)
+    remaining_slot_counts: list[Annotated[StrictInt,Field(ge=1,le=7)]]=Field(default_factory=list)
     limit: Annotated[StrictInt,Field(ge=1,le=50)]
     cursor: Annotated[str,Field(max_length=2048)]|None
+
+    @field_validator('remaining_slot_counts')
+    @classmethod
+    def unique_slots(cls,value):
+        if len(set(value))!=len(value):raise ValueError('duplicate slot count')
+        return value
 
 
 class FilterGroup(DTO):

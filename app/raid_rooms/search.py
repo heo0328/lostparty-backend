@@ -1,7 +1,7 @@
 """Permission-scoped member references and filtering before pagination."""
 import hmac,hashlib,json
 from datetime import date
-from sqlalchemy import select,or_,and_
+from sqlalchemy import select,or_,and_,func
 from sqlalchemy.orm import aliased
 from fastapi.encoders import jsonable_encoder
 from app.core.config import settings
@@ -101,13 +101,17 @@ def search(principal,data):
             query=query.where(member.exists())
         if data.raid_ids:query=query.where(select(Item.id).where(Item.room_id==Room.id,Item.raid_id.in_(data.raid_ids)).exists())
         if data.difficulty_ids:query=query.where(select(Round.id).where(Round.room_id==Room.id,Round.cycle_key==date.fromisoformat(graph.raids.cycle(stamp).cycle_key),Round.difficulty_id.in_(data.difficulty_ids)).exists())
+        count=select(func.count()).select_from(Member).where(Member.room_id==Room.id,Member.ended_at.is_(None)).correlate(Room).scalar_subquery()
+        if data.remaining_slot_counts:query=query.where(func.greatest(0,Room.app_capacity-count).in_(data.remaining_slot_counts))
         head=db.get(DirectoryHead,1)
         if head is None:fail('SERVICE_UNAVAILABLE',503)
         normalized=data.model_dump(mode='json',exclude={'cursor'})
-        for field in ('group_ids','raid_ids','difficulty_ids'):normalized[field]=sorted(normalized[field])
+        for field in ('group_ids','raid_ids','difficulty_ids','remaining_slot_counts'):normalized[field]=sorted(normalized[field])
         normalized['member_conditions']=sorted([dict(member_ref=c.member_ref,character_ids=sorted(map(str,c.character_ids))) for c in data.member_conditions],key=lambda c:c['member_ref'])
-        binding=digest([str(uid),normalized,scope]);revision=digest([head.revision,graph.raids.cycle(stamp).cycle_key])
+        binding=['recruitment-search',str(uid)]
+        revision=digest([head.revision,graph.raids.cycle(stamp).cycle_key,normalized,scope])
         offset=cursor_decode(data.cursor,binding,revision) if data.cursor else 0
-        rooms=list(db.scalars(query.order_by(Room.created_at.desc(),Room.id.desc()).offset(offset).limit(data.limit+1)))
+        primary=count.asc() if data.sort.direction=='ascending' else count.desc()
+        rooms=list(db.scalars(query.order_by(primary,Room.created_at.desc(),Room.id.desc()).offset(offset).limit(data.limit+1)))
         token=cursor_encode(dict(scope=binding,revision=revision,offset=offset+data.limit)) if len(rooms)>data.limit else None
         return dict(items=[card(db,r,uid,stamp) for r in rooms[:data.limit]],directory_revision=head.revision,filter_scope_digest=scope,next_cursor=token,evaluated_at=stamp)

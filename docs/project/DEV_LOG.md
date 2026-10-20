@@ -1592,3 +1592,9 @@ R2-C 구현 **841503d**, feat/raid-recruitment/로컬·미push. [전체56번째 
 로컬0016→0023추가이행·API8000새이미지healthy·readiness0023/health200/공개목록200. 기존49표 중48전체행수/지문보존, game_account_requests90행수동일/지문차이는기존만료cleanup이동작하는환경으로원문동등성증명한계명시. 이행코드는해당표수정없음. 실회원모집쓰기/provider/기기·Firebase삭제/볼륨초기화없음, 실제신규room/원장link각0. 합성키context1000왕복0.0754초·410bytes/HTTP발급419bytes. 원격main77a1fe5/devce3064f확인,모집원격브랜치없음,다른작업브랜치보존. 작업브랜치게시후이슈13인계·회신확인을이어간다. 전체57번째Backend정렬/자리입력요청이후신규회신없음.
 
 R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment push·원격SHA일치확인. 기본Git HTTPS helper부재로첫push실패후인증된gh credential helper를명령한정사용해성공(키출력/설정전역변경없음). [전체58번째 Backend R5 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6287055201) 게시·전체댓글순번조회/본문상단최신화. 게시후총58댓글, Flutter확인회신/정렬·자리매핑미수신. 다음Flutter 계약적용/새구간동작결과와기존필터입력회신→Backend동일브랜치보완·게시/결과답변. main/dev/활동브랜치보존·미merge·미운영배포.
+
+## 2026-10-20 #13 Flutter59/60 회신 대응
+
+59번째 기존참가인원정렬/남은자리 입력 수신, 60번째 개인표로컬UI/API연결·합성48PASS/분석0 수신. sort={criterion:member_count,direction:ascending/descending} 기본내림차순, remaining_slot_counts엄격1..7중복금지·OR·[]제한없음, 정확현재membership수/남은자리SQL조건을페이지전에적용. 동률created_atDESC/idDESC, cursor전체정규화조건/세대결합·변경409. [계약](../ISSUE_13_SEARCH_SORT_SLOTS.md). 검색3기존+새경계1·원본계약1 총5PASS/25.69초. 첫검증의이행용합성기존방혼입으로기대순서실패후대상그룹으로격리해통과. DB migration변경없음/실제회원쓰기없음. 다음이미지·실행계약/새입력GET대조→commit/push·원격확인→같은이슈결과답변. 개인표48PASS는Flutter보고이며실서버/실회원/기기인수아님.
+
+검색보완 로컬8000새이미지healthy·실행OpenAPI전체일치, 새sort/remaining_slot_counts POST읽기200/no-store/실제방0, DB0023유지. 이 변경의 실회원 쓰기·provider·migration·실기기시험없음. 관련5PASS·실행대조후네이티브회신용커밋/게시한다.

@@ -71,3 +71,44 @@ def test_group_projection_uses_the_same_multigroup_filter_reference(ready,http):
     c=http.get('/v1/me/raid-room-filter-context',params=dict(group_ids=','.join(map(str,gids))),headers=a['headers']).json()
     result=member_reads.projections(actor(a['uid']),gids[0],[uuid.UUID(rid)],c['filter_context_token'],gids)
     assert {m['member_ref'] for m in result['rooms'][0]['members']}=={m['member_ref'] for m in c['members']}
+
+
+def test_member_count_sort_remaining_slots_before_page_and_cursor_binding(ready,http):
+    from app.raid_rooms import core
+    target,a,b,_=ready;gid=groups(a,b)[0];first,_=create(http,a)
+    assert post(http,b,f'raid-rooms/{first}/join',admission(http,b,first)).status_code==200
+    aa=dict(a,ids=[a['ids'][1],a['ids'][0],*a['ids'][2:]])
+    bb=dict(b,ids=[b['ids'][1],b['ids'][0],*b['ids'][2:]])
+    second,_=create(http,aa);third,_=create(http,bb)
+    with session() as db,db.begin():
+        stamp=now(db)
+        for rid in (first,second,third):db.get(Room,uuid.UUID(rid)).group_id=gid
+        for rid in (second,third):db.get(Room,uuid.UUID(rid)).created_at=stamp
+        core.directory(db)
+    tied=sorted([second,third],reverse=True)
+    data=dict(category='group_linked',admission_scope='public',group_ids=[str(gid)],filter_context_token=None,member_conditions=[],raid_ids=['horizon_cathedral'],difficulty_ids=['stage1'],limit=1,cursor=None)
+    def fetch(body):
+        out=http.post('/v1/raid-rooms/search',json=body,headers=a['headers']);assert out.status_code==200,out.text
+        return out.json()
+    page=fetch(data);assert [r['room_id'] for r in page['items']]==[first]
+    cursor=page['next_cursor'];assert cursor
+    page=fetch(dict(data,cursor=cursor));assert page['items'][0]['room_id']==tied[0]
+    err(http.post('/v1/raid-rooms/search',json=dict(data,cursor=cursor,sort=dict(criterion='member_count',direction='ascending')),headers=a['headers']),409,'CURSOR_STALE')
+    assert fetch(dict(data,sort=dict(criterion='member_count',direction='ascending')))['items'][0]['room_id']==tied[0]
+    assert fetch(dict(data,remaining_slot_counts=[3]))['items'][0]['room_id']==tied[0]
+    assert fetch(dict(data,remaining_slot_counts=[1]))['items']==[]
+    page=fetch(dict(data,remaining_slot_counts=[3,2]));assert page['items'][0]['room_id']==first
+    assert fetch(dict(data,remaining_slot_counts=[2,3],cursor=page['next_cursor']))['items'][0]['room_id']==tied[0]
+    for extra in (dict(remaining_slot_counts=[True]),dict(remaining_slot_counts=[0]),dict(remaining_slot_counts=[8]),dict(remaining_slot_counts=[2,2]),dict(sort=dict(criterion='remaining_slots',direction='ascending'))):
+        err(http.post('/v1/raid-rooms/search',json=dict(data,**extra),headers=a['headers']),400,'INVALID_REQUEST')
+    from app.auth.models import User
+    from app.raid_rooms.integrated_models import RecruitmentMembership as Member
+    with session() as db,db.begin():
+        stamp=now(db)
+        for _ in range(2):
+            uid=uuid.uuid4();db.add(User(id=uid,status='active',created_at=stamp,updated_at=stamp,last_login_at=stamp));db.flush()
+            db.add(Member(id=uuid.uuid4(),room_id=uuid.UUID(first),user_id=uid,revision=1,joined_at=stamp))
+        core.directory(db)
+    assert fetch(data)['items'][0]['room_id']==first
+    assert fetch(dict(data,remaining_slot_counts=list(range(1,8))))['items'][0]['room_id']==tied[0]
+    err(http.post('/v1/raid-rooms/search',json=dict(data,cursor=cursor),headers=a['headers']),409,'CURSOR_STALE')

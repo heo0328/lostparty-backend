@@ -35685,6 +35685,18 @@
             "type": "array",
             "title": "Difficulty Ids"
           },
+          "sort": {
+            "$ref": "#/components/schemas/Sort"
+          },
+          "remaining_slot_counts": {
+            "items": {
+              "type": "integer",
+              "maximum": 7.0,
+              "minimum": 1.0
+            },
+            "type": "array",
+            "title": "Remaining Slot Counts"
+          },
           "limit": {
             "type": "integer",
             "maximum": 50.0,
@@ -36403,6 +36415,28 @@
           "ineligible_character_ids"
         ],
         "title": "SettingsOut"
+      },
+      "Sort": {
+        "properties": {
+          "criterion": {
+            "type": "string",
+            "const": "member_count",
+            "title": "Criterion",
+            "default": "member_count"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "ascending",
+              "descending"
+            ],
+            "title": "Direction",
+            "default": "descending"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "Sort"
       },
       "StartIn": {
         "properties": {
@@ -38556,7 +38590,7 @@
       "max_token_bytes": 4096,
       "replay": "original minimal ACK before new token expiry/source validation"
     },
-    "search": "visibility then group OR/member AND/within-member character OR, then stable created_at DESC/id DESC and pagination",
+    "search": "visibility and raid/difficulty/group OR/member AND/within-member character OR, then exact remaining slots OR, member_count ascending/descending (default descending), created_at DESC/id DESC ties, then pagination; cursor binds full normalized conditions and directory/cycle/group generations",
     "bounds": {
       "request_bytes": 32768,
       "page_max": 50,
