@@ -1,5 +1,7 @@
 # #13 R0 계약 보완3판 — 46/47번째 반영
 
+최신 기술 정정: [49번째 대응 보완4판](ISSUE_13_R0_TECHNICAL_BOUNDARIES_R4.md)이 필터/그룹연결·입장범위, 종료/완료 입력과 N1의 충돌 정의를 대체한다. 나머지 확인된 계약은 유지한다.
+
 2026-10-20 / Backend / feat/raid-recruitment / 기준8639e7b. 설계 본문7e9c2f2 로컬·미push.
 
 공식 인계: [전체48번째 Backend / R0 계약 보완3판](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283178369). 다음 Flutter 소비 재대조, 최종 인수/구현은 미완료.
