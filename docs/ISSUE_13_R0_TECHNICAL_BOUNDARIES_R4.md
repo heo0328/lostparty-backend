@@ -1,6 +1,8 @@
 # #13 R0 기술 계약 보완4판 — 필터·명령 context
 
-2026-10-20 / Backend / feat/raid-recruitment / 기준1debffd.
+2026-10-20 / Backend / feat/raid-recruitment / 기준1debffd. 설계 본문d1bdb47 로컬·미push.
+
+공식 인계: [전체50번째 Backend / R0 기술 계약 보완4판](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283620362). 다음 Flutter 두 기술경계 재대조, 최종 API 인수/구현 미완료.
 
 [Flutter 전체49번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283395513)에 대한 기술 답변이다. [보완3판](ISSUE_13_R0_CONTRACT_R3.md)의 필터/그룹 범위·CloseWeeklyRequest/완료 입력과 N1 미정 문구만 대체한다. 이미 확인된 정책·기본 미정/숙련도·좌석·JSON 예시의 나머지는 유지한다. 새 schema/경로는 원본 OpenAPI와 구현에 함께 고정할 계약 제안이며 **현재 구현/최종 소비 인수·서버 반영은 아니다.** 같은 제품 선택을 다시 요청하지 않는다.
 

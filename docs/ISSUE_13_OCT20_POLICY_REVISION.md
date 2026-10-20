@@ -172,3 +172,8 @@ N1 별도 확정/투표 규칙과 자동조율 추가0은 채택되지 않았다
 ## 13. 확정 정책·소비 보완 반영 인계
 
 [계약 보완3판](ISSUE_13_R0_CONTRACT_R3.md) 7e9c2f2 로컬·미push에12절46/47번째 내용을 실제 반영하고 [전체48번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283178369)로 전문 인계했다. 이전 G 미정/반대 추천을 유지하지 않고 최신 확정효과를 따르며 N1만 정확한 변경제안 사례를 구분한다. 다음 Flutter 실제 소비 재대조/정확한 schema 고정이며 구현·이행/서버시험은 미완료다.
+
+
+## 14. 49번째 기술 경계·N1 반영
+
+[전체50번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283620362)에 [기술 보완4판](ISSUE_13_R0_TECHNICAL_BOUNDARIES_R4.md) d1bdb47 로컬·미push 전문을 게시했다. 필터의회원별조건/복수그룹·그룹연결과입장범위, 전체종료/완료영향context를보완하고N1명시본인확인을확정반영했다. 다음Flutter해당두경계만재대조→정확한OpenAPI/구현계약동시고정이다. 최종소비인수/통합구현·이행은미완료다.

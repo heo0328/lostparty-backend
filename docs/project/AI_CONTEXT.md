@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-최신 수신: [#13 전체49번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283395513) R3 소비검토완료/N1명시본인확인 확정. 다음Backend 회원별캐릭터AND/OR·복수그룹동일회원/그룹연결·입장scope분리와 방전체종료/item완료의 권한내 영향context/CAS출처를 보완→해당부분만Flutter재대조. 기존 제품정책/기본상태는재질문하지않는다. 새기능구현·최종API인수는아니며 NEXT_WORK기준.
+최신: [#13 전체50번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283620362)에 [49번째 대응 기술 보완4판](../ISSUE_13_R0_TECHNICAL_BOUNDARIES_R4.md) d1bdb47 로컬·미push 전문/JSON8개 게시. 회원별캐릭터AND/OR·복수그룹동일회원/그룹연결·입장scope 분리와 권한내 영향context/타인원장CAS제거·N1확정을 반영했다. 다음Flutter두경계만재대조→정확한OpenAPI/구현계약동시고정·통합구현. 최종API인수/서버DB이행·Flutter연결은미완료, NEXT_WORK기준.
 
 최신: [#13 전체48번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283178369)에 [46/47번째 반영 계약 보완3판](../ISSUE_13_R0_CONTRACT_R3.md) 7e9c2f2 로컬·미push 전문 게시. 확정10정책·nullable숙련도/개인profile출처·미정/요일만/전체주차·통합타입/좌석·권한내 그룹필터/JSON9개를 반영했다. 다음 Flutter 재대조→정확한 schema/통합 구현. N1 변경 제안은 아직 미채택, 자동 추가0은 제외다. 보완안 게시 완료이며 최종 인수/구현·서버/DB/Flutter 적용은 미완료. NEXT_WORK 기준.
 
