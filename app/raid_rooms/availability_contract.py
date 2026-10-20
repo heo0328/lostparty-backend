@@ -7,19 +7,7 @@ def draft_openapi():
     candidate = FastAPI(title='LostParty recruitment availability draft')
     candidate.include_router(router)
     schema = candidate.openapi()
-    for operations in schema['paths'].values():
-        for operation in operations.values():
-            operation['responses'].pop('422', None)
-            for status, response in operation['responses'].items():
-                headers = response.setdefault('headers', {})
-                headers['Cache-Control'] = {'schema': {'type': 'string', 'const': 'no-store'}}
-                if status == '401':
-                    headers['WWW-Authenticate'] = {'schema': {'type': 'string', 'const': 'Bearer'}}
-                if status == '409':
-                    headers['Retry-After'] = {'description': 'REQUEST_IN_PROGRESS only',
-                        'schema': {'type': 'integer', 'const': 2}}
-    for key in ('HTTPValidationError', 'ValidationError'):
-        schema['components']['schemas'].pop(key, None)
+    decorate(schema)
     schema['x-availability-policy'] = {
         'activation': 'unmounted R2 draft; integrated activation and canonical OpenAPI merge at R5',
         'timezone': 'Asia/Seoul', 'week_origin': 'ISO Monday 00:00',
@@ -33,3 +21,20 @@ def draft_openapi():
         'warnings': 'schedule mismatch and busy warnings belong to R3 schedule/participation views; no schedule writes here',
     }
     return schema
+
+
+def decorate(schema):
+    """Shared real error/header behavior for unmounted recruitment drafts."""
+    for operations in schema['paths'].values():
+        for operation in operations.values():
+            operation['responses'].pop('422', None)
+            for status, response in operation['responses'].items():
+                headers = response.setdefault('headers', {})
+                headers['Cache-Control'] = {'schema': {'type': 'string', 'const': 'no-store'}}
+                if status == '401':
+                    headers['WWW-Authenticate'] = {'schema': {'type': 'string', 'const': 'Bearer'}}
+                if status == '409':
+                    headers['Retry-After'] = {'description': 'REQUEST_IN_PROGRESS only',
+                        'schema': {'type': 'integer', 'const': 2}}
+    for key in ('HTTPValidationError', 'ValidationError'):
+        schema['components']['schemas'].pop(key, None)

@@ -1568,3 +1568,13 @@ R2-A 구현 커밋 **1a007eb**, feat/raid-recruitment/로컬·미push. [전체54
 - 이 구간은 내부 서비스·저장 연결이며 새 생성/신청/승인 HTTP 활성화/권한 부여/일정·예약/완료 구현은 아니다. 원본 OpenAPI/main/R2-A draft는 변경하지 않고 공개 계약 동일성은 넓은 회귀에서 확인했다. 개발DB0016/API8000/이미지·자료/기존 키·외부provider/Flutter는 미변경. 다음 Backend R2-C 생성·신청/승인 명령/context·CAS·ACK/읽기·정확한 HTTP 계약 통합→R3~R5이며 추가 제품 설계 회신 대기는 아니다. commit/push는 구간 상태와 구분한다.
 
 R2-B 구현 **d25c26b**, feat/raid-recruitment/로컬·미push. [전체55번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6285004770)와 본문 상단에 현재/미완료·다음 Backend R2-C를 반영했다. Flutter 시험 요청 없음. 전용 lostparty-recruitment-r2btest tmpfs 컨테이너/네트워크 정리 완료.
+
+
+## 2026-10-20 — #13 R2-C 기본 명령·context/원 ACK/미활성 HTTP 통합
+
+- [R2-C 기록](../ISSUE_13_R2C_ADMISSION_IMPLEMENTATION.md), feat/raid-recruitment 유지. R2-B 원자 기반을 미정 생성/즉시참가/신청·승인·거절/본인 철회/선택 context/본인 plan·최소 신청/관리 검토의 HTTP10동작에 연결했다. source/CAS/actor·공대장 권한·원접수 scope/실제귀속·현재 자격·P1 최근 성공값과 DB 최종 주차/만료 검사·원 ACK/rollback 포함이다. 신청은 슬롯/방 한도를 소비·예약하지 않고 승인에서 최종 검사한다. 본인 최소 View와 관리 Review를 분리하고 관리 검토에 타인 ownership/weekly CAS를 노출하지 않는다.
+- 원 application/room/actor·scope revision/접수시각/원 선택·빌드/성공 출처를 snapshot으로 보존한다. 공개 접수 후 그룹 복귀 예외는 확인된 동일 application만 허용하고 legacy_unknown/원본 없는 자료는 승격하지 않는다. 그룹 전용 관리 검토는 현재 그룹 회원도 확인한다. 신청 만료는 cycle 끝, readonly GET는 만료 상태를 평가할 뿐 기록을 고치지 않는다. 최종 만료 정각 실패는 승인·assignment/점유·ACK를 전부 rollback하며 동일 key 회복 검증 통과다.
+- 정확한 미활성 openapi/recruitment-admission.draft.json을 구현 생성 객체와 전체 대조했다. 원본 openapi/openapi.yaml/main 및 R2-A draft는 변경하지 않았다. 공통 입력 경계/계약 헤더 장식만 재사용하고 본문·query32768bytes, 중복 query/header/JSON·unknown/strict scalar·기간/enum 등을 검사한다. 미정 외 일정 의도/세션·예약/마감/확인/투표·choice는 R3 미완료503 gate로 보호하고 성공으로 무시하지 않는다.
+- 관련 넓은 회귀 **81 PASS / 164.09초**(R2-C 초기9 + R2-B13 + R2-A17 + 준비24 + 추가원천11 + P1성공7). 본인 최소 View/관리 권한·pending 비예약/거절·철회·원접수 귀속/원본 보존·최종 만료 rollback 보완 후 **최종 R2-C11 + R2-B13 + R2-A17 =41 PASS / 127.98초**. 두 실행은 일부 중복이므로 합산하지 않는다. 기존 Starlette DeprecationWarning1. 전용 tmpfs PostgreSQL17/제한 LOGIN·합성 사용자/모의 인증·격리 TestClient이며 실제 API8000/provider/Flutter/기기 시험이 아니다.
+- 선택 context는 평문 내부 payload 없는 domain 분리 HMAC-SHA256의67문자 MAC다. actor/action/cycle/정확 source snapshot에 바인딩하고 원천 재검사/현재주차/키 교체로 무효화한다. 별도 임의5분 TTL을 넣지 않았으며 R4 짧은 AEAD 명령 context와 구분한다. 합성 키·현재 전체 카탈로그5item/665bytes binding을1000회 측정: token67문자/median0.041ms/max0.690ms. 기존32KiB 경계에 맞추며 item 수는 중복 없는 현재 카탈로그집합으로 제한한다. 로컬 CPU 측정이고 실서버 부하/SLA가 아니다. 첫 측정의 frozen settings instance monkeypatch 오류는 클래스 메서드 합성 주입으로만 보정했다. 실제 키는 사용/출력하지 않았다.
+- 새 migration 없음(0021 원천 사용). 실제DB0016/서버·이미지/키·자료/Flutter 소스는 미변경, 배포/merge·실제 DB이행·Flutter 동작 시험 요청 없음. 다음 Backend R3 일정/예약·확인/제안/미래주차→R4 나머지 도메인/목록검색/완료 context→R5 원본 계약/main·실제 준비 검증/commit·push/원격 확인 후 필요한 Flutter 인계다. 동일 제품 설계 재협의 대기가 아니다.

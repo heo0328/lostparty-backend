@@ -66,20 +66,20 @@ def _limits(db, uid, selection, increasing):
         fail('MEMBER_RAID_LIMIT_REACHED')
 
 
-def _group(db, room, uid):
+def _group(db, room, uid, allow_external=False):
     if room.scope!='group':return  # Public admission independent of linked group.
     group=db.get(Group,room.group_id)
     if group is None or group.ended_at is not None:fail('GROUP_NOT_ACTIVE')
     member=db.scalar(select(GroupMembership).where(GroupMembership.group_id==group.id,
         GroupMembership.user_id==uid,GroupMembership.ended_at.is_(None)))
-    if member is None:fail('GROUP_MEMBERSHIP_REQUIRED',403)
+    if member is None and not allow_external:fail('GROUP_MEMBERSHIP_REQUIRED',403)
     owner=db.get(GroupMembership,group.leader_membership_id)
     if owner is None or owner.ended_at is not None:fail('SERVICE_UNAVAILABLE',503)
     count=db.scalar(select(func.count()).select_from(GroupMembership).where(
         GroupMembership.group_id==group.id,GroupMembership.ended_at.is_(None)))
     if count>limits.values(db.get(MemberUsageLimits,owner.user_id)).group_capacity:
         fail('GROUP_CAPACITY_EXCEEDED')
-    if limits.joined_group_count(db,uid)>limits.values(db.get(MemberUsageLimits,uid)).joined_groups:
+    if member is not None and limits.joined_group_count(db,uid)>limits.values(db.get(MemberUsageLimits,uid)).joined_groups:
         fail('MEMBER_GROUP_LIMIT_EXCEEDED')
 
 
@@ -105,23 +105,28 @@ def _slot(db, room, round, selection, character, party_no):
     return next(n for n in range(1,5) if n not in {r.slot_no for r in rows})
 
 
-def admit_bundle(db, uid, room, selection, targets, expected_cycle_key):
+def admit_bundle(db, uid, room, selection, targets, expected_cycle_key, *, validate_only=False, pending=False, public_origin_application=None):
     """Atomically attach every active item; caller must roll back on any rejection.
 
     Supports empty/unscheduled rooms without inventing sessions. Existing persistent
     members may acquire next-round assignments without consuming another room unit.
     This does not approve an application or grant a caller HTTP admission authority.
     """
+    if pending and not validate_only:raise ValueError('Pending validation cannot write occupancy')
     stamp=now(db)
     cycle=raids.cycle(stamp)
     if expected_cycle_key!=cycle.cycle_key:fail('CYCLE_CHANGED')
     if room.ended_at is not None:fail('ROOM_NOT_ACTIVE')
     if room.migration_state!='ready':fail('ROOM_REVIEW_REQUIRED')
-    user=db.scalar(select(User).where(User.id==uid).with_for_update())
+    query=select(User).where(User.id==uid)
+    user=db.scalar(query if validate_only else query.with_for_update())
     if user is None or user.status!='active':fail('ROOM_TARGET_UNAVAILABLE')
     member=db.scalar(select(Member).where(Member.room_id==room.id,Member.user_id==uid,Member.ended_at.is_(None)))
-    _limits(db,uid,selection,member is None)
-    _group(db,room,uid)
+    _limits(db,uid,selection,member is None and not pending)
+    origin=public_origin_application
+    allow_external=(origin is not None and origin.room_id==room.id and origin.user_id==uid and
+                    origin.origin_state=='known' and origin.origin_scope=='public' and origin.state=='pending')
+    _group(db,room,uid,allow_external=allow_external)
     _room_restrictions(db,room)
     character=identity.selected_character(db,uid,selection.model_dump(mode='json'))
     if not character.summary.get('class_name'):fail('CHARACTER_DATA_UNAVAILABLE')
@@ -159,10 +164,14 @@ def admit_bundle(db, uid, room, selection, targets, expected_cycle_key):
             fail('WEEKLY_ALREADY_PARTICIPATING')
         if member and db.scalar(select(Assignment.id).where(Assignment.round_id==round.id,
                 Assignment.membership_id==member.id)) is not None:fail('ROOM_MEMBER_EXISTS')
-        plans.append((item,round,state,_slot(db,room,round,selection,character,target.party_no)))
+        if target.party_no>min(room.app_capacity//4,round.game_party_size//4):fail('ROOM_COMPOSITION_CONFLICT')
+        plans.append((item,round,state,None if pending else _slot(db,room,round,selection,character,target.party_no)))
     if member is None:
-        if db.scalar(select(func.count()).select_from(Member).where(Member.room_id==room.id,
+        if not pending and db.scalar(select(func.count()).select_from(Member).where(Member.room_id==room.id,
                 Member.ended_at.is_(None)))>=room.app_capacity:fail('ROOM_FULL')
+    if validate_only:
+        return member,[],power
+    if member is None:
         member=Member(id=uuid.uuid4(),room_id=room.id,user_id=uid,revision=1,joined_at=stamp)
         db.add(member);db.flush()
     build=deepcopy(power)

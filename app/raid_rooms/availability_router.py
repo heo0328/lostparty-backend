@@ -21,12 +21,19 @@ def unique_pairs(pairs):
 class AvailabilityRoute(APIRoute):
     body_limit = 32768
 
+    def allowed_query(self, request):
+        return set()
+
     def get_route_handler(self):
         handler = super().get_route_handler()
 
         async def bounded(request: Request):
-            if request.query_params or any(len(request.headers.getlist(k)) > 1 for k in ('authorization', 'idempotency-key')):
+            if (set(request.query_params)-self.allowed_query(request) or
+                    any(len(request.query_params.getlist(k))>1 for k in request.query_params) or
+                    any(len(request.headers.getlist(k)) > 1 for k in ('authorization', 'idempotency-key'))):
                 fail('INVALID_REQUEST', 400)
+            if len(request.scope.get('query_string',b''))>self.body_limit:
+                fail('REQUEST_TOO_LARGE',413)
             body = bytearray()
             async for chunk in request.stream():
                 if request.method == 'GET' and chunk:
