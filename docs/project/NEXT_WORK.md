@@ -1,22 +1,22 @@
 # 다음 실행
 
-2026-10-20. 현재 **feat/raid-recruitment**, 기존 초안35dd5f9/보완 본문 **e806ee4 로컬 커밋·미push**. main77a1fe5/dev ce3064f 유지. 별도 활동 브랜치 feat/activity-selection/89a3248 보존. 미커밋 변경을 다른 브랜치로 옮기지 않는다.
+2026-10-20. 현재 **feat/raid-recruitment**, 최신 계약 보완 본문 **7e9c2f2 로컬 커밋·미push**. main77a1fe5/dev ce3064f 유지. 별도 활동 브랜치 feat/activity-selection/89a3248 보존. 미커밋 변경을 다른 브랜치로 옮기지 않는다.
 
-## 현재 — #13 Flutter46/47번째 수신 / Backend 최종 소비 계약 보완
+## 현재 — #13 R0 계약 보완3판 게시 / Flutter 재대조
 
 [계약 고정 초안](../ISSUE_13_FIXED_CONTRACT_DRAFT.md)을 [전체43번째 Backend 회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271860507)에 본문 전체로 게시했다. [Flutter41번째 정정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271510136)·[42번째 대조](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6271574011)에 대한 기술 답변이다. 완료는 검토 초안 작성/게시이며 최종 계약·통합 구현·Flutter 적용은 미완료다.
 
-### 다음 담당·완료 조건 — Flutter46/47번째 수신
+### 다음 담당·완료 조건 — 보완3판 게시
 
-[46번째 소비 보완](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6282880292)와 [47번째 사용자 결정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283062852)을 확인했다. [정책 문서12절](../ISSUE_13_OCT20_POLICY_REVISION.md)에 확정10항목/남은 소비 보완을 기록했다. **다음 담당 Backend**이며 Flutter의 전체 회신 대기는 해소됐다. 이번은 수신/작업 순서 정리로 실제 계약 보완·기술 답변 완료는 아니다.
+[46번째 소비 검토](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6282880292)/[47번째 사용자 결정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283062852)을 [계약 보완3판](../ISSUE_13_R0_CONTRACT_R3.md)에 반영해 [전체48번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283178369)에 전문 게시했다. 설계7e9c2f2 로컬 커밋·미push다. 기존 두 초안의 충돌 정의는3판을 따른다.
 
-1. 47번째 확정 정책부터 R2/최종 schema·권한/정족수·효과표에 반영한다. 방 구성원의 레이드 자체 불참 모드를 철회하고 필수/선택 타임과 분리한다. 세션별 정족수 모두 충족 후 원자 적용, 정각부터 마감, 혼합4인 규칙, A완료 상태 표시/B,C 유지, item 단독 탈퇴 금지/묶음 전체 탈퇴를 반영한다.
-2. 마지막 개인 완료의 ON/OFF·choice/위임·종료, 방 전체 이번주 미완료 중단·실제 참가자 선언, 자동OFF/06이전·이후 설정 효력, 타임별 묶음 합계24시간을 명시한다. 기존 G를 전부 미정으로 유지하거나 다시 사용자에게 묻지 않는다.
-3. 46번째의 nullable 숙련도 실제5종/null, personal-profile 역할 버전 출처 정정, 완전 미정/요일만/요일무제한 조율의 전체 생성 예시, 참가 전 그룹권한 내 필터·최소 projection/공개식별자 대응, 최종 CreateItem·생성/신청/승인 예시와0→1 좌석 adapter를 보완한다. 표 밖 명시참가 허용과 context 밖 조합 거절을 구분한다.
-4. N1 변경 제안은 아직 미확정이다. 생성자 수동지정/자동조율 추가인원 최소1과 구분해 필요한 기술 사례만 제시한다. 추가0 채택으로 해석하지 않는다. 기술 상한은 측정/근거로 제안한다.
-5. 보완 전문을 #13 게시→Flutter 소비 재대조→정확한 schema/OpenAPI와 통합 구현 R1~R5로 연결한다. 새 서버 테스트/배포 요청은 없다.
+1. **다음 Flutter**: nullable 숙련도/실제 P1 출처·기본미정/요일만/전체주차 조율·최종 입력 타입과 JSON9개·좌석 변환·그룹 최소projection/페이지 전 서버 필터의 실제 소비 가능 여부를 재대조한다. 이미 확정한 제품 정책은 재질문하지 않는다.
+2. Backend: 새 회신의 실제 타입/권한·adapter 차이만 보완해 정확한 schema를 고정한다. N1 변경 제안의 자기 확인 사례는 아직 미채택이며 생성자 수동지정/자동조율 추가인원 최소1과 분리한다. 추가0은 허용하지 않는다. 기술 상한은 Backend 근거/측정으로 제시한다.
+3. 재대조/경계 고정 뒤 정확한 OpenAPI와 모델·추가migration/기존자료 보존→개인표/관계·원장→예약/투표/다음주→완료·권한/원자성→실제 앱·DB/계약 검증의 내부R1~R5를 진행한다. 검증된 구현 구간 commit/push/원격 확인 뒤 필요한 테스트 인계를 한다.
 
-P1 최근 성공 snapshot 방향은46번째에서 요구 부합으로 확인했으나 구현/이행·경합 검증은 미완료다. 모집 adapter/route도 여전히 pending이다. 네이티브 소스는 직접 읽지 않는다.
+확정 반영: 각 타임 정족수 전체 충족 후 원자적용/레이드 자체 불참 모드 제외/정각부터 신규 마감/혼합4인 구성/A완료 표시·B,C 유지/item단독탈퇴 제외·묶음전체탈퇴/마지막 개인완료 ON/OFF·choice/방전체 이번주 중단·실제참가자 선언/자동OFF·06경계 효력/타임합계24h. 원장/CAS/옛ACK·명시 시간중복 경고와 P1최근성공 보존 기술안은 유지한다.
+
+완료는 계약 보완안 작성/게시이며 최종 소비 인수·통합 구현·OpenAPI/서버/DB 반영·Flutter 연결은 미완료다. 이번은 문서·설계 예시 검사뿐이며 새 서버 시험/배포 요청은 없다. 네이티브 소스는 직접 읽지 않았다.
 
 ### 보존할 확정 경계·실제 상태
 

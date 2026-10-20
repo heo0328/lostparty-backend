@@ -1,6 +1,8 @@
 # #13 R0 계약 보완3판 — 46/47번째 반영
 
-2026-10-20 / Backend / feat/raid-recruitment / 기준8639e7b.
+2026-10-20 / Backend / feat/raid-recruitment / 기준8639e7b. 설계 본문7e9c2f2 로컬·미push.
+
+공식 인계: [전체48번째 Backend / R0 계약 보완3판](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283178369). 다음 Flutter 소비 재대조, 최종 인수/구현은 미완료.
 
 [Flutter46번째 소비 검토](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6282880292)·[47번째 사용자 결정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283062852)을 반영한다. [보완2판](ISSUE_13_R0_CONSUMER_CORRECTIONS.md)의 충돌 정의는 이 문서로 대체하며 원자성·ACK/보안·명시 중복경고·P1 최근 성공 보존 기술안과 전체 기능 지도는 유지한다. **확정 정책의 계약 반영이며 구현/최종 소비 인수/원본 OpenAPI·실행 서버 반영은 아니다.** 새 경로/오류명은 계약 후보로 구분한다.
 

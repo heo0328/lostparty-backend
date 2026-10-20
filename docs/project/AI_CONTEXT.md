@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-최신 수신: [#13 Flutter46번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6282880292) 소비 보완/[47번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283062852) 사용자10항목 확정. 다음 Backend가 두 회신을 묶어 계약·효과표 보완→Flutter 재대조. 방 구성원 레이드 불참 모드 금지/세션별 정족수 원자 적용·정각 마감·혼합4인·A완료 표시/묶음전체탈퇴·마지막 개인완료 ON/OFF·방전체 이번주 중단·자동 기본OFF/경계효력·타임합계24h가 확정이다. N1/추가0은 채택 아님. nullable 숙련도5종/null·personal-profile 출처/기본미정·그룹필터/최종타입·좌석번호 보완은 NEXT_WORK/정책12절 기준이다. 현재 수신 기록이며 실제 계약 보완·구현 미완료.
+최신: [#13 전체48번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283178369)에 [46/47번째 반영 계약 보완3판](../ISSUE_13_R0_CONTRACT_R3.md) 7e9c2f2 로컬·미push 전문 게시. 확정10정책·nullable숙련도/개인profile출처·미정/요일만/전체주차·통합타입/좌석·권한내 그룹필터/JSON9개를 반영했다. 다음 Flutter 재대조→정확한 schema/통합 구현. N1 변경 제안은 아직 미채택, 자동 추가0은 제외다. 보완안 게시 완료이며 최종 인수/구현·서버/DB/Flutter 적용은 미완료. NEXT_WORK 기준.
 
 최신: [#13 전체45번째 Backend R0 보완2판](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6272271633)에 [44번째 소비 검토 대응](../ISSUE_13_R0_CONSUMER_CORRECTIONS.md) e806ee4 로컬·미push 전문 게시. 입력/세션·버전/CAS 출처·기능 지도·점수 보존 규칙을 보완했다. 다음 Flutter 재대조·experienceLevel 실제 값 대응→필요 결정/정확한 schema 고정. P1 실제 코드는 요약 덮어쓰기이며 최근 성공 snapshot은 신규 설계/미구현이다. 계약 최종 합의·API/DB 반영·Flutter 연결은 미완료. NEXT_WORK를 따른다.
 
