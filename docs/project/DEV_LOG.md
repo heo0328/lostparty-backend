@@ -1566,3 +1566,5 @@ R2-A 구현 커밋 **1a007eb**, feat/raid-recruitment/로컬·미push. [전체54
 - 넓은 회귀 **75 PASS / 125.48초**: 초기 R2-B8 + R2-A17 + R1-B11 + R1-A8 + P1성공7 + 준비24. 추가 경계/정리 후 **37 PASS / 66.83초**: R2-B13 + 준비24. 마지막 대상 User 잠금 보완 후 최종 **R2-B13 PASS / 63.38초**. 세 실행은 중복되므로 합산하지 않는다. 기존 Starlette DeprecationWarning1. 전용 tmpfs PostgreSQL17/제한 LOGIN·합성자료/모의 인증 검증이며 실제 서버/provider/Flutter·기기 시험이 아니다.
 - 개발 중 합성 방의 즉시/지연 FK flush 순서와 실제 카탈로그의 게임 인원·최소레벨, verified_at NOT NULL fixture 오류를 바로잡았다. 제품 제약을 완화하지 않았고 최종 전체 R2-B 검증 통과. 확인되지 않은 legacy 활성행 해제는 기능 성공으로 포장하지 않고 명시 거절한다.
 - 이 구간은 내부 서비스·저장 연결이며 새 생성/신청/승인 HTTP 활성화/권한 부여/일정·예약/완료 구현은 아니다. 원본 OpenAPI/main/R2-A draft는 변경하지 않고 공개 계약 동일성은 넓은 회귀에서 확인했다. 개발DB0016/API8000/이미지·자료/기존 키·외부provider/Flutter는 미변경. 다음 Backend R2-C 생성·신청/승인 명령/context·CAS·ACK/읽기·정확한 HTTP 계약 통합→R3~R5이며 추가 제품 설계 회신 대기는 아니다. commit/push는 구간 상태와 구분한다.
+
+R2-B 구현 **d25c26b**, feat/raid-recruitment/로컬·미push. [전체55번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6285004770)와 본문 상단에 현재/미완료·다음 Backend R2-C를 반영했다. Flutter 시험 요청 없음. 전용 lostparty-recruitment-r2btest tmpfs 컨테이너/네트워크 정리 완료.

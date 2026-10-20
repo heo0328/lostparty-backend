@@ -1,10 +1,10 @@
 # 다음 실행
 
-2026-10-20. 현재 **feat/raid-recruitment**, 최신 구현 **1a007eb 로컬 커밋·미push**. main77a1fe5/dev ce3064f 유지. 별도 활동 브랜치 feat/activity-selection/89a3248 보존. 미커밋 변경을 다른 브랜치로 옮기지 않는다.
+2026-10-20. 현재 **feat/raid-recruitment**, 최신 구현 **d25c26b 로컬 커밋·미push**. main77a1fe5/dev ce3064f 유지. 별도 활동 브랜치 feat/activity-selection/89a3248 보존. 미커밋 변경을 다른 브랜치로 옮기지 않는다.
 
 ## 현재 — #13 R2-B 관계·캐릭터/슬롯·주간 원장 내부 연결 / 다음 Backend R2-C
 
-[R2-B 구현기록](../ISSUE_13_R2B_PARTICIPATION_IMPLEMENTATION.md). strict Selection/Target·묶음 전체 assignment/원장 transaction·정밀 역할/P1 성공값/한도·그룹/4인·8인 자리 검사와 정확한 원장 세대 연결을 구현했다. 0021은 새 연결표/복합 FK alias만 추가하며 기존 모든 자료·시각 보존/추정 backfill 없음을 검증했다. 원본 OpenAPI/main·R2-A draft/API8000/개발DB0016은 그대로다. 최종 검증과 Git 상태는 DEV_LOG 기준.
+[R2-B 구현기록](../ISSUE_13_R2B_PARTICIPATION_IMPLEMENTATION.md) **d25c26b 로컬·미push** / [전체55번째 Backend R2-B](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6285004770). 관련 회귀75PASS/추가 경계37PASS/마지막 대상 User 잠금 후 최종13PASS(일부중복, 합산안함), 전용 tmpfs 정리 완료. strict Selection/Target·묶음 전체 assignment/원장 transaction·정밀 역할/P1 성공값/한도·그룹/4인·8인 자리 검사와 정확한 원장 세대 연결을 구현했다. 0021은 새 연결표/복합 FK alias만 추가하며 기존 모든 자료·시각 보존/추정 backfill 없음을 검증했다. 원본 OpenAPI/main·R2-A draft/API8000/개발DB0016은 그대로다. 최종 검증과 Git 상태는 DEV_LOG 기준.
 
 ### 다음 담당·완료 조건 — Backend R2-C
 

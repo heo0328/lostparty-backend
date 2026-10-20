@@ -9,7 +9,7 @@
 | 이슈 | 주제 | 다음 담당·상태/완료 조건 |
 |---|---|---|
 | [#12](https://github.com/heo0328/lostparty-backend/issues/12) | 그룹 G1/G2 Flutter 연결 | Backend 구현/통합 완료. Flutter 연결/관련 검증과 사용SHA 회신 미확인. 현재 Flutter 우선작업을 중단시키지 않음 |
-| [#13](https://github.com/heo0328/lostparty-backend/issues/13) | 통합모집·시간/참가/주간관리 | [R2-B 내부 관계/슬롯·원장 연결](../ISSUE_13_R2B_PARTICIPATION_IMPLEMENTATION.md)·0021/기존 자료 보존·원자 묶음/P1/한도·그룹/인원 경계 구현. 다음 Backend R2-C 생성/신청/승인 명령·정확한 HTTP 통합→R3~R5. 실제API/DB0016/원본 OpenAPI 유지/새 모집·Flutter 적용 미완료/회신 대기 없음 |
+| [#13](https://github.com/heo0328/lostparty-backend/issues/13) | 통합모집·시간/참가/주간관리 | [전체55번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6285004770) / d25c26b 로컬·미push / [R2-B 내부 관계/슬롯·원장 연결](../ISSUE_13_R2B_PARTICIPATION_IMPLEMENTATION.md)·0021/기존 자료 보존·원자 묶음/P1/한도·그룹/인원 경계 구현. 다음 Backend R2-C 생성/신청/승인 명령·정확한 HTTP 통합→R3~R5. 실제API/DB0016/원본 OpenAPI 유지/새 모집·Flutter 적용 미완료/회신 대기 없음 |
 | [#15](https://github.com/heo0328/lostparty-backend/issues/15) | V2 Flutter 인증/분쟁 | #13 전체16번째Flutter 보고기준 D1~D4 dev반영·마감, 분쟁실기기는사용자판단보류. 이후 #13 전체17번째에서 로그인화면재구성수정 별도마감·계약검토전환을보고했으며분쟁실기기보류는별도 |
 | [#16](https://github.com/heo0328/lostparty-backend/issues/16) | G3 완료 구현/dev 통합·조건부 해산 후속 | 관리GET/이전/일반탈퇴는 구현332a8ab·인계349fb79/PR20 bb144e0 dev통합·원격확인/완료브랜치정리. 통합전45PASS·실행계약일치(기존148PASS와중복), [전체6번째 Backend 통합결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6262944673). 조건부해산은실제그룹모집원본후속·추방/대표변경미구현/Flutter연결·실기기별도, 이슈유지 |
 | [#17](https://github.com/heo0328/lostparty-backend/issues/17) | 캐릭터 소멸 근거·이력·이름 재사용 ID | Flutter전체1번째범위확인·Backend 현재기능/증거공백 검토·최소계약 보완. 기존L1/claim/조회 재사용. 실제삭제/보류해제 승인 아님 |
