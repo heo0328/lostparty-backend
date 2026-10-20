@@ -10,7 +10,7 @@ from app.raid_rooms.models import Room, Round, Membership, Application, Director
 
 REVISION = '0018_room_application_build'
 # Known additive source revisions; legacy F2 schema/semantics stay intact.
-SUPPORTED_REVISIONS = (REVISION, '0019_integrated_recruitment', '0020_recruitment_sources')
+SUPPORTED_REVISIONS = (REVISION, '0019_integrated_recruitment', '0020_recruitment_sources', '0021_recruitment_weekly_links')
 MODELS = (Room, Round, Membership, Application, DirectoryHead, MemberHead)
 
 
@@ -36,17 +36,20 @@ def require_ready(db, *, integrated=False):
     require(len(versions) == 1 and versions[0] in SUPPORTED_REVISIONS)
     models = MODELS
     if integrated:
-        require(versions[0] in ('0019_integrated_recruitment', '0020_recruitment_sources'))
+        require(versions[0] in SUPPORTED_REVISIONS[1:])
         from app.raid_rooms.integrated_models import (
             RecruitmentRoom, RecruitmentItem, RecruitmentRound, RecruitmentMembership,
             RecruitmentAssignment, RecruitmentSession, RecruitmentSegment,
         )
         models += (RecruitmentRoom, RecruitmentItem, RecruitmentRound, RecruitmentMembership,
                    RecruitmentAssignment, RecruitmentSession, RecruitmentSegment)
-        if versions == ['0020_recruitment_sources']:
+        if versions[0] in SUPPORTED_REVISIONS[2:]:
             from app.raid_rooms.source_models import SOURCE_MODELS
             from app.game_accounts.power_success import RolePowerSuccess
             models += SOURCE_MODELS + (RolePowerSuccess,)
+        if versions == ['0021_recruitment_weekly_links']:
+            from app.raid_rooms.weekly_links import WeeklyOccupancy
+            models += (WeeklyOccupancy,)
     for model in models:
         table = model.__table__
         name = table.name
@@ -76,6 +79,14 @@ def require_ready(db, *, integrated=False):
         unique = {tuple(v['column_names']) for v in schema.get_unique_constraints(name, schema='public')}
         for constraint in table.constraints:
             if isinstance(constraint, UniqueConstraint):
+                added_weekly_aliases = {
+                    'recruitment_items': ('room_id','id','raid_id'),
+                    'recruitment_rounds': ('room_id','item_id','id','cycle_key'),
+                    'recruitment_assignments': ('room_id','item_id','round_id','id','user_id','character_id'),
+                }
+                if (versions != ['0021_recruitment_weekly_links'] and
+                        tuple(c.name for c in constraint.columns) == added_weekly_aliases.get(name)):
+                    continue
                 require(tuple(c.name for c in constraint.columns) in unique)
         # Expressions are covered by domain/DDL tests; startup catches missing checks.
         require(len(schema.get_check_constraints(name, schema='public')) >=
@@ -89,7 +100,8 @@ def require_ready(db, *, integrated=False):
             where = index.dialect_options['postgresql'].get('where')
             if where is not None:
                 require(normalized(actual.get('dialect_options', {}).get('postgresql_where', '')) == normalized(where))
-        for privilege in ('SELECT', 'INSERT', 'UPDATE'):
+        privileges = ('SELECT','INSERT','UPDATE','DELETE') if name == 'recruitment_weekly_occupancies' else ('SELECT','INSERT','UPDATE')
+        for privilege in privileges:
             require(db.scalar(text('SELECT has_table_privilege(current_user, :name, :privilege)'),
                               dict(name='public.'+name, privilege=privilege)))
     triggers = db.execute(text("""

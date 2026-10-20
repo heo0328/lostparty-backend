@@ -44,6 +44,7 @@ class RecruitmentItem(Base):
     revision = mapped_column(Integer, nullable=False, default=1)
     created_at = stamp()
     __table_args__ = (UniqueConstraint('room_id', 'id'), UniqueConstraint('room_id', 'raid_id'),
+                      UniqueConstraint('room_id', 'id', 'raid_id'),
                       CheckConstraint('revision>=1'))
 
 
@@ -62,6 +63,7 @@ class RecruitmentRound(Base):
     ended_at = stamp(nullable=True)
     __table_args__ = (
         UniqueConstraint('room_id', 'item_id', 'id'),
+        UniqueConstraint('room_id', 'item_id', 'id', 'cycle_key'),
         ForeignKeyConstraint(['room_id', 'item_id'], ['recruitment_items.room_id', 'recruitment_items.id']),
         CheckConstraint('EXTRACT(DOW FROM cycle_key)=3 AND game_party_size IN (4,8) AND revision>=1'),
         CheckConstraint("state IN ('active','completed','stopped_incomplete','legacy_ended')"),
@@ -106,6 +108,7 @@ class RecruitmentAssignment(Base):
     ended_at = stamp(nullable=True)
     __table_args__ = (
         UniqueConstraint('round_id', 'membership_id'),
+        UniqueConstraint('room_id', 'item_id', 'round_id', 'id', 'user_id', 'character_id'),
         ForeignKeyConstraint(['room_id', 'item_id', 'round_id'],
                              ['recruitment_rounds.room_id', 'recruitment_rounds.item_id', 'recruitment_rounds.id']),
         ForeignKeyConstraint(['room_id', 'membership_id', 'user_id'],

@@ -1557,3 +1557,12 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 변경은 현재 목적 브랜치 로컬 커밋으로 보존하고 원격/Flutter 동작 시험 인계는 R5 준비 후 진행한다. R2-B·R3~R5/경고 표시·통합 활성화는 미완료이며 네이티브 회신 대기는 아니다.
 
 R2-A 구현 커밋 **1a007eb**, feat/raid-recruitment/로컬·미push. [전체54번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6284804193)와 본문 상단에 현재/다음 담당·미완료 범위를 반영했다. 네이티브 시험 요청 없음. 전용 lostparty-recruitment-r2test tmpfs 컨테이너/네트워크 정리 완료.
+
+
+## 2026-10-20 — #13 R2-B 관계/캐릭터·슬롯·주간 원장 내부 연결
+
+- feat/raid-recruitment에서 [R2-B 구현기록](../ISSUE_13_R2B_PARTICIPATION_IMPLEMENTATION.md)의 transaction primitive를 구현했다. 합의된 strict Selection/Target, persistent membership/전체 item assignment·WeeklyState 연결, 현재 소유/활동/lifecycle/CAS·카탈로그/레벨·P1 최근 성공값의 정확한 Decimal 비교·한도/그룹·혼합4/단독8/파티 슬롯을 검사한다. 새 room_count는 통합 원천의 종료까지 우선해 보존 legacy 자료의 사용량 되살림/이중 집계를 막는다. 대상 User도 잠금 내 재검사한다.
+- additive 0021_recruitment_weekly_links는 exact assignment/round/item/user/character/raid/cycle FK 원장 연결표와 unique alias만 추가한다. 기존 모든 행·시각 hash 보존, 기존0019/0020파일 무수정, 추정 점유 연결 backfill 없음. read-only readiness의 이전 revision 호환과 새 연결표/DELETE 권한 검사 포함. 확인된 연결·원장 room/difficulty/joined_at만 해제하며 종료된 assignment 재호출은 noop, 연결 없는 legacy/틀린 세대는 거절한다.
+- 넓은 회귀 **75 PASS / 125.48초**: 초기 R2-B8 + R2-A17 + R1-B11 + R1-A8 + P1성공7 + 준비24. 추가 경계/정리 후 **37 PASS / 66.83초**: R2-B13 + 준비24. 마지막 대상 User 잠금 보완 후 최종 **R2-B13 PASS / 63.38초**. 세 실행은 중복되므로 합산하지 않는다. 기존 Starlette DeprecationWarning1. 전용 tmpfs PostgreSQL17/제한 LOGIN·합성자료/모의 인증 검증이며 실제 서버/provider/Flutter·기기 시험이 아니다.
+- 개발 중 합성 방의 즉시/지연 FK flush 순서와 실제 카탈로그의 게임 인원·최소레벨, verified_at NOT NULL fixture 오류를 바로잡았다. 제품 제약을 완화하지 않았고 최종 전체 R2-B 검증 통과. 확인되지 않은 legacy 활성행 해제는 기능 성공으로 포장하지 않고 명시 거절한다.
+- 이 구간은 내부 서비스·저장 연결이며 새 생성/신청/승인 HTTP 활성화/권한 부여/일정·예약/완료 구현은 아니다. 원본 OpenAPI/main/R2-A draft는 변경하지 않고 공개 계약 동일성은 넓은 회귀에서 확인했다. 개발DB0016/API8000/이미지·자료/기존 키·외부provider/Flutter는 미변경. 다음 Backend R2-C 생성·신청/승인 명령/context·CAS·ACK/읽기·정확한 HTTP 계약 통합→R3~R5이며 추가 제품 설계 회신 대기는 아니다. commit/push는 구간 상태와 구분한다.

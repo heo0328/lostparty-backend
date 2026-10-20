@@ -2,18 +2,18 @@
 
 2026-10-20. 현재 **feat/raid-recruitment**, 최신 구현 **1a007eb 로컬 커밋·미push**. main77a1fe5/dev ce3064f 유지. 별도 활동 브랜치 feat/activity-selection/89a3248 보존. 미커밋 변경을 다른 브랜치로 옮기지 않는다.
 
-## 현재 — #13 R2-A 개인 가능표·방 제출표 구현 / 다음 Backend R2-B
+## 현재 — #13 R2-B 관계·캐릭터/슬롯·주간 원장 내부 연결 / 다음 Backend R2-C
 
-[R2-A 구현기록](../ISSUE_13_R2A_AVAILABILITY_IMPLEMENTATION.md) **1a007eb 로컬·미push** / [전체54번째 Backend R2-A](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6284804193). 최종 **59 PASS / 66.32초**, 전용 tmpfs 정리 완료. 개인 가능표·방 제출표의 strict DTO/정규화·편집 원본 보존/변경 시에만 버전 증가·명시 snapshot 복사·세 CAS·원 ACK·권한/재가입 세대·읽기 무쓰기와 미활성 HTTP 4동작을 구현했다. 기존 R1-B/0020을 사용한다. [미활성 정확한 OpenAPI](../../openapi/recruitment-availability.draft.json)는 구현과 대조하며 원본 OpenAPI/main·API8000/개발DB0016은 그대로다. 구현·최종 검증/Git 상태는 DEV_LOG에 기록한다.
+[R2-B 구현기록](../ISSUE_13_R2B_PARTICIPATION_IMPLEMENTATION.md). strict Selection/Target·묶음 전체 assignment/원장 transaction·정밀 역할/P1 성공값/한도·그룹/4인·8인 자리 검사와 정확한 원장 세대 연결을 구현했다. 0021은 새 연결표/복합 FK alias만 추가하며 기존 모든 자료·시각 보존/추정 backfill 없음을 검증했다. 원본 OpenAPI/main·R2-A draft/API8000/개발DB0016은 그대로다. 최종 검증과 Git 상태는 DEV_LOG 기준.
 
-### 다음 담당·완료 조건 — Backend R2-B
+### 다음 담당·완료 조건 — Backend R2-C
 
-1. 지속 membership/캐릭터 선택·item/round/assignment와 WeeklyState를 정확한 세대에 연결한다. 현재 슬롯·한도/소유/CAS·정밀 역할 점수와 P1 최근 성공 값·관측/경고/버전을 함께 검증한다. 구 assignment 해제로 다른 방의 새 점유가 사라지지 않게 한다.
-2. 개인표 밖 명시 참여/시간 중복은 허용+경고를 유지한다. R3 일정/예약 응답에서 새 제출표와 기존 일정의 불일치를 표시하고 저장 자체로 일정 동의를 추정하지 않는다. 레거시 검토 전 방/원본 출처 불명 신청을 자동 승격하지 않는다.
-3. R2의 나머지 HTTP·오류/ACK를 정확한 draft 계약과 함께 고정한다. 기존 후보 서비스는 이전 표만 쓰므로 이중 집계/이중 쓰기·일부 라우터 실제 활성화는 하지 않는다. 구간/페이지/탐색 상한은 실제 측정 근거로 정한다.
-4. R3 예약·후보/제안/정족수·확인·다음주, R4 부분완료/전체종료·암호화context/가시검색·원자성, R5 실제앱/DB·원본계약 통합검증→구현구간commit/push/원격확인→필요 Flutter 인계를 진행한다. 현재 네이티브 설계 재협의/시험 대기가 아니다.
+1. 생성·직접참가·신청/승인 명령에 R2-B 내부 기반을 연결한다. 기존 레거시 후보 서비스는 구 표만 쓰므로 그대로 새 통합 완료로 보지 않는다. 인증 actor/승인자 권한·현재 room/context/계획 CAS·신청 원본 scope 및 현재 대상 자격·마감/주차를 검사하고 명령 원 ACK와 원자 rollback을 검증한다. R2-B 함수 자체는 HTTP 권한·신청 승인을 부여하지 않는다.
+2. 생성/참가 context와 필요한 본인 관계·배치/원장 읽기 및 정확한 required/null·오류/ACK를 구현과 draft OpenAPI에 함께 고정한다. 같은 제품 설계 회신을 다시 요청하지 않는다. 새 코드의 실제 라우터 부분 활성화/구 표 이중 쓰기는 하지 않는다.
+3. R3 세션/예약·명시 참여와 시간 경고·자동 후보/제안·정족수/확인·다음주를 연결한다. 개인표 밖 명시 참여와 다른 방 시간 중복은 허용+경고, 자동 후보만 회피한다. 아직 표 저장을 일정 동의/예약으로 추정하지 않는다.
+4. R4 부분 완료/전체 탈퇴·종료·리더 해결·정확한 예약 해제·암호화 context/가시 검색·원자성, R5 원본 OpenAPI/main·DB/실제 준비검증→commit/push/원격확인→필요 Flutter 인계를 진행한다. 주간 연결 없는 legacy 검토 자료는 명시 대응 없이 승격/해제하지 않는다.
 
-R2 전체·새 모집 통합 기능·Flutter 연결은 미완료다. 실제 DB0020 이행/서버 재시작·provider/Flutter·기기 검증은 미실행이며 별도 회신/동작 시험 요청은 없다.
+R2 전체·새 모집 HTTP/통합 기능·Flutter 연결은 미완료다. 현재 네이티브 회신/추가 시험 대기가 아니다. 실제DB0021 이행/서버 재시작·provider/Flutter·기기 검증은 미실행이다.
 
 ### 보존할 확정 경계·실제 상태
 

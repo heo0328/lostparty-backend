@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+현재 모집은 [R2-B 관계/캐릭터·슬롯·주간 원장 내부 연결](../ISSUE_13_R2B_PARTICIPATION_IMPLEMENTATION.md)까지 구현했다. 0021 정확한 assignment/round 귀속·기존 자료 보존, 묶음 원자 참가/정밀 P1 성공값·한도/그룹/인원 검증. 다음 Backend R2-C 명령·context/CAS/ACK·정확한 HTTP 계약 통합. 원본 계약/main·실제API/DB0016은 유지, Flutter 연결/통합 활성화 미완료·회신 대기 없음. 검증/Git은 NEXT_WORK·DEV_LOG 기준.
+
 현재 모집은 1a007eb 로컬·미push / [전체54번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6284804193) / [R2-A 개인표/제출표](../ISSUE_13_R2A_AVAILABILITY_IMPLEMENTATION.md) 저장·권한/CAS/원ACK·미활성HTTP/정확한draft 계약 구현까지 진행했다. 다음 Backend R2-B 관계/캐릭터/슬롯·주간 원장 연결이며 Flutter 회신 대기가 아니다. 원본 OpenAPI/main·API8000/개발DB0016은 유지하고 통합/Flutter 적용은 미완료다. 검증/Git은 NEXT_WORK·DEV_LOG 기준. 아래는 단계별 당시 기록이다.
 
 최신 구현: [#13 전체53번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6284451921)/[R1-B 추가원천·P1 성공보존](../ISSUE_13_R1B_SOURCES_IMPLEMENTATION.md) fbf1f2f 로컬·미push. 0020/추가17원천과P1쓰기transaction연결, NULL/실패보존·낮은최신관측/지연·동시성/퇴역정리·기존자료보존검증완료. 회귀183PASS/최종보완45PASS(일부중복). 다음BackendR2 개인표/제출·관계/원장·정확한HTTP계약. 기존OpenAPI·실행API/개발DB0016·이미지/자료미반영/새모집연결미완료/Flutter시험요청없음. NEXT_WORK기준.
