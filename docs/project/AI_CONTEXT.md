@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-현재 모집은 [R2-C 기본 명령/미활성 HTTP](../ISSUE_13_R2C_ADMISSION_IMPLEMENTATION.md)까지 구현했다. 미정 생성/참가·신청/승인/거절·철회/context/본인 plan·신청/관리 검토·원 ACK/원자 연결이며 정확한 draft와 대조했다. 다음 Backend R3 일정·예약/확인·제안/다음주→R4 완료/권한·목록검색→R5 실제 통합·원격 인계. 원본 OpenAPI/main·실제API/개발DB0016은 유지/새 모집 통합·Flutter 적용은 미완료이며 네이티브 재설계 회신 대기는 아니다. 검증·Git은 NEXT_WORK/DEV_LOG 기준.
+현재 모집은 841503d 로컬·미push / [전체56번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6285392591) / [R2-C 기본 명령/미활성 HTTP](../ISSUE_13_R2C_ADMISSION_IMPLEMENTATION.md)까지 구현했다. 미정 생성/참가·신청/승인/거절·철회/context/본인 plan·신청/관리 검토·원 ACK/원자 연결이며 정확한 draft와 대조했다. 다음 Backend R3 일정·예약/확인·제안/다음주→R4 완료/권한·목록검색→R5 실제 통합·원격 인계. 원본 OpenAPI/main·실제API/개발DB0016은 유지/새 모집 통합·Flutter 적용은 미완료이며 네이티브 재설계 회신 대기는 아니다. 검증·Git은 NEXT_WORK/DEV_LOG 기준.
 
 현재 모집은 1a007eb 로컬·미push / [전체54번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6284804193) / [R2-A 개인표/제출표](../ISSUE_13_R2A_AVAILABILITY_IMPLEMENTATION.md) 저장·권한/CAS/원ACK·미활성HTTP/정확한draft 계약 구현까지 진행했다. 다음 Backend R2-B 관계/캐릭터/슬롯·주간 원장 연결이며 Flutter 회신 대기가 아니다. 원본 OpenAPI/main·API8000/개발DB0016은 유지하고 통합/Flutter 적용은 미완료다. 검증/Git은 NEXT_WORK·DEV_LOG 기준. 아래는 단계별 당시 기록이다.
 

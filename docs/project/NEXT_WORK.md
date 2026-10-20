@@ -1,10 +1,10 @@
 # 다음 실행
 
-2026-10-20. 현재 **feat/raid-recruitment**, 최신 구현 **d25c26b 로컬 커밋·미push**. main77a1fe5/dev ce3064f 유지. 별도 활동 브랜치 feat/activity-selection/89a3248 보존. 미커밋 변경을 다른 브랜치로 옮기지 않는다.
+2026-10-20. 현재 **feat/raid-recruitment**, 최신 구현 **841503d 로컬 커밋·미push**. main77a1fe5/dev ce3064f 유지. 별도 활동 브랜치 feat/activity-selection/89a3248 보존. 미커밋 변경을 다른 브랜치로 옮기지 않는다.
 
 ## 현재 — #13 R2-C 기본 생성·참가/신청·승인 명령/HTTP / 다음 Backend R3
 
-[R2-C 구현기록](../ISSUE_13_R2C_ADMISSION_IMPLEMENTATION.md). 미정(schedule_groups=[]) 방의 생성·즉시참가·신청/승인·거절/본인 철회와 선택 context·본인 plan/최소 신청·권한별 관리 검토를 명령 transaction/원 ACK·정확한 미활성 HTTP 10동작에 연결했다. [정확한 draft](../../openapi/recruitment-admission.draft.json)는 구현과 전체 대조한다. 관련 회귀81PASS/164.09초, 최종 R2 HTTP11+관계13+가능표17 =41PASS/127.98초(일부중복, 합산안함). 원본 OpenAPI/main·실제API8000/개발DB0016은 유지하며 아직 통합 기능·Flutter 적용 완료가 아니다. 현재 커밋/Git·Issue 기록은 DEV_LOG 기준.
+[R2-C 구현기록](../ISSUE_13_R2C_ADMISSION_IMPLEMENTATION.md) **841503d 로컬·미push** / [전체56번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6285392591). 전용 tmpfs 정리 완료. 미정(schedule_groups=[]) 방의 생성·즉시참가·신청/승인·거절/본인 철회와 선택 context·본인 plan/최소 신청·권한별 관리 검토를 명령 transaction/원 ACK·정확한 미활성 HTTP 10동작에 연결했다. [정확한 draft](../../openapi/recruitment-admission.draft.json)는 구현과 전체 대조한다. 관련 회귀81PASS/164.09초, 최종 R2 HTTP11+관계13+가능표17 =41PASS/127.98초(일부중복, 합산안함). 원본 OpenAPI/main·실제API8000/개발DB0016은 유지하며 아직 통합 기능·Flutter 적용 완료가 아니다. 현재 커밋/Git·Issue 기록은 DEV_LOG 기준.
 
 ### 다음 담당·완료 조건 — Backend R3 일정/예약·확인·미래 주차
 
