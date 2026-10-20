@@ -1526,3 +1526,12 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 사용자최신회신확인지시로전체51개댓글을조회해 [51번째Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283811575)를확인했다. 두기술경계소비검토/제품결정완료와실제API/암호화/DBtransaction인수미완료를구분했다. 같은설계/제품재협의없이Backend정확한OpenAPI/통합구현으로진행하도록문서담당을전환했다.
 - 최종검색에기존raidIds/difficultyIds/정렬·자리필터대응및회원조건페이지전결합을보존하고필드/오류/권한·token/상한측정을구현계약과일치시킬잔여명세작업을NEXT_WORK에기록했다. 기존FlutterPendingRepository는미연결이며상시polling추가없음이다.
 - 이번은수신/단계기록이며Backend코드/OpenAPI/DDL·서버DB/자료변경·자동/실서버/기기시험없음. Flutter도문서예시검증/회신만수행한보고다. 반복접수댓글은추가하지않고후속구현계약/결과로인계한다.
+
+
+## 2026-10-20 — #13 R1-A 실제 원천/보존 이행 구현·52번째 결과
+
+- 사용자 진행 지시로51번째 완료 이후 원천모델 실제구현을 시작했다. 구현 전/결과기록 전 이슈전체51개/추가변경없음 확인, [전체52번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6284008917)로 실제첫구간 결과만기록했다. fdf2f58 로컬커밋·미push이며새API/Flutter테스트요청은아니다.
+- [구현기록](../ISSUE_13_R1_STORAGE_IMPLEMENTATION.md): 7개recruitment_*모델로지속membership/주차assignment·item/round·session/segment분리, 고정DDL0019추가이행/복합FK·unique/기간체크와readiness통합모드구현. 기존표/0017·0018/원장·신청/ACK를바꾸지않고ID/시각·기록시각/표시·빌드보존. 증명없는종료는legacy_ended·일정은legacy_review_required/예약없음으로가져왔다.
+- 실제격리PostgreSQL17/제한LOGIN에서0018→0019 및모든기존표의행/시각hash동일보존, 모델타입/null·복합관계/슬롯/기간거절rollback, 그룹연결공개·별개겹침표현, READONLY구조검사와기존준비/이행회귀 **33PASS/28.78초**. 초기DDL%이스케이프수정과fixture의존/활동·사용량CAS순서/PG타입비교를바로잡은후최종재실행통과. 기존라이브러리DeprecationWarning1건. 원본행/비밀값출력없음.
+- 검증전용tmpfs환경만생성/정리했고개발DB0016/API/이미지·자료/원본OpenAPI는변경하지않았다. 별도활동브랜치migration이0016까지임을확인해head충돌없음이다. 실제서버/외부provider·Flutter/기기시험은미실행.
+- R1-A만완료이며R1전체나정확한HTTP/통합완료로표시하지않는다. 다음Backend나머지원천/최근성공snapshot·개인표/관계원장·예약/투표/완료·권한/필터·명세를내부R1~R5로이어간다. 이전후보와새원천을섞어사용량을이중집계하거나부분활성화하지않는다. 소비가능구간commit/push/원격·API/DB준비확인후필요시험인계를한다.

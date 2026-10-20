@@ -1,6 +1,8 @@
 # #13 R1-A 통합 원천·보존 이행 구현
 
-2026-10-20 / feat/raid-recruitment / 기준 ef17b5a.
+2026-10-20 / feat/raid-recruitment / 기준 ef17b5a. 구현 fdf2f58 로컬 커밋·미push.
+
+공식 결과: [#13 전체52번째 Backend / R1-A 구현](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6284008917). 다음 Backend 후속 구현이며 Flutter 시험 요청은 없다.
 
 [Flutter 전체51번째 소비 대조 완료](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283811575) 이후 첫 구현 구간이다. **R1-A 저장 기반만 완료했으며 R1 전체/통합 모집/API·Flutter 적용 완료가 아니다.** 원본 OpenAPI와 실행 서버는 기존 API 그대로다. 이번에 서비스 경로/동작을 바꾸지 않아 새 API를 명세에 선공개하지 않았다.
 

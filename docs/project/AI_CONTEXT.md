@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+최신 구현: [#13 전체52번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6284008917) / [R1-A 원천·보존이행](../ISSUE_13_R1_STORAGE_IMPLEMENTATION.md) fdf2f58 로컬·미push. 7개모델/0019추가이행·기존전체자료/시각·표시빌드보존/제한계정·교차귀속/기간/슬롯/read-only준비검사등33PASS(28.78초). 다음Backend나머지원천/P1성공보존→개인표·관계원장/예약·투표·완료·필터/HTTP계약통합구현. R1전체/통합기능완료아님. 원본OpenAPI·실행API/개발DB0016·이미지/자료미변경, Flutter시험요청없음. NEXT_WORK기준.
+
 최신: [#13 Flutter전체51번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283811575)에서R4의두기술경계소비대조마감/제품결정완료. 다음Backend정확한OpenAPI·모델/이행·읽기쓰기통합구현/내부R1~R5검증이며같은설계재협의없음. 최종검색명세에기존raid/difficulty/정렬·자리필터대응과회원조건결합을보존하고상한은측정으로고정한다. 실제API/암호화/DB동시성인수·Flutter연결은미완료, NEXT_WORK기준.
 
 최신: [#13 전체50번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6283620362)에 [49번째 대응 기술 보완4판](../ISSUE_13_R0_TECHNICAL_BOUNDARIES_R4.md) d1bdb47 로컬·미push 전문/JSON8개 게시. 회원별캐릭터AND/OR·복수그룹동일회원/그룹연결·입장scope 분리와 권한내 영향context/타인원장CAS제거·N1확정을 반영했다. 다음Flutter두경계만재대조→정확한OpenAPI/구현계약동시고정·통합구현. 최종API인수/서버DB이행·Flutter연결은미완료, NEXT_WORK기준.
