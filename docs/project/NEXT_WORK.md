@@ -1,10 +1,10 @@
 # 다음 실행
 
-2026-10-20. 현재 **feat/raid-recruitment**, 최신 구현 **fbf1f2f 로컬 커밋·미push**. main77a1fe5/dev ce3064f 유지. 별도 활동 브랜치 feat/activity-selection/89a3248 보존. 미커밋 변경을 다른 브랜치로 옮기지 않는다.
+2026-10-20. 현재 **feat/raid-recruitment**, 최신 구현 **1a007eb 로컬 커밋·미push**. main77a1fe5/dev ce3064f 유지. 별도 활동 브랜치 feat/activity-selection/89a3248 보존. 미커밋 변경을 다른 브랜치로 옮기지 않는다.
 
 ## 현재 — #13 R2-A 개인 가능표·방 제출표 구현 / 다음 Backend R2-B
 
-[R2-A 구현기록](../ISSUE_13_R2A_AVAILABILITY_IMPLEMENTATION.md). 개인 가능표·방 제출표의 strict DTO/정규화·편집 원본 보존/변경 시에만 버전 증가·명시 snapshot 복사·세 CAS·원 ACK·권한/재가입 세대·읽기 무쓰기와 미활성 HTTP 4동작을 구현했다. 기존 R1-B/0020을 사용한다. [미활성 정확한 OpenAPI](../../openapi/recruitment-availability.draft.json)는 구현과 대조하며 원본 OpenAPI/main·API8000/개발DB0016은 그대로다. 구현·최종 검증/Git 상태는 DEV_LOG에 기록한다.
+[R2-A 구현기록](../ISSUE_13_R2A_AVAILABILITY_IMPLEMENTATION.md) **1a007eb 로컬·미push** / [전체54번째 Backend R2-A](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6284804193). 최종 **59 PASS / 66.32초**, 전용 tmpfs 정리 완료. 개인 가능표·방 제출표의 strict DTO/정규화·편집 원본 보존/변경 시에만 버전 증가·명시 snapshot 복사·세 CAS·원 ACK·권한/재가입 세대·읽기 무쓰기와 미활성 HTTP 4동작을 구현했다. 기존 R1-B/0020을 사용한다. [미활성 정확한 OpenAPI](../../openapi/recruitment-availability.draft.json)는 구현과 대조하며 원본 OpenAPI/main·API8000/개발DB0016은 그대로다. 구현·최종 검증/Git 상태는 DEV_LOG에 기록한다.
 
 ### 다음 담당·완료 조건 — Backend R2-B
 

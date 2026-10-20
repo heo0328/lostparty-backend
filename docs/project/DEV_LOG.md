@@ -1555,3 +1555,5 @@ NEXT_WORK는현재완료구간/실제확인/Flutter후속의다음실행중심,A
 - 개발 중 멱등 operation이 기존 varchar32를 넘겨 첫 HTTP 저장503을 발견하고 짧은 독립 operation 이름으로 수정했다. 추가 검증을 이전 실행과 겹쳐 임시 DB 초기화가 충돌한 setup 오류1회는 두 실행 종료 후 본 작업 소유 tmpfs DB만 재생성해 단일 최종 실행으로 해소했다. 실제 DB는 대상이 아니다.
 - 32KiB 내 compact32766bytes/분리519행의 DTO+정규화 500회 측정: median1.997ms/max20.181ms/출력519행. 구간 수 임의 상한 대신 streaming body32768bytes 제한과 정확 경계 HTTP 검증. 로컬 CPU 측정으로 실서버 부하/SLA를 보장하지 않는다.
 - 변경은 현재 목적 브랜치 로컬 커밋으로 보존하고 원격/Flutter 동작 시험 인계는 R5 준비 후 진행한다. R2-B·R3~R5/경고 표시·통합 활성화는 미완료이며 네이티브 회신 대기는 아니다.
+
+R2-A 구현 커밋 **1a007eb**, feat/raid-recruitment/로컬·미push. [전체54번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6284804193)와 본문 상단에 현재/다음 담당·미완료 범위를 반영했다. 네이티브 시험 요청 없음. 전용 lostparty-recruitment-r2test tmpfs 컨테이너/네트워크 정리 완료.
