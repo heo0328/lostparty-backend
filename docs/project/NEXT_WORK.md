@@ -2,7 +2,7 @@
 
 2026-10-21 / **feat/raid-recruitment**, W1/W2 `917123e`·W3 `13b655e` 완료·기존 실행 구현 cc003e9 계열.
 
-[전체84번째 Flutter · 계약 소비 검토 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6310097083) 기준 **계약0.4.1 / policy two-cycle-contract-4** 유지. [W1](../ISSUE_13_W1_CYCLE_FOUNDATION.md)·[W2-A](../ISSUE_13_W2_READ_SLICE.md)·[W2-B](../ISSUE_13_W2_CYCLE_ADMISSION.md)와 [W3 명시 N개방·참가·취소/위임](../ISSUE_13_W3_CYCLE_LIFECYCLE.md)는 로컬 구현·격리 검증 완료다. W1/W2는 `917123e`, W3는 `13b655e`로 관리하며 미push다. 다음은 **W4**다. 후보27경로/29동작은 main에 미등록이며 W4~W5·실제 서버 공개/Flutter 인수는 미완료다. [전체 작업계획](../ISSUE_13_TWO_CYCLE_WORK_PLAN.md) 기준.
+[전체84번째 Flutter · 계약 소비 검토 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6310097083) 기준 **계약0.4.1 / policy two-cycle-contract-4** 유지. [W1](../ISSUE_13_W1_CYCLE_FOUNDATION.md)·[W2-A](../ISSUE_13_W2_READ_SLICE.md)·[W2-B](../ISSUE_13_W2_CYCLE_ADMISSION.md)와 [W3 명시 N개방·참가·취소/위임](../ISSUE_13_W3_CYCLE_LIFECYCLE.md)는 로컬 구현·격리 검증 완료다. W1/W2는 `917123e`, W3는 `13b655e`로 관리한다. W4 준비 `e8deb02`까지 작업 브랜치 push·원격 SHA 일치를 확인했다. 다음은 **W4**다. 후보27경로/29동작은 main에 미등록이며 W4~W5·실제 서버 공개/Flutter 인수는 미완료다. [전체 작업계획](../ISSUE_13_TWO_CYCLE_WORK_PLAN.md) 기준.
 
 작업 구간 종료마다 검증·문서 갱신 후 커밋한다. push/PR/merge·배포는 기존 승인 범위를 따른다.
 
@@ -37,4 +37,4 @@
 - 별도 검증 이미지에서 FastAPI/원본 전체 일치와 DB0023 readiness 통과. 개발 서버/API 이미지·DB는 전환하지 않았다. 신규 v2 쓰기/target 목록·selector 의존·운영 성능·실회원·기기는 미검증이다. Flutter 인계 전 실제 준비 경로/실행 SHA·게시 상태를 확인한다.
 - W2-B: 후보17경로/19동작·0025 추가3표, C/N 단일 생성·초기순번/리더·원 ACK/롤백, target 검색·상세/개인계획·그룹 projection·본인/신청목록·일반 참가/승인·거절·철회. 신규35PASS 후 최종 조회 보완6PASS 재검증(중복), W1/W2-A·기존 생성/일정/계정·시각 회귀121PASS. 실제 lease 인원/정원·SQL 필터/정렬·T cursor/리더·private plan 권한 격리, N 복사일정 예약0 확인. 상세 증거/후속은 W2-B 문서 참조.
 - W3: 명시 N개방/재개+최초참가·C source 특례/대체/B보존·불참, N취소/자동승계·T직접위임·캐릭터교체·취소 후 재참가. 0026 추가2표/불변 결정·세대별 일정 연결, 원자 rollback·원ACK·C/이전세대 보존 검증. 실행 결과는 [W3 기록](../ISSUE_13_W3_CYCLE_LIFECYCLE.md) 참조.
-- W1/W2·W3는 완료 구간 로컬 커밋/미push. 0026까지 shadow head이며 현재 API/worker와 혼용 금지. W2-A 조회만으로 0024~26 이행은 필요 없다. main/OpenAPI116경로는 유지하고 신규 후보는 미등록했다. 설계 builder는 immutable cc003e9 baseline fallback/--base-openapi로 기존 hash를 재현한다. 완료 구간 커밋은 사용자 상시 지시로 수행한다. 새 Flutter 시험 요청/Issue 댓글·push·merge·배포는 없다.
+- W1/W2·W3와 W4 준비 커밋은 작업 브랜치에 push·원격 확인 완료. 0026까지 shadow head이며 현재 API/worker와 혼용 금지. W2-A 조회만으로 0024~26 이행은 필요 없다. main/OpenAPI116경로는 유지하고 신규 후보는 미등록했다. 설계 builder는 immutable cc003e9 baseline fallback/--base-openapi로 기존 hash를 재현한다. 완료 구간 커밋은 사용자 상시 지시로 수행한다. 새 Flutter 시험 요청/Issue 댓글·merge·배포는 없다. 소스 push와 실행 서버 활성화는 별도이며 다음 실행은 위 W4-A부터다.

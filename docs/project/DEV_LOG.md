@@ -1716,3 +1716,11 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - GitHub 연결 도구로 Issue #13 본문·전체84댓글을 재조회했다. 최신은 [전체84번째 Flutter · 계약 소비 검토 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6310097083) 그대로이며 새 요청/계약 변경은 없다. Issue 본문의 W1부터 준비 표시는 원격 구현 인계 전 상태이고 현재 로컬 W3 완료/미push 상태는 NEXT_WORK를 따른다. 내부 준비만 수행하므로 변화 없는 댓글은 게시하지 않았다.
 - NEXT_WORK에 W4-A target 제출표/일정·명시확인예약의 첫 코드 대조점·동의 구간/기존 UNIQUE 문제·보존/경합/원ACK·HTTP 검증 완료 조건을 구체화했다. W4-B 완료/정정·W4-C 공통/전역·W4-D worker/v1/legacy/summary 전환 순서와 미완료 상태를 유지한다. 기능 구현/이행은 이번 준비 범위에 포함하지 않는다.
 - 이번은 문서만 변경했으므로 서버/DB 테스트는 재실행하지 않았다. W3 검증 근거는13b655e의164PASS(신규30 포함)/고정 계약 통과 기록을 유지한다. 문서 링크·diff 공백·고정 계약 hash 불변을 확인하고 준비 문서 구간을 로컬 커밋한다. 이 항목의 커밋 SHA는 git log 기준이며 push/Flutter 인수·실제 서버 활성화는 미완료다.
+
+
+## 2026-10-21 — W1/W2·W3·W4 준비 커밋 push·다음 W4-A 준비 확인
+
+- 사용자 명시 push 요청에 따라 feat/raid-recruitment의 미게시917123e·13b655e·e8deb02를 push했다. 사전 fetch 후 로컬만3/원격만0을 확인했으며 force push/이력 재작성 없이 게시했다. 기본 HTTPS 자격증명 연결 부재로 첫 push는 실패했으나 기존 gh 인증을 명령 한정 credential helper로 연결해 성공했다. 인증정보를 문서/커밋에 포함하거나 Git 전역 설정을 변경하지 않았다.
+- 실제 원격 refs/heads/feat/raid-recruitment와 로컬 HEAD가 e8deb02b07d05b27bafd8bd83bd89eee4eed8e29로 일치함을 확인했다. NEXT_WORK/AI_CONTEXT/추적표/작업계획의 현재 미push 표시를 갱신하고 이 게시 기록도 별도 커밋·push한다. 이전 단계 당시 미push 기록은 이력으로 보존한다.
+- Issue #13 본문·전체84댓글을 재조회했다. 최신은 전체84번째 Flutter 계약 소비 검토 마감/동일0.4.1·policy4이며 새 요청은 없다. 다음 Backend는 NEXT_WORK의 W4-A target 제출표·일정·새 동의/명시 확인예약이다. 첫 검토점은 CycleSubmission 귀속 및 이전 해제 예약 UNIQUE/동의 구간 보존이며 이후 완료/공통관리·06worker/v1/legacy·summary 전환을 이어간다. 추가 제품 입력/Flutter 동일 계약 재검토는 선행 조건이 아니다.
+- 이번은 게시/준비 문서 작업으로 기능 코드를 바꾸거나 서버/DB 시험을 반복하지 않았다. W3의164PASS 및 고정 계약 검증 기록을 유지한다. 문서 링크·diff 공백 확인 후 게시하며 main/dev 병합·배포·실제 API/DB 이행·Flutter 시험 요청/Issue 댓글은 하지 않았다. 후보27경로29동작은 아직 main 미등록이다.

@@ -11,7 +11,7 @@
 - Backend와 Flutter가 독립 재현한 것은 **84개 합성 schema 사례·global CAS 출처6쌍·공통 설정 endpoint 흐름2개**다. 실행 API/DB·원자성·멱등저장소/성능·디바이스 인수는 별도 미완료다.
 - [W1 저장·참가자·공대장 기반](ISSUE_13_W1_CYCLE_FOUNDATION.md)은 로컬 구현·격리 PostgreSQL 검증 완료. W4~W5와 신규 v2 쓰기 API 공개는 미완료다. 기존 실행 구현은 cc003e9 계열이며 [원본 OpenAPI](../openapi/openapi.yaml)는 기존 실행 계약이다. 실제 개발 DB/API 이미지는 변경하지 않았다.
 - [W2-A 주차 메타·계정summary](ISSUE_13_W2_READ_SLICE.md) 두 경로를 main/실행원본에 추가하고 고유107사례/검증 이미지·DB0023 호환을 확인했다. 기존114경로/schema 변경0. 실제 서버 반영·선택기 전체 의존/인수는 미완료다. [W2-B](ISSUE_13_W2_CYCLE_ADMISSION.md) 생성·조회/일반 참가와 [W3](ISSUE_13_W3_CYCLE_LIFECYCLE.md) 명시 N개방/참가·취소/위임도 로컬 구현·격리 검증 완료다. 후보27경로/29동작은 main에 미등록이다. 다음은 W4다.
-- W1/W2는 `917123e`, W3는 이 기록을 포함한 완료 구간 로컬 커밋으로 관리한다. 미push이며 실제 서버/DB 이행·Flutter 인수는 미완료다. 구 API/worker는0023만 활성화하며 shadow0024~0026과 혼용하지 않는다.
+- W1/W2는 `917123e`, W3는 `13b655e`로 관리한다. W4 준비 `e8deb02`까지 작업 브랜치 push·원격 확인 완료이며 실제 서버/DB 이행·Flutter 인수는 미완료다. 구 API/worker는0023만 활성화하며 shadow0024~0026과 혼용하지 않는다.
 
 ## 구현 순서와 완료 조건
 
