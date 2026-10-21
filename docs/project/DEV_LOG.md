@@ -1770,3 +1770,8 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - UI 중단 뒤 변경27파일은 staged 상태로 보존됐고 원격/HEAD 차이0·충돌 없음을 확인했다. 이전 pytest 프로세스는 종료됐으나 최종 출력/종료 코드는 유실되어 통과로 추정하지 않고 같은10파일 묶음을 로그/종료 코드 파일에 저장하며 재실행했다. 최종 **132PASS/1081.82초**(신규26 포함), 예비 실행 중복 합산 없음. 기존 BlockingPortal deprecation 외 실패 없음.
 - 고정 계약/DTO SHA 불변·변경 Python AST·문서 링크·staged diff 검사를 통과했다. 이전에 확인한84합성/CAS6쌍/공통ACK2흐름·실행원본116경로 전체 일치와 후보42경로/45동작 미등록을 유지한다.
 - 실제 개발 DB/API 이미지·서버는 전환하지 않았고 전용 lostparty-w4b-runner 및 lostparty-w4b-test tmpfs 시험 DB만 정리했다. Issue 최신 전체86번째 Backend A2 이후 추가 요청/계약 변경은 없었다. 검증 구간을 feat/raid-recruitment에 commit/push·원격 SHA 확인 후 같은 Issue에 결과를 게시한다. 다음 Backend W4-C의 T 관리4/G1 공통·전역4동작, W4-D legacy 함께하기 조회1동작과 worker/v1/summary·W5는 미완료다.
+
+## 2026-10-22 — #13 W4-B 게시·다음 W4-C 인계
+
+- 구현 `0d8b58111356b69d817b23b154a56efb64c974f9`를 feat/raid-recruitment에 commit/push하고 원격 브랜치 SHA 일치를 확인했다. [전체87번째 Backend · W4-B 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6319271776)를 게시한 뒤 전체 댓글을 재조회하여 본문 제외 실제 작성 순번87·Backend 작성 측·W4-B 단계를 확인했다. 다음 담당 Backend W4-C이며 W4-B 소스/격리 자동 검증 완료와 전체 W4·실제 서버/Flutter 미완료를 구분했다.
+- 기존 GitHub 앱 도구가 제공되지 않아 인증된 gh CLI로 같은 공식 Issue를 갱신했다. 본문 상단을 W4-B 완료/다음 W4-C로 갱신하고 이전 본문/이력을 보존했음을 재조회했다. 이번 문서 후속에는 코드 변경이 없어 기능 시험/DB·서버 재실행 없이 링크·diff 검사 후 별도 commit/push한다.

@@ -2,9 +2,9 @@
 
 2026-10-22 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13).
 
-W1/W2 `917123e`·W3 `13b655e`·W4-A1 `6d2b301`·W4-A2 `88583a9`와 게시 기록 `ef25c38`까지 push/원격 확인 완료. [W4-B 완료·정정·현재주 재개](../ISSUE_13_W4B_CYCLE_OUTCOMES.md)는 구현·격리 검증 완료(**132PASS/1081.82초**, 신규26 포함), 구간 commit/push·공식 Issue 게시를 마무리한다. 다음 실행은 아래 W4-C이며 중간12/18/6PASS는 최종 고유 통계에 합산하지 않는다.
+W1/W2 `917123e`·W3 `13b655e`·W4-A1 `6d2b301`·W4-A2 `88583a9`와 게시 기록 `ef25c38`까지 push/원격 확인 완료. [W4-B 완료·정정·현재주 재개](../ISSUE_13_W4B_CYCLE_OUTCOMES.md)는 구현·격리 검증 완료(**132PASS/1081.82초**, 신규26 포함), 구현 `0d8b58111356b69d817b23b154a56efb64c974f9` commit/push·실제 원격 SHA 확인·[전체87번째 Backend · W4-B 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6319271776) 게시 완료. 다음 실행은 아래 W4-C이며 중간12/18/6PASS는 최종 고유 통계에 합산하지 않는다.
 
-착수/인계 시 AGENTS → 협업 규칙 → 이 문서 → AI_CONTEXT → 계약4판/ACK 보완을 읽고 Issue 본문/최신 댓글·Git/코드를 확인한다. 최신 조회는 [전체86번째 Backend · W4-A2 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6316089641)이며 새 Flutter 요청·계약 변경은 없다. 계약0.4.1/policy two-cycle-contract-4 고정이고 추가 제품 입력/동일 계약 재검토 대기는 없다. 사용자 지시대로 작업 구간 종료마다 검증·문서 갱신·commit/push·GitHub 기록을 한다.
+착수/인계 시 AGENTS → 협업 규칙 → 이 문서 → AI_CONTEXT → 계약4판/ACK 보완을 읽고 Issue 본문/최신 댓글·Git/코드를 확인한다. 최신 게시/조회는 [전체87번째 Backend · W4-B 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6319271776)이며 새 Flutter 요청·계약 변경은 없다. 계약0.4.1/policy two-cycle-contract-4 고정이고 추가 제품 입력/동일 계약 재검토 대기는 없다. 사용자 지시대로 작업 구간 종료마다 검증·문서 갱신·commit/push·GitHub 기록을 한다.
 
 ## 다음 W4-C — T 관리와 G1 공통/전역
 

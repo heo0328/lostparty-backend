@@ -1,6 +1,6 @@
 # Issue #13 W4-B — 현재주 완료·정정·명시 재개
 
-2026-10-22 / `feat/raid-recruitment` / 시작 `ef25c38` / 구현·격리 검증 완료, 구간 commit/push·공식 Issue 게시 예정.
+2026-10-22 / `feat/raid-recruitment` / 시작 `ef25c38` / 구현·격리 검증 완료, 구현 `0d8b58111356b69d817b23b154a56efb64c974f9` commit/push·실제 원격 SHA 확인·[전체87번째 Backend · W4-B 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6319271776) 게시 완료.
 
 기준은 [전체86번째 Backend · W4-A2](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6316089641), [계약4판](ISSUE_13_TWO_CYCLE_CONTRACT_R4.md)·[ACK 보완](ISSUE_13_COMMON_SETTINGS_ACK_ADDENDUM.md), 고정 전체 명세0.4.1/policy two-cycle-contract-4다. 사용한도 때문에 중단된 로컬 변경과 전용 검증 컨테이너를 보존한 채 이어서 진행했다. 재개 시 Issue 본문·전체86댓글을 다시 확인했고 새 요청/계약 변경은 없다.
 
