@@ -2,9 +2,9 @@
 
 2026-10-21 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13).
 
-W1/W2 `917123e`·W3 `13b655e`·[W4-A1](../ISSUE_13_W4A1_SUBMISSION_CONSENT.md) `6d2b301`의 구현/검증·push를 완료했다. 이번 [W4-A2 일정 조율·제안/투표](../ISSUE_13_W4A2_CYCLE_PLANNING.md)까지 구현·격리 검증하고 구간 commit/push·원격 확인 후 공식 Issue에 기록한다. 게시 SHA/댓글은 해당 기록·DEV_LOG를 따른다. 다음은 **Backend W4-B 완료/정정·현재주 재개**다.
+W1/W2 `917123e`·W3 `13b655e`·[W4-A1](../ISSUE_13_W4A1_SUBMISSION_CONSENT.md) `6d2b301`의 구현/검증·push를 완료했다. [W4-A2 일정 조율·제안/투표](../ISSUE_13_W4A2_CYCLE_PLANNING.md) `88583a9`까지 구현·격리 검증(신규31/회귀218·고유249 분리 실행)·구간 commit/push·실제 원격 SHA 일치를 확인했다. [전체86번째 Backend · W4-A2 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6316089641)에 게시했고 Issue 상단 현재 상태도 갱신했다. 다음은 **Backend W4-B 완료/정정·현재주 재개**다.
 
-작업 시작 시 AGENTS → 협업 규칙 → 이 문서 → AI_CONTEXT → 관련 계약을 읽고 Issue 본문/최신 댓글과 Git·코드를 대조한다. 최신 확인 댓글은 [전체85번째 Backend · W4-A1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6314976554)이며 계약0.4.1/policy two-cycle-contract-4 고정이다. 추가 제품 입력·Flutter의 동일 계약 재검토 대기는 없다. 사용자 지시로 섹션 완료마다 검증·문서 갱신·commit/push·GitHub 기록을 수행한다.
+작업 시작 시 AGENTS → 협업 규칙 → 이 문서 → AI_CONTEXT → 관련 계약을 읽고 Issue 본문/최신 댓글과 Git·코드를 대조한다. 최신 확인 댓글은 [전체86번째 Backend · W4-A2 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6316089641)이며 계약0.4.1/policy two-cycle-contract-4 고정이다. 추가 제품 입력·Flutter의 동일 계약 재검토 대기는 없다. 사용자 지시로 섹션 완료마다 검증·문서 갱신·commit/push·GitHub 기록을 수행한다.
 
 ## 다음 W4-B 작업
 

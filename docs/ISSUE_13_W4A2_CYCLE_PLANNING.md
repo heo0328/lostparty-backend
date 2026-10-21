@@ -41,3 +41,7 @@ shadow `0028_cycle_planning`은 불변 제안 귀속/내용·CM revision별 표�
 다음 Backend는 **W4-B 완료/정정·현재주 재개**다. item별 완료/남은 예약의 정확 귀속 해제·C 수요일10시 이후 권한, 완료 없이 현재주 전체 미완료 종료·정정/반복 재개와 이전 세대 보존을 구현한다. 이후 W4-C G1 공통/전역 관계 → W4-D 06worker/v1·legacy/declined summary·활성화 검증 → W5 통합/성능·실제 인계다. 같은 계약 재검토나 새 제품 입력은 선행 조건이 아니다.
 
 이번 구간의 구현/검증·commit/push/원격 확인을 공식 Issue에 기록한다. 후보 미등록 상태이므로 새 Flutter 서버 시험을 요청하지 않는다. W4-A1/A2 소스 완료와 W4 전체·실제 서버 공개·Flutter 인수는 구별한다.
+
+## 소스 게시와 공식 기록
+
+구현 `88583a9b8147ce09c0d730e77859f004869ab468`를 `feat/raid-recruitment`에 commit/push하고 실제 원격 SHA 일치를 확인했다. [전체86번째 Backend · W4-A2 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6316089641)를 게시한 뒤 전체86댓글에서 실제 작성 순서·작성 측/단계·원문 일치를 재확인했다. Issue 본문 상단도 W4-A2 완료/다음 Backend W4-B로 갱신하고 이전 원문/이력 보존을 확인했다. 기존 연결 앱의 쓰기 권한 제한으로 인증된 gh CLI를 사용했다. 새 Flutter 시험·Issue 종료·merge/배포·실제 DB 이행은 하지 않았다. 이 게시 링크/다음 작업 기록도 후속 문서 커밋으로 push한다.
