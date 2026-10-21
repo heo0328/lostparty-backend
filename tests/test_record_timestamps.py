@@ -10,8 +10,12 @@ from app.core.database import engine, session
 def test_all_application_tables_have_database_clocks():
     with engine().connect() as c:
         schema = inspect(c)
-        assert set(Base.metadata.tables) == set(schema.get_table_names()) - {'alembic_version'}
-        for table in Base.metadata.tables:
+        from app.raid_rooms.cycle_models import CYCLE_MODELS
+        from app.raid_rooms.cycle_application_models import CYCLE_ADMISSION_MODELS
+        staged = {m.__tablename__ for m in CYCLE_MODELS+CYCLE_ADMISSION_MODELS}
+        runtime_tables = set(Base.metadata.tables) - staged
+        assert runtime_tables == set(schema.get_table_names()) - {'alembic_version'}
+        for table in runtime_tables:
             columns = {v['name']: v for v in schema.get_columns(table)}
             for name in ('record_created_at', 'record_updated_at'):
                 assert columns[name]['type'].timezone

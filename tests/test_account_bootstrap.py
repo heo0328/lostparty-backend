@@ -6,7 +6,7 @@ from datetime import datetime, timezone, date, timedelta
 from threading import Event
 
 import pytest
-from sqlalchemy import select, text, event, insert, delete
+from sqlalchemy import select, text, event, insert, delete, inspect
 
 from app.core.database import session, engine, now
 from app.game_accounts import bootstrap
@@ -32,10 +32,10 @@ def selected(client, world):
 
 
 def fingerprints():
-    from app.auth.models import Base
     with engine().connect() as c:
         return {t:c.scalar(text('SELECT md5(COALESCE(string_agg(h,\'\' ORDER BY h),\'\')) FROM '
-            '(SELECT md5(to_jsonb(t)::text) h FROM "'+t+'" t) s')) for t in Base.metadata.tables}
+            '(SELECT md5(to_jsonb(t)::text) h FROM "'+t+'" t) s'))
+            for t in inspect(c).get_table_names() if t != 'alembic_version'}
 
 
 def test_empty_strict_auth_and_no_implicit_rows(client, login):

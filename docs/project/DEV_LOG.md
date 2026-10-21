@@ -1600,3 +1600,98 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 검색보완 로컬8000새이미지healthy·실행OpenAPI전체일치, 새sort/remaining_slot_counts POST읽기200/no-store/실제방0, DB0023유지. 이 변경의 실회원 쓰기·provider·migration·실기기시험없음. 관련5PASS·실행대조후네이티브회신용커밋/게시한다.
 
 게시확인: 검색보완cc003e94996bb4e2fdaef6911df24d055ae831b8 push·원격동일SHA, [전체61번째 Backend·검색보완/개인표수신답변](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6291232832) 게시·본문상단갱신·전체댓글순번실조회. 59번째입력공백과Backend후속wire는처리완료, 다음Flutter적용/수동확인·사용SHA/범위회신. 실기기/실회원인수는별도미확인.
+
+
+## 2026-10-21 — #13 이번 주·다음 주/함께하기 즉시참가 설계1판
+
+- Flutter 전체70/71/72번째의 actual C/N선택·완료수10시·기존인원 즉시확정/대체캐릭터·충돌B보존/원자이동제외를 모델/서비스·원본OpenAPI와 대조. #19전체1번째 미확정통계도 읽기확인.
+- [설계](../ISSUE_13_TWO_CYCLE_DESIGN.md), [core 명세](../design/issue13-two-cycle.openapi.json): RoomCycle/주차제출표·참가구간원천, 전역/회차권한·legacy보존·한도/통계구분·측정·W0~W5를 정리. v2는 기술제안이고 원본 계약 확정/전체 schema 구현 아님.
+- [전체73번째 Backend 설계 회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6296309772)에 설계와core JSON전문 게시/실제순번 조회. 다음Flutter소비대조, Backend회신후기술보완/전체DTO·보존이행상세고정. 이슈본문상단·NEXT_WORK/AI_CONTEXT/추적표도 최신화.
+- JSON parse/내부ref해석·27schema JSON Schema2020-12 메타검증·7operationID/path필수검증 통과. 최초 원본 Target schema명 충돌(alias명)을 실제 Admission ref로 고쳐 생성완료. OpenAPI전용validator 미설치로 미실행. 기능/DB/실서버/성능시험 아님.
+- feat/raid-recruitment/기존HEAD6490f69 보존, 문서만 미커밋·미push. 실제 코드·원본OpenAPI/DB·이미지/자료·다른이슈 변경/merge·배포·실회원쓰기 없음.
+
+
+## 2026-10-21 — #13 주차별 공대장·승계 설계2판
+
+- 전체74/75최신회신조회,실제globalleader/transfer/drop_membership·권한/일정참가확인소스대조. 기존1판전역공대장/빈N/전역승계가정을 [보완2판](../ISSUE_13_TWO_CYCLE_LEADERSHIP_R2.md)으로대체. 기존사용자변경·1판기록보존.
+- T리더/순서원천·개방+최초참가원자명령·자동승계/직접위임/취소CAS·C보존·자리projection/충돌제목/소스상태·확인예약분리정리. L1마지막N후재개/한도,G1~G3공통권한,A1명시개방우선/OFF기존특례범위는제안이며제품확정아님.
+- core JSON 11경로/39schema parse·내부ref·JSON Schema2020-12메타/operation중복0검사통과,문서공백검사. 기능/DB·성능·정식OpenAPIvalidator/실행비교는미실행. 원본OpenAPI·코드·서버DB/이미지/자료변경없음.
+- [전체76번째 Backend 보완설계회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6307589155)에본문/정확한core변경분전문게시·실제순번/원격내용확인. 다음Flutter소비대조·제품결정→Backend전체DTO/보존이행·계약고정/W1~W5. 문서로컬미커밋/미push,merge·배포·실회원시험요청없음。
+
+
+## 2026-10-21 — #13 L1/G1/A1 확정 반영·전체 계약 후보3판
+
+- Flutter전체77기술보완/78제품확정조회. L1핵심·G1·A1/OFF범위의정책대기는해소,별도방관계종료UX/통계정책확정으로확대하지않음. 기존문서변경보존.
+- [계약3판](../ISSUE_13_TWO_CYCLE_CONTRACT_R3.md): joined_order 1..signedbigintmax의십진string·schema상한,prospectiveRoomCycle/roundUUID·초기round1·실제대상weeklyrevision/재개r→r+1예시,leadership/target CAS·private권한/자리history·G1context와전체경로명세. 개방이력의generation별unique/FK와T목록head이행도정리.
+- 전체후보53경로56operation196schema/재현도구·예시·경로표작성. 기존core2는입력으로보존. 미구현전체v2를runtime원본으로게시하지않고원본OpenAPI는현재실행계약으로그대로유지. 새생성v2는continuationfalse/C생성ACK후명시N개방으로분리한소비차이를분명히인계.
+- JSON/schema196메타·전체ref·56operation/path/query/멱등·정밀도/unknown/필수입력포함16합성schema예시PASS,결정적재생성동일PASS. 원격73+76에서core2재구성/로컬동일PASS. 초기생성중기존MyMembership/Continuation의실제Pydantic별칭을원본ref에맞춰수정. 정식OpenAPIvalidator미설치/실행FastAPI전체대조·HTTP/DB/성능·실회원/기기시험미실행.
+- [전체79번째 Backend 계약인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6308319220)에본문/전체경로표/입력SHA검사포함재현도구·예시전문게시,실제순번/원격본문과도구동일확인. 다음Flutter전체DTO소비대조→Backend필요보완/구현계약고정. 설계고정후W1~W5와실서버준비는별도.
+- feat/raid-recruitment HEAD6490f69유지/문서·명세도구미커밋·미push,앱/원본OpenAPI·DB/이미지/실제자료변경없음. commit/push·merge·배포/새실회원시험요청안함.
+
+
+## 2026-10-21 — #13 Flutter80 네 요청·계약 보완4판
+
+- 실제80번째최신댓글조회/3판title모순·globalCAS출처/생성checkbox차이·숙련도검색누락대조. [4판](../ISSUE_13_TWO_CYCLE_CONTRACT_R4.md) 작성,기존승인checkbox를단일C/N원자생성으로보존. 생성후사용자재활성화강제철회. N선택은N만/C+14없음·N실패전체rollback/원키ACK복구 명세. L1/G1/A1재질문없음.
+- clean을schema위치만방문하도록수정해properties.title/default/description·instance default/examples보존. 전체닫힌object의required-property일치검사추가:3판모순3건재현/4판0건. GlobalMembershipCommand는currentC/room/persistentCAS/token네필드만·GlobalScope/ACK,source6쌍확인. 경험OR/[]no-filter/unrestricted=저장null·GET배열/POST·SQL전페이지/cursor명세추가.
+- full53경로56operation202schema·70개합성schema사례·메타/ref/필수속성/경로·헤더·clean회귀/재현동일성PASS. 실제서버/DB/HTTP·성능·권한경합시험아님. 정식OpenAPIvalidator미실행. 원격73/76core+79예시16개·cc003e9원본만둔격리폴더에서full/70예시재현·검증·canonical로컬동일PASS. generator UTF8/이식가능route-map경로정리.
+- [전체81번째 Backend 보완인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6309446458)에본문/명세builder·예시builder·validator전문게시,실제댓글순번·원격본문/3도구일치확인. 다음Flutter네항목소비재대조→Backend잔여wire보완/구현계약W1~W5. schema예시의거절·transaction설명은실제구현PASS로확대하지않음.
+- feat/raid-recruitment HEAD6490f69보존/문서도구미커밋·미push,앱·runtime원본OpenAPI/DB·이미지/실제자료·다른이슈변경없음. commit/push/merge·배포/실회원반복시험요청없음.
+
+
+## 2026-10-21 — #13 공통 설정 ACK 보완/네이티브 인계
+
+2026-10-21 / feat/raid-recruitment / HEAD6490f69·실행 구현 cc003e9 계열. Flutter82에서 기존 네 항목 검토 완료, 잔여 common-settings ACK를 [보완안](../ISSUE_13_COMMON_SETTINGS_ACK_ADDENDUM.md)·[전체83번째 Backend 회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6310051618)으로 회신했다. GlobalScope+CommonSettingsAck/성공후room revision·실제영향주차, C/N공존·N만존재 endpoint흐름2개, 전체53경로56동작204schema·84합성사례/기존CAS6쌍 검증·격리재현 통과. 다음Flutter는 ACK 한 항목만 재대조, Backend는 잔여충돌 확인후 계약고정/W1~W5. 문서도구미커밋/미push,새v2미구현·원본OpenAPI/앱/서버DB·자료불변.
+
+- 검증: jsonschema 메타/내부ref/닫힌객체정합성·84사례·global CAS6쌍·실제경로context/request/200흐름2개 통과. 기존81도구에 게시한 patch를 적용한 격리재현 결과 전체명세/예시 동일. 이전후보 비교에서 기존schema 변경0, 공통설정PUT한곳·schema2개추가·info.version만 변경. 3판baseline의모순3건도재현,현재0. git diff --check 통과.
+- 원ACK replay는값동일성/schema만확인. 실제명령실행/FastAPI대조·HTTP·DB경합/성능·실회원/기기미실행. 계약최종확정/구현·운영완료로표시하지않음.
+
+
+## 2026-10-21 — #13 계약 소비 검토 마감 반영·W1~W5 문서 최신화
+
+- [전체84번째 Flutter · 계약 소비 검토 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6310097083) 확인. 네이티브는83번째 도구/명세를 독립 재현하고 마지막 공통설정 ACK와 전체 소비검토를 마감했다. 남은 충돌/동일정책 재결정 대기 없음. 계약0.4.1/policy two-cycle-contract-4를 구현기준으로 고정한다.
+- [구현작업계획](../ISSUE_13_TWO_CYCLE_WORK_PLAN.md)에 W1~W5 범위·의존/완료조건·W1 착수절차·Flutter 첫소비구간·인계조건을 정리했다. NEXT_WORK/AI_CONTEXT/ISSUE_TRACKER와 기존설계 첫머리를 최신화했다. 구판의검토대기·전역leader·빈N/매주자동개방 가정은 현행 작업 지시가 아니다.
+- Git HEAD6490f69/feat/raid-recruitment·실행cc003e9계열 유지. 문서·도구 미커밋/미push 및 기존변경 보존. 이번은 문서만변경, 실제W1코드/DDL·원본OpenAPI/서버DB/자료·배포 없음. 기능시험 미실행. 문서링크·JSON기준hash·diff공백검사를 수행한다.
+
+## 2026-10-21 — #13 W1 주차별 저장·참가자·공대장 기반
+
+- 사용자 구현 진행 지시에 따라 Issue 본문과 전체84번째 Flutter 회신을 재조회했다. 총84댓글/소비충돌 없음·0.4.1/policy4 고정 유지. 기존 통합 모델·0019~0023·실제 main 연결/원장·멱등·continuation/worker를 대조하고 [W1 구현 기록](../ISSUE_13_W1_CYCLE_FOUNDATION.md)을 작성했다.
+- `0024_recruitment_cycles`: frozen additive DDL 10표, RoomCycle/세대·공대장/순번·실제 참가자·Round/Assignment 복합 FK·주차별 목록 head/제출표·불변 개방/참가/legacy 분류 원천. 기존 표는 구조/내용을 바꾸지 않는다. 실제 Round FK로 주차만 분류하며 미상 세대/리더/순번/설정/동의를 현재값이나1로 채우지 않는다. 빈/잘못된 신청·혼합 session은 review로 보존, N 자동복사/자동참가0.
+- `cycles.py`: 명시 C/N target resolver·G1 C우선/존재하지 않을 때만 N·06시/10시 guard, 실제 전체 bundle/원장 lease 확인 후 순번·실제 참가·Assignment binding/이벤트 원자 기록, bigint 최대값 후 고갈 거절·재참가 구간 보존, 기존 durable reserve/commit_result를 재사용하는 v2 명령 기반. 상위 입장/소유/한도/인증 검증과 실제 HTTP는 W2 이후다.
+- readiness의 shadow schema 대조와 이전 `process_due`/`process_room` 차단을 추가했다. `require_active`는 실행0023만 허용한다. W1의0024만 실제 DB에 적용하면 이전 API/worker가 거절하므로 신규 worker/v1 adapter·검토자료 이행과 함께 전환해야 한다. 기존 HTTP fixture는0023, 신규 보존 이행은 별도 임시 DB0024를 검증한다. 날짜 표 검사도 이 경계를 명시했다.
+- 검증 환경: Docker Desktop 엔진 중지 확인 후 시작, 별도 `lostparty-w1-test` tmpfs PostgreSQL과 기존 테스트 이미지의 `lostparty-w1-runner`를 사용했다. 개발 DB/API 이미지 재생성·migration·실회원/provider/기기 시험은 수행하지 않았다. 제한 LOGIN의 실제 PostgreSQL0023→0024에서 기존 모든 표/열(기록시각 포함) SHA 지문 보존을 확인했다.
+- 초기21PASS/78.76초는 중복. 복합 FK·혼합자료/재참가/rollback 보완 후 관련 실행56PASS/1FAIL/252.19초. 실패 원인은 재사용 컨테이너에 남은 구 OpenAPI 파일이었다. 저장소 `openapi/`를 동기화했고, 목록 head의 오래된 ORM 캐시 방지·실제 리더 변경 후 원ACK 복구 시험도 보완했다. 실패 항목/나머지 admission/날짜표/영향W1 재검증17PASS/92.67초(중복10), 고유63사례(W1 26+회귀37) 모두 통과 확인. 단일 전체63 실행이나 기능 전체 통과로 확대하지 않는다. 실제 소스 FastAPI/원본OpenAPI 비교도 재검증 통과. 기존 BlockingPortal deprecation warning1 외 신규 경고 없음.
+- `git diff --check`·신규 Python AST/문서 링크 확인. 기존 미커밋 사용자 문서/도구를 보존하고 NEXT_WORK/작업계획/기능지도/추적표의 다음 작업을 W2로 갱신했다. HEAD6490f69/feat/raid-recruitment 유지, W1코드·문서 모두 미커밋·미push. 원본OpenAPI/실제개발자료·main/dev·다른브랜치 변경 없음.
+- 다음 Backend: W2 주차메타/actualcycle·계정summary/선택기부터 조회·검색·생성·일반참가. 실제 서버 소비 가능 구간과 보존/전환 검증이 갖춰진 뒤 게시/원격확인·Issue 인계한다. 이번 W1은 내부 기반이므로 새 댓글·Flutter 구현 테스트 요청은 하지 않았다. 실서버/신규 v2·성능·기기/운영 인수는 미완료다.
+- 검증 종료 후 이번에 생성한 `lostparty-w1-runner`와 `lostparty-w1-test` 테스트 DB 컨테이너/전용 네트워크만 정리했다. 개발 컨테이너·DB 볼륨·기존 기기/Firebase 자료는 정리 대상에 포함하지 않았다.
+
+## 2026-10-21 — #13 W2-A 주차 메타·계정 주간summary
+
+- 사용자 후속 진행 지시에 따라 시작 문서·W1/작업계획/계약을 읽고 Issue #13 본문·최신 회신을 재조회했다. 총84댓글/동일0.4.1/policy4, 새 회신/정책 결정 대기 없음. W2의 첫 작은 소비 구간인 메타·summary를 먼저 구현했다. [W2-A 기록](../ISSUE_13_W2_READ_SLICE.md) 기준이며 W2 전체를 완료로 표기하지 않는다.
+- `weekly_summary.py`/DTO/router를 main에 연결: GET /v2/raid-cycles·POST /v2/me/raid-weekly-summary. 두 경로 모두 인증/READ ONLY/RR·no-store. 본인 소유 인증50캐릭터/두 actual target/500entry, 고정 batch SQL·전체403·원장/lease/실 Assignment·과거 의사 분리·완료 source/시간 권한/next_change_at·제목 공개 범위를 구현했다. DB0023에서 조회 가능하고 0024 표를 조회/생성하거나 기본 주간행/설정·멱등·예약을 쓰지 않는다.
+- 실행원본OpenAPI에 구현한2경로·10schema만 추가, 기존114경로와 기존 모든schema 변경0/현재116경로. 합의 명세 ref확장/annotation 제외 구조·필수·제약 대조 및 FastAPI 전체 비교. 설계 builder는 현재 runtime을 변경된 설계 입력으로 쓰지 않도록 pinned cc003e9 Git baseline fallback/--base-openapi를 추가했다. 설계 재생성53/56/204와 canonical fb4c7d065594a9a0e7e8288e5f73179f90b078b68ac4323d1aade5c7a63b42f1 불변.
+- 초기28PASS/1FAIL/22.21초: schema 비교에서 Permission.next_change_at 필수·revision 상한 누락이 드러나 DTO/응답을 수정했다. 비교기를 완화해 차이를 숨기지 않았다. 보완 후 신규29+기존 주간원장/첫화면/모집회원조회/기록시각74 총103PASS/108.10초. 추가 RR 동시 탈퇴·disabled/revoked3PASS/6.09초, 고유106사례 통과 확인. 단일 전체106 실행 결과나 W2 전체/실회원 인수로 확대하지 않는다.
+- 합성50캐릭터×C/N×5raid=500항목의 측정 재실행1PASS/5.15초는 중복. 응답287861bytes, 고정시각 내부 서비스 SELECT9회(1캐릭터와 동일), HTTP 인증과 실제 server_now SQL은 측정 범위 밖. 운영 latency/p50/p95/비용은 미측정이다. 기존 실제 테스트 표 전체 지문·원장/설정 보존, provider/키 금지·엄격 입력·당사자/회원/권한 격리·경계/과거 의사와실참가 분리 검증.
+- W1 모델이 main import에 포함되는 상태에서 bootstrap 보존 도구가 미적용 shadow 표를 조회하지 않도록 실제 runtime 표를 inspect하도록 보완했다. 기존 runtime 모든 표/열 검사는 유지했고 bootstrap 회귀가 통과했다.
+- 별도 lostparty-w2-test tmpfs PostgreSQL/기존 테스트이미지 runner로 검증했다. 현재 app/alembic/원본만 담은 독립 `lostparty-w2-read-api` 이미지를 빌드해 이미지 자체의 FastAPI/원본 전체116경로 일치와 격리DB0023 readiness 통과 확인. 개발 이미지 태그/서버·DB migration 전환, 실회원/provider·Flutter/기기는 미실행. 기존 BlockingPortal deprecation warning1 외 신규 경고 없음.
+- NEXT_WORK/작업계획/AI_CONTEXT/추적표를 다음 W2-B로 갱신했다. HEAD6490f69/feat/raid-recruitment·기존 미커밋 사용자 문서/도구/W1을 보존했다. W1/W2-A 코드·문서 모두 미커밋·미push, main/dev·다른브랜치·실제 개발자료 변경 없음. 실제 소비 가능 경로/선택기 의존/서버·게시가 준비되기 전이므로 새 Issue 댓글/Flutter 시험·재계약 검토를 요청하지 않았다.
+- 다음 Backend: W2-B 생성context·C/N 원자생성/target 목록·검색/detail/plan/일반 신청·승인·직접참가. W2-A 구현과 실제 서버/Flutter 인수를 구별하고, 준비된 구간의 게시·원격확인 후 인계 규칙을 유지한다.
+- 최종 검토에서 원장 active_party·활성 Assignment/실제lease 조건을 SQL에 결합해 같은 주차의 종료 세대 이력을 읽지 않도록 보완했다. 종료 세대25개/현재source1개 시험 추가·신규 조회 전체33PASS/20.27초(중복32/추가1), 최종 고유107사례(신규33+회귀74) 통과 확인. 해당 소스까지 검증 이미지를 재빌드했다.
+- 최종 이미지의116경로 계약 일치/DB0023 readiness를 다시 확인했다. AST/문서링크/공백 검사 통과 후 이번 `lostparty-w2-runner`·`lostparty-w2-test` tmpfs DB/전용 네트워크만 정리했다. 개발 컨테이너/DB 볼륨은 정리 대상이 아니다. 검증 이미지는 로컬 캐시로 보존했다.
+
+## 2026-10-21 — W2-B 주차별 생성·조회·일반 참가 후보 구현
+
+- 사용자 다음 작업 지시에 따라 AGENTS→협업/NEXT_WORK/AI_CONTEXT→계약4판·Git·Issue #13 본문/전체84번째 Flutter 최신댓글을 확인했다. 기준0.4.1/policy4·53경로/56동작/204schema hash 유지, 브랜치 feat/raid-recruitment·HEAD6490f69 및 기존 미커밋 변경을 보존했다. 별도 제품결정/동일 계약 재검토를 요청하지 않았다.
+- 0025_cycle_admissions 추가3표로 T/generation 신청 pending 유일성·정확한 Session/Segment 복합 FK/DB 시각을 추가했다. 기존 표/구 신청/동의 원천은 변경하지 않고 readiness의 shadow 인식만 확장했으며 구 API/worker는0023만 활성 허용한다. cycles.execute에는 마지막 마감 재검사용 optional callback을 연결하고 원ACK 우선/원자 rollback을 유지했다.
+- W2-B 후보17경로19동작: 예정ID·C/N 사전검토/단일원자생성·대체N캐릭터·T 기간스냅샷·N복사일정 pending/예약0, target 목록/SQL 숙련도OR·정원/정렬·회원/캐릭터 필터/cursor·상세/실제자리·private plan·그룹 projection·본인/신청목록·일반 참가/신청·최신자격 승인/검토/거절/철회를 구현했다. Room 공통 revision과 T revision을 분리하고 실제 T 관계 없이 개인 계획을 열지 않도록 확인했다. 공개출처 신청의 이후 group scope 예외도 보존했다.
+- 고정 명세에서 생성한 정적 cycle_wire.py와 canonical 입력 보완·후보 오류 details를 사용한다. 앱은 docs를 읽지 않는다. schema 검증을 위해 requirements-dev에 jsonschema4.26.0, Dockerfile.test에 고정 계약 COPY를 추가했다. 기존 bounded route는 기본 반복query 거절 유지, 후보 GET 경험배열만 반복 허용한다. main/OpenAPI116경로는 변경하지 않고 후보는 격리 앱에서만 mount했다.
+- 신규 최종35PASS/187.90초. 초기24PASS와 경계/경합 추가11PASS는 중복 포함이므로 합산하지 않는다. 그룹 projection·공대장 검토·미체크N effect의 최종 보완6PASS/34.78초 재검증도 중복이다. 제한 LOGIN 마이그레이션 전후 기존 실제 표 모든 열 지문, 원장/원ACK·전체rollback/마지막1자리 경합·T cursor/권한·대체캐릭터·고정 계약 HTTP 응답을 확인했다. 테스트 준비 중 발견한 교차 DTO 전달/명령임대 표 이름 지문 제외·오류 response ref 처리/누락 테스트 의존성은 수정 후 재실행했다. DTO 재생성은 컨테이너 복사 소유권 충돌을 피하도록 --output 임시경로를 지원한다.
+- W2-B 세부 결과와 W3/W4 의존은 [W2-B 기록](../ISSUE_13_W2_CYCLE_ADMISSION.md)에 남기고 NEXT_WORK의 다음 실행을 W3로 갱신했다. 생성 대체캐릭터 성공을 기존인원 N 특례 완료로 해석하지 않는다. 실제 서버/provider·실회원·기기·운영 성능은 미검증, 실제 개발 DB/API 이미지·사용자자료·원격/브랜치 이력은 변경하지 않았다. 새 Flutter 시험/반복 검토 요청·Issue 댓글·commit/push·merge·배포 없음.
+- 기존 W1 cycle/W2-A summary·v1 생성/일정/개인표·계정 bootstrap/기록시각 회귀121PASS/220.02초. 실행 FastAPI/OpenAPI116경로 전체일치도 통과했다. 신규35와 합친 이번 고유 확인156은 별도 실행 결과이며 이전 단계 통계와 합산하지 않는다. 기존 BlockingPortal deprecation1건 외 실패 없음. 최종 AST·문서링크·diff 공백·계약 hash도 통과했다.
+- 정적 DTO의 생성 출력/검증 사용본 SHA256 `be9b0208ee32d52e33aff5324627d8b6b085a164a207d18efc05bca5578e3135` 일치를 확인하고 이번 `lostparty-w2b-runner`·`lostparty-w2b-test` tmpfs DB/전용 네트워크만 정리했다. 개발 컨테이너/DB 볼륨·기존 검증 이미지 캐시는 보존했다.
+
+
+## 2026-10-21 — 완료 구간 커밋 상시 규칙·W1/W2 커밋
+
+- 사용자 지시: 작업 구간을 하나 끝낼 때 커밋한다. AGENTS와 개발 작업 흐름에 검증·문서 갱신 후 구간 커밋/재승인 불필요 규칙을 반영했다. push/PR/merge·배포의 별도 승인 범위는 유지한다.
+- 직전 HEAD6490f69 이후 보존 중이던 #13 합의 설계/고정 계약·W1 기반·W2-A 조회·W2-B 생성/조회/일반 참가·검증·관련 문서를 이번 완료 구간 커밋에 함께 포함한다. 현재 실제 실행 소스의 OpenAPI116경로와 shadow 후보17경로/19동작을 구별하며 후보는 main에 미등록이다.
+- 검증 근거는 직전 W2-B 신규35PASS·최종 보완6PASS(중복)·회귀121PASS다. 이번은 커밋/문서 규칙 반영이므로 서버/DB 시험을 불필요하게 재실행하지 않고 변경 범위·구문·계약 hash·비밀 파일 제외·diff 공백을 확인한다. push·Issue 게시·merge·배포·실제 DB 변경은 하지 않는다. 현재 커밋 식별은 이 항목을 포함한 커밋과 git log를 기준으로 확인한다.

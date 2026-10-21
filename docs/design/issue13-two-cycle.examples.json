@@ -1,0 +1,3008 @@
+{
+  "notice": "All UUIDs/tokens/catalog names are synthetic. Schema validation is not API/DB/transaction/permission execution. Guard outcomes and SQL/cursor rules are illustrative contract obligations.",
+  "cases": [
+    {
+      "name": "open_context",
+      "schema": "OpeningContext",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-28",
+          "playable_from": "2026-10-28T01:00:00Z",
+          "phase": "future",
+          "target_revision": null,
+          "room_cycle_id": null,
+          "target_generation": null,
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000005",
+          "source": {
+            "source_cycle_key": "2026-10-21",
+            "membership_id": "00000000-0000-4000-8000-000000000006",
+            "membership_revision": 1,
+            "assignment_ids": [
+              "00000000-0000-4000-8000-000000000007"
+            ],
+            "source_cycle_member_id": "00000000-0000-4000-8000-000000000008",
+            "source_cycle_member_revision": 1
+          },
+          "selection": {
+            "registration_id": "00000000-0000-4000-8000-000000000001",
+            "character_id": "00000000-0000-4000-8000-000000000002",
+            "selected_role": "dealer",
+            "expected_registration_version": 1,
+            "expected_ownership_revision": 1,
+            "expected_roster_revision": 1,
+            "expected_lifecycle_revision": 1,
+            "expected_role_summary_version": 1,
+            "expected_limits_revision": 1,
+            "expected_usage_revision": 1
+          },
+          "targets": [
+            {
+              "item_id": "00000000-0000-4000-8000-000000000003",
+              "round_id": "00000000-0000-4000-8000-000000000004",
+              "party_no": 1,
+              "expected_round_revision": 1,
+              "expected_weekly_revision": 7
+            }
+          ],
+          "target_session_ids": [],
+          "leadership": null,
+          "context_token": "synthetic-schema-example-not-real-token",
+          "issued_at": "2026-10-21T03:00:00Z",
+          "expires_at": "2026-10-21T03:02:00Z",
+          "opening_effect": "create_and_join",
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          },
+          "conflicts": [],
+          "prospective_room_cycle_id": "00000000-0000-4000-8000-000000000009",
+          "prospective_generation": 1,
+          "prospective_target_revision": 1,
+          "item_settings": [
+            {
+              "item_id": "00000000-0000-4000-8000-000000000003",
+              "difficulty_id": "synthetic-difficulty",
+              "catalog_version": "synthetic-catalog",
+              "duration_minutes": null
+            }
+          ]
+        }
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "open_command",
+      "schema": "OpeningCommand",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "target_cycle_key": "2026-10-28",
+        "expected_target_revision": null,
+        "context_token": "synthetic-schema-example-not-real-token",
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000002",
+          "selected_role": "dealer",
+          "expected_registration_version": 1,
+          "expected_ownership_revision": 1,
+          "expected_roster_revision": 1,
+          "expected_lifecycle_revision": 1,
+          "expected_role_summary_version": 1,
+          "expected_limits_revision": 1,
+          "expected_usage_revision": 1
+        },
+        "target_items": [
+          {
+            "item_id": "00000000-0000-4000-8000-000000000003",
+            "round_id": "00000000-0000-4000-8000-000000000004",
+            "party_no": 1,
+            "expected_round_revision": 1,
+            "expected_weekly_revision": 7
+          }
+        ],
+        "target_session_ids": [],
+        "intent": "open"
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "reopen_context",
+      "schema": "OpeningContext",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-28",
+          "playable_from": "2026-10-28T01:00:00Z",
+          "phase": "future",
+          "target_revision": 4,
+          "room_cycle_id": "00000000-0000-4000-8000-000000000009",
+          "target_generation": 1,
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000005",
+          "source": {
+            "source_cycle_key": "2026-10-21",
+            "membership_id": "00000000-0000-4000-8000-000000000006",
+            "membership_revision": 1,
+            "assignment_ids": [
+              "00000000-0000-4000-8000-000000000007"
+            ],
+            "source_cycle_member_id": "00000000-0000-4000-8000-000000000008",
+            "source_cycle_member_revision": 1
+          },
+          "selection": {
+            "registration_id": "00000000-0000-4000-8000-000000000001",
+            "character_id": "00000000-0000-4000-8000-000000000002",
+            "selected_role": "dealer",
+            "expected_registration_version": 1,
+            "expected_ownership_revision": 1,
+            "expected_roster_revision": 1,
+            "expected_lifecycle_revision": 1,
+            "expected_role_summary_version": 1,
+            "expected_limits_revision": 1,
+            "expected_usage_revision": 1
+          },
+          "targets": [
+            {
+              "item_id": "00000000-0000-4000-8000-000000000003",
+              "round_id": "00000000-0000-4000-8000-000000000010",
+              "party_no": 1,
+              "expected_round_revision": 1,
+              "expected_weekly_revision": 9
+            }
+          ],
+          "target_session_ids": [],
+          "leadership": {
+            "leader_cycle_member_id": null,
+            "leader_membership_id": null,
+            "leadership_revision": 3
+          },
+          "context_token": "synthetic-schema-example-not-real-token",
+          "issued_at": "2026-10-21T03:00:00Z",
+          "expires_at": "2026-10-21T03:02:00Z",
+          "opening_effect": "reopen_and_join",
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          },
+          "conflicts": [],
+          "prospective_room_cycle_id": "00000000-0000-4000-8000-000000000009",
+          "prospective_generation": 2,
+          "prospective_target_revision": 5,
+          "item_settings": [
+            {
+              "item_id": "00000000-0000-4000-8000-000000000003",
+              "difficulty_id": "synthetic-difficulty",
+              "catalog_version": "synthetic-catalog",
+              "duration_minutes": null
+            }
+          ]
+        }
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "reopen_command",
+      "schema": "OpeningCommand",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "target_cycle_key": "2026-10-28",
+        "expected_target_revision": 4,
+        "context_token": "synthetic-schema-example-not-real-token",
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000002",
+          "selected_role": "dealer",
+          "expected_registration_version": 1,
+          "expected_ownership_revision": 1,
+          "expected_roster_revision": 1,
+          "expected_lifecycle_revision": 1,
+          "expected_role_summary_version": 1,
+          "expected_limits_revision": 1,
+          "expected_usage_revision": 1
+        },
+        "target_items": [
+          {
+            "item_id": "00000000-0000-4000-8000-000000000003",
+            "round_id": "00000000-0000-4000-8000-000000000010",
+            "party_no": 1,
+            "expected_round_revision": 1,
+            "expected_weekly_revision": 9
+          }
+        ],
+        "target_session_ids": [],
+        "intent": "reopen"
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "joined_order_valid_1",
+      "schema": "JoinedOrder",
+      "value": "1",
+      "schema_valid": true
+    },
+    {
+      "name": "joined_order_valid_9007199254740993",
+      "schema": "JoinedOrder",
+      "value": "9007199254740993",
+      "schema_valid": true
+    },
+    {
+      "name": "joined_order_valid_9223372036854775807",
+      "schema": "JoinedOrder",
+      "value": "9223372036854775807",
+      "schema_valid": true
+    },
+    {
+      "name": "joined_order_invalid_0",
+      "schema": "JoinedOrder",
+      "value": "0",
+      "schema_valid": false
+    },
+    {
+      "name": "joined_order_invalid_01",
+      "schema": "JoinedOrder",
+      "value": "01",
+      "schema_valid": false
+    },
+    {
+      "name": "joined_order_invalid_9223372036854775808",
+      "schema": "JoinedOrder",
+      "value": "9223372036854775808",
+      "schema_valid": false
+    },
+    {
+      "name": "joined_order_invalid_9007199254740993",
+      "schema": "JoinedOrder",
+      "value": 9007199254740993,
+      "schema_valid": false
+    },
+    {
+      "name": "joined_order_invalid_1.0",
+      "schema": "JoinedOrder",
+      "value": 1.0,
+      "schema_valid": false
+    },
+    {
+      "name": "joined_order_invalid_-1",
+      "schema": "JoinedOrder",
+      "value": "-1",
+      "schema_valid": false
+    },
+    {
+      "name": "joined_order_invalid_1e3",
+      "schema": "JoinedOrder",
+      "value": "1e3",
+      "schema_valid": false
+    },
+    {
+      "name": "target_unknown_field",
+      "schema": "OpeningCommand",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "target_cycle_key": "2026-10-28",
+        "expected_target_revision": null,
+        "context_token": "synthetic-schema-example-not-real-token",
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000002",
+          "selected_role": "dealer",
+          "expected_registration_version": 1,
+          "expected_ownership_revision": 1,
+          "expected_roster_revision": 1,
+          "expected_lifecycle_revision": 1,
+          "expected_role_summary_version": 1,
+          "expected_limits_revision": 1,
+          "expected_usage_revision": 1
+        },
+        "target_items": [
+          {
+            "item_id": "00000000-0000-4000-8000-000000000003",
+            "round_id": "00000000-0000-4000-8000-000000000004",
+            "party_no": 1,
+            "expected_round_revision": 1,
+            "expected_weekly_revision": 7,
+            "surprise": "not accepted"
+          }
+        ],
+        "target_session_ids": [],
+        "intent": "open"
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "opening_intent_missing",
+      "schema": "OpeningCommand",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "target_cycle_key": "2026-10-28",
+        "expected_target_revision": null,
+        "context_token": "synthetic-schema-example-not-real-token",
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000002",
+          "selected_role": "dealer",
+          "expected_registration_version": 1,
+          "expected_ownership_revision": 1,
+          "expected_roster_revision": 1,
+          "expected_lifecycle_revision": 1,
+          "expected_role_summary_version": 1,
+          "expected_limits_revision": 1,
+          "expected_usage_revision": 1
+        },
+        "target_items": [
+          {
+            "item_id": "00000000-0000-4000-8000-000000000003",
+            "round_id": "00000000-0000-4000-8000-000000000004",
+            "party_no": 1,
+            "expected_round_revision": 1,
+            "expected_weekly_revision": 7
+          }
+        ],
+        "target_session_ids": []
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "create_title_success_checkbox_off",
+      "schema": "Input_contract3_post__v2_raid-rooms",
+      "value": {
+        "title": "합성 모집 제목",
+        "scope": "public",
+        "group_id": null,
+        "admission_mode": "leader_only",
+        "app_mode": "single",
+        "items": [
+          {
+            "raid_id": "sample_raid",
+            "difficulty_id": "sample_normal",
+            "duration_minutes": null,
+            "expected_weekly_revision": 7,
+            "party_no": 1
+          }
+        ],
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000002",
+          "selected_role": "dealer",
+          "expected_registration_version": 1,
+          "expected_ownership_revision": 1,
+          "expected_roster_revision": 1,
+          "expected_lifecycle_revision": 1,
+          "expected_role_summary_version": 1,
+          "expected_limits_revision": 1,
+          "expected_usage_revision": 1
+        },
+        "selection_context": {
+          "context_token": "synthetic-schema-token-not-usable-off-C"
+        },
+        "experience_level": null,
+        "combat_requirement": {
+          "input_mode": "shared",
+          "dealer_min": null,
+          "support_min": null
+        },
+        "continuation": {
+          "enabled": false,
+          "next_selection": null
+        },
+        "schedule_groups": [],
+        "expected_cycle_key": "2026-10-21",
+        "expected_catalog_version": "synthetic-catalog",
+        "expected_group_revision": null,
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": null
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "create_checkbox_C_and_N_single_command",
+      "schema": "Input_contract3_post__v2_raid-rooms",
+      "value": {
+        "title": "합성 모집 제목",
+        "scope": "public",
+        "group_id": null,
+        "admission_mode": "leader_only",
+        "app_mode": "single",
+        "items": [
+          {
+            "raid_id": "sample_raid",
+            "difficulty_id": "sample_normal",
+            "duration_minutes": null,
+            "expected_weekly_revision": 7,
+            "party_no": 1
+          }
+        ],
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000002",
+          "selected_role": "dealer",
+          "expected_registration_version": 1,
+          "expected_ownership_revision": 1,
+          "expected_roster_revision": 1,
+          "expected_lifecycle_revision": 1,
+          "expected_role_summary_version": 1,
+          "expected_limits_revision": 1,
+          "expected_usage_revision": 1
+        },
+        "selection_context": {
+          "context_token": "synthetic-schema-token-not-usable-on-C"
+        },
+        "experience_level": null,
+        "combat_requirement": {
+          "input_mode": "shared",
+          "dealer_min": null,
+          "support_min": null
+        },
+        "continuation": {
+          "enabled": true,
+          "next_selection": {
+            "registration_id": "00000000-0000-4000-8000-000000000001",
+            "character_id": "00000000-0000-4000-8000-000000000002",
+            "selected_role": "dealer",
+            "expected_registration_version": 1,
+            "expected_ownership_revision": 1,
+            "expected_roster_revision": 1,
+            "expected_lifecycle_revision": 1,
+            "expected_role_summary_version": 1,
+            "expected_limits_revision": 1,
+            "expected_usage_revision": 1
+          }
+        },
+        "schedule_groups": [],
+        "expected_cycle_key": "2026-10-21",
+        "expected_catalog_version": "synthetic-catalog",
+        "expected_group_revision": null,
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": null
+      },
+      "schema_valid": true,
+      "contract_effect": "All C/N writes and ACK commit together; no partial success"
+    },
+    {
+      "name": "create_checkbox_N_alternative_character",
+      "schema": "Input_contract3_post__v2_raid-rooms",
+      "value": {
+        "title": "합성 모집 제목",
+        "scope": "public",
+        "group_id": null,
+        "admission_mode": "leader_only",
+        "app_mode": "single",
+        "items": [
+          {
+            "raid_id": "sample_raid",
+            "difficulty_id": "sample_normal",
+            "duration_minutes": null,
+            "expected_weekly_revision": 7,
+            "party_no": 1
+          }
+        ],
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000002",
+          "selected_role": "dealer",
+          "expected_registration_version": 1,
+          "expected_ownership_revision": 1,
+          "expected_roster_revision": 1,
+          "expected_lifecycle_revision": 1,
+          "expected_role_summary_version": 1,
+          "expected_limits_revision": 1,
+          "expected_usage_revision": 1
+        },
+        "selection_context": {
+          "context_token": "synthetic-schema-token-not-usable-on-C-alt"
+        },
+        "experience_level": null,
+        "combat_requirement": {
+          "input_mode": "shared",
+          "dealer_min": null,
+          "support_min": null
+        },
+        "continuation": {
+          "enabled": true,
+          "next_selection": {
+            "registration_id": "00000000-0000-4000-8000-000000000001",
+            "character_id": "00000000-0000-4000-8000-000000000021",
+            "selected_role": "dealer",
+            "expected_registration_version": 1,
+            "expected_ownership_revision": 1,
+            "expected_roster_revision": 1,
+            "expected_lifecycle_revision": 1,
+            "expected_role_summary_version": 1,
+            "expected_limits_revision": 1,
+            "expected_usage_revision": 1
+          }
+        },
+        "schedule_groups": [],
+        "expected_cycle_key": "2026-10-21",
+        "expected_catalog_version": "synthetic-catalog",
+        "expected_group_revision": null,
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": null
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "create_selected_N_checkbox_no_C_plus14",
+      "schema": "Input_contract3_post__v2_raid-rooms",
+      "value": {
+        "title": "합성 모집 제목",
+        "scope": "public",
+        "group_id": null,
+        "admission_mode": "leader_only",
+        "app_mode": "single",
+        "items": [
+          {
+            "raid_id": "sample_raid",
+            "difficulty_id": "sample_normal",
+            "duration_minutes": null,
+            "expected_weekly_revision": 9,
+            "party_no": 1
+          }
+        ],
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000002",
+          "selected_role": "dealer",
+          "expected_registration_version": 1,
+          "expected_ownership_revision": 1,
+          "expected_roster_revision": 1,
+          "expected_lifecycle_revision": 1,
+          "expected_role_summary_version": 1,
+          "expected_limits_revision": 1,
+          "expected_usage_revision": 1
+        },
+        "selection_context": {
+          "context_token": "synthetic-schema-token-not-usable-on-N"
+        },
+        "experience_level": null,
+        "combat_requirement": {
+          "input_mode": "shared",
+          "dealer_min": null,
+          "support_min": null
+        },
+        "continuation": {
+          "enabled": true,
+          "next_selection": null
+        },
+        "schedule_groups": [],
+        "expected_cycle_key": "2026-10-21",
+        "expected_catalog_version": "synthetic-catalog",
+        "expected_group_revision": null,
+        "target_cycle_key": "2026-10-28",
+        "expected_target_revision": null
+      },
+      "schema_valid": true,
+      "contract_effect": "Exactly N, no C+14; next_selection=null"
+    },
+    {
+      "name": "create_title_empty_rejected",
+      "schema": "Input_contract3_post__v2_raid-rooms",
+      "value": {
+        "title": "",
+        "scope": "public",
+        "group_id": null,
+        "admission_mode": "leader_only",
+        "app_mode": "single",
+        "items": [
+          {
+            "raid_id": "sample_raid",
+            "difficulty_id": "sample_normal",
+            "duration_minutes": null,
+            "expected_weekly_revision": 7,
+            "party_no": 1
+          }
+        ],
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000002",
+          "selected_role": "dealer",
+          "expected_registration_version": 1,
+          "expected_ownership_revision": 1,
+          "expected_roster_revision": 1,
+          "expected_lifecycle_revision": 1,
+          "expected_role_summary_version": 1,
+          "expected_limits_revision": 1,
+          "expected_usage_revision": 1
+        },
+        "selection_context": {
+          "context_token": "synthetic-schema-token-not-usable-off-C"
+        },
+        "experience_level": null,
+        "combat_requirement": {
+          "input_mode": "shared",
+          "dealer_min": null,
+          "support_min": null
+        },
+        "continuation": {
+          "enabled": false,
+          "next_selection": null
+        },
+        "schedule_groups": [],
+        "expected_cycle_key": "2026-10-21",
+        "expected_catalog_version": "synthetic-catalog",
+        "expected_group_revision": null,
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": null
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "create_title_null_rejected",
+      "schema": "Input_contract3_post__v2_raid-rooms",
+      "value": {
+        "title": null,
+        "scope": "public",
+        "group_id": null,
+        "admission_mode": "leader_only",
+        "app_mode": "single",
+        "items": [
+          {
+            "raid_id": "sample_raid",
+            "difficulty_id": "sample_normal",
+            "duration_minutes": null,
+            "expected_weekly_revision": 7,
+            "party_no": 1
+          }
+        ],
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000002",
+          "selected_role": "dealer",
+          "expected_registration_version": 1,
+          "expected_ownership_revision": 1,
+          "expected_roster_revision": 1,
+          "expected_lifecycle_revision": 1,
+          "expected_role_summary_version": 1,
+          "expected_limits_revision": 1,
+          "expected_usage_revision": 1
+        },
+        "selection_context": {
+          "context_token": "synthetic-schema-token-not-usable-off-C"
+        },
+        "experience_level": null,
+        "combat_requirement": {
+          "input_mode": "shared",
+          "dealer_min": null,
+          "support_min": null
+        },
+        "continuation": {
+          "enabled": false,
+          "next_selection": null
+        },
+        "schedule_groups": [],
+        "expected_cycle_key": "2026-10-21",
+        "expected_catalog_version": "synthetic-catalog",
+        "expected_group_revision": null,
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": null
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "create_title_too_long_rejected",
+      "schema": "Input_contract3_post__v2_raid-rooms",
+      "value": {
+        "title": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "scope": "public",
+        "group_id": null,
+        "admission_mode": "leader_only",
+        "app_mode": "single",
+        "items": [
+          {
+            "raid_id": "sample_raid",
+            "difficulty_id": "sample_normal",
+            "duration_minutes": null,
+            "expected_weekly_revision": 7,
+            "party_no": 1
+          }
+        ],
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000002",
+          "selected_role": "dealer",
+          "expected_registration_version": 1,
+          "expected_ownership_revision": 1,
+          "expected_roster_revision": 1,
+          "expected_lifecycle_revision": 1,
+          "expected_role_summary_version": 1,
+          "expected_limits_revision": 1,
+          "expected_usage_revision": 1
+        },
+        "selection_context": {
+          "context_token": "synthetic-schema-token-not-usable-off-C"
+        },
+        "experience_level": null,
+        "combat_requirement": {
+          "input_mode": "shared",
+          "dealer_min": null,
+          "support_min": null
+        },
+        "continuation": {
+          "enabled": false,
+          "next_selection": null
+        },
+        "schedule_groups": [],
+        "expected_cycle_key": "2026-10-21",
+        "expected_catalog_version": "synthetic-catalog",
+        "expected_group_revision": null,
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": null
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "create_title_missing_rejected",
+      "schema": "Input_contract3_post__v2_raid-rooms",
+      "value": {
+        "scope": "public",
+        "group_id": null,
+        "admission_mode": "leader_only",
+        "app_mode": "single",
+        "items": [
+          {
+            "raid_id": "sample_raid",
+            "difficulty_id": "sample_normal",
+            "duration_minutes": null,
+            "expected_weekly_revision": 7,
+            "party_no": 1
+          }
+        ],
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000002",
+          "selected_role": "dealer",
+          "expected_registration_version": 1,
+          "expected_ownership_revision": 1,
+          "expected_roster_revision": 1,
+          "expected_lifecycle_revision": 1,
+          "expected_role_summary_version": 1,
+          "expected_limits_revision": 1,
+          "expected_usage_revision": 1
+        },
+        "selection_context": {
+          "context_token": "synthetic-schema-token-not-usable-off-C"
+        },
+        "experience_level": null,
+        "combat_requirement": {
+          "input_mode": "shared",
+          "dealer_min": null,
+          "support_min": null
+        },
+        "continuation": {
+          "enabled": false,
+          "next_selection": null
+        },
+        "schedule_groups": [],
+        "expected_cycle_key": "2026-10-21",
+        "expected_catalog_version": "synthetic-catalog",
+        "expected_group_revision": null,
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": null
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "create_search_sentinel_not_a_creation_experience",
+      "schema": "Input_contract3_post__v2_raid-rooms",
+      "value": {
+        "title": "합성 모집 제목",
+        "scope": "public",
+        "group_id": null,
+        "admission_mode": "leader_only",
+        "app_mode": "single",
+        "items": [
+          {
+            "raid_id": "sample_raid",
+            "difficulty_id": "sample_normal",
+            "duration_minutes": null,
+            "expected_weekly_revision": 7,
+            "party_no": 1
+          }
+        ],
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000002",
+          "selected_role": "dealer",
+          "expected_registration_version": 1,
+          "expected_ownership_revision": 1,
+          "expected_roster_revision": 1,
+          "expected_lifecycle_revision": 1,
+          "expected_role_summary_version": 1,
+          "expected_limits_revision": 1,
+          "expected_usage_revision": 1
+        },
+        "selection_context": {
+          "context_token": "synthetic-schema-token-not-usable-off-C"
+        },
+        "experience_level": "unrestricted",
+        "combat_requirement": {
+          "input_mode": "shared",
+          "dealer_min": null,
+          "support_min": null
+        },
+        "continuation": {
+          "enabled": false,
+          "next_selection": null
+        },
+        "schedule_groups": [],
+        "expected_cycle_key": "2026-10-21",
+        "expected_catalog_version": "synthetic-catalog",
+        "expected_group_revision": null,
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": null
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "unchecked_next_selection_rejected",
+      "schema": "Input_contract3_post__v2_raid-rooms",
+      "value": {
+        "title": "합성 모집 제목",
+        "scope": "public",
+        "group_id": null,
+        "admission_mode": "leader_only",
+        "app_mode": "single",
+        "items": [
+          {
+            "raid_id": "sample_raid",
+            "difficulty_id": "sample_normal",
+            "duration_minutes": null,
+            "expected_weekly_revision": 7,
+            "party_no": 1
+          }
+        ],
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000002",
+          "selected_role": "dealer",
+          "expected_registration_version": 1,
+          "expected_ownership_revision": 1,
+          "expected_roster_revision": 1,
+          "expected_lifecycle_revision": 1,
+          "expected_role_summary_version": 1,
+          "expected_limits_revision": 1,
+          "expected_usage_revision": 1
+        },
+        "selection_context": {
+          "context_token": "synthetic-schema-token-not-usable-off-C"
+        },
+        "experience_level": null,
+        "combat_requirement": {
+          "input_mode": "shared",
+          "dealer_min": null,
+          "support_min": null
+        },
+        "continuation": {
+          "enabled": false,
+          "next_selection": {
+            "registration_id": "00000000-0000-4000-8000-000000000001",
+            "character_id": "00000000-0000-4000-8000-000000000002",
+            "selected_role": "dealer",
+            "expected_registration_version": 1,
+            "expected_ownership_revision": 1,
+            "expected_roster_revision": 1,
+            "expected_lifecycle_revision": 1,
+            "expected_role_summary_version": 1,
+            "expected_limits_revision": 1,
+            "expected_usage_revision": 1
+          }
+        },
+        "schedule_groups": [],
+        "expected_cycle_key": "2026-10-21",
+        "expected_catalog_version": "synthetic-catalog",
+        "expected_group_revision": null,
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": null
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "common_title_update_success",
+      "schema": "CommonSettingsCommand",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_room_revision": 7,
+        "context_token": "synthetic-schema-token-not-usable",
+        "title": "합성 공통 제목 변경",
+        "scope": "public",
+        "group_id": null,
+        "expected_group_revision": null
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "common_title_missing_rejected",
+      "schema": "CommonSettingsCommand",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_room_revision": 7,
+        "context_token": "synthetic-schema-token-not-usable",
+        "scope": "public",
+        "group_id": null,
+        "expected_group_revision": null
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "common_title_empty_rejected",
+      "schema": "CommonSettingsCommand",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_room_revision": 7,
+        "context_token": "synthetic-schema-token-not-usable",
+        "title": "",
+        "scope": "public",
+        "group_id": null,
+        "expected_group_revision": null
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "card_success_title_present",
+      "schema": "B_Card",
+      "value": {
+        "room_id": "00000000-0000-4000-8000-000000000006",
+        "revision": 1,
+        "title": "합성 카드 제목",
+        "scope": "public",
+        "group_id": null,
+        "admission_mode": "leader_only",
+        "experience_level": null,
+        "app_capacity": 8,
+        "app_member_count": 1,
+        "state": "active",
+        "items": [
+          {
+            "item_id": "00000000-0000-4000-8000-000000000004",
+            "raid_id": "sample_raid",
+            "difficulty_id": "sample_normal",
+            "game_party_size": 8,
+            "round_id": "00000000-0000-4000-8000-000000000005"
+          }
+        ],
+        "game_items": [
+          {
+            "item_id": "00000000-0000-4000-8000-000000000004",
+            "raid_id": "sample_raid",
+            "difficulty_id": "sample_normal",
+            "game_party_size": 8,
+            "round_id": "00000000-0000-4000-8000-000000000005"
+          }
+        ],
+        "leader_display": null,
+        "created_at": "2026-10-21T03:00:00Z",
+        "phase": "current",
+        "restricted": false,
+        "schedule_summary": {
+          "mode": "x",
+          "occurrence_mode": null,
+          "confirmed_starts_at": [],
+          "earliest_start": null,
+          "latest_start": null
+        },
+        "combat_requirement": {
+          "input_mode": "shared",
+          "dealer_min": null,
+          "support_min": null
+        },
+        "continuation_enabled": true,
+        "permissions": {
+          "view_detail": {
+            "allowed": false,
+            "reason": null,
+            "next_change_at": null
+          },
+          "view_plan": {
+            "allowed": false,
+            "reason": null,
+            "next_change_at": null
+          }
+        },
+        "leadership": {
+          "leader_cycle_member_id": "00000000-0000-4000-8000-000000000008",
+          "leader_membership_id": "00000000-0000-4000-8000-000000000009",
+          "leadership_revision": 1
+        },
+        "my_target_role": "leader",
+        "target_cycle_key": "2026-10-21",
+        "target_state": "open",
+        "target_revision": 1,
+        "room_cycle_id": "00000000-0000-4000-8000-000000000007",
+        "target_generation": 1
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "card_title_missing_rejected",
+      "schema": "B_Card",
+      "value": {
+        "room_id": "00000000-0000-4000-8000-000000000006",
+        "revision": 1,
+        "scope": "public",
+        "group_id": null,
+        "admission_mode": "leader_only",
+        "experience_level": null,
+        "app_capacity": 8,
+        "app_member_count": 1,
+        "state": "active",
+        "items": [
+          {
+            "item_id": "00000000-0000-4000-8000-000000000004",
+            "raid_id": "sample_raid",
+            "difficulty_id": "sample_normal",
+            "game_party_size": 8,
+            "round_id": "00000000-0000-4000-8000-000000000005"
+          }
+        ],
+        "game_items": [
+          {
+            "item_id": "00000000-0000-4000-8000-000000000004",
+            "raid_id": "sample_raid",
+            "difficulty_id": "sample_normal",
+            "game_party_size": 8,
+            "round_id": "00000000-0000-4000-8000-000000000005"
+          }
+        ],
+        "leader_display": null,
+        "created_at": "2026-10-21T03:00:00Z",
+        "phase": "current",
+        "restricted": false,
+        "schedule_summary": {
+          "mode": "x",
+          "occurrence_mode": null,
+          "confirmed_starts_at": [],
+          "earliest_start": null,
+          "latest_start": null
+        },
+        "combat_requirement": {
+          "input_mode": "shared",
+          "dealer_min": null,
+          "support_min": null
+        },
+        "continuation_enabled": true,
+        "permissions": {
+          "view_detail": {
+            "allowed": false,
+            "reason": null,
+            "next_change_at": null
+          },
+          "view_plan": {
+            "allowed": false,
+            "reason": null,
+            "next_change_at": null
+          }
+        },
+        "leadership": {
+          "leader_cycle_member_id": "00000000-0000-4000-8000-000000000008",
+          "leader_membership_id": "00000000-0000-4000-8000-000000000009",
+          "leadership_revision": 1
+        },
+        "my_target_role": "leader",
+        "target_cycle_key": "2026-10-21",
+        "target_state": "open",
+        "target_revision": 1,
+        "room_cycle_id": "00000000-0000-4000-8000-000000000007",
+        "target_generation": 1
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "card_wrapped_success",
+      "schema": "Output_contract3_get__v2_raid-rooms_room_id",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T01:00:00Z",
+          "phase": "current",
+          "target_revision": 1,
+          "room_cycle_id": "00000000-0000-4000-8000-000000000007",
+          "target_generation": 1,
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "revision": 1,
+          "title": "합성 카드 제목",
+          "scope": "public",
+          "group_id": null,
+          "admission_mode": "leader_only",
+          "experience_level": null,
+          "app_capacity": 8,
+          "app_member_count": 1,
+          "state": "active",
+          "items": [
+            {
+              "item_id": "00000000-0000-4000-8000-000000000004",
+              "raid_id": "sample_raid",
+              "difficulty_id": "sample_normal",
+              "game_party_size": 8,
+              "round_id": "00000000-0000-4000-8000-000000000005"
+            }
+          ],
+          "game_items": [
+            {
+              "item_id": "00000000-0000-4000-8000-000000000004",
+              "raid_id": "sample_raid",
+              "difficulty_id": "sample_normal",
+              "game_party_size": 8,
+              "round_id": "00000000-0000-4000-8000-000000000005"
+            }
+          ],
+          "leader_display": null,
+          "created_at": "2026-10-21T03:00:00Z",
+          "phase": "current",
+          "restricted": false,
+          "schedule_summary": {
+            "mode": "x",
+            "occurrence_mode": null,
+            "confirmed_starts_at": [],
+            "earliest_start": null,
+            "latest_start": null
+          },
+          "combat_requirement": {
+            "input_mode": "shared",
+            "dealer_min": null,
+            "support_min": null
+          },
+          "continuation_enabled": true,
+          "permissions": {
+            "view_detail": {
+              "allowed": false,
+              "reason": null,
+              "next_change_at": null
+            },
+            "view_plan": {
+              "allowed": false,
+              "reason": null,
+              "next_change_at": null
+            }
+          },
+          "leadership": {
+            "leader_cycle_member_id": "00000000-0000-4000-8000-000000000008",
+            "leader_membership_id": "00000000-0000-4000-8000-000000000009",
+            "leadership_revision": 1
+          },
+          "my_target_role": "leader",
+          "target_cycle_key": "2026-10-21",
+          "target_state": "open",
+          "target_revision": 1,
+          "room_cycle_id": "00000000-0000-4000-8000-000000000007",
+          "target_generation": 1
+        }
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "create_context_checked_primary_and_next",
+      "schema": "B_CreationContext",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "server_time": "2026-10-21T03:00:00Z",
+        "catalog_version": "synthetic-catalog",
+        "policy_snapshot": "x",
+        "context_token": "synthetic-schema-token-not-usable-on-C",
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000002",
+          "selected_role": "dealer",
+          "expected_registration_version": 1,
+          "expected_ownership_revision": 1,
+          "expected_roster_revision": 1,
+          "expected_lifecycle_revision": 1,
+          "expected_role_summary_version": 1,
+          "expected_limits_revision": 1,
+          "expected_usage_revision": 1
+        },
+        "targets": [
+          {
+            "raid_id": "sample_raid",
+            "difficulty_id": "sample_normal",
+            "expected_weekly_revision": 7
+          }
+        ],
+        "group_revision": null,
+        "settings_defaults": {
+          "experience_levels": [],
+          "experience_unrestricted_value": null,
+          "opening_mode": "explicit"
+        },
+        "comparison": {
+          "selected_role": "dealer",
+          "requirement": null,
+          "actual": null,
+          "state": "unrestricted",
+          "source": "flutter_analysis",
+          "trust": "client_submitted",
+          "current_summary_version": 1,
+          "success_summary_version": null,
+          "power_revision": 1,
+          "observed_at": null,
+          "success_saved_at": null,
+          "success_issues": [],
+          "current_issues": []
+        },
+        "permissions": {
+          "create": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          }
+        },
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": null,
+        "issued_at": "2026-10-21T03:00:00Z",
+        "expires_at": "2026-10-21T03:02:00Z",
+        "prospective_room_id": "00000000-0000-4000-8000-000000000006",
+        "target_creation": {
+          "target_cycle_key": "2026-10-21",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000007",
+          "generation": 1,
+          "initial_target_revision": 1,
+          "selection": {
+            "registration_id": "00000000-0000-4000-8000-000000000001",
+            "character_id": "00000000-0000-4000-8000-000000000002",
+            "selected_role": "dealer",
+            "expected_registration_version": 1,
+            "expected_ownership_revision": 1,
+            "expected_roster_revision": 1,
+            "expected_lifecycle_revision": 1,
+            "expected_role_summary_version": 1,
+            "expected_limits_revision": 1,
+            "expected_usage_revision": 1
+          },
+          "targets": [
+            {
+              "item_id": "00000000-0000-4000-8000-000000000004",
+              "round_id": "00000000-0000-4000-8000-000000000005",
+              "raid_id": "sample_raid",
+              "difficulty_id": "sample_normal",
+              "party_no": 1,
+              "expected_round_revision": 1,
+              "expected_weekly_revision": 7
+            }
+          ],
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          },
+          "conflicts": []
+        },
+        "next_cycle_creation": {
+          "target_cycle_key": "2026-10-28",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000010",
+          "generation": 1,
+          "initial_target_revision": 1,
+          "selection": {
+            "registration_id": "00000000-0000-4000-8000-000000000001",
+            "character_id": "00000000-0000-4000-8000-000000000002",
+            "selected_role": "dealer",
+            "expected_registration_version": 1,
+            "expected_ownership_revision": 1,
+            "expected_roster_revision": 1,
+            "expected_lifecycle_revision": 1,
+            "expected_role_summary_version": 1,
+            "expected_limits_revision": 1,
+            "expected_usage_revision": 1
+          },
+          "targets": [
+            {
+              "item_id": "00000000-0000-4000-8000-000000000004",
+              "round_id": "00000000-0000-4000-8000-000000000011",
+              "raid_id": "sample_raid",
+              "difficulty_id": "sample_normal",
+              "party_no": 1,
+              "expected_round_revision": 1,
+              "expected_weekly_revision": 9
+            }
+          ],
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          },
+          "conflicts": []
+        },
+        "continuation_effect": "target_and_next"
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "create_context_N_preflight_blocked_no_rows",
+      "schema": "B_CreationContext",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "server_time": "2026-10-21T03:00:00Z",
+        "catalog_version": "synthetic-catalog",
+        "policy_snapshot": "x",
+        "context_token": "synthetic-schema-token-not-usable-on-C",
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000002",
+          "selected_role": "dealer",
+          "expected_registration_version": 1,
+          "expected_ownership_revision": 1,
+          "expected_roster_revision": 1,
+          "expected_lifecycle_revision": 1,
+          "expected_role_summary_version": 1,
+          "expected_limits_revision": 1,
+          "expected_usage_revision": 1
+        },
+        "targets": [
+          {
+            "raid_id": "sample_raid",
+            "difficulty_id": "sample_normal",
+            "expected_weekly_revision": 7
+          }
+        ],
+        "group_revision": null,
+        "settings_defaults": {
+          "experience_levels": [],
+          "experience_unrestricted_value": null,
+          "opening_mode": "explicit"
+        },
+        "comparison": {
+          "selected_role": "dealer",
+          "requirement": null,
+          "actual": null,
+          "state": "unrestricted",
+          "source": "flutter_analysis",
+          "trust": "client_submitted",
+          "current_summary_version": 1,
+          "success_summary_version": null,
+          "power_revision": 1,
+          "observed_at": null,
+          "success_saved_at": null,
+          "success_issues": [],
+          "current_issues": []
+        },
+        "permissions": {
+          "create": {
+            "allowed": false,
+            "reason": "WEEKLY_ALREADY_PARTICIPATING",
+            "next_change_at": null
+          }
+        },
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": null,
+        "issued_at": "2026-10-21T03:00:00Z",
+        "expires_at": "2026-10-21T03:02:00Z",
+        "prospective_room_id": "00000000-0000-4000-8000-000000000006",
+        "target_creation": {
+          "target_cycle_key": "2026-10-21",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000007",
+          "generation": 1,
+          "initial_target_revision": 1,
+          "selection": {
+            "registration_id": "00000000-0000-4000-8000-000000000001",
+            "character_id": "00000000-0000-4000-8000-000000000002",
+            "selected_role": "dealer",
+            "expected_registration_version": 1,
+            "expected_ownership_revision": 1,
+            "expected_roster_revision": 1,
+            "expected_lifecycle_revision": 1,
+            "expected_role_summary_version": 1,
+            "expected_limits_revision": 1,
+            "expected_usage_revision": 1
+          },
+          "targets": [
+            {
+              "item_id": "00000000-0000-4000-8000-000000000004",
+              "round_id": "00000000-0000-4000-8000-000000000005",
+              "raid_id": "sample_raid",
+              "difficulty_id": "sample_normal",
+              "party_no": 1,
+              "expected_round_revision": 1,
+              "expected_weekly_revision": 7
+            }
+          ],
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          },
+          "conflicts": []
+        },
+        "next_cycle_creation": {
+          "target_cycle_key": "2026-10-28",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000010",
+          "generation": 1,
+          "initial_target_revision": 1,
+          "selection": {
+            "registration_id": "00000000-0000-4000-8000-000000000001",
+            "character_id": "00000000-0000-4000-8000-000000000002",
+            "selected_role": "dealer",
+            "expected_registration_version": 1,
+            "expected_ownership_revision": 1,
+            "expected_roster_revision": 1,
+            "expected_lifecycle_revision": 1,
+            "expected_role_summary_version": 1,
+            "expected_limits_revision": 1,
+            "expected_usage_revision": 1
+          },
+          "targets": [
+            {
+              "item_id": "00000000-0000-4000-8000-000000000004",
+              "round_id": "00000000-0000-4000-8000-000000000011",
+              "raid_id": "sample_raid",
+              "difficulty_id": "sample_normal",
+              "party_no": 1,
+              "expected_round_revision": 1,
+              "expected_weekly_revision": 9
+            }
+          ],
+          "permission": {
+            "allowed": false,
+            "reason": "WEEKLY_ALREADY_PARTICIPATING",
+            "next_change_at": null
+          },
+          "conflicts": [
+            {
+              "room_id": "00000000-0000-4000-8000-000000000018",
+              "room_title": "본인 권한 내 합성 B방",
+              "target_cycle_key": "2026-10-28",
+              "raid_id": "sample_raid",
+              "character_id": "00000000-0000-4000-8000-000000000002",
+              "can_view_detail": true
+            }
+          ]
+        },
+        "continuation_effect": "target_and_next"
+      },
+      "schema_valid": true,
+      "scenario": "Schema-valid denial example, not executed business check"
+    },
+    {
+      "name": "create_atomic_success_ACK_C_N",
+      "schema": "CreateAck",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T01:00:00Z",
+          "phase": "current",
+          "target_revision": 1,
+          "room_cycle_id": "00000000-0000-4000-8000-000000000007",
+          "target_generation": 1,
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "command_id": "00000000-0000-4000-8000-000000000012",
+          "outcome": "applied",
+          "executed_at": "2026-10-21T03:00:00Z",
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "target_cycle_key": "2026-10-21",
+          "revisions": [],
+          "created_cycles": [
+            {
+              "target_cycle_key": "2026-10-21",
+              "room_cycle_id": "00000000-0000-4000-8000-000000000007",
+              "generation": 1,
+              "target_revision": 1,
+              "leader_cycle_member_id": "00000000-0000-4000-8000-000000000008"
+            },
+            {
+              "target_cycle_key": "2026-10-28",
+              "room_cycle_id": "00000000-0000-4000-8000-000000000010",
+              "generation": 1,
+              "target_revision": 1,
+              "leader_cycle_member_id": "00000000-0000-4000-8000-000000000013"
+            }
+          ],
+          "continuation_effect": "target_and_next"
+        }
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "create_context_unchecked_C_only",
+      "schema": "B_CreationContext",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "server_time": "2026-10-21T03:00:00Z",
+        "catalog_version": "synthetic-catalog",
+        "policy_snapshot": "x",
+        "context_token": "synthetic-schema-token-not-usable-off-C",
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000002",
+          "selected_role": "dealer",
+          "expected_registration_version": 1,
+          "expected_ownership_revision": 1,
+          "expected_roster_revision": 1,
+          "expected_lifecycle_revision": 1,
+          "expected_role_summary_version": 1,
+          "expected_limits_revision": 1,
+          "expected_usage_revision": 1
+        },
+        "targets": [
+          {
+            "raid_id": "sample_raid",
+            "difficulty_id": "sample_normal",
+            "expected_weekly_revision": 7
+          }
+        ],
+        "group_revision": null,
+        "settings_defaults": {
+          "experience_levels": [],
+          "experience_unrestricted_value": null,
+          "opening_mode": "explicit"
+        },
+        "comparison": {
+          "selected_role": "dealer",
+          "requirement": null,
+          "actual": null,
+          "state": "unrestricted",
+          "source": "flutter_analysis",
+          "trust": "client_submitted",
+          "current_summary_version": 1,
+          "success_summary_version": null,
+          "power_revision": 1,
+          "observed_at": null,
+          "success_saved_at": null,
+          "success_issues": [],
+          "current_issues": []
+        },
+        "permissions": {
+          "create": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          }
+        },
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": null,
+        "issued_at": "2026-10-21T03:00:00Z",
+        "expires_at": "2026-10-21T03:02:00Z",
+        "prospective_room_id": "00000000-0000-4000-8000-000000000006",
+        "target_creation": {
+          "target_cycle_key": "2026-10-21",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000007",
+          "generation": 1,
+          "initial_target_revision": 1,
+          "selection": {
+            "registration_id": "00000000-0000-4000-8000-000000000001",
+            "character_id": "00000000-0000-4000-8000-000000000002",
+            "selected_role": "dealer",
+            "expected_registration_version": 1,
+            "expected_ownership_revision": 1,
+            "expected_roster_revision": 1,
+            "expected_lifecycle_revision": 1,
+            "expected_role_summary_version": 1,
+            "expected_limits_revision": 1,
+            "expected_usage_revision": 1
+          },
+          "targets": [
+            {
+              "item_id": "00000000-0000-4000-8000-000000000004",
+              "round_id": "00000000-0000-4000-8000-000000000005",
+              "raid_id": "sample_raid",
+              "difficulty_id": "sample_normal",
+              "party_no": 1,
+              "expected_round_revision": 1,
+              "expected_weekly_revision": 7
+            }
+          ],
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          },
+          "conflicts": []
+        },
+        "next_cycle_creation": null,
+        "continuation_effect": "target_only"
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "create_unchecked_C_only_ACK",
+      "schema": "CreateAck",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T01:00:00Z",
+          "phase": "current",
+          "target_revision": 1,
+          "room_cycle_id": "00000000-0000-4000-8000-000000000007",
+          "target_generation": 1,
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "command_id": "00000000-0000-4000-8000-000000000012",
+          "outcome": "applied",
+          "executed_at": "2026-10-21T03:00:00Z",
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "target_cycle_key": "2026-10-21",
+          "revisions": [],
+          "created_cycles": [
+            {
+              "target_cycle_key": "2026-10-21",
+              "room_cycle_id": "00000000-0000-4000-8000-000000000007",
+              "generation": 1,
+              "target_revision": 1,
+              "leader_cycle_member_id": "00000000-0000-4000-8000-000000000008"
+            }
+          ],
+          "continuation_effect": "target_only"
+        }
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "create_context_selected_N_no_extra_cycle",
+      "schema": "B_CreationContext",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "server_time": "2026-10-21T03:00:00Z",
+        "catalog_version": "synthetic-catalog",
+        "policy_snapshot": "x",
+        "context_token": "synthetic-schema-token-not-usable-on-N",
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000002",
+          "selected_role": "dealer",
+          "expected_registration_version": 1,
+          "expected_ownership_revision": 1,
+          "expected_roster_revision": 1,
+          "expected_lifecycle_revision": 1,
+          "expected_role_summary_version": 1,
+          "expected_limits_revision": 1,
+          "expected_usage_revision": 1
+        },
+        "targets": [
+          {
+            "raid_id": "sample_raid",
+            "difficulty_id": "sample_normal",
+            "expected_weekly_revision": 9
+          }
+        ],
+        "group_revision": null,
+        "settings_defaults": {
+          "experience_levels": [],
+          "experience_unrestricted_value": null,
+          "opening_mode": "explicit"
+        },
+        "comparison": {
+          "selected_role": "dealer",
+          "requirement": null,
+          "actual": null,
+          "state": "unrestricted",
+          "source": "flutter_analysis",
+          "trust": "client_submitted",
+          "current_summary_version": 1,
+          "success_summary_version": null,
+          "power_revision": 1,
+          "observed_at": null,
+          "success_saved_at": null,
+          "success_issues": [],
+          "current_issues": []
+        },
+        "permissions": {
+          "create": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          }
+        },
+        "target_cycle_key": "2026-10-28",
+        "expected_target_revision": null,
+        "issued_at": "2026-10-21T03:00:00Z",
+        "expires_at": "2026-10-21T03:02:00Z",
+        "prospective_room_id": "00000000-0000-4000-8000-000000000006",
+        "target_creation": {
+          "target_cycle_key": "2026-10-28",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000010",
+          "generation": 1,
+          "initial_target_revision": 1,
+          "selection": {
+            "registration_id": "00000000-0000-4000-8000-000000000001",
+            "character_id": "00000000-0000-4000-8000-000000000002",
+            "selected_role": "dealer",
+            "expected_registration_version": 1,
+            "expected_ownership_revision": 1,
+            "expected_roster_revision": 1,
+            "expected_lifecycle_revision": 1,
+            "expected_role_summary_version": 1,
+            "expected_limits_revision": 1,
+            "expected_usage_revision": 1
+          },
+          "targets": [
+            {
+              "item_id": "00000000-0000-4000-8000-000000000004",
+              "round_id": "00000000-0000-4000-8000-000000000011",
+              "raid_id": "sample_raid",
+              "difficulty_id": "sample_normal",
+              "party_no": 1,
+              "expected_round_revision": 1,
+              "expected_weekly_revision": 9
+            }
+          ],
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          },
+          "conflicts": []
+        },
+        "next_cycle_creation": null,
+        "continuation_effect": "target_is_next"
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "create_selected_N_only_ACK_no_C_plus14",
+      "schema": "CreateAck",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-28",
+          "playable_from": "2026-10-28T01:00:00Z",
+          "phase": "future",
+          "target_revision": 1,
+          "room_cycle_id": "00000000-0000-4000-8000-000000000010",
+          "target_generation": 1,
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "command_id": "00000000-0000-4000-8000-000000000012",
+          "outcome": "applied",
+          "executed_at": "2026-10-21T03:00:00Z",
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "target_cycle_key": "2026-10-28",
+          "revisions": [],
+          "created_cycles": [
+            {
+              "target_cycle_key": "2026-10-28",
+              "room_cycle_id": "00000000-0000-4000-8000-000000000010",
+              "generation": 1,
+              "target_revision": 1,
+              "leader_cycle_member_id": "00000000-0000-4000-8000-000000000013"
+            }
+          ],
+          "continuation_effect": "target_is_next"
+        }
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "leave_persistent_only_no_cycle_context",
+      "schema": "CommonContext",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "command": "leave",
+          "room_revision": 7,
+          "persistent_membership_revision": 3,
+          "context_token": "synthetic-schema-token-not-usable-leave",
+          "issued_at": "2026-10-21T03:00:00Z",
+          "expires_at": "2026-10-21T03:02:00Z",
+          "impact_cycles": [],
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          },
+          "expected_cycle_key": "2026-10-21",
+          "authorization_cycle_key": null,
+          "current_settings": {
+            "title": "합성 공통 제목",
+            "scope": "public",
+            "group_id": null,
+            "group_revision": null
+          }
+        }
+      },
+      "schema_valid": true,
+      "scenario": "Guard outcome is illustrative; server not run"
+    },
+    {
+      "name": "leave_persistent_only_no_cycle_request",
+      "schema": "GlobalMembershipCommand",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_room_revision": 7,
+        "expected_persistent_membership_revision": 3,
+        "context_token": "synthetic-schema-token-not-usable-leave"
+      },
+      "schema_valid": true,
+      "expected_server_allowed": true
+    },
+    {
+      "name": "leave_zero_active_effect_after_N_cancel_context",
+      "schema": "CommonContext",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "command": "leave",
+          "room_revision": 7,
+          "persistent_membership_revision": 3,
+          "context_token": "synthetic-schema-token-not-usable-leave",
+          "issued_at": "2026-10-21T03:00:00Z",
+          "expires_at": "2026-10-21T03:02:00Z",
+          "impact_cycles": [],
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          },
+          "expected_cycle_key": "2026-10-21",
+          "authorization_cycle_key": null,
+          "current_settings": {
+            "title": "합성 공통 제목",
+            "scope": "public",
+            "group_id": null,
+            "group_revision": null
+          }
+        }
+      },
+      "schema_valid": true,
+      "scenario": "Guard outcome is illustrative; server not run"
+    },
+    {
+      "name": "leave_zero_active_effect_after_N_cancel_request",
+      "schema": "GlobalMembershipCommand",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_room_revision": 7,
+        "expected_persistent_membership_revision": 3,
+        "context_token": "synthetic-schema-token-not-usable-leave"
+      },
+      "schema_valid": true,
+      "expected_server_allowed": true
+    },
+    {
+      "name": "leave_explicit_global_ordinary_C_N_context",
+      "schema": "CommonContext",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "command": "leave",
+          "room_revision": 7,
+          "persistent_membership_revision": 3,
+          "context_token": "synthetic-schema-token-not-usable-leave",
+          "issued_at": "2026-10-21T03:00:00Z",
+          "expires_at": "2026-10-21T03:02:00Z",
+          "impact_cycles": [
+            {
+              "target_cycle_key": "2026-10-21",
+              "room_cycle_id": "00000000-0000-4000-8000-000000000007",
+              "generation": 1,
+              "target_revision": 4,
+              "leadership": {
+                "leader_cycle_member_id": "00000000-0000-4000-8000-000000000016",
+                "leader_membership_id": "00000000-0000-4000-8000-000000000017",
+                "leadership_revision": 2
+              },
+              "member_count": 1,
+              "assignment_count": 1,
+              "reservation_count": 0,
+              "members_revision": 4,
+              "plan_revision": 5,
+              "actor_cycle_member_id": "00000000-0000-4000-8000-000000000008",
+              "actor_cycle_member_revision": 4
+            },
+            {
+              "target_cycle_key": "2026-10-28",
+              "room_cycle_id": "00000000-0000-4000-8000-000000000010",
+              "generation": 1,
+              "target_revision": 4,
+              "leadership": {
+                "leader_cycle_member_id": "00000000-0000-4000-8000-000000000016",
+                "leader_membership_id": "00000000-0000-4000-8000-000000000017",
+                "leadership_revision": 2
+              },
+              "member_count": 1,
+              "assignment_count": 1,
+              "reservation_count": 0,
+              "members_revision": 4,
+              "plan_revision": 5,
+              "actor_cycle_member_id": "00000000-0000-4000-8000-000000000008",
+              "actor_cycle_member_revision": 4
+            }
+          ],
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          },
+          "expected_cycle_key": "2026-10-21",
+          "authorization_cycle_key": null,
+          "current_settings": {
+            "title": "합성 공통 제목",
+            "scope": "public",
+            "group_id": null,
+            "group_revision": null
+          }
+        }
+      },
+      "schema_valid": true,
+      "scenario": "Guard outcome is illustrative; server not run"
+    },
+    {
+      "name": "leave_explicit_global_ordinary_C_N_request",
+      "schema": "GlobalMembershipCommand",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_room_revision": 7,
+        "expected_persistent_membership_revision": 3,
+        "context_token": "synthetic-schema-token-not-usable-leave"
+      },
+      "schema_valid": true,
+      "expected_server_allowed": true
+    },
+    {
+      "name": "leave_leader_unresolved_denied_context",
+      "schema": "CommonContext",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "command": "leave",
+          "room_revision": 7,
+          "persistent_membership_revision": 3,
+          "context_token": "synthetic-schema-token-not-usable-leave",
+          "issued_at": "2026-10-21T03:00:00Z",
+          "expires_at": "2026-10-21T03:02:00Z",
+          "impact_cycles": [
+            {
+              "target_cycle_key": "2026-10-21",
+              "room_cycle_id": "00000000-0000-4000-8000-000000000007",
+              "generation": 1,
+              "target_revision": 4,
+              "leadership": {
+                "leader_cycle_member_id": "00000000-0000-4000-8000-000000000008",
+                "leader_membership_id": "00000000-0000-4000-8000-000000000009",
+                "leadership_revision": 2
+              },
+              "member_count": 1,
+              "assignment_count": 1,
+              "reservation_count": 0,
+              "members_revision": 4,
+              "plan_revision": 5,
+              "actor_cycle_member_id": "00000000-0000-4000-8000-000000000008",
+              "actor_cycle_member_revision": 4
+            }
+          ],
+          "permission": {
+            "allowed": false,
+            "reason": "LEADERSHIP_RESOLUTION_REQUIRED",
+            "next_change_at": null
+          },
+          "expected_cycle_key": "2026-10-21",
+          "authorization_cycle_key": null,
+          "current_settings": {
+            "title": "합성 공통 제목",
+            "scope": "public",
+            "group_id": null,
+            "group_revision": null
+          }
+        }
+      },
+      "schema_valid": true,
+      "scenario": "Guard outcome is illustrative; server not run"
+    },
+    {
+      "name": "leave_leader_unresolved_denied_request",
+      "schema": "GlobalMembershipCommand",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_room_revision": 7,
+        "expected_persistent_membership_revision": 3,
+        "context_token": "synthetic-schema-token-not-usable-leave"
+      },
+      "schema_valid": true,
+      "expected_server_allowed": false
+    },
+    {
+      "name": "end_global_last_member_N_only_context",
+      "schema": "CommonContext",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "command": "end",
+          "room_revision": 7,
+          "persistent_membership_revision": 3,
+          "context_token": "synthetic-schema-token-not-usable-end",
+          "issued_at": "2026-10-21T03:00:00Z",
+          "expires_at": "2026-10-21T03:02:00Z",
+          "impact_cycles": [
+            {
+              "target_cycle_key": "2026-10-28",
+              "room_cycle_id": "00000000-0000-4000-8000-000000000010",
+              "generation": 1,
+              "target_revision": 4,
+              "leadership": {
+                "leader_cycle_member_id": "00000000-0000-4000-8000-000000000008",
+                "leader_membership_id": "00000000-0000-4000-8000-000000000009",
+                "leadership_revision": 2
+              },
+              "member_count": 1,
+              "assignment_count": 1,
+              "reservation_count": 0,
+              "members_revision": 4,
+              "plan_revision": 5,
+              "actor_cycle_member_id": "00000000-0000-4000-8000-000000000008",
+              "actor_cycle_member_revision": 4
+            }
+          ],
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          },
+          "expected_cycle_key": "2026-10-21",
+          "authorization_cycle_key": "2026-10-28",
+          "current_settings": {
+            "title": "합성 공통 제목",
+            "scope": "public",
+            "group_id": null,
+            "group_revision": null
+          }
+        }
+      },
+      "schema_valid": true,
+      "scenario": "Guard outcome is illustrative; server not run"
+    },
+    {
+      "name": "end_global_last_member_N_only_request",
+      "schema": "GlobalMembershipCommand",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_room_revision": 7,
+        "expected_persistent_membership_revision": 3,
+        "context_token": "synthetic-schema-token-not-usable-end"
+      },
+      "schema_valid": true,
+      "expected_server_allowed": true
+    },
+    {
+      "name": "end_other_T_participant_denied_context",
+      "schema": "CommonContext",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "command": "end",
+          "room_revision": 7,
+          "persistent_membership_revision": 3,
+          "context_token": "synthetic-schema-token-not-usable-end",
+          "issued_at": "2026-10-21T03:00:00Z",
+          "expires_at": "2026-10-21T03:02:00Z",
+          "impact_cycles": [
+            {
+              "target_cycle_key": "2026-10-21",
+              "room_cycle_id": "00000000-0000-4000-8000-000000000007",
+              "generation": 1,
+              "target_revision": 4,
+              "leadership": {
+                "leader_cycle_member_id": "00000000-0000-4000-8000-000000000008",
+                "leader_membership_id": "00000000-0000-4000-8000-000000000009",
+                "leadership_revision": 2
+              },
+              "member_count": 1,
+              "assignment_count": 1,
+              "reservation_count": 0,
+              "members_revision": 4,
+              "plan_revision": 5,
+              "actor_cycle_member_id": "00000000-0000-4000-8000-000000000008",
+              "actor_cycle_member_revision": 4
+            },
+            {
+              "target_cycle_key": "2026-10-28",
+              "room_cycle_id": "00000000-0000-4000-8000-000000000010",
+              "generation": 1,
+              "target_revision": 4,
+              "leadership": {
+                "leader_cycle_member_id": "00000000-0000-4000-8000-000000000016",
+                "leader_membership_id": "00000000-0000-4000-8000-000000000017",
+                "leadership_revision": 2
+              },
+              "member_count": 1,
+              "assignment_count": 1,
+              "reservation_count": 0,
+              "members_revision": 4,
+              "plan_revision": 5,
+              "actor_cycle_member_id": null,
+              "actor_cycle_member_revision": null
+            }
+          ],
+          "permission": {
+            "allowed": false,
+            "reason": "ROOM_LAST_MEMBER_REQUIRED",
+            "next_change_at": null
+          },
+          "expected_cycle_key": "2026-10-21",
+          "authorization_cycle_key": "2026-10-21",
+          "current_settings": {
+            "title": "합성 공통 제목",
+            "scope": "public",
+            "group_id": null,
+            "group_revision": null
+          }
+        }
+      },
+      "schema_valid": true,
+      "scenario": "Guard outcome is illustrative; server not run"
+    },
+    {
+      "name": "end_other_T_participant_denied_request",
+      "schema": "GlobalMembershipCommand",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_room_revision": 7,
+        "expected_persistent_membership_revision": 3,
+        "context_token": "synthetic-schema-token-not-usable-end"
+      },
+      "schema_valid": true,
+      "expected_server_allowed": false
+    },
+    {
+      "name": "global_fabricated_target_CAS_rejected",
+      "schema": "GlobalMembershipCommand",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_room_revision": 7,
+        "expected_persistent_membership_revision": 3,
+        "context_token": "synthetic-schema-token-not-usable-end",
+        "expected_cycle_member_revision": 1
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "global_unneeded_target_key_rejected",
+      "schema": "GlobalMembershipCommand",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_room_revision": 7,
+        "expected_persistent_membership_revision": 3,
+        "context_token": "synthetic-schema-token-not-usable-end",
+        "target_cycle_key": "2026-10-21"
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "leave_persistent_only_success_ACK",
+      "schema": "GlobalMembershipAck",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "command_id": "00000000-0000-4000-8000-000000000012",
+          "outcome": "applied",
+          "executed_at": "2026-10-21T03:00:00Z",
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "membership_id": "00000000-0000-4000-8000-000000000009",
+          "persistent_membership_revision": 4,
+          "affected_cycle_keys": [],
+          "room_ended": false,
+          "revisions": []
+        }
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "end_global_last_member_success_ACK",
+      "schema": "GlobalMembershipAck",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "command_id": "00000000-0000-4000-8000-000000000012",
+          "outcome": "applied",
+          "executed_at": "2026-10-21T03:00:00Z",
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "membership_id": "00000000-0000-4000-8000-000000000009",
+          "persistent_membership_revision": 4,
+          "affected_cycle_keys": [
+            "2026-10-28"
+          ],
+          "room_ended": true,
+          "revisions": []
+        }
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "N_cancel_preserves_C_request",
+      "schema": "CancellationCommand",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "target_cycle_key": "2026-10-28",
+        "expected_target_revision": 4,
+        "expected_leadership_revision": 2,
+        "context_token": "synthetic-schema-token-not-usable"
+      },
+      "schema_valid": true,
+      "scenario": "Runtime must preserve C; this fixture validates request shape only"
+    },
+    {
+      "name": "create_N_conflict_entire_create_rejected",
+      "schema": "Error",
+      "value": {
+        "error": {
+          "code": "TARGET_CHARACTER_CONFLICT",
+          "message": "합성 거절 예시",
+          "request_id": "00000000-0000-4000-8000-000000000014",
+          "details": {
+            "conflicts": [
+              {
+                "room_id": "00000000-0000-4000-8000-000000000018",
+                "room_title": "본인 권한 내 합성 B방",
+                "target_cycle_key": "2026-10-28",
+                "raid_id": "sample_raid",
+                "character_id": "00000000-0000-4000-8000-000000000002",
+                "can_view_detail": true
+              }
+            ],
+            "available_at": null,
+            "failed_cycle_key": "2026-10-28"
+          }
+        }
+      },
+      "schema_valid": true,
+      "expected_http_status": 409,
+      "no_committed_cycles": []
+    },
+    {
+      "name": "global_leader_guard_error",
+      "schema": "Error",
+      "value": {
+        "error": {
+          "code": "LEADERSHIP_RESOLUTION_REQUIRED",
+          "message": "합성 거절 예시",
+          "request_id": "00000000-0000-4000-8000-000000000014",
+          "details": {
+            "conflicts": [],
+            "available_at": null,
+            "failed_cycle_key": null
+          }
+        }
+      },
+      "schema_valid": true,
+      "expected_http_status": 409
+    },
+    {
+      "name": "global_end_other_T_guard_error",
+      "schema": "Error",
+      "value": {
+        "error": {
+          "code": "ROOM_LAST_MEMBER_REQUIRED",
+          "message": "합성 거절 예시",
+          "request_id": "00000000-0000-4000-8000-000000000014",
+          "details": {
+            "conflicts": [],
+            "available_at": null,
+            "failed_cycle_key": null
+          }
+        }
+      },
+      "schema_valid": true,
+      "expected_http_status": 409
+    },
+    {
+      "name": "global_stale_context_error",
+      "schema": "Error",
+      "value": {
+        "error": {
+          "code": "TARGET_CONTEXT_STALE",
+          "message": "합성 거절 예시",
+          "request_id": "00000000-0000-4000-8000-000000000014",
+          "details": {
+            "conflicts": [],
+            "available_at": null,
+            "failed_cycle_key": null
+          }
+        }
+      },
+      "schema_valid": true,
+      "expected_http_status": 409
+    },
+    {
+      "name": "search_experience_omitted_no_filter",
+      "schema": "Input_contract3_post__v2_raid-rooms_search",
+      "value": {
+        "category": "all",
+        "admission_scope": null,
+        "group_ids": [],
+        "filter_context_token": null,
+        "member_conditions": [],
+        "raid_ids": [],
+        "difficulty_ids": [],
+        "limit": 20,
+        "cursor": null,
+        "target_cycle_key": "2026-10-21"
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "search_experience_empty_no_filter",
+      "schema": "Input_contract3_post__v2_raid-rooms_search",
+      "value": {
+        "category": "all",
+        "admission_scope": null,
+        "group_ids": [],
+        "filter_context_token": null,
+        "member_conditions": [],
+        "raid_ids": [],
+        "difficulty_ids": [],
+        "limit": 20,
+        "cursor": null,
+        "target_cycle_key": "2026-10-21",
+        "experience_levels": []
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "search_experience_stored_null_only",
+      "schema": "Input_contract3_post__v2_raid-rooms_search",
+      "value": {
+        "category": "all",
+        "admission_scope": null,
+        "group_ids": [],
+        "filter_context_token": null,
+        "member_conditions": [],
+        "raid_ids": [],
+        "difficulty_ids": [],
+        "limit": 20,
+        "cursor": null,
+        "target_cycle_key": "2026-10-21",
+        "experience_levels": [
+          "unrestricted"
+        ]
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "search_experience_OR_specific_and_stored_null",
+      "schema": "Input_contract3_post__v2_raid-rooms_search",
+      "value": {
+        "category": "all",
+        "admission_scope": null,
+        "group_ids": [],
+        "filter_context_token": null,
+        "member_conditions": [],
+        "raid_ids": [],
+        "difficulty_ids": [],
+        "limit": 20,
+        "cursor": null,
+        "target_cycle_key": "2026-10-21",
+        "experience_levels": [
+          "experienced",
+          "unrestricted"
+        ]
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "search_experience_same_set_reordered",
+      "schema": "Input_contract3_post__v2_raid-rooms_search",
+      "value": {
+        "category": "all",
+        "admission_scope": null,
+        "group_ids": [],
+        "filter_context_token": null,
+        "member_conditions": [],
+        "raid_ids": [],
+        "difficulty_ids": [],
+        "limit": 20,
+        "cursor": null,
+        "target_cycle_key": "2026-10-21",
+        "experience_levels": [
+          "unrestricted",
+          "experienced"
+        ]
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "search_experience_null_rejected",
+      "schema": "Input_contract3_post__v2_raid-rooms_search",
+      "value": {
+        "category": "all",
+        "admission_scope": null,
+        "group_ids": [],
+        "filter_context_token": null,
+        "member_conditions": [],
+        "raid_ids": [],
+        "difficulty_ids": [],
+        "limit": 20,
+        "cursor": null,
+        "target_cycle_key": "2026-10-21",
+        "experience_levels": null
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "search_experience_duplicate_rejected",
+      "schema": "Input_contract3_post__v2_raid-rooms_search",
+      "value": {
+        "category": "all",
+        "admission_scope": null,
+        "group_ids": [],
+        "filter_context_token": null,
+        "member_conditions": [],
+        "raid_ids": [],
+        "difficulty_ids": [],
+        "limit": 20,
+        "cursor": null,
+        "target_cycle_key": "2026-10-21",
+        "experience_levels": [
+          "experienced",
+          "experienced"
+        ]
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "search_experience_unknown_rejected",
+      "schema": "Input_contract3_post__v2_raid-rooms_search",
+      "value": {
+        "category": "all",
+        "admission_scope": null,
+        "group_ids": [],
+        "filter_context_token": null,
+        "member_conditions": [],
+        "raid_ids": [],
+        "difficulty_ids": [],
+        "limit": 20,
+        "cursor": null,
+        "target_cycle_key": "2026-10-21",
+        "experience_levels": [
+          "unknown"
+        ]
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "search_experience_null_string_rejected",
+      "schema": "Input_contract3_post__v2_raid-rooms_search",
+      "value": {
+        "category": "all",
+        "admission_scope": null,
+        "group_ids": [],
+        "filter_context_token": null,
+        "member_conditions": [],
+        "raid_ids": [],
+        "difficulty_ids": [],
+        "limit": 20,
+        "cursor": null,
+        "target_cycle_key": "2026-10-21",
+        "experience_levels": [
+          "null"
+        ]
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "search_experience_empty_value_rejected",
+      "schema": "Input_contract3_post__v2_raid-rooms_search",
+      "value": {
+        "category": "all",
+        "admission_scope": null,
+        "group_ids": [],
+        "filter_context_token": null,
+        "member_conditions": [],
+        "raid_ids": [],
+        "difficulty_ids": [],
+        "limit": 20,
+        "cursor": null,
+        "target_cycle_key": "2026-10-21",
+        "experience_levels": [
+          ""
+        ]
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "common_settings_C_N_context",
+      "schema": "CommonContext",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "command": "edit_common_settings",
+          "room_revision": 7,
+          "persistent_membership_revision": 3,
+          "context_token": "synthetic-schema-token-not-usable-common_settings_C_N",
+          "issued_at": "2026-10-21T03:00:00Z",
+          "expires_at": "2026-10-21T03:02:00Z",
+          "impact_cycles": [
+            {
+              "target_cycle_key": "2026-10-21",
+              "room_cycle_id": "00000000-0000-4000-8000-000000000007",
+              "generation": 1,
+              "target_revision": 4,
+              "leadership": {
+                "leader_cycle_member_id": "00000000-0000-4000-8000-000000000008",
+                "leader_membership_id": "00000000-0000-4000-8000-000000000009",
+                "leadership_revision": 2
+              },
+              "member_count": 1,
+              "assignment_count": 1,
+              "reservation_count": 0,
+              "members_revision": 4,
+              "plan_revision": 5,
+              "actor_cycle_member_id": "00000000-0000-4000-8000-000000000008",
+              "actor_cycle_member_revision": 4
+            },
+            {
+              "target_cycle_key": "2026-10-28",
+              "room_cycle_id": "00000000-0000-4000-8000-000000000010",
+              "generation": 1,
+              "target_revision": 4,
+              "leadership": {
+                "leader_cycle_member_id": "00000000-0000-4000-8000-000000000008",
+                "leader_membership_id": "00000000-0000-4000-8000-000000000009",
+                "leadership_revision": 2
+              },
+              "member_count": 1,
+              "assignment_count": 1,
+              "reservation_count": 0,
+              "members_revision": 4,
+              "plan_revision": 5,
+              "actor_cycle_member_id": "00000000-0000-4000-8000-000000000008",
+              "actor_cycle_member_revision": 4
+            }
+          ],
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          },
+          "expected_cycle_key": "2026-10-21",
+          "authorization_cycle_key": "2026-10-21",
+          "current_settings": {
+            "title": "합성 공통 제목",
+            "scope": "public",
+            "group_id": null,
+            "group_revision": null
+          }
+        }
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "common_settings_C_N_request",
+      "schema": "CommonSettingsCommand",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_room_revision": 7,
+        "context_token": "synthetic-schema-token-not-usable-common_settings_C_N",
+        "title": "합성 공통 제목 변경",
+        "scope": "public",
+        "group_id": null,
+        "expected_group_revision": null
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "common_settings_C_N_ACK",
+      "schema": "CommonSettingsAck",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "command_id": "00000000-0000-4000-8000-000000000012",
+          "outcome": "applied",
+          "executed_at": "2026-10-21T03:00:00Z",
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "room_revision": 8,
+          "affected_cycle_keys": [
+            "2026-10-21",
+            "2026-10-28"
+          ]
+        }
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "common_settings_C_N_original_ACK_replay",
+      "schema": "CommonSettingsAck",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "command_id": "00000000-0000-4000-8000-000000000012",
+          "outcome": "applied",
+          "executed_at": "2026-10-21T03:00:00Z",
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "room_revision": 8,
+          "affected_cycle_keys": [
+            "2026-10-21",
+            "2026-10-28"
+          ]
+        }
+      },
+      "schema_valid": true,
+      "replay_of": "common_settings_C_N_ACK",
+      "scenario": "Same key/body after expiry, week change or authority transfer; runtime behavior not executed"
+    },
+    {
+      "name": "common_settings_N_only_context",
+      "schema": "CommonContext",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "command": "edit_common_settings",
+          "room_revision": 7,
+          "persistent_membership_revision": 3,
+          "context_token": "synthetic-schema-token-not-usable-common_settings_N_only",
+          "issued_at": "2026-10-21T03:00:00Z",
+          "expires_at": "2026-10-21T03:02:00Z",
+          "impact_cycles": [
+            {
+              "target_cycle_key": "2026-10-28",
+              "room_cycle_id": "00000000-0000-4000-8000-000000000010",
+              "generation": 1,
+              "target_revision": 4,
+              "leadership": {
+                "leader_cycle_member_id": "00000000-0000-4000-8000-000000000008",
+                "leader_membership_id": "00000000-0000-4000-8000-000000000009",
+                "leadership_revision": 2
+              },
+              "member_count": 1,
+              "assignment_count": 1,
+              "reservation_count": 0,
+              "members_revision": 4,
+              "plan_revision": 5,
+              "actor_cycle_member_id": "00000000-0000-4000-8000-000000000008",
+              "actor_cycle_member_revision": 4
+            }
+          ],
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          },
+          "expected_cycle_key": "2026-10-21",
+          "authorization_cycle_key": "2026-10-28",
+          "current_settings": {
+            "title": "합성 공통 제목",
+            "scope": "public",
+            "group_id": null,
+            "group_revision": null
+          }
+        }
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "common_settings_N_only_request",
+      "schema": "CommonSettingsCommand",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_room_revision": 7,
+        "context_token": "synthetic-schema-token-not-usable-common_settings_N_only",
+        "title": "합성 공통 제목 변경",
+        "scope": "public",
+        "group_id": null,
+        "expected_group_revision": null
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "common_settings_N_only_ACK",
+      "schema": "CommonSettingsAck",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "command_id": "00000000-0000-4000-8000-000000000013",
+          "outcome": "applied",
+          "executed_at": "2026-10-21T03:00:00Z",
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "room_revision": 8,
+          "affected_cycle_keys": [
+            "2026-10-28"
+          ]
+        }
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "common_settings_N_only_original_ACK_replay",
+      "schema": "CommonSettingsAck",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "command_id": "00000000-0000-4000-8000-000000000013",
+          "outcome": "applied",
+          "executed_at": "2026-10-21T03:00:00Z",
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "room_revision": 8,
+          "affected_cycle_keys": [
+            "2026-10-28"
+          ]
+        }
+      },
+      "schema_valid": true,
+      "replay_of": "common_settings_N_only_ACK",
+      "scenario": "Same key/body after expiry, week change or authority transfer; runtime behavior not executed"
+    },
+    {
+      "name": "common_settings_noop_ACK",
+      "schema": "CommonSettingsAck",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "command_id": "00000000-0000-4000-8000-000000000013",
+          "outcome": "noop",
+          "executed_at": "2026-10-21T03:00:00Z",
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "room_revision": 7,
+          "affected_cycle_keys": []
+        }
+      },
+      "schema_valid": true
+    },
+    {
+      "name": "common_settings_missing_room_revision_rejected",
+      "schema": "CommonSettingsAck",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "command_id": "00000000-0000-4000-8000-000000000013",
+          "outcome": "applied",
+          "executed_at": "2026-10-21T03:00:00Z",
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "affected_cycle_keys": [
+            "2026-10-28"
+          ]
+        }
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "common_settings_missing_affected_cycle_keys_rejected",
+      "schema": "CommonSettingsAck",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "command_id": "00000000-0000-4000-8000-000000000013",
+          "outcome": "applied",
+          "executed_at": "2026-10-21T03:00:00Z",
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "room_revision": 8
+        }
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "common_settings_fabricated_scope_target_rejected",
+      "schema": "CommonSettingsAck",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "policy_version": "two-cycle-contract-4",
+          "target_cycle_key": "2026-10-28"
+        },
+        "data": {
+          "command_id": "00000000-0000-4000-8000-000000000013",
+          "outcome": "applied",
+          "executed_at": "2026-10-21T03:00:00Z",
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "room_revision": 8,
+          "affected_cycle_keys": [
+            "2026-10-28"
+          ]
+        }
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "common_settings_fabricated_data_target_rejected",
+      "schema": "CommonSettingsAck",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "command_id": "00000000-0000-4000-8000-000000000013",
+          "outcome": "applied",
+          "executed_at": "2026-10-21T03:00:00Z",
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "room_revision": 8,
+          "affected_cycle_keys": [
+            "2026-10-28"
+          ],
+          "target_cycle_key": "2026-10-28"
+        }
+      },
+      "schema_valid": false
+    },
+    {
+      "name": "common_settings_duplicate_affected_cycle_rejected",
+      "schema": "CommonSettingsAck",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-21T03:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "policy_version": "two-cycle-contract-4"
+        },
+        "data": {
+          "command_id": "00000000-0000-4000-8000-000000000013",
+          "outcome": "applied",
+          "executed_at": "2026-10-21T03:00:00Z",
+          "room_id": "00000000-0000-4000-8000-000000000006",
+          "room_revision": 8,
+          "affected_cycle_keys": [
+            "2026-10-28",
+            "2026-10-28"
+          ]
+        }
+      },
+      "schema_valid": false
+    }
+  ],
+  "cas_bindings": [
+    {
+      "context_case": "leave_persistent_only_no_cycle_context",
+      "request_case": "leave_persistent_only_no_cycle_request",
+      "mapping": {
+        "expected_cycle_key": "expected_cycle_key",
+        "expected_room_revision": "room_revision",
+        "expected_persistent_membership_revision": "persistent_membership_revision",
+        "context_token": "context_token"
+      }
+    },
+    {
+      "context_case": "leave_zero_active_effect_after_N_cancel_context",
+      "request_case": "leave_zero_active_effect_after_N_cancel_request",
+      "mapping": {
+        "expected_cycle_key": "expected_cycle_key",
+        "expected_room_revision": "room_revision",
+        "expected_persistent_membership_revision": "persistent_membership_revision",
+        "context_token": "context_token"
+      }
+    },
+    {
+      "context_case": "leave_explicit_global_ordinary_C_N_context",
+      "request_case": "leave_explicit_global_ordinary_C_N_request",
+      "mapping": {
+        "expected_cycle_key": "expected_cycle_key",
+        "expected_room_revision": "room_revision",
+        "expected_persistent_membership_revision": "persistent_membership_revision",
+        "context_token": "context_token"
+      }
+    },
+    {
+      "context_case": "leave_leader_unresolved_denied_context",
+      "request_case": "leave_leader_unresolved_denied_request",
+      "mapping": {
+        "expected_cycle_key": "expected_cycle_key",
+        "expected_room_revision": "room_revision",
+        "expected_persistent_membership_revision": "persistent_membership_revision",
+        "context_token": "context_token"
+      }
+    },
+    {
+      "context_case": "end_global_last_member_N_only_context",
+      "request_case": "end_global_last_member_N_only_request",
+      "mapping": {
+        "expected_cycle_key": "expected_cycle_key",
+        "expected_room_revision": "room_revision",
+        "expected_persistent_membership_revision": "persistent_membership_revision",
+        "context_token": "context_token"
+      }
+    },
+    {
+      "context_case": "end_other_T_participant_denied_context",
+      "request_case": "end_other_T_participant_denied_request",
+      "mapping": {
+        "expected_cycle_key": "expected_cycle_key",
+        "expected_room_revision": "room_revision",
+        "expected_persistent_membership_revision": "persistent_membership_revision",
+        "context_token": "context_token"
+      }
+    }
+  ],
+  "common_settings_flows": [
+    {
+      "context_case": "common_settings_C_N_context",
+      "request_case": "common_settings_C_N_request",
+      "response_case": "common_settings_C_N_ACK"
+    },
+    {
+      "context_case": "common_settings_N_only_context",
+      "request_case": "common_settings_N_only_request",
+      "response_case": "common_settings_N_only_ACK"
+    }
+  ],
+  "get_query_examples": [
+    {
+      "query": "",
+      "meaning": "no experience filter"
+    },
+    {
+      "query": "experience_levels=experienced&experience_levels=unrestricted",
+      "meaning": "OR experienced/SQL NULL"
+    }
+  ]
+}

@@ -10,7 +10,7 @@ from app.raid_rooms.models import Room, Round, Membership, Application, Director
 
 REVISION = '0018_room_application_build'
 # Known additive source revisions; legacy F2 schema/semantics stay intact.
-SUPPORTED_REVISIONS = (REVISION, '0019_integrated_recruitment', '0020_recruitment_sources', '0021_recruitment_weekly_links','0022_recruitment_schedule_heads','0023_recruitment_resume')
+SUPPORTED_REVISIONS = (REVISION, '0019_integrated_recruitment', '0020_recruitment_sources', '0021_recruitment_weekly_links','0022_recruitment_schedule_heads','0023_recruitment_resume','0024_recruitment_cycles','0025_cycle_admissions')
 MODELS = (Room, Round, Membership, Application, DirectoryHead, MemberHead)
 
 
@@ -56,6 +56,12 @@ def require_ready(db, *, integrated=False):
         if versions[0] in SUPPORTED_REVISIONS[5:]:
             from app.raid_rooms.resume_models import ResumeProposal
             models += (ResumeProposal,)
+        if versions[0] in SUPPORTED_REVISIONS[6:]:
+            from app.raid_rooms.cycle_models import CYCLE_MODELS
+            models += CYCLE_MODELS
+        if versions[0] in SUPPORTED_REVISIONS[7:]:
+            from app.raid_rooms.cycle_application_models import CYCLE_ADMISSION_MODELS
+            models += CYCLE_ADMISSION_MODELS
     for model in models:
         table = model.__table__
         name = table.name
@@ -131,3 +137,8 @@ def require_ready(db, *, integrated=False):
 def require_active(db):
     require(list(db.scalars(text('SELECT version_num FROM public.alembic_version')))==['0023_recruitment_resume'])
     require_ready(db,integrated=True)
+
+
+def require_legacy_worker(db):
+    # The old worker may not auto-enrol or expire proposals on the shadow head.
+    require(list(db.scalars(text('SELECT version_num FROM public.alembic_version')))==['0023_recruitment_resume'])

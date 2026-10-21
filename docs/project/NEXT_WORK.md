@@ -1,27 +1,29 @@
 # 다음 실행
 
-2026-10-20, **feat/raid-recruitment**. R3 일정/예약·미래주차, R4 완료/종료·권한/검색, R5 main/worker·OpenAPI/DB 통합을 구현하고 **로컬 API8000·DB0023에 반영**했다. [상세 구현·검증](../ISSUE_13_R3_R5_IMPLEMENTATION.md). 구현 **66244da push·원격 SHA 확인 / [전체58번째 Backend R5 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6287055201) 완료**, Flutter 회신 대기다. main/dev·활동 브랜치는 보존한다.
+2026-10-21 / **feat/raid-recruitment**, W1/W2 완료 구간 로컬 커밋 기준(직전 HEAD6490f69)·기존 실행 구현 cc003e9 계열.
 
-## 다음 실행·완료 조건
+[전체84번째 Flutter · 계약 소비 검토 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6310097083) 기준 **계약0.4.1 / policy two-cycle-contract-4** 유지. [W1](../ISSUE_13_W1_CYCLE_FOUNDATION.md)·[W2-A](../ISSUE_13_W2_READ_SLICE.md)·[W2-B 생성/조회/일반 참가](../ISSUE_13_W2_CYCLE_ADMISSION.md)는 로컬 구현·격리 검증 완료·구간 커밋/미push다. 다음은 **W3**다. W2-B 후보는 main에 미등록이며 W3~W5·실제 서버 공개/Flutter 인수는 미완료다. [전체 작업계획](../ISSUE_13_TWO_CYCLE_WORK_PLAN.md) 기준.
 
-1. 게시·인계 완료. Backend는 이슈13 최신 회신을 확인하고 아래 미완료 매핑/연동 결과를 같은 브랜치에서 처리한다. 기존 전체 실행1133PASS/1FAIL에서 과거 usage 기대값 실패를 수정했고 관련 최신75PASS/159.28초. 마지막 모델/계약·일정/관계·미래주차 추가54PASS/200.83초. 결과를 중복 합산하지 않는다.
-2. Flutter [전체59번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6287178945)의 정렬·남은자리 입력을 수신해 [최종 wire](../ISSUE_13_SEARCH_SORT_SLOTS.md)로 구현·계약 보완했다. 관련5PASS/25.69초, 구현cc003e9 push·원격확인/로컬8000반영/[전체61번째 Backend 회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6291232832) 완료. sort.member_count/direction 및 remaining_slot_counts를 페이지 전 SQL에 결합하며 기존 입력 재질문 대기가 아니다.
+작업 구간 종료마다 검증·문서 갱신 후 커밋한다. push/PR/merge·배포는 기존 승인 범위를 따른다.
 
-3. 게시 후 Flutter는 원격 SHA/원본 OpenAPI 기준 실제 연동·변경 구간 확인 결과를 이슈13에 회신. Backend는 실제 회신을 조회하고 필요한 보완 결과를 같은 이슈에 답한다. 인계 게시와 Flutter 적용/실기기 인수는 별도다. 이슈 종료/merge/운영배포는 수행하지 않는다.
+## 다음 작업 순서
 
-## 보존·검증 경계
+1. **W3 — 다음 주 참가·개방·취소·공대장 위임**: W2-B `cycle_creation/commands/admission/schedule`·0025의 명시 target 저장/일반 참가를 이어 쓴다. 기존 C 참가자 N즉시참가·대체캐릭터·B충돌보존, 명시개방/재개+최초참가·N취소/자동승계·직접위임을 구현한다. 취소 후 같은 세대 재참가는 기존 Assignment를 재활성화하고 새 순번·이벤트로 구간을 남긴다. 완료 Assignment 부활/타 주차 lease 해제는 금지한다. 생성에서 대체 N 캐릭터가 되는 것만으로 기존 C 회원 특례 구현 완료라 하지 않는다.
+2. **W4 — 주차별 일정·완료·공통 관리·전환**: 조율/제출표·확인예약/완료·정정, G1 공통설정·전역leave/end, 06시worker/v1호환. 0024/0025에서 구 API 활성화/worker는 거절하므로 새 worker·v1 adapter·legacy review·닫힘 세대 조회/실행 fixture를 함께 전환한다. 현재 후보 plan의 후속 명령 권한은 아직 준비되지 않았다.
+3. **W5 — 통합 검증·성능·실행 계약·네이티브 인계**: 보존/경합·성능/전체56동작 원본OpenAPI 대조, 소비가능구간 묶음 commit/push·원격확인·인계. 중간 인계도 같은 기준을 충족하면 진행하며 W5까지 일괄 대기하지 않는다. 실제 DB 이행/이미지전환의 대상·영향·승인 범위는 별도다.
 
-추가 migration0016→0023 성공, 볼륨 초기화/기기·Firebase 삭제/실회원 모집 쓰기·provider 호출 없음. 기존49테이블 중48행수·지문 동일, 요청 메타데이터90행은 행수동일/지문차이(기존 만료정리 환경)로 원문 보존 증명 한계를 DEV_LOG에 남긴다. 실행 OpenAPI 전체일치·readiness0023·health200/공개 목록GET200 확인. 합성 자동 HTTP/DB 테스트와 실제 네이티브 인수는 구분한다.
+## 담당·완료 조건
 
-## 별도 보존
+- 다음 Backend: W3. 관련 Issue 본문/최신 회신·Git 상태를 먼저 확인한다. 사용자 추가 제품결정·동일 계약 재검토는 선행 조건이 아니다.
+- 다음 Flutter: 주차메타/actualcycle·계정summary/선택기. 착수 시 실제 준비 경로/실행SHA와 계정·캐시·회원격리 회귀 범위를 확인한다. Backend W1 기반만으로 실제 API 준비 완료를 안내하지 않는다.
+- 최초 생성만 C/N 함께, 이후 참가·탈퇴·위임·완료는 T별 독립이다. L1/G1/A1·기존자료/원ACK 보존 유지. #19 통계 미확정은 별도 후속이다.
 
-- #18 설계5fff83b와기록은활동브랜치89a3248에보존. [전체3번째Flutter](https://github.com/heo0328/lostparty-backend/issues/18#issuecomment-6264981603)는접수/별도소비검토대기이며승인아니다. 모집에자동활동추가를섞지않는다.
-- #15 [전체9번째Flutter](https://github.com/heo0328/lostparty-backend/issues/15#issuecomment-6263145675) 화면수정8937445 dev/push·사용자기기3항목성공보고. 분쟁인수는별도보류다.
-- G3완료구간dev/ce3064f통합·그룹브랜치정리상태유지. #16조건부해산은실제그룹모집원본/정합성후속이다. #17근거검토/#19통계는별도이슈로추적한다.
+## 기준과 실제 상태
 
-
-## 주간 사용횟수 통계 확인 — #19
-
-2026-10-19 읽기확인: [#13전체7번째Flutter 원요구](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6232893737)는#19로이관됐으며아직통계구현/실제집계는없다. 실행DB0016에모집room/round/membership/application표와통계표·통계API가없다. 기존WeeklyState6행중manual완료4행·party완료/활성party는각0이며개인수동체크는모집이용/결과통계로전용하지않는다. 현재한도usage와주간누적이용도분리한다. 통합모집설계의실제생성/참가구간·결과/함께하기이력원천을확보하고#19귀속/마감/coverage정책확정뒤집계·조회로이어간다. 미지원자료는이용0으로보고하지않는다.
-
-Flutter 전체60번째 개인표 UI/GET·PUT 로컬 구현·합성48PASS 수신: 미커밋/미push·실제서버/실회원/기기수동인수전. 다음 Flutter 사용SHA·수동결과/적용범위회신, Backend 불필요한 동일시험 재요청 없음.
+- [계약4판](../ISSUE_13_TWO_CYCLE_CONTRACT_R4.md) + [ACK 보완](../ISSUE_13_COMMON_SETTINGS_ACK_ADDENDUM.md), [전체83번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6310051618). docs/design/issue13-two-cycle.full.openapi.json이 구현 명세이며 core issue13-two-cycle.openapi.json은 재현 입력용이다.
+- 53경로/56동작/204schema, canonical SHA256 fb4c7d065594a9a0e7e8288e5f73179f90b078b68ac4323d1aade5c7a63b42f1. Backend/Flutter 합성84사례·CAS6쌍·endpoint흐름2개와 W1 실행 검증을 구별한다.
+- W1: 신규 0024/10표·주차/세대/실참가·복합 FK/원천 보존·target/06·10시/순번·원 ACK/worker 차단. 관련 고유63사례 확인: 1차56PASS/계약파일1FAIL 후 컨테이너 파일 동기화·보완 재검증17PASS(중복10)로 모두 통과. 제한 LOGIN/합성자료·기존 표 모든 열 지문 보존. 초기21PASS는 중복이다.
+- W2-A: GET /v2/raid-cycles·POST /v2/me/raid-weekly-summary를 main에 연결하고 원본에2경로/10schema 추가. 기존114경로/schema 변경0·현재116경로. 합의 명세의 실제 입력/응답 제약 대조/107고유사례 확인(103+추가3 후 종료이력 제한 보완/신규조회33재검증·추가1), 신규 두 경로·기존 계정/캐시/회원격리·RR/원장·기존 표 보존 확인은 격리 합성자료 기준이다.
+- 별도 검증 이미지에서 FastAPI/원본 전체 일치와 DB0023 readiness 통과. 개발 서버/API 이미지·DB는 전환하지 않았다. 신규 v2 쓰기/target 목록·selector 의존·운영 성능·실회원·기기는 미검증이다. Flutter 인계 전 실제 준비 경로/실행 SHA·게시 상태를 확인한다.
+- W2-B: 후보17경로/19동작·0025 추가3표, C/N 단일 생성·초기순번/리더·원 ACK/롤백, target 검색·상세/개인계획·그룹 projection·본인/신청목록·일반 참가/승인·거절·철회. 신규35PASS 후 최종 조회 보완6PASS 재검증(중복), W1/W2-A·기존 생성/일정/계정·시각 회귀121PASS. 실제 lease 인원/정원·SQL 필터/정렬·T cursor/리더·private plan 권한 격리, N 복사일정 예약0 확인. 상세 증거/후속은 W2-B 문서 참조.
+- W1/W2 코드·문서/기존 설계 도구를 완료 구간 커밋에 포함·미push. 0025까지 shadow head이며 현재 API/worker와 혼용 금지. W2-A 조회만으로 0024/25 이행은 필요 없다. main/OpenAPI116경로는 유지하고 신규 후보는 미등록했다. 설계 builder는 immutable cc003e9 baseline fallback/--base-openapi로 기존 hash를 재현한다. 완료 구간 커밋은 사용자 상시 지시로 수행한다. 새 Flutter 시험 요청/Issue 댓글·push·merge·배포는 없다.

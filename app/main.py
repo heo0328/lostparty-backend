@@ -32,6 +32,7 @@ from app.raid_rooms.management_router import router as recruitment_management_ro
 from app.raid_rooms.search_router import router as recruitment_search_router
 from app.raid_rooms.member_router import router as recruitment_reads_router
 from app.raid_rooms.worker import run as run_recruitment_worker
+from app.raid_rooms.weekly_summary_router import router as weekly_summary_router
 
 
 @asynccontextmanager
@@ -69,6 +70,7 @@ app.include_router(groups_router)
 app.include_router(group_admissions_router)
 app.include_router(ownership_disputes_router)
 app.include_router(bootstrap_router)
+app.include_router(weekly_summary_router)
 for recruitment_api in (recruitment_search_router,recruitment_reads_router,recruitment_router,availability_router,
                         schedule_router,continuation_router,completion_router,recruitment_management_router):
     app.include_router(recruitment_api)

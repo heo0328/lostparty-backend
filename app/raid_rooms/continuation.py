@@ -215,6 +215,8 @@ def opening(principal,rid,key,data):
 
 def process_due():
     with session() as db:
+        from app.raid_rooms.readiness import require_legacy_worker
+        require_legacy_worker(db)
         ids=list(db.scalars(select(Room.id).join(RoomSettings,RoomSettings.room_id==Room.id).where(Room.ended_at.is_(None),
             Room.migration_state=='ready').order_by(Room.id)))
     for rid in ids:
@@ -227,6 +229,8 @@ def process_due():
 
 def process_room(rid):
     with session() as db,db.begin():
+        from app.raid_rooms.readiness import require_legacy_worker
+        require_legacy_worker(db)
         lock(db,'game-mutations-v1');stamp=now(db);room=db.get(Room,rid);value=db.get(RoomSettings,rid)
         target=date.fromisoformat(raids.cycle(stamp).cycle_key)
         changed=False

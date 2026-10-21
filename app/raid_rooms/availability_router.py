@@ -24,12 +24,15 @@ class AvailabilityRoute(APIRoute):
     def allowed_query(self, request):
         return set()
 
+    def repeated_query(self, request):
+        return set()
+
     def get_route_handler(self):
         handler = super().get_route_handler()
 
         async def bounded(request: Request):
             if (set(request.query_params)-self.allowed_query(request) or
-                    any(len(request.query_params.getlist(k))>1 for k in request.query_params) or
+                    any(len(request.query_params.getlist(k))>1 and k not in self.repeated_query(request) for k in request.query_params) or
                     any(len(request.headers.getlist(k)) > 1 for k in ('authorization', 'idempotency-key'))):
                 fail('INVALID_REQUEST', 400)
             if len(request.scope.get('query_string',b''))>self.body_limit:
