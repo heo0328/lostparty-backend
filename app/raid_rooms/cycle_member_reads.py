@@ -16,6 +16,15 @@ from app.raid_rooms.source_models import (ScheduleGroup,ScheduleAlternative,Sess
 from app.raid_rooms.schedule_views import segment_view
 
 
+def read_target(db,uid,rid,key,stamp):
+    from app.raid_rooms import cycles
+    room=commands.base.room(db,uid,rid)
+    _,row=cycles.resolve(db,rid,key,stamp)
+    if row is None:fail('TARGET_NOT_OPEN')
+    admission.capacity(row)
+    return room,row
+
+
 def badge(db,room,uid):
     return room.group_id is not None and db.scalar(select(GroupMembership.id).where(
         GroupMembership.group_id==room.group_id,GroupMembership.user_id==uid,GroupMembership.ended_at.is_(None))) is not None
@@ -61,20 +70,24 @@ def formation(db,row):
     return dict(formation_slots=current,formation_history=history,unplaced_assignments=[])
 
 
-def settings(db,room,row,uid):
+def settings(db,room,row,uid,stamp):
     source=row.settings_snapshot
-    return dict(room_id=room.id,revision=row.settings_revision,room_revision=room.revision,
+    result=dict(room_id=room.id,revision=row.settings_revision,room_revision=room.revision,
         experience_level=source['experience_level'],combat_requirement=source['combat_requirement'],
         continuation=dict(enabled=source['continuation_enabled'],opening_mode='explicit',revision=row.settings_revision),
         scope=room.scope,group_id=room.group_id,admission_mode=source['admission_mode'],
         permissions={name:permission('RECRUITMENT_COMMAND_NOT_READY') for name in
             ('edit_settings','edit_common_settings','open_next_cycle','reopen_next_cycle')},
         leadership=commands.leadership(db,row),my_target_role=directory.role(db,uid,row))
+    from app.raid_rooms.cycle_leadership import action_permissions
+    actions=action_permissions(db,uid,room,row,stamp)
+    for name in ('open_next_cycle','reopen_next_cycle'):result['permissions'][name]=actions[name]
+    return result
 
 
 def detail(principal,rid,key):
     with base.snapshot(principal) as (db,uid,stamp):
-        room,row=commands.resolve(db,uid,rid,key,stamp)
+        room,row=read_target(db,uid,rid,key,stamp)
         mine=db.scalar(select(Member).where(Member.room_id==rid,Member.user_id==uid,Member.ended_at.is_(None)))
         values=[]
         for actual in db.scalars(select(CycleMember).where(CycleMember.cycle_id==row.id,
@@ -103,7 +116,7 @@ def detail(principal,rid,key):
                     party_no=a.party_no,slot_no=a.slot_no) for a,link in owned],comparison=comparison,build=build,is_me=actual.user_id==uid,
                 status='needs_review' if reason else 'valid',status_reason=reason,target_state=actual.state))
         result=dict(scope=scope(stamp,key,row),data=dict(room=directory.card(db,room,row,uid,stamp),
-            settings=settings(db,room,row,uid),members_revision=row.members_revision,members=values,
+            settings=settings(db,room,row,uid,stamp),members_revision=row.members_revision,members=values,
             my_membership=own_view(db,room,row,mine) if mine else None,plan_revision=row.plan_revision,
             permissions=dict(view_detail=permission(),view_plan=permission(None if mine and own_cycle_member(db,row,mine) else 'WEEKLY_PARTICIPANT_REQUIRED')),
             access=dict(state='allowed',policy_snapshot=digest([str(row.id),row.generation,row.revision]),evaluated_at=stamp,issues=[]),
@@ -114,14 +127,13 @@ def detail(principal,rid,key):
 def schedule_fields(db,room,row,mine,stamp):
     graph=schedule.graph
     groups=[];sessions=[];parts=[];segments=[]
-    for group in db.scalars(select(ScheduleGroup).where(ScheduleGroup.room_id==room.id,ScheduleGroup.cycle_key==row.cycle_key)
-            .order_by(ScheduleGroup.id)):
+    for group in sorted(schedule.groups(db,row),key=lambda g:str(g.id)):
         alternatives=[]
         for alt in db.scalars(select(ScheduleAlternative).where(ScheduleAlternative.group_id==group.id).order_by(ScheduleAlternative.id)):
             clock=lambda v:f'{v//60:02}:{v%60:02}' if v is not None else None
             alternatives.append(dict(alternative_id=alt.id,session_id=alt.session_id,weekday=alt.weekday,
                 starts_local=clock(alt.start_minute),leader_latest_start_local=clock(alt.latest_start_minute),item_ids=alt.item_order))
-        groups.append(dict(group_id=group.id,revision=group.revision,client_group_key=group.client_key,
+        groups.append(dict(group_id=group.id,revision=group.revision,client_group_key=db.get(graph.ScheduleHead,group.id).client_key,
             occurrence_mode=group.occurrence_mode,planning_mode=group.planning_mode,day_scope=group.day_scope,required=group.required,
             auto_confirm_additional_members=group.auto_additional_members,alternatives=alternatives,selected_session_id=group.selected_session_id,
             resolution='selected' if group.selected_session_id else 'all' if group.occurrence_mode=='each' else 'unresolved',
@@ -159,7 +171,7 @@ def schedule_fields(db,room,row,mine,stamp):
 
 def plan(principal,rid,key):
     with base.snapshot(principal) as (db,uid,stamp):
-        room,row=commands.resolve(db,uid,rid,key,stamp);mine=base.member(db,uid,room)
+        room,row=read_target(db,uid,rid,key,stamp);mine=base.member(db,uid,room)
         if own_cycle_member(db,row,mine) is None:fail('WEEKLY_PARTICIPANT_REQUIRED',403)
         items=[dict(item_id=i.id,revision=i.revision,raid_id=i.raid_id,difficulty_id=r.difficulty_id,
             catalog_version=r.catalog_version,game_party_size=r.game_party_size,round_id=r.id,round_revision=r.revision,round_state=r.state)
@@ -174,6 +186,8 @@ def plan(principal,rid,key):
             permissions={name:permission('RECRUITMENT_COMMAND_NOT_READY') for name in
                 ('edit_schedule_groups','cancel_target_participation','transfer_leadership','open_next_cycle','reopen_next_cycle',
                  'view_common_context','leave_global','end_global')},leadership=commands.leadership(db,row),
-            my_target_role=directory.role(db,uid,row),target_cycle_key=key,target_state='open',
+            my_target_role=directory.role(db,uid,row),target_cycle_key=key,target_state=commands.target_state(db,row),
             **formation(db,row),**schedule_fields(db,room,row,mine,stamp)))
+        from app.raid_rooms.cycle_leadership import action_permissions
+        result['data']['permissions'].update(action_permissions(db,uid,room,row,stamp))
         return wire.OutputContract3GetV2MeRaidRoomsRoomIdPlan.model_validate(jsonable_encoder(result)).model_dump(mode='json')

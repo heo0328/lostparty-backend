@@ -47,7 +47,7 @@ def member_count(db, target):
 
 
 def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *,
-                 validate_only=False, pending=False, public_origin_application=None, opening=False):
+                 validate_only=False, pending=False, public_origin_application=None, opening=False, replacing=None):
     if pending and not validate_only:
         raise ValueError('Pending validation cannot acquire a lease')
     cycles.target(stamp, target.cycle_key.isoformat())
@@ -82,11 +82,14 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
         fail('ROOM_ITEMS_CHANGED')
     if size != (pairs[0][1].game_party_size if len(pairs) == 1 else 4):
         fail('ROOM_COMPOSITION_CONFLICT')
-    if member is not None and db.scalar(select(CycleMember.id).where(CycleMember.cycle_id == target.id,
+    if replacing is not None and (member is None or replacing.membership_id!=member.id or replacing.user_id!=uid
+            or replacing.cycle_id!=target.id or replacing.generation!=target.generation or replacing.state!='participating'):
+        fail('TARGET_CONTEXT_STALE')
+    if replacing is None and member is not None and db.scalar(select(CycleMember.id).where(CycleMember.cycle_id == target.id,
             CycleMember.generation == target.generation, CycleMember.membership_id == member.id,
             CycleMember.state.in_(('participating', 'completed', 'stopped')))) is not None:
         fail('ROOM_MEMBER_EXISTS')
-    if not pending and member_count(db, target) >= size:
+    if not pending and replacing is None and member_count(db, target) >= size:
         fail('ROOM_FULL')
     plans = []
     # Only the target capacity is visible to the pure composition helper.
@@ -110,17 +113,30 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
             level = None
         if not core.raids.meets_item_level(level, difficulty):
             fail('RAID_ITEM_LEVEL_REQUIRED')
-        state = core.weekly.require_available_for_participation(db, uid, character.id, item.raid_id, target.cycle_key)
+        old=db.scalar(select(Assignment).where(Assignment.round_id==rd.id,Assignment.membership_id==member.id)) if member else None
+        if old is not None and (old.state!='active' if replacing else old.state!='left'):
+            fail('TARGET_CONTEXT_STALE')
+        if replacing is not None and old is None:fail('TARGET_BUNDLE_INCOMPLETE')
+        lease=db.get(WeeklyOccupancy,(uid,character.id,item.raid_id,target.cycle_key))
+        own_lease=replacing is not None and lease is not None and lease.assignment_id==old.id
+        state = db.get(WeeklyState,(uid,character.id,item.raid_id,target.cycle_key)) if own_lease else core.weekly.require_available_for_participation(db, uid, character.id, item.raid_id, target.cycle_key)
+        if own_lease and (state is None or state.active_party_id!=room.id or state.manual_completed_at is not None or state.party_completed_at is not None):
+            fail('WEEKLY_OCCUPANCY_CHANGED')
         if (state.revision if state else 1) != choice.expected_weekly_revision:
             fail('REVISION_CONFLICT')
-        if db.get(WeeklyOccupancy, (uid, character.id, item.raid_id, target.cycle_key)) is not None:
+        if lease is not None and not own_lease:
             fail('WEEKLY_ALREADY_PARTICIPATING')
         if choice.party_no > min(size // 4, rd.game_party_size // 4):
             fail('ROOM_COMPOSITION_CONFLICT')
-        slot = None if pending else core._slot(db, formation, rd, selection, character, choice.party_no)
-        plans.append((item, rd, state, slot))
+        slot = None if pending else core._slot(db, formation, rd, selection, character, choice.party_no,
+            exclude_membership_id=member.id if replacing else None)
+        if replacing is not None and old.party_no==choice.party_no:slot=old.slot_no
+        plans.append((item, rd, state, slot, old))
     if validate_only:
         return member, [], power
+    if replacing is not None:
+        for item,rd,state,slot,old in plans:core.release_assignment(db,old,stamp)
+        db.flush()
     if member is None:
         member = Member(id=uuid.uuid4(), room_id=room.id, user_id=uid, revision=1, joined_at=stamp)
         db.add(member)
@@ -131,13 +147,19 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
     if success:
         build['success_summary'] = deepcopy(success.source_summary)
     assignments = []
-    for item, rd, state, slot in plans:
-        assignment = Assignment(id=uuid.uuid4(), room_id=room.id, item_id=item.id, round_id=rd.id,
+    for item, rd, state, slot, old in plans:
+        values=dict(room_id=room.id, item_id=item.id, round_id=rd.id,
             membership_id=member.id, user_id=uid, character_id=character.id, selected_role=selection.selected_role,
             party_no=choices[item.id].party_no, slot_no=slot, display=core.identity.display(character),
             build=jsonable_encoder(build), ownership_revision=selection.expected_ownership_revision,
-            lifecycle_revision=selection.expected_lifecycle_revision, revision=1, state='active', joined_at=stamp)
-        db.add(assignment)
+            lifecycle_revision=selection.expected_lifecycle_revision, state='active', joined_at=stamp,ended_at=None)
+        if old is None:
+            assignment=Assignment(id=uuid.uuid4(),revision=1,**values)
+            db.add(assignment)
+        else:
+            assignment=old
+            for name,value in values.items():setattr(assignment,name,value)
+            assignment.revision+=1
         if state is None:
             state = WeeklyState(user_id=uid, character_id=character.id, raid_id=item.raid_id,
                 cycle_key=target.cycle_key, revision=1, updated_at=stamp)

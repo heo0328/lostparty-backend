@@ -56,6 +56,11 @@ class AdmissionScope(StrEnum):
     group = 'group'
 
 
+class Intent(StrEnum):
+    open = 'open'
+    reopen = 'reopen'
+
+
 class Outcome(StrEnum):
     applied = 'applied'
     recorded = 'recorded'
@@ -74,6 +79,14 @@ class State(StrEnum):
 class SelectedRole(StrEnum):
     dealer = 'dealer'
     support = 'support'
+
+
+class BAssignmentCAS(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    assignment_id: UUID
+    expected_revision: conint(ge=1, le=2147483647, strict=True)
 
 
 class AppCapacity(IntEnum):
@@ -221,6 +234,17 @@ class BAppRaidRoomsParticipationCommandsTarget(BaseModel):
     expected_weekly_revision: conint(ge=1, le=2147483647, strict=True)
 
 
+class Mode(StrEnum):
+    leave = 'leave'
+    auto_successor = 'auto_successor'
+    close_target = 'close_target'
+
+
+class Action(StrEnum):
+    join_ = 'join'
+    decline = 'decline'
+
+
 class CycleKey(RootModel[date]):
     root: date = Field(
         ...,
@@ -228,9 +252,52 @@ class CycleKey(RootModel[date]):
     )
 
 
+class OpeningEffect(StrEnum):
+    create_and_join = 'create_and_join'
+    reopen_and_join = 'reopen_and_join'
+    already_open = 'already_open'
+
+
+class ItemSetting(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    item_id: UUID
+    difficulty_id: StrictStr
+    catalog_version: StrictStr
+    duration_minutes: conint(ge=10, le=1440, multiple_of=5, strict=True) | None
+
+
 class Phase1(StrEnum):
     current = 'current'
     future = 'future'
+
+
+class Selection(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    registration_id: UUID
+    character_id: UUID
+    selected_role: SelectedRole
+    expected_registration_version: conint(ge=1, le=2147483647, strict=True)
+    expected_ownership_revision: conint(ge=1, le=2147483647, strict=True)
+    expected_roster_revision: conint(ge=1, le=2147483647, strict=True)
+    expected_lifecycle_revision: conint(ge=1, le=2147483647, strict=True)
+    expected_role_summary_version: conint(ge=1, le=2147483647, strict=True)
+    expected_limits_revision: conint(ge=1, le=2147483647, strict=True)
+    expected_usage_revision: conint(ge=1, le=2147483647, strict=True)
+
+
+class Target(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    item_id: UUID
+    round_id: UUID
+    party_no: conint(ge=1, le=2, strict=True)
+    expected_round_revision: conint(ge=1, le=2147483647, strict=True)
+    expected_weekly_revision: conint(ge=1, le=2147483647, strict=True)
 
 
 class Version(RootModel[conint(ge=1, le=2147483647, strict=True)]):
@@ -402,7 +469,7 @@ class State6(StrEnum):
     obsolete = 'obsolete'
 
 
-class Mode(StrEnum):
+class Mode1(StrEnum):
     unscheduled = 'unscheduled'
     manual = 'manual'
     coordinated = 'coordinated'
@@ -511,6 +578,21 @@ class FormationSlot(BaseModel):
     is_leader: StrictBool
 
 
+class EffectScope(StrEnum):
+    target_bundle = 'target_bundle'
+
+
+class Impact(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    effect_scope: EffectScope
+    assignment_count: conint(ge=0, le=5, strict=True)
+    reservation_count: conint(ge=0, strict=True)
+    preserves_other_cycles: Literal[True]
+    preserves_global_membership: Literal[True]
+
+
 class Leadership(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -558,20 +640,16 @@ class Revision(BaseModel):
     revision: Version
 
 
-class Selection(BaseModel):
+class Source(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    registration_id: UUID
-    character_id: UUID
-    selected_role: SelectedRole
-    expected_registration_version: conint(ge=1, le=2147483647, strict=True)
-    expected_ownership_revision: conint(ge=1, le=2147483647, strict=True)
-    expected_roster_revision: conint(ge=1, le=2147483647, strict=True)
-    expected_lifecycle_revision: conint(ge=1, le=2147483647, strict=True)
-    expected_role_summary_version: conint(ge=1, le=2147483647, strict=True)
-    expected_limits_revision: conint(ge=1, le=2147483647, strict=True)
-    expected_usage_revision: conint(ge=1, le=2147483647, strict=True)
+    source_cycle_key: CycleKey
+    membership_id: UUID
+    membership_revision: Version
+    assignment_ids: list[UUID] = Field(..., max_length=5, min_length=1)
+    source_cycle_member_id: UUID
+    source_cycle_member_revision: Version
 
 
 class UnplacedAssignment(BaseModel):
@@ -794,6 +872,30 @@ class ProspectiveCreateItem(BaseModel):
     expected_weekly_revision: Version
 
 
+class CancellationCommand(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    expected_cycle_key: CycleKey
+    target_cycle_key: CycleKey
+    expected_target_revision: Version
+    context_token: constr(min_length=1, max_length=4096, strict=True)
+    expected_leadership_revision: Version
+
+
+class ContinueCommand(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    expected_cycle_key: CycleKey
+    target_cycle_key: CycleKey
+    expected_target_revision: Version
+    context_token: constr(min_length=1, max_length=4096, strict=True)
+    selection: Selection
+    target_items: list[Target] = Field(..., max_length=5, min_length=1)
+    target_session_ids: list[UUID] = Field(..., min_length=0)
+
+
 class InputContract3PostV2RaidRoomApplicationsApplicationIdApprove(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -818,6 +920,28 @@ class InputContract3PostV2RaidRoomApplicationsApplicationIdWithdraw(BaseModel):
     expected_target_revision: Version
 
 
+class InputContract3PostV2RaidRoomsRoomIdCharacterChanges(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    expected_cycle_key: CycleKey
+    expected_room_revision: conint(ge=1, le=2147483647, strict=True)
+    expected_members_revision: conint(ge=1, le=2147483647, strict=True)
+    expected_plan_revision: conint(ge=1, le=2147483647, strict=True)
+    expected_policy_snapshot: StrictStr
+    expected_catalog_version: StrictStr
+    selection_context: BContextRef
+    selection: BSelection
+    target_items: list[BAppRaidRoomsParticipationCommandsTarget] = Field(
+        ..., min_length=1
+    )
+    target_session_ids: list[UUID]
+    assignments: list[BAssignmentCAS]
+    expected_cycle_member_revision: conint(ge=1, le=2147483647, strict=True)
+    target_cycle_key: CycleKey
+    expected_target_revision: Version
+
+
 class InputContract3PostV2RaidRoomsRoomIdJoin(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -836,6 +960,43 @@ class InputContract3PostV2RaidRoomsRoomIdJoin(BaseModel):
     target_session_ids: list[UUID]
     target_cycle_key: CycleKey
     expected_target_revision: Version
+
+
+class OpeningCommand(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    expected_cycle_key: CycleKey
+    target_cycle_key: CycleKey
+    expected_target_revision: Version | None
+    context_token: constr(min_length=1, max_length=4096, strict=True)
+    selection: Selection
+    target_items: list[Target] = Field(..., max_length=5, min_length=1)
+    target_session_ids: list[UUID] = Field(..., min_length=0)
+    intent: Intent
+
+
+class ScopedCommand(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    expected_cycle_key: CycleKey
+    target_cycle_key: CycleKey
+    expected_target_revision: Version
+    context_token: constr(min_length=1, max_length=4096, strict=True)
+
+
+class TransferCommand(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    expected_cycle_key: CycleKey
+    target_cycle_key: CycleKey
+    expected_target_revision: Version
+    context_token: constr(min_length=1, max_length=4096, strict=True)
+    expected_leadership_revision: Version
+    candidate_cycle_member_id: UUID
+    expected_candidate_revision: Version
 
 
 class AckData(BaseModel):
@@ -1016,6 +1177,23 @@ class BScheduleGroup(BaseModel):
     alternatives: list[BAlternativeInput]
 
 
+class ContinuationContextData(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    room_id: UUID
+    action: Action
+    source: Source
+    selection: Selection | None
+    targets: list[Target] = Field(..., max_length=5, min_length=0)
+    target_session_ids: list[UUID] = Field(..., min_length=0)
+    context_token: constr(min_length=1, max_length=4096, strict=True)
+    issued_at: AwareDatetime
+    expires_at: AwareDatetime
+    permission: Permission
+    conflicts: list[Conflict] = Field(..., max_length=5, min_length=0)
+
+
 class CreateAckData(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -1046,6 +1224,28 @@ class ExperienceFilterValues(RootModel[list[ExperienceFilterValue] | None]):
         max_length=6,
         min_length=0,
     )
+
+
+class OpeningContextData(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    room_id: UUID
+    source: Source
+    selection: Selection | None
+    targets: list[Target] = Field(..., max_length=5)
+    target_session_ids: list[UUID] = Field(..., max_length=64)
+    leadership: Leadership | None
+    context_token: constr(min_length=1, max_length=4096, strict=True)
+    issued_at: AwareDatetime
+    expires_at: AwareDatetime
+    opening_effect: OpeningEffect
+    permission: Permission
+    conflicts: list[Conflict] = Field(..., max_length=5)
+    prospective_room_cycle_id: UUID
+    prospective_generation: Version
+    prospective_target_revision: Version
+    item_settings: list[ItemSetting] = Field(..., max_length=5, min_length=1)
 
 
 class Scope(BaseModel):
@@ -1232,7 +1432,7 @@ class BSession(BaseModel):
     revision: conint(ge=1, le=2147483647, strict=True)
     round_ids: list[UUID]
     required: StrictBool
-    mode: Mode
+    mode: Mode1
     state: State7
     schedule_revision: conint(ge=1, le=2147483647, strict=True)
     starts_at: AwareDatetime | None
@@ -1308,6 +1508,18 @@ class BAppRaidRoomsScheduleOutputParticipation(BaseModel):
     permissions: dict[str, BPermission]
 
 
+class LeadershipCandidate(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    cycle_member_id: UUID
+    revision: Version
+    joined_order: JoinedOrder
+    character_id: UUID
+    character_name: StrictStr | None
+    permission: Permission
+
+
 class ProspectiveCreateCycle(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -1320,6 +1532,14 @@ class ProspectiveCreateCycle(BaseModel):
     targets: list[ProspectiveCreateItem] = Field(..., max_length=5, min_length=1)
     permission: Permission
     conflicts: list[Conflict] = Field(..., max_length=5, min_length=0)
+
+
+class ContinuationContext(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    scope: Scope
+    data: ContinuationContextData
 
 
 class CreateAck(BaseModel):
@@ -1389,6 +1609,14 @@ class InputContract3PostV2RaidRoomsSearch(BaseModel):
     cursor: constr(max_length=2048, strict=True) | None
     target_cycle_key: CycleKey
     experience_levels: ExperienceFilterValues | None = None
+
+
+class OpeningContext(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    scope: Scope
+    data: OpeningContextData
 
 
 class OutputContract3GetV2RaidRoomsRoomId(BaseModel):
@@ -1524,6 +1752,38 @@ class BProjectionPage(BaseModel):
     rooms: list[BProjection]
 
 
+class CancellationContextData(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    room_id: UUID
+    context_token: constr(min_length=1, max_length=4096, strict=True)
+    issued_at: AwareDatetime
+    expires_at: AwareDatetime
+    impact: Impact
+    permission: Permission
+    leadership: Leadership
+    members_revision: Version
+    mode: Mode
+    successor: LeadershipCandidate | None
+
+
+class TransferContextData(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    room_id: UUID
+    leadership: Leadership
+    members_revision: Version
+    candidates: list[LeadershipCandidate] = Field(..., max_length=8)
+    context_token: constr(min_length=1, max_length=4096, strict=True)
+    issued_at: AwareDatetime
+    expires_at: AwareDatetime
+    permission: Permission
+    preserves_other_cycles: Literal[True]
+    changes_formation: Literal[False]
+
+
 class BEligibility(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -1549,6 +1809,14 @@ class BScheduleProposal(BaseModel):
     votes: list[BVote]
     my_response: BResponse
     permissions: dict[str, BPermission]
+
+
+class CancellationContext(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    scope: Scope
+    data: CancellationContextData
 
 
 class OutputContract3GetV2GroupsGroupIdRaidRoomMemberProjections(BaseModel):
@@ -1597,6 +1865,14 @@ class OutputContract3GetV2RaidRoomsRoomIdDetail(BaseModel):
     )
     scope: Scope
     data: BDetail
+
+
+class TransferContext(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    scope: Scope
+    data: TransferContextData
 
 
 class BPlan(BaseModel):
@@ -1662,6 +1938,22 @@ class W2Models(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
+    ContinuationContext_1: ContinuationContext | None = Field(
+        None, alias='ContinuationContext'
+    )
+    ContinueCommand_1: ContinueCommand | None = Field(None, alias='ContinueCommand')
+    ScopedCommand_1: ScopedCommand | None = Field(None, alias='ScopedCommand')
+    CancellationContext_1: CancellationContext | None = Field(
+        None, alias='CancellationContext'
+    )
+    CancellationCommand_1: CancellationCommand | None = Field(
+        None, alias='CancellationCommand'
+    )
+    OpeningContext_1: OpeningContext | None = Field(None, alias='OpeningContext')
+    OpeningCommand_1: OpeningCommand | None = Field(None, alias='OpeningCommand')
+    TransferContext_1: TransferContext | None = Field(None, alias='TransferContext')
+    TransferCommand_1: TransferCommand | None = Field(None, alias='TransferCommand')
+    CharacterChange: InputContract3PostV2RaidRoomsRoomIdCharacterChanges | None = None
     Error_1: Error | None = Field(None, alias='Error')
     Projections: OutputContract3GetV2GroupsGroupIdRaidRoomMemberProjections | None = (
         None

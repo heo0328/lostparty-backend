@@ -1,6 +1,6 @@
 # Issue #13 두 주차 모집 구현 작업 계획
 
-2026-10-21 / 담당 Backend / 작업 브랜치 `feat/raid-recruitment` / HEAD `6490f69`.
+2026-10-21 / 담당 Backend / 작업 브랜치 `feat/raid-recruitment` / W1/W2 기준 `917123e` 이후 W3 완료 구간.
 
 ## 현재 기준과 진행 상태
 
@@ -9,9 +9,9 @@
 - 기준: [계약4판](ISSUE_13_TWO_CYCLE_CONTRACT_R4.md) + [공통 설정 ACK 보완](ISSUE_13_COMMON_SETTINGS_ACK_ADDENDUM.md), [전체83번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6310051618).
 - 전체 구현 명세: [full.openapi.json](design/issue13-two-cycle.full.openapi.json), 53경로/56동작/204schema. canonical SHA256 `fb4c7d065594a9a0e7e8288e5f73179f90b078b68ac4323d1aade5c7a63b42f1`. JSON 내부 candidate/not-implemented 표시는 미실행 상태를 나타내며, 검토 대기가 남았다는 뜻으로 해석하지 않는다. 재현 hash를 유지한다.
 - Backend와 Flutter가 독립 재현한 것은 **84개 합성 schema 사례·global CAS 출처6쌍·공통 설정 endpoint 흐름2개**다. 실행 API/DB·원자성·멱등저장소/성능·디바이스 인수는 별도 미완료다.
-- [W1 저장·참가자·공대장 기반](ISSUE_13_W1_CYCLE_FOUNDATION.md)은 로컬 구현·격리 PostgreSQL 검증 완료. W2~W5와 신규 v2 API 공개는 미완료다. 기존 실행 구현은 cc003e9 계열이며 [원본 OpenAPI](../openapi/openapi.yaml)는 기존 실행 계약이다. 실제 개발 DB/API 이미지는 변경하지 않았다.
-- [W2-A 주차 메타·계정summary](ISSUE_13_W2_READ_SLICE.md) 두 경로를 main/실행원본에 추가하고 고유107사례/검증 이미지·DB0023 호환을 확인했다. 기존114경로/schema 변경0. 실제 서버 반영·선택기 전체 의존/인수는 미완료다. 다음은 W2-B 생성·target 조회/검색·일반 참가다.
-- W1/W2-A 코드·설계 문서·명세 도구·작업 계획 모두 미커밋·미push. 기존 미커밋 변경은 보존한다.
+- [W1 저장·참가자·공대장 기반](ISSUE_13_W1_CYCLE_FOUNDATION.md)은 로컬 구현·격리 PostgreSQL 검증 완료. W4~W5와 신규 v2 쓰기 API 공개는 미완료다. 기존 실행 구현은 cc003e9 계열이며 [원본 OpenAPI](../openapi/openapi.yaml)는 기존 실행 계약이다. 실제 개발 DB/API 이미지는 변경하지 않았다.
+- [W2-A 주차 메타·계정summary](ISSUE_13_W2_READ_SLICE.md) 두 경로를 main/실행원본에 추가하고 고유107사례/검증 이미지·DB0023 호환을 확인했다. 기존114경로/schema 변경0. 실제 서버 반영·선택기 전체 의존/인수는 미완료다. [W2-B](ISSUE_13_W2_CYCLE_ADMISSION.md) 생성·조회/일반 참가와 [W3](ISSUE_13_W3_CYCLE_LIFECYCLE.md) 명시 N개방/참가·취소/위임도 로컬 구현·격리 검증 완료다. 후보27경로/29동작은 main에 미등록이다. 다음은 W4다.
+- W1/W2는 `917123e`, W3는 이 기록을 포함한 완료 구간 로컬 커밋으로 관리한다. 미push이며 실제 서버/DB 이행·Flutter 인수는 미완료다. 구 API/worker는0023만 활성화하며 shadow0024~0026과 혼용하지 않는다.
 
 ## 구현 순서와 완료 조건
 
@@ -19,7 +19,7 @@
 |---|---|---|---|---|
 | W1 | 주차별 저장 구조·참가자·공대장 기반 | RoomCycle/target head·generation, 실제 회차 참가자와 persistent 관계 분리, 주차별 leadership/참가순서, 명시 target resolver, 원장·멱등/개방 이벤트 기반, 10시 predicate, 기존 worker 전환 준비 | 격리 DB에서 additive 이행/기존자료 분류·보존, C/N 관계·리더 분리, FK/고유성·signed bigint 순번, 원ACK/동일방 한도 보존, 수06/10시 경계·잘못된target 거절 검증 | 로컬 구현·격리 검증 완료/미게시 |
 | W2 | 주차 조회·검색·생성·일반 참가 | 주차 메타/actualcycle·계정 summary, 생성 context·C/N 원자 생성, 목록/search/detail/plan 등 target 조회, 일반 신청/승인·직접 참가 | C/N 정보·자리·가시권한 분리, 숙련도OR/무관·자리/정렬을 페이지 전 SQL 적용, cursor 조건 결합, 생성 N실패 전체rollback/원ACK 복구, 신청·마지막자리 경합 검증 | [A](ISSUE_13_W2_READ_SLICE.md)·[B](ISSUE_13_W2_CYCLE_ADMISSION.md) 로컬 구현·격리 검증 완료/미게시. B는 후보 라우터·서버 미공개 |
-| W3 | 다음 주 참가·개방·취소·공대장 위임 | 명시 N개방/재개+최초참가, C참가자 N즉시참가·대체캐릭터, 충돌/불참·대상캐릭터변경, N취소·자동승계/직접위임 | source자격 재검사, B방보존·실패시 A점유0, bundle 원자성, N 마지막1인 N만 종료, 명시재개 새generation/기존UUID보존, 참가순번 승계·직접위임시 본인참가 유지·C불변 | W1/W2 의존 |
+| W3 | 다음 주 참가·개방·취소·공대장 위임 | 명시 N개방/재개+최초참가, C참가자 N즉시참가·대체캐릭터, 충돌/불참·대상캐릭터변경, N취소·자동승계/직접위임 | source자격 재검사, B방보존·실패시 A점유0, bundle 원자성, N 마지막1인 N만 종료, 명시재개 새generation/기존UUID보존, 참가순번 승계·직접위임시 본인참가 유지·C불변 | [W3](ISSUE_13_W3_CYCLE_LIFECYCLE.md) 로컬 구현·격리 검증 완료/미게시 |
 | W4 | 주차별 일정·완료·공통 관리·전환 | 일정/개인표·투표·확인예약, 현재주차 완료/미완료·정정/재개, 공통설정·전역leave/end, 06시 worker·v1 호환 adapter | 명시확인 없는 복사일정 예약0, 완료 T=C·수10시부터, C완료시N불변, G1 공통권한·GlobalScope ACK, persistent CAS/영향0·quota, 중복worker/원ACK·legacy자료 보존 | W1~W3 의존 |
 | W5 | 통합 검증·성능·실행 계약·네이티브 인계 | 자료 보존/전체 회귀·SQL성능 측정, 원본 OpenAPI/FastAPI 전체 대조, 실제 소비 가능 구간 묶음의 commit/push·원격확인·인계 | 검증한 경로/환경·실행SHA/게시여부·미준비/미확인 범위 명시, Flutter가 소비할 실제 경로 준비 증명, Flutter 적용·실기기·운영완료를 구별 | 통합 마무리 미실행 |
 
@@ -50,4 +50,6 @@ Flutter가 밝힌 다음 작은 구간은 **주차 메타/actualcycle·계정 su
 
 W5는 통합 완료 단계이며 중간 인계를 마지막까지 미룬다는 의미가 아니다. 실제 소비 가능한 구간은 **해당 의존/보존/검증 완료 → 구현+원본OpenAPI 일치 → commit/push·원격확인 → 이슈 #13 인계** 순서로 묶어 전달한다. 불완전한 쓰기·구 worker 혼용 상태는 실행서버에 노출하지 않는다. 실행 DB 이행/이미지 전환은 그 시점의 대상·영향·승인 범위를 확인하고 기능 계약 확정만으로 실행하지 않는다.
 
-다음 작업자는 이슈 본문·최신 댓글/작업트리·원격 상태를 확인한 뒤 **W3부터** 이어간다. 사용자 추가 제품결정이나 네이티브의 동일 계약 재회신을 선행 조건으로 두지 않는다. W1/W2는 로컬 구현·격리 검증까지이며 W2-B 후보의 실제 서버 공개/worker·v1 전환은 하지 않았다.
+다음 작업자는 이슈 본문·최신 댓글/작업트리·원격 상태를 확인한 뒤 **W4부터** 이어간다. 사용자 추가 제품결정이나 네이티브의 동일 계약 재회신을 선행 조건으로 두지 않는다. W1~W3는 로컬 구현·격리 검증까지이며 후보의 실제 서버 공개/worker·v1 전환은 하지 않았다.
+
+W4는 W3 취소/재참가에서 보존한 이전 예약·동의와 새 동의 구간을 분리하고, 명시 불참 결정의 summary projection을 연결한다. 이전 CycleSubmission은 취소 이벤트에 보존하고 현재 head는 정리하므로 재참가 시 이전 제출/확인을 자동 복원하지 않는다.

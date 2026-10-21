@@ -29,7 +29,7 @@ def card(db,room,row,uid,stamp):
     leader_assignment=db.scalar(select(Assignment).join(CycleAssignment,CycleAssignment.assignment_id==Assignment.id).where(
         CycleAssignment.cycle_member_id==leader['leader_cycle_member_id']).order_by(Assignment.id).limit(1))
     mine=db.scalar(select(Member.id).where(Member.room_id==room.id,Member.user_id==uid,Member.ended_at.is_(None))) if uid else None
-    groups=list(db.scalars(select(ScheduleGroup).where(ScheduleGroup.room_id==room.id,ScheduleGroup.cycle_key==row.cycle_key)))
+    groups=schedule.groups(db,row)
     starts=[s.starts_at for s in schedule.sessions(db,row) if s.state=='confirmed']
     items=[dict(item_id=i.id,raid_id=i.raid_id,difficulty_id=r.difficulty_id,game_party_size=r.game_party_size,round_id=r.id)
         for i,r in admission.rounds(db,row)]
@@ -45,7 +45,7 @@ def card(db,room,row,uid,stamp):
         permissions=dict(view_detail=permission(None if uid else 'AUTH_REQUIRED'),
             view_plan=permission(None if role(db,uid,row)!='none' else 'WEEKLY_PARTICIPANT_REQUIRED')),
         leadership=leader,my_target_role=role(db,uid,row),target_cycle_key=row.cycle_key.isoformat(),
-        target_state='open' if row.state=='open' else 'review_required',target_revision=row.revision,
+        target_state=commands.target_state(db,row),target_revision=row.revision,
         room_cycle_id=row.id,target_generation=row.generation)
 
 

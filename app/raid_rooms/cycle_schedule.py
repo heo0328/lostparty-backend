@@ -11,8 +11,17 @@ from app.raid_rooms import scheduling as graph, cycle_admission as admission
 from app.raid_rooms.cycle_application_models import CycleSession, CycleSessionSegment
 from app.raid_rooms.integrated_models import RecruitmentSession as Session, RecruitmentSegment as Segment
 from app.raid_rooms.source_models import (ScheduleGroup, ScheduleAlternative, SessionBinding,
-    SegmentDurationEvidence)
+    SegmentDurationEvidence,SessionParticipation)
 from app.raid_rooms.schedule_heads import ScheduleHead
+
+
+def groups(db,target):
+    if target.generation==1:
+        return list(db.scalars(select(ScheduleGroup).where(ScheduleGroup.room_id==target.room_id,
+            ScheduleGroup.cycle_key==target.cycle_key)))
+    from app.raid_rooms.cycle_lifecycle_models import CycleScheduleGroup
+    return list(db.scalars(select(ScheduleGroup).join(CycleScheduleGroup,CycleScheduleGroup.group_id==ScheduleGroup.id).where(
+        CycleScheduleGroup.cycle_id==target.id,CycleScheduleGroup.generation==target.generation)))
 
 
 def local_start(key,weekday,clock):
@@ -56,8 +65,14 @@ def enrol(db, target, member, selected, stamp, *, creating=False, copied=False):
     deadlines(db, target, selected, stamp)
     for session in sessions(db, target):
         if creating or db.get(SessionBinding, session.id).required or session.id in selected:
+            old=db.scalar(select(SessionParticipation).where(SessionParticipation.session_id==session.id,
+                SessionParticipation.membership_id==member.id))
+            if old is not None and old.state=='ended':
+                old.state='active';old.revision+=1
+                old.confirmation_state='confirmation_pending' if session.state=='confirmed' else 'not_required'
+                old.confirmed_at=old.confirmed_schedule_revision=None
             graph.participation(db, session, member,
-                confirm=session.state == 'confirmed' and not copied, stamp=stamp)
+                confirm=creating and session.state == 'confirmed' and not copied, stamp=stamp)
 
 
 def install(db, room, target, inputs, member, stamp, *, copied=False):
@@ -82,12 +97,15 @@ def install(db, room, target, inputs, member, stamp, *, copied=False):
         if len({a.client_alternative_key for a in value.alternatives}) != len(value.alternatives):
             fail('INVALID_REQUEST', 400)
         group = ScheduleGroup(id=uuid.uuid4(), room_id=room.id, cycle_key=target.cycle_key,
-            client_key=value.client_group_key, revision=1, occurrence_mode=value.occurrence_mode,
+            client_key=value.client_group_key if target.generation==1 else f'g{target.generation}-{uuid.uuid4().hex}', revision=1, occurrence_mode=value.occurrence_mode,
             planning_mode=value.planning_mode, day_scope=value.day_scope, required=value.required,
             auto_additional_members=value.auto_confirm_additional_members)
         db.add(group)
         db.flush()
-        db.add(ScheduleHead(group_id=group.id, client_key=group.client_key, active=True))
+        db.add(ScheduleHead(group_id=group.id, client_key=value.client_group_key, active=True))
+        if target.generation>1:
+            from app.raid_rooms.cycle_lifecycle_models import CycleScheduleGroup
+            db.add(CycleScheduleGroup(group_id=group.id,room_id=room.id,cycle_id=target.id,generation=target.generation))
         for choice in value.alternatives:
             if choice.existing_session_id is not None or choice.expected_session_revision is not None:
                 fail('INVALID_REQUEST', 400)

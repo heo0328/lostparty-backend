@@ -10,7 +10,7 @@ from app.raid_rooms.models import Room, Round, Membership, Application, Director
 
 REVISION = '0018_room_application_build'
 # Known additive source revisions; legacy F2 schema/semantics stay intact.
-SUPPORTED_REVISIONS = (REVISION, '0019_integrated_recruitment', '0020_recruitment_sources', '0021_recruitment_weekly_links','0022_recruitment_schedule_heads','0023_recruitment_resume','0024_recruitment_cycles','0025_cycle_admissions')
+SUPPORTED_REVISIONS = (REVISION, '0019_integrated_recruitment', '0020_recruitment_sources', '0021_recruitment_weekly_links','0022_recruitment_schedule_heads','0023_recruitment_resume','0024_recruitment_cycles','0025_cycle_admissions','0026_cycle_lifecycle')
 MODELS = (Room, Round, Membership, Application, DirectoryHead, MemberHead)
 
 
@@ -62,6 +62,9 @@ def require_ready(db, *, integrated=False):
         if versions[0] in SUPPORTED_REVISIONS[7:]:
             from app.raid_rooms.cycle_application_models import CYCLE_ADMISSION_MODELS
             models += CYCLE_ADMISSION_MODELS
+        if versions[0] in SUPPORTED_REVISIONS[8:]:
+            from app.raid_rooms.cycle_lifecycle_models import CYCLE_LIFECYCLE_MODELS
+            models += CYCLE_LIFECYCLE_MODELS
     for model in models:
         table = model.__table__
         name = table.name
@@ -114,7 +117,7 @@ def require_ready(db, *, integrated=False):
             where = index.dialect_options['postgresql'].get('where')
             if where is not None:
                 require(normalized(actual.get('dialect_options', {}).get('postgresql_where', '')) == normalized(where))
-        privileges = ('SELECT','INSERT','UPDATE','DELETE') if name == 'recruitment_weekly_occupancies' else ('SELECT','INSERT','UPDATE')
+        privileges = ('SELECT','INSERT','UPDATE','DELETE') if name in ('recruitment_weekly_occupancies','recruitment_cycle_submissions') else ('SELECT','INSERT','UPDATE')
         for privilege in privileges:
             require(db.scalar(text('SELECT has_table_privilege(current_user, :name, :privilege)'),
                               dict(name='public.'+name, privilege=privilege)))

@@ -1,4 +1,4 @@
-"""Generate static DTOs for the W2 candidate, without runtime docs dependencies.
+"""Generate static DTOs for the W2/W3 candidate, without runtime docs dependencies.
 
 Run in a disposable tooling venv with datamodel-code-generator==0.86.0.
 The checked-in generated module is the application input, not this tool.
@@ -11,6 +11,9 @@ import subprocess
 import tempfile
 
 ROOTS={
+    **{n:n for n in ('ContinuationContext','ContinueCommand','ScopedCommand','CancellationContext','CancellationCommand',
+        'OpeningContext','OpeningCommand','TransferContext','TransferCommand')},
+    'CharacterChange':'Input_contract3_post__v2_raid-rooms_room_id_character-changes',
     'Error':'Error',
     'Projections':'Output_contract3_get__v2_groups_group_id_raid-room-member-projections',
     'Create':'Input_contract3_post__v2_raid-rooms',

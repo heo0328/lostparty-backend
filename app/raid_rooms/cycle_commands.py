@@ -29,9 +29,17 @@ def resolve(db, uid, rid, key, stamp, *, write=False):
 def leadership(db,row):
     generation=db.get(CycleGeneration,(row.id,row.generation))
     leader=db.get(CycleMember,generation.leader_cycle_member_id) if generation else None
+    if generation is not None and generation.state=='cancelled' and leader is None:
+        return dict(leader_cycle_member_id=None,leadership_revision=generation.leadership_revision,leader_membership_id=None)
     if generation is None or leader is None:fail('ROOM_REVIEW_REQUIRED')
     return dict(leader_cycle_member_id=leader.id,leadership_revision=generation.leadership_revision,
         leader_membership_id=leader.membership_id)
+
+
+def target_state(db,row):
+    generation=db.get(CycleGeneration,(row.id,row.generation))
+    return {'cancelled':'cancelled','completed':'completed','stopped':'stopped_incomplete',
+        'review_required':'review_required'}.get(generation.state,'open')
 
 
 def require_leader(db,uid,row):
@@ -104,10 +112,13 @@ def preflight(db,uid,room,row,cid,role,intent,stamp):
 
 
 def get_context(principal,rid,key,cid,role,intent):
+    if intent=='change_character':
+        from app.raid_rooms import cycle_character
+        return cycle_character.get(principal,rid,key,cid,role)
     with base.snapshot(principal) as (db,uid,stamp):
         room,row=resolve(db,uid,rid,key,stamp)
         return wire.OutputContract3GetV2RaidRoomsRoomIdAdmissionContext.model_validate(jsonable_encoder(
-            preflight(db,uid,room,row,cid,role,intent,stamp))).model_dump(mode='json')
+            preflight(db,uid,room,row,cid,role,intent,stamp))).model_dump(mode='json',exclude_unset=True)
 
 
 def ack(db,command_id,room,row,member,assignments,stamp):

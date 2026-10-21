@@ -1695,3 +1695,16 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 사용자 지시: 작업 구간을 하나 끝낼 때 커밋한다. AGENTS와 개발 작업 흐름에 검증·문서 갱신 후 구간 커밋/재승인 불필요 규칙을 반영했다. push/PR/merge·배포의 별도 승인 범위는 유지한다.
 - 직전 HEAD6490f69 이후 보존 중이던 #13 합의 설계/고정 계약·W1 기반·W2-A 조회·W2-B 생성/조회/일반 참가·검증·관련 문서를 이번 완료 구간 커밋에 함께 포함한다. 현재 실제 실행 소스의 OpenAPI116경로와 shadow 후보17경로/19동작을 구별하며 후보는 main에 미등록이다.
 - 검증 근거는 직전 W2-B 신규35PASS·최종 보완6PASS(중복)·회귀121PASS다. 이번은 커밋/문서 규칙 반영이므로 서버/DB 시험을 불필요하게 재실행하지 않고 변경 범위·구문·계약 hash·비밀 파일 제외·diff 공백을 확인한다. push·Issue 게시·merge·배포·실제 DB 변경은 하지 않는다. 현재 커밋 식별은 이 항목을 포함한 커밋과 git log를 기준으로 확인한다.
+
+
+## 2026-10-21 — #13 W3 명시 N개방·참가·취소/승계·위임
+
+- 사용자 W3 진행 지시에 따라 시작 문서/계약·Git·Issue #13 본문/전체84댓글을 확인했다. 마지막은 전체84번째 Flutter 계약 소비 검토 마감이며 기준0.4.1/policy4와 canonical hash는 불변이다. feat/raid-recruitment·W1/W2 커밋917123e 이후 깨끗한 작업트리에서 시작했고 Flutter 로컬 소스를 조회하지 않았다.
+- [W3 기록](../ISSUE_13_W3_CYCLE_LIFECYCLE.md): 0026 추가2표(불변 CycleDecision·세대별 ScheduleGroup 연결), 명시 N개방/재개+최초참가, 유효 C source 특례 참가/대체·B충돌 보존/불참, N취소/결정적 유효순번 승계·T직접위임·미완료 bundle 캐릭터교체를 구현했다. source completed/stopped와 cancelled/removed를 구별하고 old 캐릭터가 무효여도 본인 취소/유효 새 캐릭터 교체는 허용한다.
+- 재참가는 같은 Assignment/CM ID에 새 순번/이벤트·확인 대기를 기록한다. 취소 시 이전 제출표와 display/build/소유·편성/확인 근거는 이벤트에 보존하며 현재 제출 head만 정리한다. N 마지막 취소는 N 세대/신청/일정만 닫고 C·persistent·원 ACK/이전 세대는 유지한다. 명시 reopen은 같은 RoomCycle UUID/새 generation·Round/Session으로 복원한다.
+- W2 후보에10경로/10동작 추가, 합계27경로/29동작. main 미등록·실행원본116경로 유지·구 API/worker는0023만 활성 허용한다. HTTP는 고정 계약 schema/ref/format으로 검증하고, 생성 DTO는 고정 명세에서 생성한 정적 코드다. 생성/검증 사용본 SHA256 593b2dd5e4a30030a1382572b33b2fc8c3c7512de5b83d53ba6f1c8395c3d8c1 일치 확인.
+- 초기2/11PASS 후 확대26PASS/192.25초, W3/W2 후보 묶음63PASS/396.12초. 이들은 중복이므로 합산하지 않는다. 테스트 준비 중 source cancelled/removed 상태와 ended_at의 중간 autoflush 및 power revision 단독 변경이 DB 보호 규칙에 걸려 fixture를 수정했다. 실제 명령 코드의 제약을 완화하지 않았다. 최종 보완 W3 신규30+기존 회귀134 총164PASS/503.70초. W1 주차/원장·W2-A summary·v1 참가/일정/제출·계정 bootstrap·기록시각/실행 FastAPI·원본116경로 전체일치 포함. 기존 BlockingPortal deprecation1건 외 실패 없음.
+- 전용 lostparty-w3-test tmpfs PostgreSQL/제한 LOGIN과 기존 검증 이미지의 lostparty-w3-runner에 현재 소스를 복사해 검증했다. 완료/중단·명시 예약 fixture는 W3 보존/권한 검증이며 W4 완료/확인 HTTP 구현 증거가 아니다. 실제 서버/provider·실회원·기기/운영 성능은 미검증이다.
+- NEXT_WORK/작업계획/AI_CONTEXT/Issue 추적표를 다음 Backend W4로 갱신했다. target 일정/제출/조율/명시 확인예약·새 동의 구간, 완료/정정/현재주 재개·G1 공통/GlobalScope/전역leave/end·06worker/v1/legacy 전환 및 declined summary projection이 남았다. 계약 검토/Flutter 회신 대기는 없다. 새 Issue 댓글·Flutter 시험 요청·push·merge·배포·실제 개발 DB/서버 변경은 하지 않았다. 사용자 상시 규칙에 따라 검증·문서 갱신 후 이번 W3 구간을 로컬 커밋한다.
+- 고정 계약53/56/204·84합성 schema/CAS6쌍/endpoint흐름2개·canonical hash 불변, 정적 DTO 사용본 일치·변경 Python AST·로컬 문서 링크·diff 공백 검사를 통과했다. 합성 schema 검증과 실행164PASS는 별도 증거다.
+- 검증 종료 후 이번 lostparty-w3-runner 및 lostparty-w3-test의 tmpfs 테스트 DB/전용 네트워크만 정리했다. 개발 컨테이너·DB 볼륨·기존 검증 이미지 캐시는 보존했다. 이 항목을 포함한 구간 커밋이 W3 완료 기준이며 git log로 SHA를 확인한다.

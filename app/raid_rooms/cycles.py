@@ -185,7 +185,10 @@ and allocates one target-specific order, in the SAME transaction as admission.
         generation=row.generation, cycle_member_id=member.id, membership_id=member.membership_id,
         user_id=member.user_id, command_id=command_id, action='joined', member_revision=member.revision,
         effective_at=stamp, evidence={'assignments': [{'id': str(a.id), 'revision': a.revision,
-            'round_id': str(a.round_id), 'item_id': str(a.item_id)} for a in assignments]}))
+            'round_id': str(a.round_id), 'item_id': str(a.item_id),'character_id':str(a.character_id),
+            'selected_role':a.selected_role,'party_no':a.party_no,'slot_no':a.slot_no,
+            'display':a.display,'build':a.build,'ownership_revision':a.ownership_revision,
+            'lifecycle_revision':a.lifecycle_revision,'joined_at':a.joined_at.isoformat()} for a in assignments]}))
     touch_directory(db, row.cycle_key)
     db.flush()
     return member

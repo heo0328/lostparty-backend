@@ -12,7 +12,8 @@ def test_all_application_tables_have_database_clocks():
         schema = inspect(c)
         from app.raid_rooms.cycle_models import CYCLE_MODELS
         from app.raid_rooms.cycle_application_models import CYCLE_ADMISSION_MODELS
-        staged = {m.__tablename__ for m in CYCLE_MODELS+CYCLE_ADMISSION_MODELS}
+        from app.raid_rooms.cycle_lifecycle_models import CYCLE_LIFECYCLE_MODELS
+        staged = {m.__tablename__ for m in CYCLE_MODELS+CYCLE_ADMISSION_MODELS+CYCLE_LIFECYCLE_MODELS}
         runtime_tables = set(Base.metadata.tables) - staged
         assert runtime_tables == set(schema.get_table_names()) - {'alembic_version'}
         for table in runtime_tables:

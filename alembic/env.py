@@ -12,6 +12,7 @@ import app.raid_rooms.schedule_heads
 import app.raid_rooms.resume_models
 import app.raid_rooms.cycle_models
 import app.raid_rooms.cycle_application_models
+import app.raid_rooms.cycle_lifecycle_models
 import app.game_accounts.power_success
 import app.groups.models
 import app.groups.admission_models

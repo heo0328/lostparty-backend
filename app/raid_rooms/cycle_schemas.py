@@ -20,3 +20,9 @@ class Admission(CanonicalCycles,wire.InputContract3PostV2RaidRoomsRoomIdJoin):pa
 class Approve(CanonicalCycles,wire.InputContract3PostV2RaidRoomApplicationsApplicationIdApprove):pass
 class Withdraw(CanonicalCycles,wire.InputContract3PostV2RaidRoomApplicationsApplicationIdWithdraw):pass
 class Search(CanonicalCycles,wire.InputContract3PostV2RaidRoomsSearch):pass
+class Continue(CanonicalCycles,wire.ContinueCommand):pass
+class Decline(CanonicalCycles,wire.ScopedCommand):pass
+class Cancel(CanonicalCycles,wire.CancellationCommand):pass
+class Open(CanonicalCycles,wire.OpeningCommand):pass
+class Transfer(CanonicalCycles,wire.TransferCommand):pass
+class Character(CanonicalCycles,wire.InputContract3PostV2RaidRoomsRoomIdCharacterChanges):pass

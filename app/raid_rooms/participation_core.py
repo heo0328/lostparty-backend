@@ -92,11 +92,13 @@ def _room_restrictions(db, room):
             fail('ROOM_RESTRICTED')
 
 
-def _slot(db, room, round, selection, character, party_no):
+def _slot(db, room, round, selection, character, party_no, *, exclude_membership_id=None):
     if party_no>min(room.app_capacity//4,round.game_party_size//4):
         fail('ROOM_COMPOSITION_CONFLICT')
-    rows=list(db.scalars(select(Assignment).where(Assignment.round_id==round.id,
-        Assignment.state=='active',Assignment.party_no==party_no)))
+    query=select(Assignment).where(Assignment.round_id==round.id,
+        Assignment.state=='active',Assignment.party_no==party_no)
+    if exclude_membership_id is not None:query=query.where(Assignment.membership_id!=exclude_membership_id)
+    rows=list(db.scalars(query))
     if len(rows)>=4:fail('ROOM_FULL')
     same=[r for r in rows if r.selected_role==selection.selected_role]
     if ((selection.selected_role=='support' and same) or (selection.selected_role=='dealer' and

@@ -19,6 +19,7 @@ from app.raid_rooms.search_router import FilterContext
 from app.raid_rooms import (cycle_creation as creation, cycle_commands as commands, cycle_wire as s,
     cycle_schemas as inputs, cycle_queries as queries, cycle_member_reads as members,cycle_lists as lists)
 from app.raid_rooms.router import OptionalPrincipal
+from app.raid_rooms import cycle_opening,cycle_continuation,cycle_leadership,cycle_character
 
 
 class CycleRoute(AvailabilityRoute):
@@ -40,6 +41,9 @@ class CycleRoute(AvailabilityRoute):
 
     def allowed_query(self, request):
         if request.method!='GET':return set()
+        if request.url.path.endswith('/continuation-context'):return {'target_cycle_key','action','character_id','selected_role'}
+        if request.url.path.endswith('/opening-context'):return {'target_cycle_key','intent','character_id','selected_role'}
+        if request.url.path.endswith(('/participation-cancellation-context','/leadership-transfer-context')):return {'target_cycle_key'}
         if request.url.path.endswith('/raid-room-member-projections'):return {'room_ids','target_cycle_key','group_ids','filter_context_token'}
         if request.url.path.endswith('/raid-room-filter-context'):return {'group_ids'}
         if request.url.path.endswith('/raid-rooms'):return {'scope','group_id','raid_id','difficulty_id','limit','cursor','target_cycle_key','experience_levels'}
@@ -80,9 +84,9 @@ def create(data:inputs.Create,principal:Principal,key:Key):
     return creation.create(principal,key,data)[1]
 
 
-@router.get('/raid-rooms/{room_id}/admission-context',response_model=s.OutputContract3GetV2RaidRoomsRoomIdAdmissionContext,responses=errors)
+@router.get('/raid-rooms/{room_id}/admission-context',response_model=s.OutputContract3GetV2RaidRoomsRoomIdAdmissionContext,response_model_exclude_unset=True,responses=errors)
 def admission_context(room_id:UUID,principal:Principal,target_cycle_key:str,character_id:UUID,
-    selected_role:Role,intent:Literal['apply','join']):
+    selected_role:Role,intent:Literal['apply','join','change_character']):
     return commands.get_context(principal,room_id,target_cycle_key,character_id,selected_role,intent)
 
 
@@ -181,3 +185,55 @@ def projections(group_id:UUID,principal:Principal,target_cycle_key:str,room_ids:
         gids=[UUID(v) for v in group_ids.split(',')] if group_ids is not None else None
     except ValueError:fail('INVALID_REQUEST',400)
     return lists.projections(principal,group_id,rids,target_cycle_key,filter_context_token,gids)
+
+
+@router.get('/me/raid-rooms/{room_id}/continuation-context',response_model=s.ContinuationContext,responses=errors)
+def continuation_context(room_id:UUID,principal:Principal,target_cycle_key:str,action:Literal['join','decline']='join',
+    character_id:UUID|None=None,selected_role:Role|None=None):
+    return cycle_continuation.get(principal,room_id,target_cycle_key,action,character_id,selected_role)
+
+
+@router.post('/raid-rooms/{room_id}/continuation-participations',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
+def continue_participation(room_id:UUID,principal:Principal,key:Key,data:inputs.Continue):
+    return cycle_continuation.execute(principal,room_id,key,data)[1]
+
+
+@router.post('/raid-rooms/{room_id}/continuation-declines',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
+def decline_continuation(room_id:UUID,principal:Principal,key:Key,data:inputs.Decline):
+    return cycle_continuation.execute(principal,room_id,key,data,decline=True)[1]
+
+
+@router.get('/me/raid-rooms/{room_id}/opening-context',response_model=s.OpeningContext,responses=errors)
+def opening_context(room_id:UUID,principal:Principal,target_cycle_key:str,intent:Literal['open','reopen'],
+    character_id:UUID|None=None,selected_role:Role|None=None):
+    return cycle_opening.get(principal,room_id,target_cycle_key,intent,character_id,selected_role)
+
+
+@router.post('/raid-rooms/{room_id}/recruitment-openings',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
+def open_recruitment(room_id:UUID,principal:Principal,key:Key,data:inputs.Open):
+    return cycle_opening.execute(principal,room_id,key,data)[1]
+
+
+@router.get('/me/raid-rooms/{room_id}/participation-cancellation-context',response_model=s.CancellationContext,responses=errors)
+def cancellation_context(room_id:UUID,principal:Principal,target_cycle_key:str):
+    return cycle_leadership.get_cancel(principal,room_id,target_cycle_key)
+
+
+@router.post('/raid-rooms/{room_id}/participation-cancellations',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
+def cancel_participation(room_id:UUID,principal:Principal,key:Key,data:inputs.Cancel):
+    return cycle_leadership.cancel(principal,room_id,key,data)[1]
+
+
+@router.get('/me/raid-rooms/{room_id}/leadership-transfer-context',response_model=s.TransferContext,responses=errors)
+def transfer_context(room_id:UUID,principal:Principal,target_cycle_key:str):
+    return cycle_leadership.get_transfer(principal,room_id,target_cycle_key)
+
+
+@router.post('/raid-rooms/{room_id}/leadership-transfers',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
+def transfer_leadership(room_id:UUID,principal:Principal,key:Key,data:inputs.Transfer):
+    return cycle_leadership.transfer(principal,room_id,key,data)[1]
+
+
+@router.post('/raid-rooms/{room_id}/character-changes',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
+def change_character(room_id:UUID,principal:Principal,key:Key,data:inputs.Character):
+    return cycle_character.execute(principal,room_id,key,data)[1]
