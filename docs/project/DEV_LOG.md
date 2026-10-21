@@ -1708,3 +1708,11 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - NEXT_WORK/작업계획/AI_CONTEXT/Issue 추적표를 다음 Backend W4로 갱신했다. target 일정/제출/조율/명시 확인예약·새 동의 구간, 완료/정정/현재주 재개·G1 공통/GlobalScope/전역leave/end·06worker/v1/legacy 전환 및 declined summary projection이 남았다. 계약 검토/Flutter 회신 대기는 없다. 새 Issue 댓글·Flutter 시험 요청·push·merge·배포·실제 개발 DB/서버 변경은 하지 않았다. 사용자 상시 규칙에 따라 검증·문서 갱신 후 이번 W3 구간을 로컬 커밋한다.
 - 고정 계약53/56/204·84합성 schema/CAS6쌍/endpoint흐름2개·canonical hash 불변, 정적 DTO 사용본 일치·변경 Python AST·로컬 문서 링크·diff 공백 검사를 통과했다. 합성 schema 검증과 실행164PASS는 별도 증거다.
 - 검증 종료 후 이번 lostparty-w3-runner 및 lostparty-w3-test의 tmpfs 테스트 DB/전용 네트워크만 정리했다. 개발 컨테이너·DB 볼륨·기존 검증 이미지 캐시는 보존했다. 이 항목을 포함한 구간 커밋이 W3 완료 기준이며 git log로 SHA를 확인한다.
+
+
+## 2026-10-21 — W3 커밋 확인·다음 W4 작업 준비
+
+- 사용자 작업내역 커밋/다음 작업 준비 요청에 따라 AGENTS→협업/NEXT_WORK/AI_CONTEXT→계약4판/ACK 보완과 Git을 확인했다. W3는 이미13b655e, W1/W2는917123e에 커밋되어 추가 구현 미커밋 내역은 없었다. feat/raid-recruitment는 origin 추적 기준 ahead2였으며 push/merge·실행 서버/DB 변경은 하지 않았다.
+- GitHub 연결 도구로 Issue #13 본문·전체84댓글을 재조회했다. 최신은 [전체84번째 Flutter · 계약 소비 검토 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6310097083) 그대로이며 새 요청/계약 변경은 없다. Issue 본문의 W1부터 준비 표시는 원격 구현 인계 전 상태이고 현재 로컬 W3 완료/미push 상태는 NEXT_WORK를 따른다. 내부 준비만 수행하므로 변화 없는 댓글은 게시하지 않았다.
+- NEXT_WORK에 W4-A target 제출표/일정·명시확인예약의 첫 코드 대조점·동의 구간/기존 UNIQUE 문제·보존/경합/원ACK·HTTP 검증 완료 조건을 구체화했다. W4-B 완료/정정·W4-C 공통/전역·W4-D worker/v1/legacy/summary 전환 순서와 미완료 상태를 유지한다. 기능 구현/이행은 이번 준비 범위에 포함하지 않는다.
+- 이번은 문서만 변경했으므로 서버/DB 테스트는 재실행하지 않았다. W3 검증 근거는13b655e의164PASS(신규30 포함)/고정 계약 통과 기록을 유지한다. 문서 링크·diff 공백·고정 계약 hash 불변을 확인하고 준비 문서 구간을 로컬 커밋한다. 이 항목의 커밋 SHA는 git log 기준이며 push/Flutter 인수·실제 서버 활성화는 미완료다.

@@ -1,8 +1,8 @@
 # 다음 실행
 
-2026-10-21 / **feat/raid-recruitment**, W1/W2 기준 `917123e` 이후 W3 완료 구간·기존 실행 구현 cc003e9 계열.
+2026-10-21 / **feat/raid-recruitment**, W1/W2 `917123e`·W3 `13b655e` 완료·기존 실행 구현 cc003e9 계열.
 
-[전체84번째 Flutter · 계약 소비 검토 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6310097083) 기준 **계약0.4.1 / policy two-cycle-contract-4** 유지. [W1](../ISSUE_13_W1_CYCLE_FOUNDATION.md)·[W2-A](../ISSUE_13_W2_READ_SLICE.md)·[W2-B](../ISSUE_13_W2_CYCLE_ADMISSION.md)와 [W3 명시 N개방·참가·취소/위임](../ISSUE_13_W3_CYCLE_LIFECYCLE.md)는 로컬 구현·격리 검증 완료다. W1/W2는 `917123e`, W3는 이 기록을 포함한 구간 커밋으로 관리하며 미push다. 다음은 **W4**다. 후보27경로/29동작은 main에 미등록이며 W4~W5·실제 서버 공개/Flutter 인수는 미완료다. [전체 작업계획](../ISSUE_13_TWO_CYCLE_WORK_PLAN.md) 기준.
+[전체84번째 Flutter · 계약 소비 검토 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6310097083) 기준 **계약0.4.1 / policy two-cycle-contract-4** 유지. [W1](../ISSUE_13_W1_CYCLE_FOUNDATION.md)·[W2-A](../ISSUE_13_W2_READ_SLICE.md)·[W2-B](../ISSUE_13_W2_CYCLE_ADMISSION.md)와 [W3 명시 N개방·참가·취소/위임](../ISSUE_13_W3_CYCLE_LIFECYCLE.md)는 로컬 구현·격리 검증 완료다. W1/W2는 `917123e`, W3는 `13b655e`로 관리하며 미push다. 다음은 **W4**다. 후보27경로/29동작은 main에 미등록이며 W4~W5·실제 서버 공개/Flutter 인수는 미완료다. [전체 작업계획](../ISSUE_13_TWO_CYCLE_WORK_PLAN.md) 기준.
 
 작업 구간 종료마다 검증·문서 갱신 후 커밋한다. push/PR/merge·배포는 기존 승인 범위를 따른다.
 
@@ -11,6 +11,16 @@
 1. **W4 — 주차별 일정·완료·공통 관리·전환**: target 제출표/조율·제안/투표·명시 확인/예약, 완료·미완료종료/정정·현재주 재개를 구현한다. 같은 세대 재참가 후 동일 session/schedule_revision의 재확인은 이전 해제 예약을 덮지 않도록 새 동의 구간을 모델링한다. W3는 이전 제출표를 이벤트에 보존하고 head를 정리하며 재참가를 확인 대기/예약0으로 둔다.
 2. **W4 전환 의존**: G1 공통설정·GlobalScope/원ACK·전역leave/end, 06시worker/v1호환·legacy review·닫힘/재개 세대 조회/실행을 함께 검증한다. 새 declined 결정 원천의 계정 summary projection도 연결한다. 구 API/worker는 0024~0026에서 활성화를 거절하므로 후보 쓰기만 먼저 공개하지 않는다. W4 명령은 아직 미준비다.
 3. **W5 — 통합 검증·성능·실행 계약·네이티브 인계**: 보존/경합·성능/전체56동작 원본OpenAPI 대조, 소비가능구간 묶음 commit/push·원격확인·인계. 중간 인계도 같은 기준을 충족하면 진행하며 W5까지 일괄 대기하지 않는다. 실제 DB 이행/이미지전환의 대상·영향·승인 범위는 별도다.
+
+## W4 시작 구간과 완료 조건
+
+다음 실행은 **W4-A target 제출표·일정·명시 확인예약**부터 시작한다. 이는 기존 W4의 내부 구현 순서이며 새 기능/계약을 추가하거나 전체 W4 완료를 뜻하지 않는다.
+
+1. 고정 전체 명세의 `availability-submission` GET/PUT·`schedule-context`·일정 그룹/후보/선택·제안/응답·`participation-confirmations`를 현재 `cycle_models.CycleSubmission`·`cycle_schedule`·`cycle_member_reads`와 대조한다. 개인표 원본은 유지하고 제출은 actual T/generation/CM에 귀속한다. 기존 `availability.py`는 persistent 회원 기준이므로 그대로 v2 target 처리로 재사용하지 않는다.
+2. `source_models.TimeReservation`의 `(participation_id, segment_id, schedule_revision)` UNIQUE와 `scheduling.reserve`의 해제 예약 재사용 거절을 먼저 검토한다. 취소→같은 CM/Assignment 재참가→같은 일정 확인 및 캐릭터교체→재확인이 새 동의 구간으로 기록되도록 additive 이행/원천 모델을 정한다. 이전 해제 예약·시각·원 ACK를 삭제하거나 덮어쓰지 않는다. 실제 다음 Alembic head는 착수 때 확인한다.
+3. 제한 LOGIN/격리 PostgreSQL에서 기존자료·시각 보존, C/N·이전 세대 격리, read-only GET, 복사일정 예약0, 명시확인/재확인·중복/경합·실패 전체 rollback·원 ACK/06경계와 고정 schema HTTP를 확인한다. 같은 주차 재참가 후 이전 제출표/동의 자동 복원이 없고 새 확인이 성공해야 이 구간 완료다. 확인된 구간을 문서 갱신 후 커밋한다.
+
+이후 W4-B 완료/정정·현재주 재개 → W4-C G1 공통 관리·전역 관계 정리 → W4-D 06 worker/v1 adapter·legacy review·declined summary와 활성화 검증을 이어간다. 후보 쓰기는 전환 검증 전 main에 등록하지 않는다. 사용자 추가 제품 입력이나 Flutter의 동일 계약 재검토는 현재 선행 조건이 아니다.
 
 ## 담당·완료 조건
 
