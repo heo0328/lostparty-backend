@@ -10,7 +10,7 @@ from app.raid_rooms.models import Room, Round, Membership, Application, Director
 
 REVISION = '0018_room_application_build'
 # Known additive source revisions; legacy F2 schema/semantics stay intact.
-SUPPORTED_REVISIONS = (REVISION, '0019_integrated_recruitment', '0020_recruitment_sources', '0021_recruitment_weekly_links','0022_recruitment_schedule_heads','0023_recruitment_resume','0024_recruitment_cycles','0025_cycle_admissions','0026_cycle_lifecycle')
+SUPPORTED_REVISIONS = (REVISION, '0019_integrated_recruitment', '0020_recruitment_sources', '0021_recruitment_weekly_links','0022_recruitment_schedule_heads','0023_recruitment_resume','0024_recruitment_cycles','0025_cycle_admissions','0026_cycle_lifecycle','0027_cycle_consents')
 MODELS = (Room, Round, Membership, Application, DirectoryHead, MemberHead)
 
 
@@ -65,6 +65,9 @@ def require_ready(db, *, integrated=False):
         if versions[0] in SUPPORTED_REVISIONS[8:]:
             from app.raid_rooms.cycle_lifecycle_models import CYCLE_LIFECYCLE_MODELS
             models += CYCLE_LIFECYCLE_MODELS
+        if versions[0] in SUPPORTED_REVISIONS[9:]:
+            from app.raid_rooms.cycle_consent_models import CYCLE_CONSENT_MODELS
+            models += CYCLE_CONSENT_MODELS
     for model in models:
         table = model.__table__
         name = table.name
@@ -94,6 +97,12 @@ def require_ready(db, *, integrated=False):
         unique = {tuple(v['column_names']) for v in schema.get_unique_constraints(name, schema='public')}
         for constraint in table.constraints:
             if isinstance(constraint, UniqueConstraint):
+                # The model retains this constraint for the 0023 runtime.
+                # 0027 keeps live (participation,segment) uniqueness and allows
+                # a fresh row after release; old reservation rows are immutable.
+                if (versions[0] in SUPPORTED_REVISIONS[9:] and name=='recruitment_reservations' and
+                        tuple(c.name for c in constraint.columns)==('participation_id','segment_id','schedule_revision')):
+                    continue
                 if versions[0]=='0019_integrated_recruitment' and constraint.name in ('uq_assignment_reservation_owner','uq_segment_reservation_owner'):
                     continue
                 added_weekly_aliases = {
@@ -133,6 +142,11 @@ def require_ready(db, *, integrated=False):
                if mode in ('O', 'A') and kind & 23 == 23
                and function == 'maintain_record_timestamps' and namespace == 'public'}
     require({m.__tablename__ for m in models} <= enabled)
+    if versions[0] in SUPPORTED_REVISIONS[9:]:
+        guards=set(db.scalars(text("""SELECT tgname FROM pg_trigger
+            WHERE NOT tgisinternal AND tgenabled IN ('O','A') AND
+            tgrelid IN ('recruitment_reservations'::regclass,'recruitment_cycle_consents'::regclass)""")))
+        require({'reservation_history_before_write','cycle_consent_immutable'}<=guards)
     head = db.get(DirectoryHead, 1)
     require(head is not None and head.revision >= 1)
 

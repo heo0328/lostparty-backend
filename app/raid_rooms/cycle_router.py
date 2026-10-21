@@ -20,6 +20,7 @@ from app.raid_rooms import (cycle_creation as creation, cycle_commands as comman
     cycle_schemas as inputs, cycle_queries as queries, cycle_member_reads as members,cycle_lists as lists)
 from app.raid_rooms.router import OptionalPrincipal
 from app.raid_rooms import cycle_opening,cycle_continuation,cycle_leadership,cycle_character
+from app.raid_rooms import cycle_times
 
 
 class CycleRoute(AvailabilityRoute):
@@ -41,6 +42,8 @@ class CycleRoute(AvailabilityRoute):
 
     def allowed_query(self, request):
         if request.method!='GET':return set()
+        if request.url.path.endswith('/schedule-context'):return {'target_cycle_key','target_session_id'}
+        if request.url.path.endswith('/raid-schedule-overlaps'):return {'target_cycle_key','limit','cursor'}
         if request.url.path.endswith('/continuation-context'):return {'target_cycle_key','action','character_id','selected_role'}
         if request.url.path.endswith('/opening-context'):return {'target_cycle_key','intent','character_id','selected_role'}
         if request.url.path.endswith(('/participation-cancellation-context','/leadership-transfer-context')):return {'target_cycle_key'}
@@ -237,3 +240,28 @@ def transfer_leadership(room_id:UUID,principal:Principal,key:Key,data:inputs.Tra
 @router.post('/raid-rooms/{room_id}/character-changes',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
 def change_character(room_id:UUID,principal:Principal,key:Key,data:inputs.Character):
     return cycle_character.execute(principal,room_id,key,data)[1]
+
+
+@router.get('/me/raid-rooms/{room_id}/availability-submission',response_model=s.OutputContract3GetV2MeRaidRoomsRoomIdAvailabilitySubmission,responses=errors)
+def get_submission(room_id:UUID,principal:Principal,target_cycle_key:str):
+    return cycle_times.get_submission(principal,room_id,target_cycle_key)
+
+
+@router.put('/me/raid-rooms/{room_id}/availability-submission',response_model=s.OutputContract3GetV2MeRaidRoomsRoomIdAvailabilitySubmission,responses=errors)
+def put_submission(room_id:UUID,principal:Principal,key:Key,data:inputs.Submission):
+    return cycle_times.put_submission(principal,room_id,key,data)[1]
+
+
+@router.get('/me/raid-rooms/{room_id}/schedule-context',response_model=s.OutputContract3GetV2MeRaidRoomsRoomIdScheduleContext,responses=errors)
+def schedule_context(room_id:UUID,principal:Principal,target_cycle_key:str,target_session_id:UUID|None=None):
+    return cycle_times.time_context(principal,room_id,target_cycle_key,target_session_id)
+
+
+@router.get('/me/raid-schedule-overlaps',response_model=s.OutputContract3GetV2MeRaidScheduleOverlaps,responses=errors)
+def schedule_overlaps(principal:Principal,target_cycle_key:str,limit:Limit=20,cursor:Cursor=None):
+    return cycle_times.overlaps(principal,target_cycle_key,limit,cursor)
+
+
+@router.post('/raid-sessions/{session_id}/participation-confirmations',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
+def confirm_participation(session_id:UUID,principal:Principal,key:Key,data:inputs.Confirm):
+    return cycle_times.confirm(principal,session_id,key,data)[1]

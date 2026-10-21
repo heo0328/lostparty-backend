@@ -26,3 +26,5 @@ class Cancel(CanonicalCycles,wire.CancellationCommand):pass
 class Open(CanonicalCycles,wire.OpeningCommand):pass
 class Transfer(CanonicalCycles,wire.TransferCommand):pass
 class Character(CanonicalCycles,wire.InputContract3PostV2RaidRoomsRoomIdCharacterChanges):pass
+class Submission(CanonicalCycles,wire.InputContract3PutV2MeRaidRoomsRoomIdAvailabilitySubmission):pass
+class Confirm(CanonicalCycles,wire.InputContract3PostV2RaidSessionsSessionIdParticipationConfirmations):pass

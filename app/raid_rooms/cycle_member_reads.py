@@ -151,6 +151,7 @@ def schedule_fields(db,room,row,mine,stamp):
             candidate_state='ready' if session.starts_at else 'not_evaluated',permissions=dict(propose_schedule=permission('RECRUITMENT_COMMAND_NOT_READY'))))
         own=db.scalar(select(Participation).where(Participation.session_id==session.id,Participation.membership_id==mine.id))
         if own is not None:
+            from app.raid_rooms.cycle_times import confirm_permission
             reservations=list(db.scalars(select(Reservation).where(Reservation.participation_id==own.id)))
             active=[r for r in reservations if r.released_at is None]
             warnings=[]
@@ -164,7 +165,7 @@ def schedule_fields(db,room,row,mine,stamp):
                 confirmed_schedule_revision=own.confirmed_schedule_revision,
                 reservation_state='active' if active and len(active)==len(values) else 'partial' if active else 'released' if reservations else 'none',
                 overlap_warning='TIME_OVERLAP' in warnings,warnings=warnings,
-                permissions=dict(confirm_participation=permission('RECRUITMENT_COMMAND_NOT_READY'))))
+                permissions=dict(confirm_participation=confirm_permission(db,mine.user_id,row,session.id,stamp))))
     return dict(schedule_state='confirmed' if sessions and all(s['state']=='confirmed' for s in sessions) else 'unconfirmed' if sessions else 'unscheduled',
         schedule_groups=groups,sessions=sessions,session_segments=segments,my_participations=parts,proposals=[])
 

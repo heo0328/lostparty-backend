@@ -1724,3 +1724,17 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 실제 원격 refs/heads/feat/raid-recruitment와 로컬 HEAD가 e8deb02b07d05b27bafd8bd83bd89eee4eed8e29로 일치함을 확인했다. NEXT_WORK/AI_CONTEXT/추적표/작업계획의 현재 미push 표시를 갱신하고 이 게시 기록도 별도 커밋·push한다. 이전 단계 당시 미push 기록은 이력으로 보존한다.
 - Issue #13 본문·전체84댓글을 재조회했다. 최신은 전체84번째 Flutter 계약 소비 검토 마감/동일0.4.1·policy4이며 새 요청은 없다. 다음 Backend는 NEXT_WORK의 W4-A target 제출표·일정·새 동의/명시 확인예약이다. 첫 검토점은 CycleSubmission 귀속 및 이전 해제 예약 UNIQUE/동의 구간 보존이며 이후 완료/공통관리·06worker/v1/legacy·summary 전환을 이어간다. 추가 제품 입력/Flutter 동일 계약 재검토는 선행 조건이 아니다.
 - 이번은 게시/준비 문서 작업으로 기능 코드를 바꾸거나 서버/DB 시험을 반복하지 않았다. W3의164PASS 및 고정 계약 검증 기록을 유지한다. 문서 링크·diff 공백 확인 후 게시하며 main/dev 병합·배포·실제 API/DB 이행·Flutter 시험 요청/Issue 댓글은 하지 않았다. 후보27경로29동작은 아직 main 미등록이다.
+
+
+## 2026-10-21 — #13 W4-A1 target 제출표·명시 확인/새 예약 동의 구간
+
+- 사용자 진행 및 섹션 완료 후 commit/push·GitHub 기록 지시에 따라 AGENTS→협업/NEXT_WORK/AI_CONTEXT→계약4판/ACK 보완·Git·Issue #13 본문/전체84댓글을 조회했다. feat/raid-recruitment·c619cef의 깨끗한 작업트리에서 시작했으며 최신은 전체84번째 Flutter 계약 소비 검토 마감/동일0.4.1·policy4다. Flutter 로컬 소스는 조회하지 않았다.
+- [W4-A1 기록](../ISSUE_13_W4A1_SUBMISSION_CONSENT.md): W4-A를 원천/실제 확인이 필요한 A1 제출표·명시확인예약과 A2 일정 그룹·조율/제안/투표로 나눠 구현한다. A1 후보4경로/5동작(제출 GET/PUT·target 시간 context·본인 overlaps·Session 확인), 실제 CM/일정/참가/target CAS·현재 자격/원장·최종 마감/06경계·원 ACK 우선 복구를 연결했다. A2 초기조율/제안/투표나 W4 전체 완료로 표시하지 않는다.
+- 0027은 불변 CycleConsent1표와 예약 이력 guard를 추가하고 과거 예약의 전체 UNIQUE를 활성 partial UNIQUE로 대체한다. 기존 행/열/시각은 수정하지 않는다. 같은 CM/Assignment/Session/schedule revision의 취소→재가입·캐릭터 교체 후 재확인은 새 예약 UUID/불변 동의로 기록하며 기존 해제 예약·이전 캐릭터/build/제출 근거는 보존한다. 구0023 metadata/worker와 shadow0027의 의미는 readiness에서 구별하며 실제 활성화는 여전히 거절한다.
+- 개인표 저장은 T 제출표/확인/예약을 전파하지 않는다. 제출은 해당 T snapshot으로만 복사하며 없는 개인표를 자동 생성하지 않는다. 실제 T 회원만 제출/시간context에 접근하고 타 방 busy는 익명 시간만 반환한다. overlaps는 본인 actual T/세대/활성 예약만 표시하고 인증 세션·target/currentC·실제 예약/limit로 cursor를 묶는다. 겹침/개인표 밖은 확인을 막지 않는 경고다.
+- 제한 LOGIN/격리 lostparty-w4-test tmpfs PostgreSQL과 cached 검증 이미지의 lostparty-w4-runner에 현재 소스를 복사해 검증했다. 초기13PASS/114.92초 이후 확장13PASS/1FAIL/126.77초에서 target cursor 범위 변경이 공용 decoder의400으로 처리됨을 확인해 scope/시점 revision 결합을 보완했다. 잘못된 model_copy 테스트의 serializer warning은 DTO 재검증으로 교정했다. 최종 서비스16PASS 뒤 HTTP 테스트의 isolated app에 실제 no-store middleware가 없어1FAIL/총151.22초였으며 실제 main.no_store를 테스트 앱에 적용했다. 원본 서버 코드를 임의 변경하거나 검사를 완화하지 않았다. 이 중복 실행은 최종 통계에 합산하지 않는다.
+- 고정 명세53경로56동작204schema·84합성/CAS6쌍/endpoint흐름2개·canonical fb4c7d065594a9a0e7e8288e5f73179f90b078b68ac4323d1aade5c7a63b42f1 불변 검증 통과. 실제 FastAPI/원본116경로 전체일치, 후보31경로34동작/main 미등록 확인. 정적 DTO 생성본/검증 사용본 SHA256 c5a1f9ef7d648ea0d7b49fc52895a3837b8fd455d987ead66997f3061498afc1 일치 확인. 합성 schema 검증과 HTTP/DB 실행 증거는 별도다.
+- NEXT_WORK/기능지도/작업계획/추적표를 다음 Backend W4-A2로 갱신했다. 이후 완료/정정·현재주 재개/G1 공통·전역leave/end/06worker·v1/legacy/declined summary 전환이 남는다. 실제 개발 DB/API 이미지·실회원/provider·Flutter/기기/운영 성능·배포는 변경/검증 범위가 아니다. 이번 구간 검증 종료 후 커밋·push·원격 확인하고 공식 Issue에 결과/다음 담당을 기록한다.
+- 신규 HTTP3+W3 회귀30 총33PASS/253.13초. 최종 서비스16PASS와 합쳐 신규 고유19개/W3 회귀30개를 분리 실행으로 확인했다. 기존 BlockingPortal deprecation1건만 남았고 serializer 경고는 해소됐다. 나머지 기존 기능 회귀는 이어 기록한다.
+- 추가 W2 생성/참가/조회·W1/summary·v1 참가/일정/제출·계정 bootstrap/기록시각 회귀169PASS/469.02초. 이번 고유 확인218개는 서비스16+HTTP3/W3회귀30+기존169의 분리 실행 합계이며 단일218개 실행으로 확대하지 않는다. 신규19/회귀199 모두 확인, 기존 BlockingPortal deprecation1건 외 최종 실패/추가 경고 없음.
+- 검증 종료 후 이번 lostparty-w4-runner·lostparty-w4-test tmpfs DB/전용 네트워크만 정리했다. 개발 컨테이너·DB 볼륨·검증 이미지 캐시는 보존했다. 최종 AST·문서 링크·diff 공백·비밀 파일 제외 및 원격과 기준 HEAD 일치를 확인하고 이번 구간을 커밋·push한다.
