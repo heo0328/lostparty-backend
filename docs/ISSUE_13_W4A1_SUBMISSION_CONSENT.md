@@ -47,3 +47,7 @@ W4-A의 첫 구간인 **실제 T에 귀속한 제출표·본인 명시확인·�
 다음은 **W4-A2 일정 그룹 편집·후보/명시 선택·초기 조율·제안/투표**다. actual T/generation/리더·설정/기간 snapshot/제출 source·동의 구간을 함께 사용해야 한다. legacy `scheduling.reserve/evaluate_initial`의 current-week/persistent 가정을 새 v2 target 명령에 그대로 연결하지 않는다. 새 일정 revision이나 제안 수락에 따른 예약도 원 동의/해제 이력을 보존하도록 본 구간의 원천 모델과 원자 실행을 이어 쓴다.
 
 이후 W4-B 완료/정정·현재주 재개, W4-C G1 공통·전역 관계, W4-D 06 worker/v1·legacy review·declined summary·활성화를 진행한다. 실제 서버/실회원/provider·기기/운영 성능·Flutter 적용은 미확인이다. 이번 구간은 사용자 지시에 따라 검증·문서와 함께 작업 브랜치에 commit/push·원격 확인하여 GitHub에 기록한다. merge/배포·자료 삭제는 수행 범위가 아니다.
+
+## 게시 확인
+
+구현 `6d2b301f8d6f5436026159b6585772aeb5df082b` / feat/raid-recruitment / push·원격 SHA 일치 확인 완료. [전체85번째 Backend · W4-A1 구현/검증 게시](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6314976554)에 결과/한계·다음 Backend W4-A2를 기록하고 Issue 상단도 같은 범위로 갱신했다. 실제 전체85댓글을 재조회해 순서와 게시 원문 일치를 확인했다. 이 게시 링크를 포함한 후속 문서 커밋도 같은 브랜치에 push한다.
