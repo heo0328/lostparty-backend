@@ -5,7 +5,7 @@ worker transitions belong to W4. Copying an N graph never creates consent.
 """
 import uuid
 from datetime import date,datetime,time,timedelta,timezone
-from sqlalchemy import select
+from sqlalchemy import select,func,text
 from app.game_accounts.support import fail
 from app.raid_rooms import scheduling as graph, cycle_admission as admission
 from app.raid_rooms.cycle_application_models import CycleSession, CycleSessionSegment
@@ -15,13 +15,35 @@ from app.raid_rooms.source_models import (ScheduleGroup, ScheduleAlternative, Se
 from app.raid_rooms.schedule_heads import ScheduleHead
 
 
+def planning_enabled(db):
+    return list(db.scalars(text('SELECT version_num FROM public.alembic_version')))==['0028_cycle_planning']
+
+
 def groups(db,target):
+    query=select(ScheduleGroup).join(ScheduleHead,ScheduleHead.group_id==ScheduleGroup.id).where(ScheduleHead.active.is_(True))
     if target.generation==1:
-        return list(db.scalars(select(ScheduleGroup).where(ScheduleGroup.room_id==target.room_id,
-            ScheduleGroup.cycle_key==target.cycle_key)))
+        return list(db.scalars(query.where(ScheduleGroup.room_id==target.room_id,ScheduleGroup.cycle_key==target.cycle_key)))
     from app.raid_rooms.cycle_lifecycle_models import CycleScheduleGroup
-    return list(db.scalars(select(ScheduleGroup).join(CycleScheduleGroup,CycleScheduleGroup.group_id==ScheduleGroup.id).where(
+    return list(db.scalars(query.join(CycleScheduleGroup,CycleScheduleGroup.group_id==ScheduleGroup.id).where(
         CycleScheduleGroup.cycle_id==target.id,CycleScheduleGroup.generation==target.generation)))
+
+
+def alternatives(db,group):
+    if group.day_scope=='any_current_cycle':return []
+    query=select(ScheduleAlternative).where(ScheduleAlternative.group_id==group.id)
+    if planning_enabled(db):
+        from app.raid_rooms.cycle_planning_models import CycleAlternative
+        edition=db.scalar(select(func.max(CycleAlternative.edition)).where(CycleAlternative.group_id==group.id))
+        if edition is not None:query=query.join(CycleAlternative,CycleAlternative.alternative_id==ScheduleAlternative.id).where(CycleAlternative.edition==edition)
+    return list(db.scalars(query.order_by(ScheduleAlternative.id)))
+
+
+def alternative_key(db,alternative):
+    if planning_enabled(db):
+        from app.raid_rooms.cycle_planning_models import CycleAlternative
+        link=db.get(CycleAlternative,alternative.id)
+        if link:return link.client_key
+    return alternative.client_key
 
 
 def local_start(key,weekday,clock):
@@ -34,9 +56,11 @@ def local_start(key,weekday,clock):
     return datetime.combine(day,time(hour,minute),graph.raids.KST).astimezone(timezone.utc)
 
 
-def sessions(db, target):
-    return list(db.scalars(select(Session).join(CycleSession, CycleSession.session_id == Session.id).where(
-        CycleSession.cycle_id == target.id, CycleSession.generation == target.generation).order_by(Session.id)))
+def sessions(db, target, *, history=False):
+    return list(db.scalars(select(Session).join(CycleSession, CycleSession.session_id == Session.id)
+        .join(SessionBinding,SessionBinding.session_id==Session.id).join(ScheduleHead,ScheduleHead.group_id==SessionBinding.group_id).where(
+        CycleSession.cycle_id == target.id, CycleSession.generation == target.generation,ScheduleHead.active.is_(True),
+        True if history else Session.state.in_(('unconfirmed','confirmed'))).order_by(Session.id)))
 
 
 def choices(db, target, stamp):
@@ -59,6 +83,17 @@ def deadlines(db, target, selected, stamp):
     for row in available:
         if (row['required'] or row['session_id'] in selected) and not row['permission']['allowed']:
             fail('RECRUITMENT_CLOSED')
+
+
+def final_deadlines(db,target,selected,stamp,*,join=True):
+    if join:deadlines(db,target,selected,stamp)
+    original={s.id:(s.state,s.schedule_revision) for s in sessions(db,target)}
+    cutoffs=[v['join_deadline'] for v in choices(db,target,stamp) if join and (v['required'] or v['session_id'] in selected) and v['join_deadline'] is not None]
+    def final(check):
+        if any(check>=cutoff for cutoff in cutoffs):fail('RECRUITMENT_CLOSED')
+        for sess in sessions(db,target):
+            if sess.state=='confirmed' and original.get(sess.id)!=(sess.state,sess.schedule_revision) and sess.starts_at<check:fail('SCHEDULE_IN_PAST')
+    return final
 
 
 def enrol(db, target, member, selected, stamp, *, creating=False, copied=False):

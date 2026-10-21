@@ -1,42 +1,30 @@
 # 다음 실행
 
-2026-10-21 / **feat/raid-recruitment**, W1/W2 `917123e`·W3 `13b655e` 완료·기존 실행 구현 cc003e9 계열.
+2026-10-21 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13).
 
-[전체84번째 Flutter · 계약 소비 검토 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6310097083) 기준 **계약0.4.1 / policy two-cycle-contract-4** 유지. [W1](../ISSUE_13_W1_CYCLE_FOUNDATION.md)·[W2-A](../ISSUE_13_W2_READ_SLICE.md)·[W2-B](../ISSUE_13_W2_CYCLE_ADMISSION.md)와 [W3 명시 N개방·참가·취소/위임](../ISSUE_13_W3_CYCLE_LIFECYCLE.md)는 로컬 구현·격리 검증 완료다. W1/W2는 `917123e`, W3는 `13b655e`로 관리한다. W4 준비 `e8deb02`까지 작업 브랜치 push·원격 SHA 일치를 확인했다. [W4-A1 제출표·명시 확인예약](../ISSUE_13_W4A1_SUBMISSION_CONSENT.md) `6d2b301`의 push·원격 SHA 일치 확인 완료. [전체85번째 Backend · W4-A1 게시](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6314976554)에 결과·다음 담당을 기록했다. 다음은 **W4-A2 일정 조율·제안/투표**다. 후보31경로/34동작은 main에 미등록이며 W4-A2~W5·실제 서버 공개/Flutter 인수는 미완료다. [전체 작업계획](../ISSUE_13_TWO_CYCLE_WORK_PLAN.md) 기준.
+W1/W2 `917123e`·W3 `13b655e`·[W4-A1](../ISSUE_13_W4A1_SUBMISSION_CONSENT.md) `6d2b301`의 구현/검증·push를 완료했다. 이번 [W4-A2 일정 조율·제안/투표](../ISSUE_13_W4A2_CYCLE_PLANNING.md)까지 구현·격리 검증하고 구간 commit/push·원격 확인 후 공식 Issue에 기록한다. 게시 SHA/댓글은 해당 기록·DEV_LOG를 따른다. 다음은 **Backend W4-B 완료/정정·현재주 재개**다.
 
-작업 구간 종료마다 검증·문서 갱신 후 커밋한다. 이번 W4 구간은 사용자 지시로 commit/push·원격 확인 후 GitHub에 기록한다. PR/merge·배포는 기존 승인 범위를 따른다.
+작업 시작 시 AGENTS → 협업 규칙 → 이 문서 → AI_CONTEXT → 관련 계약을 읽고 Issue 본문/최신 댓글과 Git·코드를 대조한다. 최신 확인 댓글은 [전체85번째 Backend · W4-A1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6314976554)이며 계약0.4.1/policy two-cycle-contract-4 고정이다. 추가 제품 입력·Flutter의 동일 계약 재검토 대기는 없다. 사용자 지시로 섹션 완료마다 검증·문서 갱신·commit/push·GitHub 기록을 수행한다.
 
-## 다음 작업 순서
+## 다음 W4-B 작업
 
-1. **W4 — 주차별 일정·완료·공통 관리·전환**: target 제출표/조율·제안/투표·명시 확인/예약, 완료·미완료종료/정정·현재주 재개를 구현한다. 같은 세대 재참가 후 동일 session/schedule_revision의 재확인은 이전 해제 예약을 덮지 않도록 새 동의 구간을 모델링한다. W3는 이전 제출표를 이벤트에 보존하고 head를 정리하며 재참가를 확인 대기/예약0으로 둔다.
-2. **W4 전환 의존**: G1 공통설정·GlobalScope/원ACK·전역leave/end, 06시worker/v1호환·legacy review·닫힘/재개 세대 조회/실행을 함께 검증한다. 새 declined 결정 원천의 계정 summary projection도 연결한다. 구 API/worker는 0024~0027에서 활성화를 거절하므로 후보 쓰기만 먼저 공개하지 않는다. W4 명령은 아직 미준비다.
-3. **W5 — 통합 검증·성능·실행 계약·네이티브 인계**: 보존/경합·성능/전체56동작 원본OpenAPI 대조, 소비가능구간 묶음 commit/push·원격확인·인계. 중간 인계도 같은 기준을 충족하면 진행하며 W5까지 일괄 대기하지 않는다. 실제 DB 이행/이미지전환의 대상·영향·승인 범위는 별도다.
+1. 고정 전체 명세의 완료 context·개인 item 완료·공대장 완료·방 전체 이번주 미완료 종료·수동 완료 정정·현재주 재개를 기존 완료/weekly/예약 원천과 대조한다. T=C와 수요일10시 이후 권한을 검사하고 N·persistent 관계를 C 완료만으로 임의 종료하지 않는다.
+2. item별 완료는 해당 item/round/assignment와 정확히 귀속한 남은 segment 예약만 정리한다. 완료 이력과 다른 item의 참가·시각, N·이전 세대, 동의/예약/원 ACK는 보존한다. 본인 전체 완료와 공대장/전체 종료의 권한·함께하기 관계 정리는 합의 계약대로 구분한다.
+3. 현재주 전체 미완료 종료는 실제 C 참가자 권한·미완료 round/남은 타임에 한정한다. 정정/재개는 완료를 자동 복구하거나 이전 assignment/예약/표를 되살리지 않도록 새 원천/세대/동의를 검토한다. 명시 N reopen과 현재주 resume을 혼동하지 않는다.
+4. 제한 LOGIN/전용 tmpfs PostgreSQL에서 대상/권한·수06/10 경계·부분 완료와 정확 귀속 해제·경합/rollback·원 ACK·이전 원천/시각·fixed schema HTTP를 검증한다. 실제 개발 DB·API 이미지는 별도 전환 작업 전까지 유지한다.
 
-## 다음 W4-A2 구간과 완료 조건
+첫 코드 대조점은 `app/raid_rooms/completion.py`·`completion_router.py`·`resume.py`, `app/raid_weekly` 원장과 `cycle_lifecycle`·`cycle_schedule`·`cycle_planning`이다. 기존 완료/재개 코드는 현재 주차·persistent 리더/일정·구 제안 원천을 사용하므로 새 T 권한/세대/불변 표와 대안 edition을 건너뛰어 직접 호출하지 않는다. W4-A2의 `CycleConsent`·`CycleVote`·일정 사건과 기존 해제 예약도 보존 대상으로 포함한다. 추가 shadow 이행을 만들면 `cycle_schedule.planning_enabled`·`cycle_times.ready`·readiness의 명시 허용 revision을 함께 검토한다. 구 API/worker의0023 활성 guard는 전환 검증 전까지 유지한다.
 
-[W4-A1](../ISSUE_13_W4A1_SUBMISSION_CONSENT.md)은 actual T 제출표 GET/PUT·시간 context/본인 겹침·명시 확인예약, 0027 불변 동의/새 예약 구간까지 구현했다. W4-A 전체 완료는 아니다. `cycle_times`의 원자 실행/동의 근거와 현재 `CycleSubmission`을 이어 쓴다.
+## 이후 순서
 
-1. 고정 명세 `schedule-groups` PUT·후보/선택·제안/응답을 `cycle_schedule`·`cycle_member_reads`와 연결한다. actual T/generation의 공대장·설정/기간 snapshot·대상 제출표만 사용한다. 기존 `scheduling.evaluate_initial/proposals`의 현재 주차/persistent 리더·제출표 가정을 그대로 재사용하지 않는다.
-2. 명시 제출/가입/퇴장 뒤 초기 조율 재계산과 후보/정족수·후발 투표를 연결한다. 이미 확정된 일정은 개인표 저장/재제출이나 인원 변동만으로 바꾸지 않는다. 제안 수락·새 일정 revision에 따른 예약도 새 동의/예약 구간으로 기록하고 이전 해제 원천을 보존한다. W3 취소/재참가와 W4-A1 확인은 통과한 회귀 기준이다.
-3. 제한 LOGIN/격리 PostgreSQL에서 C/N·이전 세대 격리, 읽기 무쓰기, floor/점검/5분/24시간/마감, 부분 실패 rollback·원 ACK·정족수/동시 투표·fixed schema HTTP·기존자료/시각 보존을 검증한다. 의미가 맞는 구현/검증 구간을 문서와 함께 commit/push·원격 확인한다.
+- W4-C: G1 공통 설정·GlobalScope/원 ACK·전역leave/end, persistent CAS/권한 내 영향 context·정확한 전체 관계 정리.
+- W4-D: 06worker/v1 adapter·legacy review·declined summary·실제 활성화 준비. 구 API/worker는0023만 활성 허용하며 shadow0024~0028과 혼용하지 않는다.
+- W5: 통합 보존/경합·성능·고정 전체56동작 대조·실제 소비 가능 구간 게시/Flutter 인계. 실제 서버 준비 경로·실행 SHA·미확인 범위를 먼저 확인한다.
 
-이후 W4-B 완료/정정·현재주 재개 → W4-C G1 공통 관리·전역 관계 정리 → W4-D 06 worker/v1 adapter·legacy review·declined summary와 활성화 검증을 이어간다. 후보 쓰기는 전환 검증 전 main에 등록하지 않는다. 사용자 추가 제품 입력이나 Flutter의 동일 계약 재검토는 현재 선행 조건이 아니다.
+## 현재 기준과 인계 경계
 
-## 담당·완료 조건
-
-- 다음 Backend: W4-A2. 관련 Issue 본문/최신 회신·Git 상태를 먼저 확인한다. 사용자 추가 제품결정·동일 계약 재검토는 선행 조건이 아니다.
-- 다음 Flutter: 주차메타/actualcycle·계정summary/선택기. 착수 시 실제 준비 경로/실행SHA와 계정·캐시·회원격리 회귀 범위를 확인한다. Backend W1 기반만으로 실제 API 준비 완료를 안내하지 않는다.
-- 최초 생성만 C/N 함께, 이후 참가·탈퇴·위임·완료는 T별 독립이다. L1/G1/A1·기존자료/원ACK 보존 유지. #19 통계 미확정은 별도 후속이다.
-
-## 기준과 실제 상태
-
-- [계약4판](../ISSUE_13_TWO_CYCLE_CONTRACT_R4.md) + [ACK 보완](../ISSUE_13_COMMON_SETTINGS_ACK_ADDENDUM.md), [전체83번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6310051618). docs/design/issue13-two-cycle.full.openapi.json이 구현 명세이며 core issue13-two-cycle.openapi.json은 재현 입력용이다.
-- 53경로/56동작/204schema, canonical SHA256 fb4c7d065594a9a0e7e8288e5f73179f90b078b68ac4323d1aade5c7a63b42f1. Backend/Flutter 합성84사례·CAS6쌍·endpoint흐름2개와 W1 실행 검증을 구별한다.
-- W1: 신규 0024/10표·주차/세대/실참가·복합 FK/원천 보존·target/06·10시/순번·원 ACK/worker 차단. 관련 고유63사례 확인: 1차56PASS/계약파일1FAIL 후 컨테이너 파일 동기화·보완 재검증17PASS(중복10)로 모두 통과. 제한 LOGIN/합성자료·기존 표 모든 열 지문 보존. 초기21PASS는 중복이다.
-- W2-A: GET /v2/raid-cycles·POST /v2/me/raid-weekly-summary를 main에 연결하고 원본에2경로/10schema 추가. 기존114경로/schema 변경0·현재116경로. 합의 명세의 실제 입력/응답 제약 대조/107고유사례 확인(103+추가3 후 종료이력 제한 보완/신규조회33재검증·추가1), 신규 두 경로·기존 계정/캐시/회원격리·RR/원장·기존 표 보존 확인은 격리 합성자료 기준이다.
-- 별도 검증 이미지에서 FastAPI/원본 전체 일치와 DB0023 readiness 통과. 개발 서버/API 이미지·DB는 전환하지 않았다. 신규 v2 쓰기/target 목록·selector 의존·운영 성능·실회원·기기는 미검증이다. Flutter 인계 전 실제 준비 경로/실행 SHA·게시 상태를 확인한다.
-- W2-B: 후보17경로/19동작·0025 추가3표, C/N 단일 생성·초기순번/리더·원 ACK/롤백, target 검색·상세/개인계획·그룹 projection·본인/신청목록·일반 참가/승인·거절·철회. 신규35PASS 후 최종 조회 보완6PASS 재검증(중복), W1/W2-A·기존 생성/일정/계정·시각 회귀121PASS. 실제 lease 인원/정원·SQL 필터/정렬·T cursor/리더·private plan 권한 격리, N 복사일정 예약0 확인. 상세 증거/후속은 W2-B 문서 참조.
-- W3: 명시 N개방/재개+최초참가·C source 특례/대체/B보존·불참, N취소/자동승계·T직접위임·캐릭터교체·취소 후 재참가. 0026 추가2표/불변 결정·세대별 일정 연결, 원자 rollback·원ACK·C/이전세대 보존 검증. 실행 결과는 [W3 기록](../ISSUE_13_W3_CYCLE_LIFECYCLE.md) 참조.
-- W1/W2·W3와 W4 준비 커밋은 작업 브랜치에 push·원격 확인 완료. 0027까지 shadow head이며 현재 API/worker와 혼용 금지. W2-A 조회만으로 0024~27 이행은 필요 없다. main/OpenAPI116경로는 유지하고 신규 후보는 미등록했다. 설계 builder는 immutable cc003e9 baseline fallback/--base-openapi로 기존 hash를 재현한다. 완료 구간 커밋은 사용자 상시 지시로 수행한다. W4-A1 결과는 전체85번째 Backend 댓글로 게시했다. 새 Flutter 시험 요청·merge·배포는 없다. 소스 push와 실행 서버 활성화는 별도이며 다음 실행은 위 W4-A2부터다.
-
-- W4-A1: 후보4경로/5동작 추가·전체31경로/34동작, shadow0027 불변 동의1표/해제 예약 보존·동일 일정 재확인. 전체 UNIQUE만 대체하고 활성 partial UNIQUE/소유 FK 유지, 실제 이행 전후 기존 행/열·시각 지문 대조. 신규19/회귀199 고유218개 분리 실행 확인·6d2b301 push/원격 확인 완료. 최신 검증·커밋/게시 기록은 [W4-A1](../ISSUE_13_W4A1_SUBMISSION_CONSENT.md)·DEV_LOG 기준이며 W4-A2/W4 나머지는 미완료다.
+- [계약4판](../ISSUE_13_TWO_CYCLE_CONTRACT_R4.md)·[ACK 보완](../ISSUE_13_COMMON_SETTINGS_ACK_ADDENDUM.md)·[전체 작업계획](../ISSUE_13_TWO_CYCLE_WORK_PLAN.md). 구현 명세는 `docs/design/issue13-two-cycle.full.openapi.json`이며 core 파일은 재현 입력이다.
+- 고정53경로/56동작/204schema·canonical SHA256 `fb4c7d065594a9a0e7e8288e5f73179f90b078b68ac4323d1aade5c7a63b42f1`. 합성 schema 검증과 실행 HTTP/DB 검증은 별도 근거다.
+- W4-A2: 실제 T/generation 그룹/후보/선택·초기 조율·세션별 정족수/명시 응답, shadow0028 불변4표·다중 세션 동의. 이전 예약/동의·다른 T/세대·원 ACK 보존. 상세 실행 결과는 A2 기록·DEV_LOG 기준이다.
+- 후보36경로/39동작은 main 미등록, 실행 OpenAPI116경로 유지. 소스 게시와 실제 개발 DB/API 전환·배포는 별도다. 실제 회원/provider/기기·운영 성능·Flutter 인수는 미완료다.
+- 다음 Flutter 구간은 주차 메타/actualcycle·계정summary/선택기이며 실제 서버 의존 준비 후 필요한 범위만 인계한다. 후보 소스 완료만으로 새 시험을 요청하지 않는다. #19 통계 미확정은 별도 후속으로 유지한다.

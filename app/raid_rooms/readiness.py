@@ -10,7 +10,7 @@ from app.raid_rooms.models import Room, Round, Membership, Application, Director
 
 REVISION = '0018_room_application_build'
 # Known additive source revisions; legacy F2 schema/semantics stay intact.
-SUPPORTED_REVISIONS = (REVISION, '0019_integrated_recruitment', '0020_recruitment_sources', '0021_recruitment_weekly_links','0022_recruitment_schedule_heads','0023_recruitment_resume','0024_recruitment_cycles','0025_cycle_admissions','0026_cycle_lifecycle','0027_cycle_consents')
+SUPPORTED_REVISIONS = (REVISION, '0019_integrated_recruitment', '0020_recruitment_sources', '0021_recruitment_weekly_links','0022_recruitment_schedule_heads','0023_recruitment_resume','0024_recruitment_cycles','0025_cycle_admissions','0026_cycle_lifecycle','0027_cycle_consents','0028_cycle_planning')
 MODELS = (Room, Round, Membership, Application, DirectoryHead, MemberHead)
 
 
@@ -68,6 +68,9 @@ def require_ready(db, *, integrated=False):
         if versions[0] in SUPPORTED_REVISIONS[9:]:
             from app.raid_rooms.cycle_consent_models import CYCLE_CONSENT_MODELS
             models += CYCLE_CONSENT_MODELS
+        if versions[0] in SUPPORTED_REVISIONS[10:]:
+            from app.raid_rooms.cycle_planning_models import CYCLE_PLANNING_MODELS
+            models += CYCLE_PLANNING_MODELS
     for model in models:
         table = model.__table__
         name = table.name
@@ -97,6 +100,10 @@ def require_ready(db, *, integrated=False):
         unique = {tuple(v['column_names']) for v in schema.get_unique_constraints(name, schema='public')}
         for constraint in table.constraints:
             if isinstance(constraint, UniqueConstraint):
+                if (versions[0] in SUPPORTED_REVISIONS[10:] and name=='recruitment_cycle_consents' and
+                        tuple(c.name for c in constraint.columns)==('user_id','command_id')):
+                    require(('user_id','command_id','participation_id') in unique)
+                    continue
                 # The model retains this constraint for the 0023 runtime.
                 # 0027 keeps live (participation,segment) uniqueness and allows
                 # a fresh row after release; old reservation rows are immutable.
@@ -147,6 +154,15 @@ def require_ready(db, *, integrated=False):
             WHERE NOT tgisinternal AND tgenabled IN ('O','A') AND
             tgrelid IN ('recruitment_reservations'::regclass,'recruitment_cycle_consents'::regclass)""")))
         require({'reservation_history_before_write','cycle_consent_immutable'}<=guards)
+    if versions[0]=='0028_cycle_planning':
+        from app.raid_rooms.cycle_planning_models import CYCLE_PLANNING_MODELS
+        guarded=set(db.scalars(text("""SELECT c.relname FROM pg_trigger t
+            JOIN pg_class c ON c.oid=t.tgrelid JOIN pg_namespace n ON n.oid=c.relnamespace
+            JOIN pg_proc f ON f.oid=t.tgfoid JOIN pg_namespace fn ON fn.oid=f.pronamespace
+            WHERE n.nspname='public' AND NOT t.tgisinternal AND t.tgenabled IN ('O','A')
+            AND t.tgname='cycle_planning_immutable' AND (t.tgtype & 27)=27
+            AND f.proname='protect_cycle_decision' AND fn.nspname='public'""")))
+        require({m.__tablename__ for m in CYCLE_PLANNING_MODELS}<=guarded)
     head = db.get(DirectoryHead, 1)
     require(head is not None and head.revision >= 1)
 

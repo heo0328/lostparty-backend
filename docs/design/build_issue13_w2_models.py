@@ -11,6 +11,11 @@ import subprocess
 import tempfile
 
 ROOTS={
+    'EditGroupsInput':'Input_contract3_put__v2_raid-rooms_room_id_schedule-groups',
+    'SelectGroupInput':'Input_contract3_post__v2_raid-schedule-groups_group_id_selections',
+    'ProposeInput':'Input_contract3_post__v2_raid-rooms_room_id_schedule-proposals',
+    'RespondInput':'Input_contract3_post__v2_raid-schedule-proposals_proposal_id_responses',
+    'CandidateOutput':'Output_contract3_get__v2_raid-schedule-groups_group_id_candidates',
     'SubmissionInput':'Input_contract3_put__v2_me_raid-rooms_room_id_availability-submission',
     'SubmissionOutput':'Output_contract3_get__v2_me_raid-rooms_room_id_availability-submission',
     'TimeContext':'Output_contract3_get__v2_me_raid-rooms_room_id_schedule-context',

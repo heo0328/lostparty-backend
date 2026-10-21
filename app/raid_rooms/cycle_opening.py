@@ -18,10 +18,10 @@ def schedule_inputs(db,source):
     result=[]
     for group in sorted(schedule.groups(db,source),key=lambda g:str(g.id)):
         alternatives=[]
-        for alt in db.scalars(select(ScheduleAlternative).where(ScheduleAlternative.group_id==group.id).order_by(ScheduleAlternative.id)):
+        for alt in schedule.alternatives(db,group):
             clock=lambda v:f'{v//60:02}:{v%60:02}' if v is not None else None
             if set(alt.item_order)!=set(pairs):fail('ROOM_REVIEW_REQUIRED')
-            alternatives.append(dict(client_alternative_key=alt.client_key,existing_session_id=None,expected_session_revision=None,
+            alternatives.append(dict(client_alternative_key=schedule.alternative_key(db,alt),existing_session_id=None,expected_session_revision=None,
                 weekday=alt.weekday,starts_local=clock(alt.start_minute),leader_latest_start_local=clock(alt.latest_start_minute),
                 item_order=[pairs[i] for i in alt.item_order]))
         result.append(wire.BScheduleGroup.model_validate(dict(client_group_key=db.get(schedule.ScheduleHead,group.id).client_key,

@@ -62,7 +62,7 @@ def execute(principal,rid,command,data):
         if current['catalog_version']!=body['expected_catalog_version']:fail('CATALOG_VERSION_CONFLICT')
         if current['selection']!=body['selection'] or current['targets']!=body['target_items']:fail('TARGET_SCOPE_MISMATCH',400)
         if not current['permissions']['change_character']['allowed']:fail(current['permissions']['change_character']['reason'])
-        schedule.deadlines(db,row,data.target_session_ids,stamp)
+        final_guard=schedule.final_deadlines(db,row,data.target_session_ids,stamp)
         evidence=dict(assignments=[life.assignment_snapshot(a) for a in owned],
             participations=leadership.release_parts(db,row,cm,stamp,ending=False))
         member,_,_=admission.admit_bundle(db,uid,room,row,Selection.model_validate(body['selection']),
@@ -71,5 +71,8 @@ def execute(principal,rid,command,data):
         cm.revision+=1;life.event(db,row,cm,command,'character_changed',stamp,evidence)
         row.revision+=1;row.members_revision+=1;row.plan_revision+=1
         cycles.touch_directory(db,row.cycle_key);db.flush()
-        return 200,life.ack(db,row,command,stamp),lambda final:schedule.deadlines(db,row,data.target_session_ids,final)
+        if schedule.planning_enabled(db):
+            from app.raid_rooms import cycle_planning
+            cycle_planning.refresh(db,room,row,uid,command,stamp)
+        return 200,life.ack(db,row,command,stamp),final_guard
     return cycles.execute(principal,'character',command,dict(room_id=str(rid),body=body),run)

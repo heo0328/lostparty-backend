@@ -155,7 +155,7 @@ def admit(principal,rid,command_id,data,*,applying=False):
         if body['selection']!=jsonable_encoder(current['selection']):fail('REVISION_CONFLICT')
         if not current['permissions'][intent]['allowed']:fail(current['permissions'][intent]['reason'])
         selected=data.target_session_ids
-        schedule.deadlines(db,row,selected,stamp)
+        final_guard=schedule.final_deadlines(db,row,selected,stamp)
         selection=Selection.model_validate(body['selection'])
         targets=[Target.model_validate(t) for t in body['target_items']]
         member,assignments,power=admission.admit_bundle(db,uid,room,row,selection,targets,command_id,stamp,
@@ -176,8 +176,11 @@ def admit(principal,rid,command_id,data,*,applying=False):
             result=(201,application_ack(command_id,app,row,stamp))
         else:
             schedule.enrol(db,row,member,selected,stamp)
+            if schedule.planning_enabled(db):
+                from app.raid_rooms import cycle_planning
+                cycle_planning.refresh(db,room,row,uid,command_id,stamp)
             result=(200,ack(db,command_id,room,row,member,assignments,stamp))
-        return *result,lambda final:schedule.deadlines(db,row,selected,final)
+        return *result,final_guard
     return cycles.execute(principal,intent,command_id,dict(room_id=str(rid),body=body),run)
 
 
@@ -258,16 +261,19 @@ def process(principal,aid,command_id,data,*,action='approve'):
                 old=saved[str(t.item_id)]
                 if old['round_id']!=str(t.round_id):fail('APPLICATION_CONTEXT_CHANGED')
                 t.party_no=old['party_no']
-            schedule.deadlines(db,row,selected,stamp)
+            final_guard=schedule.final_deadlines(db,row,selected,stamp)
             member,assignments,_=admission.admit_bundle(db,app.user_id,room,row,selection,targets,command_id,stamp,
                 public_origin_application=app)
             schedule.enrol(db,row,member,selected,stamp)
+            if schedule.planning_enabled(db):
+                from app.raid_rooms import cycle_planning
+                cycle_planning.refresh(db,room,row,uid,command_id,stamp)
             app.state='accepted'
         else:app.state='withdrawn' if action=='withdraw' else 'rejected'
         app.revision+=1;app.ended_at=stamp;db.flush()
         if action=='approve':
             result=ack(db,command_id,room,row,member,assignments,stamp)
             result['data']['revisions'].append(dict(resource='application',id=app.id,revision=app.revision))
-            return 200,result,lambda final:schedule.deadlines(db,row,selected,final)
+            return 200,result,final_guard
         return 200,application_ack(command_id,app,row,stamp)
     return cycles.execute(principal,action,command_id,dict(application_id=str(aid),body=body),run)

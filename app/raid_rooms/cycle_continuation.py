@@ -78,11 +78,14 @@ def execute(principal,rid,command,data,*,decline=False):
                 fail('TARGET_SCOPE_MISMATCH',400)
             selection=Selection.model_validate(body['selection']);targets=[Target.model_validate(t) for t in body['target_items']]
             selected=[uuid.UUID(i) for i in body['target_session_ids']]
-            schedule.deadlines(db,row,selected,stamp)
+            final_guard=schedule.final_deadlines(db,row,selected,stamp)
             member,_,_=admission.admit_bundle(db,uid,room,row,selection,targets,command,stamp)
             schedule.enrol(db,row,member,selected,stamp)
+            if schedule.planning_enabled(db):
+                from app.raid_rooms import cycle_planning
+                cycle_planning.refresh(db,room,row,uid,command,stamp)
         db.flush()
         result=life.ack(db,row,command,stamp)
         if decline:return 200,result
-        return 200,result,lambda final:schedule.deadlines(db,row,selected,final)
+        return 200,result,final_guard
     return cycles.execute(principal,'decline' if decline else 'continue',command,dict(room_id=str(rid),body=body),run)

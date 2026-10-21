@@ -21,6 +21,7 @@ from app.raid_rooms import (cycle_creation as creation, cycle_commands as comman
 from app.raid_rooms.router import OptionalPrincipal
 from app.raid_rooms import cycle_opening,cycle_continuation,cycle_leadership,cycle_character
 from app.raid_rooms import cycle_times
+from app.raid_rooms import cycle_schedule_service
 
 
 class CycleRoute(AvailabilityRoute):
@@ -42,6 +43,7 @@ class CycleRoute(AvailabilityRoute):
 
     def allowed_query(self, request):
         if request.method!='GET':return set()
+        if request.url.path.endswith('/candidates'):return {'target_cycle_key'}
         if request.url.path.endswith('/schedule-context'):return {'target_cycle_key','target_session_id'}
         if request.url.path.endswith('/raid-schedule-overlaps'):return {'target_cycle_key','limit','cursor'}
         if request.url.path.endswith('/continuation-context'):return {'target_cycle_key','action','character_id','selected_role'}
@@ -265,3 +267,28 @@ def schedule_overlaps(principal:Principal,target_cycle_key:str,limit:Limit=20,cu
 @router.post('/raid-sessions/{session_id}/participation-confirmations',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
 def confirm_participation(session_id:UUID,principal:Principal,key:Key,data:inputs.Confirm):
     return cycle_times.confirm(principal,session_id,key,data)[1]
+
+
+@router.put('/raid-rooms/{room_id}/schedule-groups',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
+def edit_schedule(room_id:UUID,principal:Principal,key:Key,data:inputs.EditGroups):
+    return cycle_schedule_service.edit(principal,room_id,key,data)[1]
+
+
+@router.get('/raid-schedule-groups/{group_id}/candidates',response_model=s.OutputContract3GetV2RaidScheduleGroupsGroupIdCandidates,responses=errors)
+def schedule_candidates(group_id:UUID,principal:Principal,target_cycle_key:str):
+    return cycle_schedule_service.candidates(principal,group_id,target_cycle_key)
+
+
+@router.post('/raid-schedule-groups/{group_id}/selections',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
+def select_schedule(group_id:UUID,principal:Principal,key:Key,data:inputs.SelectGroup):
+    return cycle_schedule_service.select_group(principal,group_id,key,data)[1]
+
+
+@router.post('/raid-rooms/{room_id}/schedule-proposals',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
+def propose_schedule(room_id:UUID,principal:Principal,key:Key,data:inputs.Propose):
+    return cycle_schedule_service.propose(principal,room_id,key,data)[1]
+
+
+@router.post('/raid-schedule-proposals/{proposal_id}/responses',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
+def respond_schedule(proposal_id:UUID,principal:Principal,key:Key,data:inputs.Respond):
+    return cycle_schedule_service.respond(principal,proposal_id,key,data)[1]

@@ -127,19 +127,26 @@ def detail(principal,rid,key):
 def schedule_fields(db,room,row,mine,stamp):
     graph=schedule.graph
     groups=[];sessions=[];parts=[];segments=[]
+    enabled=schedule.planning_enabled(db)
+    leader=False
+    if enabled:
+        from app.raid_rooms import cycle_schedule_service as service,cycle_planning,cycle_proposals
+        try:service.target(db,mine.user_id,room.id,row.cycle_key.isoformat(),stamp,leader=True);leader=True
+        except GameError:pass
     for group in sorted(schedule.groups(db,row),key=lambda g:str(g.id)):
         alternatives=[]
-        for alt in db.scalars(select(ScheduleAlternative).where(ScheduleAlternative.group_id==group.id).order_by(ScheduleAlternative.id)):
+        for alt in schedule.alternatives(db,group):
             clock=lambda v:f'{v//60:02}:{v%60:02}' if v is not None else None
             alternatives.append(dict(alternative_id=alt.id,session_id=alt.session_id,weekday=alt.weekday,
                 starts_local=clock(alt.start_minute),leader_latest_start_local=clock(alt.latest_start_minute),item_ids=alt.item_order))
+        value=cycle_planning.candidate(db,room,row,group,stamp) if enabled and group.planning_mode=='coordinated' else None
         groups.append(dict(group_id=group.id,revision=group.revision,client_group_key=db.get(graph.ScheduleHead,group.id).client_key,
             occurrence_mode=group.occurrence_mode,planning_mode=group.planning_mode,day_scope=group.day_scope,required=group.required,
             auto_confirm_additional_members=group.auto_additional_members,alternatives=alternatives,selected_session_id=group.selected_session_id,
             resolution='selected' if group.selected_session_id else 'all' if group.occurrence_mode=='each' else 'unresolved',
-            candidate_state='not_evaluated',permissions=dict(select=permission('RECRUITMENT_COMMAND_NOT_READY'))))
+            candidate_state=value['state'] if value else 'not_evaluated',permissions=dict(select=permission(None if leader and group.selected_session_id is None and group.planning_mode!='unscheduled' else 'SCHEDULE_PROPOSAL_REQUIRED' if enabled else 'RECRUITMENT_COMMAND_NOT_READY'))))
     actual=own_cycle_member(db,row,mine)
-    for session in schedule.sessions(db,row):
+    for session in schedule.sessions(db,row,history=row.state!='open'):
         binding=db.get(SessionBinding,session.id);group=db.get(ScheduleGroup,binding.group_id)
         values=graph.segments(db,session.id)
         segments.append(dict(session_id=session.id,segments=[segment_view(db,s) for s in values]))
@@ -148,7 +155,7 @@ def schedule_fields(db,room,row,mine,stamp):
             starts_at=session.starts_at,ends_at=session.ends_at,duration_minutes=sum(s.duration_minutes for s in values),
             duration_source='item_sum',duration_policy_version='difficulty-duration-v1',earliest_start=session.starts_at,
             latest_start=session.starts_at,join_deadline=session.starts_at-timedelta(minutes=30) if session.state=='confirmed' else None,
-            candidate_state='ready' if session.starts_at else 'not_evaluated',permissions=dict(propose_schedule=permission('RECRUITMENT_COMMAND_NOT_READY'))))
+            candidate_state='ready' if session.starts_at else 'not_evaluated',permissions=dict(propose_schedule=permission(None if leader and session.state=='confirmed' and stamp<session.ends_at else 'SCHEDULE_NOT_CONFIRMED' if enabled else 'RECRUITMENT_COMMAND_NOT_READY'))))
         own=db.scalar(select(Participation).where(Participation.session_id==session.id,Participation.membership_id==mine.id))
         if own is not None:
             from app.raid_rooms.cycle_times import confirm_permission
@@ -166,8 +173,9 @@ def schedule_fields(db,room,row,mine,stamp):
                 reservation_state='active' if active and len(active)==len(values) else 'partial' if active else 'released' if reservations else 'none',
                 overlap_warning='TIME_OVERLAP' in warnings,warnings=warnings,
                 permissions=dict(confirm_participation=confirm_permission(db,mine.user_id,row,session.id,stamp))))
-    return dict(schedule_state='confirmed' if sessions and all(s['state']=='confirmed' for s in sessions) else 'unconfirmed' if sessions else 'unscheduled',
-        schedule_groups=groups,sessions=sessions,session_segments=segments,my_participations=parts,proposals=[])
+    views=cycle_proposals.views(db,row,mine,stamp) if enabled else []
+    return dict(schedule_state='change_pending' if any(v['state']=='pending' for v in views) else 'confirmed' if sessions and all(s['state']=='confirmed' for s in sessions) else 'unconfirmed' if sessions else 'unscheduled',
+        schedule_groups=groups,sessions=sessions,session_segments=segments,my_participations=parts,proposals=views)
 
 
 def plan(principal,rid,key):
@@ -191,4 +199,11 @@ def plan(principal,rid,key):
             **formation(db,row),**schedule_fields(db,room,row,mine,stamp)))
         from app.raid_rooms.cycle_leadership import action_permissions
         result['data']['permissions'].update(action_permissions(db,uid,room,row,stamp))
+        if schedule.planning_enabled(db):
+            from app.raid_rooms.cycle_schedule_service import target
+            reason=None
+            try:target(db,uid,room.id,key,stamp,leader=True)
+            except GameError as error:reason=error.code
+            if reason is None and any(s.state=='confirmed' for s in schedule.sessions(db,row)):reason='SCHEDULE_PROPOSAL_REQUIRED'
+            result['data']['permissions']['edit_schedule_groups']=permission(reason)
         return wire.OutputContract3GetV2MeRaidRoomsRoomIdPlan.model_validate(jsonable_encoder(result)).model_dump(mode='json')

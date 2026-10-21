@@ -98,6 +98,7 @@ def cancel(principal,rid,command,data):
         token=life.verify_token(uid,rid,body,'cancel',stamp)
         value,binding,room,row,cm,owned=prepare_cancel(db,uid,rid,body['target_cycle_key'],stamp)
         commands.cas(db,row,body,stamp,leader=True)
+        final_guard=schedule.final_deadlines(db,row,[],stamp,join=False)
         current=value['data'];successor=current['successor']
         if token['successor']!=(str(successor['cycle_member_id']) if successor else None) or not current['permission']['allowed']:
             fail('SUCCESSOR_UNAVAILABLE')
@@ -128,7 +129,10 @@ def cancel(principal,rid,command,data):
             raid_ids=[i.raid_id for i,r in life.admission.rounds(db,row)]))
         row.revision+=1;row.members_revision+=1;row.plan_revision+=1
         cycles.touch_directory(db,row.cycle_key);db.flush()
-        return 200,life.ack(db,row,command,stamp)
+        if schedule.planning_enabled(db):
+            from app.raid_rooms import cycle_planning
+            cycle_planning.refresh(db,room,row,uid,command,stamp)
+        return 200,life.ack(db,row,command,stamp),final_guard
     return cycles.execute(principal,'cancel',command,dict(room_id=str(rid),body=body),run)
 
 

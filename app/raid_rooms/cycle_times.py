@@ -18,7 +18,7 @@ from app.raid_rooms.member_reads import paginate
 
 
 def ready(db):
-    if list(db.scalars(text('SELECT version_num FROM public.alembic_version')))!=['0027_cycle_consents']:
+    if list(db.scalars(text('SELECT version_num FROM public.alembic_version'))) not in (['0027_cycle_consents'],['0028_cycle_planning']):
         fail('RECRUITMENT_COMMAND_NOT_READY',503)
 
 
@@ -56,6 +56,7 @@ def put_submission(principal,rid,command,data):
         room,row,cm=own_target(db,uid,rid,body['target_cycle_key'],stamp,write=True)
         commands.cas(db,row,body,stamp)
         availability.verified(db,uid)
+        final_guard=schedule.final_deadlines(db,row,[],stamp,join=False)
         personal=db.get(PersonalAvailability,uid);current=db.get(CycleSubmission,cm.id)
         if (body['expected_cycle_member_revision']!=cm.revision or
                 body['expected_personal_version']!=(personal.revision if personal else 1) or
@@ -72,9 +73,12 @@ def put_submission(principal,rid,command,data):
             current.submitted_at=stamp
             row.revision+=1;row.plan_revision+=1;cycles.touch_directory(db,row.cycle_key)
         db.flush()
+        if schedule.planning_enabled(db):
+            from app.raid_rooms import cycle_planning
+            cycle_planning.refresh(db,room,row,uid,command,stamp)
         result=wire.OutputContract3GetV2MeRaidRoomsRoomIdAvailabilitySubmission.model_validate(
             dict(scope=scope(stamp,body['target_cycle_key'],row),data=submission_view(db,row,cm))).model_dump(mode='json')
-        return 200,result
+        return 200,result,final_guard
     return cycles.execute(principal,'submission',command,dict(room_id=str(rid),body=body),run)
 
 
@@ -108,6 +112,40 @@ def confirm_permission(db,uid,row,sid,stamp):
     return permission(next_change=current.ends_at)
 
 
+def record_confirmation(db,row,cm,current,part,values,owned,command,stamp,*,authorization):
+    uid=cm.user_id;sid=current.id
+    active=list(db.scalars(select(Reservation).where(Reservation.participation_id==part.id,Reservation.released_at.is_(None))))
+    correct=(len(active)==len(values) and {r.segment_id for r in active}=={s.id for s in values} and
+        all(r.schedule_revision==current.schedule_revision and r.assignment_id==owned[s.round_id].id and
+            (r.starts_at,r.ends_at)==(s.starts_at,s.ends_at)
+            for s in values for r in active if r.segment_id==s.id))
+    already=part.confirmation_state=='confirmed' and part.confirmed_schedule_revision==current.schedule_revision
+    if active and not (correct and already):fail('ROOM_REVIEW_REQUIRED')
+    if already and not correct:fail('ROOM_REVIEW_REQUIRED')
+    if not already:
+        reservations=[]
+        for segment in values:
+            a=owned[segment.round_id]
+            reservation=Reservation(id=uuid.uuid4(),room_id=row.room_id,participation_id=part.id,session_id=sid,
+                membership_id=cm.membership_id,user_id=uid,assignment_id=a.id,item_id=a.item_id,round_id=a.round_id,
+                segment_id=segment.id,schedule_revision=current.schedule_revision,starts_at=segment.starts_at,ends_at=segment.ends_at)
+            db.add(reservation);reservations.append(reservation)
+        # The old rows stay released. New UUIDs identify this fresh interval,
+        # even when the session and schedule revision are exactly the same.
+        part.revision+=1;part.confirmation_state='confirmed'
+        part.confirmed_at=stamp;part.confirmed_schedule_revision=current.schedule_revision
+        db.add(CycleConsent(id=uuid.uuid4(),room_id=row.room_id,cycle_id=row.id,generation=row.generation,
+            cycle_member_id=cm.id,membership_id=cm.membership_id,user_id=uid,participation_id=part.id,session_id=sid,
+            command_id=command,member_revision=cm.revision,participation_revision=part.revision,
+            schedule_revision=current.schedule_revision,effective_at=stamp,
+            evidence=jsonable_encoder(dict(authorization=authorization,submission=submission_view(db,row,cm),
+                assignments=[life.assignment_snapshot(owned[s.round_id]) for s in values],
+                reservations=[dict(id=r.id,segment_id=r.segment_id,assignment_id=r.assignment_id,
+                    starts_at=r.starts_at,ends_at=r.ends_at) for r in reservations]))))
+    db.flush()
+    return not already
+
+
 def confirm(principal,sid,command,data):
     body=data.model_dump(mode='json')
     def run(db,uid,stamp):
@@ -116,35 +154,10 @@ def confirm(principal,sid,command,data):
         if (body['expected_cycle_member_revision']!=cm.revision or
                 body['expected_participation_revision']!=part.revision or
                 body['expected_schedule_revision']!=current.schedule_revision):fail('REVISION_CONFLICT')
-        active=list(db.scalars(select(Reservation).where(Reservation.participation_id==part.id,Reservation.released_at.is_(None))))
-        correct=(len(active)==len(values) and {r.segment_id for r in active}=={s.id for s in values} and
-            all(r.schedule_revision==current.schedule_revision and r.assignment_id==owned[s.round_id].id and
-                (r.starts_at,r.ends_at)==(s.starts_at,s.ends_at)
-                for s in values for r in active if r.segment_id==s.id))
-        already=part.confirmation_state=='confirmed' and part.confirmed_schedule_revision==current.schedule_revision
-        if active and not (correct and already):fail('ROOM_REVIEW_REQUIRED')
-        if already and not correct:fail('ROOM_REVIEW_REQUIRED')
-        if not already:
-            reservations=[]
-            for segment in values:
-                a=owned[segment.round_id]
-                reservation=Reservation(id=uuid.uuid4(),room_id=row.room_id,participation_id=part.id,session_id=sid,
-                    membership_id=cm.membership_id,user_id=uid,assignment_id=a.id,item_id=a.item_id,round_id=a.round_id,
-                    segment_id=segment.id,schedule_revision=current.schedule_revision,starts_at=segment.starts_at,ends_at=segment.ends_at)
-                db.add(reservation);reservations.append(reservation)
-            # The old rows stay released. New UUIDs identify this fresh interval,
-            # even when the session and schedule revision are exactly the same.
-            part.revision+=1;part.confirmation_state='confirmed'
-            part.confirmed_at=stamp;part.confirmed_schedule_revision=current.schedule_revision
-            db.add(CycleConsent(id=uuid.uuid4(),room_id=row.room_id,cycle_id=row.id,generation=row.generation,
-                cycle_member_id=cm.id,membership_id=cm.membership_id,user_id=uid,participation_id=part.id,session_id=sid,
-                command_id=command,member_revision=cm.revision,participation_revision=part.revision,
-                schedule_revision=current.schedule_revision,effective_at=stamp,
-                evidence=jsonable_encoder(dict(submission=submission_view(db,row,cm),
-                    assignments=[life.assignment_snapshot(owned[s.round_id]) for s in values],
-                    reservations=[dict(id=r.id,segment_id=r.segment_id,assignment_id=r.assignment_id,
-                        starts_at=r.starts_at,ends_at=r.ends_at) for r in reservations]))))
-            row.revision+=1;row.plan_revision+=1;cycles.touch_directory(db,row.cycle_key)
+        changed=record_confirmation(db,row,cm,current,part,values,owned,command,stamp,
+            authorization=dict(kind='explicit_confirmation',command_id=str(command)))
+        already=not changed
+        if changed:row.revision+=1;row.plan_revision+=1;cycles.touch_directory(db,row.cycle_key)
         db.flush()
         result=life.ack(db,row,command,stamp,outcome='noop' if already else 'applied',revisions=[
             dict(resource='target',id=row.id,revision=row.revision),
