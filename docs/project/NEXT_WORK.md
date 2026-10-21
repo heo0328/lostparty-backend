@@ -1,30 +1,33 @@
 # 다음 실행
 
-2026-10-21 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13).
+2026-10-22 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13).
 
-W1/W2 `917123e`·W3 `13b655e`·[W4-A1](../ISSUE_13_W4A1_SUBMISSION_CONSENT.md) `6d2b301`의 구현/검증·push를 완료했다. [W4-A2 일정 조율·제안/투표](../ISSUE_13_W4A2_CYCLE_PLANNING.md) `88583a9`까지 구현·격리 검증(신규31/회귀218·고유249 분리 실행)·구간 commit/push·실제 원격 SHA 일치를 확인했다. [전체86번째 Backend · W4-A2 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6316089641)에 게시했고 Issue 상단 현재 상태도 갱신했다. 다음은 **Backend W4-B 완료/정정·현재주 재개**다.
+W1/W2 `917123e`·W3 `13b655e`·W4-A1 `6d2b301`·W4-A2 `88583a9`와 게시 기록 `ef25c38`까지 push/원격 확인 완료. [W4-B 완료·정정·현재주 재개](../ISSUE_13_W4B_CYCLE_OUTCOMES.md)는 구현·격리 검증 완료(**132PASS/1081.82초**, 신규26 포함), 구간 commit/push·공식 Issue 게시를 마무리한다. 다음 실행은 아래 W4-C이며 중간12/18/6PASS는 최종 고유 통계에 합산하지 않는다.
 
-작업 시작 시 AGENTS → 협업 규칙 → 이 문서 → AI_CONTEXT → 관련 계약을 읽고 Issue 본문/최신 댓글과 Git·코드를 대조한다. 최신 확인 댓글은 [전체86번째 Backend · W4-A2 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6316089641)이며 계약0.4.1/policy two-cycle-contract-4 고정이다. 추가 제품 입력·Flutter의 동일 계약 재검토 대기는 없다. 사용자 지시로 섹션 완료마다 검증·문서 갱신·commit/push·GitHub 기록을 수행한다.
+착수/인계 시 AGENTS → 협업 규칙 → 이 문서 → AI_CONTEXT → 계약4판/ACK 보완을 읽고 Issue 본문/최신 댓글·Git/코드를 확인한다. 최신 조회는 [전체86번째 Backend · W4-A2 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6316089641)이며 새 Flutter 요청·계약 변경은 없다. 계약0.4.1/policy two-cycle-contract-4 고정이고 추가 제품 입력/동일 계약 재검토 대기는 없다. 사용자 지시대로 작업 구간 종료마다 검증·문서 갱신·commit/push·GitHub 기록을 한다.
 
-## 다음 W4-B 작업
+## 다음 W4-C — T 관리와 G1 공통/전역
 
-1. 고정 전체 명세의 완료 context·개인 item 완료·공대장 완료·방 전체 이번주 미완료 종료·수동 완료 정정·현재주 재개를 기존 완료/weekly/예약 원천과 대조한다. T=C와 수요일10시 이후 권한을 검사하고 N·persistent 관계를 C 완료만으로 임의 종료하지 않는다.
-2. item별 완료는 해당 item/round/assignment와 정확히 귀속한 남은 segment 예약만 정리한다. 완료 이력과 다른 item의 참가·시각, N·이전 세대, 동의/예약/원 ACK는 보존한다. 본인 전체 완료와 공대장/전체 종료의 권한·함께하기 관계 정리는 합의 계약대로 구분한다.
-3. 현재주 전체 미완료 종료는 실제 C 참가자 권한·미완료 round/남은 타임에 한정한다. 정정/재개는 완료를 자동 복구하거나 이전 assignment/예약/표를 되살리지 않도록 새 원천/세대/동의를 검토한다. 명시 N reopen과 현재주 resume을 혼동하지 않는다.
-4. 제한 LOGIN/전용 tmpfs PostgreSQL에서 대상/권한·수06/10 경계·부분 완료와 정확 귀속 해제·경합/rollback·원 ACK·이전 원천/시각·fixed schema HTTP를 검증한다. 실제 개발 DB·API 이미지는 별도 전환 작업 전까지 유지한다.
+고정 명세 중 후보 라우터에 남은9동작을 대조했다. 아래 C의8동작과 D의 legacy 함께하기 조회1동작이며, 이미 main 소스에 있는 주차/summary2동작은 별도다. W4-B 완료만으로 전체56동작 완료를 표시하지 않는다.
 
-첫 코드 대조점은 `app/raid_rooms/completion.py`·`completion_router.py`·`resume.py`, `app/raid_weekly` 원장과 `cycle_lifecycle`·`cycle_schedule`·`cycle_planning`이다. 기존 완료/재개 코드는 현재 주차·persistent 리더/일정·구 제안 원천을 사용하므로 새 T 권한/세대/불변 표와 대안 edition을 건너뛰어 직접 호출하지 않는다. W4-A2의 `CycleConsent`·`CycleVote`·일정 사건과 기존 해제 예약도 보존 대상으로 포함한다. 추가 shadow 이행을 만들면 `cycle_schedule.planning_enabled`·`cycle_times.ready`·readiness의 명시 허용 revision을 함께 검토한다. 구 API/worker의0023 활성 guard는 전환 검증 전까지 유지한다.
+1. **T 관리4동작**: GET `/v2/me/raid-rooms/{room_id}/settings`, PUT `/v2/raid-rooms/{room_id}/settings`, PUT `formation`, POST `removals`. actual T/세대의 리더·open·현재 자격·설정/편성/CM CAS와 영향만 사용한다. 부분 완료 이력/원래 자리·다른 T·persistent 관계·기존 동의/해제 예약과 원 ACK를 보존하고, 제외 후 승계/현재 투표/새 시간 확인을 재평가한다.
+2. **G1 공통/전역4동작**: GET `/v2/me/raid-rooms/{room_id}/common-context`, PUT `/v2/raid-rooms/{room_id}/common-settings`, POST `leave`·`end`. G1은 C row가 존재하면 closed/review C도 N fallback을 막는다. C가 없을 때만 N을 검토한다. 전역 context의 실제 전체 영향·persistent CAS를 사용하며 target가 없는 영향을 가짜 C/N으로 만들지 않는다.
+3. 공통 설정200은 GlobalScope+CommonSettingsAck·수행 후 room_revision/실제 affected_cycle_keys이며 no-op 영향은[]이다. 전역 leave/end는 확인한 전체 영향만 원자 정리하고 현재 T 리더의 선행 위임/안전한 마지막1인 조건·과거 완료 보존을 지킨다. 원 ACK는 주차/권한·context 만료 재검사보다 먼저 복구한다.
+4. 제한 LOGIN/전용 tmpfs PostgreSQL에서 C/N·closed/review/부재 C의 G1 권한, persistent-only/영향0, target 제외와 전역 종료의 차이, 부분 완료/재개 후 source·좌석·예약·원장 귀속, CAS/rollback·원 ACK·고정 HTTP/전체 계약을 검증하고 구간 게시한다.
 
-## 이후 순서
+첫 대조점은 기존 `management.py`·`management_router.py`·`completion.py`·`command_context.py`, `cycles.common_authority_cycle`와 `cycle_lifecycle`·`cycle_outcomes`·`cycle_resume`다. 기존 전역 Room/Member의 현재주 리더 가정을 target 계약에 그대로 재사용하지 않는다. 공통 설정 성공 응답은 [ACK 보완](../ISSUE_13_COMMON_SETTINGS_ACK_ADDENDUM.md)을 따른다.
 
-- W4-C: G1 공통 설정·GlobalScope/원 ACK·전역leave/end, persistent CAS/권한 내 영향 context·정확한 전체 관계 정리.
-- W4-D: 06worker/v1 adapter·legacy review·declined summary·실제 활성화 준비. 구 API/worker는0023만 활성 허용하며 shadow0024~0028과 혼용하지 않는다.
-- W5: 통합 보존/경합·성능·고정 전체56동작 대조·실제 소비 가능 구간 게시/Flutter 인계. 실제 서버 준비 경로·실행 SHA·미확인 범위를 먼저 확인한다.
+## W4-B에서 보존할 기준
 
-## 현재 기준과 인계 경계
+- actual C/수10시·120초 완료 context·명시 수동 정정·개인/공대장 완료·미완료 종료/재개. 마지막 개인 완료와 미완료 종료는 C 관계 이력을 보존하고 N/persistent를 자동 정리하지 않는다.
+- shadow0029 불변 CycleOutcome/CycleResume2표. 중단 Round는 새 UUID로 대체하고 새 Assignment/세션·확인 구간을 만들며 completed item/개인 완료 이력·원래 formation_history와 이전 예약/동의/제출/투표 원천을 보존한다. 적용 투표 집합/이전 세대 상태도 source에 기록한다.
+- 부분 완료자는 남은 활성 item만 일정 확인/예약·제안 분모에 포함한다. 재개 뒤 다른 사람을 위해 새 Round가 생겨도 본인 완료 raid를 다시 입장시키지 않는다. 이전 Assignment/예약·개인 제출을 자동 복원하지 않는다.
+- 재개할 C 일정에서 빠진 전역 완료 item은 N의 전체 묶음 복사 시 captured settings 순서로 보완한다. 다른T를 변경하는 완료 효과가 아니라 이후 별도 N 개방 명령의 복사이며, N의 확인/예약 동의가 아니다.
+- 추가 shadow 이행 시 `cycle_schedule.planning_enabled`·`cycle_times.ready`·outcome 준비 검사·readiness의 명시 허용 revision을 함께 검토한다. 구 API/worker의0023 활성 guard는 전환 검증 전까지 유지한다.
 
-- [계약4판](../ISSUE_13_TWO_CYCLE_CONTRACT_R4.md)·[ACK 보완](../ISSUE_13_COMMON_SETTINGS_ACK_ADDENDUM.md)·[전체 작업계획](../ISSUE_13_TWO_CYCLE_WORK_PLAN.md). 구현 명세는 `docs/design/issue13-two-cycle.full.openapi.json`이며 core 파일은 재현 입력이다.
-- 고정53경로/56동작/204schema·canonical SHA256 `fb4c7d065594a9a0e7e8288e5f73179f90b078b68ac4323d1aade5c7a63b42f1`. 합성 schema 검증과 실행 HTTP/DB 검증은 별도 근거다.
-- W4-A2: 실제 T/generation 그룹/후보/선택·초기 조율·세션별 정족수/명시 응답, shadow0028 불변4표·다중 세션 동의. 이전 예약/동의·다른 T/세대·원 ACK 보존. 상세 실행 결과는 A2 기록·DEV_LOG 기준이다.
-- 후보36경로/39동작은 main 미등록, 실행 OpenAPI116경로 유지. 소스 게시와 실제 개발 DB/API 전환·배포는 별도다. 실제 회원/provider/기기·운영 성능·Flutter 인수는 미완료다.
-- 다음 Flutter 구간은 주차 메타/actualcycle·계정summary/선택기이며 실제 서버 의존 준비 후 필요한 범위만 인계한다. 후보 소스 완료만으로 새 시험을 요청하지 않는다. #19 통계 미확정은 별도 후속으로 유지한다.
+## 이후 전환·인계
+
+- W4-D: 06worker/v1 adapter·legacy review·declined summary·GET `/v2/me/raid-rooms/{room_id}/continuation-choices` 보존 projection·실제 활성화 준비. legacy choices를 새 실제 N 참가나 동의로 쓰지 않는다. 기존 v1 수동 완료에도 C/수10시 guard와 원 ACK 예외를 연결한다.
+- W5: 고정 전체53경로/56동작 대조·통합 보존/경합·성능·실제 소비 가능 구간 게시/Flutter 인계. 준비 경로·실행 SHA와 실회원/provider·캐시/계정 격리·미확인 범위를 구분한다.
+- 후보42경로/45동작은 main 미등록. 로컬 main/원본 OpenAPI116경로, 실제 개발 DB/API 이미지·서버는 유지한다. source 게시와 서버 전환/배포·실회원/기기/운영 성능·Flutter 인수는 별도다. 후보 완료만으로 새 Flutter 서버 시험을 요청하지 않는다.
+- 고정 명세는 `docs/design/issue13-two-cycle.full.openapi.json` / canonical SHA256 `fb4c7d065594a9a0e7e8288e5f73179f90b078b68ac4323d1aade5c7a63b42f1`. schema 합성 검증과 실행 HTTP/DB 검증은 별도 근거이며 [DEV_LOG](DEV_LOG.md)·각 구간 기록을 따른다. #19 통계 미확정은 별도 후속으로 유지한다.

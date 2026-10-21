@@ -10,7 +10,7 @@ from app.game_accounts.lifecycle import digest
 from app.raid_rooms import cycles,cycle_commands as commands,cycle_admission as admission,admission_context as selection_context
 from app.raid_rooms import command_context as opaque,cycle_wire as wire
 from app.raid_rooms.cycle_creation import scope,permission
-from app.raid_rooms.cycle_models import RoomCycle,CycleMember,CycleGeneration,CycleAssignment,ParticipationEvent
+from app.raid_rooms.cycle_models import RoomCycle,CycleMember,CycleGeneration,CycleAssignment,CycleRound,ParticipationEvent
 from app.raid_rooms.cycle_lifecycle_models import CycleDecision
 from app.raid_rooms.integrated_models import RecruitmentMembership as Member,RecruitmentAssignment as Assignment
 from app.raid_rooms.weekly_links import WeeklyOccupancy
@@ -37,7 +37,8 @@ def actual_member(db,row,uid,*,states=VALID_STATES):
 
 
 def assignments(db,row,cm):
-    return list(db.scalars(select(Assignment).join(CycleAssignment,CycleAssignment.assignment_id==Assignment.id).where(
+    return list(db.scalars(select(Assignment).join(CycleAssignment,CycleAssignment.assignment_id==Assignment.id).join(
+        CycleRound,CycleRound.round_id==Assignment.round_id).where((CycleRound.is_current.is_(True)) | (Assignment.state=='completed'),
         CycleAssignment.cycle_id==row.id,CycleAssignment.generation==row.generation,
         CycleAssignment.cycle_member_id==cm.id).order_by(Assignment.item_id)))
 

@@ -20,6 +20,7 @@ from app.raid_rooms import (cycle_creation as creation, cycle_commands as comman
     cycle_schemas as inputs, cycle_queries as queries, cycle_member_reads as members,cycle_lists as lists)
 from app.raid_rooms.router import OptionalPrincipal
 from app.raid_rooms import cycle_opening,cycle_continuation,cycle_leadership,cycle_character
+from app.raid_rooms import cycle_outcomes,cycle_resume
 from app.raid_rooms import cycle_times
 from app.raid_rooms import cycle_schedule_service
 
@@ -43,6 +44,7 @@ class CycleRoute(AvailabilityRoute):
 
     def allowed_query(self, request):
         if request.method!='GET':return set()
+        if request.url.path.endswith('/command-context'):return {'target_cycle_key','command','round_id'}
         if request.url.path.endswith('/candidates'):return {'target_cycle_key'}
         if request.url.path.endswith('/schedule-context'):return {'target_cycle_key','target_session_id'}
         if request.url.path.endswith('/raid-schedule-overlaps'):return {'target_cycle_key','limit','cursor'}
@@ -292,3 +294,33 @@ def propose_schedule(room_id:UUID,principal:Principal,key:Key,data:inputs.Propos
 @router.post('/raid-schedule-proposals/{proposal_id}/responses',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
 def respond_schedule(proposal_id:UUID,principal:Principal,key:Key,data:inputs.Respond):
     return cycle_schedule_service.respond(principal,proposal_id,key,data)[1]
+
+
+@router.get('/raid-rooms/{room_id}/command-context',response_model=s.OutputContract3GetV2RaidRoomsRoomIdCommandContext,responses=errors)
+def outcome_context(room_id:UUID,principal:Principal,target_cycle_key:str,command:Literal['close_weekly','complete_item','personal_completion'],round_id:UUID|None=None):
+    return cycle_outcomes.get(principal,room_id,target_cycle_key,command,round_id)
+
+
+@router.post('/raid-rooms/{room_id}/weekly-incomplete-closures',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
+def close_current_cycle(room_id:UUID,principal:Principal,key:Key,data:inputs.Closure):
+    return cycle_outcomes.execute(principal,room_id,None,key,data,'close_weekly')[1]
+
+
+@router.post('/raid-rounds/{round_id}/completion',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
+def complete_round(round_id:UUID,principal:Principal,key:Key,data:inputs.Outcome):
+    return cycle_outcomes.execute(principal,None,round_id,key,data,'complete_item')[1]
+
+
+@router.post('/raid-rounds/{round_id}/personal-completion',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
+def complete_personal_round(round_id:UUID,principal:Principal,key:Key,data:inputs.PersonalOutcome):
+    return cycle_outcomes.execute(principal,None,round_id,key,data,'personal_completion')[1]
+
+
+@router.post('/raid-rooms/{room_id}/weekly-resume-proposals',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
+def resume_current_cycle(room_id:UUID,principal:Principal,key:Key,data:inputs.Resume):
+    return cycle_resume.create(principal,room_id,key,data)[1]
+
+
+@router.put('/me/characters/{character_id}/raid-weekly-states/{raid_id}/manual-completion',response_model=s.ManualCompletionResult,responses=errors)
+def manual_current_cycle(character_id:UUID,raid_id:str,principal:Principal,key:Key,data:inputs.Manual):
+    return cycle_outcomes.manual(principal,character_id,raid_id,key,data)[1]

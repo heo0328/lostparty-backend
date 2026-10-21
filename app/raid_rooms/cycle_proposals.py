@@ -78,6 +78,7 @@ def create(db,room,row,cm,command,targets,stamp):
 
 
 def evaluate(db,room,row,proposal,binding,uid,command,stamp):
+    if not binding.content:return False
     if proposal.state!='pending':return False
     sessions={s.id:s for s in graph.sessions(db,row)}
     if any(uuid.UUID(t['session_id']) not in sessions or sessions[uuid.UUID(t['session_id'])].state!='confirmed' or
@@ -135,6 +136,7 @@ def views(db,row,mine,stamp):
     values=[]
     for proposal,binding in db.execute(select(Proposal,CycleProposal).join(CycleProposal,CycleProposal.proposal_id==Proposal.id).where(
             CycleProposal.cycle_id==row.id,CycleProposal.generation==row.generation).order_by(Proposal.created_at,Proposal.id)):
+        if not binding.content:continue
         response=latest(db,proposal,actual) if actual else None
         eligible=actual is not None and any(actual.id==m.id for t in binding.content for m in plan.members(db,row,db.get(graph.Session,uuid.UUID(t['session_id']))))
         values.append(dict(proposal_id=proposal.id,revision=proposal.revision,proposal_plan_revision=proposal.proposal_plan_revision,

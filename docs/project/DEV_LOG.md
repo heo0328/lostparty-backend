@@ -1755,3 +1755,18 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 검증 종료 후 이번 lostparty-w4a2-runner·lostparty-w4a2-test의 tmpfs DB/전용 네트워크만 정리했다. 개발 컨테이너/DB 볼륨·기존 검증 이미지 캐시는 보존했다. 최종 AST/문서 링크·diff 공백과 고정 계약/DTO hash를 확인하고 이번 구간을 commit/push한다.
 - 구현 `88583a9b8147ce09c0d730e77859f004869ab468`를 feat/raid-recruitment에 commit/push했고 실제 원격 refs/heads/feat/raid-recruitment와 SHA 일치를 확인했다. 기존 연결 앱 쓰기 권한 제한으로 gh CLI를 사용하여 [전체86번째 Backend · W4-A2 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6316089641)를 게시했다. 전체86댓글을 다시 조회해 실제 전체 작성 순서/Backend 작성 측/W4-A2 단계·원문 일치를 확인했다. 다음 담당 Backend W4-B이며 A2 소스/격리 검증 완료와 실제 서버·Flutter 미인수를 구별한다.
 - Issue #13 본문 상단을 W4-A2 완료/다음 W4-B로 갱신하고 이전 원문/이력을 그대로 보존했음을 재조회했다(끝 개행 제외). NEXT_WORK/A2 기록/기능지도/작업계획/추적표에 구현 SHA·게시 링크·다음 실행을 반영했다. 이 후속은 문서만 변경하므로 DB/서버 검증은 반복하지 않고 링크·diff 확인 후 별도 commit/push하여 원격 작업 기록을 마무리한다.
+
+## 2026-10-21 — #13 W4-B 완료·정정·현재주 재개 (검증 진행)
+
+- ef25c38의 W4-A2 게시 이후 W4-B를 구현하던 중 자동 승인 검토가 사용한도 때문에 Docker 테스트 동기화를 실행하지 못했다. 이는 안전성 거절이 아니라 검토 서비스의 사용한도 실패였다. 사용자 재개 지시에 따라 기존 변경/컨테이너를 보존하고 AGENTS/협업/NEXT_WORK/AI_CONTEXT·계약4판/ACK 보완·Git·Issue 본문/전체86댓글을 다시 확인했다. 최신은 전체86번째 Backend A2이며 새 Flutter 요청/명세 변경은 없다.
+- [W4-B 기록](../ISSUE_13_W4B_CYCLE_OUTCOMES.md): actual C/수10시·120초 context·원 ACK/최종 시각과 함께 본인/공대장 item 완료·현재주 미완료 종료·수동 완료 정정·명시 재개6경로를 연결한다. 완료/취소·persistent 관계/다른 T 효과를 구분하고 item별 lease/예약만 해제한다. shadow0029 불변2표와 Round/Assignment 새 구간·CM revision별 재개 투표를 사용하며 과거 완료/중단·예약/동의/제출 source와 적용 전 세대 상태/투표 집합을 보존한다.
+- 사용한도로 실행되지 않았던 수정 테스트 복사를 재개했다. 초기 실패는 표시 시각 비교/DB에 없는 세션 상태를 교정했고 기본12PASS/142.28초 뒤 확장 검증에서 개인 완료 item을 다시 입장시키는 문제를 발견해 중단된 본인 item만 재개하도록 수정했다. 제약/완료 가드를 완화하지 않았다. 이 중복 실행은 최종 통계에 합산하지 않는다.
+- 고정 계약53/56/204·84합성/CAS6쌍/공통 ACK endpoint2개/canonical SHA 불변 통과. 정적 DTO 생성/사용본 7abfb96a98258ab3ca2eda340f5458dbe1fd44fa3a9499f58e68e5071a0ff3a6 일치, 저장소 원본과 FastAPI116경로 전체 일치·후보42경로45동작/main 미등록 확인. 최초 대조는 캐시 이미지의 오래된 계약 파일 때문이었고 현재 원본을 복사하여 해소했다. 실제 개발 DB/서버·API 이미지는 변경하지 않았다. 최종 검증/게시·다음 작업 문서는 아래 이어 기록한다.
+- 확장 검증18PASS 뒤 HTTP 검증 의존성이 캐시 이미지에 없어 실패했다. 현재 requirements-dev의 jsonschema4.26.0을 전용 컨테이너의 사용자 환경에만 설치하고 HTTP/미동의 재개/중복경합/경계·N 복사 집중6PASS/73.59초를 확인했다. 이후 completed/stopped 실제 C 리더의 위임까지 포함해 신규26사례가 최종 묶음에서 통과했고 기존 기능 회귀를 진행 중이다. 중복 예비 실행은 합산하지 않는다.
+- 고정 경로와 실제 후보를 대조해 남은 범위를 명확히 했다. W4-C는 T settings GET/PUT·formation PUT·removals POST4동작과 G1 common-context GET/common-settings PUT/leave·end POST4동작이다. W4-D에 legacy continuation-choices GET1동작을 추적한다. main의 주차/summary2동작과 합쳐 전체56동작이며 기존 합의 범위의 누락 추적이지 새 API 제안이 아니다. NEXT_WORK의 다음 실행에 반영했다.
+
+## 2026-10-22 — #13 W4-B 최종 검증·게시 준비
+
+- UI 중단 뒤 변경27파일은 staged 상태로 보존됐고 원격/HEAD 차이0·충돌 없음을 확인했다. 이전 pytest 프로세스는 종료됐으나 최종 출력/종료 코드는 유실되어 통과로 추정하지 않고 같은10파일 묶음을 로그/종료 코드 파일에 저장하며 재실행했다. 최종 **132PASS/1081.82초**(신규26 포함), 예비 실행 중복 합산 없음. 기존 BlockingPortal deprecation 외 실패 없음.
+- 고정 계약/DTO SHA 불변·변경 Python AST·문서 링크·staged diff 검사를 통과했다. 이전에 확인한84합성/CAS6쌍/공통ACK2흐름·실행원본116경로 전체 일치와 후보42경로/45동작 미등록을 유지한다.
+- 실제 개발 DB/API 이미지·서버는 전환하지 않았고 전용 lostparty-w4b-runner 및 lostparty-w4b-test tmpfs 시험 DB만 정리했다. Issue 최신 전체86번째 Backend A2 이후 추가 요청/계약 변경은 없었다. 검증 구간을 feat/raid-recruitment에 commit/push·원격 SHA 확인 후 같은 Issue에 결과를 게시한다. 다음 Backend W4-C의 T 관리4/G1 공통·전역4동작, W4-D legacy 함께하기 조회1동작과 worker/v1/summary·W5는 미완료다.

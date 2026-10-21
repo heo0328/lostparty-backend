@@ -35,6 +35,12 @@ def floor(db,row):
     values=list(db.scalars(select(CycleOpening).where(CycleOpening.cycle_id==row.id,
         CycleOpening.generation==row.generation,CycleOpening.state=='applied')))
     if not values or any(not v.evidence.get('search_floor_at') for v in values):fail('ROOM_REVIEW_REQUIRED')
+    from app.raid_rooms.cycle_outcomes import enabled
+    if enabled(db):
+        from app.raid_rooms.cycle_outcome_models import CycleOutcome
+        resumes=list(db.scalars(select(CycleOutcome).where(CycleOutcome.cycle_id==row.id,CycleOutcome.generation==row.generation,
+            CycleOutcome.kind=='resume_applied')))
+        if resumes:return max(datetime.fromisoformat(v.evidence['search_floor_at']) for v in resumes)
     return max(datetime.fromisoformat(v.evidence['search_floor_at']) for v in values)
 
 
@@ -48,7 +54,7 @@ def members(db,row,sess=None):
     rounds={s.round_id for s in graph.graph.active_segments(db,sess.id)} if sess else {rd.id for _,rd in graph.admission.rounds(db,row) if rd.state=='active'}
     for cm in db.scalars(query.order_by(CycleMember.joined_order,CycleMember.id)):
         owned={a.round_id for a in life.assignments(db,row,cm) if a.state=='active'}
-        if rounds and rounds<=owned:result.append(cm)
+        if rounds & owned:result.append(cm)
     return result
 
 
@@ -63,7 +69,7 @@ def candidate(db,room,row,group,stamp,*,sess=None,alternative=None):
     for cm in actual:
         try:life.qualify(db,room,row,cm)
         except GameError:return empty
-    duration=sum(v['duration_minutes'] for v in row.settings_snapshot['items']) if sess is None else sum(s.duration_minutes for s in graph.graph.active_segments(db,sess.id))
+    duration=sum(v['duration_minutes'] for v in row.settings_snapshot['items'] if v['item_id'] in {str(i.id) for i,r in graph.admission.rounds(db,row) if r.state=='active'}) if sess is None else sum(s.duration_minutes for s in graph.graph.active_segments(db,sess.id))
     if not 0<duration<=1440:fail('SESSION_DURATION_EXCEEDED')
     choices=[alternative] if alternative else graph.alternatives(db,group)
     if sess is not None:
@@ -86,7 +92,7 @@ def candidate(db,room,row,group,stamp,*,sess=None,alternative=None):
 
 
 def make_session(db,room,row,group,item_ids,start,stamp,alternative=None):
-    pairs={i.id:(i,rd) for i,rd in graph.admission.rounds(db,row)}
+    pairs={i.id:(i,rd) for i,rd in graph.admission.rounds(db,row) if rd.state=='active'}
     if len(set(item_ids))!=len(item_ids) or set(item_ids)!=set(pairs):fail('ROOM_ITEMS_CHANGED')
     if any(rd.state!='active' for _,rd in pairs.values()):fail('ROUND_NOT_ACTIVE')
     sess=graph.Session(id=uuid.uuid4(),room_id=room.id,revision=1,schedule_revision=1,state='unconfirmed',created_at=stamp)
@@ -121,9 +127,9 @@ def consent(db,room,row,cm,sess,command,stamp,authorization):
     part=db.scalar(select(Participation).where(Participation.session_id==sess.id,Participation.membership_id==cm.membership_id,
         Participation.state=='active'))
     if part is None:fail('PARTICIPATION_ENDED')
-    segments=graph.graph.active_segments(db,sess.id)
     owned={a.round_id:a for a in life.assignments(db,row,cm) if a.state=='active'}
-    if not segments or any(s.round_id not in owned for s in segments):fail('ROUND_NOT_ACTIVE')
+    segments=[s for s in graph.graph.active_segments(db,sess.id) if s.round_id in owned]
+    if not segments:fail('ROUND_NOT_ACTIVE')
     return times.record_confirmation(db,row,cm,sess,part,segments,owned,command,stamp,authorization=authorization)
 
 
@@ -144,7 +150,7 @@ def initial(db,room,row,uid,command,stamp):
                     local=value['earliest_start'].astimezone(graph.graph.raids.KST)
                     alt=next(a for a in alts if a.weekday==local.isoweekday() and
                         (a.latest_start_minute is None or local.hour*60+local.minute<=a.latest_start_minute))
-                order=[uuid.UUID(v) for v in alt.item_order] if alt else [i.id for i,_ in graph.admission.rounds(db,row)]
+                order=[uuid.UUID(v) for v in alt.item_order] if alt else [i.id for i,r in graph.admission.rounds(db,row) if r.state=='active']
                 linked.append(make_session(db,room,row,group,order,None,stamp,alt))
         for sess in linked:
             actual=members(db,row,sess)
@@ -167,7 +173,7 @@ def refresh(db,room,row,uid,command,stamp):
     cycle_proposals.reevaluate(db,room,row,uid,command,stamp)
 
 
-def edit(db,room,row,uid,command,groups,stamp):
+def edit(db,room,row,uid,command,groups,stamp,*,confirm_manual=True,evaluate_initial=True):
     ready(db)
     current=graph.groups(db,row);live=graph.sessions(db,row)
     if any(s.state=='confirmed' or db.scalar(select(Reservation.id).where(Reservation.session_id==s.id).limit(1)) for s in live):fail('SCHEDULE_PROPOSAL_REQUIRED')
@@ -175,7 +181,7 @@ def edit(db,room,row,uid,command,groups,stamp):
     if len({g.client_group_key for g in groups})!=len(groups):fail('INVALID_REQUEST',400)
     ids=[g.existing_group_id for g in groups if g.existing_group_id]
     if len(set(ids))!=len(ids):fail('INVALID_REQUEST',400)
-    existing={g.id:g for g in current};pairs={i.id:rd for i,rd in graph.admission.rounds(db,row)}
+    existing={g.id:g for g in current};pairs={i.id:rd for i,rd in graph.admission.rounds(db,row) if rd.state=='active'}
     for g in groups:
         if (g.existing_group_id is None)!=(g.expected_group_revision is None):fail('INVALID_REQUEST',400)
         if g.existing_group_id and (g.existing_group_id not in existing or existing[g.existing_group_id].revision!=g.expected_group_revision):fail('REVISION_CONFLICT')
@@ -221,6 +227,8 @@ def edit(db,room,row,uid,command,groups,stamp):
             if g.planning_mode=='manual' and (g.occurrence_mode=='each' or len(g.alternatives)==1):
                 sess=make_session(db,room,row,group,list(a.item_ids),graph.local_start(row.cycle_key.isoformat(),a.weekday,a.starts_local),stamp,alt)
                 # Manual editing explicitly confirms only the leader's own time.
-                cm=life.actual_member(db,row,uid,states=('participating',));consent(db,room,row,cm,sess,command,stamp,dict(kind='manual_schedule_edit'))
+                if confirm_manual:
+                    cm=life.actual_member(db,row,uid,states=('participating',));consent(db,room,row,cm,sess,command,stamp,dict(kind='manual_schedule_edit'))
     event(db,row,uid,command,'groups_edited',stamp,dict(previous=before,requested=groups));bump(db,row)
-    db.flush();initial(db,room,row,uid,command,stamp)
+    db.flush()
+    if evaluate_initial:initial(db,room,row,uid,command,stamp)

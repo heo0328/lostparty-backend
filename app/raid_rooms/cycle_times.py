@@ -18,7 +18,7 @@ from app.raid_rooms.member_reads import paginate
 
 
 def ready(db):
-    if list(db.scalars(text('SELECT version_num FROM public.alembic_version'))) not in (['0027_cycle_consents'],['0028_cycle_planning']):
+    if list(db.scalars(text('SELECT version_num FROM public.alembic_version'))) not in (['0027_cycle_consents'],['0028_cycle_planning'],['0029_cycle_outcomes']):
         fail('RECRUITMENT_COMMAND_NOT_READY',503)
 
 
@@ -98,7 +98,8 @@ def session_target(db,uid,sid,key,stamp):
     life.qualify(db,room,row,cm)
     values=schedule.graph.active_segments(db,sid)
     owned={a.round_id:a for a in life.assignments(db,row,cm) if a.state=='active'}
-    if not values or any(s.round_id not in owned for s in values):fail('ROUND_NOT_ACTIVE')
+    values=[s for s in values if s.round_id in owned]
+    if not values:fail('ROUND_NOT_ACTIVE')
     for segment in values:
         binding=db.get(CycleSessionSegment,segment.id)
         if (binding is None or (binding.cycle_id,binding.generation,binding.session_id)!=(row.id,row.generation,sid)

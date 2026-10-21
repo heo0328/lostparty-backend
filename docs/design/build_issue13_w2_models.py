@@ -11,6 +11,13 @@ import subprocess
 import tempfile
 
 ROOTS={
+    'OutcomeInput':'Input_contract3_post__v2_raid-rounds_round_id_completion',
+    'PersonalOutcomeInput':'Input_contract3_post__v2_raid-rounds_round_id_personal-completion',
+    'ClosureInput':'Input_contract3_post__v2_raid-rooms_room_id_weekly-incomplete-closures',
+    'OutcomeContext':'Output_contract3_get__v2_raid-rooms_room_id_command-context',
+    'ResumeInput':'Input_contract3_post__v2_raid-rooms_room_id_weekly-resume-proposals',
+    'ManualInput':'ManualCompletionCommand',
+    'ManualOutput':'ManualCompletionResult',
     'EditGroupsInput':'Input_contract3_put__v2_raid-rooms_room_id_schedule-groups',
     'SelectGroupInput':'Input_contract3_post__v2_raid-schedule-groups_group_id_selections',
     'ProposeInput':'Input_contract3_post__v2_raid-rooms_room_id_schedule-proposals',

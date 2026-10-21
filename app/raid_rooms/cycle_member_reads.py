@@ -9,7 +9,7 @@ from app.groups.models import GroupMembership
 from app.raid_rooms import (admission_service as base, admission_context as context, cycle_admission as admission,
     cycle_queries as directory, cycle_commands as commands, cycle_schedule as schedule, cycle_wire as wire)
 from app.raid_rooms.cycle_creation import scope, permission
-from app.raid_rooms.cycle_models import CycleMember, CycleAssignment, CycleSubmission
+from app.raid_rooms.cycle_models import CycleMember, CycleAssignment, CycleSubmission, CycleRound
 from app.raid_rooms.integrated_models import RecruitmentMembership as Member, RecruitmentAssignment as Assignment
 from app.raid_rooms.source_models import (ScheduleGroup,ScheduleAlternative,SessionBinding,
     SessionParticipation as Participation,TimeReservation as Reservation)
@@ -45,7 +45,8 @@ def own_view(db,room,row,member):
 
 
 def assignments(db,row,member_id=None):
-    query=select(Assignment,CycleAssignment).join(CycleAssignment,CycleAssignment.assignment_id==Assignment.id).where(
+    query=select(Assignment,CycleAssignment).join(CycleAssignment,CycleAssignment.assignment_id==Assignment.id).join(
+        CycleRound,CycleRound.round_id==Assignment.round_id).where((CycleRound.is_current.is_(True)) | (Assignment.state=='completed'),
         CycleAssignment.cycle_id==row.id,CycleAssignment.generation==row.generation)
     if member_id is not None:query=query.where(Assignment.membership_id==member_id)
     return list(db.execute(query.order_by(Assignment.joined_at,Assignment.id)))
@@ -64,8 +65,8 @@ def formation(db,row):
                     assignment_id=a.id if a else None,status='participating' if a else 'empty',
                     is_leader=link is not None and link.cycle_member_id==leader))
         for a,link in values:
-            if a.round_id==rd.id and a.state=='completed':
-                history.append(dict(target_cycle_key=row.cycle_key,round_id=rd.id,party_no=a.party_no,slot_no=a.slot_no,
+            if a.item_id==item.id and a.state=='completed':
+                history.append(dict(target_cycle_key=row.cycle_key,round_id=a.round_id,party_no=a.party_no,slot_no=a.slot_no,
                     assignment_id=a.id,status='completed',is_leader=link.cycle_member_id==leader))
     return dict(formation_slots=current,formation_history=history,unplaced_assignments=[])
 
@@ -161,19 +162,25 @@ def schedule_fields(db,room,row,mine,stamp):
             from app.raid_rooms.cycle_times import confirm_permission
             reservations=list(db.scalars(select(Reservation).where(Reservation.participation_id==own.id)))
             active=[r for r in reservations if r.released_at is None]
+            owned_rounds={a.round_id for a,link in assignments(db,row,mine.id) if a.state=='active'}
+            expected_segments=[s for s in graph.active_segments(db,session.id) if s.round_id in owned_rounds]
             warnings=[]
             if any(graph.busy(db,mine.user_id,r.starts_at,r.ends_at,excluding=session.id) for r in active):warnings.append('TIME_OVERLAP')
             submission=db.get(CycleSubmission,actual.id) if actual else None
             if session.starts_at and (submission is None or not graph.time.covered(session.starts_at,session.ends_at,submission.normalized_intervals)):
                 warnings.append('OUTSIDE_AVAILABILITY')
             parts.append(dict(participation_id=own.id,revision=own.revision,session_id=session.id,
-                assignment_ids=[a.id for a in graph.assignments(db,mine,session)],state=own.state,required=binding.required,
+                assignment_ids=[a.id for a,link in assignments(db,row,mine.id) if a.round_id in {s.round_id for s in values}],state=own.state,required=binding.required,
                 participating=own.state=='active',confirmation_state=own.confirmation_state,confirmed_at=own.confirmed_at,
                 confirmed_schedule_revision=own.confirmed_schedule_revision,
-                reservation_state='active' if active and len(active)==len(values) else 'partial' if active else 'released' if reservations else 'none',
+                reservation_state='active' if active and len(active)==len(expected_segments) else 'partial' if active else 'released' if reservations else 'none',
                 overlap_warning='TIME_OVERLAP' in warnings,warnings=warnings,
                 permissions=dict(confirm_participation=confirm_permission(db,mine.user_id,row,session.id,stamp))))
     views=cycle_proposals.views(db,row,mine,stamp) if enabled else []
+    from app.raid_rooms import cycle_outcomes
+    if cycle_outcomes.enabled(db):
+        from app.raid_rooms import cycle_resume
+        views+=cycle_resume.views(db,row,mine,stamp)
     return dict(schedule_state='change_pending' if any(v['state']=='pending' for v in views) else 'confirmed' if sessions and all(s['state']=='confirmed' for s in sessions) else 'unconfirmed' if sessions else 'unscheduled',
         schedule_groups=groups,sessions=sessions,session_segments=segments,my_participations=parts,proposals=views)
 

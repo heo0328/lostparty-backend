@@ -20,10 +20,18 @@ def schedule_inputs(db,source):
         alternatives=[]
         for alt in schedule.alternatives(db,group):
             clock=lambda v:f'{v//60:02}:{v%60:02}' if v is not None else None
-            if set(alt.item_order)!=set(pairs):fail('ROOM_REVIEW_REQUIRED')
+            if len(set(alt.item_order))!=len(alt.item_order) or set(alt.item_order)-set(pairs):fail('ROOM_REVIEW_REQUIRED')
+            # C may retain only unfinished item times after a party completion.
+            # N still contains the full bundle; append completed C items in the
+            # captured settings order without treating the copied intent as consent.
+            order=list(alt.item_order)
+            missing=set(pairs)-set(order)
+            completed={str(i.id) for i,r in admission.rounds(db,source) if r.state=='completed'}
+            if missing-completed:fail('ROOM_REVIEW_REQUIRED')
+            order += [v['item_id'] for v in source.settings_snapshot['items'] if v['item_id'] in missing]
             alternatives.append(dict(client_alternative_key=schedule.alternative_key(db,alt),existing_session_id=None,expected_session_revision=None,
                 weekday=alt.weekday,starts_local=clock(alt.start_minute),leader_latest_start_local=clock(alt.latest_start_minute),
-                item_order=[pairs[i] for i in alt.item_order]))
+                item_order=[pairs[i] for i in order]))
         result.append(wire.BScheduleGroup.model_validate(dict(client_group_key=db.get(schedule.ScheduleHead,group.id).client_key,
             existing_group_id=None,expected_group_revision=None,occurrence_mode=group.occurrence_mode,
             planning_mode=group.planning_mode,required=group.required,auto_confirm_additional_members=group.auto_additional_members,

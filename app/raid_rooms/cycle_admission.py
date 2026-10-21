@@ -47,7 +47,7 @@ def member_count(db, target):
 
 
 def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *,
-                 validate_only=False, pending=False, public_origin_application=None, opening=False, replacing=None):
+                 validate_only=False, pending=False, public_origin_application=None, opening=False, replacing=None, resuming=None, resume_items=None):
     if pending and not validate_only:
         raise ValueError('Pending validation cannot acquire a lease')
     cycles.target(stamp, target.cycle_key.isoformat())
@@ -78,14 +78,20 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
     pairs = rounds(db, target)
     choices = {t.item_id: t for t in targets}
     all_items = set(db.scalars(select(Item.id).where(Item.room_id == room.id)))
+    if resuming is not None:
+        if (member is None or resuming.membership_id!=member.id or resuming.cycle_id!=target.id
+                or resuming.generation!=target.generation or resuming.state!='stopped'):fail('TARGET_CONTEXT_STALE')
+        if not resume_items:fail('TARGET_BUNDLE_INCOMPLETE')
+        pairs=[(i,r) for i,r in pairs if r.state=='active' and i.id in resume_items]
+        all_items={i.id for i,r in pairs}
     if not pairs or len(choices) != len(targets) or set(choices) != all_items or {i.id for i, r in pairs} != all_items:
         fail('ROOM_ITEMS_CHANGED')
-    if size != (pairs[0][1].game_party_size if len(pairs) == 1 else 4):
+    if size != (pairs[0][1].game_party_size if len(all_items) == 1 and len(target.settings_snapshot['items'])==1 else 4):
         fail('ROOM_COMPOSITION_CONFLICT')
     if replacing is not None and (member is None or replacing.membership_id!=member.id or replacing.user_id!=uid
             or replacing.cycle_id!=target.id or replacing.generation!=target.generation or replacing.state!='participating'):
         fail('TARGET_CONTEXT_STALE')
-    if replacing is None and member is not None and db.scalar(select(CycleMember.id).where(CycleMember.cycle_id == target.id,
+    if replacing is None and resuming is None and member is not None and db.scalar(select(CycleMember.id).where(CycleMember.cycle_id == target.id,
             CycleMember.generation == target.generation, CycleMember.membership_id == member.id,
             CycleMember.state.in_(('participating', 'completed', 'stopped')))) is not None:
         fail('ROOM_MEMBER_EXISTS')
@@ -173,5 +179,10 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
             assignment_id=assignment.id, joined_at=stamp))
         assignments.append(assignment)
     db.flush()
-    cycles.record_bundle_join(db, target.id, member.id, command_id, stamp)
+    if resuming is None:cycles.record_bundle_join(db, target.id, member.id, command_id, stamp)
+    else:
+        from app.raid_rooms.cycle_models import CycleAssignment
+        for a in assignments:db.add(CycleAssignment(assignment_id=a.id,room_id=room.id,cycle_id=target.id,generation=target.generation,
+            cycle_member_id=resuming.id,membership_id=member.id,user_id=uid,item_id=a.item_id,round_id=a.round_id))
+        db.flush()
     return member, assignments, power
