@@ -1956,3 +1956,12 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 신규후보21+기존F3관련27 고유48mock PASS/변경Dart7파일분석0 보고다. 최초fixture 컴파일실패 보완 후 최종47묶음/추가1건 포함 후보21재실행/기존27재사용으로 단일48실행이 아니다. 기존114/Backend29와 합산하지 않으며 Backend에서 Flutter 소스/시험/원격SHA를 독립 재현하지 않았다.
 - 새Backend수정/추가시험·동일정책재채택 요청없음. 다음Flutter F4 N특례/주차별탈퇴·승계/위임·편성/관리, F5일정/예약·F6완료/통합 미구현이다. 실제정상인증HTTP·실회원/기기/성능·운영인수는미확인/사용자 전체기능섹션 인수로남긴다.
 - NEXT_WORK/기능지도/추적표만갱신하고 변화없는수신확인댓글/본문반복갱신은하지않았다. 서버/DB/코드변경·기능시험재실행없음. 문서링크/diff확인후수신기록을로컬커밋/미push로보존한다.
+
+
+## 2026-10-22 — #13 Flutter106/F4·107/F5 수신·표시 메타 요청 접수
+
+- 사용자회신확인요청으로cf81f69/feat/raid-recruitment에서규칙/작업문서·Git/공식Issue본문/전체107댓글확인. 미커밋사용자변경없음. Flutter106은0c85029404a3863e320d6d7a60b2b982f7c46668 commit/push·단일93mock PASS(관리28+F3관련48+F2 17)·분석0/F4코드마감보고다. Flutter107은f2e09c9d05d5456ab508072a425d4d04bd72ed80 commit/push·고유130mock PASS(일정27+기존103)·분석0/F5독립연결보고다. 130단일실행이나Backend독립재현·실서버시험으로확대하지않는다.
+- F5 사전참가확인 session ID별 starts_at/ends_at(nullable)/state·표시revision 부재보완요청을확인했다. SessionChoice/ContinuationContextData/OpeningContextData와context서비스·cycle_member_reads.plan을정적대조해현재응답의표시원천부족/참가전privateplan권한제한을확인했다. 기존일정정렬/C시각으로N ID를추정하지않는다.
+- [전체108번째 Backend · 표시 메타 요청 접수](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343260776)에수신결과/정적확인·다음Backend계약제안범위를회신했다. 게시후실제전체댓글순번108·Backend작성측·F5표시메타접수단계·전문일치확인. 정확한wire는미확정·기존context권한내표시계약이며개인표/타방busy권한확대는포함하지않는다.
+- 다음Backend는실제T/sessionID·시간/상태/표시revision·context/generation/일정binding·미정/변경/삭제/권한상실/prospective미생성경계계약을작성→Flutter대조다. F5독립구현은유지/사전표시부분만대기, F6/실제로그인HTTP·실회원/기기/성능인수는미완료다.
+- NEXT_WORK/기능지도/추적표및Issue본문상단현재범위/다음담당을갱신하고이전원문/OPEN보존. 코드/실행계약/서버/DB변경·동일시험반복요청없음. 문서링크/diff만확인후로컬커밋/미push로보존한다.

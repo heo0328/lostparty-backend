@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+최신(2026-10-22): [Flutter106 F4](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6342159361) 0c850294/93mock PASS 마감·[107 F5](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343179198) f2e09c9d/고유130mock PASS 독립연결보고 수신. F5사전참가세션시각/상태메타보완요청을 [Backend108](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343260776)에정적대조/접수회신. 다음Backend권한내표시메타계약제안→Flutter대조, F5독립코드유지/해당표시만대기·F6/실회원/기기인수별도미완료. 서버/계약변경없고 [NEXT_WORK](NEXT_WORK.md)기준. 아래는이전기록이다.
+
 최신 수신(2026-10-22): [전체105번째 Flutter · F3 후보 연결](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6340688138)에서 f6287404 commit/push·Backend0afd879/168경로 소비·신규21+관련27 고유48mock PASS/분석0 보고. 후보 보완대기 해소·F3 코드/자동 검증 마감, 실제정상인증HTTP·기기/운영인수는 미확인이다. 다음Flutter F4 주차별관리, Backend 재현차이대응·새수정/시험요청없음. [NEXT_WORK](NEXT_WORK.md)기준이며 아래는 이전 기록이다.
 
 현재(2026-10-22 후보 구현): [그룹 활동 캐릭터 후보 개발 안내](../ISSUE_13_GROUP_CHARACTER_CANDIDATES_DEVELOPMENT.md). 후보GET/optional검색token·전체후보사전검증 구현, 고유29PASS/양프로필계약일치·실제API8000/168경로/DB29반영.105표449행/내용·실행설정보존. 구간0afd879 push/원격확인·[전체104번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6340348412) 완료. 다음Flutter후보UI/선택재검증연결, Backend차이대응. 실제로그인/기기·F3전체/운영인수별도이며 [NEXT_WORK](NEXT_WORK.md)기준. 아래는이전기록이다.

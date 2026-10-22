@@ -8,16 +8,19 @@
 
 최종28PASS/222.33초+보강2PASS/21.14초(중복1제외 고유29)·두프로필 OpenAPI 전체객체일치. 실제 API8000은168경로/DB0029·새이미지66e69545…/healthy다. 전후105표449행/전체내용지문·환경/키mount·보안/포트/command보존, DDL/초기화없음. 실제정상로그인HTTP·기기/F3전체·운영인수는미완료다. 구간 `0afd87932ab9b89a5d0976cf634daa5d6ef5a408` commit/push·실제원격SHA일치·[전체104번째 Backend · 후보 구현/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6340348412) 게시완료다.
 
-## 최신 수신 — Flutter F3 코드/자동 검증 마감
+## 최신 수신 — F4 마감·F5 독립 연결 / 사전 참가 표시 메타 보완
 
-[전체105번째 Flutter · F3 후보 연결/자동 검증 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6340688138)에서 `feature/raid-recruitment-scheduling` / `f6287404afd6273218255037c6cb4e419fb0313e` commit/push·원격일치 보고를 수신했다. Backend0afd879/실행168경로를 소비해 후보2열UI·정렬/명시더보기·검색token·페이지밖선택/stale재검증·회원/세션격리를 연결했다. 신규후보21+기존F3관련27 고유48PASS/변경Dart7파일분석0 보고이며 모두mock 검증이다. Backend에서 Flutter 소스/시험을 독립 재현하지 않았고 기존114/Backend29와 합산하지 않는다.
+[전체106번째 Flutter F4](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6342159361)는0c850294 commit/push·최종단일93mock PASS/분석0 보고, [전체107번째 Flutter F5](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343179198)는f2e09c9d commit/push·고유130mock PASS(127묶음후추가3포함일정27재실행/기존103재사용)/분석0 보고다. F4는코드/자동검증마감, F5는일정/예약독립연결완료이며사전참가시간표시는미완료다. Backend에서Flutter소스/시험/원격SHA를독립재현하지않았고실제HTTP·실회원/기기인수로확대하지않는다.
 
-후보 출처/계약 보완 대기는 해소됐고 **F3 코드·자동 검증 구간 마감**, 실제 정상인증HTTP·실회원/기기 인수·운영 완료는 아니다. 새 Backend 수정/추가시험/동일정책 재채택 요청은 없다. 변화 없는 수신확인 댓글은 반복하지 않는다.
+[전체108번째 Backend · 표시 메타 요청 확인](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343260776)에현재context/DTO·privateplan권한을정적대조한결과를회신했다. SessionChoice는ID/required/join_deadline/permission만있고continuation/opening은target_session_ids만제공한다. 공개시각목록순서로ID를추정하거나참가전privateplan을무조건조회하는것으로대체하지않는다.
 
-## 다음 Flutter — F4 주차별 관리
+다음 **Backend**: 기존admission/continuation/opening context권한내선택session의실제T/ID·시작/종료(nullable)·상태/표시revision 계약을작성해Flutter대조한다. context token/일정revision·generation binding, 미정·변경/삭제/접근상실·prospective개방의미생성session표시/선택경계를정의한다. 정확한wire/경로는미확정이며개인제출표/타방busy공개·권한확대는포함하지않는다.
 
-- 다음 단위는 F4 N특례·주차별 탈퇴/승계·위임/편성·관리다. F5일정/예약·F6완료/통합은 이후 미구현이다. 생성만C/N원자·이후T별독립과 기존과거7관계보존을 유지한다.
-- 정상로그인 후보조회·실제2열/긴이름/글자크기·더보기/stale/회원전환·성능 확인은 미실행이며, 사용자 전체기능섹션 기기 인수와 별도 추적한다. 이미 보고한 같은 mock 시험/정책 수용을 다시 요청하지 않는다.
+## 다음 Flutter — F5 독립 구현 유지·표시 메타 계약 대기
+
+- 사전일반참가/캐릭터변경/N특례·개방확인창의실제시각/미정표시부분만Backend계약보완대기다. F1~F4/후보·이미참가한방의F5일정/제안/본인확인연결은유지한다.
+- 표시계약합의→Backend구현/검증·게시/실행SHA인계후네이티브가해당부분을연결/검증·회신한다. F6완료/정정·종료/재개통합은미구현이다.
+- 정상로그인HTTP·실회원·기기표시/성능인수는미확인이다. 기존mock검증/BackendDB시험/동일정책채택을반복요청하지않는다.
 
 ## 다음 Backend — 연결 차이 대응·현재 실행 유지
 
