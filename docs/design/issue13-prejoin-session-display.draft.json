@@ -1,0 +1,897 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lostparty:prejoin-session-display:draft1",
+  "title": "Issue13 opt-in prejoin session display — DRAFT, NOT DEPLOYED",
+  "$ref": "#/$defs/SessionDisplay",
+  "$defs": {
+    "Permission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowed",
+        "reason",
+        "next_change_at"
+      ],
+      "properties": {
+        "allowed": {
+          "type": "boolean"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "next_change_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "ActualSessionDisplay": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "session_id",
+        "revision",
+        "schedule_revision",
+        "state",
+        "required",
+        "starts_at",
+        "ends_at",
+        "join_deadline",
+        "permission"
+      ],
+      "properties": {
+        "session_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "schedule_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "state": {
+          "enum": [
+            "unconfirmed",
+            "confirmed"
+          ]
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "starts_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ends_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "join_deadline": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "permission": {
+          "$ref": "#/$defs/Permission"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "confirmed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "starts_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+              },
+              "ends_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "starts_at": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "ends_at": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "ends_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "PreviewAlternative": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "preview_ref",
+        "session_id",
+        "state",
+        "weekday",
+        "starts_at",
+        "ends_at",
+        "time_state",
+        "materialization"
+      ],
+      "properties": {
+        "preview_ref": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "session_id": {
+          "type": "null"
+        },
+        "state": {
+          "const": "preview"
+        },
+        "weekday": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7
+        },
+        "starts_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ends_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "time_state": {
+          "enum": [
+            "bounded",
+            "undetermined",
+            "start_only"
+          ]
+        },
+        "materialization": {
+          "enum": [
+            "on_open",
+            "after_group_selection",
+            "after_coordination",
+            "not_scheduled"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "time_state": {
+                "const": "bounded"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "starts_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+              },
+              "ends_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "time_state": {
+                "const": "undetermined"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "starts_at": {
+                "type": "null"
+              },
+              "ends_at": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "time_state": {
+                "const": "start_only"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "starts_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+              },
+              "ends_at": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "OpeningSchedulePreviewGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "preview_group_ref",
+        "source_group_revision",
+        "planning_mode",
+        "occurrence_mode",
+        "day_scope",
+        "required",
+        "alternatives"
+      ],
+      "properties": {
+        "preview_group_ref": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "source_group_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "planning_mode": {
+          "enum": [
+            "manual",
+            "coordinated",
+            "unscheduled"
+          ]
+        },
+        "occurrence_mode": {
+          "enum": [
+            "one_of",
+            "each"
+          ]
+        },
+        "day_scope": {
+          "enum": [
+            "selected_weekdays",
+            "any_current_cycle"
+          ]
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PreviewAlternative"
+          }
+        }
+      }
+    },
+    "ExistingSessionDisplay": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "selection_mode",
+        "target_cycle_key",
+        "room_cycle_id",
+        "target_generation",
+        "plan_revision",
+        "display_revision",
+        "sessions",
+        "previews"
+      ],
+      "properties": {
+        "kind": {
+          "const": "existing"
+        },
+        "selection_mode": {
+          "const": "select_session_ids"
+        },
+        "target_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "room_cycle_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "plan_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "display_revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "sessions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ActualSessionDisplay"
+          },
+          "maxItems": 64
+        },
+        "previews": {
+          "type": "array",
+          "maxItems": 0
+        }
+      }
+    },
+    "OpeningPreviewDisplay": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "selection_mode",
+        "target_cycle_key",
+        "room_cycle_id",
+        "target_generation",
+        "plan_revision",
+        "display_revision",
+        "sessions",
+        "previews"
+      ],
+      "properties": {
+        "kind": {
+          "const": "opening_preview"
+        },
+        "selection_mode": {
+          "const": "opening_implicit_enrolment"
+        },
+        "target_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "room_cycle_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "plan_revision": {
+          "type": "null"
+        },
+        "display_revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "sessions": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "previews": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OpeningSchedulePreviewGroup"
+          }
+        }
+      }
+    },
+    "NoSelectionDisplay": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "selection_mode",
+        "target_cycle_key",
+        "room_cycle_id",
+        "target_generation",
+        "plan_revision",
+        "display_revision",
+        "sessions",
+        "previews"
+      ],
+      "properties": {
+        "kind": {
+          "const": "none"
+        },
+        "selection_mode": {
+          "const": "no_session_selection"
+        },
+        "target_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "room_cycle_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "plan_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "display_revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "sessions": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "previews": {
+          "type": "array",
+          "maxItems": 0
+        }
+      }
+    },
+    "SessionDisplay": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ExistingSessionDisplay"
+        },
+        {
+          "$ref": "#/$defs/OpeningPreviewDisplay"
+        },
+        {
+          "$ref": "#/$defs/NoSelectionDisplay"
+        }
+      ]
+    }
+  },
+  "x-status": "proposal-not-implemented",
+  "x-extension": {
+    "method": "get",
+    "paths": [
+      "/v2/raid-rooms/{room_id}/admission-context",
+      "/v2/raid-rooms/{room_id}/continuation-context",
+      "/v2/raid-rooms/{room_id}/opening-context"
+    ],
+    "query": {
+      "name": "include_session_display",
+      "required": false,
+      "default": "false",
+      "enum": [
+        "true",
+        "false"
+      ]
+    },
+    "response-property": "data.session_display",
+    "property-present-only-when-opted-in": true,
+    "write-body-changes": false,
+    "display-response-max-bytes-proposal": 1048576
+  },
+  "x-examples": {
+    "admission_confirmed": {
+      "kind": "existing",
+      "selection_mode": "select_session_ids",
+      "target_cycle_key": "2026-10-21",
+      "room_cycle_id": "11111111-1111-4111-8111-111111111111",
+      "target_generation": 1,
+      "plan_revision": 3,
+      "display_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sessions": [
+        {
+          "session_id": "22222222-2222-4222-8222-222222222222",
+          "revision": 2,
+          "schedule_revision": 2,
+          "state": "confirmed",
+          "required": true,
+          "starts_at": "2026-10-23T10:00:00Z",
+          "ends_at": "2026-10-23T10:30:00Z",
+          "join_deadline": "2026-10-23T09:30:00Z",
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": "2026-10-23T09:30:00Z"
+          }
+        }
+      ],
+      "previews": []
+    },
+    "admission_unconfirmed": {
+      "kind": "existing",
+      "selection_mode": "select_session_ids",
+      "target_cycle_key": "2026-10-21",
+      "room_cycle_id": "11111111-1111-4111-8111-111111111111",
+      "target_generation": 1,
+      "plan_revision": 3,
+      "display_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sessions": [
+        {
+          "session_id": "22222222-2222-4222-8222-222222222222",
+          "revision": 2,
+          "schedule_revision": 2,
+          "state": "unconfirmed",
+          "required": true,
+          "starts_at": null,
+          "ends_at": null,
+          "join_deadline": null,
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          }
+        }
+      ],
+      "previews": []
+    },
+    "continuation_open_n": {
+      "kind": "existing",
+      "selection_mode": "select_session_ids",
+      "target_cycle_key": "2026-10-28",
+      "room_cycle_id": "11111111-1111-4111-8111-111111111111",
+      "target_generation": 1,
+      "plan_revision": 3,
+      "display_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sessions": [
+        {
+          "session_id": "22222222-2222-4222-8222-222222222222",
+          "revision": 2,
+          "schedule_revision": 2,
+          "state": "confirmed",
+          "required": true,
+          "starts_at": "2026-10-30T10:00:00Z",
+          "ends_at": "2026-10-30T10:30:00Z",
+          "join_deadline": "2026-10-30T09:30:00Z",
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": "2026-10-30T09:30:00Z"
+          }
+        }
+      ],
+      "previews": []
+    },
+    "opening_manual": {
+      "kind": "opening_preview",
+      "selection_mode": "opening_implicit_enrolment",
+      "target_cycle_key": "2026-10-28",
+      "room_cycle_id": "11111111-1111-4111-8111-111111111111",
+      "target_generation": 1,
+      "plan_revision": null,
+      "display_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sessions": [],
+      "previews": [
+        {
+          "preview_group_ref": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "source_group_revision": 4,
+          "planning_mode": "manual",
+          "occurrence_mode": "one_of",
+          "day_scope": "selected_weekdays",
+          "required": true,
+          "alternatives": [
+            {
+              "preview_ref": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "session_id": null,
+              "state": "preview",
+              "weekday": 5,
+              "starts_at": "2026-10-30T10:00:00Z",
+              "ends_at": "2026-10-30T10:30:00Z",
+              "time_state": "bounded",
+              "materialization": "on_open"
+            }
+          ]
+        }
+      ]
+    },
+    "opening_coordination_any_cycle": {
+      "kind": "opening_preview",
+      "selection_mode": "opening_implicit_enrolment",
+      "target_cycle_key": "2026-10-28",
+      "room_cycle_id": "11111111-1111-4111-8111-111111111111",
+      "target_generation": 1,
+      "plan_revision": null,
+      "display_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sessions": [],
+      "previews": [
+        {
+          "preview_group_ref": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "source_group_revision": 4,
+          "planning_mode": "coordinated",
+          "occurrence_mode": "one_of",
+          "day_scope": "any_current_cycle",
+          "required": true,
+          "alternatives": []
+        }
+      ]
+    },
+    "opening_unknown_duration": {
+      "kind": "opening_preview",
+      "selection_mode": "opening_implicit_enrolment",
+      "target_cycle_key": "2026-10-28",
+      "room_cycle_id": "11111111-1111-4111-8111-111111111111",
+      "target_generation": 1,
+      "plan_revision": null,
+      "display_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sessions": [],
+      "previews": [
+        {
+          "preview_group_ref": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "source_group_revision": 4,
+          "planning_mode": "manual",
+          "occurrence_mode": "one_of",
+          "day_scope": "selected_weekdays",
+          "required": true,
+          "alternatives": [
+            {
+              "preview_ref": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "session_id": null,
+              "state": "preview",
+              "weekday": 5,
+              "starts_at": "2026-10-30T10:00:00Z",
+              "ends_at": null,
+              "time_state": "start_only",
+              "materialization": "on_open"
+            }
+          ]
+        }
+      ]
+    },
+    "reopening_generation3_wed_early": {
+      "kind": "opening_preview",
+      "selection_mode": "opening_implicit_enrolment",
+      "target_cycle_key": "2026-10-28",
+      "room_cycle_id": "11111111-1111-4111-8111-111111111111",
+      "target_generation": 3,
+      "plan_revision": null,
+      "display_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sessions": [],
+      "previews": [
+        {
+          "preview_group_ref": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "source_group_revision": 4,
+          "planning_mode": "manual",
+          "occurrence_mode": "one_of",
+          "day_scope": "selected_weekdays",
+          "required": true,
+          "alternatives": [
+            {
+              "preview_ref": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "session_id": null,
+              "state": "preview",
+              "weekday": 3,
+              "starts_at": "2026-11-03T16:00:00Z",
+              "ends_at": "2026-11-03T16:30:00Z",
+              "time_state": "bounded",
+              "materialization": "on_open"
+            }
+          ]
+        }
+      ]
+    },
+    "already_open_or_decline": {
+      "kind": "none",
+      "selection_mode": "no_session_selection",
+      "target_cycle_key": "2026-10-28",
+      "room_cycle_id": "11111111-1111-4111-8111-111111111111",
+      "target_generation": 1,
+      "plan_revision": 7,
+      "display_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sessions": [],
+      "previews": []
+    },
+    "opening_manual_multiple_one_of": {
+      "kind": "opening_preview",
+      "selection_mode": "opening_implicit_enrolment",
+      "target_cycle_key": "2026-10-28",
+      "room_cycle_id": "11111111-1111-4111-8111-111111111111",
+      "target_generation": 1,
+      "plan_revision": null,
+      "display_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sessions": [],
+      "previews": [
+        {
+          "preview_group_ref": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "source_group_revision": 4,
+          "planning_mode": "manual",
+          "occurrence_mode": "one_of",
+          "day_scope": "selected_weekdays",
+          "required": true,
+          "alternatives": [
+            {
+              "preview_ref": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "session_id": null,
+              "state": "preview",
+              "weekday": 5,
+              "starts_at": "2026-10-30T10:00:00Z",
+              "ends_at": "2026-10-30T10:30:00Z",
+              "time_state": "bounded",
+              "materialization": "after_group_selection"
+            },
+            {
+              "preview_ref": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "session_id": null,
+              "state": "preview",
+              "weekday": 5,
+              "starts_at": "2026-10-30T11:00:00Z",
+              "ends_at": "2026-10-30T11:30:00Z",
+              "time_state": "bounded",
+              "materialization": "after_group_selection"
+            }
+          ]
+        }
+      ]
+    },
+    "opening_manual_each": {
+      "kind": "opening_preview",
+      "selection_mode": "opening_implicit_enrolment",
+      "target_cycle_key": "2026-10-28",
+      "room_cycle_id": "11111111-1111-4111-8111-111111111111",
+      "target_generation": 1,
+      "plan_revision": null,
+      "display_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sessions": [],
+      "previews": [
+        {
+          "preview_group_ref": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "source_group_revision": 4,
+          "planning_mode": "manual",
+          "occurrence_mode": "each",
+          "day_scope": "selected_weekdays",
+          "required": true,
+          "alternatives": [
+            {
+              "preview_ref": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "session_id": null,
+              "state": "preview",
+              "weekday": 5,
+              "starts_at": "2026-10-30T10:00:00Z",
+              "ends_at": "2026-10-30T10:30:00Z",
+              "time_state": "bounded",
+              "materialization": "on_open"
+            },
+            {
+              "preview_ref": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "session_id": null,
+              "state": "preview",
+              "weekday": 5,
+              "starts_at": "2026-10-30T11:00:00Z",
+              "ends_at": "2026-10-30T11:30:00Z",
+              "time_state": "bounded",
+              "materialization": "on_open"
+            }
+          ]
+        }
+      ]
+    },
+    "opening_unscheduled": {
+      "kind": "opening_preview",
+      "selection_mode": "opening_implicit_enrolment",
+      "target_cycle_key": "2026-10-28",
+      "room_cycle_id": "11111111-1111-4111-8111-111111111111",
+      "target_generation": 1,
+      "plan_revision": null,
+      "display_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sessions": [],
+      "previews": [
+        {
+          "preview_group_ref": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "source_group_revision": 4,
+          "planning_mode": "unscheduled",
+          "occurrence_mode": "one_of",
+          "day_scope": "selected_weekdays",
+          "required": true,
+          "alternatives": [
+            {
+              "preview_ref": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+              "session_id": null,
+              "state": "preview",
+              "weekday": 5,
+              "starts_at": null,
+              "ends_at": null,
+              "time_state": "undetermined",
+              "materialization": "not_scheduled"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

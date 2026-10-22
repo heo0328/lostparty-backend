@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+현재(2026-10-22): [사전 참가 표시메타 초안1](../ISSUE_13_PREJOIN_SESSION_DISPLAY_DRAFT.md)·닫힌schema/11예시·11거절/opt-in3경계검사작성완료. 3GET의명시opt-in·기존응답/token보존·actual세션/미생성opening preview/none구분 제안이며 다음Flutter소비대조→Backend구현이다. 코드/실행계약/서버미변경, [NEXT_WORK](NEXT_WORK.md)기준. 아래는이전기록이다.
+
 최신(2026-10-22): [Flutter106 F4](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6342159361) 0c850294/93mock PASS 마감·[107 F5](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343179198) f2e09c9d/고유130mock PASS 독립연결보고 수신. F5사전참가세션시각/상태메타보완요청을 [Backend108](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343260776)에정적대조/접수회신. 다음Backend권한내표시메타계약제안→Flutter대조, F5독립코드유지/해당표시만대기·F6/실회원/기기인수별도미완료. 서버/계약변경없고 [NEXT_WORK](NEXT_WORK.md)기준. 아래는이전기록이다.
 
 최신 수신(2026-10-22): [전체105번째 Flutter · F3 후보 연결](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6340688138)에서 f6287404 commit/push·Backend0afd879/168경로 소비·신규21+관련27 고유48mock PASS/분석0 보고. 후보 보완대기 해소·F3 코드/자동 검증 마감, 실제정상인증HTTP·기기/운영인수는 미확인이다. 다음Flutter F4 주차별관리, Backend 재현차이대응·새수정/시험요청없음. [NEXT_WORK](NEXT_WORK.md)기준이며 아래는 이전 기록이다.

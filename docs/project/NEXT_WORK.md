@@ -8,6 +8,16 @@
 
 최종28PASS/222.33초+보강2PASS/21.14초(중복1제외 고유29)·두프로필 OpenAPI 전체객체일치. 실제 API8000은168경로/DB0029·새이미지66e69545…/healthy다. 전후105표449행/전체내용지문·환경/키mount·보안/포트/command보존, DDL/초기화없음. 실제정상로그인HTTP·기기/F3전체·운영인수는미완료다. 구간 `0afd87932ab9b89a5d0976cf634daa5d6ef5a408` commit/push·실제원격SHA일치·[전체104번째 Backend · 후보 구현/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6340348412) 게시완료다.
 
+## 현재 계약 구간 — 사전 참가 표시 메타 초안1 작성 / 다음 Flutter 대조
+
+[사전 참가 세션 표시 메타 초안1](../ISSUE_13_PREJOIN_SESSION_DISPLAY_DRAFT.md)·[검토 JSON Schema/합성 예시](../design/issue13-prejoin-session-display.draft.json)를 작성했다. 기존3GET에optional `include_session_display` query·opt-in때만data.session_display를추가하는제안이다. 생략/false의기존응답/토큰·쓰기body/원ACK는유지하고새token의내부버전표지/표시digest를결합한다.
+
+existing는실제T/session시각·상태/revision·required/permission을ID로직접제공한다. opening_preview는prospective cycle/generation의일정의도이며session_id=null·가짜ID/자동시간확정·예약없음, none은decline/already_open noop이다. 실제미정과duration미상preview·다중one_of/each/coordinated/unscheduled/주차전체를구분한다.
+
+다음 **Flutter**: opt-in/닫힌DTO·세종류/선택의미·prospective세대비교·원ACK보존·1MiB초과처리제안을소비대조한다. 충돌없으면Backend구현/격리검증·게시/개발실행/소비SHA인계다. 같은F1~F4/후보·F5독립시험/정책을반복요청하지않는다.
+
+검증은schema/ref/닫힌객체·11예시/11거절fixture/opt-in존재3경계와KST/시각·상태조합의문서검사다. 실제HTTP/DB·token/동시성시험이아니다. 앱코드/실행OpenAPI·서버168경로/DB29·기본고정계약불변이며아래요청접수는이력이다.
+
 ## 최신 수신 — F4 마감·F5 독립 연결 / 사전 참가 표시 메타 보완
 
 [전체106번째 Flutter F4](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6342159361)는0c850294 commit/push·최종단일93mock PASS/분석0 보고, [전체107번째 Flutter F5](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343179198)는f2e09c9d commit/push·고유130mock PASS(127묶음후추가3포함일정27재실행/기존103재사용)/분석0 보고다. F4는코드/자동검증마감, F5는일정/예약독립연결완료이며사전참가시간표시는미완료다. Backend에서Flutter소스/시험/원격SHA를독립재현하지않았고실제HTTP·실회원/기기인수로확대하지않는다.
