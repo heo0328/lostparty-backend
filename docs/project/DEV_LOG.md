@@ -1868,3 +1868,14 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 구현 `372988108b8e7054d76da94838162480c3a2c12c` commit/push·실제 원격 SHA 일치 확인·[전체91번째 Backend · W5 복원 준비 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6332223435) 게시 완료. 본문 제외 실제 전체 작성 순번91·Backend 작성 측·W5 복원 준비 단계를 재조회했다. 기존 연결 도구의 쓰기 권한 부족은 이전 구간에서 확인돼 조회는 연결 도구, 관련 결과 게시/본문 갱신은 인증된 gh CLI로 수행했다. 새 댓글/요구는 없었고 본문 이전 원문/합의 이력 보존·OPEN 유지를 확인했다.
 - NEXT_WORK/기능지도/계획/추적표/복원 기록에 SHA·게시 링크·다음 Backend 실제 전환을 반영했다. 실제 DB0023/구 API114/healthy는 유지하며 새로운 checkpoint·실제0029/API8000 전환·Flutter 소비 인계는 다음 구간이다. private 백업은 ignore/0700·0600으로 로컬에 보관하며 GitHub에는 도구/집계/문서만 게시했다.
 - 게시 기록 후속만 변경하므로 기능 시험·DB/서버/백업 재실행 없이 문서 링크/diff 검사 후 별도 commit/push한다.
+
+
+## 2026-10-22 — #13 W5 실제 로컬 DB/API 전환
+
+- 사용자 다음 구간 진행과 지난주 키 제외 정상 확인을 반영했다. AGENTS/협업/NEXT_WORK/AI_CONTEXT·계약3판/4판/ACK·Git/Issue 본문과 전체91댓글 확인, 추가 계약 변경/사용자 변경 없음. [실행/검증/복구 경계](../ISSUE_13_W5_LIVE_CUTOVER.md)·checkpoint/live 공개 artifact에 근거를 기록한다.
+- 기존 API를 정지해 모든 내부 worker를 중단하고 DB 다른 연결0을 확인한 뒤 quiesced-checkpoint 도구를 실제 실행했다. 새 backups/lostparty-preflight-f2b2a14f7162의83표414행/키4개·시퀀스/환경·실행 설정을 비공개0700/0600으로 보관했다. 제한 LOGIN fresh0029 이행 보존·별도 fresh0023/구 이미지 복구 통과. source_writes_paused/cutover_checkpoint 모두true이며 이전 무정지 rehearsal과 구분한다.
+- 후보 이미지 app/alembic 전체 Python 파일이 현재 작업트리와 일치함을 확인하고 실제 app 제한 LOGIN으로0023→0029 이행했다.82개 기존 업무표413행·모든 열/기록시각/열 정의·시퀀스·DB profile·키 bytes 보존, full readiness29/DB 비소유자 통과. 검증된 이미지ccc787c…를 two-cycle 태그로 고정하고 Compose override/--no-deps --no-build로 API만 factory/새 worker 동시기동, DB 컨테이너/volume은 유지했다. 기존 구 이미지efde69d…는 보존했다.
+- 첫 기동 후 mount 문자열 검사에서 Docker Desktop의 POSIX→동일 WSL UNC 표시 차이만 발견했다. 정규화한 동일 경로/ro 목적지와 키 bytes·환경/보안/포트 일치로 재검증했다. migration이나 자료 보존 실패는 없었으며 실제 이후 검증은 종료0이다.
+- 실제 health 내부/호스트200·v1 공개0건/v2 C/N각0건·인증 누락/잘못된 Bearer401/ACCESS_INVALID·Bearer 헤더/no-store의8 HTTP검사 통과.167 활성 factory와116 기본 소스 OpenAPI 각각 전체 객체 일치, 고정0.4.1/canonical SHA 불변. 기존 유효 세션2회원 서비스 읽기에서 관계각7/not_selected/plan TARGET_NOT_OPEN7/영향0 leave-context7 확인. 지난주7건 현재 검색 제외는 정상이며 실제 leave/end/새 참가·동의/자료 삭제0이다. 기동/worker·읽기 후 전체 테이블 지문 불변·전용 runner 정리/API·DB만 healthy 확인.
+- 자동 승인 검토가 제안된 기존 세션 기반 테스트 토큰 발급·비공개 저장을 credential-probing side effect로 거절했다. 거절된 명령/토큰 코드는 실행되지 않았고 해당 검사를 제거한 뒤 승인된 전환을 수행했다. 토큰 발급 우회 없이 공개 HTTP/인증 거절·기존 서비스 읽기만 검증했다. 실제 인증 HTTP 성공/Google provider·기기는 Flutter 정상 로그인 확인 범위이며 미확인이다.
+- Compose override에 별도 이미지 선택을 추가하고 README/협업/다음 실행/지도/계획/추적표에 현재0029 실행·재기동/복구 경계를 반영했다. 기존304합성/백업 보호7시험을 재실행/합산하지 않는다. 신규 API/고정계약/DDL 변경·운영 배포/merge/원본 overwrite/drop/downgrade는 없다. 구간 commit/push·원격 확인 후 공식 #13에 실제 준비/Flutter 다음 읽기 구간을 인계한다.

@@ -2,22 +2,21 @@
 
 2026-10-22 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13).
 
-[실제 자료 영향·복원 리허설](../ISSUE_13_W5_RESTORE_PREFLIGHT.md) 완료: source83표/414행·시퀀스1·인증 키4개·환경/실행 설정 보관, 제한 app LOGIN의 복원본0029 이행/기존82업무표 보존·별도0023/구 이미지 복구·읽기/worker 불변 확인. 보호 unittest7PASS. 검증용 컨테이너/DB/network만 정리했고 비공개 백업은 `backups/`에0700/0600으로 보관한다. 구현 `372988108b8e7054d76da94838162480c3a2c12c` commit/push·실제 원격 SHA 일치 확인·[전체91번째 Backend · W5 복원 준비 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6332223435) 게시 완료. 이전 W5 자동304고유 검증과 별도이며 실제 개발 서버/DB 전환·Flutter 적용은 미실행이다.
+[개발 DB/API 실제 전환](../ISSUE_13_W5_LIVE_CUTOVER.md) 완료: 구 API/모든 내부 worker 정지·다른 DB 연결0 확인 후 새 checkpoint, 제한 app LOGIN의0023→0029·82업무표413행/기록시각·키4개/시퀀스 보존, API8000 factory167경로/새 worker 기동·호스트 health200. 두 프로필 OpenAPI 전체 객체 일치·공개/인증 거절 HTTP8검사·기존2회원 서비스 읽기·기동 후 전체 테이블 불변 확인. 신규 DTO/계약/DDL 변경 없음. 지난주7건의 현재 C/N 검색 제외는 사용자 확인한 정상 동작이며 원본/관계는 유지한다.
 
-착수/인계 시 AGENTS → 협업 규칙 → 이 문서 → AI_CONTEXT → 계약3판/4판/ACK를 읽고 Issue 본문/최신 댓글·Git/코드를 확인한다. 최신 공식 기록은 [전체91번째 Backend · W5 복원 준비 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6332223435)이며 추가 제품 입력/동일 계약 회신 대기는 없다. 계약0.4.1/policy two-cycle-contract-4를 유지한다.
+착수/인계 시 AGENTS → 협업 → 이 문서 → AI_CONTEXT → 계약3판/4판/ACK와 Issue 본문/최신 댓글·Git을 확인한다. 계약0.4.1/policy4·canonical SHA `fb4c7d065594a9a0e7e8288e5f73179f90b078b68ac4323d1aade5c7a63b42f1` 유지. 이 구간 commit/push·원격 확인 후 Issue에 실제 서버 준비 결과와 다음 Flutter 구간을 인계한다.
 
-## 다음 Backend — 개발 DB/API 실제 전환·소비 가능한 구간 인계
+## 다음 Flutter — 주차 메타·summary/선택기 소비
 
-1. **대상/영향·승인 범위 확인**: 로컬 개발 DB0023→0029·API8000/worker 동시전환이 다음 구간이다. source는 여전히 API114경로/구 이미지/healthy다. 과거 모집7건은 C/N 밖·stopped 원천이며 새 C/N 공개 검색은0건(구 검색7건), persistent 관계7개/원본·ACK는 보존한다. 현재 plan은 TARGET_NOT_OPEN이고 영향0의 본인 leave-context는 허용되지만 실제 명령은 실행하지 않았다. 이 목록 차이를 전환 인계에 포함한다.
-2. **직전 checkpoint·실제 전환**: [복원 리허설/전환 순서](../ISSUE_13_W5_RESTORE_PREFLIGHT.md)의 검증된 후보 이미지·자료/키/환경 보존과 복구 지점을 사용한다. 현재 source 실행 중 백업은 리허설 snapshot이며 전환 checkpoint가 아니다. 구 API/모든 worker 정지 후 새 백업을 확정하고0029 이행/보존·factory/새 worker 동시기동·health/계약/인증/v1/C/N을 검증한다. [compose.two-cycle.yaml](../../compose.two-cycle.yaml)은 진입점 override이며23이미지/구 worker를29와 혼용하지 않는다. 실제 source drop/초기화/downgrade·운영변경으로 확대하지 않는다.
-3. **복구/쓰기 경계**: 새 쓰기 허용 전 실패는 승인된 checkpoint를 별도 DB에 복원·검증 후 연결을 전환한다. 새 쓰기 이후는 snapshot 복원으로 새 자료를 버리지 말고 영향/보존 범위를 확인한다. 실제 실행 SHA·이미지/DB·보존·검증 결과를 기록한다.
-4. **실제 소비 증명 후 Flutter 인계**: 서버 경로/실행 SHA·고정 계약·확인/미확인을 준비하고 commit/push·원격 확인 후 같은 Issue로 메타/summary·주차 선택·계정 캐시 격리와 필요한 구간만 요청한다. v1 위험 방 쓰기409 CLIENT_UPGRADE_REQUIRED·원 ACK 우선·본인 수동 C/수10시와 개인표 유지·과거 모집7건 목록 차이를 포함한다. 현재 소스/리허설만으로 새 서버 시험을 요청하지 않는다.
+- 정상 로그인으로 GET `/v2/raid-cycles`·POST `/v2/me/raid-weekly-summary` 성공과 C/N 선택/target 본인 목록을 연결한다. 현재 로컬 개발 서버는167경로/DB29이며 기존 개발 연결 경로를 사용한다. 실제 기기 연결/로그인 성공은 Backend 공개 HTTP·서비스 읽기 검증과 별도 미확인이다.
+- 계정 전환/로그아웃 시 summary·선택 주차 캐시를 회원/환경별로 격리한다. 사용 계약 SHA·확인/실패/미확인을 같은 #13에 회신한다. 과거7건은 C/N 밖이므로 현재 공개 검색에 없는 것이 정상이며 persistent 관계/한도는 자동 해제하지 않았다.
+- v1 위험 방 쓰기는 원 ACK 우선/409 CLIENT_UPGRADE_REQUIRED이고 본인 수동 C10시/개인표는 유지한다. 새 쓰기/실회원·기기 전체 인수는 이 읽기 구간과 구분한다.
 
-추가 제품 입력/동일 계약 재회신 대기는 없다. 실제 개발 DB/API 전환·Flutter 적용·실회원/provider/기기·운영 인수는 미완료이며 #19 통계는 별도 후속이다.
+## 다음 Backend — 인계 회신 대응·현재 실행 유지
 
-## 유지할 기준
+1. 검증 구간 commit/push·원격 확인 후 공식 Issue에 인계하고 실제 댓글 순번·링크를 기록한다. 새 계약 재채택 요청은 하지 않는다.
+2. Flutter의 재현 가능한 차이/실패가 있으면 기존 브랜치에서 필요한 구간만 보완·검증·게시 후 회신한다. Flutter 적용을 추정해 완료 처리하거나 새 기능 범위를 추가하지 않는다. #19 통계는 독립 후속이다.
+3. 개발 재기동은 `compose.yaml` + `compose.two-cycle.yaml`/two-cycle 이미지·factory를 함께 사용한다. 실제 DB29에0023 기본 앱/구 worker를 혼용하지 않는다. [재기동 명령과 복구 경계](../ISSUE_13_W5_LIVE_CUTOVER.md)를 따른다.
+4. 비공개 checkpoint는 `backups/lostparty-preflight-f2b2a14f7162`에0700/0600·Git/Docker 제외로 보관한다. source23 전용 checkpoint 도구를 현재29 source에 재실행하지 않는다. 새 쓰기 이후 snapshot overwrite로 자료를 버리지 않으며 실제 복구/운영변경/merge는 범위를 별도 확인한다.
 
-- 06시 N→C는 같은 실제 UUID/세대·리더/순번·Assignment/세션·동의/예약이다. 새 N 자동 생성/가입0, 지난 실제 T만 정리하며 부적격/unknown source는 증거·lease를 보존해 review로 둔다.
-- G1은 C 행이 없을 때만 N이다. 공통/전역 GlobalScope·persistent CAS/영향0·120초 context/원 ACK·완료 이력을 보존한다. GET/summary는 READ ONLY이며 실제 참가/점유가 현재 세대 declined/legacy intent보다 우선한다.
-- 추가 DDL/계약 변경은 없다. 고정53경로/56동작/204schema·canonical SHA256 `fb4c7d065594a9a0e7e8288e5f73179f90b078b68ac4323d1aade5c7a63b42f1`을 유지한다. 기본116/준비167경로는 소스 계약이고 실제114경로 이미지는 미전환이다.
-- [측정 artifact](../design/issue13-w5-performance.json)는 합성 자료·서비스 호출/SQL 반환 rows/compact JSON bytes 기준이다. 구 실행 이미지 전체/실제 서버·provider/기기 성능이나 SLO를 대체하지 않는다. 검증/게시 이력은 [DEV_LOG](DEV_LOG.md) 기준이다.
+추가 제품 입력 대기는 없다. 실제 인증 HTTP 성공/provider·Flutter 적용·실회원 쓰기/기기·운영 인수는 미완료다. 테스트 토큰 발급/저장은 자동 승인 검토 거절로 실행하지 않았고 정상 로그인 검증을 Flutter 인계 범위로 남긴다. 이전 W5 합성304/백업 보호7은 기존 근거이며 이번 실제 확인과 합산하지 않는다.

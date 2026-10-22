@@ -1,8 +1,10 @@
 # Explicit cutover override, only after the target DB has been verified at 0029.
-# This file changes the API entrypoint; it never migrates or resets a database.
+# Build/tag the verified two-cycle image before starting; never use the old tag.
+# This file selects the API image/entrypoint; it never migrates or resets a database.
 # Preserve compose.yaml's database volume and read-only authentication key mount.
 services:
   api:
+    image: lostparty-backend-api:two-cycle
     command:
       - uvicorn
       - app.main:create_two_cycle_app
