@@ -63,4 +63,6 @@ python3 scripts/recruitment_restore_preflight.py --docker docker.exe \
 python -m unittest discover -s tests -p test_recruitment_backup_guards.py
 ```
 
-다음 담당은 Backend의 실제 전환 대상/영향·승인 범위 확정과 개발 서버 전환이다. Flutter 적용/실회원·기기·운영 인수는 미완료다. 구간 commit/push·공식 게시 결과는 [DEV_LOG](project/DEV_LOG.md)·[NEXT_WORK](project/NEXT_WORK.md)에 이어 기록한다.
+다음 담당은 Backend의 실제 전환 대상/영향·승인 범위 확정과 개발 서버 전환이다. Flutter 적용/실회원·기기·운영 인수는 미완료다. 구현 `372988108b8e7054d76da94838162480c3a2c12c` commit/push·실제 원격 SHA 일치 확인·[전체91번째 Backend · W5 복원 준비 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6332223435) 게시 완료. 게시 결과는 [DEV_LOG](project/DEV_LOG.md)·[NEXT_WORK](project/NEXT_WORK.md)에 이어 기록한다.
+
+Issue 본문 상단은 실제 자료 영향/복구 준비 완료·다음 Backend 개발 DB/API 전환으로 갱신하고 이전 원문/합의 이력을 보존했다. 본문 제외 실제 전체 순번91·Backend 작성 측·W5 복원 준비 단계를 재조회했으며 OPEN을 유지했다. source 전환·Flutter 인수 완료로 확대하지 않는다.

@@ -2,9 +2,9 @@
 
 2026-10-22 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13).
 
-[실제 자료 영향·복원 리허설](../ISSUE_13_W5_RESTORE_PREFLIGHT.md) 완료: source83표/414행·시퀀스1·인증 키4개·환경/실행 설정 보관, 제한 app LOGIN의 복원본0029 이행/기존82업무표 보존·별도0023/구 이미지 복구·읽기/worker 불변 확인. 보호 unittest7PASS. 검증용 컨테이너/DB/network만 정리했고 비공개 백업은 `backups/`에0700/0600으로 보관한다. 문서/도구 commit/push·Issue 결과 게시 준비다. 이전 W5 자동304고유 검증과 별도이며 실제 개발 서버/DB 전환·Flutter 적용은 미실행이다.
+[실제 자료 영향·복원 리허설](../ISSUE_13_W5_RESTORE_PREFLIGHT.md) 완료: source83표/414행·시퀀스1·인증 키4개·환경/실행 설정 보관, 제한 app LOGIN의 복원본0029 이행/기존82업무표 보존·별도0023/구 이미지 복구·읽기/worker 불변 확인. 보호 unittest7PASS. 검증용 컨테이너/DB/network만 정리했고 비공개 백업은 `backups/`에0700/0600으로 보관한다. 구현 `372988108b8e7054d76da94838162480c3a2c12c` commit/push·실제 원격 SHA 일치 확인·[전체91번째 Backend · W5 복원 준비 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6332223435) 게시 완료. 이전 W5 자동304고유 검증과 별도이며 실제 개발 서버/DB 전환·Flutter 적용은 미실행이다.
 
-착수/인계 시 AGENTS → 협업 규칙 → 이 문서 → AI_CONTEXT → 계약3판/4판/ACK를 읽고 Issue 본문/최신 댓글·Git/코드를 확인한다. 최신 공식 기록은 [전체90번째 Backend · W5 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6331483028)이며 추가 제품 입력/동일 계약 회신 대기는 없다. 계약0.4.1/policy two-cycle-contract-4를 유지한다.
+착수/인계 시 AGENTS → 협업 규칙 → 이 문서 → AI_CONTEXT → 계약3판/4판/ACK를 읽고 Issue 본문/최신 댓글·Git/코드를 확인한다. 최신 공식 기록은 [전체91번째 Backend · W5 복원 준비 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6332223435)이며 추가 제품 입력/동일 계약 회신 대기는 없다. 계약0.4.1/policy two-cycle-contract-4를 유지한다.
 
 ## 다음 Backend — 개발 DB/API 실제 전환·소비 가능한 구간 인계
 

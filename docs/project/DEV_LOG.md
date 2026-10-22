@@ -1861,3 +1861,10 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 현재 source 쓰기를 멈추지 않은 snapshot은 실제 전환 checkpoint가 아니다. 다음은 대상/목록 영향·승인 범위 확인 후 구 API/모든 worker 정지·새 checkpoint·실제0029/이미지 전환·소비 인계다. 이번은 실제 source stop/migration/overwrite/drop/downgrade·Flutter 시험 요청 없이 준비 구간을 끝내고 commit/push·공식 결과 게시를 진행한다.
 
 - 마지막 보강은 API와 독립된 source-reader로 snapshot/키 읽기를 분리하고, operator가 API/all writer를 멈춘 뒤에만 선언할 quiesced-checkpoint의 실행 상태 가드를 추가했다. 현재 실제 실행은 source API를 유지한 리허설이며 checkpoint=false다. source-reader도 종료 후 정리했다. archive의 원 owner/ACL metadata는 유지하고 제한 LOGIN 복원에서만 owner/ACL 적용을 건너뛰어 app 권한을 재구성한다.
+
+
+## 2026-10-22 — #13 실제 복원 준비 게시·다음 개발 DB/API 전환 인계
+
+- 구현 `372988108b8e7054d76da94838162480c3a2c12c` commit/push·실제 원격 SHA 일치 확인·[전체91번째 Backend · W5 복원 준비 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6332223435) 게시 완료. 본문 제외 실제 전체 작성 순번91·Backend 작성 측·W5 복원 준비 단계를 재조회했다. 기존 연결 도구의 쓰기 권한 부족은 이전 구간에서 확인돼 조회는 연결 도구, 관련 결과 게시/본문 갱신은 인증된 gh CLI로 수행했다. 새 댓글/요구는 없었고 본문 이전 원문/합의 이력 보존·OPEN 유지를 확인했다.
+- NEXT_WORK/기능지도/계획/추적표/복원 기록에 SHA·게시 링크·다음 Backend 실제 전환을 반영했다. 실제 DB0023/구 API114/healthy는 유지하며 새로운 checkpoint·실제0029/API8000 전환·Flutter 소비 인계는 다음 구간이다. private 백업은 ignore/0700·0600으로 로컬에 보관하며 GitHub에는 도구/집계/문서만 게시했다.
+- 게시 기록 후속만 변경하므로 기능 시험·DB/서버/백업 재실행 없이 문서 링크/diff 검사 후 별도 commit/push한다.
