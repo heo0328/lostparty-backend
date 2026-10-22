@@ -404,4 +404,10 @@ def test_closed_completed_and_stopped_leaders_can_transfer_without_n_effect(outc
     leadership.transfer(actor(a['uid']),rid,uuid.uuid4(),body)
     after=plan(a,rid,c)['data'];assert after['leadership']['leader_cycle_member_id']==candidate['cycle_member_id']
     assert after['my_assignments']==view['my_assignments']
-    assert stable(plan(a,rid,n)['data'])==before
+    after_n=stable(plan(a,rid,n)['data'])
+    # Global permissions are projected in both tabs; G1 follows the C leader.
+    # They do not represent a mutation of N participation/scheduling.
+    assert before['permissions']['end_global']['reason']=='ROOM_LAST_MEMBER_REQUIRED'
+    assert after_n['permissions']['end_global']['reason']=='COMMON_LEADER_REQUIRED'
+    before['permissions'].pop('end_global');after_n['permissions'].pop('end_global')
+    assert after_n==before

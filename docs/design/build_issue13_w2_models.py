@@ -11,6 +11,11 @@ import subprocess
 import tempfile
 
 ROOTS={
+    **{n:n for n in ('CommonContext','CommonSettingsCommand','CommonSettingsAck','GlobalMembershipCommand','GlobalMembershipAck')},
+    'TargetSettingsInput':'Input_contract3_put__v2_raid-rooms_room_id_settings',
+    'TargetSettingsOutput':'Output_contract3_get__v2_me_raid-rooms_room_id_settings',
+    'FormationInput':'Input_contract3_put__v2_raid-rooms_room_id_formation',
+    'RemovalInput':'Input_contract3_post__v2_raid-rooms_room_id_removals',
     'OutcomeInput':'Input_contract3_post__v2_raid-rounds_round_id_completion',
     'PersonalOutcomeInput':'Input_contract3_post__v2_raid-rounds_round_id_personal-completion',
     'ClosureInput':'Input_contract3_post__v2_raid-rooms_room_id_weekly-incomplete-closures',

@@ -61,6 +61,11 @@ class Response(StrEnum):
     reject = 'reject'
 
 
+class AdmissionMode1(StrEnum):
+    direct_join = 'direct_join'
+    leader_only = 'leader_only'
+
+
 class Intent(StrEnum):
     open = 'open'
     reopen = 'reopen'
@@ -92,6 +97,11 @@ class BAssignmentCAS(BaseModel):
     )
     assignment_id: UUID
     expected_revision: conint(ge=1, le=2147483647, strict=True)
+
+
+class AdmissionMode2(StrEnum):
+    leader_only = 'leader_only'
+    direct_join = 'direct_join'
 
 
 class AppCapacity(IntEnum):
@@ -204,6 +214,17 @@ class DayScope(StrEnum):
     selected_weekdays = 'selected_weekdays'
 
 
+class BPlacement(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    item_id: UUID
+    party_no: conint(ge=1, le=2, strict=True)
+    slot_no: conint(ge=1, le=4, strict=True)
+    cycle_member_id: UUID
+    expected_cycle_member_revision: conint(ge=1, le=2147483647, strict=True)
+
+
 class ScheduleState(StrEnum):
     unscheduled = 'unscheduled'
     unconfirmed = 'unconfirmed'
@@ -295,9 +316,26 @@ class Mode(StrEnum):
     close_target = 'close_target'
 
 
+class Command1(StrEnum):
+    edit_common_settings = 'edit_common_settings'
+    leave = 'leave'
+    end = 'end'
+
+
+class Outcome1(StrEnum):
+    applied = 'applied'
+    noop = 'noop'
+
+
 class Action(StrEnum):
     join_ = 'join'
     decline = 'decline'
+
+
+class Outcome2(StrEnum):
+    applied = 'applied'
+    recorded = 'recorded'
+    noop = 'noop'
 
 
 class CycleKey(RootModel[date]):
@@ -305,6 +343,20 @@ class CycleKey(RootModel[date]):
         ...,
         description='Canonical Wednesday date in KST; server validates target is C or N. No implicit rollover.',
     )
+
+
+class Outcome3(StrEnum):
+    applied = 'applied'
+    noop = 'noop'
+
+
+class GlobalScope(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    server_now: AwareDatetime
+    current_cycle_key: CycleKey
+    policy_version: Literal['two-cycle-contract-4']
 
 
 class OpeningEffect(StrEnum):
@@ -657,15 +709,6 @@ class BSession(BaseModel):
     join_deadline: AwareDatetime | None
     candidate_state: CandidateState
     permissions: dict[str, BPermission]
-
-
-class Continuation(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-    )
-    enabled: StrictBool
-    opening_mode: Literal['explicit']
-    revision: Version
 
 
 class State11(StrEnum):
@@ -1110,6 +1153,19 @@ class CancellationCommand(BaseModel):
     expected_leadership_revision: Version
 
 
+class CommonSettingsCommand(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    expected_cycle_key: CycleKey
+    expected_room_revision: Version
+    context_token: constr(min_length=1, max_length=4096, strict=True)
+    title: constr(min_length=1, max_length=60, strict=True)
+    scope: Scope1
+    group_id: UUID | None
+    expected_group_revision: Version | None
+
+
 class ContinueCommand(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -1121,6 +1177,16 @@ class ContinueCommand(BaseModel):
     selection: Selection
     target_items: list[Target] = Field(..., max_length=5, min_length=1)
     target_session_ids: list[UUID] = Field(..., min_length=0)
+
+
+class GlobalMembershipCommand(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    expected_cycle_key: CycleKey
+    expected_room_revision: Version
+    expected_persistent_membership_revision: Version
+    context_token: constr(min_length=1, max_length=4096, strict=True)
 
 
 class InputContract3PostV2RaidRoomApplicationsApplicationIdApprove(BaseModel):
@@ -1187,6 +1253,22 @@ class InputContract3PostV2RaidRoomsRoomIdJoin(BaseModel):
     target_session_ids: list[UUID]
     target_cycle_key: CycleKey
     expected_target_revision: Version
+
+
+class InputContract3PostV2RaidRoomsRoomIdRemovals(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    expected_cycle_key: CycleKey
+    expected_room_revision: conint(ge=1, le=2147483647, strict=True)
+    expected_members_revision: conint(ge=1, le=2147483647, strict=True)
+    expected_plan_revision: conint(ge=1, le=2147483647, strict=True)
+    expected_cycle_member_revision: conint(ge=1, le=2147483647, strict=True)
+    target_cycle_member_id: UUID
+    expected_removed_cycle_member_revision: conint(ge=1, le=2147483647, strict=True)
+    target_cycle_key: CycleKey
+    expected_target_revision: Version
+    expected_leadership_revision: Version
 
 
 class InputContract3PostV2RaidRoomsRoomIdWeeklyIncompleteClosures(BaseModel):
@@ -1268,6 +1350,34 @@ class InputContract3PutV2MeRaidRoomsRoomIdAvailabilitySubmission(BaseModel):
     target_cycle_key: CycleKey
     expected_cycle_key: CycleKey
     expected_target_revision: Version
+
+
+class InputContract3PutV2RaidRoomsRoomIdFormation(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    expected_cycle_key: CycleKey
+    expected_members_revision: conint(ge=1, le=2147483647, strict=True)
+    expected_plan_revision: conint(ge=1, le=2147483647, strict=True)
+    placements: list[BPlacement]
+    target_cycle_key: CycleKey
+    expected_target_revision: Version
+    expected_leadership_revision: Version
+
+
+class InputContract3PutV2RaidRoomsRoomIdSettings(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    expected_cycle_key: CycleKey
+    expected_room_revision: conint(ge=1, le=2147483647, strict=True)
+    expected_settings_revision: conint(ge=1, le=2147483647, strict=True)
+    experience_level: ExperienceLevel | None
+    combat_requirement: BCombat
+    admission_mode: AdmissionMode1
+    target_cycle_key: CycleKey
+    expected_target_revision: Version
+    expected_leadership_revision: Version
 
 
 class ManualCompletionCommand(BaseModel):
@@ -1403,7 +1513,7 @@ class BCard(BaseModel):
     title: StrictStr
     scope: Scope1
     group_id: UUID | None
-    admission_mode: AdmissionMode
+    admission_mode: AdmissionMode2
     experience_level: ExperienceLevel | None
     app_capacity: AppCapacity
     app_member_count: conint(ge=0, le=8, strict=True) = Field(
@@ -1550,6 +1660,43 @@ class BScheduleGroup(BaseModel):
     alternatives: list[BAlternativeInput]
 
 
+class Continuation(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    enabled: StrictBool
+    opening_mode: Literal['explicit']
+    revision: Version
+
+
+class Permissions6(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    edit_settings: Permission
+    edit_common_settings: Permission
+    open_next_cycle: Permission
+    reopen_next_cycle: Permission
+
+
+class BSettings(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    room_id: UUID
+    revision: conint(ge=1, le=2147483647, strict=True)
+    room_revision: conint(ge=1, le=2147483647, strict=True)
+    experience_level: ExperienceLevel | None
+    combat_requirement: BCombat
+    continuation: Continuation
+    scope: Scope1
+    group_id: UUID | None
+    admission_mode: AdmissionMode2
+    permissions: Permissions6
+    leadership: Leadership
+    my_target_role: MyTargetRole
+
+
 class BSubmissionOut(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -1566,7 +1713,7 @@ class BSubmissionOut(BaseModel):
     cycle_member_revision: Version
 
 
-class Permissions6(BaseModel):
+class Permissions7(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
@@ -1591,6 +1738,28 @@ class BWeeklyEntry(BaseModel):
     mark_blocked_reason: MarkBlockedReason | None
 
 
+class CurrentSettings(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    title: constr(min_length=1, max_length=60, strict=True)
+    scope: Scope1
+    group_id: UUID | None
+    group_revision: Version | None
+
+
+class CommonSettingsAckData(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    command_id: UUID
+    outcome: Outcome1
+    executed_at: AwareDatetime
+    room_id: UUID
+    room_revision: Version
+    affected_cycle_keys: list[CycleKey] = Field(..., max_length=2, min_length=0)
+
+
 class ContinuationContextData(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -1613,7 +1782,7 @@ class CreateAckData(BaseModel):
         extra='forbid',
     )
     command_id: UUID
-    outcome: Outcome
+    outcome: Outcome2
     executed_at: AwareDatetime
     room_id: UUID
     target_cycle_key: CycleKey
@@ -1638,6 +1807,21 @@ class ExperienceFilterValues(RootModel[list[ExperienceFilterValue] | None]):
         max_length=6,
         min_length=0,
     )
+
+
+class GlobalMembershipAckData(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    command_id: UUID
+    outcome: Outcome3
+    executed_at: AwareDatetime
+    room_id: UUID
+    membership_id: UUID
+    persistent_membership_revision: Version
+    affected_cycle_keys: list[CycleKey] = Field(..., max_length=2, min_length=0)
+    room_ended: StrictBool
+    revisions: list[Revision] = Field(..., min_length=0)
 
 
 class OpeningContextData(BaseModel):
@@ -1724,7 +1908,7 @@ class BGroup(BaseModel):
     permissions: dict[str, BPermission]
 
 
-class Permissions7(BaseModel):
+class Permissions8(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
@@ -1745,7 +1929,7 @@ class BMembership(BaseModel):
     room: BCard | None
     recovery_only: StrictBool
     history_only: StrictBool
-    permissions: Permissions7
+    permissions: Permissions8
     target_role: TargetRole
     cycle_member_id: UUID | None
     cycle_member_revision: Version | None
@@ -1831,34 +2015,6 @@ class BSegmentSet(BaseModel):
     segments: list[BSegment]
 
 
-class Permissions8(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-    )
-    edit_settings: Permission
-    edit_common_settings: Permission
-    open_next_cycle: Permission
-    reopen_next_cycle: Permission
-
-
-class BSettings(BaseModel):
-    model_config = ConfigDict(
-        extra='forbid',
-    )
-    room_id: UUID
-    revision: conint(ge=1, le=2147483647, strict=True)
-    room_revision: conint(ge=1, le=2147483647, strict=True)
-    experience_level: ExperienceLevel | None
-    combat_requirement: BCombat
-    continuation: Continuation
-    scope: Scope1
-    group_id: UUID | None
-    admission_mode: AdmissionMode
-    permissions: Permissions8
-    leadership: Leadership
-    my_target_role: MyTargetRole
-
-
 class BAppRaidRoomsAdmissionSchemasMyMembership(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -1870,6 +2026,24 @@ class BAppRaidRoomsAdmissionSchemasMyMembership(BaseModel):
     cycle_member_id: UUID | None
     cycle_member_revision: Version | None
     joined_order: JoinedOrder | None
+
+
+class CommonImpact(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    target_cycle_key: CycleKey
+    room_cycle_id: UUID
+    generation: Version
+    target_revision: Version
+    leadership: Leadership
+    member_count: conint(ge=0, le=8, strict=True)
+    assignment_count: conint(ge=0, le=40, strict=True)
+    reservation_count: conint(ge=0, strict=True)
+    members_revision: Version
+    plan_revision: Version
+    actor_cycle_member_id: UUID | None
+    actor_cycle_member_revision: Version | None
 
 
 class LeadershipCandidate(BaseModel):
@@ -1907,6 +2081,14 @@ class BAnonymousBusy(BaseModel):
     intervals: list[BBusy]
 
 
+class CommonSettingsAck(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    scope: GlobalScope
+    data: CommonSettingsAckData
+
+
 class ContinuationContext(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -1940,6 +2122,14 @@ class Error(BaseModel):
         extra='forbid',
     )
     error: Error1
+
+
+class GlobalMembershipAck(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    scope: GlobalScope
+    data: GlobalMembershipAckData
 
 
 class InputContract3PostV2RaidRooms(BaseModel):
@@ -2047,6 +2237,14 @@ class OutputContract3GetV2MeRaidRoomsRoomIdAvailabilitySubmission(BaseModel):
     )
     scope: Scope
     data: BSubmissionOut
+
+
+class OutputContract3GetV2MeRaidRoomsRoomIdSettings(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    scope: Scope
+    data: BSettings
 
 
 class OutputContract3GetV2RaidRoomsRoomId(BaseModel):
@@ -2228,6 +2426,24 @@ class CancellationContextData(BaseModel):
     successor: LeadershipCandidate | None
 
 
+class CommonContextData(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    room_id: UUID
+    command: Command1
+    room_revision: Version
+    persistent_membership_revision: Version
+    context_token: constr(min_length=1, max_length=4096, strict=True)
+    issued_at: AwareDatetime
+    expires_at: AwareDatetime
+    impact_cycles: list[CommonImpact] = Field(..., max_length=2, min_length=0)
+    permission: Permission
+    expected_cycle_key: CycleKey
+    authorization_cycle_key: CycleKey | None
+    current_settings: CurrentSettings
+
+
 class TransferContextData(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -2288,6 +2504,14 @@ class CancellationContext(BaseModel):
     )
     scope: Scope
     data: CancellationContextData
+
+
+class CommonContext(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    scope: GlobalScope
+    data: CommonContextData
 
 
 class OutputContract3GetV2GroupsGroupIdRaidRoomMemberProjections(BaseModel):
@@ -2407,7 +2631,7 @@ class BTimeContext(BaseModel):
     evaluated_at: AwareDatetime
     members: list[BTimeMember]
     target_session_id: UUID | None
-    permissions: Permissions6
+    permissions: Permissions7
     target_cycle_key: StrictStr
 
 
@@ -2439,6 +2663,23 @@ class W2Models(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
+    CommonContext_1: CommonContext | None = Field(None, alias='CommonContext')
+    CommonSettingsCommand_1: CommonSettingsCommand | None = Field(
+        None, alias='CommonSettingsCommand'
+    )
+    CommonSettingsAck_1: CommonSettingsAck | None = Field(
+        None, alias='CommonSettingsAck'
+    )
+    GlobalMembershipCommand_1: GlobalMembershipCommand | None = Field(
+        None, alias='GlobalMembershipCommand'
+    )
+    GlobalMembershipAck_1: GlobalMembershipAck | None = Field(
+        None, alias='GlobalMembershipAck'
+    )
+    TargetSettingsInput: InputContract3PutV2RaidRoomsRoomIdSettings | None = None
+    TargetSettingsOutput: OutputContract3GetV2MeRaidRoomsRoomIdSettings | None = None
+    FormationInput: InputContract3PutV2RaidRoomsRoomIdFormation | None = None
+    RemovalInput: InputContract3PostV2RaidRoomsRoomIdRemovals | None = None
     OutcomeInput: InputContract3PostV2RaidRoundsRoundIdCompletion | None = None
     PersonalOutcomeInput: (
         InputContract3PostV2RaidRoundsRoundIdPersonalCompletion | None

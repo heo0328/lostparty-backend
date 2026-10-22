@@ -38,3 +38,8 @@ class PersonalOutcome(CanonicalCycles,wire.InputContract3PostV2RaidRoundsRoundId
 class Closure(CanonicalCycles,wire.InputContract3PostV2RaidRoomsRoomIdWeeklyIncompleteClosures):pass
 class Resume(CanonicalCycles,wire.InputContract3PostV2RaidRoomsRoomIdWeeklyResumeProposals):pass
 class Manual(CanonicalCycles,wire.ManualCompletionCommand):pass
+class TargetSettings(CanonicalCycles,wire.InputContract3PutV2RaidRoomsRoomIdSettings):pass
+class Formation(CanonicalCycles,wire.InputContract3PutV2RaidRoomsRoomIdFormation):pass
+class Removal(CanonicalCycles,wire.InputContract3PostV2RaidRoomsRoomIdRemovals):pass
+class CommonSettings(CanonicalCycles,wire.CommonSettingsCommand):pass
+class GlobalMembership(CanonicalCycles,wire.GlobalMembershipCommand):pass

@@ -53,9 +53,9 @@ def cas(db, row, body, stamp, *, leader=False):
     if body['expected_cycle_key']!=raids.cycle(stamp).cycle_key:fail('CYCLE_CHANGED')
     if body['target_cycle_key']!=row.cycle_key.isoformat() or body['expected_target_revision']!=row.revision:
         fail('TARGET_CONTEXT_STALE')
-    if 'expected_room_revision' in body and (body['expected_room_revision']!=db.get(Room,row.room_id).revision or
-            body['expected_members_revision']!=row.members_revision or body['expected_plan_revision']!=row.plan_revision):
-        fail('REVISION_CONFLICT')
+    for name,actual in (('expected_room_revision',db.get(Room,row.room_id).revision),
+            ('expected_members_revision',row.members_revision),('expected_plan_revision',row.plan_revision)):
+        if name in body and body[name]!=actual:fail('REVISION_CONFLICT')
     if leader and body['expected_leadership_revision']!=leadership(db,row)['leadership_revision']:
         fail('LEADERSHIP_CHANGED')
 

@@ -1775,3 +1775,15 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 
 - 구현 `0d8b58111356b69d817b23b154a56efb64c974f9`를 feat/raid-recruitment에 commit/push하고 원격 브랜치 SHA 일치를 확인했다. [전체87번째 Backend · W4-B 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6319271776)를 게시한 뒤 전체 댓글을 재조회하여 본문 제외 실제 작성 순번87·Backend 작성 측·W4-B 단계를 확인했다. 다음 담당 Backend W4-C이며 W4-B 소스/격리 자동 검증 완료와 전체 W4·실제 서버/Flutter 미완료를 구분했다.
 - 기존 GitHub 앱 도구가 제공되지 않아 인증된 gh CLI로 같은 공식 Issue를 갱신했다. 본문 상단을 W4-B 완료/다음 W4-C로 갱신하고 이전 본문/이력을 보존했음을 재조회했다. 이번 문서 후속에는 코드 변경이 없어 기능 시험/DB·서버 재실행 없이 링크·diff 검사 후 별도 commit/push한다.
+
+## 2026-10-22 — #13 W4-C 구현·격리 검증 착수
+
+- AGENTS/협업/NEXT_WORK/AI_CONTEXT·계약4판/ACK 보완·Git/코드와 Issue 본문/전체87댓글을 확인했다. 최신 Backend W4-B 이후 추가 요청/계약 변경이 없고 작업 트리/원격이 일치했다. 88dcb3b에서 같은 목적 브랜치로 이어간다.
+- [W4-C 기록](../ISSUE_13_W4C_CYCLE_MANAGEMENT.md): T 설정/자리/제외4동작·G1 context/공통설정/전역leave/end4동작을 연결했다. 신규 DDL 없이 shadow0029·불변 ParticipationEvent/원 ACK를 사용하고 완료/중단·다른 T/persistent를 보존한다. GlobalScope/영향0/linked group·G1 현재자격·120초 context·최종 시각을 검증한다. 후보50경로/53동작은 main 미등록이며 실제 DB/API 이미지·서버를 전환하지 않았다.
+- 전용 lostparty-w4c-test tmpfs PostgreSQL/제한 LOGIN·cached 검증 이미지에서 실행 중이다. 초기 모델 참조 누락을 수정했고, 다음9PASS 후 N-only 생성 시험의 checkbox/context 불일치를 계약대로 고쳤다. 고정 명세84합성/CAS6쌍/공통ACK2흐름·SHA 불변·실행원본116경로 전체 일치/후보50경로53동작을 확인했다. 최종 기능 검증 결과/commit·push·Issue 기록은 아래 이어 남긴다.
+
+## 2026-10-22 — #13 W4-C 최종 검증·게시 준비
+
+- 최신 소스의 관련6파일 최종 **고유98PASS(25+26+47 분리 실행, 마지막47PASS/374.96초)**(신규27 포함), 수정 후 실행 종료 코드0. 기존 BlockingPortal deprecation 외 최종 미해결 실패 없음. 앞선9PASS/16PASS와 중복 합산하지 않는다. W4-C 전체와 W4-B 완료/재개·기존 일정/참가/HTTP·기록시각 회귀를 함께 실행했다. pytest 로그/종료 파일로 최종 결과를 확인했다. 마지막 연결그룹 시험의 준비 자료 부재로25PASS/1FAIL(308.71초) 뒤 그룹 생성 fixture와 non-null 그룹 revision의 DTO 값 객체/정수 비교 오류를 고쳤다(그룹 fixture 교정 후1FAIL/15.38초 재현). 영향 없는 통과25개·수정 후26PASS와 남은 회귀를 분리 집계했다. 기존 C 위임 시험의 N 전체응답 불변 가정은 새 G1 전역 권한의 표시 사유가 바뀌는 것과 구분하도록 고쳤다(26PASS/1FAIL318.98초). N 원장/참가·일정/리비전은 계속 정확히 대조하고 전역 종료 거절 사유의 변화도 명시 검증한다. 전체 단일 실행 통과로 확대하지 않는다.
+- 고정 명세84합성/CAS6쌍/공통ACK2흐름·SHA 불변, 실행원본116경로 전체 일치·후보50경로53동작/main 미등록, 정적 DTO 재생성/사용본 바이트 일치(125056d7ba0ace6fe769d5a2c46fcf4093a659c999fe6851228b849d1af18f7c)를 확인했다. 변경 Python AST/문서 링크·diff 검사도 통과했다.
+- 실제 개발 DB/API 이미지·서버를 전환하지 않았고 전용 lostparty-w4c-runner·lostparty-w4c-test tmpfs 시험 DB만 정리했다. 새 DDL은 없다. 검증 구간 commit/push·원격 SHA 확인 후 Issue #13에 결과를 기록하고 W4-D로 넘긴다. 실제 provider/회원/기기·운영 성능·Flutter 적용/인수는 미검증이며 새 서버 시험을 요청하지 않는다.

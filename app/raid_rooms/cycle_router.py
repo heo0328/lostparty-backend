@@ -20,7 +20,7 @@ from app.raid_rooms import (cycle_creation as creation, cycle_commands as comman
     cycle_schemas as inputs, cycle_queries as queries, cycle_member_reads as members,cycle_lists as lists)
 from app.raid_rooms.router import OptionalPrincipal
 from app.raid_rooms import cycle_opening,cycle_continuation,cycle_leadership,cycle_character
-from app.raid_rooms import cycle_outcomes,cycle_resume
+from app.raid_rooms import cycle_outcomes,cycle_resume,cycle_management,cycle_common
 from app.raid_rooms import cycle_times
 from app.raid_rooms import cycle_schedule_service
 
@@ -44,6 +44,7 @@ class CycleRoute(AvailabilityRoute):
 
     def allowed_query(self, request):
         if request.method!='GET':return set()
+        if request.url.path.endswith('/common-context'):return {'command'}
         if request.url.path.endswith('/command-context'):return {'target_cycle_key','command','round_id'}
         if request.url.path.endswith('/candidates'):return {'target_cycle_key'}
         if request.url.path.endswith('/schedule-context'):return {'target_cycle_key','target_session_id'}
@@ -324,3 +325,43 @@ def resume_current_cycle(room_id:UUID,principal:Principal,key:Key,data:inputs.Re
 @router.put('/me/characters/{character_id}/raid-weekly-states/{raid_id}/manual-completion',response_model=s.ManualCompletionResult,responses=errors)
 def manual_current_cycle(character_id:UUID,raid_id:str,principal:Principal,key:Key,data:inputs.Manual):
     return cycle_outcomes.manual(principal,character_id,raid_id,key,data)[1]
+
+
+@router.get('/me/raid-rooms/{room_id}/settings',response_model=s.OutputContract3GetV2MeRaidRoomsRoomIdSettings,responses=errors)
+def target_settings(room_id:UUID,principal:Principal,target_cycle_key:str):
+    return cycle_management.get(principal,room_id,target_cycle_key)
+
+
+@router.put('/raid-rooms/{room_id}/settings',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
+def edit_target_settings(room_id:UUID,principal:Principal,key:Key,data:inputs.TargetSettings):
+    return cycle_management.command(principal,room_id,key,data,'settings')[1]
+
+
+@router.put('/raid-rooms/{room_id}/formation',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
+def edit_target_formation(room_id:UUID,principal:Principal,key:Key,data:inputs.Formation):
+    return cycle_management.command(principal,room_id,key,data,'formation')[1]
+
+
+@router.post('/raid-rooms/{room_id}/removals',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
+def remove_target_member(room_id:UUID,principal:Principal,key:Key,data:inputs.Removal):
+    return cycle_management.command(principal,room_id,key,data,'remove')[1]
+
+
+@router.get('/me/raid-rooms/{room_id}/common-context',response_model=s.CommonContext,responses=errors)
+def common_context(room_id:UUID,principal:Principal,command:Literal['edit_common_settings','leave','end']):
+    return cycle_common.get(principal,room_id,command)
+
+
+@router.put('/raid-rooms/{room_id}/common-settings',response_model=s.CommonSettingsAck,responses=errors)
+def edit_common_settings(room_id:UUID,principal:Principal,key:Key,data:inputs.CommonSettings):
+    return cycle_common.execute(principal,room_id,key,data,'edit_common_settings')[1]
+
+
+@router.post('/raid-rooms/{room_id}/leave',response_model=s.GlobalMembershipAck,responses=errors)
+def leave_global(room_id:UUID,principal:Principal,key:Key,data:inputs.GlobalMembership):
+    return cycle_common.execute(principal,room_id,key,data,'leave')[1]
+
+
+@router.post('/raid-rooms/{room_id}/end',response_model=s.GlobalMembershipAck,responses=errors)
+def end_global(room_id:UUID,principal:Principal,key:Key,data:inputs.GlobalMembership):
+    return cycle_common.execute(principal,room_id,key,data,'end')[1]

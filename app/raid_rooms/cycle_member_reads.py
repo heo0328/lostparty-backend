@@ -83,6 +83,10 @@ def settings(db,room,row,uid,stamp):
     from app.raid_rooms.cycle_leadership import action_permissions
     actions=action_permissions(db,uid,room,row,stamp)
     for name in ('open_next_cycle','reopen_next_cycle'):result['permissions'][name]=actions[name]
+    from app.raid_rooms import cycle_outcomes,cycle_management,cycle_common
+    if cycle_outcomes.enabled(db):
+        result['permissions']['edit_settings']=cycle_management.edit_permission(db,uid,room,row,stamp)
+        result['permissions']['edit_common_settings']=cycle_common.common_permission(db,uid,room,stamp)
     return result
 
 
@@ -213,4 +217,10 @@ def plan(principal,rid,key):
             except GameError as error:reason=error.code
             if reason is None and any(s.state=='confirmed' for s in schedule.sessions(db,row)):reason='SCHEDULE_PROPOSAL_REQUIRED'
             result['data']['permissions']['edit_schedule_groups']=permission(reason)
+        from app.raid_rooms import cycle_outcomes,cycle_common
+        if cycle_outcomes.enabled(db):
+            for name,kind in (('leave_global','leave'),('end_global','end')):
+                try:result['data']['permissions'][name]=cycle_common.context(db,uid,room.id,kind,stamp)[0]['data']['permission']
+                except GameError as error:result['data']['permissions'][name]=permission(error.code)
+            result['data']['permissions']['view_common_context']=permission(None)
         return wire.OutputContract3GetV2MeRaidRoomsRoomIdPlan.model_validate(jsonable_encoder(result)).model_dump(mode='json')
