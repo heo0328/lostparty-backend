@@ -37,4 +37,4 @@ continuation/opening의 기존 `target_session_ids=[]`와 쓰기 본문은 유�
 - 교체 전후105표345행의 전체 내용 지문·환경/인증키mount·보안/포트/실행command가 일치했다. migration·DB 초기화/삭제·기존키 변경은 없다. 기존이미지는 `lostparty-backend-api:pre-session-display`로 보존했다. 실제health200/세GET의무인증·잘못된Bearer401/no-store 총7검사와 호스트health200을 확인했다.
 - 이번 임시DB(tmpfs)/runner/network만 정리했고 기존API/DB 두 컨테이너만 healthy로 유지한다. 실제 정상로그인 회원 HTTP 성공·기기 표시/성능·Flutter 연결/F6/운영 인수는 미확인이다.
 
-다음 Flutter 작업은 게시·실행 확인한 소비 SHA에서 이 세 GET의 opt-in DTO와 사전 참가 표시/선택을 연결하고 결과를 Issue #13에 회신하는 것이다. 이미 확인한 동일 정책 수용이나 기존 mock 시험을 반복 요청하지 않는다. 게시 SHA/댓글은 인계 후 아래와 [DEV_LOG](project/DEV_LOG.md)에 연결한다.
+다음 Flutter 작업은 게시·실행 확인한 소비 SHA에서 이 세 GET의 opt-in DTO와 사전 참가 표시/선택을 연결하고 결과를 Issue #13에 회신하는 것이다. 이미 확인한 동일 정책 수용이나 기존 mock 시험을 반복 요청하지 않는다. 게시: 구현 `07c2b671d67e5dfcef5f873ef55ffcb54f87b365` commit/push·실제 원격SHA 일치 확인 후 [전체112번째 Backend · F5 사전 참가 표시 구현/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6345290060)에 회신했다. 본문 제외 실제전체순번112·Backend작성측·구현/인계단계를 재조회했다. 다음 담당 Flutter의 표시·선택 연결은 대기이며 Backend는 차이 대응이다.

@@ -2002,3 +2002,10 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 검증이미지 sha256:404cf8c4163af68a34bbb58435f4057c46eb555942616b3c4004330db6f78141의 app/alembic Python221파일과 작업트리 바이트 일치 후 실제 개발API8000만 compose two-cycle factory로 교체했다. 기존66e69545…는 pre-session-display 태그로 보존했다. DB29 migration/초기화/실회원쓰기/키변경 없이 교체전후105표345행의 전체내용지문·환경/키mount·보안/포트/command 일치, healthy/두프로필 OpenAPI 일치·내부health/새GET3개 무인증·오류Bearer 6검사(401/no-store/WWW-Authenticate)·호스트health200 통과다.
 - 과거449행 기록과 이번직전345행의 차이는 이미 교체 전에 game_account_requests 105→1만 관측됐다. 이번 교체전후는345행/모든표내용 일치이며 이전자료를 복원/덮어쓰지 않았다. 실제 정상로그인 회원HTTP 성공·Flutter 기기/표시·성능SLA·운영인수는 미확인이다.
 - 이번 tmpfs DB/runner/internal network만 정리하고 기존API/DB 두컨테이너만 healthy로 남겼다. 검증/실행과 다음Flutter 적용 범위를 개발안내/NEXT_WORK/AI_CONTEXT에 기록했다. 구간커밋·push/원격확인 후 #13에 소비SHA와 결과를 인계하고 실제댓글순번/링크를 이어 기록한다. dev/main 병합·운영배포·Issue 종료 없음.
+
+## 2026-10-23 — #13 표시 메타 원격 게시·Flutter 인계 완료
+
+- 구현구간 `07c2b671d67e5dfcef5f873ef55ffcb54f87b365`를 feat/raid-recruitment에 commit/push하고 실제 원격SHA 일치를 확인했다. 기존5개 문서커밋도 함께 게시했으며 공유이력 재작성/merge 없음이다.
+- [전체112번째 Backend · F5 사전 참가 표시 구현/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6345290060)에 소비SHA·고정문서/OpenAPI·48고유PASS·실제개발반영/내용·설정보존·미확인을 게시했다. 재조회로 본문 제외 실제전체순번112·Backend작성측·구현/인계단계와 댓글전문 일치를 확인했다.
+- Issue 본문 상단 현재범위/상태/다음담당을 갱신하고 이전본문을 보존했다. 다음Flutter는 새opt-in DTO/표시·선택·변경거절/재조회·preview와 개방ACK뒤실제ID 연결 및 사용SHA/결과 회신이며 Backend는 재현차이 대응이다. 같은 수용/기존mock 반복요청 없음·F6/실회원/기기/성능/운영인수 미완료·OPEN 유지다.
+- NEXT_WORK/AI_CONTEXT/추적표/개발안내에 같은 SHA/댓글과 대기상태를 반영했다. 후행은 게시기록 문서이며 앱/실행 이미지/48검증 근거는 07c2b67 그대로다.

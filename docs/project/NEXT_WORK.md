@@ -8,7 +8,7 @@
 
 actual 세션/미생성 opening_preview/none·실제T/새generation·표시binding·전체1MiB 초과413을 구현했다. 최종47PASS/410.22초+DB29연계1PASS/15.82초, 고유48PASS다. 기본/두주차 OpenAPI 전체일치·기본0.4.1/policy4/canonical SHA 불변이다. 실제 API8000은168경로/DB0029·이미지404cf8c4…/healthy, 교체전후105표345행/전체내용지문·환경/키mount·보안/포트/command 보존이다. migration/초기화/키변경 없음·임시검증DB/컨테이너/network 정리완료다.
 
-구간 commit/push·원격확인 뒤 같은 Issue에 소비SHA/실행결과를 인계한다. 구현/자동검증·개발실행 반영과 Flutter 적용·실회원/기기 인수를 구별한다.
+구간 `07c2b671d67e5dfcef5f873ef55ffcb54f87b365` commit/push·실제 원격SHA 일치 확인·[전체112번째 Backend · F5 사전 참가 표시 구현/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6345290060) 게시 완료다. 다음 담당은 Flutter 새 표시·선택 연결이며 Backend는 차이 대응이다. 구현/자동검증·개발실행 반영과 Flutter 적용·실회원/기기 인수를 구별한다.
 
 ## 다음 Flutter — F5 사전 참가 표시·선택 연결
 
