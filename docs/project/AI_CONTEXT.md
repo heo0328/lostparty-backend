@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-현재(2026-10-22 후보 구현): [그룹 활동 캐릭터 후보 개발 안내](../ISSUE_13_GROUP_CHARACTER_CANDIDATES_DEVELOPMENT.md). 후보GET/optional검색token·전체후보사전검증 구현, 고유29PASS/양프로필계약일치·실제API8000/168경로/DB29반영.105표449행/내용·실행설정보존. 다음Flutter후보UI/선택재검증연결, Backend차이대응. 실제로그인/기기·F3전체/운영인수별도이며 [NEXT_WORK](NEXT_WORK.md)기준. 아래는이전기록이다.
+현재(2026-10-22 후보 구현): [그룹 활동 캐릭터 후보 개발 안내](../ISSUE_13_GROUP_CHARACTER_CANDIDATES_DEVELOPMENT.md). 후보GET/optional검색token·전체후보사전검증 구현, 고유29PASS/양프로필계약일치·실제API8000/168경로/DB29반영.105표449행/내용·실행설정보존. 구간0afd879 push/원격확인·[전체104번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6340348412) 완료. 다음Flutter후보UI/선택재검증연결, Backend차이대응. 실제로그인/기기·F3전체/운영인수별도이며 [NEXT_WORK](NEXT_WORK.md)기준. 아래는이전기록이다.
 
 [전체103번째 Backend · 선택 재검증 보완2판](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6339459589) 전문 게시·실제 댓글순번/본문 일치 확인 완료. 보완2443641 로컬·미push, 다음 Backend 구현이며 동일 수용 회신 대기는 없다.
 

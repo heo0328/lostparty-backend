@@ -1,6 +1,6 @@
 # Issue #13 — 그룹 활동 캐릭터 후보 조회 구현·인계
 
-2026-10-22 / feat/raid-recruitment. 기준은 [초안1](ISSUE_13_GROUP_CHARACTER_CANDIDATES_DRAFT.md)·[Flutter102 수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6339166701)·[보완2판/Backend103](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6339459589)이다. 아래 구현과 검증·서버 게시 상태를 구분한다. 실제 인계 SHA/댓글은 최종 게시 기록을 따른다.
+2026-10-22 / feat/raid-recruitment. 기준은 [초안1](ISSUE_13_GROUP_CHARACTER_CANDIDATES_DRAFT.md)·[Flutter102 수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6339166701)·[보완2판/Backend103](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6339459589)이다. 아래 구현과 검증·서버 게시 상태를 구분한다. 실제 소비 SHA는 `0afd87932ab9b89a5d0976cf634daa5d6ef5a408`(commit/push·원격 SHA 일치)이며 [전체104번째 Backend · 구현/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6340348412)에 게시했다.
 
 ## 제공 경로·소비 순서
 
@@ -35,4 +35,4 @@
 
 실행 API의 two-cycle168경로/기본116경로 각각 OpenAPI 전체객체 일치, 내부health200·신규경로 무인증/잘못된Bearer401 ACCESS_INVALID/no-store의3 HTTP검사와 호스트8000 health200을 확인했다. 실제정상로그인 후보조회성공/실회원쓰기·기기는별도미확인이다. 이를위해기존실회원토큰을발급하지않았다.
 
-다음은 구간commit/push·원격확인 후 같은Issue에 실제소비SHA·실행계약/경로·예시를 인계하고 Flutter가 그룹원2열 후보/정렬·선택/stale 재검증을 연결하는 것이다. 기존 F1/F2·F3 독립구현은 유지하며 F3전체·실기기/운영완료로 확대하지 않는다.
+구간commit/push·원격확인 및 위104번째 인계를 완료했다. 다음은 Flutter가 그룹원2열 후보/정렬·선택/stale 재검증을 연결하는 것이다. 기존 F1/F2·F3 독립구현은 유지하며 F3전체·실기기/운영완료로 확대하지 않는다.

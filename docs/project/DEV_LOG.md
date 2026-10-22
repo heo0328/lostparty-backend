@@ -1939,3 +1939,11 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 전용lostparty-candidates-runner·tmpfsDB/network만정리하고실제API/DBhealthy유지.문서/링크/diff확인후작업구간commit/push·실제원격SHA확인→같은Issue소비인계예정, Flutter후보UI/F3전체·실회원/기기/운영인수는별도미완료다.
 
 - 최종 계약 대조에서 검토용 초안 오류 GameErrorOut에 기존 cycle의 nullable error.details가 빠진 것을 확인했다. 런타임은 기존 CycleRoute Error/Error1을 그대로 사용하므로 실행 OpenAPI를 기준으로 소비하도록 개발 안내/인계에 명시한다. 새 GET의 details는null이며 기존 검색 오류/코드는 변경하지 않는다.
+
+
+## 2026-10-22 — #13 후보 구현 게시·Flutter 연결 인계
+
+- 구현구간 `0afd87932ab9b89a5d0976cf634daa5d6ef5a408` commit/push·실제원격SHA일치 확인. 일반git push는HTTPS credential helper미설정으로실패했고 기존인증gh credential helper를명령범위에서연결해성공했다. 자격증명출력/새토큰발급/공유설정수정/force push없음. 초안·보완로컬커밋도이번작업구간과함께게시했다.
+- 공식Issue본문/전체103댓글에서새요구없음을확인후 [전체104번째 Backend · 후보 구현/개발반영·Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6340348412) 게시. 실제전체댓글순번104·Backend작성측·후보구현/실행인계단계·전문일치를재조회했다. 다음Flutter후보UI·정렬/더보기·선택/token stale검증연결, Backend재현차이대응이다. 동일정책/시험반복회신을요구하지않았다.
+- 인계에실행168경로OpenAPI/소비SHA·계약추가범위·error.details초안누락보완·고유29시험/단일성능측정한계·개발105표449행지문/설정보존·실제인증/기기미확인을명시했다. Issue본문상단현재상태/다음담당을갱신하고이전원문/OPEN을보존했다.
+- NEXT_WORK/기능지도/추적표/개발안내에SHA/게시링크를반영했다. 이후행은문서게시기록만이며기능/DB/서버시험재실행없음. 문서링크/diff확인후후행commit/push·원격확인한다.
