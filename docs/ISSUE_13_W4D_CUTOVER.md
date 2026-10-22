@@ -1,6 +1,6 @@
 # Issue #13 W4-D — 주차 전환·v1 호환·활성화 준비
 
-2026-10-22 / `feat/raid-recruitment` / 시작 `3176c4f` / 구현·격리 검증 완료, commit/push·공식 게시 준비.
+2026-10-22 / `feat/raid-recruitment` / 시작 `3176c4f` / 구현·격리 검증 완료. 구현 `8085e90877561c28c45eb7279929d790da0a7c5b` commit/push·실제 원격 SHA 확인·[전체89번째 Backend · W4-D 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6330758804) 게시 완료.
 
 [전체88번째 Backend · W4-C 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6330196057), [계약3판 전환 기준](ISSUE_13_TWO_CYCLE_CONTRACT_R3.md)·[4판](ISSUE_13_TWO_CYCLE_CONTRACT_R4.md)·[공통 ACK 보완](ISSUE_13_COMMON_SETTINGS_ACK_ADDENDUM.md), 고정0.4.1/policy two-cycle-contract-4 기준이다. 착수 시 Issue 본문/전체88댓글·Git/코드를 대조했고 추가 요구/계약 변경·사용자 미커밋 변경은 없었다.
 
@@ -37,3 +37,5 @@ GET `/v2/me/raid-rooms/{room_id}/continuation-choices`는 actual T의 legacy 읽
 고정84합성/CAS6쌍/공통ACK2흐름·canonical SHA 불변, 기본116경로/준비167경로의 FastAPI 생성 객체 전체 일치, 정적 DTO 재생성 바이트 일치(SHA256 `7cc60c15569f3a3d6c0e0429aed16406e3be5f0d28f4bd51c2aba0ffa599cd7a`), 변경 Python AST/문서 링크/diff 검사를 통과했다. 전용 runner·시험 DB/network만 정리했고 실제 개발 DB/API 이미지·서버는 변경하지 않았다.
 
 다음 Backend는 **W5 전체 실행 계약·통합 보존/경합·성능·실제 소비 가능 구간 인계**다. 전체 route 연결과 자동 검증/전환 준비 완료를 실제 개발 서버 적용·Flutter/실회원/provider·기기·운영 인수 완료로 확대하지 않는다. 실제 전환은 그 시점의 대상/영향/승인 범위를 확인한다. 불명 legacy 자료는 계속 review로 보존하고 임의 정리/동의 복원은 하지 않는다.
+
+공식 Issue 본문 상단을 W4-D 완료/다음 Backend W5로 갱신하고 기존 원문/합의 이력 보존을 재조회했다. 본문 제외 실제 전체 댓글 순번89·Backend 작성 측·W4-D 단계를 확인했다. 다음 Backend W5 대기이며 Flutter 시험 요청/실제 서버 전환은 아직 없다.

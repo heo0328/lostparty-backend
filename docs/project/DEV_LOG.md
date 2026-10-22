@@ -1806,3 +1806,10 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 최신 소스의 관련7파일 최종 단일 실행 **151PASS/611.48초**(신규16 포함), 종료 코드0. W4-D/W4-C·weekly/summary/bootstrap/continuation/기록시각 회귀를 확인했다. 기존 BlockingPortal deprecation1건 외 최종 미해결 실패 없음. 앞선9PASS/7PASS는 중복 합산하지 않는다. 세대 재개 후 옛 declined 이력 재사용 방지까지 포함했다.
 - 고정84합성/CAS6쌍/공통ACK2흐름·canonical SHA 불변, 기본116경로/준비167경로 전체 런타임 계약 일치, 정적 DTO 재생성 바이트 일치(SHA256 7cc60c15569f3a3d6c0e0429aed16406e3be5f0d28f4bd51c2aba0ffa599cd7a), Python AST/문서 링크/diff 검사를 통과했다.
 - 전용 lostparty-w4d-runner·lostparty-w4d-test tmpfs DB/network만 정리했다. 실제 개발 DB/API 이미지·서버/자료/키는 변경하지 않았다. 이행 계획에는 구 API와 모든 worker를 먼저 정지하는 경계를 명시했다. 다음 Backend W5 통합/보존·경합/성능·실제 소비 인계이며 Flutter 시험 요청·실제 전환은 아직 없다.
+
+
+## 2026-10-22 — #13 W4-D 게시·다음 W5 인계
+
+- 구현 `8085e90877561c28c45eb7279929d790da0a7c5b` commit/push·실제 원격 SHA 확인·[전체89번째 Backend · W4-D 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6330758804) 게시 완료. 본문 제외 실제 전체 작성 순번89·Backend 작성 측·W4-D 단계를 재조회했다. Issue 본문 상단은 현재 W4-D 완료/다음 Backend W5이며 이전 원문/합의 이력 보존과 OPEN 유지를 확인했다.
+- NEXT_WORK/기능지도/작업계획/추적표/구간 기록에 구현 SHA·게시 링크·다음 Backend W5를 반영했다. 추가 제품 입력/동일 계약 회신 대기는 없다. 완료는 후보 소스·격리 자동 검증·전환 준비이며 실제 개발 서버/DB 전환·Flutter 적용/인수·W5 통합/성능은 미완료다.
+- 이 후속은 게시 기록만 변경하므로 DB/서버·기능 테스트 재실행 없이 문서 링크/diff 검증 후 별도 commit/push한다.

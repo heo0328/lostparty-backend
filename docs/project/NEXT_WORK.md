@@ -2,9 +2,9 @@
 
 2026-10-22 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13).
 
-[W4-D 전환·v1 호환·활성화 준비](../ISSUE_13_W4D_CUTOVER.md) 구현/격리 검증 완료: 관련7파일151PASS/611.48초(신규16 포함), 기본116/준비167경로 실행 계약 전체 일치·고정 계약/DTO 검증 통과. 구간 commit/push·원격 확인 및 공식 Issue 결과 게시를 마치고 아래 W5로 이어간다. 실제 개발 서버/DB 전환·Flutter 적용은 미실행이다.
+[W4-D 전환·v1 호환·활성화 준비](../ISSUE_13_W4D_CUTOVER.md) 구현/격리 검증 완료: 관련7파일151PASS/611.48초(신규16 포함), 기본116/준비167경로 실행 계약 전체 일치·고정 계약/DTO 검증 통과. 구현 `8085e90877561c28c45eb7279929d790da0a7c5b` commit/push·실제 원격 SHA 확인·[전체89번째 Backend · W4-D 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6330758804) 게시 완료. 다음은 아래 W5다. 실제 개발 서버/DB 전환·Flutter 적용은 미실행이다.
 
-착수/인계 시 AGENTS → 협업 규칙 → 이 문서 → AI_CONTEXT → 계약3판 전환 기준/4판/ACK 보완을 읽고 Issue 본문/최신 댓글·Git/코드를 확인한다. 최신 조회는 [전체88번째 Backend · W4-C 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6330196057)이며 새 Flutter 요청/계약 변경·추가 제품 입력 대기는 없다. 계약0.4.1/policy two-cycle-contract-4를 유지하고 구간 종료 시 검증·문서·commit/push·GitHub 기록을 한다.
+착수/인계 시 AGENTS → 협업 규칙 → 이 문서 → AI_CONTEXT → 계약3판 전환 기준/4판/ACK 보완을 읽고 Issue 본문/최신 댓글·Git/코드를 확인한다. 최신 조회는 [전체89번째 Backend · W4-D 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6330758804)이며 새 Flutter 요청/계약 변경·추가 제품 입력 대기는 없다. 계약0.4.1/policy two-cycle-contract-4를 유지하고 구간 종료 시 검증·문서·commit/push·GitHub 기록을 한다.
 
 ## 다음 W5 — 통합 계약·보존/경합·성능·실제 인계
 
