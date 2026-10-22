@@ -1,0 +1,103 @@
+{
+  "source_revision": [
+    "0023_recruitment_resume"
+  ],
+  "source_paths": 114,
+  "source_image": "sha256:efde69d269a405358d99a45b1a2bbf243b0cb3f1408a29d878ee05e759d2b5fb",
+  "candidate_image": "sha256:ccc787cb9ccb3bf5731336398d3fedf6645178244ac2b5014243208d479250a2",
+  "source_tables": 83,
+  "source_rows": 414,
+  "source_aggregate": {
+    "recruitment_rooms": {
+      "ready": 7
+    },
+    "recruitment_assignments": {
+      "stopped_incomplete": 7
+    },
+    "recruitment_memberships": {
+      "active": 7
+    },
+    "recruitment_rounds": {
+      "stopped_incomplete": 7
+    }
+  },
+  "restored_all_rows_columns_timestamps": true,
+  "keys_preserved": true,
+  "key_files": 4,
+  "sequence_count": 1,
+  "sequences_preserved": true,
+  "database_profile": {
+    "encoding": "UTF8",
+    "collation": "en_US.utf8",
+    "ctype": "en_US.utf8"
+  },
+  "migrated_old_tables_preserved": true,
+  "prepared": {
+    "revision": [
+      "0029_cycle_outcomes"
+    ],
+    "restricted_login": true,
+    "database_owner": false,
+    "cycles": {
+      "review_required": 7
+    },
+    "provenance": {
+      "legacy_unknown": 7
+    },
+    "unknown_generations": 7,
+    "members": {
+      "review_required": 7
+    },
+    "evidence": {
+      "assignment": 7
+    },
+    "explicit_cycles": 0,
+    "executable_members": 0,
+    "new_consents": 0
+  },
+  "projections": {
+    "public_items": {
+      "C": 0,
+      "N": 0
+    },
+    "eligible_session_users": 2,
+    "membership_items": {
+      "C": 7,
+      "N": 7
+    },
+    "membership_states": {
+      "not_selected": 14
+    },
+    "current_plan_results": {
+      "TARGET_NOT_OPEN": 7
+    },
+    "leave_context_results": {
+      "allowed": 7,
+      "zero_impact_contexts": 7
+    },
+    "cycle_phase_counts": {
+      "outside_C_N": 7
+    },
+    "scope": "read-only service projections using existing valid sessions; no JWT/command/provider/device test"
+  },
+  "legacy_projections": {
+    "public_v1_items": 7
+  },
+  "read_projections_and_worker_unchanged": true,
+  "private_runtime_config_backed_up": true,
+  "private_environment_file_backed_up": true,
+  "recovery_0023_all_rows_columns_timestamps": true,
+  "recovery_old_image_ready": true,
+  "archive_sha256": "90832a93d72100a6d6e195e217daaf8ea2337fb2a4e15a509faf8f5d47329858",
+  "source_containers_unchanged": true,
+  "consistent_snapshot": true,
+  "source_writes_paused": false,
+  "cutover_checkpoint": false,
+  "backup_relative_path": "backups/lostparty-preflight-a0de630e7891",
+  "limitations": [
+    "Snapshot is a rehearsal, not a quiesced cutover checkpoint",
+    "No real API/worker cutover or Flutter/provider/device acceptance",
+    "Post-snapshot writes require a new checkpoint and approved recovery handling",
+    "Sequence reads are not MVCC-snapshot-isolated; strict equality was verified for this rehearsal"
+  ]
+}

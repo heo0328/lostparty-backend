@@ -2,16 +2,18 @@
 
 2026-10-22 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13).
 
-[W5 통합·성능·전환 준비](../ISSUE_13_W5_INTEGRATION.md)의 자동 검증/검색 보완 구간 완료: 전체303PASS/1855.45초 후 최종 보강31PASS/334.92초(중복30 제외·고유304, 신규7 포함). 두 runtime 계약 전체 일치·세 문서 정식 OpenAPI 검증·고정 계약/DTO 검증·Compose override 정적 비교 통과. 구현 `a10187ca238afc1fb41bbdc026228410bb85a311` commit/push·실제 원격 SHA 일치 확인·[전체90번째 Backend · W5 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6331483028) 게시 완료. 다음은 아래 실제 전환 준비다. 실제 개발 서버/DB 전환·Flutter 적용은 미실행이다.
+[실제 자료 영향·복원 리허설](../ISSUE_13_W5_RESTORE_PREFLIGHT.md) 완료: source83표/414행·시퀀스1·인증 키4개·환경/실행 설정 보관, 제한 app LOGIN의 복원본0029 이행/기존82업무표 보존·별도0023/구 이미지 복구·읽기/worker 불변 확인. 보호 unittest7PASS. 검증용 컨테이너/DB/network만 정리했고 비공개 백업은 `backups/`에0700/0600으로 보관한다. 문서/도구 commit/push·Issue 결과 게시 준비다. 이전 W5 자동304고유 검증과 별도이며 실제 개발 서버/DB 전환·Flutter 적용은 미실행이다.
 
 착수/인계 시 AGENTS → 협업 규칙 → 이 문서 → AI_CONTEXT → 계약3판/4판/ACK를 읽고 Issue 본문/최신 댓글·Git/코드를 확인한다. 최신 공식 기록은 [전체90번째 Backend · W5 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6331483028)이며 추가 제품 입력/동일 계약 회신 대기는 없다. 계약0.4.1/policy two-cycle-contract-4를 유지한다.
 
-## 다음 Backend — 실제 전환 준비·소비 가능한 구간 인계
+## 다음 Backend — 개발 DB/API 실제 전환·소비 가능한 구간 인계
 
-1. **실제 상태/자료 영향 재확인**: 조회한 개발 대상은 DB0023·API114경로/새 factory 없음·healthy, 방7개/Assignment7개(활성 Assignment0)다. 인증 키 mount는 `/run/secrets` 읽기 전용이다. 소스 기본116/준비167과 다르며 실제 상태/자료를 임의로 새 세대·동의로 승격하지 않는다. 기존 자료의 legacy_unknown/review 영향과 소비 가능한 조회/차단 범위를 집계해 Flutter 적용 순서를 구체화한다.
-2. **대상별 복구/전환 계획 확정**: [W5 전환 순서](../ISSUE_13_W5_INTEGRATION.md)의 검증된 source/이미지·DB23→29·자료/키 보존·백업/별도 복원 검증·구 API와 모든 worker 정지·시작/health/계약·복구 지점을 확인한다. [compose.two-cycle.yaml](../../compose.two-cycle.yaml)은 API command만 factory로 바꾸는 정적 검증 완료 override이며 실제 실행하지 않았다. 기본 `app.main:app`은23, `app.main:create_two_cycle_app`은29 전체 준비검사+새 worker/v1 adapter다. 실제 변경의 대상·영향/승인 범위를 확인하고 미승인 DB/서버 전환을 임의 실행하지 않는다.
-3. **실제 소비 증명 후 Flutter 인계**: 실제 경로/실행 SHA·고정 계약·확인한 동작·미확인 범위를 준비하고 commit/push·원격 확인 후 같은 Issue로 메타/summary·주차 선택·계정 캐시 격리와 필요한 구간만 요청한다. v1 위험 방 쓰기409 CLIENT_UPGRADE_REQUIRED·원 ACK 우선·본인 수동 C/수10시와 개인표 유지 차이를 포함한다. 현재 소스 게시만으로 새 서버 시험을 요청하지 않는다.
-4. **결과 구분**: 이번은 자동 통합/성능·전환 진입점 준비 완료다. W5 전체의 실제 서버 전환/소비 인계·Flutter 적용·실회원/provider/기기·운영 인수는 미완료다. 추가 제품 입력/동일 계약 재회신 대기는 없고 #19 통계는 별도 후속이다.
+1. **대상/영향·승인 범위 확인**: 로컬 개발 DB0023→0029·API8000/worker 동시전환이 다음 구간이다. source는 여전히 API114경로/구 이미지/healthy다. 과거 모집7건은 C/N 밖·stopped 원천이며 새 C/N 공개 검색은0건(구 검색7건), persistent 관계7개/원본·ACK는 보존한다. 현재 plan은 TARGET_NOT_OPEN이고 영향0의 본인 leave-context는 허용되지만 실제 명령은 실행하지 않았다. 이 목록 차이를 전환 인계에 포함한다.
+2. **직전 checkpoint·실제 전환**: [복원 리허설/전환 순서](../ISSUE_13_W5_RESTORE_PREFLIGHT.md)의 검증된 후보 이미지·자료/키/환경 보존과 복구 지점을 사용한다. 현재 source 실행 중 백업은 리허설 snapshot이며 전환 checkpoint가 아니다. 구 API/모든 worker 정지 후 새 백업을 확정하고0029 이행/보존·factory/새 worker 동시기동·health/계약/인증/v1/C/N을 검증한다. [compose.two-cycle.yaml](../../compose.two-cycle.yaml)은 진입점 override이며23이미지/구 worker를29와 혼용하지 않는다. 실제 source drop/초기화/downgrade·운영변경으로 확대하지 않는다.
+3. **복구/쓰기 경계**: 새 쓰기 허용 전 실패는 승인된 checkpoint를 별도 DB에 복원·검증 후 연결을 전환한다. 새 쓰기 이후는 snapshot 복원으로 새 자료를 버리지 말고 영향/보존 범위를 확인한다. 실제 실행 SHA·이미지/DB·보존·검증 결과를 기록한다.
+4. **실제 소비 증명 후 Flutter 인계**: 서버 경로/실행 SHA·고정 계약·확인/미확인을 준비하고 commit/push·원격 확인 후 같은 Issue로 메타/summary·주차 선택·계정 캐시 격리와 필요한 구간만 요청한다. v1 위험 방 쓰기409 CLIENT_UPGRADE_REQUIRED·원 ACK 우선·본인 수동 C/수10시와 개인표 유지·과거 모집7건 목록 차이를 포함한다. 현재 소스/리허설만으로 새 서버 시험을 요청하지 않는다.
+
+추가 제품 입력/동일 계약 재회신 대기는 없다. 실제 개발 DB/API 전환·Flutter 적용·실회원/provider/기기·운영 인수는 미완료이며 #19 통계는 별도 후속이다.
 
 ## 유지할 기준
 

@@ -1849,3 +1849,15 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 구현 `a10187ca238afc1fb41bbdc026228410bb85a311` commit/push·실제 원격 SHA 일치 확인·[전체90번째 Backend · W5 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6331483028) 게시 완료. 본문 제외 실제 전체 댓글 순번90·Backend 작성 측·W5 단계를 재조회했다. Issue 본문 상단은 현재 자동 통합/성능 완료·다음 Backend 실제 전환 준비이며 이전 원문/합의 이력 보존과 OPEN 유지를 확인했다.
 - 연결 GitHub 도구의 댓글 쓰기는403 Resource not accessible by integration이었다. 기존 인증 gh CLI로 전환하고 재조회해 미게시/중복 없음을 확인한 뒤 한 번 게시했다. 자동 승인 심사 거절이 아니라 연결 integration의 쓰기 권한 부족이며 게시 자체는 사용자 승인 범위에서 완료했다.
 - NEXT_WORK/기능지도/작업계획/추적표/W5 기록에 SHA·게시 링크·다음 Backend를 반영했다. 실제 DB/서버 전환·소비 가능 경로/Flutter 적용·실회원/provider/기기·운영 인수는 미완료다. 이 후속은 게시 기록만 변경하므로 기능 시험/DB·서버 재실행 없이 문서 링크/diff 검사 후 별도 commit/push한다.
+
+
+## 2026-10-22 — #13 실제 자료 영향·백업/복원 리허설
+
+- 사용자 요청의 다음1구간을 f276342/feat/raid-recruitment에서 진행했다. AGENTS/협업/NEXT_WORK/AI_CONTEXT·계약3판/4판/ACK·Git/Issue 본문·전체90댓글 확인, 새 요구/계약 변경·사용자 변경 없음.
+- [복원 기록](../ISSUE_13_W5_RESTORE_PREFLIGHT.md)·공개 집계 artifact·source READ ONLY exported snapshot/pg_dump·전체 지문/열 비교·키/환경/실행 설정 private backup·새 internal network/tmpfs PG 복원/이행/별도 복구 도구를 추가했다. source83표/414행 전체 복원, version 제외82업무표/413행의0029 이행 보존, 시퀀스1·UTF8/en_US.utf8·키4개 일치, 제한 LOGIN/DB 비소유자의0029 readiness/167경로 생성과 구 이미지 별도0023/114경로 준비/health 함수 복구를 확인했다.
+- 실제 과거7건은 C/N 밖·stopped 원천이며 review/generation unknown/증거로 보존된다. 기존 공개7건→신규 C/N0건, 관계 목록각7건/not_selected·plan TARGET_NOT_OPEN7건·leave-context allowed/impact0 각7건을 유효 세션2회원의 읽기로 확인했다. GET/worker 후 새 전체 DB 지문 불변·explicit/participating/새 consent0이다. 원본/관계·한도 자동정리와 실제 leave/end는 실행하지 않았다.
+- 보존 실패/누락·행/시각/열 변경과 키 overwrite·path traversal/absolute/symlink 거절의 합성 unittest7PASS/0.002초. 전체304합성 Backend 시험 재실행/실제 HTTP/JWT·provider/기기 인수로 확대하지 않는다. 예비 tmpfs archive 경로 실패는stdin 복원, 구 이미지 health용 격리 환경 누락은 실제 역할/환경 구조를 맞춰 수정했고 최신 도구의 실제 리허설은 종료0이다.
+- 검증 기준은 공개 artifact의 backups/lostparty-preflight-a0de630e7891. private6파일은0700디렉터리/0600파일·Git/Docker ignore를 확인했고 실제 DB/키/환경·원본 오류를 출력/커밋/게시하지 않았다. 별도 빌드 image ccc787c…를 검증했으나 source image efde69d…/DB0023/API114/healthy·실행 identity/키는 유지했다. 전용 DB/runner/network만 정리했다.
+- 현재 source 쓰기를 멈추지 않은 snapshot은 실제 전환 checkpoint가 아니다. 다음은 대상/목록 영향·승인 범위 확인 후 구 API/모든 worker 정지·새 checkpoint·실제0029/이미지 전환·소비 인계다. 이번은 실제 source stop/migration/overwrite/drop/downgrade·Flutter 시험 요청 없이 준비 구간을 끝내고 commit/push·공식 결과 게시를 진행한다.
+
+- 마지막 보강은 API와 독립된 source-reader로 snapshot/키 읽기를 분리하고, operator가 API/all writer를 멈춘 뒤에만 선언할 quiesced-checkpoint의 실행 상태 가드를 추가했다. 현재 실제 실행은 source API를 유지한 리허설이며 checkpoint=false다. source-reader도 종료 후 정리했다. archive의 원 owner/ACL metadata는 유지하고 제한 LOGIN 복원에서만 owner/ACL 적용을 건너뛰어 app 권한을 재구성한다.

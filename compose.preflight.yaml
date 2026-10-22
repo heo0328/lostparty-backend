@@ -1,0 +1,19 @@
+# Private restore rehearsal only. No ports, live volumes, API or provider access.
+services:
+  db:
+    image: postgres:17-bookworm
+    environment:
+      POSTGRES_PASSWORD: preflight-only-password
+    tmpfs:
+      - /var/lib/postgresql/data
+      - /restore:mode=0700
+    networks:
+      - isolated
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U postgres -d postgres"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+networks:
+  isolated:
+    internal: true
