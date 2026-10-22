@@ -12,6 +12,8 @@ from app.raid_rooms.integrated_models import RecruitmentRound as Round
 from app.raid_rooms.source_models import ScheduleAlternative
 from app.raid_rooms.participation_commands import Target,Selection
 
+from app.raid_rooms import session_display as display, session_display_schemas as display_schemas
+
 
 def schedule_inputs(db,source):
     pairs={str(i.id):i.raid_id for i,r in admission.rounds(db,source)}
@@ -39,7 +41,7 @@ def schedule_inputs(db,source):
     return result
 
 
-def prepare(db,uid,rid,key,intent,cid,role,stamp,*,seed=None):
+def prepare(db,uid,rid,key,intent,cid,role,stamp,*,seed=None,include_session_display=False):
     if intent not in ('open','reopen') or (cid is None)!=(role is None):fail('INVALID_REQUEST',400)
     room,row,value=life.target_row(db,uid,rid,key,stamp,next_only=True)
     source,cm,owned,selected,public,source_proof,reason=life.source(db,uid,room,stamp)
@@ -103,6 +105,9 @@ def prepare(db,uid,rid,key,intent,cid,role,stamp,*,seed=None):
         prospective_generation=gen,prospective_target_revision=epoch,
         item_settings=[dict(item_id=v['item_id'],difficulty_id=v['difficulty_id'],catalog_version=v['catalog_version'],
             duration_minutes=v['duration_minutes']) for v in settings['items']])
+    if include_session_display:
+        data["session_display"]=(display.none(uid,row,"opening") if already else
+            display.preview(db,uid,source,key,rid_cycle,gen,settings,inputs))
     # A cancelled generation has deliberately no leader, but retains its epoch.
     if row and not already:
         old=db.get(CycleGeneration,(row.id,row.generation))
@@ -112,14 +117,14 @@ def prepare(db,uid,rid,key,intent,cid,role,stamp,*,seed=None):
         comparison['power_revision'] if comparison else None,
         jsonable_encoder(inputs),[row.id,row.revision,row.generation,row.state] if row else None]
     value,binding=life.sign(uid,rid,key,'opening',jsonable_encoder(data),hidden,stamp,row=row,
-        extra=dict(seed=str(rid_cycle),intent=intent,cid=str(cid),role=role))
+        extra=dict(**display.marker(include_session_display),seed=str(rid_cycle),intent=intent,cid=str(cid),role=role))
     return value,binding,room,row,source,settings,inputs
 
 
-def get(principal,rid,key,intent,cid=None,role=None):
+def get(principal,rid,key,intent,cid=None,role=None,include_session_display=False):
     with commands.base.snapshot(principal) as (db,uid,stamp):
-        value,*_=prepare(db,uid,rid,key,intent,cid,role,stamp)
-        return wire.OpeningContext.model_validate(value).model_dump(mode='json')
+        value,*_=prepare(db,uid,rid,key,intent,cid,role,stamp,include_session_display=include_session_display)
+        return display.output(display_schemas.OpeningDisplayContext,value,include_session_display)
 
 
 def execute(principal,rid,command,data):
@@ -128,7 +133,7 @@ def execute(principal,rid,command,data):
         token=life.verify_token(uid,rid,body,'opening',stamp)
         if body['intent']!=token['intent']:fail('TARGET_SCOPE_MISMATCH',400)
         result,binding,room,row,source,settings,inputs=prepare(db,uid,rid,body['target_cycle_key'],token['intent'],
-            uuid.UUID(token['cid']),token['role'],stamp,seed=token['seed'])
+            uuid.UUID(token['cid']),token['role'],stamp,seed=token['seed'],include_session_display=display.enabled(token))
         expected=row.revision if row else None
         if body['expected_target_revision']!=expected:fail('TARGET_CONTEXT_STALE')
         life.require_match(token,binding)

@@ -7,8 +7,10 @@ from app.raid_rooms import cycle_admission as admission,cycle_schedule as schedu
 from app.raid_rooms.cycle_creation import permission,scope
 from app.raid_rooms.participation_commands import Selection,Target
 
+from app.raid_rooms import session_display as display, session_display_schemas as display_schemas
 
-def prepare(db,uid,rid,key,cid,role,stamp):
+
+def prepare(db,uid,rid,key,cid,role,stamp,*,include_session_display=False):
     room,row=commands.resolve(db,uid,rid,key,stamp)
     cm=life.actual_member(db,row,uid,states=('participating',))
     if cm is None:fail('WEEKLY_PARTICIPANT_REQUIRED',403)
@@ -28,30 +30,33 @@ def prepare(db,uid,rid,key,cid,role,stamp):
     hidden=[room.revision,room.scope,life.selection_context.group_stamp(db,room.group_id),cm.id,cm.revision,
         [[a.id,a.revision,a.character_id,a.selected_role,a.party_no,a.slot_no] for a in owned],
         row.settings_snapshot,selection,targets,power['power_revision'],choices]
+    metadata=display.existing(db,uid,row,stamp,"character",choices) if include_session_display else None
+    if include_session_display:hidden.append(metadata)
     snapshot=digest(jsonable_encoder(hidden))
     data=dict(room_id=rid,room_revision=room.revision,members_revision=row.members_revision,plan_revision=row.plan_revision,
         expected_cycle_key=commands.raids.cycle(stamp).cycle_key,server_time=stamp,catalog_version=commands.raids.catalog().catalog_version,
         policy_snapshot=snapshot,selection=selection,targets=targets,session_choices=choices,comparison=power,
         permissions=dict(change_character=permission(reason)),target_cycle_key=key,expected_target_revision=row.revision,
         leadership=commands.leadership(db,row))
+    if include_session_display:data["session_display"]=metadata
     # server_time is presentation, not an execution snapshot component.
     signed={k:v for k,v in jsonable_encoder(data).items() if k!='server_time'}
-    value,binding=life.sign(uid,rid,key,'character',signed,jsonable_encoder(hidden),stamp,row=row)
+    value,binding=life.sign(uid,rid,key,'character',signed,jsonable_encoder(hidden),stamp,row=row,extra=display.marker(include_session_display))
     value['data']['server_time']=stamp
     return value,binding,room,row,cm,owned
 
 
-def get(principal,rid,key,cid,role):
+def get(principal,rid,key,cid,role,include_session_display=False):
     with commands.base.snapshot(principal) as (db,uid,stamp):
-        value,*_=prepare(db,uid,rid,key,cid,role,stamp)
-        return wire.OutputContract3GetV2RaidRoomsRoomIdAdmissionContext.model_validate(value).model_dump(mode='json',exclude_unset=True)
+        value,*_=prepare(db,uid,rid,key,cid,role,stamp,include_session_display=include_session_display)
+        return display.output(display_schemas.AdmissionDisplayContext,value,include_session_display)
 
 
 def execute(principal,rid,command,data):
     body=data.model_dump(mode='json')
     def run(db,uid,stamp):
         token=life.verify_token(uid,rid,body|dict(context_token=body['selection_context']['context_token']),'character',stamp)
-        value,binding,room,row,cm,owned=prepare(db,uid,rid,body['target_cycle_key'],data.selection.character_id,data.selection.selected_role,stamp)
+        value,binding,room,row,cm,owned=prepare(db,uid,rid,body['target_cycle_key'],data.selection.character_id,data.selection.selected_role,stamp,include_session_display=display.enabled(token))
         commands.cas(db,row,body,stamp);life.require_match(token,binding)
         current=value['data']
         if body['expected_cycle_member_revision']!=cm.revision:fail('REVISION_CONFLICT')

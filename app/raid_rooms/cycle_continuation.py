@@ -7,8 +7,10 @@ from app.raid_rooms import cycle_commands as commands,cycle_wire as wire,cycles,
 from app.raid_rooms.cycle_creation import permission
 from app.raid_rooms.participation_commands import Selection,Target
 
+from app.raid_rooms import session_display as display, session_display_schemas as display_schemas
 
-def prepare(db,uid,rid,key,action,cid,role,stamp):
+
+def prepare(db,uid,rid,key,action,cid,role,stamp,*,include_session_display=False):
     if action not in ('join','decline') or (cid is None)!=(role is None):fail('INVALID_REQUEST',400)
     if action=='decline' and cid is not None:fail('INVALID_REQUEST',400)
     room,row,value=life.target_row(db,uid,rid,key,stamp,next_only=True)
@@ -42,7 +44,10 @@ def prepare(db,uid,rid,key,action,cid,role,stamp):
     conflicts=life.conflict_details(db,uid,room,row,selected)
     data=dict(room_id=rid,action=action,source=public,selection=selected,targets=targets,
         target_session_ids=selected_ids,permission=permission(reason),conflicts=conflicts)
-    extra=dict(cid=str(selected.character_id) if selected else None,role=selected.selected_role if selected else None,
+    if include_session_display:
+        data["session_display"]=(display.none(uid,row,"continue-decline") if action=="decline" else
+            display.existing(db,uid,row,stamp,"continue-join"))
+    extra=dict(**display.marker(include_session_display),cid=str(selected.character_id) if selected else None,role=selected.selected_role if selected else None,
         source_character=str(owned[0].character_id))
     hidden=[source_proof,room.revision,room.scope,selection_context.group_stamp(db,room.group_id),
         row.settings_snapshot,commands.leadership(db,row),choices,comparison['power_revision'] if comparison else None]
@@ -50,10 +55,10 @@ def prepare(db,uid,rid,key,action,cid,role,stamp):
     return result,binding,room,row
 
 
-def get(principal,rid,key,action='join',cid=None,role=None):
+def get(principal,rid,key,action='join',cid=None,role=None,include_session_display=False):
     with commands.base.snapshot(principal) as (db,uid,stamp):
-        value,*_=prepare(db,uid,rid,key,action,cid,role,stamp)
-        return wire.ContinuationContext.model_validate(value).model_dump(mode='json')
+        value,*_=prepare(db,uid,rid,key,action,cid,role,stamp,include_session_display=include_session_display)
+        return display.output(display_schemas.ContinuationDisplayContext,value,include_session_display)
 
 
 def execute(principal,rid,command,data,*,decline=False):
@@ -61,7 +66,7 @@ def execute(principal,rid,command,data,*,decline=False):
     def run(db,uid,stamp):
         token=life.verify_token(uid,rid,body,'continue-'+action,stamp)
         value,binding,room,row=prepare(db,uid,rid,body['target_cycle_key'],action,
-            uuid.UUID(token['cid']) if token['cid'] else None,token['role'],stamp)
+            uuid.UUID(token['cid']) if token['cid'] else None,token['role'],stamp,include_session_display=display.enabled(token))
         commands.cas(db,row,body,stamp)
         life.require_match(token,binding)
         current=value['data']

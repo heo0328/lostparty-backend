@@ -1990,3 +1990,15 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 문서 validator에 실제 router AST의 GET경로 대조를 추가했다. 경로3개/schema/ref/닫힌객체·11예시/11거절fixture/opt-in존재3경계 통과, 문서링크/diff 확인. 런타임HTTP/DB/token/성능시험을 실행한 것은 아니다.
 - [전체111번째 Backend · 경로 정정/수용 확인](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6344566106)에 같은 Issue 회신, 실제 본문제외 전체순번111·Backend작성측·경로정정단계·전문 일치를 재조회했다. 다음 Backend는 수용된 범위의 구현/격리검증·게시/실행SHA 인계이며 동일 계약 수용/시험을 다시 선행 대기로 만들지 않는다.
 - NEXT_WORK/AI_CONTEXT/추적표와 Issue 상단의 현재상태·다음담당을 갱신하고 이전 원문/OPEN을 보존한다. 앱코드/실행계약·서버/DB/키 미변경, F5사전표시/F6·실회원/기기 인수 미완료다. 문서 정정/수신기록만 로컬 커밋·미push로 보존한다.
+
+
+## 2026-10-23 — #13 사전 참가 표시 메타 구현·개발 반영
+
+- 1ef6c0d/feat/raid-recruitment에서 AGENTS/협업/NEXT_WORK/AI_CONTEXT·합의초안/실제코드·Git·공식Issue 본문/전체111댓글을 확인했다. Flutter110 수용/Backend111 경로 정정 뒤 새 회신·사용자 미커밋 변경은 없었다. 기존브랜치/기존5개 로컬문서커밋을 보존하고 표시 구현을 진행했다.
+- 기존3GET에 엄격 include_session_display opt-in과 닫힌 actual/preview/none DTO를 구현했다. active target/generation 세션조회·UTC/null·권한/required/deadline·source의도/N날짜/전체묶음duration·prospective 새세대·opaque preview refs를 제공한다. 개인표/타방busy/이전세대 노출·새 endpoint/권한확대·DDL은 없다.
+- true token 내부 version1 표지와 표시 snapshot을 기존 policy/lifecycle binding에 넣고 쓰기에서 재계산한다. 생략/false/기존미결token 계산·본문·원ACK 우선을 유지했다. 전체UTF8 응답1MiB 초과413, preview 수의 추가제한/절단/falsefallback 없음.
+- 최종 묶음47PASS/410.22초+현재DB0029 연계1PASS/15.82초, 고유48PASS(새표시24/기존회귀24). 탐색 재실행은 합산하지 않는다. actual/preview/none·flag/DTO·읽기전용·시각/끝/revision/state/head 변경거절·원ACK/기존token·권한/Bearer/폐기세션·source그룹/reopen/이전세대제외·manual each/단일/복수/조율/주차전체/unscheduled·KST수요일00:05/미정duration·실저장5002후보/실1MiB413/토큰4096bytes이하를 확인했다. 초기 실패는 fixture의 기존confirmed 상태 기대·편집DTO item_ids·날짜형 바인딩을 바로잡았으며 최종 실패0이다. 기존anyio deprecation warning1종은 남는다.
+- actualfactory168경로/기본116경로 OpenAPI 전체 객체 일치. 기존3GET query/응답과 관련display schemas만 변경했고 base wire/기본OpenAPI/0.4.1·policy4·canonical fb4c7d… 불변이다. 검토schema/11예시·11거절/3존재·경로3검사 및 canonical53경로56동작204schema/84fixtures 검증은 별도 정적 근거다.
+- 검증이미지 sha256:404cf8c4163af68a34bbb58435f4057c46eb555942616b3c4004330db6f78141의 app/alembic Python221파일과 작업트리 바이트 일치 후 실제 개발API8000만 compose two-cycle factory로 교체했다. 기존66e69545…는 pre-session-display 태그로 보존했다. DB29 migration/초기화/실회원쓰기/키변경 없이 교체전후105표345행의 전체내용지문·환경/키mount·보안/포트/command 일치, healthy/두프로필 OpenAPI 일치·내부health/새GET3개 무인증·오류Bearer 6검사(401/no-store/WWW-Authenticate)·호스트health200 통과다.
+- 과거449행 기록과 이번직전345행의 차이는 이미 교체 전에 game_account_requests 105→1만 관측됐다. 이번 교체전후는345행/모든표내용 일치이며 이전자료를 복원/덮어쓰지 않았다. 실제 정상로그인 회원HTTP 성공·Flutter 기기/표시·성능SLA·운영인수는 미확인이다.
+- 이번 tmpfs DB/runner/internal network만 정리하고 기존API/DB 두컨테이너만 healthy로 남겼다. 검증/실행과 다음Flutter 적용 범위를 개발안내/NEXT_WORK/AI_CONTEXT에 기록했다. 구간커밋·push/원격확인 후 #13에 소비SHA와 결과를 인계하고 실제댓글순번/링크를 이어 기록한다. dev/main 병합·운영배포·Issue 종료 없음.

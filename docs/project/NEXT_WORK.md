@@ -1,39 +1,23 @@
 # 다음 실행
 
-2026-10-23 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13).
+2026-10-23 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13), OPEN.
 
-## 현재 — 그룹 활동 캐릭터 후보 구현·개발 반영 완료
+## 현재 — 사전 참가 표시 메타 Backend 구현·개발 서버 반영 완료
 
-[개발 안내](../ISSUE_13_GROUP_CHARACTER_CANDIDATES_DEVELOPMENT.md) 기준으로 GET `/v2/groups/{group_id}/raid-room-character-candidates`와 검색 optional `group_character_candidates_token`을 구현했다. Flutter102 수용/[Backend103 보완](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6339459589) 기준이다. 새token으로 전체후보 선택검증 후 실제T 방검색/페이지를 수행하며200/items=[]도선택유효·거절은선택보류다. role_family=null/Flutter기존카탈로그표시는합의대로유지한다.
+[개발 안내](../ISSUE_13_PREJOIN_SESSION_DISPLAY_DEVELOPMENT.md)·[실행 OpenAPI](../../openapi/two-cycle.openapi.yaml) 기준이다. [Flutter110 수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6344221859)/[Backend111 경로 정정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6344566106)을 구현했다. 기존 세GET에서 include_session_display=true만 data.session_display를 제공하고 생략/false의 응답·token 계산/쓰기본문·원ACK를 보존한다.
 
-최종28PASS/222.33초+보강2PASS/21.14초(중복1제외 고유29)·두프로필 OpenAPI 전체객체일치. 실제 API8000은168경로/DB0029·새이미지66e69545…/healthy다. 전후105표449행/전체내용지문·환경/키mount·보안/포트/command보존, DDL/초기화없음. 실제정상로그인HTTP·기기/F3전체·운영인수는미완료다. 구간 `0afd87932ab9b89a5d0976cf634daa5d6ef5a408` commit/push·실제원격SHA일치·[전체104번째 Backend · 후보 구현/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6340348412) 게시완료다.
+actual 세션/미생성 opening_preview/none·실제T/새generation·표시binding·전체1MiB 초과413을 구현했다. 최종47PASS/410.22초+DB29연계1PASS/15.82초, 고유48PASS다. 기본/두주차 OpenAPI 전체일치·기본0.4.1/policy4/canonical SHA 불변이다. 실제 API8000은168경로/DB0029·이미지404cf8c4…/healthy, 교체전후105표345행/전체내용지문·환경/키mount·보안/포트/command 보존이다. migration/초기화/키변경 없음·임시검증DB/컨테이너/network 정리완료다.
 
-## 현재 계약 — Flutter110 수용·Backend111 경로 정정 / 다음 Backend 구현
+구간 commit/push·원격확인 뒤 같은 Issue에 소비SHA/실행결과를 인계한다. 구현/자동검증·개발실행 반영과 Flutter 적용·실회원/기기 인수를 구별한다.
 
-[Flutter110 소비 검토](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6344221859)에서 두 경로 표기를 제외한 표시 메타 계약을 수용했다. 누락된 `/me`를 실제 router와 대조해 continuation/opening의 표·JSON 경로를 정정하고 [전체111번째 Backend 회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6344566106)에 게시했다. 새 alias/endpoint·DTO 의미 변경은 아니다.
+## 다음 Flutter — F5 사전 참가 표시·선택 연결
 
-정확한 기존 경로는 admission `/v2/raid-rooms/{room_id}/admission-context`, continuation `/v2/me/raid-rooms/{room_id}/continuation-context`, opening `/v2/me/raid-rooms/{room_id}/opening-context`다. [정정된 초안](../ISSUE_13_PREJOIN_SESSION_DISPLAY_DRAFT.md)·[검토 schema/예시](../design/issue13-prejoin-session-display.draft.json)를 구현 기준으로 삼는다.
+- 게시된 소비SHA와 위 실행계약으로 admission `/v2/raid-rooms/{room_id}/admission-context`, continuation `/v2/me/raid-rooms/{room_id}/continuation-context`, opening `/v2/me/raid-rooms/{room_id}/opening-context`의 opt-in DTO를 연결한다.
+- actual ID/시각/미정·변경거절/재조회·기존 target_session_ids 선택, 미생성 preview는 session_id=null/POST 제외·개방원ACK뒤현재T plan의 실제ID조회, none/noop를 구별하고 적용 결과/사용SHA를 #13에 회신한다. 같은 계약 수용/이미 보고한 mock을 반복 선행 요청하지 않는다.
+- F4는 Flutter106/0c850294·93mock PASS 마감 보고, F5 독립 연결은 Flutter107/f2e09c9d·고유130mock PASS 보고를 유지한다. Backend가 Flutter 소스/시험을 독립 재현한 결과는 아니다. 새 사전표시 연결/F6·정상로그인 실제HTTP·실회원/기기/운영인수는 미완료다.
 
-다음 **Backend**: 기존3GET의 include_session_display opt-in/기존 응답·token/body/원ACK 보존, actual 세션/미생성 opening_preview/none·prospective 세대/시각·표시binding·1MiB 초과413을 구현한다. 격리 권한/변경·호환성/크기/계약 검증→commit/push·원격확인→개발실행/실제 OpenAPI·소비SHA를 인계한다. 같은 계약 수용/동일 시험 회신을 다시 기다리지 않는다.
+## 다음 Backend — 재현 차이 보완·현재 실행 유지
 
-검증은 실제 router AST의 GET3경로 대조·schema/ref/닫힌객체·11예시/11거절/opt-in존재3경계 통과다. 실제HTTP/DB/token·성능시험은 아니다. 표시API/실행 OpenAPI·서버168경로/DB29·기본0.4.1/policy4/canonical SHA는 아직 미변경이다. Flutter의 표시 연결은 실제 소비 인계 뒤이며 F5독립구간 유지·사전표시/F6/실회원·기기인수는 미완료다.
-
-## 최신 수신 — F4 마감·F5 독립 연결 / 사전 참가 표시 메타 보완
-
-[전체106번째 Flutter F4](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6342159361)는0c850294 commit/push·최종단일93mock PASS/분석0 보고, [전체107번째 Flutter F5](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343179198)는f2e09c9d commit/push·고유130mock PASS(127묶음후추가3포함일정27재실행/기존103재사용)/분석0 보고다. F4는코드/자동검증마감, F5는일정/예약독립연결완료이며사전참가시간표시는미완료다. Backend에서Flutter소스/시험/원격SHA를독립재현하지않았고실제HTTP·실회원/기기인수로확대하지않는다.
-
-[전체108번째 Backend · 표시 메타 요청 확인](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343260776)에현재context/DTO·privateplan권한을정적대조한결과를회신했다. SessionChoice는ID/required/join_deadline/permission만있고continuation/opening은target_session_ids만제공한다. 공개시각목록순서로ID를추정하거나참가전privateplan을무조건조회하는것으로대체하지않는다.
-
-다음 **Backend**: 기존admission/continuation/opening context권한내선택session의실제T/ID·시작/종료(nullable)·상태/표시revision 계약을작성해Flutter대조한다. context token/일정revision·generation binding, 미정·변경/삭제/접근상실·prospective개방의미생성session표시/선택경계를정의한다. 정확한wire/경로는미확정이며개인제출표/타방busy공개·권한확대는포함하지않는다.
-
-## 다음 Flutter — F5 독립 구현 유지·표시 메타 계약 대기
-
-- 사전일반참가/캐릭터변경/N특례·개방확인창의실제시각/미정표시부분만Backend계약보완대기다. F1~F4/후보·이미참가한방의F5일정/제안/본인확인연결은유지한다.
-- 표시계약합의→Backend구현/검증·게시/실행SHA인계후네이티브가해당부분을연결/검증·회신한다. F6완료/정정·종료/재개통합은미구현이다.
-- 정상로그인HTTP·실회원·기기표시/성능인수는미확인이다. 기존mock검증/BackendDB시험/동일정책채택을반복요청하지않는다.
-
-## 다음 Backend — 연결 차이 대응·현재 실행 유지
-
-- Flutter 재현 가능한 계약/실행 차이가 있으면 같은브랜치에서 필요한구간만보완·검증/게시후회신한다. 이미수용한공개범위/계열·같은시험/정책채택을반복요청하지않는다. #19통계는별도후속이다.
-- 재기동은 compose.yaml + compose.two-cycle.yaml/two-cycle image·factory를함께사용한다. 기본0023 앱/구worker를DB29에혼용하지않는다. [전환/복구 경계](../ISSUE_13_W5_LIVE_CUTOVER.md)를따른다.
-- 지난주7관계의현재C/N검색제외는정상이며원본/persistent관계·한도자동해제없음. 기존비공개checkpoint는보존하며source23용도구를현재DB29에재실행/이전snapshotoverwrite하지않는다. 실제복구·운영변경/merge는별도범위확인이다.
+- Flutter의 재현 가능한 표시/선택·계약/실행 차이가 오면 같은 브랜치에서 보완·검증·commit/push 후 회신한다. 이전 수용/같은 시험을 다시 요청하지 않는다. #19 통계는 독립 후속이다.
+- 재기동은 compose.yaml + compose.two-cycle.yaml/two-cycle image·factory를 함께 사용한다. 기본0023 앱/구worker를 DB29에 혼용하지 않는다. [전환/복구 경계](../ISSUE_13_W5_LIVE_CUTOVER.md)를 따른다. 코드 게시와 dev/main 병합·운영배포는 별도다.
+- 지난주7관계의 현재C/N 검색 제외는 정상이며 원본/persistent관계·한도 자동해제 없음. 기존 비공개checkpoint는 보존하고 source23용도구를 DB29에 재실행/이전snapshot overwrite하지 않는다.

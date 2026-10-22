@@ -1,5 +1,7 @@
 # Issue #13 — 사전 참가 세션 표시 메타 계약 초안1
 
+> **구현 문서:** 합의 후 Backend 구현·실행 계약·검증/인계 상태는 [개발 안내](ISSUE_13_PREJOIN_SESSION_DISPLAY_DEVELOPMENT.md)를 따른다. 아래 본문과 JSON의 DRAFT/미구현 표기는 제안 당시 기록이다.
+
 > **2026-10-23 소비 검토 반영:** [Flutter110](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6344221859)가 경로 두 곳을 제외한 계약을 수용했다. continuation/opening의 누락된 `/me`를 기존 router와 대조해 표·JSON 모두 정정했다. 새 alias/endpoint가 아니며 다음 Backend 구현이다. 아래 Flutter 대조 대기는 당시 기록이고 현재 서버/API는 미변경·표시 메타 미구현이다.
 
 2026-10-22 / Backend / feat/raid-recruitment. [Flutter107 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343179198)·[Backend108 확인](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343260776)에 대응한다. **구현 전 소비 검토안**이며 현재 API168경로/DB29·0afd879 실행 계약/기본0.4.1/policy4/canonical SHA는 변경하지 않는다. 검토용 [닫힌 JSON Schema·추가 위치·합성 예시](design/issue13-prejoin-session-display.draft.json)는 실행 OpenAPI를 대체하지 않는다.

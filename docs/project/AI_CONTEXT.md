@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+현재(2026-10-23): [사전 참가 표시메타 개발 안내](../ISSUE_13_PREJOIN_SESSION_DISPLAY_DEVELOPMENT.md) 기준 Backend 구현·고유48PASS/개발API8000 반영완료. 기존3GET opt-in actual/preview/none·표시binding·1MiB413, 생략/false/token/body/원ACK 보존. 두프로필 OpenAPI 전체일치·168경로/DB29·이미지404cf8c4…·전후105표345행/내용·설정보존/임시검증환경정리. commit/push·원격확인 후 Flutter 소비SHA/사전표시 연결 인계. F5독립구간 유지·새표시/F6·실회원/기기/운영인수 미완료. [NEXT_WORK](NEXT_WORK.md) 기준이며 아래는 이전 기록이다.
+
 현재(2026-10-23): [Flutter110](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6344221859)가 표시메타 초안의 두 경로 외 내용을 수용했다. continuation/opening의 `/me` 누락을 실제 router와 대조해 문서/JSON에서 정정하고 [Backend111](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6344566106)에 회신했다. 다음 Backend는 정정된 기존3GET opt-in 표시메타 구현·격리검증/게시·실행 소비 인계다. 같은 수용 회신 대기 없음, 서버/실행계약 미변경·F5표시/F6·실회원/기기 인수 미완료. [NEXT_WORK](NEXT_WORK.md) 기준이며 아래는 이전 기록이다.
 
 현재(2026-10-22): [사전 참가 표시메타 초안1](../ISSUE_13_PREJOIN_SESSION_DISPLAY_DRAFT.md)·닫힌schema/11예시·11거절/opt-in3경계검사작성완료. [전체109번째 Backend 초안 전문 게시](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343766208) 완료(5cf76f1 로컬·미push). 3GET의명시opt-in·기존응답/token보존·actual세션/미생성opening preview/none구분 제안이며 다음Flutter소비대조→Backend구현이다. 코드/실행계약/서버미변경, [NEXT_WORK](NEXT_WORK.md)기준. 아래는이전기록이다.

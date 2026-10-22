@@ -15,6 +15,8 @@ from app.raid_rooms.participation_commands import Selection, Target
 from app.raid_weekly.models import WeeklyState
 from app.raids import service as raids
 
+from app.raid_rooms import session_display as display, session_display_schemas as display_schemas
+
 
 def resolve(db, uid, rid, key, stamp, *, write=False):
     room=base.room(db,uid,rid)
@@ -69,7 +71,7 @@ def target_items(db,uid,row,selection):
     return result
 
 
-def preflight(db,uid,room,row,cid,role,intent,stamp):
+def preflight(db,uid,room,row,cid,role,intent,stamp,*,include_session_display=False):
     if intent not in ('apply','join'):fail('INVALID_REQUEST',400)
     selection=context.selection(db,uid,cid,role)
     targets=target_items(db,uid,row,selection)
@@ -99,26 +101,30 @@ def preflight(db,uid,room,row,cid,role,intent,stamp):
         row.settings_revision,row.members_revision,row.plan_revision,leadership(db,row),
         context.group_stamp(db,room.group_id),room.scope,room.revision,row.settings_snapshot,
         selection,targets,power['power_revision'],choices,context.policy(db,room)])
+    metadata=display.existing(db,uid,row,stamp,intent,choices) if include_session_display else None
+    if include_session_display:stable.append(metadata)
     policy=digest(stable)
     expires=min(stamp+timedelta(seconds=opaque.LIFETIME_SECONDS),raids.cycle(stamp).ends_at)
     token=opaque.seal(dict(actor=str(uid),room=str(room.id),cycle=str(row.id),intent=intent,
-        command='admit-v2',expires=expires.isoformat(),digest=policy))
-    return dict(scope=scope(stamp,row.cycle_key.isoformat(),row),data=dict(room_id=room.id,room_revision=room.revision,
+        command='admit-v2',expires=expires.isoformat(),digest=policy,**display.marker(include_session_display)))
+    result=dict(scope=scope(stamp,row.cycle_key.isoformat(),row),data=dict(room_id=room.id,room_revision=room.revision,
         members_revision=row.members_revision,plan_revision=row.plan_revision,
         expected_cycle_key=raids.cycle(stamp).cycle_key,server_time=stamp,catalog_version=raids.catalog().catalog_version,
         policy_snapshot=policy,context_token=token,selection=selection,targets=targets,session_choices=choices,
         comparison=power,permissions={intent:permission(reason)},target_cycle_key=row.cycle_key,
         expected_target_revision=row.revision,issued_at=stamp,expires_at=expires,leadership=leadership(db,row)))
+    if include_session_display:result["data"]["session_display"]=metadata
+    return result
 
 
-def get_context(principal,rid,key,cid,role,intent):
+def get_context(principal,rid,key,cid,role,intent,include_session_display=False):
     if intent=='change_character':
         from app.raid_rooms import cycle_character
-        return cycle_character.get(principal,rid,key,cid,role)
+        return cycle_character.get(principal,rid,key,cid,role,include_session_display)
     with base.snapshot(principal) as (db,uid,stamp):
         room,row=resolve(db,uid,rid,key,stamp)
-        return wire.OutputContract3GetV2RaidRoomsRoomIdAdmissionContext.model_validate(jsonable_encoder(
-            preflight(db,uid,room,row,cid,role,intent,stamp))).model_dump(mode='json',exclude_unset=True)
+        return display.output(display_schemas.AdmissionDisplayContext, jsonable_encoder(
+            preflight(db,uid,room,row,cid,role,intent,stamp,include_session_display=include_session_display)), include_session_display)
 
 
 def ack(db,command_id,room,row,member,assignments,stamp):
@@ -148,7 +154,7 @@ def admit(principal,rid,command_id,data,*,applying=False):
         if (token.get('actor')!=str(uid) or token.get('command')!='admit-v2' or token.get('room')!=str(rid)
                 or token.get('cycle')!=str(row.id) or token.get('intent')!=intent):fail('CONTEXT_INVALID',400)
         if stamp>=datetime.fromisoformat(token['expires']):fail('CONTEXT_EXPIRED')
-        current=preflight(db,uid,room,row,data.selection.character_id,data.selection.selected_role,intent,stamp)['data']
+        current=preflight(db,uid,room,row,data.selection.character_id,data.selection.selected_role,intent,stamp,include_session_display=display.enabled(token))['data']
         if token['digest']!=current['policy_snapshot']:fail('SELECTION_CONTEXT_CHANGED')
         if body['expected_policy_snapshot']!=current['policy_snapshot']:fail('POLICY_CONTEXT_CHANGED')
         if body['expected_catalog_version']!=current['catalog_version']:fail('CATALOG_VERSION_CONFLICT')

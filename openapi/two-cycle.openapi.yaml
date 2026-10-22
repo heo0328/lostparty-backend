@@ -26847,6 +26847,20 @@
               "type": "string",
               "title": "Intent"
             }
+          },
+          {
+            "name": "include_session_display",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "true",
+                "false"
+              ],
+              "type": "string",
+              "default": "false",
+              "title": "Include Session Display"
+            }
           }
         ],
         "responses": {
@@ -26855,7 +26869,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OutputContract3GetV2RaidRoomsRoomIdAdmissionContext"
+                  "$ref": "#/components/schemas/AdmissionDisplayContext"
                 }
               }
             },
@@ -30824,6 +30838,20 @@
               ],
               "title": "Selected Role"
             }
+          },
+          {
+            "name": "include_session_display",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "true",
+                "false"
+              ],
+              "type": "string",
+              "default": "false",
+              "title": "Include Session Display"
+            }
           }
         ],
         "responses": {
@@ -30832,7 +30860,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContinuationContext"
+                  "$ref": "#/components/schemas/ContinuationDisplayContext"
                 }
               }
             },
@@ -31550,6 +31578,20 @@
               ],
               "title": "Selected Role"
             }
+          },
+          {
+            "name": "include_session_display",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "true",
+                "false"
+              ],
+              "type": "string",
+              "default": "false",
+              "title": "Include Session Display"
+            }
           }
         ],
         "responses": {
@@ -31558,7 +31600,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OpeningContext"
+                  "$ref": "#/components/schemas/OpeningDisplayContext"
                 }
               }
             },
@@ -39080,6 +39122,92 @@
         ],
         "title": "Action"
       },
+      "ActualSessionDisplay": {
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Session Id"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "schedule_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Schedule Revision"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "unconfirmed",
+              "confirmed"
+            ],
+            "title": "State"
+          },
+          "required": {
+            "type": "boolean",
+            "title": "Required"
+          },
+          "starts_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Starts At"
+          },
+          "ends_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ends At"
+          },
+          "join_deadline": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Join Deadline"
+          },
+          "permission": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Permission"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "session_id",
+          "revision",
+          "schedule_revision",
+          "state",
+          "required",
+          "starts_at",
+          "ends_at",
+          "join_deadline",
+          "permission"
+        ],
+        "title": "ActualSessionDisplay"
+      },
       "AdmissionContext": {
         "properties": {
           "room_id": {
@@ -39174,6 +39302,161 @@
           "permissions"
         ],
         "title": "AdmissionContext"
+      },
+      "AdmissionDisplayContext": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/AdmissionDisplayData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "AdmissionDisplayContext"
+      },
+      "AdmissionDisplayData": {
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "room_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Room Revision"
+          },
+          "members_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Members Revision"
+          },
+          "plan_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Plan Revision"
+          },
+          "expected_cycle_key": {
+            "type": "string",
+            "title": "Expected Cycle Key"
+          },
+          "server_time": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Server Time"
+          },
+          "catalog_version": {
+            "type": "string",
+            "title": "Catalog Version"
+          },
+          "policy_snapshot": {
+            "type": "string",
+            "title": "Policy Snapshot"
+          },
+          "context_token": {
+            "type": "string",
+            "title": "Context Token"
+          },
+          "selection": {
+            "$ref": "#/components/schemas/BSelection"
+          },
+          "targets": {
+            "items": {
+              "$ref": "#/components/schemas/BAppRaidRoomsParticipationCommandsTarget"
+            },
+            "type": "array",
+            "title": "Targets"
+          },
+          "session_choices": {
+            "items": {
+              "$ref": "#/components/schemas/SessionChoice"
+            },
+            "type": "array",
+            "maxItems": 64,
+            "minItems": 0,
+            "title": "Session Choices"
+          },
+          "comparison": {
+            "$ref": "#/components/schemas/BPowerComparison"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Permissions"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "expected_target_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "issued_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Issued At"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          },
+          "leadership": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Leadership"
+          },
+          "session_display": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ExistingSessionDisplay"
+              },
+              {
+                "$ref": "#/components/schemas/OpeningPreviewDisplay"
+              },
+              {
+                "$ref": "#/components/schemas/NoSelectionDisplay"
+              }
+            ],
+            "title": "Session Display",
+            "discriminator": {
+              "propertyName": "kind",
+              "mapping": {
+                "existing": "#/components/schemas/ExistingSessionDisplay",
+                "none": "#/components/schemas/NoSelectionDisplay",
+                "opening_preview": "#/components/schemas/OpeningPreviewDisplay"
+              }
+            }
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "room_id",
+          "room_revision",
+          "members_revision",
+          "plan_revision",
+          "expected_cycle_key",
+          "server_time",
+          "catalog_version",
+          "policy_snapshot",
+          "context_token",
+          "selection",
+          "targets",
+          "session_choices",
+          "comparison",
+          "permissions",
+          "target_cycle_key",
+          "expected_target_revision",
+          "issued_at",
+          "expires_at",
+          "leadership"
+        ],
+        "title": "AdmissionDisplayData"
       },
       "AdmissionMode": {
         "type": "string",
@@ -40026,122 +40309,6 @@
           "issues"
         ],
         "title": "BAccess"
-      },
-      "BAdmissionContext": {
-        "properties": {
-          "room_id": {
-            "type": "string",
-            "format": "uuid",
-            "title": "Room Id"
-          },
-          "room_revision": {
-            "type": "integer",
-            "maximum": 2147483647.0,
-            "minimum": 1.0,
-            "title": "Room Revision"
-          },
-          "members_revision": {
-            "type": "integer",
-            "maximum": 2147483647.0,
-            "minimum": 1.0,
-            "title": "Members Revision"
-          },
-          "plan_revision": {
-            "type": "integer",
-            "maximum": 2147483647.0,
-            "minimum": 1.0,
-            "title": "Plan Revision"
-          },
-          "expected_cycle_key": {
-            "type": "string",
-            "title": "Expected Cycle Key"
-          },
-          "server_time": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Server Time"
-          },
-          "catalog_version": {
-            "type": "string",
-            "title": "Catalog Version"
-          },
-          "policy_snapshot": {
-            "type": "string",
-            "title": "Policy Snapshot"
-          },
-          "context_token": {
-            "type": "string",
-            "title": "Context Token"
-          },
-          "selection": {
-            "$ref": "#/components/schemas/BSelection"
-          },
-          "targets": {
-            "items": {
-              "$ref": "#/components/schemas/BAppRaidRoomsParticipationCommandsTarget"
-            },
-            "type": "array",
-            "title": "Targets"
-          },
-          "session_choices": {
-            "items": {
-              "$ref": "#/components/schemas/SessionChoice"
-            },
-            "type": "array",
-            "maxItems": 64,
-            "minItems": 0,
-            "title": "Session Choices"
-          },
-          "comparison": {
-            "$ref": "#/components/schemas/BPowerComparison"
-          },
-          "permissions": {
-            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Permissions"
-          },
-          "target_cycle_key": {
-            "$ref": "#/components/schemas/CycleKey"
-          },
-          "expected_target_revision": {
-            "$ref": "#/components/schemas/Version"
-          },
-          "issued_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Issued At"
-          },
-          "expires_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Expires At"
-          },
-          "leadership": {
-            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Leadership"
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "room_id",
-          "room_revision",
-          "members_revision",
-          "plan_revision",
-          "expected_cycle_key",
-          "server_time",
-          "catalog_version",
-          "policy_snapshot",
-          "context_token",
-          "selection",
-          "targets",
-          "session_choices",
-          "comparison",
-          "permissions",
-          "target_cycle_key",
-          "expected_target_revision",
-          "issued_at",
-          "expires_at",
-          "leadership"
-        ],
-        "title": "BAdmissionContext"
       },
       "BAlternativeInput": {
         "properties": {
@@ -47759,13 +47926,13 @@
         ],
         "title": "Continuation"
       },
-      "ContinuationContext": {
+      "ContinuationDisplayContext": {
         "properties": {
           "scope": {
             "$ref": "#/components/schemas/Scope"
           },
           "data": {
-            "$ref": "#/components/schemas/ContinuationContextData"
+            "$ref": "#/components/schemas/ContinuationDisplayData"
           }
         },
         "additionalProperties": false,
@@ -47774,9 +47941,9 @@
           "scope",
           "data"
         ],
-        "title": "ContinuationContext"
+        "title": "ContinuationDisplayContext"
       },
-      "ContinuationContextData": {
+      "ContinuationDisplayData": {
         "properties": {
           "room_id": {
             "type": "string",
@@ -47844,6 +48011,28 @@
             "maxItems": 5,
             "minItems": 0,
             "title": "Conflicts"
+          },
+          "session_display": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ExistingSessionDisplay"
+              },
+              {
+                "$ref": "#/components/schemas/OpeningPreviewDisplay"
+              },
+              {
+                "$ref": "#/components/schemas/NoSelectionDisplay"
+              }
+            ],
+            "title": "Session Display",
+            "discriminator": {
+              "propertyName": "kind",
+              "mapping": {
+                "existing": "#/components/schemas/ExistingSessionDisplay",
+                "none": "#/components/schemas/NoSelectionDisplay",
+                "opening_preview": "#/components/schemas/OpeningPreviewDisplay"
+              }
+            }
           }
         },
         "additionalProperties": false,
@@ -47861,7 +48050,7 @@
           "permission",
           "conflicts"
         ],
-        "title": "ContinuationContextData"
+        "title": "ContinuationDisplayData"
       },
       "ContinuationEffect": {
         "type": "string",
@@ -49370,6 +49559,77 @@
           "error"
         ],
         "title": "ErrorOut"
+      },
+      "ExistingSessionDisplay": {
+        "properties": {
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "room_cycle_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Cycle Id"
+          },
+          "target_generation": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Target Generation"
+          },
+          "display_revision": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 64,
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Display Revision"
+          },
+          "kind": {
+            "type": "string",
+            "const": "existing",
+            "title": "Kind"
+          },
+          "selection_mode": {
+            "type": "string",
+            "const": "select_session_ids",
+            "title": "Selection Mode"
+          },
+          "plan_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Plan Revision"
+          },
+          "sessions": {
+            "items": {
+              "$ref": "#/components/schemas/ActualSessionDisplay"
+            },
+            "type": "array",
+            "maxItems": 64,
+            "title": "Sessions"
+          },
+          "previews": {
+            "items": {
+              "$ref": "#/components/schemas/OpeningSchedulePreviewGroup"
+            },
+            "type": "array",
+            "maxItems": 0,
+            "title": "Previews"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "target_cycle_key",
+          "room_cycle_id",
+          "target_generation",
+          "display_revision",
+          "kind",
+          "selection_mode",
+          "plan_revision",
+          "sessions",
+          "previews"
+        ],
+        "title": "ExistingSessionDisplay"
       },
       "ExperienceChoice": {
         "properties": {
@@ -52133,6 +52393,77 @@
         ],
         "title": "MyTargetRole"
       },
+      "NoSelectionDisplay": {
+        "properties": {
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "room_cycle_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Cycle Id"
+          },
+          "target_generation": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Target Generation"
+          },
+          "display_revision": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 64,
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Display Revision"
+          },
+          "kind": {
+            "type": "string",
+            "const": "none",
+            "title": "Kind"
+          },
+          "selection_mode": {
+            "type": "string",
+            "const": "no_session_selection",
+            "title": "Selection Mode"
+          },
+          "plan_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Plan Revision"
+          },
+          "sessions": {
+            "items": {
+              "$ref": "#/components/schemas/ActualSessionDisplay"
+            },
+            "type": "array",
+            "maxItems": 0,
+            "title": "Sessions"
+          },
+          "previews": {
+            "items": {
+              "$ref": "#/components/schemas/OpeningSchedulePreviewGroup"
+            },
+            "type": "array",
+            "maxItems": 0,
+            "title": "Previews"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "target_cycle_key",
+          "room_cycle_id",
+          "target_generation",
+          "display_revision",
+          "kind",
+          "selection_mode",
+          "plan_revision",
+          "sessions",
+          "previews"
+        ],
+        "title": "NoSelectionDisplay"
+      },
       "NormalizedInterval": {
         "properties": {
           "start_minute": {
@@ -52227,13 +52558,13 @@
         ],
         "title": "Open"
       },
-      "OpeningContext": {
+      "OpeningDisplayContext": {
         "properties": {
           "scope": {
             "$ref": "#/components/schemas/Scope"
           },
           "data": {
-            "$ref": "#/components/schemas/OpeningContextData"
+            "$ref": "#/components/schemas/OpeningDisplayData"
           }
         },
         "additionalProperties": false,
@@ -52242,9 +52573,9 @@
           "scope",
           "data"
         ],
-        "title": "OpeningContext"
+        "title": "OpeningDisplayContext"
       },
-      "OpeningContextData": {
+      "OpeningDisplayData": {
         "properties": {
           "room_id": {
             "type": "string",
@@ -52340,6 +52671,28 @@
             "maxItems": 5,
             "minItems": 1,
             "title": "Item Settings"
+          },
+          "session_display": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ExistingSessionDisplay"
+              },
+              {
+                "$ref": "#/components/schemas/OpeningPreviewDisplay"
+              },
+              {
+                "$ref": "#/components/schemas/NoSelectionDisplay"
+              }
+            ],
+            "title": "Session Display",
+            "discriminator": {
+              "propertyName": "kind",
+              "mapping": {
+                "existing": "#/components/schemas/ExistingSessionDisplay",
+                "none": "#/components/schemas/NoSelectionDisplay",
+                "opening_preview": "#/components/schemas/OpeningPreviewDisplay"
+              }
+            }
           }
         },
         "additionalProperties": false,
@@ -52362,7 +52715,7 @@
           "prospective_target_revision",
           "item_settings"
         ],
-        "title": "OpeningContextData"
+        "title": "OpeningDisplayData"
       },
       "OpeningEffect": {
         "type": "string",
@@ -52400,6 +52753,139 @@
           "expected_continuation_revision"
         ],
         "title": "OpeningIn"
+      },
+      "OpeningPreviewDisplay": {
+        "properties": {
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "room_cycle_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Cycle Id"
+          },
+          "target_generation": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Target Generation"
+          },
+          "display_revision": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 64,
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Display Revision"
+          },
+          "kind": {
+            "type": "string",
+            "const": "opening_preview",
+            "title": "Kind"
+          },
+          "selection_mode": {
+            "type": "string",
+            "const": "opening_implicit_enrolment",
+            "title": "Selection Mode"
+          },
+          "plan_revision": {
+            "type": "null",
+            "title": "Plan Revision"
+          },
+          "sessions": {
+            "items": {
+              "$ref": "#/components/schemas/ActualSessionDisplay"
+            },
+            "type": "array",
+            "maxItems": 0,
+            "title": "Sessions"
+          },
+          "previews": {
+            "items": {
+              "$ref": "#/components/schemas/OpeningSchedulePreviewGroup"
+            },
+            "type": "array",
+            "title": "Previews"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "target_cycle_key",
+          "room_cycle_id",
+          "target_generation",
+          "display_revision",
+          "kind",
+          "selection_mode",
+          "plan_revision",
+          "sessions",
+          "previews"
+        ],
+        "title": "OpeningPreviewDisplay"
+      },
+      "OpeningSchedulePreviewGroup": {
+        "properties": {
+          "preview_group_ref": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 64,
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Preview Group Ref"
+          },
+          "source_group_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Source Group Revision"
+          },
+          "planning_mode": {
+            "type": "string",
+            "enum": [
+              "manual",
+              "coordinated",
+              "unscheduled"
+            ],
+            "title": "Planning Mode"
+          },
+          "occurrence_mode": {
+            "type": "string",
+            "enum": [
+              "one_of",
+              "each"
+            ],
+            "title": "Occurrence Mode"
+          },
+          "day_scope": {
+            "type": "string",
+            "enum": [
+              "selected_weekdays",
+              "any_current_cycle"
+            ],
+            "title": "Day Scope"
+          },
+          "required": {
+            "type": "boolean",
+            "title": "Required"
+          },
+          "alternatives": {
+            "items": {
+              "$ref": "#/components/schemas/PreviewAlternative"
+            },
+            "type": "array",
+            "title": "Alternatives"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "preview_group_ref",
+          "source_group_revision",
+          "planning_mode",
+          "occurrence_mode",
+          "day_scope",
+          "required",
+          "alternatives"
+        ],
+        "title": "OpeningSchedulePreviewGroup"
       },
       "Origin": {
         "properties": {
@@ -52694,23 +53180,6 @@
           "data"
         ],
         "title": "OutputContract3GetV2RaidRoomsRoomId"
-      },
-      "OutputContract3GetV2RaidRoomsRoomIdAdmissionContext": {
-        "properties": {
-          "scope": {
-            "$ref": "#/components/schemas/Scope"
-          },
-          "data": {
-            "$ref": "#/components/schemas/BAdmissionContext"
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "scope",
-          "data"
-        ],
-        "title": "OutputContract3GetV2RaidRoomsRoomIdAdmissionContext"
       },
       "OutputContract3GetV2RaidRoomsRoomIdApplications": {
         "properties": {
@@ -54332,6 +54801,88 @@
           "saved_at"
         ],
         "title": "PresentationOut"
+      },
+      "PreviewAlternative": {
+        "properties": {
+          "preview_ref": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 64,
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Preview Ref"
+          },
+          "session_id": {
+            "type": "null",
+            "title": "Session Id"
+          },
+          "state": {
+            "type": "string",
+            "const": "preview",
+            "title": "State"
+          },
+          "weekday": {
+            "type": "integer",
+            "maximum": 7.0,
+            "minimum": 1.0,
+            "title": "Weekday"
+          },
+          "starts_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Starts At"
+          },
+          "ends_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ends At"
+          },
+          "time_state": {
+            "type": "string",
+            "enum": [
+              "bounded",
+              "undetermined",
+              "start_only"
+            ],
+            "title": "Time State"
+          },
+          "materialization": {
+            "type": "string",
+            "enum": [
+              "on_open",
+              "after_group_selection",
+              "after_coordination",
+              "not_scheduled"
+            ],
+            "title": "Materialization"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "preview_ref",
+          "session_id",
+          "state",
+          "weekday",
+          "starts_at",
+          "ends_at",
+          "time_state",
+          "materialization"
+        ],
+        "title": "PreviewAlternative"
       },
       "PreviewIn": {
         "properties": {
