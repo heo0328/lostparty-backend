@@ -53,3 +53,6 @@ python3 scripts/check_openapi.py --docker docker.exe --container lostparty-backe
 첫 전환 때는 리허설에서 검증한 동일 이미지로 `--no-build`를 사용했다. 이후 코드 변경 시 위 명령으로 two-cycle 태그를 새로 빌드한다. 호스트 포트8000·기존 환경/키/읽기 전용 mount·보안을 유지한다. 실제 기기에서 기존 연결 경로에 도달하는지 여부는 Flutter 확인 범위다.
 
 commit/push·원격 SHA 확인 후 **Flutter**에 합의된 다음 구간 GET `/v2/raid-cycles`·POST `/v2/me/raid-weekly-summary`와 주차 선택/target 본인 목록·계정 캐시 격리를 인계한다. 정상 로그인 세션으로 두 조회 성공·C/N 선택·계정 전환/로그아웃 캐시 격리·사용 계약 SHA를 같은 Issue에 회신하면 된다. 과거 키 모집이 현재 검색에 없는 것은 정상이며 새 모집/쓰기 전체 실기기 인수와 구별한다. Backend는 재현 가능한 차이/실패가 오면 해당 구간을 보완한다. Issue는 OPEN이며 Flutter 적용/실회원 쓰기/운영 인수·#19 통계 완료로 표시하지 않는다.
+
+
+게시: 구간 `3c26cdb6fd8a17c0bf0d7afaa3bbd93d1f4f3176` commit/push·실제 원격 SHA 일치 확인·[전체92번째 Backend · W5 실제 전환/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6332478347) 게시 완료. 다음 담당은 Flutter 메타/summary·주차 선택/계정 캐시 격리·정상 로그인 확인이며 Backend는 차이 대응이다. 본문 제외 실제 전체 댓글 순번92·Backend 작성 측·W5 실제 전환 단계를 재조회했고, Issue 본문 상단 현재 상태·다음 담당 갱신과 이전 원문 보존/OPEN을 확인했다.

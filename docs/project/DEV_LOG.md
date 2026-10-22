@@ -1879,3 +1879,10 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 실제 health 내부/호스트200·v1 공개0건/v2 C/N각0건·인증 누락/잘못된 Bearer401/ACCESS_INVALID·Bearer 헤더/no-store의8 HTTP검사 통과.167 활성 factory와116 기본 소스 OpenAPI 각각 전체 객체 일치, 고정0.4.1/canonical SHA 불변. 기존 유효 세션2회원 서비스 읽기에서 관계각7/not_selected/plan TARGET_NOT_OPEN7/영향0 leave-context7 확인. 지난주7건 현재 검색 제외는 정상이며 실제 leave/end/새 참가·동의/자료 삭제0이다. 기동/worker·읽기 후 전체 테이블 지문 불변·전용 runner 정리/API·DB만 healthy 확인.
 - 자동 승인 검토가 제안된 기존 세션 기반 테스트 토큰 발급·비공개 저장을 credential-probing side effect로 거절했다. 거절된 명령/토큰 코드는 실행되지 않았고 해당 검사를 제거한 뒤 승인된 전환을 수행했다. 토큰 발급 우회 없이 공개 HTTP/인증 거절·기존 서비스 읽기만 검증했다. 실제 인증 HTTP 성공/Google provider·기기는 Flutter 정상 로그인 확인 범위이며 미확인이다.
 - Compose override에 별도 이미지 선택을 추가하고 README/협업/다음 실행/지도/계획/추적표에 현재0029 실행·재기동/복구 경계를 반영했다. 기존304합성/백업 보호7시험을 재실행/합산하지 않는다. 신규 API/고정계약/DDL 변경·운영 배포/merge/원본 overwrite/drop/downgrade는 없다. 구간 commit/push·원격 확인 후 공식 #13에 실제 준비/Flutter 다음 읽기 구간을 인계한다.
+
+
+## 2026-10-22 — #13 실제 개발 전환 게시·Flutter 읽기 구간 인계
+
+- 구간 `3c26cdb6fd8a17c0bf0d7afaa3bbd93d1f4f3176` commit/push·실제 원격 SHA 일치 확인·[전체92번째 Backend · W5 실제 전환/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6332478347) 게시 완료. 다음 담당은 Flutter 메타/summary·주차 선택/계정 캐시 격리·정상 로그인 확인이며 Backend는 차이 대응이다.
+- 공식 Issue 본문/최신91댓글을 게시 직전 재조회하고 변화 없음을 확인했다. 연결 GitHub 조회 도구와 기존 쓰기403 이력을 고려한 인증 gh CLI로 결과1회/본문 상단을 게시했다. 재조회에서 본문 제외 실제 전체92번째·Backend 측·W5 실제 전환/Flutter 읽기 인계 단계를 확인했고 댓글 전문·본문 원문 보존/OPEN을 검증했다.
+- 실제 계약/소스·서버 준비를 원격 게시한 뒤 필요한 Flutter 메타/summary·선택기/계정 캐시 격리·정상 로그인 확인만 요청했다. Backend 공개 HTTP/서비스 읽기와 실제 인증 HTTP/Flutter·실회원 쓰기/기기·운영 미확인을 구분했다. 게시 기록 문서 후속만 별도 검증/commit·push하며 서버/DB를 재실행하지 않는다.

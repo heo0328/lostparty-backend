@@ -4,7 +4,7 @@
 
 [개발 DB/API 실제 전환](../ISSUE_13_W5_LIVE_CUTOVER.md) 완료: 구 API/모든 내부 worker 정지·다른 DB 연결0 확인 후 새 checkpoint, 제한 app LOGIN의0023→0029·82업무표413행/기록시각·키4개/시퀀스 보존, API8000 factory167경로/새 worker 기동·호스트 health200. 두 프로필 OpenAPI 전체 객체 일치·공개/인증 거절 HTTP8검사·기존2회원 서비스 읽기·기동 후 전체 테이블 불변 확인. 신규 DTO/계약/DDL 변경 없음. 지난주7건의 현재 C/N 검색 제외는 사용자 확인한 정상 동작이며 원본/관계는 유지한다.
 
-착수/인계 시 AGENTS → 협업 → 이 문서 → AI_CONTEXT → 계약3판/4판/ACK와 Issue 본문/최신 댓글·Git을 확인한다. 계약0.4.1/policy4·canonical SHA `fb4c7d065594a9a0e7e8288e5f73179f90b078b68ac4323d1aade5c7a63b42f1` 유지. 이 구간 commit/push·원격 확인 후 Issue에 실제 서버 준비 결과와 다음 Flutter 구간을 인계한다.
+착수/인계 시 AGENTS → 협업 → 이 문서 → AI_CONTEXT → 계약3판/4판/ACK와 Issue 본문/최신 댓글·Git을 확인한다. 계약0.4.1/policy4·canonical SHA `fb4c7d065594a9a0e7e8288e5f73179f90b078b68ac4323d1aade5c7a63b42f1` 유지. 구간 `3c26cdb6fd8a17c0bf0d7afaa3bbd93d1f4f3176` commit/push·실제 원격 SHA 일치 확인·[전체92번째 Backend · W5 실제 전환/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6332478347) 게시 완료. 다음 담당은 Flutter 메타/summary·주차 선택/계정 캐시 격리·정상 로그인 확인이며 Backend는 차이 대응이다.
 
 ## 다음 Flutter — 주차 메타·summary/선택기 소비
 
@@ -14,7 +14,7 @@
 
 ## 다음 Backend — 인계 회신 대응·현재 실행 유지
 
-1. 검증 구간 commit/push·원격 확인 후 공식 Issue에 인계하고 실제 댓글 순번·링크를 기록한다. 새 계약 재채택 요청은 하지 않는다.
+1. [전체92번째 Backend · W5 실제 전환/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6332478347)의 Flutter 회신을 확인한다. 정상 로그인/읽기 성공·사용SHA·캐시 격리 결과를 구별하며 새 계약 재채택 요청은 하지 않는다.
 2. Flutter의 재현 가능한 차이/실패가 있으면 기존 브랜치에서 필요한 구간만 보완·검증·게시 후 회신한다. Flutter 적용을 추정해 완료 처리하거나 새 기능 범위를 추가하지 않는다. #19 통계는 독립 후속이다.
 3. 개발 재기동은 `compose.yaml` + `compose.two-cycle.yaml`/two-cycle 이미지·factory를 함께 사용한다. 실제 DB29에0023 기본 앱/구 worker를 혼용하지 않는다. [재기동 명령과 복구 경계](../ISSUE_13_W5_LIVE_CUTOVER.md)를 따른다.
 4. 비공개 checkpoint는 `backups/lostparty-preflight-f2b2a14f7162`에0700/0600·Git/Docker 제외로 보관한다. source23 전용 checkpoint 도구를 현재29 source에 재실행하지 않는다. 새 쓰기 이후 snapshot overwrite로 자료를 버리지 않으며 실제 복구/운영변경/merge는 범위를 별도 확인한다.

@@ -2,7 +2,7 @@
 
 2026-10-22 / 담당 Backend / 작업 브랜치 `feat/raid-recruitment` / W1/W2 `917123e`·W3 `13b655e` 이후 W4-D 구간.
 
-현재(2026-10-22): [W5 실제 전환](ISSUE_13_W5_LIVE_CUTOVER.md) 완료. 구 API/worker 정지·새 checkpoint→개발 DB0029·factory167경로/새 worker 기동·82업무표413행/키4개 보존·실제 공개/인증 거절 HTTP8검사/양 프로필 계약 일치 확인. 지난주 키 모집 제외는 정상이며 원본/관계를 유지한다. 다음은 게시/공식 인계 후 Flutter 메타/summary·선택기·캐시 격리와 정상 로그인 확인이다. Backend 구현/로컬 실행 검증과 Flutter/실기기/운영 인수를 구별한다. 상세 다음 실행은 [NEXT_WORK](project/NEXT_WORK.md)이며 아래 단계별 미반영 표시는 당시 이력이다.
+현재(2026-10-22): [W5 실제 전환](ISSUE_13_W5_LIVE_CUTOVER.md) 완료. 구 API/worker 정지·새 checkpoint→개발 DB0029·factory167경로/새 worker 기동·82업무표413행/키4개 보존·실제 공개/인증 거절 HTTP8검사/양 프로필 계약 일치 확인. 지난주 키 모집 제외는 정상이며 원본/관계를 유지한다. 구간 `3c26cdb6fd8a17c0bf0d7afaa3bbd93d1f4f3176` commit/push·실제 원격 SHA 일치 확인·[전체92번째 Backend · W5 실제 전환/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6332478347) 게시 완료. 다음 담당은 Flutter 메타/summary·주차 선택/계정 캐시 격리·정상 로그인 확인이며 Backend는 차이 대응이다. Backend 구현/로컬 실행 검증과 Flutter/실기기/운영 인수를 구별한다. 상세 다음 실행은 [NEXT_WORK](project/NEXT_WORK.md)이며 아래 단계별 미반영 표시는 당시 이력이다.
 
 ## 현재 기준과 진행 상태
 
