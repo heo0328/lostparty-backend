@@ -62,6 +62,9 @@ def get_card(principal,rid,key):
 
 def search(principal,data):
     body=data.model_dump(mode='json')
+    candidate_token=body.pop('group_character_candidates_token',None)
+    if candidate_token is not None:
+        body['group_character_candidates_token']=candidate_token
     with snapshot(principal,public=True) as (db,uid,stamp):
         target=cycles.target(stamp,body['target_cycle_key'])
         for name in ('group_ids','raid_ids','difficulty_ids','remaining_slot_counts','experience_levels'):
@@ -79,6 +82,11 @@ def search(principal,data):
                 fail('FILTER_CONTEXT_STALE')
         elif data.filter_context_token is not None:fail('INVALID_REQUEST',400)
         if data.member_conditions and (not data.group_ids or data.filter_context_token is None):fail('INVALID_REQUEST',400)
+        if candidate_token is not None:
+            if uid is None:fail('AUTH_REQUIRED',401)
+            if len(data.group_ids)!=1 or data.filter_context_token is None:fail('INVALID_REQUEST',400)
+            from app.raid_rooms.character_candidates import validate_search
+            validate_search(db,uid,principal[1].id,data.group_ids,(ctx,mapping),candidate_token,data.member_conditions,stamp)
         count=select(func.count(func.distinct(Assignment.membership_id))).join(CycleRound,
             CycleRound.round_id==Assignment.round_id).join(WeeklyOccupancy,WeeklyOccupancy.assignment_id==Assignment.id).where(
             CycleRound.cycle_id==RoomCycle.id,CycleRound.generation==RoomCycle.generation,

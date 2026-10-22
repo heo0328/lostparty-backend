@@ -1616,7 +1616,7 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 전체74/75최신회신조회,실제globalleader/transfer/drop_membership·권한/일정참가확인소스대조. 기존1판전역공대장/빈N/전역승계가정을 [보완2판](../ISSUE_13_TWO_CYCLE_LEADERSHIP_R2.md)으로대체. 기존사용자변경·1판기록보존.
 - T리더/순서원천·개방+최초참가원자명령·자동승계/직접위임/취소CAS·C보존·자리projection/충돌제목/소스상태·확인예약분리정리. L1마지막N후재개/한도,G1~G3공통권한,A1명시개방우선/OFF기존특례범위는제안이며제품확정아님.
 - core JSON 11경로/39schema parse·내부ref·JSON Schema2020-12메타/operation중복0검사통과,문서공백검사. 기능/DB·성능·정식OpenAPIvalidator/실행비교는미실행. 원본OpenAPI·코드·서버DB/이미지/자료변경없음.
-- [전체76번째 Backend 보완설계회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6307589155)에본문/정확한core변경분전문게시·실제순번/원격내용확인. 다음Flutter소비대조·제품결정→Backend전체DTO/보존이행·계약고정/W1~W5. 문서로컬미커밋/미push,merge·배포·실회원시험요청없음。
+- [전체76번째 Backend 보완설계회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6307589155)에본문/정확한core변경분전문게시·실제순번/원격내용확인. 다음Flutter소비대조·제품결정→Backend전체DTO/보존이행·계약고정/W1~W5. 문서로컬미커밋/미push,merge·배포·실회원시험요청없음.
 
 
 ## 2026-10-21 — #13 L1/G1/A1 확정 반영·전체 계약 후보3판
@@ -1927,3 +1927,15 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 문서 보완2443641 로컬커밋·미push. [전체103번째 Backend · Flutter102 답변/선택 재검증 보완2판](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6339459589)에 보완 전문을 게시했다. 게시 직전 전체102댓글·새 회신 없음 확인, 게시 후 실제103번째/전문 일치 재조회했다.
 - Issue 본문 상단의 현재 범위·다음 담당을Flutter102 수용/Backend 보완 회신완료·다음Backend 구현으로 갱신하고 이전원문/OPEN을 보존했다. 추가 계약 재채택/반복 시험을 선행 대기로 만들지 않으며 새 API/실제소비SHA/서버인계 완료가 아님을 명시했다.
 - 기존 wire validator6예시/8거절/4binding 및 문서링크/diff 확인통과. 이번은 문서답변만이며 런타임/DB 시험·서버재기동없음. 게시기록 후속만로컬커밋/미push로남긴다.
+
+
+## 2026-10-22 — #13 그룹 활동 캐릭터 후보 구현·개발 API 반영
+
+- 사용자 진행 지시로dc998d0/feat/raid-recruitment에서 AGENTS/협업/NEXT_WORK/AI_CONTEXT·초안1/보완2판·Git·공식Issue본문/전체103댓글확인, 새요구/사용자변경없음. 합의된단일그룹후보GET/allowlist DTO·현재소유/활동/NameClaim/lifecycle 및 역할성공원천배치조회·HMAC/서명cursor·전체후보사전검증/optional검색token을구현했다. wire-core/기본openapi/DDL미변경.
+- 실제제한LOGIN/합성JWT HTTP·회원/그룹권한/회수세션·페이지연결/빈후보/Decimal정렬·페이지밖선택/방0건검증·C/N실제매칭·소유/활동/claim/lifecycle/등록변경stale·전투력성공보존·전체표READ ONLY보존/합의schema대조: 최종28PASS/222.33초+보강2PASS/21.14초(중복1제외 고유29).예비22PASS/173.37초와초기실패실행은중복합산하지않는다. 기존BlockingPortal경고1건외최종미해결실패없음.
+- 초기runner는jsonschema누락및소스copy중설정import실패가있었다. 같은DB에시험이겹치지않도록확인했고다른실행은패키지미설치로수집단계종료/fixture미실행이었다. 임시runner에누락패키지를설치/외부bridge해제후동기화완료상태로순차실행했다. 새요청fixture가생략필드를null로바꿔400거절을일으킨것을exclude_unset으로수정했고생산strict정책은완화하지않았다.
+- 합성2회원/400·10,000후보의페이지100단일측정: 각각10 SELECT/SQL410·10,010행/응답69,962·70,016bytes/74.730·1467.014ms.전체scope지문비용을기록하고최대제품한도/실서버SLO/p95로확대하지않는다. 집계artifact와재현시험을보존했다.
+- 빌드image66e69545…의app/alembic219Python파일작업트리일치.이전ccc787cb…이미지를pre-character-candidates태그로보존후개발API만--no-deps/--no-build교체.DB29/105표449행전체내용지문·실행환경/키mount/보안/포트/command지문전후동일, migration/초기화없음.실제168경로/기본116경로각OpenAPI전체객체일치·내부health/신규무인증/invalidBearer401/no-store3HTTP검사및호스트8000health200통과.실회원토큰발급/인증성공/provider/기기인수는미실행.
+- 전용lostparty-candidates-runner·tmpfsDB/network만정리하고실제API/DBhealthy유지.문서/링크/diff확인후작업구간commit/push·실제원격SHA확인→같은Issue소비인계예정, Flutter후보UI/F3전체·실회원/기기/운영인수는별도미완료다.
+
+- 최종 계약 대조에서 검토용 초안 오류 GameErrorOut에 기존 cycle의 nullable error.details가 빠진 것을 확인했다. 런타임은 기존 CycleRoute Error/Error1을 그대로 사용하므로 실행 OpenAPI를 기준으로 소비하도록 개발 안내/인계에 명시한다. 새 GET의 details는null이며 기존 검색 오류/코드는 변경하지 않는다.

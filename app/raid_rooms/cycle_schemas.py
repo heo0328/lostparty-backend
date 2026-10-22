@@ -1,7 +1,8 @@
 """Strict request semantics layered over the generated fixed wire contract."""
 from datetime import date
-from pydantic import field_validator
+from pydantic import Field, field_validator
 from app.raid_rooms import cycle_wire as wire
+from app.raid_rooms.candidate_schemas import CandidateToken
 
 
 class CanonicalCycles:
@@ -19,7 +20,8 @@ class Create(CanonicalCycles,wire.InputContract3PostV2RaidRooms):pass
 class Admission(CanonicalCycles,wire.InputContract3PostV2RaidRoomsRoomIdJoin):pass
 class Approve(CanonicalCycles,wire.InputContract3PostV2RaidRoomApplicationsApplicationIdApprove):pass
 class Withdraw(CanonicalCycles,wire.InputContract3PostV2RaidRoomApplicationsApplicationIdWithdraw):pass
-class Search(CanonicalCycles,wire.InputContract3PostV2RaidRoomsSearch):pass
+class Search(CanonicalCycles,wire.InputContract3PostV2RaidRoomsSearch):
+    group_character_candidates_token: CandidateToken = Field(default=None, json_schema_extra=lambda s:s.pop('default',None))
 class Continue(CanonicalCycles,wire.ContinueCommand):pass
 class Decline(CanonicalCycles,wire.ScopedCommand):pass
 class Cancel(CanonicalCycles,wire.CancellationCommand):pass

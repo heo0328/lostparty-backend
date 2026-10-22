@@ -1,0 +1,27 @@
+{
+  "kind": "synthetic-isolated-service-first-page",
+  "samples_per_case": 1,
+  "scope": "No product-wide maximum or live SLO asserted",
+  "measurements": [
+    {
+      "candidate_count": 400,
+      "page_limit": 100,
+      "select_statements": 10,
+      "selected_sql_rows": 410,
+      "response_bytes": 69962,
+      "first_page_ms": 74.73,
+      "environment": "synthetic isolated restricted PostgreSQL; single sample, not SLO",
+      "group_member_count": 2
+    },
+    {
+      "candidate_count": 10000,
+      "page_limit": 100,
+      "select_statements": 10,
+      "selected_sql_rows": 10010,
+      "response_bytes": 70016,
+      "first_page_ms": 1467.014,
+      "environment": "synthetic isolated restricted PostgreSQL; single sample, not SLO",
+      "group_member_count": 2
+    }
+  ]
+}

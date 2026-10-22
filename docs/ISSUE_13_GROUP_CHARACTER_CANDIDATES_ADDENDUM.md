@@ -1,5 +1,7 @@
 # Issue #13 — 후보 선택 재검증 보완2판
 
+> **구현/개발 반영 완료(2026-10-22):** [개발 안내](ISSUE_13_GROUP_CHARACTER_CANDIDATES_DEVELOPMENT.md)의 후보GET/검색token·검증/168경로 실행 상태가 현재 기준이다. 아래 미구현/미반영·다음구현 표기는 계약검토 당시 기록이다.
+
 2026-10-22 / Backend / feat/raid-recruitment. [전체102번째 Flutter 소비 검토](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6339166701)에 대한 보완이다. [초안1](ISSUE_13_GROUP_CHARACTER_CANDIDATES_DRAFT.md)의 §5 재취득/선택 확인 설명을 이 문서로 구체화한다. 새 endpoint/필드/응답 schema를 추가하지 않는다. 기존 검토용 OpenAPI·6개 응답 예시는 그대로이며 실제 서버/기본 계약0.4.1/policy4/canonical SHA는 변경하지 않는다. **후보 API/검색 token 검증은 아직 미구현이다.**
 
 ## 수용 확인

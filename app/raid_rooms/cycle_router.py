@@ -23,6 +23,8 @@ from app.raid_rooms import cycle_opening,cycle_continuation,cycle_leadership,cyc
 from app.raid_rooms import cycle_outcomes,cycle_resume,cycle_management,cycle_common
 from app.raid_rooms import cycle_times
 from app.raid_rooms import cycle_schedule_service
+from app.raid_rooms import character_candidates
+from app.raid_rooms.candidate_schemas import CandidatePage
 
 
 class CycleRoute(AvailabilityRoute):
@@ -44,6 +46,7 @@ class CycleRoute(AvailabilityRoute):
 
     def allowed_query(self, request):
         if request.method!='GET':return set()
+        if request.url.path.endswith('/raid-room-character-candidates'):return {'filter_context_token','limit','cursor'}
         if request.url.path.endswith('/common-context'):return {'command'}
         if request.url.path.endswith('/command-context'):return {'target_cycle_key','command','round_id'}
         if request.url.path.endswith('/candidates'):return {'target_cycle_key'}
@@ -151,6 +154,14 @@ def filter_context(principal:Principal,group_ids:Annotated[str,Query(max_length=
     try:ids=TypeAdapter(list[UUID]).validate_python(json.loads(group_ids,object_pairs_hook=unique_pairs))
     except (ValueError,TypeError,ValidationError,RecursionError):fail('INVALID_REQUEST',400)
     return queries.filters.get_context(principal,ids)
+
+
+@router.get('/groups/{group_id}/raid-room-character-candidates',response_model=CandidatePage,responses=errors)
+def group_character_candidates(group_id:UUID,principal:Principal,
+    filter_context_token:Annotated[str,Query(min_length=64,max_length=64,pattern=r'^[0-9a-f]{64}$')],
+    limit:Annotated[int,Query(ge=1,le=100)]=50,
+    cursor:Annotated[str|None,Query(min_length=1,max_length=2048)]=None):
+    return character_candidates.get(principal,group_id,filter_context_token,limit,cursor)
 
 
 @router.get('/raid-rooms/{room_id}',response_model=s.OutputContract3GetV2RaidRoomsRoomId,responses=errors)
