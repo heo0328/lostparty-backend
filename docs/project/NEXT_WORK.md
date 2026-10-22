@@ -4,6 +4,8 @@
 
 ## 현재 구간 — 후보 계약 초안1 작성 완료 / Flutter 소비 대조
 
+로컬 초안 커밋 `f1b198f`(미push)의 전문/OpenAPI·합성 예시를 [전체101번째 Backend · 후보 계약 초안1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6338175041)에 게시하고 실제 순번/본문 일치를 확인했다. [전체100번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6338043525)는 기존 F3 mocked HTTP27건 재검증 통과 보고이며 신규27건/실서버 시험이 아니다. 새 Backend 추가시험 요청은 없다.
+
 [후보 조회 계약 초안1](../ISSUE_13_GROUP_CHARACTER_CANDIDATES_DRAFT.md)·[추가경로 OpenAPI/합성 예시](../design/issue13-group-character-candidates.draft.openapi.json)를 작성했다. [전체99번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6337772851)의 초안 검토 대기를 수신했다. 다음 **Flutter**는 같은 그룹 내 현재 소유/활동 캐릭터 허용필드 공개·원천/nullable·회원 경계 페이지/정렬·candidate token 검색 연결을 대조한다. Backend에 직업 계열 분류 원천이 없어 초안1 role_family는null이며 Flutter 기존 직업 카탈로그 소비 또는 공유 매핑이 필요한지 한 항목을 확인한다. 기존 개인 visible을 공개 동의로 해석하지 않는다.
 
 초안 wire 검증은6응답 예시/8거절 사례/검색binding4사례·schema/ref/닫힌객체 검사 통과. API/DB·provider/기기시험이 아니다. 신규 API/검색필드/공개권한은 미합의·미구현이고 현재167경로/DB29·0.4.1/policy4/canonical SHA 불변이다. 합의 후 Backend 구현·격리 권한/보존/성능/계약 검증→게시/개발 서버 반영→Flutter 후보 연결 인계 순서다. 아래 출처 확인과 기존 전환 이력을 보존한다.

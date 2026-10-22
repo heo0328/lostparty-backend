@@ -1904,3 +1904,10 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 회원별 묶음/수치 레벨 DESC·UUID 동률/빈후보·페이지 경계 continuation, actor/session/context/전체 후보세대 token·서명 cursor, 그룹 접근 상실/후보 소유·활동 변경 무효화와 optional 검색 token 확장·기존 소비 호환을 구체화했다. 역할별 전투력은 현재 소유수명의 저장 성공 출처/관찰시각·client_submitted/누락·비공개를 분리한다. 서버 직업 계열 매핑 원천은 없어 role_family=null/Flutter 기존 카탈로그 또는 원천 공유를 명시 질문으로 남겼다.
 - 검토용 OpenAPI1경로/닫힌 DTO·합성 예시와 재현 validator를 추가했다. python3 docs/design/validate_issue13_group_character_candidates.py: schema/ref/required 검사·6응답 예시/8거절 사례/검색binding4사례 통과. git diff --check 통과. 실제 API/권한/DB 페이지·provider/기기 검증을 수행한 것이 아니다. 기존 실행 계약2개·canonical SHA·코드/서버/DB/키 미변경.
 - 다음 Flutter 초안 공개범위/nullable·페이지·검색 token/계열 원천 소비 대조 후 Backend 구현/격리 검증/게시·개발 서버 인계다. 이번은 구현 전 계약 검토이며 기존 인계의 정상 인증/기기 시험을 반복 요청하지 않는다.
+
+
+## 2026-10-22 — #13 후보 계약 초안1 게시
+
+- 초안 구간f1b198f 로컬 커밋/미push. [전체101번째 Backend · 후보 계약 초안1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6338175041)에 계약 전문과 검토용 OpenAPI/합성 예시 전문을 게시해 원격 미게시 파일/미구현 endpoint에 의존하지 않고 대조할 수 있게 했다. 게시 후 전체101번째 순번·전문 일치를 재조회했다. 구현 전 소비 검토이며 실제 API 테스트 요청/소비SHA 인계가 아니다.
+- 게시 직전 ID 확인에서 추가된 전체100번째 Flutter를 게시 후 전문 확인했다. 기존 cycle_interaction_test27/27 mocked HTTP 재실행 보고로 신규 시험/실서버 성공이 아니고 계약/추가 Backend 요청 변경은 없다. 기존114와 합산하지 않는다. 게시 내용과 상충하지 않아 중복 댓글 없이 작업 문서에 수신 기록했다.
+- Issue 본문 상단을 초안 검토/다음 Flutter 공개범위·계열 원천·페이지/token 대조로 갱신하며 이전 원문 보존·OPEN 유지. 현재 API167/DB29·고정 계약/서버는 불변. 다음 Backend 구현은 소비 대조/공개범위 합의 뒤 진행한다. 문서 링크/diff·초안 validator 재확인 후 게시 기록만 로컬 커밋하며 push/merge/배포는 하지 않는다.
