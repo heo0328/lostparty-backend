@@ -2,13 +2,13 @@
 
 2026-10-22 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13).
 
-## 현재 구간 — 후보 계약 초안1 작성 완료 / Flutter 소비 대조
+## 현재 구간 — Flutter102 수용·선택 재검증 보완 / 다음 Backend 구현
 
-로컬 초안 커밋 `f1b198f`(미push)의 전문/OpenAPI·합성 예시를 [전체101번째 Backend · 후보 계약 초안1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6338175041)에 게시하고 실제 순번/본문 일치를 확인했다. [전체100번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6338043525)는 기존 F3 mocked HTTP27건 재검증 통과 보고이며 신규27건/실서버 시험이 아니다. 새 Backend 추가시험 요청은 없다.
+[전체102번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6339166701)가 제한 공개·계열null/기존카탈로그 표시·nullable/페이지·검색token을 수용했다. 요청한 페이지 밖 기존 선택의 재검증은 [보완2판](../ISSUE_13_GROUP_CHARACTER_CANDIDATES_ADDENDUM.md)에 명시했다. 새 후보 첫 페이지 token으로 기존 ref/UUID 조건을 유지해 검색을 최대1회 자동 재시도하며, 서버가 전체 현재 후보에서 모두 사전검증한 뒤 방 검색/페이지를 수행한다. 200/items=[]도 선택 유효/일치방0이며 페이지 미로드는 소멸이 아니다. 400/404/409는 선택 보류/명시 수정이며 UUID 삭제·[]로 확대·자동 전페이지 수집·반복 재시도하지 않는다.
 
-[후보 조회 계약 초안1](../ISSUE_13_GROUP_CHARACTER_CANDIDATES_DRAFT.md)·[추가경로 OpenAPI/합성 예시](../design/issue13-group-character-candidates.draft.openapi.json)를 작성했다. [전체99번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6337772851)의 초안 검토 대기를 수신했다. 다음 **Flutter**는 같은 그룹 내 현재 소유/활동 캐릭터 허용필드 공개·원천/nullable·회원 경계 페이지/정렬·candidate token 검색 연결을 대조한다. Backend에 직업 계열 분류 원천이 없어 초안1 role_family는null이며 Flutter 기존 직업 카탈로그 소비 또는 공유 매핑이 필요한지 한 항목을 확인한다. 기존 개인 visible을 공개 동의로 해석하지 않는다.
+다음 **Backend**: 수용된 초안1+보완2판의 후보 읽기/검색 사전검증 구현→격리 권한/페이지/보존·최대규모 성능/계약 검증→구간 commit/push·원격 확인→개발 실행 반영/소비SHA 인계. 같은 정책/계열 재채택 회신을 선행 대기로 만들지 않는다. Flutter 후보 UI는 실제 소비 인계 후 연결한다. 현재 후보 경로/검색token 검증은 미구현·서버167경로/DB29·0.4.1/policy4/canonical SHA 불변이다. 정상 인증 HTTP·실회원/기기/F3 전체 인수는 별도 미완료다.
 
-초안 wire 검증은6응답 예시/8거절 사례/검색binding4사례·schema/ref/닫힌객체 검사 통과. API/DB·provider/기기시험이 아니다. 신규 API/검색필드/공개권한은 미합의·미구현이고 현재167경로/DB29·0.4.1/policy4/canonical SHA 불변이다. 합의 후 Backend 구현·격리 권한/보존/성능/계약 검증→게시/개발 서버 반영→Flutter 후보 연결 인계 순서다. 아래 출처 확인과 기존 전환 이력을 보존한다.
+[초안1](../ISSUE_13_GROUP_CHARACTER_CANDIDATES_DRAFT.md)·[검토 OpenAPI/예시](../design/issue13-group-character-candidates.draft.openapi.json)는 전체101번째 Backend에 전문 게시했고 f1b198f 로컬·미push다. 보완2판은 wire 변경 없이 판정/재취득 설명을 추가하며 기존 schema 검사 통과가 실제 검색 구현 시험을 뜻하지 않는다. 아래는 이전 출처 확인/전환 이력이다.
 
 ## 최신 수신·다음 Backend — 그룹 캐릭터 필터 후보 계약
 

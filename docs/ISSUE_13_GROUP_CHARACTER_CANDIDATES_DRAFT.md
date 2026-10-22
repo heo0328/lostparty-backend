@@ -1,5 +1,7 @@
 # Issue #13 — 그룹원 활동 캐릭터 필터 후보 계약 초안1
 
+> **2026-10-22 소비 보완:** [전체102번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6339166701)가 공개범위/계열null 소비·nullable/페이지·검색token을 수용했다. §5의 페이지 밖 선택 재검증은 [보완2판](ISSUE_13_GROUP_CHARACTER_CANDIDATES_ADDENDUM.md)이 구체화한다. 같은정책 재채택 대기 없이 다음 Backend 구현이며 현재 서버/후보 API는 미변경·미구현이다. 아래 계열 소비 질문/초안 대기는 당시 기록이다.
+
 2026-10-22 / Backend / feat/raid-recruitment. [Flutter96 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6336402066)·[97 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6337065372)·[99 초안 검토 접수](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6337772851)에 대응한다.
 
 **검토용이며 미구현·서버 미반영이다.** 현재0.4.1/policy4·canonical SHA·두 실행 OpenAPI를 변경하지 않는다. 기계 판독 가능한 [추가 경로 OpenAPI/합성 예시](design/issue13-group-character-candidates.draft.openapi.json)를 함께 제공한다. 이 파일은 기존 전체 계약을 대체하지 않는다. 구현 완료 후에만 실행 계약/소비 SHA를 별도로 인계한다.

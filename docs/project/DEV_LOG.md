@@ -1911,3 +1911,12 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 초안 구간f1b198f 로컬 커밋/미push. [전체101번째 Backend · 후보 계약 초안1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6338175041)에 계약 전문과 검토용 OpenAPI/합성 예시 전문을 게시해 원격 미게시 파일/미구현 endpoint에 의존하지 않고 대조할 수 있게 했다. 게시 후 전체101번째 순번·전문 일치를 재조회했다. 구현 전 소비 검토이며 실제 API 테스트 요청/소비SHA 인계가 아니다.
 - 게시 직전 ID 확인에서 추가된 전체100번째 Flutter를 게시 후 전문 확인했다. 기존 cycle_interaction_test27/27 mocked HTTP 재실행 보고로 신규 시험/실서버 성공이 아니고 계약/추가 Backend 요청 변경은 없다. 기존114와 합산하지 않는다. 게시 내용과 상충하지 않아 중복 댓글 없이 작업 문서에 수신 기록했다.
 - Issue 본문 상단을 초안 검토/다음 Flutter 공개범위·계열 원천·페이지/token 대조로 갱신하며 이전 원문 보존·OPEN 유지. 현재 API167/DB29·고정 계약/서버는 불변. 다음 Backend 구현은 소비 대조/공개범위 합의 뒤 진행한다. 문서 링크/diff·초안 validator 재확인 후 게시 기록만 로컬 커밋하며 push/merge/배포는 하지 않는다.
+
+
+## 2026-10-22 — #13 Flutter102 검토 수신·후보 선택 재검증 보완2판
+
+- 사용자 회신 확인/보완 답변 요청으로252ecac·feat/raid-recruitment에서 착수. AGENTS/협업/NEXT_WORK/AI_CONTEXT·초안1/검토OpenAPI·Git/공식 Issue 본문·전체102댓글 확인, 사용자 미커밋 변경 없음. Flutter 로컬 소스 접근/수정 없음.
+- Flutter102가 공개범위·role_family=null/기존 ClassSynergyCatalog2026.09.03.user.v1·nullable/전투력 출처·페이지/optional token을 수용했다. 제공한 카탈로그SHA/직업역할은 Flutter 보고로 기록하고 독립 소스/바이트 검증으로 확대하지 않았다. 신규 서버 분류표/공개설정 UI 필요 대기를 해소했다.
+- 남은 페이지 밖 선택 재검증 요청을 보완2판에 명시: 첫페이지 새candidate_token+동일선택 검색최대1회, 전체현재후보에서 모든 ref/UUID 검증 후 방 SQL/페이지 처리·200/items=[]도선택유효, 미로드/소멸구분·400/404/409보류/명시수정, 자동전페이지/[]확대/반복재시도금지. context변경의 정확한membership alias대응과 재가입승계금지를 포함했다. 새endpoint/DTO/응답필드 추가 없이 설명만 보완했다.
+- 현재 cycle_queries.search에 새token/전체후보사전검증이 없음을 정적확인했다. 위동작은 구현의무이며 실제PostgreSQL/HTTP·페이지/권한 시험으로 보고하지 않는다. 기존6예시/8거절/4binding validator와문서링크/diff 확인만 수행한다. 기존코드/실행OpenAPI/서버/DB/키미변경.
+- 다음Backend는수용범위+보완규칙으로구현/격리검증/게시·개발실행/소비SHA인계이며같은계약재채택을다시선행대기로두지않는다. Flutter후보UI/F3전체·실회원/기기인수는미완료다.
