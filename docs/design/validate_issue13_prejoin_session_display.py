@@ -4,6 +4,7 @@ Run from the repository root with jsonschema installed:
 python3 docs/design/validate_issue13_prejoin_session_display.py
 """
 import copy
+import ast
 import json
 from datetime import date, datetime, time, timedelta, timezone
 from pathlib import Path
@@ -87,6 +88,20 @@ def main():
     check_structure(DOC)
     assert DOC['x-status'] == 'proposal-not-implemented'
     assert len(DOC['x-extension']['paths']) == 3
+    # Validate declared GET paths against the actual router without importing
+    # the application or accessing its database/secrets.
+    router = ast.parse(Path('app/raid_rooms/cycle_router.py').read_text())
+    paths = set()
+    for node in ast.walk(router):
+        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            continue
+        for decorator in node.decorator_list:
+            if (isinstance(decorator, ast.Call) and isinstance(decorator.func, ast.Attribute)
+                    and isinstance(decorator.func.value, ast.Name) and decorator.func.value.id == 'router'
+                    and decorator.func.attr == 'get' and decorator.args
+                    and isinstance(decorator.args[0], ast.Constant)):
+                paths.add('/v2' + decorator.args[0].value)
+    assert set(DOC['x-extension']['paths']) <= paths, 'Draft GET path missing from current router'
     examples = DOC['x-examples']
     for value in examples.values():
         validate(value)
@@ -118,7 +133,7 @@ def main():
     envelope.validate({})
     envelope.validate({'session_display': original})
     assert list(envelope.iter_errors({'session_display': None}))
-    print(f'DRAFT ONLY: schema/refs/closed objects OK; {len(examples)} examples, '
+    print(f'DRAFT ONLY: 3 GET paths match router; schema/refs/closed objects OK; {len(examples)} examples, '
           f'{len(invalid)} rejected fixtures, 3 opt-in presence cases PASS. '
           'No runtime API/DB/token/concurrency tests executed.')
 

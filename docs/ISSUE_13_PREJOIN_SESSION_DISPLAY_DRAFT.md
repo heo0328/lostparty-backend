@@ -1,5 +1,7 @@
 # Issue #13 — 사전 참가 세션 표시 메타 계약 초안1
 
+> **2026-10-23 소비 검토 반영:** [Flutter110](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6344221859)가 경로 두 곳을 제외한 계약을 수용했다. continuation/opening의 누락된 `/me`를 기존 router와 대조해 표·JSON 모두 정정했다. 새 alias/endpoint가 아니며 다음 Backend 구현이다. 아래 Flutter 대조 대기는 당시 기록이고 현재 서버/API는 미변경·표시 메타 미구현이다.
+
 2026-10-22 / Backend / feat/raid-recruitment. [Flutter107 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343179198)·[Backend108 확인](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343260776)에 대응한다. **구현 전 소비 검토안**이며 현재 API168경로/DB29·0afd879 실행 계약/기본0.4.1/policy4/canonical SHA는 변경하지 않는다. 검토용 [닫힌 JSON Schema·추가 위치·합성 예시](design/issue13-prejoin-session-display.draft.json)는 실행 OpenAPI를 대체하지 않는다.
 
 ## 1. 기존 context에 명시적으로 요청하는 표시 정보
@@ -9,8 +11,8 @@
 | 기존 GET | 적용 동작 |
 |---|---|
 | `/v2/raid-rooms/{room_id}/admission-context` | intent=join/apply/change_character |
-| `/v2/raid-rooms/{room_id}/continuation-context` | action=join/decline |
-| `/v2/raid-rooms/{room_id}/opening-context` | intent=open/reopen, opening_effect별 처리 |
+| `/v2/me/raid-rooms/{room_id}/continuation-context` | action=join/decline |
+| `/v2/me/raid-rooms/{room_id}/opening-context` | intent=open/reopen, opening_effect별 처리 |
 
 `true`일 때만 기존 응답 `data.session_display`를 추가한다. **생략/false 응답에는 새 필드가 없고, 명시null도 반환하지 않는다.** 기존 닫힌 DTO 소비·미결 요청/기존 token 계산을 보존하기 위한 선택이다. 기술적 opt-in이며 사용자에게 별도 설정/조회 단계를 추가하는 것은 아니다. Flutter는 새 계약/SHA 실제 인계 뒤에만 flag와 DTO를 함께 적용한다. 화면에서 표시 정보를 요청했으나 응답 필드가 없으면 계약 불일치이며 기존 C 시각/배열 순서 추정으로 대체하지 않는다.
 

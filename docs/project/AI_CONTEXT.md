@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+현재(2026-10-23): [Flutter110](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6344221859)가 표시메타 초안의 두 경로 외 내용을 수용했다. continuation/opening의 `/me` 누락을 실제 router와 대조해 문서/JSON에서 정정하고 [Backend111](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6344566106)에 회신했다. 다음 Backend는 정정된 기존3GET opt-in 표시메타 구현·격리검증/게시·실행 소비 인계다. 같은 수용 회신 대기 없음, 서버/실행계약 미변경·F5표시/F6·실회원/기기 인수 미완료. [NEXT_WORK](NEXT_WORK.md) 기준이며 아래는 이전 기록이다.
+
 현재(2026-10-22): [사전 참가 표시메타 초안1](../ISSUE_13_PREJOIN_SESSION_DISPLAY_DRAFT.md)·닫힌schema/11예시·11거절/opt-in3경계검사작성완료. [전체109번째 Backend 초안 전문 게시](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343766208) 완료(5cf76f1 로컬·미push). 3GET의명시opt-in·기존응답/token보존·actual세션/미생성opening preview/none구분 제안이며 다음Flutter소비대조→Backend구현이다. 코드/실행계약/서버미변경, [NEXT_WORK](NEXT_WORK.md)기준. 아래는이전기록이다.
 
 최신(2026-10-22): [Flutter106 F4](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6342159361) 0c850294/93mock PASS 마감·[107 F5](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343179198) f2e09c9d/고유130mock PASS 독립연결보고 수신. F5사전참가세션시각/상태메타보완요청을 [Backend108](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343260776)에정적대조/접수회신. 다음Backend권한내표시메타계약제안→Flutter대조, F5독립코드유지/해당표시만대기·F6/실회원/기기인수별도미완료. 서버/계약변경없고 [NEXT_WORK](NEXT_WORK.md)기준. 아래는이전기록이다.

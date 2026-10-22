@@ -1981,3 +1981,12 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 초안5cf76f1 로컬커밋·미push. [전체109번째 Backend · F5 사전 참가 세션 표시 메타 계약 초안1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343766208)에 계약·닫힌JSON Schema/추가위치/11합성예시 전문을 직접게시했다. 아직원격파일/실행API·소비SHA인계가아닌구현전대조임을명시했다.
 - 게시직전전체108댓글/추가요구없음을확인했고게시후전체109번째순번·Backend작성측·메타초안단계·전문일치를재조회했다. 다음Flutter opt-in/DTO·actual/preview/none·prospective/원ACK·크기제안대조후Backend구현이다.
 - Issue본문상단현재범위/다음담당을초안게시/Flutter대조로갱신하고이전원문/OPEN을보존했다. NEXT_WORK/기능지도/추적표에링크·SHA/미push기록을반영했다. 후행은문서게시기록만이며서버/DB/기능시험재실행없음. 문서링크/diff·초안validator확인후로컬커밋한다.
+
+
+## 2026-10-23 — #13 Flutter110 표시 메타 수용·두 경로 표기 정정
+
+- 사용자 회신 확인 요청으로 a5e0a29/feat/raid-recruitment에서 규칙/현재 문서·Git·공식 Issue 본문/전체110댓글을 확인했다. 사용자 미커밋 변경은 없었다. [Flutter110](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6344221859)은 문서 검토 a0ff9a9 commit/push 보고이며 기능코드/실제HTTP·DB 검증은 아니다.
+- Flutter가 opt-in/닫힌existing·opening_preview·none/미생성ID·선택/원ACK·표시binding/1MiB·413을 수용했다. 다만 초안의 continuation/opening 경로에 /me를 빠뜨린 Backend 작성 오류를 지적했다. 실제 cycle_router.py의 세GET을 대조해 Markdown표·JSON x-extension.paths를 기존 /v2/me/raid-rooms/... 경로로 정정했다. admission은 유지하며 새 alias/endpoint를 추가하지 않았다.
+- 문서 validator에 실제 router AST의 GET경로 대조를 추가했다. 경로3개/schema/ref/닫힌객체·11예시/11거절fixture/opt-in존재3경계 통과, 문서링크/diff 확인. 런타임HTTP/DB/token/성능시험을 실행한 것은 아니다.
+- [전체111번째 Backend · 경로 정정/수용 확인](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6344566106)에 같은 Issue 회신, 실제 본문제외 전체순번111·Backend작성측·경로정정단계·전문 일치를 재조회했다. 다음 Backend는 수용된 범위의 구현/격리검증·게시/실행SHA 인계이며 동일 계약 수용/시험을 다시 선행 대기로 만들지 않는다.
+- NEXT_WORK/AI_CONTEXT/추적표와 Issue 상단의 현재상태·다음담당을 갱신하고 이전 원문/OPEN을 보존한다. 앱코드/실행계약·서버/DB/키 미변경, F5사전표시/F6·실회원/기기 인수 미완료다. 문서 정정/수신기록만 로컬 커밋·미push로 보존한다.

@@ -550,8 +550,8 @@
     "method": "get",
     "paths": [
       "/v2/raid-rooms/{room_id}/admission-context",
-      "/v2/raid-rooms/{room_id}/continuation-context",
-      "/v2/raid-rooms/{room_id}/opening-context"
+      "/v2/me/raid-rooms/{room_id}/continuation-context",
+      "/v2/me/raid-rooms/{room_id}/opening-context"
     ],
     "query": {
       "name": "include_session_display",
