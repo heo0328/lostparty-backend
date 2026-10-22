@@ -6,7 +6,7 @@ AGENTS → 협업 → NEXT_WORK → AI_CONTEXT → 계약3판/4판/ACK를 확인
 
 ## 검증 상태
 
-전체18파일 **303PASS/1855.45초** 후 리더 표시 이력 조회를 좁힌 최종 소스의 관련4파일 **31PASS/334.92초**·양 실행 종료0을 확인했다. 중복30을 제외한 **고유304PASS(신규7 포함)**다. 최종 단일304개 실행으로 확대하지 않는다. 예비29PASS 등은 중복 합산하지 않았다. 기존 BlockingPortal deprecation1건 외 최종 미해결 실패는 없다. 기본/준비 runtime 계약 전체 일치·변경 AST/JSON/문서 링크/diff 검사도 통과했다. 전용 runner·tmpfs DB/network만 정리했고 실제 개발 DB/API 이미지는 변경하지 않았다. 구간 commit/push·공식 게시 준비다.
+전체18파일 **303PASS/1855.45초** 후 리더 표시 이력 조회를 좁힌 최종 소스의 관련4파일 **31PASS/334.92초**·양 실행 종료0을 확인했다. 중복30을 제외한 **고유304PASS(신규7 포함)**다. 최종 단일304개 실행으로 확대하지 않는다. 예비29PASS 등은 중복 합산하지 않았다. 기존 BlockingPortal deprecation1건 외 최종 미해결 실패는 없다. 기본/준비 runtime 계약 전체 일치·변경 AST/JSON/문서 링크/diff 검사도 통과했다. 전용 runner·tmpfs DB/network만 정리했고 실제 개발 DB/API 이미지는 변경하지 않았다. 구현 `a10187ca238afc1fb41bbdc026228410bb85a311` commit/push·실제 원격 SHA 일치 확인·[전체90번째 Backend · W5 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6331483028) 게시 완료.
 
 ## 이번 구간
 
@@ -68,3 +68,5 @@ EXPLAIN root의 실제/추정 rows·버퍼는 artifact에 기록한다. 표본 �
 6. 실제 소비 가능한 서버 주소/실행 SHA·계약과 미확인 범위를 같은 Issue로 전달하고 Flutter에 필요한 메타/summary·주차 선택/계정 캐시 격리·v1 변경 검증만 요청한다. Flutter 적용·실회원/provider·기기·운영 인수는 별도 결과를 받아 기록한다.
 
 현재는 이 계획 준비와 소스/격리 검증 구간이다. 실제 전환 승인 요청/실행·새 서버 Flutter 시험 요청은 하지 않는다. 다음 담당과 최종 통과/게시 근거는 [NEXT_WORK](project/NEXT_WORK.md)·[DEV_LOG](project/DEV_LOG.md)에 기록한다.
+
+공식 Issue 본문 상단을 W5 자동 통합/성능 완료·다음 Backend 실제 전환 준비로 갱신하고 이전 원문/합의 이력을 보존했다. 본문 제외 실제 전체 댓글 순번90·Backend 작성 측·W5 단계를 재조회했다. 연결 도구의 댓글 쓰기는403이어서 중복 미게시를 확인한 뒤 인증된 gh CLI로 게시했다. 전체 W5/실제 서버·Flutter 인수 완료로 Issue를 닫지 않았으며 다음 담당은 Backend다.

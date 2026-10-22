@@ -1842,3 +1842,10 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 최신6항목 측정/EXPLAIN을 artifact·W5 표에 교체했다.50카드 SELECT507→15·p50 C255.558→19.583ms/N250.186→18.616ms·bytes 동일, 그룹7페이지80→18. 단일8인 p9512.764→13.106ms 소폭 증가와 C p9595.465ms 변동,500summary의 근거조회10→13 추가 비용도 그대로 기록했다. DB23 구 이미지 전체/실제 서버·네트워크/provider/기기·SLO로 확대하지 않는다. 묶음 항목의 양측 공통 actor 조회2SELECT도 명시했다.
 - 고정84합성/CAS6쌍/공통ACK2흐름·canonical SHA 불변, 기본116/준비167경로 runtime 객체 전체 일치, 세 문서의 정식 OpenAPI 검증(openapi-spec-validator0.7.2), DTO 재생성 바이트 일치, 최종 AST/JSON/문서 링크/diff 통과. Compose override는 API command만 변경함을 정적 비교했다.
 - 로그/종료0을 확인하고 전용 lostparty-w5-runner·lostparty-w5-test tmpfs DB/network만 정리했다. 실제 개발 DB/API 이미지·서버/자료/키는 변경하지 않았다. 다음 Backend는 실제 자료 영향·복구/전환 대상/승인 범위 확정·실제 소비 가능한 구간 인계이며 Flutter 시험 요청/전체 인수는 아직 미실행이다. 구간 commit/push·원격 확인 후 같은 Issue에 결과를 게시한다.
+
+
+## 2026-10-22 — #13 W5 자동 통합/성능 게시·실제 전환 준비 인계
+
+- 구현 `a10187ca238afc1fb41bbdc026228410bb85a311` commit/push·실제 원격 SHA 일치 확인·[전체90번째 Backend · W5 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6331483028) 게시 완료. 본문 제외 실제 전체 댓글 순번90·Backend 작성 측·W5 단계를 재조회했다. Issue 본문 상단은 현재 자동 통합/성능 완료·다음 Backend 실제 전환 준비이며 이전 원문/합의 이력 보존과 OPEN 유지를 확인했다.
+- 연결 GitHub 도구의 댓글 쓰기는403 Resource not accessible by integration이었다. 기존 인증 gh CLI로 전환하고 재조회해 미게시/중복 없음을 확인한 뒤 한 번 게시했다. 자동 승인 심사 거절이 아니라 연결 integration의 쓰기 권한 부족이며 게시 자체는 사용자 승인 범위에서 완료했다.
+- NEXT_WORK/기능지도/작업계획/추적표/W5 기록에 SHA·게시 링크·다음 Backend를 반영했다. 실제 DB/서버 전환·소비 가능 경로/Flutter 적용·실회원/provider/기기·운영 인수는 미완료다. 이 후속은 게시 기록만 변경하므로 기능 시험/DB·서버 재실행 없이 문서 링크/diff 검사 후 별도 commit/push한다.

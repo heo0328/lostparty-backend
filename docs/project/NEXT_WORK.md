@@ -2,9 +2,9 @@
 
 2026-10-22 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13).
 
-[W5 통합·성능·전환 준비](../ISSUE_13_W5_INTEGRATION.md)의 자동 검증/검색 보완 구간 완료: 전체303PASS/1855.45초 후 최종 보강31PASS/334.92초(중복30 제외·고유304, 신규7 포함). 두 runtime 계약 전체 일치·세 문서 정식 OpenAPI 검증·고정 계약/DTO 검증·Compose override 정적 비교 통과. 구간 commit/push·원격 확인·공식 Issue 게시를 마치고 아래 실제 전환 준비로 이어간다. 실제 개발 서버/DB 전환·Flutter 적용은 미실행이다.
+[W5 통합·성능·전환 준비](../ISSUE_13_W5_INTEGRATION.md)의 자동 검증/검색 보완 구간 완료: 전체303PASS/1855.45초 후 최종 보강31PASS/334.92초(중복30 제외·고유304, 신규7 포함). 두 runtime 계약 전체 일치·세 문서 정식 OpenAPI 검증·고정 계약/DTO 검증·Compose override 정적 비교 통과. 구현 `a10187ca238afc1fb41bbdc026228410bb85a311` commit/push·실제 원격 SHA 일치 확인·[전체90번째 Backend · W5 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6331483028) 게시 완료. 다음은 아래 실제 전환 준비다. 실제 개발 서버/DB 전환·Flutter 적용은 미실행이다.
 
-착수/인계 시 AGENTS → 협업 규칙 → 이 문서 → AI_CONTEXT → 계약3판/4판/ACK를 읽고 Issue 본문/최신 댓글·Git/코드를 확인한다. 최신 공식 조회는 [전체89번째 Backend · W4-D 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6330758804) 이후 추가 요청 없음이다. 계약0.4.1/policy two-cycle-contract-4를 유지한다.
+착수/인계 시 AGENTS → 협업 규칙 → 이 문서 → AI_CONTEXT → 계약3판/4판/ACK를 읽고 Issue 본문/최신 댓글·Git/코드를 확인한다. 최신 공식 기록은 [전체90번째 Backend · W5 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6331483028)이며 추가 제품 입력/동일 계약 회신 대기는 없다. 계약0.4.1/policy two-cycle-contract-4를 유지한다.
 
 ## 다음 Backend — 실제 전환 준비·소비 가능한 구간 인계
 
