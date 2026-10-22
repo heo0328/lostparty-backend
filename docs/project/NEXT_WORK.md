@@ -2,9 +2,9 @@
 
 2026-10-22 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13).
 
-W4-B 구현 `0d8b581`·게시 기록 `88dcb3b`까지 push/원격 확인 완료. [W4-C 주차별 관리·공통 설정·전역 정리](../ISSUE_13_W4C_CYCLE_MANAGEMENT.md)는 구현·격리 검증 완료(**고유98PASS(25+26+47 분리 실행, 마지막47PASS/374.96초)**, 신규27 포함), 구간 commit/push·공식 Issue 게시를 마무리한다. 다음은 아래 W4-D다. 예비 실행은 최종 고유 통계와 중복 합산하지 않는다.
+W4-B 구현 `0d8b581`·게시 기록 `88dcb3b`까지 push/원격 확인 완료. [W4-C 주차별 관리·공통 설정·전역 정리](../ISSUE_13_W4C_CYCLE_MANAGEMENT.md)는 구현·격리 검증 완료(**고유98PASS(25+26+47 분리 실행, 마지막47PASS/374.96초)**, 신규27 포함), 구현 `babb25b8599fb3564fec59bae13a690e2f53d5b6` commit/push·실제 원격 SHA 확인·[전체88번째 Backend · W4-C 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6330196057) 게시 완료. 다음은 아래 W4-D다. 예비 실행은 최종 고유 통계와 중복 합산하지 않는다.
 
-착수/인계 시 AGENTS → 협업 규칙 → 이 문서 → AI_CONTEXT → 계약4판/ACK 보완을 읽고 Issue 본문/최신 댓글·Git/코드를 확인한다. 최신 조회는 [전체87번째 Backend · W4-B 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6319271776)이며 새 Flutter 요청/계약 변경·추가 제품 입력 대기는 없다. 계약0.4.1/policy two-cycle-contract-4를 유지하고 사용자 상시 지시대로 구간 종료 시 검증·문서·commit/push·GitHub 기록을 한다.
+착수/인계 시 AGENTS → 협업 규칙 → 이 문서 → AI_CONTEXT → 계약4판/ACK 보완을 읽고 Issue 본문/최신 댓글·Git/코드를 확인한다. 최신 조회는 [전체88번째 Backend · W4-C 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6330196057)이며 새 Flutter 요청/계약 변경·추가 제품 입력 대기는 없다. 계약0.4.1/policy two-cycle-contract-4를 유지하고 사용자 상시 지시대로 구간 종료 시 검증·문서·commit/push·GitHub 기록을 한다.
 
 ## 다음 W4-D — 주차 전환·v1/legacy 호환·활성화 준비
 

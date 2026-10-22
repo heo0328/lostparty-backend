@@ -1,6 +1,6 @@
 # Issue #13 W4-C — 주차별 관리·공통 설정·전역 정리
 
-2026-10-22 / `feat/raid-recruitment` / 시작 `88dcb3b` / 구현·격리 검증 완료, 구간 commit/push·공식 Issue 게시 예정.
+2026-10-22 / `feat/raid-recruitment` / 시작 `88dcb3b` / 구현·격리 검증 완료, 구현 `babb25b8599fb3564fec59bae13a690e2f53d5b6` commit/push·실제 원격 SHA 확인·[전체88번째 Backend · W4-C 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6330196057) 게시 완료.
 
 기준은 [전체87번째 Backend · W4-B 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6319271776), [계약4판](ISSUE_13_TWO_CYCLE_CONTRACT_R4.md)·[공통 ACK 보완](ISSUE_13_COMMON_SETTINGS_ACK_ADDENDUM.md), 고정 명세0.4.1/policy two-cycle-contract-4다. 착수 시 Issue 본문·전체87댓글과 Git을 조회했으며 추가 요구/계약 변경·원격 충돌·사용자 미커밋 변경은 없었다.
 
