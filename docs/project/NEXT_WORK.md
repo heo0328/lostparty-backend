@@ -10,6 +10,8 @@
 
 ## 현재 계약 구간 — 사전 참가 표시 메타 초안1 작성 / 다음 Flutter 대조
 
+초안 `5cf76f1` 로컬커밋/미push. 계약/JSON Schema·예시 전문을 [전체109번째 Backend · 사전 참가 표시 메타 초안1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343766208)에 게시하고 실제 순번/본문 일치를 확인했다. 다음 담당은 Flutter 소비 대조이며 구현/실제서버 인계는 아직 아니다.
+
 [사전 참가 세션 표시 메타 초안1](../ISSUE_13_PREJOIN_SESSION_DISPLAY_DRAFT.md)·[검토 JSON Schema/합성 예시](../design/issue13-prejoin-session-display.draft.json)를 작성했다. 기존3GET에optional `include_session_display` query·opt-in때만data.session_display를추가하는제안이다. 생략/false의기존응답/토큰·쓰기body/원ACK는유지하고새token의내부버전표지/표시digest를결합한다.
 
 existing는실제T/session시각·상태/revision·required/permission을ID로직접제공한다. opening_preview는prospective cycle/generation의일정의도이며session_id=null·가짜ID/자동시간확정·예약없음, none은decline/already_open noop이다. 실제미정과duration미상preview·다중one_of/each/coordinated/unscheduled/주차전체를구분한다.

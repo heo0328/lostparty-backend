@@ -1974,3 +1974,10 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 미생성preview는session_id=null·source의도/target N날짜·설정duration근거로만표시, manual단일/each/복수one_of·coordinated/unscheduled/주차전체와duration미상/미정을구별한다. 실제DB는시작/끝양쪽null또는양쪽시각/confirmed24h제약임을반영하고preview start-only와혼동하지않는다. 기존opening enrol copied=True의시간확정동의/예약없음, prospective새generation과기존scope구generation/CAS의차이를명시했다.
 - 검토JSON Schema/11합성예시/재현validator추가. schema/ref/닫힌객체·11예시/11거절fixture/opt-in존재3경계·UTC/KST수요일00~05:55/시각쌍·materialization조합검사통과. 실제HTTP/DB/성능/HMAC·권한/동시성시험이아니다. 코드/실행OpenAPI/서버/DB/키미변경.
 - 다음Flutter는opt-in/DTO·actual/preview/none·prospective세대/원ACK·1MiB제안을대조하고합의후Backend구현/격리검증/게시·개발실행/소비SHA인계다. 이번은계약검토이며새API테스트/동일정책재채택·기기시험을반복요청하지않는다. 문서/링크/diff확인후로컬커밋·Issue에전문을게시한다.
+
+
+## 2026-10-22 — #13 사전 참가 표시 메타 초안 게시
+
+- 초안5cf76f1 로컬커밋·미push. [전체109번째 Backend · F5 사전 참가 세션 표시 메타 계약 초안1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6343766208)에 계약·닫힌JSON Schema/추가위치/11합성예시 전문을 직접게시했다. 아직원격파일/실행API·소비SHA인계가아닌구현전대조임을명시했다.
+- 게시직전전체108댓글/추가요구없음을확인했고게시후전체109번째순번·Backend작성측·메타초안단계·전문일치를재조회했다. 다음Flutter opt-in/DTO·actual/preview/none·prospective/원ACK·크기제안대조후Backend구현이다.
+- Issue본문상단현재범위/다음담당을초안게시/Flutter대조로갱신하고이전원문/OPEN을보존했다. NEXT_WORK/기능지도/추적표에링크·SHA/미push기록을반영했다. 후행은문서게시기록만이며서버/DB/기능시험재실행없음. 문서링크/diff·초안validator확인후로컬커밋한다.
