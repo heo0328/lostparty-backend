@@ -123,3 +123,8 @@ def command(principal,rid,key,data,operation):
         room.revision+=1;room.plan_revision+=1;base.core.legacy.directory(db);db.flush()
         return 200,dict(command_id=key,outcome='applied',executed_at=stamp,revisions=[base.revision('room',room),base.revision('plan',room,room.plan_revision),dict(resource='settings',id=rid,revision=value.revision)])
     return base.execute(principal,operation,key,dict(room_id=str(rid),body=data.model_dump(mode='json')),run)
+
+
+# Two-cycle storage never falls back to the legacy global room graph.
+from app.raid_rooms.v1_compat import read as _current_read
+get_settings=_current_read('settings')(get_settings)

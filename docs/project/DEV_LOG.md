@@ -1792,3 +1792,17 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 
 - 구현 `babb25b8599fb3564fec59bae13a690e2f53d5b6`를 feat/raid-recruitment에 commit/push했고 실제 원격 브랜치 SHA 일치를 확인했다. 인증된 gh CLI로 [전체88번째 Backend · W4-C 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6330196057)를 게시한 뒤 전체 댓글을 재조회해 본문 제외 실제 전체 작성 순번88·Backend 작성 측·W4-C 단계를 확인했다. 완료는 후보 소스/격리 자동 검증이며 W4 전체·실제 서버/Flutter 인수는 미완료다.
 - Issue 본문 상단을 W4-C 완료/다음 Backend W4-D로 갱신하고 이전 원문/이력을 그대로 보존했음을 재조회했다. NEXT_WORK/기능지도/작업계획/추적표에 SHA·게시 링크·다음 실행을 기록했다. 이 문서 후속은 코드 변경이 없어 기능 시험/DB·서버 재실행 없이 링크·diff 검사 후 별도 commit/push한다.
+
+## 2026-10-22 — #13 W4-D 전환/호환 구현·격리 검증 착수
+
+- AGENTS/협업/NEXT_WORK/AI_CONTEXT·계약3판 전환/4판/ACK 보완과 Git/Issue 본문/전체88댓글을 확인했다. 최신 W4-C 이후 추가 요청/계약 변경·사용자 미커밋 변경은 없었다. 3176c4f에서 같은 작업 브랜치로 진행했다.
+- [W4-D 기록](../ISSUE_13_W4D_CUTOVER.md): 실제 T/generation worker의 과거 정리·N→C UUID/리더/예약 보존/새 N 생성0·현재 부적격 review, v1 C 조회 DTO projection·원 ACK 뒤 위험 쓰기 upgrade, 안전한 개인표/수동 C10시/원 ACK·첫 화면 표시, 현재 세대 declined summary와 legacy choice GET를 구현했다. 신규 DDL 없이0029를 사용하고 옛 worker23/새 worker29 경계를 유지한다.
+- 별도 create_two_cycle_app factory의167경로·0029 준비검사/worker·모든56개 고정 operation ID 및 전환 OpenAPI를 준비했다. 기본 app/원본116경로와 v1 수동 완료 설명/PLAY_NOT_STARTED enum을 함께 검토했다. source 생성/격리 검증이며 실제 개발 DB/API 이미지·서버/자료/키는 전환하지 않았다.
+- 전용 lostparty-w4d-test tmpfs PostgreSQL/제한 LOGIN·cached 검증 이미지에서 예비9PASS/109.01초, 식별자 접두사 특례와 route 객체 공유에 의한 테스트 인증 대체 문제를 수정해 보강7PASS/88.84초를 확인했다. 예비 실행은 중복 합산하지 않는다. 현재16신규와 기존 관련 묶음을 로그/종료 파일에 저장하며 검증 중이다. 최종 결과/commit·push·Issue 기록은 아래 이어 남긴다.
+
+
+## 2026-10-22 — #13 W4-D 최종 검증·게시 준비
+
+- 최신 소스의 관련7파일 최종 단일 실행 **151PASS/611.48초**(신규16 포함), 종료 코드0. W4-D/W4-C·weekly/summary/bootstrap/continuation/기록시각 회귀를 확인했다. 기존 BlockingPortal deprecation1건 외 최종 미해결 실패 없음. 앞선9PASS/7PASS는 중복 합산하지 않는다. 세대 재개 후 옛 declined 이력 재사용 방지까지 포함했다.
+- 고정84합성/CAS6쌍/공통ACK2흐름·canonical SHA 불변, 기본116경로/준비167경로 전체 런타임 계약 일치, 정적 DTO 재생성 바이트 일치(SHA256 7cc60c15569f3a3d6c0e0429aed16406e3be5f0d28f4bd51c2aba0ffa599cd7a), Python AST/문서 링크/diff 검사를 통과했다.
+- 전용 lostparty-w4d-runner·lostparty-w4d-test tmpfs DB/network만 정리했다. 실제 개발 DB/API 이미지·서버/자료/키는 변경하지 않았다. 이행 계획에는 구 API와 모든 worker를 먼저 정지하는 경계를 명시했다. 다음 Backend W5 통합/보존·경합/성능·실제 소비 인계이며 Flutter 시험 요청·실제 전환은 아직 없다.

@@ -2,24 +2,22 @@
 
 2026-10-22 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13).
 
-W4-B 구현 `0d8b581`·게시 기록 `88dcb3b`까지 push/원격 확인 완료. [W4-C 주차별 관리·공통 설정·전역 정리](../ISSUE_13_W4C_CYCLE_MANAGEMENT.md)는 구현·격리 검증 완료(**고유98PASS(25+26+47 분리 실행, 마지막47PASS/374.96초)**, 신규27 포함), 구현 `babb25b8599fb3564fec59bae13a690e2f53d5b6` commit/push·실제 원격 SHA 확인·[전체88번째 Backend · W4-C 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6330196057) 게시 완료. 다음은 아래 W4-D다. 예비 실행은 최종 고유 통계와 중복 합산하지 않는다.
+[W4-D 전환·v1 호환·활성화 준비](../ISSUE_13_W4D_CUTOVER.md) 구현/격리 검증 완료: 관련7파일151PASS/611.48초(신규16 포함), 기본116/준비167경로 실행 계약 전체 일치·고정 계약/DTO 검증 통과. 구간 commit/push·원격 확인 및 공식 Issue 결과 게시를 마치고 아래 W5로 이어간다. 실제 개발 서버/DB 전환·Flutter 적용은 미실행이다.
 
-착수/인계 시 AGENTS → 협업 규칙 → 이 문서 → AI_CONTEXT → 계약4판/ACK 보완을 읽고 Issue 본문/최신 댓글·Git/코드를 확인한다. 최신 조회는 [전체88번째 Backend · W4-C 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6330196057)이며 새 Flutter 요청/계약 변경·추가 제품 입력 대기는 없다. 계약0.4.1/policy two-cycle-contract-4를 유지하고 사용자 상시 지시대로 구간 종료 시 검증·문서·commit/push·GitHub 기록을 한다.
+착수/인계 시 AGENTS → 협업 규칙 → 이 문서 → AI_CONTEXT → 계약3판 전환 기준/4판/ACK 보완을 읽고 Issue 본문/최신 댓글·Git/코드를 확인한다. 최신 조회는 [전체88번째 Backend · W4-C 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6330196057)이며 새 Flutter 요청/계약 변경·추가 제품 입력 대기는 없다. 계약0.4.1/policy two-cycle-contract-4를 유지하고 구간 종료 시 검증·문서·commit/push·GitHub 기록을 한다.
 
-## 다음 W4-D — 주차 전환·v1/legacy 호환·활성화 준비
+## 다음 W5 — 통합 계약·보존/경합·성능·실제 인계
 
-1. **남은 고정 GET1동작**: `/v2/me/raid-rooms/{room_id}/continuation-choices`를 legacy 보존 projection으로 연결한다. 과거 선택/의사를 새 실제 N 참가나 동의로 해석하지 않고, GET로 없는 회차·제출·예약을 만들지 않는다. 후보50경로/53동작 + main 주차/summary2동작 + 이1동작으로 전체53경로/56동작을 대조한다.
-2. **06시 전환**: 주차별 실제 상태·세대·리더·현재 유효 참가순서를 사용하고, 기존 자동 함께하기 행으로 새 N/참가/예약을 만들지 않는다. 중복 worker·주차 경계·원장/이전 세대·완료/중단·source·원 ACK·소유/한도 review 분류를 검증한다. W4-A/B/C의 명시 동의와 새 예약 구간을 보존한다.
-3. **v1 adapter/summary**: 옛 전역 RoomSettings/leader/members/plan을 새 T 권한으로 추정하지 않는다. 기존 v1 수동 완료에도 실제 C/수10시와 원 ACK 우선 예외를 연결한다. legacy 불명 자료는 실행 기본값으로 승격하지 않고 review를 유지한다. declared declined와 나중 일반 참가·다른 방 점유의 account weekly summary 우선순위를 연결한다.
-4. **활성화 검증**: 현재 v1/worker의0023 guard와 shadow0029를 혼용하지 않는다. main 등록·실행 OpenAPI/준비검사·worker/lifespan·이행 전후 보존·복구 가능한 전환을 격리 환경에서 먼저 검증하고 실제 서버/DB 전환 대상·영향·승인 범위를 확인한다. 합의된 기능 계약만으로 실제 이행/배포를 실행하지 않는다.
+1. **전체 실행 계약/통합**: 고정53경로/56동작/204schema와 준비 앱167경로/전체56개 operation ID·실제 HTTP/DB 효과를 대조한다. 기본 앱116경로·v1 수동 완료10시/원 ACK 설명 및 PLAY_NOT_STARTED enum과 [전환 준비 계약](../../openapi/two-cycle.openapi.yaml)을 구분한다. `scripts/check_openapi.py --profile legacy|two-cycle`은 선택한 런타임 객체 전체를 비교한다.
+2. **보존/경합**: 제한 LOGIN·격리 PostgreSQL의0023→0029와 원래 행/열·시각·legacy_unknown/review 보존, C/N·세대·현재/과거 완료·declined/일반 참가/다른 방 점유, worker/명령 경합·06/10시·원 ACK를 통합 검증한다. 옛 N의 생성일이 이전 C에 속한다는 이유로 제안/예약을 폐기하지 않는다. review 자료에 임의 실행 기본값·예약/동의를 채우지 않는다.
+3. **성능**: 동일 합성 자료에서 구 기준/신규 SQL 수·rows·응답 bytes·p50/p95·EXPLAIN을 측정하고 비교한다. 최대8인·묶음/복수 세션·50캐릭터/두 주차500summary·그룹 필터/페이지와 앱별 캐시/계정 격리를 포함한다. 측정 없이 비용0/예상ms를 약속하거나 자동 테스트를 실제 provider/기기 성능으로 보고하지 않는다.
+4. **실제 소비 준비/전환**: 먼저 실제 대상 DB revision·기존 이미지/설정·진입점·자료/키 보존 상태를 필요한 범위에서 조회하고, 대상별 이행/복구·구 API/모든 worker 정지 후 동시전환·계약/health 검증 계획을 구체화한다. 기본 `app.main:app`은0023, 전환 factory `app.main:create_two_cycle_app`은0029 전체 준비검사+새 worker/v1 adapter다. factory 생성이나 소스 게시 자체는 DB 이행·배포가 아니다. 실제 변경 대상/영향·기존 승인 범위를 확인하고 미승인 실제 DB/서버 전환을 임의 실행하지 않는다.
+5. **Flutter 인계**: 실제 소비 가능한 의존/서버·고정 SHA/계약·미확인 범위를 준비한 뒤 구간 commit/push·원격 확인을 먼저 하고 같은 Issue에 필요한 테스트만 인계한다. v1 구 방 쓰기409 CLIENT_UPGRADE_REQUIRED, 본인 수동 체크/false 정정의 C/10시와 원 ACK 우선, 안전한 개인 시간표 유지 차이를 알린다. 현재 후보 소스 게시만으로 새 서버 시험을 요청하지 않는다.
 
-첫 대조점은 `worker.py`·`continuation.py`·`resume.py`·`readiness.py`·`app/main.py`, weekly summary/v1 router와 `cycles`·`cycle_opening`·`cycle_outcomes`·`cycle_common`이다. 이전 W4-C의 신규 DDL은 없고 shadow0029를 사용한다. 추가 이행이 필요하면 planning/times/outcomes/readiness 허용 revision을 함께 검토한다.
+## 보존 기준
 
-## 보존·인계 기준
-
-- T 설정·편성·제외는 actual T만 변경한다. 완료 Assignment/원래 자리·다른 T·persistent 관계·기존 예약 시각을 보존한다. target 제외와 전역 탈퇴/종료를 혼동하지 않는다.
-- G1은 C 행이 없는 경우만 N 리더다. closed/completed C의 유효 리더 권한을 유지하고 review/권한 없는 C를 N으로 메우지 않는다. 전역 GlobalScope/원 ACK에는 가짜 target가 없고 persistent-only 영향0도 유효하다.
-- 공통 title/scope 수정 no-op은 room revision 유지/영향[]이다. 전역 정리는 실제 전체 영향 context와 persistent CAS·120초 만료·최종 주차/시각·원 ACK를 한 transaction으로 검증한다. 완료된 C에 다른 참가자의 탈퇴가 발생해도 유효한 완료 리더 근거를 지우지 않는다.
-- 현재 후보50경로/53동작은 main 미등록. main/원본 OpenAPI116경로·실제 개발 DB/API 이미지·서버는 유지한다. 실제 provider/회원/기기·운영 성능·Flutter 적용/인수는 별도다. 후보 소스 게시만으로 새 Flutter 서버 시험을 요청하지 않는다.
-- 이후 **W5**: 전체 실행 계약·통합 보존/경합·성능을 확인하고 소비 가능한 구간을 게시·Flutter에 인계한다. W4 전체/서버 공개·Flutter 인수 완료로 확대하지 않는다. #19 통계는 별도 미완료다.
-- 고정 명세 canonical SHA256 `fb4c7d065594a9a0e7e8288e5f73179f90b078b68ac4323d1aade5c7a63b42f1`, schema53경로/56동작/204schema·84합성 검증과 실제 HTTP/DB 검증은 분리한다. 검증/게시 근거는 [DEV_LOG](DEV_LOG.md)·각 구간 문서를 따른다.
+- 06시 N→C는 같은 실제 UUID/세대·리더/순번·Assignment/세션·동의/예약이다. 새 N 자동 개방/가입·옛 auto_open_enabled/choice를 동의로 전용하지 않는다. 지난 실제 T만 worker가 정확히 정리하고 현재 부적격 명시 source는 자리/lease 증거를 유지하며 review로 분류한다.
+- T 설정·편성·제외/일정·완료와 persistent 전역 효과를 구분한다. G1은 C 행이 없을 때만 N 리더이며 closed/review C를 N으로 메우지 않는다. GlobalScope·persistent CAS/영향0·120초 context/원 ACK·완료 이력을 유지한다.
+- GET/summary는 READ ONLY다. 실제 참가/다른 방 점유가 해당 주차/세대의 declined/legacy intent보다 우선하며 unknown/review 점유는 confirmed가 아니다. legacy choice GET는 실제 T projection이며 빈 N을 만들지 않는다.
+- 추가 DDL은 없다. 저장 head는0029, 옛 worker는0023만/새 worker는0029만 허용한다. 기본 앱116경로와 준비 앱167경로(신규 후보51경로/54동작+기존 메타/summary2동작)를 구분한다. 원본 고정 명세 canonical SHA256 `fb4c7d065594a9a0e7e8288e5f73179f90b078b68ac4323d1aade5c7a63b42f1`은 유지한다.
+- 실제 개발 DB/API 이미지·서버/provider·실회원/기기·운영·Flutter 적용/인수는 별도 미완료다. #19 통계는 별도 후속이다. 검증/게시 상세는 [DEV_LOG](DEV_LOG.md)·각 구간 기록을 따른다.

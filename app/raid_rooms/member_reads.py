@@ -163,3 +163,14 @@ def overlaps(principal,limit,cursor):
         room_count=len({r.room_id for r in reservations if r.id in affected})
         revision=digest([[str(r.id),r.schedule_revision] for r in reservations]);page,token=paginate(pairs,limit,cursor,['overlaps',str(uid),limit],revision)
         return dict(items=page,cycle_key=graph.raids.cycle(stamp).cycle_key,pair_count=count,affected_room_count=room_count,reservation_count=len(affected),revision=revision,next_cursor=token,evaluated_at=stamp)
+
+
+# Two-cycle storage never falls back to the legacy global room graph.
+from app.raid_rooms.v1_compat import read as _current_read
+summary=_current_read('card')(summary)
+detail=_current_read('detail')(detail)
+memberships=_current_read('memberships')(memberships)
+applications=_current_read('applications')(applications)
+time_context=_current_read('time')(time_context)
+overlaps=_current_read('overlaps')(overlaps)
+projections=_current_read('projections')(projections)

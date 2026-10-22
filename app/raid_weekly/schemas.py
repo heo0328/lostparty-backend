@@ -51,7 +51,7 @@ class WeeklyEntry(DTO):
     participation: Participation | None
     can_mark_completed: StrictBool
     can_clear_manual_completion: StrictBool
-    mark_blocked_reason: Literal['CURRENT_CYCLE_REQUIRED', 'RAID_INACTIVE', 'CHARACTER_UNUSABLE',
+    mark_blocked_reason: Literal['CURRENT_CYCLE_REQUIRED', 'PLAY_NOT_STARTED', 'RAID_INACTIVE', 'CHARACTER_UNUSABLE',
                                  'PARTICIPATION_CONFIRMATION_REQUIRED'] | None
 
 

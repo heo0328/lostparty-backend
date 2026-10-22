@@ -11,6 +11,7 @@ import subprocess
 import tempfile
 
 ROOTS={
+    'LegacyChoices':'Output_contract3_get__v2_me_raid-rooms_room_id_continuation-choices',
     **{n:n for n in ('CommonContext','CommonSettingsCommand','CommonSettingsAck','GlobalMembershipCommand','GlobalMembershipAck')},
     'TargetSettingsInput':'Input_contract3_put__v2_raid-rooms_room_id_settings',
     'TargetSettingsOutput':'Output_contract3_get__v2_me_raid-rooms_room_id_settings',

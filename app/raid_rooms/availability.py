@@ -88,6 +88,9 @@ def get(principal, rid=None):
 def put(principal, key, data, rid=None):
     operation = 'recruitment-personal-time' if rid is None else 'recruitment-room-time'
     ticket, replay = reserve(principal, operation, key, {'room_id': str(rid) if rid else None, 'body': data})
+    if replay and rid is not None:
+        from app.raid_rooms.v1_compat import enabled
+        if enabled():return replay
     if replay:
         # Current auth and room membership still required; never recheck resource CAS
         # or overwrite a newer submission with this historical success.
@@ -102,6 +105,9 @@ def put(principal, key, data, rid=None):
     try:
         with session() as db, db.begin():
             uid = authorize(db, principal, write=True)
+            if rid is not None:
+                from app.raid_rooms.v1_compat import reject_write
+                reject_write(db)
             verified(db, uid)
             personal = db.get(PersonalAvailability, uid)
             version = personal.revision if personal else 1
@@ -159,3 +165,8 @@ def put(principal, key, data, rid=None):
     except Exception:
         release(ticket)
         raise
+
+
+# Two-cycle storage never falls back to the legacy global room graph.
+from app.raid_rooms.v1_compat import read as _current_read
+get=_current_read('availability')(get)

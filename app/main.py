@@ -86,8 +86,7 @@ async def no_store(request, call_next):
 
 
 _original_openapi = app.openapi
-def openapi():
-    schema = _original_openapi()
+def _decorate_openapi(schema):
     for path, operations in schema["paths"].items():
         if path.startswith(("/v1/", "/v2/")):
             for operation in operations.values():
@@ -351,6 +350,7 @@ def openapi():
         'bounds':{'request_bytes':32768,'page_max':50,'cursor_max':2048,'candidate_ticks_max':2016},
     }
     return schema
+def openapi():return _decorate_openapi(_original_openapi())
 app.openapi = openapi
 
 class HealthResponse(BaseModel):
@@ -377,3 +377,43 @@ def health():
     except (psycopg.Error, RuntimeError):
         return JSONResponse(status_code=503, content={"status": "unhealthy", "database": "unavailable"})
     return {"status": "ok", "database": "ok"}
+
+
+@asynccontextmanager
+async def two_cycle_lifespan(application):
+    from app.core.database import session
+    from app.raid_rooms.readiness import require_two_cycle_active
+    from app.raid_rooms.cycle_worker import process_due
+    with session() as db:require_two_cycle_active(db)
+    tasks=[asyncio.create_task(run()),asyncio.create_task(run_ownership_worker()),
+        asyncio.create_task(run_recruitment_worker(process_due))]
+    try:yield
+    finally:
+        for task in tasks:task.cancel()
+        for task in tasks:
+            with suppress(asyncio.CancelledError):await task
+
+
+def create_two_cycle_app():
+    """Explicit ASGI factory for a verified 0029 cutover; default app stays 0023.
+
+    Preparation only: this factory never migrates DBs or edits deployment config.
+    """
+    from app.raid_rooms.cycle_router import router as cycle_router
+    from fastapi.routing import APIRoute
+    from fastapi import APIRouter
+    result=FastAPI(title="LostParty API",docs_url=None,redoc_url=None,openapi_url=None,lifespan=two_cycle_lifespan)
+    legacy=APIRouter()
+    legacy.routes.extend(route for route in app.routes if isinstance(route,APIRoute))
+    result.include_router(legacy)
+    result.include_router(cycle_router)
+    register(result);result.middleware('http')(no_store)
+    generate=result.openapi
+    def schema():
+        value=_decorate_openapi(generate())
+        value['x-recruitment-policy'].update(schema_revision='0029_cycle_outcomes',policy_version='two-cycle-contract-4',
+            continuation='Explicit N opening only; 06:00 N becomes C with the same UUID/leader/assignments/consents; no automatic new N',
+            compatibility='v1 current-C read adapters; unsafe room writes replay original ACK then CLIENT_UPGRADE_REQUIRED; personal availability/manual completion remain safe')
+        return value
+    result.openapi=schema
+    return result

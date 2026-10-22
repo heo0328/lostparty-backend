@@ -6806,7 +6806,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Manual ledger completion/correction only for actual C after Wednesday 10:00 KST. Original successful ACK replays before current ownership, cycle or eligibility checks."
       }
     },
     "/v1/me/usage-limits": {
@@ -38057,6 +38058,7 @@
                 "type": "string",
                 "enum": [
                   "CURRENT_CYCLE_REQUIRED",
+                  "PLAY_NOT_STARTED",
                   "RAID_INACTIVE",
                   "CHARACTER_UNUSABLE",
                   "PARTICIPATION_CONFIRMATION_REQUIRED"

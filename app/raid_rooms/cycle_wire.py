@@ -477,6 +477,25 @@ class BCardItem(BaseModel):
     round_id: UUID
 
 
+class State5(StrEnum):
+    selected = 'selected'
+    blocked = 'blocked'
+
+
+class BChoiceView(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    choice_id: UUID
+    revision: conint(ge=1, le=2147483647, strict=True)
+    item_id: UUID
+    raid_id: StrictStr
+    character_id: UUID
+    selected_role: SelectedRole
+    state: State5
+    blocked_reason: StrictStr | None
+
+
 class Source1(StrEnum):
     manual = 'manual'
     party = 'party'
@@ -522,7 +541,7 @@ class BEditAlternative(BaseModel):
     item_ids: list[UUID]
 
 
-class State5(StrEnum):
+class State6(StrEnum):
     eligible = 'eligible'
     blocked = 'blocked'
     unavailable = 'unavailable'
@@ -585,7 +604,7 @@ class BItemDuration(BaseModel):
     duration_minutes: conint(ge=10, le=1440, multiple_of=5, strict=True) | None
 
 
-class State6(StrEnum):
+class State7(StrEnum):
     current = 'current'
     ended = 'ended'
 
@@ -623,14 +642,14 @@ class BPermission(BaseModel):
     next_change_at: AwareDatetime | None
 
 
-class State7(StrEnum):
+class State8(StrEnum):
     unrestricted = 'unrestricted'
     missing = 'missing'
     below = 'below'
     meets = 'meets'
 
 
-class State8(StrEnum):
+class State9(StrEnum):
     pending = 'pending'
     applied = 'applied'
     obsolete = 'obsolete'
@@ -651,7 +670,7 @@ class BResumeProposal(BaseModel):
     revision: conint(ge=1, le=2147483647, strict=True)
     proposal_plan_revision: conint(ge=1, le=2147483647, strict=True)
     created_from_plan_revision: conint(ge=1, le=2147483647, strict=True)
-    state: State8
+    state: State9
     target_round_ids: list[UUID]
     eligible_count: StrictInt
     accepted_count: StrictInt
@@ -667,7 +686,7 @@ class TargetState2(StrEnum):
     review_required = 'review_required'
 
 
-class State9(StrEnum):
+class State10(StrEnum):
     pending = 'pending'
     applied = 'applied'
     cancelled = 'cancelled'
@@ -680,7 +699,7 @@ class Mode1(StrEnum):
     coordinated = 'coordinated'
 
 
-class State10(StrEnum):
+class State11(StrEnum):
     unconfirmed = 'unconfirmed'
     confirmed = 'confirmed'
     finished = 'finished'
@@ -697,7 +716,7 @@ class BSession(BaseModel):
     round_ids: list[UUID]
     required: StrictBool
     mode: Mode1
-    state: State10
+    state: State11
     schedule_revision: conint(ge=1, le=2147483647, strict=True)
     starts_at: AwareDatetime | None
     ends_at: AwareDatetime | None
@@ -711,7 +730,7 @@ class BSession(BaseModel):
     permissions: dict[str, BPermission]
 
 
-class State11(StrEnum):
+class State12(StrEnum):
     active = 'active'
     ended = 'ended'
 
@@ -742,7 +761,7 @@ class BAppRaidRoomsScheduleOutputParticipation(BaseModel):
     revision: conint(ge=1, le=2147483647, strict=True)
     session_id: UUID
     assignment_ids: list[UUID]
-    state: State11
+    state: State12
     required: StrictBool
     participating: StrictBool
     confirmation_state: ConfirmationState
@@ -942,7 +961,7 @@ class BAnalysisIssue(BaseModel):
     severity: Severity
 
 
-class State12(StrEnum):
+class State13(StrEnum):
     ready = 'ready'
     unavailable = 'unavailable'
 
@@ -1070,7 +1089,7 @@ class BResponse(BaseModel):
     response_set: ResponseSet
 
 
-class State13(StrEnum):
+class State14(StrEnum):
     planned = 'planned'
     released = 'released'
 
@@ -1087,7 +1106,7 @@ class BSegment(BaseModel):
     duration_minutes: StrictInt | None
     duration_source: StrictStr
     policy_version: StrictStr
-    state: State13
+    state: State14
     released_reason: StrictStr | None
 
 
@@ -1540,6 +1559,18 @@ class BCard(BaseModel):
     target_generation: Version
 
 
+class BChoices(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    room_id: UUID
+    membership_revision: conint(ge=1, le=2147483647, strict=True)
+    revision: conint(ge=1, le=2147483647, strict=True)
+    items: list[BChoiceView]
+    permissions: dict[str, BPermission]
+    target_cycle_key: StrictStr
+
+
 class BContext(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
@@ -1922,7 +1953,7 @@ class BMembership(BaseModel):
     membership_id: UUID
     revision: conint(ge=1, le=2147483647, strict=True)
     room_id: UUID
-    state: State6
+    state: State7
     joined_at: AwareDatetime
     ended_at: AwareDatetime | None
     assignments: list[BOwnAssignment]
@@ -1961,7 +1992,7 @@ class BPowerComparison(BaseModel):
         constr(pattern=r'^[0-9]+(?:\.[0-9]+)?$', max_length=32, strict=True) | None
     )
     actual: constr(pattern=r'^[0-9]+(?:\.[0-9]+)?$', max_length=32, strict=True) | None
-    state: State7
+    state: State8
     source: Literal['flutter_analysis']
     trust: Literal['client_submitted']
     current_summary_version: conint(ge=1, le=2147483647, strict=True)
@@ -2076,7 +2107,7 @@ class BAnonymousBusy(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    state: State12
+    state: State13
     revision: conint(ge=1, le=2147483647, strict=True)
     intervals: list[BBusy]
 
@@ -2237,6 +2268,14 @@ class OutputContract3GetV2MeRaidRoomsRoomIdAvailabilitySubmission(BaseModel):
     )
     scope: Scope
     data: BSubmissionOut
+
+
+class OutputContract3GetV2MeRaidRoomsRoomIdContinuationChoices(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    scope: Scope
+    data: BChoices
 
 
 class OutputContract3GetV2MeRaidRoomsRoomIdSettings(BaseModel):
@@ -2465,7 +2504,7 @@ class BEligibility(BaseModel):
         extra='forbid',
     )
     evaluated_at: AwareDatetime
-    state: State5
+    state: State6
     reasons: list[StrictStr]
     comparison: BPowerComparison | None
 
@@ -2478,7 +2517,7 @@ class BScheduleProposal(BaseModel):
     revision: conint(ge=1, le=2147483647, strict=True)
     proposal_plan_revision: conint(ge=1, le=2147483647, strict=True)
     created_from_plan_revision: conint(ge=1, le=2147483647, strict=True)
-    state: State9
+    state: State10
     target_session_ids: list[UUID]
     base_schedules: list[BBaseSchedule]
     proposed_sessions: list[BSegmentSet]
@@ -2662,6 +2701,9 @@ class OutputContract3GetV2RaidRoomApplicationsApplicationId(BaseModel):
 class W2Models(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
+    )
+    LegacyChoices: OutputContract3GetV2MeRaidRoomsRoomIdContinuationChoices | None = (
+        None
     )
     CommonContext_1: CommonContext | None = Field(None, alias='CommonContext')
     CommonSettingsCommand_1: CommonSettingsCommand | None = Field(

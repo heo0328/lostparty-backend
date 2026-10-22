@@ -185,3 +185,12 @@ def require_active(db):
 def require_legacy_worker(db):
     # The old worker may not auto-enrol or expire proposals on the shadow head.
     require(list(db.scalars(text('SELECT version_num FROM public.alembic_version')))==['0023_recruitment_resume'])
+
+
+def require_cycle_worker(db):
+    require(list(db.scalars(text('SELECT version_num FROM public.alembic_version')))==['0029_cycle_outcomes'])
+
+
+def require_two_cycle_active(db):
+    require_cycle_worker(db)
+    require_ready(db,integrated=True)

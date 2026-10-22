@@ -365,3 +365,20 @@ def leave_global(room_id:UUID,principal:Principal,key:Key,data:inputs.GlobalMemb
 @router.post('/raid-rooms/{room_id}/end',response_model=s.GlobalMembershipAck,responses=errors)
 def end_global(room_id:UUID,principal:Principal,key:Key,data:inputs.GlobalMembership):
     return cycle_common.execute(principal,room_id,key,data,'end')[1]
+
+
+@router.get('/me/raid-rooms/{room_id}/continuation-choices',response_model=s.OutputContract3GetV2MeRaidRoomsRoomIdContinuationChoices,responses=errors)
+def legacy_choices(room_id:UUID,principal:Principal,target_cycle_key:str):
+    from app.raid_rooms import cycle_legacy
+    return cycle_legacy.get(principal,room_id,target_cycle_key)
+
+
+# Preserve the operation IDs already consumed from the fixed contract.
+for _route in router.routes:
+    _method=next(iter(_route.methods)).lower()
+    _name=_method+'__'+_route.path.strip('/').replace('/','_').replace('{','').replace('}','')
+    _route.operation_id=_name if _route.path.rsplit('/',1)[-1] in (
+        'continuation-context','continuation-participations','continuation-declines',
+        'participation-cancellation-context','participation-cancellations','opening-context',
+        'recruitment-openings','leadership-transfer-context','leadership-transfers') else 'contract3_'+_name
+    if _route.path.endswith('/manual-completion'):_route.operation_id='contract3_manual_completion'

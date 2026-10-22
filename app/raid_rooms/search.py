@@ -115,3 +115,8 @@ def search(principal,data):
         rooms=list(db.scalars(query.order_by(primary,Room.created_at.desc(),Room.id.desc()).offset(offset).limit(data.limit+1)))
         token=cursor_encode(dict(scope=binding,revision=revision,offset=offset+data.limit)) if len(rooms)>data.limit else None
         return dict(items=[card(db,r,uid,stamp) for r in rooms[:data.limit]],directory_revision=head.revision,filter_scope_digest=scope,next_cursor=token,evaluated_at=stamp)
+
+
+# Two-cycle storage never falls back to the legacy global room graph.
+from app.raid_rooms.v1_compat import read as _current_read
+search=_current_read('search')(search)

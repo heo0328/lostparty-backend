@@ -120,3 +120,8 @@ def confirm(principal,sid,key,data):
             if current>=session.ends_at:fail('SCHEDULE_ENDED')
         return 200,result(key,room,actor,stamp),final
     return base.execute(principal,'confirm',key,dict(session_id=str(sid),body=data.model_dump(mode='json')),run)
+
+
+# Two-cycle storage never falls back to the legacy global room graph.
+from app.raid_rooms.v1_compat import read as _current_read
+candidates=_current_read('candidates')(candidates)

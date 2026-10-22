@@ -134,7 +134,7 @@ def snapshot(db, uid, stamp):
             personal.append(profiles.output(stored, uid, a, c))
             # The existing 50-ID limit is a V1 request limit. Project all current
             # activities from this same snapshot, never call separate HTTP batches.
-            entries.extend(weekly.entry(stored, a, c, raid, key, cycle, weekly_rows.get((cid, raid.raid_id))) for raid in catalog.raids)
+            entries.extend(weekly.entry(stored, a, c, raid, key, cycle, weekly_rows.get((cid, raid.raid_id)),stamp) for raid in catalog.raids)
         bundles.append(dict(registration=registration, characters=character_list,
             representative=representative.value(r, a, configuration) if state == 'owned' else None,
             presentation=presentation.output(r, a, displays.get(a.id)) if state == 'owned' else None,

@@ -112,3 +112,8 @@ def get(principal,rid,command,round_id=None):
         value['context_token']=seal(dict(actor=str(uid),room=str(rid),command=command,round=str(round_id) if round_id else None,
             cycle=value['cycle_key'],expires_at=expires.isoformat(),digest=binding))
         return value
+
+
+# Two-cycle storage never falls back to the legacy global room graph.
+from app.raid_rooms.v1_compat import read as _current_read
+get=_current_read('upgrade')(get)

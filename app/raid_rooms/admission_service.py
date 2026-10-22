@@ -71,6 +71,8 @@ def execute(principal,operation,key,payload,run):
     try:
         with session() as db,db.begin():
             uid=authorize(db,principal,write=True)
+            from app.raid_rooms.v1_compat import reject_write
+            reject_write(db)
             stamp=now(db);cycle=raids.cycle(stamp)
             outcome=run(db,uid,stamp)
             status,result=outcome[:2]
@@ -336,3 +338,11 @@ def finish_application(principal,aid,key,data,*,withdrawing=False):
             if current>=app.expires_at:fail('APPLICATION_NOT_PENDING')
         return 200,dict(command_id=key,room_id=row.id,application_id=aid,revision=app.revision,state=app.state,executed_at=stamp),final
     return execute(principal,'withdraw' if withdrawing else 'reject',key,dict(application_id=str(aid),body=jsonable_encoder(data)),run)
+
+
+# Two-cycle storage never falls back to the legacy global room graph.
+from app.raid_rooms.v1_compat import read as _current_read
+creation_context=_current_read('upgrade')(creation_context)
+admission_context=_current_read('upgrade')(admission_context)
+plan=_current_read('plan')(plan)
+application=_current_read('application')(application)

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Compare the committed contract with FastAPI's schema in the Compose API."""
+import argparse
 import difflib
 import json
 from pathlib import Path
@@ -11,12 +12,17 @@ def main():
     root = Path(__file__).resolve().parents[1]
     # JSON is a valid YAML subset; keep the contract in this format so the host
     # needs only the standard library, with no YAML package installation.
-    expected = json.loads((root / "openapi/openapi.yaml").read_text())
-    output = subprocess.check_output(
-        ["docker", "compose", "exec", "-T", "api", "python", "-c",
-         "import json; from app.main import app; print(json.dumps(app.openapi()))"],
-        cwd=root, text=True,
-    )
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--profile',choices=('legacy','two-cycle'),default='legacy')
+    parser.add_argument('--container')
+    parser.add_argument('--docker',default='docker')
+    args=parser.parse_args()
+    contract='two-cycle.openapi.yaml' if args.profile=='two-cycle' else 'openapi.yaml'
+    expected=json.loads((root/'openapi'/contract).read_text())
+    expression='create_two_cycle_app().openapi()' if args.profile=='two-cycle' else 'app.openapi()'
+    command=[args.docker,'exec',args.container] if args.container else [args.docker,'compose','exec','-T','api']
+    output=subprocess.check_output(command+['python','-c',
+        'import json; from app.main import app,create_two_cycle_app; print(json.dumps('+expression+'))'],cwd=root,text=True)
     actual = json.loads(output)
     if expected != actual:
         render = lambda value: json.dumps(value, indent=2, sort_keys=True).splitlines(True)

@@ -6,7 +6,8 @@ bootstrap, key access, session reservation or command/dedup writes occur here.
 """
 from collections import defaultdict
 from datetime import datetime, time, timedelta
-from sqlalchemy import select, and_, or_
+from sqlalchemy import select, and_, or_,text
+import uuid
 from app.game_accounts.models import Account, Character, Registration, NameClaim
 from app.game_accounts.support import fail
 from app.groups.models import Group, GroupMembership
@@ -116,6 +117,33 @@ def participation(state, lease, candidates, by_id, account, character, visible_g
         can_view_detail=bool(member_current and visible))
 
 
+def cycle_evidence(db,uid,ids,keys):
+    revision=list(db.scalars(text('SELECT version_num FROM public.alembic_version')))
+    if revision!=['0029_cycle_outcomes']:return None,set()
+    from app.raid_rooms.cycle_models import CycleAssignment,CycleMember,RoomCycle,CycleRound
+    from app.raid_rooms.cycle_lifecycle_models import CycleDecision
+    query=select(Assignment,Item,RoomCycle,CycleMember,CycleRound).join(CycleAssignment,CycleAssignment.assignment_id==Assignment.id).join(
+        RoomCycle,RoomCycle.id==CycleAssignment.cycle_id).join(CycleMember,CycleMember.id==CycleAssignment.cycle_member_id).join(
+        CycleRound,CycleRound.round_id==Assignment.round_id).join(Item,Item.id==Assignment.item_id).join(Member,Member.id==Assignment.membership_id).where(
+        Assignment.user_id==uid,Assignment.character_id.in_(ids),RoomCycle.cycle_key.in_(keys),
+        CycleAssignment.generation==RoomCycle.generation,Member.ended_at.is_(None))
+    confirmed=set();actual=set()
+    for a,item,row,cm,rd in db.execute(query):
+        identity=(a.character_id,item.raid_id,row.cycle_key)
+        if row.provenance=='explicit' and rd.is_current and cm.state in ('participating','completed','stopped'):
+            actual.add(identity)
+            if row.state=='open' and cm.state=='participating':confirmed.add(a.id)
+    declines=set()
+    for decision,row in db.execute(select(CycleDecision,RoomCycle).join(RoomCycle,RoomCycle.id==CycleDecision.cycle_id).where(
+            CycleDecision.user_id==uid,CycleDecision.kind=='declined',RoomCycle.cycle_key.in_(keys),CycleDecision.generation==RoomCycle.generation)):
+        evidence=decision.evidence
+        try:cid=uuid.UUID(evidence['character_id'])
+        except (KeyError,ValueError,TypeError):continue
+        if cid in ids:
+            declines.update((cid,raid,row.cycle_key) for raid in evidence.get('raid_ids',[]) if (cid,raid,row.cycle_key) not in actual)
+    return confirmed,declines
+
+
 def summary(principal, data):
     with snapshot(principal) as (db, uid, stamp):
         catalog = raids.catalog()
@@ -132,6 +160,7 @@ def summary(principal, data):
         choices = {(r.character_id, r.raid_id, r.target_cycle): r for r in db.scalars(select(ContinuationChoice).where(
             ContinuationChoice.user_id == uid, ContinuationChoice.character_id.in_(data.character_ids),
             ContinuationChoice.target_cycle.in_(keys), ContinuationChoice.ended_at.is_(None)))}
+        confirmed,declines=cycle_evidence(db,uid,data.character_ids,keys)
         visible_groups = set(db.scalars(select(GroupMembership.group_id).join(Group, Group.id == GroupMembership.group_id)
             .where(GroupMembership.user_id == uid, GroupMembership.ended_at.is_(None), Group.ended_at.is_(None))))
         entries = []
@@ -143,6 +172,7 @@ def summary(principal, data):
                     key = (cid, raid.raid_id, target.key)
                     state, lease, choice = states.get(key), leases.get(key), choices.get(key)
                     part = participation(state, lease, by_key[key], by_id, account, character, visible_groups)
+                    if part and confirmed is not None and part['assignment_id'] not in confirmed:part['status']='review_required'
                     sources = []
                     if state is not None:
                         if state.manual_completed_at is not None:
@@ -159,7 +189,7 @@ def summary(principal, data):
                     clear_reason = playable_reason or (None if state and state.manual_completed_at else 'MANUAL_COMPLETION_NOT_FOUND')
                     continuation = ('confirmed' if part and part['status'] == 'confirmed' else
                                     'blocked' if part or (choice and choice.state == 'blocked') else
-                                    'legacy_intent' if choice else 'not_selected')
+                                    'declined' if key in declines else 'legacy_intent' if choice else 'not_selected')
                     view_reason = None if part and part['can_view_detail'] else 'ROOM_MEMBERSHIP_REQUIRED' if part else 'NOT_PARTICIPATING'
                     time_change = target.playable_from if playable_reason else raids.cycle(stamp).ends_at
                     entries.append(dict(character_id=cid, raid_id=raid.raid_id, target_cycle_key=target.key.isoformat(),

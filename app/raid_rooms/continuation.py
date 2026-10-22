@@ -258,3 +258,8 @@ def process_room(rid):
                         authorized_effective_at=effective,search_floor_at=effective+timedelta(minutes=30))
                     db.add(event)
                 event.state='blocked';event.blocked_reason=error.code;event.processed_at=stamp
+
+
+# Two-cycle storage never falls back to the legacy global room graph.
+from app.raid_rooms.v1_compat import read as _current_read
+get=_current_read('choices')(get)
