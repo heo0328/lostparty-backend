@@ -1947,3 +1947,12 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 공식Issue본문/전체103댓글에서새요구없음을확인후 [전체104번째 Backend · 후보 구현/개발반영·Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6340348412) 게시. 실제전체댓글순번104·Backend작성측·후보구현/실행인계단계·전문일치를재조회했다. 다음Flutter후보UI·정렬/더보기·선택/token stale검증연결, Backend재현차이대응이다. 동일정책/시험반복회신을요구하지않았다.
 - 인계에실행168경로OpenAPI/소비SHA·계약추가범위·error.details초안누락보완·고유29시험/단일성능측정한계·개발105표449행지문/설정보존·실제인증/기기미확인을명시했다. Issue본문상단현재상태/다음담당을갱신하고이전원문/OPEN을보존했다.
 - NEXT_WORK/기능지도/추적표/개발안내에SHA/게시링크를반영했다. 이후행은문서게시기록만이며기능/DB/서버시험재실행없음. 문서링크/diff확인후후행commit/push·원격확인한다.
+
+
+## 2026-10-22 — #13 Flutter105 F3 후보 연결 결과 수신
+
+- 사용자 회신확인 요청으로7f39cb5/feat/raid-recruitment에서 규칙/현재문서·Git/공식Issue본문/전체105댓글을 읽었다. 미커밋 사용자변경없음. [전체105번째 Flutter · F3 후보 연결/자동검증](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6340688138)은 feature/raid-recruitment-scheduling/f6287404afd6273218255037c6cb4e419fb0313e commit/push·원격SHA일치 보고다.
+- Backend0afd879/168경로 소비로 후보GET/2열UI·역할출처/기존카탈로그·정밀Decimal/회원조각페이지·token검색/페이지밖선택/stale복구·회원/환경/세션격리를 연결하고 F3 코드/자동검증 구간을 마감했다고 보고했다. 오류details는 기존 공통parser로 수용해 신규전용parser 불필요 보고다. 후보부족/계약대기는 해소됐다.
+- 신규후보21+기존F3관련27 고유48mock PASS/변경Dart7파일분석0 보고다. 최초fixture 컴파일실패 보완 후 최종47묶음/추가1건 포함 후보21재실행/기존27재사용으로 단일48실행이 아니다. 기존114/Backend29와 합산하지 않으며 Backend에서 Flutter 소스/시험/원격SHA를 독립 재현하지 않았다.
+- 새Backend수정/추가시험·동일정책재채택 요청없음. 다음Flutter F4 N특례/주차별탈퇴·승계/위임·편성/관리, F5일정/예약·F6완료/통합 미구현이다. 실제정상인증HTTP·실회원/기기/성능·운영인수는미확인/사용자 전체기능섹션 인수로남긴다.
+- NEXT_WORK/기능지도/추적표만갱신하고 변화없는수신확인댓글/본문반복갱신은하지않았다. 서버/DB/코드변경·기능시험재실행없음. 문서링크/diff확인후수신기록을로컬커밋/미push로보존한다.
