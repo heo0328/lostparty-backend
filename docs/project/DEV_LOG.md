@@ -1886,3 +1886,12 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 구간 `3c26cdb6fd8a17c0bf0d7afaa3bbd93d1f4f3176` commit/push·실제 원격 SHA 일치 확인·[전체92번째 Backend · W5 실제 전환/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6332478347) 게시 완료. 다음 담당은 Flutter 메타/summary·주차 선택/계정 캐시 격리·정상 로그인 확인이며 Backend는 차이 대응이다.
 - 공식 Issue 본문/최신91댓글을 게시 직전 재조회하고 변화 없음을 확인했다. 연결 GitHub 조회 도구와 기존 쓰기403 이력을 고려한 인증 gh CLI로 결과1회/본문 상단을 게시했다. 재조회에서 본문 제외 실제 전체92번째·Backend 측·W5 실제 전환/Flutter 읽기 인계 단계를 확인했고 댓글 전문·본문 원문 보존/OPEN을 검증했다.
 - 실제 계약/소스·서버 준비를 원격 게시한 뒤 필요한 Flutter 메타/summary·선택기/계정 캐시 격리·정상 로그인 확인만 요청했다. Backend 공개 HTTP/서비스 읽기와 실제 인증 HTTP/Flutter·실회원 쓰기/기기·운영 미확인을 구분했다. 게시 기록 문서 후속만 별도 검증/commit·push하며 서버/DB를 재실행하지 않는다.
+
+
+## 2026-10-22 — #13 Flutter F1/F2·F3 결과 수신 및 후보 조회 출처 확인
+
+- AGENTS/협업/NEXT_WORK/AI_CONTEXT·R0 기술경계4판/두주차 계약4판·실행 OpenAPI·Git/Issue 본문과 전체97댓글 확인. feat/raid-recruitment/6143350에서 사용자 미커밋 변경 없음. Flutter 로컬 소스 접근/수정 없음.
+- 전체94 F1 af9e9d3·95 F2 e42f780·97 F3 독립 구간121fad3의 commit/push 및 mocked HTTP 고유123/95/114PASS 보고를 수신했다. 보고를 독립 재검증/실제 인증 HTTP·Backend DB/기기 인수로 확대하지 않는다.
+- 전체96번째 Flutter 요청의 그룹원 전체 활동 캐릭터 후보 출처는 현재 공개계약에 없다. filter-context는 ref/alias/display, 그룹원 목록은 대표표시, projection은 명시 room_ids/실제T 참가 캐릭터이며 본인 characters API는 타인 후보 대안이 아니다. 코드/DTO/경로 및 검색의 회원별 assignment/character 결합·페이지 전 적용, 현재 그룹 권한/context 재검사와 캐릭터 소유/활동 변경이 context 입력에 없음을 정적 확인했다.
+- 기존 R0 기술경계4판 §3.1의 전체 roster 비공개와 요청 범위 차이를 확인했다. 다음 Backend는 단일 그룹 후보의 공개필드/전투력 출처·소유/활동·context/ref/페이지 무효화·회원별 묶음/레벨/안정 정렬 계약 보완 후 Flutter 대조이며 새 API/권한을 미합의 구현하지 않는다. F3 후보 부분만 대기/독립 구현 유지, F4~F6·실회원/기기 인수는 미완료다.
+- [전체98번째 Backend · 결과 확인/후보 출처 점검](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6337703638)에 같은 Issue 회신. 게시 직전 전체97댓글/중복 없음을 확인하고 게시 후 전체98번째 순번·본문 일치를 재조회했다. 새 기능/경로/계약SHA·서버/DB/키 변경과 동일 자동시험/기기시험 요청 없음. Issue OPEN 유지. NEXT_WORK/AI_CONTEXT/추적표를 갱신하고 문서 diff/링크 확인 후 로컬 커밋한다.

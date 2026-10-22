@@ -2,6 +2,12 @@
 
 2026-10-22 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13).
 
+## 최신 수신·다음 Backend — 그룹 캐릭터 필터 후보 계약
+
+[94번째 Flutter F1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6335276652)·[95번째 F2](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6335852339)·[97번째 F3 독립 구간](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6337065372)의 commit/push·mocked HTTP 검증 보고를 수신했다. F3 전체/정상 인증 HTTP·실회원·기기 인수는 미완료다. [96번째 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6336402066)의 그룹원 전체 활동 캐릭터 후보 출처는 현재 계약/구현에 없음을 확인하고 [전체98번째 Backend · 후보 출처 점검](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6337703638)에 회신했다.
+
+다음 담당 **Backend**: 단일 선택 그룹의 후보 조회 계약을 작성한다. 기존 R0 기술경계4판 §3.1의 타인 전체 roster 비공개와 달라지는 공개 범위를 명시하고, 소유/활동·대표표시/캐릭터/역할별 전투력 nullable/출처·context/ref 결합·회원별 묶음/레벨 정렬/안정 cursor·권한/소유/활동 변경 무효화를 정의해 Flutter와 대조한다. 합의 전 새 API/권한을 구현하지 않는다. 기존 방 projection·본인 캐릭터 API는 전체 후보 대안이 아니며 페이지 후 로컬 필터로 대체하지 않는다. Flutter는 후보 부분만 계약 대기, 독립 구현 결과 유지다. 새 소비 SHA/경로는 아직 없고 현재 계약/서버는 유지한다. 아래 정상 로그인/기기 확인은 별도 남은 인수이며 이번에 반복 요청하지 않았다. 아래 인계 당시 차이 대응 순서보다 이 후보 계약 보완을 우선한다.
+
 [개발 DB/API 실제 전환](../ISSUE_13_W5_LIVE_CUTOVER.md) 완료: 구 API/모든 내부 worker 정지·다른 DB 연결0 확인 후 새 checkpoint, 제한 app LOGIN의0023→0029·82업무표413행/기록시각·키4개/시퀀스 보존, API8000 factory167경로/새 worker 기동·호스트 health200. 두 프로필 OpenAPI 전체 객체 일치·공개/인증 거절 HTTP8검사·기존2회원 서비스 읽기·기동 후 전체 테이블 불변 확인. 신규 DTO/계약/DDL 변경 없음. 지난주7건의 현재 C/N 검색 제외는 사용자 확인한 정상 동작이며 원본/관계는 유지한다.
 
 착수/인계 시 AGENTS → 협업 → 이 문서 → AI_CONTEXT → 계약3판/4판/ACK와 Issue 본문/최신 댓글·Git을 확인한다. 계약0.4.1/policy4·canonical SHA `fb4c7d065594a9a0e7e8288e5f73179f90b078b68ac4323d1aade5c7a63b42f1` 유지. 구간 `3c26cdb6fd8a17c0bf0d7afaa3bbd93d1f4f3176` commit/push·실제 원격 SHA 일치 확인·[전체92번째 Backend · W5 실제 전환/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6332478347) 게시 완료. 다음 담당은 Flutter 메타/summary·주차 선택/계정 캐시 격리·정상 로그인 확인이며 Backend는 차이 대응이다.
