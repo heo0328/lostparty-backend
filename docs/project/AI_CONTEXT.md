@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+[전체103번째 Backend · 선택 재검증 보완2판](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6339459589) 전문 게시·실제 댓글순번/본문 일치 확인 완료. 보완2443641 로컬·미push, 다음 Backend 구현이며 동일 수용 회신 대기는 없다.
+
 현재(2026-10-22 보완 답변): [Flutter102](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6339166701) 제한공개/계열null·기존카탈로그/nullable·페이지/token 수용. [선택 재검증 보완2판](../ISSUE_13_GROUP_CHARACTER_CANDIDATES_ADDENDUM.md)은 첫 페이지 새token+기존선택 검색1회·전체후보 사전검증/200빈결과 유효·거절시보류를 명시한다. 다음 Backend 구현/격리검증·게시/소비 인계이며 동일 계약 재채택 대기 없음. 신규 API/서버는 미구현/미변경, 아래는 이전 기록이다.
 
 현재(2026-10-22): [그룹 활동 캐릭터 후보 계약 초안1](../ISSUE_13_GROUP_CHARACTER_CANDIDATES_DRAFT.md)·별도 검토 OpenAPI/예시 작성 및 wire 검증 완료. [전체101번째 Backend 초안 전문 게시](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6338175041) 완료(f1b198f 로컬·미push). Flutter100 기존mock27건 재검증 수신, 다음 Flutter 공개범위/nullable·정렬/커서/token 검색 연결과 직업계열 원천 대조. API/서버 미구현·기존 계약/DB 불변. 구현은 합의 후이며 상세 다음 실행은 [NEXT_WORK](NEXT_WORK.md). 아래는 수신/전환 이력이다.

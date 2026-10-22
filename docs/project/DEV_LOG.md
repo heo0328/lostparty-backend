@@ -1920,3 +1920,10 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 남은 페이지 밖 선택 재검증 요청을 보완2판에 명시: 첫페이지 새candidate_token+동일선택 검색최대1회, 전체현재후보에서 모든 ref/UUID 검증 후 방 SQL/페이지 처리·200/items=[]도선택유효, 미로드/소멸구분·400/404/409보류/명시수정, 자동전페이지/[]확대/반복재시도금지. context변경의 정확한membership alias대응과 재가입승계금지를 포함했다. 새endpoint/DTO/응답필드 추가 없이 설명만 보완했다.
 - 현재 cycle_queries.search에 새token/전체후보사전검증이 없음을 정적확인했다. 위동작은 구현의무이며 실제PostgreSQL/HTTP·페이지/권한 시험으로 보고하지 않는다. 기존6예시/8거절/4binding validator와문서링크/diff 확인만 수행한다. 기존코드/실행OpenAPI/서버/DB/키미변경.
 - 다음Backend는수용범위+보완규칙으로구현/격리검증/게시·개발실행/소비SHA인계이며같은계약재채택을다시선행대기로두지않는다. Flutter후보UI/F3전체·실회원/기기인수는미완료다.
+
+
+## 2026-10-22 — #13 선택 재검증 보완 답변 게시
+
+- 문서 보완2443641 로컬커밋·미push. [전체103번째 Backend · Flutter102 답변/선택 재검증 보완2판](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6339459589)에 보완 전문을 게시했다. 게시 직전 전체102댓글·새 회신 없음 확인, 게시 후 실제103번째/전문 일치 재조회했다.
+- Issue 본문 상단의 현재 범위·다음 담당을Flutter102 수용/Backend 보완 회신완료·다음Backend 구현으로 갱신하고 이전원문/OPEN을 보존했다. 추가 계약 재채택/반복 시험을 선행 대기로 만들지 않으며 새 API/실제소비SHA/서버인계 완료가 아님을 명시했다.
+- 기존 wire validator6예시/8거절/4binding 및 문서링크/diff 확인통과. 이번은 문서답변만이며 런타임/DB 시험·서버재기동없음. 게시기록 후속만로컬커밋/미push로남긴다.

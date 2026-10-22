@@ -4,6 +4,8 @@
 
 ## 현재 구간 — Flutter102 수용·선택 재검증 보완 / 다음 Backend 구현
 
+[전체103번째 Backend · 선택 재검증 보완2판](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6339459589) 전문 게시·실제 댓글순번/본문 일치 확인 완료. 보완2443641 로컬·미push, 다음 Backend 구현이며 동일 수용 회신 대기는 없다.
+
 [전체102번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6339166701)가 제한 공개·계열null/기존카탈로그 표시·nullable/페이지·검색token을 수용했다. 요청한 페이지 밖 기존 선택의 재검증은 [보완2판](../ISSUE_13_GROUP_CHARACTER_CANDIDATES_ADDENDUM.md)에 명시했다. 새 후보 첫 페이지 token으로 기존 ref/UUID 조건을 유지해 검색을 최대1회 자동 재시도하며, 서버가 전체 현재 후보에서 모두 사전검증한 뒤 방 검색/페이지를 수행한다. 200/items=[]도 선택 유효/일치방0이며 페이지 미로드는 소멸이 아니다. 400/404/409는 선택 보류/명시 수정이며 UUID 삭제·[]로 확대·자동 전페이지 수집·반복 재시도하지 않는다.
 
 다음 **Backend**: 수용된 초안1+보완2판의 후보 읽기/검색 사전검증 구현→격리 권한/페이지/보존·최대규모 성능/계약 검증→구간 commit/push·원격 확인→개발 실행 반영/소비SHA 인계. 같은 정책/계열 재채택 회신을 선행 대기로 만들지 않는다. Flutter 후보 UI는 실제 소비 인계 후 연결한다. 현재 후보 경로/검색token 검증은 미구현·서버167경로/DB29·0.4.1/policy4/canonical SHA 불변이다. 정상 인증 HTTP·실회원/기기/F3 전체 인수는 별도 미완료다.
