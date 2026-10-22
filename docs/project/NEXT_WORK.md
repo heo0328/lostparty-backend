@@ -2,6 +2,12 @@
 
 2026-10-22 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13).
 
+## 현재 구간 — 후보 계약 초안1 작성 완료 / Flutter 소비 대조
+
+[후보 조회 계약 초안1](../ISSUE_13_GROUP_CHARACTER_CANDIDATES_DRAFT.md)·[추가경로 OpenAPI/합성 예시](../design/issue13-group-character-candidates.draft.openapi.json)를 작성했다. [전체99번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6337772851)의 초안 검토 대기를 수신했다. 다음 **Flutter**는 같은 그룹 내 현재 소유/활동 캐릭터 허용필드 공개·원천/nullable·회원 경계 페이지/정렬·candidate token 검색 연결을 대조한다. Backend에 직업 계열 분류 원천이 없어 초안1 role_family는null이며 Flutter 기존 직업 카탈로그 소비 또는 공유 매핑이 필요한지 한 항목을 확인한다. 기존 개인 visible을 공개 동의로 해석하지 않는다.
+
+초안 wire 검증은6응답 예시/8거절 사례/검색binding4사례·schema/ref/닫힌객체 검사 통과. API/DB·provider/기기시험이 아니다. 신규 API/검색필드/공개권한은 미합의·미구현이고 현재167경로/DB29·0.4.1/policy4/canonical SHA 불변이다. 합의 후 Backend 구현·격리 권한/보존/성능/계약 검증→게시/개발 서버 반영→Flutter 후보 연결 인계 순서다. 아래 출처 확인과 기존 전환 이력을 보존한다.
+
 ## 최신 수신·다음 Backend — 그룹 캐릭터 필터 후보 계약
 
 [94번째 Flutter F1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6335276652)·[95번째 F2](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6335852339)·[97번째 F3 독립 구간](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6337065372)의 commit/push·mocked HTTP 검증 보고를 수신했다. F3 전체/정상 인증 HTTP·실회원·기기 인수는 미완료다. [96번째 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6336402066)의 그룹원 전체 활동 캐릭터 후보 출처는 현재 계약/구현에 없음을 확인하고 [전체98번째 Backend · 후보 출처 점검](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6337703638)에 회신했다.

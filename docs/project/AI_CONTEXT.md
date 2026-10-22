@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+현재(2026-10-22): [그룹 활동 캐릭터 후보 계약 초안1](../ISSUE_13_GROUP_CHARACTER_CANDIDATES_DRAFT.md)·별도 검토 OpenAPI/예시 작성 및 wire 검증 완료. Flutter99 초안 검토 접수, 다음 Flutter 공개범위/nullable·정렬/커서/token 검색 연결과 직업계열 원천 대조. API/서버 미구현·기존 계약/DB 불변. 구현은 합의 후이며 상세 다음 실행은 [NEXT_WORK](NEXT_WORK.md). 아래는 수신/전환 이력이다.
+
 최신 수신(2026-10-22): #13 Flutter F1/F2·F3 독립 구간 게시/자동 검증 보고 수신, 실제 HTTP/기기 인수·F3 전체 미완료. [96번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6336402066)의 그룹원 전체 활동 캐릭터 후보 API는 현재 계약/구현에 없으며 [98번째 Backend 확인](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6337703638) 회신 완료. 다음 Backend는 기존 타인 전체 roster 비공개 경계와 공개 범위 차이를 명시한 후보 조회 계약·권한/context/정렬/페이지 보완 후 Flutter 대조다. 새 API/서버 변경 없음. [NEXT_WORK](NEXT_WORK.md) 기준이며 아래 전환/인계 이력을 보존한다.
 
 현재(2026-10-22 개발 전환 완료): [실제 DB/API 전환](../ISSUE_13_W5_LIVE_CUTOVER.md)에서 구 API/worker 정지·새 checkpoint 후 개발 DB0029/새 factory167경로·API8000/새 worker를 기동했다.82업무표413행/기록시각·키4개·시퀀스/기존 volume·환경 보존, 호스트 health200·양 프로필 계약 전체 객체 일치·공개/인증 거절 HTTP8검사·서비스 읽기/worker 후 불변 통과. 지난주7건 현재 C/N 검색 제외는 정상이며 원본/persistent 관계 유지다. 구간 `3c26cdb6fd8a17c0bf0d7afaa3bbd93d1f4f3176` commit/push·원격 일치·[전체92번째 Backend · W5 실제 전환/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6332478347) 게시 완료. 다음은 Flutter 메타/summary·주차 선택/계정 캐시 격리와 정상 로그인 확인이다. 실제 인증 HTTP/provider/회원 쓰기·기기/운영 인수는 미완료다. 재기동은 compose.two-cycle.yaml을 함께 사용한다. [NEXT_WORK](NEXT_WORK.md)·[DEV_LOG](DEV_LOG.md) 기준이며 아래는 이전 기록이다.

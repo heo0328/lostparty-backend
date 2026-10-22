@@ -1895,3 +1895,12 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 전체96번째 Flutter 요청의 그룹원 전체 활동 캐릭터 후보 출처는 현재 공개계약에 없다. filter-context는 ref/alias/display, 그룹원 목록은 대표표시, projection은 명시 room_ids/실제T 참가 캐릭터이며 본인 characters API는 타인 후보 대안이 아니다. 코드/DTO/경로 및 검색의 회원별 assignment/character 결합·페이지 전 적용, 현재 그룹 권한/context 재검사와 캐릭터 소유/활동 변경이 context 입력에 없음을 정적 확인했다.
 - 기존 R0 기술경계4판 §3.1의 전체 roster 비공개와 요청 범위 차이를 확인했다. 다음 Backend는 단일 그룹 후보의 공개필드/전투력 출처·소유/활동·context/ref/페이지 무효화·회원별 묶음/레벨/안정 정렬 계약 보완 후 Flutter 대조이며 새 API/권한을 미합의 구현하지 않는다. F3 후보 부분만 대기/독립 구현 유지, F4~F6·실회원/기기 인수는 미완료다.
 - [전체98번째 Backend · 결과 확인/후보 출처 점검](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6337703638)에 같은 Issue 회신. 게시 직전 전체97댓글/중복 없음을 확인하고 게시 후 전체98번째 순번·본문 일치를 재조회했다. 새 기능/경로/계약SHA·서버/DB/키 변경과 동일 자동시험/기기시험 요청 없음. Issue OPEN 유지. NEXT_WORK/AI_CONTEXT/추적표를 갱신하고 문서 diff/링크 확인 후 로컬 커밋한다.
+
+
+## 2026-10-22 — #13 그룹 활동 캐릭터 후보 계약 초안1
+
+- 사용자 보완 작업 지시로 기존 feat/raid-recruitment/9c7ab9f에서 진행. 규칙·현재 문서/계약/코드·공식 Issue 본문/전체99댓글을 확인했고 Flutter99는 공개범위 확대 합의가 아닌 초안 대조 접수임을 확인했다. 사용자 미커밋 변경 없음.
+- 현재 같은 그룹의 정상 회원끼리 현재 인증 소유/활동/NameClaim·생명주기 유효 캐릭터 허용필드만 제공하는 후보 읽기 경로를 제안했다. 등록/원정대ID·원장/장비/개인설정 원문 비노출, 기존 private visible은 공개동의로 재해석하지 않는다. 기존 전체 roster 비공개와 달라지는 범위는 명시 합의 전 미구현으로 유지한다.
+- 회원별 묶음/수치 레벨 DESC·UUID 동률/빈후보·페이지 경계 continuation, actor/session/context/전체 후보세대 token·서명 cursor, 그룹 접근 상실/후보 소유·활동 변경 무효화와 optional 검색 token 확장·기존 소비 호환을 구체화했다. 역할별 전투력은 현재 소유수명의 저장 성공 출처/관찰시각·client_submitted/누락·비공개를 분리한다. 서버 직업 계열 매핑 원천은 없어 role_family=null/Flutter 기존 카탈로그 또는 원천 공유를 명시 질문으로 남겼다.
+- 검토용 OpenAPI1경로/닫힌 DTO·합성 예시와 재현 validator를 추가했다. python3 docs/design/validate_issue13_group_character_candidates.py: schema/ref/required 검사·6응답 예시/8거절 사례/검색binding4사례 통과. git diff --check 통과. 실제 API/권한/DB 페이지·provider/기기 검증을 수행한 것이 아니다. 기존 실행 계약2개·canonical SHA·코드/서버/DB/키 미변경.
+- 다음 Flutter 초안 공개범위/nullable·페이지·검색 token/계열 원천 소비 대조 후 Backend 구현/격리 검증/게시·개발 서버 인계다. 이번은 구현 전 계약 검토이며 기존 인계의 정상 인증/기기 시험을 반복 요청하지 않는다.

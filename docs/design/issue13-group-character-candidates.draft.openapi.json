@@ -1,0 +1,961 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Issue13 group activity character candidates — DRAFT1, not deployed",
+    "version": "0.1.0-draft"
+  },
+  "x-status": "proposal-not-implemented",
+  "x-baseline-contract": "0.4.1 / two-cycle-contract-4",
+  "x-search-addition": {
+    "path": "/v2/raid-rooms/search",
+    "method": "post",
+    "optional-request-property": "group_character_candidates_token",
+    "binding-schema": {
+      "$ref": "#/components/schemas/SearchCandidateBinding"
+    },
+    "description": "See companion Markdown for semantics; canonical search schema is unchanged until agreement."
+  },
+  "paths": {
+    "/v2/groups/{group_id}/raid-room-character-candidates": {
+      "get": {
+        "operationId": "draft_group_raid_room_character_candidates",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "filter_context_token",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Read-only scoped candidate page; draft, not deployed",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CandidatePage"
+                },
+                "examples": {
+                  "single_member": {
+                    "value": {
+                      "group_id": "11111111-1111-4111-8111-111111111111",
+                      "filter_context_token": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                      "scope_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                      "candidate_token": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                      "evaluated_at": "2026-10-22T01:00:00Z",
+                      "groups": [
+                        {
+                          "member_ref": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                          "alias": {
+                            "group_id": "11111111-1111-4111-8111-111111111111",
+                            "group_membership_id": "22222222-2222-4222-8222-222222222222"
+                          },
+                          "display": {
+                            "server_name": "synthetic-server",
+                            "character_name": "synthetic-representative",
+                            "class_name": null
+                          },
+                          "continues_from_previous": false,
+                          "continues_on_next": false,
+                          "characters": [
+                            {
+                              "character_id": "33333333-3333-4333-8333-333333333333",
+                              "server_name": "synthetic-server",
+                              "character_name": "synthetic-character",
+                              "class_name": "synthetic-class",
+                              "role_family": null,
+                              "item_level": "1700.00",
+                              "item_level_source": "stored_character_summary",
+                              "summary_fetched_at": "2026-10-22T00:00:00Z",
+                              "ownership_revision": 1,
+                              "lifecycle_revision": 1,
+                              "ownership_state": "owned",
+                              "activity_state": "selected",
+                              "lifecycle_state": "active",
+                              "dealer": {
+                                "value": "123456.78",
+                                "source": "stored_role_success",
+                                "trust": "client_submitted",
+                                "observed_at": "2026-10-22T00:00:00Z",
+                                "saved_at": "2026-10-22T00:01:00Z",
+                                "power_revision": 2,
+                                "integrity_status": "clean"
+                              },
+                              "support": {
+                                "value": null,
+                                "source": "unavailable",
+                                "trust": null,
+                                "observed_at": null,
+                                "saved_at": null,
+                                "power_revision": null,
+                                "integrity_status": null
+                              }
+                            }
+                          ]
+                        }
+                      ],
+                      "next_cursor": null
+                    }
+                  },
+                  "zero_candidates": {
+                    "value": {
+                      "group_id": "11111111-1111-4111-8111-111111111111",
+                      "filter_context_token": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                      "scope_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                      "candidate_token": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                      "evaluated_at": "2026-10-22T01:00:00Z",
+                      "groups": [
+                        {
+                          "member_ref": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                          "alias": {
+                            "group_id": "11111111-1111-4111-8111-111111111111",
+                            "group_membership_id": "22222222-2222-4222-8222-222222222222"
+                          },
+                          "display": {
+                            "server_name": "synthetic-server",
+                            "character_name": "synthetic-representative",
+                            "class_name": null
+                          },
+                          "continues_from_previous": false,
+                          "continues_on_next": false,
+                          "characters": []
+                        }
+                      ],
+                      "next_cursor": null
+                    }
+                  },
+                  "split_first": {
+                    "value": {
+                      "group_id": "11111111-1111-4111-8111-111111111111",
+                      "filter_context_token": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                      "scope_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                      "candidate_token": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                      "evaluated_at": "2026-10-22T01:00:00Z",
+                      "groups": [
+                        {
+                          "member_ref": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                          "alias": {
+                            "group_id": "11111111-1111-4111-8111-111111111111",
+                            "group_membership_id": "22222222-2222-4222-8222-222222222222"
+                          },
+                          "display": {
+                            "server_name": "synthetic-server",
+                            "character_name": "synthetic-representative",
+                            "class_name": null
+                          },
+                          "continues_from_previous": false,
+                          "continues_on_next": true,
+                          "characters": [
+                            {
+                              "character_id": "33333333-3333-4333-8333-333333333333",
+                              "server_name": "synthetic-server",
+                              "character_name": "synthetic-character",
+                              "class_name": "synthetic-class",
+                              "role_family": null,
+                              "item_level": "1700.00",
+                              "item_level_source": "stored_character_summary",
+                              "summary_fetched_at": "2026-10-22T00:00:00Z",
+                              "ownership_revision": 1,
+                              "lifecycle_revision": 1,
+                              "ownership_state": "owned",
+                              "activity_state": "selected",
+                              "lifecycle_state": "active",
+                              "dealer": {
+                                "value": "123456.78",
+                                "source": "stored_role_success",
+                                "trust": "client_submitted",
+                                "observed_at": "2026-10-22T00:00:00Z",
+                                "saved_at": "2026-10-22T00:01:00Z",
+                                "power_revision": 2,
+                                "integrity_status": "clean"
+                              },
+                              "support": {
+                                "value": null,
+                                "source": "unavailable",
+                                "trust": null,
+                                "observed_at": null,
+                                "saved_at": null,
+                                "power_revision": null,
+                                "integrity_status": null
+                              }
+                            }
+                          ]
+                        }
+                      ],
+                      "next_cursor": "synthetic-opaque-cursor-not-valid-for-a-server"
+                    }
+                  },
+                  "split_last": {
+                    "value": {
+                      "group_id": "11111111-1111-4111-8111-111111111111",
+                      "filter_context_token": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                      "scope_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                      "candidate_token": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                      "evaluated_at": "2026-10-22T01:00:00Z",
+                      "groups": [
+                        {
+                          "member_ref": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                          "alias": {
+                            "group_id": "11111111-1111-4111-8111-111111111111",
+                            "group_membership_id": "22222222-2222-4222-8222-222222222222"
+                          },
+                          "display": {
+                            "server_name": "synthetic-server",
+                            "character_name": "synthetic-representative",
+                            "class_name": null
+                          },
+                          "continues_from_previous": true,
+                          "continues_on_next": false,
+                          "characters": [
+                            {
+                              "character_id": "33333333-3333-4333-8333-333333333333",
+                              "server_name": "synthetic-server",
+                              "character_name": "synthetic-character",
+                              "class_name": "synthetic-class",
+                              "role_family": null,
+                              "item_level": "1700.00",
+                              "item_level_source": "stored_character_summary",
+                              "summary_fetched_at": "2026-10-22T00:00:00Z",
+                              "ownership_revision": 1,
+                              "lifecycle_revision": 1,
+                              "ownership_state": "owned",
+                              "activity_state": "selected",
+                              "lifecycle_state": "active",
+                              "dealer": {
+                                "value": "123456.78",
+                                "source": "stored_role_success",
+                                "trust": "client_submitted",
+                                "observed_at": "2026-10-22T00:00:00Z",
+                                "saved_at": "2026-10-22T00:01:00Z",
+                                "power_revision": 2,
+                                "integrity_status": "clean"
+                              },
+                              "support": {
+                                "value": null,
+                                "source": "unavailable",
+                                "trust": null,
+                                "observed_at": null,
+                                "saved_at": null,
+                                "power_revision": null,
+                                "integrity_status": null
+                              }
+                            }
+                          ]
+                        }
+                      ],
+                      "next_cursor": null
+                    }
+                  },
+                  "unknown_values": {
+                    "value": {
+                      "group_id": "11111111-1111-4111-8111-111111111111",
+                      "filter_context_token": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                      "scope_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                      "candidate_token": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                      "evaluated_at": "2026-10-22T01:00:00Z",
+                      "groups": [
+                        {
+                          "member_ref": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                          "alias": {
+                            "group_id": "11111111-1111-4111-8111-111111111111",
+                            "group_membership_id": "22222222-2222-4222-8222-222222222222"
+                          },
+                          "display": {
+                            "server_name": "synthetic-server",
+                            "character_name": "synthetic-representative",
+                            "class_name": null
+                          },
+                          "continues_from_previous": false,
+                          "continues_on_next": false,
+                          "characters": [
+                            {
+                              "character_id": "33333333-3333-4333-8333-333333333333",
+                              "server_name": "synthetic-server",
+                              "character_name": "synthetic-character",
+                              "class_name": "synthetic-class",
+                              "role_family": null,
+                              "item_level": null,
+                              "item_level_source": "unavailable",
+                              "summary_fetched_at": "2026-10-22T00:00:00Z",
+                              "ownership_revision": 1,
+                              "lifecycle_revision": 1,
+                              "ownership_state": "owned",
+                              "activity_state": "selected",
+                              "lifecycle_state": "active",
+                              "dealer": {
+                                "value": null,
+                                "source": "unavailable",
+                                "trust": null,
+                                "observed_at": null,
+                                "saved_at": null,
+                                "power_revision": null,
+                                "integrity_status": null
+                              },
+                              "support": {
+                                "value": null,
+                                "source": "unavailable",
+                                "trust": null,
+                                "observed_at": null,
+                                "saved_at": null,
+                                "power_revision": null,
+                                "integrity_status": null
+                              }
+                            }
+                          ]
+                        }
+                      ],
+                      "next_cursor": null
+                    }
+                  },
+                  "not_disclosed": {
+                    "value": {
+                      "group_id": "11111111-1111-4111-8111-111111111111",
+                      "filter_context_token": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                      "scope_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                      "candidate_token": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                      "evaluated_at": "2026-10-22T01:00:00Z",
+                      "groups": [
+                        {
+                          "member_ref": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                          "alias": {
+                            "group_id": "11111111-1111-4111-8111-111111111111",
+                            "group_membership_id": "22222222-2222-4222-8222-222222222222"
+                          },
+                          "display": {
+                            "server_name": "synthetic-server",
+                            "character_name": "synthetic-representative",
+                            "class_name": null
+                          },
+                          "continues_from_previous": false,
+                          "continues_on_next": false,
+                          "characters": [
+                            {
+                              "character_id": "33333333-3333-4333-8333-333333333333",
+                              "server_name": "synthetic-server",
+                              "character_name": "synthetic-character",
+                              "class_name": "synthetic-class",
+                              "role_family": null,
+                              "item_level": "1700.00",
+                              "item_level_source": "stored_character_summary",
+                              "summary_fetched_at": "2026-10-22T00:00:00Z",
+                              "ownership_revision": 1,
+                              "lifecycle_revision": 1,
+                              "ownership_state": "owned",
+                              "activity_state": "selected",
+                              "lifecycle_state": "active",
+                              "dealer": {
+                                "value": null,
+                                "source": "not_disclosed",
+                                "trust": null,
+                                "observed_at": null,
+                                "saved_at": null,
+                                "power_revision": null,
+                                "integrity_status": null
+                              },
+                              "support": {
+                                "value": null,
+                                "source": "unavailable",
+                                "trust": null,
+                                "observed_at": null,
+                                "saved_at": null,
+                                "power_revision": null,
+                                "integrity_status": null
+                              }
+                            }
+                          ]
+                        }
+                      ],
+                      "next_cursor": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Existing error envelope; candidate-specific codes are defined in the draft",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Existing error envelope; candidate-specific codes are defined in the draft",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Existing error envelope; candidate-specific codes are defined in the draft",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Existing error envelope; candidate-specific codes are defined in the draft",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Existing error envelope; candidate-specific codes are defined in the draft",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Existing error envelope; candidate-specific codes are defined in the draft",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Existing error envelope; candidate-specific codes are defined in the draft",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "CandidateAlias": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "group_id",
+          "group_membership_id"
+        ],
+        "properties": {
+          "group_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "group_membership_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "CandidateDisplay": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "server_name",
+          "character_name",
+          "class_name"
+        ],
+        "properties": {
+          "server_name": {
+            "type": "string"
+          },
+          "character_name": {
+            "type": "string"
+          },
+          "class_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "CandidatePower": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "value",
+              "source",
+              "trust",
+              "observed_at",
+              "saved_at",
+              "power_revision",
+              "integrity_status"
+            ],
+            "properties": {
+              "value": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64,
+                "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+              },
+              "source": {
+                "const": "stored_role_success"
+              },
+              "trust": {
+                "const": "client_submitted"
+              },
+              "observed_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "saved_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "power_revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "integrity_status": {
+                "enum": [
+                  "clean",
+                  "review",
+                  "error",
+                  "unavailable"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "value",
+              "source",
+              "trust",
+              "observed_at",
+              "saved_at",
+              "power_revision",
+              "integrity_status"
+            ],
+            "properties": {
+              "value": {
+                "type": "null"
+              },
+              "source": {
+                "enum": [
+                  "unavailable",
+                  "not_disclosed"
+                ]
+              },
+              "trust": {
+                "type": "null"
+              },
+              "observed_at": {
+                "type": "null"
+              },
+              "saved_at": {
+                "type": "null"
+              },
+              "power_revision": {
+                "type": "null"
+              },
+              "integrity_status": {
+                "type": "null"
+              }
+            }
+          }
+        ]
+      },
+      "CandidateCharacter": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "character_id",
+          "server_name",
+          "character_name",
+          "class_name",
+          "role_family",
+          "item_level",
+          "item_level_source",
+          "summary_fetched_at",
+          "ownership_revision",
+          "lifecycle_revision",
+          "ownership_state",
+          "activity_state",
+          "lifecycle_state",
+          "dealer",
+          "support"
+        ],
+        "properties": {
+          "character_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "server_name": {
+            "type": "string"
+          },
+          "character_name": {
+            "type": "string"
+          },
+          "class_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "role_family": {
+            "type": "null",
+            "description": "Draft1: no established server class-family source. Pending Flutter mapping decision."
+          },
+          "item_level": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64,
+                "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "item_level_source": {
+            "enum": [
+              "stored_character_summary",
+              "unavailable"
+            ]
+          },
+          "summary_fetched_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ownership_revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "lifecycle_revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "ownership_state": {
+            "const": "owned"
+          },
+          "activity_state": {
+            "const": "selected"
+          },
+          "lifecycle_state": {
+            "const": "active"
+          },
+          "dealer": {
+            "$ref": "#/components/schemas/CandidatePower"
+          },
+          "support": {
+            "$ref": "#/components/schemas/CandidatePower"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "item_level": {
+                  "type": "null"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "item_level_source": {
+                  "const": "unavailable"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "item_level_source": {
+                  "const": "stored_character_summary"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "CandidateMemberChunk": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "member_ref",
+          "alias",
+          "display",
+          "continues_from_previous",
+          "continues_on_next",
+          "characters"
+        ],
+        "properties": {
+          "member_ref": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "alias": {
+            "$ref": "#/components/schemas/CandidateAlias"
+          },
+          "display": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CandidateDisplay"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "continues_from_previous": {
+            "type": "boolean"
+          },
+          "continues_on_next": {
+            "type": "boolean"
+          },
+          "characters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CandidateCharacter"
+            },
+            "maxItems": 100
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "characters": {
+                  "maxItems": 0
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "continues_from_previous": {
+                  "const": false
+                },
+                "continues_on_next": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      },
+      "CandidatePage": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "group_id",
+          "filter_context_token",
+          "scope_digest",
+          "candidate_token",
+          "evaluated_at",
+          "groups",
+          "next_cursor"
+        ],
+        "properties": {
+          "group_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "filter_context_token": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "scope_digest": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "candidate_token": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CandidateMemberChunk"
+            },
+            "maxItems": 100
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "SearchCandidateBinding": {
+        "type": "object",
+        "description": "Addition to the existing search request; not a complete search body. Absent preserves legacy behavior; explicit null is invalid.",
+        "properties": {
+          "group_character_candidates_token": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "minLength": 64,
+            "maxLength": 64
+          }
+        },
+        "additionalProperties": false
+      },
+      "GameErrorOut": {
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/GameErrorDetail"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "title": "GameErrorOut"
+      },
+      "GameErrorDetail": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Request Id"
+          },
+          "retry_after_seconds": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retry After Seconds"
+          },
+          "retry_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retry At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "code",
+          "message",
+          "request_id"
+        ],
+        "title": "GameErrorDetail"
+      }
+    }
+  }
+}
