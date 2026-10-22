@@ -23,29 +23,28 @@ def role(db,uid,row):
     return 'leader' if own.id==commands.leadership(db,row)['leader_cycle_member_id'] else 'member'
 
 
-def card(db,room,row,uid,stamp):
+def card(db,room,row,uid,stamp,loaded=None):
     settings=row.settings_snapshot
-    leader=commands.leadership(db,row)
+    leader=loaded['leadership'] if loaded is not None else commands.leadership(db,row)
     leader_assignment=db.scalar(select(Assignment).join(CycleAssignment,CycleAssignment.assignment_id==Assignment.id).where(
-        CycleAssignment.cycle_member_id==leader['leader_cycle_member_id']).order_by(Assignment.id).limit(1))
-    mine=db.scalar(select(Member.id).where(Member.room_id==room.id,Member.user_id==uid,Member.ended_at.is_(None))) if uid else None
-    groups=schedule.groups(db,row)
-    starts=[s.starts_at for s in schedule.sessions(db,row) if s.state=='confirmed']
-    items=[dict(item_id=i.id,raid_id=i.raid_id,difficulty_id=r.difficulty_id,game_party_size=r.game_party_size,round_id=r.id)
+        CycleAssignment.cycle_member_id==leader['leader_cycle_member_id']).order_by(Assignment.id).limit(1)) if loaded is None else None
+    groups=loaded['groups'] if loaded is not None else schedule.groups(db,row)
+    starts=loaded['starts'] if loaded is not None else [s.starts_at for s in schedule.sessions(db,row) if s.state=='confirmed']
+    items=loaded['items'] if loaded is not None else [dict(item_id=i.id,raid_id=i.raid_id,difficulty_id=r.difficulty_id,game_party_size=r.game_party_size,round_id=r.id)
         for i,r in admission.rounds(db,row)]
     return dict(room_id=room.id,revision=room.revision,title=room.title,scope=room.scope,group_id=room.group_id,
         admission_mode=settings['admission_mode'],experience_level=settings['experience_level'],app_capacity=settings['app_capacity'],
-        app_member_count=admission.member_count(db,row),state='ended' if room.ended_at else 'active',items=items,game_items=items,
-        leader_display=leader_assignment.display if leader_assignment else None,created_at=room.created_at,
+        app_member_count=loaded['count'] if loaded is not None else admission.member_count(db,row),state='ended' if room.ended_at else 'active',items=items,game_items=items,
+        leader_display=loaded['leader_display'] if loaded is not None else leader_assignment.display if leader_assignment else None,created_at=room.created_at,
         phase='ended' if room.ended_at else cycles.target(stamp,row.cycle_key.isoformat()).phase,restricted=row.state=='review_required',
         schedule_summary=dict(mode=groups[0].planning_mode if len(groups)==1 else 'multiple' if groups else 'unscheduled',
             occurrence_mode=groups[0].occurrence_mode if len(groups)==1 else None,confirmed_starts_at=sorted(starts),
             earliest_start=min(starts) if starts else None,latest_start=max(starts) if starts else None),
         combat_requirement=settings['combat_requirement'],continuation_enabled=settings['continuation_enabled'],
         permissions=dict(view_detail=permission(None if uid else 'AUTH_REQUIRED'),
-            view_plan=permission(None if role(db,uid,row)!='none' else 'WEEKLY_PARTICIPANT_REQUIRED')),
-        leadership=leader,my_target_role=role(db,uid,row),target_cycle_key=row.cycle_key.isoformat(),
-        target_state=commands.target_state(db,row),target_revision=row.revision,
+            view_plan=permission(None if (loaded['role'] if loaded is not None else role(db,uid,row))!='none' else 'WEEKLY_PARTICIPANT_REQUIRED')),
+        leadership=leader,my_target_role=loaded['role'] if loaded is not None else role(db,uid,row),target_cycle_key=row.cycle_key.isoformat(),
+        target_state=loaded['state'] if loaded is not None else commands.target_state(db,row),target_revision=row.revision,
         room_cycle_id=row.id,target_generation=row.generation)
 
 
@@ -132,6 +131,8 @@ def search(principal,data):
         primary=count.asc() if sort['direction']=='ascending' else count.desc()
         rows=list(db.execute(query.order_by(primary,Room.created_at.desc(),Room.id.desc()).offset(offset).limit(data.limit+1)))
         token=cursor_encode(dict(scope=binding,revision=revision,offset=offset+data.limit)) if len(rows)>data.limit else None
-        result=dict(scope=scope(stamp,target.key.isoformat()),data=dict(items=[card(db,r,t,uid,stamp) for r,t in rows[:data.limit]],
+        from app.raid_rooms.cycle_card_batch import load
+        loaded=load(db,[t for _,t in rows[:data.limit]],uid)
+        result=dict(scope=scope(stamp,target.key.isoformat()),data=dict(items=[card(db,r,t,uid,stamp,loaded[t.id]) for r,t in rows[:data.limit]],
             directory_revision=head,filter_scope_digest=context_digest,next_cursor=token,evaluated_at=stamp))
         return wire.OutputContract3PostV2RaidRoomsSearch.model_validate(result).model_dump(mode='json')

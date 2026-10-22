@@ -1813,3 +1813,32 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 구현 `8085e90877561c28c45eb7279929d790da0a7c5b` commit/push·실제 원격 SHA 확인·[전체89번째 Backend · W4-D 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6330758804) 게시 완료. 본문 제외 실제 전체 작성 순번89·Backend 작성 측·W4-D 단계를 재조회했다. Issue 본문 상단은 현재 W4-D 완료/다음 Backend W5이며 이전 원문/합의 이력 보존과 OPEN 유지를 확인했다.
 - NEXT_WORK/기능지도/작업계획/추적표/구간 기록에 구현 SHA·게시 링크·다음 Backend W5를 반영했다. 추가 제품 입력/동일 계약 회신 대기는 없다. 완료는 후보 소스·격리 자동 검증·전환 준비이며 실제 개발 서버/DB 전환·Flutter 적용/인수·W5 통합/성능은 미완료다.
 - 이 후속은 게시 기록만 변경하므로 DB/서버·기능 테스트 재실행 없이 문서 링크/diff 검증 후 별도 commit/push한다.
+
+
+## 2026-10-22 — #13 W5 통합·성능/전환 준비 착수
+
+- AGENTS/협업/NEXT_WORK/AI_CONTEXT·계약3판/4판/ACK와 Git/공식 Issue 본문·전체89댓글을 확인했다. 최신 W4-D 이후 새 요구/계약 변경·사용자 미커밋 변경은 없고 fff8806에서 같은 브랜치로 진행했다. GitHub 연결 도구로 조회했다.
+- [W5 기록](../ISSUE_13_W5_INTEGRATION.md): 검색 결과 페이지의 actual cycle/generation별 카드 자료를 요청 내부에서 배치 조회한다. 응답/계약·전역 캐시 추가 없이 기존 single-card와 대조한다. 50방/두 주차·그룹 페이지/공개 범위·최대8인·묶음/다중 세션·재개 세대·50캐릭터500summary의 SQL/rows/bytes/p50/p95/EXPLAIN을 측정한다.
+- 전용 tmpfs PostgreSQL·제한 LOGIN에서 비어 있지 않은0023→0029 원천/시각·review/원 ACK 보존 및 준비 factory 실제 JWT 생성/참가·회원 격리/disabled 차단을 검증한다. 예비29PASS/303.30초는 최종 통계와 중복 합산하지 않는다. 합성 로그인 throttle/그룹 한도·직렬화 준비 오류와 다른 cleanup thread가 SQL 계측에 섞이는 문제를 수정했다. 최종 회귀는 로그/종료 파일로 확인 중이다.
+- 실제 개발 환경은 읽기 전용으로 DB0023·실행 이미지114경로/factory 없음·healthy를 확인했다. 소스 기본116/준비167과 다른 것을 기록했다. 방7개/활성7·Assignment7개/활성0의 집계만 확인하고 원본 사용자 자료/키를 출력하지 않았다. `compose.two-cycle.yaml`은 API command만 바꾸는 override로 정적 비교했으며 DB volume/키 mount·security/ports/health는 보존한다. 실제 API/worker 정지·이행·재생성/서버 전환은 미실행이다.
+
+### W5 검증 재개용 임시 실행 위치 — 당시 중간 기록, 최종 종료/정리 아래 참조
+
+- 전용 runner `lostparty-w5-runner`, tmpfs DB `lostparty-w5-test-test-db-1`/network `lostparty-w5-test_default`이며 실제 개발 DB/서버와 다르다. 도구 Python은 `/tmp/w5-tools/bin/python`이다.
+- 전체18파일 회귀는 runner `/tmp/w5-final.log`·완료 시 `/tmp/w5-final.exit`, 파일 목록 `/tmp/w5-final-files.json`에 남긴다. 프로세스가 끝나기 전에 재실행/DB 정리를 하지 않는다. 현재 전체 회귀는 리더 표시 이력 조회를 제한하기 직전 소스로 실행 중이다.
+- 전체 회귀가 끝나면 최신 `cycle_card_batch.py`의 첫 표시만 읽기/반복 재개 반환 행 수 제한 시험까지 동기화하고 integration/performance/queries/cutover4파일을 최종 보강 실행한다(예상31사례). 보강의 최신6항목 수치로 `docs/design/issue13-w5-performance.json`과 W5 측정표를 교체한다. 전체/보강의 중복30사례를 합산하지 않고 실행 시점·구분을 기록한다.
+- 최종 검증 후 전용 컨테이너만 정리하고 문서 확정→구간 commit/push·원격 SHA 확인→Issue 본문/최신 댓글 재조회→같은 Issue 결과 게시/실제 댓글 순번 확인→게시 링크 문서 commit/push를 마친다. 실제 API/DB 이행·이미지 전환·Flutter 시험 요청은 아직 미실행이다. 임시 실행 경로는 완료 후 영구 근거로 사용하지 않는다.
+
+
+## 2026-10-22 — #13 W5 전체 회귀 통과·리더 이력 최종 보강
+
+- 전체18파일 **303PASS/1855.45초(30분55초)**·종료0을 확인했다. 원천/참가·생성/다음주/일정·완료/관리/전환/summary·weekly/기록시각을 함께 실행했다. 기존 BlockingPortal deprecation1건 외 이 실행의 미해결 실패 없음. 예비29PASS/303.30초와 중복 합산하지 않는다.
+- 리더 표시의 과거 재개 Assignment 전체를 읽을 수 있는 쿼리를 기존 단건과 같은 첫 표시만 읽도록 추가 보완했다. 위 전체 실행은 보완 직전 배치 소스 기준이다. 최신 소스를 동기화해 integration/performance/queries/cutover4파일31사례를 `/tmp/w5-recheck.log`·`/tmp/w5-recheck.exit`로 보강 실행 중이며 최신6개 측정 artifact는 `/tmp/w5-latest-reports`다. 중복30사례와 추가1사례/실행 시점을 구분한다.
+
+
+## 2026-10-22 — #13 W5 최종 보강·측정 확정/전용 시험 정리
+
+- 최신 리더 첫 표시/반복 재개 행 수 제한 소스의 관련4파일 **31PASS/334.92초**·종료0. 전체303PASS/1855.45초와 중복30을 제외한 **고유304PASS(신규7 포함)**다. 전체304 단일 실행이나 전체 회귀가 최종 제한 쿼리로 실행된 것으로 확대하지 않는다. 기존 BlockingPortal deprecation1건 외 최종 미해결 실패 없음. 예비29PASS/기타 통과는 중복 합산하지 않는다.
+- 최신6항목 측정/EXPLAIN을 artifact·W5 표에 교체했다.50카드 SELECT507→15·p50 C255.558→19.583ms/N250.186→18.616ms·bytes 동일, 그룹7페이지80→18. 단일8인 p9512.764→13.106ms 소폭 증가와 C p9595.465ms 변동,500summary의 근거조회10→13 추가 비용도 그대로 기록했다. DB23 구 이미지 전체/실제 서버·네트워크/provider/기기·SLO로 확대하지 않는다. 묶음 항목의 양측 공통 actor 조회2SELECT도 명시했다.
+- 고정84합성/CAS6쌍/공통ACK2흐름·canonical SHA 불변, 기본116/준비167경로 runtime 객체 전체 일치, 세 문서의 정식 OpenAPI 검증(openapi-spec-validator0.7.2), DTO 재생성 바이트 일치, 최종 AST/JSON/문서 링크/diff 통과. Compose override는 API command만 변경함을 정적 비교했다.
+- 로그/종료0을 확인하고 전용 lostparty-w5-runner·lostparty-w5-test tmpfs DB/network만 정리했다. 실제 개발 DB/API 이미지·서버/자료/키는 변경하지 않았다. 다음 Backend는 실제 자료 영향·복구/전환 대상/승인 범위 확정·실제 소비 가능한 구간 인계이며 Flutter 시험 요청/전체 인수는 아직 미실행이다. 구간 commit/push·원격 확인 후 같은 Issue에 결과를 게시한다.

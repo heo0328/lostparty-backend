@@ -1,0 +1,14 @@
+# Explicit cutover override, only after the target DB has been verified at 0029.
+# This file changes the API entrypoint; it never migrates or resets a database.
+# Preserve compose.yaml's database volume and read-only authentication key mount.
+services:
+  api:
+    command:
+      - uvicorn
+      - app.main:create_two_cycle_app
+      - --factory
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+      - --no-proxy-headers
