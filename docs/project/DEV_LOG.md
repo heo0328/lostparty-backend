@@ -2009,3 +2009,15 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - [전체112번째 Backend · F5 사전 참가 표시 구현/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6345290060)에 소비SHA·고정문서/OpenAPI·48고유PASS·실제개발반영/내용·설정보존·미확인을 게시했다. 재조회로 본문 제외 실제전체순번112·Backend작성측·구현/인계단계와 댓글전문 일치를 확인했다.
 - Issue 본문 상단 현재범위/상태/다음담당을 갱신하고 이전본문을 보존했다. 다음Flutter는 새opt-in DTO/표시·선택·변경거절/재조회·preview와 개방ACK뒤실제ID 연결 및 사용SHA/결과 회신이며 Backend는 재현차이 대응이다. 같은 수용/기존mock 반복요청 없음·F6/실회원/기기/성능/운영인수 미완료·OPEN 유지다.
 - NEXT_WORK/AI_CONTEXT/추적표/개발안내에 같은 SHA/댓글과 대기상태를 반영했다. 후행은 게시기록 문서이며 앱/실행 이미지/48검증 근거는 07c2b67 그대로다.
+
+
+## 2026-10-23 — #13 Flutter F5 결과·F6 정정/현재주 재개 표시 질문 확인 및 회신
+
+- 사용자 최신댓글 확인/회신 요청으로 00db6c8/feat/raid-recruitment에서 규칙·작업문서·Git(사용자 미커밋 변경 없음)·공식Issue 본문/전체115댓글을 조회했다. Flutter113 소비대조·114 F5사전표시·115 F6설계 질문을 구분했다.
+- [Flutter114](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6345894901)는 고정07c2b671 소비/1a909e7 commit/push·최종단일106mock PASS/분석0 보고다. 사전표시 코드/자동검증 완료로 기록하되 소스/시험·실회원HTTP/기기를 Backend가 독립 재현한 근거로 확대하지 않는다. Flutter115의 e910231/F5유지·F6설계 상태는 구현완료가 아니다.
+- cycle_outcomes.manual, cycle_resume.create/apply/respond/views, cycle_planning.make_session, 응답라우팅/plan 읽기·불변 CycleResume 모델/0029 trigger·고정OpenAPI를 대조했다. 검토파일 바이트가 소비07c2b671과 일치함을 확인했고 OpenAPI의실제request schema를 ref로해결해필드를확인했다. 기존테스트는 근거코드만 읽었고 신규실행/이전48PASS합산은 없다.
+- 정정은 manual PUT completed=false의 manual근거해제다. party원천·완료Assignment/Round·참가/예약복구 역명령은없으며 personal_completion의manual근거를해제해도 완료Assignment를복원하지않는다. C/수10시·CAS/원ACK는유지한다.
+- 재개 content는불변으로 schedule_groups(명시또는null에서retained해석)/round/member/assignment원천을저장하지만 views/BResumeProposal에일정원본/시각/표시revision이없다. 현행respond는proposal ID/cycle/gen·target/CM/proposal/proposal_plan CAS를검증하므로검증없음으로표현하지않았고, 표시snapshot/token입력은없음을확인했다. 현재plan/F5display로제안원본을추정하지않는다.
+- apply/make_session의현재target설정duration·실제대상/자격/정족수재검사와고정입력을분리하는표시/binding계약이필요하다. 2명이상create의제안자accept·null retained생성전확인과1명별도응답도범위에포함해야한다. 정확한wire/opt-in/토큰/호환성은다음Backend최소계약안→Flutter대조이며미합의구현은하지않았다.
+- [전체116번째 Backend · F6 정정범위 확답/현재주재개 표시보완 필요](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6355428620)에회신했다. 게시후전문일치·본문제외실제전체순번116·Backend작성측·계약확인단계를재조회했다. 다음Backend는재개표시계약안, Flutter는재개UI/응답만대기·수동v2/기존v1pending원경로·완료/미완료종료독립F6설계진행이다. 같은정책/시험반복요청없음·F6/실회원/기기/성능/운영인수미완료·OPEN유지다.
+- NEXT_WORK/AI_CONTEXT/추적표와Issue상단현재상태/다음담당을갱신하고이전본문을보존한다. 앱/API·실행OpenAPI/서버/DB/키·이미지변경/시험컨테이너기동없음. 이번문서기록은상시규칙으로로컬커밋/미push이며구현소비SHA는07c2b671그대로다.
