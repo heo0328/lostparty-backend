@@ -2144,3 +2144,11 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 독립명령/권한/완료조건의확대로프로젝트한이슈한주제규칙에따라 [#22 개인완료후탈퇴/승계](https://github.com/heo0328/lostparty-backend/issues/22), [#23 양T동일회원추방](https://github.com/heo0328/lostparty-backend/issues/23)을생성했다. 각본문에검토전문/원본131·128·130·상호링크/현재미합의·미구현/다음Flutter·Backend/명확한완료조건을기록하고실제본문전문일치/OPEN을재조회했다. 본문은댓글순번으로세지않는다. 기존feat/raid-recruitment브랜치유지/미완료이관이며원본전체기능완료·요구폐기가아니다.
 - [전체132번째 Backend · 원자적 참가관리 계약 제안/후속 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6361053787)에분리/계약검토결과·다음각후속Flutter소비대조·Backend합의구현/검증·게시/실행인계·현재기존170경로/DB0030/129유지를회신했다. 본문제외실제전체순번132/Backend작성측/계약제안단계·전문일치를재조회했다. 원본본문상단과상태문서에이관/기존통합인수추적을유지한다.
 - 관련5소스AST/라우트·170경로JSON/새4경로없음·멱등/감사CHECK제약·문서참조/diff정적검사PASS, 실행HTTP/DB/권한/경합/원자성시험아님/기존시험수합산없음이다. 문서로컬커밋/미push이며원격검토원문은각Issue본문에제공했다. 앱/API/실행OpenAPI·서버/DB/키·컨테이너기동/추가시험·dev/main통합/운영배포/데이터삭제없음, #13/#22/#23 OPEN이다.
+
+
+## 2026-10-23 — #22/#23 Flutter 첫 소비 회신 확인
+
+- 사용자답변확인지시로Git(87794f7/기존문서2커밋미push보존)·상태문서와원본13/후속22·23의본문/전체댓글을조회했다. 원본13은132개댓글그대로, [#22 전체1번째 Flutter · 방향수용/표시근거보완](https://github.com/heo0328/lostparty-backend/issues/22#issuecomment-6361482436), [#23 전체1번째 Flutter · 방향수용/source review범위확인](https://github.com/heo0328/lostparty-backend/issues/23#issuecomment-6361482811)이신규회신이다. Flutter673e7e46 기준정적소비대조이며코드/새시험·실서버/기기검증아니다.
+- 양방향수용/전용ACK·원pending/원ACK·원자성·다른T/완료보존은확인됐다. Backend의다음은22 최소캐릭터/raid/난이도/완료·취소표시를동일Context스냅샷/표시revision으로닫는보완과23 실제CM/양수gen source review의current_only 정리범위/권한·미확정거절/안내·구경로를명시하는것이다. 같은정책수용반복대기가아니며보완/구현/wire·예시·SHA·개발반영/DB여부인계담당은Backend다.
+- 마지막1인해산유지가사용자확정이고양T다인강제해산은요청하지않았다는정정을현재문서/이슈상태에반영한다. 과거당시미확정표현은이력으로보존한다. 제안1의participating한정을최종승인구현으로표시하지않으며구현/새실행검증은아직없다.
+- NEXT_WORK/AI_CONTEXT/추적표/제안문서의현재담당을갱신했다. 이번회신확인과상태정리에서새코드/API/서버/DB/키·시험·댓글게시·merge/배포없음이다. 상시규칙으로문서로컬커밋/미push, #13/#22/#23 OPEN·129기존인계는유지한다.

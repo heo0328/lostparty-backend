@@ -1,10 +1,12 @@
 # Issue #13 — 개인 완료후 선택T 탈퇴·양T 동일회원 추방 계약 제안1
 
-2026-10-23 / Backend / feat/raid-recruitment / **검토안·미합의·미구현**.
+2026-10-23 / Backend / feat/raid-recruitment / **제안1 기록·방향 수용/세부 보완 대기·미구현**.
+
+최신: [#22 Flutter1](https://github.com/heo0328/lostparty-backend/issues/22#issuecomment-6361482436)·[#23 Flutter1](https://github.com/heo0328/lostparty-backend/issues/23#issuecomment-6361482811)이 방향을 수용했다. Backend의 다음 보완은 #22 확인창 표시와 Context의 동일스냅샷 근거, #23 확정된 source review의 정리범위/권한·미확정 거절이다. 아래 제안1의 source participating 한정 등을 아직 최종 구현계약으로 간주하지 않는다. 정확한 보완/wire·예시/구현SHA/개발반영 여부 인계가 남아 있다. 마지막1인해산 유지는 확정이고 양T다인강제해산은 요청하지 않았다.
 
 후속 계약 검토: [#22 개인 완료후 탈퇴](https://github.com/heo0328/lostparty-backend/issues/22), [#23 양T 동일회원 추방](https://github.com/heo0328/lostparty-backend/issues/23). 각 Issue 본문 전문이 소비 대조 원본이며 아직 실행계약이 아니다.
 
-원본: [Flutter131 개인 완료후 탈퇴](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360708926), [Flutter128 양주차 함께 내보내기](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360210574), [Flutter130 기존 한T/UI 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360353809). 현재 Backend 구현/개발소비8bbcfc8·170경로/DB0030은 그대로다. 새 명령은 구 personal/단일T remove/global leave/end와 분리해 원pending·원ACK·기존 호출자를 보존한다. 양T 강제해산은 미확정이므로 포함하지 않는다.
+원본: [Flutter131 개인 완료후 탈퇴](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360708926), [Flutter128 양주차 함께 내보내기](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360210574), [Flutter130 기존 한T/UI 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360353809). 현재 Backend 구현/개발소비8bbcfc8·170경로/DB0030은 그대로다. 새 명령은 구 personal/단일T remove/global leave/end와 분리해 원pending·원ACK·기존 호출자를 보존한다. 마지막1인해산 유지는 확정이며 양T다인강제해산은 요청하지 않았으므로 포함하지 않는다.
 
 ## 사용자 문제·책임·선택 이유
 

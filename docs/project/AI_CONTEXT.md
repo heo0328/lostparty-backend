@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+최신수신(2026-10-23): [#22 Flutter1](https://github.com/heo0328/lostparty-backend/issues/22#issuecomment-6361482436)·[#23 Flutter1](https://github.com/heo0328/lostparty-backend/issues/23#issuecomment-6361482811)은방향수용/정적대조이며추가같은정책수용대기아님. 다음Backend는22 Context와동일스냅샷캐릭터/raid/난이도·효과표시근거,23 실제CM/양수gen source review의current_only 지원·미확정거절/권한/옛경로 여부를명시하고구현/정확한wire·SHA/실행예시인계. 마지막1인해산유지는확정·양T다인강제해산요청없음으로정정. 새4경로미구현/170·DB0030·129인계유지, 다음Flutter는인계후연결/표적검증. 이번새기능/시험·서버변경없음, [NEXT_WORK](NEXT_WORK.md) 참조. 아래는이전기록이다.
+
 현재(2026-10-23 후속제안): [전체132번째 Backend · 원자적 참가관리 계약 제안/후속 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6361053787) 게시/실제순번·전문일치확인. [원자적참가관리 제안1](../ISSUE_13_ATOMIC_MEMBER_ACTIONS_DRAFT.md)을 독립완료조건의 [#22 개인완료후T탈퇴/승계](https://github.com/heo0328/lostparty-backend/issues/22), [#23 현재/양T동일회원추방](https://github.com/heo0328/lostparty-backend/issues/23) 본문전문·상호/원본연결로분리(기능전체완료/요구폐기아님/브랜치유지). 다음Flutter각후속소비대조→Backend합의구현/검증/게시·실행인계, 둘다미합의·미구현/OPEN. 현재170경로/DB0030·129인계유지·문서로컬커밋/미push·새코드/서버/DB/키/시험변경없음. #13은기존인계/통합인수추적, 양T강제해산미확정. [NEXT_WORK](NEXT_WORK.md) 기준이며아래는이전기록이다.
 
 최신수신(2026-10-23): [Flutter131 개인완료후선택T탈퇴](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360708926) 요청추가. 선택raid완료+잔여본인T참가취소/예약정리·공대장자동승계/마지막1인종료·다른T보존의 한명령은 현personal/globalleave/end와 달라 미합의·미구현이다. 다음Backend는 이계약과 기존Flutter128 양T동일회원추방 계약검토, 다음Flutter는 Backend129/8bbcfc8 완료정정·보관 직접연결/결과회신. Flutter130 1d6c0c1a push/144mock·분석0은 보고수신/독립재현아님. 강제양T해산은 사용자확인중/요청미확정, 기존완료인계를되돌리지않는다. [NEXT_WORK](NEXT_WORK.md) 참조.
