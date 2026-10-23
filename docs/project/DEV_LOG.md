@@ -2127,3 +2127,11 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 
 - 사용자가 작성한 문서의 commit/push를 명시지시했다. 기존지침afb0a0c/회신기록60d3a4e/전달전용종료02a8ce2의 문서3커밋과 clean 작업트리·diff를 확인하고 현재 게시상태 기록과 함께 feat/raid-recruitment에 push한다. 과거 미push 표기는 당시 이력으로 보존하며 NEXT_WORK/AI_CONTEXT/추적표의 현재게시상태를갱신했다.
 - 문서내용·참조 및 diff검사만 수행한다. 추가Issue댓글·서버/DB·API·기능코드/시험·merge/배포변경은없으며, 종료한 #21과 진행중인 #13 상태를유지한다.
+
+
+## 2026-10-23 — #13 최신130/131 수신 / 필요한 Backend 후속 확인
+
+- 사용자 확인 요청으로 작업문서/Git(b7e9253 clean)·공식본문/전체131댓글을 조회했다. [전체130번째 Flutter · 상세위치/카드단일T추방 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360353809)는1d6c0c1a push·최종단일144mock/분석0 보고, 기존2940824 소비/양T추방구현대기다. Backend 독립재현/실회원·기기인수/기존시험합산으로 확대하지 않는다.
+- [전체131번째 Flutter · 개인완료후선택T탈퇴 계약요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360708926)은 선택raid본인완료+같은T나머지참가취소·공대장자동승계/마지막1인종료를 한명령으로 요구하고N/타인/기존완료·원pending을보존한다. 코드의 personal은 선택Assignment완료/남은active없으면completed뿐이며 명시탈퇴/승계없음, common leave/end의 LEADERSHIP_RESOLUTION_REQUIRED/ROOM_LAST_MEMBER_REQUIRED로대체불가를 정적으로확인했다.
+- 다음Backend는 새개인완료+탈퇴와 기존128 양T동일회원추방의 context/impact·권한/리더자격·소유/CAS/세대·원자성/ACK·예약/완료/N보존 최소계약검토다. 둘다미합의·미구현, 사용자확인중인 양T강제해산은요청확정으로취급하지않는다. Backend129 완료정정/보관 인계와분리하며 Flutter새연결완료회신은미수신이다.
+- NEXT_WORK/AI_CONTEXT/추적표에 다음담당과링크를 갱신했다. 이번은 확인/정적대조·문서기록이며 기능/API/서버/DB/키 변경·신규시험/댓글게시/Issue수정/merge/배포없음, 상시규칙으로문서로컬커밋/미push다.

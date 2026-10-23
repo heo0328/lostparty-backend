@@ -14,9 +14,14 @@
 
 소비 `8bbcfc8cb89e69eb1f9747a0fcf2e919e41c3b76` commit/push·원격SHA일치 및 [전체129번째 Backend · 완료정정/보관 구현·개발반영·소비인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360251618) 전문/실제순번 확인을 완료했다. 다음Flutter는 새reader/정정writer·원pending schema호환/권한/ACK·목록/기록 직접차이 연결·결과회신이다. 같은 계약 수용/기존 mock 반복 요청은 하지 않는다. 실제 정상회원HTTP·실기기전체/성능·운영 인수, 과거·은퇴UI 확대/pending영속복구/#19는 별도다. 아래는 이전 구간 기록이다.
 
-## 별도 후속 — Flutter128 양주차 동일회원 함께 내보내기 계약 요청
+## 다음 Backend — 개인 완료후 선택T 탈퇴 / 양T 동일회원 추방 계약 검토
 
-[전체128번째 Flutter · 상세관리 UX/양주차 추방 계약 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360210574)을 인계 직전에 확인했다. 현재카드의 실제T/대상회원 고정·반대C/N 같은 user_id의 실제참가·current-only/양T원자처리·각T리더십/권한·소유/재참가/세대CAS·단일ACK/원재송/양T무효화 검토가 필요하다. 새계약 미합의·미구현이며 완료정정/보관 인계와 별개다. 다음Backend는 현재단일Tremove 구현/정확한권한을대조해최소계약안을검토한다. 양T를두명령자동연속으로성공처리하거나현재T공대장의권한을임의확대하지않는다. 같은계약수용대기나완료정정의미완료로혼동하지않는다.
+[전체131번째 Flutter · 개인 완료후 선택T 탈퇴 계약 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360708926)이 추가됐다. 사용자 의도는 “나혼자 완료처리이후 탈퇴”: 선택raid 본인완료 + 같은실제T의 나머지 본인참가 취소/예약정리 + 공대장자동승계/마지막1인종료를 한명령으로 처리하고 다른T는 보존하는 것이다. 현재 personal_completion은 선택round 본인Assignment만 완료·남은active없으면CycleMember.completed이며 명시탈퇴/자동승계를 하지 않는다. global leave/end로 대체할 수 없음을 코드에서 확인했다.
+
+- 다음 Backend: 정확한 context/impact·permission과 선택raid완료/다중raid잔여취소·후계자권한/자격/마지막1인·소유/CAS/세대·원ACK/재송·예약/주간근거·N보존을 최소계약으로 검토한다. 새계약 미합의·미구현이며 기존 item완료/원pending을 바꾸거나 두명령자동연속으로 대체하지 않는다. 사용자확인중인 양T강제해산을 확정범위로 포함하지 않는다.
+- 별도 기존 요청 [전체128번째 Flutter · 양주차 동일회원 함께 내보내기](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360210574)는 현재카드 대상/실제T 고정·반대C/N 같은 user_id의 실제참가·각T리더십/권한·CAS·current-only/양T원자처리·단일ACK/원재송/양T무효화 계약 검토 대기다. 미합의·미구현이며 현재T공대장의 권한을 임의확대하지 않는다.
+- [전체130번째 Flutter · 상세행동/카드단일T추방 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360353809)는1d6c0c1a commit/push·최종단일144mock PASS/전체분석0 보고다. 기존소비2940824·한T writer 유지/양T추방미구현이며 Backend 독립재현/실회원·기기인수와 구분한다.
+- 기존 완료정정/보관 Backend129·소비8bbcfc8 인계는 완료 상태를 유지한다. Flutter131은 새소스와 정적대조했으나 새 정정/보관의 구현연결 완료회신은 아직 없다. 다음Flutter는 해당 인계의 직접연결/결과회신, 다음Backend는 위 두 별도계약 검토다. 같은기존시험·정책재수용 요청은 없다.
 
 ## 이전 — F6-C 재개 확인 Backend 구현·개발 반영 완료
 
