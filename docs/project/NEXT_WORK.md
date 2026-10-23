@@ -4,6 +4,8 @@
 
 ## 현재 — #24/#25 구현·격리 검증, 실제 개발 반영 전
 
+구현 소비 `15e143aeb9f3105a1b8a5816051e0e837726892c` / feat/raid-recruitment commit·push/원격 일치 확인. [#24 전체4번째 Backend · 검색 구현 인계](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6371301279)·[#25 전체6번째 Backend · 탈퇴/해산·profile 구현 인계](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371301934)를 게시하고 실제 전체 순번·전문을 확인했다. 다음 Flutter는 위 source로 직접 연결/자동 검증, Backend는 실제 개발 반영 전 상태다. [#13 전체140번째 Backend · IF-001 문서 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6371302557)도 회신 완료하며 별도 정책 수용/시험 대기는 없다.
+
 사용자 구현 진행 지시와 [#24 전체3번째 Flutter 수용](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6370137482)·[#25 전체5번째 Flutter 네 차이 해소](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6370138718)를 확인했다. 네이티브의 계약 재수용을 기다리는 상태가 아니다. [개발 안내](../ISSUE_24_25_MEMBERSHIP_ACTIONS_DEVELOPMENT.md)를 현재 구현 기준으로 사용한다.
 
 - Backend 소스: 검색 SQL 페이지 전 본인 실제T 참가 제외·semantics cursor, 새 옵션별 Context/6필드 원자 명령·C→N ACK, 승계 불가 탈퇴/명시 복구, 방·지속관계·한도, opt-in reader/본인 종료 기록을 구현했다. 같은 지속회원의 재참가도 옛 CM/Assignment 식별자를 재사용하지 않도록 보강했다. 실행 후보 계약176경로·기본116/기존 component·구 명령/pending/24h 원 ACK 보존이다.

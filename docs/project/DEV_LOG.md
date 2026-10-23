@@ -2237,3 +2237,10 @@ NEXT_WORK/AI_CONTEXT/추적표를최신다음Backend계약/호환설계로갱신
 소스 c6066195a19a536aac37e1f1712f2a22ecaa20ff를 작업 브랜치에 push/원격 확인한 뒤 인계 문구 대조에서, 새 profile.resume_weekly를 앱 비활성 상태로 일괄 false 처리한 부분이 retained/stopped의 기존 서버 권한 보존과 맞지 않음을 바로잡았다. 기존 cycle_resume.prepare_create의 읽기 전용 source/권한 검사 결과를 그대로 표시하고 앱 진입 비활성은 제품 상태로 분리한다. 기존 endpoint·실제 서버 권한은 계속 보존하며 이 GET은 제안/명령/재개 쓰기를 실행하지 않는다.
 
 보강한 retained/stopped 1건과 정상 legacy content 보존 회귀1건이 **2PASS/33.23초**다. 앞선37과 중복1건을 제외한 최종 고유 **38PASS(신규21·검색11·기존6)**이며 보강된 최종 이미지의116/176 계약 전체·app203소스 해시를 다시 확인했다. 생성한 두 번째 독립 tmpfs DB/runner·네트워크도 정리했다. 구현 인계는 이 보완을 포함한 후속 source SHA를 사용한다. 최초 일반 git push의 credential helper 부재는 GitHub CLI helper를 해당 명령에만 지정해 해결했고 전역 인증 설정/토큰 출력은 없다. 실제 개발 API/DB0030·dev/main/운영은 그대로다.
+
+
+### 최종 소스 게시·Issue 인계 확인
+
+소비 **15e143aeb9f3105a1b8a5816051e0e837726892c / feat/raid-recruitment commit·push·원격 SHA 일치**를 확인했다. [#24 전체4번째 Backend · 검색 구현 인계](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6371301279)·[#25 전체6번째 Backend · 새 명령/profile 구현 인계](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371301934)·[#13 전체140번째 Backend · IF-001 문서 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6371302557)을 게시하고 실제 전체 순번(본문 제외)과 댓글 전문 일치를 조회했다. #24/#25 본문 상단은 현재 source/완료 구간·다음 Flutter 연결/자동 검증·Backend 개발 반영 전 상태로 갱신하고 최초 설계 전문/원본·상호 연결을 보존했다. 세 Issue 모두 OPEN이다.
+
+다음 Flutter는 게시된 source/계약으로 직접 연결 및 표적 자동 검증을 진행한다. 실제 기존 API174/DB0030은 미변경이고 새 HTTP/실회원·기기 연동은 Backend0031 반영 확인 후다. 같은 제품 정책 수용/기존 전체시험 반복 요청은 없다. 인계 기록만 후속 문서 커밋에 누적하며 구현 소비 SHA는 위와 같다.
