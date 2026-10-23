@@ -2072,3 +2072,13 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 공식 Issue 본문/전체125댓글을 조회했다. 전체123번째 Flutter는2019cefe 문서게시·인수표15행미실행/수동인수대기, [전체124번째 Flutter · 첫 기기 피드백/서버 보완 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358203104)은 새 제품 요구, [전체125번째 Flutter · 독립 수정 결과/Backend 대기](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358397626)는2ba24d95 push·최종단일190mock/전체분석0 보고다. 기존153/중간실행 합산이나 Backend 독립재현으로 확대하지 않는다.
 - 다음 Backend는 본인 party/manual 완료해제(타인보존/참가·동의·예약복원없음/취소시각·과거주차·CAS·원ACK), current 관계/검색 상태, 다중raid 전체완료+N없음 논리종료/기록보존·N유지/직접상세·재개의 코드/계약 대조와 최소 계약안 검토다. 기존 manual근거만 해제 정책의 변경 요청이며 사용자 발언 전달을 신규 계약 합의/구현 완료로 표시하지 않는다. 물리삭제 승인 아님이다.
 - 사용자 정상 확인 전달은 레벨/최고난이도·생성후 실제T상세/새생성·변경캐릭터완료에 한정한다. 전체 실회원/기기/성능/운영 인수는 미완료다. NEXT_WORK/AI_CONTEXT/추적표에 다음 Backend·미완료를 기록했다. 이번은 회신 확인/로컬 문서 기록이며 앱/실행계약/서버/DB/키 변경·시험·댓글/이슈 변경·push/merge/배포/데이터삭제는 없다.
+
+
+## 2026-10-23 — #13 본인 완료 정정·완료 방 보관 계약 제안1 게시
+
+- 사용자 작업진행 지시로 규칙/작업문서·Git(d32049a/기존 로컬 문서2커밋 보존)·공식 Issue 본문/전체125댓글·현재완료/manual/summary/회원목록/검색/상세/개방/모델/공통원장을 대조했다. Flutter 로컬 소스는 열지 않았다.
+- [계약 제안1](../ISSUE_13_COMPLETION_CORRECTION_LIFECYCLE_DRAFT.md)에 새context/정정POST의 닫힌 입력/결과·현재소유/은퇴기록정정·과거T/수06~10시·CAS/감사/동시완료·원ACK24시간·기존manual보존, 전체완료근거/N독립·보관조회/쓰기·current/ended/all SQL필터/기록·stopped재개 분리를 명시했다. 실제 공통 오류는 IDEMPOTENCY_CONFLICT/REQUEST_IN_PROGRESS/IDEMPOTENCY_EXPIRED이며 복구24시간/Retry-After2초를 소스에서 확인했다.
+- 현재 current SQL은 지속Member 종료 여부만 검사한다. 검색은 이미 T open만 조회하며 카드 활성은 Room.ended_at기준이다. 특정 실기기 방의 DB 원인 재현으로 확대하지 않는다. 개인완료는 Round active여도 generation completed일 수 있어 전raid 완료근거 검사를 별도로 제안했다.
+- 소스5개 AST·실행계약 JSON168경로/새정정경로 부재·멱등code/24시간 정적대조 및 diff검사 통과. HTTP/DB/권한/경합/원자성/기기 신규실행시험 아님, 기존66/Flutter190 등에 합산 없음이다.
+- [전체126번째 Backend · 완료 정정/방 보관 계약 제안1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358628814)에 검토원본 전문을 게시하고 실제 본문제외 순번126·Backend 작성측·계약제안단계·전문 일치를 재조회했다. 다음 Flutter의 두 소비경계 대조 후 Backend 합의구현/격리검증/commit·push·원격확인/실행OpenAPI·소비인계다. 계약을 실행에 추가하지 않았고 같은 정책/기존시험 반복요청 없음이다.
+- Issue상단 현재 범위·다음담당을 갱신하고 이전본문/OPEN 보존, NEXT_WORK/AI_CONTEXT/추적표 기록. 문서 로컬커밋·미push이며 서버/DB/키·실행OpenAPI·앱코드 미변경, 데이터삭제/dev·main병합/운영배포 없음이다.

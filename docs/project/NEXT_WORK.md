@@ -2,16 +2,15 @@
 
 2026-10-23 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13), OPEN.
 
-## 현재 후속 — 첫 실기기 피드백의 Backend 계약 검토 대기
+## 현재 — 본인 완료 정정·방 보관 계약 제안 / 다음 Flutter 소비 대조
 
-[전체124번째 Flutter · 완료 해제/방 수명 보완 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358203104)과 [전체125번째 Flutter · 독립 수정 결과/서버 보완 대기](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358397626)를 확인했다. 기존 F6-C 구현/인계 완료와 구분하며 다음 담당은 Backend다.
+[전체126번째 Backend · 완료 정정/방 보관 계약 제안1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358628814)에 [계약 제안1](../ISSUE_13_COMPLETION_CORRECTION_LIFECYCLE_DRAFT.md) 전문을 게시하고 실제 댓글 순번/작성측/전문 일치를 확인했다. Flutter124/125의 새 제품 요구에 대한 검토안이며 **새 계약 미합의·미구현**이다. 기존 Backend2940824/168경로/서버·DB·키는 유지한다.
 
-- 본인 캐릭터/실제T/raid의 manual·party 양쪽 완료 해제 계약 검토: 타인 완료 보존, 참가/좌석/동의/예약 자동복원 없음. 소유/활동·과거주차와 취소 가능 시각(완료 생성의 수10시 조건을 그대로 적용한다고 가정하지 않음)·CAS/멱등/동시 완료·출처/summary/ACK 의미와 기존 endpoint 변경 여부를 정리한다. Flutter가 전달한 새 제품 요구이며 아직 신규 계약 합의/구현 완료가 아니다.
-- current memberships의 legacy_intent/not_selected/completed 관계·room/cycle 상태 및 검색 노출을 실제 구현과 대조한다. Flutter125의 participating/review_required+열린cycle 표시 보완은 서버 방 수명을 대신하지 않는다.
-- 다중raid 전체완료·다음주 함께하기 없음의 서비스상 논리 종료/보관 계약 검토: 일부완료로 종료하지 않음, N이 열렸으면 N참가/리더/일정 보존, 완료근거/원ACK/감사 보존, 목록/직접상세/재개 정책 명시. 물리삭제나 실제 데이터 정리 요청으로 해석하지 않는다.
-- 다음 Backend는 관련 코드/계약 대조→최소 계약안·필요한 독립 후속 분리 판단→같은 Issue 협의다. 합의 구현 시 검증·commit/push·정확한 OpenAPI/SHA 인계 후 Flutter 연결이다. 현재 서버/DB/키 변경·신규 구현/시험은 없다.
-- Flutter125는 2ba24d95b59db5cfc758c8c1de26ee96bfc4b200 commit/push·최종 단일190mock PASS/전체분석0 보고. 개별 캐릭터 갱신/선호역할/주간후보필터/참가중 표시 등을 수정했고 Backend2940824 소비 유지다. 독립재현 결과가 아니며 기존153/중간실행과 합산하지 않는다.
-- Flutter123 인수표15행은 미실행 보고였고, Flutter124/125에서 사용자 레벨/최고난이도·생성후 실제주차상세/새생성·변경캐릭터 완료만 실제 정상 확인을 전달했다. 전체 U행/실회원/기기/성능·운영 인수 완료로 확대하지 않는다.
+- 다음 Flutter: 별도 context/완료정정 명령의 과거T·현재C 수06~10시 취소, 현재소유/CAS·새ACK/원ACK24시간·기존manual경로 보존과 current/ended/all·보관방 상세/쓰기차단/N보존·stopped재개 분리의 소비 가능 여부/구체 차이를 회신한다. 같은 기존 정책/시험 반복 요청 없음.
+- Backend: 피드백 반영→합의 구간 구현→격리검증→구간commit/push·원격확인→정확한 실행 OpenAPI/SHA·개발반영 여부 인계. 현재는 5개 관련 소스 AST/기존168경로·새경로 미노출·멱등 실제code/24시간 대조와 diff검사만 수행했고 서버시험/DB변경은 없다.
+- 정정은 본인 manual/party 투영만 해제하고 원본Outcome/완료Assignment/타인·N 보존, 좌석/참가/동의/예약 자동복원 없음이다. 별도 불변 정정 감사와 원자성·최종시각/CAS를 제안했다.
+- 보관은 전raid 완료근거+열린 다음 실제주차 없음 조건이며 일부완료/0명/legacy를 전체완료로 추정하지 않는다. SQL pagination 전 current 실제참여필터와 기록조회/원ACK·개인정정 유지, N개방 경합/완료정정후방비복원도 검증대상이다.
+- Flutter125 2ba24d95 push·단일190mock/분석0은 보고수신이며 독립재현/기기전체인수 아님. 레벨/최고난이도·생성실제T상세/새생성·변경캐릭터완료 정상확인 전달만 기록한다. 실회원/기기전체·성능/운영, pending영속복구·#19는 미완료/별도다.
 
 ## 현재 — F6-C 재개 확인 Backend 구현·개발 반영 완료
 
