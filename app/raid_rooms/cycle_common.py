@@ -49,7 +49,8 @@ def context(db,uid,rid,kind,stamp):
     outcomes.ready(db)
     if kind not in ('edit_common_settings','leave','end'):fail('INVALID_REQUEST',400)
     room=commands.base.room(db,uid,rid);actor=commands.base.member(db,uid,room)
-    if room.ended_at is not None:fail('ROOM_NOT_ACTIVE')
+    from app.raid_rooms.completed_room_lifecycle import require_active
+    require_active(db,rid)
     current=cycles.target(stamp,commands.raids.cycle(stamp).cycle_key).current
     rows=list(db.scalars(select(RoomCycle).where(RoomCycle.room_id==rid,
         RoomCycle.cycle_key.in_((current,current+timedelta(days=7)))).order_by(RoomCycle.cycle_key)))

@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+현재(2026-10-23 구현): [Flutter127](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358680312)은 제안수용/최종wire·Backend구현인계 대기이며 추가수용대기가 아님을 정정했다. [완료정정/보관 개발](../ISSUE_13_COMPLETION_CORRECTION_DEVELOPMENT.md) 기준 새2경로/170·닫힌DTO/예시8/nullable·기록읽기 구현, 고유42PASS(신규26/회귀16)·예시8/실행계약일치·228소스바이트일치. 실제API13291847…/DB0030 healthy·기존104업무표430행/내용·열정의·설정보존/새감사0행, 임시환경정리·실회원쓰기없음. 다음Backend 게시/소비인계→Flutter 직접차이 연결, 실회원/기기전체/성능/운영 미완료. [NEXT_WORK](NEXT_WORK.md) 기준이며 아래는 이전 기록이다.
+
 현재(2026-10-23 계약 제안): [전체126번째 Backend · 완료 정정/방 보관 계약 제안1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358628814) 전문 게시/실제순번·전문일치 확인. [제안1](../ISSUE_13_COMPLETION_CORRECTION_LIFECYCLE_DRAFT.md)은 새 본인완료정정 context/명령·과거T/수06~10시·소유/CAS/감사·원ACK24시간, 전체완료/N없음 논리보관·current필터/기록상세/N보존/stopped재개 분리다. 미합의·미구현, 다음Flutter 소비대조→Backend 합의구현/검증/게시. 서버·DB·키/실행168경로 유지·새자동시험없음. [NEXT_WORK](NEXT_WORK.md) 참조. 아래는 이전 상태 기록이다.
 
 현재(2026-10-23 추가 수신): [Flutter124 새 정책/실기기 피드백](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358203104)·[Flutter125 독립 수정/Backend 대기](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358397626) 확인. 다음 Backend는 본인 party 포함 완료해제·current 목록 의미·전체완료/N없는방 논리종료·완료기록보존의 계약 검토/제안. 기존 manual근거해제 정책에서 변경 요청이며 아직 새 계약 합의/구현 아님. Flutter2ba24d95 push/단일190mock PASS·분석0 보고(독립재현 아님), 기존Backend2940824 유지·새 서버/DB/키 변경 없음. [NEXT_WORK](NEXT_WORK.md) 참조. 아래는 이전 구간 기록이다.

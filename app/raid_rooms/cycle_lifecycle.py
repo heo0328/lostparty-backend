@@ -22,6 +22,8 @@ VALID_STATES=('participating','completed','stopped')
 
 def target_row(db,uid,rid,key,stamp,*,next_only=False):
     room=commands.base.room(db,uid,rid)
+    from app.raid_rooms.completed_room_lifecycle import require_active
+    require_active(db,rid)
     value,row=cycles.resolve(db,rid,key,stamp)
     if next_only and value.phase!='future':fail('TARGET_CYCLE_NOT_FUTURE')
     if room.ended_at is not None:fail('ROOM_NOT_ACTIVE')

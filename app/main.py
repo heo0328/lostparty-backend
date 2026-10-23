@@ -411,7 +411,7 @@ def create_two_cycle_app():
     generate=result.openapi
     def schema():
         value=_decorate_openapi(generate())
-        value['x-recruitment-policy'].update(schema_revision='0029_cycle_outcomes',policy_version='two-cycle-contract-4',
+        value['x-recruitment-policy'].update(schema_revision='0030_completion_corrections',policy_version='two-cycle-contract-4',
             continuation='Explicit N opening only; 06:00 N becomes C with the same UUID/leader/assignments/consents; no automatic new N',
             compatibility='v1 current-C read adapters; unsafe room writes replay original ACK then CLIENT_UPGRADE_REQUIRED; personal availability/manual completion remain safe')
         return value

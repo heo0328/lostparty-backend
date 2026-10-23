@@ -1,5 +1,5 @@
 """Actor/target-scoped membership and application pages, without GET writes."""
-from sqlalchemy import select,func
+from sqlalchemy import select,func,and_,or_
 from app.game_accounts.support import fail,cursor_encode,cursor_decode
 from app.game_accounts.lifecycle import digest
 from app.raid_rooms import admission_service as base, cycles, cycle_queries as directory, cycle_commands as commands
@@ -10,6 +10,7 @@ from app.raid_rooms.cycle_application_models import CycleApplication as Applicat
 from app.raid_rooms.integrated_models import RecruitmentMembership as Member,RecruitmentRoom as Room
 from app.raid_rooms.models import MemberHead
 from app.groups.models import GroupMembership
+from app.raid_rooms import completed_room_lifecycle as archive
 
 
 def applications(principal,key,*,rid=None,state='pending',limit=20,cursor=None):
@@ -54,8 +55,14 @@ def memberships(principal,key,state='current',limit=20,cursor=None):
     with base.snapshot(principal) as (db,uid,stamp):
         target=cycles.target(stamp,key)
         query=select(Member,Room).join(Room,Room.id==Member.room_id).where(Member.user_id==uid)
-        if state=='current':query=query.where(Member.ended_at.is_(None))
-        elif state=='ended':query=query.where(Member.ended_at.is_not(None))
+        actual_query=select(CycleMember.id).join(RoomCycle,RoomCycle.id==CycleMember.cycle_id).where(
+            RoomCycle.room_id==Member.room_id,RoomCycle.cycle_key==target.key,CycleMember.membership_id==Member.id,
+            or_(CycleMember.generation==RoomCycle.generation,and_(CycleMember.generation.is_(None),RoomCycle.generation.is_(None))))
+        active=actual_query.where(CycleMember.state.in_(('participating','review_required')),
+            RoomCycle.state.in_(('open','review_required'))).correlate(Member).exists()
+        history=actual_query.where(CycleMember.state.in_(('completed','stopped','cancelled','removed'))).correlate(Member).exists()
+        if state=='current':query=query.where(Member.ended_at.is_(None),Room.ended_at.is_(None),~archive.archived(Room.id),active)
+        elif state=='ended':query=query.where(or_(Member.ended_at.is_not(None),Room.ended_at.is_not(None),archive.archived(Room.id),history))
         head=db.get(MemberHead,uid)
         revision=head.membership_revision if head else 1
         binding=['cycle-memberships',str(uid),str(principal[1].id),key,state,limit]
@@ -66,10 +73,12 @@ def memberships(principal,key,state='current',limit=20,cursor=None):
         items=[]
         for member,room in rows[:limit]:
             _,row=cycles.resolve(db,room.id,key,stamp)
-            actual=members.own_cycle_member(db,row,member) if row and row.generation else None
+            actual=db.scalar(select(CycleMember).where(CycleMember.cycle_id==row.id,CycleMember.generation==row.generation,CycleMember.membership_id==member.id)) if row else None
             ready=row is not None and row.provenance=='explicit' and row.generation is not None and bool(row.settings_snapshot)
             detail=members.own_view(db,room,row,member) if ready else dict(target_role='none',cycle_member_id=None,
-                cycle_member_revision=None,joined_order=None)
+                cycle_member_revision=actual.revision if actual else None,joined_order=str(actual.joined_order) if actual and actual.joined_order else None)
+            if actual:
+                detail.update(cycle_member_id=actual.id,cycle_member_revision=actual.revision,joined_order=str(actual.joined_order) if actual.joined_order else None)
             owned=members.assignments(db,row,member.id) if ready else []
             items.append(dict(membership_id=member.id,revision=member.revision,room_id=room.id,
                 state='current' if member.ended_at is None else 'ended',joined_at=member.joined_at,ended_at=member.ended_at,
@@ -78,10 +87,10 @@ def memberships(principal,key,state='current',limit=20,cursor=None):
                     cycle_member_id=link.cycle_member_id) for a,link in owned],
                 room=directory.card(db,room,row,uid,stamp) if ready else None,
                 recovery_only=not ready,history_only=member.ended_at is not None,
-                permissions=dict(view_plan=permission(None if actual and member.ended_at is None else 'WEEKLY_PARTICIPANT_REQUIRED')),
+                permissions=dict(view_plan=permission(None if ready and actual and member.ended_at is None else 'ROOM_REVIEW_REQUIRED' if actual and not ready else 'WEEKLY_PARTICIPANT_REQUIRED')),
                 target_role=detail['target_role'],cycle_member_id=detail['cycle_member_id'],
                 cycle_member_revision=detail['cycle_member_revision'],joined_order=detail['joined_order'],
-                target_participation_state=actual.state if actual else 'review_required' if row and not ready else 'not_selected',
+                target_participation_state=('cancelled' if actual.state=='removed' else actual.state) if actual else 'review_required' if row and not ready else 'not_selected',
                 target_cycle_key=key,room_cycle_id=row.id if row else None,target_generation=row.generation if row else None,
                 target_revision=row.revision if row else None))
         return wire.OutputContract3GetV2MeRaidRoomMemberships.model_validate(dict(scope=scope(stamp,key),

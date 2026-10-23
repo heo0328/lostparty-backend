@@ -1,4 +1,5 @@
-# Explicit cutover override, only after the target DB has been verified at 0029.
+# Explicit cutover override, only after the target DB has been verified at 0029/0030.
+# Personal completion corrections require 0030; never reset existing data.
 # Build/tag the verified two-cycle image before starting; never use the old tag.
 # This file selects the API image/entrypoint; it never migrates or resets a database.
 # Preserve compose.yaml's database volume and read-only authentication key mount.

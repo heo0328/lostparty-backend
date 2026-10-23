@@ -13,6 +13,7 @@ from app.raid_rooms.cycle_models import RoomCycle, CycleMember, CycleRound, Cycl
 from app.raid_rooms.integrated_models import RecruitmentRoom as Room, RecruitmentMembership as Member, RecruitmentAssignment as Assignment
 from app.raid_rooms.weekly_links import WeeklyOccupancy
 from app.raid_rooms.source_models import ScheduleGroup
+from app.raid_rooms import completed_room_lifecycle as archive
 
 
 def role(db,uid,row):
@@ -24,6 +25,7 @@ def role(db,uid,row):
 
 
 def card(db,room,row,uid,stamp,loaded=None):
+    ended=room.ended_at is not None or (loaded['archived'] if loaded is not None else archive.is_archived(db,room.id))
     settings=row.settings_snapshot
     leader=loaded['leadership'] if loaded is not None else commands.leadership(db,row)
     leader_assignment=db.scalar(select(Assignment).join(CycleAssignment,CycleAssignment.assignment_id==Assignment.id).where(
@@ -34,9 +36,9 @@ def card(db,room,row,uid,stamp,loaded=None):
         for i,r in admission.rounds(db,row)]
     return dict(room_id=room.id,revision=room.revision,title=room.title,scope=room.scope,group_id=room.group_id,
         admission_mode=settings['admission_mode'],experience_level=settings['experience_level'],app_capacity=settings['app_capacity'],
-        app_member_count=loaded['count'] if loaded is not None else admission.member_count(db,row),state='ended' if room.ended_at else 'active',items=items,game_items=items,
+        app_member_count=loaded['count'] if loaded is not None else admission.member_count(db,row),state='ended' if ended else 'active',items=items,game_items=items,
         leader_display=loaded['leader_display'] if loaded is not None else leader_assignment.display if leader_assignment else None,created_at=room.created_at,
-        phase='ended' if room.ended_at else cycles.target(stamp,row.cycle_key.isoformat()).phase,restricted=row.state=='review_required',
+        phase='ended' if ended else cycles.target(stamp,row.cycle_key.isoformat()).phase,restricted=row.state=='review_required',
         schedule_summary=dict(mode=groups[0].planning_mode if len(groups)==1 else 'multiple' if groups else 'unscheduled',
             occurrence_mode=groups[0].occurrence_mode if len(groups)==1 else None,confirmed_starts_at=sorted(starts),
             earliest_start=min(starts) if starts else None,latest_start=max(starts) if starts else None),
@@ -53,6 +55,7 @@ def get_card(principal,rid,key):
         query=select(Room).where(Room.id==rid,filters.visible(uid))
         room=db.scalar(query)
         if room is None:fail('ROOM_NOT_FOUND',404)
+        if archive.is_archived(db,rid):fail('ROOM_NOT_FOUND',404)
         _,row=cycles.resolve(db,rid,key,stamp)
         if row is None:fail('TARGET_NOT_OPEN')
         admission.capacity(row)
@@ -93,7 +96,7 @@ def search(principal,data):
             CycleRound.is_current.is_(True),Assignment.state=='active').correlate(RoomCycle).scalar_subquery()
         query=select(Room,RoomCycle).join(RoomCycle,RoomCycle.room_id==Room.id).where(
             Room.ended_at.is_(None),RoomCycle.cycle_key==target.key,RoomCycle.state=='open',
-            RoomCycle.generation.is_not(None),filters.visible(uid))
+            RoomCycle.generation.is_not(None),~archive.archived(Room.id),filters.visible(uid))
         if data.category=='general':query=query.where(Room.group_id.is_(None))
         elif data.category=='group_linked':query=query.where(Room.group_id.is_not(None))
         if data.admission_scope is not None:query=query.where(Room.scope==data.admission_scope)

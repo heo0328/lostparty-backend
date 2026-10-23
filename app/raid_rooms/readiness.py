@@ -10,7 +10,7 @@ from app.raid_rooms.models import Room, Round, Membership, Application, Director
 
 REVISION = '0018_room_application_build'
 # Known additive source revisions; legacy F2 schema/semantics stay intact.
-SUPPORTED_REVISIONS = (REVISION, '0019_integrated_recruitment', '0020_recruitment_sources', '0021_recruitment_weekly_links','0022_recruitment_schedule_heads','0023_recruitment_resume','0024_recruitment_cycles','0025_cycle_admissions','0026_cycle_lifecycle','0027_cycle_consents','0028_cycle_planning','0029_cycle_outcomes')
+SUPPORTED_REVISIONS = (REVISION, '0019_integrated_recruitment', '0020_recruitment_sources', '0021_recruitment_weekly_links','0022_recruitment_schedule_heads','0023_recruitment_resume','0024_recruitment_cycles','0025_cycle_admissions','0026_cycle_lifecycle','0027_cycle_consents','0028_cycle_planning','0029_cycle_outcomes','0030_completion_corrections')
 MODELS = (Room, Round, Membership, Application, DirectoryHead, MemberHead)
 
 
@@ -71,9 +71,12 @@ def require_ready(db, *, integrated=False):
         if versions[0] in SUPPORTED_REVISIONS[10:]:
             from app.raid_rooms.cycle_planning_models import CYCLE_PLANNING_MODELS
             models += CYCLE_PLANNING_MODELS
-    if integrated and versions[0]=='0029_cycle_outcomes':
+    if integrated and versions[0] in ('0029_cycle_outcomes','0030_completion_corrections'):
         from app.raid_rooms.cycle_outcome_models import CYCLE_OUTCOME_MODELS
         models += CYCLE_OUTCOME_MODELS
+    if integrated and versions[0]=='0030_completion_corrections':
+        from app.raid_rooms.completion_correction_models import CompletionCorrection
+        models += (CompletionCorrection,)
     for model in models:
         table = model.__table__
         name = table.name
@@ -166,13 +169,15 @@ def require_ready(db, *, integrated=False):
             AND t.tgname='cycle_planning_immutable' AND (t.tgtype & 27)=27
             AND f.proname='protect_cycle_decision' AND fn.nspname='public'""")))
         require({m.__tablename__ for m in CYCLE_PLANNING_MODELS}<=guarded)
-    if versions[0]=='0029_cycle_outcomes':
+    if versions[0] in ('0029_cycle_outcomes','0030_completion_corrections'):
         guarded=set(db.scalars(text("""SELECT c.relname FROM pg_trigger t JOIN pg_class c ON c.oid=t.tgrelid
             JOIN pg_namespace n ON n.oid=c.relnamespace JOIN pg_proc f ON f.oid=t.tgfoid
             WHERE n.nspname='public' AND NOT t.tgisinternal AND t.tgenabled IN ('O','A')
             AND t.tgname='cycle_outcome_immutable' AND (t.tgtype & 27)=27 AND f.proname='protect_cycle_decision'""")))
         from app.raid_rooms.cycle_outcome_models import CYCLE_OUTCOME_MODELS
         require({m.__tablename__ for m in CYCLE_OUTCOME_MODELS}<=guarded)
+    if versions[0]=='0030_completion_corrections':
+        require(db.scalar(text("SELECT count(*) FROM pg_trigger t JOIN pg_proc f ON f.oid=t.tgfoid WHERE t.tgrelid='raid_completion_corrections'::regclass AND NOT t.tgisinternal AND t.tgenabled IN ('O','A') AND t.tgname='completion_correction_immutable' AND (t.tgtype & 27)=27 AND f.proname='protect_cycle_decision'"))==1)
     head = db.get(DirectoryHead, 1)
     require(head is not None and head.revision >= 1)
 
@@ -188,7 +193,7 @@ def require_legacy_worker(db):
 
 
 def require_cycle_worker(db):
-    require(list(db.scalars(text('SELECT version_num FROM public.alembic_version')))==['0029_cycle_outcomes'])
+    require(list(db.scalars(text('SELECT version_num FROM public.alembic_version')))in (['0029_cycle_outcomes'],['0030_completion_corrections']))
 
 
 def require_two_cycle_active(db):

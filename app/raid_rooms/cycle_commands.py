@@ -20,6 +20,8 @@ from app.raid_rooms import session_display as display, session_display_schemas a
 
 def resolve(db, uid, rid, key, stamp, *, write=False):
     room=base.room(db,uid,rid)
+    from app.raid_rooms.completed_room_lifecycle import require_active
+    require_active(db,rid)
     value,row=cycles.resolve(db,rid,key,stamp,write=write)
     if row is None:fail('TARGET_NOT_OPEN')
     admission.capacity(row)

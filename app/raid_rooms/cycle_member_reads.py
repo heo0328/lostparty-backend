@@ -14,6 +14,7 @@ from app.raid_rooms.integrated_models import RecruitmentMembership as Member, Re
 from app.raid_rooms.source_models import (ScheduleGroup,ScheduleAlternative,SessionBinding,
     SessionParticipation as Participation,TimeReservation as Reservation)
 from app.raid_rooms.schedule_views import segment_view
+from app.raid_rooms import completed_room_lifecycle as archive
 
 
 def read_target(db,uid,rid,key,stamp):
@@ -87,12 +88,14 @@ def settings(db,room,row,uid,stamp):
     if cycle_outcomes.enabled(db):
         result['permissions']['edit_settings']=cycle_management.edit_permission(db,uid,room,row,stamp)
         result['permissions']['edit_common_settings']=cycle_common.common_permission(db,uid,room,stamp)
+    if archive.is_archived(db,room.id):archive.permissions(result['permissions'])
     return result
 
 
 def detail(principal,rid,key):
     with base.snapshot(principal) as (db,uid,stamp):
         room,row=read_target(db,uid,rid,key,stamp)
+        if archive.is_archived(db,rid):base.member(db,uid,room)
         mine=db.scalar(select(Member).where(Member.room_id==rid,Member.user_id==uid,Member.ended_at.is_(None)))
         values=[]
         for actual in db.scalars(select(CycleMember).where(CycleMember.cycle_id==row.id,
@@ -223,6 +226,7 @@ def plan(principal,rid,key,include_resume_display=False):
                 try:result['data']['permissions'][name]=cycle_common.context(db,uid,room.id,kind,stamp)[0]['data']['permission']
                 except GameError as error:result['data']['permissions'][name]=permission(error.code)
             result['data']['permissions']['view_common_context']=permission(None)
+        if archive.is_archived(db,rid):archive.permissions(result['data']['permissions'])
         if include_resume_display:
             from app.raid_rooms import resume_review, resume_review_schemas
             return resume_review.output(resume_review_schemas.ResumePlanContext,result)

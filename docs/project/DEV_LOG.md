@@ -2082,3 +2082,18 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 소스5개 AST·실행계약 JSON168경로/새정정경로 부재·멱등code/24시간 정적대조 및 diff검사 통과. HTTP/DB/권한/경합/원자성/기기 신규실행시험 아님, 기존66/Flutter190 등에 합산 없음이다.
 - [전체126번째 Backend · 완료 정정/방 보관 계약 제안1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358628814)에 검토원본 전문을 게시하고 실제 본문제외 순번126·Backend 작성측·계약제안단계·전문 일치를 재조회했다. 다음 Flutter의 두 소비경계 대조 후 Backend 합의구현/격리검증/commit·push·원격확인/실행OpenAPI·소비인계다. 계약을 실행에 추가하지 않았고 같은 정책/기존시험 반복요청 없음이다.
 - Issue상단 현재 범위·다음담당을 갱신하고 이전본문/OPEN 보존, NEXT_WORK/AI_CONTEXT/추적표 기록. 문서 로컬커밋·미push이며 서버/DB/키·실행OpenAPI·앱코드 미변경, 데이터삭제/dev·main병합/운영배포 없음이다.
+
+
+## 2026-10-23 — #13 Flutter127 수용 확인 / 개인 완료정정·완료 방 수명 구현·개발 반영
+
+- 사용자 “자료 미회신으로 네이티브 차단” 확인 요청으로 공식 본문/전체127댓글을 조회했다. Flutter127은 두방향을 이미수용했고 정책재협의가 아닌 구현/정확한nullable·기록detail/plan·새context/ACK wire·SHA/OpenAPI/DBmigration/실행상태 인계를 요청했다. 기존 NEXT_WORK의 Flutter대기를 Backend구현/인계로 정정했다. 기존 미push 문서3커밋 보존, Flutter소스는읽지 않았다.
+- 새completion_correction/schemas/models·0030 감사표/불변trigger·별도context GET/정정 POST를 구현했다. 과거T/현재수06~10시·현재소유/비활성/은퇴·catalog비활성기록, manual/party둘다 해제·주간revision+1/불변감사·타인/완료원본/참가·예약비복원, actor/flow/대상/CAS/source bound120초·4096bytes와 최종경계·원성공24시간복구·공통멱등오류를 닫았다. 구manual/summary/원bodyhash 유지다.
+- 완료방 공통SQL보관판정·current/ended/all SQL페이지전 실제관계필터·보관card404/기존회원실제detail/plan기록·쓰기permission/중앙신규명령차단/원ACK우선·N보존/stopped분리·cursor무효화를 연결했다. 0명/일부완료/legacy를 전체완료로 추정하지 않고 개인완료Assignment근거와 열린뒤주차/불완료주차를 검사한다. 복구용 card=null/gen=null은 실제cycle/memberID·revision, assignments[]/role없음·view_plan=false이며 가짜자료없음이다. known-gen review도예시로확정했다.
+- 격리새26+기존16 총42개묶음41PASS/구기대1FAIL·516.99초. 실패는 옛current에서not_selected를기대한시험이었다. 새합의대로current/ended제외·all보존을검사하도록고치고 최종가시성guard/생성/보관/nullable와 **5PASS/56.63초** 재확인(중복4제외고유42PASS). 탐색24PASS312.64초/중간수정실행합산없음·42단일통과표현없음, 최종미해결실패0/기존anyio warning1종이다. 초기작성중 plan분기·원장이름길이·합성시험항목선택 오류는 최종42검증 전에 수정했다.
+- 수동/party/둘다·과거/은퇴/시각·실제합성Bearer/타인/폐기세션·32KiB/no-store·권한/CAS/출처/만료/최종만료·rollover/감사실패 rollback·동일명령경합·원ACK/재완료보존·전raid개인완료/N보존/보관기록/새개방차단/복구nullable 및 기존생성·참가/신청·목록·일정표/완료/종료/재개·manual를 확인했다. 합성실행8예시는token만redact해최종Closed OpenAPI JSON Schema/format검증PASS8이다. 예시검증용 첫ref는wire클래스명이아닌실제ResumePlanContext로맞췄고앱계약변경은없었다.
+- 기존168paths/기존schemas 전체불변·새2paths/총170, 기본116 OpenAPI·고정wire/canonical불변이다. 검증이미지 sha256:13291847b6ec78a6fdaa33d334128d6bf59d775d784f0dc7752491d3ef5a4519의 app/alembic228파일과 작업트리 바이트일치/두프로필객체일치다.
+- 실제직전baseline DB0029/105표431행을READONLY지문으로수집하고API만최종이미지로교체·0030을적용했다. 기존104업무표430행의전체내용/열정의·환경/인증키mount/보안/포트/command 지문전후일치, 새감사표0행·총106표431행(version포함)이다. DB재시작/기존행갱신·삭제/초기화/키교체/실회원명령없음. 이전344행을재사용하지않았다. 직전50928839…는pre-completion-correction태그보존이며0030에구이미지복구는별도호환확인없이하지않는다.
+- 실제 API 기본116/두주차170 OpenAPI각전체일치, 앱과동일모델등록한제한API역할의0030readiness·health200·새2경로무인증/오류Bearer401/no-store/WWW-Authenticate4검사PASS. 독립readiness검사에서모델미등록NullType오류는실제factory등록후재검사해PASS, 실제앱문제아님이다. readonlyrootfs에스크립트복사하지않고표준입력으로실행했다. 정상로그인실회원HTTP/쓰기·기기·성능/운영인수미확인이다.
+- 임시correction-runner/tmpfs DB/network만정리해기존API/DB두컨테이너healthy다. 다음은구간commit/push·원격확인후최종wire/예시/개발상태를같은Issue에회신→Flutter직접연결이다. dev/main통합·운영배포·이슈종료/실데이터삭제없음이다.
+
+- 인계전 시각시험이 과거T/수06~10시 조합에 치우치지 않도록 실제target=C 수06~10시와 과거T를 각각 명시하도록 보강해 **2PASS/30.18초**를 재확인했다(기존42와중복2·미합산). 앱/migration/image228파일은 동일, 추가tmpfs DB/runner/network도정리했다.

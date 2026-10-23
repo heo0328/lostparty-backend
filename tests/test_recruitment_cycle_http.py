@@ -94,7 +94,9 @@ def test_membership_and_application_pages_are_target_scoped(candidate):
         assert not lists.applications(actor(w['uid']),c,rid=room_arg)['data']['items']
     denied('ROOM_LEADER_REQUIRED',lists.applications,actor(b['uid']),n,rid=rid)
     commands.process(actor(a['uid']),uuid.UUID(app['application_id']),uuid.uuid4(),decision(app,context(a,rid,n,'apply')))
-    page=lists.memberships(actor(b['uid']),c)
+    assert lists.memberships(actor(b['uid']),c)['data']['items']==[]
+    assert lists.memberships(actor(b['uid']),c,'ended')['data']['items']==[]
+    page=lists.memberships(actor(b['uid']),c,'all')
     assert page['data']['items'][0]['target_participation_state']=='not_selected'
     assert page['data']['items'][0]['permissions']['view_plan']['allowed'] is False
     assert not page['data']['items'][0]['assignments']

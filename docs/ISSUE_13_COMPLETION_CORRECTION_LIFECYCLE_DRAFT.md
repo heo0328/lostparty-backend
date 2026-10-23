@@ -1,6 +1,8 @@
 # Issue #13 — 본인 완료 정정·완료 방 보관 계약 제안1
 
-2026-10-23 / Backend / feat/raid-recruitment / **검토안·미합의·미구현**.
+2026-10-23 / Backend / feat/raid-recruitment / **제안 당시 검토안 기록**.
+
+현재는 [Flutter127](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358680312)이 수용했고 [개발 인계](ISSUE_13_COMPLETION_CORRECTION_DEVELOPMENT.md)의 구현/실행 OpenAPI·예시가 기준이다. 아래 미합의·미구현 표현은 제안 당시 상태를 보존한 것이다.
 
 요청 원본은 [전체124번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358203104), 독립 수정 결과는 [전체125번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358397626)다. 소비 구현은 29408243192ed3a37a347ade046db26ad2d918b9이며 이 문서는 실행 OpenAPI가 아니다. 기존 endpoint의 의미를 조용히 바꾸지 않고 아래 소비 변경을 먼저 협의한다.
 

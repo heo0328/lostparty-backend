@@ -28,6 +28,7 @@ from app.raid_rooms import character_candidates
 from app.raid_rooms.candidate_schemas import CandidatePage
 from app.raid_rooms import session_display_schemas as display_schemas
 from app.raid_rooms import resume_review, resume_review_schemas
+from app.raid_rooms import completion_correction, completion_correction_schemas as correction_schemas
 
 
 class CycleRoute(AvailabilityRoute):
@@ -51,6 +52,7 @@ class CycleRoute(AvailabilityRoute):
         if request.method=='POST' and request.url.path.endswith('/weekly-resume-proposals'):return {'preview_only'}
         if request.method!='GET':return set()
         if request.url.path.endswith('/raid-room-character-candidates'):return {'filter_context_token','limit','cursor'}
+        if request.url.path.endswith('/completion-correction-context'):return {'target_cycle_key'}
         if request.url.path.endswith('/common-context'):return {'command'}
         if request.url.path.endswith('/command-context'):return {'target_cycle_key','command','round_id'}
         if request.url.path.endswith('/candidates'):return {'target_cycle_key'}
@@ -402,3 +404,13 @@ for _route in router.routes:
         'participation-cancellation-context','participation-cancellations','opening-context',
         'recruitment-openings','leadership-transfer-context','leadership-transfers') else 'contract3_'+_name
     if _route.path.endswith('/manual-completion'):_route.operation_id='contract3_manual_completion'
+
+
+@router.get('/me/characters/{character_id}/raid-weekly-states/{raid_id}/completion-correction-context', response_model=correction_schemas.CorrectionContext, responses=errors)
+def completion_correction_context(character_id:UUID,raid_id:str,principal:Principal,target_cycle_key:str):
+    return completion_correction.context(principal,character_id,raid_id,target_cycle_key)
+
+
+@router.post('/me/characters/{character_id}/raid-weekly-states/{raid_id}/completion-corrections', response_model=correction_schemas.CorrectionResult, responses=errors)
+def correct_completion(character_id:UUID,raid_id:str,principal:Principal,key:Key,data:correction_schemas.CorrectionCommand):
+    return completion_correction.execute(principal,character_id,raid_id,key,data)[1]

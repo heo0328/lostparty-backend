@@ -66,6 +66,8 @@ def load(db, rows, uid):
             SessionBinding,SessionBinding.session_id==Session.id).join(ScheduleHead,ScheduleHead.group_id==SessionBinding.group_id).where(
             RoomCycle.id.in_(ids),ScheduleHead.active.is_(True),Session.state=='confirmed').order_by(Session.id)):
         starts[cid].append(start)
+    from app.raid_rooms import completed_room_lifecycle as archive
+    archived_ids=set(db.scalars(select(RoomCycle.room_id).where(RoomCycle.id.in_(ids),archive.archived(RoomCycle.room_id))))
     result={}
     for row in rows:
         gen=generations.get(row.id);leader=leaders.get(gen.leader_cycle_member_id) if gen else None
@@ -74,7 +76,7 @@ def load(db, rows, uid):
             leader_membership_id=leader.membership_id if leader else None)
         mine=own.get(row.id)
         role='none' if mine is None else 'leader' if mine.id==leadership['leader_cycle_member_id'] else 'member'
-        result[row.id]=dict(leadership=leadership,leader_display=displays.get(gen.leader_cycle_member_id),
+        result[row.id]=dict(archived=row.room_id in archived_ids,leadership=leadership,leader_display=displays.get(gen.leader_cycle_member_id),
             groups=groups[row.id],starts=starts[row.id],items=items[row.id],count=counts.get(row.id,0),role=role,
             state={'cancelled':'cancelled','completed':'completed','stopped':'stopped_incomplete','review_required':'review_required'}.get(gen.state,'open'))
     return result

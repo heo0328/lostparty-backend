@@ -210,7 +210,17 @@ lease store; do not introduce a second dedup namespace or in-memory cache.
         with session() as db, db.begin():
             uid = authorize(db, principal, write=True)
             stamp = now(db)
+            from app.raid_rooms import completed_room_lifecycle as archive
+            rid = archive.mutation_room(db, payload) if operation != 'create' else None
+            if rid is not None:
+                from app.raid_rooms.admission_service import room as visible_room
+                visible_room(db, uid, rid)
+                archive.require_active(db, rid)
             outcome = run(db, uid, stamp)
+            db.flush()
+            if rid is not None and archive.is_archived(db, rid):
+                for cycle_key in db.scalars(select(RoomCycle.cycle_key).where(RoomCycle.room_id==rid)):
+                    touch_directory(db, cycle_key)
             status, result = outcome[:2]
             saved = commit_result(db, ticket, status, result)
             db.flush()
