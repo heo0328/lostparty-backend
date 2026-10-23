@@ -1,5 +1,7 @@
 # 모집 탐색 — 선택 주차 본인 실제 참가 방 제외 설계안1
 
+최신 소비대조: [#24 전체1번째 Flutter 회신](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6369170940). 기존요청/응답/SQL제외·커서표식은소비가능·blocking API변경요청없음. Backend검색의미/head·커서계약고정과Flutter stale커서첫페이지회복은후속이며현재자동재조회완료가아니다. 이번은정적검토이며구현/시험·개발반영승인이아니다. 아래설계안1을보완할근거로보존한다.
+
 2026-10-24 / Backend / feat/raid-recruitment / **기획·설계 제안, 미구현**.
 
 요구 원본은 [#13 전체135번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6366977367)다. 이미 참가한 모집을 탐색 결과에서 반복 노출하지 않고, 참가/기록 화면과 기존 회원 접근은 유지한다. 독립 완료조건으로 검색 후속에 추적하며 탈퇴/해산과 같은 작업 브랜치를 유지한다.

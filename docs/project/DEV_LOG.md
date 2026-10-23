@@ -2193,3 +2193,12 @@ NEXT_WORK/AI_CONTEXT/추적표를최신다음Backend계약/호환설계로갱신
 독립완료조건의#24검색/#25탈퇴·해산에본문전문/상호·원본연결·상단상태/다음담당을게시하고 [#13 전체137번째 Backend · 설계/후속이관](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6368822874) 회신을실제조회해전문·전체순번확인했다. 새이슈본문은댓글순번에포함하지않는다. 기존브랜치유지/미완료이관·원본요구폐기아님, #22/#23기존구현과Flutter실인수대기는별도보존했다.
 
 다음Flutter는새정책재수용/동일시험반복이아닌#24기존검색캐시/#25메뉴·전용ACK·C→N순서·복구/기록접근의구체소비차이검토,다음Backend closed wire/예시/구현구간고정이다. 현116/174계약JSON·새경로미노출확인/문서diff검사만수행,신규동작실행시험·코드/API/실행OpenAPI·서버/DB/키변경없음. 설계문서로컬커밋/미push·전문은Issue공개,dev/main/운영·Issue종료없음.
+
+
+## 2026-10-24 — #24/#25 Flutter 전체1번째 설계 소비대조 수신
+
+[#24 전체1번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6369170940)는기존요청/DTO·SQL페이지전제외/커서표식소비가능·blocking변경없음이다. 현재앱CURSOR_STALE는기존rows/cursor/cache폐기+failure이며자동회복은아직없음,후속최대1회첫페이지회복/명시갱신은Flutter책임이다. Backend검색기본설명·semantics/head·커서고정은남는다.
+
+[#25 전체1번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6369171307)는방향기술소비가능이며4보완(메뉴옵션별접근격리/현재T미참가+반대리더,planned후상태와room/Member/CM/target/leadership revision규칙,review/null리더명시reader,ended회원/그룹탈퇴·재가입자기기록wire)을요청했다. 빈effects관계종료는앱별도알림/한도무효화·비대상T화면유지/대상T이탈을맡는다. recovery안내/명시복구진입은기존review영역UX제안이며제품승인·네번째상시버튼·필수단계로해석하지않는다.
+
+두회신은Flutter6e3d81bc정적소비대조/문서변경보고이며새기능/시험/개발반영승인아님이다. 다음Backend closed wire/대표예시/구현구간고정·해당Issue결과회신,동일정책재수용/기존전체시험요청없음. 이번은수신확인/기획문서상태갱신·diff검사/로컬커밋미push만수행. 외부댓글/코드/API/실행OpenAPI·서버/DB/키/새실행시험·Issue종료/dev/main/운영변경없음.

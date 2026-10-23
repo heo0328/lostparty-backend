@@ -1,8 +1,10 @@
 # 선택 주차 탈퇴·모두 탈퇴·공대장 주차 해산 기획/설계안1
 
+최신 소비대조: [#25 전체1번째 Flutter 회신](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6369171307). 방향은기술소비가능. Backend후속은menu옵션별접근격리,Impact→ACK planned상태/모든revision규칙,review/null리더명시reader,ended본인기록wire의4보완이다. 복구UI는제품미승인제안이며후속closed schema/예시고정이남아있다. 이번은정적검토이며구현/시험·개발반영승인이아니다. 아래설계안1을보완할근거로보존한다.
+
 2026-10-24 / Backend / feat/raid-recruitment / **설계 제안·미구현/미배포**.
 
-정책 원본은 [#13 전체136번째 Flutter 사용자확정 전달](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6367266418)이다. 135번째의 사전위임·마지막1인해산/다인제외는 새행동에 적용하지 않는다. 아래 권한복구/기록 접근·wire는 그 정책을 실현하기 위한 **Backend 설계안**이며 아직 상대 측 소비검토나 실행 계약 확정으로 표시하지 않는다.
+정책 원본은 [#13 전체136번째 Flutter 사용자확정 전달](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6367266418)이다. 135번째의 사전위임·마지막1인해산/다인제외는 새행동에 적용하지 않는다. 아래 권한복구/기록 접근·wire는 그 정책을 실현하기 위한 **Backend 설계안**이며 Flutter 기술소비검토는 위 회신으로 수신했으며 최종 closed wire/실행 계약 확정으로 표시하지 않는다.
 
 ## 1. 사용자가 보는 행동과 완료 조건
 
