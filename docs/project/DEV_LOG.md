@@ -2065,3 +2065,10 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - preview Key/pending 없음·null/[]/순서/고정본문·닫힌 DTO·권한/confirmation·legacy/stale 차단·원명령/Ack·적용 후 현재T plan 자동조회와 조회 실패 시 원Ack 확정 보존을 보고했다. 중간28/152 및 기존 F5/F6-A/B 수치를 최종153에 합산하지 않는다.
 - 신규 계약 차이/Backend 변경 요청이 없어 구현·서버/DB/키 변경·시험 재실행·중복 댓글은 없다. 다음 Flutter F1~F6 실회원/사용자 기기 인수 준비와 최종 연결/조건 체크리스트 대조, Backend 재현 차이 대응이다. 실회원 HTTP/쓰기·실제ID/참가·동의/예약/완료/N·기기/성능·운영 인수, pending 앱종료 후 영속복구는 별도 미완료다.
 - NEXT_WORK/AI_CONTEXT/추적표 및 Issue 상단의 다음 담당을 갱신하고 기존 본문/OPEN을 보존한다. 이 수신 기록은 로컬 문서 커밋이며 신규 구현 인계나 push·dev/main 통합·운영 배포·Issue 종료는 하지 않는다.
+
+
+## 2026-10-23 — #13 Flutter123~125 수신 / 새 완료 정정·방 수명 계약 요청
+
+- 공식 Issue 본문/전체125댓글을 조회했다. 전체123번째 Flutter는2019cefe 문서게시·인수표15행미실행/수동인수대기, [전체124번째 Flutter · 첫 기기 피드백/서버 보완 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358203104)은 새 제품 요구, [전체125번째 Flutter · 독립 수정 결과/Backend 대기](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358397626)는2ba24d95 push·최종단일190mock/전체분석0 보고다. 기존153/중간실행 합산이나 Backend 독립재현으로 확대하지 않는다.
+- 다음 Backend는 본인 party/manual 완료해제(타인보존/참가·동의·예약복원없음/취소시각·과거주차·CAS·원ACK), current 관계/검색 상태, 다중raid 전체완료+N없음 논리종료/기록보존·N유지/직접상세·재개의 코드/계약 대조와 최소 계약안 검토다. 기존 manual근거만 해제 정책의 변경 요청이며 사용자 발언 전달을 신규 계약 합의/구현 완료로 표시하지 않는다. 물리삭제 승인 아님이다.
+- 사용자 정상 확인 전달은 레벨/최고난이도·생성후 실제T상세/새생성·변경캐릭터완료에 한정한다. 전체 실회원/기기/성능/운영 인수는 미완료다. NEXT_WORK/AI_CONTEXT/추적표에 다음 Backend·미완료를 기록했다. 이번은 회신 확인/로컬 문서 기록이며 앱/실행계약/서버/DB/키 변경·시험·댓글/이슈 변경·push/merge/배포/데이터삭제는 없다.

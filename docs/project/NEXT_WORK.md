@@ -2,6 +2,17 @@
 
 2026-10-23 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13), OPEN.
 
+## 현재 후속 — 첫 실기기 피드백의 Backend 계약 검토 대기
+
+[전체124번째 Flutter · 완료 해제/방 수명 보완 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358203104)과 [전체125번째 Flutter · 독립 수정 결과/서버 보완 대기](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358397626)를 확인했다. 기존 F6-C 구현/인계 완료와 구분하며 다음 담당은 Backend다.
+
+- 본인 캐릭터/실제T/raid의 manual·party 양쪽 완료 해제 계약 검토: 타인 완료 보존, 참가/좌석/동의/예약 자동복원 없음. 소유/활동·과거주차와 취소 가능 시각(완료 생성의 수10시 조건을 그대로 적용한다고 가정하지 않음)·CAS/멱등/동시 완료·출처/summary/ACK 의미와 기존 endpoint 변경 여부를 정리한다. Flutter가 전달한 새 제품 요구이며 아직 신규 계약 합의/구현 완료가 아니다.
+- current memberships의 legacy_intent/not_selected/completed 관계·room/cycle 상태 및 검색 노출을 실제 구현과 대조한다. Flutter125의 participating/review_required+열린cycle 표시 보완은 서버 방 수명을 대신하지 않는다.
+- 다중raid 전체완료·다음주 함께하기 없음의 서비스상 논리 종료/보관 계약 검토: 일부완료로 종료하지 않음, N이 열렸으면 N참가/리더/일정 보존, 완료근거/원ACK/감사 보존, 목록/직접상세/재개 정책 명시. 물리삭제나 실제 데이터 정리 요청으로 해석하지 않는다.
+- 다음 Backend는 관련 코드/계약 대조→최소 계약안·필요한 독립 후속 분리 판단→같은 Issue 협의다. 합의 구현 시 검증·commit/push·정확한 OpenAPI/SHA 인계 후 Flutter 연결이다. 현재 서버/DB/키 변경·신규 구현/시험은 없다.
+- Flutter125는 2ba24d95b59db5cfc758c8c1de26ee96bfc4b200 commit/push·최종 단일190mock PASS/전체분석0 보고. 개별 캐릭터 갱신/선호역할/주간후보필터/참가중 표시 등을 수정했고 Backend2940824 소비 유지다. 독립재현 결과가 아니며 기존153/중간실행과 합산하지 않는다.
+- Flutter123 인수표15행은 미실행 보고였고, Flutter124/125에서 사용자 레벨/최고난이도·생성후 실제주차상세/새생성·변경캐릭터 완료만 실제 정상 확인을 전달했다. 전체 U행/실회원/기기/성능·운영 인수 완료로 확대하지 않는다.
+
 ## 현재 — F6-C 재개 확인 Backend 구현·개발 반영 완료
 
 [Backend118 제안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6355880490)을 [Flutter120](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6356264877)이 세방식 모두 수용해 구현했다. [개발 안내](../ISSUE_13_WEEKLY_RESUME_REVIEW_DEVELOPMENT.md)·[실행 OpenAPI](../../openapi/two-cycle.openapi.yaml)가 기준이다.
@@ -12,7 +23,7 @@
 
 소비구간 `29408243192ed3a37a347ade046db26ad2d918b9` commit/push·원격SHA확인 및 [전체121번째 Backend · F6-C 구현/개발 반영/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6356827586) 게시·전문일치 확인을 완료했다. Flutter122의 F6-C 연결 결과를 수신했다. 다음 담당은 Flutter F1~F6 전체 실회원/사용자 기기 인수 준비·최종 연결/조건 체크리스트 대조이며 Backend는 재현 차이 대응이다.
 
-## 다음 Flutter — F1~F6 실회원·기기 인수 준비
+## 이전 인계 — F1~F6 실회원·기기 인수 준비
 
 [전체122번째 Flutter · F6-C 연결 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6357361150)에서 Backend2940824 소비·Flutter618f95e6/feature/raid-recruitment-scheduling commit/push·원격일치, 최종 단일153mock PASS·변경Dart7파일 분석0을 보고했다. Backend 독립재현이나 실회원/기기 인수 근거로 확대하지 않는다.
 
