@@ -2152,3 +2152,15 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 양방향수용/전용ACK·원pending/원ACK·원자성·다른T/완료보존은확인됐다. Backend의다음은22 최소캐릭터/raid/난이도/완료·취소표시를동일Context스냅샷/표시revision으로닫는보완과23 실제CM/양수gen source review의current_only 정리범위/권한·미확정거절/안내·구경로를명시하는것이다. 같은정책수용반복대기가아니며보완/구현/wire·예시·SHA·개발반영/DB여부인계담당은Backend다.
 - 마지막1인해산유지가사용자확정이고양T다인강제해산은요청하지않았다는정정을현재문서/이슈상태에반영한다. 과거당시미확정표현은이력으로보존한다. 제안1의participating한정을최종승인구현으로표시하지않으며구현/새실행검증은아직없다.
 - NEXT_WORK/AI_CONTEXT/추적표/제안문서의현재담당을갱신했다. 이번회신확인과상태정리에서새코드/API/서버/DB/키·시험·댓글게시·merge/배포없음이다. 상시규칙으로문서로컬커밋/미push, #13/#22/#23 OPEN·129기존인계는유지한다.
+
+## 2026-10-23 — #22/#23 원자적 참가관리 구현·격리검증·개발 반영
+
+Flutter각전체1번째 방향수용 회신을 확인하고 Backend각전체2번째로 #22 표시스냅샷(6361940655)/#23 source review 정리(6361941083)를 명시했다. [개발 안내](../ISSUE_22_23_ATOMIC_MEMBER_ACTIONS_DEVELOPMENT.md)·[합성예시](../design/issue22-23-atomic-member-actions.examples.json)·실행OpenAPI174경로가 기준이다. 기존170경로/기존schema·기본116전체·canonical0.4.1/cycle_wire는 보존했다.
+
+cycles.execute 한트랜잭션/공통쓰기잠금/원ACK에 새개인완료후T탈퇴·자동승계/후계없음전체거절/마지막T완료·불완료null리더와 현재만/양T동일회원추방을 연결했다. 동일스냅샷표시·명시/숨은CAS·권한/대상등록/소유/활동/lease·세대·최종주차/만료·N보존·선택T별무효화를 닫았다. source review는 관계/양수gen/lease확정과현재공대장자격이있으면 current_only 정리를 허용하고 불확정은거절한다. 구API·구pending/원ACK·타인/기존완료/지속회원은 보존한다. migration/새DDL없다.
+
+격리고유39PASS(신규33/기존회귀6):29/362.46초→추가/재확인/회귀11/144.64초→Nsource/개인재확인3/44.02초(재확인4중복제외). 초기 날짜직렬화/GETquery타입/시험의server_time·파생permission비교실패를수정했고초기17PASS등은고유수에중복합산하지않았다. 합성principal HTTP·동시동일Key1회효과·2번째T실패/감사/최종C·만료rollback·원ACKrollover·review허용/거절·Nsource순서/타round거절·기존remove/개인완료/보관을검증했다. 예시17그룹 응답33/요청9의42개 게시schema/format검증PASS,token검증후가림이다.
+
+실제API8000은92490ff3bf3e777d6342cb7a416af042ccf6654f8429c37a8a7cfd2796d71352/230소스일치·두프로필계약전체일치·health200·신규4경로무인증/잘못된Bearer8개401/no-store/WWW-Authenticate다. 교체직전/직후106표476행 내용지문/열정의·DB0030·환경/키mount/보안/포트/command지문동일,DB재시작/삭제/초기화·키교체·실회원쓰기없음. 전이미지pre-atomic-members태그보존·임시runner/tmpfsDB/network만정리했고기존API/DB두개healthy다.
+
+다음은 구현구간commit/push·원격SHA확인→각Issue정확한소비SHA/계약·예시인계→Flutter직접연결/표적검증회신이다. 정상실회원HTTP·실기기전체/성능·운영·dev/main통합은미완료이며Issue13/22/23은OPEN유지. 마지막1인해산유지는확정/양T다인강제해산요청없음이다.

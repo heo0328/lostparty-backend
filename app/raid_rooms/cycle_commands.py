@@ -33,7 +33,7 @@ def resolve(db, uid, rid, key, stamp, *, write=False):
 def leadership(db,row):
     generation=db.get(CycleGeneration,(row.id,row.generation))
     leader=db.get(CycleMember,generation.leader_cycle_member_id) if generation else None
-    if generation is not None and generation.state=='cancelled' and leader is None:
+    if generation is not None and (generation.state=='cancelled' or (generation.state=='completed' and row.state=='closed' and generation.closed_at is not None)) and leader is None:
         return dict(leader_cycle_member_id=None,leadership_revision=generation.leadership_revision,leader_membership_id=None)
     if generation is None or leader is None:fail('ROOM_REVIEW_REQUIRED')
     return dict(leader_cycle_member_id=leader.id,leadership_revision=generation.leadership_revision,

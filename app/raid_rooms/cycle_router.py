@@ -31,6 +31,9 @@ from app.raid_rooms import resume_review, resume_review_schemas
 from app.raid_rooms import completion_correction, completion_correction_schemas as correction_schemas
 
 
+from app.raid_rooms import atomic_members, atomic_member_schemas as atomic_schemas
+
+
 class CycleRoute(AvailabilityRoute):
     def repeated_query(self,request):
         return {'experience_levels'} if request.method=='GET' and request.url.path.endswith('/raid-rooms') else set()
@@ -52,6 +55,8 @@ class CycleRoute(AvailabilityRoute):
         if request.method=='POST' and request.url.path.endswith('/weekly-resume-proposals'):return {'preview_only'}
         if request.method!='GET':return set()
         if request.url.path.endswith('/raid-room-character-candidates'):return {'filter_context_token','limit','cursor'}
+        if request.url.path.endswith('/personal-completion-departure-context'):return {'target_cycle_key','round_id'}
+        if request.url.path.endswith('/member-removal-context'):return {'target_cycle_key','target_cycle_member_id'}
         if request.url.path.endswith('/completion-correction-context'):return {'target_cycle_key'}
         if request.url.path.endswith('/common-context'):return {'command'}
         if request.url.path.endswith('/command-context'):return {'target_cycle_key','command','round_id'}
@@ -414,3 +419,23 @@ def completion_correction_context(character_id:UUID,raid_id:str,principal:Princi
 @router.post('/me/characters/{character_id}/raid-weekly-states/{raid_id}/completion-corrections', response_model=correction_schemas.CorrectionResult, responses=errors)
 def correct_completion(character_id:UUID,raid_id:str,principal:Principal,key:Key,data:correction_schemas.CorrectionCommand):
     return completion_correction.execute(principal,character_id,raid_id,key,data)[1]
+
+
+@router.get('/raid-rooms/{room_id}/personal-completion-departure-context',response_model=atomic_schemas.DepartureContext,responses=errors)
+def departure_context(room_id:UUID,target_cycle_key:atomic_schemas.CycleKey,round_id:UUID,principal:Principal):
+    return atomic_members.get(principal,room_id,target_cycle_key,round_id=round_id)
+
+
+@router.post('/raid-rooms/{room_id}/personal-completion-departures',response_model=atomic_schemas.ActionResult,responses=errors)
+def personal_departure(room_id:UUID,data:atomic_schemas.DepartureCommand,principal:Principal,key:Key):
+    return atomic_members.execute(principal,room_id,key,data,departure=True)[1]
+
+
+@router.get('/raid-rooms/{room_id}/member-removal-context',response_model=atomic_schemas.RemovalContext,responses=errors)
+def member_removal_context(room_id:UUID,target_cycle_key:atomic_schemas.CycleKey,target_cycle_member_id:UUID,principal:Principal):
+    return atomic_members.get(principal,room_id,target_cycle_key,cmid=target_cycle_member_id)
+
+
+@router.post('/raid-rooms/{room_id}/member-removals',response_model=atomic_schemas.ActionResult,responses=errors)
+def atomic_removal(room_id:UUID,data:atomic_schemas.RemovalCommand,principal:Principal,key:Key):
+    return atomic_members.execute(principal,room_id,key,data)[1]

@@ -1,22 +1,22 @@
 # 이슈 주제별 추적표
 
-현재 작업 브랜치: **feat/raid-recruitment**. G3는 PR20 bb144e0/후행ce3064f로 dev통합·원격확인/그룹브랜치로컬·원격정리했고 main77a1fe5는유지한다. 기존모집c41fd03/F1·F2는보존·미push이며dev기준을merge로반영한다.
+현재 작업 브랜치: **feat/raid-recruitment**. G3는 PR20 bb144e0/후행ce3064f로 dev통합·원격확인/그룹브랜치로컬·원격정리했고 main77a1fe5는유지한다. 모집 구현은 작업 브랜치에서 게시/협업하며 dev/main 통합은 별도다.
 
-2026-10-18 사용자 지시로 정리했다. 한 이슈의 직접 기능/완료 조건에 집중하고 독립 후속은 링크로만 연결한다. 아래 번호는 GitHub 이슈 번호이며 Backend 작업 단계 번호가 아니다. 현재 통합 기준은 dev/ce3064f·main/77a1fe5이며 기존로컬API8000/DB0016은 유지한다.
+2026-10-18 사용자 지시로 정리했다. 한 이슈의 직접 기능/완료 조건에 집중하고 독립 후속은 링크로만 연결한다. 아래 번호는 GitHub 이슈 번호이며 Backend 작업 단계 번호가 아니다. 당시 통합 기준은 dev/ce3064f·main/77a1fe5였다. 현재 개발API는 two-cycle174경로/DB0030이며 최신실행은 NEXT_WORK를 따른다.
 
 ## 열려 있는 주제
 
 | 이슈 | 주제 | 다음 담당·상태/완료 조건 |
 |---|---|---|
 | [#12](https://github.com/heo0328/lostparty-backend/issues/12) | 그룹 G1/G2 Flutter 연결 | Backend 구현/통합 완료. Flutter 연결/관련 검증과 사용SHA 회신 미확인. 현재 Flutter 우선작업을 중단시키지 않음 |
-| [#13](https://github.com/heo0328/lostparty-backend/issues/13) | 통합모집·시간/참가/주간관리 | 완료정정/보관 소비8bbcfc8/Backend129 인계완료·고유42PASS/예시8/API170·DB0030·기존104표430행보존. 다음Flutter 직접연결/인수결과. 개인완료후탈퇴와양T추방은 [전체132번째 Backend · 원자적 참가관리 계약 제안/후속 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6361053787)로 #22/#23 독립후속이관(미완료/브랜치유지), 원본요구폐기아님. 실회원/기기전체·성능/운영미완료·마지막1인해산유지확정/양T다인강제해산요청없음·OPEN |
+| [#13](https://github.com/heo0328/lostparty-backend/issues/13) | 통합모집·시간/참가/주간관리 | 완료정정/보관 소비8bbcfc8/Backend129 인계완료·고유42PASS/예시8/당시API170·DB0030·기존104표430행보존. 다음Flutter 직접연결/인수결과. 개인완료후탈퇴와양T추방은 [전체132번째 Backend · 원자적 참가관리 계약 제안/후속 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6361053787)로 #22/#23 독립후속이관(Backend구현/개발174경로·DB0030 반영완료, 게시/소비인계준비·Flutter미완료/브랜치유지), 원본요구폐기아님. 실회원/기기전체·성능/운영미완료·마지막1인해산유지확정/양T다인강제해산요청없음·OPEN |
 | [#15](https://github.com/heo0328/lostparty-backend/issues/15) | V2 Flutter 인증/분쟁 | #13 전체16번째Flutter 보고기준 D1~D4 dev반영·마감, 분쟁실기기는사용자판단보류. 이후 #13 전체17번째에서 로그인화면재구성수정 별도마감·계약검토전환을보고했으며분쟁실기기보류는별도 |
 | [#16](https://github.com/heo0328/lostparty-backend/issues/16) | G3 완료 구현/dev 통합·조건부 해산 후속 | 관리GET/이전/일반탈퇴는 구현332a8ab·인계349fb79/PR20 bb144e0 dev통합·원격확인/완료브랜치정리. 통합전45PASS·실행계약일치(기존148PASS와중복), [전체6번째 Backend 통합결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6262944673). 조건부해산은실제그룹모집원본후속·추방/대표변경미구현/Flutter연결·실기기별도, 이슈유지 |
 | [#17](https://github.com/heo0328/lostparty-backend/issues/17) | 캐릭터 소멸 근거·이력·이름 재사용 ID | Flutter전체1번째범위확인·Backend 현재기능/증거공백 검토·최소계약 보완. 기존L1/claim/조회 재사용. 실제삭제/보류해제 승인 아님 |
 | [#18](https://github.com/heo0328/lostparty-backend/issues/18) | 활동 자동추가·직접제외 보존 | 활동브랜치89a3248/설계5fff83b 로컬미push보존. [전체3번째Flutter](https://github.com/heo0328/lostparty-backend/issues/18#issuecomment-6264981603)는설계접수/별도소비검토대기이며미승인·구현전 |
 | [#19](https://github.com/heo0328/lostparty-backend/issues/19) | 사용자/그룹 주간 이용 통계 | Flutter전체1번째검토·type최초고정/함께집계·해산OFF/평균분모/그룹조회권한미확정·실제방원천선행. 집계/조회 미구현·개인manual결과 집계 금지 |
-| [#22](https://github.com/heo0328/lostparty-backend/issues/22) | 개인 완료후 선택T 탈퇴·공대장 자동승계 | #13 Flutter131 원본·제안1 본문전문/관련#23연결. active선택1완료/잔여T취소·자동승계/마지막종료·다른T보존, [Flutter1](https://github.com/heo0328/lostparty-backend/issues/22#issuecomment-6361482436) 방향수용·다음Backend 동일스냅샷표시/매핑근거보완→구현/검증·wire/예시/SHA/개발인계. 표시보완대기·미구현/OPEN |
-| [#23](https://github.com/heo0328/lostparty-backend/issues/23) | 현재/양T 동일회원 원자적 내보내기 | #13 Flutter128/130 원본·제안1 본문전문/관련#22연결. 각T리더권한/option별token/current_only/both원자ACK·완료보존, [Flutter1](https://github.com/heo0328/lostparty-backend/issues/23#issuecomment-6361482811) 방향수용·다음Backend source review 정리범위/권한·거절보완→구현/검증·wire/예시/SHA/개발인계. review보완대기·미구현/OPEN |
+| [#22](https://github.com/heo0328/lostparty-backend/issues/22) | 개인 완료후 선택T 탈퇴·공대장 자동승계 | 전체2번째 Backend 표시보완 구현/개발반영 완료. [개발안내](../ISSUE_22_23_ATOMIC_MEMBER_ACTIONS_DEVELOPMENT.md)·고유39PASS(23합동)/174경로·DB0030. 다음Backend 게시/소비인계→Flutter 전용reader/확인/ACK·상세이탈 연결/결과회신, 실회원·기기 인수미완료·OPEN |
+| [#23](https://github.com/heo0328/lostparty-backend/issues/23) | 현재/양T 동일회원 원자적 내보내기 | 전체2번째 Backend source review보완 구현/개발반영 완료. [개발안내](../ISSUE_22_23_ATOMIC_MEMBER_ACTIONS_DEVELOPMENT.md)·option별token/current_only격리/both전체원자ACK. 다음Backend 게시/소비인계→Flutter 카드3선택/전용ACK·선택T별 갱신 연결/회신, 실회원·기기 인수미완료·OPEN |
 
 
 ## 이번 종료

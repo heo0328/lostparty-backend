@@ -71,7 +71,7 @@ def load(db, rows, uid):
     result={}
     for row in rows:
         gen=generations.get(row.id);leader=leaders.get(gen.leader_cycle_member_id) if gen else None
-        if gen is None or (leader is None and gen.state!='cancelled'):fail('ROOM_REVIEW_REQUIRED')
+        if gen is None or (leader is None and not (gen.state=='cancelled' or (gen.state=='completed' and row.state=='closed' and gen.closed_at is not None))):fail('ROOM_REVIEW_REQUIRED')
         leadership=dict(leader_cycle_member_id=leader.id if leader else None,leadership_revision=gen.leadership_revision,
             leader_membership_id=leader.membership_id if leader else None)
         mine=own.get(row.id)

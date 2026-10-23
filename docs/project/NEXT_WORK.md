@@ -1,50 +1,21 @@
 # 다음 실행
 
-2026-10-23 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13), OPEN.
+2026-10-23 / **feat/raid-recruitment** / [#13](https://github.com/heo0328/lostparty-backend/issues/13), [#22](https://github.com/heo0328/lostparty-backend/issues/22), [#23](https://github.com/heo0328/lostparty-backend/issues/23) OPEN.
 
-## 공통 기준 — Issue21 전달/문서 정리 완료·종료
+## 현재 실행 — #22/#23 구현·개발 반영 완료, 게시·소비 인계
 
-[Issue21](https://github.com/heo0328/lostparty-backend/issues/21)의 [공통 원문62240fe](https://github.com/heo0328/LostParty_flutter/blob/62240fe25711d26c478c295590c80114ebf69a6a/docs/architecture/DEVELOPMENT_QUALITY_AND_UX_STANDARD.md)을 읽고 [Backend 최소 지침](../DEVELOPMENT_QUALITY_AND_UX_STANDARD.md)을 AGENTS/개발·협업 규칙에 연결했다. 기존 규칙 충돌 없음, 승인된 후속 기능부터 사용자문제/책임/선택·소비영향/필요검증에 적용한다. API/DB/배포/전면감사·최적화 착수 없음이다. 릴리즈 배포·안정 확인 후 종료보고에서 배포main/태그 기준 목적별 최적화 검토시점을 안내하되 지금 브랜치/자동작업을 만들지 않는다. [전체1번째 Backend · 품질/UX 지침 반영 결과](https://github.com/heo0328/lostparty-backend/issues/21#issuecomment-6360604622)에 적용기준/실제순번·전문일치 확인, 사용자의 문서 commit/push 지시에 따라 지침afb0a0c·전달/종료기록02a8ce2와 게시상태 기록을 feat/raid-recruitment에 함께 게시한다. 사용자 지시로 내용전달 전용 이슈는 추가댓글 없이 종료한다. 별도회신/수용대기는 없고 양측은 이후승인작업부터 적용한다. Issue13 후속은 아래 상태를 유지한다.
+[개발 안내](../ISSUE_22_23_ATOMIC_MEMBER_ACTIONS_DEVELOPMENT.md), [OpenAPI174경로](../../openapi/two-cycle.openapi.yaml), [합성예시17그룹](../design/issue22-23-atomic-member-actions.examples.json)이 기준이다. [#22 전체2번째 Backend 표시 보완](https://github.com/heo0328/lostparty-backend/issues/22#issuecomment-6361940655), [#23 전체2번째 Backend review 보완](https://github.com/heo0328/lostparty-backend/issues/23#issuecomment-6361941083)을 구현했다. 같은 정책 수용을 다시 요청하지 않는다.
 
-## 현재 — 완료 정정·방 보관 게시/개발반영/소비인계 완료
+- #22: Context에 동일스냅샷의 character/raid/난이도·효과와 display_revision을 결합했다. 선택1개만 완료·잔여본인T취소·실제탈퇴/자동승계·후계없음 전체거절·마지막completed/incomplete/null리더, 다른T/지속회원/기존완료 보존이다. Flutter는 전용reader/ACK와 표시/영향 의미 비교·원본문 재송·성공후 member-only plan 미의존/상세이탈을 연결한다.
+- #23: 실제CM/양수gen·관계/lease가 확정된 source review는 현재 자격있는 공대장의 current_only 정리를 지원한다. 불확정관계는 ROOM_REVIEW_REQUIRED, 반대review/미확정gen/actor없음은 정확한 status와target=null이다. 각T권한·option별token/current_only 반대불변·both 전체원자 ACK를 제공한다. Flutter는 기존 취소/현재만/함께 선택·mode별 의미 비교/무효화·전용ACK를 연결하며 자동fallback하지 않는다.
+- 최종 고유39PASS(신규33/기존회귀6), 예시42개 게시schema/format검증·기본116/두주차174 실행계약일치·230소스 이미지일치. 실제 API92490ff3… healthy/DB0030, 교체 전후106표476행 내용·열정의·설정보존, 새4경로 인증거절8검사/health200. migration/DB재시작·실회원쓰기/키변경 없음. 임시시험환경정리 완료.
+- 다음 Backend: 위 구현 구간 commit/push·원격SHA 확인 후 각 후속Issue에 정확한소비SHA/계약·예시/개발상태를 인계한다. 다음 Flutter: 인계받은 새4경로 직접 연결/표적검증 결과를 해당Issue에 회신한다. 새 동작의 정상실회원 HTTP·실기기·성능·운영 인수는 미확인이며 같은 기존시험을 반복 요청하지 않는다.
+- 마지막1인해산 유지는 사용자 확정이고 양T다인강제해산은 요청하지 않았다. #13 원본의 통합모집 인수·기존129 완료정정/보관 연결은 별도 유지하며 세 Issue를 이번 Backend 구현만으로 종료하지 않는다.
 
-[Flutter127 수용/최종 wire 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358680312)을 기준으로 [개발 안내](../ISSUE_13_COMPLETION_CORRECTION_DEVELOPMENT.md)·[예시8개](../design/issue13-completion-correction.examples.json)·[실행 OpenAPI](../../openapi/two-cycle.openapi.yaml)의 새2경로/총170경로를 구현했다. 기존168경로/기존schema·manual/summary·원ACK 의미는 유지한다. 복구용 room=null/gen=null 실관계와 양수gen review, 보관회원 detail/plan의 permission/access·실제UUID/리더십, 새context/ACK·주차경계·오류 순서를 닫았다.
+## 기존 인계·별도 후속
 
-관련 고유42PASS(신규26/회귀16). 초기42묶음41PASS/구계약 기대1실패 뒤 새current/all 계약으로 시험기대 수정·5PASS(4중복) 재확인, 탐색24와 합산없음이다. 예시8개의 closed OpenAPI 검증·기본116/두주차170 실행계약 전체일치·app/alembic228파일 바이트 일치다. 실제 API8000/이미지13291847… healthy·DB0030: 기존104업무표430행/전체내용·열정의·설정보존, 새 감사표0행·총106표431행(version포함). DB재시작/기존행삭제·수정/키교체·실회원 쓰기 없음, 실제ready/health/인증거절4검사·임시환경정리 완료다.
-
-소비 `8bbcfc8cb89e69eb1f9747a0fcf2e919e41c3b76` commit/push·원격SHA일치 및 [전체129번째 Backend · 완료정정/보관 구현·개발반영·소비인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360251618) 전문/실제순번 확인을 완료했다. 다음Flutter는 새reader/정정writer·원pending schema호환/권한/ACK·목록/기록 직접차이 연결·결과회신이다. 같은 계약 수용/기존 mock 반복 요청은 하지 않는다. 실제 정상회원HTTP·실기기전체/성능·운영 인수, 과거·은퇴UI 확대/pending영속복구/#19는 별도다. 아래는 이전 구간 기록이다.
-
-## 다음 Backend — #22 표시 스냅샷 / #23 source review 보완
-
-[#22 전체1번째 Flutter · 방향수용/표시근거 보완](https://github.com/heo0328/lostparty-backend/issues/22#issuecomment-6361482436), [#23 전체1번째 Flutter · 카드3선택수용/source review 범위 확인](https://github.com/heo0328/lostparty-backend/issues/23#issuecomment-6361482811)을 확인했다. 둘다 방향은 수용됐고 같은정책 재수용 대기가 아니다. 정확한 소비 근거 보완과 구현인계의 **다음 담당은 Backend**다. 새4경로는 여전히 미구현이며 현재8bbcfc8/170경로/DB0030·완료정정/보관129인계는 유지한다.
-
-- #22: Context UUID 배열을 별도시점 plan과 결합하면 캐릭터/raid/난이도·편성 표시 변경을 놓칠 수 있다. Context와 같은 스냅샷의 최소 표시 요약을 넣거나 plan/표시revision·정확한 매핑/의미비교 근거를 닫아야 한다. 일반회원/승계/후계없음 confirmation=null/마지막completed·incomplete null리더/원ACK rollover의 정확한OpenAPI·SHA·예시를 구현인계한다. Flutter는전용reader/ACK·token시각과의미변경구분·성공뒤member-plan비의존/상세이탈을 맡는다.
-- #23: 기존카드의needs_review/source review 정리 대상이 새participating한정으로 사라지지 않게, 실제CM/양수gen 확정된 source review의current_only 지원 여부·정확한권한/오류와 미확정gen 거절/안내·기존경로를 결정한다. review를participating으로위장하거나옛API자동fallback하지않는다. 반대review/actor없는participating의target=null·각T권한/option별token/current_only반대불변·both원자ACK는방향수용됐다. 새source review 허용/거절 포함실행예시/closed schema·SHA를인계한다.
-- 정정: **마지막1인해산유지는 사용자확정, 양T다인강제해산은 요청없음**이다. 더이상사용자확인대기로표시하지않으며후속범위에추가하지않는다.
-- 다음 Backend: 위보완을각Issue에서명시→합의범위구현/격리검증→commit/push·원격확인→정확한실행OpenAPI/예시/소비SHA·개발반영/DB여부인계. 다음Flutter는그인계수신후직접연결/표적검증결과를각후속에회신한다. 기존반복시험/같은정책수용요청없음이다.
-- 두회신은 Flutter673e7e46 기준 정적소비대조 보고이며 기능/새mock/실서버·기기검증이아니다. 이번Backend는회신확인/문서정리만했고새코드/API/서버/DB/키·시험변경없음/문서로컬커밋·미push다. 원본13은OPEN·기존인계/통합인수를유지하며#22/#23도OPEN이다.
-
-## 이전 — F6-C 재개 확인 Backend 구현·개발 반영 완료
-
-[Backend118 제안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6355880490)을 [Flutter120](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6356264877)이 세방식 모두 수용해 구현했다. [개발 안내](../ISSUE_13_WEEKLY_RESUME_REVIEW_DEVELOPMENT.md)·[실행 OpenAPI](../../openapi/two-cycle.openapi.yaml)가 기준이다.
-
-기존 POST의 읽기전용preview/Key분리, GETplan opt-in의재개제안별resume_review, 보호된생성/응답token과고정시각/설정/영향·현재권한/CAS를구현했다. null retained/[] 무일정·명시배열/순서·생성자표/1인별도응답·거절/미응답의참가재연결과시간동의구분·원Ack를보존한다. 새JSONB review_version=1과구형legacy_unverifiable를구분하며신규보호제안의token없는새응답은거절한다(Flutter120수용). 구형미결payload/원Ack·기본false응답을보존하고실패token fallback/과거행갱신/추가DDL은없다.
-
-최종65PASS/763.70초+구형시각미정보완3PASS/41.43초(중복2제외고유66:신규30/기존회귀36)·두프로필OpenAPI전체일치·Python223소스/이미지바이트일치다. 실제API8000은168경로/DB0029·50928839…/healthy, 교체전후105표344행/전체내용지문·환경/키mount·보안/포트/command보존이다. 임시검증DB/runner/network정리완료, migration/초기화/실회원쓰기/키변경없음이다.
-
-소비구간 `29408243192ed3a37a347ade046db26ad2d918b9` commit/push·원격SHA확인 및 [전체121번째 Backend · F6-C 구현/개발 반영/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6356827586) 게시·전문일치 확인을 완료했다. Flutter122의 F6-C 연결 결과를 수신했다. 다음 담당은 Flutter F1~F6 전체 실회원/사용자 기기 인수 준비·최종 연결/조건 체크리스트 대조이며 Backend는 재현 차이 대응이다.
-
-## 이전 인계 — F1~F6 실회원·기기 인수 준비
-
-[전체122번째 Flutter · F6-C 연결 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6357361150)에서 Backend2940824 소비·Flutter618f95e6/feature/raid-recruitment-scheduling commit/push·원격일치, 최종 단일153mock PASS·변경Dart7파일 분석0을 보고했다. Backend 독립재현이나 실회원/기기 인수 근거로 확대하지 않는다.
-
-- F6-C 생성 전 preview/제안별 표시·확인/원명령 재송·원Ack/recorded·applied 구분 및 적용 후 현재T 자동조회 연결을 보고했다. 조회 실패에도 원Ack 확정·pending해제를 유지한다.
-- 신규 계약 차이·추가 Backend 변경 요청은 없다. 중복 확인 댓글이나 동일 시험 요청은 작성하지 않는다.
-- 정상인증회원 HTTP·실회원쓰기·새ID/참가/시간동의/예약·완료/N 보존·확인창/접근성/실기기/성능은 미확인이다. Backend DB/HMAC/권한/CAS/경합/원자성/정족수의 Flutter 독립재현도 미확인이며 Backend 기존 자동검증과 구분한다.
-- Flutter는 F1~F6 전체 인수 준비·최종 조건 대조를 진행한다. Backend는 재현 가능한 차이 발생 시 해당 구간만 대응한다. 모집관리 pending 앱종료 후 영속복구는 별도 후속이다.
-
-## 수신·후속 상태
-
-- Flutter114 F5/1a909e7 push·단일106mock PASS/분석0, Flutter117 F6-A/660433d push·단일108mock PASS/분석0, [Flutter119 F6-B](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6356041000) ea0c932f47094e70d324ec790c2892f8011b774f push/원격확인·단일156mock PASS/분석0 보고다. Flutter119는B별도사용자승인구현임을명시했다. Backend독립재현/실회원·기기인수는아니며서로합산하지않는다.
-- 정정은manual근거해제만/완료Assignment·Round·party·참가·예약복원역명령없음이다. 모집관리pending은app소유메모리writer이며앱종료뒤영속복구완료로확대하지않는다. #19통계는독립후속이다.
-- 기본0.4.1/policy4·canonical SHA·기본0023OpenAPI는유지한다. 재기동은compose.yaml+compose.two-cycle.yaml/two-cycle factory이며DB29에기본0023앱/구worker를혼용하지않는다. [전환/복구 경계](../ISSUE_13_W5_LIVE_CUTOVER.md)를따르고source23checkpoint재실행/과거snapshot overwrite없음. dev/main병합·운영배포·Issue종료는하지않았다.
+- 완료정정/보관 소비8bbcfc8: [Backend129](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360251618)·[개발안내](../ISSUE_13_COMPLETION_CORRECTION_DEVELOPMENT.md). 본인 manual/party 완료근거 정정과 실제 완료 기록/참가 복원은 구분한다. Flutter 직접 연결·결과 회신은 별도이며 기존 pending/원ACK를 새명령에 강제 캐스팅하지 않는다.
+- F6-C 소비2940824: [Backend121](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6356827586), [Flutter122](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6357361150) 연결/mock 보고수신. F1~F6 전체 정상회원·기기 인수/성능과 모집관리 pending 앱종료 후 영속복구는 미완료다. 과거 시험/보고 상세는 [DEV_LOG](DEV_LOG.md)를 따른다.
+- #19 통계, #17 생명주기, #18 활동정책 등 독립후속은 [추적표](ISSUE_TRACKER.md)를 따른다. 이번구간으로 범위를 확대하지 않는다.
+- Issue21은 내용전달/문서정리로 종료했고 추가회신·수용대기가 없다. 승인된 후속에 [품질/UX 기준](../DEVELOPMENT_QUALITY_AND_UX_STANDARD.md)을 적용한다. 릴리즈/안정 확인 후 배포main/태그 기준의 별도 최적화 검토시점 안내는 남아 있다.
+- 재기동은 compose.yaml+compose.two-cycle.yaml/two-cycle factory/DB0030이다. 기본0023앱·구worker 혼용, 과거snapshot 덮어쓰기/초기화, dev/main merge·운영배포는 이번 범위가 아니다.

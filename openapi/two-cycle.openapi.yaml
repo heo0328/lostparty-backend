@@ -39354,6 +39354,924 @@
           }
         }
       }
+    },
+    "/v2/raid-rooms/{room_id}/personal-completion-departure-context": {
+      "get": {
+        "tags": [
+          "recruitment-cycle-candidate"
+        ],
+        "summary": "Departure Context",
+        "operationId": "departure_context_v2_raid_rooms__room_id__personal_completion_departure_context_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Room Id"
+            }
+          },
+          {
+            "name": "target_cycle_key",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+              "format": "date",
+              "title": "Target Cycle Key"
+            }
+          },
+          {
+            "name": "round_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Round Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DepartureContext"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Request Entity Too Large",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Too Many Requests",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "const": 60
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/raid-rooms/{room_id}/personal-completion-departures": {
+      "post": {
+        "tags": [
+          "recruitment-cycle-candidate"
+        ],
+        "summary": "Personal Departure",
+        "operationId": "personal_departure_v2_raid_rooms__room_id__personal_completion_departures_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Room Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid4",
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DepartureCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Request Entity Too Large",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Too Many Requests",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "const": 60
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/raid-rooms/{room_id}/member-removal-context": {
+      "get": {
+        "tags": [
+          "recruitment-cycle-candidate"
+        ],
+        "summary": "Member Removal Context",
+        "operationId": "member_removal_context_v2_raid_rooms__room_id__member_removal_context_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Room Id"
+            }
+          },
+          {
+            "name": "target_cycle_key",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+              "format": "date",
+              "title": "Target Cycle Key"
+            }
+          },
+          {
+            "name": "target_cycle_member_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Target Cycle Member Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RemovalContext"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Request Entity Too Large",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Too Many Requests",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "const": 60
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/raid-rooms/{room_id}/member-removals": {
+      "post": {
+        "tags": [
+          "recruitment-cycle-candidate"
+        ],
+        "summary": "Atomic Removal",
+        "operationId": "atomic_removal_v2_raid_rooms__room_id__member_removals_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Room Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid4",
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemovalCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Request Entity Too Large",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Too Many Requests",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "const": 60
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -63873,6 +64791,1032 @@
           "joined_at"
         ],
         "title": "Participation"
+      },
+      "ActionEffect": {
+        "properties": {
+          "target_cycle_key": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "format": "date",
+            "title": "Target Cycle Key"
+          },
+          "room_cycle_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Cycle Id"
+          },
+          "target_generation": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Target Generation"
+          },
+          "target_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Target Revision"
+          },
+          "cycle_member_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Cycle Member Id"
+          },
+          "cycle_member_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Cycle Member Revision"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "cancelled",
+              "removed"
+            ],
+            "title": "State"
+          },
+          "leadership": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Leadership"
+          },
+          "completed_assignment_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 1,
+            "title": "Completed Assignment Ids"
+          },
+          "cancelled_assignment_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "title": "Cancelled Assignment Ids"
+          },
+          "preserved_completed_assignment_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "title": "Preserved Completed Assignment Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "target_cycle_key",
+          "room_cycle_id",
+          "target_generation",
+          "target_revision",
+          "cycle_member_id",
+          "cycle_member_revision",
+          "state",
+          "leadership",
+          "completed_assignment_ids",
+          "cancelled_assignment_ids",
+          "preserved_completed_assignment_ids"
+        ],
+        "title": "ActionEffect"
+      },
+      "ActionResult": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ActionResultData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "ActionResult"
+      },
+      "ActionResultData": {
+        "properties": {
+          "command_id": {
+            "type": "string",
+            "format": "uuid4",
+            "title": "Command Id"
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "personal_completion_departure",
+              "member_removal"
+            ],
+            "title": "Action"
+          },
+          "outcome": {
+            "type": "string",
+            "const": "applied",
+            "title": "Outcome"
+          },
+          "executed_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Executed At"
+          },
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "subject_membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Subject Membership Id"
+          },
+          "affected_cycle_keys": {
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+              "format": "date"
+            },
+            "type": "array",
+            "maxItems": 2,
+            "minItems": 1,
+            "title": "Affected Cycle Keys"
+          },
+          "effects": {
+            "items": {
+              "$ref": "#/components/schemas/ActionEffect"
+            },
+            "type": "array",
+            "maxItems": 2,
+            "minItems": 1,
+            "title": "Effects"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "command_id",
+          "action",
+          "outcome",
+          "executed_at",
+          "room_id",
+          "subject_membership_id",
+          "affected_cycle_keys",
+          "effects"
+        ],
+        "title": "ActionResultData"
+      },
+      "AssignmentDisplay": {
+        "properties": {
+          "assignment_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Assignment Id"
+          },
+          "round_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Round Id"
+          },
+          "item_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Item Id"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "character_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Character Name"
+          },
+          "raid_id": {
+            "type": "string",
+            "title": "Raid Id"
+          },
+          "raid_name": {
+            "type": "string",
+            "title": "Raid Name"
+          },
+          "difficulty_id": {
+            "type": "string",
+            "title": "Difficulty Id"
+          },
+          "difficulty_name": {
+            "type": "string",
+            "title": "Difficulty Name"
+          },
+          "catalog_version": {
+            "type": "string",
+            "title": "Catalog Version"
+          },
+          "effect": {
+            "type": "string",
+            "enum": [
+              "complete",
+              "cancel",
+              "preserve_completed"
+            ],
+            "title": "Effect"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "assignment_id",
+          "round_id",
+          "item_id",
+          "character_id",
+          "character_name",
+          "raid_id",
+          "raid_name",
+          "difficulty_id",
+          "difficulty_name",
+          "catalog_version",
+          "effect"
+        ],
+        "title": "AssignmentDisplay"
+      },
+      "DepartureCommand": {
+        "properties": {
+          "expected_cycle_key": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "format": "date",
+            "title": "Expected Cycle Key"
+          },
+          "target_cycle_key": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "format": "date",
+            "title": "Target Cycle Key"
+          },
+          "room_cycle_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Cycle Id"
+          },
+          "target_generation": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Target Generation"
+          },
+          "expected_target_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Target Revision"
+          },
+          "context_token": {
+            "type": "string",
+            "maxLength": 4096,
+            "minLength": 1,
+            "title": "Context Token"
+          },
+          "actor_cycle_member_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Actor Cycle Member Id"
+          },
+          "expected_cycle_member_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Cycle Member Revision"
+          },
+          "round_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Round Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_cycle_key",
+          "target_cycle_key",
+          "room_cycle_id",
+          "target_generation",
+          "expected_target_revision",
+          "context_token",
+          "actor_cycle_member_id",
+          "expected_cycle_member_revision",
+          "round_id"
+        ],
+        "title": "DepartureCommand"
+      },
+      "DepartureContext": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/DepartureData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "DepartureContext"
+      },
+      "DepartureData": {
+        "properties": {
+          "action": {
+            "type": "string",
+            "const": "personal_completion_departure",
+            "title": "Action"
+          },
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "subject": {
+            "$ref": "#/components/schemas/DepartureSubject"
+          },
+          "leadership": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Leadership"
+          },
+          "impact": {
+            "$ref": "#/components/schemas/DepartureImpact"
+          },
+          "display": {
+            "$ref": "#/components/schemas/DepartureDisplay"
+          },
+          "permission": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Permission"
+          },
+          "confirmation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Confirmation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "action",
+          "room_id",
+          "subject",
+          "leadership",
+          "impact",
+          "display",
+          "permission",
+          "confirmation"
+        ],
+        "title": "DepartureData"
+      },
+      "DepartureDisplay": {
+        "properties": {
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "character_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Character Name"
+          },
+          "assignments": {
+            "items": {
+              "$ref": "#/components/schemas/AssignmentDisplay"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Assignments"
+          },
+          "display_revision": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Display Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "character_id",
+          "character_name",
+          "assignments",
+          "display_revision"
+        ],
+        "title": "DepartureDisplay"
+      },
+      "DepartureImpact": {
+        "properties": {
+          "complete_assignment_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 1,
+            "minItems": 1,
+            "title": "Complete Assignment Ids"
+          },
+          "cancel_assignment_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "title": "Cancel Assignment Ids"
+          },
+          "preserved_completed_assignment_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "title": "Preserved Completed Assignment Ids"
+          },
+          "released_reservation_count": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Released Reservation Count"
+          },
+          "departure_effect": {
+            "type": "string",
+            "enum": [
+              "leave",
+              "automatic_successor",
+              "close_completed",
+              "close_incomplete"
+            ],
+            "title": "Departure Effect"
+          },
+          "successor": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Successor"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "preserves_other_cycles": {
+            "type": "boolean",
+            "const": true,
+            "title": "Preserves Other Cycles"
+          },
+          "preserves_global_membership": {
+            "type": "boolean",
+            "const": true,
+            "title": "Preserves Global Membership"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "complete_assignment_ids",
+          "cancel_assignment_ids",
+          "preserved_completed_assignment_ids",
+          "released_reservation_count",
+          "departure_effect",
+          "successor",
+          "preserves_other_cycles",
+          "preserves_global_membership"
+        ],
+        "title": "DepartureImpact"
+      },
+      "DepartureSubject": {
+        "properties": {
+          "membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Membership Id"
+          },
+          "cycle_member_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Cycle Member Id"
+          },
+          "cycle_member_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Cycle Member Revision"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "round_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Round Id"
+          },
+          "assignment_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Assignment Id"
+          },
+          "assignment_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Assignment Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "membership_id",
+          "cycle_member_id",
+          "cycle_member_revision",
+          "character_id",
+          "round_id",
+          "assignment_id",
+          "assignment_revision"
+        ],
+        "title": "DepartureSubject"
+      },
+      "OppositeRelation": {
+        "properties": {
+          "target_cycle_key": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "format": "date",
+            "title": "Target Cycle Key"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "none",
+              "participating",
+              "review_required"
+            ],
+            "title": "Status"
+          },
+          "target": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RemovalTarget"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "target_cycle_key",
+          "status",
+          "target"
+        ],
+        "title": "OppositeRelation"
+      },
+      "RemovalCommand": {
+        "properties": {
+          "expected_cycle_key": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "format": "date",
+            "title": "Expected Cycle Key"
+          },
+          "target_cycle_key": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "format": "date",
+            "title": "Target Cycle Key"
+          },
+          "room_cycle_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Cycle Id"
+          },
+          "target_generation": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Target Generation"
+          },
+          "expected_target_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Target Revision"
+          },
+          "context_token": {
+            "type": "string",
+            "maxLength": 4096,
+            "minLength": 1,
+            "title": "Context Token"
+          },
+          "target_membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Target Membership Id"
+          },
+          "target_cycle_member_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Target Cycle Member Id"
+          },
+          "expected_target_cycle_member_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Target Cycle Member Revision"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "current_only",
+              "both"
+            ],
+            "title": "Mode"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_cycle_key",
+          "target_cycle_key",
+          "room_cycle_id",
+          "target_generation",
+          "expected_target_revision",
+          "context_token",
+          "target_membership_id",
+          "target_cycle_member_id",
+          "expected_target_cycle_member_revision",
+          "mode"
+        ],
+        "title": "RemovalCommand"
+      },
+      "RemovalContext": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/RemovalData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "RemovalContext"
+      },
+      "RemovalData": {
+        "properties": {
+          "action": {
+            "type": "string",
+            "const": "member_removal",
+            "title": "Action"
+          },
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "target_membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Target Membership Id"
+          },
+          "source": {
+            "$ref": "#/components/schemas/RemovalTarget"
+          },
+          "opposite_relation": {
+            "$ref": "#/components/schemas/OppositeRelation"
+          },
+          "options": {
+            "$ref": "#/components/schemas/RemovalOptions"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "action",
+          "room_id",
+          "target_membership_id",
+          "source",
+          "opposite_relation",
+          "options"
+        ],
+        "title": "RemovalData"
+      },
+      "RemovalEffect": {
+        "properties": {
+          "target_cycle_key": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "format": "date",
+            "title": "Target Cycle Key"
+          },
+          "cycle_member_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Cycle Member Id"
+          },
+          "cancel_assignment_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "title": "Cancel Assignment Ids"
+          },
+          "preserved_completed_assignment_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "title": "Preserved Completed Assignment Ids"
+          },
+          "released_reservation_count": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Released Reservation Count"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "target_cycle_key",
+          "cycle_member_id",
+          "cancel_assignment_ids",
+          "preserved_completed_assignment_ids",
+          "released_reservation_count"
+        ],
+        "title": "RemovalEffect"
+      },
+      "RemovalImpact": {
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "current_only",
+              "both"
+            ],
+            "title": "Mode"
+          },
+          "affected_cycle_keys": {
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+              "format": "date"
+            },
+            "type": "array",
+            "maxItems": 2,
+            "minItems": 1,
+            "title": "Affected Cycle Keys"
+          },
+          "targets": {
+            "items": {
+              "$ref": "#/components/schemas/RemovalEffect"
+            },
+            "type": "array",
+            "maxItems": 2,
+            "minItems": 1,
+            "title": "Targets"
+          },
+          "preserves_completed": {
+            "type": "boolean",
+            "const": true,
+            "title": "Preserves Completed"
+          },
+          "preserves_global_membership": {
+            "type": "boolean",
+            "const": true,
+            "title": "Preserves Global Membership"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "mode",
+          "affected_cycle_keys",
+          "targets",
+          "preserves_completed",
+          "preserves_global_membership"
+        ],
+        "title": "RemovalImpact"
+      },
+      "RemovalOption": {
+        "properties": {
+          "permission": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Permission"
+          },
+          "impact": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RemovalImpact"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "confirmation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Confirmation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "permission",
+          "impact",
+          "confirmation"
+        ],
+        "title": "RemovalOption"
+      },
+      "RemovalOptions": {
+        "properties": {
+          "current_only": {
+            "$ref": "#/components/schemas/RemovalOption"
+          },
+          "both": {
+            "$ref": "#/components/schemas/RemovalOption"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "current_only",
+          "both"
+        ],
+        "title": "RemovalOptions"
+      },
+      "RemovalTarget": {
+        "properties": {
+          "target_cycle_key": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "format": "date",
+            "title": "Target Cycle Key"
+          },
+          "room_cycle_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Cycle Id"
+          },
+          "target_generation": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Target Generation"
+          },
+          "target_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Target Revision"
+          },
+          "actor_cycle_member_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Actor Cycle Member Id"
+          },
+          "actor_cycle_member_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Actor Cycle Member Revision"
+          },
+          "target_cycle_member_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Target Cycle Member Id"
+          },
+          "target_cycle_member_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Target Cycle Member Revision"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "character_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Character Name"
+          },
+          "leadership": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Leadership"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "target_cycle_key",
+          "room_cycle_id",
+          "target_generation",
+          "target_revision",
+          "actor_cycle_member_id",
+          "actor_cycle_member_revision",
+          "target_cycle_member_id",
+          "target_cycle_member_revision",
+          "character_id",
+          "character_name",
+          "leadership"
+        ],
+        "title": "RemovalTarget"
+      },
+      "Successor": {
+        "properties": {
+          "cycle_member_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Cycle Member Id"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "joined_order": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$",
+            "title": "Joined Order"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "character_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Character Name"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "cycle_member_id",
+          "revision",
+          "joined_order",
+          "character_id",
+          "character_name"
+        ],
+        "title": "Successor"
       }
     },
     "securitySchemes": {
