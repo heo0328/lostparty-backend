@@ -4,7 +4,7 @@
 
 ## 공통 기준 — Issue21 문서 반영
 
-[Issue21](https://github.com/heo0328/lostparty-backend/issues/21)의 [공통 원문62240fe](https://github.com/heo0328/LostParty_flutter/blob/62240fe25711d26c478c295590c80114ebf69a6a/docs/architecture/DEVELOPMENT_QUALITY_AND_UX_STANDARD.md)을 읽고 [Backend 최소 지침](../DEVELOPMENT_QUALITY_AND_UX_STANDARD.md)을 AGENTS/개발·협업 규칙에 연결했다. 기존 규칙 충돌 없음, 승인된 후속 기능부터 사용자문제/책임/선택·소비영향/필요검증에 적용한다. API/DB/배포/전면감사·최적화 착수 없음이다. 릴리즈 배포·안정 확인 후 종료보고에서 배포main/태그 기준 목적별 최적화 검토시점을 안내하되 지금 브랜치/자동작업을 만들지 않는다. Issue13 후속은 아래 상태를 유지한다.
+[Issue21](https://github.com/heo0328/lostparty-backend/issues/21)의 [공통 원문62240fe](https://github.com/heo0328/LostParty_flutter/blob/62240fe25711d26c478c295590c80114ebf69a6a/docs/architecture/DEVELOPMENT_QUALITY_AND_UX_STANDARD.md)을 읽고 [Backend 최소 지침](../DEVELOPMENT_QUALITY_AND_UX_STANDARD.md)을 AGENTS/개발·협업 규칙에 연결했다. 기존 규칙 충돌 없음, 승인된 후속 기능부터 사용자문제/책임/선택·소비영향/필요검증에 적용한다. API/DB/배포/전면감사·최적화 착수 없음이다. 릴리즈 배포·안정 확인 후 종료보고에서 배포main/태그 기준 목적별 최적화 검토시점을 안내하되 지금 브랜치/자동작업을 만들지 않는다. [전체1번째 Backend · 품질/UX 지침 반영 결과](https://github.com/heo0328/lostparty-backend/issues/21#issuecomment-6360604622)에 적용기준/실제순번·전문일치 확인, 지침afb0a0c와 후행기록은 로컬커밋/미push다. 다음양측은 승인작업부터 적용하며 같은수용/시험 반복요청없음. Issue13 후속은 아래 상태를 유지한다.
 
 ## 현재 — 완료 정정·방 보관 게시/개발반영/소비인계 완료
 
