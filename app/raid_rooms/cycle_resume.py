@@ -12,6 +12,7 @@ from app.raid_rooms.cycle_models import CycleMember,CycleRound,CycleGeneration,C
 from app.raid_rooms.source_models import ScheduleProposal as Proposal
 from app.raid_rooms.integrated_models import RecruitmentRound as Round
 from app.raid_rooms.participation_commands import Target
+from app.raid_rooms import resume_review as review
 
 
 def source(db,row):
@@ -48,30 +49,51 @@ def retained(db,row,items):
     return values
 
 
+def prepare_create(db,uid,rid,body,stamp):
+    outcomes.playable(stamp,body['target_cycle_key'])
+    room,row,cm=outcomes.target(db,uid,rid,body['target_cycle_key'],stamp)
+    commands.cas(db,row,body,stamp,leader=True)
+    if body['expected_room_revision']!=room.revision or body['expected_members_revision']!=row.members_revision or body['expected_plan_revision']!=row.plan_revision or body['expected_cycle_member_revision']!=cm.revision:fail('REVISION_CONFLICT')
+    if commands.leadership(db,row)['leader_cycle_member_id']!=cm.id:fail('TARGET_LEADER_REQUIRED',403)
+    life.qualify(db,room,row,cm)
+    if not row.settings_snapshot['continuation_enabled']:fail('CONTINUATION_REQUIRED')
+    rounds,members=source(db,row)
+    if row.state!='closed' or not rounds or not members:fail('ROUND_NOT_STOPPED')
+    pending=list(db.scalars(select(Proposal).join(CycleResume,CycleResume.proposal_id==Proposal.id).where(
+        CycleResume.cycle_id==row.id,CycleResume.generation==row.generation,Proposal.state=='pending').order_by(Proposal.id)))
+    groups=body['schedule_groups'] if body['schedule_groups'] is not None else retained(db,row,{str(r.item_id) for r in rounds})
+    content=dict(rounds=[plan.snapshot(r) for r in rounds],members=[dict(id=str(m.id),revision=m.revision) for m in members],
+        assignments=[life.assignment_snapshot(a) for m in members for a in life.assignments(db,row,m) if a.round_id in {r.id for r in rounds} and a.state=='stopped_incomplete'],schedule_groups=groups)
+    return room,row,cm,jsonable_encoder(content),pending
+
+
 def create(principal,rid,command,data):
-    body=data.model_dump(mode='json')
+    body=review.command_body(data)
     def run(db,uid,stamp):
-        outcomes.playable(stamp,body['target_cycle_key'])
-        room,row,cm=outcomes.target(db,uid,rid,body['target_cycle_key'],stamp)
-        commands.cas(db,row,body,stamp,leader=True)
-        if body['expected_room_revision']!=room.revision or body['expected_members_revision']!=row.members_revision or body['expected_plan_revision']!=row.plan_revision or body['expected_cycle_member_revision']!=cm.revision:fail('REVISION_CONFLICT')
-        if commands.leadership(db,row)['leader_cycle_member_id']!=cm.id:fail('TARGET_LEADER_REQUIRED',403)
-        life.qualify(db,room,row,cm)
-        if not row.settings_snapshot['continuation_enabled']:fail('CONTINUATION_REQUIRED')
-        rounds,members=source(db,row)
-        if row.state!='closed' or not rounds or not members:fail('ROUND_NOT_STOPPED')
-        for p in db.scalars(select(Proposal).join(CycleResume,CycleResume.proposal_id==Proposal.id).where(CycleResume.cycle_id==row.id,CycleResume.generation==row.generation,Proposal.state=='pending')):
-            p.state='obsolete';p.revision+=1
-        groups=body['schedule_groups'] if body['schedule_groups'] is not None else retained(db,row,{str(r.item_id) for r in rounds})
-        content=dict(rounds=[plan.snapshot(r) for r in rounds],members=[dict(id=str(m.id),revision=m.revision) for m in members],
-            assignments=[life.assignment_snapshot(a) for m in members for a in life.assignments(db,row,m) if a.round_id in {r.id for r in rounds} and a.state=='stopped_incomplete'],schedule_groups=groups)
+        protected='resume_context_token' in body
+        checked=None
+        if protected:
+            original={k:v for k,v in body.items() if k!='resume_context_token'}
+            _,row,_=outcomes.target(db,uid,rid,body['target_cycle_key'],stamp)
+            checked=review.verify(body['resume_context_token'],uid,row,'create',stamp)
+            shown,binding,basis,prepared=review.prepare(db,uid,rid,original,stamp)
+            if checked['digest']!=binding:fail('TARGET_CONTEXT_STALE')
+            room,row,cm,content,pending=prepared
+            content.update(review_version=1,review_basis=basis)
+        else:room,row,cm,content,pending=prepare_create(db,uid,rid,body,stamp)
+        for previous in pending:previous.state='obsolete';previous.revision+=1
         p=Proposal(id=uuid.uuid4(),room_id=rid,creator_membership_id=cm.membership_id,revision=1,proposal_plan_revision=1,
             created_from_plan_revision=row.plan_revision,state='pending',created_at=stamp)
         db.add(p);db.flush();db.add(CycleProposal(proposal_id=p.id,room_id=rid,cycle_id=row.id,generation=row.generation,content=[]));db.flush()
         db.add(CycleResume(proposal_id=p.id,room_id=rid,cycle_id=row.id,generation=row.generation,content=jsonable_encoder(content)));db.flush()
-        if len(members)>=2 and cm.id in {m.id for m in members}:votes.vote(db,row,p,cm,'accept',command,stamp)
+        if len(content['members'])>=2 and str(cm.id) in {m['id'] for m in content['members']}:votes.vote(db,row,p,cm,'accept',command,stamp)
         plan.bump(db,row)
-        return 200,life.ack(db,row,command,stamp,outcome='recorded',revisions=[dict(resource='proposal',id=p.id,revision=p.revision),dict(resource='target',id=row.id,revision=row.revision)]),lambda current:outcomes.playable(current,body['target_cycle_key'])
+        def final(current):
+            outcomes.playable(current,body['target_cycle_key'])
+            if checked:
+                if current>=review.datetime.fromisoformat(checked['expires']):fail('COMMAND_CONTEXT_EXPIRED')
+                review.project_groups(row,basis,validate_at=current)
+        return 200,life.ack(db,row,command,stamp,outcome='recorded',revisions=[dict(resource='proposal',id=p.id,revision=p.revision),dict(resource='target',id=row.id,revision=row.revision)]),final
     return cycles.execute(principal,'resume',command,dict(room_id=str(rid),body=body),run)
 
 
@@ -87,6 +109,11 @@ def apply(db,room,row,p,binding,uid,command,stamp):
         snapshots={v['id']:v for v in binding.content['assignments'] if v['membership_id']==str(cm.membership_id)}
         if any(str(a.id) not in snapshots or a.revision!=snapshots[str(a.id)]['revision'] for a in values):fail('PROPOSAL_CONTEXT_CHANGED')
         originals[cm.id]=values
+    protected=binding.content.get('review_version')==1
+    if protected:
+        review.valid_basis(db,row,binding.content,binding.content['review_basis'],members)
+        review.project_groups(row,binding.content['review_basis'],validate_at=stamp)
+        saved_effect=review.effect(db,row,life.actual_member(db,row,uid),binding.content,binding.content['review_basis'],members,accepted,required)
     # Each stopped Round is replaced, never revived. Completed item rounds stay current.
     new={}
     for previous in old.values():
@@ -113,7 +140,7 @@ def apply(db,room,row,p,binding,uid,command,stamp):
     for cm in members:
         submission=db.get(CycleSubmission,cm.id)
         if submission is not None:submissions.append(plan.snapshot(submission));db.delete(submission)
-    outcomes.event(db,row,uid,command,'resume_applied',stamp,dict(proposal_id=str(p.id),search_floor_at=(stamp+timedelta(minutes=30)).isoformat(),previous=binding.content,previous_generation=previous_generation,submissions=submissions,vote_set=vote_set))
+    outcomes.event(db,row,uid,command,'resume_applied',stamp,dict(proposal_id=str(p.id),search_floor_at=(stamp+timedelta(minutes=30)).isoformat(),previous=binding.content,previous_generation=previous_generation,submissions=submissions,vote_set=vote_set,**(dict(review_effect=saved_effect) if protected else {})))
     db.flush()
     groups=[wire.BEditGroup.model_validate(g) for g in binding.content['schedule_groups']]
     plan.edit(db,room,row,uid,command,groups,stamp,confirm_manual=False,evaluate_initial=False)
@@ -135,15 +162,29 @@ def respond(db,uid,pid,command,body,stamp):
     if p.state!='pending':fail('PROPOSAL_NOT_PENDING')
     if body['expected_proposal_revision']!=p.revision or body['expected_proposal_plan_revision']!=p.proposal_plan_revision or body['expected_cycle_member_revision']!=cm.revision:fail('REVISION_CONFLICT')
     if cm.id not in {m.id for m in actual(db,row,binding)}:fail('PROPOSAL_TARGET_REQUIRED',403)
+    protected=binding.content.get('review_version')==1
+    checked=None
+    if protected:
+        if 'resume_context_token' not in body:fail('CONTEXT_INVALID',400)
+        checked=review.verify(body['resume_context_token'],uid,row,'respond',stamp,proposal=p)
+        shown,binding_hash=review.for_proposal(db,room,row,cm,p,binding.content,stamp)
+        if shown['display']['status']=='stale':fail('PROPOSAL_CONTEXT_CHANGED')
+        if shown['confirmation'] is None:fail(shown['display']['permission']['reason'])
+        if checked['digest']!=binding_hash:fail('TARGET_CONTEXT_STALE')
+    elif 'resume_context_token' in body:fail('CONTEXT_INVALID',400)
     if body['response']=='accept':life.qualify(db,room,row,cm)
     schedule_final=graph.final_deadlines(db,row,[],stamp,join=False)
-    def final(current):outcomes.playable(current,key);schedule_final(current)
+    def final(current):
+        outcomes.playable(current,key);schedule_final(current)
+        if checked:
+            if current>=review.datetime.fromisoformat(checked['expires']):fail('COMMAND_CONTEXT_EXPIRED')
+            review.project_groups(row,binding.content['review_basis'],validate_at=current)
     if votes.vote(db,row,p,cm,body['response'],command,stamp):plan.bump(db,row)
     applied=apply(db,room,row,p,binding,uid,command,stamp)
     return 200,life.ack(db,row,command,stamp,outcome='applied' if applied else 'recorded'),final
 
 
-def views(db,row,mine,stamp):
+def views(db,row,mine,stamp,include_resume_display=False):
     cm=life.actual_member(db,row,mine.user_id);result=[]
     for p,binding in db.execute(select(Proposal,CycleResume).join(CycleResume,CycleResume.proposal_id==Proposal.id).where(CycleResume.cycle_id==row.id,CycleResume.generation==row.generation).order_by(Proposal.created_at,Proposal.id)):
         members,accepted,required=counts(db,row,p,binding);v=votes.latest(db,p,cm) if cm else None
@@ -160,4 +201,9 @@ def views(db,row,mine,stamp):
         result.append(dict(proposal_id=p.id,kind='weekly_resume',revision=p.revision,proposal_plan_revision=p.proposal_plan_revision,
             created_from_plan_revision=p.created_from_plan_revision,state=p.state,target_round_ids=[r['id'] for r in binding.content['rounds']],
             eligible_count=len(members),accepted_count=accepted,required_votes=required,my_response=own_response,permissions=dict(respond_proposal=commands.permission(reason))))
+    if include_resume_display:
+        room=db.get(commands.Room,row.room_id)
+        for value in result:
+            p=db.get(Proposal,value['proposal_id']);binding=db.get(CycleResume,p.id)
+            value['resume_review']=review.for_proposal(db,room,row,cm,p,binding.content,stamp,uid=mine.user_id)[0]
     return result

@@ -1,6 +1,8 @@
 # Issue #13 — F6 현재주 재개 일정 확인 계약 제안 1
 
-2026-10-23 / Backend / `feat/raid-recruitment` / **소비 검토안·미합의·미구현**.
+2026-10-23 / Backend / `feat/raid-recruitment` / **계약 제안 당시 기록**.
+
+> [Flutter120](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6356264877)이 아래 세 소비 방식을 모두 수용했다. 합의 후 구현/검증·실행 인계 상태는 [개발 안내](ISSUE_13_WEEKLY_RESUME_REVIEW_DEVELOPMENT.md)를 따른다. 아래의 미합의/미구현·검토요청 표기는 제안 당시 기록이다.
 
 [Flutter115 질문](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6355333496)·[Backend116 확인](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6355428620)에 대응한다. 기준은 게시된 구현 `07c2b671d67e5dfcef5f873ef55ffcb54f87b365`다. 아래는 새 제안이며 현재 실행 OpenAPI/168경로·DB0029·기본0.4.1/policy4·서버/키를 변경하지 않는다. 구현/실제 서버 시험 요청이 아니다.
 

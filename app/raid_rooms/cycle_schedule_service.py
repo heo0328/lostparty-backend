@@ -100,13 +100,15 @@ def propose(principal,rid,command,data):
 
 
 def respond(principal,pid,command,data):
-    body=data.model_dump(mode='json')
+    from app.raid_rooms import resume_review
+    body=resume_review.command_body(data)
     def run(db,uid,stamp):
         plan.ready(db)
         from app.raid_rooms import cycle_outcomes,cycle_resume
         from app.raid_rooms.cycle_outcome_models import CycleResume
         if cycle_outcomes.enabled(db) and db.get(CycleResume,pid) is not None:
             return cycle_resume.respond(db,uid,pid,command,body,stamp)
+        if 'resume_context_token' in body:fail('CONTEXT_INVALID',400)
         binding=db.get(CycleProposal,pid)
         if binding is None:fail('PROPOSAL_NOT_FOUND',404)
         room,row,cm=target(db,uid,binding.room_id,body['target_cycle_key'],stamp,body)

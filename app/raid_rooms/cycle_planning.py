@@ -173,7 +173,8 @@ def refresh(db,room,row,uid,command,stamp):
     cycle_proposals.reevaluate(db,room,row,uid,command,stamp)
 
 
-def edit(db,room,row,uid,command,groups,stamp,*,confirm_manual=True,evaluate_initial=True):
+def validate_edit_groups(db,room,row,groups,*,item_ids=None):
+    """Validate the editable graph without creating or retiring any records."""
     ready(db)
     current=graph.groups(db,row);live=graph.sessions(db,row)
     if any(s.state=='confirmed' or db.scalar(select(Reservation.id).where(Reservation.session_id==s.id).limit(1)) for s in live):fail('SCHEDULE_PROPOSAL_REQUIRED')
@@ -181,7 +182,8 @@ def edit(db,room,row,uid,command,groups,stamp,*,confirm_manual=True,evaluate_ini
     if len({g.client_group_key for g in groups})!=len(groups):fail('INVALID_REQUEST',400)
     ids=[g.existing_group_id for g in groups if g.existing_group_id]
     if len(set(ids))!=len(ids):fail('INVALID_REQUEST',400)
-    existing={g.id:g for g in current};pairs={i.id:rd for i,rd in graph.admission.rounds(db,row) if rd.state=='active'}
+    existing={g.id:g for g in current}
+    items=set(item_ids) if item_ids is not None else {i.id for i,rd in graph.admission.rounds(db,row) if rd.state=='active'}
     for g in groups:
         if (g.existing_group_id is None)!=(g.expected_group_revision is None):fail('INVALID_REQUEST',400)
         if g.existing_group_id and (g.existing_group_id not in existing or existing[g.existing_group_id].revision!=g.expected_group_revision):fail('REVISION_CONFLICT')
@@ -193,8 +195,13 @@ def edit(db,room,row,uid,command,groups,stamp,*,confirm_manual=True,evaluate_ini
         for a in g.alternatives:
             if a.existing_session_id is not None or a.expected_session_revision is not None:fail('SCHEDULE_PROPOSAL_REQUIRED')
             if (a.starts_local is not None)!=(g.planning_mode=='manual'):fail('INVALID_REQUEST',400)
-            if len(a.item_ids)!=len(pairs) or set(a.item_ids)!=set(pairs):fail('ROOM_ITEMS_CHANGED')
+            if len(a.item_ids)!=len(items) or set(a.item_ids)!=items:fail('ROOM_ITEMS_CHANGED')
             if a.starts_local and a.leader_latest_start_local and a.starts_local>a.leader_latest_start_local:fail('LEADER_START_LIMIT')
+    return current,live,existing
+
+
+def edit(db,room,row,uid,command,groups,stamp,*,confirm_manual=True,evaluate_initial=True):
+    current,live,existing=validate_edit_groups(db,room,row,groups)
     before=dict(groups=[snapshot(g) for g in current],alternatives=[snapshot(a) for g in current for a in graph.alternatives(db,g)],
         sessions=[snapshot(s) for s in live])
     for old in current:db.get(ScheduleHead,old.id).active=False

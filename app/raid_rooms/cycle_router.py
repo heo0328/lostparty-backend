@@ -6,7 +6,8 @@ these paths in the runtime OpenAPI would falsely claim mixed-worker readiness.
 import json
 from typing import Annotated, Literal
 from uuid import UUID
-from fastapi import APIRouter, Query, Request
+from fastapi import APIRouter, Query, Request, Header
+from pydantic import UUID4
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import SQLAlchemyError
@@ -26,6 +27,7 @@ from app.raid_rooms import cycle_schedule_service
 from app.raid_rooms import character_candidates
 from app.raid_rooms.candidate_schemas import CandidatePage
 from app.raid_rooms import session_display_schemas as display_schemas
+from app.raid_rooms import resume_review, resume_review_schemas
 
 
 class CycleRoute(AvailabilityRoute):
@@ -46,6 +48,7 @@ class CycleRoute(AvailabilityRoute):
         return bounded
 
     def allowed_query(self, request):
+        if request.method=='POST' and request.url.path.endswith('/weekly-resume-proposals'):return {'preview_only'}
         if request.method!='GET':return set()
         if request.url.path.endswith('/raid-room-character-candidates'):return {'filter_context_token','limit','cursor'}
         if request.url.path.endswith('/common-context'):return {'command'}
@@ -66,7 +69,8 @@ class CycleRoute(AvailabilityRoute):
                 'continuation_enabled','next_character_id','next_selected_role'}
         if request.url.path.endswith('/admission-context'):
             return {'target_cycle_key','character_id','selected_role','intent','include_session_display'}
-        if request.url.path.endswith('/detail') or request.url.path.endswith('/plan'):
+        if request.url.path.endswith('/plan'):return {'target_cycle_key','include_resume_display'}
+        if request.url.path.endswith('/detail'):
             return {'target_cycle_key'}
         if '/raid-rooms/' in request.url.path:return {'target_cycle_key'}
         return set()
@@ -173,8 +177,9 @@ def card(room_id:UUID,target_cycle_key:str,principal:OptionalPrincipal=None):ret
 def detail(room_id:UUID,target_cycle_key:str,principal:Principal):return members.detail(principal,room_id,target_cycle_key)
 
 
-@router.get('/me/raid-rooms/{room_id}/plan',response_model=s.OutputContract3GetV2MeRaidRoomsRoomIdPlan,responses=errors)
-def plan(room_id:UUID,target_cycle_key:str,principal:Principal):return members.plan(principal,room_id,target_cycle_key)
+@router.get('/me/raid-rooms/{room_id}/plan',response_model=resume_review_schemas.ResumePlanContext,response_model_exclude_unset=True,responses=errors)
+def plan(room_id:UUID,target_cycle_key:str,principal:Principal,include_resume_display:Literal['true','false']='false'):
+    return members.plan(principal,room_id,target_cycle_key,include_resume_display=='true')
 
 
 AppState=Literal['pending','accepted','rejected','withdrawn','expired','cancelled','all']
@@ -329,8 +334,11 @@ def complete_personal_round(round_id:UUID,principal:Principal,key:Key,data:input
     return cycle_outcomes.execute(principal,None,round_id,key,data,'personal_completion')[1]
 
 
-@router.post('/raid-rooms/{room_id}/weekly-resume-proposals',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
-def resume_current_cycle(room_id:UUID,principal:Principal,key:Key,data:inputs.Resume):
+@router.post('/raid-rooms/{room_id}/weekly-resume-proposals',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin|resume_review_schemas.ResumePreviewContext,response_model_exclude_unset=True,responses=errors)
+def resume_current_cycle(room_id:UUID,principal:Principal,data:inputs.Resume,
+    key:Annotated[UUID4|None,Header(alias='Idempotency-Key')]=None,preview_only:Literal['true','false']='false'):
+    if preview_only=='true':return resume_review.preview(principal,room_id,data)
+    if key is None:fail('INVALID_REQUEST',400)
     return cycle_resume.create(principal,room_id,key,data)[1]
 
 

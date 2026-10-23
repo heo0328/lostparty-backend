@@ -3,6 +3,7 @@ from datetime import date
 from pydantic import Field, field_validator
 from app.raid_rooms import cycle_wire as wire
 from app.raid_rooms.candidate_schemas import CandidateToken
+from app.raid_rooms.resume_review_schemas import Token
 
 
 class CanonicalCycles:
@@ -33,12 +34,14 @@ class Confirm(CanonicalCycles,wire.InputContract3PostV2RaidSessionsSessionIdPart
 class EditGroups(CanonicalCycles,wire.InputContract3PutV2RaidRoomsRoomIdScheduleGroups):pass
 class SelectGroup(CanonicalCycles,wire.InputContract3PostV2RaidScheduleGroupsGroupIdSelections):pass
 class Propose(CanonicalCycles,wire.InputContract3PostV2RaidRoomsRoomIdScheduleProposals):pass
-class Respond(CanonicalCycles,wire.InputContract3PostV2RaidScheduleProposalsProposalIdResponses):pass
+class Respond(CanonicalCycles,wire.InputContract3PostV2RaidScheduleProposalsProposalIdResponses):
+    resume_context_token: Token = Field(default=None, exclude_if=lambda v:v is None, json_schema_extra=lambda s:s.pop('default',None))
 
 class Outcome(CanonicalCycles,wire.InputContract3PostV2RaidRoundsRoundIdCompletion):pass
 class PersonalOutcome(CanonicalCycles,wire.InputContract3PostV2RaidRoundsRoundIdPersonalCompletion):pass
 class Closure(CanonicalCycles,wire.InputContract3PostV2RaidRoomsRoomIdWeeklyIncompleteClosures):pass
-class Resume(CanonicalCycles,wire.InputContract3PostV2RaidRoomsRoomIdWeeklyResumeProposals):pass
+class Resume(CanonicalCycles,wire.InputContract3PostV2RaidRoomsRoomIdWeeklyResumeProposals):
+    resume_context_token: Token = Field(default=None, exclude_if=lambda v:v is None, json_schema_extra=lambda s:s.pop('default',None))
 class Manual(CanonicalCycles,wire.ManualCompletionCommand):pass
 class TargetSettings(CanonicalCycles,wire.InputContract3PutV2RaidRoomsRoomIdSettings):pass
 class Formation(CanonicalCycles,wire.InputContract3PutV2RaidRoomsRoomIdFormation):pass

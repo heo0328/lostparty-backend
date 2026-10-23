@@ -129,7 +129,7 @@ def detail(principal,rid,key):
         return wire.OutputContract3GetV2RaidRoomsRoomIdDetail.model_validate(result).model_dump(mode='json')
 
 
-def schedule_fields(db,room,row,mine,stamp):
+def schedule_fields(db,room,row,mine,stamp,include_resume_display=False):
     graph=schedule.graph
     groups=[];sessions=[];parts=[];segments=[]
     enabled=schedule.planning_enabled(db)
@@ -184,12 +184,12 @@ def schedule_fields(db,room,row,mine,stamp):
     from app.raid_rooms import cycle_outcomes
     if cycle_outcomes.enabled(db):
         from app.raid_rooms import cycle_resume
-        views+=cycle_resume.views(db,row,mine,stamp)
+        views+=cycle_resume.views(db,row,mine,stamp,include_resume_display)
     return dict(schedule_state='change_pending' if any(v['state']=='pending' for v in views) else 'confirmed' if sessions and all(s['state']=='confirmed' for s in sessions) else 'unconfirmed' if sessions else 'unscheduled',
         schedule_groups=groups,sessions=sessions,session_segments=segments,my_participations=parts,proposals=views)
 
 
-def plan(principal,rid,key):
+def plan(principal,rid,key,include_resume_display=False):
     with base.snapshot(principal) as (db,uid,stamp):
         room,row=read_target(db,uid,rid,key,stamp);mine=base.member(db,uid,room)
         if own_cycle_member(db,row,mine) is None:fail('WEEKLY_PARTICIPANT_REQUIRED',403)
@@ -207,7 +207,7 @@ def plan(principal,rid,key):
                 ('edit_schedule_groups','cancel_target_participation','transfer_leadership','open_next_cycle','reopen_next_cycle',
                  'view_common_context','leave_global','end_global')},leadership=commands.leadership(db,row),
             my_target_role=directory.role(db,uid,row),target_cycle_key=key,target_state=commands.target_state(db,row),
-            **formation(db,row),**schedule_fields(db,room,row,mine,stamp)))
+            **formation(db,row),**schedule_fields(db,room,row,mine,stamp,include_resume_display)))
         from app.raid_rooms.cycle_leadership import action_permissions
         result['data']['permissions'].update(action_permissions(db,uid,room,row,stamp))
         if schedule.planning_enabled(db):
@@ -223,4 +223,7 @@ def plan(principal,rid,key):
                 try:result['data']['permissions'][name]=cycle_common.context(db,uid,room.id,kind,stamp)[0]['data']['permission']
                 except GameError as error:result['data']['permissions'][name]=permission(error.code)
             result['data']['permissions']['view_common_context']=permission(None)
+        if include_resume_display:
+            from app.raid_rooms import resume_review, resume_review_schemas
+            return resume_review.output(resume_review_schemas.ResumePlanContext,result)
         return wire.OutputContract3GetV2MeRaidRoomsRoomIdPlan.model_validate(jsonable_encoder(result)).model_dump(mode='json')

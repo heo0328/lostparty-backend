@@ -2033,3 +2033,16 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - [전체118번째 Backend · F6 재개 일정확인 계약 제안1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6355880490)에검토원본문전문과핵심3항목소비대조요청을게시했다. 새117수신/다음범위를같은댓글에반영해edit했고전문일치를재조회했다. 실제본문제외전체순번118·Backend작성측·계약제안단계이며아직구현/테스트/실행소비SHA인계가아님을명시했다. 로컬문서미push라원격파일링크대신댓글전문을검토원본으로제공했다.
 - 다음Flutter는POSTpreview소비/GETplan별DTO확인/신규보호제안과구형호환경계세항목의수용·구체차이를회신한다. Backend는피드백반영후합의구현·검증/게시/개발실행인계담당이다. 독립F6-B설계는분리하며같은F5/F6-A시험/기존정책을반복요청하지않는다.
 - NEXT_WORK/AI_CONTEXT/추적표와Issue본문상단에제안/다음담당·미합의/미완료를기록하고이전본문/OPEN보존한다. 앱/실행OpenAPI·서버/DB/키·컨테이너미변경/신규시험기동없음, 문서로컬커밋·미push·merge/운영배포없음이다.
+
+
+## 2026-10-23 — #13 F6-C 재개 확인 합의 구현·격리검증·개발 반영
+
+- 사용자진행지시로9584b2c/feat/raid-recruitment에서규칙/현재문서/합의제안·Git(사용자미커밋변경없음)·Issue본문/전체120댓글을확인했다. Flutter120이Backend118세소비방식/구호환경계를전부수용했고추가endpoint/정책/같은시험요청없음을구현기준으로삼았다. 미push문서2커밋은보존했다.
+- 새resume_review/schemas와기존cycle_resume/create/respond/views·plan·router·요청DTO를연결했다. 기존POSTpreview_only=true는READ ONLY/REPEATABLE READ·Key불필요/주어진형식검사·생성/투표/원장/예약쓰기0, false제출은기존Key필수/두200응답이다. plan include_resume_display=true만weekly_resume별review를추가한다. 기존3경로확장이고168경로유지다.
+- 순수일정검증을cycle_planning.validate_edit_groups로분리해preview/기존편집이같은입력의미를검사한다. 고정source/설정·duration/시각/영향/권한·현재eligible/정족수/기존CAS·actor/flow/원본문hash를sealed120초·4096bytes확인에묶고생성/응답/최종만료·시각을재검사한다. 신규JSONB review_version=1·불변basis를추가하며DDL/과거행갱신없음이다. 완료된제안자가투표대상이아니면인원수가2명이상이어도자동표로표시하지않는다.
+- 신규보호제안token없는새응답/일반·구형제안에token/실패tokenfallback을거절한다. 구형생성/응답·원Ack/payload hash·false응답은유지하고optional필드기본null을구본문에추가하지않는다. legacy당시duration은현재값으로추정하지않으며stale/legacy는confirmation=null이다. source/generation/완료/N보존·재연결과수락자실제시간동의를구분한다.
+- 최종관련묶음 **65PASS/763.70초**(신규29·기존회귀36), 실패0/기존anyio deprecation warning1종. 예비3PASS/21PASS/추가6PASS는최종과중복이라합산하지않는다. preview쓰기0/HTTP두형태·키/엄격입력·null/[]/순서·5일정유형/미정·legacy/원Ack·source설정/round/assignment/group변경·actor/flow/변조·만료/최종만료rollback·동시동일명령·수락/거절/자격감소·완료제안자표·N보존·C/수10시/KST수요일00:05·실제합성Bearer/타인/폐기세션·32KiB/정확응답크기·실저장5001후보전체plan1MiB413을검증했다. 기존완료/수동정정/미완료종료·일정조율/후보/편집/표/고정HTTP계약회귀를포함한다.
+- 실행OpenAPI의plan/create query/응답과Resume/Respond token/해당schemas만합의범위로변경했다. 기존필드의타입/필수성불변·기본116/두주차168경로각전체객체일치·core wire/기본OpenAPI/고정0.4.1·policy4/canonical fb4c7d…불변·53경로56동작204schema/84fixture정적검증통과다.
+- 검증이미지 sha256:ea1992bcc3dd78da3defe48930a8c71e7e177a81e5206ecefa3ae7a8d0a39093의app/alembic Python223파일과작업트리바이트일치를확인했다. compose환경/factory command가현재API와같음을값출력없이확인후개발API8000만two-cycle이미지/command로교체했다. 구실행404cf8c4…는pre-resume-review태그보존이다. DB29 migration/초기화/실회원명령/키변경없이교체전후105표344행/전체내용지문·환경/키mount·보안/포트/command일치·healthy·실제두프로필OpenAPI일치다. 이전문서행수를재사용하지않고교체직전344행으로대조했다.
+- 실제내부health200·3경로무인증/오류Bearer401/no-store/WWW-Authenticate6검사·호스트health200통과. 실제정상로그인회원HTTP성공/회원쓰기/기기·성능SLA·운영인수는미확인이다. 임시tmpfs DB/runner/internal network만정리해기존API/DB두컨테이너만healthy로남겼다.
+- Flutter119 F6-B는ea0c932f47094e70d324ec790c2892f8011b774f commit/push·원격일치·6파일단일156mock PASS/분석0보고이며B별도사용자승인을명시했다. Backend독립재현/실회원·기기인수로확대/이전mock합산하지않는다. 다음은구간commit/push·원격확인후Flutter F6-C새소비SHA/계약/개발실행인계다. dev/main병합·운영배포·Issue종료없음이다.

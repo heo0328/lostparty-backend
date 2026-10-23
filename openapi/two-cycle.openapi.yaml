@@ -29800,6 +29800,20 @@
               "type": "string",
               "title": "Target Cycle Key"
             }
+          },
+          {
+            "name": "include_resume_display",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "true",
+                "false"
+              ],
+              "type": "string",
+              "default": "false",
+              "title": "Include Resume Display"
+            }
           }
         ],
         "responses": {
@@ -29808,7 +29822,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OutputContract3GetV2MeRaidRoomsRoomIdPlan"
+                  "$ref": "#/components/schemas/ResumePlanContext"
                 }
               }
             },
@@ -36371,12 +36385,33 @@
             }
           },
           {
+            "name": "preview_only",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "true",
+                "false"
+              ],
+              "type": "string",
+              "default": "false",
+              "title": "Preview Only"
+            }
+          },
+          {
             "name": "Idempotency-Key",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
-              "type": "string",
-              "format": "uuid4",
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid4"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "Idempotency-Key"
             }
           }
@@ -36397,7 +36432,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OutputContract3PostV2RaidRoomsRoomIdJoin"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/OutputContract3PostV2RaidRoomsRoomIdJoin"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ResumePreviewContext"
+                    }
+                  ],
+                  "title": "Response Contract3 Post  V2 Raid-Rooms Room Id Weekly-Resume-Proposals"
                 }
               }
             },
@@ -43471,167 +43514,6 @@
         ],
         "title": "BPlacement"
       },
-      "BPlan": {
-        "properties": {
-          "room_id": {
-            "type": "string",
-            "format": "uuid",
-            "title": "Room Id"
-          },
-          "revision": {
-            "type": "integer",
-            "maximum": 2147483647.0,
-            "minimum": 1.0,
-            "title": "Revision"
-          },
-          "members_revision": {
-            "type": "integer",
-            "maximum": 2147483647.0,
-            "minimum": 1.0,
-            "title": "Members Revision"
-          },
-          "server_time": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Server Time"
-          },
-          "app_capacity": {
-            "$ref": "#/components/schemas/AppCapacity"
-          },
-          "game_items": {
-            "items": {
-              "$ref": "#/components/schemas/BGameItem"
-            },
-            "type": "array",
-            "title": "Game Items"
-          },
-          "schedule_state": {
-            "$ref": "#/components/schemas/ScheduleState"
-          },
-          "schedule_groups": {
-            "items": {
-              "$ref": "#/components/schemas/BGroup"
-            },
-            "type": "array",
-            "title": "Schedule Groups"
-          },
-          "sessions": {
-            "items": {
-              "$ref": "#/components/schemas/BSession"
-            },
-            "type": "array",
-            "title": "Sessions"
-          },
-          "session_segments": {
-            "items": {
-              "$ref": "#/components/schemas/BSegmentSet"
-            },
-            "type": "array",
-            "title": "Session Segments"
-          },
-          "my_membership": {
-            "$ref": "#/components/schemas/BAppRaidRoomsAdmissionSchemasMyMembership"
-          },
-          "my_assignments": {
-            "items": {
-              "$ref": "#/components/schemas/BAssignmentView"
-            },
-            "type": "array",
-            "title": "My Assignments"
-          },
-          "my_participations": {
-            "items": {
-              "$ref": "#/components/schemas/BAppRaidRoomsScheduleOutputParticipation"
-            },
-            "type": "array",
-            "title": "My Participations"
-          },
-          "proposals": {
-            "items": {
-              "anyOf": [
-                {
-                  "$ref": "#/components/schemas/BScheduleProposal"
-                },
-                {
-                  "$ref": "#/components/schemas/BResumeProposal"
-                }
-              ]
-            },
-            "type": "array",
-            "title": "Proposals"
-          },
-          "permissions": {
-            "$ref": "#/components/schemas/Permissions4"
-          },
-          "leadership": {
-            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Leadership"
-          },
-          "my_target_role": {
-            "$ref": "#/components/schemas/MyTargetRole"
-          },
-          "formation_slots": {
-            "items": {
-              "$ref": "#/components/schemas/FormationSlot"
-            },
-            "type": "array",
-            "maxItems": 40,
-            "minItems": 0,
-            "title": "Formation Slots"
-          },
-          "formation_history": {
-            "items": {
-              "$ref": "#/components/schemas/FormationSlot"
-            },
-            "type": "array",
-            "maxItems": 40,
-            "minItems": 0,
-            "title": "Formation History"
-          },
-          "unplaced_assignments": {
-            "items": {
-              "$ref": "#/components/schemas/UnplacedAssignment"
-            },
-            "type": "array",
-            "maxItems": 40,
-            "minItems": 0,
-            "title": "Unplaced Assignments"
-          },
-          "target_cycle_key": {
-            "type": "string",
-            "title": "Target Cycle Key"
-          },
-          "target_state": {
-            "$ref": "#/components/schemas/TargetState"
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "room_id",
-          "revision",
-          "members_revision",
-          "server_time",
-          "app_capacity",
-          "game_items",
-          "schedule_state",
-          "schedule_groups",
-          "sessions",
-          "session_segments",
-          "my_membership",
-          "my_assignments",
-          "my_participations",
-          "proposals",
-          "permissions",
-          "leadership",
-          "my_target_role",
-          "formation_slots",
-          "formation_history",
-          "unplaced_assignments",
-          "target_cycle_key",
-          "target_state"
-        ],
-        "title": "BPlan"
-      },
       "BPowerComparison": {
         "properties": {
           "selected_role": {
@@ -44010,88 +43892,6 @@
           "response_set"
         ],
         "title": "BResponse"
-      },
-      "BResumeProposal": {
-        "properties": {
-          "proposal_id": {
-            "type": "string",
-            "format": "uuid",
-            "title": "Proposal Id"
-          },
-          "kind": {
-            "type": "string",
-            "const": "weekly_resume",
-            "title": "Kind"
-          },
-          "revision": {
-            "type": "integer",
-            "maximum": 2147483647.0,
-            "minimum": 1.0,
-            "title": "Revision"
-          },
-          "proposal_plan_revision": {
-            "type": "integer",
-            "maximum": 2147483647.0,
-            "minimum": 1.0,
-            "title": "Proposal Plan Revision"
-          },
-          "created_from_plan_revision": {
-            "type": "integer",
-            "maximum": 2147483647.0,
-            "minimum": 1.0,
-            "title": "Created From Plan Revision"
-          },
-          "state": {
-            "$ref": "#/components/schemas/State9"
-          },
-          "target_round_ids": {
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "type": "array",
-            "title": "Target Round Ids"
-          },
-          "eligible_count": {
-            "type": "integer",
-            "title": "Eligible Count"
-          },
-          "accepted_count": {
-            "type": "integer",
-            "title": "Accepted Count"
-          },
-          "required_votes": {
-            "type": "integer",
-            "title": "Required Votes"
-          },
-          "my_response": {
-            "$ref": "#/components/schemas/MyResponse"
-          },
-          "permissions": {
-            "additionalProperties": {
-              "$ref": "#/components/schemas/BPermission"
-            },
-            "type": "object",
-            "title": "Permissions"
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "proposal_id",
-          "kind",
-          "revision",
-          "proposal_plan_revision",
-          "created_from_plan_revision",
-          "state",
-          "target_round_ids",
-          "eligible_count",
-          "accepted_count",
-          "required_votes",
-          "my_response",
-          "permissions"
-        ],
-        "title": "BResumeProposal"
       },
       "BReview": {
         "properties": {
@@ -53071,23 +52871,6 @@
         ],
         "title": "OutputContract3GetV2MeRaidRoomsRoomIdContinuationChoices"
       },
-      "OutputContract3GetV2MeRaidRoomsRoomIdPlan": {
-        "properties": {
-          "scope": {
-            "$ref": "#/components/schemas/Scope"
-          },
-          "data": {
-            "$ref": "#/components/schemas/BPlan"
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "scope",
-          "data"
-        ],
-        "title": "OutputContract3GetV2MeRaidRoomsRoomIdPlan"
-      },
       "OutputContract3GetV2MeRaidRoomsRoomIdScheduleContext": {
         "properties": {
           "scope": {
@@ -56160,6 +55943,12 @@
           },
           "expected_leadership_revision": {
             "$ref": "#/components/schemas/Version"
+          },
+          "resume_context_token": {
+            "type": "string",
+            "maxLength": 4096,
+            "minLength": 1,
+            "title": "Resume Context Token"
           }
         },
         "additionalProperties": false,
@@ -56176,6 +55965,740 @@
           "expected_leadership_revision"
         ],
         "title": "Resume"
+      },
+      "ResumeAlternative": {
+        "properties": {
+          "alternative_ref": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 64,
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Alternative Ref"
+          },
+          "weekday": {
+            "type": "integer",
+            "maximum": 7.0,
+            "minimum": 1.0,
+            "title": "Weekday"
+          },
+          "starts_local": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][05]$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Starts Local"
+          },
+          "leader_latest_start_local": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][05]$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Leader Latest Start Local"
+          },
+          "item_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "title": "Item Ids"
+          },
+          "session_id": {
+            "type": "null",
+            "title": "Session Id"
+          },
+          "starts_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Starts At"
+          },
+          "ends_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ends At"
+          },
+          "time_state": {
+            "type": "string",
+            "enum": [
+              "bounded",
+              "start_only",
+              "undetermined"
+            ],
+            "title": "Time State"
+          },
+          "materialization": {
+            "type": "string",
+            "enum": [
+              "on_apply",
+              "after_group_selection",
+              "after_coordination",
+              "not_scheduled"
+            ],
+            "title": "Materialization"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "alternative_ref",
+          "weekday",
+          "starts_local",
+          "leader_latest_start_local",
+          "item_ids",
+          "session_id",
+          "starts_at",
+          "ends_at",
+          "time_state",
+          "materialization"
+        ],
+        "title": "ResumeAlternative"
+      },
+      "ResumeConfirmation": {
+        "properties": {
+          "context_token": {
+            "type": "string",
+            "maxLength": 4096,
+            "minLength": 1,
+            "title": "Context Token"
+          },
+          "issued_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Issued At"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "context_token",
+          "issued_at",
+          "expires_at"
+        ],
+        "title": "ResumeConfirmation"
+      },
+      "ResumeDisplay": {
+        "properties": {
+          "version": {
+            "type": "integer",
+            "const": 1,
+            "title": "Version"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ready",
+              "stale",
+              "legacy_unverifiable"
+            ],
+            "title": "Status"
+          },
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "room_cycle_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Cycle Id"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "target_generation": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Target Generation"
+          },
+          "proposal_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Proposal Id"
+          },
+          "proposal_revision": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2147483647.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Proposal Revision"
+          },
+          "proposal_plan_revision": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2147483647.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Proposal Plan Revision"
+          },
+          "origin": {
+            "type": "string",
+            "enum": [
+              "explicit",
+              "retained",
+              "legacy_unknown"
+            ],
+            "title": "Origin"
+          },
+          "settings_revision": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2147483647.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Settings Revision"
+          },
+          "basis_revision": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 64,
+                "minLength": 64,
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Basis Revision"
+          },
+          "display_revision": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 64,
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Display Revision"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ResumeItem"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "groups": {
+            "items": {
+              "$ref": "#/components/schemas/ResumeGroup"
+            },
+            "type": "array",
+            "title": "Groups"
+          },
+          "effect": {
+            "$ref": "#/components/schemas/ResumeEffect"
+          },
+          "permission": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Permission"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "version",
+          "status",
+          "room_id",
+          "room_cycle_id",
+          "target_cycle_key",
+          "target_generation",
+          "proposal_id",
+          "proposal_revision",
+          "proposal_plan_revision",
+          "origin",
+          "settings_revision",
+          "basis_revision",
+          "display_revision",
+          "items",
+          "groups",
+          "effect",
+          "permission"
+        ],
+        "title": "ResumeDisplay"
+      },
+      "ResumeEffect": {
+        "properties": {
+          "eligible_count": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Eligible Count"
+          },
+          "accepted_count": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Accepted Count"
+          },
+          "required_votes": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Required Votes"
+          },
+          "new_round_count": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "New Round Count"
+          },
+          "new_assignment_count": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "New Assignment Count"
+          },
+          "completed_preserved_count": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed Preserved Count"
+          },
+          "superseded_proposal_count": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Superseded Proposal Count"
+          },
+          "creator_accept_on_submit": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Creator Accept On Submit"
+          },
+          "my_immediate_session_count_on_accept": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "My Immediate Session Count On Accept"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "eligible_count",
+          "accepted_count",
+          "required_votes",
+          "new_round_count",
+          "new_assignment_count",
+          "completed_preserved_count",
+          "superseded_proposal_count",
+          "creator_accept_on_submit",
+          "my_immediate_session_count_on_accept"
+        ],
+        "title": "ResumeEffect"
+      },
+      "ResumeGroup": {
+        "properties": {
+          "group_ref": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 64,
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Group Ref"
+          },
+          "planning_mode": {
+            "$ref": "#/components/schemas/PlanningMode"
+          },
+          "occurrence_mode": {
+            "$ref": "#/components/schemas/OccurrenceMode"
+          },
+          "day_scope": {
+            "$ref": "#/components/schemas/DayScope"
+          },
+          "required": {
+            "type": "boolean",
+            "title": "Required"
+          },
+          "auto_confirm_additional_members": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 7.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Auto Confirm Additional Members"
+          },
+          "alternatives": {
+            "items": {
+              "$ref": "#/components/schemas/ResumeAlternative"
+            },
+            "type": "array",
+            "title": "Alternatives"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_ref",
+          "planning_mode",
+          "occurrence_mode",
+          "day_scope",
+          "required",
+          "auto_confirm_additional_members",
+          "alternatives"
+        ],
+        "title": "ResumeGroup"
+      },
+      "ResumeItem": {
+        "properties": {
+          "item_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Item Id"
+          },
+          "source_round_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Source Round Id"
+          },
+          "raid_id": {
+            "type": "string",
+            "title": "Raid Id"
+          },
+          "difficulty_id": {
+            "type": "string",
+            "title": "Difficulty Id"
+          },
+          "catalog_version": {
+            "type": "string",
+            "title": "Catalog Version"
+          },
+          "duration_minutes": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Duration Minutes"
+          },
+          "duration_source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Duration Source"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "item_id",
+          "source_round_id",
+          "raid_id",
+          "difficulty_id",
+          "catalog_version",
+          "duration_minutes",
+          "duration_source"
+        ],
+        "title": "ResumeItem"
+      },
+      "ResumePlanContext": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ResumePlanData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "ResumePlanContext"
+      },
+      "ResumePlanData": {
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "members_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Members Revision"
+          },
+          "server_time": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Server Time"
+          },
+          "app_capacity": {
+            "$ref": "#/components/schemas/AppCapacity"
+          },
+          "game_items": {
+            "items": {
+              "$ref": "#/components/schemas/BGameItem"
+            },
+            "type": "array",
+            "title": "Game Items"
+          },
+          "schedule_state": {
+            "$ref": "#/components/schemas/ScheduleState"
+          },
+          "schedule_groups": {
+            "items": {
+              "$ref": "#/components/schemas/BGroup"
+            },
+            "type": "array",
+            "title": "Schedule Groups"
+          },
+          "sessions": {
+            "items": {
+              "$ref": "#/components/schemas/BSession"
+            },
+            "type": "array",
+            "title": "Sessions"
+          },
+          "session_segments": {
+            "items": {
+              "$ref": "#/components/schemas/BSegmentSet"
+            },
+            "type": "array",
+            "title": "Session Segments"
+          },
+          "my_membership": {
+            "$ref": "#/components/schemas/BAppRaidRoomsAdmissionSchemasMyMembership"
+          },
+          "my_assignments": {
+            "items": {
+              "$ref": "#/components/schemas/BAssignmentView"
+            },
+            "type": "array",
+            "title": "My Assignments"
+          },
+          "my_participations": {
+            "items": {
+              "$ref": "#/components/schemas/BAppRaidRoomsScheduleOutputParticipation"
+            },
+            "type": "array",
+            "title": "My Participations"
+          },
+          "proposals": {
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/BScheduleProposal"
+                },
+                {
+                  "$ref": "#/components/schemas/ResumeProposalReview"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Proposals"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/Permissions4"
+          },
+          "leadership": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Leadership"
+          },
+          "my_target_role": {
+            "$ref": "#/components/schemas/MyTargetRole"
+          },
+          "formation_slots": {
+            "items": {
+              "$ref": "#/components/schemas/FormationSlot"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "minItems": 0,
+            "title": "Formation Slots"
+          },
+          "formation_history": {
+            "items": {
+              "$ref": "#/components/schemas/FormationSlot"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "minItems": 0,
+            "title": "Formation History"
+          },
+          "unplaced_assignments": {
+            "items": {
+              "$ref": "#/components/schemas/UnplacedAssignment"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "minItems": 0,
+            "title": "Unplaced Assignments"
+          },
+          "target_cycle_key": {
+            "type": "string",
+            "title": "Target Cycle Key"
+          },
+          "target_state": {
+            "$ref": "#/components/schemas/TargetState"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "room_id",
+          "revision",
+          "members_revision",
+          "server_time",
+          "app_capacity",
+          "game_items",
+          "schedule_state",
+          "schedule_groups",
+          "sessions",
+          "session_segments",
+          "my_membership",
+          "my_assignments",
+          "my_participations",
+          "proposals",
+          "permissions",
+          "leadership",
+          "my_target_role",
+          "formation_slots",
+          "formation_history",
+          "unplaced_assignments",
+          "target_cycle_key",
+          "target_state"
+        ],
+        "title": "ResumePlanData"
+      },
+      "ResumePreviewContext": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ResumePreviewData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "ResumePreviewContext"
+      },
+      "ResumePreviewData": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "weekly_resume_preview",
+            "title": "Kind"
+          },
+          "resume_review": {
+            "$ref": "#/components/schemas/ResumeReview"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "kind",
+          "resume_review"
+        ],
+        "title": "ResumePreviewData"
       },
       "ResumeProposal": {
         "properties": {
@@ -56271,6 +56794,91 @@
         ],
         "title": "ResumeProposal"
       },
+      "ResumeProposalReview": {
+        "properties": {
+          "proposal_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Proposal Id"
+          },
+          "kind": {
+            "type": "string",
+            "const": "weekly_resume",
+            "title": "Kind"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "proposal_plan_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Proposal Plan Revision"
+          },
+          "created_from_plan_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Created From Plan Revision"
+          },
+          "state": {
+            "$ref": "#/components/schemas/State9"
+          },
+          "target_round_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "title": "Target Round Ids"
+          },
+          "eligible_count": {
+            "type": "integer",
+            "title": "Eligible Count"
+          },
+          "accepted_count": {
+            "type": "integer",
+            "title": "Accepted Count"
+          },
+          "required_votes": {
+            "type": "integer",
+            "title": "Required Votes"
+          },
+          "my_response": {
+            "$ref": "#/components/schemas/MyResponse"
+          },
+          "permissions": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/BPermission"
+            },
+            "type": "object",
+            "title": "Permissions"
+          },
+          "resume_review": {
+            "$ref": "#/components/schemas/ResumeReview"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "proposal_id",
+          "kind",
+          "revision",
+          "proposal_plan_revision",
+          "created_from_plan_revision",
+          "state",
+          "target_round_ids",
+          "eligible_count",
+          "accepted_count",
+          "required_votes",
+          "my_response",
+          "permissions"
+        ],
+        "title": "ResumeProposalReview"
+      },
       "ResumeRequest": {
         "properties": {
           "expected_cycle_key": {
@@ -56327,6 +56935,30 @@
           "schedule_groups"
         ],
         "title": "ResumeRequest"
+      },
+      "ResumeReview": {
+        "properties": {
+          "display": {
+            "$ref": "#/components/schemas/ResumeDisplay"
+          },
+          "confirmation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResumeConfirmation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "display",
+          "confirmation"
+        ],
+        "title": "ResumeReview"
       },
       "RetirementOut": {
         "properties": {
@@ -61057,6 +61689,12 @@
           },
           "expected_target_revision": {
             "$ref": "#/components/schemas/Version"
+          },
+          "resume_context_token": {
+            "type": "string",
+            "maxLength": 4096,
+            "minLength": 1,
+            "title": "Resume Context Token"
           }
         },
         "additionalProperties": false,
