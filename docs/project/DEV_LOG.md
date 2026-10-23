@@ -2251,3 +2251,12 @@ NEXT_WORK/AI_CONTEXT/추적표를최신다음Backend계약/호환설계로갱신
 사용자 진행 지시와 공식 #24 전체4/#25 전체6/#13 전체140 이후 새 회신 없음·clean branch를 확인했다. [전환 결과](../ISSUE_24_25_DEVELOPMENT_ROLLOUT.md)·[집계](../design/issue24-25-development-rollout.json). 백업 복원0031 리허설과 실제 제한 LOGIN 이행, API/worker 교체,106→108표603행·기존105업무표 내용/열/기록시각/키/시퀀스 보존·환경/DB 컨테이너/볼륨 유지. 이미지67322372…·소스236파일 일치,176/116 계약 전체·HTTP health/검색2/인증거절4 통과. 임시 환경 정리. 단독 readiness 모델 미등록·환경 목록 순서 비교는 검사 도구 보정 후 통과했으며 제품 코드/계약 변경은 없다. 신규 실회원 명령/기기 인수·dev/main·운영은 미실행, 다음 Flutter 연결/자동 검증·정상 로그인 실인수와 Backend 차이 대응. 게시 SHA·회신 링크는 후속 기록한다.
 
 게시: 전환 기록920cc059e5c15a88a8c35e529ebd821af253fc20 commit/push·원격 SHA 일치 확인 후 [#24 전체5번째 Backend · 개발 반영 완료](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6371617690)·[#25 전체7번째 Backend · 개발 반영 완료](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371618996) 게시·전문/순번 확인, 두 Issue 본문 상단 실행176/DB0031·다음 Flutter/Backend 차이 대응으로 갱신했다. 원본 본문·OPEN 보존. 다음은 Flutter 연결·자동 검증/정상 로그인 인수 대기다.
+
+
+## 2026-10-24 — 사용자 지정 개발 계정의 테스트 원정대 인증
+
+사용자가 특정 개발 계정의 미인증 등록 원정대를 테스트용 인증 상태로 바꾸도록 직접 요청했다. 지정 등록1건·preview13캐릭터, 기존 canonical claim/연결 소유권/진행 중 도전0건을 읽기 확인했다. 영문 대소문자는 저장된 정규 이름으로 확인했다. 개인정보·계정/캐릭터 식별자는 공개 문서/Issue에 기록하지 않는다.
+
+0700/0600 비공개 `backups/test-roster-grant-9e7a9217fde1`에 실행 전 DB archive와 결과/감사 식별자를 보관했다. 기존 game-mutations lock·회원/등록 행 잠금과 한 트랜잭션에서 신규 Account/13 canonical Character·NameClaim/미설정 Configuration/도전 참조 없는 Ownership Audit를 만들고 지정 등록의 account 연결·version을 갱신했다. 기존 reconcile을 재사용했고 다른 소유권/도전/인증 자료를 덮어쓰지 않았다. 트랜잭션 내 변경 표는 의도한6개뿐이며 별도 커밋 후 읽기에서 verified/owned·13캐릭터 usable·감사 이력을 확인했다.
+
+이는 사용자 승인 개발 테스트 자료 설정이며 실제 장비 검증/provider 인증 성공이 아니다. 활동/대표는 미설정 유지, 앱 화면 갱신 후 사용자 선택이 다음 확인이다. 코드/API 계약·이미지/worker·DB schema 변경과 재배포/운영 자료 변경은 없다. #24/#25 연결/실인수 다음 담당은 기존 그대로이며 개인정보 Issue 회신은 하지 않았다.
