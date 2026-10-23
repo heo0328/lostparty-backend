@@ -2244,3 +2244,8 @@ NEXT_WORK/AI_CONTEXT/추적표를최신다음Backend계약/호환설계로갱신
 소비 **15e143aeb9f3105a1b8a5816051e0e837726892c / feat/raid-recruitment commit·push·원격 SHA 일치**를 확인했다. [#24 전체4번째 Backend · 검색 구현 인계](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6371301279)·[#25 전체6번째 Backend · 새 명령/profile 구현 인계](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371301934)·[#13 전체140번째 Backend · IF-001 문서 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6371302557)을 게시하고 실제 전체 순번(본문 제외)과 댓글 전문 일치를 조회했다. #24/#25 본문 상단은 현재 source/완료 구간·다음 Flutter 연결/자동 검증·Backend 개발 반영 전 상태로 갱신하고 최초 설계 전문/원본·상호 연결을 보존했다. 세 Issue 모두 OPEN이다.
 
 다음 Flutter는 게시된 source/계약으로 직접 연결 및 표적 자동 검증을 진행한다. 실제 기존 API174/DB0030은 미변경이고 새 HTTP/실회원·기기 연동은 Backend0031 반영 확인 후다. 같은 제품 정책 수용/기존 전체시험 반복 요청은 없다. 인계 기록만 후속 문서 커밋에 누적하며 구현 소비 SHA는 위와 같다.
+
+
+## 2026-10-24 — #24/#25 실제 개발 API·DB0031 반영
+
+사용자 진행 지시와 공식 #24 전체4/#25 전체6/#13 전체140 이후 새 회신 없음·clean branch를 확인했다. [전환 결과](../ISSUE_24_25_DEVELOPMENT_ROLLOUT.md)·[집계](../design/issue24-25-development-rollout.json). 백업 복원0031 리허설과 실제 제한 LOGIN 이행, API/worker 교체,106→108표603행·기존105업무표 내용/열/기록시각/키/시퀀스 보존·환경/DB 컨테이너/볼륨 유지. 이미지67322372…·소스236파일 일치,176/116 계약 전체·HTTP health/검색2/인증거절4 통과. 임시 환경 정리. 단독 readiness 모델 미등록·환경 목록 순서 비교는 검사 도구 보정 후 통과했으며 제품 코드/계약 변경은 없다. 신규 실회원 명령/기기 인수·dev/main·운영은 미실행, 다음 Flutter 연결/자동 검증·정상 로그인 실인수와 Backend 차이 대응. 게시 SHA·회신 링크는 후속 기록한다.

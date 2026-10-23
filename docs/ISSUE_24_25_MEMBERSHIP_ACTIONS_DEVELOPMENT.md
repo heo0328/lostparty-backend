@@ -2,7 +2,7 @@
 
 2026-10-24 / `feat/raid-recruitment` / #24·#25. 사용자 구현 진행 지시와 [#24 전체3번째 Flutter 계약 수용](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6370137482), [#25 전체5번째 Flutter 네 차이 해소](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6370138718)를 기준으로 한다. 원본 정책은 #13 전체135·136번째이고 [보완안2](ISSUE_25_CONTRACT_REVIEW_V2.md)와 [검색 계약](ISSUE_24_SEARCH_CONTRACT.md)의 wire를 구현한다.
 
-현재 구간은 **소스 구현·격리 검증**이다. 실제 개발 서버·기존 DB0030에는 아직 반영하지 않았다. 아래 0031과 176경로는 신규 후보 이미지/격리 DB의 기준이며 기존 실행 174경로와 혼동하지 않는다. 기존 API `0eed67c`/DB0030 및 운영·dev/main은 유지한다.
+현재 **소스 구현·격리 검증·실제 개발 API/DB0031 반영 완료**다. 실행176경로/기본116 계약 전체 일치·기존106표603행 보존/2표 추가·health/인증 경계를 확인했다. [실제 전환 결과와 미확인 범위](ISSUE_24_25_DEVELOPMENT_ROLLOUT.md)를 따른다. 실회원 명령·기기 인수는 다음 Flutter 단계이며 운영·dev/main은 유지한다.
 
 ## API와 저장 책임
 
