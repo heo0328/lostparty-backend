@@ -2,6 +2,8 @@
 
 [공식 협업 Issue21](https://github.com/heo0328/lostparty-backend/issues/21)의 요청에 따라 [공통 원문 — Flutter62240fe 고정본](https://github.com/heo0328/LostParty_flutter/blob/62240fe25711d26c478c295590c80114ebf69a6a/docs/architecture/DEVELOPMENT_QUALITY_AND_UX_STANDARD.md)을 Backend의 기존 작업 흐름에 맞춰 적용한다. AGENTS·개발/협업 규칙을 보완하며 별도 승인 절차나 일괄 리팩토링 지시를 추가하지 않는다.
 
+Issue21은 사용자와 네이티브가 협의한 기준을 전달하는 용도로 종료한다. 전달 내용은 이 문서와 AGENTS·개발/협업 규칙에 보존하며 별도 회신·재수용/반복 검증 대기는 없다. 이후 승인된 작업에 이 기준을 적용한다.
+
 ## 사용자 경험과 구조 선택
 
 사용자가 기능의 목적·대상 캐릭터/방/실제 주차·현재 상태를 이해하고 원하는 일을 쉽게 예측하며 수행하는 경험을 우선한다. 권한·보안·정합성은 이를 지탱하는 필수 조건이다. 서버 내부 편의를 위해 추가 화면·입력·반복 요청·장문 설명을 요구하지 않는다. 승인된 UX에 영향이 있으면 대안과 영향을 먼저 협의한다.
