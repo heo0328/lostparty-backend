@@ -2049,3 +2049,11 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 
 - 게시전구형manual starts_local=null의합법적구DTO조합을추가점검했다. 구형create는의미검증을적용시점에수행했으므로제안원문에해당조합이남을수있다. 새opt-in조회에서이를가짜시각/예외로만들지않고undetermined·confirmation=null로표시하도록guard를추가했다. 격리DB29의신규경계1+보호생성/HTTP회귀2 **3PASS/41.43초**, 기존65묶음중복2제외총고유66PASS(신규30/회귀36)다. 기본65PASS를보완후66단일실행으로표현하지않는다.
 - 최종이미지 sha256:50928839b92c6d44089449f2f76b7d8c17ca3e2b14481b7a0afd04ce17f345f4를재빌드·223파일바이트일치검증후같은개발API에반영했다. 직전ea1992bc…는pre-resume-review-legacy-guard태그로보존했고구현전404cf8c4…의pre-resume-review태그도유지했다. 다시전후105표344행/전체내용·설정일치·healthy·실제두프로필OpenAPI·health/인증거절검사통과, 추가임시검증환경도정리했다. 소비인계는이최종guard를포함한SHA로수행한다.
+
+
+## 2026-10-23 — #13 F6-C 최종 소비 게시·Flutter 인계 기록
+
+- 구현 e789928과 구형시각 guard를 포함한 최종 소비 `29408243192ed3a37a347ade046db26ad2d918b9`를 feat/raid-recruitment에 commit/push하고 원격 SHA 일치를 확인했다. 기존 미push 문서2커밋도 보존해 함께 게시했다. 개발 실행 이미지는 최종50928839…이며 앞선 검증 결과를 재합산하지 않는다.
+- [전체121번째 댓글 · Backend · F6-C 구현/개발 반영/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6356827586)를 게시하고 실제 본문 제외 댓글 순번121·작성측 Backend·전문 일치를 재조회했다. Issue 상단에 현재 범위·완료 상태·다음 담당을 기록하고 이전 본문과 OPEN을 보존했다.
+- 다음 Flutter는 새 소비 SHA의 DTO/preview·표시확인/recorded·applied/원명령 writer·원Ack/현재T 조회를 F6-C에 연결해 사용 SHA·결과를 같은 Issue에 회신한다. Backend는 재현 차이 대응이며 동일 정책 수용이나 F5/F6-A/B 반복 시험은 요청하지 않았다. 실회원 HTTP·실기기·F6 최종·성능/운영 인수는 별도 미완료다.
+- 이 후행 변경은 게시 사실·링크·다음 담당 문서 기록뿐이다. 앱·서버·DB·키 추가 변경이나 시험 재실행, dev/main 병합·운영 배포·Issue 종료는 없다.

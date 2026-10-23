@@ -10,7 +10,7 @@
 
 최종65PASS/763.70초+구형시각미정보완3PASS/41.43초(중복2제외고유66:신규30/기존회귀36)·두프로필OpenAPI전체일치·Python223소스/이미지바이트일치다. 실제API8000은168경로/DB0029·50928839…/healthy, 교체전후105표344행/전체내용지문·환경/키mount·보안/포트/command보존이다. 임시검증DB/runner/network정리완료, migration/초기화/실회원쓰기/키변경없음이다.
 
-구간commit/push·원격SHA확인후같은Issue에새소비SHA/실행결과를인계한다. 다음담당은Flutter F6-C연결/결과회신, Backend는재현차이대응이다.
+소비구간 `29408243192ed3a37a347ade046db26ad2d918b9` commit/push·원격SHA확인 및 [전체121번째 Backend · F6-C 구현/개발 반영/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6356827586) 게시·전문일치 확인을 완료했다. 다음담당은Flutter F6-C연결/결과회신, Backend는재현차이대응이다.
 
 ## 다음 Flutter — 새 게시/실행 SHA로 F6-C 연결
 
