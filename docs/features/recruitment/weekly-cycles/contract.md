@@ -1,5 +1,7 @@
 # 주차별 조회·명령과 데이터 경계
 
+<a id="api"></a>
+
 ## 계약 원본
 
 [실행 OpenAPI](../../../../openapi/two-cycle.openapi.yaml)가 현재 요청·응답·상태 코드·필수/nullable 필드의 원본이다. `two-cycle`은 실행 구성 이름이며 DB 마이그레이션 번호가 아니다. 당시 0.4.1 설계 스냅샷은 합의·재현용 기준 자료이며 이후 확장된 실행 계약 전체를 대신하지 않는다.
@@ -13,11 +15,15 @@
 | 선택 주차 참가 취소 | GET `/v2/me/raid-rooms/{room_id}/participation-cancellation-context`, POST `/v2/raid-rooms/{room_id}/participation-cancellations` |
 | 공대장 위임 | GET `/v2/me/raid-rooms/{room_id}/leadership-transfer-context`, POST `/v2/raid-rooms/{room_id}/leadership-transfers` |
 
+<a id="section"></a>
+
 ## 읽기와 권한
 
 서버 세션이 actor를 결정한다. 지속 관계·실제 주차 참가·현재 소유·그룹 공개 권한은 각각 검사한다. 날짜나 membership 이름으로 다른 참가자의 ID·자격을 만들어내지 않는다. GET은 참가·개방·예약·재개 제안을 생성하지 않는다.
 
 context는 읽기 시점의 설명과 선택 근거다. 실제 쓰기는 현재 C/N·세대·revision·권한·활동 캐릭터·주간 점유·구성을 다시 확인한다. 주차 전환 뒤의 낡은 context를 새로운 주차의 승인으로 사용하지 않는다. 과거 ACK는 원 명령의 성공이며 현재 권한이 아니다.
+
+<a id="section-2"></a>
 
 ## 쓰기와 원자성
 
@@ -25,11 +31,15 @@ C/N 생성, 선택 주차 참가·취소·위임은 최신 자격 검증과 데�
 
 명령 성공 뒤의 조회 실패를 쓰기 실패로 바꾸지 않는다. 완료된 명령을 재실행해 현재 상태를 맞추지 않고 현재 GET을 별도로 읽는다. revision/세대 충돌은 최신 context 재취득과 사용자 결정의 재확인이 필요하다. 구 명령의 body·namespace·원 효과·보관 기한을 새 명령과 섞지 않는다.
 
+<a id="section-3"></a>
+
 ## 데이터 보존
 
 주차별 참가·순번·공대장·예약·완료는 실제 T와 세대에 귀속된다. 주차 전환은 날짜의 의미를 바꾸는 것이며 이전 완료 기록을 새 주차에 복사하지 않는다. 취소로 현재 권한을 정리해도 과거 완료 snapshot·감사와 다른 T의 자료는 보존한다. 재참가에서 옛 기록 식별자가 새 쓰기 권한이 되지 않도록 현재 관계와 종료 관계를 분리한다.
 
 과거 단계의 추가 migration·shadow 후보·서버 미반영 여부는 현재 실행 방법이 아니다. 실행 환경·이행·복구 경계는 공통 개발·운영의 최신 안내가 담당한다.
+
+<a id="section-4"></a>
 
 ## 오류 처리와 소비
 

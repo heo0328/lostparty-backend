@@ -1,6 +1,6 @@
-> **현재 구현 기준(2026-10-21):** [전체84번째 Flutter · 계약 소비 검토 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6310097083)에서 잔여 충돌 없이 소비 검토를 마감했다. 계약0.4.1/policy4를 고정하며 [W1~W5 작업계획](../../features/recruitment/planning/ISSUE_13_TWO_CYCLE_WORK_PLAN.md)을 따른다. 아래 검토대기/후속질문·구판 단계표는 당시 기록이다. 실제 기능/실행API·DB 인수는 별도 미완료다.
+> **현재 구현 기준(2026-10-21):** [전체84번째 Flutter · 계약 소비 검토 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6310097083)에서 잔여 충돌 없이 소비 검토를 마감했다. 계약0.4.1/policy4를 고정하며 [W1~W5 작업계획](../work-records/features/recruitment/planning/ISSUE_13_TWO_CYCLE_WORK_PLAN.md)을 따른다. 아래 검토대기/후속질문·구판 단계표는 당시 기록이다. 실제 기능/실행API·DB 인수는 별도 미완료다.
 
-> **최신 보완:** [계약 후보4판](../../features/recruitment/contracts/ISSUE_13_TWO_CYCLE_CONTRACT_R4.md)이 전체80번째의 제목/전역CAS/생성checkbox/숙련도검색 수정을 반영한다. 아래3판까지의 생성후추가활성화/제목schema·global target CAS 가정은 최신계약이 아니다. 이 문서는 당시 기록으로 보존한다.
+> **최신 보완:** [계약 후보4판](../work-records/features/recruitment/contracts/ISSUE_13_TWO_CYCLE_CONTRACT_R4.md)이 전체80번째의 제목/전역CAS/생성checkbox/숙련도검색 수정을 반영한다. 아래3판까지의 생성후추가활성화/제목schema·global target CAS 가정은 최신계약이 아니다. 이 문서는 당시 기록으로 보존한다.
 
 # Issue #13 두 주차 전체 계약 3판
 

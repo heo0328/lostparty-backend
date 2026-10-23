@@ -36,7 +36,7 @@ def validate_contract(name,value):
     from pathlib import Path
     from jsonschema import Draft202012Validator, FormatChecker
     from referencing import Registry, Resource
-    contract=json.loads(Path('docs/features/recruitment/artifacts/issue25-membership-actions.contract.schema.json').read_text())
+    contract=json.loads(Path('docs/features/recruitment/membership-actions/examples/membership-actions.schema.json').read_text())
     legacy_schema=json.loads(Path('openapi/two-cycle.openapi.yaml').read_text())
     legacy_schema['$schema']='https://json-schema.org/draft/2020-12/schema'
     registry=Registry().with_resource('urn:lostparty:two-cycle-0eed67c',Resource.from_contents(legacy_schema))

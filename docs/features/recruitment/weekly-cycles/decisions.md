@@ -1,16 +1,24 @@
 # 주차 관리의 주요 결정과 근거
 
+<a id="section"></a>
+
 ## 주차별 참가를 지속 관계와 분리
 
-방에 남아 있는 회원 관계가 현재주·다음주 모두의 참가를 뜻하지 않는다. 주차별 공대장·참가·예약·완료를 분리해 다른 주차 취소가 기존 주차 자료를 없애지 않게 한다. [주차별 공대장 설계](../contracts/ISSUE_13_TWO_CYCLE_LEADERSHIP_R2.md), [계약 소비 검토 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6310097083).
+방에 남아 있는 회원 관계가 현재주·다음주 모두의 참가를 뜻하지 않는다. 주차별 공대장·참가·예약·완료를 분리해 다른 주차 취소가 기존 주차 자료를 없애지 않게 한다. [주차별 공대장 설계](../../../archive/work-records/features/recruitment/contracts/ISSUE_13_TWO_CYCLE_LEADERSHIP_R2.md), [계약 소비 검토 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6310097083).
+
+<a id="section-2"></a>
 
 ## 생성 시 명시 선택과 다음주 개방
 
-C/N 선택을 하나의 생성 명령으로 확정하고 명시 개방에서만 새 주차를 만든다. 과거 자동 개방 설정을 새로운 참가 동의로 간주하지 않기 위한 결정이다. 조회·설정만으로 새 N 생성/가입을 하지 않는다. [계약 보완](../contracts/ISSUE_13_TWO_CYCLE_CONTRACT_R4.md), [합의 기준 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6310051618).
+C/N 선택을 하나의 생성 명령으로 확정하고 명시 개방에서만 새 주차를 만든다. 과거 자동 개방 설정을 새로운 참가 동의로 간주하지 않기 위한 결정이다. 조회·설정만으로 새 N 생성/가입을 하지 않는다. [계약 보완](../../../archive/work-records/features/recruitment/contracts/ISSUE_13_TWO_CYCLE_CONTRACT_R4.md), [합의 기준 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6310051618).
+
+<a id="section-3"></a>
 
 ## 같은 주차 재개와 다음주 개방 구분
 
 사용자가 드문 중단·재개 조작을 줄이기로 결정해 `close_weekly`와 같은 주차 `weekly_resume`를 앱에서 비활성화했다. 데이터 삭제나 기존 명령 복구 차단으로 확대하지 않는다. 다음주 `reopen`은 유지한다. [사용자 최종 결정 전달](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6370006371), [Backend 보존 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6371302557).
+
+<a id="section-4"></a>
 
 ## 새 탈퇴·해산과 구 명령의 호환
 

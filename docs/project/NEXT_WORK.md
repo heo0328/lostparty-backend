@@ -1,34 +1,26 @@
 # 다음 실행
 
-2026-10-24 / 기능 작업 **feat/raid-recruitment** / [#13](https://github.com/heo0328/lostparty-backend/issues/13), [#22](https://github.com/heo0328/lostparty-backend/issues/22), [#23](https://github.com/heo0328/lostparty-backend/issues/23) OPEN.
+2026-10-24 / 기능 작업 `feat/raid-recruitment`, 문서 작업 `docs/document-organization`.
 
-## 현재 — #24/#25 개발 API·DB0031 반영 완료
+## Flutter 다음 실행
 
-2026-10-24 사용자 진행 지시에 따라 실제 개발 서버를176경로·DB0031로 반영했다. 구현 source `15e143aeb9f3105a1b8a5816051e0e837726892c` / feat/raid-recruitment, [실행 결과/보존 근거](../features/recruitment/development/ISSUE_24_25_DEVELOPMENT_ROLLOUT.md). 비공개 백업 복원 리허설·제한 LOGIN readiness·실제 이행·API/worker 교체 후 기존105개 업무 표의 모든 행/열/기록 시각·키·시퀀스 보존을 확인했다.106→108표603행, API/DB 두 컨테이너 healthy·DB 재생성 없음. 새 검색과 메뉴/명령·opt-in reader가 실제 개발 API에 반영됐다.
+- **검색 연결:** [#24](https://github.com/heo0328/lostparty-backend/issues/24)의 게시 source15e143a·실행176경로 계약으로 검색 캐시/실제T 참가 제외·탈퇴 후 재노출·cursor 회복을 연결하고 직접 영향 범위의 결과를 회신한다. [Backend 개발 반영 인계](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6371617690), [현재 검색 설명](../features/recruitment/search/README.md).
+- **탈퇴·해산 UI/기록:** [#25](https://github.com/heo0328/lostparty-backend/issues/25) Flutter A 전용 context/원명령·ACK는6968f47a commit/push·고유177mock/분석0 보고를 수신했다. Backend 독립 재현은 아니다. [A 결과와 미완료 B/C](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371981415). 실제 상세 버튼은 구명령이며 다음 B에서 메뉴·확인·선택T 성공이탈/반대T화면유지·빈effects 관계알림, C에서 profile/본인 옛기록 Router를 연결한다. A 완료를 새 정책 UI 전체 완료로 표시하지 않는다.
+- **실제 인수:** 정상 로그인으로 게시된 새 명령·검색·자기 기록의 직접 영향을 확인하고 해당 Issue에 회신한다. 합성/mock 통과와 실회원 HTTP·기기 인수는 구분한다. 기존 계약 재수용이나 이미 확인한 전체 시험 반복 대기는 아니다.
 
-- 다음 Flutter: 구현 인계 source/176계약으로 직접 연결·자동 검증을 마치고, 정상 로그인으로 선택T 검색·새 메뉴/명령·profile/본인 종료 기록을 확인해 #24/#25에 회신한다. 실회원 HTTP/기기 인수는 미확인이며 기존 전체 시험 반복이나 계약 재수용을 요구하지 않는다.
-- 다음 Backend: 네이티브의 재현 가능한 계약/동작 차이에 대응한다. [#24 전체5번째 Backend · 개발 반영 완료](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6371617690)·[#25 전체7번째 Backend · 개발 반영 완료](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371618996) 게시·전문/실제 전체 순번 확인 완료. 다음 담당 Flutter, 직접 연결·정상 로그인 인수 대기다. 원본 #13 전체140 IF-001 회신 유지·추가 정책 수용 대기 없음.
-- 실제 이번 검증:176/116 OpenAPI 전체 일치, health200·공개 C/N 검색2·새 경로 인증 거절4/no-store. 고유38 합성 시험은 직전 구현 근거이고 실제 회원 명령 성공으로 표시하지 않는다. 임시 복원/runner/network 정리 완료.
-- IF-001 앱 비활성·기존 endpoint/권한/자료/원 pending/24h ACK 보존, 복구 UX는 미승인 제안. #13/#22/#23/#24/#25 OPEN·dev/main 병합/AWS 운영 배포/자료 삭제 없음.
+## Backend 다음 실행
 
-아래는 이전 구간 기록이며 현재 실행/다음 담당은 위 기준이 우선한다.
+새 Backend 차단/수정 요청은 없다. Flutter/사용자의 재현 가능한 계약·동작 차이에 해당 기능 범위로 대응한다. 현재 마지막 개발 전환 근거는 source15e143a/반영920cc059·API176/DB0031이며 [전환·보존 기록](../engineering/operations/README.md)과 [#25 Backend 개발 반영](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371618996)을 따른다. 이 문서 정리에서 실제 컨테이너/HTTP/DB를 재확인한 상태가 아니다.
 
-## 개발 테스트 자료 보조 작업
+사용자 지정 테스트용 인증 설정은 실제 장비 인증 성공과 구분한다. 다음 사용자 확인이 필요하면 앱 목록 새로고침·활동/대표 선택이며 비공개 실행 근거는 DEV_LOG에 보존한다. 자료/키/DB초기화·개발 fixture 재적용은 수행하지 않는다.
 
-사용자 지정 미인증 등록 원정대1건을 직접 요청에 따라 테스트용 verified/owned로 설정하고 커밋 후13캐릭터·감사 이력을 읽기 검증했다. 실제 장비 인증 성공과 구분한다. 활동/대표는 미설정이며 다음 사용자 확인은 앱의 원정대 목록 새로고침·활동/대표 선택이다. 개인정보 없는 실행/비공개 백업 근거는 [DEV_LOG](DEV_LOG.md)의 2026-10-24 테스트 인증 항목을 따른다. #24/#25 다음 담당/미완료 범위는 그대로다.
+## 유지할 경계·독립 후속
 
-## 기존 인계·별도 후속
+- [IF-001](../features/recruitment/completion-and-records/inactive-features.md): 이번주 미완료 종료·같은 주차 재개는 앱 비활성, 구 endpoint/서버권한/자료·원pending/24h ACK는 보존한다. 다음주 reopen과 recover_leadership은 별개이고 복구 UX는 제품 승인 전 제안이다.
+- 그룹 연결·조건부 해산, V2 분쟁 실인수 보류, 생명주기 #17·활동 자동추가/직접제외 #18·통계 #19는 [추적표](ISSUE_TRACKER.md)의 담당·미완료를 유지한다. 이번 문서 작업으로 착수/종료하지 않는다.
+- 모집 pending의 앱종료 후 영속복구·F1~F6 실회원/기기 전체·성능·운영 인수, dev/main 통합·AWS 배포는 미완료다. 품질/UX 기준의 운영 안정 후 별도 최적화 검토 안내도 유지한다.
+- 재기동/환경 확인이 별도 필요하면 [개발 환경](../engineering/development/environment.md)을 따른다. 기본앱·구worker 혼용이나 과거 백업 덮어쓰기/삭제는 하지 않는다.
 
-- 완료정정/보관 소비8bbcfc8: [Backend129](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360251618)·[개발안내](../features/recruitment/development/ISSUE_13_COMPLETION_CORRECTION_DEVELOPMENT.md). 본인 manual/party 완료근거 정정과 실제 완료 기록/참가 복원은 구분한다. Flutter A/B 연결결과는133/134번째로 수신했고 실제인수는 별도이며 기존 pending/원ACK를 새명령에 강제 캐스팅하지 않는다.
-- F6-C 소비2940824: [Backend121](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6356827586), [Flutter122](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6357361150) 연결/mock 보고수신. F1~F6 전체 정상회원·기기 인수/성능과 모집관리 pending 앱종료 후 영속복구는 미완료다. 과거 시험/보고 상세는 [DEV_LOG](DEV_LOG.md)를 따른다.
-- #19 통계, #17 생명주기, #18 활동정책 등 독립후속은 [추적표](ISSUE_TRACKER.md)를 따른다. 이번구간으로 범위를 확대하지 않는다.
-- Issue21은 내용전달/문서정리로 종료했고 추가회신·수용대기가 없다. 승인된 후속에 [품질/UX 기준](../guides/DEVELOPMENT_QUALITY_AND_UX_STANDARD.md)을 적용한다. 릴리즈/안정 확인 후 배포main/태그 기준의 별도 최적화 검토시점 안내는 남아 있다.
-- 재기동은 compose.yaml+compose.two-cycle.yaml/two-cycle factory/DB0031이다. 기본0023앱·구worker 혼용, 과거snapshot 덮어쓰기/초기화, dev/main merge·운영배포는 이번 범위가 아니다.
+## 문서 작업 마감·다음 채팅
 
-## 문서 정리 구간 — 2026-10-24
-
-문서 탐색은 [전체 안내](../README.md)를 사용한다. 문서 정리 브랜치는 `docs/document-organization`이며 기존 모집 작업 HEAD에서 분기했다. 기능 후속은 기존 `feat/raid-recruitment`와 위 #24/#25 담당/완료 조건을 유지한다. 문서 정리 구간은 로컬 커밋으로 마감하며 push·dev/main 통합은 미실행이다. 다음 채팅에서는 본문의 기능 후속을 따르고, 문서 정리 변경의 원격 게시/통합은 별도 지시 범위에서 진행한다.
-
-## 기능 중심 문서 재구성
-
-사용자 승인 계획에 따라 전체171파일/주요제목1302개 대응표를 이동 전에 확정했다. `docs/document-organization`에서 현재주·다음주 모집 관리의 설명·계약·결정 근거를 시범 작성하고 고정 계약84사례/hash·링크를 확인했다. 다음 문서 작업은 대응표에 따라 기존 원문을 보존하면서 나머지 기능을 순차 통합하는 것이다. 기능 인수의 다음 담당·미완료 조건은 위 기준을 유지한다.
+[전체 기능 안내](../README.md)와 [원문/섹션 대응표](../engineering/documentation/README.md)를 기준으로 문서를 관리한다. 문서 정리 브랜치에서 시범·전체 통합을 로컬 커밋으로 마감하며 push·PR·병합은 수행하지 않는다. 원격 게시/통합은 별도 지시 범위다. 기능 작업으로 돌아갈 때는 위 Flutter B/C·#24 연결/실인수와 Backend 재현 차이 대응을 이어가며 현재 설명에 작업단계 문서를 다시 누적하지 않는다.
