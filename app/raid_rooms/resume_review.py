@@ -66,7 +66,7 @@ def project_groups(row, basis, *, validate_at=None):
         ref = digest([str(row.id), row.generation, g['client_group_key']])
         alternatives = []
         for a in g['alternatives']:
-            start = graph.local_start(row.cycle_key.isoformat(), a['weekday'], a['starts_local']) if g['planning_mode'] == 'manual' else None
+            start = graph.local_start(row.cycle_key.isoformat(), a['weekday'], a['starts_local']) if g['planning_mode'] == 'manual' and a['starts_local'] is not None else None
             minutes = [durations.get(str(i)) for i in a['item_ids']]
             total = sum(minutes) if minutes and all(type(v) is int and v > 0 for v in minutes) else None
             end = start + timedelta(minutes=total) if start is not None and total is not None else None

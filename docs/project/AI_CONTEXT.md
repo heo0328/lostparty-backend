@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-현재(2026-10-23): Flutter120이Backend118재개확인3계약을모두수용해 [F6-C 개발안내](../ISSUE_13_WEEKLY_RESUME_REVIEW_DEVELOPMENT.md) 기준 구현·고유65PASS(신규29/회귀36)·개발API반영완료. 기존POSTpreview/plan opt-in resume_review·보호생성/응답token·고정basis/시각/영향·구형미결/원Ack/false응답보존·legacy/stale차단, 새JSONB버전/추가DDL없음. 168경로/DB29·ea1992bc…/healthy·두프로필OpenAPI일치/223소스바이트일치·전후105표344행/내용·설정보존·임시환경정리. 다음commit/push·원격확인후Flutter F6-C인계, 실회원/기기/성능·F6최종/운영인수미완료. Flutter119 F6-B ea0c932f/156mock PASS보고도수신(Backend독립재현아님). [NEXT_WORK](NEXT_WORK.md) 기준이며아래는이전기록이다.
+현재(2026-10-23): Flutter120이Backend118재개확인3계약을모두수용해 [F6-C 개발안내](../ISSUE_13_WEEKLY_RESUME_REVIEW_DEVELOPMENT.md) 기준 구현·고유66PASS(신규30/회귀36)·개발API반영완료. 기존POSTpreview/plan opt-in resume_review·보호생성/응답token·고정basis/시각/영향·구형미결/원Ack/false응답보존·legacy/stale차단, 새JSONB버전/추가DDL없음. 168경로/DB29·50928839…/healthy·두프로필OpenAPI일치/223소스바이트일치·전후105표344행/내용·설정보존·임시환경정리. 다음commit/push·원격확인후Flutter F6-C인계, 실회원/기기/성능·F6최종/운영인수미완료. Flutter119 F6-B ea0c932f/156mock PASS보고도수신(Backend독립재현아님). [NEXT_WORK](NEXT_WORK.md) 기준이며아래는이전기록이다.
 
 현재(2026-10-23): [현재주재개 일정확인 제안1](../ISSUE_13_WEEKLY_RESUME_REVIEW_DRAFT.md) 전문을 [전체118번째 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6355880490)에게시·Flutter소비대조대기. 기존POST preview모드/GETplan opt-in resume_review·생성/응답token·고정시각/설정/영향·구형제안/구클라이언트제한적호환을제안한미합의/미구현문서다. Flutter117 F6-A660433d push/단일108mock PASS·분석0보고수신, 다음F6-B범위/F6-C위계약대기(A승인을B/C구현승인으로확대안함). 이번정적경로/본문·KST2예검산만·앱/실행계약/서버/DB/키변경없음·문서로컬커밋/미push. [NEXT_WORK](NEXT_WORK.md)기준이며아래는이전기록이다.
 

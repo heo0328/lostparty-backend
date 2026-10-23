@@ -433,3 +433,17 @@ def test_wednesday_early_preview_uses_end_of_actual_cycle(outcomes):
     start = datetime.fromisoformat(alt['starts_at'].replace('Z','+00:00')).astimezone(commands.raids.KST)
     assert start.date() == date.fromisoformat(c) + timedelta(days=7)
     assert start.hour == 0 and start.minute == 5 and shown['target_cycle_key'] == c
+
+
+def test_legacy_manual_without_clock_is_readable_but_unconfirmable(outcomes):
+    engine, a, b = outcomes; rid, c, n = stopped(a)
+    groups = explicit_groups(a, rid, c, 'manual', 'one_of', 1, 'selected_weekdays')
+    groups[0]['alternatives'][0]['starts_local'] = None
+    # The historical create DTO allowed this combination before apply checked it.
+    pid = propose_resume(a, rid, c, groups)
+    before = fingerprints(engine)
+    value = proposal(a, rid, c, pid)['resume_review']
+    assert value['display']['status'] == 'legacy_unverifiable' and value['confirmation'] is None
+    alt = value['display']['groups'][0]['alternatives'][0]
+    assert alt['starts_at'] is alt['ends_at'] is None and alt['time_state'] == 'undetermined'
+    assert fingerprints(engine) == before

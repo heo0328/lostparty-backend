@@ -37,12 +37,12 @@ schedule_groups=null은유지할의도해석, []는일정그룹없음, 명시배
 
 ## 검증·실행·인계
 
-최종 관련 묶음 **65PASS/763.70초**(새재개29·기존회귀36), 실패0/기존anyio deprecation warning1종이다. 탐색3PASS·21PASS·추가6PASS는최종과중복이므로합산하지않는다. 새기능은모두격리DB0029·합성계정으로검증했다.
+최종 관련 묶음 **65PASS/763.70초**와구형수동시각미정경계보완후**3PASS/41.43초**(재실행2제외고유**66PASS**, 신규30·기존회귀36), 실패0/기존anyio deprecation warning1종이다. 구형manual의starts_local=null도undetermined/confirmation=null로읽으며보호된생성/HTTP회귀2개를함께재확인했다. 탐색3PASS·21PASS·추가6PASS는최종과중복이므로합산하지않는다. 새기능은모두격리DB0029·합성계정으로검증했다.
 
 preview 쓰기0/두200응답·Key모드/엄격flag·null/[]/순서·수동each/단일/복수·조율/주차전체/미지정·legacy와구명령/원Ack·핵심설정/round/assignment/group 변경stale·actor/flow/변조·토큰만료/최종만료rollback·동시동일명령·수락/거절/참가재연결과동의·적격자감소·완료된제안자의자동표없음·N보존/C수10시/KST수요일00:05를확인했다. 실제합성Bearer성공·무인증/오류/폐기세션/타인권한·32KiB요청/응답정확경계·5,001개저장후보가있는전체plan의실1MiB초과413도확인했다. 무관전체시험/성능SLA시험은아니다.
 
 실행변경은기존plan/create의query/응답과Resume/Respond의optional non-null token/관련schemas뿐이다. 경로168개 유지·기본116경로OpenAPI와two-cycle168경로OpenAPI를각각전체객체비교했다. core wire/기본OpenAPI·고정53경로56동작204schema/84fixture·canonical SHA fb4c7d…는불변이다.
 
-검증이미지 `sha256:ea1992bcc3dd78da3defe48930a8c71e7e177a81e5206ecefa3ae7a8d0a39093`의app/alembic Python223파일이작업트리와바이트일치했다. 해당이미지로개발API8000만two-cycle factory로교체해healthy/DB0029다. 교체전후105표344행의전체내용지문·환경/인증키mount·보안/포트/command 일치, DDL/초기화/실회원쓰기/키변경없음이다. 직전실행이미지404cf8c4…는`lostparty-backend-api:pre-resume-review`로보존했다. 실제내부health200·3경로의무인증/잘못된Bearer401/no-store/WWW-Authenticate 6검사·호스트health200과실제두프로필OpenAPI일치를확인했다. 이번tmpfs검증DB/runner/network만정리하고기존API/DB두컨테이너만healthy다.
+검증이미지 `sha256:50928839b92c6d44089449f2f76b7d8c17ca3e2b14481b7a0afd04ce17f345f4`의app/alembic Python223파일이작업트리와바이트일치했다. 해당이미지로개발API8000만two-cycle factory로교체해healthy/DB0029다. 교체전후105표344행의전체내용지문·환경/인증키mount·보안/포트/command 일치, DDL/초기화/실회원쓰기/키변경없음이다. 직전실행이미지404cf8c4…는`lostparty-backend-api:pre-resume-review`로보존했다. 실제내부health200·3경로의무인증/잘못된Bearer401/no-store/WWW-Authenticate 6검사·호스트health200과실제두프로필OpenAPI일치를확인했다. 이번tmpfs검증DB/runner/network만정리하고기존API/DB두컨테이너만healthy다.
 
 구현commit/push·원격확인후공식Issue에새소비SHA를인계한다. 실제정상로그인회원HTTP·실회원쓰기·기기·성능/운영인수는미확인이다. 합성DB/Bearer·자동검증과 실제회원HTTP/기기·운영인수는 구별한다. 다음 Flutter는 게시·실행확인된 새 소비SHA의 DTO/두200응답·확인창/원명령writer/원Ack·현재T조회에 F6-C를 연결하고 결과·사용SHA를 #13에 회신한다. F6-A/B 기존mock 반복이나 같은정책수용은 다시 요청하지 않는다.
