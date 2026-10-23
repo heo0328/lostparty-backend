@@ -2,6 +2,10 @@
 
 2026-10-23 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13), OPEN.
 
+## 공통 기준 — Issue21 문서 반영
+
+[Issue21](https://github.com/heo0328/lostparty-backend/issues/21)의 [공통 원문62240fe](https://github.com/heo0328/LostParty_flutter/blob/62240fe25711d26c478c295590c80114ebf69a6a/docs/architecture/DEVELOPMENT_QUALITY_AND_UX_STANDARD.md)을 읽고 [Backend 최소 지침](../DEVELOPMENT_QUALITY_AND_UX_STANDARD.md)을 AGENTS/개발·협업 규칙에 연결했다. 기존 규칙 충돌 없음, 승인된 후속 기능부터 사용자문제/책임/선택·소비영향/필요검증에 적용한다. API/DB/배포/전면감사·최적화 착수 없음이다. 릴리즈 배포·안정 확인 후 종료보고에서 배포main/태그 기준 목적별 최적화 검토시점을 안내하되 지금 브랜치/자동작업을 만들지 않는다. Issue13 후속은 아래 상태를 유지한다.
+
 ## 현재 — 완료 정정·방 보관 게시/개발반영/소비인계 완료
 
 [Flutter127 수용/최종 wire 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358680312)을 기준으로 [개발 안내](../ISSUE_13_COMPLETION_CORRECTION_DEVELOPMENT.md)·[예시8개](../design/issue13-completion-correction.examples.json)·[실행 OpenAPI](../../openapi/two-cycle.openapi.yaml)의 새2경로/총170경로를 구현했다. 기존168경로/기존schema·manual/summary·원ACK 의미는 유지한다. 복구용 room=null/gen=null 실관계와 양수gen review, 보관회원 detail/plan의 permission/access·실제UUID/리더십, 새context/ACK·주차경계·오류 순서를 닫았다.

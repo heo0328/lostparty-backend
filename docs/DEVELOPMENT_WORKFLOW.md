@@ -10,6 +10,10 @@ Python 3.12와 Docker Compose를 실행 기준으로 사용합니다. FastAPI·P
 
 배포 예정 환경은 Lightsail Linux amd64, 운영 프록시 후보는 Caddy입니다. 초기에는 Cognito·Lambda·API Gateway·RDS·Redis·Kafka·Kubernetes·마이크로서비스를 전제로 추가하지 않습니다. S3·FCM 및 다른 인프라는 실제 요구가 생기면 검토합니다. 이 방향의 변경이 필요하면 이유와 영향을 제시하고 합의합니다.
 
+## 개발 판단과 사용자 경험
+
+[Backend 품질·데이터 책임·UX 기준](DEVELOPMENT_QUALITY_AND_UX_STANDARD.md)을 승인된 기능 작업에 규모에 맞게 적용합니다. 해결할 사용자 문제/보존 흐름·라우터/업무/트랜잭션 책임·기존 방식 유지/변경 이유·소비 영향·필요 검증을 짧게 남깁니다. API/파일 수나 특정 패턴 적용 자체를 목표로 삼지 않으며 매번 별도 설계서나 계층을 추가하지 않습니다. 기능 계약·검증·게시/배포의 기존 승인 범위는 그대로입니다.
+
 ## 작업과 Git
 
 1. AGENTS → 협업 규칙 → NEXT_WORK → AI_CONTEXT → 관련 계약 순서로 확인한 뒤 요청 범위·완료 조건과 실제 Issue 본문·최신 댓글·Git·코드를 대조합니다. 인계할 때도 최신 댓글을 확인합니다. 불일치는 근거를 확인해 문서를 갱신합니다.

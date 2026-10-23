@@ -16,6 +16,8 @@
 | [#18](https://github.com/heo0328/lostparty-backend/issues/18) | 활동 자동추가·직접제외 보존 | 활동브랜치89a3248/설계5fff83b 로컬미push보존. [전체3번째Flutter](https://github.com/heo0328/lostparty-backend/issues/18#issuecomment-6264981603)는설계접수/별도소비검토대기이며미승인·구현전 |
 | [#19](https://github.com/heo0328/lostparty-backend/issues/19) | 사용자/그룹 주간 이용 통계 | Flutter전체1번째검토·type최초고정/함께집계·해산OFF/평균분모/그룹조회권한미확정·실제방원천선행. 집계/조회 미구현·개인manual결과 집계 금지 |
 
+| [#21](https://github.com/heo0328/lostparty-backend/issues/21) | UX 우선 품질·데이터 책임 공통 기준 | 공통원문62240fe 확인·[Backend 최소지침](../DEVELOPMENT_QUALITY_AND_UX_STANDARD.md)/AGENTS/개발·협업 연결, 기존충돌없음. 이후승인기능부터적용·기능/API/DB변경/전면감사/최적화착수없음. 반영결과회신·게시상태별도기록, Issue13 독립 |
+
 ## 이번 종료
 
 | 이슈 | 종료 구분 | 근거/보존한 미완료 |
