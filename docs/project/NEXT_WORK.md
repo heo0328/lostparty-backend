@@ -14,14 +14,14 @@
 
 소비 `8bbcfc8cb89e69eb1f9747a0fcf2e919e41c3b76` commit/push·원격SHA일치 및 [전체129번째 Backend · 완료정정/보관 구현·개발반영·소비인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360251618) 전문/실제순번 확인을 완료했다. 다음Flutter는 새reader/정정writer·원pending schema호환/권한/ACK·목록/기록 직접차이 연결·결과회신이다. 같은 계약 수용/기존 mock 반복 요청은 하지 않는다. 실제 정상회원HTTP·실기기전체/성능·운영 인수, 과거·은퇴UI 확대/pending영속복구/#19는 별도다. 아래는 이전 구간 기록이다.
 
-## 다음 Backend — 개인 완료후 선택T 탈퇴 / 양T 동일회원 추방 계약 검토
+## 다음 Flutter — #22/#23 새 명령 계약 소비 대조
 
-[전체131번째 Flutter · 개인 완료후 선택T 탈퇴 계약 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360708926)이 추가됐다. 사용자 의도는 “나혼자 완료처리이후 탈퇴”: 선택raid 본인완료 + 같은실제T의 나머지 본인참가 취소/예약정리 + 공대장자동승계/마지막1인종료를 한명령으로 처리하고 다른T는 보존하는 것이다. 현재 personal_completion은 선택round 본인Assignment만 완료·남은active없으면CycleMember.completed이며 명시탈퇴/자동승계를 하지 않는다. global leave/end로 대체할 수 없음을 코드에서 확인했다.
+[전체132번째 Backend · 원자적 참가관리 계약 제안/후속 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6361053787)로 [계약 제안1](../ISSUE_13_ATOMIC_MEMBER_ACTIONS_DRAFT.md)을 인계했다. 원본13을닫거나기능완료로표시하지않고 독립완료조건을 **[#22 개인완료후선택T탈퇴/자동승계](https://github.com/heo0328/lostparty-backend/issues/22)** 및 **[#23 현재만/양T동일회원원자추방](https://github.com/heo0328/lostparty-backend/issues/23)** 으로이관했다. 각후속본문에닫힌검토계약전문/원본131·128/130·상호링크/담당·완료조건을기록했다. 본문게시(댓글아님)/전문일치·OPEN과원본댓글순번을실제확인했다. 브랜치는feat/raid-recruitment그대로다.
 
-- 다음 Backend: 정확한 context/impact·permission과 선택raid완료/다중raid잔여취소·후계자권한/자격/마지막1인·소유/CAS/세대·원ACK/재송·예약/주간근거·N보존을 최소계약으로 검토한다. 새계약 미합의·미구현이며 기존 item완료/원pending을 바꾸거나 두명령자동연속으로 대체하지 않는다. 사용자확인중인 양T강제해산을 확정범위로 포함하지 않는다.
-- 별도 기존 요청 [전체128번째 Flutter · 양주차 동일회원 함께 내보내기](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360210574)는 현재카드 대상/실제T 고정·반대C/N 같은 user_id의 실제참가·각T리더십/권한·CAS·current-only/양T원자처리·단일ACK/원재송/양T무효화 계약 검토 대기다. 미합의·미구현이며 현재T공대장의 권한을 임의확대하지 않는다.
-- [전체130번째 Flutter · 상세행동/카드단일T추방 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360353809)는1d6c0c1a commit/push·최종단일144mock PASS/전체분석0 보고다. 기존소비2940824·한T writer 유지/양T추방미구현이며 Backend 독립재현/실회원·기기인수와 구분한다.
-- 기존 완료정정/보관 Backend129·소비8bbcfc8 인계는 완료 상태를 유지한다. Flutter131은 새소스와 정적대조했으나 새 정정/보관의 구현연결 완료회신은 아직 없다. 다음Flutter는 해당 인계의 직접연결/결과회신, 다음Backend는 위 두 별도계약 검토다. 같은기존시험·정책재수용 요청은 없다.
+- #22 다음Flutter: active선택raid본인1완료·나머지본인T참가취소/예약정리·실제탈퇴·자격있는자동승계/없으면전체거절·마지막실제참가종료/null리더·다른T/기존완료/타인보존·성공후member-only plan미의존의 context/전용ACK를 UX에소비가능한지 구체차이회신. 새계약미합의·미구현.
+- #23 다음Flutter: sameuser내부결합/외부membership·반대실제관계와review/nullgen·각T현재공대장권한/대상비공대장·option별token/current_only반대불변·both원자ACK/불가선택표시를기존카드3선택에소비가능한지 구체차이회신. 새계약미합의·미구현.
+- 다음Backend: 각후속 피드백반영/합의구현·직접권한/CAS/동시성/원ACK/감사/예약·완료/N보존 검증→구간commit/push·원격확인→정확한실행OpenAPI/예시/소비SHA·개발반영/DB여부인계. 기존170경로/구personal·removals/원pending·완료정정/보관129유지. 현재는소스5개AST/라우트·멱등/감사제약·새경로미노출/문서diff정적대조만했고코드/API/서버/DB/키·신규실행시험/컨테이너변경없음이다. 문서로컬커밋/미push이며검토원문은후속Issue본문으로제공했다.
+- 사용자확인중인 양T강제해산은미확정/범위밖이며다른새기능/운영배포/실데이터삭제로확대하지않는다. 기존Flutter130 1d6c0c1a/144mock·분석0보고와Backend129 완료정정/보관의Flutter직접연결/결과대기는독립유지, 같은시험/정책재수용반복요청없음이다.
 
 ## 이전 — F6-C 재개 확인 Backend 구현·개발 반영 완료
 

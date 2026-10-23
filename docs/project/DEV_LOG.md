@@ -2135,3 +2135,12 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - [전체131번째 Flutter · 개인완료후선택T탈퇴 계약요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360708926)은 선택raid본인완료+같은T나머지참가취소·공대장자동승계/마지막1인종료를 한명령으로 요구하고N/타인/기존완료·원pending을보존한다. 코드의 personal은 선택Assignment완료/남은active없으면completed뿐이며 명시탈퇴/승계없음, common leave/end의 LEADERSHIP_RESOLUTION_REQUIRED/ROOM_LAST_MEMBER_REQUIRED로대체불가를 정적으로확인했다.
 - 다음Backend는 새개인완료+탈퇴와 기존128 양T동일회원추방의 context/impact·권한/리더자격·소유/CAS/세대·원자성/ACK·예약/완료/N보존 최소계약검토다. 둘다미합의·미구현, 사용자확인중인 양T강제해산은요청확정으로취급하지않는다. Backend129 완료정정/보관 인계와분리하며 Flutter새연결완료회신은미수신이다.
 - NEXT_WORK/AI_CONTEXT/추적표에 다음담당과링크를 갱신했다. 이번은 확인/정적대조·문서기록이며 기능/API/서버/DB/키 변경·신규시험/댓글게시/Issue수정/merge/배포없음, 상시규칙으로문서로컬커밋/미push다.
+
+
+## 2026-10-23 — #13 개인 완료후 탈퇴/양T추방 계약 제안·#22/#23 분리
+
+- 사용자진행지시로 AGENTS/협업/작업문서/품질UX지침·Git(ee5072f/기존미push문서1커밋보존)·공식본문/전체131댓글·실제personal/remove/승계/감사·입력/라우트/공통원장을대조했다. Flutter로컬소스는읽지않았다.
+- [제안1](../ISSUE_13_ATOMIC_MEMBER_ACTIONS_DRAFT.md)은 개인선택active1완료+잔여T취소/실제탈퇴/자격승계·후계없으면전체거절/마지막T종료·closedcompleted null리더/성공후member-only plan미의존, sameuser반대T조회/각T리더권한·option별token·current_only반대불변/both원자ACK·명시nullable·최대120초/4096bytes·원ACK24시간/단일transaction·예약/완료/타인/N보존을정했다. 구명령/원pending해시·129인계는유지하고2public명령연속실행/권한확대/양T강제해산은제안하지않았다.
+- 독립명령/권한/완료조건의확대로프로젝트한이슈한주제규칙에따라 [#22 개인완료후탈퇴/승계](https://github.com/heo0328/lostparty-backend/issues/22), [#23 양T동일회원추방](https://github.com/heo0328/lostparty-backend/issues/23)을생성했다. 각본문에검토전문/원본131·128·130·상호링크/현재미합의·미구현/다음Flutter·Backend/명확한완료조건을기록하고실제본문전문일치/OPEN을재조회했다. 본문은댓글순번으로세지않는다. 기존feat/raid-recruitment브랜치유지/미완료이관이며원본전체기능완료·요구폐기가아니다.
+- [전체132번째 Backend · 원자적 참가관리 계약 제안/후속 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6361053787)에분리/계약검토결과·다음각후속Flutter소비대조·Backend합의구현/검증·게시/실행인계·현재기존170경로/DB0030/129유지를회신했다. 본문제외실제전체순번132/Backend작성측/계약제안단계·전문일치를재조회했다. 원본본문상단과상태문서에이관/기존통합인수추적을유지한다.
+- 관련5소스AST/라우트·170경로JSON/새4경로없음·멱등/감사CHECK제약·문서참조/diff정적검사PASS, 실행HTTP/DB/권한/경합/원자성시험아님/기존시험수합산없음이다. 문서로컬커밋/미push이며원격검토원문은각Issue본문에제공했다. 앱/API/실행OpenAPI·서버/DB/키·컨테이너기동/추가시험·dev/main통합/운영배포/데이터삭제없음, #13/#22/#23 OPEN이다.
