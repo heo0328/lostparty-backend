@@ -1,0 +1,2651 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "LostParty ownership dispute V2 — DRAFT, not implemented",
+    "version": "2026-10-18-draft-2",
+    "description": "Review artifact only. Does not add endpoints to the running API. Companion contract: docs/features/ownership/ISSUE_8_OWNERSHIP_DISPUTE_V2_CONTRACT.md."
+  },
+  "paths": {
+    "/v2/game-accounts/preview": {
+      "post": {
+        "operationId": "post__v2_game-accounts_preview",
+        "security": [
+          {
+            "AppBearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Contract proposal; not implemented",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreviewV2"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          }
+        },
+        "x-implementation-status": "draft-not-implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PreviewIn"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/me/game-account-verifications": {
+      "post": {
+        "operationId": "post__v2_me_game-account-verifications",
+        "security": [
+          {
+            "AppBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Contract proposal; not implemented",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerificationV2"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          }
+        },
+        "x-implementation-status": "draft-not-implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClaimStartIn"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "get__v2_me_game-account-verifications",
+        "security": [
+          {
+            "AppBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "purpose",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "all",
+                "claim",
+                "defense"
+              ],
+              "default": "all"
+            }
+          },
+          {
+            "name": "view",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "active",
+                "all"
+              ],
+              "default": "active"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contract proposal; not implemented",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerificationPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          }
+        },
+        "x-implementation-status": "draft-not-implemented"
+      }
+    },
+    "/v2/me/game-account-verifications/{id}": {
+      "get": {
+        "operationId": "get__v2_me_game-account-verifications_by_id",
+        "security": [
+          {
+            "AppBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contract proposal; not implemented",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerificationV2"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          }
+        },
+        "x-implementation-status": "draft-not-implemented"
+      }
+    },
+    "/v2/me/game-account-verifications/{id}/confirm": {
+      "post": {
+        "operationId": "post__v2_me_game-account-verifications_by_id_confirm",
+        "security": [
+          {
+            "AppBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contract proposal; not implemented",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerificationV2"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          }
+        },
+        "x-implementation-status": "draft-not-implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VersionIn"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/me/game-account-verifications/{id}/cancel": {
+      "post": {
+        "operationId": "post__v2_me_game-account-verifications_by_id_cancel",
+        "security": [
+          {
+            "AppBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contract proposal; not implemented",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerificationV2"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          }
+        },
+        "x-implementation-status": "draft-not-implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VersionIn"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/me/ownership-disputes": {
+      "get": {
+        "operationId": "get__v2_me_ownership-disputes",
+        "security": [
+          {
+            "AppBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "role",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "all",
+                "challenger",
+                "owner"
+              ],
+              "default": "all"
+            }
+          },
+          {
+            "name": "view",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "active",
+                "all"
+              ],
+              "default": "active"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contract proposal; not implemented",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DisputePage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          }
+        },
+        "x-implementation-status": "draft-not-implemented"
+      }
+    },
+    "/v2/me/ownership-disputes/{id}": {
+      "get": {
+        "operationId": "get__v2_me_ownership-disputes_by_id",
+        "security": [
+          {
+            "AppBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contract proposal; not implemented",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DisputeOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          }
+        },
+        "x-implementation-status": "draft-not-implemented"
+      }
+    },
+    "/v2/me/ownership-disputes/{id}/cancel": {
+      "post": {
+        "operationId": "post__v2_me_ownership-disputes_by_id_cancel",
+        "security": [
+          {
+            "AppBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contract proposal; not implemented",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DisputeOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          }
+        },
+        "x-implementation-status": "draft-not-implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VersionIn"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/me/ownership-disputes/{id}/settle": {
+      "post": {
+        "operationId": "post__v2_me_ownership-disputes_by_id_settle",
+        "security": [
+          {
+            "AppBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contract proposal; not implemented",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DisputeOut"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          }
+        },
+        "x-implementation-status": "draft-not-implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VersionIn"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/me/ownership-disputes/{id}/defenses": {
+      "post": {
+        "operationId": "post__v2_me_ownership-disputes_by_id_defenses",
+        "security": [
+          {
+            "AppBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Contract proposal; not implemented",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerificationV2"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See companion contract for business errors and precedence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            }
+          }
+        },
+        "x-implementation-status": "draft-not-implemented",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DefenseStartIn"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Summary": {
+        "properties": {
+          "server_name": {
+            "type": "string",
+            "title": "Server Name"
+          },
+          "character_name": {
+            "type": "string",
+            "title": "Character Name"
+          },
+          "class_name": {
+            "type": "string",
+            "title": "Class Name"
+          },
+          "character_level": {
+            "type": "integer",
+            "title": "Character Level"
+          },
+          "item_level": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Level"
+          },
+          "combat_power": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Combat Power"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "server_name",
+          "character_name",
+          "class_name",
+          "character_level",
+          "item_level"
+        ],
+        "title": "Summary"
+      },
+      "PreviewOut": {
+        "properties": {
+          "characters": {
+            "items": {
+              "$ref": "#/components/schemas/Summary"
+            },
+            "type": "array",
+            "title": "Characters"
+          },
+          "server_fetched_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Server Fetched At"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "characters",
+          "server_fetched_at",
+          "expires_at"
+        ],
+        "title": "PreviewOut"
+      },
+      "GameErrorOut": {
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/GameErrorDetail"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "title": "GameErrorOut"
+      },
+      "GameErrorDetail": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Request Id"
+          },
+          "retry_after_seconds": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retry After Seconds"
+          },
+          "retry_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retry At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "code",
+          "message",
+          "request_id"
+        ],
+        "title": "GameErrorDetail"
+      },
+      "Target": {
+        "type": "object",
+        "properties": {
+          "server_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "character_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        },
+        "required": [
+          "server_name",
+          "character_name"
+        ],
+        "additionalProperties": false
+      },
+      "OwnershipContext": {
+        "type": "object",
+        "properties": {
+          "relation": {
+            "type": "string",
+            "enum": [
+              "self",
+              "other",
+              "unverified",
+              "unresolved"
+            ]
+          },
+          "notice_code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "OTHER_OWNER_VERIFIED"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "Z$"
+          },
+          "can_start_claim": {
+            "type": "boolean"
+          },
+          "blocked_reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "ALREADY_VERIFIED",
+                  "IDENTITY_UNRESOLVED",
+                  "DISPUTE_ALREADY_ACTIVE",
+                  "DISPUTE_CAPACITY_REACHED"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "relation",
+          "notice_code",
+          "observed_at",
+          "can_start_claim",
+          "blocked_reason"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "can_start_claim": {
+                  "enum": [
+                    true
+                  ]
+                }
+              },
+              "required": [
+                "can_start_claim"
+              ]
+            },
+            "then": {
+              "properties": {
+                "blocked_reason": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "can_start_claim": {
+                  "enum": [
+                    false
+                  ]
+                }
+              },
+              "required": [
+                "can_start_claim"
+              ]
+            },
+            "then": {
+              "properties": {
+                "blocked_reason": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "PreviewV2": {
+        "type": "object",
+        "properties": {
+          "preview": {
+            "$ref": "#/components/schemas/PreviewOut"
+          },
+          "ownership_context": {
+            "$ref": "#/components/schemas/OwnershipContext"
+          },
+          "server_now": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "Z$"
+          }
+        },
+        "required": [
+          "preview",
+          "ownership_context",
+          "server_now"
+        ],
+        "additionalProperties": false
+      },
+      "VersionIn": {
+        "type": "object",
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "expected_version"
+        ],
+        "additionalProperties": false
+      },
+      "ClaimStartIn": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "enum": [
+                  "direct_input"
+                ]
+              },
+              "character_name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64
+              }
+            },
+            "required": [
+              "source",
+              "character_name"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "enum": [
+                  "registration"
+                ]
+              },
+              "registration_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "expected_registration_version": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "target_character": {
+                "$ref": "#/components/schemas/Target"
+              }
+            },
+            "required": [
+              "source",
+              "registration_id",
+              "expected_registration_version",
+              "target_character"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      },
+      "CharacterSelection": {
+        "type": "object",
+        "properties": {
+          "registration_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expected_registration_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "expected_ownership_revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "expected_roster_revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "expected_lifecycle_revision": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "registration_id",
+          "character_id",
+          "expected_registration_version",
+          "expected_ownership_revision",
+          "expected_roster_revision",
+          "expected_lifecycle_revision"
+        ],
+        "additionalProperties": false
+      },
+      "DefenseStartIn": {
+        "type": "object",
+        "properties": {
+          "expected_dispute_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "selection": {
+            "$ref": "#/components/schemas/CharacterSelection"
+          }
+        },
+        "required": [
+          "expected_dispute_version",
+          "selection"
+        ],
+        "additionalProperties": false
+      },
+      "VerificationV2": {
+        "type": "object",
+        "properties": {
+          "verification_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "claim",
+              "defense"
+            ]
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "direct_input",
+              "registration",
+              "dispute_defense"
+            ]
+          },
+          "source_registration_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "equipment_status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "passed",
+              "expired",
+              "cancelled",
+              "invalidated"
+            ]
+          },
+          "ownership_outcome": {
+            "type": "string",
+            "enum": [
+              "none",
+              "verified",
+              "dispute_opened",
+              "defended",
+              "blocked"
+            ]
+          },
+          "ownership_context": {
+            "$ref": "#/components/schemas/OwnershipContext"
+          },
+          "target": {
+            "$ref": "#/components/schemas/Target"
+          },
+          "required_slots": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "무기",
+                "투구",
+                "어깨",
+                "상의",
+                "하의",
+                "장갑"
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 3,
+            "uniqueItems": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "Z$"
+          },
+          "equipment_expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "Z$"
+          },
+          "server_now": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "Z$"
+          },
+          "ended_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "result_code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "REQUIRED_EQUIPMENT_PRESENT",
+                  "NON_REQUIRED_EQUIPMENT_CHANGED",
+                  "PROVIDER_EVIDENCE_PENDING",
+                  "ROSTER_EVIDENCE_PENDING",
+                  "VERIFIED",
+                  "DISPUTE_OPENED",
+                  "OWNER_DEFENDED",
+                  "DISPUTE_CAPACITY_REACHED",
+                  "DISPUTE_ALREADY_ACTIVE",
+                  "REVISION_CONFLICT",
+                  "IDENTITY_CONFLICT",
+                  "LOSTARK_KEY_CHANGED",
+                  "PARENT_DISPUTE_ENDED",
+                  "DEFENSE_WINDOW_CLOSED",
+                  "VERIFICATION_EXPIRED",
+                  "VERIFICATION_CANCELLED"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "dispute_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "registration_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "allowed_actions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "confirm",
+                "cancel",
+                "view_dispute",
+                "open_registration"
+              ]
+            },
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "verification_id",
+          "version",
+          "purpose",
+          "source",
+          "source_registration_id",
+          "equipment_status",
+          "ownership_outcome",
+          "ownership_context",
+          "target",
+          "required_slots",
+          "created_at",
+          "equipment_expires_at",
+          "server_now",
+          "ended_at",
+          "result_code",
+          "dispute_id",
+          "registration_id",
+          "allowed_actions"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "equipment_status": {
+                  "enum": [
+                    "pending"
+                  ]
+                }
+              },
+              "required": [
+                "equipment_status"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ended_at": {
+                  "type": "null"
+                },
+                "ownership_outcome": {
+                  "const": "none"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "equipment_status": {
+                  "enum": [
+                    "passed",
+                    "expired",
+                    "cancelled",
+                    "invalidated"
+                  ]
+                }
+              },
+              "required": [
+                "equipment_status"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ended_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "equipment_status": {
+                  "enum": [
+                    "expired",
+                    "cancelled"
+                  ]
+                }
+              },
+              "required": [
+                "equipment_status"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ownership_outcome": {
+                  "const": "none"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "equipment_status": {
+                  "enum": [
+                    "invalidated"
+                  ]
+                }
+              },
+              "required": [
+                "equipment_status"
+              ]
+            },
+            "then": {
+              "properties": {
+                "ownership_outcome": {
+                  "const": "blocked"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "purpose": {
+                  "enum": [
+                    "defense"
+                  ]
+                }
+              },
+              "required": [
+                "purpose"
+              ]
+            },
+            "then": {
+              "properties": {
+                "source": {
+                  "const": "dispute_defense"
+                },
+                "source_registration_id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "registration_id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "dispute_id": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "purpose": {
+                  "enum": [
+                    "claim"
+                  ]
+                }
+              },
+              "required": [
+                "purpose"
+              ]
+            },
+            "then": {
+              "properties": {
+                "source": {
+                  "enum": [
+                    "direct_input",
+                    "registration"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "source": {
+                  "enum": [
+                    "direct_input"
+                  ]
+                }
+              },
+              "required": [
+                "source"
+              ]
+            },
+            "then": {
+              "properties": {
+                "source_registration_id": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "source": {
+                  "enum": [
+                    "registration"
+                  ]
+                }
+              },
+              "required": [
+                "source"
+              ]
+            },
+            "then": {
+              "properties": {
+                "source_registration_id": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "ownership_outcome": {
+                  "enum": [
+                    "verified"
+                  ]
+                }
+              },
+              "required": [
+                "ownership_outcome"
+              ]
+            },
+            "then": {
+              "properties": {
+                "equipment_status": {
+                  "const": "passed"
+                },
+                "registration_id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "dispute_id": {
+                  "type": "null"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "ownership_outcome": {
+                  "enum": [
+                    "dispute_opened",
+                    "defended"
+                  ]
+                }
+              },
+              "required": [
+                "ownership_outcome"
+              ]
+            },
+            "then": {
+              "properties": {
+                "equipment_status": {
+                  "const": "passed"
+                },
+                "dispute_id": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "DisputeOut": {
+        "type": "object",
+        "properties": {
+          "dispute_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "viewer_role": {
+            "type": "string",
+            "enum": [
+              "challenger",
+              "owner"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "defending",
+              "defended",
+              "transferred",
+              "cancelled",
+              "invalidated",
+              "review_required"
+            ]
+          },
+          "phase": {
+            "type": "string",
+            "enum": [
+              "awaiting_defense",
+              "settlement_due",
+              "retrying_settlement",
+              "finished",
+              "review_required"
+            ]
+          },
+          "target": {
+            "$ref": "#/components/schemas/Target"
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "Z$"
+          },
+          "defense_deadline": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "Z$"
+          },
+          "server_now": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "Z$"
+          },
+          "defense_available_until": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "resolved_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reason_code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "OWNER_DEFENDED",
+                  "OWNERSHIP_TRANSFERRED",
+                  "CHALLENGER_CANCELLED",
+                  "OWNER_CHANGED",
+                  "TARGET_CHANGED",
+                  "PARTY_IMPACT_REVIEW_REQUIRED",
+                  "REGISTRATION_REMOVED",
+                  "REGISTRATION_CONFLICT",
+                  "REGISTRATION_LIMIT",
+                  "UPSTREAM_UNAVAILABLE",
+                  "LOSTARK_KEY_NOT_CONFIGURED",
+                  "LOSTARK_KEY_REJECTED",
+                  "WAITING_FOR_EARLIER_DISPUTE",
+                  "MEMBER_UNAVAILABLE"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "next_retry_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "my_registration_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "my_active_verification_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "uniqueItems": true
+          },
+          "allowed_actions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "cancel_dispute",
+                "start_defense",
+                "view_my_verifications",
+                "request_settlement",
+                "open_registration"
+              ]
+            },
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "dispute_id",
+          "version",
+          "viewer_role",
+          "state",
+          "phase",
+          "target",
+          "started_at",
+          "defense_deadline",
+          "server_now",
+          "defense_available_until",
+          "resolved_at",
+          "reason_code",
+          "next_retry_at",
+          "my_registration_id",
+          "my_active_verification_ids",
+          "allowed_actions"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "enum": [
+                    "defending"
+                  ]
+                }
+              },
+              "required": [
+                "state"
+              ]
+            },
+            "then": {
+              "properties": {
+                "resolved_at": {
+                  "type": "null"
+                },
+                "phase": {
+                  "enum": [
+                    "awaiting_defense",
+                    "settlement_due",
+                    "retrying_settlement"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "enum": [
+                    "review_required"
+                  ]
+                }
+              },
+              "required": [
+                "state"
+              ]
+            },
+            "then": {
+              "properties": {
+                "resolved_at": {
+                  "type": "null"
+                },
+                "phase": {
+                  "const": "review_required"
+                },
+                "reason_code": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "enum": [
+                    "defended",
+                    "transferred",
+                    "cancelled",
+                    "invalidated"
+                  ]
+                }
+              },
+              "required": [
+                "state"
+              ]
+            },
+            "then": {
+              "properties": {
+                "phase": {
+                  "const": "finished"
+                },
+                "resolved_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "reason_code": {
+                  "type": "string"
+                },
+                "next_retry_at": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "VerificationPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VerificationV2"
+            }
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2048
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "feed_revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "server_now": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "Z$"
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor",
+          "feed_revision",
+          "server_now"
+        ],
+        "additionalProperties": false
+      },
+      "DisputePage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DisputeOut"
+            }
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2048
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "feed_revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "server_now": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "Z$"
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor",
+          "feed_revision",
+          "server_now"
+        ],
+        "additionalProperties": false
+      },
+      "PreviewIn": {
+        "type": "object",
+        "properties": {
+          "character_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        },
+        "required": [
+          "character_name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "AppBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "x-proposed-policy": {
+    "max_active_disputes_per_account": 3,
+    "defense_success": "close all pending disputes for the same account and ownership revision",
+    "settlement_order": "first equipment-control success, then server sequence",
+    "repeat_cooldown_seconds": 0,
+    "external_push": "future scope"
+  }
+}

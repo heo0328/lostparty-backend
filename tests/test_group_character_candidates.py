@@ -64,7 +64,7 @@ def test_http_allowlist_page_fragments_and_readonly(group_candidates):
             from jsonschema import Draft202012Validator
             from referencing import Registry, Resource
             from referencing.jsonschema import DRAFT202012
-            contract=json.loads(Path('docs/design/issue13-group-character-candidates.draft.openapi.json').read_text())
+            contract=json.loads(Path('docs/features/recruitment/artifacts/issue13-group-character-candidates.draft.openapi.json').read_text())
             registry=Registry().with_resource('urn:candidates',Resource.from_contents(contract,default_specification=DRAFT202012))
             Draft202012Validator({'$ref':'urn:candidates#/components/schemas/CandidatePage'},registry=registry,
                 format_checker=Draft202012Validator.FORMAT_CHECKER).validate(value)

@@ -1,6 +1,8 @@
 # LostParty Backend
 
-활성 사용자 기능에서 미완료 종료·같은 주차 재개를 제외하며, 구 API/이력·원 pending/ACK는 [IF-001 비활성 보존 기준](docs/INACTIVE_FEATURES.md)에 따라 유지합니다.
+문서는 [문서 안내](docs/README.md)에서 기능별로 찾아볼 수 있습니다.
+
+활성 사용자 기능에서 미완료 종료·같은 주차 재개를 제외하며, 구 API/이력·원 pending/ACK는 [IF-001 비활성 보존 기준](docs/reference/INACTIVE_FEATURES.md)에 따라 유지합니다.
 
 로스트파티(LostParty) 모바일 앱의 백엔드 프로젝트입니다. Firebase 기반으로 서버 기능을 구현하고 테스트하던 중, 더 다양한 기능을 추가하고 유연하게 운영하기 위해 자체 백엔드 서버 개발을 시작했습니다.
 
@@ -10,9 +12,9 @@ Flutter 앱은 별도의 Windows 개발 환경과 GitHub 저장소에서 개발�
 
 ## Flutter와 API 계약 협업
 
-작업 원칙은 [AGENTS.md](AGENTS.md), 상세 흐름은 [개발 작업 규칙](docs/DEVELOPMENT_WORKFLOW.md)과 [API 협업 규칙](docs/API_COLLABORATION.md)에 정리합니다.
+작업 원칙은 [AGENTS.md](AGENTS.md), 상세 흐름은 [개발 작업 규칙](docs/guides/DEVELOPMENT_WORKFLOW.md)과 [API 협업 규칙](docs/guides/API_COLLABORATION.md)에 정리합니다.
 
-현재 두 주차 개발 서버의 실행 계약은 `openapi/two-cycle.openapi.yaml`이며, 기본0023 앱 계약은 `openapi/openapi.yaml`에 보존합니다. 현재 계약은 인증·회원/원정대·캐릭터·주간 원장·그룹·소유권 분쟁·일괄 조회 API를 정의합니다. 일괄 조회 범위·읽기 스냅샷/크기 제한은 [개발 안내](docs/ISSUE_8_ACCOUNT_BOOTSTRAP_DEVELOPMENT.md)에 있습니다.
+현재 두 주차 개발 서버의 실행 계약은 `openapi/two-cycle.openapi.yaml`이며, 기본0023 앱 계약은 `openapi/openapi.yaml`에 보존합니다. 현재 계약은 인증·회원/원정대·캐릭터·주간 원장·그룹·소유권 분쟁·일괄 조회 API를 정의합니다. 일괄 조회 범위·읽기 스냅샷/크기 제한은 [개발 안내](docs/features/account/ISSUE_8_ACCOUNT_BOOTSTRAP_DEVELOPMENT.md)에 있습니다.
 
 API 추가·변경은 GitHub Issues에서 요청·응답과 호환성 영향을 합의하고 관련 Flutter Issue/PR을 연결합니다. Backend 구현과 계약은 함께 변경하며, 현재 개발 API를 갱신한 뒤 `python3 scripts/check_openapi.py --docker docker.exe --container lostparty-backend-api-1 --profile two-cycle`로 일치 여부를 검증합니다.
 
@@ -39,7 +41,7 @@ WSL의 시스템 Python 3.14는 유지하며 백엔드는 Docker의 Python 3.12�
 
 현재 작업은 [NEXT_WORK](docs/project/NEXT_WORK.md), 개발 이력은 [DEV_LOG](docs/project/DEV_LOG.md), 프로젝트 지도는 [AI_CONTEXT](docs/project/AI_CONTEXT.md)에서 확인합니다.
 
-현재 DB0029 개발 API 재기동은 다음 구성을 사용합니다. 기본 Compose 단독은0023 앱이므로 현재 DB와 혼용하지 않습니다. [실제 전환/보존·복구 경계](docs/ISSUE_13_W5_LIVE_CUTOVER.md)를 따릅니다.
+현재 DB0031 개발 API 재기동은 다음 구성을 사용합니다. 기본 Compose 단독은0023 앱이므로 현재 DB와 혼용하지 않습니다. [실제 전환/보존·복구 경계](docs/features/recruitment/development/ISSUE_24_25_DEVELOPMENT_ROLLOUT.md)를 따릅니다.
 
 ```bash
 docker.exe compose -f compose.yaml -f compose.two-cycle.yaml up -d --no-deps --build --wait --wait-timeout 180 api
