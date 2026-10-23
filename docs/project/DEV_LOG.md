@@ -2057,3 +2057,11 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - [전체121번째 댓글 · Backend · F6-C 구현/개발 반영/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6356827586)를 게시하고 실제 본문 제외 댓글 순번121·작성측 Backend·전문 일치를 재조회했다. Issue 상단에 현재 범위·완료 상태·다음 담당을 기록하고 이전 본문과 OPEN을 보존했다.
 - 다음 Flutter는 새 소비 SHA의 DTO/preview·표시확인/recorded·applied/원명령 writer·원Ack/현재T 조회를 F6-C에 연결해 사용 SHA·결과를 같은 Issue에 회신한다. Backend는 재현 차이 대응이며 동일 정책 수용이나 F5/F6-A/B 반복 시험은 요청하지 않았다. 실회원 HTTP·실기기·F6 최종·성능/운영 인수는 별도 미완료다.
 - 이 후행 변경은 게시 사실·링크·다음 담당 문서 기록뿐이다. 앱·서버·DB·키 추가 변경이나 시험 재실행, dev/main 병합·운영 배포·Issue 종료는 없다.
+
+
+## 2026-10-23 — #13 Flutter122 F6-C 연결 결과 수신
+
+- 규칙/작업 문서·관련 계약·Git clean을 확인하고 공식 Issue 본문과 전체122댓글을 조회했다. [전체122번째 Flutter · F6-C 연결 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6357361150)에서 Backend2940824 소비·Flutter618f95e6/feature/raid-recruitment-scheduling commit/push·원격일치, 최종 단일153mock PASS·변경Dart7파일 분석0을 보고했다. Backend 독립재현이나 실회원/기기 인수 근거로 확대하지 않는다.
+- preview Key/pending 없음·null/[]/순서/고정본문·닫힌 DTO·권한/confirmation·legacy/stale 차단·원명령/Ack·적용 후 현재T plan 자동조회와 조회 실패 시 원Ack 확정 보존을 보고했다. 중간28/152 및 기존 F5/F6-A/B 수치를 최종153에 합산하지 않는다.
+- 신규 계약 차이/Backend 변경 요청이 없어 구현·서버/DB/키 변경·시험 재실행·중복 댓글은 없다. 다음 Flutter F1~F6 실회원/사용자 기기 인수 준비와 최종 연결/조건 체크리스트 대조, Backend 재현 차이 대응이다. 실회원 HTTP/쓰기·실제ID/참가·동의/예약/완료/N·기기/성능·운영 인수, pending 앱종료 후 영속복구는 별도 미완료다.
+- NEXT_WORK/AI_CONTEXT/추적표 및 Issue 상단의 다음 담당을 갱신하고 기존 본문/OPEN을 보존한다. 이 수신 기록은 로컬 문서 커밋이며 신규 구현 인계나 push·dev/main 통합·운영 배포·Issue 종료는 하지 않는다.

@@ -10,14 +10,16 @@
 
 최종65PASS/763.70초+구형시각미정보완3PASS/41.43초(중복2제외고유66:신규30/기존회귀36)·두프로필OpenAPI전체일치·Python223소스/이미지바이트일치다. 실제API8000은168경로/DB0029·50928839…/healthy, 교체전후105표344행/전체내용지문·환경/키mount·보안/포트/command보존이다. 임시검증DB/runner/network정리완료, migration/초기화/실회원쓰기/키변경없음이다.
 
-소비구간 `29408243192ed3a37a347ade046db26ad2d918b9` commit/push·원격SHA확인 및 [전체121번째 Backend · F6-C 구현/개발 반영/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6356827586) 게시·전문일치 확인을 완료했다. 다음담당은Flutter F6-C연결/결과회신, Backend는재현차이대응이다.
+소비구간 `29408243192ed3a37a347ade046db26ad2d918b9` commit/push·원격SHA확인 및 [전체121번째 Backend · F6-C 구현/개발 반영/Flutter 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6356827586) 게시·전문일치 확인을 완료했다. Flutter122의 F6-C 연결 결과를 수신했다. 다음 담당은 Flutter F1~F6 전체 실회원/사용자 기기 인수 준비·최종 연결/조건 체크리스트 대조이며 Backend는 재현 차이 대응이다.
 
-## 다음 Flutter — 새 게시/실행 SHA로 F6-C 연결
+## 다음 Flutter — F1~F6 실회원·기기 인수 준비
 
-- POST weekly-resume-proposals?preview_only=true는명령writer/key/pending없이읽고깊이복사한기존Resume본문·CAS로확인한다. ready/permission/confirmation을함께검증하고같은본문+resume_context_token/새key·preview query제거로제출한다.
-- GET 현재T plan?include_resume_display=true에서weekly_resume별DTO/고정일정·미정/영향·basis/display·권한/confirmation을확인한뒤기존응답본문+token을보낸다. 일반일정경로에token을보내지않는다. legacy/stale/token없음은새응답차단·명시새제안안내, 자동false읽기/재제안없음이다.
-- recorded/applied·생성자accept와1인별도응답·참가재연결과수락자의시간동의를구분한다. 원Ack뒤현재T plan의새실제ID/본인상태를읽고preview/source ID와혼동하지않는다. 결과불명은원method/path/body/key/token재송이다.
-- 사용SHA/연결결과를#13에회신한다. 기존정책/F5/F6-A/B동일mock을반복요청하지않는다. 새직접영향검증·정상로그인HTTP/실회원·기기·성능·F6최종/운영인수는별도로구분한다.
+[전체122번째 Flutter · F6-C 연결 결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6357361150)에서 Backend2940824 소비·Flutter618f95e6/feature/raid-recruitment-scheduling commit/push·원격일치, 최종 단일153mock PASS·변경Dart7파일 분석0을 보고했다. Backend 독립재현이나 실회원/기기 인수 근거로 확대하지 않는다.
+
+- F6-C 생성 전 preview/제안별 표시·확인/원명령 재송·원Ack/recorded·applied 구분 및 적용 후 현재T 자동조회 연결을 보고했다. 조회 실패에도 원Ack 확정·pending해제를 유지한다.
+- 신규 계약 차이·추가 Backend 변경 요청은 없다. 중복 확인 댓글이나 동일 시험 요청은 작성하지 않는다.
+- 정상인증회원 HTTP·실회원쓰기·새ID/참가/시간동의/예약·완료/N 보존·확인창/접근성/실기기/성능은 미확인이다. Backend DB/HMAC/권한/CAS/경합/원자성/정족수의 Flutter 독립재현도 미확인이며 Backend 기존 자동검증과 구분한다.
+- Flutter는 F1~F6 전체 인수 준비·최종 조건 대조를 진행한다. Backend는 재현 가능한 차이 발생 시 해당 구간만 대응한다. 모집관리 pending 앱종료 후 영속복구는 별도 후속이다.
 
 ## 수신·후속 상태
 
