@@ -119,9 +119,15 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
             level = None
         if not core.raids.meets_item_level(level, difficulty):
             fail('RAID_ITEM_LEVEL_REQUIRED')
-        old=db.scalar(select(Assignment).where(Assignment.round_id==rd.id,Assignment.membership_id==member.id)) if member else None
+        old=db.scalar(select(Assignment).where(Assignment.round_id==rd.id,Assignment.membership_id==member.id).order_by(Assignment.joined_at.desc(),Assignment.id.desc())) if member else None
         if old is not None and (old.state!='active' if replacing else old.state!='left'):
             fail('TARGET_CONTEXT_STALE')
+        if replacing is None and old is not None and old.state=='left':
+            from app.raid_rooms.cycle_models import CycleAssignment,ParticipationEvent
+            binding=db.get(CycleAssignment,old.id)
+            cm=db.get(CycleMember,binding.cycle_member_id) if binding else None
+            event=db.scalar(select(ParticipationEvent).where(ParticipationEvent.cycle_member_id==cm.id,ParticipationEvent.member_revision==cm.revision)) if cm else None
+            if event is not None and event.evidence.get('membership_action') is True:old=None
         if replacing is not None and old is None:fail('TARGET_BUNDLE_INCOMPLETE')
         lease=db.get(WeeklyOccupancy,(uid,character.id,item.raid_id,target.cycle_key))
         own_lease=replacing is not None and lease is not None and lease.assignment_id==old.id

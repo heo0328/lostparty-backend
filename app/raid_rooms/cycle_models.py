@@ -86,6 +86,8 @@ class CycleMember(Base):
         CheckConstraint("state='review_required' OR (generation IS NOT NULL AND joined_order IS NOT NULL AND joined_at IS NOT NULL)"),
         CheckConstraint("state<>'participating' OR ended_at IS NULL"),
         CheckConstraint("state NOT IN ('cancelled','removed') OR ended_at IS NOT NULL"),
+        Index('uq_recruitment_current_cycle_member', 'cycle_id', 'generation', 'membership_id', unique=True,
+              postgresql_where=text("state <> 'cancelled' AND state <> 'removed'")),
         Index('uq_recruitment_unknown_cycle_member', 'cycle_id', 'membership_id', unique=True,
               postgresql_where=text('generation IS NULL')),
     )

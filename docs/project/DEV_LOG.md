@@ -2213,3 +2213,20 @@ NEXT_WORK/AI_CONTEXT/추적표를최신다음Backend계약/호환설계로갱신
 정적 검증: JSON Schema2020-12 49개 정의(기존 외부 참조4개 포함), 독립 작성 합성 wire37개·Impact→ACK9쌍·기존 reader 참조2건·거부 경계4건 통과. 작성 중 예시 공유 객체/검증 보조의 누락을 수정한 뒤 최종 정합성을 확인했다. 원격 게시 자료도 로컬과 일치한다. 검색 request/response 원본 schema 참조·해시 확인, 실행 OpenAPI 두 파일 HEAD 바이트 동일/새 경로 미노출, 문서 diff 검사 완료. 이는 실제 응답 캡처·제품 실행 시험이 아니다.
 
 다음 Flutter는 새 profile/revision 등 남는 구체 소비 차이만 회신하고 Backend는 후속 구현 지시에 따른다. 문서만 로컬 커밋/미push. 코드/API 구현·DDL·서버/DB/키·기기/운영·dev/main·Issue 종료 변경 없음.
+
+
+## 2026-10-24 — #24 검색·#25 일반 탈퇴/해산 구현·격리 검증
+
+사용자 ‘작업 진행합니다’를 기능 구현 지시로 받고 공식 이슈 본문/최신 댓글을 다시 확인했다. #24 전체3번째 Flutter(6370137482)는 계약 수용/추가 차단없음, #25 전체5번째 Flutter(6370138718)는 기존 네 차이 해소이며 실제 구현 인계 후 연결한다. [개발 안내](../ISSUE_24_25_MEMBERSHIP_ACTIONS_DEVELOPMENT.md)에 구현·보존·다음 담당을 정리했다.
+
+검색은 기존 shape/필터/집계를 유지하면서 선택T·현gen CM participating/review+활성 지속Member를 SQL 정렬/페이지 전에 제외하고 cursor digest에 own-target-participation-excluded-v1을 결합했다. 새 option별 Context/6필드 membership-actions 명령은 실제 C→N ACK·권한/원자 CAS·정리/자동승계/후계 불가 탈퇴·명시 복구·Room/Member/한도 head를 연결한다. 기본 reader를 보존한 opt-in profile과 본인 종료 기록 anchor/그룹 탈퇴·재가입 분리도 구현했다. 기존 cancel/leave/end·D22/E23·24h 원 ACK는 별도 namespace/효과로 유지한다.
+
+0031 후보는 리더 복구/불변 명령 감사2표와 현재/retained CM·Assignment partial unique를 추가한다. 기존 행을 재작성하지 않는다. 검토 중 같은 지속회원의 선택T 재참가가 옛 CM/Assignment를 재사용하는 기존 동작을 확인해 새 일반 명령으로 종료한 관계에는 새 CM/Assignment·가입순번을 발급하도록 보강했다. 옛 anchor와 일정 snapshot은 고정하고, 현재 reader/완료 정리는 옛 cancelled/removed 기록과 분리한다. 구 명령의 기존 재참가 효과는 유지한다. 명시 복구 대기의 지난T는 worker가 자동 리더 배정 없이 보존 종료한다.
+
+최종 고유 **37PASS = 신규20 + 검색11 + 기존 회귀6**, 겹치지 않는 20PASS/209.02초 + 16PASS/242.21초 + 1PASS/10.28초로 확인했다. 둘째 묶음은16개 통과 뒤 추가 SQL predicate 시험1건의 합성 상태 변경 중 시각 조회/autoflush 때문에 실패했고 준비 순서를 바로잡아 마지막1개만 재실행 통과했다. 구현 과정의 HTTP profile query 허용 누락과 재참가 자료 재사용을 수정한 후 최종 source 경계를 검증했다. 인증/소유권·stale/만료·동일키 경합/원 ACK, N 실패 전체 rollback, 리더 부적격·review 잔존 복구, 효과0 지속관계, 양T/8인 해산, 종료/그룹탈퇴·두 종류 재참가/식별자·읽기전용, 원 D22/E23/완료·주차전환을 포함한다. pytest의 기존 anyio/Starlette deprecation 경고1종 외 미해결 실패 없음.
+
+별도 정적 근거: 합의 설계37벡터가 구현 DTO를 통과했다(서버 시험 수에 더하지 않음). [실제 합성 DB 실행 응답7개](../design/issue24-25-implementation.examples.json)는 context token을 제거하고 기존 closed schema/format과 재대조했다. 이는 실제 개발 DB/사용자 응답이 아니다. 기존 schema component 전부 객체 동일·기본 openapi.yaml HEAD 바이트 동일, 후보176/기본116 객체 전체가 최종 빌드 이미지와 일치한다. 검증용 API 이미지의 app Python203파일 소스 해시가 작업 디렉터리와 일치한다. 임시 비관리자 DB의0031 이행·readiness/ASGI lifespan/health200·신규 menu/command/profile401+no-store3검사를 확인했다. 최초 후보 health 설정 누락은 독립 검증 환경의 POSTGRES_DB/APP_DB_PASSWORD·db 해석을 갖춰 해결했으며 제품 health 구현은 바꾸지 않았다. 문서 링크/문법/diff 검사 완료.
+
+[IF-001](../INACTIVE_FEATURES.md)은 #13 전체139번째 Flutter 사용자 최종 결정(6370006371)을 반영한다. close_weekly/weekly_resume를 앱 비활성 보존으로 분리하고 기존 endpoint/권한·자료·원 pending/24h ACK와 다음주 reopen/#25 recover_leadership을 유지한다. 복구 UX는 별도 제품 승인 전 제안이다. Docker 빌드 컨텍스트에서 .aws/.codex/.agents도 제외했다.
+
+**실제 개발 API/DB 미반영**: API92490ff3bf3e777d6342cb7a416af042ccf6654f8429c37a8a7cfd2796d71352·DB0030 둘 다 healthy, 새2표 없음 읽기 확인. 기존 자료/키/볼륨·dev/main/운영·Issue 종료 변경 없음. 이번 생성 tmpfs DB/두 후보 API/시험 runner·전용 네트워크는 검증 뒤 정리했고 기존 api/db만 실행 중이다. 소스 구현 인계/Flutter 자동 연결과 실제 개발 API/DB0031 반영·실회원/기기 인수는 구분한다. 다음 Backend 개발 반영 구간, Flutter 전용 DTO/원 ACK→메뉴/관계 알림→profile·기록 Router 직접 연결이다.

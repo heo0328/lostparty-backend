@@ -117,6 +117,8 @@ class RecruitmentAssignment(Base):
         CheckConstraint("selected_role IN ('dealer','support') AND party_no BETWEEN 1 AND 2 AND slot_no BETWEEN 1 AND 4"),
         CheckConstraint('revision>=1 AND ownership_revision>=1 AND lifecycle_revision>=1'),
         CheckConstraint("(state='active' AND ended_at IS NULL) OR (state IN ('completed','left','stopped_incomplete','legacy_ended') AND ended_at IS NOT NULL)"),
+        Index('uq_recruitment_current_assignment', 'round_id', 'membership_id', unique=True,
+              postgresql_where=text("state <> 'left' AND state <> 'legacy_ended'")),
         Index('uq_recruitment_active_slot', 'round_id', 'party_no', 'slot_no', unique=True,
               postgresql_where=text("state='active'")),
     )

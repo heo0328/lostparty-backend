@@ -15,7 +15,7 @@ from app.raid_weekly import service as weekly
 from app.raid_weekly.models import WeeklyState
 
 
-def enabled(db):return list(db.scalars(text('SELECT version_num FROM public.alembic_version')))in (['0029_cycle_outcomes'],['0030_completion_corrections'])
+def enabled(db):return list(db.scalars(text('SELECT version_num FROM public.alembic_version')))in (['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'])
 def ready(db):
     if not enabled(db):fail('RECRUITMENT_COMMAND_NOT_READY',503)
 
@@ -140,7 +140,7 @@ def execute(principal,rid,round_id,command,data,kind):
         if kind in ('complete_item','close_weekly'):
             for rd in rounds:rd.state='stopped_incomplete' if kind=='close_weekly' else 'completed';rd.ended_at=stamp;rd.revision+=1
         db.flush()
-        for member in db.scalars(select(CycleMember).where(CycleMember.cycle_id==row.id,CycleMember.generation==row.generation,CycleMember.membership_id.in_(affected))):
+        for member in db.scalars(select(CycleMember).where(CycleMember.cycle_id==row.id,CycleMember.generation==row.generation,CycleMember.membership_id.in_(affected),CycleMember.state.in_(('participating','review_required','completed','stopped')))):
             active=any(a.state=='active' for a in life.assignments(db,row,member))
             if not active:member.state='stopped' if kind=='close_weekly' else 'completed';member.ended_at=stamp
             member.revision+=1;life.event(db,row,member,command,'stopped' if kind=='close_weekly' else 'completed',stamp,evidence)

@@ -1,5 +1,7 @@
 # Flutter와 API 협업
 
+활성 사용자 기능에서 미완료 종료·같은 주차 재개를 제외하며, 구 API/이력·원 pending/ACK는 [IF-001 비활성 보존 기준](INACTIVE_FEATURES.md)에 따라 유지합니다.
+
 ## 소통 기준
 
 Flutter와 Backend를 동시에 개발하는 동안, 별도 협업툴이나 공유 방식을 채택하기 전까지 **[heo0328/lostparty-backend의 GitHub Issues](https://github.com/heo0328/lostparty-backend/issues)**를 공식 협업 채널로 사용합니다. Backend는 Issue와 합의된 계약을 기준으로 작업합니다. Flutter 로컬 경로나 특정 문서를 찾아 읽는 절차는 두지 않습니다.

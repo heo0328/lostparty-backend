@@ -32,6 +32,7 @@ from app.raid_rooms import completion_correction, completion_correction_schemas 
 
 
 from app.raid_rooms import atomic_members, atomic_member_schemas as atomic_schemas
+from app.raid_rooms import membership_actions, membership_readers, membership_action_schemas as membership_schemas
 
 
 class CycleRoute(AvailabilityRoute):
@@ -69,16 +70,17 @@ class CycleRoute(AvailabilityRoute):
         if request.url.path.endswith('/raid-room-member-projections'):return {'room_ids','target_cycle_key','group_ids','filter_context_token'}
         if request.url.path.endswith('/raid-room-filter-context'):return {'group_ids'}
         if request.url.path.endswith('/raid-rooms'):return {'scope','group_id','raid_id','difficulty_id','limit','cursor','target_cycle_key','experience_levels'}
-        if request.url.path.endswith('/raid-room-memberships') or request.url.path.endswith('/applications') or request.url.path.endswith('/raid-room-applications'):
+        if request.url.path.endswith('/raid-room-memberships'):return {'target_cycle_key','state','limit','cursor','reader_profile'}
+        if request.url.path.endswith('/applications') or request.url.path.endswith('/raid-room-applications'):
             return {'target_cycle_key','state','limit','cursor'}
         if request.url.path.endswith('/raid-room-creation-context'):
             return {'target_cycle_key','character_id','selected_role','items','group_id',
                 'continuation_enabled','next_character_id','next_selected_role'}
         if request.url.path.endswith('/admission-context'):
             return {'target_cycle_key','character_id','selected_role','intent','include_session_display'}
-        if request.url.path.endswith('/plan'):return {'target_cycle_key','include_resume_display'}
+        if request.url.path.endswith('/plan'):return {'target_cycle_key','include_resume_display','reader_profile','membership_id','cycle_member_id'}
         if request.url.path.endswith('/detail'):
-            return {'target_cycle_key'}
+            return {'target_cycle_key','reader_profile','membership_id','cycle_member_id'}
         if '/raid-rooms/' in request.url.path:return {'target_cycle_key'}
         return set()
 
@@ -142,11 +144,12 @@ def withdraw(application_id:UUID,data:inputs.Withdraw,principal:Principal,key:Ke
     return commands.process(principal,application_id,key,data,action='withdraw')[1]
 
 
-@router.post('/raid-rooms/search',response_model=s.OutputContract3PostV2RaidRoomsSearch,responses=errors)
+@router.post('/raid-rooms/search',response_model=s.OutputContract3PostV2RaidRoomsSearch,responses=errors,
+    description='Authenticated search excludes own active persistent membership with participating/review_required CM in the selected actual T/current generation, in SQL before sorting and pagination. Opposite-only, pending and historical relations are preserved. Cursor semantics: own-target-participation-excluded-v1; old semantics/head changes return CURSOR_STALE (409), foreign/tampered scope INVALID_REQUEST (400).')
 def search(data:inputs.Search,principal:OptionalPrincipal=None):return queries.search(principal,data)
 
 
-@router.get('/raid-rooms',response_model=s.OutputContract3PostV2RaidRoomsSearch,responses=errors)
+@router.get('/raid-rooms',response_model=s.OutputContract3PostV2RaidRoomsSearch,responses=errors,description='GET adapter uses the same SQL exclusion, cursor scope and own-target-participation-excluded-v1 semantics as POST /v2/raid-rooms/search.')
 def room_list(target_cycle_key:str,principal:OptionalPrincipal=None,scope:Literal['public','group']='public',
     group_id:UUID|None=None,raid_id:str|None=None,difficulty_id:str|None=None,
     limit:Annotated[int,Query(ge=1,le=50)]=20,cursor:Annotated[str|None,Query(max_length=2048)]=None,
@@ -180,12 +183,21 @@ def group_character_candidates(group_id:UUID,principal:Principal,
 def card(room_id:UUID,target_cycle_key:str,principal:OptionalPrincipal=None):return queries.get_card(principal,room_id,target_cycle_key)
 
 
-@router.get('/raid-rooms/{room_id}/detail',response_model=s.OutputContract3GetV2RaidRoomsRoomIdDetail,responses=errors)
-def detail(room_id:UUID,target_cycle_key:str,principal:Principal):return members.detail(principal,room_id,target_cycle_key)
+@router.get('/raid-rooms/{room_id}/detail',response_model=s.OutputContract3GetV2RaidRoomsRoomIdDetail|membership_schemas.DetailProfile,response_model_exclude_unset=True,responses=errors)
+def detail(room_id:UUID,target_cycle_key:str,principal:Principal,reader_profile:Literal['membership-actions-1']|None=None,
+    membership_id:UUID|None=None,cycle_member_id:UUID|None=None):
+    if reader_profile is not None:
+        return membership_readers.get(principal,room_id,target_cycle_key,'detail',membership_id=membership_id,cycle_member_id=cycle_member_id)
+    if membership_id is not None or cycle_member_id is not None:fail('INVALID_REQUEST',400)
+    return members.detail(principal,room_id,target_cycle_key)
 
 
-@router.get('/me/raid-rooms/{room_id}/plan',response_model=resume_review_schemas.ResumePlanContext,response_model_exclude_unset=True,responses=errors)
-def plan(room_id:UUID,target_cycle_key:str,principal:Principal,include_resume_display:Literal['true','false']='false'):
+@router.get('/me/raid-rooms/{room_id}/plan',response_model=resume_review_schemas.ResumePlanContext|membership_schemas.PlanProfile,response_model_exclude_unset=True,responses=errors)
+def plan(room_id:UUID,target_cycle_key:str,principal:Principal,include_resume_display:Literal['true','false']='false',
+    reader_profile:Literal['membership-actions-1']|None=None,membership_id:UUID|None=None,cycle_member_id:UUID|None=None):
+    if reader_profile is not None:
+        return membership_readers.get(principal,room_id,target_cycle_key,'plan',membership_id=membership_id,cycle_member_id=cycle_member_id,include_resume_display=include_resume_display=='true')
+    if membership_id is not None or cycle_member_id is not None:fail('INVALID_REQUEST',400)
     return members.plan(principal,room_id,target_cycle_key,include_resume_display=='true')
 
 
@@ -204,8 +216,9 @@ def applications(room_id:UUID,principal:Principal,target_cycle_key:str,state:App
     return lists.applications(principal,target_cycle_key,rid=room_id,state=state,limit=limit,cursor=cursor)
 
 
-@router.get('/me/raid-room-memberships',response_model=s.OutputContract3GetV2MeRaidRoomMemberships,responses=errors)
-def memberships(principal:Principal,target_cycle_key:str,state:Literal['current','ended','all']='current',limit:Limit=20,cursor:Cursor=None):
+@router.get('/me/raid-room-memberships',response_model=s.OutputContract3GetV2MeRaidRoomMemberships|membership_schemas.MembershipPage,responses=errors)
+def memberships(principal:Principal,target_cycle_key:str,state:Literal['current','ended','all']='current',limit:Limit=20,cursor:Cursor=None,reader_profile:Literal['membership-actions-1']|None=None):
+    if reader_profile is not None:return membership_readers.memberships(principal,target_cycle_key,state,limit,cursor)
     return lists.memberships(principal,target_cycle_key,state,limit,cursor)
 
 
@@ -439,3 +452,13 @@ def member_removal_context(room_id:UUID,target_cycle_key:atomic_schemas.CycleKey
 @router.post('/raid-rooms/{room_id}/member-removals',response_model=atomic_schemas.ActionResult,responses=errors)
 def atomic_removal(room_id:UUID,data:atomic_schemas.RemovalCommand,principal:Principal,key:Key):
     return atomic_members.execute(principal,room_id,key,data)[1]
+
+
+@router.get('/raid-rooms/{room_id}/membership-action-context',response_model=membership_schemas.Context,responses=errors,description='Active persistent membership is the menu entrance; selected-T membership/leadership and recovery guards apply per option. GET never assigns leadership. Requires schema0031.')
+def membership_action_context(room_id:UUID,target_cycle_key:atomic_schemas.CycleKey,principal:Principal):
+    return membership_actions.get(principal,room_id,target_cycle_key)
+
+
+@router.post('/raid-rooms/{room_id}/membership-actions',response_model=membership_schemas.Result,responses=errors,description='Exact six-field actor/view-T/action/opaque-token command. One transaction validates the complete selected option, cleans up, succeeds departure despite no qualified successor, records explicit recovery and C-to-N effects. Original ACK replay lasts24h; unchanged legacy operations use separate namespaces. Requires schema0031.')
+def membership_action(room_id:UUID,data:membership_schemas.Command,principal:Principal,key:Key):
+    return membership_actions.execute(principal,room_id,key,data)[1]

@@ -10,6 +10,7 @@ from tests.test_recruitment_cycle_commands import create_room, context, admissio
 from tests.test_raid_room_migrations import table_digests
 from tests.test_group_foundation import actor
 from app.raid_rooms import cycle_member_reads as members
+from tests.test_recruitment_cycle_lifecycle import lifecycle
 
 
 def search_request(key,**updates):
@@ -78,6 +79,7 @@ def test_detail_and_plan_keep_target_assignments_and_formation(candidate):
 def test_cursor_normalization_and_target_directory_invalidation(candidate,people):
     _,a,b=candidate
     first=create_room(a);second=create_room(b,combined=False)
+    third_room=create_room(people('w2-cursor-visible'),combined=False)
     rid=uuid.UUID(first['room_id']);c,n=[v['target_cycle_key'] for v in first['created_cycles']]
     conditions=dict(limit=1,experience_levels=['experienced','unrestricted'])
     page=queries.search(actor(a['uid']),search_request(c,**conditions))
@@ -112,7 +114,7 @@ def test_group_visibility_and_character_sql_filter_use_actual_target(candidate,p
     conditions=dict(group_ids=[gid],filter_context_token=source['filter_context_token'],member_conditions=[
         dict(member_ref=ref,character_ids=[b['ids'][0]])])
     assert not queries.search(actor(a['uid']),search_request(c,**conditions))['data']['items']
-    assert len(queries.search(actor(a['uid']),search_request(n,**conditions))['data']['items'])==1
+    assert not queries.search(actor(a['uid']),search_request(n,**conditions))['data']['items']
     from app.raid_rooms import cycle_lists
     from tests.test_recruitment_cycle_http import validate
     for key,count in ((c,1),(n,2)):
@@ -125,3 +127,61 @@ def test_group_visibility_and_character_sql_filter_use_actual_target(candidate,p
     with session() as db,db.begin():
         db.get(GroupMembership,bid).ended_at=now(db);db.get(Group,gid).members_revision+=1
     denied('FILTER_CONTEXT_STALE',queries.search,actor(a['uid']),search_request(n,**conditions))
+
+
+def target_id(db,rid,key):
+    return db.scalar(select(RoomCycle.id).where(RoomCycle.room_id==rid,RoomCycle.cycle_key==date.fromisoformat(key)))
+
+
+def test_own_target_exclusion_opposite_and_reappearance(lifecycle):
+    from app.raid_rooms import cycle_leadership
+    _,a,b=lifecycle
+    created=create_room(a);rid=uuid.UUID(created['room_id']);c,n=[v['target_cycle_key'] for v in created['created_cycles']]
+    for key in (c,n):
+        assert not queries.search(actor(a['uid']),search_request(key))['data']['items']
+        assert len(queries.search(actor(b['uid']),search_request(key))['data']['items'])==1
+        assert len(queries.search(None,search_request(key))['data']['items'])==1
+    commands.admit(actor(b['uid']),rid,uuid.uuid4(),admission_request(context(b,rid,n)))
+    assert len(queries.search(actor(b['uid']),search_request(c))['data']['items'])==1
+    assert not queries.search(actor(b['uid']),search_request(n))['data']['items']
+    cancel=cycle_leadership.get_cancel(actor(b['uid']),rid,n)
+    from tests.test_recruitment_cycle_lifecycle import cancel_body
+    cycle_leadership.cancel(actor(b['uid']),rid,uuid.uuid4(),cancel_body(cancel))
+    assert len(queries.search(actor(b['uid']),search_request(n))['data']['items'])==1
+    assert queries.get_card(actor(a['uid']),rid,n)['data']['my_target_role']=='leader'
+
+
+def test_exclusion_before_limit_and_old_cursor_stale(candidate,people,monkeypatch):
+    _,a,b=candidate
+    own=create_room(a);visible=create_room(b,combined=False)
+    other=create_room(people('own-search-page2'),combined=False)
+    key=own['created_cycles'][0]['target_cycle_key']
+    first=queries.search(actor(a['uid']),search_request(key,limit=1))['data']
+    second=queries.search(actor(a['uid']),search_request(key,limit=1,cursor=first['next_cursor']))['data']
+    assert len(first['items'])==len(second['items'])==1
+    assert {x['room_id'] for x in first['items']+second['items']}=={visible['room_id'],other['room_id']}
+    assert second['next_cursor'] is None
+    monkeypatch.setattr(queries,'SEARCH_SEMANTICS','old-semantics')
+    old=queries.search(actor(a['uid']),search_request(key,limit=1))['data']['next_cursor']
+    monkeypatch.setattr(queries,'SEARCH_SEMANTICS','own-target-participation-excluded-v1')
+    denied('CURSOR_STALE',queries.search,actor(a['uid']),search_request(key,limit=1,cursor=old))
+
+
+def test_exclusion_exact_cm_state_and_active_persistent_member(candidate):
+    # Isolate SQL predicate boundaries with valid synthetic rows; no cleanup is
+    # being claimed for these direct fixture state transitions.
+    from app.core.database import now
+    _,a,b=candidate;created=create_room(a);rid=uuid.UUID(created['room_id']);n=created['created_cycles'][1]['target_cycle_key']
+    commands.admit(actor(b['uid']),rid,uuid.uuid4(),admission_request(context(b,rid,n)))
+    for state in ('participating','review_required','completed','stopped','cancelled','removed'):
+        with session() as db,db.begin():
+            cm=db.scalar(select(queries.CycleMember).where(queries.CycleMember.cycle_id==target_id(db,rid,n),queries.CycleMember.user_id==b['uid']))
+            stamp=now(db)
+            cm.state=state;cm.ended_at=stamp if state in ('cancelled','removed') else None
+        page=queries.search(actor(b['uid']),search_request(n))['data']['items']
+        assert bool(page)==(state not in ('participating','review_required'))
+        if page:assert page[0]['app_member_count']==2
+    with session() as db,db.begin():
+        cm=db.scalar(select(queries.CycleMember).where(queries.CycleMember.cycle_id==target_id(db,rid,n),queries.CycleMember.user_id==b['uid']))
+        cm.state='review_required';cm.ended_at=None;db.get(queries.Member,cm.membership_id).ended_at=now(db)
+    assert len(queries.search(actor(b['uid']),search_request(n))['data']['items'])==1

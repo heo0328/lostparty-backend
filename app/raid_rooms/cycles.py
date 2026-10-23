@@ -151,11 +151,17 @@ and allocates one target-specific order, in the SAME transaction as admission.
                 or weekly.active_difficulty_id != rd.difficulty_id or weekly.joined_at != occupancy.joined_at):
             fail('WEEKLY_OCCUPANCY_CHANGED')
     member = db.scalar(select(CycleMember).where(CycleMember.cycle_id == row.id,
-        CycleMember.generation == row.generation, CycleMember.membership_id == membership_id))
+        CycleMember.generation == row.generation, CycleMember.membership_id == membership_id)
+        .order_by(CycleMember.joined_order.desc().nullslast(),CycleMember.id.desc()))
     if member is not None and member.state == 'participating':
         return member
     if member is not None and member.state not in ('cancelled', 'removed'):
         fail('TARGET_CONTEXT_STALE')  # Completed/stopped history is not a new join.
+    if member is not None:
+        ended_event=db.scalar(select(ParticipationEvent).where(ParticipationEvent.cycle_member_id==member.id,
+            ParticipationEvent.member_revision==member.revision,ParticipationEvent.action.in_(('cancelled','removed'))))
+        if ended_event is not None and ended_event.evidence.get('membership_action') is True:
+            member=None  # the historical locator must never be recycled as a new writer
     order = allocate_join_order(db, generation)
     if member is None:
         member = CycleMember(id=uuid.uuid4(), room_id=row.room_id, cycle_id=row.id, generation=row.generation,

@@ -1,5 +1,9 @@
 # Issue25 계약 보완안2 — 옵션 격리·후상태/revision·복구/기록 reader
 
+후속 구현 기준: [검색/일반 탈퇴·해산 개발 안내](ISSUE_24_25_MEMBERSHIP_ACTIONS_DEVELOPMENT.md)와 실행 OpenAPI를 따른다. 아래는 합의 당시의 설계 자료/검증 경계를 보존한 것이다. 실제 개발 API/DB 반영 상태는 개발 안내·NEXT_WORK에서 구분한다.
+
+제품 상태 보충: [IF-001](INACTIVE_FEATURES.md)에 따라 close_weekly/weekly_resume 앱 진입은 비활성이다. 아래 retained/기존 content·resume 호환은 과거 자료·원 API 보존 기준이며 앱 재활성화 근거가 아니다. #25 recover_leadership 및 다음주 reopen과 구분한다.
+
 2026-10-24 / feat/raid-recruitment / **기획·설계 범위의 닫힌 계약안, 기능 미구현**.
 
 [Flutter 전체1번째 소비대조](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6369171307)의 네 보완에 답한다. 기존3행동 정책은 재질문하지 않는다. [설계안1](ISSUE_13_MEMBERSHIP_ACTIONS_DESIGN.md)의 모호한 wire/reader 부분은 이 안이 대체하고 기존 명령·원ACK의 효과는 유지한다. 복구 UI의 제품 승인을 뜻하지 않으며 네번째 상시버튼/탈퇴전 필수단계·GET자동승계를 추가하지 않는다.

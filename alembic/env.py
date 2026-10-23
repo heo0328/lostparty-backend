@@ -16,6 +16,7 @@ import app.raid_rooms.cycle_lifecycle_models
 import app.raid_rooms.cycle_consent_models
 import app.raid_rooms.cycle_planning_models
 import app.raid_rooms.cycle_outcome_models
+import app.raid_rooms.membership_action_models
 import app.game_accounts.power_success
 import app.groups.models
 import app.groups.admission_models

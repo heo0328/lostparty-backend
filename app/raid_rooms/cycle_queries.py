@@ -15,6 +15,21 @@ from app.raid_rooms.weekly_links import WeeklyOccupancy
 from app.raid_rooms.source_models import ScheduleGroup
 from app.raid_rooms import completed_room_lifecycle as archive
 
+SEARCH_SEMANTICS = 'own-target-participation-excluded-v1'
+
+
+def own_participation(uid):
+    """Correlated actual-T predicate; apply before sorting/pagination/count+1."""
+    return select(CycleMember.id).join(Member, Member.id == CycleMember.membership_id).where(
+        CycleMember.cycle_id == RoomCycle.id,
+        CycleMember.room_id == Room.id,
+        CycleMember.generation == RoomCycle.generation,
+        CycleMember.user_id == uid,
+        Member.user_id == uid, Member.room_id == Room.id,
+        Member.ended_at.is_(None),
+        CycleMember.state.in_(('participating', 'review_required')),
+    ).correlate(Room, RoomCycle).exists()
+
 
 def role(db,uid,row):
     own=db.scalar(select(CycleMember).join(Member,Member.id==CycleMember.membership_id).where(
@@ -97,6 +112,7 @@ def search(principal,data):
         query=select(Room,RoomCycle).join(RoomCycle,RoomCycle.room_id==Room.id).where(
             Room.ended_at.is_(None),RoomCycle.cycle_key==target.key,RoomCycle.state=='open',
             RoomCycle.generation.is_not(None),~archive.archived(Room.id),filters.visible(uid))
+        if uid is not None:query=query.where(~own_participation(uid))
         if data.category=='general':query=query.where(Room.group_id.is_(None))
         elif data.category=='group_linked':query=query.where(Room.group_id.is_not(None))
         if data.admission_scope is not None:query=query.where(Room.scope==data.admission_scope)
@@ -136,7 +152,7 @@ def search(principal,data):
         permissions=list(db.execute(select(Group.id,Group.revision,Group.members_revision).join(GroupMembership,
             GroupMembership.group_id==Group.id).where(GroupMembership.user_id==uid,
             GroupMembership.ended_at.is_(None),Group.ended_at.is_(None)).order_by(Group.id))) if uid else []
-        revision=digest(jsonable_encoder([head,target.current,body,context_digest,[list(r) for r in permissions]]))
+        revision=digest(jsonable_encoder([SEARCH_SEMANTICS,head,target.current,body,context_digest,[list(r) for r in permissions]]))
         binding=['cycle-directory',str(uid),str(principal[1].id) if principal else None,target.key.isoformat()]
         offset=cursor_decode(data.cursor,binding,revision) if data.cursor else 0
         primary=count.asc() if sort['direction']=='ascending' else count.desc()

@@ -1,6 +1,7 @@
 """Private target detail and plan. Historical/global assignments are not aliases."""
 from datetime import timedelta
-from sqlalchemy import select
+from contextlib import nullcontext
+from sqlalchemy import select, or_
 from fastapi.encoders import jsonable_encoder
 from app.auth.models import User
 from app.game_accounts.support import fail, GameError
@@ -49,7 +50,10 @@ def assignments(db,row,member_id=None):
     query=select(Assignment,CycleAssignment).join(CycleAssignment,CycleAssignment.assignment_id==Assignment.id).join(
         CycleRound,CycleRound.round_id==Assignment.round_id).where((CycleRound.is_current.is_(True)) | (Assignment.state=='completed'),
         CycleAssignment.cycle_id==row.id,CycleAssignment.generation==row.generation)
-    if member_id is not None:query=query.where(Assignment.membership_id==member_id)
+    if member_id is not None:
+        current=select(CycleMember.id).where(CycleMember.cycle_id==row.id,CycleMember.generation==row.generation,
+            CycleMember.membership_id==member_id,CycleMember.state.in_(('participating','completed','stopped','review_required')))
+        query=query.where(Assignment.membership_id==member_id,or_(~current.exists(),CycleAssignment.cycle_member_id.in_(current)))
     return list(db.execute(query.order_by(Assignment.joined_at,Assignment.id)))
 
 
@@ -92,8 +96,8 @@ def settings(db,room,row,uid,stamp):
     return result
 
 
-def detail(principal,rid,key):
-    with base.snapshot(principal) as (db,uid,stamp):
+def detail(principal,rid,key,*,read_snapshot=None):
+    with (nullcontext(read_snapshot) if read_snapshot is not None else base.snapshot(principal)) as (db,uid,stamp):
         room,row=read_target(db,uid,rid,key,stamp)
         if archive.is_archived(db,rid):base.member(db,uid,room)
         mine=db.scalar(select(Member).where(Member.room_id==rid,Member.user_id==uid,Member.ended_at.is_(None)))
@@ -192,8 +196,8 @@ def schedule_fields(db,room,row,mine,stamp,include_resume_display=False):
         schedule_groups=groups,sessions=sessions,session_segments=segments,my_participations=parts,proposals=views)
 
 
-def plan(principal,rid,key,include_resume_display=False):
-    with base.snapshot(principal) as (db,uid,stamp):
+def plan(principal,rid,key,include_resume_display=False,*,read_snapshot=None):
+    with (nullcontext(read_snapshot) if read_snapshot is not None else base.snapshot(principal)) as (db,uid,stamp):
         room,row=read_target(db,uid,rid,key,stamp);mine=base.member(db,uid,room)
         if own_cycle_member(db,row,mine) is None:fail('WEEKLY_PARTICIPANT_REQUIRED',403)
         items=[dict(item_id=i.id,revision=i.revision,raid_id=i.raid_id,difficulty_id=r.difficulty_id,

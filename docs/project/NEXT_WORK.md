@@ -2,13 +2,16 @@
 
 2026-10-24 / **feat/raid-recruitment** / [#13](https://github.com/heo0328/lostparty-backend/issues/13), [#22](https://github.com/heo0328/lostparty-backend/issues/22), [#23](https://github.com/heo0328/lostparty-backend/issues/23) OPEN.
 
-## 현재 — #24/#25 계약 보완 회신 완료, 기능 구현 전
+## 현재 — #24/#25 구현·격리 검증, 실제 개발 반영 전
 
-- #24: [검색 계약](../ISSUE_24_SEARCH_CONTRACT.md)으로 기존 요청/응답 shape, 선택 실제T/현 generation의 SQL 페이지 전 제외, semantics 표식·영향 T head/커서 경계를 고정했다. [전체2번째 Backend · 검색 계약 보완](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6369761914)에 회신했다. Flutter 전체1번째의 blocking 변경 요청은 없으며 자동 첫 페이지 회복은 아직 앱 후속이다.
-- #25: [계약 보완안2](../ISSUE_25_CONTRACT_REVIEW_V2.md)와 [closed schema](../design/issue25-membership-actions.contract.schema.json)·[합성 예시37개](../design/issue25-membership-actions.contract.examples.json)를 작성했다. 옵션별 접근 격리, planned 상태/revision의 유지·증가 증명, 명시 복구 reader, 종료 본인 기록/탈퇴·재가입 locator의 네 요청에 답했다. [전체2번째 Backend · 계약 보완](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6369762510), [전체3번째 Backend · 예시1/2](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6369763243), [전체4번째 Backend · 예시2/2](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6369763925) 전문 게시와 손실 없는 원격 대조를 완료했다.
-- 다음 Flutter: 새 opt-in `reader_profile=membership-actions-1`/revision·기록 소비에 남는 구체 차이가 있으면 #25에 회신한다. 기존 제품 정책 재수용이나 기존 시험 반복 요청은 없다. 복구 UX는 별도 제품 승인 전 제안이다.
-- 다음 Backend: 회신에 구체 차이가 있으면 계약을 보완하고, 구현 지시 후 검색 SQL/커서와 새 원자 명령·reader·audit/recovery 이행을 해당 범위로 진행한다. 현재 사용자 지시는 기획·설계이며 기능 구현/DB 이행/서버 반영·실기기 시험 요청은 하지 않았다.
-- 검증: JSON Schema2020-12 정합성, 합성 wire37개·Impact→ACK9쌍·기존 reader 참조2건·거부 경계4건 정적 검증. 기존 실행 OpenAPI 두 파일은 HEAD와 바이트 동일하다. 합성 자료는 실제 서버 응답/동작 시험이 아니다. 문서 로컬 커밋·미push, 코드/서버/DB 변경 없음.
+사용자 구현 진행 지시와 [#24 전체3번째 Flutter 수용](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6370137482)·[#25 전체5번째 Flutter 네 차이 해소](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6370138718)를 확인했다. 네이티브의 계약 재수용을 기다리는 상태가 아니다. [개발 안내](../ISSUE_24_25_MEMBERSHIP_ACTIONS_DEVELOPMENT.md)를 현재 구현 기준으로 사용한다.
+
+- Backend 소스: 검색 SQL 페이지 전 본인 실제T 참가 제외·semantics cursor, 새 옵션별 Context/6필드 원자 명령·C→N ACK, 승계 불가 탈퇴/명시 복구, 방·지속관계·한도, opt-in reader/본인 종료 기록을 구현했다. 같은 지속회원의 재참가도 옛 CM/Assignment 식별자를 재사용하지 않도록 보강했다. 실행 후보 계약176경로·기본116/기존 component·구 명령/pending/24h 원 ACK 보존이다.
+- DB 후보0031: 리더 복구/불변 감사2표와 현재 CM/Assignment partial unique를 추가한다. 기존 행 재작성/초기화 없이 임시 PostgreSQL·비관리자 역할에서 이행과 실제 ASGI 시작을 검증한다. 최종 고유37PASS(신규20/검색11/기존6), 합성 실행 응답7개 schema 대조·기본116/후보176 전체 계약·실제 후보 ASGI 시작/health·인증3건 검증 완료. 게시 SHA/결과는 DEV_LOG에 기록한다.
+- 실제 개발 서버는 API92490ff3…/174경로·DB0030이고 두 컨테이너 healthy, 새2표 없음 확인. 구현 후보 이미지/합성 DB와 구분한다. 기존 개발 API·DB에 0031 이행/이미지 교체·실회원 쓰기를 실행하지 않았다.
+- 다음 Flutter: 게시된 source/176계약으로 전용 DTO·원 명령/ACK → 메뉴/성공 화면/관계 종료 알림 → profile/기록 Router를 연결하고 직접 영향의 자동 검증 결과를 #24/#25에 회신한다. 실제 서버 연동·실회원/기기 인수는 개발 API/DB0031 반영 확인 뒤다. 기존 정책/전체 시험 재수용은 요청하지 않는다.
+- 다음 Backend: 구현/자동 검증·게시 구간을 마감하고, 별도 개발 반영 구간에서 기존 자료 보존·0031 이행/API·worker 호환/실행 계약을 확인한다. 재현 가능한 소비 차이가 오면 해당 범위에서 대응한다. dev/main/운영·자료 삭제는 미진행이다.
+- [IF-001](../INACTIVE_FEATURES.md): #13 전체139번째 사용자 최종 결정 전달에 따라 close_weekly/weekly_resume 앱 신규 진입을 비활성 보존으로 분리했다. endpoint·권한/자료·원 pending/ACK는 유지한다. 다음주 reopen/#25 recover_leadership과 구분하고 복구 UX는 제품 미승인 제안으로 유지한다.
 
 원본은 [#13 전체135번째 검색 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6366977367)·[전체136번째 사용자 확정 정책](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6367266418)이며 [전체137번째 Backend 설계/후속 이관](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6368822874)에서 독립 완료 조건으로 #24/#25를 연결했다. [설계안1 검색](../ISSUE_13_SEARCH_EXCLUSION_DESIGN.md)·[설계안1 탈퇴/해산](../ISSUE_13_MEMBERSHIP_ACTIONS_DESIGN.md)은 배경으로 보존하되 wire는 보완안2가 우선한다. 구 cancel/leave/end·D22/E23 pending/24h 원 ACK와 현행 174경로·DB0030은 보존한다. OPEN 이슈와 실제 인수 미완료는 기능 완료로 표시하지 않는다.
 

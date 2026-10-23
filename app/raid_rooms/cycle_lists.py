@@ -73,7 +73,7 @@ def memberships(principal,key,state='current',limit=20,cursor=None):
         items=[]
         for member,room in rows[:limit]:
             _,row=cycles.resolve(db,room.id,key,stamp)
-            actual=db.scalar(select(CycleMember).where(CycleMember.cycle_id==row.id,CycleMember.generation==row.generation,CycleMember.membership_id==member.id)) if row else None
+            actual=db.scalar(select(CycleMember).where(CycleMember.cycle_id==row.id,CycleMember.generation==row.generation,CycleMember.membership_id==member.id).order_by(CycleMember.joined_order.desc().nullslast(),CycleMember.id.desc())) if row else None
             ready=row is not None and row.provenance=='explicit' and row.generation is not None and bool(row.settings_snapshot)
             detail=members.own_view(db,room,row,member) if ready else dict(target_role='none',cycle_member_id=None,
                 cycle_member_revision=actual.revision if actual else None,joined_order=str(actual.joined_order) if actual and actual.joined_order else None)

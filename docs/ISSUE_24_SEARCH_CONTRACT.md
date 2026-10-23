@@ -1,5 +1,7 @@
 # Issue24 검색 계약 보완1 — 기존 shape/semantics·cursor/head
 
+후속 구현 기준: [검색/일반 탈퇴·해산 개발 안내](ISSUE_24_25_MEMBERSHIP_ACTIONS_DEVELOPMENT.md)와 실행 OpenAPI를 따른다. 아래는 합의 당시의 설계 자료/검증 경계를 보존한 것이다. 실제 개발 API/DB 반영 상태는 개발 안내·NEXT_WORK에서 구분한다.
+
 2026-10-24 / 설계 계약 고정·미구현. [Flutter 전체1번째](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6369170940) 기존요청재사용 가능/차단API요청없음 회신을반영한다. [설계안1](ISSUE_13_SEARCH_EXCLUSION_DESIGN.md)의판정표·검증조건을유지한다.
 
 ## 고정 계약

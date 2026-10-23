@@ -18,8 +18,16 @@ def process_room(rid):
         room=db.get(Room,rid)
         if room is None:return
         for row in db.scalars(select(RoomCycle).where(RoomCycle.room_id==rid,RoomCycle.cycle_key<=current).order_by(RoomCycle.cycle_key)):
-            if row.state!='open' or row.generation is None or row.provenance!='explicit':continue
+            if row.state not in ('open','review_required') or row.generation is None or row.provenance!='explicit':continue
+            recovery=None
+            if row.state=='review_required':
+                from sqlalchemy import text
+                if list(db.scalars(text('SELECT version_num FROM alembic_version')))!=['0031_membership_actions']:continue
+                from app.raid_rooms.membership_action_models import LeadershipRecovery
+                recovery=db.get(LeadershipRecovery,(row.id,row.generation))
+                if recovery is None:continue
             if row.cycle_key==current:
+                if row.state=='review_required':continue
                 # N -> C is a label change, with the SAME actual rows/consents.
                 # Invalid sources retain their proven seats/leases for review.
                 for cm in db.scalars(select(CycleMember).where(CycleMember.cycle_id==row.id,CycleMember.generation==row.generation,CycleMember.state=='participating')):
@@ -33,7 +41,7 @@ def process_room(rid):
                         plan.bump(db,row);break
                 continue
             command=uuid.uuid4()
-            for cm in db.scalars(select(CycleMember).where(CycleMember.cycle_id==row.id,CycleMember.generation==row.generation,CycleMember.state=='participating')):
+            for cm in db.scalars(select(CycleMember).where(CycleMember.cycle_id==row.id,CycleMember.generation==row.generation,CycleMember.state.in_(('participating','review_required') if recovery else ('participating',)))):
                 owned=life.assignments(db,row,cm)
                 evidence=dict(reason='cycle_closed',assignments=[life.assignment_snapshot(a) for a in owned],participations=leadership.release_parts(db,row,cm,stamp))
                 submission=db.get(CycleSubmission,cm.id)
@@ -49,6 +57,8 @@ def process_room(rid):
             for app in db.scalars(select(CycleApplication).where(CycleApplication.cycle_id==row.id,CycleApplication.generation==row.generation,CycleApplication.state=='pending')):
                 app.state='expired';app.ended_at=stamp;app.revision+=1
             row.state='closed';gen=db.get(CycleGeneration,(row.id,row.generation));gen.state='stopped';gen.closed_at=stamp
+            if recovery is not None:
+                recovery.state='closed';recovery.reason=None;recovery.remaining_review_reasons=[];recovery.revision+=1
             row.members_revision+=1;plan.bump(db,row)
         db.flush()
         if life.raids.cycle(now(db)).cycle_key!=current.isoformat():fail('CYCLE_CHANGED')
@@ -58,7 +68,7 @@ def process_due():
     with session() as db:
         from app.raid_rooms.readiness import require_cycle_worker
         require_cycle_worker(db)
-        ids=list(db.scalars(select(RoomCycle.room_id).where(RoomCycle.state=='open').distinct().order_by(RoomCycle.room_id)))
+        ids=list(db.scalars(select(RoomCycle.room_id).where(RoomCycle.state.in_(('open','review_required'))).distinct().order_by(RoomCycle.room_id)))
     for rid in ids:
         try:process_room(rid)
         except Exception:

@@ -411,7 +411,14 @@ def create_two_cycle_app():
     generate=result.openapi
     def schema():
         value=_decorate_openapi(generate())
-        value['x-recruitment-policy'].update(schema_revision='0030_completion_corrections',policy_version='two-cycle-contract-4',
+        value['x-recruitment-policy'].update(schema_revision='0031_membership_actions',policy_version='two-cycle-contract-4',
+            search_semantics='own-target-participation-excluded-v1',
+            membership_actions=dict(policy_version='membership-actions-1',required_schema='0031_membership_actions',
+                actions=['leave_target','leave_all','dissolve_led_targets','recover_leadership'],
+                reader_profile='membership-actions-1',default_reader='legacy shape preserved',
+                effects_order='actual C then N; empty effects can end persistent membership',
+                compatibility='old cancel/leave/end and D22/E23 retain original operation/pending/24h ACK',
+                inactive_features='IF-001: close_weekly/weekly_resume app entry disabled; APIs/history/original pending retained'),
             continuation='Explicit N opening only; 06:00 N becomes C with the same UUID/leader/assignments/consents; no automatic new N',
             compatibility='v1 current-C read adapters; unsafe room writes replay original ACK then CLIENT_UPGRADE_REQUIRED; personal availability/manual completion remain safe')
         return value
