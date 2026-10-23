@@ -89,3 +89,5 @@ Migration `0030_completion_corrections`는 새 `raid_completion_corrections` 감
 실제 개발 API의 기본116/두주차170 OpenAPI 각 전체 객체 일치, 런타임 모델을 등록한 API 제한역할의 DB0030 전체 readiness 통과다. 실제 health200·새2경로 무인증/오류Bearer401·no-store/WWW-Authenticate4검사를 확인했다. 이 검사는 정상로그인 실회원 HTTP 성공·기기 쓰기 검증이 아니며 해당 인수는 미확인이다. 이번 합성DB/runner/network는 정리해 기존 API/DB만 healthy로 남겼다.
 
 현재C 수06~10시와 과거T를 각각 명시하는 시각시험 보강 뒤 **2PASS/30.18초**도 재확인했다(기존고유42에 포함된 중복2, 합산 없음). 최종 app/migration 바이트는 동일하고 추가 시험용 tmpfs 환경도 정리했다.
+
+최종 소비 SHA `8bbcfc8cb89e69eb1f9747a0fcf2e919e41c3b76` / feat/raid-recruitment commit/push·원격SHA일치 확인. [전체129번째 Backend · 완료정정/보관 구현·개발반영·소비인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360251618) 전문/본문제외실제댓글순번 확인 완료다. 다음Flutter는 새 DTO/정정writer·원pending schema호환/권한·원ACK/실제T 재조회·review/목록/회원기록 직접진입 차이를 연결해 사용SHA/결과를회신한다. 같은 정책/기존mock 반복 요청 없음, Backend는 재현 차이 대응이다.

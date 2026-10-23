@@ -2,13 +2,17 @@
 
 2026-10-23 / **feat/raid-recruitment** / Issue [#13](https://github.com/heo0328/lostparty-backend/issues/13), OPEN.
 
-## 현재 — 완료 정정·방 보관 Backend 구현/개발 반영 / 게시 인계 마무리
+## 현재 — 완료 정정·방 보관 게시/개발반영/소비인계 완료
 
 [Flutter127 수용/최종 wire 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6358680312)을 기준으로 [개발 안내](../ISSUE_13_COMPLETION_CORRECTION_DEVELOPMENT.md)·[예시8개](../design/issue13-completion-correction.examples.json)·[실행 OpenAPI](../../openapi/two-cycle.openapi.yaml)의 새2경로/총170경로를 구현했다. 기존168경로/기존schema·manual/summary·원ACK 의미는 유지한다. 복구용 room=null/gen=null 실관계와 양수gen review, 보관회원 detail/plan의 permission/access·실제UUID/리더십, 새context/ACK·주차경계·오류 순서를 닫았다.
 
 관련 고유42PASS(신규26/회귀16). 초기42묶음41PASS/구계약 기대1실패 뒤 새current/all 계약으로 시험기대 수정·5PASS(4중복) 재확인, 탐색24와 합산없음이다. 예시8개의 closed OpenAPI 검증·기본116/두주차170 실행계약 전체일치·app/alembic228파일 바이트 일치다. 실제 API8000/이미지13291847… healthy·DB0030: 기존104업무표430행/전체내용·열정의·설정보존, 새 감사표0행·총106표431행(version포함). DB재시작/기존행삭제·수정/키교체·실회원 쓰기 없음, 실제ready/health/인증거절4검사·임시환경정리 완료다.
 
-다음 Backend는 이 구간commit/push·원격확인 후 정확한 소비SHA/자료·migration/실행결과를 #13에 인계한다. 인계 후 다음Flutter는 새reader/정정writer·원pending schema호환/권한/ACK·목록/기록 직접차이 연결·결과회신이다. 같은 계약 수용/기존 mock 반복 요청은 하지 않는다. 실제 정상회원HTTP·실기기전체/성능·운영 인수, 과거·은퇴UI 확대/pending영속복구/#19는 별도다. 아래는 이전 구간 기록이다.
+소비 `8bbcfc8cb89e69eb1f9747a0fcf2e919e41c3b76` commit/push·원격SHA일치 및 [전체129번째 Backend · 완료정정/보관 구현·개발반영·소비인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360251618) 전문/실제순번 확인을 완료했다. 다음Flutter는 새reader/정정writer·원pending schema호환/권한/ACK·목록/기록 직접차이 연결·결과회신이다. 같은 계약 수용/기존 mock 반복 요청은 하지 않는다. 실제 정상회원HTTP·실기기전체/성능·운영 인수, 과거·은퇴UI 확대/pending영속복구/#19는 별도다. 아래는 이전 구간 기록이다.
+
+## 별도 후속 — Flutter128 양주차 동일회원 함께 내보내기 계약 요청
+
+[전체128번째 Flutter · 상세관리 UX/양주차 추방 계약 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360210574)을 인계 직전에 확인했다. 현재카드의 실제T/대상회원 고정·반대C/N 같은 user_id의 실제참가·current-only/양T원자처리·각T리더십/권한·소유/재참가/세대CAS·단일ACK/원재송/양T무효화 검토가 필요하다. 새계약 미합의·미구현이며 완료정정/보관 인계와 별개다. 다음Backend는 현재단일Tremove 구현/정확한권한을대조해최소계약안을검토한다. 양T를두명령자동연속으로성공처리하거나현재T공대장의권한을임의확대하지않는다. 같은계약수용대기나완료정정의미완료로혼동하지않는다.
 
 ## 이전 — F6-C 재개 확인 Backend 구현·개발 반영 완료
 

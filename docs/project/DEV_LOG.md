@@ -2097,3 +2097,11 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - 임시correction-runner/tmpfs DB/network만정리해기존API/DB두컨테이너healthy다. 다음은구간commit/push·원격확인후최종wire/예시/개발상태를같은Issue에회신→Flutter직접연결이다. dev/main통합·운영배포·이슈종료/실데이터삭제없음이다.
 
 - 인계전 시각시험이 과거T/수06~10시 조합에 치우치지 않도록 실제target=C 수06~10시와 과거T를 각각 명시하도록 보강해 **2PASS/30.18초**를 재확인했다(기존42와중복2·미합산). 앱/migration/image228파일은 동일, 추가tmpfs DB/runner/network도정리했다.
+
+
+## 2026-10-23 — #13 완료정정/보관 게시·최종 소비자료 회신
+
+- 소비 `8bbcfc8cb89e69eb1f9747a0fcf2e919e41c3b76` / feat/raid-recruitment 구간commit/push·원격일치를확인했다. 기존미push문서3커밋을보존해함께게시했다. [전체129번째 Backend · 완료정정/보관 구현·개발반영·소비인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360251618)에정확한개발안내/OpenAPI170/실행예시8/migration0030/검증코드 링크와실행상태를회신하고실제본문제외순번129/Backend작성측/구현인계단계·전문일치를재조회했다. Flutter127은추가정책수용대기가아니었음을정정했다.
+- 다음Flutter는고정SHA로새reader/정정writer·기존원pending호환·권한/원ACK/실제T·목록/기록읽기직접차이연결/결과회신, Backend는재현차이대응이다. 같은시험/정책재수용은요청하지않았다. 실회원/기기전체/성능/운영인수미완료/OPEN유지다.
+- 인계직전새 [전체128번째 Flutter · 상세관리 UX/양주차 동일회원추방 계약 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6360210574)을확인했다. 새 user_id기준반대주차참가·각T권한/CAS·양T원자추방/원ACK는별도Backend계약검토대기/미합의·미구현으로기록하고현재인계완료와구분했다. 두기존명령자동연속/권한확대는구현하지않았다.
+- Issue상단현재범위/완료/다음Flutter·별도Backend후속을갱신하고이전본문/OPEN을보존한다. 이후행기록은문서뿐이며추가앱/서버/DB/키·시험변경/dev·main통합/운영배포·데이터삭제없음이다.
