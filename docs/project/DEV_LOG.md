@@ -2021,3 +2021,15 @@ R5 게시: 구현66244da7201cb115a384f4b712fd56f01adfaed7, feat/raid-recruitment
 - apply/make_session의현재target설정duration·실제대상/자격/정족수재검사와고정입력을분리하는표시/binding계약이필요하다. 2명이상create의제안자accept·null retained생성전확인과1명별도응답도범위에포함해야한다. 정확한wire/opt-in/토큰/호환성은다음Backend최소계약안→Flutter대조이며미합의구현은하지않았다.
 - [전체116번째 Backend · F6 정정범위 확답/현재주재개 표시보완 필요](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6355428620)에회신했다. 게시후전문일치·본문제외실제전체순번116·Backend작성측·계약확인단계를재조회했다. 다음Backend는재개표시계약안, Flutter는재개UI/응답만대기·수동v2/기존v1pending원경로·완료/미완료종료독립F6설계진행이다. 같은정책/시험반복요청없음·F6/실회원/기기/성능/운영인수미완료·OPEN유지다.
 - NEXT_WORK/AI_CONTEXT/추적표와Issue상단현재상태/다음담당을갱신하고이전본문을보존한다. 앱/API·실행OpenAPI/서버/DB/키·이미지변경/시험컨테이너기동없음. 이번문서기록은상시규칙으로로컬커밋/미push이며구현소비SHA는07c2b671그대로다.
+
+
+## 2026-10-23 — #13 F6 현재주 재개 일정 확인 계약 제안1 게시
+
+- 사용자 네이티브 보완협의 제안 요청으로 9a3fb3d/feat/raid-recruitment에서 규칙/작업문서·Git(미커밋변경없음)·공식Issue본문/전체116댓글·W4-B/기존resume/outcomes/plan/router/bodylimit/DTO/불변JSONB를대조했다. Flutter 로컬소스는열지않았다.
+- [제안1](../ISSUE_13_WEEKLY_RESUME_REVIEW_DRAFT.md)을작성했다. 새endpoint없이 기존POST preview_only=true(읽기전용/Key불필요/기존Resume본문)/GETplan include_resume_display=true의제안별resume_review/기존생성·응답optional resume_context_token을제안한다. DTO표·scope/시각/미정/영향·기존required CAS·120초/4096bytes token·basis/display digest·핵심근거변경시새제안·동일C/generation·null retained/[] 무일정·2명이상생성자accept/1명별도응답·참가재연결과시간동의를구분했다.
+- 기존JSONB 새review_version=1에근거를고정하고구형행을수정/추정하지않는안이다. 구형생성/응답미결·원ACK/구payload hash와GETfalse응답은보존하되 **신규보호제안은새응답token필수/구클라이언트token없으면400**인제한적호환을명시했다. 구형제안은새Flutter에서legacy_unverifiable/confirmation=null로새응답을막고공대장명시재제안안내다. 실패token구경로fallback/자동재제안·정책/역명령확대없음.
+- 기존3경로를router AST/실행OpenAPI와대조하고Resume/Respond필드/새표시미구현상태·검토소스/실행계약의07c2b671바이트일치·기존local_start AST로KST날짜2예검산·diff검사통과다. HTTP/DB/토큰·원ACK/동시성/크기실행시험아님, 기존48PASS/F5/F6-A통계와합산없음.
+- 제안게시직전댓글요약에서새전체117을확인했고전체118게시후전문을즉시읽었다. [Flutter117 F6-A](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6355764602)는660433d commit/push·7파일단일108mock PASS/분석0·수동v2/구v1pending보존/계정schema2·ACK/실제T/N캐시보존연결보고다. Backend독립재현/실회원HTTP/기기인수로확대하지않는다. 추가Backend변경/같은시험요청없고다음F6-B범위·F6-C계약대기다. A승인을B/C구현승인으로확대하지않는다.
+- [전체118번째 Backend · F6 재개 일정확인 계약 제안1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6355880490)에검토원본문전문과핵심3항목소비대조요청을게시했다. 새117수신/다음범위를같은댓글에반영해edit했고전문일치를재조회했다. 실제본문제외전체순번118·Backend작성측·계약제안단계이며아직구현/테스트/실행소비SHA인계가아님을명시했다. 로컬문서미push라원격파일링크대신댓글전문을검토원본으로제공했다.
+- 다음Flutter는POSTpreview소비/GETplan별DTO확인/신규보호제안과구형호환경계세항목의수용·구체차이를회신한다. Backend는피드백반영후합의구현·검증/게시/개발실행인계담당이다. 독립F6-B설계는분리하며같은F5/F6-A시험/기존정책을반복요청하지않는다.
+- NEXT_WORK/AI_CONTEXT/추적표와Issue본문상단에제안/다음담당·미합의/미완료를기록하고이전본문/OPEN보존한다. 앱/실행OpenAPI·서버/DB/키·컨테이너미변경/신규시험기동없음, 문서로컬커밋·미push·merge/운영배포없음이다.
