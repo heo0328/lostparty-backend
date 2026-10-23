@@ -28,10 +28,12 @@ room/Member/CM/members/leadership은 합의한 유지·명령당 1회 증가 규
 
 ## 검증·인계
 
-최종 코드의 고유37개가 분할 실행으로 통과했다(신규20·검색11·기존 회귀6). 합의 설계37벡터의 구현 DTO 정적 검증과 [합성 DB 실행 응답7개](design/issue24-25-implementation.examples.json)의 closed schema 대조도 통과했다. 후보 API 실제 ASGI 시작/health200·인증거절3건/no-store와 기본116·후보176 OpenAPI 전체 일치를 확인했다. 후보 이미지의 app Python203개가 소스와 일치한다.
+최종 코드의 고유38개가 분할 실행으로 통과했다(신규21·검색11·기존 회귀6). 합의 설계37벡터의 구현 DTO 정적 검증과 [합성 DB 실행 응답7개](design/issue24-25-implementation.examples.json)의 closed schema 대조도 통과했다. 후보 API 실제 ASGI 시작/health200·인증거절3건/no-store와 기본116·후보176 OpenAPI 전체 일치를 확인했다. 후보 이미지의 app Python203개가 소스와 일치한다.
 
 구체 실행 결과와 소스 SHA/원격 게시·댓글 링크는 [DEV_LOG](project/DEV_LOG.md), 다음 담당은 [NEXT_WORK](project/NEXT_WORK.md)를 따른다. 시험은 임시 tmpfs PostgreSQL·비관리자 LOGIN·합성 계정/키로 수행하며 실제 회원·기기/운영 시험이 아니다. 실행 OpenAPI는 기존 component 전체를 보존한 176경로이고 기본116경로와 고정 설계0.4.1 원본은 유지한다.
 
 Flutter는 게시된 source/실행 계약으로 전용 DTO·원 명령/ACK → 실제 메뉴·성공 화면·관계 종료 알림 → profile/기록 Router를 연결할 수 있다. 실 개발 서버 연동은 API/DB0031 반영 확인 후 수행한다. effects=[]의 관계 종료는 C/N 내목록·한도 별도 무효화, 비대상T 해산은 현재 화면 유지, 대상T 탈퇴는 성공1회 이탈이다. 후속 GET403/404·refresh 실패를 쓰기 실패로 되돌리지 않는다.
 
 [IF-001](INACTIVE_FEATURES.md)에 따라 close_weekly/weekly_resume 앱 신규 진입은 비활성 보존이다. endpoint/서버 권한·과거 stopped/완료·원 pending/ACK를 삭제하거나 재해석하지 않으며 retained 자료를 읽었다고 앱 기능을 다시 켜지 않는다. 다음주 reopen과 #25 recover_leadership은 별개다. 복구 UX는 여전히 제품 승인 전 제안이다.
+
+retained/stopped의 `resume_weekly`는 기존 서버의 source/권한 검사 결과를 그대로 반영한다. IF-001 앱 진입 비활성은 별도 제품 상태이며 이 권한 필드를 일괄 false로 바꾸는 근거가 아니다. 조회는 기존 준비 검사만 재사용하고 재개 제안/명령을 생성하지 않는다.

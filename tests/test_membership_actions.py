@@ -448,3 +448,14 @@ def test_actual_bearer_auth_foreign_actor_revoked_ack_and_request_limit(membersh
         with session() as db,db.begin():db.scalar(select(Session).where(Session.user_id==a['uid'])).revoked_at=now(db)
         replay=http.post(post_path,json=request,headers=headers)
         assert replay.status_code==401 and replay.headers['cache-control']=='no-store'
+
+
+def test_retained_stopped_reader_preserves_server_capability_without_app_reactivation(membership_ready):
+    engine,a,b=membership_ready;rid,c,n=scheduled(a)
+    complete(a,rid,c,kind='close_weekly')
+    before=fingerprints(engine)
+    value=readers.get(actor(a['uid']),rid,c,'plan');validate_contract('PlanProfile',value)
+    assert value['data']['viewer']['mode']=='retained' and value['data']['content'] is not None
+    assert value['data']['permissions']['resume_weekly']['allowed']
+    assert value['data']['access']['read_only'] is False
+    assert fingerprints(engine)==before  # no preview proposal/write/automatic resume

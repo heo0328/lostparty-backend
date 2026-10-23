@@ -92,8 +92,18 @@ def projection(db,uid,room,row,member,cm,stamp,*,anchored=False):
     manages=bool(not historical and is_leader and row.state=='open' and gen.state=='open' and actions.qualified(db,room,row,cm)[0] is None)
     perms=dict(view_detail=permission(),view_plan=permission(None if plan_allowed else 'ROOM_REVIEW_REQUIRED' if cm else 'WEEKLY_PARTICIPANT_REQUIRED'),
         manage_target=permission(None if manages else 'ROOM_READ_ONLY' if historical else 'TARGET_LEADER_REQUIRED'),
-        resume_weekly=permission('ROOM_READ_ONLY' if historical else 'FEATURE_INACTIVE'),
+        resume_weekly=permission('ROOM_READ_ONLY' if historical else 'ROUND_NOT_STOPPED'),
         read_action_menu=permission(None if menu else 'ROOM_READ_ONLY'))
+    if not historical and mode=='retained' and cm.state=='stopped':
+        # IF-001 disables app entry, not the retained server capability. Reuse
+        # the legacy authority/source check; never issue or apply a resume here.
+        from app.raid_rooms import cycle_resume
+        expected=dict(expected_cycle_key=actions.life.raids.cycle(stamp).cycle_key,target_cycle_key=row.cycle_key.isoformat(),
+            expected_target_revision=row.revision,expected_room_revision=room.revision,
+            expected_members_revision=row.members_revision,expected_plan_revision=row.plan_revision,
+            expected_cycle_member_revision=cm.revision,expected_leadership_revision=gen.leadership_revision,schedule_groups=None)
+        try:cycle_resume.prepare_create(db,uid,room.id,expected,stamp);perms['resume_weekly']=permission()
+        except GameError as error:perms['resume_weekly']=permission(error.code)
     target=dict(room_id=room.id,title=room.title,room_revision=room.revision,room_state='ended' if room.ended_at else 'active',
         target_cycle_key=row.cycle_key if row else None,room_cycle_id=row.id if row else None,
         target_generation=cm.generation if cm else row.generation if row else None,target_revision=row.revision if row else None,

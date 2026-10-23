@@ -7,7 +7,7 @@
 사용자 구현 진행 지시와 [#24 전체3번째 Flutter 수용](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6370137482)·[#25 전체5번째 Flutter 네 차이 해소](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6370138718)를 확인했다. 네이티브의 계약 재수용을 기다리는 상태가 아니다. [개발 안내](../ISSUE_24_25_MEMBERSHIP_ACTIONS_DEVELOPMENT.md)를 현재 구현 기준으로 사용한다.
 
 - Backend 소스: 검색 SQL 페이지 전 본인 실제T 참가 제외·semantics cursor, 새 옵션별 Context/6필드 원자 명령·C→N ACK, 승계 불가 탈퇴/명시 복구, 방·지속관계·한도, opt-in reader/본인 종료 기록을 구현했다. 같은 지속회원의 재참가도 옛 CM/Assignment 식별자를 재사용하지 않도록 보강했다. 실행 후보 계약176경로·기본116/기존 component·구 명령/pending/24h 원 ACK 보존이다.
-- DB 후보0031: 리더 복구/불변 감사2표와 현재 CM/Assignment partial unique를 추가한다. 기존 행 재작성/초기화 없이 임시 PostgreSQL·비관리자 역할에서 이행과 실제 ASGI 시작을 검증한다. 최종 고유37PASS(신규20/검색11/기존6), 합성 실행 응답7개 schema 대조·기본116/후보176 전체 계약·실제 후보 ASGI 시작/health·인증3건 검증 완료. 게시 SHA/결과는 DEV_LOG에 기록한다.
+- DB 후보0031: 리더 복구/불변 감사2표와 현재 CM/Assignment partial unique를 추가한다. 기존 행 재작성/초기화 없이 임시 PostgreSQL·비관리자 역할에서 이행과 실제 ASGI 시작을 검증한다. 최종 고유38PASS(신규21/검색11/기존6), 합성 실행 응답7개 schema 대조·기본116/후보176 전체 계약·실제 후보 ASGI 시작/health·인증3건 검증 완료. 게시 SHA/결과는 DEV_LOG에 기록한다.
 - 실제 개발 서버는 API92490ff3…/174경로·DB0030이고 두 컨테이너 healthy, 새2표 없음 확인. 구현 후보 이미지/합성 DB와 구분한다. 기존 개발 API·DB에 0031 이행/이미지 교체·실회원 쓰기를 실행하지 않았다.
 - 다음 Flutter: 게시된 source/176계약으로 전용 DTO·원 명령/ACK → 메뉴/성공 화면/관계 종료 알림 → profile/기록 Router를 연결하고 직접 영향의 자동 검증 결과를 #24/#25에 회신한다. 실제 서버 연동·실회원/기기 인수는 개발 API/DB0031 반영 확인 뒤다. 기존 정책/전체 시험 재수용은 요청하지 않는다.
 - 다음 Backend: 구현/자동 검증·게시 구간을 마감하고, 별도 개발 반영 구간에서 기존 자료 보존·0031 이행/API·worker 호환/실행 계약을 확인한다. 재현 가능한 소비 차이가 오면 해당 범위에서 대응한다. dev/main/운영·자료 삭제는 미진행이다.

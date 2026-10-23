@@ -2230,3 +2230,10 @@ NEXT_WORK/AI_CONTEXT/추적표를최신다음Backend계약/호환설계로갱신
 [IF-001](../INACTIVE_FEATURES.md)은 #13 전체139번째 Flutter 사용자 최종 결정(6370006371)을 반영한다. close_weekly/weekly_resume를 앱 비활성 보존으로 분리하고 기존 endpoint/권한·자료·원 pending/24h ACK와 다음주 reopen/#25 recover_leadership을 유지한다. 복구 UX는 별도 제품 승인 전 제안이다. Docker 빌드 컨텍스트에서 .aws/.codex/.agents도 제외했다.
 
 **실제 개발 API/DB 미반영**: API92490ff3bf3e777d6342cb7a416af042ccf6654f8429c37a8a7cfd2796d71352·DB0030 둘 다 healthy, 새2표 없음 읽기 확인. 기존 자료/키/볼륨·dev/main/운영·Issue 종료 변경 없음. 이번 생성 tmpfs DB/두 후보 API/시험 runner·전용 네트워크는 검증 뒤 정리했고 기존 api/db만 실행 중이다. 소스 구현 인계/Flutter 자동 연결과 실제 개발 API/DB0031 반영·실회원/기기 인수는 구분한다. 다음 Backend 개발 반영 구간, Flutter 전용 DTO/원 ACK→메뉴/관계 알림→profile·기록 Router 직접 연결이다.
+
+
+### 인계 전 IF-001 reader 권한 보존 보완
+
+소스 c6066195a19a536aac37e1f1712f2a22ecaa20ff를 작업 브랜치에 push/원격 확인한 뒤 인계 문구 대조에서, 새 profile.resume_weekly를 앱 비활성 상태로 일괄 false 처리한 부분이 retained/stopped의 기존 서버 권한 보존과 맞지 않음을 바로잡았다. 기존 cycle_resume.prepare_create의 읽기 전용 source/권한 검사 결과를 그대로 표시하고 앱 진입 비활성은 제품 상태로 분리한다. 기존 endpoint·실제 서버 권한은 계속 보존하며 이 GET은 제안/명령/재개 쓰기를 실행하지 않는다.
+
+보강한 retained/stopped 1건과 정상 legacy content 보존 회귀1건이 **2PASS/33.23초**다. 앞선37과 중복1건을 제외한 최종 고유 **38PASS(신규21·검색11·기존6)**이며 보강된 최종 이미지의116/176 계약 전체·app203소스 해시를 다시 확인했다. 생성한 두 번째 독립 tmpfs DB/runner·네트워크도 정리했다. 구현 인계는 이 보완을 포함한 후속 source SHA를 사용한다. 최초 일반 git push의 credential helper 부재는 GitHub CLI helper를 해당 명령에만 지정해 해결했고 전역 인증 설정/토큰 출력은 없다. 실제 개발 API/DB0030·dev/main/운영은 그대로다.
