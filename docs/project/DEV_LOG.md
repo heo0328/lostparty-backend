@@ -2249,3 +2249,5 @@ NEXT_WORK/AI_CONTEXT/추적표를최신다음Backend계약/호환설계로갱신
 ## 2026-10-24 — #24/#25 실제 개발 API·DB0031 반영
 
 사용자 진행 지시와 공식 #24 전체4/#25 전체6/#13 전체140 이후 새 회신 없음·clean branch를 확인했다. [전환 결과](../ISSUE_24_25_DEVELOPMENT_ROLLOUT.md)·[집계](../design/issue24-25-development-rollout.json). 백업 복원0031 리허설과 실제 제한 LOGIN 이행, API/worker 교체,106→108표603행·기존105업무표 내용/열/기록시각/키/시퀀스 보존·환경/DB 컨테이너/볼륨 유지. 이미지67322372…·소스236파일 일치,176/116 계약 전체·HTTP health/검색2/인증거절4 통과. 임시 환경 정리. 단독 readiness 모델 미등록·환경 목록 순서 비교는 검사 도구 보정 후 통과했으며 제품 코드/계약 변경은 없다. 신규 실회원 명령/기기 인수·dev/main·운영은 미실행, 다음 Flutter 연결/자동 검증·정상 로그인 실인수와 Backend 차이 대응. 게시 SHA·회신 링크는 후속 기록한다.
+
+게시: 전환 기록920cc059e5c15a88a8c35e529ebd821af253fc20 commit/push·원격 SHA 일치 확인 후 [#24 전체5번째 Backend · 개발 반영 완료](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6371617690)·[#25 전체7번째 Backend · 개발 반영 완료](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371618996) 게시·전문/순번 확인, 두 Issue 본문 상단 실행176/DB0031·다음 Flutter/Backend 차이 대응으로 갱신했다. 원본 본문·OPEN 보존. 다음은 Flutter 연결·자동 검증/정상 로그인 인수 대기다.

@@ -20,3 +20,5 @@
 직전 합성 DB 고유38PASS는 구현 검증 근거이며 이번 실서버 검사와 합산하지 않는다. 실제 로그인한 회원의 명령·탈퇴/해산·기기 인수는 실행하지 않았다. Flutter는 게시 source/176계약을 연결하고 정상 로그인으로 신규 메뉴/명령·profile/종료 기록·선택T 검색의 직접 영향 범위를 확인해 #24/#25에 결과를 회신한다. 실제 자료를 변경하는 사용자 시나리오는 네이티브/사용자 인수 범위다.
 
 IF-001 앱 비활성·기존 서버 권한/endpoint·원 pending/24h ACK는 유지한다. recover_leadership UX는 별도 제품 승인 전 제안이다. #13/#24/#25 OPEN이며 dev/main 병합·AWS 운영 배포·실기기 전체 인수 완료를 뜻하지 않는다. 재기동은 기존 compose.yaml+compose.two-cycle.yaml을 사용하며 이 파일 자체가 migration을 실행하지는 않는다.
+
+게시: 전환 기록 `920cc059e5c15a88a8c35e529ebd821af253fc20` commit/push·원격 확인 뒤 [#24 전체5번째 Backend · 개발 반영 완료](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6371617690)·[#25 전체7번째 Backend · 개발 반영 완료](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371618996) 회신·전문/전체 순번을 검증했다. 다음 담당 Flutter 연결·자동 검증/정상 로그인 인수, Backend 차이 대응이다.
