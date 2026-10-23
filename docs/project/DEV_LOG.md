@@ -2184,3 +2184,12 @@ E23은 d3a328e7 설계push/정적대조이며 구현전, source review 보완대
 Backend신규요청은 [135번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6366977367) 선택T본인실제참가방검색SQL페이지전제외와 [136번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6367266418) 사용자확정전달의새탈퇴/해산계약이다. 선택T C/N·모두탈퇴는사전위임없이자동승계/빈T종료,해산은본인리더인모든C/N주차·다인허용/비대상보존이다.136번째가이전사전위임/마지막1인해산·다인제외를대체하며구end/leave/cancel pending/원효과·24hACK는보존한다.후계review/권한·복구상태·대상집합고정/방수명·한도·기록보존은Backend설계로닫아야한다.
 
 NEXT_WORK/AI_CONTEXT/추적표를최신다음Backend계약/호환설계로갱신했다.새범위미구현이며코드/API/서버·DB/키·새시험·댓글/Issue종료·dev/main/운영변경없음.문서diff검사/수신로컬커밋만수행하고미push다.
+
+
+## 2026-10-24 — 검색 제외·새 탈퇴/해산 기획·설계안1 게시
+
+사용자‘기획과설계부터’에따라 [검색설계](../ISSUE_13_SEARCH_EXCLUSION_DESIGN.md)·[탈퇴/해산설계](../ISSUE_13_MEMBERSHIP_ACTIONS_DESIGN.md)를작성했다. 관련9소스 AST·실제next_only/공통리더·한도/모델제약·record권한·worker/nullable리더·기존OpenAPI를정적대조했다. user136정책을유지하고새Context menu/6필드POST·전용ACK·원명령호환,후계자격불가에도자기탈퇴성공/관리권한보류·명시복구,모든유효T종료때Room/Member/한도·ended본인기록읽기를직접연계한설계제안이다. 복구보조UX/새audit·recovery migration은소비검토전제안/미확정이며코드/DDL을추가하지않았다.
+
+독립완료조건의#24검색/#25탈퇴·해산에본문전문/상호·원본연결·상단상태/다음담당을게시하고 [#13 전체137번째 Backend · 설계/후속이관](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6368822874) 회신을실제조회해전문·전체순번확인했다. 새이슈본문은댓글순번에포함하지않는다. 기존브랜치유지/미완료이관·원본요구폐기아님, #22/#23기존구현과Flutter실인수대기는별도보존했다.
+
+다음Flutter는새정책재수용/동일시험반복이아닌#24기존검색캐시/#25메뉴·전용ACK·C→N순서·복구/기록접근의구체소비차이검토,다음Backend closed wire/예시/구현구간고정이다. 현116/174계약JSON·새경로미노출확인/문서diff검사만수행,신규동작실행시험·코드/API/실행OpenAPI·서버/DB/키변경없음. 설계문서로컬커밋/미push·전문은Issue공개,dev/main/운영·Issue종료없음.

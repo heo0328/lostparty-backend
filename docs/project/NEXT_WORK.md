@@ -2,16 +2,17 @@
 
 2026-10-24 / **feat/raid-recruitment** / [#13](https://github.com/heo0328/lostparty-backend/issues/13), [#22](https://github.com/heo0328/lostparty-backend/issues/22), [#23](https://github.com/heo0328/lostparty-backend/issues/23) OPEN.
 
-## 다음 담당 Backend — 선택T 참가 방 검색 제외·새 탈퇴/해산 계약
+## 다음 — 설계 후속 #24/#25 소비 차이 검토·계약 고정
 
-2026-10-24 최신 수신은 [정리 문서](../ISSUE_13_OCT24_NATIVE_FEEDBACK.md)를 따른다. [#13 전체135번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6366977367)의 검색제외와 [전체136번째 Flutter 사용자확정 전달](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6367266418)의 새 탈퇴/해산이 Backend 선행 작업이다. **136번째가 이전 사전위임/마지막1인 해산·다인해산 제외 제한을 대체**한다. 아직 새API/구현/개발반영은 없고 현174경로/DB0030과 구명령·pending/원ACK를 유지한다.
+사용자 지시 ‘기획과 설계부터’ 범위의 설계안1을 작성해 [#13 전체137번째 Backend · 설계/후속 이관](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6368822874)에 회신했다. 독립완료조건으로 [#24 검색 제외](https://github.com/heo0328/lostparty-backend/issues/24), [#25 탈퇴/해산](https://github.com/heo0328/lostparty-backend/issues/25)에 전문을 게시했다. 원본/상호연결·본문상단의 상태/다음담당을 유지하고 요구폐기·기능완료·새브랜치생성으로 해석하지 않는다.
 
-- 검색: 선택T/현generation의 본인 실제참가(필요review포함)를 SQL페이지전 제외. 반대T/단순지속·legacy/not_selected/취소는 구분, 비로그인/필터/정렬/커서·탈퇴후재노출/기존회원읽기는 보존한다.
-- 선택T탈퇴는 C/N허용·사전위임없이 실제참가순 자동승계/빈T종료·반대T보존. 모두탈퇴는 본인양T/지속관계를 한명령으로정리·각T승계/빈T종료다. review/부적격후계도 탈퇴를막지않으면서 권한을확대하지않는 복구상태를설계한다.
-- 해산은 본인이공대장인 모든C/N주차의 전원탈퇴/종료·다인허용. 비공대장T는보존, Context/확인/명령/ACK에대상집합고정. 모든유효T종료시Room/지속관계/한도정합성과 완료·감사·기록을보존한다. 구end/leave/cancel API의원효과/원명령·24hACK는새endpoint/version등으로호환보존한다.
-- 다음Backend는현재구현대조→주제별추적·정확한계약/호환·권한/복구설계회신→합의범위구현/표적검증/게시·개발상태인계다. 다음Flutter는인계뒤버튼/새명령·영향T갱신/성공이탈정합화를진행한다. 이번확인만으로새정책을기존본문에적용하거나서버를바꾸지않았다.
+- [검색 설계안](../ISSUE_13_SEARCH_EXCLUSION_DESIGN.md): 기존search/응답 재사용·선택T/현gen의본인참가 NOT EXISTS를 SQL정렬/페이지전 적용. 반대T/단순지속/종료/비로그인과내참가/기록/그룹조회는보존, semantics표식/기존CURSOR_STALE·영향T head갱신으로 재노출/페이지를정합화한다.
+- [탈퇴/해산 설계안](../ISSUE_13_MEMBERSHIP_ACTIONS_DESIGN.md): C/N자기탈퇴·모두탈퇴의독립승계/빈T종료·본인리더인모든T다인해산/비대상보존. 구cancel/leave/end·D22/E23 pending/원효과/24hACK는유지하고 새Context menu/6필드POST·전용ACK/C→N순으로분리제안했다.
+- 새설계 검토지점: 후계부적격/순서미확정이어도자기탈퇴성공→T review/null리더·명시적recover_leadership 보조(권한복구전검증); 모든유효T종료의Room/지속관계/한도정합성과ended본인기록읽기/쓰기권한분리. 복구UI/DTO·audit/recovery 추가migration은제안이며확정/구현아니다.
+- 다음Flutter는각후속에서검색기존요청/캐시와새메뉴·ACK/순서·복구안내/기록소비의구체차이만검토한다. 다음Backend는그차이를반영해closed schema/대표예시·내부구현구간을고정한다. 이미확정된제품정책수용/전체기존시험을반복요청하지않는다. **현재기획/설계까지이며구현/실서버시험요청아님**.
+- 검증은9개관련소스AST/기존정책·모델/조회/worker·한도/원ACK의정적대조,현계약JSON116/174/새경로미노출·문서검사다. 코드/API/실행OpenAPI·서버/DB/키/새실행시험 변경없음,설계로컬커밋/미push·Issue본문전문공개다. 기능구현/개발반영은별도다.
 
-Flutter D22/E23/A/B는 구현·자동경계완료 보고수신: #22 Flutter5 fece2003/133mock, [#23 Flutter5](https://github.com/heo0328/lostparty-backend/issues/23#issuecomment-6363846643) b6720079/178mock, [#13 Flutter133 A](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6364089791) e9d2783d/94mock, [Flutter134 B](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6364976336)797c16b3/159mock·각분석0. 서로중복합산/Backend독립재현·전체실인수로확대하지않는다. N단독생성 앱수정407328ef/21mock 보고·수정본실행미확인이다. C단독/C+N생성·기존마지막1인해산은사용자정상보고, 다인승계등은추가회원부족으로미확인. 실회원/기기전체·성능/dev/main/운영·Issue종료는미완료다.
+기존Flutter D22/E23/A/B는코드·관련자동경계완료보고/실기기전체인수미완료다. #13의전체135실기기와136최신정책원문·보고SHA/각시험수는 [수신정리](../ISSUE_13_OCT24_NATIVE_FEEDBACK.md)를따른다. 현Backend소비0eed67c/174·DB0030은유지한다. #13/#22/#23/#24/#25 OPEN·dev/main/운영/데이터삭제없음.
 
 아래는 기존 Backend 인계 기준이다.
 
