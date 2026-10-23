@@ -1,0 +1,51 @@
+{
+  "status": "DESIGN CONTRACT SNAPSHOT; SQL/runtime unchanged",
+  "source_commit": "0eed67c453040b332653fd2071e6cd2e1eeed503",
+  "method": "POST",
+  "path": "/v2/raid-rooms/search",
+  "request_schema_ref": "#/components/schemas/app__raid_rooms__cycle_schemas__Search",
+  "response200_schema_ref": "#/components/schemas/OutputContract3PostV2RaidRoomsSearch",
+  "request_schema_sha256": "b19b2e7746a18794293a41b72acebb6f965ffe8c30bf62c11eab058b4a6e1462",
+  "response200_schema_sha256": "11a2dc9132e2626b6808599c3c2159669258609050edd63ebbf39fc8e8fe83b9",
+  "semantics": "own-target-participation-excluded-v1",
+  "new_request_fields": [],
+  "new_response_fields": [],
+  "filter_stage": "SQL before sort/offset/limit+1",
+  "exclusion": {
+    "actor": "current authenticated user, active persistent membership",
+    "cycle": "selected actual T, current generation",
+    "states": [
+      "participating",
+      "review_required"
+    ],
+    "not_excluded": [
+      "opposite_only",
+      "persistent_only",
+      "legacy_intent",
+      "not_selected",
+      "pending_application_only",
+      "completed",
+      "stopped",
+      "cancelled",
+      "removed",
+      "old_generation"
+    ],
+    "anonymous": "unchanged"
+  },
+  "cursor": {
+    "old_semantics": "CURSOR_STALE409",
+    "target_directory_change": "CURSOR_STALE409",
+    "foreign_scope_or_tamper": "INVALID_REQUEST400",
+    "automatic_first_page_retry_implemented": false,
+    "flutter_followup": "at most once same scope/filter/T or explicit refresh"
+  },
+  "head": "touch actual changed T in same mutation transaction; relation-only notifications remain separate",
+  "unchanged_surfaces": [
+    "membership_lists",
+    "records",
+    "detail",
+    "plan",
+    "group_projections",
+    "base0023_contract"
+  ]
+}

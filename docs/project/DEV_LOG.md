@@ -2202,3 +2202,14 @@ NEXT_WORK/AI_CONTEXT/추적표를최신다음Backend계약/호환설계로갱신
 [#25 전체1번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6369171307)는방향기술소비가능이며4보완(메뉴옵션별접근격리/현재T미참가+반대리더,planned후상태와room/Member/CM/target/leadership revision규칙,review/null리더명시reader,ended회원/그룹탈퇴·재가입자기기록wire)을요청했다. 빈effects관계종료는앱별도알림/한도무효화·비대상T화면유지/대상T이탈을맡는다. recovery안내/명시복구진입은기존review영역UX제안이며제품승인·네번째상시버튼·필수단계로해석하지않는다.
 
 두회신은Flutter6e3d81bc정적소비대조/문서변경보고이며새기능/시험/개발반영승인아님이다. 다음Backend closed wire/대표예시/구현구간고정·해당Issue결과회신,동일정책재수용/기존전체시험요청없음. 이번은수신확인/기획문서상태갱신·diff검사/로컬커밋미push만수행. 외부댓글/코드/API/실행OpenAPI·서버/DB/키/새실행시험·Issue종료/dev/main/운영변경없음.
+
+
+## 2026-10-24 — #24/#25 계약 보완안2·합성 예시 회신
+
+기획·설계 범위에서 #24 검색 요청/응답 참조와 semantics/SQL 제외·head/커서를 고정했다. #25 Flutter 전체1번째 요청 4건에 대해 옵션별 접근·null 조합, planned target/gen 상태와 revision 유지/증가 증명, 명시 recovery/role/permission reader, 종료 본인 기록 locator·그룹 탈퇴/재가입 분리를 규정했다. 새 reader profile은 opt-in 제안이며 기존 기본 shape를 대체하지 않는다. 복구 UX/추가 audit/recovery 이행은 제안이고 구현 승인으로 확대하지 않는다.
+
+[#24 전체2번째 Backend · 검색 계약 보완](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6369761914), [#25 전체2번째 Backend · 계약 보완안2/closed schema](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6369762510), [전체3번째 Backend · 예시1/2](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6369763243), [전체4번째 Backend · 예시2/2](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6369763925)에 전문을 게시했다. 실제 전체 순번·댓글 본문 일치, 원격 schema 및 분할 예시의 손실 없는 재조합을 확인했다. 두 Issue 본문 상단은 현재 상태/다음 담당을 갱신하고 OPEN을 유지한다. 같은 정책/전체 시험 반복 요청이나 #13 중복 진행 댓글은 작성하지 않았다.
+
+정적 검증: JSON Schema2020-12 49개 정의(기존 외부 참조4개 포함), 독립 작성 합성 wire37개·Impact→ACK9쌍·기존 reader 참조2건·거부 경계4건 통과. 작성 중 예시 공유 객체/검증 보조의 누락을 수정한 뒤 최종 정합성을 확인했다. 원격 게시 자료도 로컬과 일치한다. 검색 request/response 원본 schema 참조·해시 확인, 실행 OpenAPI 두 파일 HEAD 바이트 동일/새 경로 미노출, 문서 diff 검사 완료. 이는 실제 응답 캡처·제품 실행 시험이 아니다.
+
+다음 Flutter는 새 profile/revision 등 남는 구체 소비 차이만 회신하고 Backend는 후속 구현 지시에 따른다. 문서만 로컬 커밋/미push. 코드/API 구현·DDL·서버/DB/키·기기/운영·dev/main·Issue 종료 변경 없음.

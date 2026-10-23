@@ -1,5 +1,7 @@
 # 선택 주차 탈퇴·모두 탈퇴·공대장 주차 해산 기획/설계안1
 
+현재 기준(2026-10-24): [계약 보완안2](ISSUE_25_CONTRACT_REVIEW_V2.md), [closed schema](design/issue25-membership-actions.contract.schema.json), [합성 예시](design/issue25-membership-actions.contract.examples.json)가 아래 설계안1의 옵션 접근·후상태/revision·reader·종료 기록 wire보다 우선한다. [#25 전체2번째 Backend 계약 회신](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6369762510)과 [전체3번째 예시1/2](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6369763243)·[전체4번째 예시2/2](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6369763925)에 전문을 게시했다. 다음 Flutter는 새 profile/구체 소비 차이만 검토하고 Backend 구현은 후속 지시에 따른다. 설계 보완 완료·미구현, 복구 UX는 제품 미승인 제안이다.
+
 최신 소비대조: [#25 전체1번째 Flutter 회신](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6369171307). 방향은기술소비가능. Backend후속은menu옵션별접근격리,Impact→ACK planned상태/모든revision규칙,review/null리더명시reader,ended본인기록wire의4보완이다. 복구UI는제품미승인제안이며후속closed schema/예시고정이남아있다. 이번은정적검토이며구현/시험·개발반영승인이아니다. 아래설계안1을보완할근거로보존한다.
 
 2026-10-24 / Backend / feat/raid-recruitment / **설계 제안·미구현/미배포**.

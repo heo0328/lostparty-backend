@@ -1,5 +1,7 @@
 # 모집 탐색 — 선택 주차 본인 실제 참가 방 제외 설계안1
 
+현재 기준(2026-10-24): [검색 계약 보완](ISSUE_24_SEARCH_CONTRACT.md)과 [#24 전체2번째 Backend 회신](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6369761914)이 아래 설계안1의 검색 의미·head·커서 경계를 구체화한다. 기존 요청/응답 shape를 유지한다. 설계 완료·미구현이며 Flutter 자동 첫 페이지 회복은 후속이다.
+
 최신 소비대조: [#24 전체1번째 Flutter 회신](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6369170940). 기존요청/응답/SQL제외·커서표식은소비가능·blocking API변경요청없음. Backend검색의미/head·커서계약고정과Flutter stale커서첫페이지회복은후속이며현재자동재조회완료가아니다. 이번은정적검토이며구현/시험·개발반영승인이아니다. 아래설계안1을보완할근거로보존한다.
 
 2026-10-24 / Backend / feat/raid-recruitment / **기획·설계 제안, 미구현**.
