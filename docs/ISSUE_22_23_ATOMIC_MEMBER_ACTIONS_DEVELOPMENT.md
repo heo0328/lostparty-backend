@@ -48,3 +48,5 @@ GET은 쓰기·Key/pending/원장 생성 없이 반복 조회한다. POST는 UUI
 개발 API8000은 `sha256:92490ff3bf3e777d6342cb7a416af042ccf6654f8429c37a8a7cfd2796d71352`로 교체했고 app/alembic **230개 Python 파일이 현재 소스와 바이트 일치**한다. 기존 이미지는 `lostparty-backend-api:pre-atomic-members`로 보존한다. 두 OpenAPI 객체전체 일치·DB0030 준비검사/health200·새4경로 무인증/잘못된Bearer **8개401/ACCESS_INVALID·no-store/WWW-Authenticate PASS**다. 정상 실회원 HTTP/실회원 쓰기는 수행하지 않았다.
 
 교체 직전/직후 **106표476행의 전체내용 지문·열정의·DB0030·환경/키mount/포트/보안/command 지문 동일**이다. DB 재시작·migration·삭제/초기화·키변경 없음, 이번 임시 시험runner/tmpfs DB/network만 정리했고 기존 API/DB 두 컨테이너 healthy다. 운영·dev/main 병합이나 Flutter 적용/실기기·성능 인수 완료가 아니다. 구현 구간을 commit/push·원격확인한 뒤 #22/#23에 소비SHA/고정링크로 인계한다.
+
+소비 구현 `0eed67c453040b332653fd2071e6cd2e1eeed503`를 commit/push하고 GitHub 원격SHA 일치를 확인했다. [#22 전체3번째 Backend 구현 인계](https://github.com/heo0328/lostparty-backend/issues/22#issuecomment-6362447014), [#23 전체3번째 Backend 구현 인계](https://github.com/heo0328/lostparty-backend/issues/23#issuecomment-6362447457)의 실제순번·본문전문 일치와 Issue 상단 현재상태/다음담당 갱신을 완료했다. 다음은 Flutter의 새동작 직접연결/표적결과·사용SHA 회신이며 Backend는 재현차이에 대응한다. 후행 문서커밋은 API/DB/이미지 변경이 아니다.

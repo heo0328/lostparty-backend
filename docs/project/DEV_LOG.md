@@ -2164,3 +2164,5 @@ cycles.execute 한트랜잭션/공통쓰기잠금/원ACK에 새개인완료후T�
 실제API8000은92490ff3bf3e777d6342cb7a416af042ccf6654f8429c37a8a7cfd2796d71352/230소스일치·두프로필계약전체일치·health200·신규4경로무인증/잘못된Bearer8개401/no-store/WWW-Authenticate다. 교체직전/직후106표476행 내용지문/열정의·DB0030·환경/키mount/보안/포트/command지문동일,DB재시작/삭제/초기화·키교체·실회원쓰기없음. 전이미지pre-atomic-members태그보존·임시runner/tmpfsDB/network만정리했고기존API/DB두개healthy다.
 
 다음은 구현구간commit/push·원격SHA확인→각Issue정확한소비SHA/계약·예시인계→Flutter직접연결/표적검증회신이다. 정상실회원HTTP·실기기전체/성능·운영·dev/main통합은미완료이며Issue13/22/23은OPEN유지. 마지막1인해산유지는확정/양T다인강제해산요청없음이다.
+
+게시/인계 마감: 구현 `0eed67c453040b332653fd2071e6cd2e1eeed503` / feat/raid-recruitment push·GitHub 원격SHA 일치, [#22 전체3번째 Backend 구현 인계](https://github.com/heo0328/lostparty-backend/issues/22#issuecomment-6362447014), [#23 전체3번째 Backend 구현 인계](https://github.com/heo0328/lostparty-backend/issues/23#issuecomment-6362447457)의 전체댓글순번/작성측/단계·본문전문 일치 확인. 이슈상단을 Backend완료/다음Flutter직접연결·결과회신으로 갱신하고 본문 제안1은 보존했다. NEXT_WORK/AI_CONTEXT/추적표에 링크·후속을 반영했다. 후행 문서갱신은 코드/DB/이미지 변경이 아니므로 서버/시험을 반복하지 않는다.
