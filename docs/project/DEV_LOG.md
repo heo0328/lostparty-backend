@@ -2175,3 +2175,12 @@ cycles.execute 한트랜잭션/공통쓰기잠금/원ACK에 새개인완료후T�
 E23은 d3a328e7 설계push/정적대조이며 구현전, source review 보완대기는 해소됐고 최신D22회신의다음작업은E23이다. A완료해제/B보관소비·정상실회원HTTP/실기기/성능·dev/main/운영은미완료다. 새Backend요청/같은시험재요청없어 중복댓글이나API수정은하지않았다. #13은132댓글로신규회신없음, #22/#23 OPEN유지다.
 
 실제API92490ff3bf3e777d6342cb7a416af042ccf6654f8429c37a8a7cfd2796d71352 및 기존API/DB두컨테이너healthy를읽기전용확인했다. NEXT_WORK/AI_CONTEXT/추적표에수신/다음담당/미확인을갱신, 문서diff검사만수행했다. 코드/API/DB/키·서버재기동/새시험변경없음이며 수신기록은로컬커밋/미push다.
+
+
+## 2026-10-24 — 네이티브 E23/A/B 결과·검색/탈퇴/해산 새 정책 수신
+
+[수신정리](../ISSUE_13_OCT24_NATIVE_FEEDBACK.md)에 #23전체5번째E23 b6720079/178mock, #13전체133번째A e9d2783d/94mock·134번째B797c16b3/159mock/각push·분석0보고를기록했다. D22포함코드/관련자동경계완료보고이며독립재현·정상회원/기기전체인수아니다.135번째의N단독생성오류는Flutter407328ef/21mock수정보고·수정본실행미확인,추가회원부족으로다인시험미확인이다.
+
+Backend신규요청은 [135번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6366977367) 선택T본인실제참가방검색SQL페이지전제외와 [136번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6367266418) 사용자확정전달의새탈퇴/해산계약이다. 선택T C/N·모두탈퇴는사전위임없이자동승계/빈T종료,해산은본인리더인모든C/N주차·다인허용/비대상보존이다.136번째가이전사전위임/마지막1인해산·다인제외를대체하며구end/leave/cancel pending/원효과·24hACK는보존한다.후계review/권한·복구상태·대상집합고정/방수명·한도·기록보존은Backend설계로닫아야한다.
+
+NEXT_WORK/AI_CONTEXT/추적표를최신다음Backend계약/호환설계로갱신했다.새범위미구현이며코드/API/서버·DB/키·새시험·댓글/Issue종료·dev/main/운영변경없음.문서diff검사/수신로컬커밋만수행하고미push다.
