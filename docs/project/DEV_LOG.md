@@ -2548,3 +2548,5 @@ NEXT_WORK/AI_CONTEXT/추적표·현재계약/설계의 ‘2가입 연결·변경
 [반영근거](../engineering/operations/application-item-level-rollout.md)·[집계](../engineering/operations/records/application-item-level-rollout.json): 구현sourcef471e3133ad60befcad77d7123e1107ba7501bb4/검증이미지6d5857b3…를반영했다. API중지후비공개customdump·키/설정/감사기준 확보·archive catalog읽기/백업중DB불변 확인. 전후108표893행전체·열/시퀀스/DBprofile·키hash동일, DB컨테이너/볼륨·API환경/명령/보안/포트·키mount source/ro보존·DB0031/migration없음이다. oldd24이미지를before-item-level26태그로보존했고임시reader를제거했다. 이번restore리허설미실행이다.
 
 실제컨테이너소스/설정241파일바이트일치·177/기본116 OpenAPI객체전체일치·HTTP12PASS·API/DB healthy다. 정상실회원 확장목록200/기기인수는미확인이다. 실회원JWT생성/명령·provider·키/자료수동변경·dev/main/운영은없다. 이전Backend격리35·Flutter158과이번12를합산하지않는다. 다음Flutter 레벨/출처문구만소수인수·Backend직접차이대응,기존1/2전체/413반복요청없음·OPEN유지다.
+
+공식 인계: [#26 전체24번째 Backend · 아이템레벨 실제개발 반영](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386808894) 게시·댓글전문/실제순번 확인. 반영근거 `6be5c6fee12272858acc5493b06278340096521f` commit·push·원격일치 후 인계했고 Issue 상단/OPEN·원본이력을 보존했다. 다음Flutter 레벨/출처문구 소수기기인수·Backend직접차이대응이다.

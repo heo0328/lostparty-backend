@@ -7,6 +7,9 @@
 - **브랜치·위치:** `feat/raid-recruitment` / `/home/heowork/projects/lostparty-backend`.
 - **현재 실제 개발:** source `f471e3133ad60befcad77d7123e1107ba7501bb4`, 이미지6d5857b3…·177경로·DB0031, API/DB healthy. [반영 근거](../engineering/operations/application-item-level-rollout.md)·[집계](../engineering/operations/records/application-item-level-rollout.json).
 
+
+공식 인계: [#26 전체24번째 Backend · 아이템레벨 실제개발 반영](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386808894) 게시·댓글전문/실제순번 확인. 반영근거 `6be5c6fee12272858acc5493b06278340096521f` commit·push·원격일치 후 인계했고 Issue 상단/OPEN·원본이력을 보존했다. 다음Flutter 레벨/출처문구 소수기기인수·Backend직접차이대응이다.
+
 ## 다음 실행
 
 [#26 전체23번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386758343)의 앱source13fb5848 push·158PASS는 자체보고다. 새3키/출처별 문구 연결 완료이며 추가 계약 차이는 없다. 기존서버의 필드누락 항목은 새reader에서 오류 처리되므로 이번 서버 반영으로 제공 소스를 맞췄다.

@@ -103,5 +103,8 @@
   "private_backup_files_published": false,
   "restore_rehearsal_executed": false,
   "flutter_comment": "https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386758343",
-  "flutter_source": "13fb5848a50428600e6a778d746f084627fde345"
+  "flutter_source": "13fb5848a50428600e6a778d746f084627fde345",
+  "rollout_evidence_commit": "6be5c6fee12272858acc5493b06278340096521f",
+  "handoff_comment": "https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386808894",
+  "handoff_overall_ordinal": 24
 }
