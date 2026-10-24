@@ -1,0 +1,86 @@
+{
+  "kind": "authored_extension_fragments_only_not_full_http_or_runtime_results",
+  "examples": [
+    {
+      "name": "new_snapshot",
+      "display_extension": {
+        "item_level": "1700",
+        "item_level_source": "application_snapshot",
+        "item_level_fetched_at": "2026-10-25T00:00:00Z"
+      },
+      "meaning": "Capture selected Character.summary at apply; fetched_at is not application created_at"
+    },
+    {
+      "name": "retained_snapshot_after_growth",
+      "display_extension": {
+        "item_level": "1700",
+        "item_level_source": "application_snapshot",
+        "item_level_fetched_at": "2026-10-25T00:00:00Z"
+      },
+      "meaning": "Current character1750 does not replace stored1700"
+    },
+    {
+      "name": "old_missing_current_saved",
+      "display_extension": {
+        "item_level": "1750",
+        "item_level_source": "current_saved",
+        "item_level_fetched_at": "2026-10-25T01:00:00Z"
+      },
+      "meaning": "Read-only projection from same owner/revision; not historical snapshot"
+    },
+    {
+      "name": "stored_snapshot_unknown_time",
+      "display_extension": {
+        "item_level": "1700",
+        "item_level_source": "application_snapshot",
+        "item_level_fetched_at": null
+      },
+      "meaning": "Never invent a missing original confirmation time"
+    },
+    {
+      "name": "owner_revision_changed",
+      "display_extension": {
+        "item_level": null,
+        "item_level_source": "unavailable",
+        "item_level_fetched_at": null
+      },
+      "meaning": "No eligible item-level source; not a database query failure"
+    },
+    {
+      "name": "source_missing",
+      "display_extension": {
+        "item_level": null,
+        "item_level_source": "unavailable",
+        "item_level_fetched_at": null
+      },
+      "meaning": "No eligible item-level source; not a database query failure"
+    },
+    {
+      "name": "unconfirmed_or_retired",
+      "display_extension": {
+        "item_level": null,
+        "item_level_source": "unavailable",
+        "item_level_fetched_at": null
+      },
+      "meaning": "No eligible item-level source; not a database query failure"
+    },
+    {
+      "name": "current_level_missing",
+      "display_extension": {
+        "item_level": null,
+        "item_level_source": "unavailable",
+        "item_level_fetched_at": null
+      },
+      "meaning": "No eligible item-level source; not a database query failure"
+    },
+    {
+      "name": "invalid_stored_level",
+      "display_extension": {
+        "item_level": null,
+        "item_level_source": "unavailable",
+        "item_level_fetched_at": null
+      },
+      "meaning": "No eligible item-level source; not a database query failure"
+    }
+  ]
+}

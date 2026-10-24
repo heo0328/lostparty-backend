@@ -2510,3 +2510,12 @@ NEXT_WORK/AI_CONTEXT/추적표·현재계약/설계의 ‘2가입 연결·변경
 [반영근거](../engineering/operations/application-display-rollout.md)·[집계](../engineering/operations/records/application-display-rollout.json): API중지후private DBcustomdump·키/설정/감사기준·archive catalog읽기·백업중불변을확인했다. 전후108표829행전체hash·열정의/시퀀스/DBprofile·인증키hash동일, DB컨테이너/볼륨·API환경/명령/포트/보안·키mount source/ro보존·DB0031유지/migration없음. oldfdd이미지rollback태그보존·임시reader제거. 이번별도restore리허설은미실행이다.
 
 실제컨테이너177/기본116 OpenAPI 객체전체일치, HTTP12건(health/주차200·표시목록/상세무인증/invalidBearer401/no-store/challenge4·기존후보양intent같은거절4·C/N검색200/no-store2)통과, API/DB healthy. 정상로그인실회원조회/기기인수·회원토큰생성/명령쓰기/provider/기기조작·dev/main/운영은미실행이다. 이전격리28/참조12·Flutter413자체보고와합산하지않는다. 다음Flutter 카드값/분석·pending재진입부터소수인수/Backend직접차이대응. 반영근거 `6444c18bc3de8b341251169f84584cb622b69154` commit·push·원격일치 확인후 [#26 전체18번째 Backend · 표시 프로필 실제 개발 반영](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386031663) 게시·전문/실제전체순번 재조회 완료. Issue상단을실제반영완료·소수인수대기/Backend 직접차이대응으로갱신하고원본이력/OPEN을보존했다.
+
+
+## 2026-10-25 — #26 신청자 아이템레벨 누락 원인 확인·최소 보완 제안
+
+작업 구간명: 신청자 아이템레벨 누락 보완. 작업 내용: [전체19 Flutter](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386174761) 수신·저장/조회경로대조·개발DB읽기집계·값출처/기존신청처리계약제안. 브랜치: feat/raid-recruitment. 표시1/2는레벨확인필요외정상사용자보고,Flutter58600023 문구2곳수정/push·분석0·최종기기확인대기를구분했다.
+
+공용groups.admission_core.display는서버/이름/직업만반환하고cycle_commands가Application.display에저장·cycle_lists가그대로반환한다. 실제DB읽기집계7신청모두저장item_level없음을확인했다. 개인정보/원본조회출력·자료수정은하지않았다. 작성예시에만level이있어실제저장까지검증하지못한부분이다. 항목은아직미해결이다.
+
+[계약제안](../features/recruitment/participation/application-item-level-proposal.md): 기존display동적map에item_level/source/fetched_at3키, application_snapshot/current_saved/unavailable을구분한다. 신규Application snapshot만보완하고기존누락은owner/revision·confirmed/active확인후현재저장값을읽기투영한다. 과거snapshot/원시각보존·DBbackfill/공용identity전역수정·provider/추가SQL·입력/ACK변경없음이다. 작성9fragment의타입/정밀값·UTC·기존mapSchema수용을정적으로확인했으며실행시험아니다. 미합의API/OpenAPI·실제서버/DB변경없음. 다음은소비차이회신후저장→조회실행구현/검증이다. 게시source/공식제안은후속기록한다.

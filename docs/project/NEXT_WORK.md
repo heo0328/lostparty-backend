@@ -2,14 +2,22 @@
 
 2026-10-25
 
-- **작업 구간명:** 신청 표시·본인 승인 대기 프로필 개발 반영(#26).
-- **작업 내용:** 사용자 진행 지시로 검증 API/동일worker 교체·기존자료보존·실행계약/HTTP 검증 완료. 다음은 Flutter 정상로그인소수인수/Backend 직접차이대응이다.
+- **작업 구간명:** 신청자 아이템레벨 누락 보완(#26).
+- **작업 내용:** 실제신청snapshot에item_level을저장하지않는누락을확인했다. 신규snapshot/기존누락 읽기보완의값·출처·시각계약을제안하고소비차이확인후구현한다. 기존프로필개발반영은완료상태다.
 - **브랜치·위치:** `feat/raid-recruitment` / `/home/heowork/projects/lostparty-backend`. 기능코드·문서·시험·인계를같은이력으로관리한다.
 - **현재 실제 개발:** API source06ea4b214591f475d422f4599ca10260cda83d08/이미지d24d7cbd…·177경로/DB0031, 새 application-display-1 포함·API/DB healthy. [반영 근거](../engineering/operations/application-display-rollout.md)·[집계](../engineering/operations/records/application-display-rollout.json). 문서/예시보완source13ae0a5와API source를구분한다.
 
 [#26 전체18번째 Backend · 표시 프로필 실제 개발 반영](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386031663) 게시·전문/실제전체순번 확인 완료. 반영근거 `6444c18bc3de8b341251169f84584cb622b69154` commit·push·원격일치 확인, 다음Flutter 정상로그인소수인수/Backend 직접차이대응이다.
 
-## 다음 Flutter · 정상로그인 소수항목 인수
+## 최신 전체19 · 아이템레벨 보완 계약 확인
+
+[전체19 Flutter](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386174761)에서 사용자표시1/2는아이템레벨‘확인필요’외정상보고를수신했다. clean문구‘세팅이상없음’/‘좌석미확정’삭제는Flutter58600023 commit/push/분석0 보고이며최종기기확인대기다. Backend실행06ea4b2의공용identity.display가3필드만저장하고목록이그대로반환하는누락을확인했다. 개발DB읽기집계7신청모두snapshot item_level없음·회원식별자/원본출력·자료수정없음이다.
+
+[최소보완제안](../features/recruitment/participation/application-item-level-proposal.md)은기존display동적map3키(item_level/source/fetched_at)를정의한다. 새신청은모집Application에서만snapshot캡처, 기존누락은동일owner/revision·confirmed/active의현재저장값을current_saved로명시하여read-only보완한다. 과거snapshot은보존하고자료없음/소유변경은unavailable/null이며원본시각을만들지않는다. 공용identity/그룹/Assignment에확대하거나DBbackfill·provider·추가SQL을하지않는다.
+
+현재제안·미합의/미구현이며API/OpenAPI·서버/DB미변경이다. 작성fragment9개정적검증은실행시험이아니다. 다음Flutter는동적map metadata와snapshot/current_saved의표시소비차이만확인하고Backend는합의후저장→실제HTTP목록까지직접구현·검증·게시인계한다. 정상1/2전체·413반복/파서완화/자격정책재수용은요청하지않는다.
+
+## 기존 개발반영과 인수 경계
 
 [전체16 Flutter 앱연결](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6385536441) ac9fe621 push·413PASS/분석0은자체보고다. 연결/합성시험과새프로필실서버·실회원/기기를구분한다. 다음은 이미연결한앱에서사용자소수항목을확인하는것이다.
 
