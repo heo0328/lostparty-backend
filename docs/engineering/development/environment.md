@@ -6,6 +6,8 @@
 
 Python3.12·FastAPI/Uvicorn·SQLAlchemy·Alembic·PostgreSQL17/psycopg를 Docker Compose로 실행한다. 직접 의존성은 [requirements](../../../requirements.txt), 검증 의존성은 [requirements-dev](../../../requirements-dev.txt), 이미지 구성은 [Dockerfile](../../../Dockerfile)을 따른다. WSL2/Bash는 현재 개발환경이며 라이브러리 사용자의 설치 요건은 아니다.
 
+[검증된 의존성 고정](dependency-locking.md): 직접 요구는 requirements.in/requirements-dev.in, 실제 설치는 전이 의존성과 SHA256을 포함한 requirements.txt/requirements-dev.txt를 사용한다. Docker 빌드는 해시·pip check·설치 목록 일치를 검사한다.
+
 `.env`와 인증/암호화 키는 로컬 비공개 설정이다. 값·원문 응답·회원 개인정보를 문서나 커밋에 넣지 않는다. 새 환경의 설정 준비와 기존 환경의 재기동을 구분한다. 기존 키가 있는 환경에서 키 생성 명령을 반복하지 않는다.
 
 <a id="section-2"></a>

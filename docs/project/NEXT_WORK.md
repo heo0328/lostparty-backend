@@ -2,9 +2,9 @@
 
 ## 현재 별도 개선 구간
 
-2026-10-25 사용자 승인: **격리 검증 실행 경로 정리**. `chore/backend-architecture-review`에서 점검에 이어 구현하며 현재 checkout도 이 브랜치다. [실행 안내](../engineering/development/isolated-verification.md)의 `verify_isolated.py`로 정적/계약/기본/최신/전체 선택을 구분한다. 시험 이미지는 현재 checkout에서 빌드하고 고유 프로젝트·internal network·tmpfs DB를 사용한다. 개발 서버/API 계약은 변경하지 않았다.
+2026-10-25 사용자 승인: **검증된 직접·전이 의존성 고정**. `chore/backend-architecture-review`에서 두 번째 개선을 적용했다. [고정 기준·업데이트 절차](../engineering/development/dependency-locking.md)를 따른다. 개발 API에서 사용 중인31개 패키지 버전을 유지하고 시험 전용12개를 추가한 hash lock으로 두 Dockerfile을 빌드한다. .in은 직접 요구 원본이며 .txt가 실제 설치 lock이다. 실행기 static에도 정합성 검사를 연결했다. 개발 서버/API 계약·DB는 변경하지 않았다.
 
-다음 실행은 실제 Backend 변경에 맞는 시험 선택이다. `legacy`/`two-cycle`은 지정 회귀 묶음이며 전체 검증은 `all`이고, 구체 실행 범위/통과·실패는 DEV_LOG를 따른다. 다른 개선 후보는 [점검 보고서](../engineering/development/backend-architecture-review.md)를 참고하되 아직 구현 착수하지 않는다. 이번 구간은 로컬 커밋하며 push/PR/merge/배포·네이티브 추가시험 요청은 없다.
+첫 개선인 [격리 검증 실행](../engineering/development/isolated-verification.md)은 적용 완료다. 실제 Backend 변경에 맞는 검증을 선택한다. `legacy`/`two-cycle`은 지정 회귀 묶음, `all`은 전체 선택이며 구체 실행 결과는 DEV_LOG를 따른다. 다른 개선 후보는 [점검 보고서](../engineering/development/backend-architecture-review.md)를 참고하되 아직 착수하지 않는다. 현재 개선은 로컬 커밋하며 push/PR/merge/배포·네이티브 추가시험 요청은 없다. Python/OS/base image 고정과 다른 플랫폼 wheel 지원은 이번 범위 밖이다.
 
 아래 모집 대기 상태는 보존한다. 모집 기능 대응 재개 전 `feat/raid-recruitment` checkout과 점검/실행기 기록의 통합 여부를 확인한다. 임시 분기에서 계속 모집 기능을 수정하지 않는다. 새 네이티브 요청 여부는 공식 Issue에서 확인한다.
 

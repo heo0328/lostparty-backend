@@ -2586,3 +2586,13 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - 최종 시험 이미지에서 기본116경로/133동작·two-cycle177경로/197동작 OpenAPI 객체 전체 일치 PASS. 첫 컨테이너 진입의 Python import 경로 오류는 수정 후 계약 재실행으로 통과했다. static 문서/동결자료·경로 검사 PASS(214문서/2311링크·앵커), git diff --check PASS.
 - 의도적 nonexistent node는 exit4, 실제 시험 실패는 exit1을 유지하며 각 프로젝트 DB/컨테이너/네트워크 cleanup 확인. mock으로 build 실패17/cleanup 실패/환경 거부도 확인. 마지막 docker ps에 기존 API bbab9692cb65·DB f1a0bf3769fa만 동일 ID/healthy로 남고 lostparty-check 네트워크 잔존0. 개발 DB 내용 hash 재검증이나 정상회원/기기/provider·성능 인수는 하지 않았다. 시험 이미지/빌드 캐시는 남기고 prune하지 않았다.
 - 개발환경 문서의 과거06ea4b2 실행 표기는 기존 기록/NEXT_WORK에 맞춰 f471e31·아이템레벨 보완 인수 수용으로 정정했다. 실제 서버를 교체한 것은 아니다. 로컬 구간 커밋만 수행하며 push/PR/merge/배포·Issue 게시/네이티브 추가시험 요청은 없다. 다음은 변경 위험에 맞는 검증 명령 사용이며 다른 개선은 별도 사용자 선택 전 미착수. 모집 복귀 전에 checkout/점검·실행기 기록 통합을 확인한다.
+
+## 2026-10-25 검증된 직접·전이 의존성 고정
+
+- 사용자 ‘현재 정상적으로 사용되는 부분을 고정’ 지시에 따라 같은 `chore/backend-architecture-review`에서 두 번째 개선을 적용했다. [설치 기준·업데이트 방법](../engineering/development/dependency-locking.md). 실제 API pip list를 읽기 확인해 pip를 제외한31개를 runtime SHA256 lock으로 고정하고, 첫 개선의 시험 이미지95452e4ee27c의 시험 전용12개를 추가했다. 직접 요구10+3은 requirements.in/requirements-dev.in에 보존한다.
+- 시험 baseline의 certifi2026.10.23/pycparser3.12와 실행API2026.10.19/3.11의 차이를 발견했다. runtime 기준 두 버전으로 통일했으며 실행 패키지 업그레이드는 없다. 새 runtime 후보 `lostparty-lock-runtime:20261025`의31개 설치 이름/버전이 기존 API 읽기 기준과 전체 동일한 것을 재확인했다.
+- 별도 다운로드 컨테이너에서 기존43버전의 Linux amd64/CPython3.12 wheel을 받고 SHA256을 계산했다. Dockerfile/Dockerfile.test에 --require-hashes/--only-binary와 pip check·정확 설치 목록 검사를 연결했다. runtime31/test43 양쪽 신규 설치·해시·의존성/설치목록 일치 PASS. 개발 API 이미지를 교체/재시작하지 않았다. base Python/OS/pip/PostgreSQL 고정은 이번에 확장하지 않았다.
+- `check_dependencies.py`의 파일 정합성 검사를 실행기 static에 통합. 직접 요구/lock 차이·해시누락·시험의runtime덮어쓰기·설치 drift 거부4건 추가, 호스트 총12PASS. 실제 offline 합성 잘못된 FastAPI wheel 해시도 pip가 exit1로 거부했고 임시 다운로드/거부시험 컨테이너를 제거했다. wheel/tmp 파일과 후보 이미지/캐시는 임시 로컬 검증 자료이며 저장소에 넣지 않았다.
+- 새 lock 환경 격리 시험: 인증파일34PASS(16.93초), 최신 아이템레벨파일18PASS(88.70초). 둘 다 기존 Starlette/AnyIO 경고1종, 실제회원/기기가 아닌 합성PostgreSQL/HTTP이며 과거 결과와 합산하지 않는다. 기본116경로/133동작·two-cycle177경로/197동작 OpenAPI 객체 전체 일치PASS. 전체 legacy/two-cycle/all과 보안 취약점 감사는 미실행.
+- static 문서/동결자료·경로/lock 검사 및 git diff --check PASS. 작업 종료 시 시험 고유 프로젝트/네트워크 정리와 기존 API bbab9692cb65·DB f1a0bf3769fa 동일 ID/healthy를 읽기 확인했다. 기존 DB/키/환경 내용 hash나 정상회원 명령 재검증은 하지 않았다.
+- 구현·문서·검증 기록은 로컬 커밋한다. push/PR/merge/배포·Issue/네이티브 회신·추가 사용자 시험 요청은 없다. 현재 개발실행 sourcef471e31/6d5857b3·177/DB0031은 유지한다. 다음에는 변경 위험에 맞는 기존 격리 명령을 사용하고, 라이브러리 업데이트는 후보 환경에서 검증 후 명시적으로 lock을 변경한다. 다른 구조 개선은 미착수이며 모집 복귀 전 checkout/통합 여부를 확인한다.

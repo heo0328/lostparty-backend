@@ -15,7 +15,7 @@ python3 scripts/verify_isolated.py two-cycle
 python3 scripts/verify_isolated.py all
 ```
 
-- `static`: 기존 문서·동결자료·JSON/Python 경로 검사와 실행기 호스트 unittest. Docker/DB를 시작하지 않는다. 전체 lint/type 검사는 아니다.
+- `static`: [의존성 lock 정합성](dependency-locking.md), 기존 문서·동결자료·JSON/Python 경로 검사와 실행기 호스트 unittest. Docker/DB를 시작하지 않는다. 전체 lint/type 검사는 아니다.
 - 호스트 unittest: 실행기의 환경 거부·선택 제한·실패 전달·cleanup 제어를 검사한다. DB/서버에 접근하지 않는다.
 - `contracts`: 새 시험 이미지에서 기본116경로/133동작과 two-cycle177경로/197동작의 생성 OpenAPI 객체 전체를 비교한다. DB/lifespan/HTTP 서버를 시작하지 않는다.
 - `legacy`: 인증·계정·bootstrap·회원설정·개인키·그룹HTTP·기존모집HTTP의 지정7파일 회귀 묶음이다.

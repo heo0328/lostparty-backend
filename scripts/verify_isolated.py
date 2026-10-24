@@ -34,6 +34,7 @@ def main(argv=None):
             parser.error(str(error))
     if args.suite == "static":
         for command in (
+            [sys.executable, "scripts/check_dependencies.py"],
             [sys.executable, "scripts/check_documentation.py"],
             [sys.executable, "-m", "unittest", "discover", "-s", "scripts/tests", "-v"],
         ):
