@@ -33,5 +33,8 @@
   "bulk_sql_count_constant_for_page_limits": [
     1,
     50
-  ]
+  ],
+  "source_commit": "f471e3133ad60befcad77d7123e1107ba7501bb4",
+  "handoff_comment": "https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386634008",
+  "handoff_overall_ordinal": 22
 }

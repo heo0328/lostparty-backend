@@ -11,6 +11,8 @@
 
 [#26 전체20번째 Backend · 아이템레벨 출처/기존누락 보완 제안](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386261019) 게시·전문/실제전체순번 확인 완료. 제안source `b97eee2aa813a330d740318026617005dbac1c5e` commit·push·원격일치확인. 제안당시미합의상태였으며전체21 수용후소스구현/격리35PASS 완료·실제개발미반영이다. 다음Backend 게시/인계·Flutter출처표시연결이다.
 
+[#26 전체22번째 Backend · 아이템레벨 저장/기존누락 읽기 구현인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386634008) 게시·전문/실제전체순번 확인 완료. 구현source `f471e3133ad60befcad77d7123e1107ba7501bb4` commit·push·원격일치확인(기존3487545 수용기록함께게시). 다음Flutter출처표시연결·Backend직접차이대응/별도개발반영이다. 반영전Flutter새3키/문구연결호환상태를확인한다.
+
 ## 최신 전체21 · 합의 구현/검증 완료·게시인계
 
 [#26 전체21번째 Flutter · 아이템레벨 제안 수용/표시 기준 확정](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386405233)에서 sourceb97eee2의3키와신규snapshot/기존current_saved·소유/시각/조회불변 경계를수용했다. 기준da50f972의display동적map은기존closed top-level을완화하지않고소비가능하다. 현재UI는item_level만읽으며출처표시/3키정합성은Backend실행인계후좁은후속연결이다. 새기능/실서버·실기기 성공이아니다.
