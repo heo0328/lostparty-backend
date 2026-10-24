@@ -109,7 +109,8 @@ def create(data:inputs.Create,principal:Principal,key:Key):
     return creation.create(principal,key,data)[1]
 
 
-@router.get('/raid-rooms/{room_id}/admission-context',response_model=display_schemas.AdmissionDisplayContext,response_model_exclude_unset=True,responses=errors)
+@router.get('/raid-rooms/{room_id}/admission-context',response_model=display_schemas.AdmissionDisplayContext,response_model_exclude_unset=True,responses=errors,
+    description='Apply permissions validate current confirmed-party capacity and composition, item level and weekly availability. Pending applications never occupy or reserve a slot; approval revalidates current eligibility.')
 def admission_context(room_id:UUID,principal:Principal,target_cycle_key:str,character_id:UUID,
     selected_role:Role,intent:Literal['apply','join','change_character'],include_session_display:Literal['true','false']='false'):
     return commands.get_context(principal,room_id,target_cycle_key,character_id,selected_role,intent,include_session_display=="true")
@@ -120,7 +121,8 @@ def join(room_id:UUID,data:inputs.Admission,principal:Principal,key:Key):
     return commands.admit(principal,room_id,key,data)[1]
 
 
-@router.post('/raid-rooms/{room_id}/applications',response_model=s.OutputContract3PostV2RaidRoomsRoomIdApplications,status_code=201,responses=errors)
+@router.post('/raid-rooms/{room_id}/applications',response_model=s.OutputContract3PostV2RaidRoomsRoomIdApplications,status_code=201,responses=errors,
+    description='Revalidate confirmed-party capacity and composition, item level and weekly availability before creating a pending application. No confirmed assignment, weekly occupancy or reservation is created; approval revalidates under the mutation lock.')
 def apply(room_id:UUID,data:inputs.Admission,principal:Principal,key:Key):
     return commands.admit(principal,room_id,key,data,applying=True)[1]
 

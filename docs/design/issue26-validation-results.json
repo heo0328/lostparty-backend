@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-24",
+  "stage": "existing_application_validation_implemented_candidate_read_contract_proposed",
+  "new_postgres_tests": 16,
+  "existing_regressions": 9,
+  "unique_passed": 25,
+  "batches": [
+    {
+      "passed": 22,
+      "seconds": 199.37
+    },
+    {
+      "passed": 3,
+      "seconds": 26.72
+    }
+  ],
+  "existing_starlette_anyio_warning": 1,
+  "proposal_positive_examples": 3,
+  "proposal_negative_schema_checks": 8,
+  "image": "sha256:480a72cf05f082ec4bf3b657e9c3511b43da41cb57b44e0f0abeb2372b746b74",
+  "source_files": 235,
+  "legacy_paths": 116,
+  "two_cycle_paths": 176,
+  "components_unchanged": true,
+  "description_changes": 2,
+  "new_candidate_endpoint_implemented": false,
+  "development_api_replaced": false,
+  "real_member_http": "not_executed",
+  "synthetic_http": "router with synthetic principal dependency override"
+}

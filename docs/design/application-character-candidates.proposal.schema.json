@@ -1,0 +1,298 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lostparty:application-character-candidates:proposal-1",
+  "title": "Application character candidates — proposal, not running API",
+  "type": "object",
+  "properties": {
+    "scope": {
+      "$ref": "#/$defs/Scope"
+    },
+    "data": {
+      "$ref": "#/$defs/Data"
+    }
+  },
+  "required": [
+    "scope",
+    "data"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "Scope": {
+      "properties": {
+        "server_now": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Server Now"
+        },
+        "current_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "title": "CycleKey",
+          "description": "Canonical Wednesday date in KST; server validates target is C or N. No implicit rollover."
+        },
+        "target_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "title": "CycleKey",
+          "description": "Canonical Wednesday date in KST; server validates target is C or N. No implicit rollover."
+        },
+        "playable_from": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Playable From"
+        },
+        "phase": {
+          "type": "string",
+          "enum": [
+            "current",
+            "future"
+          ],
+          "title": "Phase1"
+        },
+        "target_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "policy_version": {
+          "type": "string",
+          "const": "two-cycle-contract-4",
+          "title": "Policy Version"
+        },
+        "room_cycle_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "server_now",
+        "current_cycle_key",
+        "target_cycle_key",
+        "playable_from",
+        "phase",
+        "target_revision",
+        "policy_version",
+        "room_cycle_id",
+        "target_generation"
+      ],
+      "title": "Scope"
+    },
+    "Data": {
+      "type": "object",
+      "properties": {
+        "room_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "intent": {
+          "const": "apply"
+        },
+        "evaluated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "catalog_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "snapshot_token": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "raw_candidate_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "eligible_candidate_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "items": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "$ref": "#/$defs/Candidate"
+          }
+        },
+        "next_cursor": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "room_id",
+        "intent",
+        "evaluated_at",
+        "catalog_version",
+        "snapshot_token",
+        "raw_candidate_count",
+        "eligible_candidate_count",
+        "items",
+        "next_cursor"
+      ],
+      "additionalProperties": false
+    },
+    "Permission": {
+      "type": "object",
+      "properties": {
+        "allowed": {
+          "type": "boolean"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "enum": [
+                "RAID_ITEM_LEVEL_REQUIRED",
+                "WEEKLY_ALREADY_COMPLETED",
+                "WEEKLY_ALREADY_PARTICIPATING",
+                "ROOM_FULL",
+                "ROOM_COMPOSITION_CONFLICT"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "allowed",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "properties": {
+            "allowed": {
+              "const": true
+            },
+            "reason": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "allowed": {
+              "const": false
+            },
+            "reason": {
+              "enum": [
+                "RAID_ITEM_LEVEL_REQUIRED",
+                "WEEKLY_ALREADY_COMPLETED",
+                "WEEKLY_ALREADY_PARTICIPATING",
+                "ROOM_FULL",
+                "ROOM_COMPOSITION_CONFLICT"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "Candidate": {
+      "type": "object",
+      "properties": {
+        "character_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "registration_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "server_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "character_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "class_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "item_level": {
+          "type": "string",
+          "pattern": "^[0-9]+(?:\\.[0-9]+)?$",
+          "maxLength": 64
+        },
+        "roles": {
+          "type": "object",
+          "properties": {
+            "dealer": {
+              "$ref": "#/$defs/Permission"
+            },
+            "support": {
+              "$ref": "#/$defs/Permission"
+            }
+          },
+          "required": [
+            "dealer",
+            "support"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "character_id",
+        "registration_id",
+        "server_name",
+        "character_name",
+        "class_name",
+        "item_level",
+        "roles"
+      ],
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "properties": {
+            "roles": {
+              "properties": {
+                "dealer": {
+                  "properties": {
+                    "allowed": {
+                      "const": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "roles": {
+              "properties": {
+                "support": {
+                  "properties": {
+                    "allowed": {
+                      "const": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

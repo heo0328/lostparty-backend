@@ -46,3 +46,8 @@
 | #15 전체1번째 | [V2 추적 유지/한주제 원칙](https://github.com/heo0328/lostparty-backend/issues/15#issuecomment-6249415434) |
 
 이번 정리는 서버 구현·DB변경·자동정리·자료삭제/초기화·기존키/로그인 재시험·운영배포 승인이 아니다. 기능코드/실행계약은 같고 새 이슈를 만들었다고 기능 구현을 시작한 것이 아니다.
+
+
+## 신규 신청 검증·후보조회 후속
+
+[#26](https://github.com/heo0328/lostparty-backend/issues/26): #13 전체142/143의 직접 보완, [전체145번째 Backend 요청회신/후속연결](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6381088415). pending 확정구성검사 보완 구현/격리검증, 후보 일괄읽기 closed 계약제안·미합의/미구현. 다음 Flutter 소비차이 회신/Backend 검증 인계. 기존 개발176/DB0031·통합 인수 미완료/원본 요구 보존·OPEN. 실제 반영은 별도 승인 구간이다.

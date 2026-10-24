@@ -99,10 +99,19 @@ def _slot(db, room, round, selection, character, party_no, *, exclude_membership
         Assignment.state=='active',Assignment.party_no==party_no)
     if exclude_membership_id is not None:query=query.where(Assignment.membership_id!=exclude_membership_id)
     rows=list(db.scalars(query))
+    return composition_slot(rows, selection.selected_role, character.summary['class_name'])
+
+
+def composition_slot(rows, selected_role, class_name):
+    """Read-only composition rule; rows are confirmed active assignments in one party.
+
+    The returned free slot is only a preview until an admission transaction
+    writes it. Pending applications must never be included in rows.
+    """
     if len(rows)>=4:fail('ROOM_FULL')
-    same=[r for r in rows if r.selected_role==selection.selected_role]
-    if ((selection.selected_role=='support' and same) or (selection.selected_role=='dealer' and
-            (len(same)>=3 or any(r.display.get('class_name')==character.summary['class_name'] for r in same)))):
+    same=[r for r in rows if r.selected_role==selected_role]
+    if ((selected_role=='support' and same) or (selected_role=='dealer' and
+            (len(same)>=3 or any(r.display.get('class_name')==class_name for r in same)))):
         fail('ROOM_COMPOSITION_CONFLICT')
     return next(n for n in range(1,5) if n not in {r.slot_no for r in rows})
 

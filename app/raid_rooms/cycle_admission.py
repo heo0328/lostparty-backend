@@ -95,7 +95,7 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
             CycleMember.generation == target.generation, CycleMember.membership_id == member.id,
             CycleMember.state.in_(('participating', 'completed', 'stopped')))) is not None:
         fail('ROOM_MEMBER_EXISTS')
-    if not pending and replacing is None and member_count(db, target) >= size:
+    if replacing is None and member_count(db, target) >= size:
         fail('ROOM_FULL')
     plans = []
     # Only the target capacity is visible to the pure composition helper.
@@ -140,7 +140,9 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
             fail('WEEKLY_ALREADY_PARTICIPATING')
         if choice.party_no > min(size // 4, rd.game_party_size // 4):
             fail('ROOM_COMPOSITION_CONFLICT')
-        slot = None if pending else core._slot(db, formation, rd, selection, character, choice.party_no,
+        # Checking a free slot never reserves it. Pending returns above the
+        # write phase, but must obey the same confirmed-party composition.
+        slot = core._slot(db, formation, rd, selection, character, choice.party_no,
             exclude_membership_id=member.id if replacing else None)
         if replacing is not None and old.party_no==choice.party_no:slot=old.slot_no
         plans.append((item, rd, state, slot, old))

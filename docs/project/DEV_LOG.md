@@ -2260,3 +2260,12 @@ NEXT_WORK/AI_CONTEXT/추적표를최신다음Backend계약/호환설계로갱신
 0700/0600 비공개 `backups/test-roster-grant-9e7a9217fde1`에 실행 전 DB archive와 결과/감사 식별자를 보관했다. 기존 game-mutations lock·회원/등록 행 잠금과 한 트랜잭션에서 신규 Account/13 canonical Character·NameClaim/미설정 Configuration/도전 참조 없는 Ownership Audit를 만들고 지정 등록의 account 연결·version을 갱신했다. 기존 reconcile을 재사용했고 다른 소유권/도전/인증 자료를 덮어쓰지 않았다. 트랜잭션 내 변경 표는 의도한6개뿐이며 별도 커밋 후 읽기에서 verified/owned·13캐릭터 usable·감사 이력을 확인했다.
 
 이는 사용자 승인 개발 테스트 자료 설정이며 실제 장비 검증/provider 인증 성공이 아니다. 활동/대표는 미설정 유지, 앱 화면 갱신 후 사용자 선택이 다음 확인이다. 코드/API 계약·이미지/worker·DB schema 변경과 재배포/운영 자료 변경은 없다. #24/#25 연결/실인수 다음 담당은 기존 그대로이며 개인정보 Issue 회신은 하지 않았다.
+
+
+## 2026-10-24 — #26 신청 구성검사 보완·닫힌 후보계약 제안
+
+사용자 승인 계획과 #13 전체142/143·최신144를 확인하고 기존 feat/raid-recruitment를 /tmp 별도 작업트리에 연결했다. docs/document-organization의 문서 이력/사용자 변경을 보존하고 merge/cherry-pick하지 않았다. [#26](https://github.com/heo0328/lostparty-backend/issues/26)에 한 주제/닫힌 DTO·scope/페이지·대표빈화면/완료조건·다음담당을 제안하고 [#13 전체145번째 Backend 요청 회신/후속연결](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6381088415) 전문/순번을 확인했다. 원본 상단은 최신 실행/후속26으로 바로잡고 원문/통합 인수·OPEN을 유지했다.
+
+pending에도 기존 확정구성/정원·role/class 검사를 적용하고 읽기 전용 composition_slot을 분리했다. context permissions.apply/실제POST·승인 재검사/잠금,8인 반대파티·C/N·pending 무점유/예약·원ACK 유지. 신규 후보API는 계약 제안/미합의·미구현이다. [개발 안내](../ISSUE_26_APPLICATION_VALIDATION_DEVELOPMENT.md)·[제안](../APPLICATION_CHARACTER_CANDIDATES_PROPOSAL.md)·[검증 집계](../design/issue26-validation-results.json).
+
+독립 internal network/tmpfs PostgreSQL·합성 키에서 고유25PASS(신규16/기존9),22PASS199.37초+3PASS26.72초·기존 경고1. 최초22ERROR는 test-db 제한과 alias 불일치한 시험환경을 수정해 해소했다. 제안schema/합성 작성예시3정상·8비정상 정적검증은 런타임 시험수와 별도. source235Python/이미지일치·116/176 전체계약 일치·기존 component/DTO불변·2description변경. 실제 로그인/실회원/기기와 구별한 synthetic principal router HTTP검증이다. DB migration·개발서버/키/자료변경·dev/main/운영 없음. 게시 SHA/댓글·정리 결과는 후속 기록한다.

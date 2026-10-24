@@ -27046,7 +27046,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Apply permissions validate current confirmed-party capacity and composition, item level and weekly availability. Pending applications never occupy or reserve a slot; approval revalidates current eligibility."
       }
     },
     "/v2/raid-rooms/{room_id}/join": {
@@ -27504,7 +27505,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Revalidate confirmed-party capacity and composition, item level and weekly availability before creating a pending application. No confirmed assignment, weekly occupancy or reservation is created; approval revalidates under the mutation lock."
       },
       "get": {
         "tags": [

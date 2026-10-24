@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+현재(2026-10-24 #26): [신청 검증/후보조회](../ISSUE_26_APPLICATION_VALIDATION_DEVELOPMENT.md) 보완 진행. 기존 context/POST의 pending 확정구성검사 누락 보완을 구현·격리25PASS/기존DTO보존·176/116계약 비교 완료하며 신규 후보GET은 [계약 제안](../APPLICATION_CHARACTER_CANDIDATES_PROPOSAL.md)·미합의/미구현. 다음 Flutter 계약 소비차이 회신/Backend 검증 인계·차이대응. 실제 개발176/DB0031은 이번 구간 미변경. [NEXT_WORK](NEXT_WORK.md)가 기준이며 아래는 이전 이력이다.
+
 현재(2026-10-24 개발 반영): #24/#25 소스15e143a·176경로/DB0031을 실제 로컬 개발 API에 반영했다. [전환 결과](../ISSUE_24_25_DEVELOPMENT_ROLLOUT.md)·[구현 계약](../ISSUE_24_25_MEMBERSHIP_ACTIONS_DEVELOPMENT.md). 비공개 백업 복원/제한 LOGIN 이행·기존106표603행 보존/2표 추가·실행176/기본116 계약 전체/HTTP7검사 통과. API/DB만 healthy, 기존 DB 컨테이너·볼륨·키/환경 유지. 다음 Flutter 직접 연결·자동 검증/정상 로그인 인수, Backend 재현 차이 대응. 실회원 명령·기기 인수/운영·dev/main은 미완료이며 IF-001/구명령·원ACK 보존. [NEXT_WORK](NEXT_WORK.md)가 현재 기준이고 아래는 이전 구간 이력이다.
 
 최신(2026-10-24 수신): [정리/기준](../ISSUE_13_OCT24_NATIVE_FEEDBACK.md). Flutter E23전체5번째 b6720079/178mock·A #13전체133번째e9d2783d/94mock·B134번째797c16b3/159mock 구현/push·분석0 보고수신(D22포함코드/자동경계완료,실인수와구분). 다음Backend는 [135번째 검색제외](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6366977367)·[136번째 최신탈퇴/해산정책](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6367266418)의계약/호환설계다. 선택T C/N탈퇴/모두탈퇴는사전위임없이자동승계/빈T종료,해산은본인리더인모든C/N주차·다인허용/비대상보존으로변경확정전달. 이전마지막1인/다인제외제한은새행동에적용하지않고구API/pending/원ACK원효과는보존한다. 새범위미구현/현174·DB0030유지,코드·서버·DB변경없이수신문서갱신. [NEXT_WORK](NEXT_WORK.md) 참조. 아래는이전기록이다.

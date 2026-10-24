@@ -2,6 +2,12 @@
 
 2026-10-24 / **feat/raid-recruitment** / [#13](https://github.com/heo0328/lostparty-backend/issues/13), [#22](https://github.com/heo0328/lostparty-backend/issues/22), [#23](https://github.com/heo0328/lostparty-backend/issues/23) OPEN.
 
+## 현재 — #26 신청 검증 보완·후보조회 계약 제안
+
+[Issue26](https://github.com/heo0328/lostparty-backend/issues/26)에서 #13 전체142/143의 보완을 추적한다. [원본 전체145번째 Backend 요청 회신/후속 연결](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6381088415). 사용자 승인 계획의 신규 후보조회는 [닫힌 계약 제안](../APPLICATION_CHARACTER_CANDIDATES_PROPOSAL.md) 단계·미합의/미구현이며 다음 Flutter가 구체 소비차이를 회신한다. 기존 pending 구성검사 보완은 [개발 안내](../ISSUE_26_APPLICATION_VALIDATION_DEVELOPMENT.md) 범위로 구현·격리 고유25PASS(신규16/기존9) 완료. 후보이미지 source235Python/116·176 전체계약 일치·기존DTO 보존. 다음 Backend는 계약 소비차이 대응 후 합의된 후보GET 구현이며 실제 개발 반영은 별도 승인이다. 기존 실행176/DB0031은 미변경, 실제 개발 반영은 별도 승인이다. #24 Flutter 전체6의0d6d960b/126mock 검색회복 연결 보고와 전체7 생성자 검색제외 실제정상/추가참가자 미확인, #25 B/C 연결 보고·실인수 별도를 수신했다. #13 전체144의 신청카드 기본상세 수정63b77872/117mock에는 추가 Backend 요청이 없다.
+
+문서 정리 브랜치는 원래 checkout에서 보존하고, 기존 feat/raid-recruitment를 별도 작업트리에서 이어간다. docs 브랜치를 임의 병합하지 않는다. 아래는 기존 인계 이력이며 이번 구간 최신 담당/결과는 위 기준과 DEV_LOG를 따른다.
+
 ## 현재 — #24/#25 개발 API·DB0031 반영 완료
 
 2026-10-24 사용자 진행 지시에 따라 실제 개발 서버를176경로·DB0031로 반영했다. 구현 source `15e143aeb9f3105a1b8a5816051e0e837726892c` / feat/raid-recruitment, [실행 결과/보존 근거](../ISSUE_24_25_DEVELOPMENT_ROLLOUT.md). 비공개 백업 복원 리허설·제한 LOGIN readiness·실제 이행·API/worker 교체 후 기존105개 업무 표의 모든 행/열/기록 시각·키·시퀀스 보존을 확인했다.106→108표603행, API/DB 두 컨테이너 healthy·DB 재생성 없음. 새 검색과 메뉴/명령·opt-in reader가 실제 개발 API에 반영됐다.
