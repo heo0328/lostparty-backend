@@ -40,7 +40,9 @@
               "display": {
                 "character_name": "합성테스트",
                 "class_name": "버서커",
-                "item_level": "1700"
+                "item_level": "1700",
+                "item_level_source": "application_snapshot",
+                "item_level_fetched_at": null
               },
               "admission_origin": {
                 "scope": "public",
@@ -118,7 +120,9 @@
               "display": {
                 "character_name": "합성테스트",
                 "class_name": "버서커",
-                "item_level": "1700"
+                "item_level": "1700",
+                "item_level_source": "application_snapshot",
+                "item_level_fetched_at": null
               },
               "admission_origin": {
                 "scope": "public",
@@ -206,7 +210,9 @@
               "display": {
                 "character_name": "합성테스트",
                 "class_name": "버서커",
-                "item_level": "1700"
+                "item_level": "1700",
+                "item_level_source": "application_snapshot",
+                "item_level_fetched_at": null
               },
               "admission_origin": {
                 "scope": "public",
@@ -284,7 +290,9 @@
               "display": {
                 "character_name": "합성테스트",
                 "class_name": "버서커",
-                "item_level": "1700"
+                "item_level": "1700",
+                "item_level_source": "application_snapshot",
+                "item_level_fetched_at": null
               },
               "admission_origin": {
                 "scope": "public",
@@ -362,7 +370,9 @@
               "display": {
                 "character_name": "합성테스트",
                 "class_name": "버서커",
-                "item_level": "1700"
+                "item_level": "1700",
+                "item_level_source": "application_snapshot",
+                "item_level_fetched_at": null
               },
               "admission_origin": {
                 "scope": "public",
@@ -434,7 +444,9 @@
               "display": {
                 "character_name": "합성테스트",
                 "class_name": "버서커",
-                "item_level": "1700"
+                "item_level": "1700",
+                "item_level_source": "application_snapshot",
+                "item_level_fetched_at": null
               },
               "admission_origin": {
                 "scope": "public",
@@ -492,7 +504,9 @@
               "display": {
                 "character_name": "합성테스트",
                 "class_name": "버서커",
-                "item_level": "1700"
+                "item_level": "1700",
+                "item_level_source": "application_snapshot",
+                "item_level_fetched_at": null
               },
               "admission_origin": {
                 "scope": "public",
@@ -582,7 +596,9 @@
               "display": {
                 "character_name": "합성테스트",
                 "class_name": "바드",
-                "item_level": "1700"
+                "item_level": "1700",
+                "item_level_source": "application_snapshot",
+                "item_level_fetched_at": null
               },
               "admission_origin": {
                 "scope": "public",

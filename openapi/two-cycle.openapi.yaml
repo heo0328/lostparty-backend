@@ -27506,7 +27506,7 @@
             }
           }
         },
-        "description": "Revalidate admission-eligibility-2 and exact displayed target parties before creating pending. Unsupported roles are ROLE_NOT_SUPPORTED. No confirmed assignment, weekly occupancy or reservation is created; original ACK replay is preserved."
+        "description": "Revalidate admission-eligibility-2 and exact displayed target parties before creating pending. Unsupported roles are ROLE_NOT_SUPPORTED. Capture item_level/item_level_source=application_snapshot/item_level_fetched_at in application display from the selected character and original confirmation time. No confirmed assignment, weekly occupancy or reservation is created; original ACK replay is preserved."
       },
       "get": {
         "tags": [
@@ -27795,7 +27795,8 @@
               }
             }
           }
-        }
+        },
+        "description": "application-display-1 always includes display.item_level, item_level_source and item_level_fetched_at. Preserve a real application_snapshot; legacy missing values use current_saved only for the same applicant/character/ownership revision and confirmed active source, otherwise unavailable. Original fetched time may be null; no backfill, provider calls, extra queries or approval decision. Other display fields stay application snapshots."
       }
     },
     "/v2/raid-room-applications/{application_id}": {

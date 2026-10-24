@@ -1,6 +1,6 @@
 # 신청자 아이템레벨 출처 보완 제안
 
-2026-10-25 / **제안 소비 합의 완료·미구현/실제 문제 미해결**. 작업 구간명: 신청자 아이템레벨 누락 보완. 브랜치: `feat/raid-recruitment`.
+2026-10-25 / **합의 구현·격리35PASS 완료/실제 개발 미반영**. 작업 구간명: 신청자 아이템레벨 누락 보완. 브랜치: `feat/raid-recruitment`.
 
 [#26 전체19번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386174761)의 코드 경로와 사용자 관찰을 확인했다. API source06ea4b2는 Application.display를 공용 groups.admission_core.display로 생성해 서버/이름/직업만 저장한다. 목록은 그대로 반환한다. 실제 개발DB 읽기 집계에서도 저장 신청7개 모두 display.item_level이 없었다. 원본회원/신청 식별자·값은 공개하지 않았으며 DB수정은 하지 않았다.
 
@@ -53,3 +53,13 @@ Flutter는새top-level모델없이 동적display3키를수용할수있는지, cu
 합의후Backend는신규snapshot/기존누락 읽기보완·정밀값/시각/소유변경·기존값보존·조회불변·일괄SQL/페이지·원ACK를직접시험한다. 특히 실제신청POST→저장display→HTTP목록까지연결해작성예시와생산자코드를대조한다. 기본/쓰기DTO·공용identity·그룹/참가기존동작·실행OpenAPI 전체를확인하고commit/push·원격확인후같은Issue에인계한다. 실제개발반영은별도구간이며현재서버/DB는변경하지않았다.
 
 공식제안: [#26 전체20번째 Backend · 아이템레벨 출처/기존누락 보완 제안](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386261019). source `b97eee2aa813a330d740318026617005dbac1c5e` commit·push·원격일치 확인후 게시·댓글전문/실제전체순번 재조회 완료. 제안 당시 다음Flutter 소비검토였으며 전체21 수용후 다음Backend 구현이다. API/서버미변경·Issue OPEN이다.
+
+## 실행 구현·검증 경계
+
+application_display.snapshot_level을모집Application 생성에만연결했다. 공용identity는3필드그대로유지한다. 신규저장3키와원본confirmed_at을캡처하고, 목록4bulk조회에서level_display가새dict를만들어실제snapshot우선/기존누락current_saved·unavailable을투영한다. 원본Application.display/revision/시각/ACK를GET에서변경하지않는다. 저장값이있으면소유변경뒤에도과거값을보존하고새소유자현재값을읽기대체하지않는다.
+
+기본/쓰기DTO·전체component는보존하며실행OpenAPI177/기본116전체비교를수행한다. 합의한Application GET/POST의description만출처와저장동작을명시한다. 기존default/본인목록/단건review에는과거누락읽기보완을확대하지않고신규저장snapshot은그대로보여준다. 기존profile1·cursor/추가SQL·승인자격/원명령은변경하지않는다.
+
+[실행 검증 집계](validation/application-item-level-results.json)는작성fragment9개와구분한다. 신규시험은딜러/서포터의실제HTTP POST→저장display→HTTP목록→성장후snapshot/원ACK보존,기존누락의정밀current_saved·기본/단건응답/DB불변,owner/ownership/missing/suspect/retired·레벨없음·불량값/시각null·페이지/SQL을직접확인한다. 합성principal/격리DB이며실회원/기기인수아니다. 실제개발source06ea4b2/이미지d24d7cbd의아이템레벨누락은현재미반영상태이며코드완료와실제해결을구분한다.
+
+최종 고유35PASS는신규18(97.96초)+직접회귀17(136.27초)의중복없는최종소스2회실행이다. 기존AnyIO경고1종외실패없음이며과거28/참조12/Flutter413·작성자료를합산하지않는다. 기본표시/권한·페이지/상한·실제합성Bearer/세션취소·기존신청/승인/거절/철회/원ACK를직접회귀했다. 후보이미지6d5857b3… 소스241파일과실제시험소스·3시험파일 바이트일치, 실행177/기본116전체계약/모든기존component·쓰기shape보존을확인했다. 시험용환경을정리했고실제개발d24d7cbd…미교체/healthy를읽기확인했다. 현재실서버의레벨누락은아직미반영문제로남으며새소스게시후네이티브는출처검증/확정문구를좁게연결한다. 실제개발반영·실회원/기기인수는별도구간이다.

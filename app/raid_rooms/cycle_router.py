@@ -135,7 +135,7 @@ def join(room_id:UUID,data:inputs.Admission,principal:Principal,key:Key):
 
 
 @router.post('/raid-rooms/{room_id}/applications',response_model=s.OutputContract3PostV2RaidRoomsRoomIdApplications,status_code=201,responses=errors,
-    description='Revalidate admission-eligibility-2 and exact displayed target parties before creating pending. Unsupported roles are ROLE_NOT_SUPPORTED. No confirmed assignment, weekly occupancy or reservation is created; original ACK replay is preserved.')
+    description='Revalidate admission-eligibility-2 and exact displayed target parties before creating pending. Unsupported roles are ROLE_NOT_SUPPORTED. Capture item_level/item_level_source=application_snapshot/item_level_fetched_at in application display from the selected character and original confirmation time. No confirmed assignment, weekly occupancy or reservation is created; original ACK replay is preserved.')
 def apply(room_id:UUID,data:inputs.Admission,principal:Principal,key:Key):
     return commands.admit(principal,room_id,key,data,applying=True)[1]
 
@@ -227,7 +227,8 @@ def my_applications(principal:Principal,target_cycle_key:str,state:AppState='pen
     return lists.applications(principal,target_cycle_key,state=state,limit=limit,cursor=cursor)
 
 
-@router.get('/raid-rooms/{room_id}/applications',response_model=s.OutputContract3GetV2RaidRoomsRoomIdApplications|application_display_schemas.ApplicationDisplayPageResponse,responses=errors)
+@router.get('/raid-rooms/{room_id}/applications',response_model=s.OutputContract3GetV2RaidRoomsRoomIdApplications|application_display_schemas.ApplicationDisplayPageResponse,responses=errors,
+    description='application-display-1 always includes display.item_level, item_level_source and item_level_fetched_at. Preserve a real application_snapshot; legacy missing values use current_saved only for the same applicant/character/ownership revision and confirmed active source, otherwise unavailable. Original fetched time may be null; no backfill, provider calls, extra queries or approval decision. Other display fields stay application snapshots.')
 def applications(room_id:UUID,principal:Principal,target_cycle_key:str,state:AppState='pending',limit:Limit=20,cursor:Cursor=None,
     reader_profile:Literal['application-display-1']|None=None):
     return lists.applications(principal,target_cycle_key,rid=room_id,state=state,limit=limit,cursor=cursor,reader_profile=reader_profile)

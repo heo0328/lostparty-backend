@@ -1,5 +1,8 @@
 """Read-only display projections, never an approval/eligibility decision."""
 import json
+import re
+from datetime import datetime, timezone
+from decimal import Decimal
 from sqlalchemy import select, tuple_
 from pydantic import ValidationError
 
@@ -15,6 +18,49 @@ from app.raid_rooms.cycle_wire import BPowerComparison
 
 PROFILE = 'application-display-1'
 MAX_RESPONSE_BYTES = 1024 * 1024
+
+
+def _level(value):
+    raw = str(value)
+    if len(raw) > 64 or not re.fullmatch(r'[0-9]+(?:\.[0-9]+)?', raw):
+        return None
+    return format(Decimal(raw), 'f')
+
+
+def _fetched(value):
+    if isinstance(value, str):
+        try:
+            value = datetime.fromisoformat(value.replace('Z', '+00:00'))
+        except ValueError:
+            return None
+    if not isinstance(value, datetime) or value.tzinfo is None or value.utcoffset() is None:
+        return None
+    return value.astimezone(timezone.utc).isoformat().replace('+00:00', 'Z')
+
+
+def snapshot_level(character):
+    """Only recruitment applications capture these keys; shared identity stays intact."""
+    value = _level(character.summary.get('item_level'))
+    return dict(item_level=value, item_level_source='application_snapshot' if value is not None else 'unavailable',
+                item_level_fetched_at=_fetched(character.confirmed_at) if value is not None else None)
+
+
+def level_display(saved, character, *, connected):
+    """Keep a real historical value; never backfill a stored application on GET."""
+    result = dict(saved)
+    extension = dict(item_level=None, item_level_source='unavailable', item_level_fetched_at=None)
+    if saved.get('item_level') is not None:
+        value = _level(saved['item_level'])
+        if value is not None:
+            extension.update(item_level=value, item_level_source='application_snapshot',
+                             item_level_fetched_at=_fetched(saved.get('item_level_fetched_at')))
+    elif connected and character is not None and character.status == 'confirmed' and character.lifecycle_state == 'active':
+        value = _level(character.summary.get('item_level'))
+        if value is not None:
+            extension.update(item_level=value, item_level_source='current_saved',
+                             item_level_fetched_at=_fetched(character.confirmed_at))
+    result.update(extension)
+    return result
 
 
 def bounded(value):
@@ -48,8 +94,9 @@ def projections(db, applications, target):
             reason = ('CHARACTER_DATA_UNAVAILABLE' if character is None or account is None else
                       'APPLICATION_CONTEXT_CHANGED' if (account.owner_id, account.ownership_revision) !=
                       (app.user_id, choice.expected_ownership_revision) else None)
+            shown = level_display(app.display, character, connected=reason is None)
             if reason:
-                result[app.id] = dict(comparison=None, analysis=None, display_reason=reason)
+                result[app.id] = dict(display=shown, comparison=None, analysis=None, display_reason=reason)
                 continue
             key = (app.user_id, choice.character_id, choice.expected_ownership_revision, choice.selected_role)
             head, success = heads.get(key), successes.get(key)
@@ -60,7 +107,7 @@ def projections(db, applications, target):
             summary = RoleSummary.model_validate(head.summary) if head is not None else None
             minimum = target.settings_snapshot['combat_requirement'][
                 'dealer_min' if choice.selected_role == 'dealer' else 'support_min']
-            projection = dict(comparison=power_value(choice.selected_role, minimum, head, success),
+            projection = dict(display=shown, comparison=power_value(choice.selected_role, minimum, head, success),
                 analysis=dict(version=head.version, saved_at=head.saved_at, analyzed_at=summary.analyzed_at,
                               integrity_status=summary.integrity_status,
                               issues=summary.model_dump(mode='json')['issues']) if head is not None else None,

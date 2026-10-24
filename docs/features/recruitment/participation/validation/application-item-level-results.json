@@ -1,0 +1,37 @@
+{
+  "image": "sha256:6d5857b38b91c6cb1f5ec2f61a047cf4bfd3a31a4b10b6b6efbd299710f4f242",
+  "source_files": 241,
+  "legacy_paths": 116,
+  "two_cycle_paths": 177,
+  "all_existing_components_and_write_shapes_preserved": true,
+  "only_application_get_post_descriptions_changed": true,
+  "development_api_replaced": false,
+  "migration_added": false,
+  "status": "passed",
+  "new_tests_passed": 18,
+  "new_tests_seconds": 97.96,
+  "authored_full_examples": 22,
+  "invalid_authored_mutations_rejected": 29,
+  "original_invalid_details_rejected": 8,
+  "auth_mode": "synthetic principal override; real FastAPI POST/GET with disposable PostgreSQL17",
+  "new_post_storage_http_roundtrip": true,
+  "legacy_no_backfill": true,
+  "shared_identity_unchanged": true,
+  "warning": "existing Starlette/AnyIO BlockingPortal deprecation",
+  "normal_login_member_device_acceptance": false,
+  "direct_regressions_passed": 17,
+  "direct_regressions_seconds": 136.27,
+  "total_unique_tests_passed": 35,
+  "final_source_batches": [
+    18,
+    17
+  ],
+  "test_source_byte_match": true,
+  "temporary_containers_network_removed": true,
+  "development_image_unchanged": "sha256:d24d7cbd3215ff3c6cf40aa86e3a111d84eef347d788c2b2d7d98820a44e4dfc",
+  "development_api_healthy": true,
+  "bulk_sql_count_constant_for_page_limits": [
+    1,
+    50
+  ]
+}

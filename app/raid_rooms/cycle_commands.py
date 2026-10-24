@@ -183,9 +183,12 @@ def admit(principal,rid,command_id,data,*,applying=False):
             if existing is not None:
                 if existing.expires_at>stamp:fail('ROOM_APPLICATION_EXISTS')
                 existing.state='expired';existing.ended_at=stamp;existing.revision+=1;db.flush()
+            from app.raid_rooms import application_display
+            character=admission.core.identity.selected_character(db,uid,body['selection'])
+            character_display=admission.core.identity.display(character) | application_display.snapshot_level(character)
             app=Application(id=uuid.uuid4(),room_id=rid,cycle_id=row.id,generation=row.generation,user_id=uid,revision=1,
                 selection=body['selection'],targets=body['target_items'],session_ids=[str(i) for i in selected],
-                display=admission.core.identity.display(admission.core.identity.selected_character(db,uid,body['selection'])),
+                display=character_display,
                 build=jsonable_encoder(power),origin_scope=room.scope,origin_group_id=room.group_id,state='pending',
                 created_at=stamp,expires_at=datetime.combine(row.cycle_key+timedelta(days=7),time(6),raids.KST))
             db.add(app);db.flush()

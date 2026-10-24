@@ -4,6 +4,7 @@ from copy import deepcopy
 from datetime import datetime
 from decimal import Decimal
 import json
+import re
 from pathlib import Path
 
 from jsonschema import Draft202012Validator, FormatChecker, ValidationError
@@ -111,6 +112,17 @@ def validate(case):
     for item in data['items']:
         assert item['target_cycle_key'] == scope['target_cycle_key']
         assert item['target_generation'] == scope['target_generation']
+        shown = item['display']
+        assert {'item_level', 'item_level_source', 'item_level_fetched_at'} <= set(shown)
+        level, origin, fetched = (shown[k] for k in ('item_level', 'item_level_source', 'item_level_fetched_at'))
+        assert origin in ('application_snapshot', 'current_saved', 'unavailable')
+        if origin == 'unavailable':
+            assert level is None and fetched is None
+        else:
+            assert isinstance(level, str) and re.fullmatch(r'[0-9]+(?:\.[0-9]+)?', level)
+            assert Decimal(level).is_finite() and Decimal(level) >= 0
+        if fetched is not None:
+            assert stamp(fetched).utcoffset().total_seconds() == 0
         comparison, analysis = item['comparison'], item['analysis']
         if item['display_reason'] is not None:
             assert comparison is None and analysis is None
@@ -172,6 +184,12 @@ def main():
     bad(page, lambda r: r['data']['items'][0]['analysis'].update(integrity_status='error'))
     bad(page, lambda r: r['data']['items'][0]['comparison'].update(observed_at=None))
     bad(page, lambda r: r['data'].update(evaluated_at='2026-10-24T12:01:00Z'))
+    bad(page, lambda r: r['data']['items'][0]['display'].pop('item_level_source'))
+    bad(page, lambda r: r['data']['items'][0]['display'].update(item_level_source='unknown'))
+    bad(page, lambda r: r['data']['items'][0]['display'].update(item_level_source='unavailable'))
+    bad(page, lambda r: r['data']['items'][0]['display'].update(item_level=None))
+    bad(page, lambda r: r['data']['items'][0]['display'].update(item_level='1e3'))
+    bad(page, lambda r: r['data']['items'][0]['display'].update(item_level_fetched_at='2026-10-25T00:00:00+09:00'))
     bad(detail, lambda r: r['data'].pop('my_application'))
     bad(detail, lambda r: r['data']['my_application'].update(expires_at=r['scope']['server_now']))
     bad(detail, lambda r: r['data']['my_application'].update(state='participating'))
