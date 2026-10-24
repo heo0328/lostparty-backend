@@ -2342,3 +2342,10 @@ NEXT_WORK/AI_CONTEXT/추적표를최신다음Backend계약/호환설계로갱신
 고유25PASS(신규16/기존9,22PASS199.37초+3PASS26.72초·기존 경고1), 초기22ERROR는 격리 test-db alias 환경불일치 수정 후 해소. pending 미점유/무예약·동일직업 대기 허용/원ACK·8인/C/N·승인경쟁/거절/철회·level/완료/점유/실제 router synthetic principal context200/POST409·no-store/DTO 검증. 작성 제안3예시/8비정상schema 정적검증은 별도이며 후보API 실행·정상로그인/실회원 검증이 아니다. source235Python/후보이미지일치·116/176 전체계약/기존components 보존·2description변경.
 
 현재 개발API67322372…/DB0031 healthy/health200 읽기확인·미교체/DB이행·키/실회원쓰기 없음. 시험용 tmpfs DB/runner/internal network 정리. 다음 Flutter26 DTO/역할·페이지/빈화면/비동기 소비차이 회신, Backend 반영/합의 후 후보읽기 구현. 실제 개발반영은 별도 승인 뒤다. 최근 #24 전체6/7 연결·일부 사용자인수, #13 전체144 신청카드수정 보고도 구분 수신·미확인 인수 보존. 기능/문서 브랜치 merge·dev/main/운영 없음. 본 문서 브랜치는 로컬 수신기록만 커밋/미push, 구현/기능브랜치 결과는 위 게시 source를 따른다.
+
+
+## 2026-10-24 — #26 Flutter 소비검토·역할 일치 보완1건 수신
+
+사용자의 네이티브 회신 확인 지시로 #26 전체2·원본13 전체145까지 재조회했다. [전체2번째 Flutter · 후보계약 소비검토](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381216870)의 source6e0063c 대조/문서1501867b push 보고를 수신했다. 본인 room/T·closed DTO/count/빈화면·snapshot/cursor·읽기전용/최종검증 구조는 소비 가능하며, 일반직업 dealer고정/바드·발키리·도화가·홀리나이트만 양역할이라는 현제품정책과 후보 유지·eligible count를 맞추는1건이 미해소다. unsupported-role을 ROOM_COMPOSITION_CONFLICT로 오용하거나 프런트가 새코드를 임의 생성하지 않도록 Backend 정확 wire/일반직업·지원직업 단/양역할·다중페이지 예시 보완 요청이다.
+
+Backend 기존 명령 입력/제안문을 정적으로 확인했고 신규 후보GET 미합의·미구현 경계를 유지한다. Flutter 소스 직접조회/재현은 하지 않았다. 다음 Backend는 제안/schema/예시 보완과 같은 Issue 회신→역할차이 해소/합의 후 신규읽기 구현, 다음 Flutter는 그 인계 후 실제목록 reader/역할/비동기 연결/직접검증이다. 이번 수신 확인만으로 서버 기존 역할권한을 바꾸거나 candidate구현/계약합의·실인수 완료로 표시하지 않는다. 신규 코드/계약 원본·시험/서버/DB·Issue 게시 없음, 현황 문서만 로컬 커밋/미push다. 기존25PASS는 반복하지 않았다.
