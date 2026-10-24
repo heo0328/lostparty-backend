@@ -4,9 +4,9 @@
 
 ## 현재 운영 경계
 
-별도 개선 브랜치의 [Backend 로깅·조회·보관](logging.md)은 구현/후보 검증 단계이며 실제 개발 API 교체·DB 재생성은 미실행이다. 아래 실제 실행 기준과 구분한다.
+최신 실행은 [Backend 개선 실제 반영](backend-improvements-rollout.md)·[집계](records/backend-improvements-rollout.json)다. source87c2a0e/이미지366e868a·177/DB0031,108표993행·키/설정 보존,실제HTTP12·두계약/로그 확인 완료다. [로깅 조회](logging.md)를 사용할 수 있다. 아래 아이템레벨 반영은 업무 구현·인수 근거로 보존한다.
 
-최신은 [신청자 아이템레벨 보완 개발 반영](application-item-level-rollout.md)·[집계](records/application-item-level-rollout.json)다. sourcef471e31/이미지6d5857b3·177경로·DB0031, 기존자료/키보존·실행12PASS 완료이며 [전체25 Flutter 인수 결과](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386859737)로 레벨표시 기기통과·두 예외분기 구현/자동검증 근거 수용을 확인했다. 두 예외분기의 실제 기기관찰과 전체모집 인수는 미완료다. 아래 표시프로필 반영은 직전 이력이다.
+직전 업무 보완은 [신청자 아이템레벨 보완 개발 반영](application-item-level-rollout.md)·[집계](records/application-item-level-rollout.json)다. sourcef471e31/이미지6d5857b3·177경로·DB0031, 기존자료/키보존·실행12PASS 완료이며 [전체25 Flutter 인수 결과](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386859737)로 레벨표시 기기통과·두 예외분기 구현/자동검증 근거 수용을 확인했다. 두 예외분기의 실제 기기관찰과 전체모집 인수는 미완료다. 아래 표시프로필 반영은 직전 이력이다.
 
 신청 목록 분석·본인pending의 [application-display-1](../../features/recruitment/participation/application-display-proposal.md)을 실제 개발서버에 반영했다. [최신 전환 기록](application-display-rollout.md)·[공개 집계](records/application-display-rollout.json)를 따른다. 경로수177은 같지만 입력/응답 계약이 갱신됐다.
 

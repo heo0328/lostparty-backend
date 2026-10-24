@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-2026-10-25 사용자 지시로 별도 개선 브랜치 `chore/backend-architecture-review`의 검증 이력을 **feat/raid-recruitment**에 병합했다. 현재 checkout도 모집 브랜치다. [격리 검증](../engineering/development/isolated-verification.md)·[의존성 고정](../engineering/development/dependency-locking.md)·[로깅](../engineering/operations/logging.md)의 코드/설정과 최신 기록을 같은 기준에 모았다. 로컬 병합은 미push이며 실제 개발 API/DB 반영은 미실행이다. 아래 기능별 상태와 모집 네이티브 대기는 보존한다. 다른 [개선 후보](../engineering/development/backend-architecture-review.md)는 미착수다.
+2026-10-25 사용자 지시로 별도 개선 브랜치 `chore/backend-architecture-review`의 검증 이력을 **feat/raid-recruitment**에 병합했다. 현재 checkout도 모집 브랜치다. [격리 검증](../engineering/development/isolated-verification.md)·[의존성 고정](../engineering/development/dependency-locking.md)·[로깅](../engineering/operations/logging.md)의 코드/설정과 최신 기록을 같은 기준에 모았다. 로컬 병합/반영 기록은 미push이며, [실제 개발 반영](../engineering/operations/backend-improvements-rollout.md)은 source87c2a0e/이미지366e868a·177/DB0031로 완료했다. API·DB 모두 로그10m×5·healthy,108표993행/키/설정을 보존했다. 아래 기능별 상태와 모집 네이티브 대기는 보존한다. 다른 [개선 후보](../engineering/development/backend-architecture-review.md)는 미착수다.
 
 현재 작업 구간은 **모집 Backend 구현·개발 반영·인수 기록 정리(#26)**, 브랜치는 **feat/raid-recruitment**, 실제 프로젝트 경로는 `/home/heowork/projects/lostparty-backend`다. 문서 정리와 최신 현황/회신 기록을 모집 코드와 이력 보존 통합했다. 문서 수정/기록이라는 작업 내용과 작업 구간명·브랜치를 구분하는 [제1원칙](../engineering/development/workflow.md)을 따른다. 브랜치 정리 이후 같은 브랜치에서 계약2 후보API를 구현·격리 검증했으며 실제 개발 서버177 반영·자료 보존 검증도 완료했다. 아이템레벨 보완은 사용자 인수 수용됐으며 전체 모집 인수는 미완료다.
 

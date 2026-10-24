@@ -1,0 +1,124 @@
+{
+  "source_commit": "87c2a0e5e6f5b58f87ca8094324ec5a606b280ca",
+  "image": "sha256:366e868aacb5937f47e54edecc028742338719286f83dd6f99d4ef7a8ebfc773",
+  "previous_image": "sha256:6d5857b38b91c6cb1f5ec2f61a047cf4bfd3a31a4b10b6b6efbd299710f4f242",
+  "revision": [
+    "0031_membership_actions"
+  ],
+  "source_files": 250,
+  "tables": 108,
+  "rows": 993,
+  "all_rows_columns_sequences_profile_keys_equal": true,
+  "db_same_image_volume_environment": true,
+  "api_environment_security_ports_keys_preserved": true,
+  "api_command_additions": [
+    "--no-access-log",
+    "--log-config",
+    "app/core/logging.json"
+  ],
+  "logging": {
+    "api": "10m x5",
+    "db": "10m x5"
+  },
+  "backup": "backend-improvements-674d2167de03",
+  "migration_run": false,
+  "api_healthy": true,
+  "db_healthy": true,
+  "http_checks": [
+    {
+      "case": "health",
+      "status": 200
+    },
+    {
+      "case": "public_cycle",
+      "status": 200
+    },
+    {
+      "case": "display_applications_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "display_applications_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "display_detail_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "display_detail_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "candidate_apply_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "candidate_apply_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "candidate_change_character_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "candidate_change_character_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "public_search_C",
+      "status": 200,
+      "no_store": true
+    },
+    {
+      "case": "public_search_N",
+      "status": 200,
+      "no_store": true
+    }
+  ],
+  "logging_checks": {
+    "json_lines": 64,
+    "event_counts": {
+      "server_event": 4,
+      "http_request": 20,
+      "job_completed": 32,
+      "api_rejected": 8
+    },
+    "request_error_correlation": true,
+    "allowlisted_fields_only": true,
+    "raw_query_identifiers_absent": true,
+    "worker_jobs_success": [
+      "auth_cleanup",
+      "ownership_settlement",
+      "recruitment"
+    ]
+  },
+  "legacy_openapi_equal": true,
+  "two_cycle_openapi_equal": true,
+  "verified_at_utc": "2026-10-24T19:47:23.684764+00:00",
+  "local_date": "2026-10-25"
+}

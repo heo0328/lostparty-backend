@@ -2616,3 +2616,13 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - #26 최신 상태/전체26번째 Backend 인계 댓글을 읽기 확인했다. OPEN/댓글26개이며 새 Backend 수정 요청은 없고 네이티브 전체 모집 점검 대기를 유지한다. 기존 [전체26 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386892285) 이외의 새 댓글/재시험 요청은 작성하지 않았다.
 - 충돌 없는 병합 결과의 코드·설정·시험·계약이 기검증65ab2a9와 동일함을 diff로 확인했다. 따라서 로깅/인증/provider/Google78PASS·모집18PASS·두 OpenAPI 전체 일치의 기존 근거를 재사용하고 이번 병합에서 pytest/서버·DB를 반복 실행하지 않는다. 문서/lock 검사·호스트12PASS·diff --check로 통합 기록을 확인했다. 서비스 적용/실회원·기기 성공이나 새 실행시험으로 기록하지 않는다.
 - 실제 개발 API sourcef471e31/이미지6d5857b3·177경로/DB0031은 그대로며 서버 교체·DB/키/설정 내용 변경·재생성·배포를 실행하지 않았다. 실제 개선 반영은 대상과 자료보존을 확인하는 별도 요청 구간이다. 다음은 모집 Issue의 구체 차이 대응 또는 사용자가 선택한 다음 작업이다.
+
+## 2026-10-25 Backend 개선 실제 개발 서버 반영 완료
+
+- 사용자의 ‘반영하고 병합’ 지시를 코드 통합으로만 해석해 서버 반영을 빠뜨렸으며, 사용자 정정 직후 기존 개발 서버에도 적용했다. 병합87c2a0e 이력은 유지하고 그 소스로 후보 이미지를 먼저 검증/교체했다. [반영 기록](../engineering/operations/backend-improvements-rollout.md)·[공개 집계](../engineering/operations/records/backend-improvements-rollout.json). 실제 이미지366e868aacb5…·two-cycle177/기본116·DB0031이다.
+- 후보250소스/설정hash·두계약 전체·고정runtime31일치 후 API/worker 중지·비공개DB custom dump/키tar·실행설정/감사기준을 확보했다. archive catalog 읽기와 백업 중 불변을 확인했고 이번 restore 리허설은 미실행이다. 이전 API6d5857b3는 before-improvements 태그로 보존했다. 백업 원문/키/환경은 게시하지 않았다.
+- API는 새 이미지/로깅CLI로 교체하고, DB는 기존 PostgreSQL 이미지·기존 volume으로 컨테이너만 재생성해 두 서비스의json-file10m×5를 실제 적용했다. 초기화/볼륨 삭제/migration/backfill·실회원명령/provider·키/환경 수동수정은 없다. 환경/포트/보안/키mount source·readonly와 기존DBimage/volume을 보존했다. DB컨테이너ID 변경과 자료보존을 구분한다.
+- 전후108표993행의 모든행hash·열·시퀀스·DBprofile·키hash 동일PASS. 이전 반영 당시893행으로 복원한 것이 아니라 이번 직전993행을 그대로 보존했다. 보존 helper의 선택 Tmpfs키 직접참조 오류는 .get 비교로 보정해 통과했으며 서버 실패/추가 자료 변경은 없었다.
+- 실제 HTTP12PASS: health/공개주차200·표시목록/상세/후보양intent 무인증·invalidBearer401 ACCESS_INVALID/no-store/challenge8건·C/N공개검색200/no-store2건. 실행 컨테이너 기본116/최신177 OpenAPI 전체 객체 일치·고정runtime31검사PASS.
+- 실제 API로그64줄 JSON/허용필드 확인: request20/rejected8/job32/server4. 오류UUID와요청로그 연결·원주소/query/식별자 제외PASS, auth_cleanup/ownership_settlement/recruitment 모든tick성공 확인. 원문대신 집계만 공개했다. API/DB healthy·임시reader제거 확인. 기존격리78/18과실제12는합산하지 않으며 실제50MB초과회전·성능·정상회원/기기/운영인수는미실행이다.
+- 현재checkout은feat/raid-recruitment이며 세 개선의 소스병합과 실제개발반영 모두완료다. 후속문서는별도커밋하며 실행source87c2a0e와구분한다. 원격push/PR/dev·main통합/AWS배포/Issue게시·네이티브추가시험요청은없다. 다음은네이티브구체차이대응이며 모집전체인수상태는유지한다.
