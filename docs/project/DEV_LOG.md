@@ -2462,3 +2462,12 @@ NEXT_WORK/AI_CONTEXT/추적표·현재계약/설계의 ‘2가입 연결·변경
 현재 cycle_lists.applications/BApplication에 display만 있고 comparison/build 투영이 없으며 일반 상세의 my_target_role만으로 pending을 구분할 수 없음을 정적으로 대조했다. 다음Backend는 공대장 페이지 bulk 역할전투력/마지막성공·현재분석오류 구분, 본인 room/T/현세대 pending 최소상태·만료/철회/수락 경계·시점/nullable/호환 계약을 먼저 제안한다. 카드별추가조회/provider/자동갱신·상세별전체신청조회·로컬힌트 대체 없이 원명령/판정/ACK를 보존한다. 일반오류는 HTTP/code 미확인 관찰로 유지한다. 신청목록 진입/갱신 정책·실시간/웹소켓/알림은 후속협의이고 변경하지 않는다.
 
 이번은 회신 확인/기록이며 새 계약 제안·합의/구현은 미실행이다. 코드·OpenAPI·서버/DB·실회원·기기를 변경하지 않았고 시험 반복/수신확인 댓글은 작성하지 않았다. 다음은 Backend 닫힌 계약/대표예시 설계→같은Issue 제안, Flutter 계약 수신 후 직접필드 연결·검증이다.
+
+
+## 2026-10-24 — #26 신청 카드 분석·본인pending 표시 계약 제안1 작성
+
+작업 구간명: 모집 신청 표시·본인 승인 대기 상태 보완. 작업 내용: [표시 계약 제안1](../features/recruitment/participation/application-display-proposal.md)·별도closed schema/작성 합성22예시·검증도구 작성. 브랜치/위치: feat/raid-recruitment / 본 프로젝트. 사용자 실행 지시의 기획단계 제한 문구를 확인했고, 추가 답변으로 계약 문서 작성·이슈 제안까지 허용받았다. 네이티브 합의 전 API/실행 OpenAPI 변경은 하지 않는다.
+
+두 기존GET의 opt-in reader_profile=application-display-1을 제안한다. 목록 comparison/analysis/display_reason의3필드를 필수nullable로 정의하고 head없음/현재분석오류/retained성공·소유연결불가와 전체승인판정을 구분했다. 기존순수projection/페이지 bulk·페이지별시점·cursor프로필격리·177/116/쓰기DTO 보존을 명시했다. 상세4필드 my_application은 본인room/T/현세대 유효pending우선·최신이력/만료경계·수락이력과현재참가 분리/조회실패와null 구분이다. 목록진입/갱신·실시간/웹소켓/알림과 code미확인 일반오류 원인수정은 범위밖이다.
+
+작성22예시(성공17/오류5)/비정상15벡터 거절·기존복사component일치 정적검증 통과. 상세 예시에 누락된 기존권한 next_change_at을 보완한 최종결과다. 새자료는 synthetic이며 API/evaluator/HTTP/DB 시험이 아니다. 원계약·코드·서버/DB·실회원/기기 불변. 소스 게시·Issue 제안/실제댓글순번은 후속 기록한다. 다음Flutter는 프로필 소비/시각·nullable·본인상태의 구체 차이 검토, Backend는 합의후 구현이다.
