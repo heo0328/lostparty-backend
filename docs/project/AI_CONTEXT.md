@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+2026-10-25 별도 구조 점검: 현재 checkout은 `chore/backend-architecture-review`이며 모집 게시 완료 `c0128c3`에서 분기했다. 기능 상태는 보존하고 구현 변경 없이 [개선 후보](../engineering/development/backend-architecture-review.md)를 기록했다. 모집 작업 브랜치는 계속 `feat/raid-recruitment`이며 아래의 현재 기능 구간 설명과 구분한다.
+
 현재 작업 구간은 **모집 Backend 구현·개발 반영·인수 기록 정리(#26)**, 브랜치는 **feat/raid-recruitment**, 실제 프로젝트 경로는 `/home/heowork/projects/lostparty-backend`다. 문서 정리와 최신 현황/회신 기록을 모집 코드와 이력 보존 통합했다. 문서 수정/기록이라는 작업 내용과 작업 구간명·브랜치를 구분하는 [제1원칙](../engineering/development/workflow.md)을 따른다. 브랜치 정리 이후 같은 브랜치에서 계약2 후보API를 구현·격리 검증했으며 실제 개발 서버177 반영·자료 보존 검증도 완료했다. 아이템레벨 보완은 사용자 인수 수용됐으며 전체 모집 인수는 미완료다.
 
 2026-10-25 기준. 현재 실행·다음 담당은 [NEXT_WORK](NEXT_WORK.md), 주제별 미완료는 [ISSUE_TRACKER](ISSUE_TRACKER.md), 결정·검증 이력은 [DEV_LOG](DEV_LOG.md)를 따른다. 아래는 기능 상태와 기준 링크이며 UI 화면 동선을 추정한 분류가 아니다.

@@ -1,5 +1,13 @@
 # 다음 실행
 
+## 현재 별도 점검 구간
+
+2026-10-25 사용자 요청으로 `feat/raid-recruitment`의 게시 완료 `c0128c3`에서 `chore/backend-architecture-review`를 분기했다. 현재 checkout은 점검 브랜치다. 작업 구간명은 **Backend 구조·개선 후보 점검**, 작업 내용은 정적 검토/후보 기록이며 기능 구현은 변경하지 않았다. [점검 결과·우선순위](../engineering/development/backend-architecture-review.md)를 기준으로 다음에는 사용자가 선택한 개선 구간의 범위/검증을 정한다. API 통합은 네이티브 호출/UX 자료 확인 후 협의한다. 이번 기록은 로컬 커밋하며 push/PR/merge/배포는 하지 않는다.
+
+아래 모집 대기 상태는 보존한다. 모집 기능 대응 재개 전 `feat/raid-recruitment` checkout과 점검 기록 통합 여부를 확인한다. 새 코드/서버 수정 요청이 생겼다는 의미는 아니다.
+
+## 보존한 모집 구간
+
 2026-10-25
 
 - **작업 구간명:** 모집 Backend 구현·개발 반영·인수 기록 정리.
