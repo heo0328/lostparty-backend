@@ -1,6 +1,6 @@
 # 신청·캐릭터 변경 후보조회 보완 계약2
 
-2026-10-24 / **검토 제안·미합의/미구현** / 작업 구간 `모집 신청·캐릭터 변경 통합 자격 보완(#26)` / `feat/raid-recruitment`. [공통 설계](eligibility-design.md)가 판정 원본이다. [제안1](candidate-proposal.md)은 이전 범위로 보존한다. 이 파일과 독립 schema/예시는 runtime OpenAPI/실서버 성공의 근거가 아니다.
+2026-10-24 / **Flutter 소비 검토 수용·사용자 UX 확정/미구현** / 작업 구간 `모집 신청·캐릭터 변경 통합 자격 보완(#26)` / `feat/raid-recruitment`. [공통 설계](eligibility-design.md)가 판정 원본이다. [제안1](candidate-proposal.md)은 이전 범위로 보존한다. 이 파일과 독립 schema/예시는 runtime OpenAPI/실서버 성공의 근거가 아니다.
 
 ## 요청·권한·전체 응답
 
@@ -67,3 +67,10 @@ Flutter는 전페이지를 같은snapshot/계수/actor·정책에서 취합하�
 
 
 설계 source `77be3a955cb8e3a91c5a2cf212c45d622e03aba0` commit/push·원격 SHA 일치 확인 뒤 [#26 전체5번째 Backend · 통합 자격 기획/설계·보완 계약2](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381680561) 게시·전문/전체 순번을 재조회했다. 다음 담당 Flutter 구체 소비차이 검토, Backend 차이 반영/합의 후 구현이며 계약 확정·새 API 실행/실인수 완료가 아니다.
+
+
+## 최신 협의 상태
+
+[#26 전체6번째 Flutter · 보완 계약2 소비 검토/사용자 UX 확정](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381816954)에서 공통 GET/intent·actor·역할/전투력·계수/페이지·사유우선순위를 소비 가능으로 확인했다. 문서e7bfe113 push 보고이며 Backend 독립 실행 검증은 아니다.8인 파티이동 확인·동의와 수락 자격실패 시 pending유지 UX도 확정됐다. 추가 예약/일정 영향이 발견되지 않으면 별도 사용자UX 결정을 기다리지 않고 확정범위 구현으로 진행한다.
+
+계약2의 wire/판정·8인 변경/대표사유 순서는 전체6 기준으로 수용됐다. 본문 중 합의 대상/제안 표기는 당시 검토 항목으로 보존하며 동일 항목 재수용을 요구하지 않는다. 구현 시 확인 뒤 바뀐 targets.party_no/현재actor·Assignments/revision·자격·일정동의를 기존 token/최종검사에 결합하고 원동의로 다른배치를 실행하지 않는다. 자격미달 승인실패는 pending/기존참가·예약 불변이며 자동거절/철회하지 않는다. 상세 UX/인수구간은 [통합 설계](eligibility-design.md)의 최신 확정 절을 따른다. 추가 일정영향이 발견될 때만 구체 차이를 회신한다.
