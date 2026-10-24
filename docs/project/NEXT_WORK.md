@@ -7,6 +7,9 @@
 - **브랜치·위치:** `feat/raid-recruitment` / `/home/heowork/projects/lostparty-backend`.
 - **실제 개발 반영 기준:** source `f471e3133ad60befcad77d7123e1107ba7501bb4`, 이미지6d5857b3…·177경로·DB0031. [반영 근거](../engineering/operations/application-item-level-rollout.md)·[집계](../engineering/operations/records/application-item-level-rollout.json).
 
+
+공식 순서 인계: [#26 전체26번째 Backend · 보완 인수 확인/네이티브 전체 구간 점검](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386892285) 게시·댓글전문/실제순번 확인. 기록4f56e60 push·원격확인 후 전달했으며 다음Flutter 전체연결 점검·Backend 구체차이대응이다.
+
 ## 최신 수신·완료 경계
 
 [#26 전체25번째 Flutter · 아이템레벨 사용자 인수 결과](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386859737)에서 사용자의 ‘현재 레벨이 표기됩니다’ 정상 기기 결과를 확인했다. current_saved/unavailable은 만들기 어려운 실제 분기를 강제하지 않고 구현·자동검증 근거로 사용자가 인수 수용했다. 해당 두 분기의 실제 기기 관찰은 미수행이며, 레벨 표시 자체의 기기 통과와 구분한다. Flutter source13fb5848/최종158PASS는 자체보고이며 Backend35PASS/반영HTTP12와 합산하지 않는다.
