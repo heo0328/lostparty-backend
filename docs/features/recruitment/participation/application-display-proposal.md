@@ -91,3 +91,17 @@ application-display-1을 목록/일반상세에만 연결했다. 기본 모델·
 현재 다음담당은 Flutter 카드표시/본인pending안내·버튼 연결/직접검증이며 Backend는 소비차이에대응한다. 전체13 소비수용을다시요청하지않는다. 실제서버 미반영이므로 새프로필의실회원/기기인수는정확한개발반영인계이후다.
 
 구현 공식 인계: [#26 전체14번째 Backend · 표시 읽기 구현/검증 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6385227653). source `06ea4b214591f475d422f4599ca10260cda83d08` commit·push·원격일치 확인 후 게시·댓글전문/실제전체순번 재조회 완료. 서버미반영/다음Flutter 연결·Backend 차이대응, OPEN이다.
+
+## 2026-10-25 — 작성 상세 예시 참조 정정
+
+[전체16번째 Flutter 연결 결과/자료 보완 요청](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6385536441)의 ac9fe621ed67aaafbcd8449fddfe17f2bce54c7e commit/push·신규68+직접영향345=413PASS/분석0 보고를 수신했다. Backend 독립재현/실회원·기기 인수로 확대하거나 기존28과 합산하지 않는다. Flutter는 기본참조검증을 유지했고 원본상세8개를 음성자료로 분리했다.
+
+작성 상세8개는 room.items/game_items가 비었는데 Assignment·formation이 item13/round14를 참조했다. 이전검증은 JSON구조/새필드정합성만 통과했으며 기본상세의참조관계를 확인하지 못했다. 따라서 과거‘작성22응답 통과’가 상세8개의 정상소비/실제응답 정합성을 증명하지는 않는다. 기존실행28PASS 기록은 당시범위 그대로 보존한다.
+
+[정상 예시](examples/application-display-v1.examples.json)의8상세에 대응item/game_item만 보완했다. horizon_cathedral/stage1·4인과 원래 item/round UUID를 사용하고 my_application4필드와 나머지상세·목록9/오류5를 보존했다. 원본06ea4b2 파일은Git이력에보존했고 잘못된8응답은 [별도음성자료](examples/application-display-v1.invalid-examples.json)에그대로복사했다.
+
+[참조 검증기](tools/validate-application-display.py)는항목/game항목·중복ID·현재Assignment항목/라운드·formation의라운드/Assignment/자리·공대장/본인참조를확인한다. 완료이력의과거round를현재round와같도록강제하지않는다. 수정정상22개 통과, 비정상변이23개/원본잘못된상세8개 거절을확인했다. 모두작성자료정적검증이며실행시험과구분한다.
+
+[추가 실행집계](validation/application-display-reference-results.json): pytest12PASS(99.56초/기존경고1)로8상태·8인N·묶음C·완료이력11HTTP사례/22응답과 별도과거round규칙1건을검증했다. 합성principal override·실제FastAPI router/TestClient·격리PostgreSQL이며 정상로그인실회원/기기성공이아니다. 각HTTP사례는새프로필/기본상세의동일참조검증·시각제외공통부분일치·전체DB조회불변을확인했다. 실행응답에서같은불일치는재현되지않아 app/쓰기DTO/OpenAPI/migration을변경하지않았고 이전28/Flutter413을반복·합산하지않았다.
+
+검증API후보 d24d7cbd…의소스241파일은여전히일치한다. 실제서버fdd256ea…미교체/healthy와시험환경정리를확인했다. 다음은정확한소스/자료보완회신과별도승인범위의새프로필개발반영이다. Flutter전체시험/정책재수용·파서완화를요청하지않는다.

@@ -2492,3 +2492,12 @@ NEXT_WORK/AI_CONTEXT/추적표·현재계약/설계의 ‘2가입 연결·변경
 
 
 최종 단일호출 고유28PASS(신규17·기존명령8·membership프로필3),245.41초/기존Starlette AnyIO경고1. [집계](../features/recruitment/participation/validation/application-display-results.json)에 소스241파일·최종runner바이트일치·후보d24d7cbd…/기본116·신규177 OpenAPI전체일치·모든기존component/쓰기shape보존/두GET만변경을기록했다. 합성64byte상한분기/기본보존·1→4신청자/limit1·50의SQL횟수불변, 실제합성Bearer401/403/200·취소session/승인후참가와DB불변/페이지·상태경계를확인했다. 작성22예시/음성15·과거시험/중간통과를합산하지않는다. 시험용runner/tmpfsDB/internal network를정리했고실제API fdd256ea…미교체/healthy·기존API/DB만남음을읽기확인했다. 운영/실회원·기기/실서버반영미실행이다. 구현source `06ea4b214591f475d422f4599ca10260cda83d08` commit·push·원격일치 확인(기존e7fd89e 수용기록함께게시) 후 [#26 전체14번째 Backend · 표시 읽기 구현/검증 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6385227653) 게시·전문/실제전체순번을 재조회했다. Issue상단도 구현완료/실제개발미반영·다음Flutter 연결·Backend 차이대응으로갱신하고원본이력/OPEN을보존했다.
+
+
+## 2026-10-25 — #26 상세 예시 참조 정정·직접 HTTP 확인
+
+작업 구간명: 신청 표시 상세 예시 정합성 보완. 작업 내용: [전체16 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6385536441)에따른작성상세8개수정·원본음성보존·검증강화/직접HTTP확인. 브랜치/위치: feat/raid-recruitment / 본프로젝트. Flutterac9fe621 push/413PASS(68+345)/분석0은자체보고이며기존28/새시험에합산하지않는다. 전체15의준비문서2bdf9976과전체16연결완료를구분한다.
+
+원본8개는room.items/game_items=[]인데 Assignment/formation이항목/라운드를참조했다. 이전검증의참조검사누락을인정하고정상예시에대응item/game_item만보완했다. my_application과나머지자료/목록9·오류5는보존했고원본06ea4b2 Git이력·별도음성8개와원본파일SHA256을유지했다. 새검증은항목·현재round/Assignment/formation·공대장/본인참조를확인하되완료이력의과거round를현재round로강제하지않는다. 정상22/음성변이23·원본8개거절정적검증통과. 시험COPY경로는문서검사와맞춰명시경로를사용했다.
+
+[추가집계](../features/recruitment/participation/validation/application-display-reference-results.json): 신규12PASS/99.56초·기존AnyIO경고1. 8상태·8인N/묶음C/완료이력의11HTTP사례22응답에서기본/확장공통부분일치·전체DB불변/참조일치를확인했다. 별도과거round규칙1건포함. 합성principal override·실제FastAPI router/TestClient/격리PostgreSQL이며정상JWT로그인회원/기기인수아님. 실행응답에서동일불일치가재현되지않아app/OpenAPI/쓰기DTO/migration을변경하지않았다. 기존28전체반복없음·이전증거보존. 후보d24d7cbd… 소스241파일일치·실제서버fdd256ea…미교체/healthy·시험환경정리확인. 자료게시/공식회신·정확SHA는후속기록한다.
