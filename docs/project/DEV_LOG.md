@@ -2428,3 +2428,10 @@ pending에도 기존 확정구성/정원·role/class 검사를 적용하고 읽�
 
 
 구현 source `484ca1719e21b01a59da75b62a1d3b1568ada2c3` / feat/raid-recruitment commit·push·원격 SHA 일치 확인 후 [#26 전체7번째 Backend · 계약2 구현/검증 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6382258395) 게시·전문/실제 전체 순번을 재조회했다. 다음 담당 Flutter2가입 연결·직접 자동검증/Backend 재현차이 대응이다. 실제 개발API67322372…/176·DB0031 healthy/health200·기존이미지 미교체를 읽기 확인했고 시험용 runner/DB/internal network/API probe는 정리해 기존API/DB만 남겼다. 실회원/기기·개발반영/운영은 별도 미완료다.
+
+
+## 2026-10-24 — #26 전체8 수동시험 분량/구현범위 해석 정정
+
+작업 구간명: 모집 신청·캐릭터 변경 통합 자격 보완. 작업 내용: [전체8번째 Flutter 사용자 정정](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6382315586) 수신·계획/인계 표현 정리. 브랜치: feat/raid-recruitment. Flutter8112a2bb push 보고이며 문서diffcheck만/기능착수·실회원/기기 인수 아님을 구분했다.1생성/2가입/3상세내부/4완료·해체/5주차는 수동 디바이스 시험 분량이지 구현 제외 기준이 아니다. Backend 두intent 구현/45PASS는 유지하되 전체UI/UX 통합연결 완료로 확대하지 않는다.
+
+NEXT_WORK/AI_CONTEXT/추적표·현재계약/설계의 ‘2가입 연결·변경은3’ 표현을 두intent 동시연결·생성/상세·일정/완료·해산/C/N 직접영향회귀 보호로 정정했다. 개발 흐름에도 수동시험 묶음과 작업구간/구현범위를 구분했다. 사용자에게 소수항목씩만 요청하며 무관 전체시험/새기능 확대는 하지 않는다. 해당회신은 같은정책 재수용/추가시험회신 불필요를 명시해 수신댓글을 추가하지 않는다. 이번 코드/OpenAPI·시험·서버/DB 변경 없음, 실제개발176/DB0031 미반영 경계·원pending/ACK·IF-001/자료·dev/main/운영 유지.
