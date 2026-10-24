@@ -2453,3 +2453,12 @@ NEXT_WORK/AI_CONTEXT/추적표·현재계약/설계의 ‘2가입 연결·변경
 [반영 근거](../engineering/operations/eligibility-rollout.md)·[공개 집계](../engineering/operations/records/eligibility-rollout.json): source484ca17/검증 이미지fdd256ea를 실제 개발API에 반영했다. API 중지 후 private dump/key/config와 전체읽기 baseline 확보·archive catalog 읽기 확인, 교체 전후108표/780행·열/시퀀스/DB profile·키 hash 동일. DB컨테이너/볼륨·환경/명령/포트/보안/키mount 원본·ro 유지, DB0031 그대로·migration 없음. old image rollback tag 보존·reader 제거. 백업 restore 리허설은 이번 구간 미실행이다.
 
 실제 실행 컨테이너177/기본116 OpenAPI 전체일치, HTTP8건(health/주차200·양intent 무인증/invalidBearer401 ACCESS_INVALID/no-store/challenge4·C/N검색200/no-store2) 통과. Backend 격리45·Flutter493 자체보고와 합산하지 않는다. 기존회원 토큰 생성/실회원 명령·provider·기기 조작·dev/main/운영배포 없음. 다음 Flutter 정상로그인 후보/역할→신청·수락부터 소수항목 인수, 변경/다른T·직접영향 추적/Backend 차이대응. 반영 기록0096319b027c1da9d2ba0b7cf3667171489c5d9d commit·push·원격일치 확인 후 [#26 전체10번째 Backend · 실제 개발 반영/자료보존 검증](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6383315604) 게시·전문/실제 전체 순번을 재조회했다. 본문 상단 최신177/DB0031·다음Flutter 수동인수/Backend 차이대응으로 갱신하고 원본제안 이력/OPEN을 보존했다.
+
+
+## 2026-10-24 — #26 전체11 가입 소수 인수 보고·표시 계약 보완 요청 수신
+
+작업 구간명: 모집 신청·캐릭터 변경 통합 자격 후속 조회 표시 보완. 작업 내용: [전체11번째 Flutter 회신](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384482003)과 현재 DTO/코드 대조·요청 분류·다음 담당 기록. 브랜치: feat/raid-recruitment. 사용자 정상로그인 후보/역할→신청/목록→수락/양쪽갱신3항목·신청카드 일반상세 진입 정상 보고를 수신했다. 변경/반대파티/C/N 전체 인수는 미완료다. Flutter c85715c58558cef93d2b839c427446291b609dbe push·카드디자인/56PASS·analyze0은 자체보고이며 Backend 재현/기기조작 결과가 아니다. 모양은 사용자 확인 대기다.
+
+현재 cycle_lists.applications/BApplication에 display만 있고 comparison/build 투영이 없으며 일반 상세의 my_target_role만으로 pending을 구분할 수 없음을 정적으로 대조했다. 다음Backend는 공대장 페이지 bulk 역할전투력/마지막성공·현재분석오류 구분, 본인 room/T/현세대 pending 최소상태·만료/철회/수락 경계·시점/nullable/호환 계약을 먼저 제안한다. 카드별추가조회/provider/자동갱신·상세별전체신청조회·로컬힌트 대체 없이 원명령/판정/ACK를 보존한다. 일반오류는 HTTP/code 미확인 관찰로 유지한다. 신청목록 진입/갱신 정책·실시간/웹소켓/알림은 후속협의이고 변경하지 않는다.
+
+이번은 회신 확인/기록이며 새 계약 제안·합의/구현은 미실행이다. 코드·OpenAPI·서버/DB·실회원·기기를 변경하지 않았고 시험 반복/수신확인 댓글은 작성하지 않았다. 다음은 Backend 닫힌 계약/대표예시 설계→같은Issue 제안, Flutter 계약 수신 후 직접필드 연결·검증이다.
