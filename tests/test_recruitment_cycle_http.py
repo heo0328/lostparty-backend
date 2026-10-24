@@ -15,7 +15,7 @@ from tests.test_recruitment_cycle_creation import candidate,ready,sources,import
 from tests.test_recruitment_cycle_commands import create_room,context,admission_request,commands,decision
 from tests.test_group_foundation import actor
 
-CONTRACT=json.loads(Path('docs/design/issue13-two-cycle.full.openapi.json').read_text())
+CONTRACT=json.loads(Path('docs/features/recruitment/weekly-cycles/examples/baseline/full.openapi.json').read_text())
 REGISTRY=Registry().with_resource('urn:w2',Resource.from_contents(CONTRACT,default_specification=DRAFT202012))
 
 

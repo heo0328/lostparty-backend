@@ -151,7 +151,7 @@ def test_prepared_app_startup_and_full_route_contract(outcomes):
     spec=candidate.openapi();assert len(app.openapi()['paths'])==116
     import json
     from pathlib import Path
-    fixed=json.loads(Path('docs/design/issue13-two-cycle.full.openapi.json').read_text())
+    fixed=json.loads(Path('docs/features/recruitment/weekly-cycles/examples/baseline/full.openapi.json').read_text())
     assert set(fixed['paths'])<=set(spec['paths'])
     assert all(method in spec['paths'][path] and spec['paths'][path][method]['operationId']==operation['operationId']
         for path,ops in fixed['paths'].items() for method,operation in ops.items())

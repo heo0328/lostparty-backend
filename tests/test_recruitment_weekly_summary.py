@@ -327,7 +327,7 @@ def test_runtime_slice_matches_agreed_contract_and_canonical_source():
     from app.main import app
     runtime=app.openapi()
     assert runtime==json.loads(Path('openapi/openapi.yaml').read_text())
-    contract=json.loads(Path('docs/design/issue13-two-cycle.full.openapi.json').read_text())
+    contract=json.loads(Path('docs/features/recruitment/weekly-cycles/examples/baseline/full.openapi.json').read_text())
     for path,method in ((META,'get'),(SUMMARY,'post')):
         actual=runtime['paths'][path][method];agreed=contract['paths'][path][method]
         assert actual['operationId']==agreed['operationId']

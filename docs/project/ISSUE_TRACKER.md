@@ -1,6 +1,6 @@
 # 이슈 주제별 추적표
 
-현재 작업 브랜치: **feat/raid-recruitment**. G3는 PR20 bb144e0/후행ce3064f로 dev통합·원격확인/그룹브랜치로컬·원격정리했고 main77a1fe5는유지한다. 모집 구현은 작업 브랜치에서 게시/협업하며 dev/main 통합은 별도다.
+기능 작업 브랜치: **feat/raid-recruitment**. 문서 재구성은 **docs/document-organization**에서 진행하며 기능 완료·미완료 상태를 변경하지 않는다. G3는 PR20 bb144e0/후행ce3064f로 dev통합·원격확인/그룹브랜치로컬·원격정리했고 main77a1fe5는유지한다. 모집 구현은 작업 브랜치에서 게시/협업하며 dev/main 통합은 별도다.
 
 2026-10-18 사용자 지시로 정리했다. 한 이슈의 직접 기능/완료 조건에 집중하고 독립 후속은 링크로만 연결한다. 아래 번호는 GitHub 이슈 번호이며 Backend 작업 단계 번호가 아니다. 당시 통합 기준은 dev/ce3064f·main/77a1fe5였다. 현재 개발API는 two-cycle176경로/DB0031이며 최신실행은 NEXT_WORK를 따른다.
 
@@ -9,23 +9,24 @@
 | 이슈 | 주제 | 다음 담당·상태/완료 조건 |
 |---|---|---|
 | [#12](https://github.com/heo0328/lostparty-backend/issues/12) | 그룹 G1/G2 Flutter 연결 | Backend 구현/통합 완료. Flutter 연결/관련 검증과 사용SHA 회신 미확인. 현재 Flutter 우선작업을 중단시키지 않음 |
-| [#13](https://github.com/heo0328/lostparty-backend/issues/13) | 통합모집·시간/참가/주간관리 | Flutter D22/E23/A/B구현보고·실인수별도.135검색/136최신탈퇴·다인해산정책은 [전체137번째 Backend 설계/후속이관](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6368822874)로#24/#25전문게시 후 소스 구현/격리 검증·개발176/DB0031 반영 완료. 구원명령유지·원본요구폐기아님,다음 #24/#25 Flutter 연결/실인수. #139 IF-001은 비활성 보존 문서에 정리·OPEN |
+| [#13](https://github.com/heo0328/lostparty-backend/issues/13) | 통합모집·시간/참가/주간관리 | 생성/승인 재시도 성공 보고141 수신·최초오류 미확정. [전체142번째 Flutter 구성 불가 신청차단](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6380773556) 및 [전체143번째 Flutter 후보 사전제외 일괄 읽기계약 협의](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6380816312) 신규 요청. 다음 Backend 기존 validator/조회 재사용·계약 제안/보완, endpoint/DTO 미합의·미구현. pending 미점유/승인 재검사·8인/C/N 보존. #24/#25 개발 반영·IF-001/기존 미완료 유지·OPEN |
 | [#15](https://github.com/heo0328/lostparty-backend/issues/15) | V2 Flutter 인증/분쟁 | #13 전체16번째Flutter 보고기준 D1~D4 dev반영·마감, 분쟁실기기는사용자판단보류. 이후 #13 전체17번째에서 로그인화면재구성수정 별도마감·계약검토전환을보고했으며분쟁실기기보류는별도 |
 | [#16](https://github.com/heo0328/lostparty-backend/issues/16) | G3 완료 구현/dev 통합·조건부 해산 후속 | 관리GET/이전/일반탈퇴는 구현332a8ab·인계349fb79/PR20 bb144e0 dev통합·원격확인/완료브랜치정리. 통합전45PASS·실행계약일치(기존148PASS와중복), [전체6번째 Backend 통합결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6262944673). 조건부해산은실제그룹모집원본후속·추방/대표변경미구현/Flutter연결·실기기별도, 이슈유지 |
 | [#17](https://github.com/heo0328/lostparty-backend/issues/17) | 캐릭터 소멸 근거·이력·이름 재사용 ID | Flutter전체1번째범위확인·Backend 현재기능/증거공백 검토·최소계약 보완. 기존L1/claim/조회 재사용. 실제삭제/보류해제 승인 아님 |
 | [#18](https://github.com/heo0328/lostparty-backend/issues/18) | 활동 자동추가·직접제외 보존 | 활동브랜치89a3248/설계5fff83b 로컬미push보존. [전체3번째Flutter](https://github.com/heo0328/lostparty-backend/issues/18#issuecomment-6264981603)는설계접수/별도소비검토대기이며미승인·구현전 |
 | [#19](https://github.com/heo0328/lostparty-backend/issues/19) | 사용자/그룹 주간 이용 통계 | Flutter전체1번째검토·type최초고정/함께집계·해산OFF/평균분모/그룹조회권한미확정·실제방원천선행. 집계/조회 미구현·개인manual결과 집계 금지 |
-| [#22](https://github.com/heo0328/lostparty-backend/issues/22) | 개인 완료후 선택T 탈퇴·공대장 자동승계 | 전체2번째 Backend 표시보완 구현/개발반영 완료. [개발안내](../ISSUE_22_23_ATOMIC_MEMBER_ACTIONS_DEVELOPMENT.md)·고유39PASS(23합동)/174경로·DB0030. 소비0eed67c push/원격확인·[전체3번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/22#issuecomment-6362447014) 완료→[전체5번째 Flutter D22 연결결과](https://github.com/heo0328/lostparty-backend/issues/22#issuecomment-6363334658) fece2003 push/133mock·분석0 보고수신, Backend추가요청없음·다음Flutter 실회원/기기인수미완료·OPEN |
+| [#22](https://github.com/heo0328/lostparty-backend/issues/22) | 개인 완료후 선택T 탈퇴·공대장 자동승계 | 전체2번째 Backend 표시보완 구현/개발반영 완료. [개발안내](../features/recruitment/membership-actions/README.md)·고유39PASS(23합동)/174경로·DB0030. 소비0eed67c push/원격확인·[전체3번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/22#issuecomment-6362447014) 완료→[전체5번째 Flutter D22 연결결과](https://github.com/heo0328/lostparty-backend/issues/22#issuecomment-6363334658) fece2003 push/133mock·분석0 보고수신, Backend추가요청없음·다음Flutter 실회원/기기인수미완료·OPEN |
 | [#23](https://github.com/heo0328/lostparty-backend/issues/23) | 현재/양T 동일회원 원자적 내보내기 | Backend0eed67c 인계·개발완료. [전체5번째 Flutter E23 연결결과](https://github.com/heo0328/lostparty-backend/issues/23#issuecomment-6363846643) b6720079 push/178mock·분석0 보고수신. 추가 계약요청없음/실회원·기기전체인수미완료·OPEN |
-| [#24](https://github.com/heo0328/lostparty-backend/issues/24) | 선택T 본인실제참가방 검색제외 | Flutter 전체3 계약 수용·추가 차단없음. [개발 안내](../ISSUE_24_25_MEMBERSHIP_ACTIONS_DEVELOPMENT.md) [Backend 전체4 구현 인계](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6371301279)·소비15e143a push/원격 확인, SQL/semantics cursor 구현·격리 검증, [전체5번째 Backend 개발 반영](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6371617690)·실제 개발176/DB0031 완료. 다음 Flutter 캐시/직접 연결·실인수, Backend 차이 대응·OPEN |
-| [#25](https://github.com/heo0328/lostparty-backend/issues/25) | 주차/모두탈퇴 자동승계·공대장T 해산 | Flutter 전체5 네 차이 해소. [개발 안내](../ISSUE_24_25_MEMBERSHIP_ACTIONS_DEVELOPMENT.md) [Backend 전체6 구현 인계](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371301934)·소비15e143a push/원격 확인, 새 원자 명령·기록/profile·0031 이행 구현/격리 검증, [전체7번째 Backend 개발 반영](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371618996)·실제 DB0031/API176 완료. 다음 Flutter 전용 DTO/ACK·메뉴/알림·기록 Router 연결/실인수, Backend 차이 대응·복구 UX 제안·OPEN |
+| [#24](https://github.com/heo0328/lostparty-backend/issues/24) | 선택T 본인실제참가방 검색제외 | Flutter 전체3 계약 수용·추가 차단없음. [개발 안내](../features/recruitment/membership-actions/contract.md) [Backend 전체4 구현 인계](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6371301279)·소비15e143a push/원격 확인, SQL/semantics cursor 구현·격리 검증, [전체5번째 Backend 개발 반영](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6371617690)·실제 개발176/DB0031 완료. 다음 Flutter 캐시/직접 연결·실인수, Backend 차이 대응·OPEN |
+| [#26](https://github.com/heo0328/lostparty-backend/issues/26) | 신청 구성검사·본인 후보조회 | #13 전체142/143→전체145 Backend 후속연결. [전체1번째 Backend 구현/검증·계약인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381161170), source6e0063c commit/push·원격확인·고유25PASS/기존DTO·176/116 보존. 기존검증 보완 구현/개발 미반영, 신규 후보GET 미합의/미구현. [전체2번째 Flutter 소비검토](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381216870): 구조 소비가능/기존선택역할·후보계수 및 unsupported wire1건 보완 요청. [전체3번째 Flutter 최신요구](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381254676)가 우선: 신청+캐릭터변경/역할전투력 포함·교체대상만 자기제외·4인별구성. 다음Backend 통합 문맥/권한·전투력/사유·scope 보완계약 회신→합의/구현, 이전 apply전용/전투력 목록밖 범위는 대체. 별도 개발반영 승인·실인수 미완료·OPEN |
+| [#25](https://github.com/heo0328/lostparty-backend/issues/25) | 주차/모두탈퇴 자동승계·공대장T 해산 | Flutter 전체5 네 차이 해소. [개발 안내](../features/recruitment/membership-actions/contract.md) [Backend 전체6 구현 인계](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371301934)·소비15e143a push/원격 확인, 새 원자 명령·기록/profile·0031 이행 구현/격리 검증, [전체7번째 Backend 개발 반영](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371618996)·실제 DB0031/API176 완료. [Flutter A 결과](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371981415) 6968f47a push/177mock·분석0 보고수신(독립재현아님). 이후 [전체9번째 Flutter B메뉴/성공처리](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6372783376) 0487788a push/295mock·[전체10번째 Flutter C프로필/본인기록](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6373322164) 0c5ae941 push/413mock·최종분석0 보고수신(범위별 수치·미합산/독립재현아님). 다음Flutter #24검색 후속/정상로그인 실인수, Backend 재현차이 대응·복구UX제안·OPEN |
 
 
 ## 이번 종료
 
 | 이슈 | 종료 구분 | 근거/보존한 미완료 |
 |---|---|---|
-| [#21](https://github.com/heo0328/lostparty-backend/issues/21) | completed (내용전달·문서정리) | 사용자 종료 지시. 공통원문62240fe·[Backend 품질/UX 기준](../DEVELOPMENT_QUALITY_AND_UX_STANDARD.md)을 AGENTS/개발·협업에 연결·보존, 추가댓글/회신대기없음. 이후승인작업에적용·기능/전면감사/최적화완료뜻아님·사용자지시로지침/전달정리 작업브랜치push |
+| [#21](https://github.com/heo0328/lostparty-backend/issues/21) | completed (내용전달·문서정리) | 사용자 종료 지시. 공통원문62240fe·[Backend 품질/UX 기준](../engineering/development/quality-and-ux.md)을 AGENTS/개발·협업에 연결·보존, 추가댓글/회신대기없음. 이후승인작업에적용·기능/전면감사/최적화완료뜻아님·사용자지시로지침/전달정리 작업브랜치push |
 | [#10](https://github.com/heo0328/lostparty-backend/issues/10) | completed | 카탈로그/주차2GET 구현/검증·Flutter소비/실기기로그. 최신게임패치 검증/기능전체인수까지 완료라는 뜻 아님 |
 | [#11](https://github.com/heo0328/lostparty-backend/issues/11) | completed (개인원장 구간) | 개인GET/manual완료·정정 구현/연결·manual true 실제보고. 미완료 실제파티/membership/i/영향확인·전체완료권한은 #13 본문에 이관 |
 | [#8](https://github.com/heo0328/lostparty-backend/issues/8) | not_planned (원본 보관/추적 이관) | 길어진 다주제 스레드만종료. 미완료 생명주기 #17/활동 #18/V2 #15/실제파티 #13은유지. 요구취소/기능전체완료아님 |
@@ -46,10 +47,3 @@
 | #15 전체1번째 | [V2 추적 유지/한주제 원칙](https://github.com/heo0328/lostparty-backend/issues/15#issuecomment-6249415434) |
 
 이번 정리는 서버 구현·DB변경·자동정리·자료삭제/초기화·기존키/로그인 재시험·운영배포 승인이 아니다. 기능코드/실행계약은 같고 새 이슈를 만들었다고 기능 구현을 시작한 것이 아니다.
-
-
-## 신규 신청 검증·후보조회 후속
-
-[#26](https://github.com/heo0328/lostparty-backend/issues/26): #13 전체142/143의 직접 보완, [전체145번째 Backend 요청회신/후속연결](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6381088415). pending 확정구성검사 보완 구현/격리검증, 후보 일괄읽기 closed 계약제안·미합의/미구현. 다음 Flutter 소비차이 회신/Backend 검증 인계. 기존 개발176/DB0031·통합 인수 미완료/원본 요구 보존·OPEN. 실제 반영은 별도 승인 구간이다.
-
-게시 source `6e0063c7c5a3ff88612bbe1c9b01f50b7408ce2a` commit/push·원격 SHA 일치 확인 후 [#26 전체1번째 Backend · 구성검사 구현/검증·후보계약 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381161170) 전문·전체 순번을 재조회했다. 다음 Flutter는 계약 소비차이 회신, Backend는 차이 대응/합의된 후보조회 구현이다. 기존 API67322372…·DB컨테이너 둘 다 healthy/health200·DB0031을 읽기 확인했고 미교체다. 시험용 runner/DB/internal network를 정리해 기존 API/DB만 남겼다. 새 구성검사 실서버/회원 인수는 별도 개발 반영 후다.
