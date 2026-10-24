@@ -2333,3 +2333,12 @@ NEXT_WORK/AI_CONTEXT/추적표를최신다음Backend계약/호환설계로갱신
 사용자 확인 지시로 Issue13 본문과 전체143번째까지 재조회했다. Flutter141 생성C/N/양주차·신청거절·승인재시도 성공 보고,142 구성불가 신청 context/POST 차단,143 레벨미달/같은4인파티 딜러직업 중복 후보 사전제외 일괄 읽기계약 협의를 확인했다. 링크·다음 담당은 NEXT_WORK에 기록했다. `cycle_commands.preflight`/신청 admit의 pending 경로와 `cycle_admission.admit_bundle`의 `slot=None if pending else core._slot(...)`를 정적으로 대조해 구성검사 누락 경계를 확인했다. 최초 사용자 오류는 code/request_id가 없어 이 누락으로 단정하지 않는다.
 
 다음 Backend는 기존 구성검사/조회 재사용 범위를 검토해 읽기 계약을 제안하고 합의 범위에서 보완한다. 후보 endpoint/DTO는 미확정이며 캐릭터별 N회 context/선행 전체멤버 조회·클라이언트 구성 복제·pending 자리예약을 새 정책으로 만들지 않는다.8인 반대파티/C/N·복수 유효역할·원후보0/필터후0/조회실패 구분과 context/POST/승인 최종검사를 보존한다. 이번은 수신·정적 확인/문서 현황 갱신만으로 신규 코드/계약·자동시험·서버/DB 변경·Issue 회신/종료 없음. 기존 no-new-request 상태를 바로잡고 docs/document-organization에서 로컬 기록 커밋만 한다.
+
+
+## 2026-10-24 — #26 구현/검증 인계와 후보조회 제안 기록
+
+사용자 계획 구현 승인에 따라 기존 feat/raid-recruitment를 /tmp 별도 worktree로 연결해 문서 브랜치를 보존했다. #13 전체142/143 요청→후속26 생성/closed 읽기계약 본문제안·[전체145번째 Backend 원본회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6381088415)·원문상단 현재상태 보정/원본요구·인수/OPEN 보존. pending 확정구성/정원 누락을 기존 읽기 판정으로 수정하고 source `6e0063c7c5a3ff88612bbe1c9b01f50b7408ce2a` commit/push·원격 일치를 확인했다. [#26 전체1번째 Backend 구현/검증·계약 검토 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381161170) 전문·순번 확인. 신규 후보조회는 [닫힌 계약 제안](https://github.com/heo0328/lostparty-backend/blob/6e0063c7c5a3ff88612bbe1c9b01f50b7408ce2a/docs/APPLICATION_CHARACTER_CANDIDATES_PROPOSAL.md)/미합의·미구현이다.
+
+고유25PASS(신규16/기존9,22PASS199.37초+3PASS26.72초·기존 경고1), 초기22ERROR는 격리 test-db alias 환경불일치 수정 후 해소. pending 미점유/무예약·동일직업 대기 허용/원ACK·8인/C/N·승인경쟁/거절/철회·level/완료/점유/실제 router synthetic principal context200/POST409·no-store/DTO 검증. 작성 제안3예시/8비정상schema 정적검증은 별도이며 후보API 실행·정상로그인/실회원 검증이 아니다. source235Python/후보이미지일치·116/176 전체계약/기존components 보존·2description변경.
+
+현재 개발API67322372…/DB0031 healthy/health200 읽기확인·미교체/DB이행·키/실회원쓰기 없음. 시험용 tmpfs DB/runner/internal network 정리. 다음 Flutter26 DTO/역할·페이지/빈화면/비동기 소비차이 회신, Backend 반영/합의 후 후보읽기 구현. 실제 개발반영은 별도 승인 뒤다. 최근 #24 전체6/7 연결·일부 사용자인수, #13 전체144 신청카드수정 보고도 구분 수신·미확인 인수 보존. 기능/문서 브랜치 merge·dev/main/운영 없음. 본 문서 브랜치는 로컬 수신기록만 커밋/미push, 구현/기능브랜치 결과는 위 게시 source를 따른다.
