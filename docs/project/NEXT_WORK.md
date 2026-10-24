@@ -10,12 +10,13 @@
 
 ## Backend 다음 실행
 
-**#26 기존 신청 구성검사 보완 완료 / 후보계약 역할 일치1건 Backend 보완 차례.** 원본 #13 전체142/143 요청은 [#26](https://github.com/heo0328/lostparty-backend/issues/26)에 한 주제로 연결하고 [전체145번째 Backend 요청 회신/후속연결](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6381088415)을 게시했다. [#26 전체1번째 Backend · 구현/검증·후보계약 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381161170) 전문·순번 확인 완료. 구현 source `6e0063c7c5a3ff88612bbe1c9b01f50b7408ce2a` / feat/raid-recruitment commit·push·원격 SHA 일치 확인, 고유25PASS(신규16/기존9)·source235Python/기본116·두주차176 계약 전체 일치·기존 component/DTO 보존/2description변경이다.
+**#26 최신요구 — 신청·캐릭터변경 통합 자격/후보계약 Backend 보완 차례.** 원본 #13 전체142/143 요청은 [#26](https://github.com/heo0328/lostparty-backend/issues/26)에 한 주제로 연결하고 [전체145번째 Backend 요청 회신/후속연결](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6381088415)을 게시했다. [#26 전체1번째 Backend · 구현/검증·후보계약 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381161170) 전문·순번 확인 완료. 구현 source `6e0063c7c5a3ff88612bbe1c9b01f50b7408ce2a` / feat/raid-recruitment commit·push·원격 SHA 일치 확인, 고유25PASS(신규16/기존9)·source235Python/기본116·두주차176 계약 전체 일치·기존 component/DTO 보존/2description변경이다.
 
-- **수신 — [전체2번째 Flutter · 후보계약 소비검토/역할 보완](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381216870):** scope/closed DTO·count/빈화면·snapshot/cursor 구조는 소비 가능. 일반직업은 dealer 고정, 바드·발키리·도화가·홀리나이트만 dealer/support 전환이라는 기존 제품정책과 후보/eligible count를 일치시켜야 한다. unsupported role의 정확한 code/필드를 제안하고 일반직업·복수역할/복수페이지 예시를 보완하는 것이 남은1건이다. Flutter 문서1501867b push 보고이며 Backend가 Flutter 소스를 직접 읽거나 실행 재현한 결과는 아니다. 기존서버 역할제한을 임의 변경하는 요청으로 확대하지 않는다.
-
-- **다음 Flutter:** 역할계약/신규읽기 인계 후 전용reader·실제선택목록·빈화면/비동기 격리를 연결/검증한다. [닫힌 후보조회 제안1](https://github.com/heo0328/lostparty-backend/blob/6e0063c7c5a3ff88612bbe1c9b01f50b7408ce2a/docs/APPLICATION_CHARACTER_CANDIDATES_PROPOSAL.md)의 일반 구조는 수용됐고 역할일치1건은 Backend 제안 보완 대기다. 후보 제외는 사용자 확정 레벨/구성/동일T 레이드 개인·파티완료/다른방 실제참가4기준이며 전투력/한도 등은 기존 선택 후 context 안내다.
-- **다음 Backend:** 제품에서 선택 가능한 역할 안에서만 후보 유지/계수하도록 제안문·closed schema·예시를 보완하고 unsupported-role wire를 #26에 회신한다. 역할차이 해소·합의 뒤 신규 endpoint를 구현한다. 신규 GET은 미합의/미구현·실행176계약에 없으며 임의 구현하지 않는다. pending 구성검사/정원 보완은 완료했지만 실제 개발서버에는 미반영이다.
+- **최신 수신 — [전체3번째 Flutter · 사용자 확정 신청/캐릭터변경 통합 자격](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381254676):** 신청과 변경 선택목록·context/실제POST·승인을 같은 정책으로 검증한다. 선택T 묶음 전체 레벨·선택역할 전투력·동일raid 개인/파티완료·다른방 실제참가·4인별 동일딜러직업/딜러3+서포터1 구성을 모두 검사한다. **기존 전투력은 후보제외 밖/신청 전용 범위는 이 최신 요구로 대체됐다.** 원래 구성검사25PASS는 이전 구간 근거이고 통합 후보/변경 구현 완료가 아니다.
+- **역할/구성:** 일반직업 dealer전용·바드/발키리/도화가/홀리나이트 양역할 정책과 eligible count를 일치시킨다. 같은직업이어도 dealer/support가 다르면 가능,8인은 각4인파티에서 검사해 반대파티 유효배치를 보존한다. 역할 무시한 공격대 전체 class총량 제한을 만들지 않는다.
+- **변경 자기제외:** 본인의 교체대상 참가/자리·해당 교체대상 점유만 제외한 가상 구성으로 평가한다. 같은room 점유 전체 무시 금지, 다른방 점유/완료 차단, 실패/경쟁 시 기존캐릭터 참가·예약/다른T 보존이다.
+- **다음 Backend:** apply전용 제안을 신청/변경 문맥·경로/DTO·자기참가 식별/권한·역할 전투력 source/누락·오래됨/경고 상태·unsupported role 및 사유 우선순위/snapshot 범위까지 보완해 #26에 회신한다. 기존 비교정책을 정적으로 대조하며 미확인을0/임의통과로 메우거나 provider갱신/원장쓰기를 하지 않는다. 보완 계약 합의 뒤 공통검증/후보읽기 구현·직접시험·인계한다. 신규 GET은 미합의/미구현·실행176계약에 없으며 변경에 apply전용GET을 임의 재사용하지 않는다.
+- **다음 Flutter:** 보완 계약/구현 인계 후 신청·변경 전용 후보reader/실제목록·역할/빈화면·비동기 격리를 연결·검증한다. 전체2의 구조 소비가능/unsupported wire 요청은 유지하되 범위는 전체3이 우선이다. Flutter 문서71e279ed push 보고이며 이번은 정적대조/문서갱신·기존시험 반복 없음이다.
 - **실제 개발:** 기존 API67322372…/DB0031 유지·API/DB healthy/health200 읽기 확인, 교체/이행·실회원쓰기/키변경 없음. 합성 tmpfs DB/runner/internal network 정리 완료. 새 구성검사 실제 반영은 별도 승인 후, 정상로그인/실회원·기기 인수는 반영 뒤다.
 - **최근 수신:** #24 전체6 Flutter0d6d960b의 검색회복 연결/126mock, 전체7 생성자 검색제외 실제정상·추가참가자 미확인, #13 전체144 Flutter63b77872 신청카드 기본상세 수정/117mock 보고수신. 최초 승인오류 원인은 code/request_id 없어 미확정이다. 이번 요청은 #26에 직접 대응하며 독립 인수/미완료를 폐기하지 않는다.
 
