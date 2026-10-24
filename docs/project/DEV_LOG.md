@@ -2539,3 +2539,12 @@ NEXT_WORK/AI_CONTEXT/추적표·현재계약/설계의 ‘2가입 연결·변경
 신규18PASS(97.96초/기존AnyIO경고1)로실제합성HTTP POST→DB저장→HTTP목록·딜러/서포터·성장후snapshot·동일key/body ACK,기존누락정밀current_saved/읽기DB불변·소유/연결/확정활동경계·NaN/음수/bool등unavailable을확인했다. 기존표시/명령직접회귀는진행중이며최종결과는후속기록한다. 작성정상22/음성29·원본음성8정적검증은실행시험과구분한다. 후보6d5857b3…/소스241파일·177/기본116전체계약·모든기존component/쓰기shape보존·Application GET/POST description만변경을확인했다. 실제개발서버/DB·실회원/기기는변경하지않았다.
 
 최종직접회귀17PASS(136.27초/기존AnyIO경고1), 신규18과합쳐고유35건이며중복없는최종소스2묶음이다. 실패/재시험없이통과했고새소스241파일·3시험파일과runner바이트일치확인, 후보6d5857b3…/실행177·기본116전체계약/기존모든component·쓰기shape보존을확인했다. 신규저장과기존누락을실제생산자→HTTP로검증해예시에만level이있던누락을보완했다. 시험환경정리·실제API d24d7cbd…미교체/healthy·기존API/DB만남음을확인했다. 실서버반영·실회원/기기인수미진행이며구현source `f471e3133ad60befcad77d7123e1107ba7501bb4` commit·push·원격일치확인(3487545수용기록함께게시)후 [#26 전체22번째 Backend · 아이템레벨 저장/기존누락 읽기 구현인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386634008) 게시·전문/실제전체순번재조회완료. Issue상단은소스구현/검증완료·실제개발미반영·다음Flutter 출처표시연결/Backend직접차이대응으로갱신하고원본이력/OPEN을보존했다.
+
+
+## 2026-10-25 — #26 전체23 Flutter 출처표시 연결 확인·아이템레벨 개발 반영
+
+작업 구간명: 신청자 아이템레벨 보완 개발 반영. 작업 내용: 전체23 회신/호환확인·사용자 승인 개발API/worker 교체·자료보존/실행검증·인계. 브랜치: feat/raid-recruitment. [전체23 Flutter](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386758343)의 source13fb5848 push·고유158PASS/분석0은 자체보고다. 필수3키/출처별 확정문구 연결 완료이며 추가소비차이없음·기존서버의누락항목오류처리 경계를 확인했다.
+
+[반영근거](../engineering/operations/application-item-level-rollout.md)·[집계](../engineering/operations/records/application-item-level-rollout.json): 구현sourcef471e3133ad60befcad77d7123e1107ba7501bb4/검증이미지6d5857b3…를반영했다. API중지후비공개customdump·키/설정/감사기준 확보·archive catalog읽기/백업중DB불변 확인. 전후108표893행전체·열/시퀀스/DBprofile·키hash동일, DB컨테이너/볼륨·API환경/명령/보안/포트·키mount source/ro보존·DB0031/migration없음이다. oldd24이미지를before-item-level26태그로보존했고임시reader를제거했다. 이번restore리허설미실행이다.
+
+실제컨테이너소스/설정241파일바이트일치·177/기본116 OpenAPI객체전체일치·HTTP12PASS·API/DB healthy다. 정상실회원 확장목록200/기기인수는미확인이다. 실회원JWT생성/명령·provider·키/자료수동변경·dev/main/운영은없다. 이전Backend격리35·Flutter158과이번12를합산하지않는다. 다음Flutter 레벨/출처문구만소수인수·Backend직접차이대응,기존1/2전체/413반복요청없음·OPEN유지다.

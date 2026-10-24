@@ -1,6 +1,6 @@
 # 신청자 아이템레벨 출처 보완 제안
 
-2026-10-25 / **합의 구현·격리35PASS 완료/실제 개발 미반영**. 작업 구간명: 신청자 아이템레벨 누락 보완. 브랜치: `feat/raid-recruitment`.
+2026-10-25 / **합의 구현·격리35PASS 및 실제 개발 반영 완료/기기 인수 대기**. 작업 구간명: 신청자 아이템레벨 누락 보완. 브랜치: `feat/raid-recruitment`.
 
 [#26 전체19번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386174761)의 코드 경로와 사용자 관찰을 확인했다. API source06ea4b2는 Application.display를 공용 groups.admission_core.display로 생성해 서버/이름/직업만 저장한다. 목록은 그대로 반환한다. 실제 개발DB 읽기 집계에서도 저장 신청7개 모두 display.item_level이 없었다. 원본회원/신청 식별자·값은 공개하지 않았으며 DB수정은 하지 않았다.
 
@@ -11,6 +11,10 @@
 확정표시: application_snapshot→‘아이템 레벨 1700’, current_saved→‘아이템 레벨 1750 · 현재 저장 정보’, unavailable→‘아이템 레벨 조회 불가’. 사용자에게확인/갱신행동·0/최소조건/전투력대체를요구하지않는다. fetched_at은원본시각으로보존하되카드에새시각행/조작을추가하지않는다.
 
 **다음 Backend:** 합의대로구현·신규POST→저장display→HTTP목록·기존누락/성장후snapshot보존·소유변경·nullable/시각·기존쓰기/조회불변을직접검증하고정확source/계약·원격게시/실제반영여부를인계한다. **다음 Flutter:** 인계후출처/누락표시·경계검증연결, 개발반영후레벨/문구만소수기기확인. 기존전체시험/사용자통과1·2전체반복은요청하지않는다.
+
+## 최신 반영 상태
+
+[전체23 Flutter](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386758343)의 source13fb5848 출처표시 연결·158PASS 자체보고/추가차이 없음을 확인했다. 사용자 서버반영 승인으로 sourcef471e31/이미지6d5857b3를 [실제개발에 반영](../../../engineering/operations/application-item-level-rollout.md)했고 기존108표893행·키/설정을 보존했다. 실제소스241파일/177·116전체OpenAPI/HTTP12PASS다. 다음Flutter 레벨/문구 소수기기인수·Backend직접차이대응이며 정상로그인/기기 성공은 아직 미확인이다. 아래 제안·구현 당시의 미반영 기록은 해당 시점 이력이다.
 
 ## 최소 호환 제안
 
