@@ -89,3 +89,5 @@ application-display-1을 목록/일반상세에만 연결했다. 기본 모델·
 기존SQL예외가503에내부식별자code(e3q8)를노출하는오류를 발견해 SERVICE_UNAVAILABLE로정정했다. 그외중간실패는합성만료/생성시각·종료시각autoflush와시험앱no-store설정 보완이다. 최종경고는기존Starlette/AnyIO BlockingPortal1개다. 후보이미지d24d7cbd…는검증용이고실제서버fdd256ea…는미교체/healthy로읽기확인했다. 시험runner/DB/internal network를정리했다. 실제기기/회원명령과서버반영·운영은별도미완료다.
 
 현재 다음담당은 Flutter 카드표시/본인pending안내·버튼 연결/직접검증이며 Backend는 소비차이에대응한다. 전체13 소비수용을다시요청하지않는다. 실제서버 미반영이므로 새프로필의실회원/기기인수는정확한개발반영인계이후다.
+
+구현 공식 인계: [#26 전체14번째 Backend · 표시 읽기 구현/검증 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6385227653). source `06ea4b214591f475d422f4599ca10260cda83d08` commit·push·원격일치 확인 후 게시·댓글전문/실제전체순번 재조회 완료. 서버미반영/다음Flutter 연결·Backend 차이대응, OPEN이다.
