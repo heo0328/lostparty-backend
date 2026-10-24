@@ -9,6 +9,8 @@
 
 [#26 전체18번째 Backend · 표시 프로필 실제 개발 반영](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386031663) 게시·전문/실제전체순번 확인 완료. 반영근거 `6444c18bc3de8b341251169f84584cb622b69154` commit·push·원격일치 확인, 다음Flutter 정상로그인소수인수/Backend 직접차이대응이다.
 
+[#26 전체20번째 Backend · 아이템레벨 출처/기존누락 보완 제안](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386261019) 게시·전문/실제전체순번 확인 완료. 제안source `b97eee2aa813a330d740318026617005dbac1c5e` commit·push·원격일치확인. 미합의/미구현·레벨미해결이며다음Flutter 최소소비차이확인후Backend 구현이다.
+
 ## 최신 전체19 · 아이템레벨 보완 계약 확인
 
 [전체19 Flutter](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386174761)에서 사용자표시1/2는아이템레벨‘확인필요’외정상보고를수신했다. clean문구‘세팅이상없음’/‘좌석미확정’삭제는Flutter58600023 commit/push/분석0 보고이며최종기기확인대기다. Backend실행06ea4b2의공용identity.display가3필드만저장하고목록이그대로반환하는누락을확인했다. 개발DB읽기집계7신청모두snapshot item_level없음·회원식별자/원본출력·자료수정없음이다.

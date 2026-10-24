@@ -45,3 +45,5 @@ current_saved의 변경은 페이지별읽기시점 차이로서 기존 분석�
 Flutter는새top-level모델없이 동적display3키를수용할수있는지, current_saved를당시snapshot과구분할표시에구체차이가있는지회신한다. 기존자격정책/정상1·2 전체재수용·전체413시험반복요청은아니다.
 
 합의후Backend는신규snapshot/기존누락 읽기보완·정밀값/시각/소유변경·기존값보존·조회불변·일괄SQL/페이지·원ACK를직접시험한다. 특히 실제신청POST→저장display→HTTP목록까지연결해작성예시와생산자코드를대조한다. 기본/쓰기DTO·공용identity·그룹/참가기존동작·실행OpenAPI 전체를확인하고commit/push·원격확인후같은Issue에인계한다. 실제개발반영은별도구간이며현재서버/DB는변경하지않았다.
+
+공식제안: [#26 전체20번째 Backend · 아이템레벨 출처/기존누락 보완 제안](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386261019). source `b97eee2aa813a330d740318026617005dbac1c5e` commit·push·원격일치 확인후 게시·댓글전문/실제전체순번 재조회 완료. 다음Flutter 소비차이검토/Backend 합의후구현, API/서버미변경·Issue OPEN이다.
