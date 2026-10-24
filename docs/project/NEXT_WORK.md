@@ -1,10 +1,12 @@
 # 다음 실행
 
-## 현재 별도 점검 구간
+## 현재 별도 개선 구간
 
-2026-10-25 사용자 요청으로 `feat/raid-recruitment`의 게시 완료 `c0128c3`에서 `chore/backend-architecture-review`를 분기했다. 현재 checkout은 점검 브랜치다. 작업 구간명은 **Backend 구조·개선 후보 점검**, 작업 내용은 정적 검토/후보 기록이며 기능 구현은 변경하지 않았다. [점검 결과·우선순위](../engineering/development/backend-architecture-review.md)를 기준으로 다음에는 사용자가 선택한 개선 구간의 범위/검증을 정한다. API 통합은 네이티브 호출/UX 자료 확인 후 협의한다. 이번 기록은 로컬 커밋하며 push/PR/merge/배포는 하지 않는다.
+2026-10-25 사용자 승인: **격리 검증 실행 경로 정리**. `chore/backend-architecture-review`에서 점검에 이어 구현하며 현재 checkout도 이 브랜치다. [실행 안내](../engineering/development/isolated-verification.md)의 `verify_isolated.py`로 정적/계약/기본/최신/전체 선택을 구분한다. 시험 이미지는 현재 checkout에서 빌드하고 고유 프로젝트·internal network·tmpfs DB를 사용한다. 개발 서버/API 계약은 변경하지 않았다.
 
-아래 모집 대기 상태는 보존한다. 모집 기능 대응 재개 전 `feat/raid-recruitment` checkout과 점검 기록 통합 여부를 확인한다. 새 코드/서버 수정 요청이 생겼다는 의미는 아니다.
+다음 실행은 실제 Backend 변경에 맞는 시험 선택이다. `legacy`/`two-cycle`은 지정 회귀 묶음이며 전체 검증은 `all`이고, 구체 실행 범위/통과·실패는 DEV_LOG를 따른다. 다른 개선 후보는 [점검 보고서](../engineering/development/backend-architecture-review.md)를 참고하되 아직 구현 착수하지 않는다. 이번 구간은 로컬 커밋하며 push/PR/merge/배포·네이티브 추가시험 요청은 없다.
+
+아래 모집 대기 상태는 보존한다. 모집 기능 대응 재개 전 `feat/raid-recruitment` checkout과 점검/실행기 기록의 통합 여부를 확인한다. 임시 분기에서 계속 모집 기능을 수정하지 않는다. 새 네이티브 요청 여부는 공식 Issue에서 확인한다.
 
 ## 보존한 모집 구간
 

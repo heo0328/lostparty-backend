@@ -14,7 +14,7 @@ Python3.12·FastAPI/Uvicorn·SQLAlchemy·Alembic·PostgreSQL17/psycopg를 Docker
 
 현재 개발 API는 `compose.yaml`에 `compose.two-cycle.yaml`을 덮어써 `app.main:create_two_cycle_app --factory`를 선택한다. 기본 Dockerfile의 `app.main:app`는 기존 앱이며 현재 개발 DB에 기본 Compose 단독으로 혼용하지 않는다. `two-cycle`은 실행 구성 이름, `0031_membership_actions`는 DB구조 이행 식별자다.
 
-현재 실제 개발 서버는177경로·DB0031이며, #26 표시 프로필 포함 구현 source06ea4b2/이미지d24d7cbd를 반영했다. [실제 교체·자료 보존·HTTP 검증](../operations/application-display-rollout.md)을 확인했다. 정상 로그인/기기 인수는 미완료다. 상세와 복원/이행 전후 근거는 [운영 전환 기록](../operations/README.md)을 따른다.
+현재 실제 개발 서버는177경로·DB0031이며, #26 아이템레벨 보완 sourcef471e31/이미지6d5857b3를 반영했다. [실제 교체·자료 보존·HTTP 검증](../operations/application-item-level-rollout.md)을 확인했다. 아이템레벨 보완 인수는 수용됐고 전체 모집·실회원/기기 인수는 미완료다. 상세와 복원/이행 전후 근거는 [운영 전환 기록](../operations/README.md)을 따른다.
 
 기존 DB가 해당 단계로 검증된 개발환경의 API 재기동 예시는 다음과 같다. 이 명령은 DB migration·초기 설정·복원을 대신하지 않는다.
 
@@ -28,6 +28,8 @@ python3 scripts/check_openapi.py --docker docker.exe --container lostparty-backe
 ## 계약과 테스트
 
 현재 실행 계약은 [two-cycle OpenAPI](../../../openapi/two-cycle.openapi.yaml), 기본앱 보존 계약은 [기본 OpenAPI](../../../openapi/openapi.yaml)다. 비교는 생성 객체 전체를 검사하며 차이를 무조건 자동 덮어쓰지 않는다. HTTP Swagger/OpenAPI 공개 경로는 비활성이다.
+
+표준 실행은 [격리 검증 실행 안내](isolated-verification.md)를 따른다. `python3 scripts/verify_isolated.py`의 static/contracts/legacy/two-cycle/all을 목적에 맞게 선택한다. 시험 이미지는 현재 소스로 빌드하며 기존 개발 API의 latest에 의존하지 않는다.
 
 pytest는 `compose.test.yaml`의 별도 테스트 DB를 사용한다. 개발 DB를 fixture/초기화 대상으로 사용하지 않는다. 테스트 이미지가 참조하는 계약 snapshot과 파일 COPY 경로도 함께 관리한다. 실제 개발서버·provider·정상 로그인 사용자 시험과 합성 테스트는 결과를 분리한다.
 

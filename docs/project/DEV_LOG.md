@@ -2576,3 +2576,13 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - [점검 결과](../engineering/development/backend-architecture-review.md): 기존 모놀리스·snapshot/명령 경계·일괄 읽기/성능시험을 유지하고 격리 검증 경로·전이 의존성 고정·장애 관측을 우선 후보로 정리. 앱 조립/계약 설명 분리·정적 검사·업무 타입은 후속 후보. API 통합은 네이티브 UX/호출 자료 필요.
 - 정적208 Python파일 AST parse PASS. 기본116경로/133동작·two-cycle177경로/197동작 확인. 서버/DB/pytest/부하/보안 감사·패키지 설치 미실행. 문서 검사 PASS(213문서·2306상대링크/앵커·197동작 분류·동결자료 보존), git diff --check PASS.
 - #26 최신 전체26 Backend 인계에서 새 서버 수정 대상 없음/네이티브 전체 구간 점검 상태 확인. 새 Issue/댓글·push/PR/merge/배포 없음. 다음은 사용자 후보 선택 후 범위 확정. 모집 대응 복귀 시 checkout·점검 기록 통합 확인.
+
+## 2026-10-25 격리 검증 실행 경로 정리 적용
+
+- 사용자 승인에 따라 `chore/backend-architecture-review`에서 첫 개선 구현. `scripts/verify_isolated.py`의 static/contracts/legacy/two-cycle/all 진입점, 컨테이너 환경/선택 검사 `isolated_checks.py`, 호스트 안전성 unittest8건과 [실행 안내](../engineering/development/isolated-verification.md)를 추가했다. legacy7파일/two-cycle8파일은 지정 회귀 묶음이며 all은 현재 test_*.py 전체를 선택한다. node 선택 시 실행 범위를 출력한다.
+- Dockerfile.test는 개발 API `latest` 의존을 제거하고 현재 소스/계약/fixtures/scripts를 Python3.12에서 빌드한다. compose.test에 internal network를 추가하고 기존 tmpfs PostgreSQL을 사용한다. 실행마다 UUID 프로젝트를 생성하며 .env 자동로딩/상속 Compose override를 차단하고 host port·기존 키/volume·개발 Compose를 사용하지 않는다. 시험 실행 중 internal=true·tmpfs·ports={}·binds=null 읽기 확인.
+- 모델 일치 시험의 기존 실패를 발견: 기본0023 DB와 collection/import된 최신 모델을 함께 비교했다. 0031 임시 DB로 옮기는 시도도 호환 모델의 의도적인 구 제약 보존 때문에 맞지 않아 채택하지 않았다. 최종적으로0023 모델 모듈을 새 metadata에 복사하고0031 전용 index만 제외, 실제 alembic_version도0023인지 확인한다. 공유 Base.metadata/기본 fixture/서비스·마이그레이션·계약을 변경하지 않았다. 최신0031 metadata 전체 일치 검증으로 주장하지 않는다.
+- **실행 결과:** 호스트 안전성8PASS; 최종 인증 파일34PASS(16.46초); 아이템레벨 파일18PASS(94.60초·별도 임시 app-role DB/0031·합성 HTTP/자료 보존 포함). 두 pytest 모두 기존 Starlette/AnyIO 경고1종. 첫 실패33PASS/1FAIL은 최종34에 중복 합산하지 않는다. 전체 legacy7파일/two-cycle8파일/all suite 실행은 미수행이며 두 대표 파일만 실제 실행했다.
+- 최종 시험 이미지에서 기본116경로/133동작·two-cycle177경로/197동작 OpenAPI 객체 전체 일치 PASS. 첫 컨테이너 진입의 Python import 경로 오류는 수정 후 계약 재실행으로 통과했다. static 문서/동결자료·경로 검사 PASS(214문서/2311링크·앵커), git diff --check PASS.
+- 의도적 nonexistent node는 exit4, 실제 시험 실패는 exit1을 유지하며 각 프로젝트 DB/컨테이너/네트워크 cleanup 확인. mock으로 build 실패17/cleanup 실패/환경 거부도 확인. 마지막 docker ps에 기존 API bbab9692cb65·DB f1a0bf3769fa만 동일 ID/healthy로 남고 lostparty-check 네트워크 잔존0. 개발 DB 내용 hash 재검증이나 정상회원/기기/provider·성능 인수는 하지 않았다. 시험 이미지/빌드 캐시는 남기고 prune하지 않았다.
+- 개발환경 문서의 과거06ea4b2 실행 표기는 기존 기록/NEXT_WORK에 맞춰 f471e31·아이템레벨 보완 인수 수용으로 정정했다. 실제 서버를 교체한 것은 아니다. 로컬 구간 커밋만 수행하며 push/PR/merge/배포·Issue 게시/네이티브 추가시험 요청은 없다. 다음은 변경 위험에 맞는 검증 명령 사용이며 다른 개선은 별도 사용자 선택 전 미착수. 모집 복귀 전에 checkout/점검·실행기 기록 통합을 확인한다.
