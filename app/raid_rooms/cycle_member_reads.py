@@ -96,7 +96,9 @@ def settings(db,room,row,uid,stamp):
     return result
 
 
-def detail(principal,rid,key,*,read_snapshot=None):
+def detail(principal,rid,key,*,read_snapshot=None,reader_profile=None):
+    from app.raid_rooms import application_display, application_display_schemas
+    if reader_profile is not None and reader_profile != application_display.PROFILE:fail('INVALID_REQUEST',400)
     with (nullcontext(read_snapshot) if read_snapshot is not None else base.snapshot(principal)) as (db,uid,stamp):
         room,row=read_target(db,uid,rid,key,stamp)
         if archive.is_archived(db,rid):base.member(db,uid,room)
@@ -133,7 +135,11 @@ def detail(principal,rid,key,*,read_snapshot=None):
             permissions=dict(view_detail=permission(),view_plan=permission(None if mine and own_cycle_member(db,row,mine) else 'WEEKLY_PARTICIPANT_REQUIRED')),
             access=dict(state='allowed',policy_snapshot=digest([str(row.id),row.generation,row.revision]),evaluated_at=stamp,issues=[]),
             leadership=commands.leadership(db,row),my_target_role=directory.role(db,uid,row),**formation(db,row)))
-        return wire.OutputContract3GetV2RaidRoomsRoomIdDetail.model_validate(result).model_dump(mode='json')
+        if reader_profile is not None:
+            result['data']['my_application']=application_display.own_application(db,uid,room,row,stamp)
+        model=application_display_schemas.ApplicationDisplayDetailResponse if reader_profile is not None else wire.OutputContract3GetV2RaidRoomsRoomIdDetail
+        result=model.model_validate(result).model_dump(mode='json')
+        return application_display.bounded(result) if reader_profile is not None else result
 
 
 def schedule_fields(db,room,row,mine,stamp,include_resume_display=False):

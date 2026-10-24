@@ -3,44 +3,28 @@
 2026-10-24
 
 - **작업 구간명:** 모집 신청 표시·본인 승인 대기 상태 보완(#26).
-- **작업 내용:** 검증된API/worker 이미지 교체·자료 보존/실행 검증 완료. 가입 소수항목 인수 보고를 수신했다. 신청목록/본인pending 상세 [표시 계약 제안1](../features/recruitment/participation/application-display-proposal.md)·closed schema/작성22예시를 준비했다. 게시 후 Flutter 전체13 수용을 확인했다. 다음은 Backend 합의범위 읽기 구현·검증이며 실제서버교체는 별도승인이다.
-- **브랜치·위치:** `feat/raid-recruitment` / `/home/heowork/projects/lostparty-backend`. 코드·계약·문서·인계를 같은 이력에 유지한다.
-- **실제 개발:** 구현source484ca1719e21b01a59da75b62a1d3b1568ada2c3/이미지fdd256ea·177경로·DB0031, API/DB healthy. migration 없음·기존108표/780행·키·설정/볼륨 보존. [반영/검증](../engineering/operations/eligibility-rollout.md)·[집계](../engineering/operations/records/eligibility-rollout.json).
+- **작업 내용:** 합의된 application-display-1 목록/일반상세 읽기 구현·격리28PASS 완료. 코드·계약·문서·인계를 같은 구간으로 관리한다.
+- **브랜치·위치:** `feat/raid-recruitment` / `/home/heowork/projects/lostparty-backend`.
+- **소스/실제 개발 구분:** 소스후보177경로에 새프로필을 구현했다. 실제 개발은 기존 source484ca17/이미지fdd256ea·177경로/DB0031로 새프로필 미반영이다. 경로수만으로 계약/반영 완료를 판단하지 않는다. 실제서버 교체는별도승인이다.
 
-[#26 전체10번째 Backend · 실제 개발 반영/자료보존 검증](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6383315604) 게시·댓글 전문/실제 전체 순번 확인 완료. 반영 근거0096319b027c1da9d2ba0b7cf3667171489c5d9d commit·push·원격 일치 확인. 다음 담당 Flutter 정상로그인 소수항목 인수, Backend 직접차이 대응이다.
+## 현재 구현과 다음 담당
 
-[#26 전체12번째 Backend · 표시 계약 제안1](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384757210) 게시·전문/실제전체순번 확인 완료. 제안source f0c7665cf41d1e470be21179791f463585d312c1 push·원격일치 확인, 이전 ebe5934도 함께게시. 다음Flutter 소비차이검토·Backend 합의후구현이다.
+[#26 전체13번째 Flutter 제안1 수용](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384902537) source f0c7665/Flutter84b132a2의 일반상세·프로필분리/목록3필드·본인4필드 소비가능을 기준으로 구현했다. [표시 계약/구현 경계](../features/recruitment/participation/application-display-proposal.md)·[실행검증집계](../features/recruitment/participation/validation/application-display-results.json).
 
-## #26 표시 계약 수용 완료 · 다음 Backend 구현
+- 목록은 같은read-only snapshot에서 페이지별4bulk조회로Character/Account/head/성공본을 적재하고 기존power_value를 사용한다. 저장display·현재분석/retained성공·head없음·소유연결불가/실제자료실패를 구분하며 전체승인판정을 새로계산하지 않는다.
+- 상세는본인·room/실제T/현세대 유효pending우선→최신이력·만료경계읽기expired/GET쓰기0이다. accepted와현재참가는별개다. 기존참가→pending안내→기존신청조건을 따른다.
+- 기본/membership-actions-1/본인신청목록·단건review/쓰기DTO/원ACK·거절·철회를 보존한다. 신규프로필만1MiB상한/413, cursor프로필·현세대격리와페이지별분석시점이다. DB조회예외의내부식별자가코드로노출되던기존변환을503 SERVICE_UNAVAILABLE로정정했다.
+- **다음 Backend:** 검증구간 commit/push·원격확인→정확source/계약/개발미반영을같은Issue에인계한다. 이후실제소비차이에대응한다.
+- **다음 Flutter:** 구현 인계 후 카드전투력/현재분석·본인pending안내/버튼을연결하고 직접영향만검증한다. 실서버인수는정확한개발반영인계후 소수항목으로진행한다. 같은정책재수용/전체시험반복을요청하지않는다.
 
-[#26 전체13번째 Flutter · 신청 표시/본인pending 제안1 수용](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384902537) 수신. 제안source f0c7665cf41d1e470be21179791f463585d312c1의 문서/schema·작성22응답을 현소비코드와 대조해 소비가능·구현차단 차이없음으로 수용했다. Flutter84b132a21f883f3fd312a6b948c1c4790ea3558d commit/push는 자체보고다. 일반상세의 새프로필과 membership-actions-1/기록 anchor는 분리 소비 가능하다. 목록3필드/페이지별 분석시점·본인4필드/참가우선 UX를 수용했고 기본fallback·카드별추가조회는 하지 않는다.
+최종검증은 한호출 고유28PASS(신규17/명령8/membership프로필3,245.41초),기존경고1개다. 후보이미지d24d7cbd…/소스241파일·177/116전체계약·기존component보존,실제개발fdd256ea…미교체/healthy·시험환경정리확인이다. 합성실제Bearer를정상로그인실회원/기기성공으로확대하지않는다.
 
-**다음 Backend:** 합의된 read-only/bulk 구현, 권한/소유revision·역할/본인·C/N/세대·만료/자료실패·페이지 및 기본/membership/쓰기DTO·원ACK/거절·철회 직접회귀,177/116 OpenAPI 전체비교→commit/push·원격확인→정확source/실행계약/개발반영여부 인계. **다음 Flutter:** 구현 인계 후 현재카드의 실제전투력/분석·본인대기안내/버튼 연결·직접검증. 실제서버교체는별도승인이다. 이번수용은문서/코드대조이며 실행·기기 성공/일반오류 원인수정완료가 아니다.
+## 인수·후속 경계
 
-
-[전체11번째 Flutter · 가입 소수 인수 통과/일괄 표시 계약 보완 요청](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384482003) 수신. 정상 로그인 앱에서 후보·허용역할, 신청 성공/목록 반영, 공대장 수락/양쪽 참가·인원·계정 갱신3항목과 신청카드→일반상세 진입이 정상이라는 사용자 보고다. Backend 독립 재현이 아니며 변경/반대파티·C/N 전체 인수로 확대하지 않는다. Flutter 카드디자인 c85715c58558cef93d2b839c427446291b609dbe commit/push·analyze0/관련56PASS 보고, 카드 모양은 사용자 확인 대기다.
-
-**현재 Backend:** 신청 목록/일반 상세의 읽기 계약 제안1을 작성·정적 검증했다. 사용자 실행 범위 확인에서 계약 문서 작성·이슈 제안을 허용받았고, API/실행 OpenAPI 구현은 네이티브 합의 이후다. (1) 공대장 신청목록 한 번 조회/페이지에 선택역할의 마지막성공 전투력·현재분석오류/미확인을 일괄 투영하되 오류와 승인불가 자격을 구분한다. (2) 선택room/실제T/현세대의 본인 pending 상태 최소 투영으로 신청버튼 대신 ‘공대장의 승인 대기중입니다.’를 표시할 수 있게 한다. 만료/철회 후 최신 신청가능 여부·수락 후 참가/기존변경 진입, session/권한 격리·시점/nullable·기존DTO 호환을 닫아 제안한다. 카드별 추가GET/provider/자동갱신·상세별 전체 내신청 조회·오래된 로컬성공 힌트는 사용하지 않는다. 기존 판정/원pending·ACK/거절·철회는 유지한다.
-
-이미 신청한 방의 상세 재진입 후 캐릭터 선택에 일반오류가 표시됐다는 관찰은 HTTP/code 미확인이다. 서버 자격버그로 단정하지 않는다. 신청/참가 중 신청버튼 숨김과 pending 안내는 사용자 요구이며 아직 새 읽기계약/구현에 반영되지 않았다. 신청목록 진입/갱신 정책·실시간동기화/웹소켓/알림은 사용자 지시로 별도 후속이다. 다음 Flutter는 계약 수신 후 정확필드 연결·직접경계 검증이며 같은정책 재수용/전체시험 반복 요청은 없다.
-
-## 다음 Flutter · 소수 항목 정상 로그인 인수
-
-[#26 전체9번째 Flutter 통합연결](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6382646003)의 f89c009f push·신청/변경 두intent 통합·493PASS/분석0은 자체보고이며 Backend 독립 재현이 아니다. 전체9 당시 새 Backend 보완요청은 없었으며, 최신 전체11의 표시계약 요청은 위 항목을 따른다. [실행 계약2](../features/recruitment/participation/candidate-contract.md)를 실제 개발서버에서 사용할 수 있다.
-
-1. 정상 로그인한 앱에서 대상 방/T의 후보·허용 역할과 원후보0/필터후0/조회오류 표시를 확인한다.
-2. 가능한 캐릭터/역할로 신청·공대장 수락과 성공 후 화면 갱신을 확인한다. 실패는 구체 사유/pending 유지와 원ACK 보존을 구분한다.
-3. 변경/반대파티 명시동의 및 생성/상세·일정·완료/해산·C/N 직접 영향도 계속 추적하되 사용자에게는 소수항목씩 나눠 요청한다. 1~5는 수동시험 분량일 뿐 구현/회귀 제외 기준이 아니다.
-
-차이가 발생하면 #26에 재현 구간과 개인정보를 제거한 오류/상태를 회신한다. Backend는 직접 차이에 대응한다. 같은 정책 재수용·이미 확인한 전체 시험 반복은 요청하지 않는다. 전체11의 가입 소수3항목 사용자 인수 보고는 수신했으며 변경·주차교차/전체 실기기 인수는 미완료다.
-
-## 검증 구분·협업 기준
-
-- Backend 격리 고유45PASS(신규19/직접회귀26), Flutter493PASS 자체보고, 실제 반영 HTTP8건·OpenAPI177/116 전체일치는 각각 다른 근거다. 작성21예시·과거시험을 합산하지 않는다.
-- #26 [전체6 계약2/UX수용](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381816954)·[전체7 Backend 구현인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6382258395)·[전체8 수동시험분량 정정](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6382315586)을 보존한다. Issue OPEN, 완료와 인수를 구분한다.
-- #24 검색 후속/추가참가자 탈퇴 재노출, #25 탈퇴·해산 A/B/C 정상 로그인 인수도 직접 영향만 확인한다. [추적표](ISSUE_TRACKER.md)의 별도 담당/미완료를 유지한다.
-- 지원역할·마지막성공 power·정확한 교체Assignment/lease 자기제외·원파티우선/명시이동동의·승인실패pending·24h ACK/거절·철회·IF-001을 보존한다.
-- 사용자 지정 테스트 인증 설정은 실제 장비 인증과 구분하며 fixture 재적용/자료·키·DB 초기화는 하지 않는다.
+- [전체11 Flutter](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384482003)의 기존후보/역할·신청/목록·수락/양쪽갱신3항목/카드일반상세 정상은사용자보고다. 새프로필·변경/반대파티/C/N 전체인수로확대하지않는다.
+- [전체12 Backend 제안](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384757210)의작성22응답/음성15정적검증과실행시험은별개다. 이전Backend45·Flutter493·디자인56/분석0은각보고범위이며중복합산하지않는다.
+- 신청목록진입/재조회시점·실시간/웹소켓/알림은별도후속이며이번에바꾸지않는다. 일반오류는HTTP/code미확인 관찰로보존한다. 이번read profile 구현을그원인수정완료로표시하지않는다.
+- 원pending/24hACK·거절/철회·정확본인/T/세대·IF-001을보존한다. 1~5는사용자수동시험분량이며구현/필요회귀제외기준이아니다.
 
 ## 유지할 경계·독립 후속
 
@@ -51,4 +35,4 @@
 
 ## 다음 채팅의 작업 기준
 
-같은 모집 브랜치에서 #26 전체13 수용 범위의 application-display-1 읽기를 구현·검증한다. 새제품결정/계약재협의를 선행조건으로 추가하지 않으며 일반오류 원인은 code 미확인으로 보존한다. 실제 개발177 반영은 완료했으며 dev/main 통합·운영 배포는 별도 미완료다. 문서 편집/협업 기록이라는 이유로 브랜치를 분리하지 않는다.
+이슈26의 새프로필 구현인계/Flutter 연결회신과 실제 개발미반영을 구분한다. 같은모집브랜치에서 직접차이에대응한다. 실제서버교체/DB·실회원수정·dev/main/운영은별도승인범위다.

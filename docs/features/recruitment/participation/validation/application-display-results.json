@@ -1,0 +1,41 @@
+{
+  "image": "sha256:d24d7cbd3215ff3c6cf40aa86e3a111d84eef347d788c2b2d7d98820a44e4dfc",
+  "source_files": 241,
+  "legacy_paths": 116,
+  "two_cycle_paths": 177,
+  "all_existing_components_preserved": true,
+  "only_two_agreed_get_operations_changed": true,
+  "development_api_replaced": false,
+  "status": "passed",
+  "new_tests_passed": 17,
+  "authored_contract_examples": 22,
+  "invalid_authored_vectors_rejected": 15,
+  "migration_added": false,
+  "test_environment": "disposable PostgreSQL17/internal network/synthetic users and auth keys",
+  "test_runner_source_files_match": 241,
+  "actual_synthetic_bearer_test": true,
+  "normal_login_member_device_acceptance": false,
+  "scope": "application-display-1 read profiles only; SQL error envelope normalization",
+  "warning": "existing Starlette AnyIO BlockingPortal deprecation",
+  "intermediate_findings": [
+    "Synthetic fixture expiry/creation and state/end-time autoflush corrected",
+    "Test HTTP app aligned with runtime no-store middleware",
+    "SQLAlchemy internal code incorrectly exposed on 503; normalized SERVICE_UNAVAILABLE"
+  ],
+  "prior_runs_not_added_to_final_count": true,
+  "direct_regressions_passed": 11,
+  "total_unique_tests_passed": 28,
+  "final_invocation_seconds": 245.41,
+  "final_single_invocation": true,
+  "temporary_containers_network_removed": true,
+  "development_image_unchanged": "sha256:fdd256ea670f250997d8d6d1f188694f2118a9699c1bdb271da68f6ee5f8b98c",
+  "development_api_healthy": true,
+  "bulk_queries_constant_for_applicant_counts": [
+    1,
+    4
+  ],
+  "bulk_queries_constant_for_page_limits": [
+    1,
+    50
+  ]
+}

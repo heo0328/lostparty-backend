@@ -31,6 +31,7 @@ from app.raid_rooms import resume_review, resume_review_schemas
 from app.raid_rooms import completion_correction, completion_correction_schemas as correction_schemas
 from app.raid_rooms import admission_candidates
 from app.raid_rooms.admission_candidate_schemas import AdmissionCandidatePage
+from app.raid_rooms import application_display_schemas
 
 
 from app.raid_rooms import atomic_members, atomic_member_schemas as atomic_schemas
@@ -46,7 +47,8 @@ class CycleRoute(AvailabilityRoute):
         async def bounded(request:Request):
             try:return await parent(request)
             except (AuthError,RequestValidationError,SQLAlchemyError) as error:
-                code=getattr(error,'code','INVALID_REQUEST' if isinstance(error,RequestValidationError) else 'SERVICE_UNAVAILABLE')
+                code=('SERVICE_UNAVAILABLE' if isinstance(error,SQLAlchemyError) else
+                      getattr(error,'code','INVALID_REQUEST'))
                 status=getattr(error,'status',400 if isinstance(error,RequestValidationError) else 503)
                 value=response(request,code,status,getattr(error,'retry_after',None),getattr(error,'retry_at',None))
                 body=json.loads(value.body)
@@ -74,7 +76,7 @@ class CycleRoute(AvailabilityRoute):
         if request.url.path.endswith('/raid-rooms'):return {'scope','group_id','raid_id','difficulty_id','limit','cursor','target_cycle_key','experience_levels'}
         if request.url.path.endswith('/raid-room-memberships'):return {'target_cycle_key','state','limit','cursor','reader_profile'}
         if request.url.path.endswith('/applications') or request.url.path.endswith('/raid-room-applications'):
-            return {'target_cycle_key','state','limit','cursor'}
+            return {'target_cycle_key','state','limit','cursor','reader_profile'} if request.url.path.endswith('/applications') else {'target_cycle_key','state','limit','cursor'}
         if request.url.path.endswith('/raid-room-creation-context'):
             return {'target_cycle_key','character_id','selected_role','items','group_id',
                 'continuation_enabled','next_character_id','next_selected_role'}
@@ -197,13 +199,13 @@ def group_character_candidates(group_id:UUID,principal:Principal,
 def card(room_id:UUID,target_cycle_key:str,principal:OptionalPrincipal=None):return queries.get_card(principal,room_id,target_cycle_key)
 
 
-@router.get('/raid-rooms/{room_id}/detail',response_model=s.OutputContract3GetV2RaidRoomsRoomIdDetail|membership_schemas.DetailProfile,response_model_exclude_unset=True,responses=errors)
-def detail(room_id:UUID,target_cycle_key:str,principal:Principal,reader_profile:Literal['membership-actions-1']|None=None,
+@router.get('/raid-rooms/{room_id}/detail',response_model=s.OutputContract3GetV2RaidRoomsRoomIdDetail|membership_schemas.DetailProfile|application_display_schemas.ApplicationDisplayDetailResponse,response_model_exclude_unset=True,responses=errors)
+def detail(room_id:UUID,target_cycle_key:str,principal:Principal,reader_profile:Literal['membership-actions-1','application-display-1']|None=None,
     membership_id:UUID|None=None,cycle_member_id:UUID|None=None):
-    if reader_profile is not None:
+    if reader_profile == 'membership-actions-1':
         return membership_readers.get(principal,room_id,target_cycle_key,'detail',membership_id=membership_id,cycle_member_id=cycle_member_id)
     if membership_id is not None or cycle_member_id is not None:fail('INVALID_REQUEST',400)
-    return members.detail(principal,room_id,target_cycle_key)
+    return members.detail(principal,room_id,target_cycle_key,reader_profile=reader_profile)
 
 
 @router.get('/me/raid-rooms/{room_id}/plan',response_model=resume_review_schemas.ResumePlanContext|membership_schemas.PlanProfile,response_model_exclude_unset=True,responses=errors)
@@ -225,9 +227,10 @@ def my_applications(principal:Principal,target_cycle_key:str,state:AppState='pen
     return lists.applications(principal,target_cycle_key,state=state,limit=limit,cursor=cursor)
 
 
-@router.get('/raid-rooms/{room_id}/applications',response_model=s.OutputContract3GetV2RaidRoomsRoomIdApplications,responses=errors)
-def applications(room_id:UUID,principal:Principal,target_cycle_key:str,state:AppState='pending',limit:Limit=20,cursor:Cursor=None):
-    return lists.applications(principal,target_cycle_key,rid=room_id,state=state,limit=limit,cursor=cursor)
+@router.get('/raid-rooms/{room_id}/applications',response_model=s.OutputContract3GetV2RaidRoomsRoomIdApplications|application_display_schemas.ApplicationDisplayPageResponse,responses=errors)
+def applications(room_id:UUID,principal:Principal,target_cycle_key:str,state:AppState='pending',limit:Limit=20,cursor:Cursor=None,
+    reader_profile:Literal['application-display-1']|None=None):
+    return lists.applications(principal,target_cycle_key,rid=room_id,state=state,limit=limit,cursor=cursor,reader_profile=reader_profile)
 
 
 @router.get('/me/raid-room-memberships',response_model=s.OutputContract3GetV2MeRaidRoomMemberships|membership_schemas.MembershipPage,responses=errors)

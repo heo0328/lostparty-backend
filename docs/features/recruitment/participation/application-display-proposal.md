@@ -1,12 +1,12 @@
 # 신청 목록·본인 신청 상태 표시 계약 제안1
 
-2026-10-24 / **제안1 소비 합의 완료·미구현**. 작업 구간명: 모집 신청 표시·본인 승인 대기 상태 보완. 브랜치: `feat/raid-recruitment`.
+2026-10-24 / **합의 구현·격리검증 완료·실제 개발 미반영**. 작업 구간명: 모집 신청 표시·본인 승인 대기 상태 보완. 브랜치: `feat/raid-recruitment`.
 
-[#26 전체11번째 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384482003)에 대한 제안이다. 기존 가입 소수3항목 정상 보고와 카드디자인 c85715c5/관련56PASS는 Flutter 보고이며 변경·반대파티/C/N 전체 인수로 확대하지 않는다. 사용자가 목록은 **전투력·분석 표시만 제공**하고 전체 승인 자격은 기존 검토/승인에서 확인하도록 선택했다. 이 문서의 새 필드는 현재 개발 API에 없다.
+[#26 전체11번째 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384482003)에 대한 제안이다. 기존 가입 소수3항목 정상 보고와 카드디자인 c85715c5/관련56PASS는 Flutter 보고이며 변경·반대파티/C/N 전체 인수로 확대하지 않는다. 사용자가 목록은 **전투력·분석 표시만 제공**하고 전체 승인 자격은 기존 검토/승인에서 확인하도록 선택했다. 이 문서의 새 필드는 소스에서 구현·격리검증 완료됐으며 현재 개발 API에는 없다. 신규17/직접회귀11의 고유28PASS, 후보이미지 소스241파일·177/기본116 OpenAPI 전체 일치·기존component 보존을 확인했다.
 
 [#26 전체13번째 Flutter · 신청 표시/본인pending 제안1 수용](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384902537) 수신. 제안source f0c7665cf41d1e470be21179791f463585d312c1의 문서/schema·작성22응답을 현소비코드와 대조해 소비가능·구현차단 차이없음으로 수용했다. Flutter84b132a21f883f3fd312a6b948c1c4790ea3558d commit/push는 자체보고다. 일반상세의 새프로필과 membership-actions-1/기록 anchor는 분리 소비 가능하다. 목록3필드/페이지별 분석시점·본인4필드/참가우선 UX를 수용했고 기본fallback·카드별추가조회는 하지 않는다.
 
-**다음 Backend:** 합의된 read-only/bulk 구현, 권한/소유revision·역할/본인·C/N/세대·만료/자료실패·페이지 및 기본/membership/쓰기DTO·원ACK/거절·철회 직접회귀,177/116 OpenAPI 전체비교→commit/push·원격확인→정확source/실행계약/개발반영여부 인계. **다음 Flutter:** 구현 인계 후 현재카드의 실제전투력/분석·본인대기안내/버튼 연결·직접검증. 실제서버교체는별도승인이다. 이번수용은문서/코드대조이며 실행·기기 성공/일반오류 원인수정완료가 아니다.
+**전체13 수용 당시 인계:** 다음 Backend는 합의된 read-only/bulk 구현, 권한/소유revision·역할/본인·C/N/세대·만료/자료실패·페이지 및 기본/membership/쓰기DTO·원ACK/거절·철회 직접회귀,177/116 OpenAPI 전체비교→commit/push·원격확인→정확source/실행계약/개발반영여부 인계. **다음 Flutter:** 구현 인계 후 현재카드의 실제전투력/분석·본인대기안내/버튼 연결·직접검증. 실제서버교체는별도승인이다. 이번수용은문서/코드대조이며 실행·기기 성공/일반오류 원인수정완료가 아니다.
 
 
 ## 경로·프로필·호환
@@ -70,10 +70,22 @@ UI 우선순위는 **기존 현재 참가관계/권한 → 유효pending → 기
 
 표시/권한/오류는기존envelope를사용한다. 화면의회원·환경/session·room/T·readGeneration·dispose격리를유지한다. 성공원ACK와후속GET실패를분리하고새POST를보내지않는다. **이번제안은목록진입/재조회시점·실시간동기화·웹소켓/알림정책을바꾸지않는다.** 일반오류관찰은HTTP/code미확인으로보존하며이제안으로원인수정완료라고표시하지않는다.
 
-## 예시·정적 검증·합의 후 순서
+## 작성 예시·정적 검증과 실행 구현
 
 [작성 합성 예시](examples/application-display-v1.examples.json)는 전체페이지/일반상세의닫힌성공응답과오류envelope를담는다. 정상success·current error+retained success·missing·unrestricted/missing·소유변경·head없음·자료연결없음·빈목록, pending/경계만료/철회/거절/취소/수락후참가/수락후탈퇴/이력없음을구분한다. 실제서버/회원응답이아니다. [검증도구](tools/validate-application-display.py)는schema와cross-field·음성벡터만검증하며실행API/evaluator/DB시험이아니다.
 
-다음Flutter는새프로필을선택해일반상세를소비가능한지,3필드의시각/누락/오류분리와4필드본인상태·기존membership-actions-1과의분리에서구체차이가있는지회신한다. 같은기존정책재수용/실서버미구현필드의기기시험을요청하지않는다. 합의후Backend는구현·bulkSQL/권한·C/N/세대/만료·기존DTO/ACK회귀·177/116실행OpenAPI전체비교를수행하고commit/push·원격확인후인계한다. 서버교체는별도승인이다.
+제안당시Flutter에새프로필을선택해일반상세를소비가능한지,3필드의시각/누락/오류분리와4필드본인상태·기존membership-actions-1과의분리에서구체차이가있는지회신한다. 같은기존정책재수용/실서버미구현필드의기기시험을요청하지않는다. 합의후Backend는구현·bulkSQL/권한·C/N/세대/만료·기존DTO/ACK회귀·177/116실행OpenAPI전체비교를수행하고commit/push·원격확인후인계한다. 서버교체는별도승인이다.
 
 공식 제안: [#26 전체12번째 Backend · 표시 계약 제안1](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384757210). source f0c7665cf41d1e470be21179791f463585d312c1 commit·push·원격일치 확인 후 게시, 댓글전문/실제전체순번을 재조회했다. 제안 게시 당시 다음Flutter 소비차이 검토였으며, 이후 전체13에서 수용해 다음Backend 구현이다. OPEN을 유지한다.
+
+## 실행 구현의 경계
+
+application-display-1을 목록/일반상세에만 연결했다. 기본 모델·membership-actions-1/단건review/쓰기DTO는 그대로다. 페이지 내 Character/Account·역할head/성공본을 네 번의bulk조회로 적재하고 기존power_value를 재사용한다. 소유연결불가와 head없음, malformed자료/DB실패를 분리한다. 상세는 같은snapshot에서 현재본인/T/현세대 pending우선·최신이력을 읽는다. 새프로필 응답만1MiB상한을 검사하고 초과시413을 반환한다. 기본조회 상한정책을 확대하지 않는다.
+
+실행계약은 소스후보177/기본116이며 실제개발도177이지만 새프로필 반영전 계약이다. 경로수만으로 동일계약/배포완료라고 표시하지 않는다. [구현 검증집계](validation/application-display-results.json)는 작성22응답·음성15정적검증과 별도로 관리한다. 신규/직접회귀는 개발과 분리된 PostgreSQL·합성회원/키에서 실행하며 정상로그인 사용자/기기 인수·운영성능과 구분한다. 실제서버교체·DB migration·기존회원자료/키·dev/main/운영배포는 이번구간에서 수행하지 않는다.
+
+최종 실행은 한 번의 pytest 호출에서 고유28PASS(245.41초, 신규17·기존명령8·membership프로필3)다. 중간시험을 합산하지 않는다. 합성 실제Bearer/외부권한·취소session, 역할별retained/현재오류/정밀값·소유연결/자료실패, 본인/T/현세대·유효pending우선/만료경계·수락후참가, 페이지중복/누락·cursor scope/stale,1→4신청자와limit1/50의SQL횟수불변,응답상한/기본응답보존을 확인했다. 상한분기는 합성64byte설정으로검증했으며실회원성능/실제1MiB부하인수와구분한다. 신규프로필뿐아니라기존명령/거절·철회/원ACK·회원기록프로필을직접회귀했다.
+
+기존SQL예외가503에내부식별자code(e3q8)를노출하는오류를 발견해 SERVICE_UNAVAILABLE로정정했다. 그외중간실패는합성만료/생성시각·종료시각autoflush와시험앱no-store설정 보완이다. 최종경고는기존Starlette/AnyIO BlockingPortal1개다. 후보이미지d24d7cbd…는검증용이고실제서버fdd256ea…는미교체/healthy로읽기확인했다. 시험runner/DB/internal network를정리했다. 실제기기/회원명령과서버반영·운영은별도미완료다.
+
+현재 다음담당은 Flutter 카드표시/본인pending안내·버튼 연결/직접검증이며 Backend는 소비차이에대응한다. 전체13 소비수용을다시요청하지않는다. 실제서버 미반영이므로 새프로필의실회원/기기인수는정확한개발반영인계이후다.

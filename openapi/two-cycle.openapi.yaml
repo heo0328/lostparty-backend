@@ -27586,6 +27586,23 @@
               ],
               "title": "Cursor"
             }
+          },
+          {
+            "name": "reader_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "const": "application-display-1",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Reader Profile"
+            }
           }
         ],
         "responses": {
@@ -27594,7 +27611,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OutputContract3GetV2RaidRoomsRoomIdApplications"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/OutputContract3GetV2RaidRoomsRoomIdApplications"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ApplicationDisplayPageResponse"
+                    }
+                  ],
+                  "title": "Response Contract3 Get  V2 Raid-Rooms Room Id Applications"
                 }
               }
             },
@@ -29595,8 +29620,11 @@
             "schema": {
               "anyOf": [
                 {
-                  "const": "membership-actions-1",
-                  "type": "string"
+                  "type": "string",
+                  "enum": [
+                    "membership-actions-1",
+                    "application-display-1"
+                  ]
                 },
                 {
                   "type": "null"
@@ -29652,6 +29680,9 @@
                     },
                     {
                       "$ref": "#/components/schemas/MembershipActionDetailProfile"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ApplicationDisplayDetailResponse"
                     }
                   ],
                   "title": "Response Contract3 Get  V2 Raid-Rooms Room Id Detail"
@@ -69545,6 +69576,426 @@
           "target_generation"
         ],
         "title": "AdmissionCandidateScope"
+      },
+      "ApplicationDisplayAnalysis": {
+        "properties": {
+          "version": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Version"
+          },
+          "saved_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Saved At"
+          },
+          "analyzed_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Analyzed At"
+          },
+          "integrity_status": {
+            "type": "string",
+            "enum": [
+              "clean",
+              "review",
+              "error",
+              "unavailable"
+            ],
+            "title": "Integrity Status"
+          },
+          "issues": {
+            "items": {
+              "$ref": "#/components/schemas/AnalysisIssue"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Issues"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "version",
+          "saved_at",
+          "analyzed_at",
+          "integrity_status",
+          "issues"
+        ],
+        "title": "ApplicationDisplayAnalysis"
+      },
+      "ApplicationDisplayDetail": {
+        "properties": {
+          "room": {
+            "$ref": "#/components/schemas/BCard"
+          },
+          "settings": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BSettings"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "members_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Members Revision"
+          },
+          "members": {
+            "items": {
+              "$ref": "#/components/schemas/BRoomMember"
+            },
+            "type": "array",
+            "title": "Members"
+          },
+          "my_membership": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BAppRaidRoomsAdmissionSchemasMyMembership"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "plan_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Plan Revision"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/Permissions3"
+          },
+          "access": {
+            "$ref": "#/components/schemas/BAccess"
+          },
+          "leadership": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Leadership"
+          },
+          "my_target_role": {
+            "$ref": "#/components/schemas/MyTargetRole"
+          },
+          "formation_slots": {
+            "items": {
+              "$ref": "#/components/schemas/FormationSlot"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "minItems": 0,
+            "title": "Formation Slots"
+          },
+          "formation_history": {
+            "items": {
+              "$ref": "#/components/schemas/FormationSlot"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "minItems": 0,
+            "title": "Formation History"
+          },
+          "unplaced_assignments": {
+            "items": {
+              "$ref": "#/components/schemas/UnplacedAssignment"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "minItems": 0,
+            "title": "Unplaced Assignments"
+          },
+          "my_application": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ApplicationDisplayOwnApplication"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "room",
+          "settings",
+          "members_revision",
+          "members",
+          "my_membership",
+          "plan_revision",
+          "permissions",
+          "access",
+          "leadership",
+          "my_target_role",
+          "formation_slots",
+          "formation_history",
+          "unplaced_assignments",
+          "my_application"
+        ],
+        "title": "ApplicationDisplayDetail"
+      },
+      "ApplicationDisplayDetailResponse": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ApplicationDisplayDetail"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "ApplicationDisplayDetailResponse"
+      },
+      "ApplicationDisplayItem": {
+        "properties": {
+          "application_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Application Id"
+          },
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "state": {
+            "type": "string",
+            "title": "State"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "expires_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expires At"
+          },
+          "ended_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ended At"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "selected_role": {
+            "$ref": "#/components/schemas/SelectedRole"
+          },
+          "display": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Display"
+          },
+          "admission_origin": {
+            "$ref": "#/components/schemas/BOrigin"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "target_generation": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "comparison": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BPowerComparison"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "analysis": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ApplicationDisplayAnalysis"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "display_reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "APPLICATION_CONTEXT_CHANGED",
+                  "CHARACTER_DATA_UNAVAILABLE"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Reason"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "application_id",
+          "room_id",
+          "revision",
+          "state",
+          "created_at",
+          "expires_at",
+          "ended_at",
+          "character_id",
+          "selected_role",
+          "display",
+          "admission_origin",
+          "target_cycle_key",
+          "target_generation",
+          "comparison",
+          "analysis",
+          "display_reason"
+        ],
+        "title": "ApplicationDisplayItem"
+      },
+      "ApplicationDisplayOwnApplication": {
+        "properties": {
+          "application_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Application Id"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "accepted",
+              "rejected",
+              "withdrawn",
+              "expired",
+              "cancelled"
+            ],
+            "title": "State"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "application_id",
+          "revision",
+          "state",
+          "expires_at"
+        ],
+        "title": "ApplicationDisplayOwnApplication"
+      },
+      "ApplicationDisplayPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ApplicationDisplayItem"
+            },
+            "type": "array",
+            "maxItems": 50,
+            "title": "Items"
+          },
+          "applications_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Applications Revision"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "items",
+          "applications_revision",
+          "next_cursor",
+          "evaluated_at"
+        ],
+        "title": "ApplicationDisplayPage"
+      },
+      "ApplicationDisplayPageResponse": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ApplicationDisplayPage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "ApplicationDisplayPageResponse"
       }
     },
     "securitySchemes": {

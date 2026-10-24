@@ -13,7 +13,9 @@ from app.groups.models import GroupMembership
 from app.raid_rooms import completed_room_lifecycle as archive
 
 
-def applications(principal,key,*,rid=None,state='pending',limit=20,cursor=None):
+def applications(principal,key,*,rid=None,state='pending',limit=20,cursor=None,reader_profile=None):
+    from app.raid_rooms import application_display as display, application_display_schemas as display_schemas
+    if reader_profile is not None and (reader_profile != display.PROFILE or rid is None):fail('INVALID_REQUEST',400)
     if state not in ('pending','accepted','rejected','withdrawn','expired','cancelled','all') or type(limit) is not int or not 1<=limit<=50:fail('INVALID_REQUEST',400)
     with base.snapshot(principal) as (db,uid,stamp):
         target=cycles.target(stamp,key)
@@ -34,10 +36,14 @@ def applications(principal,key,*,rid=None,state='pending',limit=20,cursor=None):
         expired_ids=list(db.scalars(select(all_rows.c.id).where(all_rows.c.state=='pending',all_rows.c.expires_at<=stamp).order_by(all_rows.c.id)))
         revision=digest([head,expired_ids and list(map(str,expired_ids)),target.current.isoformat(),limit,state])
         binding=['cycle-applications',str(uid),str(principal[1].id),str(rid),key]
+        if reader_profile is not None:
+            binding.append(reader_profile)
+            revision=digest([revision,str(row.id),row.generation])
         offset=cursor_decode(cursor,binding,revision) if cursor else 0
         rows=list(db.scalars(query.order_by(Application.created_at.desc(),Application.id.desc()).offset(offset).limit(limit+1)))
         token=cursor_encode(dict(scope=binding,revision=revision,offset=offset+limit)) if len(rows)>limit else None
         items=[]
+        projected=display.projections(db,rows[:limit],row) if reader_profile is not None else {}
         for app in rows[:limit]:
             actual=db.get(RoomCycle,app.cycle_id)
             items.append(dict(application_id=app.id,room_id=app.room_id,revision=app.revision,
@@ -46,8 +52,11 @@ def applications(principal,key,*,rid=None,state='pending',limit=20,cursor=None):
                 selected_role=app.selection['selected_role'],display=app.display,
                 admission_origin=dict(scope=app.origin_scope,group_id=app.origin_group_id),target_cycle_key=actual.cycle_key,
                 target_generation=app.generation))
-        return wire.OutputContract3GetV2RaidRoomsRoomIdApplications.model_validate(dict(scope=scope(stamp,key,row),
+            if reader_profile is not None:items[-1].update(projected[app.id])
+        model=display_schemas.ApplicationDisplayPageResponse if reader_profile is not None else wire.OutputContract3GetV2RaidRoomsRoomIdApplications
+        result=model.model_validate(dict(scope=scope(stamp,key,row),
             data=dict(items=items,applications_revision=head,next_cursor=token,evaluated_at=stamp))).model_dump(mode='json')
+        return display.bounded(result) if reader_profile is not None else result
 
 
 def memberships(principal,key,state='current',limit=20,cursor=None):

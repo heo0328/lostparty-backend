@@ -2480,3 +2480,15 @@ NEXT_WORK/AI_CONTEXT/추적표·현재계약/설계의 ‘2가입 연결·변경
 **다음 Backend:** 합의된 read-only/bulk 구현, 권한/소유revision·역할/본인·C/N/세대·만료/자료실패·페이지 및 기본/membership/쓰기DTO·원ACK/거절·철회 직접회귀,177/116 OpenAPI 전체비교→commit/push·원격확인→정확source/실행계약/개발반영여부 인계. **다음 Flutter:** 구현 인계 후 현재카드의 실제전투력/분석·본인대기안내/버튼 연결·직접검증. 실제서버교체는별도승인이다. 이번수용은문서/코드대조이며 실행·기기 성공/일반오류 원인수정완료가 아니다.
 
 이번은 회신확인/문서기록으로 API·실행OpenAPI·서버/DB/기기·합성시험을 변경/반복하지 않았다. 별도 수신확인 댓글 없이 문서와Issue상단 다음담당을 갱신한다. 실제 구현/인계 회신은 검증구간 게시 후 같은Issue에 남긴다.
+
+
+## 2026-10-24 — #26 신청 표시 프로필 읽기 구현·직접검증
+
+작업 구간명: 모집 신청 표시·본인 승인 대기 상태 보완. 작업 내용: 전체13 합의에 따른 application-display-1 모델·목록bulk/상세본인신청/프로필라우팅·cursor/상한·실행계약·시험. 브랜치/위치: feat/raid-recruitment / 본 프로젝트. 미게시 e7fd89e 수용기록도 같은 이력으로 유지한다.
+
+기본DTO를 상속한 별도closed ApplicationDisplay 모델을 두GET의선택프로필에연결했다. 페이지4bulk조회·동일snapshot·기존순수power_value로 역할별current/retained·시각/version/issues/소유연결을분리하고 실제손상/DB실패는503으로표현한다. 상세는본인room/T/현세대의pending우선·최신이력·만료경계읽기expired이며자료쓰기없다. 기존기본/회원기록프로필·단건review/본인신청목록·명령은보존한다. 신규프로필1MiB상한/413을실제연결했다. migration추가/실제개발서버교체없음이다.
+
+시험에서 기존CycleRoute가 SQLAlchemyError.code 내부식별자(e3q8)를503 업무코드로사용하는결함을발견했다. DB예외를명시적으로SERVICE_UNAVAILABLE로변환하도록같은경계에서수정했다. 별도합성fixture는expires>created 제약/종료시각설정전autoflush,미들웨어없는시험HTTP앱을 실제no-store와맞춰보완했다. 중간통과/실패는최종고유시험에더하지않으며실행결과/소스게시·회신은아래후속기록을따른다.
+
+
+최종 단일호출 고유28PASS(신규17·기존명령8·membership프로필3),245.41초/기존Starlette AnyIO경고1. [집계](../features/recruitment/participation/validation/application-display-results.json)에 소스241파일·최종runner바이트일치·후보d24d7cbd…/기본116·신규177 OpenAPI전체일치·모든기존component/쓰기shape보존/두GET만변경을기록했다. 합성64byte상한분기/기본보존·1→4신청자/limit1·50의SQL횟수불변, 실제합성Bearer401/403/200·취소session/승인후참가와DB불변/페이지·상태경계를확인했다. 작성22예시/음성15·과거시험/중간통과를합산하지않는다. 시험용runner/tmpfsDB/internal network를정리했고실제API fdd256ea…미교체/healthy·기존API/DB만남음을읽기확인했다. 운영/실회원·기기/실서버반영미실행이다. 게시소스·공식회신은후속기록한다.
