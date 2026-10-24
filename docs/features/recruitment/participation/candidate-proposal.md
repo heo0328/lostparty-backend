@@ -1,4 +1,4 @@
-> 제안1 보관 기준: 이 문서의 신청 전용·전투력 후보제외 밖 범위는 [#26 전체3번째 Flutter 최신 확정](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381254676)으로 대체됐습니다. [전체4번째 Backend 검증 차이 회신](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381295804) 이후 보완 계약2가 다음 작업이며, 이 제안은 실행 API가 아닙니다. 현재 담당/상태는 [NEXT_WORK](../../../project/NEXT_WORK.md)를 따릅니다.
+> 제안1 보관 기준: 이 문서의 신청 전용·전투력 후보제외 밖 범위는 [#26 전체3번째 Flutter 최신 확정](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381254676)으로 대체됐습니다. [전체4번째 Backend 검증 차이 회신](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381295804) 이후 [보완 계약2](candidate-contract.md)를 새 검토 기준으로 작성했으며, 이 제안은 실행 API가 아닙니다. 현재 담당/상태는 [NEXT_WORK](../../../project/NEXT_WORK.md)를 따릅니다.
 
 # 신청 자격 검증·본인 캐릭터 후보 조회 제안1
 

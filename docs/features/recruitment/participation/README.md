@@ -30,7 +30,7 @@ admission-context는 선택한 실제T와 intent에 필요한 현재 자격·조
 
 ## 상태와 문서 연결
 
-#26의 기존 신청 구성검사 보완은 source6e0063c·격리25PASS/개발 미반영입니다. [후보조회 제안1](candidate-proposal.md)은 최신 신청·캐릭터변경/역할전투력 요구 이전의 미합의 초안입니다. [구현/검증 기록](../../../archive/work-records/features/recruitment/development/ISSUE_26_APPLICATION_VALIDATION_DEVELOPMENT.md)과 [검증 집계](validation/application-validation-results.json)를 보존하며, 보완 계약2·합의/신규읽기 구현은 다음 구간입니다.
+#26의 기존 신청 구성검사 보완은 source6e0063c·격리25PASS/개발 미반영이다. 최신 신청·캐릭터변경/역할전투력 요구는 [통합 자격 설계](eligibility-design.md)와 [보완 계약2](candidate-contract.md)를 검토 기준으로 사용한다. 두 문서는 설계/미합의·미구현이며 [제안1](candidate-proposal.md)은 이전 범위로 보존한다. [이전 구현/검증 기록](../../../archive/work-records/features/recruitment/development/ISSUE_26_APPLICATION_VALIDATION_DEVELOPMENT.md)·[검증 집계](validation/application-validation-results.json)는 신규 후보/변경 통합요구 완료 근거가 아니다.
 
 이 문서는 현재 정책·계약의 설명이다. Backend 구현·Flutter 적용·합성 시험·실회원/기기 인수·운영 완료는 각각 구분하며, 최신 담당과 남은 작업은 [NEXT_WORK](../../../project/NEXT_WORK.md)와 [이슈 추적표](../../../project/ISSUE_TRACKER.md)를 따른다. 과거 상세 작업은 [문서 대응표](../../../engineering/documentation/README.md)로 추적한다.
 

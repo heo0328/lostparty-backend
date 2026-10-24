@@ -2391,3 +2391,14 @@ pending에도 기존 확정구성/정원·role/class 검사를 적용하고 읽�
 브랜치 통합 구간 완료: 병합 `ebadab8797be8ad0f84ffa63ae9244b38fd6d3f2`를 feat/raid-recruitment에 commit/push하고 실제 원격 SHA 일치를 확인했다. 병합의 두 부모/조상으로 문서03eee4e와 기능1cc25bc 전체 이력이 보존됨을 검증했다. 현재 프로젝트 checkout은 feat/raid-recruitment 하나이며 임시 /tmp/lostparty-application-work는 제거했다. 원격 문서 브랜치는 없었고, 전부 통합된 로컬 docs/document-organization만 `git branch -d`로 삭제했다. dev/main·다른 미완료 브랜치는 유지했다.
 
 검증: 문서205개·상대링크/앵커2215개, 기준자료171개·보관원문128개·고정JSON20개·API196동작 대응/JSON·Python/도구·Docker경로 PASS. 게시된 기능1cc25bc 대비 app/alembic/openapi/의존성/실행compose·Dockerfile 변경0, 신청검사25시험 소스/신규JSON3개 바이트 일치. 문서 이동에 따른 기존시험 자료 경로만 문서정리 커밋대로 반영했다. runtime/DB 시험·서버 재시작은 실행하지 않았으며 기존25PASS를 재실행한 것으로 표시하지 않는다. 신규 후보 설계/개발반영도 진행하지 않았다. 이후 기능·계약·기록은 현재 모집 브랜치에 함께 누적한다.
+
+
+## 2026-10-24 — #26 통합 자격 기획·설계/보완 계약2
+
+작업 구간명: 모집 신청·캐릭터 변경 통합 자격 보완(#26). 작업 내용: 최신2/3/4 회신과 실제 power_comparison/RolePowerSuccess.capture·_slot/변경prepare/replacing/weekly lease를 정적 대조해 공통판정·문맥/쓰기·읽기·시험/인계 순서로 설계, 닫힌 계약2/schema/작성 예시 제시. 브랜치/위치: feat/raid-recruitment / 본 프로젝트 경로. 이 구간에서 앱/실행OpenAPI·DB migration/서버·키·실회원 자료는 변경하지 않았다.
+
+[통합 설계](../features/recruitment/participation/eligibility-design.md)·[보완 계약2](../features/recruitment/participation/candidate-contract.md). apply/change_character 신규공통GET·현재본인actor 서버도출, 일반dealer/지원4직업 양역할·ROLE_NOT_SUPPORTED, role별저장성공본·최소값/시각·issues/retained정책, 정확Assignment/lease 자기제외·8인 원파티우선→반대파티, 사유 우선순위·exclusion_summary/원후보0/필터후0/missing, 내용지문기반HMAC페이지·단일read-only bulk조회 설계다. 임의TTL/경고일괄차단·전투력0대체/provider갱신/원장쓰기·공격대전체class총량 제한은 신설하지 않는다. 이전 source25PASS/기존 설계1은 보존·새범위완료와구분한다.
+
+정적검증: jsonschema Draft202012+형식·별도 의미불변식으로 작성 예시21개(일반/복수역할·누락/미달/최소없음·retained성공/새head실패/경고·자기제외/반대파티·C/N·2페이지), 비정상 응답16개·snapshot혼합거절을 확인했다. 실제 DB/evaluator/HTTP 시험·성능계측이 아니며 수치를 기존25시험에 더하지 않는다. 문서 참조/원문/고정JSON 검사는 별도 통과 기록을 따른다.
+
+다음은 같은26에 보완 제안2를 게시해 구체 소비차이를 확인하고 합의 뒤 공통검증/변경원자성→후보읽기→직접회귀/실행계약·게시/연결인계다. 후보GET/신규 role검사는 미합의/미구현·실제 개발API176/DB0031 기존상태, dev/main/운영/자료삭제 없음. 게시/회신 링크와 commit/push는 후속 기록한다.

@@ -7,3 +7,6 @@
 - [후보조회 제안1 작성 예시](application-character-candidates.proposal.examples.json) — 합성 작성 자료/실제 응답 아님
 
 [전체 자료 대응표](../../../../engineering/documentation/README.md)
+
+- [신청·변경 보완 계약2 schema](candidate-contract-v2.schema.json) — 검토 제안/실행계약 아님
+- [보완 계약2 작성 예시21개](candidate-contract-v2.examples.json) — 합성 정적 자료/실제 응답 아님

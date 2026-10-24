@@ -1,0 +1,724 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lostparty:admission-character-candidates:proposal-2",
+  "title": "Admission candidates proposal2 — not runtime API",
+  "type": "object",
+  "properties": {
+    "scope": {
+      "$ref": "#/$defs/Scope"
+    },
+    "data": {
+      "$ref": "#/$defs/Data"
+    }
+  },
+  "required": [
+    "scope",
+    "data"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "Scope": {
+      "properties": {
+        "server_now": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Server Now"
+        },
+        "current_cycle_key": {
+          "$ref": "#/$defs/CycleKey"
+        },
+        "target_cycle_key": {
+          "$ref": "#/$defs/CycleKey"
+        },
+        "playable_from": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Playable From"
+        },
+        "phase": {
+          "$ref": "#/$defs/Phase1"
+        },
+        "target_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "policy_version": {
+          "type": "string",
+          "const": "two-cycle-contract-4",
+          "title": "Policy Version"
+        },
+        "room_cycle_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "server_now",
+        "current_cycle_key",
+        "target_cycle_key",
+        "playable_from",
+        "phase",
+        "target_revision",
+        "policy_version",
+        "room_cycle_id",
+        "target_generation"
+      ],
+      "title": "Scope"
+    },
+    "CycleKey": {
+      "type": "string",
+      "format": "date",
+      "title": "CycleKey",
+      "description": "Canonical Wednesday date in KST; server validates target is C or N. No implicit rollover."
+    },
+    "Phase1": {
+      "type": "string",
+      "enum": [
+        "current",
+        "future"
+      ],
+      "title": "Phase1"
+    },
+    "Version": {
+      "type": "integer",
+      "maximum": 2147483647.0,
+      "minimum": 1.0,
+      "title": "Version",
+      "description": "Strict integer at server; booleans/floats rejected."
+    },
+    "PowerComparison": {
+      "properties": {
+        "selected_role": {
+          "type": "string",
+          "enum": [
+            "dealer",
+            "support"
+          ],
+          "title": "Selected Role"
+        },
+        "requirement": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 32,
+              "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Requirement"
+        },
+        "actual": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 32,
+              "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Actual"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "unrestricted",
+            "missing",
+            "below",
+            "meets"
+          ],
+          "title": "State"
+        },
+        "source": {
+          "type": "string",
+          "const": "flutter_analysis",
+          "title": "Source"
+        },
+        "trust": {
+          "type": "string",
+          "const": "client_submitted",
+          "title": "Trust"
+        },
+        "current_summary_version": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Current Summary Version"
+        },
+        "success_summary_version": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "maximum": 2147483647.0,
+              "minimum": 1.0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Success Summary Version"
+        },
+        "power_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Power Revision"
+        },
+        "observed_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Observed At"
+        },
+        "success_saved_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Success Saved At"
+        },
+        "success_issues": {
+          "items": {
+            "$ref": "#/$defs/AnalysisIssue"
+          },
+          "type": "array",
+          "title": "Success Issues"
+        },
+        "current_issues": {
+          "items": {
+            "$ref": "#/$defs/AnalysisIssue"
+          },
+          "type": "array",
+          "title": "Current Issues"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "selected_role",
+        "requirement",
+        "actual",
+        "state",
+        "source",
+        "trust",
+        "current_summary_version",
+        "success_summary_version",
+        "power_revision",
+        "observed_at",
+        "success_saved_at",
+        "success_issues",
+        "current_issues"
+      ],
+      "title": "PowerComparison"
+    },
+    "AnalysisIssue": {
+      "properties": {
+        "code": {
+          "type": "string",
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Z0-9_]+$",
+          "title": "Code"
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "warning",
+            "error"
+          ],
+          "title": "Severity"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "code",
+        "severity"
+      ],
+      "title": "AnalysisIssue"
+    },
+    "RoleEvaluation": {
+      "type": "object",
+      "properties": {
+        "supported": {
+          "type": "boolean"
+        },
+        "allowed": {
+          "type": "boolean"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "enum": [
+                "ROLE_NOT_SUPPORTED",
+                "RAID_ITEM_LEVEL_REQUIRED",
+                "COMBAT_POWER_REQUIRED",
+                "WEEKLY_ALREADY_COMPLETED",
+                "WEEKLY_ALREADY_PARTICIPATING",
+                "ROOM_FULL",
+                "ROOM_COMPOSITION_CONFLICT"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "comparison": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PowerComparison"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "supported",
+        "allowed",
+        "reason",
+        "comparison"
+      ],
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "properties": {
+            "supported": {
+              "const": false
+            },
+            "allowed": {
+              "const": false
+            },
+            "reason": {
+              "const": "ROLE_NOT_SUPPORTED"
+            },
+            "comparison": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "supported": {
+              "const": true
+            },
+            "allowed": {
+              "const": true
+            },
+            "reason": {
+              "type": "null"
+            },
+            "comparison": {
+              "$ref": "#/$defs/PowerComparison"
+            }
+          }
+        },
+        {
+          "properties": {
+            "supported": {
+              "const": true
+            },
+            "allowed": {
+              "const": false
+            },
+            "reason": {
+              "enum": [
+                "RAID_ITEM_LEVEL_REQUIRED",
+                "COMBAT_POWER_REQUIRED",
+                "WEEKLY_ALREADY_COMPLETED",
+                "WEEKLY_ALREADY_PARTICIPATING",
+                "ROOM_FULL",
+                "ROOM_COMPOSITION_CONFLICT"
+              ]
+            },
+            "comparison": {
+              "$ref": "#/$defs/PowerComparison"
+            }
+          }
+        }
+      ]
+    },
+    "Candidate": {
+      "type": "object",
+      "properties": {
+        "character_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "registration_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "server_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "character_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "class_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "item_level": {
+          "type": "string",
+          "maxLength": 64,
+          "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+        },
+        "roles": {
+          "type": "object",
+          "properties": {
+            "dealer": {
+              "$ref": "#/$defs/RoleEvaluation"
+            },
+            "support": {
+              "$ref": "#/$defs/RoleEvaluation"
+            }
+          },
+          "required": [
+            "dealer",
+            "support"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "character_id",
+        "registration_id",
+        "server_name",
+        "character_name",
+        "class_name",
+        "item_level",
+        "roles"
+      ],
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "properties": {
+            "roles": {
+              "properties": {
+                "dealer": {
+                  "properties": {
+                    "allowed": {
+                      "const": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "roles": {
+              "properties": {
+                "support": {
+                  "properties": {
+                    "allowed": {
+                      "const": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Assignment": {
+      "type": "object",
+      "properties": {
+        "assignment_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "item_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "round_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "character_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "selected_role": {
+          "enum": [
+            "dealer",
+            "support"
+          ]
+        },
+        "party_no": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2
+        },
+        "slot_no": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4
+        }
+      },
+      "required": [
+        "assignment_id",
+        "revision",
+        "item_id",
+        "round_id",
+        "character_id",
+        "selected_role",
+        "party_no",
+        "slot_no"
+      ],
+      "additionalProperties": false
+    },
+    "Actor": {
+      "type": "object",
+      "properties": {
+        "membership_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "cycle_member_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "cycle_member_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "assignments": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 200,
+          "items": {
+            "$ref": "#/$defs/Assignment"
+          }
+        }
+      },
+      "required": [
+        "membership_id",
+        "cycle_member_id",
+        "cycle_member_revision",
+        "assignments"
+      ],
+      "additionalProperties": false
+    },
+    "Exclusion": {
+      "type": "object",
+      "properties": {
+        "reason": {
+          "enum": [
+            "RAID_ITEM_LEVEL_REQUIRED",
+            "COMBAT_POWER_REQUIRED",
+            "WEEKLY_ALREADY_COMPLETED",
+            "WEEKLY_ALREADY_PARTICIPATING",
+            "ROOM_FULL",
+            "ROOM_COMPOSITION_CONFLICT"
+          ]
+        },
+        "detail": {
+          "anyOf": [
+            {
+              "enum": [
+                "missing",
+                "below"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "character_count": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "reason",
+        "detail",
+        "character_count"
+      ],
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "properties": {
+            "reason": {
+              "const": "COMBAT_POWER_REQUIRED"
+            },
+            "detail": {
+              "enum": [
+                "missing",
+                "below"
+              ]
+            }
+          }
+        },
+        {
+          "properties": {
+            "reason": {
+              "enum": [
+                "RAID_ITEM_LEVEL_REQUIRED",
+                "WEEKLY_ALREADY_COMPLETED",
+                "WEEKLY_ALREADY_PARTICIPATING",
+                "ROOM_FULL",
+                "ROOM_COMPOSITION_CONFLICT"
+              ]
+            },
+            "detail": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    },
+    "Data": {
+      "type": "object",
+      "properties": {
+        "room_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "intent": {
+          "enum": [
+            "apply",
+            "change_character"
+          ]
+        },
+        "eligibility_policy_version": {
+          "const": "admission-eligibility-2"
+        },
+        "actor": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Actor"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evaluated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "catalog_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "snapshot_token": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "raw_candidate_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "eligible_candidate_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "exclusion_summary": {
+          "type": "array",
+          "maxItems": 7,
+          "items": {
+            "$ref": "#/$defs/Exclusion"
+          }
+        },
+        "items": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "$ref": "#/$defs/Candidate"
+          }
+        },
+        "next_cursor": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "room_id",
+        "intent",
+        "eligibility_policy_version",
+        "actor",
+        "evaluated_at",
+        "catalog_version",
+        "snapshot_token",
+        "raw_candidate_count",
+        "eligible_candidate_count",
+        "exclusion_summary",
+        "items",
+        "next_cursor"
+      ],
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "properties": {
+            "intent": {
+              "const": "apply"
+            },
+            "actor": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "intent": {
+              "const": "change_character"
+            },
+            "actor": {
+              "$ref": "#/$defs/Actor"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

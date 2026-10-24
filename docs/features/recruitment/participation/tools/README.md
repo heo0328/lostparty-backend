@@ -5,3 +5,5 @@
 - [validate-session-display.py](validate-session-display.py)
 
 [전체 자료 대응표](../../../../engineering/documentation/README.md)
+
+[보완 계약2 정적 검증](validate-candidate-contract.py)은 작성 예시·불변식만 검사한다. `python3 docs/features/recruitment/participation/tools/validate-candidate-contract.py`로 실행하며 실제 API/DB 시험을 수행하지 않는다.
