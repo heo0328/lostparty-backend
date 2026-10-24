@@ -51,3 +51,5 @@
 ## 신규 신청 검증·후보조회 후속
 
 [#26](https://github.com/heo0328/lostparty-backend/issues/26): #13 전체142/143의 직접 보완, [전체145번째 Backend 요청회신/후속연결](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6381088415). pending 확정구성검사 보완 구현/격리검증, 후보 일괄읽기 closed 계약제안·미합의/미구현. 다음 Flutter 소비차이 회신/Backend 검증 인계. 기존 개발176/DB0031·통합 인수 미완료/원본 요구 보존·OPEN. 실제 반영은 별도 승인 구간이다.
+
+게시 source `6e0063c7c5a3ff88612bbe1c9b01f50b7408ce2a` commit/push·원격 SHA 일치 확인 후 [#26 전체1번째 Backend · 구성검사 구현/검증·후보계약 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381161170) 전문·전체 순번을 재조회했다. 다음 Flutter는 계약 소비차이 회신, Backend는 차이 대응/합의된 후보조회 구현이다. 기존 API67322372…·DB컨테이너 둘 다 healthy/health200·DB0031을 읽기 확인했고 미교체다. 시험용 runner/DB/internal network를 정리해 기존 API/DB만 남겼다. 새 구성검사 실서버/회원 인수는 별도 개발 반영 후다.

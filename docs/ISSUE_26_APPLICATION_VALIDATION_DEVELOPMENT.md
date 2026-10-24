@@ -27,3 +27,6 @@ API의 필드/상태코드/component는 불변이며 two-cycle OpenAPI의 기존
 후보계약 작성 예시3개와 추가필드/필수누락/역할 reason 일관성·허용역할0/잘못 bool/cursor상한/nullable 금지8개 거절을 closed schema로 검증했다. 이는 제안 정적 검사이며 신규 endpoint 실행/실회원 자료가 아니다.
 
 후보 API 이미지에서 app/alembic Python235파일이 workspace와 일치하고 기본116/두주차176 OpenAPI 전체 일치, 모든 기존 component/DTO 보존·기존2동작 description만 변경을 확인했다. 신규 후보GET은 runtime 계약/라우터에 없다. 실제 개발 API/DB는 교체/이행하지 않았으며 테스트환경 정리 후 실제 상태를 별도 읽기 확인한다.
+
+
+게시 source `6e0063c7c5a3ff88612bbe1c9b01f50b7408ce2a` commit/push·원격 SHA 일치 확인 후 [#26 전체1번째 Backend · 구성검사 구현/검증·후보계약 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381161170) 전문·전체 순번을 재조회했다. 다음 Flutter는 계약 소비차이 회신, Backend는 차이 대응/합의된 후보조회 구현이다. 기존 API67322372…·DB컨테이너 둘 다 healthy/health200·DB0031을 읽기 확인했고 미교체다. 시험용 runner/DB/internal network를 정리해 기존 API/DB만 남겼다. 새 구성검사 실서버/회원 인수는 별도 개발 반영 후다.
