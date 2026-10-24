@@ -2435,3 +2435,12 @@ pending에도 기존 확정구성/정원·role/class 검사를 적용하고 읽�
 작업 구간명: 모집 신청·캐릭터 변경 통합 자격 보완. 작업 내용: [전체8번째 Flutter 사용자 정정](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6382315586) 수신·계획/인계 표현 정리. 브랜치: feat/raid-recruitment. Flutter8112a2bb push 보고이며 문서diffcheck만/기능착수·실회원/기기 인수 아님을 구분했다.1생성/2가입/3상세내부/4완료·해체/5주차는 수동 디바이스 시험 분량이지 구현 제외 기준이 아니다. Backend 두intent 구현/45PASS는 유지하되 전체UI/UX 통합연결 완료로 확대하지 않는다.
 
 NEXT_WORK/AI_CONTEXT/추적표·현재계약/설계의 ‘2가입 연결·변경은3’ 표현을 두intent 동시연결·생성/상세·일정/완료·해산/C/N 직접영향회귀 보호로 정정했다. 개발 흐름에도 수동시험 묶음과 작업구간/구현범위를 구분했다. 사용자에게 소수항목씩만 요청하며 무관 전체시험/새기능 확대는 하지 않는다. 해당회신은 같은정책 재수용/추가시험회신 불필요를 명시해 수신댓글을 추가하지 않는다. 이번 코드/OpenAPI·시험·서버/DB 변경 없음, 실제개발176/DB0031 미반영 경계·원pending/ACK·IF-001/자료·dev/main/운영 유지.
+
+
+## 2026-10-24 — #26 전체9 Flutter 통합 연결/자동검증 결과 수신
+
+작업 구간명: 모집 신청·캐릭터 변경 통합 자격 보완. 작업 내용: 최신 네이티브 회신 확인·현황/다음담당 갱신. 브랜치: feat/raid-recruitment. [#26 전체9번째 Flutter · 신청/캐릭터 변경 통합 후보 연결 결과](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6382646003) 수신: Flutter f89c009f07b45ff53a4f108247f9e856229f8455 commit/push 보고, 두intent reader·전페이지/역할·표시/선호·변경 actor/배치 확인·원명령/ACK·수락실패pending유지를 함께 연결했다. 신규60+직접영향433=493PASS/분석0은 네이티브 자체 보고이고 Backend 독립 재현이 아니다. 신규60의 작성21벡터도 합성fixture이며 Backend45/과거시험과 합산하거나 실회원 성공으로 표시하지 않는다.
+
+전용Gateway/모델·동일snapshot전페이지·역할/원정대표시/대표·선호,두intent선택/context·변경파티명시동의/확인후변경POST0·늦은응답격리,원ACK/재송/ACK후GET실패성공유지,수락실패pending유지·직접가입기존계약보존 연결을 보고했다. 초기import/분석경고·여러페이지role참조 수정 후 최종493/분석0이며 Backend가 Flutter소스를 직접읽거나독립실행한 증거는 아니다. 최초로딩/0건/정보부족·미달/실패 구분과 provider자동갱신/쓰기없음도 유지했다.
+
+새 Backend 수정/계약 재수용·전체시험 반복 요청 없음. 다음Backend는 별도 승인된 실제 개발 반영 뒤 정확 source/이미지·실행177/DB0031보존·health를 인계하고 Flutter는 소수항목으로 후보/역할→신청·수락부터 수동 인수/변경·직접영향을 이어간다. 현재 실제개발176/DB0031 미반영/실회원·기기 미확인 경계를 유지한다. 이번 코드/OpenAPI·시험/서버/DB·키/자료·dev/main/운영 변경 없고 수신 확인 중복댓글은 쓰지 않는다.
