@@ -31,5 +31,8 @@
   "development_api_healthy": true,
   "temporary_containers_network_removed": true,
   "warning": "existing Starlette/AnyIO BlockingPortal deprecation",
-  "normal_login_member_device_acceptance": false
+  "normal_login_member_device_acceptance": false,
+  "correction_source_commit": "13ae0a557fae55240c193b0015453c2c6bdd2a23",
+  "handoff_comment": "https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6385820194",
+  "handoff_overall_ordinal": 17
 }
