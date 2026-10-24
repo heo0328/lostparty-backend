@@ -1,0 +1,104 @@
+{
+  "source_commit": "06ea4b214591f475d422f4599ca10260cda83d08",
+  "image": "sha256:d24d7cbd3215ff3c6cf40aa86e3a111d84eef347d788c2b2d7d98820a44e4dfc",
+  "previous_image": "sha256:fdd256ea670f250997d8d6d1f188694f2118a9699c1bdb271da68f6ee5f8b98c",
+  "revision": [
+    "0031_membership_actions"
+  ],
+  "source_files": 241,
+  "tables": 108,
+  "rows": 829,
+  "all_rows_columns_sequences_profile_keys_equal": true,
+  "db_container_volume_preserved": true,
+  "environment_command_security_ports_preserved": true,
+  "key_mount_source_and_readonly_preserved": true,
+  "backup": "application-display26-4e008e11f7f7",
+  "migration_run": false,
+  "healthy": true,
+  "verified_at_utc": "2026-10-24T15:27:55.350442+00:00",
+  "local_date": "2026-10-25",
+  "http_checks": [
+    {
+      "case": "health",
+      "status": 200
+    },
+    {
+      "case": "public_cycle",
+      "status": 200
+    },
+    {
+      "case": "display_applications_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "display_applications_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "display_detail_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "display_detail_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "candidate_apply_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "candidate_apply_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "candidate_change_character_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "candidate_change_character_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "public_search_C",
+      "status": 200,
+      "no_store": true
+    },
+    {
+      "case": "public_search_N",
+      "status": 200,
+      "no_store": true
+    }
+  ],
+  "openapi_full_match": {
+    "two_cycle_paths": 177,
+    "legacy_paths": 116
+  },
+  "normal_login_member_device_acceptance": false,
+  "scope": "local development API and same-lifespan worker replacement",
+  "private_backup_files_published": false,
+  "restore_rehearsal_executed": false
+}

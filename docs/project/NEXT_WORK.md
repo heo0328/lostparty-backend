@@ -2,27 +2,26 @@
 
 2026-10-25
 
-- **작업 구간명:** 신청 표시 상세 예시 정합성 보완(#26).
-- **작업 내용:** 작성상세8개 item/round참조정정·음성보존·검증도구/직접HTTP12PASS 완료. 소스게시·같은Issue회신 완료·다음은 별도개발반영 구간이다.
-- **브랜치·위치:** `feat/raid-recruitment` / `/home/heowork/projects/lostparty-backend`. 문서·시험도동일이력으로관리한다.
-- **API 기준:** 구현source06ea4b214591f475d422f4599ca10260cda83d08/검증후보d24d7cbd… 소스241파일일치·이번app/쓰기DTO/OpenAPI/migration변경없음. 실제개발fdd256ea…/source484ca17·177/DB0031은새프로필미반영·healthy. 경로수가같아도동일계약/배포완료가아니다.
+- **작업 구간명:** 신청 표시·본인 승인 대기 프로필 개발 반영(#26).
+- **작업 내용:** 사용자 진행 지시로 검증 API/동일worker 교체·기존자료보존·실행계약/HTTP 검증 완료. 다음은 Flutter 정상로그인소수인수/Backend 직접차이대응이다.
+- **브랜치·위치:** `feat/raid-recruitment` / `/home/heowork/projects/lostparty-backend`. 기능코드·문서·시험·인계를같은이력으로관리한다.
+- **현재 실제 개발:** API source06ea4b214591f475d422f4599ca10260cda83d08/이미지d24d7cbd…·177경로/DB0031, 새 application-display-1 포함·API/DB healthy. [반영 근거](../engineering/operations/application-display-rollout.md)·[집계](../engineering/operations/records/application-display-rollout.json). 문서/예시보완source13ae0a5와API source를구분한다.
 
-[#26 전체17번째 Backend · 예시 정정/HTTP 참조 검증](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6385820194) 게시·전문/실제전체순번 확인 완료. 자료소스`13ae0a557fae55240c193b0015453c2c6bdd2a23` push/원격일치확인·원본이력/OPEN유지.
+## 다음 Flutter · 정상로그인 소수항목 인수
 
-## 최신 회신과 보완 결과
+[전체16 Flutter 앱연결](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6385536441) ac9fe621 push·413PASS/분석0은자체보고다. 연결/합성시험과새프로필실서버·실회원/기기를구분한다. 다음은 이미연결한앱에서사용자소수항목을확인하는것이다.
 
-[#26 전체16 Flutter · 연결 결과/예시 참조 보완 요청](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6385536441) ac9fe621ed67aaafbcd8449fddfe17f2bce54c7e push·413PASS/분석0은자체보고다. 기존가입3항목성공·새앱연결/합성시험·새프로필실서버/실기기인수를구분한다. 전체15의2bdf9976은준비문서였고전체16에서연결완료를보고했다.
+1. 공대장신청목록 카드의선택역할전투력·현재분석/미확인표시를확인한다. 오류/성공보존·미확인과전체승인가능판정을구분한다.
+2. 본인pending방상세재진입시승인대기안내와신청버튼숨김을확인한다. 다른T·다른회원정보를섞지않는다.
+3. 철회/만료·수락후기존흐름은그상태가발생할때확인한다. 시험을위해실회원자료를임의변조하지않는다. 기존가입3항목/413전체시험을이유없이반복요청하지않고변경·반대파티/C/N직접영향은계속추적한다.
 
-[표시계약/정정](../features/recruitment/participation/application-display-proposal.md)·[추가집계](../features/recruitment/participation/validation/application-display-reference-results.json). 정상22개중상세8개의room.items/game_items만정정·my_application과나머지자료유지. 원본Git이력/별도음성8개를보존했다. 정적검증22정상/23변이·8원본거절, 추가pytest12PASS=11HTTP사례22응답+과거round규칙1건(99.56초/기존경고1)이다. 기존28·Flutter413·작성자료를합산하지않는다.
+차이가발생하면#26에개인정보를제거한상태/code·재현구간을회신한다. Backend는직접차이에대응한다. 일반오류원인은HTTP/code미확인관찰로남기며이번배포를원인수정완료로확대하지않는다. 목록진입/갱신·실시간/웹소켓/알림은이번범위에서바꾸지않았다.
 
-참조검증은항목/현재라운드·Assignment/formation·공대장/본인을확인하고과거완료round를현재round로강제하지않는다. HTTP각사례에서기본/프로필공통부분일치·읽기DB불변을확인했으며실행응답에서같은결함은재현되지않았다. 합성principal override/FastAPI TestClient·격리PostgreSQL이며정상로그인회원/기기결과가아니다. 시험runner/tmpfsDB/internal network정리·기존API/DB만남음을확인했다.
+## 검증·보존 경계
 
-## 다음 담당
-
-- **Backend 현재 마감:** 보완자료/시험/문서commit·push·원격확인·전체17 회신 완료. 기존API source06ea4b2와자료보완13ae0a5를구분한다.
-- **Backend 다음 구간:** 별도개발서버반영승인시후보이미지/현재소스·DB0031·환경/키·백업/보존기준을재확인하고API/동일worker만교체·실행계약/HTTP·기존자료보존을검증해인계한다. 현재요청은예시보완이며실제서버교체를수행하지않았다.
-- **Flutter:** 연결은완료보고상태다. 보완8개가필요한자료에반영됐는지만확인하고, 정확개발반영인계후카드값/분석·pending재진입·철회/만료/수락후흐름을소수항목으로인수한다. 기존413전체반복/정책재수용/파서완화는요청하지않는다.
-- **보존:** 원pending/24hACK·거절/철회·회원/session·room/T/세대·기존membership프로필/기록·IF-001. 목록진입/갱신·실시간/웹소켓/알림과HTTP/code미확인일반오류원인수정은범위밖이다. 1~5는수동시험분량이지구현/회귀제외기준이아니다.
+- 이번반영: 소스241파일·실제컨테이너177/기본116 OpenAPI 전체일치, HTTP12건 통과. API중지후백업/catalog읽기·DB불변확인→교체, 전후108표829행/열·시퀀스·DBprofile·키hash동일, DB컨테이너/볼륨·환경/명령/포트/보안·키mount/readonly보존·migration없음이다. 이전API fdd256ea는rollback태그로보존했고임시reader제거·기존API/DB만남았다.
+- [전체14 구현인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6385227653)의격리28PASS와 [전체17 예시보완](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6385820194)의추가12PASS/정상22·비정상23/원본8거절은별도근거다. Flutter413자체보고·기존시험과합산하지않는다.
+- 정상로그인실회원조회200/기기인수는미확인이다. 실제회원session으로토큰을만들거나회원명령·provider/기기조작을수행하지않았다. 원pending/ACK/거절·철회·기존membership프로필/기록·IF-001을보존한다. 1~5는수동시험분량이지구현/필요회귀제외기준이아니다.
 
 ## 유지할 경계·독립 후속
 
@@ -33,4 +32,4 @@
 
 ## 다음 채팅의 작업 기준
 
-보완자료공식회신·실제개발새프로필미반영을구분한다. 같은모집브랜치에서새회신/직접차이를확인하고별도승인된개발반영구간을진행한다. dev/main/운영·DB자료/키수정은별도승인범위다.
+새표시프로필 개발반영은완료했다. 같은모집브랜치에서#26 정상로그인/소수기기인수 회신과직접차이에대응한다. dev/main/운영·DB자료/키수정은별도승인범위다.

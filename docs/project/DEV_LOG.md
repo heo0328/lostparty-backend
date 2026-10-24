@@ -2501,3 +2501,12 @@ NEXT_WORK/AI_CONTEXT/추적표·현재계약/설계의 ‘2가입 연결·변경
 원본8개는room.items/game_items=[]인데 Assignment/formation이항목/라운드를참조했다. 이전검증의참조검사누락을인정하고정상예시에대응item/game_item만보완했다. my_application과나머지자료/목록9·오류5는보존했고원본06ea4b2 Git이력·별도음성8개와원본파일SHA256을유지했다. 새검증은항목·현재round/Assignment/formation·공대장/본인참조를확인하되완료이력의과거round를현재round로강제하지않는다. 정상22/음성변이23·원본8개거절정적검증통과. 시험COPY경로는문서검사와맞춰명시경로를사용했다.
 
 [추가집계](../features/recruitment/participation/validation/application-display-reference-results.json): 신규12PASS/99.56초·기존AnyIO경고1. 8상태·8인N/묶음C/완료이력의11HTTP사례22응답에서기본/확장공통부분일치·전체DB불변/참조일치를확인했다. 별도과거round규칙1건포함. 합성principal override·실제FastAPI router/TestClient/격리PostgreSQL이며정상JWT로그인회원/기기인수아님. 실행응답에서동일불일치가재현되지않아app/OpenAPI/쓰기DTO/migration을변경하지않았다. 기존28전체반복없음·이전증거보존. 후보d24d7cbd… 소스241파일일치·실제서버fdd256ea…미교체/healthy·시험환경정리확인. 자료·검증source `13ae0a557fae55240c193b0015453c2c6bdd2a23` commit·push·원격일치확인후 [#26 전체17번째 Backend · 예시 정정/HTTP 참조 검증](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6385820194) 게시·전문/실제전체순번 재조회. Issue상단은예시보완완료/API source06ea4b2불변·개발새프로필미반영·다음별도개발반영/반영후소수인수로갱신하고원본이력/OPEN을보존했다.
+
+
+## 2026-10-25 — #26 신청 표시 프로필 실제 개발 반영
+
+작업 구간명: 신청 표시·본인 승인 대기 프로필 개발 반영. 작업 내용: 사용자 진행 지시로 검증이미지/API·동일worker 교체·자료보존/실행검증·인계. 브랜치/위치: feat/raid-recruitment / 본프로젝트. 최신전체17 이후추가회신없음을확인했다. 구현source06ea4b2/검증이미지d24d7cbd…를소스241파일/전체계약 재확인후반영했다. 예시/검증보완source13ae0a5와API source를구분한다.
+
+[반영근거](../engineering/operations/application-display-rollout.md)·[집계](../engineering/operations/records/application-display-rollout.json): API중지후private DBcustomdump·키/설정/감사기준·archive catalog읽기·백업중불변을확인했다. 전후108표829행전체hash·열정의/시퀀스/DBprofile·인증키hash동일, DB컨테이너/볼륨·API환경/명령/포트/보안·키mount source/ro보존·DB0031유지/migration없음. oldfdd이미지rollback태그보존·임시reader제거. 이번별도restore리허설은미실행이다.
+
+실제컨테이너177/기본116 OpenAPI 객체전체일치, HTTP12건(health/주차200·표시목록/상세무인증/invalidBearer401/no-store/challenge4·기존후보양intent같은거절4·C/N검색200/no-store2)통과, API/DB healthy. 정상로그인실회원조회/기기인수·회원토큰생성/명령쓰기/provider/기기조작·dev/main/운영은미실행이다. 이전격리28/참조12·Flutter413자체보고와합산하지않는다. 다음Flutter 카드값/분석·pending재진입부터소수인수/Backend직접차이대응. 게시SHA/공식반영인계는후속기록한다.

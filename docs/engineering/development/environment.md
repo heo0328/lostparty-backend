@@ -14,7 +14,7 @@ Python3.12·FastAPI/Uvicorn·SQLAlchemy·Alembic·PostgreSQL17/psycopg를 Docker
 
 현재 개발 API는 `compose.yaml`에 `compose.two-cycle.yaml`을 덮어써 `app.main:create_two_cycle_app --factory`를 선택한다. 기본 Dockerfile의 `app.main:app`는 기존 앱이며 현재 개발 DB에 기본 Compose 단독으로 혼용하지 않는다. `two-cycle`은 실행 구성 이름, `0031_membership_actions`는 DB구조 이행 식별자다.
 
-현재 실제 개발 서버는177경로·DB0031이며, #26 구현 source484ca17/이미지fdd256ea를 반영했다. [실제 교체·자료 보존·HTTP 검증](../operations/eligibility-rollout.md)을 확인했다. 정상 로그인/기기 인수는 미완료다. 상세와 복원/이행 전후 근거는 [운영 전환 기록](../operations/README.md)을 따른다.
+현재 실제 개발 서버는177경로·DB0031이며, #26 표시 프로필 포함 구현 source06ea4b2/이미지d24d7cbd를 반영했다. [실제 교체·자료 보존·HTTP 검증](../operations/application-display-rollout.md)을 확인했다. 정상 로그인/기기 인수는 미완료다. 상세와 복원/이행 전후 근거는 [운영 전환 기록](../operations/README.md)을 따른다.
 
 기존 DB가 해당 단계로 검증된 개발환경의 API 재기동 예시는 다음과 같다. 이 명령은 DB migration·초기 설정·복원을 대신하지 않는다.
 

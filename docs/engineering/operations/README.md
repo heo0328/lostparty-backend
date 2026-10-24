@@ -4,9 +4,9 @@
 
 ## 현재 운영 경계
 
-신청 목록 분석·본인pending의 [application-display-1](../../features/recruitment/participation/application-display-proposal.md)은 별도 소스 구현/격리28PASS 완료 구간이다. 현재 서버177과 소스후보177의 경로수는 같지만 새프로필은 실제서버 미반영이다.
+신청 목록 분석·본인pending의 [application-display-1](../../features/recruitment/participation/application-display-proposal.md)을 실제 개발서버에 반영했다. [최신 전환 기록](application-display-rollout.md)·[공개 집계](records/application-display-rollout.json)를 따른다. 경로수177은 같지만 입력/응답 계약이 갱신됐다.
 
-현재 로컬 개발 서버는2026-10-24 #26 구현 source484ca17·이미지fdd256ea, API177경로·DB0031_membership_actions다. [최신 API 교체·자료 보존/실행 검증](eligibility-rollout.md)과 [공개 집계](records/eligibility-rollout.json)를 따른다. 기본 앱116경로·DB0023 기준과 혼용하지 않는다. [구현 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6382258395)와 별도 반영 구간을 구분한다. AWS 운영 배포·dev/main 통합·실회원 신규명령/실기기 인수는 완료 상태가 아니다.
+현재 로컬 개발 서버는2026-10-25 #26 구현 source06ea4b2·이미지d24d7cbd, API177경로·DB0031_membership_actions다. 이전 자격기능 전환은 [당시 기록](eligibility-rollout.md)·[당시 집계](records/eligibility-rollout.json)를 따른다. 기본 앱116경로·DB0023 기준과 혼용하지 않는다. [구현 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6382258395)와 별도 반영 구간을 구분한다. AWS 운영 배포·dev/main 통합·실회원 신규명령/실기기 인수는 완료 상태가 아니다.
 
 이전 #24/#25 전환은 기존 DB 컨테이너/볼륨·키·환경을 유지하고 API/동일 lifespan worker를 교체했다. 비공개 백업을 별도 DB에서 제한 LOGIN으로 복원·이행 검증한 뒤 실제 DB를 이행했고 기존105개 업무 표의 모든 행·열 정의·기록시각·키·시퀀스를 보존했다.106→108표/603행, 새2표0행, 실행 계약 일치·health/공개검색/인증경계7검사는 당시 실제 실행 근거다. 합성38시험과 합산하거나 정상 회원 명령 성공으로 표시하지 않는다.
 
