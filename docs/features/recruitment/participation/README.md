@@ -30,13 +30,13 @@ admission-context는 선택한 실제T와 intent에 필요한 현재 자격·조
 
 ## 상태와 문서 연결
 
-아이템레벨은실제신청snapshot에서누락됨을전체19에서확인했다. [값/출처·기존신청 보완제안](application-item-level-proposal.md)은전체21 소비/UX수용후소스구현·격리35PASS 완료 후 [실제개발 반영](../../../engineering/operations/application-item-level-rollout.md) 완료다. Flutter 전체23 출처표시 연결 완료 보고를 수신했으며 정상로그인 기기 레벨/문구 인수는 미확인이다. 기존예시의item_level을실제저장/제공증거로사용하지않는다.
+아이템레벨은실제신청snapshot에서누락됨을전체19에서확인했다. [값/출처·기존신청 보완제안](application-item-level-proposal.md)은전체21 소비/UX수용후소스구현·격리35PASS 완료 후 [실제개발 반영](../../../engineering/operations/application-item-level-rollout.md) 완료다. Flutter 전체23 출처표시 연결 완료 후 [전체25 사용자 인수](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386859737)를 수신했다. 레벨표시 기기통과·두 예외분기 구현/자동검증 근거 수용을 구분하며 전체모집 인수는 미완료다. 기존예시의item_level을실제저장/제공증거로사용하지않는다.
 
-전체16 Flutter의 앱연결/413PASS 자체보고를 수신했다. 작성상세8개의 item/round참조만정정하고 검증을추가했다. [정정 근거/추가12PASS](application-display-proposal.md#2026-10-25--작성-상세-예시-참조-정정), [실제 개발 프로필 반영](../../../engineering/operations/application-display-rollout.md)도 완료했으며 정상로그인 소수인수 대기다.
+전체16 Flutter의 앱연결/413PASS 자체보고를 수신했다. 작성상세8개의 item/round참조만정정하고 검증을추가했다. [정정 근거/추가12PASS](application-display-proposal.md#2026-10-25--작성-상세-예시-참조-정정), [실제 개발 프로필 반영](../../../engineering/operations/application-display-rollout.md)도 완료했다. 이후 레벨표시 보완의 사용자 인수 결과는 위 기록을 따르고 전체모집 인수와 구분한다.
 
 #26 전체11의 신청 카드 분석/전투력·본인pending 상세는 [표시 계약 제안1](application-display-proposal.md)로 별도 협의한다. application-display-1은 Flutter 전체13에서 수용한 뒤 소스 구현·격리28PASS를 완료했다. 소스와 실제개발177 모두 확장계약을 반영했다. [반영/실행 검증](../../../engineering/operations/application-display-rollout.md)을 따른다.
 
-#26 계약2의 신청·변경 공통 자격/배치와 일괄 후보GET을 구현·격리 검증했다. [통합 자격/구현 경계](eligibility-design.md)·[실행 소비 계약2](candidate-contract.md)·[고유45PASS 집계](validation/eligibility-results.json)가 현재 기준이며 신규 실행후보177/기본116·기존component/쓰기DTO를 보존한다. 실제 개발API177/DB0031에 반영했으며 [자료 보존/실행 검증](../../../engineering/operations/eligibility-rollout.md)을 완료했다. 정상 로그인/기기 인수는 다음 단계다. [제안1](candidate-proposal.md)은 이전 범위로 보존하고 이전 신청검사25PASS를 이번45건에 더하지 않는다.
+#26 계약2의 신청·변경 공통 자격/배치와 일괄 후보GET을 구현·격리 검증했다. [통합 자격/구현 경계](eligibility-design.md)·[실행 소비 계약2](candidate-contract.md)·[고유45PASS 집계](validation/eligibility-results.json)가 현재 기준이며 신규 실행후보177/기본116·기존component/쓰기DTO를 보존한다. 실제 개발API177/DB0031에 반영했으며 [자료 보존/실행 검증](../../../engineering/operations/eligibility-rollout.md)을 완료했다. 가입 소수3항목의 사용자 정상보고를 수신했으며 변경/반대파티/C/N 전체인수는 미완료다. [제안1](candidate-proposal.md)은 이전 범위로 보존하고 이전 신청검사25PASS를 이번45건에 더하지 않는다.
 
 이 문서는 현재 정책·계약의 설명이다. Backend 구현·Flutter 적용·합성 시험·실회원/기기 인수·운영 완료는 각각 구분하며, 최신 담당과 남은 작업은 [NEXT_WORK](../../../project/NEXT_WORK.md)와 [이슈 추적표](../../../project/ISSUE_TRACKER.md)를 따른다. 과거 상세 작업은 [문서 대응표](../../../engineering/documentation/README.md)로 추적한다.
 

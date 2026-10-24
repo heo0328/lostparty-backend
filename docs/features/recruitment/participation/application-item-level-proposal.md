@@ -1,6 +1,6 @@
 # 신청자 아이템레벨 출처 보완 제안
 
-2026-10-25 / **합의 구현·격리35PASS 및 실제 개발 반영 완료/기기 인수 대기**. 작업 구간명: 신청자 아이템레벨 누락 보완. 브랜치: `feat/raid-recruitment`.
+2026-10-25 / **합의 구현·격리35PASS 및 실제 개발 반영 완료/보완 구간 인수 수용**. 작업 구간명: 신청자 아이템레벨 누락 보완. 브랜치: `feat/raid-recruitment`.
 
 [#26 전체19번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386174761)의 코드 경로와 사용자 관찰을 확인했다. API source06ea4b2는 Application.display를 공용 groups.admission_core.display로 생성해 서버/이름/직업만 저장한다. 목록은 그대로 반환한다. 실제 개발DB 읽기 집계에서도 저장 신청7개 모두 display.item_level이 없었다. 원본회원/신청 식별자·값은 공개하지 않았으며 DB수정은 하지 않았다.
 
@@ -10,11 +10,11 @@
 
 확정표시: application_snapshot→‘아이템 레벨 1700’, current_saved→‘아이템 레벨 1750 · 현재 저장 정보’, unavailable→‘아이템 레벨 조회 불가’. 사용자에게확인/갱신행동·0/최소조건/전투력대체를요구하지않는다. fetched_at은원본시각으로보존하되카드에새시각행/조작을추가하지않는다.
 
-**다음 Backend:** 합의대로구현·신규POST→저장display→HTTP목록·기존누락/성장후snapshot보존·소유변경·nullable/시각·기존쓰기/조회불변을직접검증하고정확source/계약·원격게시/실제반영여부를인계한다. **다음 Flutter:** 인계후출처/누락표시·경계검증연결, 개발반영후레벨/문구만소수기기확인. 기존전체시험/사용자통과1·2전체반복은요청하지않는다.
+**전체21 수용 당시 다음 Backend:** 합의대로구현·신규POST→저장display→HTTP목록·기존누락/성장후snapshot보존·소유변경·nullable/시각·기존쓰기/조회불변을직접검증하고정확source/계약·원격게시/실제반영여부를인계한다. **다음 Flutter:** 인계후출처/누락표시·경계검증연결, 개발반영후레벨/문구만소수기기확인. 기존전체시험/사용자통과1·2전체반복은요청하지않는다.
 
 ## 최신 반영 상태
 
-[전체23 Flutter](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386758343)의 source13fb5848 출처표시 연결·158PASS 자체보고/추가차이 없음을 확인했다. 사용자 서버반영 승인으로 sourcef471e31/이미지6d5857b3를 [실제개발에 반영](../../../engineering/operations/application-item-level-rollout.md)했고 기존108표893행·키/설정을 보존했다. 실제소스241파일/177·116전체OpenAPI/HTTP12PASS다. 다음Flutter 레벨/문구 소수기기인수·Backend직접차이대응이며 정상로그인/기기 성공은 아직 미확인이다. 아래 제안·구현 당시의 미반영 기록은 해당 시점 이력이다.
+[전체23 Flutter](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386758343)의 source13fb5848 출처표시 연결·158PASS 자체보고/추가차이 없음을 확인했다. 사용자 서버반영 승인으로 sourcef471e31/이미지6d5857b3를 [실제개발에 반영](../../../engineering/operations/application-item-level-rollout.md)했고 기존108표893행·키/설정을 보존했다. 실제소스241파일/177·116전체OpenAPI/HTTP12PASS다. [전체25 Flutter 인수 결과](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386859737)에서 레벨 표시의 사용자 기기 통과를 확인했다. current_saved/unavailable은 구현·자동검증 근거로 사용자가 인수 수용했고 해당 분기의 실제 기기 관찰은 미수행이다. 추가 Backend 수정/재시험 요청은 없다. 네이티브 작업순서/시험 진행은 해당 측에서 관리하고 Backend는 구체차이에 대응한다. 아래 제안·구현 당시의 미반영 기록은 해당 시점 이력이다.
 
 ## 최소 호환 제안
 
@@ -64,8 +64,8 @@ application_display.snapshot_level을모집Application 생성에만연결했다.
 
 기본/쓰기DTO·전체component는보존하며실행OpenAPI177/기본116전체비교를수행한다. 합의한Application GET/POST의description만출처와저장동작을명시한다. 기존default/본인목록/단건review에는과거누락읽기보완을확대하지않고신규저장snapshot은그대로보여준다. 기존profile1·cursor/추가SQL·승인자격/원명령은변경하지않는다.
 
-[실행 검증 집계](validation/application-item-level-results.json)는작성fragment9개와구분한다. 신규시험은딜러/서포터의실제HTTP POST→저장display→HTTP목록→성장후snapshot/원ACK보존,기존누락의정밀current_saved·기본/단건응답/DB불변,owner/ownership/missing/suspect/retired·레벨없음·불량값/시각null·페이지/SQL을직접확인한다. 합성principal/격리DB이며실회원/기기인수아니다. 실제개발source06ea4b2/이미지d24d7cbd의아이템레벨누락은현재미반영상태이며코드완료와실제해결을구분한다.
+[실행 검증 집계](validation/application-item-level-results.json)는작성fragment9개와구분한다. 신규시험은딜러/서포터의실제HTTP POST→저장display→HTTP목록→성장후snapshot/원ACK보존,기존누락의정밀current_saved·기본/단건응답/DB불변,owner/ownership/missing/suspect/retired·레벨없음·불량값/시각null·페이지/SQL을직접확인한다. 합성principal/격리DB이며실회원/기기인수아니다. 구현 검증 당시 실제개발source06ea4b2/이미지d24d7cbd의아이템레벨누락은미반영상태였으며코드완료와실제해결을구분한다.
 
-최종 고유35PASS는신규18(97.96초)+직접회귀17(136.27초)의중복없는최종소스2회실행이다. 기존AnyIO경고1종외실패없음이며과거28/참조12/Flutter413·작성자료를합산하지않는다. 기본표시/권한·페이지/상한·실제합성Bearer/세션취소·기존신청/승인/거절/철회/원ACK를직접회귀했다. 후보이미지6d5857b3… 소스241파일과실제시험소스·3시험파일 바이트일치, 실행177/기본116전체계약/모든기존component·쓰기shape보존을확인했다. 시험용환경을정리했고실제개발d24d7cbd…미교체/healthy를읽기확인했다. 현재실서버의레벨누락은아직미반영문제로남으며새소스게시후네이티브는출처검증/확정문구를좁게연결한다. 실제개발반영·실회원/기기인수는별도구간이다.
+최종 고유35PASS는신규18(97.96초)+직접회귀17(136.27초)의중복없는최종소스2회실행이다. 기존AnyIO경고1종외실패없음이며과거28/참조12/Flutter413·작성자료를합산하지않는다. 기본표시/권한·페이지/상한·실제합성Bearer/세션취소·기존신청/승인/거절/철회/원ACK를직접회귀했다. 후보이미지6d5857b3… 소스241파일과실제시험소스·3시험파일 바이트일치, 실행177/기본116전체계약/모든기존component·쓰기shape보존을확인했다. 시험용환경을정리했고실제개발d24d7cbd…미교체/healthy를읽기확인했다. 당시 실서버의레벨누락은미반영문제로남았으며새소스게시후네이티브는출처검증/확정문구를좁게연결한다. 실제개발반영·실회원/기기인수는별도구간이다.
 
 구현공식인계: [#26 전체22번째 Backend · 아이템레벨 저장/기존누락 읽기 구현인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386634008). source `f471e3133ad60befcad77d7123e1107ba7501bb4` commit·push·원격일치 확인후게시·전문/실제전체순번재조회완료. 다음Flutter출처표시/검증연결·Backend직접차이대응/별도개발반영,Issue OPEN이다.

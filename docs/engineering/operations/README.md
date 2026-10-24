@@ -4,7 +4,7 @@
 
 ## 현재 운영 경계
 
-최신은 [신청자 아이템레벨 보완 개발 반영](application-item-level-rollout.md)·[집계](records/application-item-level-rollout.json)다. sourcef471e31/이미지6d5857b3·177경로·DB0031, 기존자료/키보존·실행12PASS 완료이며 정상로그인 기기 레벨/문구 인수는 미확인이다. 아래 표시프로필 반영은 직전 이력이다.
+최신은 [신청자 아이템레벨 보완 개발 반영](application-item-level-rollout.md)·[집계](records/application-item-level-rollout.json)다. sourcef471e31/이미지6d5857b3·177경로·DB0031, 기존자료/키보존·실행12PASS 완료이며 [전체25 Flutter 인수 결과](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386859737)로 레벨표시 기기통과·두 예외분기 구현/자동검증 근거 수용을 확인했다. 두 예외분기의 실제 기기관찰과 전체모집 인수는 미완료다. 아래 표시프로필 반영은 직전 이력이다.
 
 신청 목록 분석·본인pending의 [application-display-1](../../features/recruitment/participation/application-display-proposal.md)을 실제 개발서버에 반영했다. [최신 전환 기록](application-display-rollout.md)·[공개 집계](records/application-display-rollout.json)를 따른다. 경로수177은 같지만 입력/응답 계약이 갱신됐다.
 
@@ -33,4 +33,4 @@ JSON 보고 안의 과거 경로·source/image/hash는 그 당시 스냅샷 값�
 
 ## 공식 인계·다음 담당
 
-[검색 개발 반영](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6371617690), [탈퇴·해산 개발 반영](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371618996). Flutter 직접 연결/정상 로그인 인수·Backend 재현차이 대응의 현재 상태는 [NEXT_WORK](../../project/NEXT_WORK.md)를 따른다. 이전 전환 기록과 최신 #26 실제 검증은 위 링크로 구분한다. 다음은 정상 로그인 소수 항목 수동 인수다.
+[검색 개발 반영](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6371617690), [탈퇴·해산 개발 반영](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371618996). Flutter 직접 연결/정상 로그인 인수·Backend 재현차이 대응의 현재 상태는 [NEXT_WORK](../../project/NEXT_WORK.md)를 따른다. 이전 전환 기록과 최신 #26 실제 검증은 위 링크로 구분한다. 아이템레벨 보완 인수는 수용됐으며 Backend는 구체 차이에 대응한다. 네이티브 작업 순서/시험 진행은 해당 측에서 기록한다.

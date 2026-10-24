@@ -14,10 +14,12 @@
 
 실제 컨테이너 소스/설정241파일 바이트 일치,177/기본116 OpenAPI 객체 전체 일치, HTTP12건 통과다. health/공개주차200, 표시목록/상세의 무인증·invalidBearer401 ACCESS_INVALID/no-store/challenge4건, 기존 후보 양intent 동일 인증경계4건, C/N 공개검색200/no-store2건이다. API/DB healthy·임시reader 제거를 확인했다. 이전 이미지d24d7cbd…는 `lostparty-backend-api:before-item-level26`에 보존했다. 복구가 필요하면 새 쓰기 호환을 확인해 API만 되돌리며 과거 DB 백업으로 새 자료를 덮어쓰지 않는다.
 
-격리 Backend35PASS·Flutter158 자체보고와 이번 실행12건을 합산하지 않는다. 정상로그인 실회원 확장목록200·새신청 저장/기기 표시 인수는 미확인이다. 실제회원 session으로 JWT를 만들거나 회원 명령·provider·기기를 조작하지 않았다. 키/회원자료 수동수정·dev/main 병합·AWS/운영배포는 없다.
+격리 Backend35PASS·Flutter158 자체보고와 이번 실행12건을 합산하지 않는다. 반영 직후 Backend 실행 확인에서는 정상로그인 실회원 확장목록200·새신청 저장/기기 표시 인수가 미확인이었다. 이후 사용자 인수 결과는 아래에 별도로 기록한다. 실제회원 session으로 JWT를 만들거나 회원 명령·provider·기기를 조작하지 않았다. 키/회원자료 수동수정·dev/main 병합·AWS/운영배포는 없다.
 
-## 다음 담당
+## 반영 후 인수·Backend 후속
 
-Flutter는 반영된 서버와 source13fb5848 이후 앱에서 정상로그인으로 신청카드의 레벨/출처 문구만 소수 확인한다. snapshot은 ‘아이템 레벨 1700’, 현재정보는 ‘아이템 레벨 1750 · 현재 저장 정보’, unavailable은 ‘아이템 레벨 조회 불가’다. 시험만을 위해 실회원 자료를 변조하지 않는다. 기존 정상1/2 전체·전체413 시험을 반복 요청하지 않는다. 차이는 개인정보를 제거한 상태/code·재현구간으로 #26에 회신하며 Backend가 직접 대응한다. Issue OPEN·기존 IF-001 및 독립 미완료 범위를 유지한다.
+[전체25 Flutter 인수 결과](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386859737)에서 레벨 표시의 사용자 기기 통과를 확인했다. current_saved/unavailable은 구현·자동검증 근거로 사용자가 인수 수용했고 해당 분기의 실제 기기 관찰은 미수행이다. 추가 Backend 수정/재시험 요청은 없다.
 
-공식 인계: [#26 전체24번째 Backend · 아이템레벨 실제개발 반영](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386808894) 게시·댓글전문/실제순번 확인. 반영근거 `6be5c6fee12272858acc5493b06278340096521f` commit·push·원격일치 후 인계했고 Issue 상단/OPEN·원본이력을 보존했다. 다음Flutter 레벨/출처문구 소수기기인수·Backend직접차이대응이다.
+전체 모집 인수·Issue26 종료·dev/main 통합/운영 완료로 확대하지 않는다. 네이티브 작업 순서/시험 진행은 네이티브 측에서 기록하며 Backend는 구체 API/계약·데이터 차이에 대응한다. 시험을 위해 실회원 자료를 변조하거나 고의 장애·추가 사용자 조작을 요청하지 않는다.
+
+공식 인계: [#26 전체24번째 Backend · 아이템레벨 실제개발 반영](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386808894) 게시·댓글전문/실제순번 확인. 반영근거 `6be5c6fee12272858acc5493b06278340096521f` commit·push·원격일치 후 인계했고 Issue 상단/OPEN·원본이력을 보존했다. 당시 다음 단계였던 레벨 인수는 전체25 결과로 수용됐으며 Backend는 직접차이에 대응한다.
