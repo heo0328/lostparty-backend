@@ -70,3 +70,5 @@ UI 우선순위는 **기존 현재 참가관계/권한 → 유효pending → 기
 [작성 합성 예시](examples/application-display-v1.examples.json)는 전체페이지/일반상세의닫힌성공응답과오류envelope를담는다. 정상success·current error+retained success·missing·unrestricted/missing·소유변경·head없음·자료연결없음·빈목록, pending/경계만료/철회/거절/취소/수락후참가/수락후탈퇴/이력없음을구분한다. 실제서버/회원응답이아니다. [검증도구](tools/validate-application-display.py)는schema와cross-field·음성벡터만검증하며실행API/evaluator/DB시험이아니다.
 
 다음Flutter는새프로필을선택해일반상세를소비가능한지,3필드의시각/누락/오류분리와4필드본인상태·기존membership-actions-1과의분리에서구체차이가있는지회신한다. 같은기존정책재수용/실서버미구현필드의기기시험을요청하지않는다. 합의후Backend는구현·bulkSQL/권한·C/N/세대/만료·기존DTO/ACK회귀·177/116실행OpenAPI전체비교를수행하고commit/push·원격확인후인계한다. 서버교체는별도승인이다.
+
+공식 제안: [#26 전체12번째 Backend · 표시 계약 제안1](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384757210). source f0c7665cf41d1e470be21179791f463585d312c1 commit·push·원격일치 확인 후 게시, 댓글전문/실제전체순번을 재조회했다. 다음Flutter 소비차이 검토·Backend 합의후구현이며 OPEN이다.
