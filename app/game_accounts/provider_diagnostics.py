@@ -32,5 +32,6 @@ def record(error):
                 upstream_status=error.http_status if type(error.http_status) is int and 100 <= error.http_status <= 599 else None,
                 elapsed_ms=milliseconds(getattr(error, 'diagnostic_elapsed_ms', None)),
                 stage_ms={stage: milliseconds(timings[stage]) for stage in sorted(STAGES) if stage in timings})
-    logging.getLogger(__name__).warning('Provider failure %s', json.dumps(data, sort_keys=True))
+    logging.getLogger(__name__).warning('Provider failure %s', json.dumps(data, sort_keys=True),
+        extra={'safe_event': 'provider_failure', 'safe_fields': data})
     return request_id

@@ -1,3 +1,4 @@
+# Disposable verification only: no .env, published ports, host keys or volumes.
 name: lostparty-auth-test
 services:
   test-db:
@@ -7,6 +8,7 @@ services:
       POSTGRES_PASSWORD: test-only-password
     tmpfs:
       - /var/lib/postgresql/data
+    networks: [isolated]
     healthcheck:
       test: [CMD-SHELL, "pg_isready -U postgres -d lostparty_test"]
       interval: 2s
@@ -23,6 +25,11 @@ services:
       AUTH_SECRET_DIR: /tmp/auth-test-keys
       OWNERSHIP_WORKER_ENABLED: "0"
       RECRUITMENT_WORKER_ENABLED: "0"
+      LOSTPARTY_ISOLATED_TEST: "1"
+    networks: [isolated]
     depends_on:
       test-db:
         condition: service_healthy
+networks:
+  isolated:
+    internal: true

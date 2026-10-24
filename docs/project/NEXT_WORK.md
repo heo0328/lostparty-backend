@@ -1,11 +1,23 @@
 # 다음 실행
 
+## 현재 실행 기준·다음 작업
+
+2026-10-25 사용자 지시로 `chore/backend-architecture-review`의 구조 점검·개선 이력(`e13980b`/`94bd92d`/`8842b0f`/`65ab2a9`)을 **feat/raid-recruitment**에 이력 보존 병합했다. 현재 checkout과 작업 위치는 `feat/raid-recruitment` / `/home/heowork/projects/lostparty-backend`다. 작업 구간명은 **Backend 개선 통합·모집 브랜치 복귀**, 작업 내용은 검증된 개선 코드/설정과 최신 기록을 한 기준으로 모으는 것이다.
+
+- [격리 검증 실행](../engineering/development/isolated-verification.md): 실제 변경에 맞게 static/contracts/legacy/two-cycle/all을 선택한다. 개발 DB/실키와 분리한 시험 환경을 기본으로 사용한다.
+- [의존성 고정](../engineering/development/dependency-locking.md): runtime31개+test전용12개의 검증 버전/해시 lock을 빌드에서 검사한다.
+- [로깅·조회](../engineering/operations/logging.md): 허용 JSON 필드·API/DB/worker 관측과10m×5 정책을 소스에 통합했다. **실제 개발 API/DB에는 아직 미반영**이며 기존 sourcef471e31/이미지6d5857b3·177/DB0031 실행 기준은 그대로다.
+
+다음은 네이티브 구체 차이 수신 시 아래 모집 협업 기준에 따라 대응하는 것이다. 실제 개발 서버에 개선을 반영하라는 별도 요청이 있으면 대상·자료/키/환경 보존과 허용 중단을 확인해 API 교체를 진행하고 DB 로그 정책 반영은 구분한다. 이번 통합은 push/PR/dev·main 통합/서버 교체/배포·Issue 게시/네이티브 추가시험 요청을 포함하지 않는다. 원격 모집 브랜치 기준은 계속c0128c3이며 로컬 개선 통합은 미push 상태다. 개선 브랜치는 dev통합·원격게시 정리 조건 전까지 보존한다. 다른 구조 개선은 [점검 보고서](../engineering/development/backend-architecture-review.md)를 참고하되 미착수다.
+
+## 보존한 모집 구간
+
 2026-10-25
 
 - **작업 구간명:** 모집 Backend 구현·개발 반영·인수 기록 정리.
 - **작업 내용:** 현재까지의 구현/검증/서버 반영/사용자 인수 근거를 정리하고 후속 Backend 차이 대응 기준을 유지한다.
 - **브랜치·위치:** `feat/raid-recruitment` / `/home/heowork/projects/lostparty-backend`. 구현·시험·계약·문서를 같은 목적 브랜치에 누적했다.
-- **현재 코드:** 아이템레벨 보완 구현 source `f471e3133ad60befcad77d7123e1107ba7501bb4` 이후는 문서·인계 기록 변경이다.
+- **현재 코드:** 모집 업무 구현 기준은 아이템레벨 보완 source `f471e3133ad60befcad77d7123e1107ba7501bb4`이며, 이번에 격리 실행·의존성 고정·로깅 source `65ab2a9`까지의 개선도 통합했다. 실제 개발 실행 버전과 구분한다.
 - **실제 개발 반영:** 같은 source / 이미지6d5857b3…·177경로·DB0031. [반영 근거](../engineering/operations/application-item-level-rollout.md)·[실행 집계](../engineering/operations/records/application-item-level-rollout.json). 반영 당시 API/DB healthy·자료/키/설정 보존을 확인했다.
 
 ## Backend 완료·인수 상태
@@ -26,7 +38,7 @@ Backend 격리시험·실제 서버 HTTP12건·Flutter158PASS 자체보고·사�
 
 사용자 지시에 따라 **네이티브 작업 순서·시험 진행은 네이티브 측에서 기록·관리한다.** Backend 문서에는 합의 계약·제공 소스/서버 상태·수신 결과와 직접 대응할 미완료만 유지한다. 이전 전체26의 순서 전달 이력은 [DEV_LOG](DEV_LOG.md)에 보존하며 별도 일정/상세 시험 순서를 중복 관리하지 않는다.
 
-이번 최신화는 문서 작업이다. 기존 시험·서버를 반복 실행하지 않으며 API/OpenAPI·DB·키·실회원 자료를 변경하지 않는다.
+직전 모집 인수 최신화는 문서 작업이었다. 이번 개선 통합도 API 계약·실행 서버/DB·키·실회원 자료는 변경하지 않았고, 기검증 코드와 동일함을 확인해 서버·pytest를 반복 실행하지 않았다.
 
 ## 유지할 경계·독립 후속
 

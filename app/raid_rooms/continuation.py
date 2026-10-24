@@ -221,10 +221,9 @@ def process_due():
             Room.migration_state=='ready').order_by(Room.id)))
     for rid in ids:
         try:process_room(rid)
-        except Exception:
-            # Isolate a failed room; never log identifiers, source data or SQL.
-            import logging
-            logging.getLogger(__name__).warning('Recruitment room opening attempt failed')
+        except Exception as error:
+            from app.core.observability import job_item_failed
+            job_item_failed('legacy_opening', error)
 
 
 def process_room(rid):

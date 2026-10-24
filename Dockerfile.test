@@ -1,15 +1,18 @@
-FROM lostparty-backend-api:latest
-USER root
-COPY requirements-dev.txt requirements.txt ./
-RUN pip install --no-cache-dir -r requirements-dev.txt
-COPY tests ./tests
-COPY openapi ./openapi
-COPY docs/features/recruitment/weekly-cycles/examples/baseline/full.openapi.json ./docs/features/recruitment/weekly-cycles/examples/baseline/full.openapi.json
-COPY docs/features/recruitment/participation/examples/candidate-contract-v2.schema.json ./docs/features/recruitment/participation/examples/candidate-contract-v2.schema.json
-COPY docs/features/recruitment/participation/examples/application-display-v1.schema.json ./docs/features/recruitment/participation/examples/application-display-v1.schema.json
-COPY docs/features/recruitment/participation/examples/application-display-v1.examples.json ./docs/features/recruitment/participation/examples/application-display-v1.examples.json
-COPY docs/features/recruitment/participation/examples/application-display-v1.invalid-examples.json ./docs/features/recruitment/participation/examples/application-display-v1.invalid-examples.json
-COPY docs/features/recruitment/participation/tools/validate-application-display.py ./docs/features/recruitment/participation/tools/validate-application-display.py
-COPY pytest.ini ./pytest.ini
+# Build the checked-out source; never inherit a mutable development API image.
+FROM python:3.12-slim-bookworm
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1
+WORKDIR /app
+COPY requirements.txt requirements-dev.txt requirements.in requirements-dev.in ./
+COPY scripts/check_dependencies.py ./scripts/check_dependencies.py
+RUN python scripts/check_dependencies.py && pip install --no-cache-dir --require-hashes --only-binary=:all: -r requirements-dev.txt \
+    && pip check && python scripts/check_dependencies.py --installed test \
+    && useradd --uid 10001 --create-home appuser
+COPY --chown=appuser:appuser app ./app
+COPY --chown=appuser:appuser alembic ./alembic
+COPY --chown=appuser:appuser alembic.ini pytest.ini ./
+COPY --chown=appuser:appuser tests ./tests
+COPY --chown=appuser:appuser openapi ./openapi
+COPY --chown=appuser:appuser docs ./docs
+COPY --chown=appuser:appuser scripts ./scripts
 USER appuser
-CMD ["pytest", "-q", "-p", "no:cacheprovider"]
+CMD ["python", "scripts/isolated_checks.py", "legacy"]

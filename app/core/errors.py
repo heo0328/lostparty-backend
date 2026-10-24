@@ -4,6 +4,7 @@ from fastapi import Request
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from sqlalchemy.exc import SQLAlchemyError
+from app.core.observability import emit, category, RequestLoggingMiddleware
 
 
 class AuthError(Exception):
@@ -12,9 +13,10 @@ class AuthError(Exception):
 
 
 def response(request, code, status, retry_after=None, retry_at=None, request_id=None):
-    request_id = request_id or str(uuid.uuid4())
+    request_id = request_id or getattr(request.state, "log_request_id", None) or str(uuid.uuid4())
+    request.state.log_request_id = request_id
     if status >= 400:
-        logging.getLogger(__name__).warning("API rejected code=%s status=%s request_id=%s", code, status, request_id)
+        emit("api_rejected", level=logging.WARNING, code=code, status=status, request_id=request_id)
     headers = {"Cache-Control": "no-store"}
     if status == 401:
         headers["WWW-Authenticate"] = "Bearer"
@@ -29,6 +31,7 @@ def response(request, code, status, retry_after=None, retry_at=None, request_id=
 
 
 def register(app):
+    app.add_middleware(RequestLoggingMiddleware)
     @app.exception_handler(AuthError)
     async def auth_error(request: Request, error: AuthError):
         return response(request, error.code, error.status, getattr(error, "retry_after", None), getattr(error, "retry_at", None), getattr(error, "request_id", None))
@@ -40,4 +43,5 @@ def register(app):
 
     @app.exception_handler(SQLAlchemyError)
     async def database_error(request: Request, error: SQLAlchemyError):
+        emit("database_error", level=logging.ERROR, category=category(error))
         return response(request, "SERVICE_UNAVAILABLE", 503)

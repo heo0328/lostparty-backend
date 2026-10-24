@@ -45,9 +45,11 @@ def verify_google(token, nonce_digest):
             raise ValueError()
         return claims["sub"]
     except (TransportError, requests.RequestException):
-        logger.warning("Google verification unavailable stage=%s", stage)
+        logger.warning("Google verification unavailable stage=%s", stage,
+            extra={"safe_event": "google_verification", "safe_fields": {"stage": stage}})
         raise AuthError("AUTH_PROVIDER_UNAVAILABLE", 503) from None
     except Exception:
         # Only a controlled stage name, never exception text, token or claims.
-        logger.warning("Google proof rejected stage=%s", stage)
+        logger.warning("Google proof rejected stage=%s", stage,
+            extra={"safe_event": "google_verification", "safe_fields": {"stage": stage}})
         raise AuthError("GOOGLE_PROOF_INVALID") from None

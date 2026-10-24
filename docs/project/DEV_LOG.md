@@ -2568,3 +2568,51 @@ NEXT_WORK/AI_CONTEXT/추적표·현재계약/설계의 ‘2가입 연결·변경
 NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리했다. 사용자 정정에 따라 네이티브 작업 순서·시험 진행은 네이티브 측에서 기록/관리하고, Backend에 상세 순서를 중복 관리하지 않는다. 이전 전체26 순서 전달 이력과 원본 댓글은 보존하며 새 반복댓글은 게시하지 않는다. API협업·운영 개요·아이템레벨 계약/반영·참가 안내·AI_CONTEXT/추적표의 인수대기 표현을 전체25 수용 결과와 맞췄다.
 
 개발 소스f471e31/이미지6d5857b3·177/DB0031 반영 및 보존/실행 근거는 기존 기록을 유지한다. 레벨표시 기기통과, current_saved/unavailable의 구현·자동검증 근거 수용과 실제분기관찰 미수행을 구분한다. 전체모집 인수·dev/main/운영은 미완료다. 이번은 문서만 변경하므로 새 서버/DB 실행·자동시험 반복 없이 문서참조/보존 검사와 diff검사를 수행한다. 관련 구현·시험·계약·문서는 같은 모집브랜치에서 함께 게시한다.
+
+
+## 2026-10-25 Backend 구조·개선 후보 점검
+
+- 사용자 요청으로 게시 완료 모집 `c0128c3`/원격 SHA 동일·clean을 확인하고 `chore/backend-architecture-review` 분기. 작업 내용은 정적 검토·문서 기록이며 기능 구현/계약/서버는 불변.
+- [점검 결과](../engineering/development/backend-architecture-review.md): 기존 모놀리스·snapshot/명령 경계·일괄 읽기/성능시험을 유지하고 격리 검증 경로·전이 의존성 고정·장애 관측을 우선 후보로 정리. 앱 조립/계약 설명 분리·정적 검사·업무 타입은 후속 후보. API 통합은 네이티브 UX/호출 자료 필요.
+- 정적208 Python파일 AST parse PASS. 기본116경로/133동작·two-cycle177경로/197동작 확인. 서버/DB/pytest/부하/보안 감사·패키지 설치 미실행. 문서 검사 PASS(213문서·2306상대링크/앵커·197동작 분류·동결자료 보존), git diff --check PASS.
+- #26 최신 전체26 Backend 인계에서 새 서버 수정 대상 없음/네이티브 전체 구간 점검 상태 확인. 새 Issue/댓글·push/PR/merge/배포 없음. 다음은 사용자 후보 선택 후 범위 확정. 모집 대응 복귀 시 checkout·점검 기록 통합 확인.
+
+## 2026-10-25 격리 검증 실행 경로 정리 적용
+
+- 사용자 승인에 따라 `chore/backend-architecture-review`에서 첫 개선 구현. `scripts/verify_isolated.py`의 static/contracts/legacy/two-cycle/all 진입점, 컨테이너 환경/선택 검사 `isolated_checks.py`, 호스트 안전성 unittest8건과 [실행 안내](../engineering/development/isolated-verification.md)를 추가했다. legacy7파일/two-cycle8파일은 지정 회귀 묶음이며 all은 현재 test_*.py 전체를 선택한다. node 선택 시 실행 범위를 출력한다.
+- Dockerfile.test는 개발 API `latest` 의존을 제거하고 현재 소스/계약/fixtures/scripts를 Python3.12에서 빌드한다. compose.test에 internal network를 추가하고 기존 tmpfs PostgreSQL을 사용한다. 실행마다 UUID 프로젝트를 생성하며 .env 자동로딩/상속 Compose override를 차단하고 host port·기존 키/volume·개발 Compose를 사용하지 않는다. 시험 실행 중 internal=true·tmpfs·ports={}·binds=null 읽기 확인.
+- 모델 일치 시험의 기존 실패를 발견: 기본0023 DB와 collection/import된 최신 모델을 함께 비교했다. 0031 임시 DB로 옮기는 시도도 호환 모델의 의도적인 구 제약 보존 때문에 맞지 않아 채택하지 않았다. 최종적으로0023 모델 모듈을 새 metadata에 복사하고0031 전용 index만 제외, 실제 alembic_version도0023인지 확인한다. 공유 Base.metadata/기본 fixture/서비스·마이그레이션·계약을 변경하지 않았다. 최신0031 metadata 전체 일치 검증으로 주장하지 않는다.
+- **실행 결과:** 호스트 안전성8PASS; 최종 인증 파일34PASS(16.46초); 아이템레벨 파일18PASS(94.60초·별도 임시 app-role DB/0031·합성 HTTP/자료 보존 포함). 두 pytest 모두 기존 Starlette/AnyIO 경고1종. 첫 실패33PASS/1FAIL은 최종34에 중복 합산하지 않는다. 전체 legacy7파일/two-cycle8파일/all suite 실행은 미수행이며 두 대표 파일만 실제 실행했다.
+- 최종 시험 이미지에서 기본116경로/133동작·two-cycle177경로/197동작 OpenAPI 객체 전체 일치 PASS. 첫 컨테이너 진입의 Python import 경로 오류는 수정 후 계약 재실행으로 통과했다. static 문서/동결자료·경로 검사 PASS(214문서/2311링크·앵커), git diff --check PASS.
+- 의도적 nonexistent node는 exit4, 실제 시험 실패는 exit1을 유지하며 각 프로젝트 DB/컨테이너/네트워크 cleanup 확인. mock으로 build 실패17/cleanup 실패/환경 거부도 확인. 마지막 docker ps에 기존 API bbab9692cb65·DB f1a0bf3769fa만 동일 ID/healthy로 남고 lostparty-check 네트워크 잔존0. 개발 DB 내용 hash 재검증이나 정상회원/기기/provider·성능 인수는 하지 않았다. 시험 이미지/빌드 캐시는 남기고 prune하지 않았다.
+- 개발환경 문서의 과거06ea4b2 실행 표기는 기존 기록/NEXT_WORK에 맞춰 f471e31·아이템레벨 보완 인수 수용으로 정정했다. 실제 서버를 교체한 것은 아니다. 로컬 구간 커밋만 수행하며 push/PR/merge/배포·Issue 게시/네이티브 추가시험 요청은 없다. 다음은 변경 위험에 맞는 검증 명령 사용이며 다른 개선은 별도 사용자 선택 전 미착수. 모집 복귀 전에 checkout/점검·실행기 기록 통합을 확인한다.
+
+## 2026-10-25 검증된 직접·전이 의존성 고정
+
+- 사용자 ‘현재 정상적으로 사용되는 부분을 고정’ 지시에 따라 같은 `chore/backend-architecture-review`에서 두 번째 개선을 적용했다. [설치 기준·업데이트 방법](../engineering/development/dependency-locking.md). 실제 API pip list를 읽기 확인해 pip를 제외한31개를 runtime SHA256 lock으로 고정하고, 첫 개선의 시험 이미지95452e4ee27c의 시험 전용12개를 추가했다. 직접 요구10+3은 requirements.in/requirements-dev.in에 보존한다.
+- 시험 baseline의 certifi2026.10.23/pycparser3.12와 실행API2026.10.19/3.11의 차이를 발견했다. runtime 기준 두 버전으로 통일했으며 실행 패키지 업그레이드는 없다. 새 runtime 후보 `lostparty-lock-runtime:20261025`의31개 설치 이름/버전이 기존 API 읽기 기준과 전체 동일한 것을 재확인했다.
+- 별도 다운로드 컨테이너에서 기존43버전의 Linux amd64/CPython3.12 wheel을 받고 SHA256을 계산했다. Dockerfile/Dockerfile.test에 --require-hashes/--only-binary와 pip check·정확 설치 목록 검사를 연결했다. runtime31/test43 양쪽 신규 설치·해시·의존성/설치목록 일치 PASS. 개발 API 이미지를 교체/재시작하지 않았다. base Python/OS/pip/PostgreSQL 고정은 이번에 확장하지 않았다.
+- `check_dependencies.py`의 파일 정합성 검사를 실행기 static에 통합. 직접 요구/lock 차이·해시누락·시험의runtime덮어쓰기·설치 drift 거부4건 추가, 호스트 총12PASS. 실제 offline 합성 잘못된 FastAPI wheel 해시도 pip가 exit1로 거부했고 임시 다운로드/거부시험 컨테이너를 제거했다. wheel/tmp 파일과 후보 이미지/캐시는 임시 로컬 검증 자료이며 저장소에 넣지 않았다.
+- 새 lock 환경 격리 시험: 인증파일34PASS(16.93초), 최신 아이템레벨파일18PASS(88.70초). 둘 다 기존 Starlette/AnyIO 경고1종, 실제회원/기기가 아닌 합성PostgreSQL/HTTP이며 과거 결과와 합산하지 않는다. 기본116경로/133동작·two-cycle177경로/197동작 OpenAPI 객체 전체 일치PASS. 전체 legacy/two-cycle/all과 보안 취약점 감사는 미실행.
+- static 문서/동결자료·경로/lock 검사 및 git diff --check PASS. 작업 종료 시 시험 고유 프로젝트/네트워크 정리와 기존 API bbab9692cb65·DB f1a0bf3769fa 동일 ID/healthy를 읽기 확인했다. 기존 DB/키/환경 내용 hash나 정상회원 명령 재검증은 하지 않았다.
+- 구현·문서·검증 기록은 로컬 커밋한다. push/PR/merge/배포·Issue/네이티브 회신·추가 사용자 시험 요청은 없다. 현재 개발실행 sourcef471e31/6d5857b3·177/DB0031은 유지한다. 다음에는 변경 위험에 맞는 기존 격리 명령을 사용하고, 라이브러리 업데이트는 후보 환경에서 검증 후 명시적으로 lock을 변경한다. 다른 구조 개선은 미착수이며 모집 복귀 전 checkout/통합 여부를 확인한다.
+
+## 2026-10-25 Backend 로깅·관측 보강
+
+- 사용자 승인 기본안(외부 서비스 없이 Python logging·10m×5)에 따라 `chore/backend-architecture-review`에서 구현. [로그 필드/조회/보관 안내](../engineering/operations/logging.md). `app/core/observability.py`의 허용 필드 JSON formatter·순수ASGI 요청 관측·DB 분류·job 관측과 logging.json을 추가했다. 신규 패키지/lock 변경 없음.
+- HTTP 전체 처리시간·method/template/status·서버 UUID와 공통 오류응답/provider 진단 ID를 연결한다. body/header/query/원path/IP·회원/방ID·SQL/parameter·예외 원문/traceback은 formatter에서 렌더링하지 않는다. 입력 X-Request-ID는 신뢰하지 않는다. success 응답 필드/헤더와 원ACK는 변경하지 않는다. 직접 반환된 과거 ACK 본문을 읽어 현재 UUID와 합치는 처리도 없다.
+- DB SQLSTATE는 connection/lock_unavailable/query_cancelled/deadlock/serialization/constraint/database로 분류한다. 초기 합성시험에서 XX000 OperationalError를 connection으로 잘못 묶은1실패를 발견했고 SQLSTATE가 있으면 알려진 분류를 우선·미분류는database, 연결종류fallback은 SQLSTATE없을 때만 사용하도록 수정했다. 예외 원문/SQL 출력 없이 원인을 구분한다.
+- auth cleanup/ownership/recruitment tick의 성공·실패/소요시간을 기록하고 기존 sleep/스위치·재시도를 보존했다. per-room 실패는 count로 누적해 partial_failure로 구분한다. 예정 업무 backlog·경보·다중프로세스 집계는 미구현이다. Uvicorn access log를 비활성화하고 server/기타 임의 message·traceback도 안전한 event만 출력한다. 기존 Google/provider 안전 진단 문맥은 유지했다.
+- Dockerfile·two-cycle command에 JSON log config/no-access-log를 연결하고 compose api/db의 json-file max-size10m/max-file5를 준비했다. 합성 환경값만 사용한 compose config 렌더링에서 두 서비스 정책·API CLI PASS. 실제50MB 초과 롤오버는 시험하지 않았다. 실제 개발 API/DB/키/환경/볼륨·로그 파일은 변경하지 않았고 컨테이너 재생성/데몬 재시작도 하지 않았다. 정책은 기존 컨테이너에 자동 적용되지 않는다.
+- **최종 격리검증:** 로깅21·인증34·provider 진단11·Google12 = 고유78PASS(29.72초). 비밀포함 header/query/path/예외/SQL 비노출·오류 request_id·미처리500·streaming·취소/동시요청 ContextVar 격리·실제 worker 재시도·health503 응답 보존, 실제 dictConfig subprocess의 access차단/traceback미노출을 확인했다. 로깅 단독21PASS는78에 포함하며 초기72PASS/1FAIL도 합산하지 않는다.
+- 최신 모집 아이템레벨 별도18PASS(90.60초·합성0031 app-role/HTTP·쓰기/원ACK/읽기보존). 두 pytest 모두 기존 Starlette/AnyIO 경고1종. 최종 후보 이미지의 기본116경로/133동작·two-cycle177경로/197동작 OpenAPI 전체 객체 일치PASS. 호스트 안전성/lock12PASS·static 문서/동결자료/경로 검사·git diff --check PASS. 전체 all/성능/실회원·기기/실제운영 관측 인수는 미수행이다.
+- 종료 시 기존 API bbab9692cb65·DB f1a0bf3769fa 동일 ID/healthy, 시험 lostparty-check 네트워크 잔존0을 읽기 확인했다. DB내용hash/정상회원 명령을 재시험한 것은 아니다. 코드·검증·문서는 로컬 커밋하며 push/PR/merge/배포·Issue 게시/네이티브 시험 요청은 없다. 실제 반영을 별도 요청받으면 자료보존·대상/허용중단을 확인하며 API 교체와 DB 로그 정책 적용을 구분한다. 모집 복귀 전 checkout/개선 기록 통합을 확인한다.
+
+
+## 2026-10-25 Backend 개선 통합·모집 브랜치 복귀
+
+- 사용자 요청으로 `chore/backend-architecture-review`의 e13980b(구조점검)·94bd92d(격리검증)·8842b0f(의존성 고정)·65ab2a9(로깅)을 `feat/raid-recruitment`에 --no-ff 이력 보존 병합했다. 병합 전 모집 로컬/원격c0128c3 동일·미커밋0·단일worktree, 개선 브랜치 원격 없음·모집이 개선의 조상임을 확인했다. 충돌 없으며 사용자 변경을 덮어쓰지 않았다.
+- 현재 실제 경로 `/home/heowork/projects/lostparty-backend`의 checkout은 feat/raid-recruitment다. NEXT_WORK/AI_CONTEXT/각 개선 문서를 통합 기준으로 갱신했다. 모집 기능·테스트·개선 도구·최신 작업 기록을 같은 브랜치에서 이어간다. 원격은 여전히c0128c3이며 이 로컬 병합의 push/PR·dev/main 병합은 요청받지 않아 수행하지 않았다. 개선 브랜치는 dev통합/원격게시 후 정리 조건 전까지 보존한다.
+- #26 최신 상태/전체26번째 Backend 인계 댓글을 읽기 확인했다. OPEN/댓글26개이며 새 Backend 수정 요청은 없고 네이티브 전체 모집 점검 대기를 유지한다. 기존 [전체26 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386892285) 이외의 새 댓글/재시험 요청은 작성하지 않았다.
+- 충돌 없는 병합 결과의 코드·설정·시험·계약이 기검증65ab2a9와 동일함을 diff로 확인했다. 따라서 로깅/인증/provider/Google78PASS·모집18PASS·두 OpenAPI 전체 일치의 기존 근거를 재사용하고 이번 병합에서 pytest/서버·DB를 반복 실행하지 않는다. 문서/lock 검사·호스트12PASS·diff --check로 통합 기록을 확인했다. 서비스 적용/실회원·기기 성공이나 새 실행시험으로 기록하지 않는다.
+- 실제 개발 API sourcef471e31/이미지6d5857b3·177경로/DB0031은 그대로며 서버 교체·DB/키/설정 내용 변경·재생성·배포를 실행하지 않았다. 실제 개선 반영은 대상과 자료보존을 확인하는 별도 요청 구간이다. 다음은 모집 Issue의 구체 차이 대응 또는 사용자가 선택한 다음 작업이다.
