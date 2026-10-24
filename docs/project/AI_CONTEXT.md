@@ -8,7 +8,7 @@
 | [원정대·캐릭터](../features/rosters/README.md) | 등록/갱신·소유 인증/V2분쟁·현재/퇴역 읽기·전투력/분석·대표/활동/표시·일괄조회 구현. V2분쟁 실인수 보류, 생명주기 증거/활동 자동추가·명시제외 후속은 별도. |
 | [레이드·주간 기록](../features/raids/README.md) | 공개 카탈로그·서버 주차·개인 완료/주간 summary 구현. 최신 게임패치 검증과 실제 이용 통계 집계는 별도 미완료. |
 | [그룹](../features/groups/README.md) | 생성/가입/초대·코드/차단·관리조회·그룹장 이전/일반탈퇴 구현·dev통합. Flutter 연결/실기기와 조건부 해산·추방/대표변경 후속 미완료. |
-| [모집·일정](../features/recruitment/README.md) | 주차별 생성/개방/참가·일정/완료·기록·검색/관계정리 구현·개발API반영. Flutter #25 A/B/C(최신0c5ae941) 명령/ACK·메뉴·기록 연결/자동검증 보고수신. #24검색 후속·정상실회원/기기 전체 인수 미완료, 추가 Backend 차단 요청 없음. |
+| [모집·일정](../features/recruitment/README.md) | 주차별 생성/개방/참가·일정/완료·기록·검색/관계정리 구현·개발API반영. Flutter #25 A/B/C(최신0c5ae941) 명령/ACK·메뉴·기록 연결/자동검증 보고수신. #24검색 후속·정상실회원/기기 전체 인수 미완료, 새 #13 Flutter142 구성 불가 신청 차단/143 후보 일괄 읽기 계약 요청 수신·Backend 검토/제안 차례(미구현). |
 | [공통 개발·운영](../engineering/README.md) | GitHub Issues·OpenAPI 계약 협업, 품질/트랜잭션/데이터보존 기준. 최신 전환 근거는API176/DB0031. 현황 조회에서 API/DB healthy·health200·DB0031을 읽기 확인했으며 실회원 명령 재검증은 아니다. |
 
 현재 개발 실행 계약은 [two-cycle OpenAPI](../../openapi/two-cycle.openapi.yaml), 기본앱 보존 계약은 [기본 OpenAPI](../../openapi/openapi.yaml)다. two-cycle은 실행 구성 이름이며0031은 DB마이그레이션 단계다.

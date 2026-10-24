@@ -10,7 +10,9 @@
 
 ## Backend 다음 실행
 
-새 Backend 차단/수정 요청은 없다. Flutter/사용자의 재현 가능한 계약·동작 차이에 해당 기능 범위로 대응한다. 현재 마지막 개발 전환 근거는 source15e143a/반영920cc059·API176/DB0031이며 [전환·보존 기록](../engineering/operations/README.md)과 [#25 Backend 개발 반영](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371618996)을 따른다. 이번 현황 조회에서 API/DB 두 컨테이너 healthy·실제 HTTP health200·DB0031_membership_actions를 읽기 확인했다. 전체 계약/실회원 명령을 재검증한 것은 아니다.
+**#13 신규 보완 요청 수신 — 다음 담당 Backend.** [전체142번째 Flutter · 구성 불가 신청 차단](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6380773556): 기존 확정참가 기준 구성 검사를 admission-context permissions.apply와 실제 신청 POST 양쪽에 적용한다. 현재 pending 경로가 `_slot`을 건너뛰는 것을 정적으로 확인했으며 승인 최종 검사·8인 반대파티/C/N·pending 미점유/무예약은 보존한다. [전체143번째 Flutter · 신청 후보 사전제외 계약 협의](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6380816312): 선택room/실제T·묶음 전체에 대해 레벨·구성/유효역할을 일괄 판단하는 읽기 계약을 기존 조회/validator 재사용부터 검토·제안한다. endpoint/DTO는 미합의이며 임의 구현하지 않는다. 캐릭터별 N회 context/전체멤버 선조회·클라이언트 정책 복제 없이 원후보0/필터후0/조회실패를 구분한다. 다음은 계약 제안/구성검사 보완이며 현재 수신·정적 확인만, 코드/실행 계약·서버 미변경이다.
+
+[전체141번째 Flutter · 사용자 생성/신청 1차](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6380750571): 단독 C/N·양주차 생성/신청 거절·재시도 승인 성공 보고수신, 최초 오류 code/request_id 부재로 최초 원인은 미확정이다.142/143 보완 요청이141 당시 수정요청 없음보다 최신이다. #25 B/C 연결 완료 보고와 실제 인수 미완료는 유지한다. 현재 마지막 개발 전환 근거는 source15e143a/반영920cc059·API176/DB0031이며 [전환·보존 기록](../engineering/operations/README.md)과 [#25 Backend 개발 반영](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371618996)을 따른다. 이번 현황 조회에서 API/DB 두 컨테이너 healthy·실제 HTTP health200·DB0031_membership_actions를 읽기 확인했다. 전체 계약/실회원 명령을 재검증한 것은 아니다.
 
 사용자 지정 테스트용 인증 설정은 실제 장비 인증 성공과 구분한다. 다음 사용자 확인이 필요하면 앱 목록 새로고침·활동/대표 선택이며 비공개 실행 근거는 DEV_LOG에 보존한다. 자료/키/DB초기화·개발 fixture 재적용은 수행하지 않는다.
 

@@ -2326,3 +2326,10 @@ NEXT_WORK/AI_CONTEXT/추적표를최신다음Backend계약/호환설계로갱신
 공식 Issue13 전체140·24 전체5·25 전체10까지 조회했다. [#25 전체9번째 Flutter · B메뉴/성공처리](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6372783376) 0487788a commit/push·295mock, [전체10번째 Flutter · C명시 프로필/본인기록](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6373322164) 0c5ae941 commit/push·413mock·최종분석0 보고수신. 범위별 보고 수치를 합산하지 않고 Backend 독립 재현/정상 로그인·실회원·기기 인수와 구분한다. 추가 Backend 차단·새 구현/반복시험 요청이 없어 중복 수용 댓글은 작성하지 않았다. 다음 Flutter는 #24검색 CURSOR_STALE 제한 회복/캐시 후속과 실제 인수, Backend는 재현 차이 대응이다.
 
 현재 docs/document-organization 작업트리 clean에서 읽기 확인했고 API/DB 두 컨테이너 healthy·컨테이너 내부 HTTP health200·DB0031_membership_actions를 확인했다. 전체 OpenAPI/실회원 명령을 다시 검증한 것은 아니다. NEXT_WORK/AI_CONTEXT/추적표의 이전 B/C 대기를 바로잡았다. 기능코드/API/DB자료·키/이미지 변경, 신규 테스트/배포/Issue 변경 없음. 문서 브랜치 로컬 커밋만 수행하며 push/PR/병합은 미실행이다.
+
+
+## 2026-10-24 — Issue13 신규 신청 구성/후보목록 보완 수신
+
+사용자 확인 지시로 Issue13 본문과 전체143번째까지 재조회했다. Flutter141 생성C/N/양주차·신청거절·승인재시도 성공 보고,142 구성불가 신청 context/POST 차단,143 레벨미달/같은4인파티 딜러직업 중복 후보 사전제외 일괄 읽기계약 협의를 확인했다. 링크·다음 담당은 NEXT_WORK에 기록했다. `cycle_commands.preflight`/신청 admit의 pending 경로와 `cycle_admission.admit_bundle`의 `slot=None if pending else core._slot(...)`를 정적으로 대조해 구성검사 누락 경계를 확인했다. 최초 사용자 오류는 code/request_id가 없어 이 누락으로 단정하지 않는다.
+
+다음 Backend는 기존 구성검사/조회 재사용 범위를 검토해 읽기 계약을 제안하고 합의 범위에서 보완한다. 후보 endpoint/DTO는 미확정이며 캐릭터별 N회 context/선행 전체멤버 조회·클라이언트 구성 복제·pending 자리예약을 새 정책으로 만들지 않는다.8인 반대파티/C/N·복수 유효역할·원후보0/필터후0/조회실패 구분과 context/POST/승인 최종검사를 보존한다. 이번은 수신·정적 확인/문서 현황 갱신만으로 신규 코드/계약·자동시험·서버/DB 변경·Issue 회신/종료 없음. 기존 no-new-request 상태를 바로잡고 docs/document-organization에서 로컬 기록 커밋만 한다.

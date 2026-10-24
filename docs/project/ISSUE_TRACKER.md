@@ -9,7 +9,7 @@
 | 이슈 | 주제 | 다음 담당·상태/완료 조건 |
 |---|---|---|
 | [#12](https://github.com/heo0328/lostparty-backend/issues/12) | 그룹 G1/G2 Flutter 연결 | Backend 구현/통합 완료. Flutter 연결/관련 검증과 사용SHA 회신 미확인. 현재 Flutter 우선작업을 중단시키지 않음 |
-| [#13](https://github.com/heo0328/lostparty-backend/issues/13) | 통합모집·시간/참가/주간관리 | Flutter D22/E23/A/B구현보고·실인수별도.135검색/136최신탈퇴·다인해산정책은 [전체137번째 Backend 설계/후속이관](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6368822874)로#24/#25전문게시 후 소스 구현/격리 검증·개발176/DB0031 반영 완료. 구원명령유지·원본요구폐기아님,다음 #24/#25 Flutter 연결/실인수. #139 IF-001은 비활성 보존 문서에 정리·OPEN |
+| [#13](https://github.com/heo0328/lostparty-backend/issues/13) | 통합모집·시간/참가/주간관리 | 생성/승인 재시도 성공 보고141 수신·최초오류 미확정. [전체142번째 Flutter 구성 불가 신청차단](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6380773556) 및 [전체143번째 Flutter 후보 사전제외 일괄 읽기계약 협의](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6380816312) 신규 요청. 다음 Backend 기존 validator/조회 재사용·계약 제안/보완, endpoint/DTO 미합의·미구현. pending 미점유/승인 재검사·8인/C/N 보존. #24/#25 개발 반영·IF-001/기존 미완료 유지·OPEN |
 | [#15](https://github.com/heo0328/lostparty-backend/issues/15) | V2 Flutter 인증/분쟁 | #13 전체16번째Flutter 보고기준 D1~D4 dev반영·마감, 분쟁실기기는사용자판단보류. 이후 #13 전체17번째에서 로그인화면재구성수정 별도마감·계약검토전환을보고했으며분쟁실기기보류는별도 |
 | [#16](https://github.com/heo0328/lostparty-backend/issues/16) | G3 완료 구현/dev 통합·조건부 해산 후속 | 관리GET/이전/일반탈퇴는 구현332a8ab·인계349fb79/PR20 bb144e0 dev통합·원격확인/완료브랜치정리. 통합전45PASS·실행계약일치(기존148PASS와중복), [전체6번째 Backend 통합결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6262944673). 조건부해산은실제그룹모집원본후속·추방/대표변경미구현/Flutter연결·실기기별도, 이슈유지 |
 | [#17](https://github.com/heo0328/lostparty-backend/issues/17) | 캐릭터 소멸 근거·이력·이름 재사용 ID | Flutter전체1번째범위확인·Backend 현재기능/증거공백 검토·최소계약 보완. 기존L1/claim/조회 재사용. 실제삭제/보류해제 승인 아님 |
