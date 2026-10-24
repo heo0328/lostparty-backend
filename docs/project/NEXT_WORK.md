@@ -7,6 +7,8 @@
 - **브랜치·위치:** `feat/raid-recruitment` / `/home/heowork/projects/lostparty-backend`. 코드·계약·문서·인계를 같은 이력에 유지한다.
 - **실제 개발:** 구현source484ca1719e21b01a59da75b62a1d3b1568ada2c3/이미지fdd256ea·177경로·DB0031, API/DB healthy. migration 없음·기존108표/780행·키·설정/볼륨 보존. [반영/검증](../engineering/operations/eligibility-rollout.md)·[집계](../engineering/operations/records/eligibility-rollout.json).
 
+[#26 전체10번째 Backend · 실제 개발 반영/자료보존 검증](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6383315604) 게시·댓글 전문/실제 전체 순번 확인 완료. 반영 근거0096319b027c1da9d2ba0b7cf3667171489c5d9d commit·push·원격 일치 확인. 다음 담당 Flutter 정상로그인 소수항목 인수, Backend 직접차이 대응이다.
+
 ## 다음 Flutter · 소수 항목 정상 로그인 인수
 
 [#26 전체9번째 Flutter 통합연결](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6382646003)의 f89c009f push·신청/변경 두intent 통합·493PASS/분석0은 자체보고이며 Backend 독립 재현이 아니다. 새 Backend 보완요청은 없다. [실행 계약2](../features/recruitment/participation/candidate-contract.md)를 실제 개발서버에서 사용할 수 있다.
