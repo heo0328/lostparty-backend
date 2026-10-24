@@ -20,9 +20,11 @@
 - **최신 수신 — [전체3번째 Flutter · 사용자 확정 신청/캐릭터변경 통합 자격](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381254676):** 신청과 변경 선택목록·context/실제POST·승인을 같은 정책으로 검증한다. 선택T 묶음 전체 레벨·선택역할 전투력·동일raid 개인/파티완료·다른방 실제참가·4인별 동일딜러직업/딜러3+서포터1 구성을 모두 검사한다. **기존 전투력은 후보제외 밖/신청 전용 범위는 이 최신 요구로 대체됐다.** 원래 구성검사25PASS는 이전 구간 근거이고 통합 후보/변경 구현 완료가 아니다.
 - **역할/구성:** 일반직업 dealer전용·바드/발키리/도화가/홀리나이트 양역할 정책과 eligible count를 일치시킨다. 같은직업이어도 dealer/support가 다르면 가능,8인은 각4인파티에서 검사해 반대파티 유효배치를 보존한다. 역할 무시한 공격대 전체 class총량 제한을 만들지 않는다.
 - **변경 자기제외:** 본인의 교체대상 참가/자리·해당 교체대상 점유만 제외한 가상 구성으로 평가한다. 같은room 점유 전체 무시 금지, 다른방 점유/완료 차단, 실패/경쟁 시 기존캐릭터 참가·예약/다른T 보존이다.
-[#26 전체4번째 Backend · 최신범위 수용/기존 검증 차이 회신](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381295804) 게시·전문/실제 순번 확인 완료. 다음 담당 Backend 보완 제안2(schema/예시) 작성·정적검증 완료→게시/구체 소비차이 해소·합의→구현이며, 이번 댓글 자체는 새 DTO 최종합의가 아니다.
+[#26 전체4번째 Backend · 최신범위 수용/기존 검증 차이 회신](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381295804) 게시·전문/실제 순번 확인 완료. 다음 담당 Backend 보완 제안2(schema/예시) 작성·정적검증·게시 완료→구체 소비차이 해소·합의→구현이며, 이번 댓글 자체는 새 DTO 최종합의가 아니다.
 
 - **현재 설계:** [통합 자격 설계](../features/recruitment/participation/eligibility-design.md)에서 필요에 따라 공통판정→문맥/쓰기→후보읽기→직접시험/인계로 작업을 분류했다. [보완 계약2](../features/recruitment/participation/candidate-contract.md)는 신규 admission-character-candidates GET의 apply/change_character·서버도출actor·지원역할/ROLE_NOT_SUPPORTED·역할별 전투력/보존 성공본·제외집계·snapshot/페이지를 닫았다. 8인 변경은 원파티 우선→반대파티, 정확한 교체Assignment/lease만 자기제외하는 설계다. 기존쓰기DTO/원ACK 유지, 실행176/DB0031은 미변경이다.
+설계 source `77be3a955cb8e3a91c5a2cf212c45d622e03aba0` commit/push·원격 SHA 일치 확인 뒤 [#26 전체5번째 Backend · 통합 자격 기획/설계·보완 계약2](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381680561) 게시·전문/전체 순번을 재조회했다. 다음 담당 Flutter 구체 소비차이 검토, Backend 차이 반영/합의 후 구현이며 계약 확정·새 API 실행/실인수 완료가 아니다.
+
 - **정적 검증:** 작성 예시21개/잘못된 응답16개·snapshot 혼합 거절. 실제 evaluator/HTTP·DB 검증이 아니며 기존25PASS와 합산하지 않는다. 기본 실행 OpenAPI에 신규 GET을 추가하지 않았다.
 - **다음 Flutter:** 보완 제안2의 intent/actor·역할/전투력/집계/페이지와 8인변경·사유 우선순위의 구체 소비차이를 검토한다. 기존 전체시험/실서버 인수 요청은 아니다.
 - **다음 Backend:** 제안의 소비차이 반영/합의 후 공통검증/변경원자성→후보GET→직접회귀·실행계약 검증/정확 source 게시를 수행한다. 계약2는 아직 미합의이므로 새 runtime API/역할제한을 구현하지 않는다.

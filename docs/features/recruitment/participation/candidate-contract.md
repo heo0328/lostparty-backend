@@ -64,3 +64,6 @@ Flutter는 전페이지를 같은snapshot/계수/actor·정책에서 취합하�
 [합성 작성 예시](examples/candidate-contract-v2.examples.json)는 일반 dealer-only, 복수역할 한/양역할·역할별전투력, missing/조건필터후0/source0, retained 성공+새head실패/경고, 변경actor/원파티자기제외·반대파티, 페이지2개를 포함한다. 실제 개발DB/HTTP 응답이나 본 기능 실행 시험이 아니다. [정적 검증 도구](tools/validate-candidate-contract.py)는 closed shape·권한/role/power/계수/페이지 불변식을 검사한다.
 
 네이티브 검토가 필요한 변경은 새공통GET/intent·서버도출actor, ROLE_NOT_SUPPORTED와 지원역할 필터/eligible, exclusion_summary의 missing구분, 보존 성공값/경고·시각 표시,8인변경 원파티우선→반대파티 배치 및 공통사유 우선순위다. 기존에 확인된 정책의 반복 수용이 아니라 이 wire/행동 차이를 확인한다. 합의 뒤 공통검증→읽기→직접회귀/계약검증→게시/소비 인계 순서로 진행한다. DB migration·원자료변경/개발배포·dev/main 통합은 승인 범위에 포함하지 않는다.
+
+
+설계 source `77be3a955cb8e3a91c5a2cf212c45d622e03aba0` commit/push·원격 SHA 일치 확인 뒤 [#26 전체5번째 Backend · 통합 자격 기획/설계·보완 계약2](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381680561) 게시·전문/전체 순번을 재조회했다. 다음 담당 Flutter 구체 소비차이 검토, Backend 차이 반영/합의 후 구현이며 계약 확정·새 API 실행/실인수 완료가 아니다.

@@ -2402,3 +2402,6 @@ pending에도 기존 확정구성/정원·role/class 검사를 적용하고 읽�
 정적검증: jsonschema Draft202012+형식·별도 의미불변식으로 작성 예시21개(일반/복수역할·누락/미달/최소없음·retained성공/새head실패/경고·자기제외/반대파티·C/N·2페이지), 비정상 응답16개·snapshot혼합거절을 확인했다. 실제 DB/evaluator/HTTP 시험·성능계측이 아니며 수치를 기존25시험에 더하지 않는다. 문서 참조/원문/고정JSON 검사는 별도 통과 기록을 따른다.
 
 다음은 같은26에 보완 제안2를 게시해 구체 소비차이를 확인하고 합의 뒤 공통검증/변경원자성→후보읽기→직접회귀/실행계약·게시/연결인계다. 후보GET/신규 role검사는 미합의/미구현·실제 개발API176/DB0031 기존상태, dev/main/운영/자료삭제 없음. 게시/회신 링크와 commit/push는 후속 기록한다.
+
+
+설계 source `77be3a955cb8e3a91c5a2cf212c45d622e03aba0` commit/push·원격 SHA 일치 확인 뒤 [#26 전체5번째 Backend · 통합 자격 기획/설계·보완 계약2](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381680561) 게시·전문/전체 순번을 재조회했다. 다음 담당 Flutter 구체 소비차이 검토, Backend 차이 반영/합의 후 구현이며 계약 확정·새 API 실행/실인수 완료가 아니다.
