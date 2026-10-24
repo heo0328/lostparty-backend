@@ -22,14 +22,20 @@ def prepare(db,uid,rid,key,cid,role,stamp,*,include_session_display=False):
     if set(by_item)!={t.item_id for t in targets}:fail('TARGET_BUNDLE_INCOMPLETE')
     for t in targets:t.party_no=by_item[t.item_id].party_no
     minimum=row.settings_snapshot['combat_requirement']['dealer_min' if role=='dealer' else 'support_min']
-    power=admission.core.power_comparison(db,uid,selection,minimum);reason=None
-    try:admission.admit_bundle(db,uid,room,row,selection,targets,None,stamp,validate_only=True,replacing=cm)
-    except GameError as error:reason=error.code
+    power=admission.core.power_comparison(db,uid,selection,minimum)
+    from app.raid_rooms import admission_eligibility
+    evaluation=admission_eligibility.single(db,uid,room,row,selection,replacing=cm)
+    reason=evaluation['reason']
+    if evaluation['allowed']:
+        for t in targets:t.party_no=evaluation['parties'][t.item_id]
+    if reason is None:
+        try:admission.admit_bundle(db,uid,room,row,selection,targets,None,stamp,validate_only=True,replacing=cm,unified=True)
+        except GameError as error:reason=error.code
     choices=schedule.choices(db,row,stamp)
     if any(c['required'] and not c['permission']['allowed'] for c in choices):reason=reason or 'RECRUITMENT_CLOSED'
     hidden=[room.revision,room.scope,life.selection_context.group_stamp(db,room.group_id),cm.id,cm.revision,
         [[a.id,a.revision,a.character_id,a.selected_role,a.party_no,a.slot_no] for a in owned],
-        row.settings_snapshot,selection,targets,power['power_revision'],choices]
+        row.settings_snapshot,selection,targets,power['power_revision'],choices,evaluation['evidence']]
     metadata=display.existing(db,uid,row,stamp,"character",choices) if include_session_display else None
     if include_session_display:hidden.append(metadata)
     snapshot=digest(jsonable_encoder(hidden))
@@ -71,7 +77,7 @@ def execute(principal,rid,command,data):
         evidence=dict(assignments=[life.assignment_snapshot(a) for a in owned],
             participations=leadership.release_parts(db,row,cm,stamp,ending=False))
         member,_,_=admission.admit_bundle(db,uid,room,row,Selection.model_validate(body['selection']),
-            [Target.model_validate(v) for v in body['target_items']],command,stamp,replacing=cm)
+            [Target.model_validate(v) for v in body['target_items']],command,stamp,replacing=cm,unified=True)
         schedule.enrol(db,row,member,data.target_session_ids,stamp)
         cm.revision+=1;life.event(db,row,cm,command,'character_changed',stamp,evidence)
         row.revision+=1;row.members_revision+=1;row.plan_revision+=1

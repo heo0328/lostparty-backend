@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-현재 작업 구간은 **모집 신청·캐릭터 변경 통합 자격 보완(#26)**, 브랜치는 **feat/raid-recruitment**, 실제 프로젝트 경로는 `/home/heowork/projects/lostparty-backend`다. 문서 정리와 최신 현황/회신 기록을 모집 코드와 이력 보존 통합했다. 문서 수정/기록이라는 작업 내용과 작업 구간명·브랜치를 구분하는 [제1원칙](../engineering/development/workflow.md)을 따른다. 이번 브랜치 정리로 미합의 후보API 구현·서버 반영을 완료한 것은 아니다.
+현재 작업 구간은 **모집 신청·캐릭터 변경 통합 자격 보완(#26)**, 브랜치는 **feat/raid-recruitment**, 실제 프로젝트 경로는 `/home/heowork/projects/lostparty-backend`다. 문서 정리와 최신 현황/회신 기록을 모집 코드와 이력 보존 통합했다. 문서 수정/기록이라는 작업 내용과 작업 구간명·브랜치를 구분하는 [제1원칙](../engineering/development/workflow.md)을 따른다. 브랜치 정리 이후 같은 브랜치에서 계약2 후보API를 구현·격리 검증했으며 실제 서버 반영은 별도 미완료다.
 
 2026-10-24 기준. 현재 실행·다음 담당은 [NEXT_WORK](NEXT_WORK.md), 주제별 미완료는 [ISSUE_TRACKER](ISSUE_TRACKER.md), 결정·검증 이력은 [DEV_LOG](DEV_LOG.md)를 따른다. 아래는 기능 상태와 기준 링크이며 UI 화면 동선을 추정한 분류가 아니다.
 
@@ -10,7 +10,7 @@
 | [원정대·캐릭터](../features/rosters/README.md) | 등록/갱신·소유 인증/V2분쟁·현재/퇴역 읽기·전투력/분석·대표/활동/표시·일괄조회 구현. V2분쟁 실인수 보류, 생명주기 증거/활동 자동추가·명시제외 후속은 별도. |
 | [레이드·주간 기록](../features/raids/README.md) | 공개 카탈로그·서버 주차·개인 완료/주간 summary 구현. 최신 게임패치 검증과 실제 이용 통계 집계는 별도 미완료. |
 | [그룹](../features/groups/README.md) | 생성/가입/초대·코드/차단·관리조회·그룹장 이전/일반탈퇴 구현·dev통합. Flutter 연결/실기기와 조건부 해산·추방/대표변경 후속 미완료. |
-| [모집·일정](../features/recruitment/README.md) | 주차별 생성/개방/참가·일정/완료·기록·검색/관계정리 구현·개발API반영. Flutter #25 A/B/C(최신0c5ae941) 명령/ACK·메뉴·기록 연결/자동검증 보고수신. #24검색 회복 연결/126mock 보고수신·추가참가자/정상실회원·기기 전체 인수 미완료, 신규 #26 신청 구성검사 보완 source6e0063c push·격리25PASS/기존DTO보존 완료(개발 미반영). 후보GET은 닫힌 제안/미합의·미구현, Flutter 전체3 최신요구 수신: 신청+캐릭터변경 후보/쓰기 통합자격·역할별전투력 포함/변경대상만 자기제외·4인별구성. [공통 설계](../features/recruitment/participation/eligibility-design.md)·[보완 계약2](../features/recruitment/participation/candidate-contract.md)/closed schema·작성예시21·정적비정상16/페이지혼합 거절 완료. Flutter 전체6 계약2 소비 수용·8인변경 명시동의/승인실패pending유지 UX확정. 다음 Backend 공통검증/변경원자성→후보읽기 구현, Flutter 인계후2가입/3변경/5주차 인수. 신규GET·역할/변경 통합검증은 미구현/실행176·DB0031 미변경. |
+| [모집·일정](../features/recruitment/README.md) | 기존176/DB0031 개발반영·#25 A/B/C/#24연결 보고수신. #26 계약2의 공통자격/변경원자성·후보GET 구현/격리 고유45PASS·후보177/기본116·기존DTO보존 완료, 실제 개발미반영. [실행 소비 계약](../features/recruitment/participation/candidate-contract.md), 다음Flutter2가입 연결/Backend 직접차이 대응·별도 개발반영 구간. 실회원/기기·운영 인수 별도 미완료. |
 | [공통 개발·운영](../engineering/README.md) | GitHub Issues·OpenAPI 계약 협업, 품질/트랜잭션/데이터보존 기준. 최신 전환 근거는API176/DB0031. 현황 조회에서 API/DB healthy·health200·DB0031을 읽기 확인했으며 실회원 명령 재검증은 아니다. |
 
 현재 개발 실행 계약은 [two-cycle OpenAPI](../../openapi/two-cycle.openapi.yaml), 기본앱 보존 계약은 [기본 OpenAPI](../../openapi/openapi.yaml)다. two-cycle은 실행 구성 이름이며0031은 DB마이그레이션 단계다.

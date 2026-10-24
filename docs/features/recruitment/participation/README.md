@@ -30,7 +30,7 @@ admission-context는 선택한 실제T와 intent에 필요한 현재 자격·조
 
 ## 상태와 문서 연결
 
-#26의 기존 신청 구성검사 보완은 source6e0063c·격리25PASS/개발 미반영이다. 최신 신청·캐릭터변경/역할전투력 요구는 [통합 자격 설계](eligibility-design.md)와 [보완 계약2](candidate-contract.md)를 검토 기준으로 사용한다. 두 문서는 설계/미합의·미구현이며 [제안1](candidate-proposal.md)은 이전 범위로 보존한다. [이전 구현/검증 기록](../../../archive/work-records/features/recruitment/development/ISSUE_26_APPLICATION_VALIDATION_DEVELOPMENT.md)·[검증 집계](validation/application-validation-results.json)는 신규 후보/변경 통합요구 완료 근거가 아니다.
+#26 계약2의 신청·변경 공통 자격/배치와 일괄 후보GET을 구현·격리 검증했다. [통합 자격/구현 경계](eligibility-design.md)·[실행 소비 계약2](candidate-contract.md)·[고유45PASS 집계](validation/eligibility-results.json)가 현재 기준이며 신규 실행후보177/기본116·기존component/쓰기DTO를 보존한다. 실제 개발API176/DB0031에는 아직 반영하지 않았다. [제안1](candidate-proposal.md)은 이전 범위로 보존하고 이전 신청검사25PASS를 이번45건에 더하지 않는다.
 
 이 문서는 현재 정책·계약의 설명이다. Backend 구현·Flutter 적용·합성 시험·실회원/기기 인수·운영 완료는 각각 구분하며, 최신 담당과 남은 작업은 [NEXT_WORK](../../../project/NEXT_WORK.md)와 [이슈 추적표](../../../project/ISSUE_TRACKER.md)를 따른다. 과거 상세 작업은 [문서 대응표](../../../engineering/documentation/README.md)로 추적한다.
 
@@ -58,6 +58,7 @@ admission-context는 선택한 실제T와 intent에 필요한 현재 자격·조
 | POST | `/v1/raid-room-applications/{application_id}/reject` |
 | POST | `/v1/raid-room-applications/{application_id}/withdraw` |
 | POST | `/v1/raid-rooms/{room_id}/character-changes` |
+| GET | `/v2/raid-rooms/{room_id}/admission-character-candidates` |
 | GET | `/v2/raid-rooms/{room_id}/admission-context` |
 | POST | `/v2/raid-rooms/{room_id}/join` |
 | POST | `/v2/raid-rooms/{room_id}/applications` |

@@ -47,7 +47,7 @@ def member_count(db, target):
 
 
 def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *,
-                 validate_only=False, pending=False, public_origin_application=None, opening=False, replacing=None, resuming=None, resume_items=None):
+                 validate_only=False, pending=False, public_origin_application=None, opening=False, replacing=None, resuming=None, resume_items=None, unified=False):
     if pending and not validate_only:
         raise ValueError('Pending validation cannot acquire a lease')
     cycles.target(stamp, target.cycle_key.isoformat())
@@ -70,6 +70,13 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
     character = core.identity.selected_character(db, uid, selection.model_dump(mode='json'))
     if not character.summary.get('class_name'):
         fail('CHARACTER_DATA_UNAVAILABLE')
+    evaluation = None
+    if unified:
+        from app.raid_rooms import admission_eligibility
+        evaluation = admission_eligibility.single(db, uid, room, target, selection, replacing=replacing,
+            pinned={t.item_id: t.party_no for t in targets})
+        if not evaluation['allowed']:
+            fail(evaluation['reason'])
     minimum = target.settings_snapshot['combat_requirement'][
         'dealer_min' if selection.selected_role == 'dealer' else 'support_min']
     power = core.power_comparison(db, uid, selection, minimum)
@@ -119,7 +126,7 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
             level = None
         if not core.raids.meets_item_level(level, difficulty):
             fail('RAID_ITEM_LEVEL_REQUIRED')
-        old=db.scalar(select(Assignment).where(Assignment.round_id==rd.id,Assignment.membership_id==member.id).order_by(Assignment.joined_at.desc(),Assignment.id.desc())) if member else None
+        old=evaluation['owned'].get(item.id) if evaluation is not None and replacing is not None else (db.scalar(select(Assignment).where(Assignment.round_id==rd.id,Assignment.membership_id==member.id).order_by(Assignment.joined_at.desc(),Assignment.id.desc())) if member else None)
         if old is not None and (old.state!='active' if replacing else old.state!='left'):
             fail('TARGET_CONTEXT_STALE')
         if replacing is None and old is not None and old.state=='left':
@@ -142,7 +149,7 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
             fail('ROOM_COMPOSITION_CONFLICT')
         # Checking a free slot never reserves it. Pending returns above the
         # write phase, but must obey the same confirmed-party composition.
-        slot = core._slot(db, formation, rd, selection, character, choice.party_no,
+        slot = evaluation['slots'][item.id] if evaluation is not None else core._slot(db, formation, rd, selection, character, choice.party_no,
             exclude_membership_id=member.id if replacing else None)
         if replacing is not None and old.party_no==choice.party_no:slot=old.slot_no
         plans.append((item, rd, state, slot, old))

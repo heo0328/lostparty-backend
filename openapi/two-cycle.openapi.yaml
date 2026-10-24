@@ -27047,7 +27047,7 @@
             }
           }
         },
-        "description": "Apply permissions validate current confirmed-party capacity and composition, item level and weekly availability. Pending applications never occupy or reserve a slot; approval revalidates current eligibility."
+        "description": "Apply/change_character use admission-eligibility-2: product-supported roles, bundle level, role-specific retained power, actual-target completion/occupancy and per-party composition. Change targets bind the exact own assignments and original-party-first valid placement. Pending never reserves a slot; current command tokens and consent must still match."
       }
     },
     "/v2/raid-rooms/{room_id}/join": {
@@ -27506,7 +27506,7 @@
             }
           }
         },
-        "description": "Revalidate confirmed-party capacity and composition, item level and weekly availability before creating a pending application. No confirmed assignment, weekly occupancy or reservation is created; approval revalidates under the mutation lock."
+        "description": "Revalidate admission-eligibility-2 and exact displayed target parties before creating pending. Unsupported roles are ROLE_NOT_SUPPORTED. No confirmed assignment, weekly occupancy or reservation is created; original ACK replay is preserved."
       },
       "get": {
         "tags": [
@@ -28208,7 +28208,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Revalidate admission-eligibility-2 at the stored application parties under the mutation lock. Qualification failure preserves pending and all business occupancy/reservations; no automatic rejection, withdrawal or party relocation. Original ACK replay is preserved."
       }
     },
     "/v2/raid-room-applications/{application_id}/reject": {
@@ -33289,7 +33290,8 @@
               }
             }
           }
-        }
+        },
+        "description": "Atomically replace only the exact own current target assignments under admission-eligibility-2. Original party is preferred, then an eligible opposite party in eight-person rooms. Current token, actor revisions, target parties and consent must match; failure preserves old character, reservations and opposite target. Original ACK replay is preserved."
       }
     },
     "/v2/me/raid-rooms/{room_id}/availability-submission": {
@@ -40693,6 +40695,268 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/MembershipActionResult"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Request Entity Too Large",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Too Many Requests",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "const": 60
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/raid-rooms/{room_id}/admission-character-candidates": {
+      "get": {
+        "tags": [
+          "recruitment-cycle-candidate"
+        ],
+        "summary": "Admission Character Candidates",
+        "description": "Read-only own candidates for apply/change_character under admission-eligibility-2. All roles and counts use the same eligibility as commands; no occupancy, provider calls or writes. Cursors bind actor/session, room, actual target and intent; changed snapshot is CURSOR_STALE.",
+        "operationId": "contract3_get__v2_raid-rooms_room_id_admission-character-candidates",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Room Id"
+            }
+          },
+          {
+            "name": "target_cycle_key",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Target Cycle Key"
+            }
+          },
+          {
+            "name": "intent",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "enum": [
+                "apply",
+                "change_character"
+              ],
+              "type": "string",
+              "title": "Intent"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdmissionCandidatePage"
                 }
               }
             },
@@ -68696,6 +68960,591 @@
           "leadership"
         ],
         "title": "MembershipActionTargetRevisionRules"
+      },
+      "AdmissionCandidateActor": {
+        "properties": {
+          "membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Membership Id"
+          },
+          "cycle_member_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Cycle Member Id"
+          },
+          "cycle_member_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Cycle Member Revision"
+          },
+          "assignments": {
+            "items": {
+              "$ref": "#/components/schemas/AdmissionCandidateAssignment"
+            },
+            "type": "array",
+            "maxItems": 200,
+            "minItems": 1,
+            "title": "Assignments"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "membership_id",
+          "cycle_member_id",
+          "cycle_member_revision",
+          "assignments"
+        ],
+        "title": "AdmissionCandidateActor"
+      },
+      "AdmissionCandidateAssignment": {
+        "properties": {
+          "assignment_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Assignment Id"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "item_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Item Id"
+          },
+          "round_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Round Id"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "selected_role": {
+            "type": "string",
+            "enum": [
+              "dealer",
+              "support"
+            ],
+            "title": "Selected Role"
+          },
+          "party_no": {
+            "type": "integer",
+            "maximum": 2.0,
+            "minimum": 1.0,
+            "title": "Party No"
+          },
+          "slot_no": {
+            "type": "integer",
+            "maximum": 4.0,
+            "minimum": 1.0,
+            "title": "Slot No"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "assignment_id",
+          "revision",
+          "item_id",
+          "round_id",
+          "character_id",
+          "selected_role",
+          "party_no",
+          "slot_no"
+        ],
+        "title": "AdmissionCandidateAssignment"
+      },
+      "AdmissionCandidateCharacter": {
+        "properties": {
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "registration_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Registration Id"
+          },
+          "server_name": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Server Name"
+          },
+          "character_name": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Character Name"
+          },
+          "class_name": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Class Name"
+          },
+          "item_level": {
+            "type": "string",
+            "maxLength": 64,
+            "pattern": "^[0-9]+(?:\\.[0-9]+)?$",
+            "title": "Item Level"
+          },
+          "roles": {
+            "$ref": "#/components/schemas/AdmissionCandidateRoles"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "character_id",
+          "registration_id",
+          "server_name",
+          "character_name",
+          "class_name",
+          "item_level",
+          "roles"
+        ],
+        "title": "AdmissionCandidateCharacter"
+      },
+      "AdmissionCandidateData": {
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "intent": {
+            "type": "string",
+            "enum": [
+              "apply",
+              "change_character"
+            ],
+            "title": "Intent"
+          },
+          "eligibility_policy_version": {
+            "type": "string",
+            "const": "admission-eligibility-2",
+            "title": "Eligibility Policy Version"
+          },
+          "actor": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AdmissionCandidateActor"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          },
+          "catalog_version": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Catalog Version"
+          },
+          "snapshot_token": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Snapshot Token"
+          },
+          "raw_candidate_count": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Raw Candidate Count"
+          },
+          "eligible_candidate_count": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Eligible Candidate Count"
+          },
+          "exclusion_summary": {
+            "items": {
+              "$ref": "#/components/schemas/AdmissionCandidateExclusion"
+            },
+            "type": "array",
+            "maxItems": 7,
+            "title": "Exclusion Summary"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/AdmissionCandidateCharacter"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Items"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2048,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "room_id",
+          "intent",
+          "eligibility_policy_version",
+          "actor",
+          "evaluated_at",
+          "catalog_version",
+          "snapshot_token",
+          "raw_candidate_count",
+          "eligible_candidate_count",
+          "exclusion_summary",
+          "items",
+          "next_cursor"
+        ],
+        "title": "AdmissionCandidateData"
+      },
+      "AdmissionCandidateExclusion": {
+        "properties": {
+          "reason": {
+            "type": "string",
+            "enum": [
+              "RAID_ITEM_LEVEL_REQUIRED",
+              "COMBAT_POWER_REQUIRED",
+              "WEEKLY_ALREADY_COMPLETED",
+              "WEEKLY_ALREADY_PARTICIPATING",
+              "ROOM_FULL",
+              "ROOM_COMPOSITION_CONFLICT"
+            ],
+            "title": "Reason"
+          },
+          "detail": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "missing",
+                  "below"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Detail"
+          },
+          "character_count": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Character Count"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "reason",
+          "detail",
+          "character_count"
+        ],
+        "title": "AdmissionCandidateExclusion"
+      },
+      "AdmissionCandidatePage": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/AdmissionCandidateScope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/AdmissionCandidateData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "AdmissionCandidatePage"
+      },
+      "AdmissionCandidatePower": {
+        "properties": {
+          "selected_role": {
+            "type": "string",
+            "enum": [
+              "dealer",
+              "support"
+            ],
+            "title": "Selected Role"
+          },
+          "requirement": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 32,
+                "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Requirement"
+          },
+          "actual": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 32,
+                "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actual"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "unrestricted",
+              "missing",
+              "below",
+              "meets"
+            ],
+            "title": "State"
+          },
+          "source": {
+            "type": "string",
+            "const": "flutter_analysis",
+            "title": "Source"
+          },
+          "trust": {
+            "type": "string",
+            "const": "client_submitted",
+            "title": "Trust"
+          },
+          "current_summary_version": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Current Summary Version"
+          },
+          "success_summary_version": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2147483647.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Success Summary Version"
+          },
+          "power_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Power Revision"
+          },
+          "observed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observed At"
+          },
+          "success_saved_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Success Saved At"
+          },
+          "success_issues": {
+            "items": {
+              "$ref": "#/components/schemas/AnalysisIssue"
+            },
+            "type": "array",
+            "title": "Success Issues"
+          },
+          "current_issues": {
+            "items": {
+              "$ref": "#/components/schemas/AnalysisIssue"
+            },
+            "type": "array",
+            "title": "Current Issues"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "selected_role",
+          "requirement",
+          "actual",
+          "state",
+          "source",
+          "trust",
+          "current_summary_version",
+          "success_summary_version",
+          "power_revision",
+          "observed_at",
+          "success_saved_at",
+          "success_issues",
+          "current_issues"
+        ],
+        "title": "AdmissionCandidatePower"
+      },
+      "AdmissionCandidateRole": {
+        "properties": {
+          "supported": {
+            "type": "boolean",
+            "title": "Supported"
+          },
+          "allowed": {
+            "type": "boolean",
+            "title": "Allowed"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "ROLE_NOT_SUPPORTED",
+                  "RAID_ITEM_LEVEL_REQUIRED",
+                  "COMBAT_POWER_REQUIRED",
+                  "WEEKLY_ALREADY_COMPLETED",
+                  "WEEKLY_ALREADY_PARTICIPATING",
+                  "ROOM_FULL",
+                  "ROOM_COMPOSITION_CONFLICT"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "comparison": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AdmissionCandidatePower"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "supported",
+          "allowed",
+          "reason",
+          "comparison"
+        ],
+        "title": "AdmissionCandidateRole"
+      },
+      "AdmissionCandidateRoles": {
+        "properties": {
+          "dealer": {
+            "$ref": "#/components/schemas/AdmissionCandidateRole"
+          },
+          "support": {
+            "$ref": "#/components/schemas/AdmissionCandidateRole"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "dealer",
+          "support"
+        ],
+        "title": "AdmissionCandidateRoles"
+      },
+      "AdmissionCandidateScope": {
+        "properties": {
+          "server_now": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Server Now"
+          },
+          "current_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "playable_from": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Playable From"
+          },
+          "phase": {
+            "$ref": "#/components/schemas/Phase1"
+          },
+          "target_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Target Revision"
+          },
+          "policy_version": {
+            "type": "string",
+            "const": "two-cycle-contract-4",
+            "title": "Policy Version"
+          },
+          "room_cycle_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Cycle Id"
+          },
+          "target_generation": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Target Generation"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "server_now",
+          "current_cycle_key",
+          "target_cycle_key",
+          "playable_from",
+          "phase",
+          "target_revision",
+          "policy_version",
+          "room_cycle_id",
+          "target_generation"
+        ],
+        "title": "AdmissionCandidateScope"
       }
     },
     "securitySchemes": {
@@ -69069,6 +69918,18 @@
       "effects_order": "actual C then N; empty effects can end persistent membership",
       "compatibility": "old cancel/leave/end and D22/E23 retain original operation/pending/24h ACK",
       "inactive_features": "IF-001: close_weekly/weekly_resume app entry disabled; APIs/history/original pending retained"
+    },
+    "admission_eligibility": {
+      "policy_version": "admission-eligibility-2",
+      "required_schema": "0031_membership_actions",
+      "intents": [
+        "apply",
+        "change_character"
+      ],
+      "approval": "stored parties; qualification failure keeps pending",
+      "change": "exact own assignment/lease exclusion; original party then opposite party; consent bound to target parties",
+      "reads": "own candidates, bulk read-only, no provider or occupancy writes",
+      "compatibility": "existing write DTOs and original 24h ACK; creation/direct join policy preserved"
     }
   }
 }

@@ -45,10 +45,15 @@ def power_comparison(db, uid, selection, minimum):
     if (head.version if head else 1) != selection.expected_role_summary_version:
         fail('REVISION_CONFLICT')
     success=db.get(RolePowerSuccess,key)
+    return power_value(selection.selected_role, minimum, head, success)
+
+
+def power_value(role, minimum, head, success):
+    """Pure projection of the existing last-success comparison policy."""
     actual=success.combat_power if success else None
     state=('unrestricted' if minimum is None else 'missing' if actual is None else
            'meets' if Decimal(actual)>=Decimal(minimum) else 'below')
-    return dict(selected_role=selection.selected_role,requirement=minimum,actual=actual,state=state,
+    return dict(selected_role=role,requirement=minimum,actual=actual,state=state,
         source='flutter_analysis',trust='client_submitted',current_summary_version=head.version if head else 1,
         success_summary_version=success.source_summary_version if success else None,
         power_revision=success.power_revision if success else 1,observed_at=success.observed_at if success else None,

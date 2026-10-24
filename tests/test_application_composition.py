@@ -53,6 +53,7 @@ def leader_class(a):
 
 
 def apply(w,rid,key,role='dealer',command=None):
+    if role=='support':change_class(w,'바드')
     ctx=context(w,rid,key,'apply',role)
     return commands.admit(actor(w['uid']),rid,command or uuid.uuid4(),admission_request(ctx),applying=True)
 
@@ -74,7 +75,7 @@ def test_duplicate_context_and_forged_post_both_reject_readonly(current):
     denied('ROOM_COMPOSITION_CONFLICT',commands.admit,actor(b['uid']),rid,uuid.uuid4(),admission_request(ctx),applying=True)
     with session() as db:assert db.scalar(select(func.count()).select_from(CycleApplication).where(CycleApplication.room_id==rid))==0
     # Other role remains valid: class identity is not a new blanket ban.
-    assert context(b,rid,c,'apply','support')['data']['permissions']['apply']['allowed']
+    assert context(b,rid,c,'apply','support')['data']['permissions']['apply']['reason']=='ROLE_NOT_SUPPORTED'
 
 
 def test_pending_does_not_reserve_or_block_same_class_and_ack_survives(current,people):
@@ -113,6 +114,7 @@ def test_pending_role_and_full_capacity(current,people,role,reason):
     for i,r in enumerate(roles):
         w=people('composition-fill-'+str(i));approve(a,apply(w,rid,c,r)[1]['data'],rid,c)
     checkrole='dealer' if role=='full' else role
+    if checkrole=='support':change_class(b,'바드')
     ctx=context(b,rid,c,'apply',checkrole);assert ctx['data']['permissions']['apply']['reason']==reason
     denied(reason,commands.admit,actor(b['uid']),rid,uuid.uuid4(),admission_request(ctx),applying=True)
     assert context(b,rid,n,'apply',checkrole)['data']['permissions']['apply']['allowed']

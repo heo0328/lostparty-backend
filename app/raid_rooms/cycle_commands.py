@@ -80,17 +80,24 @@ def preflight(db,uid,room,row,cid,role,intent,stamp,*,include_session_display=Fa
     minimum=row.settings_snapshot['combat_requirement']['dealer_min' if role=='dealer' else 'support_min']
     power=admission.core.power_comparison(db,uid,selection,minimum)
     reason=None
+    evaluation=None
+    if intent=='apply':
+        from app.raid_rooms import admission_eligibility
+        evaluation=admission_eligibility.single(db,uid,room,row,selection)
+        reason=evaluation['reason']
+        if evaluation['allowed']:
+            for t in targets:t.party_no=evaluation['parties'][t.item_id]
     if row.settings_snapshot['admission_mode']!=('leader_only' if intent=='apply' else 'direct_join'):
         reason='ADMISSION_MODE_CHANGED'
     if reason is None:
         try:
-            admission.admit_bundle(db,uid,room,row,selection,targets,None,stamp,validate_only=True,pending=intent=='apply')
+            admission.admit_bundle(db,uid,room,row,selection,targets,None,stamp,validate_only=True,pending=intent=='apply',unified=intent=='apply')
         except GameError as error:
             reason=error.code
             if admission.capacity(row)==8 and reason in ('ROOM_FULL','ROOM_COMPOSITION_CONFLICT'):
                 alternate=[t.model_copy(update={'party_no':2}) for t in targets]
                 try:
-                    admission.admit_bundle(db,uid,room,row,selection,alternate,None,stamp,validate_only=True,pending=intent=='apply')
+                    admission.admit_bundle(db,uid,room,row,selection,alternate,None,stamp,validate_only=True,pending=intent=='apply',unified=intent=='apply')
                     targets=alternate;reason=None
                 except GameError:pass
     choices=schedule.choices(db,row,stamp)
@@ -104,6 +111,7 @@ def preflight(db,uid,room,row,cid,role,intent,stamp,*,include_session_display=Fa
         context.group_stamp(db,room.group_id),room.scope,room.revision,row.settings_snapshot,
         selection,targets,power['power_revision'],choices,context.policy(db,room)])
     metadata=display.existing(db,uid,row,stamp,intent,choices) if include_session_display else None
+    if evaluation is not None:stable.append(evaluation['evidence'])
     if include_session_display:stable.append(metadata)
     policy=digest(stable)
     expires=min(stamp+timedelta(seconds=opaque.LIFETIME_SECONDS),raids.cycle(stamp).ends_at)
@@ -162,12 +170,13 @@ def admit(principal,rid,command_id,data,*,applying=False):
         if body['expected_catalog_version']!=current['catalog_version']:fail('CATALOG_VERSION_CONFLICT')
         if body['selection']!=jsonable_encoder(current['selection']):fail('REVISION_CONFLICT')
         if not current['permissions'][intent]['allowed']:fail(current['permissions'][intent]['reason'])
+        if applying and body['target_items']!=jsonable_encoder(current['targets']):fail('TARGET_SCOPE_MISMATCH',400)
         selected=data.target_session_ids
         final_guard=schedule.final_deadlines(db,row,selected,stamp)
         selection=Selection.model_validate(body['selection'])
         targets=[Target.model_validate(t) for t in body['target_items']]
         member,assignments,power=admission.admit_bundle(db,uid,room,row,selection,targets,command_id,stamp,
-            validate_only=applying,pending=applying)
+            validate_only=applying,pending=applying,unified=applying)
         if applying:
             existing=db.scalar(select(Application).where(Application.cycle_id==row.id,Application.generation==row.generation,
                 Application.user_id==uid,Application.state=='pending'))
@@ -231,7 +240,7 @@ def application(principal,aid):
                         if old[str(t.item_id)]['round_id']!=str(t.round_id):fail('APPLICATION_CONTEXT_CHANGED')
                         t.party_no=old[str(t.item_id)]['party_no']
                     _,_,power=admission.admit_bundle(db,app.user_id,room,row,choice,targets,None,stamp,
-                        validate_only=True,public_origin_application=app)
+                        validate_only=True,public_origin_application=app,unified=True)
                     schedule.deadlines(db,row,[uuid.UUID(i) for i in app.session_ids],stamp)
                 except GameError as error:reason=error.code
             result['data']=dict(application=result['data'],room_revision=room.revision,members_revision=row.members_revision,
@@ -271,7 +280,7 @@ def process(principal,aid,command_id,data,*,action='approve'):
                 t.party_no=old['party_no']
             final_guard=schedule.final_deadlines(db,row,selected,stamp)
             member,assignments,_=admission.admit_bundle(db,app.user_id,room,row,selection,targets,command_id,stamp,
-                public_origin_application=app)
+                public_origin_application=app,unified=True)
             schedule.enrol(db,row,member,selected,stamp)
             if schedule.planning_enabled(db):
                 from app.raid_rooms import cycle_planning

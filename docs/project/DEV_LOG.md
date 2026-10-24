@@ -2414,3 +2414,14 @@ pending에도 기존 확정구성/정원·role/class 검사를 적용하고 읽�
 8인 이동시 대상파티 확인·명시동의/원파티가능시자리우선, 확인후 actor/배치/자격변경시 POST0/재확인, 승인자격실패시 pending유지·참가/예약/점유쓰기0·거절/철회가능과 만료/처리/권한오류 구분을 반영했다. source77be3a9/설계·계약2 wire/역할/전투력/계수/빈화면/페이지·사유순서 소비 가능/새TTL·경고일괄차단 없음 확인수신이며 실제API 동작증거와 구분한다. 다음Backend 구현/직접검증·인계, Flutter2가입/3변경/5주차 인수 순서다. 추가일정영향만 구체 차이 회신하며 재협의/반복시험을 선행조건으로 늘리지 않는다.
 
 이번 수신 확인은 코드·실행OpenAPI/DB/서버·새시험·실회원·Issue게시 변경 없이 문서만 동일 브랜치에 기록했다. 이전25PASS/계약작성21예시·정적검증과 전체미구현을 구분한다. 개발반영/배포·dev/main/운영 승인 확대 없음.
+
+
+## 2026-10-24 — #26 공통자격·변경원자성·후보GET 구현/격리검증
+
+작업 구간명: 모집 신청·캐릭터 변경 통합 자격 보완. 작업 내용: 계약2/Flutter전체6 UX에 따른 공통loader·순수role/level/power/weekly/composition·배치, 신청/context/변경/승인 adapter, bulk 후보GET·closed DTO/페이지·실행계약/회귀. 브랜치/위치: feat/raid-recruitment / 본 프로젝트. 새 scope/이슈·worktree 분리 없이 진행했다.
+
+신규 ROLE_NOT_SUPPORTED/사유순서·제품지원역할은 apply/change/approval에만 적용하고 생성/직접가입은 보존했다. power_value는 기존 role별 마지막성공 비교 projection을 공유하며 누락0/타역할·임의TTL/경고일괄차단을 하지 않는다. current target/round완전성·ledger/lease·참조Assignment/round/가입시각/교체원캐릭터의 정확한lease를 읽기 검증해 불완전자료를 필터0으로 감추지 않는다. 변경은 정확한 현CM Assignment·lease 자기제외/원파티우선→반대파티, 실제캐릭터원자료/현재actor·targets·동의를 기존 서명/최종검사에 결합했다. 승인에는 저장파티를 사용하고 자격실패 pending/업무자료불변·원ACK/거절·철회/동시성·반대T를 보존했다.
+
+[검증집계](../features/recruitment/participation/validation/eligibility-results.json): 고유45PASS(신규19/기존26), 최종소스10+8+27 분할·중복 없음. 중간확인에서 캐릭터원자료 서명누락/추가변수참조를 수정했고, 두 합성fixture의 lease/원장가입시각·자동flush 시점을 바로잡아 최종통과했다. 예비35PASS/기존25/정적작성21·비정상16은 중복합산하지 않는다. 기존 Starlette/AnyIO 경고1. 새19건에는 실제합성Bearer/취소session·외부intent·no-store,20캐릭터증가전후 SQL횟수불변,같은room다른점유/불완전lease,저장파티고정/권한·stale/위조/원자rollback이 포함된다. 회귀26은 직접신청16·기존명령8·변경2다.
+
+후보API source239파일·기본116/신규177 OpenAPI 전체/기존 component·쓰기shape 보존 확인. 후보이미지의 별도 합성0031/NOSUPERUSER LOGIN에서 실제factory/readiness·health200/인증거절2/no-store 확인. 운영/개발 DB·키/port 사용·migration추가·실제API교체/실회원명령·기기/성능인수는 하지 않았다. 다음은 검증구간 commit/push·정확source/계약/실제미반영 인계→Flutter2가입연결·직접시험/Backend소비차이대응, 실제개발반영은 별도승인이다. 최종게시/정리·회신은 후속 기록한다.

@@ -5,6 +5,7 @@ RUN pip install --no-cache-dir -r requirements-dev.txt
 COPY tests ./tests
 COPY openapi ./openapi
 COPY docs/features/recruitment/weekly-cycles/examples/baseline/full.openapi.json ./docs/features/recruitment/weekly-cycles/examples/baseline/full.openapi.json
+COPY docs/features/recruitment/participation/examples/candidate-contract-v2.schema.json ./docs/features/recruitment/participation/examples/candidate-contract-v2.schema.json
 COPY pytest.ini ./pytest.ini
 USER appuser
 CMD ["pytest", "-q", "-p", "no:cacheprovider"]

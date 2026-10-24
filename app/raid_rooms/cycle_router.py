@@ -29,6 +29,8 @@ from app.raid_rooms.candidate_schemas import CandidatePage
 from app.raid_rooms import session_display_schemas as display_schemas
 from app.raid_rooms import resume_review, resume_review_schemas
 from app.raid_rooms import completion_correction, completion_correction_schemas as correction_schemas
+from app.raid_rooms import admission_candidates
+from app.raid_rooms.admission_candidate_schemas import AdmissionCandidatePage
 
 
 from app.raid_rooms import atomic_members, atomic_member_schemas as atomic_schemas
@@ -76,6 +78,7 @@ class CycleRoute(AvailabilityRoute):
         if request.url.path.endswith('/raid-room-creation-context'):
             return {'target_cycle_key','character_id','selected_role','items','group_id',
                 'continuation_enabled','next_character_id','next_selected_role'}
+        if request.url.path.endswith('/admission-character-candidates'):return {'target_cycle_key','intent','limit','cursor'}
         if request.url.path.endswith('/admission-context'):
             return {'target_cycle_key','character_id','selected_role','intent','include_session_display'}
         if request.url.path.endswith('/plan'):return {'target_cycle_key','include_resume_display','reader_profile','membership_id','cycle_member_id'}
@@ -109,8 +112,16 @@ def create(data:inputs.Create,principal:Principal,key:Key):
     return creation.create(principal,key,data)[1]
 
 
+@router.get('/raid-rooms/{room_id}/admission-character-candidates',response_model=AdmissionCandidatePage,responses=errors,
+    description='Read-only own candidates for apply/change_character under admission-eligibility-2. All roles and counts use the same eligibility as commands; no occupancy, provider calls or writes. Cursors bind actor/session, room, actual target and intent; changed snapshot is CURSOR_STALE.')
+def admission_character_candidates(room_id:UUID,principal:Principal,target_cycle_key:str,
+    intent:Literal['apply','change_character'],limit:Annotated[int,Query(ge=1,le=100)]=50,
+    cursor:Annotated[str,Query(min_length=1,max_length=2048)]|None=None):
+    return admission_candidates.get(principal,room_id,target_cycle_key,intent,limit,cursor)
+
+
 @router.get('/raid-rooms/{room_id}/admission-context',response_model=display_schemas.AdmissionDisplayContext,response_model_exclude_unset=True,responses=errors,
-    description='Apply permissions validate current confirmed-party capacity and composition, item level and weekly availability. Pending applications never occupy or reserve a slot; approval revalidates current eligibility.')
+    description='Apply/change_character use admission-eligibility-2: product-supported roles, bundle level, role-specific retained power, actual-target completion/occupancy and per-party composition. Change targets bind the exact own assignments and original-party-first valid placement. Pending never reserves a slot; current command tokens and consent must still match.')
 def admission_context(room_id:UUID,principal:Principal,target_cycle_key:str,character_id:UUID,
     selected_role:Role,intent:Literal['apply','join','change_character'],include_session_display:Literal['true','false']='false'):
     return commands.get_context(principal,room_id,target_cycle_key,character_id,selected_role,intent,include_session_display=="true")
@@ -122,7 +133,7 @@ def join(room_id:UUID,data:inputs.Admission,principal:Principal,key:Key):
 
 
 @router.post('/raid-rooms/{room_id}/applications',response_model=s.OutputContract3PostV2RaidRoomsRoomIdApplications,status_code=201,responses=errors,
-    description='Revalidate confirmed-party capacity and composition, item level and weekly availability before creating a pending application. No confirmed assignment, weekly occupancy or reservation is created; approval revalidates under the mutation lock.')
+    description='Revalidate admission-eligibility-2 and exact displayed target parties before creating pending. Unsupported roles are ROLE_NOT_SUPPORTED. No confirmed assignment, weekly occupancy or reservation is created; original ACK replay is preserved.')
 def apply(room_id:UUID,data:inputs.Admission,principal:Principal,key:Key):
     return commands.admit(principal,room_id,key,data,applying=True)[1]
 
@@ -131,7 +142,8 @@ def apply(room_id:UUID,data:inputs.Admission,principal:Principal,key:Key):
 def application(application_id:UUID,principal:Principal):return commands.application(principal,application_id)
 
 
-@router.post('/raid-room-applications/{application_id}/approve',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
+@router.post('/raid-room-applications/{application_id}/approve',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors,
+    description='Revalidate admission-eligibility-2 at the stored application parties under the mutation lock. Qualification failure preserves pending and all business occupancy/reservations; no automatic rejection, withdrawal or party relocation. Original ACK replay is preserved.')
 def approve(application_id:UUID,data:inputs.Approve,principal:Principal,key:Key):
     return commands.process(principal,application_id,key,data)[1]
 
@@ -281,7 +293,8 @@ def transfer_leadership(room_id:UUID,principal:Principal,key:Key,data:inputs.Tra
     return cycle_leadership.transfer(principal,room_id,key,data)[1]
 
 
-@router.post('/raid-rooms/{room_id}/character-changes',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
+@router.post('/raid-rooms/{room_id}/character-changes',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors,
+    description='Atomically replace only the exact own current target assignments under admission-eligibility-2. Original party is preferred, then an eligible opposite party in eight-person rooms. Current token, actor revisions, target parties and consent must match; failure preserves old character, reservations and opposite target. Original ACK replay is preserved.')
 def change_character(room_id:UUID,principal:Principal,key:Key,data:inputs.Character):
     return cycle_character.execute(principal,room_id,key,data)[1]
 

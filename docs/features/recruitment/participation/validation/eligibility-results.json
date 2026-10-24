@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-24",
+  "stage": "contract2_implemented_isolated_validation_development_not_deployed",
+  "unique_tests_passed": 45,
+  "new_contract2_tests": 19,
+  "application_and_legacy_regressions": 26,
+  "final_source_passed_segments": [
+    10,
+    8,
+    27
+  ],
+  "final_segment_seconds": 204.79,
+  "intermediate_failures_resolved": [
+    "confirmation evidence initially omitted candidate character facts",
+    "variable reference while adding confirmation evidence",
+    "synthetic alternate-assignment timestamps did not match ledger/lease",
+    "synthetic malformed-lease fixture autoflushed before end timestamp was set"
+  ],
+  "existing_deprecation_warning": "Starlette/AnyIO",
+  "bulk_query_growth_test": {
+    "added_characters": 20,
+    "query_count_unchanged": true
+  },
+  "image": "sha256:fdd256ea670f250997d8d6d1f188694f2118a9699c1bdb271da68f6ee5f8b98c",
+  "source_files": 239,
+  "legacy_paths": 116,
+  "candidate_paths": 177,
+  "existing_components_preserved": true,
+  "existing_write_shapes_preserved": true,
+  "startup_probe": {
+    "factory_startup": true,
+    "restricted_login": true,
+    "health": 200,
+    "unauthorized_checks": 2,
+    "no_store": true
+  },
+  "actual_bearer": "synthetic account/key only; auth/foreign-intent/revoked-session checks",
+  "design_vectors": {
+    "authored_examples": 21,
+    "invalid_vectors": 16,
+    "mixed_snapshot_rejected": true,
+    "runtime_tests": false
+  },
+  "development_api_replaced": false,
+  "database_migration_added": false,
+  "real_member_device_acceptance": "not_executed"
+}

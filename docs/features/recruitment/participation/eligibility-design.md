@@ -1,6 +1,6 @@
 # 신청·캐릭터 변경 통합 자격 설계
 
-2026-10-24 / 작업 구간명: **모집 신청·캐릭터 변경 통합 자격 보완(#26)** / 브랜치 `feat/raid-recruitment`. 이 문서는 소비 검토/사용자 UX 확정을 반영한 설계다. 신규 API/공통검증 구현·개발 반영 완료가 아니다.
+2026-10-24 / 작업 구간명: **모집 신청·캐릭터 변경 통합 자격 보완(#26)** / 브랜치 `feat/raid-recruitment`. 소비 검토/사용자 UX 확정에 따라 공통검증·변경원자성·신규 후보GET을 구현·격리 검증했다. 실제 개발 반영·실회원/기기 인수는 미완료다.
 
 원본은 [#26 전체2번째 Flutter 역할 일치 요청](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381216870), [전체3번째 Flutter 최신 사용자 확정](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381254676), [전체4번째 Backend 기존 검증 차이 회신](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381295804)이다. 전투력 제외·신청 전용 제안1은 최신 범위로 대체한다.
 
@@ -16,7 +16,7 @@
 | 4. 후보읽기 구현 | 한 본인 graph·target/주간/파티 snapshot을 bulk 조회해 역할별 필터/계수·페이지 제공 | 권한·비동기 scope·완전조회/실패·SQL 증가 검증·실행 OpenAPI 전체 비교 |
 | 5. 게시·연결·실제 인수 | 검증구간 commit/push·원격 확인 후 소스/계약 인계 | Flutter reader·목록/역할·실제 UI 검증, 별도 개발 반영 승인 후 정상로그인/실회원·기기 인수 |
 
-예시는 판정과 계약을 검증하는 자료다. 예시부터 기능/권한을 결정하지 않는다. 본 설계 구간에서는 app/OpenAPI/DB·서버를 수정하지 않고, 네이티브에 기존25시험 반복이나 서버 반영 전 실회원 시험을 요청하지 않는다.
+예시는 판정과 계약을 검증하는 자료다. 예시부터 기능/권한을 결정하지 않는다. 설계 이후 구현 구간에서 app/후보 OpenAPI를 함께 갱신했다. DB migration·실제 서버는 변경하지 않았고 기존25시험 반복이나 서버 반영 전 실회원 시험을 요청하지 않는다.
 
 ## 판정 책임과 재사용
 
@@ -30,7 +30,7 @@
 
 ## 역할·전투력·불가사유
 
-기존 제품정책을 서버와 일치시키는 제안이다. 일반직업은 dealer만, **바드·발키리·도화가·홀리나이트**는 dealer/support를 모두 평가한다. unsupported role은 `supported=false/allowed=false/reason=ROLE_NOT_SUPPORTED/comparison=null`. 이 새 제안 code는 직업 구성 불가와 구분하며 합의 후 context/쓰기의 신규 실행 판정에도 동일 적용한다. 기존에 성공한 구 원명령의 원ACK는 현재 역할정책 재검사 전에 기존대로 복구한다. 과거 역할·참가/완료/분석·pending 자료를 삭제/변환하지 않는다.
+수용된 기존 제품정책을 서버와 일치시켜 구현했다. 일반직업은 dealer만, **바드·발키리·도화가·홀리나이트**는 dealer/support를 모두 평가한다. unsupported role은 `supported=false/allowed=false/reason=ROLE_NOT_SUPPORTED/comparison=null`. 이 code는 직업 구성 불가와 구분하며 신청/변경/승인 context·쓰기에도 동일 적용한다. 기존에 성공한 구 원명령의 원ACK는 현재 역할정책 재검사 전에 기존대로 복구한다. 과거 역할·참가/완료/분석·pending 자료를 삭제/변환하지 않는다.
 
 역할별 원천 데이터 무결성을 먼저 확인한다. 문맥/권한/자료 오류는 전체 실패이며 역할 불가사유로 숨기지 않는다. 판정 가능한 역할의 대표 불가사유는 **역할미지원→묶음 레벨→역할 전투력→개인/파티완료→주간점유→정원/파티구성** 순서다. 묶음 item은 UUID순으로 안정 처리한다. 이 순서는 제안2의 명시적 우선순위로, 여러 조건이 동시에 실패할 때 기존 단일 경로와 첫 reason이 달라질 수 있으므로 합의·직접시험 대상이다. context/POST/승인은 같은 공통 결과를 사용한다.
 
@@ -69,7 +69,7 @@
 | 일괄 읽기 | 본인 source/두역할 성공본·주간·확정배치 bulk 적재/메모리판정·HMAC페이지 | 권한/교체actor·필터전 count·전페이지 동일 snapshot/중복/누락·cursor stale/타인범위·자료불완전 실패/SQL 횟수 |
 | 소비/인계 | schema/예시/실행 OpenAPI/정확 source 연결 | Flutter 전페이지 취합후 기존 원정대/레벨순·대표/선호역할, 실패/로딩과0건·계정/환경/T/epoch 격리 |
 
-DB migration은 현재 설계상 불필요하다. 기존 endpoint/쓰기 DTO를 보존하고 신규 읽기1경로를 제안하므로 합의 후 실행 경로수는176→177이 예상되지만 현재 실행 OpenAPI에는 추가하지 않는다. 기존 source6e0063c/25PASS는 신청 구성검사 이전 구간 근거이며 본 통합요구의 구현/실행 시험이 아니다.
+DB migration은 추가하지 않았다. 기존 endpoint/쓰기 DTO를 보존하고 신규 읽기1경로를 후보 실행 OpenAPI에 반영해177경로이며 실제 개발서버176경로는 아직 교체하지 않았다. 기존 source6e0063c/25PASS는 이전 구간 근거이며 이번 고유45PASS와 합산하지 않는다.
 
 
 ## 확정 성공·실패 UX와 추가 구현 경계
@@ -81,3 +81,14 @@ DB migration은 현재 설계상 불필요하다. 기존 endpoint/쓰기 DTO를 
 신청 ACK 뒤 시트닫기·원방상세 유지/내신청 갱신, 승인 ACK 뒤 참가/계정i·방인원/영향T 검색·목록 갱신, 거절/철회는 해당신청 갱신이다. 응답유실은 같은 원본문/key 재확인, 성공ACK 뒤 GET실패는 성공을 유지하고 조회만 재시도한다. 메모리pending을 앱종료 영속보장으로 확대하지 않는다. 변경 취소는 POST0이며 실패/경쟁은 기존 캐릭터/자리·예약·다른T 보존이다.
 
 실제 인수는 사용자 확정5구간 중 2가입부터 짧게 연결/시험/수정 후 마감한다. 변경 공통계약은 함께 구현하되 실제 캐릭터변경 조작은3방내부행위, 주차교차는5에서 인수한다. 구현 중 기존 예약/일정동의 범위를 넘는 영향이 발견되면 그 구체 차이만 먼저 같은Issue에 회신한다. 그 외 새 UX 질문/기존 전체시험 반복/서버반영 전 실기기 확인을 선행조건으로 추가하지 않는다.
+
+
+## 구현·직접 검증 결과
+
+공통 eligibility loader/순수판정·배치와 기존 명령 adapter를 연결했다. source/target/현세대·round 완전성, 후보/교체 원캐릭터의 ledger/lease/Assignment/round·가입시각을 읽기 검증한다. 전투력 projection은 기존 마지막성공 정책을 순수 함수로 공유한다. 신규 역할정책/사유 순서는 apply/change/approval에만 적용하고 생성/직접가입은 유지한다. 변경의 실제old Assignment도 정확한 현CM에서 선택하며 자격/배치/캐릭터 source 근거를 기존 서명에 결합한다.
+
+[직접 검증 집계](validation/eligibility-results.json): 고유45PASS(신규19·기존26), 최종 소스의 분할 통과10+8+27·중복 없음. 기존35예비 통과/중간 실패를 합산하지 않는다. 초기에는 확인근거에 캐릭터 원자료 누락을 시험에서 발견해 보완했고 그 변수참조 오류도 수정했다. 나머지 재실행 원인은 합성 fixture의 ledger/lease 시각 불일치와 종료시각 설정 전 autoflush 제약으로, 정상 fixture를 맞춘 뒤 통과했다. 기존 Starlette/AnyIO 경고1개다.
+
+같은 역할 power·정밀도/보존 성공본/경고·원후보/제외/페이지·same-room다른점유·지원역할·후보/context/POST 일치,8인 반대파티·확인후변경거절·원ACK·두번째item실패 rollback/반대T 보존, 승인최신자격실패 pending/업무자료불변·저장파티 유지·마지막자리 경쟁/거절/철회·기존변경을 확인했다. 신규 HTTP는 synthetic principal router와 실제 합성Bearer의 인증/외부intent/취소session·no-store를 구분 검증했다. 후보20캐릭터 추가 전후 SQL 횟수 동일을 확인했으며 사용자 환경 성능 인수로 확대하지 않는다.
+
+최종 후보이미지에서 소스239파일·기본116/신규177 전체 OpenAPI·기존component/쓰기shape 일치·보존을 확인했다. 별도 합성0031 DB/NOSUPERUSER LOGIN의 실제 factory/readiness·health200·새GET 인증거절2건/no-store를 확인했다. 작성 예시21/비정상16 정적검사는 실행45건과 별도다. 현재 실제 개발API는 교체하지 않았으며 DB migration/실회원·기기/운영 인수는 미실행이다.

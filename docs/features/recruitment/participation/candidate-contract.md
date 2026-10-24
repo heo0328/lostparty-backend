@@ -1,10 +1,10 @@
 # 신청·캐릭터 변경 후보조회 보완 계약2
 
-2026-10-24 / **Flutter 소비 검토 수용·사용자 UX 확정/미구현** / 작업 구간 `모집 신청·캐릭터 변경 통합 자격 보완(#26)` / `feat/raid-recruitment`. [공통 설계](eligibility-design.md)가 판정 원본이다. [제안1](candidate-proposal.md)은 이전 범위로 보존한다. 이 파일과 독립 schema/예시는 runtime OpenAPI/실서버 성공의 근거가 아니다.
+2026-10-24 / **계약2 구현·격리 검증 완료/실제 개발 미반영** / 작업 구간 `모집 신청·캐릭터 변경 통합 자격 보완(#26)` / `feat/raid-recruitment`. [공통 설계](eligibility-design.md)가 판정 원본이다. [제안1](candidate-proposal.md)은 이전 범위로 보존한다. 현재 구현후보의 정확한 HTTP shape는 [실행 OpenAPI](../../../../openapi/two-cycle.openapi.yaml)다. 독립 schema/작성 예시는 소비검증 자료이며 실제 개발서버 성공 근거가 아니다.
 
 ## 요청·권한·전체 응답
 
-신규 제안 경로는 **GET `/v2/raid-rooms/{room_id}/admission-character-candidates`**다. 제안1 application-character-candidates는 아직 미구현이므로 호환 alias나 fallback을 신설하지 않는다.
+신규 읽기 경로는 **GET `/v2/raid-rooms/{room_id}/admission-character-candidates`**다. 제안1 application-character-candidates는 구현 대상에서 제외했으므로 호환 alias나 fallback을 신설하지 않는다.
 
 필수 query `target_cycle_key`(기존 C/N 실제 날짜), `intent`(`apply|change_character`), 선택 `limit`(기본50/1~100), `cursor`(기본없음/1~2048문자). UUID room·현재 인증 필수, query 중복/unknown·GET body는400 INVALID_REQUEST. 같은 한 endpoint의 intent별 명시 문맥이며 apply조회로 change를 대신하지 않는다.
 
@@ -74,3 +74,10 @@ Flutter는 전페이지를 같은snapshot/계수/actor·정책에서 취합하�
 [#26 전체6번째 Flutter · 보완 계약2 소비 검토/사용자 UX 확정](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6381816954)에서 공통 GET/intent·actor·역할/전투력·계수/페이지·사유우선순위를 소비 가능으로 확인했다. 문서e7bfe113 push 보고이며 Backend 독립 실행 검증은 아니다.8인 파티이동 확인·동의와 수락 자격실패 시 pending유지 UX도 확정됐다. 추가 예약/일정 영향이 발견되지 않으면 별도 사용자UX 결정을 기다리지 않고 확정범위 구현으로 진행한다.
 
 계약2의 wire/판정·8인 변경/대표사유 순서는 전체6 기준으로 수용됐다. 본문 중 합의 대상/제안 표기는 당시 검토 항목으로 보존하며 동일 항목 재수용을 요구하지 않는다. 구현 시 확인 뒤 바뀐 targets.party_no/현재actor·Assignments/revision·자격·일정동의를 기존 token/최종검사에 결합하고 원동의로 다른배치를 실행하지 않는다. 자격미달 승인실패는 pending/기존참가·예약 불변이며 자동거절/철회하지 않는다. 상세 UX/인수구간은 [통합 설계](eligibility-design.md)의 최신 확정 절을 따른다. 추가 일정영향이 발견될 때만 구체 차이를 회신한다.
+
+
+## 현재 구현·인계 경계
+
+GET과 apply/change/approval 공통판정·확인배치 결합을 구현했다. [통합 설계의 실행 결과](eligibility-design.md#구현직접-검증-결과)·[검증 집계](validation/eligibility-results.json)를 따른다. 기본116/후보177 전체 비교·기존component/쓰기DTO 보존, 신규19+직접회귀26=고유45PASS다. 부분페이지/명령실패·승인pending유지/변경rollback은 직접시험 근거이고 디자인21벡터와 구분한다. 이 문서의 제안/합의 후 구현 표현은 작성 당시 설계 절차이며 Flutter 전체6의 수용과 현재 구현 완료 상태가 우선한다.
+
+다음 Flutter는 게시 source/177계약으로2가입의 reader/후보/role/빈화면·원명령 연결을 진행한다. 변경 실제조작은3방내부행위/주차교차는5에 인수한다. 실제 개발서버 반영은 별도 승인 후이므로 현재 새endpoint 실서버/실회원 시험을 요청하지 않는다.

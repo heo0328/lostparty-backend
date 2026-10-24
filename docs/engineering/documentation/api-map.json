@@ -1176,6 +1176,12 @@
       "path": "/v2/raid-rooms/{room_id}/membership-actions",
       "operation_id": "membership_action_v2_raid_rooms__room_id__membership_actions_post",
       "topic": "recruitment/membership-actions"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/raid-rooms/{room_id}/admission-character-candidates",
+      "operation_id": "contract3_get__v2_raid-rooms_room_id_admission-character-candidates",
+      "topic": "recruitment/participation"
     }
   ]
 }
