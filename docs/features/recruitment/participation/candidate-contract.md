@@ -81,3 +81,6 @@ Flutter는 전페이지를 같은snapshot/계수/actor·정책에서 취합하�
 GET과 apply/change/approval 공통판정·확인배치 결합을 구현했다. [통합 설계의 실행 결과](eligibility-design.md#구현직접-검증-결과)·[검증 집계](validation/eligibility-results.json)를 따른다. 기본116/후보177 전체 비교·기존component/쓰기DTO 보존, 신규19+직접회귀26=고유45PASS다. 부분페이지/명령실패·승인pending유지/변경rollback은 직접시험 근거이고 디자인21벡터와 구분한다. 이 문서의 제안/합의 후 구현 표현은 작성 당시 설계 절차이며 Flutter 전체6의 수용과 현재 구현 완료 상태가 우선한다.
 
 다음 Flutter는 게시 source/177계약으로2가입의 reader/후보/role/빈화면·원명령 연결을 진행한다. 변경 실제조작은3방내부행위/주차교차는5에 인수한다. 실제 개발서버 반영은 별도 승인 후이므로 현재 새endpoint 실서버/실회원 시험을 요청하지 않는다.
+
+
+구현 source `484ca1719e21b01a59da75b62a1d3b1568ada2c3` / feat/raid-recruitment commit·push·원격 SHA 일치 확인 후 [#26 전체7번째 Backend · 계약2 구현/검증 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6382258395) 게시·전문/실제 전체 순번을 재조회했다. 다음 담당 Flutter2가입 연결·직접 자동검증/Backend 재현차이 대응이다. 실제 개발API67322372…/176·DB0031 healthy/health200·기존이미지 미교체를 읽기 확인했고 시험용 runner/DB/internal network/API probe는 정리해 기존API/DB만 남겼다. 실회원/기기·개발반영/운영은 별도 미완료다.

@@ -2425,3 +2425,6 @@ pending에도 기존 확정구성/정원·role/class 검사를 적용하고 읽�
 [검증집계](../features/recruitment/participation/validation/eligibility-results.json): 고유45PASS(신규19/기존26), 최종소스10+8+27 분할·중복 없음. 중간확인에서 캐릭터원자료 서명누락/추가변수참조를 수정했고, 두 합성fixture의 lease/원장가입시각·자동flush 시점을 바로잡아 최종통과했다. 예비35PASS/기존25/정적작성21·비정상16은 중복합산하지 않는다. 기존 Starlette/AnyIO 경고1. 새19건에는 실제합성Bearer/취소session·외부intent·no-store,20캐릭터증가전후 SQL횟수불변,같은room다른점유/불완전lease,저장파티고정/권한·stale/위조/원자rollback이 포함된다. 회귀26은 직접신청16·기존명령8·변경2다.
 
 후보API source239파일·기본116/신규177 OpenAPI 전체/기존 component·쓰기shape 보존 확인. 후보이미지의 별도 합성0031/NOSUPERUSER LOGIN에서 실제factory/readiness·health200/인증거절2/no-store 확인. 운영/개발 DB·키/port 사용·migration추가·실제API교체/실회원명령·기기/성능인수는 하지 않았다. 다음은 검증구간 commit/push·정확source/계약/실제미반영 인계→Flutter2가입연결·직접시험/Backend소비차이대응, 실제개발반영은 별도승인이다. 최종게시/정리·회신은 후속 기록한다.
+
+
+구현 source `484ca1719e21b01a59da75b62a1d3b1568ada2c3` / feat/raid-recruitment commit·push·원격 SHA 일치 확인 후 [#26 전체7번째 Backend · 계약2 구현/검증 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6382258395) 게시·전문/실제 전체 순번을 재조회했다. 다음 담당 Flutter2가입 연결·직접 자동검증/Backend 재현차이 대응이다. 실제 개발API67322372…/176·DB0031 healthy/health200·기존이미지 미교체를 읽기 확인했고 시험용 runner/DB/internal network/API probe는 정리해 기존API/DB만 남겼다. 실회원/기기·개발반영/운영은 별도 미완료다.

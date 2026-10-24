@@ -43,5 +43,14 @@
   },
   "development_api_replaced": false,
   "database_migration_added": false,
-  "real_member_device_acceptance": "not_executed"
+  "real_member_device_acceptance": "not_executed",
+  "source_commit": "484ca1719e21b01a59da75b62a1d3b1568ada2c3",
+  "temporary_environment_removed": true,
+  "development_runtime_readback": {
+    "image_prefix": "67322372",
+    "paths": 176,
+    "revision": "0031_membership_actions",
+    "health": 200,
+    "replaced": false
+  }
 }
