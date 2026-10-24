@@ -7,6 +7,8 @@
 - **브랜치·위치:** `feat/raid-recruitment` / `/home/heowork/projects/lostparty-backend`. 기능코드·문서·시험·인계를같은이력으로관리한다.
 - **현재 실제 개발:** API source06ea4b214591f475d422f4599ca10260cda83d08/이미지d24d7cbd…·177경로/DB0031, 새 application-display-1 포함·API/DB healthy. [반영 근거](../engineering/operations/application-display-rollout.md)·[집계](../engineering/operations/records/application-display-rollout.json). 문서/예시보완source13ae0a5와API source를구분한다.
 
+[#26 전체18번째 Backend · 표시 프로필 실제 개발 반영](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386031663) 게시·전문/실제전체순번 확인 완료. 반영근거 `6444c18bc3de8b341251169f84584cb622b69154` commit·push·원격일치 확인, 다음Flutter 정상로그인소수인수/Backend 직접차이대응이다.
+
 ## 다음 Flutter · 정상로그인 소수항목 인수
 
 [전체16 Flutter 앱연결](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6385536441) ac9fe621 push·413PASS/분석0은자체보고다. 연결/합성시험과새프로필실서버·실회원/기기를구분한다. 다음은 이미연결한앱에서사용자소수항목을확인하는것이다.

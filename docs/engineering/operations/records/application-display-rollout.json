@@ -100,5 +100,8 @@
   "normal_login_member_device_acceptance": false,
   "scope": "local development API and same-lifespan worker replacement",
   "private_backup_files_published": false,
-  "restore_rehearsal_executed": false
+  "restore_rehearsal_executed": false,
+  "rollout_evidence_commit": "6444c18bc3de8b341251169f84584cb622b69154",
+  "handoff_comment": "https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386031663",
+  "handoff_overall_ordinal": 18
 }
