@@ -69,7 +69,7 @@
 | 일괄 읽기 | 본인 source/두역할 성공본·주간·확정배치 bulk 적재/메모리판정·HMAC페이지 | 권한/교체actor·필터전 count·전페이지 동일 snapshot/중복/누락·cursor stale/타인범위·자료불완전 실패/SQL 횟수 |
 | 소비/인계 | schema/예시/실행 OpenAPI/정확 source 연결 | Flutter 전페이지 취합후 기존 원정대/레벨순·대표/선호역할, 실패/로딩과0건·계정/환경/T/epoch 격리 |
 
-DB migration은 추가하지 않았다. 기존 endpoint/쓰기 DTO를 보존하고 신규 읽기1경로를 후보 실행 OpenAPI에 반영해177경로이며 실제 개발서버176경로는 아직 교체하지 않았다. 기존 source6e0063c/25PASS는 이전 구간 근거이며 이번 고유45PASS와 합산하지 않는다.
+DB migration은 추가하지 않았다. 기존 endpoint/쓰기 DTO를 보존하고 신규 읽기1경로를 후보 실행 OpenAPI에 반영해177경로이며 실제 개발서버도177경로로 교체했다. [개발 반영·자료 보존 검증](../../../engineering/operations/eligibility-rollout.md)을 따른다. 기존 source6e0063c/25PASS는 이전 구간 근거이며 이번 고유45PASS와 합산하지 않는다.
 
 
 ## 확정 성공·실패 UX와 추가 구현 경계
@@ -91,4 +91,4 @@ DB migration은 추가하지 않았다. 기존 endpoint/쓰기 DTO를 보존하�
 
 같은 역할 power·정밀도/보존 성공본/경고·원후보/제외/페이지·same-room다른점유·지원역할·후보/context/POST 일치,8인 반대파티·확인후변경거절·원ACK·두번째item실패 rollback/반대T 보존, 승인최신자격실패 pending/업무자료불변·저장파티 유지·마지막자리 경쟁/거절/철회·기존변경을 확인했다. 신규 HTTP는 synthetic principal router와 실제 합성Bearer의 인증/외부intent/취소session·no-store를 구분 검증했다. 후보20캐릭터 추가 전후 SQL 횟수 동일을 확인했으며 사용자 환경 성능 인수로 확대하지 않는다.
 
-최종 후보이미지에서 소스239파일·기본116/신규177 전체 OpenAPI·기존component/쓰기shape 일치·보존을 확인했다. 별도 합성0031 DB/NOSUPERUSER LOGIN의 실제 factory/readiness·health200·새GET 인증거절2건/no-store를 확인했다. 작성 예시21/비정상16 정적검사는 실행45건과 별도다. 현재 실제 개발API는 교체하지 않았으며 DB migration/실회원·기기/운영 인수는 미실행이다.
+최종 후보이미지에서 소스239파일·기본116/신규177 전체 OpenAPI·기존component/쓰기shape 일치·보존을 확인했다. 별도 합성0031 DB/NOSUPERUSER LOGIN의 실제 factory/readiness·health200·새GET 인증거절2건/no-store를 확인했다. 작성 예시21/비정상16 정적검사는 실행45건과 별도다. 위 격리검증 당시에는 실제 개발API를 교체하지 않았다. 이후 [개발 반영](../../../engineering/operations/eligibility-rollout.md)을 완료했다. DB migration/실회원·기기/운영 인수는 이번에도 미실행이다.

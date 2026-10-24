@@ -4,9 +4,9 @@
 
 ## 현재 운영 경계
 
-현재 로컬 개발 서버의 마지막 확인 기준은2026-10-24 구현 source15e143a·반영920cc059, API176경로·DB0031_membership_actions다. 기본 앱116경로·DB0023 기준과 혼용하지 않는다. #26 source484ca17은177경로/공통자격·후보GET 구현/격리검증까지 마쳤지만 이 실제서버에는 미반영이다. [구현 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6382258395)와 별도 반영 구간을 구분한다. AWS 운영 배포·dev/main 통합·실회원 신규명령/실기기 인수는 완료 상태가 아니다.
+현재 로컬 개발 서버는2026-10-24 #26 구현 source484ca17·이미지fdd256ea, API177경로·DB0031_membership_actions다. [최신 API 교체·자료 보존/실행 검증](eligibility-rollout.md)과 [공개 집계](records/eligibility-rollout.json)를 따른다. 기본 앱116경로·DB0023 기준과 혼용하지 않는다. [구현 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6382258395)와 별도 반영 구간을 구분한다. AWS 운영 배포·dev/main 통합·실회원 신규명령/실기기 인수는 완료 상태가 아니다.
 
-전환은 기존 DB 컨테이너/볼륨·키·환경을 유지하고 API/동일 lifespan worker를 교체했다. 비공개 백업을 별도 DB에서 제한 LOGIN으로 복원·이행 검증한 뒤 실제 DB를 이행했고 기존105개 업무 표의 모든 행·열 정의·기록시각·키·시퀀스를 보존했다.106→108표/603행, 새2표0행, 실행 계약 일치·health/공개검색/인증경계7검사는 당시 실제 실행 근거다. 합성38시험과 합산하거나 정상 회원 명령 성공으로 표시하지 않는다.
+이전 #24/#25 전환은 기존 DB 컨테이너/볼륨·키·환경을 유지하고 API/동일 lifespan worker를 교체했다. 비공개 백업을 별도 DB에서 제한 LOGIN으로 복원·이행 검증한 뒤 실제 DB를 이행했고 기존105개 업무 표의 모든 행·열 정의·기록시각·키·시퀀스를 보존했다.106→108표/603행, 새2표0행, 실행 계약 일치·health/공개검색/인증경계7검사는 당시 실제 실행 근거다. 합성38시험과 합산하거나 정상 회원 명령 성공으로 표시하지 않는다.
 
 <a id="section-2"></a>
 
@@ -29,4 +29,4 @@ JSON 보고 안의 과거 경로·source/image/hash는 그 당시 스냅샷 값�
 
 ## 공식 인계·다음 담당
 
-[검색 개발 반영](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6371617690), [탈퇴·해산 개발 반영](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371618996). Flutter 직접 연결/정상 로그인 인수·Backend 재현차이 대응의 현재 상태는 [NEXT_WORK](../../project/NEXT_WORK.md)를 따른다. 이 문서는 당시 결과를 읽기 정리한 것이며 이번에 healthy·HTTP·DB를 재검사한 결과가 아니다.
+[검색 개발 반영](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6371617690), [탈퇴·해산 개발 반영](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371618996). Flutter 직접 연결/정상 로그인 인수·Backend 재현차이 대응의 현재 상태는 [NEXT_WORK](../../project/NEXT_WORK.md)를 따른다. 이전 전환 기록과 최신 #26 실제 검증은 위 링크로 구분한다. 다음은 정상 로그인 소수 항목 수동 인수다.

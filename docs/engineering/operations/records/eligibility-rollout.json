@@ -1,0 +1,78 @@
+{
+  "source_commit": "484ca1719e21b01a59da75b62a1d3b1568ada2c3",
+  "image": "sha256:fdd256ea670f250997d8d6d1f188694f2118a9699c1bdb271da68f6ee5f8b98c",
+  "previous_image": "sha256:67322372b0e7a92344e62e37b06d06e97f1cbc097d0b8fcaffeab49d86695db6",
+  "revision": [
+    "0031_membership_actions"
+  ],
+  "source_files": 239,
+  "tables": 108,
+  "rows": 780,
+  "all_rows_columns_sequences_profile_keys_equal": true,
+  "db_container_volume_preserved": true,
+  "environment_command_security_ports_preserved": true,
+  "backup": "eligibility26-1b708df44268",
+  "migration_run": false,
+  "healthy": true,
+  "http_checks": [
+    {
+      "case": "health",
+      "status": 200
+    },
+    {
+      "case": "public_cycle",
+      "status": 200
+    },
+    {
+      "case": "candidate_apply_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "candidate_apply_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "candidate_change_character_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "candidate_change_character_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "public_search_C",
+      "status": 200,
+      "no_store": true
+    },
+    {
+      "case": "public_search_N",
+      "status": 200,
+      "no_store": true
+    }
+  ],
+  "verified_at_utc": "2026-10-24T10:50:26.779022+00:00",
+  "openapi_full_match": {
+    "two_cycle_paths": 177,
+    "legacy_paths": 116
+  },
+  "key_mount_source_and_readonly_preserved": true,
+  "scope": "local development API and lifespan workers only",
+  "not_verified": [
+    "normal-login member commands",
+    "device acceptance",
+    "production"
+  ],
+  "private_backup_files_published": false
+}

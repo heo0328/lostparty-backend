@@ -1,10 +1,10 @@
 # 신청·캐릭터 변경 후보조회 보완 계약2
 
-2026-10-24 / **계약2 구현·격리 검증 완료/실제 개발 미반영** / 작업 구간 `모집 신청·캐릭터 변경 통합 자격 보완(#26)` / `feat/raid-recruitment`. [공통 설계](eligibility-design.md)가 판정 원본이다. [제안1](candidate-proposal.md)은 이전 범위로 보존한다. 현재 구현후보의 정확한 HTTP shape는 [실행 OpenAPI](../../../../openapi/two-cycle.openapi.yaml)다. 독립 schema/작성 예시는 소비검증 자료이며 실제 개발서버 성공 근거가 아니다.
+2026-10-24 / **계약2 구현·격리 검증·실제 개발 반영 완료/실회원 인수 대기** / 작업 구간 `모집 신청·캐릭터 변경 통합 자격 보완(#26)` / `feat/raid-recruitment`. [공통 설계](eligibility-design.md)가 판정 원본이다. [제안1](candidate-proposal.md)은 이전 범위로 보존한다. 현재 구현후보의 정확한 HTTP shape는 [실행 OpenAPI](../../../../openapi/two-cycle.openapi.yaml)다. 독립 schema/작성 예시는 소비검증 자료이며 실제 개발서버 성공 근거가 아니다.
 
 [#26 전체9번째 Flutter · 신청/캐릭터 변경 통합 후보 연결 결과](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6382646003) 수신: Flutter f89c009f07b45ff53a4f108247f9e856229f8455 commit/push 보고, 두intent reader·전페이지/역할·표시/선호·변경 actor/배치 확인·원명령/ACK·수락실패pending유지를 함께 연결했다. 신규60+직접영향433=493PASS/분석0은 네이티브 자체 보고이고 Backend 독립 재현이 아니다. 신규60의 작성21벡터도 합성fixture이며 Backend45/과거시험과 합산하거나 실회원 성공으로 표시하지 않는다.
 
-현재 다음 단계는 별도 승인된 Backend 개발 반영과 반영 후 Flutter의 신청·수락/변경·직접 영향 소수항목 수동 인수다. 네이티브 소스 연결/자동검증 보고를 실제 개발API177 배포·실회원/기기 완료로 확대하지 않는다.
+[실제 개발API177/DB0031 반영·자료 보존/HTTP 검증](../../../engineering/operations/eligibility-rollout.md)을 완료했다. 다음은 Flutter 정상 로그인 신청·수락/변경·직접 영향 소수항목 수동 인수다. 자동검증/반영 완료를 실회원·기기 완료로 확대하지 않는다.
 
 ## 요청·권한·전체 응답
 
@@ -87,4 +87,4 @@ GET과 apply/change/approval 공통판정·확인배치 결합을 구현했다. 
 다음 Flutter는 게시 source/177계약으로 신청·변경 두intent의 reader/후보/role/빈화면·확인/원명령·갱신을 통합 연결하고 직접 영향 회귀를 함께 확인한다. 1~5는 사용자 수동시험 분량·순서만 구분하며 다른 구간 구현/필요 회귀를 미루는 근거가 아니다. 실제 개발서버 반영은 별도 승인 후이므로 현재 새endpoint 실서버/실회원 시험을 요청하지 않는다.
 
 
-구현 source `484ca1719e21b01a59da75b62a1d3b1568ada2c3` / feat/raid-recruitment commit·push·원격 SHA 일치 확인 후 [#26 전체7번째 Backend · 계약2 구현/검증 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6382258395) 게시·전문/실제 전체 순번을 재조회했다. 다음 담당 Flutter 신청·변경 통합연결·직접 자동검증/Backend 재현차이 대응이다. 실제 개발API67322372…/176·DB0031 healthy/health200·기존이미지 미교체를 읽기 확인했고 시험용 runner/DB/internal network/API probe는 정리해 기존API/DB만 남겼다. 실회원/기기·개발반영/운영은 별도 미완료다.
+구현 인계 당시 기록: source `484ca1719e21b01a59da75b62a1d3b1568ada2c3` / feat/raid-recruitment commit·push·원격 SHA 일치 확인 후 [#26 전체7번째 Backend · 계약2 구현/검증 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6382258395) 게시·전문/실제 전체 순번을 재조회했다. 당시 다음 담당은 Flutter 신청·변경 통합연결·직접 자동검증/Backend 재현차이 대응이다. 실제 개발API67322372…/176·DB0031 healthy/health200·기존이미지 미교체를 읽기 확인했고 시험용 runner/DB/internal network/API probe는 정리해 기존API/DB만 남겼다. 이후 개발 반영은 위 최신 기록에서 완료했으며 정상 로그인/기기·운영 인수는 미완료다.

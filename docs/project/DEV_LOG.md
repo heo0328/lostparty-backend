@@ -2444,3 +2444,12 @@ NEXT_WORK/AI_CONTEXT/추적표·현재계약/설계의 ‘2가입 연결·변경
 전용Gateway/모델·동일snapshot전페이지·역할/원정대표시/대표·선호,두intent선택/context·변경파티명시동의/확인후변경POST0·늦은응답격리,원ACK/재송/ACK후GET실패성공유지,수락실패pending유지·직접가입기존계약보존 연결을 보고했다. 초기import/분석경고·여러페이지role참조 수정 후 최종493/분석0이며 Backend가 Flutter소스를 직접읽거나독립실행한 증거는 아니다. 최초로딩/0건/정보부족·미달/실패 구분과 provider자동갱신/쓰기없음도 유지했다.
 
 새 Backend 수정/계약 재수용·전체시험 반복 요청 없음. 다음Backend는 별도 승인된 실제 개발 반영 뒤 정확 source/이미지·실행177/DB0031보존·health를 인계하고 Flutter는 소수항목으로 후보/역할→신청·수락부터 수동 인수/변경·직접영향을 이어간다. 현재 실제개발176/DB0031 미반영/실회원·기기 미확인 경계를 유지한다. 이번 코드/OpenAPI·시험/서버/DB·키/자료·dev/main/운영 변경 없고 수신 확인 중복댓글은 쓰지 않는다.
+
+
+## 2026-10-24 — #26 통합 자격 개발 서버 반영·자료 보존 검증
+
+작업 구간명: 모집 신청·캐릭터 변경 통합 자격 개발 반영. 작업 내용: 사용자 진행 지시로 중단된 API/worker 교체를 재개·검증·인계. 브랜치/위치: feat/raid-recruitment / 본 프로젝트. 최신 #26 전체9 이후 추가댓글0건·추가수정요청없음을 확인했다.
+
+[반영 근거](../engineering/operations/eligibility-rollout.md)·[공개 집계](../engineering/operations/records/eligibility-rollout.json): source484ca17/검증 이미지fdd256ea를 실제 개발API에 반영했다. API 중지 후 private dump/key/config와 전체읽기 baseline 확보·archive catalog 읽기 확인, 교체 전후108표/780행·열/시퀀스/DB profile·키 hash 동일. DB컨테이너/볼륨·환경/명령/포트/보안/키mount 원본·ro 유지, DB0031 그대로·migration 없음. old image rollback tag 보존·reader 제거. 백업 restore 리허설은 이번 구간 미실행이다.
+
+실제 실행 컨테이너177/기본116 OpenAPI 전체일치, HTTP8건(health/주차200·양intent 무인증/invalidBearer401 ACCESS_INVALID/no-store/challenge4·C/N검색200/no-store2) 통과. Backend 격리45·Flutter493 자체보고와 합산하지 않는다. 기존회원 토큰 생성/실회원 명령·provider·기기 조작·dev/main/운영배포 없음. 다음 Flutter 정상로그인 후보/역할→신청·수락부터 소수항목 인수, 변경/다른T·직접영향 추적/Backend 차이대응. 이슈 인계·게시SHA는 후속 기록한다.
