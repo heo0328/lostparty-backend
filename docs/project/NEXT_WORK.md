@@ -5,12 +5,12 @@
 ## Flutter 다음 실행
 
 - **검색 연결:** [#24](https://github.com/heo0328/lostparty-backend/issues/24)의 게시 source15e143a·실행176경로 계약으로 검색 캐시/실제T 참가 제외·탈퇴 후 재노출·cursor 회복을 연결하고 직접 영향 범위의 결과를 회신한다. [Backend 개발 반영 인계](https://github.com/heo0328/lostparty-backend/issues/24#issuecomment-6371617690), [현재 검색 설명](../features/recruitment/search/README.md).
-- **탈퇴·해산 UI/기록:** [#25](https://github.com/heo0328/lostparty-backend/issues/25) Flutter A 전용 context/원명령·ACK는6968f47a commit/push·고유177mock/분석0 보고를 수신했다. Backend 독립 재현은 아니다. [A 결과와 미완료 B/C](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371981415). 실제 상세 버튼은 구명령이며 다음 B에서 메뉴·확인·선택T 성공이탈/반대T화면유지·빈effects 관계알림, C에서 profile/본인 옛기록 Router를 연결한다. A 완료를 새 정책 UI 전체 완료로 표시하지 않는다.
+- **탈퇴·해산 UI/기록:** [#25](https://github.com/heo0328/lostparty-backend/issues/25)의 Flutter A 전용 명령/ACK에 이어 [전체9번째 Flutter · B 메뉴/성공 처리](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6372783376) 0487788a commit/push·295mock, [전체10번째 Flutter · C 명시 조회 프로필/본인 기록](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6373322164) 0c5ae941 commit/push·413mock/최종 분석0 보고를 수신했다. 수치는 각 보고 범위이며 합산/Backend 독립 재현하지 않는다. B/C 구현 대기는 해소됐으며 다음은 #24 검색 후속과 정상 로그인 개발API·실회원/기기 인수다. 추가 Backend 차단/구현·반복시험 요청은 없다.
 - **실제 인수:** 정상 로그인으로 게시된 새 명령·검색·자기 기록의 직접 영향을 확인하고 해당 Issue에 회신한다. 합성/mock 통과와 실회원 HTTP·기기 인수는 구분한다. 기존 계약 재수용이나 이미 확인한 전체 시험 반복 대기는 아니다.
 
 ## Backend 다음 실행
 
-새 Backend 차단/수정 요청은 없다. Flutter/사용자의 재현 가능한 계약·동작 차이에 해당 기능 범위로 대응한다. 현재 마지막 개발 전환 근거는 source15e143a/반영920cc059·API176/DB0031이며 [전환·보존 기록](../engineering/operations/README.md)과 [#25 Backend 개발 반영](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371618996)을 따른다. 이 문서 정리에서 실제 컨테이너/HTTP/DB를 재확인한 상태가 아니다.
+새 Backend 차단/수정 요청은 없다. Flutter/사용자의 재현 가능한 계약·동작 차이에 해당 기능 범위로 대응한다. 현재 마지막 개발 전환 근거는 source15e143a/반영920cc059·API176/DB0031이며 [전환·보존 기록](../engineering/operations/README.md)과 [#25 Backend 개발 반영](https://github.com/heo0328/lostparty-backend/issues/25#issuecomment-6371618996)을 따른다. 이번 현황 조회에서 API/DB 두 컨테이너 healthy·실제 HTTP health200·DB0031_membership_actions를 읽기 확인했다. 전체 계약/실회원 명령을 재검증한 것은 아니다.
 
 사용자 지정 테스트용 인증 설정은 실제 장비 인증 성공과 구분한다. 다음 사용자 확인이 필요하면 앱 목록 새로고침·활동/대표 선택이며 비공개 실행 근거는 DEV_LOG에 보존한다. 자료/키/DB초기화·개발 fixture 재적용은 수행하지 않는다.
 
@@ -23,4 +23,4 @@
 
 ## 문서 작업 마감·다음 채팅
 
-[전체 기능 안내](../README.md)와 [원문/섹션 대응표](../engineering/documentation/README.md)를 기준으로 문서를 관리한다. 문서 정리 브랜치에서 시범·전체 통합을 로컬 커밋으로 마감하며 push·PR·병합은 수행하지 않는다. 원격 게시/통합은 별도 지시 범위다. 기능 작업으로 돌아갈 때는 위 Flutter B/C·#24 연결/실인수와 Backend 재현 차이 대응을 이어가며 현재 설명에 작업단계 문서를 다시 누적하지 않는다.
+[전체 기능 안내](../README.md)와 [원문/섹션 대응표](../engineering/documentation/README.md)를 기준으로 문서를 관리한다. 문서 정리 브랜치에서 시범·전체 통합을 로컬 커밋으로 마감하며 push·PR·병합은 수행하지 않는다. 원격 게시/통합은 별도 지시 범위다. 기능 작업으로 돌아갈 때는 위 #24 연결·#25 정상 로그인 실인수와 Backend 재현 차이 대응을 이어가며 현재 설명에 작업단계 문서를 다시 누적하지 않는다.
