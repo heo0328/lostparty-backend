@@ -2,37 +2,32 @@
 
 2026-10-25
 
-- **작업 구간명:** 신청자 아이템레벨 보완 개발 반영(#26).
-- **작업 내용:** Flutter 전체23의 출처별 표시 연결 완료/소비 차이 없음 확인 후 사용자 승인으로 개발 API/worker를 교체했다.
+- **작업 구간명:** 모집 전체 흐름 네이티브 점검·인수.
+- **작업 내용:** 아이템레벨 보완 인수 결과 확인 후, 네이티브가 현재 앱·개발 서버 기준으로 모집 전체 연결을 점검하고 Backend가 구체 차이에 대응한다.
 - **브랜치·위치:** `feat/raid-recruitment` / `/home/heowork/projects/lostparty-backend`.
-- **현재 실제 개발:** source `f471e3133ad60befcad77d7123e1107ba7501bb4`, 이미지6d5857b3…·177경로·DB0031, API/DB healthy. [반영 근거](../engineering/operations/application-item-level-rollout.md)·[집계](../engineering/operations/records/application-item-level-rollout.json).
+- **실제 개발 반영 기준:** source `f471e3133ad60befcad77d7123e1107ba7501bb4`, 이미지6d5857b3…·177경로·DB0031. [반영 근거](../engineering/operations/application-item-level-rollout.md)·[집계](../engineering/operations/records/application-item-level-rollout.json).
 
+## 최신 수신·완료 경계
 
-공식 인계: [#26 전체24번째 Backend · 아이템레벨 실제개발 반영](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386808894) 게시·댓글전문/실제순번 확인. 반영근거 `6be5c6fee12272858acc5493b06278340096521f` commit·push·원격일치 후 인계했고 Issue 상단/OPEN·원본이력을 보존했다. 다음Flutter 레벨/출처문구 소수기기인수·Backend직접차이대응이다.
+[#26 전체25번째 Flutter · 아이템레벨 사용자 인수 결과](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386859737)에서 사용자의 ‘현재 레벨이 표기됩니다’ 정상 기기 결과를 확인했다. current_saved/unavailable은 만들기 어려운 실제 분기를 강제하지 않고 구현·자동검증 근거로 사용자가 인수 수용했다. 해당 두 분기의 실제 기기 관찰은 미수행이며, 레벨 표시 자체의 기기 통과와 구분한다. Flutter source13fb5848/최종158PASS는 자체보고이며 Backend35PASS/반영HTTP12와 합산하지 않는다.
 
-## 다음 실행
+신청자 레벨 누락 보완 구간은 인수 수용됐고 추가 Backend 수정/재시험 대기는 없다. 전체 모집·변경/주차교차 인수나 Issue26 종료까지 완료한 것은 아니다. [전체24 Backend 반영 인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386808894) 후 개발 미반영 대기는 해소됐다.
 
-[#26 전체23번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386758343)의 앱source13fb5848 push·158PASS는 자체보고다. 새3키/출처별 문구 연결 완료이며 추가 계약 차이는 없다. 기존서버의 필드누락 항목은 새reader에서 오류 처리되므로 이번 서버 반영으로 제공 소스를 맞췄다.
+## 다음 담당·순서
 
-다음 Flutter는 정상로그인으로 신청카드 레벨/출처 문구만 소수 확인한다. snapshot→‘아이템 레벨 1700’, current_saved→‘아이템 레벨 1750 · 현재 저장 정보’, unavailable→‘아이템 레벨 조회 불가’. 사용자 확인/갱신 요구·새시각행/조작은 없다. 기존 정상1/2 전체·413 시험 반복은 요청하지 않는다. 차이는 #26에 개인정보를 제거한 상태/code·재현구간으로 회신하고 Backend가 직접 대응한다. 정상회원 확장조회/기기 인수는 아직 미확인이다.
+사용자가 다음 순서를 네이티브의 모집 전체 구간 테스트로 지정했다. Flutter가 현재 앱과 반영 서버를 기준으로 전체 연결 및 직접 영향의 검증 현황을 정리하고 아래 구간을 순서대로 점검한다.
 
-이번 반영은 API/worker만 교체했고108표893행 전체·키/설정·시퀀스/DBprofile·DB컨테이너/볼륨을 보존했다. 실제소스241파일·OpenAPI177/기본116 전체일치·HTTP12PASS다. 기존 Backend격리35PASS와 Flutter158 자체보고는 별도다. migration·기존신청backfill·실회원명령/provider·키/자료수정·dev/main/운영은 없다. 임시reader는 제거했다.
+1. 생성: 조건·모집 생성과 결과 반영.
+2. 가입: 후보·역할 선택, 신청/대기/승인·거절·철회와 양쪽 상태 반영.
+3. 방 내부 행위: 캐릭터/역할·배치 변경, 일정/동의와 참가 정보 반영.
+4. 완료·해산: 활성 기능의 완료/해산 및 관련 기록·상태 반영. IF-001 비활성 기능은 제외 기준을 유지한다.
+5. 주차 분리: C/N 전환·격리와 다른 주차 자료 보존.
 
-## 기존 개발반영과 인수 경계
+[전체8 Flutter의 기존 5구간 기준](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6382315586)을 따른다. 이는 수동시험 분량/순서이며 구현·직접 영향 회귀를 특정 구간만으로 제한하지 않는다. 사용자의 수동 확인은 소수 항목씩 나누고, 이미 통과한 항목은 근거를 유지하되 재확인이 필요한 직접 영향이 있으면 이유와 대상만 제시한다. 동일 자동시험 전체를 변화 없이 반복 실행하라는 요청은 아니다.
 
-[전체16 Flutter 앱연결](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6385536441) ac9fe621 push·413PASS/분석0은자체보고다. 연결/합성시험과새프로필실서버·실회원/기기를구분한다. 다음은 이미연결한앱에서사용자소수항목을확인하는것이다.
+**다음 Flutter:** 점검 순서/기존 통과·미확인·실패를 구분해 진행하고 직접 차이를 해당 Issue에 개인정보를 제거한 상태/code·재현구간으로 회신한다. **다음 Backend:** 구체 API/계약·데이터 차이가 보고되면 재현·수정·필요검증·게시/인계한다. 현재 별도 코드/서버 수정 대상은 없다. 전체 점검과 인수 결과가 확인될 때까지 Issue26 및 독립 미완료 추적을 유지한다.
 
-1. 공대장신청목록 카드의선택역할전투력·현재분석/미확인표시를확인한다. 오류/성공보존·미확인과전체승인가능판정을구분한다.
-2. 본인pending방상세재진입시승인대기안내와신청버튼숨김을확인한다. 다른T·다른회원정보를섞지않는다.
-3. 철회/만료·수락후기존흐름은그상태가발생할때확인한다. 시험을위해실회원자료를임의변조하지않는다. 기존가입3항목/413전체시험을이유없이반복요청하지않고변경·반대파티/C/N직접영향은계속추적한다.
-
-차이가발생하면#26에개인정보를제거한상태/code·재현구간을회신한다. Backend는직접차이에대응한다. 일반오류원인은HTTP/code미확인관찰로남기며이번배포를원인수정완료로확대하지않는다. 목록진입/갱신·실시간/웹소켓/알림은이번범위에서바꾸지않았다.
-
-## 검증·보존 경계
-
-- 이번반영: 소스241파일·실제컨테이너177/기본116 OpenAPI 전체일치, HTTP12건 통과. API중지후백업/catalog읽기·DB불변확인→교체, 전후108표829행/열·시퀀스·DBprofile·키hash동일, DB컨테이너/볼륨·환경/명령/포트/보안·키mount/readonly보존·migration없음이다. 이전API fdd256ea는rollback태그로보존했고임시reader제거·기존API/DB만남았다.
-- [전체14 구현인계](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6385227653)의격리28PASS와 [전체17 예시보완](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6385820194)의추가12PASS/정상22·비정상23/원본8거절은별도근거다. Flutter413자체보고·기존시험과합산하지않는다.
-- 정상로그인실회원조회200/기기인수는미확인이다. 실제회원session으로토큰을만들거나회원명령·provider/기기조작을수행하지않았다. 원pending/ACK/거절·철회·기존membership프로필/기록·IF-001을보존한다. 1~5는수동시험분량이지구현/필요회귀제외기준이아니다.
+목록 진입/갱신·실시간/웹소켓/알림은 변경하지 않았다. 이전 일반오류 관찰은 HTTP/code 미확인이며 원인 수정 완료로 해석하지 않는다. 시험을 위한 실회원 자료/키 변조·고의 장애를 요구하지 않는다. 이번 수신 기록은 문서 작업으로 API·서버/DB·기기·dev/main/운영 변경이나 새 실행시험은 없다.
 
 ## 유지할 경계·독립 후속
 
@@ -43,4 +38,4 @@
 
 ## 다음 채팅의 작업 기준
 
-새표시프로필과 아이템레벨 보완 개발반영은 완료했다. 같은모집브랜치에서#26 정상로그인/소수기기인수 회신과직접차이에대응한다. dev/main/운영·DB자료/키수정은별도승인범위다.
+#26 최신 회신에서 네이티브 전체 구간 점검의 진행/결과와 직접 Backend 차이를 확인한다. 아이템레벨 보완은 위 근거로 인수 수용됐고, 전체 모집 인수·dev/main/운영은 미완료다. 같은 모집 브랜치에서 이어간다.
