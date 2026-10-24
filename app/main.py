@@ -374,7 +374,10 @@ def health():
             value = conn.execute("SELECT 1").fetchone()[0]
         if value != 1:
             raise RuntimeError("Unexpected health result")
-    except (psycopg.Error, RuntimeError):
+    except (psycopg.Error, RuntimeError) as error:
+        from app.core.observability import emit, category
+        import logging
+        emit("database_error", level=logging.ERROR, category=category(error))
         return JSONResponse(status_code=503, content={"status": "unhealthy", "database": "unavailable"})
     return {"status": "ok", "database": "ok"}
 

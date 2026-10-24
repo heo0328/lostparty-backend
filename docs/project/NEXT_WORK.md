@@ -2,9 +2,11 @@
 
 ## 현재 별도 개선 구간
 
-2026-10-25 사용자 승인: **검증된 직접·전이 의존성 고정**. `chore/backend-architecture-review`에서 두 번째 개선을 적용했다. [고정 기준·업데이트 절차](../engineering/development/dependency-locking.md)를 따른다. 개발 API에서 사용 중인31개 패키지 버전을 유지하고 시험 전용12개를 추가한 hash lock으로 두 Dockerfile을 빌드한다. .in은 직접 요구 원본이며 .txt가 실제 설치 lock이다. 실행기 static에도 정합성 검사를 연결했다. 개발 서버/API 계약·DB는 변경하지 않았다.
+2026-10-25 사용자 승인: **Backend 로깅·관측 보강**. `chore/backend-architecture-review`에서 세 번째 개선의 코드/후보 설정을 구현했다. [로그 항목·조회·보관 안내](../engineering/operations/logging.md)를 따른다. 기본 logging으로 허용된 JSON 필드만 기록하고 API 요청/DB 원인/worker 결과를 구분한다. Uvicorn 원래 access 기록을 차단하며 Compose api/db는10m×5 정책을 준비했다. **실제 개발 API/DB에는 아직 반영하지 않았고 재생성도 하지 않았다.**
 
-첫 개선인 [격리 검증 실행](../engineering/development/isolated-verification.md)은 적용 완료다. 실제 Backend 변경에 맞는 검증을 선택한다. `legacy`/`two-cycle`은 지정 회귀 묶음, `all`은 전체 선택이며 구체 실행 결과는 DEV_LOG를 따른다. 다른 개선 후보는 [점검 보고서](../engineering/development/backend-architecture-review.md)를 참고하되 아직 착수하지 않는다. 현재 개선은 로컬 커밋하며 push/PR/merge/배포·네이티브 추가시험 요청은 없다. Python/OS/base image 고정과 다른 플랫폼 wheel 지원은 이번 범위 밖이다.
+다음은 변경 위험에 맞는 격리 검증 사용이다. 실제 개발 서버 반영이 요청되면 자료·키/환경·원본 실행 보존을 확인한 별도 구간에서 API 이미지를 교체한다. DB 로그 보관 설정을 적용하려고 이번에 DB를 재기동하지 않는다. 외부 서비스/대시보드/알림·전체 backlog 측정·장기보관은 미구현이다. 현재 개선은 로컬 커밋하며 push/PR/merge/배포·네이티브 추가시험 요청은 없다.
+
+앞선 [격리 실행](../engineering/development/isolated-verification.md)과 [의존성 고정](../engineering/development/dependency-locking.md)은 구현·검증 완료다. 다른 구조 개선은 [점검 보고서](../engineering/development/backend-architecture-review.md)를 참고하되 아직 착수하지 않는다. 구체 시험·미실행·실패 수정은 DEV_LOG를 따른다.
 
 아래 모집 대기 상태는 보존한다. 모집 기능 대응 재개 전 `feat/raid-recruitment` checkout과 점검/실행기 기록의 통합 여부를 확인한다. 임시 분기에서 계속 모집 기능을 수정하지 않는다. 새 네이티브 요청 여부는 공식 Issue에서 확인한다.
 

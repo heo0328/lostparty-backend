@@ -2596,3 +2596,14 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - 새 lock 환경 격리 시험: 인증파일34PASS(16.93초), 최신 아이템레벨파일18PASS(88.70초). 둘 다 기존 Starlette/AnyIO 경고1종, 실제회원/기기가 아닌 합성PostgreSQL/HTTP이며 과거 결과와 합산하지 않는다. 기본116경로/133동작·two-cycle177경로/197동작 OpenAPI 객체 전체 일치PASS. 전체 legacy/two-cycle/all과 보안 취약점 감사는 미실행.
 - static 문서/동결자료·경로/lock 검사 및 git diff --check PASS. 작업 종료 시 시험 고유 프로젝트/네트워크 정리와 기존 API bbab9692cb65·DB f1a0bf3769fa 동일 ID/healthy를 읽기 확인했다. 기존 DB/키/환경 내용 hash나 정상회원 명령 재검증은 하지 않았다.
 - 구현·문서·검증 기록은 로컬 커밋한다. push/PR/merge/배포·Issue/네이티브 회신·추가 사용자 시험 요청은 없다. 현재 개발실행 sourcef471e31/6d5857b3·177/DB0031은 유지한다. 다음에는 변경 위험에 맞는 기존 격리 명령을 사용하고, 라이브러리 업데이트는 후보 환경에서 검증 후 명시적으로 lock을 변경한다. 다른 구조 개선은 미착수이며 모집 복귀 전 checkout/통합 여부를 확인한다.
+
+## 2026-10-25 Backend 로깅·관측 보강
+
+- 사용자 승인 기본안(외부 서비스 없이 Python logging·10m×5)에 따라 `chore/backend-architecture-review`에서 구현. [로그 필드/조회/보관 안내](../engineering/operations/logging.md). `app/core/observability.py`의 허용 필드 JSON formatter·순수ASGI 요청 관측·DB 분류·job 관측과 logging.json을 추가했다. 신규 패키지/lock 변경 없음.
+- HTTP 전체 처리시간·method/template/status·서버 UUID와 공통 오류응답/provider 진단 ID를 연결한다. body/header/query/원path/IP·회원/방ID·SQL/parameter·예외 원문/traceback은 formatter에서 렌더링하지 않는다. 입력 X-Request-ID는 신뢰하지 않는다. success 응답 필드/헤더와 원ACK는 변경하지 않는다. 직접 반환된 과거 ACK 본문을 읽어 현재 UUID와 합치는 처리도 없다.
+- DB SQLSTATE는 connection/lock_unavailable/query_cancelled/deadlock/serialization/constraint/database로 분류한다. 초기 합성시험에서 XX000 OperationalError를 connection으로 잘못 묶은1실패를 발견했고 SQLSTATE가 있으면 알려진 분류를 우선·미분류는database, 연결종류fallback은 SQLSTATE없을 때만 사용하도록 수정했다. 예외 원문/SQL 출력 없이 원인을 구분한다.
+- auth cleanup/ownership/recruitment tick의 성공·실패/소요시간을 기록하고 기존 sleep/스위치·재시도를 보존했다. per-room 실패는 count로 누적해 partial_failure로 구분한다. 예정 업무 backlog·경보·다중프로세스 집계는 미구현이다. Uvicorn access log를 비활성화하고 server/기타 임의 message·traceback도 안전한 event만 출력한다. 기존 Google/provider 안전 진단 문맥은 유지했다.
+- Dockerfile·two-cycle command에 JSON log config/no-access-log를 연결하고 compose api/db의 json-file max-size10m/max-file5를 준비했다. 합성 환경값만 사용한 compose config 렌더링에서 두 서비스 정책·API CLI PASS. 실제50MB 초과 롤오버는 시험하지 않았다. 실제 개발 API/DB/키/환경/볼륨·로그 파일은 변경하지 않았고 컨테이너 재생성/데몬 재시작도 하지 않았다. 정책은 기존 컨테이너에 자동 적용되지 않는다.
+- **최종 격리검증:** 로깅21·인증34·provider 진단11·Google12 = 고유78PASS(29.72초). 비밀포함 header/query/path/예외/SQL 비노출·오류 request_id·미처리500·streaming·취소/동시요청 ContextVar 격리·실제 worker 재시도·health503 응답 보존, 실제 dictConfig subprocess의 access차단/traceback미노출을 확인했다. 로깅 단독21PASS는78에 포함하며 초기72PASS/1FAIL도 합산하지 않는다.
+- 최신 모집 아이템레벨 별도18PASS(90.60초·합성0031 app-role/HTTP·쓰기/원ACK/읽기보존). 두 pytest 모두 기존 Starlette/AnyIO 경고1종. 최종 후보 이미지의 기본116경로/133동작·two-cycle177경로/197동작 OpenAPI 전체 객체 일치PASS. 호스트 안전성/lock12PASS·static 문서/동결자료/경로 검사·git diff --check PASS. 전체 all/성능/실회원·기기/실제운영 관측 인수는 미수행이다.
+- 종료 시 기존 API bbab9692cb65·DB f1a0bf3769fa 동일 ID/healthy, 시험 lostparty-check 네트워크 잔존0을 읽기 확인했다. DB내용hash/정상회원 명령을 재시험한 것은 아니다. 코드·검증·문서는 로컬 커밋하며 push/PR/merge/배포·Issue 게시/네이티브 시험 요청은 없다. 실제 반영을 별도 요청받으면 자료보존·대상/허용중단을 확인하며 API 교체와 DB 로그 정책 적용을 구분한다. 모집 복귀 전 checkout/개선 기록 통합을 확인한다.

@@ -12,4 +12,4 @@ COPY --chown=appuser:appuser alembic.ini .
 COPY --chown=appuser:appuser scripts/create_auth_keys.py ./scripts/create_auth_keys.py
 USER appuser
 EXPOSE 8000
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--no-proxy-headers"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--no-proxy-headers", "--no-access-log", "--log-config", "app/core/logging.json"]

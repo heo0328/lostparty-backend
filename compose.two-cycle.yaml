@@ -16,3 +16,6 @@ services:
       - --port
       - "8000"
       - --no-proxy-headers
+      - --no-access-log
+      - --log-config
+      - app/core/logging.json
