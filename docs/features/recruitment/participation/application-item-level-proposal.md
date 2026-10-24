@@ -1,10 +1,16 @@
 # 신청자 아이템레벨 출처 보완 제안
 
-2026-10-25 / **협의 제안·미합의·미구현**. 작업 구간명: 신청자 아이템레벨 누락 보완. 브랜치: `feat/raid-recruitment`.
+2026-10-25 / **제안 소비 합의 완료·미구현/실제 문제 미해결**. 작업 구간명: 신청자 아이템레벨 누락 보완. 브랜치: `feat/raid-recruitment`.
 
 [#26 전체19번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386174761)의 코드 경로와 사용자 관찰을 확인했다. API source06ea4b2는 Application.display를 공용 groups.admission_core.display로 생성해 서버/이름/직업만 저장한다. 목록은 그대로 반환한다. 실제 개발DB 읽기 집계에서도 저장 신청7개 모두 display.item_level이 없었다. 원본회원/신청 식별자·값은 공개하지 않았으며 DB수정은 하지 않았다.
 
 작성 합성예시에는 item_level을 넣었지만 실제 snapshot 저장기에는 없었다. 예시만으로 실제 제공을 판단한 검증 누락이다. 정상 인수1/2의 나머지와 Flutter58600023 문구변경·분석0/게시 보고는 독립 실행/기기 확인과 구분한다.
+
+[#26 전체21번째 Flutter · 아이템레벨 제안 수용/표시 기준 확정](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386405233)에서 sourceb97eee2의3키와신규snapshot/기존current_saved·소유/시각/조회불변 경계를수용했다. 기준da50f972의display동적map은기존closed top-level을완화하지않고소비가능하다. 현재UI는item_level만읽으며출처표시/3키정합성은Backend실행인계후좁은후속연결이다. 새기능/실서버·실기기 성공이아니다.
+
+확정표시: application_snapshot→‘아이템 레벨 1700’, current_saved→‘아이템 레벨 1750 · 현재 저장 정보’, unavailable→‘아이템 레벨 조회 불가’. 사용자에게확인/갱신행동·0/최소조건/전투력대체를요구하지않는다. fetched_at은원본시각으로보존하되카드에새시각행/조작을추가하지않는다.
+
+**다음 Backend:** 합의대로구현·신규POST→저장display→HTTP목록·기존누락/성장후snapshot보존·소유변경·nullable/시각·기존쓰기/조회불변을직접검증하고정확source/계약·원격게시/실제반영여부를인계한다. **다음 Flutter:** 인계후출처/누락표시·경계검증연결, 개발반영후레벨/문구만소수기기확인. 기존전체시험/사용자통과1·2전체반복은요청하지않는다.
 
 ## 최소 호환 제안
 
@@ -18,7 +24,7 @@
 
 item_level_source=application_snapshot이면 **Application.display에 실제 저장돼 있던 값**이다. 신청시각은 기존created_at이고 level의 원본시각은 별도fetched_at이다. current_saved이면 **해당 페이지 evaluated_at에 조회한 Character.summary의 현재 저장값**이며 신청 당시 값이 아니다. unavailable이면 값/시각 모두null이다. 다른 표시값과 출처·시각이 다른 것을 허용하고 UI가 당시 레벨/현재 저장 레벨을 혼동하지 않도록 소비한다.
 
-기존 계약의 ‘display는 신청 snapshot’은 서버/이름/직업과 실제 저장레벨에 적용한다. 기존 누락 레벨의 읽기 보완값만 명시적으로current_saved로 구분하는 의미 보완이다. 이 차이와 동적map의 새 metadata3키 소비를 Flutter와 확인한 뒤 구현한다. profile1 실패를 기본조회로 fallback하는 정책은 추가하지 않는다.
+기존 계약의 ‘display는 신청 snapshot’은 서버/이름/직업과 실제 저장레벨에 적용한다. 기존 누락 레벨의 읽기 보완값만 명시적으로current_saved로 구분하는 의미 보완이다. 이 차이와 동적map의 새3키 소비는 전체21에서 수용됐으며 합의 범위로 구현한다. profile1 실패를 기본조회로 fallback하는 정책은 추가하지 않는다.
 
 ## 저장·기존 신청·소유 경계
 
@@ -46,4 +52,4 @@ Flutter는새top-level모델없이 동적display3키를수용할수있는지, cu
 
 합의후Backend는신규snapshot/기존누락 읽기보완·정밀값/시각/소유변경·기존값보존·조회불변·일괄SQL/페이지·원ACK를직접시험한다. 특히 실제신청POST→저장display→HTTP목록까지연결해작성예시와생산자코드를대조한다. 기본/쓰기DTO·공용identity·그룹/참가기존동작·실행OpenAPI 전체를확인하고commit/push·원격확인후같은Issue에인계한다. 실제개발반영은별도구간이며현재서버/DB는변경하지않았다.
 
-공식제안: [#26 전체20번째 Backend · 아이템레벨 출처/기존누락 보완 제안](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386261019). source `b97eee2aa813a330d740318026617005dbac1c5e` commit·push·원격일치 확인후 게시·댓글전문/실제전체순번 재조회 완료. 다음Flutter 소비차이검토/Backend 합의후구현, API/서버미변경·Issue OPEN이다.
+공식제안: [#26 전체20번째 Backend · 아이템레벨 출처/기존누락 보완 제안](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386261019). source `b97eee2aa813a330d740318026617005dbac1c5e` commit·push·원격일치 확인후 게시·댓글전문/실제전체순번 재조회 완료. 제안 당시 다음Flutter 소비검토였으며 전체21 수용후 다음Backend 구현이다. API/서버미변경·Issue OPEN이다.

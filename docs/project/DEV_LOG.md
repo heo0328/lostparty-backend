@@ -2519,3 +2519,14 @@ NEXT_WORK/AI_CONTEXT/추적표·현재계약/설계의 ‘2가입 연결·변경
 공용groups.admission_core.display는서버/이름/직업만반환하고cycle_commands가Application.display에저장·cycle_lists가그대로반환한다. 실제DB읽기집계7신청모두저장item_level없음을확인했다. 개인정보/원본조회출력·자료수정은하지않았다. 작성예시에만level이있어실제저장까지검증하지못한부분이다. 항목은아직미해결이다.
 
 [계약제안](../features/recruitment/participation/application-item-level-proposal.md): 기존display동적map에item_level/source/fetched_at3키, application_snapshot/current_saved/unavailable을구분한다. 신규Application snapshot만보완하고기존누락은owner/revision·confirmed/active확인후현재저장값을읽기투영한다. 과거snapshot/원시각보존·DBbackfill/공용identity전역수정·provider/추가SQL·입력/ACK변경없음이다. 작성9fragment의타입/정밀값·UTC·기존mapSchema수용을정적으로확인했으며실행시험아니다. 미합의API/OpenAPI·실제서버/DB변경없음. 다음은소비차이회신후저장→조회실행구현/검증이다. 제안source `b97eee2aa813a330d740318026617005dbac1c5e` commit·push·원격일치 확인후 [#26 전체20번째 Backend · 아이템레벨 출처/기존누락 보완 제안](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386261019) 게시·전문/실제전체순번 재조회. Issue상단을레벨미해결/제안·미합의·다음Flutter 소비검토/Backend 합의후구현으로갱신하고기존이력/OPEN을보존했다.
+
+
+## 2026-10-25 — #26 전체21 아이템레벨 보완 소비수용·UX확정
+
+작업 구간명: 신청자 아이템레벨 누락 보완. 작업 내용: 최신수용회신확인·계약상태/다음담당 기록. 브랜치: feat/raid-recruitment. [#26 전체21번째 Flutter · 아이템레벨 제안 수용/표시 기준 확정](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386405233)에서 sourceb97eee2의3키와신규snapshot/기존current_saved·소유/시각/조회불변 경계를수용했다. 기준da50f972의display동적map은기존closed top-level을완화하지않고소비가능하다. 현재UI는item_level만읽으며출처표시/3키정합성은Backend실행인계후좁은후속연결이다. 새기능/실서버·실기기 성공이아니다.
+
+확정표시: application_snapshot→‘아이템 레벨 1700’, current_saved→‘아이템 레벨 1750 · 현재 저장 정보’, unavailable→‘아이템 레벨 조회 불가’. 사용자에게확인/갱신행동·0/최소조건/전투력대체를요구하지않는다. fetched_at은원본시각으로보존하되카드에새시각행/조작을추가하지않는다.
+
+**다음 Backend:** 합의대로구현·신규POST→저장display→HTTP목록·기존누락/성장후snapshot보존·소유변경·nullable/시각·기존쓰기/조회불변을직접검증하고정확source/계약·원격게시/실제반영여부를인계한다. **다음 Flutter:** 인계후출처/누락표시·경계검증연결, 개발반영후레벨/문구만소수기기확인. 기존전체시험/사용자통과1·2전체반복은요청하지않는다.
+
+이번은정적소비검토/계약회신수신이며새시험·API/OpenAPI·서버/DB/기기변경은없다. 레벨의실제해결/인수는아직대기다. 수신확인중복댓글없이이슈상단/문서상태를갱신하며구현결과는검증구간게시후같은Issue에회신한다.

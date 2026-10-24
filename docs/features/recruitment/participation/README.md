@@ -30,7 +30,7 @@ admission-context는 선택한 실제T와 intent에 필요한 현재 자격·조
 
 ## 상태와 문서 연결
 
-아이템레벨은실제신청snapshot에서누락됨을전체19에서확인했다. [값/출처·기존신청 보완제안](application-item-level-proposal.md)은미합의/미구현이며현재카드의해당항목은미해결이다. 기존예시의item_level을실제저장/제공증거로사용하지않는다.
+아이템레벨은실제신청snapshot에서누락됨을전체19에서확인했다. [값/출처·기존신청 보완제안](application-item-level-proposal.md)은전체21 소비/UX수용완료·미구현이며현재카드의해당항목은미해결이다. 기존예시의item_level을실제저장/제공증거로사용하지않는다.
 
 전체16 Flutter의 앱연결/413PASS 자체보고를 수신했다. 작성상세8개의 item/round참조만정정하고 검증을추가했다. [정정 근거/추가12PASS](application-display-proposal.md#2026-10-25--작성-상세-예시-참조-정정), [실제 개발 프로필 반영](../../../engineering/operations/application-display-rollout.md)도 완료했으며 정상로그인 소수인수 대기다.
 

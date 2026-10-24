@@ -3,21 +3,29 @@
 2026-10-25
 
 - **작업 구간명:** 신청자 아이템레벨 누락 보완(#26).
-- **작업 내용:** 실제신청snapshot에item_level을저장하지않는누락을확인했다. 신규snapshot/기존누락 읽기보완의값·출처·시각계약을제안하고소비차이확인후구현한다. 기존프로필개발반영은완료상태다.
+- **작업 내용:** 실제신청snapshot에item_level을저장하지않는누락을확인했다. 신규snapshot/기존누락 읽기보완의값·출처·시각계약을제안했고전체21 소비/UX수용을확인했다. 다음은Backend 합의구현/직접검증이다. 기존프로필개발반영은완료상태다.
 - **브랜치·위치:** `feat/raid-recruitment` / `/home/heowork/projects/lostparty-backend`. 기능코드·문서·시험·인계를같은이력으로관리한다.
 - **현재 실제 개발:** API source06ea4b214591f475d422f4599ca10260cda83d08/이미지d24d7cbd…·177경로/DB0031, 새 application-display-1 포함·API/DB healthy. [반영 근거](../engineering/operations/application-display-rollout.md)·[집계](../engineering/operations/records/application-display-rollout.json). 문서/예시보완source13ae0a5와API source를구분한다.
 
 [#26 전체18번째 Backend · 표시 프로필 실제 개발 반영](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386031663) 게시·전문/실제전체순번 확인 완료. 반영근거 `6444c18bc3de8b341251169f84584cb622b69154` commit·push·원격일치 확인, 다음Flutter 정상로그인소수인수/Backend 직접차이대응이다.
 
-[#26 전체20번째 Backend · 아이템레벨 출처/기존누락 보완 제안](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386261019) 게시·전문/실제전체순번 확인 완료. 제안source `b97eee2aa813a330d740318026617005dbac1c5e` commit·push·원격일치확인. 미합의/미구현·레벨미해결이며다음Flutter 최소소비차이확인후Backend 구현이다.
+[#26 전체20번째 Backend · 아이템레벨 출처/기존누락 보완 제안](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386261019) 게시·전문/실제전체순번 확인 완료. 제안source `b97eee2aa813a330d740318026617005dbac1c5e` commit·push·원격일치확인. 제안당시미합의상태였으며전체21 수용후에도현재미구현·레벨미해결이다. 다음담당Backend 구현이다.
 
-## 최신 전체19 · 아이템레벨 보완 계약 확인
+## 최신 전체21 · 수용 완료/다음 Backend 구현
+
+[#26 전체21번째 Flutter · 아이템레벨 제안 수용/표시 기준 확정](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386405233)에서 sourceb97eee2의3키와신규snapshot/기존current_saved·소유/시각/조회불변 경계를수용했다. 기준da50f972의display동적map은기존closed top-level을완화하지않고소비가능하다. 현재UI는item_level만읽으며출처표시/3키정합성은Backend실행인계후좁은후속연결이다. 새기능/실서버·실기기 성공이아니다.
+
+확정표시: application_snapshot→‘아이템 레벨 1700’, current_saved→‘아이템 레벨 1750 · 현재 저장 정보’, unavailable→‘아이템 레벨 조회 불가’. 사용자에게확인/갱신행동·0/최소조건/전투력대체를요구하지않는다. fetched_at은원본시각으로보존하되카드에새시각행/조작을추가하지않는다.
+
+**다음 Backend:** 합의대로구현·신규POST→저장display→HTTP목록·기존누락/성장후snapshot보존·소유변경·nullable/시각·기존쓰기/조회불변을직접검증하고정확source/계약·원격게시/실제반영여부를인계한다. **다음 Flutter:** 인계후출처/누락표시·경계검증연결, 개발반영후레벨/문구만소수기기확인. 기존전체시험/사용자통과1·2전체반복은요청하지않는다.
+
+## 전체19 원인 확인·제안 기록
 
 [전체19 Flutter](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386174761)에서 사용자표시1/2는아이템레벨‘확인필요’외정상보고를수신했다. clean문구‘세팅이상없음’/‘좌석미확정’삭제는Flutter58600023 commit/push/분석0 보고이며최종기기확인대기다. Backend실행06ea4b2의공용identity.display가3필드만저장하고목록이그대로반환하는누락을확인했다. 개발DB읽기집계7신청모두snapshot item_level없음·회원식별자/원본출력·자료수정없음이다.
 
 [최소보완제안](../features/recruitment/participation/application-item-level-proposal.md)은기존display동적map3키(item_level/source/fetched_at)를정의한다. 새신청은모집Application에서만snapshot캡처, 기존누락은동일owner/revision·confirmed/active의현재저장값을current_saved로명시하여read-only보완한다. 과거snapshot은보존하고자료없음/소유변경은unavailable/null이며원본시각을만들지않는다. 공용identity/그룹/Assignment에확대하거나DBbackfill·provider·추가SQL을하지않는다.
 
-현재제안·미합의/미구현이며API/OpenAPI·서버/DB미변경이다. 작성fragment9개정적검증은실행시험이아니다. 다음Flutter는동적map metadata와snapshot/current_saved의표시소비차이만확인하고Backend는합의후저장→실제HTTP목록까지직접구현·검증·게시인계한다. 정상1/2전체·413반복/파서완화/자격정책재수용은요청하지않는다.
+제안 당시 미합의였고 전체21에서수용했다. 현재미구현·API/OpenAPI·서버/DB미변경이다. 작성fragment9개정적검증은실행시험이아니다. 다음Flutter는동적map metadata와snapshot/current_saved의표시소비차이만확인하고Backend는합의후저장→실제HTTP목록까지직접구현·검증·게시인계한다. 정상1/2전체·413반복/파서완화/자격정책재수용은요청하지않는다.
 
 ## 기존 개발반영과 인수 경계
 
