@@ -3,7 +3,7 @@
 2026-10-24
 
 - **작업 구간명:** 모집 신청 표시·본인 승인 대기 상태 보완(#26).
-- **작업 내용:** 검증된API/worker 이미지 교체·자료 보존/실행 검증 완료. 가입 소수항목 인수 보고를 수신했다. 신청목록/본인pending 상세 [표시 계약 제안1](../features/recruitment/participation/application-display-proposal.md)·closed schema/작성22예시를 준비했다. 게시 완료·다음은 Flutter 소비차이 확인이며 합의 전 API는 변경하지 않는다.
+- **작업 내용:** 검증된API/worker 이미지 교체·자료 보존/실행 검증 완료. 가입 소수항목 인수 보고를 수신했다. 신청목록/본인pending 상세 [표시 계약 제안1](../features/recruitment/participation/application-display-proposal.md)·closed schema/작성22예시를 준비했다. 게시 후 Flutter 전체13 수용을 확인했다. 다음은 Backend 합의범위 읽기 구현·검증이며 실제서버교체는 별도승인이다.
 - **브랜치·위치:** `feat/raid-recruitment` / `/home/heowork/projects/lostparty-backend`. 코드·계약·문서·인계를 같은 이력에 유지한다.
 - **실제 개발:** 구현source484ca1719e21b01a59da75b62a1d3b1568ada2c3/이미지fdd256ea·177경로·DB0031, API/DB healthy. migration 없음·기존108표/780행·키·설정/볼륨 보존. [반영/검증](../engineering/operations/eligibility-rollout.md)·[집계](../engineering/operations/records/eligibility-rollout.json).
 
@@ -11,7 +11,12 @@
 
 [#26 전체12번째 Backend · 표시 계약 제안1](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384757210) 게시·전문/실제전체순번 확인 완료. 제안source f0c7665cf41d1e470be21179791f463585d312c1 push·원격일치 확인, 이전 ebe5934도 함께게시. 다음Flutter 소비차이검토·Backend 합의후구현이다.
 
-## #26 표시 계약 제안 완료 · 다음 Flutter 소비 검토
+## #26 표시 계약 수용 완료 · 다음 Backend 구현
+
+[#26 전체13번째 Flutter · 신청 표시/본인pending 제안1 수용](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384902537) 수신. 제안source f0c7665cf41d1e470be21179791f463585d312c1의 문서/schema·작성22응답을 현소비코드와 대조해 소비가능·구현차단 차이없음으로 수용했다. Flutter84b132a21f883f3fd312a6b948c1c4790ea3558d commit/push는 자체보고다. 일반상세의 새프로필과 membership-actions-1/기록 anchor는 분리 소비 가능하다. 목록3필드/페이지별 분석시점·본인4필드/참가우선 UX를 수용했고 기본fallback·카드별추가조회는 하지 않는다.
+
+**다음 Backend:** 합의된 read-only/bulk 구현, 권한/소유revision·역할/본인·C/N/세대·만료/자료실패·페이지 및 기본/membership/쓰기DTO·원ACK/거절·철회 직접회귀,177/116 OpenAPI 전체비교→commit/push·원격확인→정확source/실행계약/개발반영여부 인계. **다음 Flutter:** 구현 인계 후 현재카드의 실제전투력/분석·본인대기안내/버튼 연결·직접검증. 실제서버교체는별도승인이다. 이번수용은문서/코드대조이며 실행·기기 성공/일반오류 원인수정완료가 아니다.
+
 
 [전체11번째 Flutter · 가입 소수 인수 통과/일괄 표시 계약 보완 요청](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384482003) 수신. 정상 로그인 앱에서 후보·허용역할, 신청 성공/목록 반영, 공대장 수락/양쪽 참가·인원·계정 갱신3항목과 신청카드→일반상세 진입이 정상이라는 사용자 보고다. Backend 독립 재현이 아니며 변경/반대파티·C/N 전체 인수로 확대하지 않는다. Flutter 카드디자인 c85715c58558cef93d2b839c427446291b609dbe commit/push·analyze0/관련56PASS 보고, 카드 모양은 사용자 확인 대기다.
 
@@ -46,4 +51,4 @@
 
 ## 다음 채팅의 작업 기준
 
-같은 모집 브랜치에서 #26 표시 계약 제안1 게시 후 Flutter의 새프로필/표시·본인상태 소비차이를 확인한다. 합의 전 DTO/API를 변경하지 않으며 일반오류 원인은 code 미확인으로 보존한다. 실제 개발177 반영은 완료했으며 dev/main 통합·운영 배포는 별도 미완료다. 문서 편집/협업 기록이라는 이유로 브랜치를 분리하지 않는다.
+같은 모집 브랜치에서 #26 전체13 수용 범위의 application-display-1 읽기를 구현·검증한다. 새제품결정/계약재협의를 선행조건으로 추가하지 않으며 일반오류 원인은 code 미확인으로 보존한다. 실제 개발177 반영은 완료했으며 dev/main 통합·운영 배포는 별도 미완료다. 문서 편집/협업 기록이라는 이유로 브랜치를 분리하지 않는다.

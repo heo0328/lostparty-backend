@@ -1,8 +1,13 @@
 # 신청 목록·본인 신청 상태 표시 계약 제안1
 
-2026-10-24 / **협의 제안·미합의·미구현**. 작업 구간명: 모집 신청 표시·본인 승인 대기 상태 보완. 브랜치: `feat/raid-recruitment`.
+2026-10-24 / **제안1 소비 합의 완료·미구현**. 작업 구간명: 모집 신청 표시·본인 승인 대기 상태 보완. 브랜치: `feat/raid-recruitment`.
 
 [#26 전체11번째 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384482003)에 대한 제안이다. 기존 가입 소수3항목 정상 보고와 카드디자인 c85715c5/관련56PASS는 Flutter 보고이며 변경·반대파티/C/N 전체 인수로 확대하지 않는다. 사용자가 목록은 **전투력·분석 표시만 제공**하고 전체 승인 자격은 기존 검토/승인에서 확인하도록 선택했다. 이 문서의 새 필드는 현재 개발 API에 없다.
+
+[#26 전체13번째 Flutter · 신청 표시/본인pending 제안1 수용](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384902537) 수신. 제안source f0c7665cf41d1e470be21179791f463585d312c1의 문서/schema·작성22응답을 현소비코드와 대조해 소비가능·구현차단 차이없음으로 수용했다. Flutter84b132a21f883f3fd312a6b948c1c4790ea3558d commit/push는 자체보고다. 일반상세의 새프로필과 membership-actions-1/기록 anchor는 분리 소비 가능하다. 목록3필드/페이지별 분석시점·본인4필드/참가우선 UX를 수용했고 기본fallback·카드별추가조회는 하지 않는다.
+
+**다음 Backend:** 합의된 read-only/bulk 구현, 권한/소유revision·역할/본인·C/N/세대·만료/자료실패·페이지 및 기본/membership/쓰기DTO·원ACK/거절·철회 직접회귀,177/116 OpenAPI 전체비교→commit/push·원격확인→정확source/실행계약/개발반영여부 인계. **다음 Flutter:** 구현 인계 후 현재카드의 실제전투력/분석·본인대기안내/버튼 연결·직접검증. 실제서버교체는별도승인이다. 이번수용은문서/코드대조이며 실행·기기 성공/일반오류 원인수정완료가 아니다.
+
 
 ## 경로·프로필·호환
 
@@ -71,4 +76,4 @@ UI 우선순위는 **기존 현재 참가관계/권한 → 유효pending → 기
 
 다음Flutter는새프로필을선택해일반상세를소비가능한지,3필드의시각/누락/오류분리와4필드본인상태·기존membership-actions-1과의분리에서구체차이가있는지회신한다. 같은기존정책재수용/실서버미구현필드의기기시험을요청하지않는다. 합의후Backend는구현·bulkSQL/권한·C/N/세대/만료·기존DTO/ACK회귀·177/116실행OpenAPI전체비교를수행하고commit/push·원격확인후인계한다. 서버교체는별도승인이다.
 
-공식 제안: [#26 전체12번째 Backend · 표시 계약 제안1](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384757210). source f0c7665cf41d1e470be21179791f463585d312c1 commit·push·원격일치 확인 후 게시, 댓글전문/실제전체순번을 재조회했다. 다음Flutter 소비차이 검토·Backend 합의후구현이며 OPEN이다.
+공식 제안: [#26 전체12번째 Backend · 표시 계약 제안1](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384757210). source f0c7665cf41d1e470be21179791f463585d312c1 commit·push·원격일치 확인 후 게시, 댓글전문/실제전체순번을 재조회했다. 제안 게시 당시 다음Flutter 소비차이 검토였으며, 이후 전체13에서 수용해 다음Backend 구현이다. OPEN을 유지한다.

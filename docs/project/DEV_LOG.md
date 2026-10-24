@@ -2471,3 +2471,12 @@ NEXT_WORK/AI_CONTEXT/추적표·현재계약/설계의 ‘2가입 연결·변경
 두 기존GET의 opt-in reader_profile=application-display-1을 제안한다. 목록 comparison/analysis/display_reason의3필드를 필수nullable로 정의하고 head없음/현재분석오류/retained성공·소유연결불가와 전체승인판정을 구분했다. 기존순수projection/페이지 bulk·페이지별시점·cursor프로필격리·177/116/쓰기DTO 보존을 명시했다. 상세4필드 my_application은 본인room/T/현세대 유효pending우선·최신이력/만료경계·수락이력과현재참가 분리/조회실패와null 구분이다. 목록진입/갱신·실시간/웹소켓/알림과 code미확인 일반오류 원인수정은 범위밖이다.
 
 작성22예시(성공17/오류5)/비정상15벡터 거절·기존복사component일치 정적검증 통과. 상세 예시에 누락된 기존권한 next_change_at을 보완한 최종결과다. 새자료는 synthetic이며 API/evaluator/HTTP/DB 시험이 아니다. 원계약·코드·서버/DB·실회원/기기 불변. 제안 source f0c7665cf41d1e470be21179791f463585d312c1 commit·push·원격일치 확인(기존 ebe5934 함께게시) 후 [#26 전체12번째 Backend · 표시 계약 제안1](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384757210) 게시·전문/실제전체순번을 재조회했다. Issue본문 상단을 제안/미합의·다음Flutter 소비검토로 갱신하고 원본제안/기존반영근거·OPEN을 보존했다. 다음Flutter는 프로필 소비/시각·nullable·본인상태의 구체 차이 검토, Backend는 합의후 구현이다.
+
+
+## 2026-10-24 — #26 전체13 표시 계약 제안1 수용·다음Backend 구현
+
+작업 구간명: 모집 신청 표시·본인 승인 대기 상태 보완. 작업 내용: 최신회신 확인/합의상태·다음담당 기록. 브랜치: feat/raid-recruitment. [#26 전체13번째 Flutter · 신청 표시/본인pending 제안1 수용](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384902537) 수신. 제안source f0c7665cf41d1e470be21179791f463585d312c1의 문서/schema·작성22응답을 현소비코드와 대조해 소비가능·구현차단 차이없음으로 수용했다. Flutter84b132a21f883f3fd312a6b948c1c4790ea3558d commit/push는 자체보고다. 일반상세의 새프로필과 membership-actions-1/기록 anchor는 분리 소비 가능하다. 목록3필드/페이지별 분석시점·본인4필드/참가우선 UX를 수용했고 기본fallback·카드별추가조회는 하지 않는다.
+
+**다음 Backend:** 합의된 read-only/bulk 구현, 권한/소유revision·역할/본인·C/N/세대·만료/자료실패·페이지 및 기본/membership/쓰기DTO·원ACK/거절·철회 직접회귀,177/116 OpenAPI 전체비교→commit/push·원격확인→정확source/실행계약/개발반영여부 인계. **다음 Flutter:** 구현 인계 후 현재카드의 실제전투력/분석·본인대기안내/버튼 연결·직접검증. 실제서버교체는별도승인이다. 이번수용은문서/코드대조이며 실행·기기 성공/일반오류 원인수정완료가 아니다.
+
+이번은 회신확인/문서기록으로 API·실행OpenAPI·서버/DB/기기·합성시험을 변경/반복하지 않았다. 별도 수신확인 댓글 없이 문서와Issue상단 다음담당을 갱신한다. 실제 구현/인계 회신은 검증구간 게시 후 같은Issue에 남긴다.
