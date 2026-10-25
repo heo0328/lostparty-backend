@@ -268,11 +268,10 @@
     "Memo": {
       "type": "string",
       "maxLength": 4096,
-      "pattern": "^(?!.*[\\u0000-\\u001f\\u007f-\\u009f\\u2028\\u2029\\u202a-\\u202e\\u2066-\\u2069]).*$",
-      "x-max-extended-graphemes": 20,
-      "x-unicode-version": "17.0.0",
       "x-max-utf8-bytes": 4096,
-      "x-normalization": "NFC, Unicode White_Space trim; empty to null"
+      "x-normalization": "NFC then allowlist validation, trim U+0020 only; normalized code points <=20; empty memo to null",
+      "x-allowed-after-nfc": "U+AC00-D7A3,U+3131-3163,A-Z,a-z,0-9,U+0020,.,!?~()-_/@#&+",
+      "description": "Raw input: decomposed Hangul allowed if NFC composes to allowed syllables. Semantic validation required; no silent character deletion."
     },
     "PresetItem": {
       "type": "object",
@@ -2040,6 +2039,13 @@
         "starts_at",
         "ends_at"
       ]
+    },
+    "MemoStored": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 1,
+      "pattern": "^(?! )(?!.* $)[가-힣ㄱ-ㅣA-Za-z0-9 .,!\\?~()_/@#&+\\-]+$",
+      "x-normalization": "Already NFC, no leading/trailing U+0020"
     }
   }
 }

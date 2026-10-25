@@ -1,9 +1,26 @@
 # 베타 일정·모집표시·신청 메모 인계 검토
 
-후속: 사용자결정4개를채택하고 [Backend 제안1](beta-contract-proposal.md)을 [전체148번째 계약 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6393622793)로 회신했다. 아래 최초수신/검토이력과구분하며 현재는Flutter소비대조대기다.
+후속: 사용자결정4개를채택하고 [Backend 제안1](beta-contract-proposal.md)을 [전체148번째 계약 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6393622793)로 회신했다. 아래 최초수신/검토이력과 구분한다. 최신149 회신을 반영한 [고정안2](beta-contract-wire.md) 작성/정적검증까지 진행했고 다음은 Flutter 잔여차이/최종합의 확인이다.
 
 2026-10-25 / 작업 구간: 네이티브 베타 계약 변경 수신·대조 / `feat/raid-recruitment`.
 기준 소스a241790. 사용자 요청은 Issue13 전달 내역 확인이며 **이 문서는 인계 검토 기록이다. 새 wire 계약 제안/합의·구현·배포가 아니다.** 코드/실행 OpenAPI/DB는 변경하지 않았다.
+
+## 최신 회신 — 전체149번째 Flutter / 조건부 소비 수용
+
+2026-10-25 [전체149번째 Flutter 소비 대조](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6393878499)를 확인했다. 제안1의 구조·사용자확정4항목·프로필/원ACK·일정/예약/표·검색·표시권한·메모snapshot/계정프리셋은 수용됐고, **최종 문자정책과 operation별 완결 wire를 보완한 고정본 확인 전까지 조건부 수용**이다. 구현/서버 반영 승인은 아니다.
+
+최신 전달은 제안1의 emoji/EGC/Unicode17 제안보다 우선한다. 신청메모와 저장문구에 동일 적용한다.
+
+- NFC 후 한글완성형 U+AC00~D7A3, 호환자모 U+3131~3163, ASCII 영문/숫자, U+0020, 기호 `.,!?~()-_/@#&+`만 허용한다.
+- 앞뒤 U+0020만 제거한 뒤 내부공백 포함 코드포인트20자. NFC로 한글이 되는 분해입력은 정상화한 뒤 검사하며, 허용 밖 문자를 조용히 지워 다른 문장으로 보내지 않는다. emoji/VS/ZWJ·허용 밖 결합문자/전각/탭/개행/제어문자는 거절한다.
+- 신청 생략/null/빈내용은 없음, 프리셋 빈항목은 불가. 기존 byte/request 상한·정규화 전 원본문 digest는 유지한다. Unicode17 EGC 정합/emoji 허용 제안은 대체되며 원 제안문/schema/벡터는 고정안2 파트에서 함께 변경했다.
+- 욕설/성적표현 금칙어는 앱 로컬 패키지·한국어 사전으로 검사한다. 서버 금칙어 검사/사전 API/동기화/키입력별 통신은 추가하지 않는다. 서버는 실제 신청/저장 시 허용문자/길이·원래 권한/정합성을 검증한다. 로컬 필터를 위조클라이언트 차단 보장으로 주장하지 않는다.
+
+다음 Backend 보완: 제안문/schema/공통벡터 수정, operation별 완결 요청·응답/오류·reader_profile 조합·record content=null·identity null/권한·memo 위치·candidates/review 포함 profile 전달 경로·구클라이언트 차단/안전 관리명령 목록을 고정한다. 기존 envelope 전체를 소비할 예시가 필요하며 신규component 예시만으로 전체 wire 합의를 완료했다고 표시하지 않는다.
+
+Flutter는 현재 Controller의 원요청 보존이 메모리이고 Gateway.write가 query를 전달하지 않는다는 점을 보고했다. operation/method/path/query/profile/T/원본문/key 영속 복구 보완이 필요하며 완료 상태가 아니다. C+N은 각각의 기본시각/조율값, N단독 next_* 금지·임의7일 복사금지와 context 바인딩을 수용했다.
+
+수신확인 단계에서는 기록만 누적했다. 후속 사용자 “작업 진행합니다” 승인으로 **베타 계약 최종 고정·소비 인계**를 진행해 최신문자/완결 wire·예시/호환목록을 작성·정적검증했다. 서버 구현/실제반영은 포함하지 않으며 문자25벡터는 실행했지만 HTTP/DB 기능시험은 아니다. 아래 초안의 EGC/emoji 제안은 당시 이력으로만 보존한다.
 
 ## 수신 근거와 현재 단계
 

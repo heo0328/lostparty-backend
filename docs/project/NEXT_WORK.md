@@ -1,14 +1,18 @@
 # 다음 실행
 
-## 현재 계약 인계·다음 작업
+## 현재 계약 인계·다음 실행
 
-2026-10-25 작업 파트 **베타 계약 대조·제안 인계**를 `feat/raid-recruitment`에서 마감한다. [계약 제안1](../features/recruitment/weekly-cycles/beta-contract-proposal.md)·[수신/사용자결정](../features/recruitment/weekly-cycles/beta-contract-intake.md)을 따른다. 사용자 토의1·2·4 채택 후 지연 사례 설명을 거쳐3도 채택됐다. 제품결정4개는확정,구체wire는Flutter소비합의대기다.
+2026-10-25 작업 파트 **베타 계약 최종 고정·소비 인계**. [#13 전체149 Flutter 조건부 수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6393878499)에 대응해 [고정안2](../features/recruitment/weekly-cycles/beta-contract-wire.md)·[정책](../features/recruitment/weekly-cycles/beta-contract-proposal.md)·완결 wire/예시를 작성·정적 검증했다. 기존 목적브랜치 `feat/raid-recruitment`에서 수신 기록과 함께 한 작업 파트로 묶어 게시한다. [전체150번째 Backend · 계약 고정안2](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6394448231)로 회신했다. 고정SHA/원격 게시 여부는 같은 회신에서 추적한다.
 
-[전체148번째 Backend · 계약 제안1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6393622793)로146/147요청에회신했고Issue13상단도최신화했다. 다음 **Flutter**는 profile·원pending/원ACK·조율/기한/개인표·표시권한/검색·메모문자규칙·프리셋전체PUT의구체차이를대조한다. 다음 **Backend**는그차이반영후wire를닫고구현/격리검증·인계한다. 기존정책재수용/동일전체시험은요청하지않는다.
+다음 **Flutter**는 고정안2의 잔여 소비차이와 최종합의 상태를 확인한다. 제한문자/NFC 후 코드포인트20/emoji 거절·앱로컬금칙어를 반영했고, operation별 입출력/오류·reader 조합·record content=null·identity/memo 권한·candidates/review 포함 profile 전달·구버전 차단/안전목록을 고정했다. 제품결정 재질문/기존정상시험 반복 요청은 없다.
 
-정적48사례(정상21/거절27)·닫힌component/상속요청47개를확인했다. 분할벡터6개/HTTP기대9개는아직기능실행이아니다. 서비스코드/실행OpenAPI·DB·실제개발서버는변경하지않았다. 미합의beta profile을현서버에전송하지않는다.
+다음 **Backend**는 구체 차이가 오면 같은 파트의 보완으로 대응하고, 양측 wire 합의 후 구현·마이그레이션·격리검증을 별도 의미 있는 작업 파트로 진행한다. 현재 계약 고정안 작성/인계이며 최종합의·구현·실제 개발 반영은 미완료다. 서버·DB·실행 OpenAPI는 변경하지 않았다.
 
-**커밋·push 단위:** 채팅마다가아닌소제목작업파트가검토/인계가능하게마감될때묶는다. 누적했던협업지침명확화·사용자결정·제안문/예시·정적검증·회신기록을이번인계파트의한커밋/push로정리하고기존이력은유지한다. 새구현/실제반영/dev·main통합·AWS배포승인으로확대하지않는다.
+정적 근거: 시간/DTO48(정상21/거절27), 최신문자25벡터 실행. 66 operation의 전체 fixture118(요청35/성공75/오류8), 기존ACK32 동일성·잘못된metadata위치3 거절. 이는 API/DB/Flutter 런타임 성공이 아니다. HTTP 기대9개와 격리 기능시험·기기 인수는 미실행이다. 제안1의6 EGC벡터는 최신문자25개로 대체했다.
+
+Flutter의 query 전달·원요청 영속복구는 계속 미완료다. 원profile/path/query/T/원본문/key를 보존하며 원profile 없는 pending을 업그레이드하지 않는다. ACK 후 조회실패는 조회만 재시도한다.
+
+**커밋·push 단위:** 채팅마다가 아닌 검증/인계 가능한 소제목 작업 파트로 묶는다. 이번은 수신 문서·제안2/schema·전체 wire/예시·정적검증·협업회신 기록을 한 번 게시하며 기존 이력을 유지한다. merge·배포·실데이터 변경으로 확대하지 않는다.
 
 ## 현재 실행 기준·다음 작업
 

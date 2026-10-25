@@ -1037,39 +1037,6 @@
       "context": {}
     }
   ],
-  "grapheme_vectors": [
-    {
-      "input": "가가가가가가가가가가가가가가가가가가가가",
-      "expected_count": 20,
-      "memo_allowed": true
-    },
-    {
-      "input": "가가가가가가가가가가가가가가가가가가가가가",
-      "expected_count": 21,
-      "memo_allowed": false
-    },
-    {
-      "input": "👨‍👩‍👧‍👦",
-      "expected_count": 1,
-      "memo_allowed": true
-    },
-    {
-      "input": "가",
-      "normalized": "가",
-      "expected_count": 1,
-      "memo_allowed": true
-    },
-    {
-      "input": "  ",
-      "normalized": null,
-      "memo_allowed": true
-    },
-    {
-      "input": "두\n줄",
-      "memo_allowed": false,
-      "reason": "line_break"
-    }
-  ],
   "http_expectations_not_executed": [
     {
       "case": "preset-get-default",
@@ -1091,7 +1058,8 @@
         "error": {
           "code": "REVISION_CONFLICT",
           "message": "REVISION_CONFLICT",
-          "request_id": "00000000-0000-4000-8000-000000000090"
+          "request_id": "00000000-0000-4000-8000-000000000090",
+          "details": null
         }
       },
       "effect": "No overwrite; retain draft and fetch current own list"
@@ -1105,12 +1073,13 @@
         "error": {
           "code": "APPLICATION_PRESET_LIMIT_EXCEEDED",
           "message": "APPLICATION_PRESET_LIMIT_EXCEEDED",
-          "request_id": "00000000-0000-4000-8000-000000000090"
+          "request_id": "00000000-0000-4000-8000-000000000090",
+          "details": null
         }
       }
     },
     {
-      "case": "twenty-one-visible-characters",
+      "case": "twenty-one-normalized-code-points",
       "method": "POST",
       "path": "/v2/raid-rooms/{room_id}/applications?contract_profile=beta-recruitment-1",
       "status": 400,
@@ -1118,7 +1087,8 @@
         "error": {
           "code": "APPLICATION_MEMO_TOO_LONG",
           "message": "APPLICATION_MEMO_TOO_LONG",
-          "request_id": "00000000-0000-4000-8000-000000000090"
+          "request_id": "00000000-0000-4000-8000-000000000090",
+          "details": null
         }
       },
       "effect": "No pending/occupancy/reservation"
@@ -1132,7 +1102,8 @@
         "error": {
           "code": "RECRUITMENT_CLOSED",
           "message": "RECRUITMENT_CLOSED",
-          "request_id": "00000000-0000-4000-8000-000000000090"
+          "request_id": "00000000-0000-4000-8000-000000000090",
+          "details": null
         }
       },
       "effect": "No new member/submission; original successful ACK retry remains original success"
@@ -1146,7 +1117,8 @@
         "error": {
           "code": "BETA_SCHEDULE_REQUIRED",
           "message": "BETA_SCHEDULE_REQUIRED",
-          "request_id": "00000000-0000-4000-8000-000000000090"
+          "request_id": "00000000-0000-4000-8000-000000000090",
+          "details": null
         }
       }
     },
@@ -1159,7 +1131,8 @@
         "error": {
           "code": "CLIENT_UPGRADE_REQUIRED",
           "message": "CLIENT_UPGRADE_REQUIRED",
-          "request_id": "00000000-0000-4000-8000-000000000090"
+          "request_id": "00000000-0000-4000-8000-000000000090",
+          "details": null
         }
       },
       "effect": "Original pending replay checked before upgrade guard"
@@ -1177,6 +1150,183 @@
     {
       "case": "old-preset-update-after-application",
       "effect": "Application keeps submitted text snapshot; preset GET/PUT success does not rewrite past application or pending request"
+    }
+  ],
+  "character_vectors": [
+    {
+      "name": "hangul20",
+      "input": "가가가가가가가가가가가가가가가가가가가가",
+      "preset": false,
+      "valid": true,
+      "normalized": "가가가가가가가가가가가가가가가가가가가가"
+    },
+    {
+      "name": "hangul21",
+      "input": "가가가가가가가가가가가가가가가가가가가가가",
+      "preset": false,
+      "valid": false,
+      "normalized": "가가가가가가가가가가가가가가가가가가가가가"
+    },
+    {
+      "name": "ascii",
+      "input": "Abc0123",
+      "preset": false,
+      "valid": true,
+      "normalized": "Abc0123"
+    },
+    {
+      "name": "punctuation",
+      "input": ".,!?~()-_/@#&+",
+      "preset": false,
+      "valid": true,
+      "normalized": ".,!?~()-_/@#&+"
+    },
+    {
+      "name": "internal-space",
+      "input": "  가 나  ",
+      "preset": false,
+      "valid": true,
+      "normalized": "가 나"
+    },
+    {
+      "name": "jamo",
+      "input": "ㅋㅋㅎㅎㅏㅣ",
+      "preset": false,
+      "valid": true,
+      "normalized": "ㅋㅋㅎㅎㅏㅣ"
+    },
+    {
+      "name": "nfc-hangul",
+      "input": "가",
+      "preset": false,
+      "valid": true,
+      "normalized": "가"
+    },
+    {
+      "name": "emoji",
+      "input": "😀",
+      "preset": false,
+      "valid": false,
+      "normalized": "😀"
+    },
+    {
+      "name": "family-emoji",
+      "input": "👨‍👩‍👧‍👦",
+      "preset": false,
+      "valid": false,
+      "normalized": "👨‍👩‍👧‍👦"
+    },
+    {
+      "name": "variation",
+      "input": "가️",
+      "preset": false,
+      "valid": false,
+      "normalized": "가️"
+    },
+    {
+      "name": "zwj",
+      "input": "가‍",
+      "preset": false,
+      "valid": false,
+      "normalized": "가‍"
+    },
+    {
+      "name": "combining",
+      "input": "á",
+      "preset": false,
+      "valid": false,
+      "normalized": "á"
+    },
+    {
+      "name": "fullwidth",
+      "input": "！",
+      "preset": false,
+      "valid": false,
+      "normalized": "！"
+    },
+    {
+      "name": "tab",
+      "input": "가\t나",
+      "preset": false,
+      "valid": false,
+      "normalized": "가\t나"
+    },
+    {
+      "name": "newline",
+      "input": "가\n나",
+      "preset": false,
+      "valid": false,
+      "normalized": "가\n나"
+    },
+    {
+      "name": "control",
+      "input": "가\u0000",
+      "preset": false,
+      "valid": false,
+      "normalized": "가\u0000"
+    },
+    {
+      "name": "nbsp",
+      "input": " 가",
+      "preset": false,
+      "valid": false,
+      "normalized": " 가"
+    },
+    {
+      "name": "empty-memo",
+      "input": "",
+      "preset": false,
+      "valid": true,
+      "normalized": null
+    },
+    {
+      "name": "spaces-memo",
+      "input": "  ",
+      "preset": false,
+      "valid": true,
+      "normalized": null
+    },
+    {
+      "name": "null-memo",
+      "input": null,
+      "preset": false,
+      "valid": true,
+      "normalized": null
+    },
+    {
+      "name": "empty-preset",
+      "input": "",
+      "preset": true,
+      "valid": false,
+      "normalized": null
+    },
+    {
+      "name": "spaces-preset",
+      "input": "  ",
+      "preset": true,
+      "valid": false,
+      "normalized": null
+    },
+    {
+      "name": "valid-preset",
+      "input": "함께 가요!",
+      "preset": true,
+      "valid": true,
+      "normalized": "함께 가요!"
+    },
+    {
+      "name": "hangul21-preset",
+      "input": "가가가가가가가가가가가가가가가가가가가가가",
+      "preset": true,
+      "valid": false,
+      "normalized": "가가가가가가가가가가가가가가가가가가가가가"
+    },
+    {
+      "name": "bytes-limit",
+      "input": "가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가",
+      "preset": false,
+      "valid": false,
+      "normalized": "가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가"
     }
   ]
 }

@@ -1,5 +1,15 @@
 # 영구 개발 이력
 
+## 2026-10-25 — 베타 계약 최종 고정·소비 인계
+
+- 작업 내용: #13 전체149 Flutter 조건부 수용을 반영해 최신 문자정책과 operation별 완결 wire를 고정했다. 작업 구간명은 **베타 계약 최종 고정·소비 인계**, 브랜치는 `feat/raid-recruitment`다. 수신 문서부터 계약/예시·정적 도구·회신을 한 마감 구간으로 게시하며 기존 이력은 유지한다.
+- 사용자 문제/선택: 네이티브가 부분 component에서 전체 closed 응답을 추정하지 않게 [고정안2](../features/recruitment/weekly-cycles/beta-contract-wire.md)와 자기완결 operation bundle/전체 본문 예시를 제공했다. reader 조합·record content=null·identity/memo 권한·원ACK·구버전 차단/안전관리를 명시했다. 기존 사용자4결정은 보존했고 새제품결정을 재요청하지 않았다.
+- 최신문자: NFC 후 제한한글/ASCII/공백/14기호, U+0020 trim 후 코드포인트20. emoji/VS/ZWJ 등 거절, 빈메모/빈preset 구분. 서버는 허용문자/길이 검증 책임, 금칙어는 앱 로컬 전용이다. 종전 Unicode17/EGC 제안을 대체했다.
+- 정적 실행 PASS: DTO/시간48(정상21/거절27), 문자25벡터, 66 operation의 전체 fixture118(요청35/성공75/오류8), 기존 ACK32 operation 형식 동일성·metadata 잘못된층3 거절, bundle 재생성 동일성·문서검사·diff check. 실제 HTTP9기대/DB/Flutter 런타임·실회원/기기는 미실행이다. 합성 fixture는 업무성공/권한실행 증거가 아니다.
+- 공식회신: [전체150번째 Backend · 계약 고정안2](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6394448231)로 전달했다. 원격 게시 SHA/고정자료 링크는 같은 회신에서 추적한다. 다음 Flutter 잔여소비차이·최종합의 확인, Backend 합의 후 구현·격리검증. 네이티브 query 전달/영속복구도 미완료다.
+- 실행경계: 서비스/실행OpenAPI/DB/실제 개발서버 source87c2a0e·이미지366e868a/177/0031 미변경. merge/배포·자료변경/Issue 종료 없음. 계약 고정안 작성과 양측 최종합의/구현·운영완료는 구분한다.
+
+
 핵심 변경·결정·검증·장애를 날짜와 작업 제목으로 누적합니다. 현재 실행 계획은 [NEXT_WORK](NEXT_WORK.md), 기능 지도는 [AI_CONTEXT](AI_CONTEXT.md)에 둡니다. 비밀정보·개인정보·원시 로그를 첨부하지 않습니다.
 
 ## 2026-10-14 — Google 인증·복구 세션 구현과 로컬 커밋

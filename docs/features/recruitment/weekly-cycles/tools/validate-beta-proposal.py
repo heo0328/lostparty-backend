@@ -36,12 +36,18 @@ def memo(value, *, preset=False):
         return
     if len(value.encode('utf-8')) > 4096:
         raise ValueError('Memo byte limit')
-    # Structural validation rejects control/linebreak characters before trim.
-    whitespace = '\u0009\u000a\u000b\u000c\u000d\u0020\u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000'
-    normalized = unicodedata.normalize('NFC', value).strip(whitespace)
+    normalized = unicodedata.normalize('NFC', value)
+    punctuation = '.,!?~()-_/@#&+'
+    if any(not ('가' <= c <= '힣' or 'ㄱ' <= c <= 'ㅣ' or
+                'A' <= c <= 'Z' or 'a' <= c <= 'z' or
+                '0' <= c <= '9' or c == ' ' or c in punctuation) for c in normalized):
+        raise ValueError('Invalid memo character')
+    normalized = normalized.strip(' ')
+    if len(normalized) > 20:
+        raise ValueError('Memo code point limit')
     if preset and not normalized:
         raise ValueError('Preset cannot normalize to empty')
-    # Deliberately no len() surrogate for extended grapheme segmentation.
+    return normalized or None
 
 
 def semantics(name, value, context):
@@ -136,8 +142,17 @@ def main():
             valid = False
         assert valid == case['valid'], 'Unexpected proposal result: '+case['name']
         counts[valid] += 1
-    print(json.dumps({'static_cases':sum(counts.values()),'accepted':counts[True],'rejected':counts[False],
-        'components':len(schema['$defs']),'grapheme_vectors_not_executed':len(payload['examples']['grapheme_vectors']),
+    for case in payload['examples']['character_vectors']:
+        valid = True
+        try:
+            normalized = memo(case['input'], preset=case['preset'])
+        except ValueError:
+            valid = False
+        assert valid == case['valid'], 'Unexpected character result: '+case['name']
+        if valid:
+            assert normalized == case['normalized'], 'Normalization mismatch: '+case['name']
+    print(json.dumps({'static_cases' :sum(counts.values()),'accepted':counts[True],'rejected':counts[False],
+        'components':len(schema['$defs']),'character_vectors_executed':len(payload['examples']['character_vectors']),
         'runtime_api_db_tests':False}))
 
 

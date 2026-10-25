@@ -1,9 +1,12 @@
-# 베타 모집 계약 제안1 — 일정·표시와 신청 메모
+# 베타 모집 계약 고정안2 — 일정·표시와 신청 메모
 
-2026-10-25 / `feat/raid-recruitment` / 작업 파트: **베타 계약 대조·제안 인계**.
+2026-10-25 / `feat/raid-recruitment` / 작업 파트: **베타 계약 최종 고정·소비 인계**.
 원요청: [Issue13 전체146 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6388828653)·[전체147 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6393242839). [수신/차이 기록](beta-contract-intake.md)을 잇는다. **사용자 제품결정 수용을 반영한 Backend 제안이며 Flutter wire 소비합의·구현/실제 반영 완료가 아니다.** 현재 실행 OpenAPI177/DB0031·source87c2a0e/이미지366e868a를 바꾸지 않는다.
 
-공식 인계: [Issue13 전체148번째 Backend · 계약 제안1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6393622793). 다음 담당은 Flutter 소비 대조이며 새 구현/서버 반영은 미완료다.
+이전 [제안1 인계/전체148](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6393622793)와 [Flutter 조건부 수용/전체149](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6393878499)를 반영한 **고정안2(beta-recruitment-wire-2)**다. [완결 wire·권한·호환 목록](beta-contract-wire.md)과 [operation별 입출력](proposals/beta-recruitment-v2.wire.json)을 함께 소비한다. Backend 고정안 작성/정적 대조이며 양측 최종합의·구현/서버 반영은 아니다.
+
+
+공식 회신: [전체150번째 Backend · 계약 고정안2](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6394448231) / 다음 Flutter 잔여차이·최종합의 확인 대기. 고정SHA/원격 게시 상태는 같은 회신에 기록한다.
 
 ## 1. 사용자 확정과 제안의 경계
 
@@ -18,11 +21,11 @@ API필드명/프로필·아래 상세 데이터/오류/제한은 Backend 기술 
 
 ## 2. 호환성과 공통 규칙
 
-- 관련 **기존 경로**에 query `contract_profile=beta-recruitment-1`을 명시할 때만 새 입력/응답 DTO를 사용한다. 생략은 기존입력/응답·reader_profile·token·digest 경로 그대로다. 알수없는 프로필/중복query/GET body/미정의키는400 INVALID_REQUEST. 현재 서버는 이 프로필을 아직 지원하지 않는다.
+- 관련 **기존 경로**에 query `contract_profile=beta-recruitment-1`을 명시할 때만 새 입력/응답 DTO를 사용한다. 생략은 기존입력/응답·reader_profile·token·digest 경로 그대로다. 알수없는 프로필/중복 singleton query(기존 experience_levels 반복 예외 유지)/GET body/미정의키는400 INVALID_REQUEST. 현재 서버는 이 프로필을 아직 지원하지 않는다.
 - 기존 `reader_profile=membership-actions-1/application-display-1` 및 include_session_display와 병용 가능하게 닫힌 새 DTO를 별도로 구성한다. 기존 closed schema에 allOf로 키를 얹거나 기본응답에 새 nullable 키를 추가하지 않는다. 공개 검색에는 참가자용 값/메모를 결합하지 않는다.
 - 신규 profile을 적용한 실제 요청은 operation/path/query profile/실제T/body/Idempotency-Key를 함께 영속 복구한다. 원래 프로필 없는 pending에 앱이 새 query/필드/null을 주입하지 않는다. 신규 digest에는 profile과 필드 존재 여부/원입력을 포함하며 문자열 정규화 결과가 같아도 다른 원본문은 같은 key로 재사용하지 않는다. 기존 namespace와 기존 payload의 digest를 변경하지 않는다.
 - 원성공ACK를 새CAS·시각·기한으로 재실행하지 않는다. 기존24h 원ACK·동일body/key 재송·멱등충돌/만료/진행중을 보존한다. 새 명령도 최신 인증/권한을 확인한다. 새 metadata 때문에 기존 쓰기ACK shape를 확대하지 않는다. ACK 뒤 조회실패는 원명령 재실행 사유가 아니다.
-- 기존 기본 DTO·구 명령을 보존한다. 다만 beta로 생성된 대상에 낡은 클라이언트가 일정/가입 등 새 약속을 모른 채 새 쓰기를 하는 것은 원ACK 재생 후409 CLIENT_UPGRADE_REQUIRED로 차단한다. 정상 탈퇴/완료/추방·해산 등 안전한 기존명령은 새 예약 정리 helper를 재사용해 보존한다. 외부계약 합의 후 차단 operation 목록과 자동회귀를 실행 OpenAPI에 고정한다.
+- 기존 기본 DTO·구 명령을 보존한다. 다만 beta로 생성된 대상에 낡은 클라이언트가 일정/가입 등 새 약속을 모른 채 새 쓰기를 하는 것은 원ACK 재생 후409 CLIENT_UPGRADE_REQUIRED로 차단한다. 정상 탈퇴/완료/추방·해산 등 안전한 기존명령은 새 예약 정리 helper를 재사용해 보존한다. 차단/안전 operation 목록은 [고정안2](beta-contract-wire.md)에 명시하며 구현 후 실행 OpenAPI와 자동회귀로 확인한다.
 - 기존 방/자료를 자동 변환·삭제하지 않는다. 새profile 조회에서 기존방의 `beta_schedule=null`을 명시한다. 그 방을 새 베타 생성/조율 방식으로 조용히 추정하지 않고 새 일정 명령은409 BETA_SCHEDULE_REQUIRED. 기존조회/관리·ACK는 보존한다. 개발자료 migration을 협의의 선행조건으로 삼지 않는다.
 - 모든 응답 no-store, 기존error envelope/code/request_id·401 Bearer·REQUEST_IN_PROGRESS Retry-After2를 유지한다. 시각UTC전송(KST표시/주차 의미),5분tick·점검·생성하한·진행시간/난이도기본값·주차끝 경계를 재사용한다. 새GET도DB/provider 쓰기를 하지 않는다.
 
@@ -43,7 +46,7 @@ context는 기존자격/선택과 두T의시각·duration·개인표revision·�
 
 최종commit시각에도 생성하한과 `now < base_starts_at−30분`을 만족해야 한다. 생성되는 각T에 안정적인session/group을1개 준비하고 묶음item_order·duration을 이어붙인 한 출발구간으로 둔다. 자정넘는 연속진행은 주차/점검 규칙 안에서 허용하며 다일별도출발은 생성하지 않는다.
 
-새profile의 상세·개별카드·plan·schedule-context와 생성/가입/continuation/opening context에는 `data.beta_schedule`, 검색/내참가/내신청 목록에는 각item.beta_schedule을 제공한다. 없는legacy대상은null이다. field의 원본은 같은target/generation의 저장 모델이며 리스트/상세가 서로 다른 출발을 추정하지 않는다.
+새profile의 실제 상세·개별카드·plan·schedule-context·가입/continuation context에는 `data.beta_schedule`, 검색/내참가/내신청 목록에는 각item.beta_schedule을 제공한다. 생성 context는 아직 저장 session이 없으므로 `data.beta_schedule_targets`에 T별 생성config를, opening context는 `data.beta_schedule_config`에 prospective config를 제공한다. membership-actions envelope는 바깥 data의 metadata와 content=null 규칙을 [완결 wire](beta-contract-wire.md)대로 따른다. 없는legacy대상은null이다. field의 원본은 같은target/generation의 저장 모델이며 리스트/상세가 서로 다른 출발을 추정하지 않는다.
 
 `BetaScheduleView`의 필수필드:
 
@@ -70,7 +73,7 @@ GET에서기한이됐지만worker처리가아직없으면 persisted상태를가�
 
 ### 3.3 ON/OFF·직접제안
 
-기존 PUT `/v2/raid-rooms/{room_id}/schedule-groups`(실제router명은下の경로표참조)의 새profile은 기존 expected_cycle_key/target_cycle_key/expected_target_revision/expected_plan_revision/expected_members_revision/expected_leadership_revision을 유지하고 groups 대신 `early_coordination_enabled,early_additional_members,accept_immediate_confirmation`으로 조율설정을변경하는닫힌입력을제안한다. 공대장/미확정/기한전만허용,ON은accept_immediate_confirmation=true가필수다. OFF는false·additional=null. ON단일명령에서현재제출표/실제인원으로즉시평가하고,성공ACK후GET로상태를확인한다. 같은값ON재송/원ACK는평가를재실행하지않는다. 이미확정은409 SCHEDULE_PROPOSAL_REQUIRED,기한후는기존 RECRUITMENT_CLOSED다.
+기존 PUT `/v2/raid-rooms/{room_id}/schedule-groups`(실제 router명은 아래 경로표 참조)의 새profile은 기존 expected_cycle_key/target_cycle_key/expected_target_revision/expected_plan_revision/expected_members_revision/expected_leadership_revision을 유지하고 groups 대신 `early_coordination_enabled,early_additional_members,accept_immediate_confirmation`으로 조율설정을변경하는닫힌입력을제안한다. 공대장/미확정/기한전만허용,ON은accept_immediate_confirmation=true가필수다. OFF는false·additional=null. ON단일명령에서현재제출표/실제인원으로즉시평가하고,성공ACK후GET로상태를확인한다. 같은값ON재송/원ACK는평가를재실행하지않는다. 이미확정은409 SCHEDULE_PROPOSAL_REQUIRED,기한후는기존 RECRUITMENT_CLOSED다.
 
 직접제안/응답은 기존schedule-proposals 경로와기존대상참가자분모·투표/revision·예약원자교체를재사용한다. beta의base_committed/coordinating도기본약속을제안의비교기준으로삼아명시제안할수있도록별도guard를확장한다(기존confirmed전용API의무조건완화가아니다). 일정밖/타예약중복은기존경고·명시수락으로허용하고표자체를수정하지않는다. 합의된새시각은proposal_confirmed이며원기한은obsolete가된다.
 
@@ -100,7 +103,9 @@ SQL에서effective출발·상태를필터한뒤기존정렬·자기참가제외�
 
 `POST /v2/raid-rooms/{room_id}/applications?contract_profile=beta-recruitment-1`의기존본문에 `application_memo`(선택string|null)를제안한다. 즉시가입/생성/캐릭터변경에는허용하지않는다. 생략/null/정규화후빈문자열은메모없음으로저장한다. 기존무메모요청에는키를추가하지않고현재계약도그대로지원한다.
 
-메모/프리셋문자열은동일 규칙: **NFC 정규화 → 금지문자/한줄 검증 → Unicode White_Space 앞뒤 trim → extended grapheme cluster 20개 이하**. CR/LF/NEL/U+2028/U+2029·TAB/기타C0/C1·양방향표시제어는거절한다. emoji ZWJ/ZWNJ/variation selector/combining mark는일괄삭제하지않는다. UAX29 Unicode17.0.0 Rev47 기준과공통벡터를제안하며Flutter사용분할버전차이는소비대조에서닫는다. 한문자열UTF-8 4096byte상한/전체요청32768byte상한은별도413 REQUEST_TOO_LARGE다. 입력초과를잘라서신청하지않는다. 길이초과는400 APPLICATION_MEMO_TOO_LONG,금지문자/형식은400 INVALID_REQUEST다.
+메모/프리셋은 **NFC → 허용문자 검증 → 앞뒤 U+0020만 trim → 내부공백 포함 코드포인트20개 이하**다. 허용은 한글 완성형 U+AC00–D7A3, 호환자모 U+3131–3163, ASCII 영문/숫자/공백, 정확히 `.,!?~()-_/@#&+`다. 분해한글은 NFC 결과가 허용범위이면 가능하고 emoji/VS/ZWJ·허용밖 결합문자/전각/탭/줄바꿈/제어는 거절한다. IME 조합중 입력을 훼손하거나 불허문자를 삭제한 다른 문장으로 제출하지 않는다. Unicode17/EGC 분할 도입은 폐기한다. 원문UTF-8 4096byte·전체요청32768byte 초과는413 REQUEST_TOO_LARGE, 불허문자는400 INVALID_REQUEST, 허용문자지만 정규화후21자 이상은400 APPLICATION_MEMO_TOO_LONG이다. 불허문자 검사를 길이보다 먼저 적용하며 자르지 않는다.
+
+욕설/성적표현 금칙어는 **앱 로컬 전용**이다. 앱이 패키지/한국어사전을 검토해 `'XXX은 금칙어로 설정되어 있습니다.'`를 빨간 안내로 표시하고 입력 수정 전 지원/저장을 막는다. 서버 금칙어 검사·사전API·동기화/키입력 통신은 추가하지 않으며 위조클라이언트 차단을 보장하지 않는다. 서버는 실제 신청/저장 요청에서 허용문자·길이만 검사한다.
 
 신청트랜잭션에서정규화된문자열snapshot을Application에저장하고원요청동일성은정규화전원본문기준으로검사한다. 프리셋ID는입력으로받지않으며옛신청을프리셋현재값으로조회하지않는다. 승인/거절/철회가메모를수정하지않고제출후수정API도추가하지않는다. 다시결정/재신청은기존새명령정책이다.
 
@@ -138,7 +143,7 @@ PUT입력 `{expected_version,items:[{id,text},...]}` + UUIDv4 Idempotency-Key. �
 |---|---|
 | POST `/v2/raid-rooms` | schedule_groups 제거, beta_schedule_targets 필수. 실제 생성 C/N과 1:1 |
 | GET opening-context | 새 T를 여는 intent에서 base_starts_at/early_coordination_enabled/(ON 시)early_additional_members를 query에 추가 |
-| POST recruitment-openings | 새 T 개방에서 beta_schedule(config) 필수. 기존 context_token/selection/target_items/target_session_ids/intent·CAS 유지. 이미 열린 T의 확인/관리에는 새 생성 config를 주입하지 않음 |
+| POST recruitment-openings | 새 T 개방에서 beta_schedule(config) 필수. 기존 context_token/selection/target_items/target_session_ids/intent·CAS 유지. open/reopen은 새 T 개방이므로 config 필수. 이미 열린 대상의 새 개방은 기존 거절, 원ACK 재생은 config를 추가하지 않음 |
 | POST join/continuation-participations | 기존 body 필드 유지. profile context에 보인 현재 약속·개인표 revision을 바인딩하고 실제 참가/복사/예약 원자 처리 |
 | POST applications | application_memo 선택 추가. 기본약속 revision은 기존 selection_context 토큰에 바인딩. 표/예약 생성 없음 |
 | POST approve | 기존 body/CAS 유지. 저장 신청과 현재 약속·신청자 동의/참가확인 경계를 검증하고 표복사는 서버에서 처리 |
@@ -150,7 +155,7 @@ PUT입력 `{expected_version,items:[{id,text},...]}` + UUIDv4 Idempotency-Key. �
 
 ## 6. 정적 대조와 앞으로의 검증
 
-작성한 신규 component/상속 요청은47종이며 JSON/상태시각 정적48사례(정상21·거절27)를 확인했다. grapheme 벡터6개와 HTTP 기대사례9개는 앞으로 구현에서 실행할 명세이며 이번 정적 통과 수에 넣지 않는다.
+기존 JSON/상태시각 정적48사례(정상21·거절27)에 최신문자25벡터를 실제 정적 실행한다. 완결 operation/closed envelope 검증은 [wire 고정안](beta-contract-wire.md)을 따른다. HTTP 기대9사례는 미실행이며 정적 성공을 API/DB 시험으로 합산하지 않는다.
 
 현재실행한것은제안문/경로·닫힌schema/작성JSON예시와상태시각/숫자경계의정적검증뿐이다. 아래는구현후격리PostgreSQL/FastAPI로확인할완료조건이며지금통과한기능시험이아니다.
 
@@ -162,4 +167,4 @@ PUT입력 `{expected_version,items:[{id,text},...]}` + UUIDv4 Idempotency-Key. �
 6. 날짜·자정·상태필터/정렬후페이지관계·cursor위조/조건변경/stale, legacy표시와기존검색제외보존.
 7. 무메모/20자/21자·가족emoji/조합한글/trim/줄바꿈·제어문자/ZWJ·byte상한,0~5/6개/id중복/타회원·공개누출·기기간CAS·프리셋바뀐뒤옛신청/원본문불변·ACK후GET실패로재신청없음.
 
-다음Flutter는profile합성/원pending·권한별표시/조율OFF의기본약속·ON즉시효과/지연review복구표시·문자분할공통 버전/예시·전체목록PUT에구체소비차이가있는지회신한다. 기존정상시험반복/인원·동의기준재수용은요청하지않는다. 회신을반영해실행wire를닫은후구현한다. 이번제안은서버교체·DBmigration/초기화·자료삭제·실회원/기기시험·AWS배포승인이아니다.
+다음 Flutter는 고정안2의 전체 wire/원pending·권한별표시·문자벡터/전체목록PUT의 잔여 소비차이와 최종합의 상태만 회신한다. 기존정상시험반복/인원·동의기준재수용은요청하지않는다. 회신을반영해실행wire를닫은후구현한다. 이번제안은서버교체·DBmigration/초기화·자료삭제·실회원/기기시험·AWS배포승인이아니다.
