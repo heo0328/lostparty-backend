@@ -2626,3 +2626,10 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - 실제 HTTP12PASS: health/공개주차200·표시목록/상세/후보양intent 무인증·invalidBearer401 ACCESS_INVALID/no-store/challenge8건·C/N공개검색200/no-store2건. 실행 컨테이너 기본116/최신177 OpenAPI 전체 객체 일치·고정runtime31검사PASS.
 - 실제 API로그64줄 JSON/허용필드 확인: request20/rejected8/job32/server4. 오류UUID와요청로그 연결·원주소/query/식별자 제외PASS, auth_cleanup/ownership_settlement/recruitment 모든tick성공 확인. 원문대신 집계만 공개했다. API/DB healthy·임시reader제거 확인. 기존격리78/18과실제12는합산하지 않으며 실제50MB초과회전·성능·정상회원/기기/운영인수는미실행이다.
 - 현재checkout은feat/raid-recruitment이며 세 개선의 소스병합과 실제개발반영 모두완료다. 후속문서는별도커밋하며 실행source87c2a0e와구분한다. 원격push/PR/dev·main통합/AWS배포/Issue게시·네이티브추가시험요청은없다. 다음은네이티브구체차이대응이며 모집전체인수상태는유지한다.
+
+
+## 2026-10-25 개선 병합·실제 반영 기록 원격 게시
+
+- 사용자 push 지시에 따라 feat/raid-recruitment의 c0128c3→7d038cf(개선4커밋·병합87c2a0e·실제반영기록)를 원격에 게시하고 ls-remote SHA 7d038cf289bed2de2f2741049f95cd55dfa7d3a5 일치를 확인했다. 기본 HTTPS credential 연결 실패 후 기존 gh auth git-credential을 해당 명령에만 연결해 성공했고 인증정보 출력/영구 Git 설정 변경은 없었다.
+- 사용 한도 중단 후 재개 시에도 clean·로컬/원격7d038cf 동일을 재확인했다. 남은 작업은 현재 상태 문서의 미push 표시 정정이었으며 NEXT_WORK/AI_CONTEXT/각 개선 안내를 게시 완료로 갱신했다. 과거 DEV_LOG의 당시 미push 기록은 이력으로 보존한다. 이 상태 문서도 같은 브랜치에 커밋/push한다.
+- 문서/lock·호스트 검사와 diff --check로 검증한다. 서버·DB·코드·계약은 변경하지 않아 pytest/실제 서버 검증은 반복하지 않는다. 개선 브랜치는 dev통합 전 보존하며 dev/main·PR·추가 배포/Issue 게시·네이티브 추가시험 요청은 없다.

@@ -8,7 +8,7 @@
 - [의존성 고정](../engineering/development/dependency-locking.md): runtime31개+test전용12개의 검증 버전/해시 lock을 빌드에서 검사한다.
 - [로깅·조회](../engineering/operations/logging.md): 허용 JSON 필드·API/DB/worker 관측과10m×5 정책을 소스에 통합했다. [실제 개발 반영](../engineering/operations/backend-improvements-rollout.md) 완료: source87c2a0e/이미지366e868a·177/DB0031. API·DB 모두10m×5/healthy이며108표993행·키/설정 보존을 확인했다.
 
-다음은 네이티브 구체 차이 수신 시 아래 모집 협업 기준에 따라 대응하는 것이다. 개선은 소스 병합과 실제 개발 서버 반영까지 완료했다. 적용 과정/실행12PASS·로그 확인과 기존 격리시험은 [DEV_LOG](DEV_LOG.md)에서 구분한다. 원격 모집 브랜치는c0128c3이며 로컬 개선 병합/실제 반영 기록은 미push 상태다. 이번 반영은 PR/dev·main 통합/AWS 운영배포·Issue 게시/네이티브 추가시험 요청을 포함하지 않는다. 개선 브랜치는 dev통합·원격게시 정리 조건 전까지 보존한다. 다른 구조 개선은 [점검 보고서](../engineering/development/backend-architecture-review.md)를 참고하되 미착수다.
+다음은 네이티브 구체 차이 수신 시 아래 모집 협업 기준에 따라 대응하는 것이다. 개선은 소스 병합과 실제 개발 서버 반영까지 완료했다. 적용 과정/실행12PASS·로그 확인과 기존 격리시험은 [DEV_LOG](DEV_LOG.md)에서 구분한다. 사용자 승인으로 개선 병합·실제 반영 기록7d038cf를 원격 feat/raid-recruitment에 push했고 SHA 일치를 확인했다. 현재 게시 완료 상태이며 이후 상태 문서 커밋도 같은 브랜치에 게시한다. 이번 반영은 PR/dev·main 통합/AWS 운영배포·Issue 게시/네이티브 추가시험 요청을 포함하지 않는다. 개선 브랜치는 dev통합·원격게시 정리 조건 전까지 보존한다. 다른 구조 개선은 [점검 보고서](../engineering/development/backend-architecture-review.md)를 참고하되 미착수다.
 
 ## 보존한 모집 구간
 
