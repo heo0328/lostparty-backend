@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-2026-10-25 최신 수신: #13 전체146/147 Flutter의 베타 일정·주차표시·신청메모/계정프리셋은 [계약 인계 검토](../features/recruitment/weekly-cycles/beta-contract-intake.md) 상태다. 다음 Backend는 계약 제안이며 아직 wire 합의/구현·실제 반영은 없다. 네이티브 단순 시험 대기와 구분한다.
+2026-10-25 최신 계약 상태: #13 전체146/147 Flutter 요청에 사용자결정4개를 반영한 [Backend 제안1](../features/recruitment/weekly-cycles/beta-contract-proposal.md)을 작성하고 [전체148번째 Backend 회신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6393622793)으로 인계했다. 다음Flutter소비대조→Backendwire확정이며 아직 새beta구현/실제반영은 없다. 기존자료/업무인수·실행기준은 보존한다.
 
 2026-10-25 사용자 지시로 별도 개선 브랜치 `chore/backend-architecture-review`의 검증 이력을 **feat/raid-recruitment**에 병합했다. 현재 checkout도 모집 브랜치다. [격리 검증](../engineering/development/isolated-verification.md)·[의존성 고정](../engineering/development/dependency-locking.md)·[로깅](../engineering/operations/logging.md)의 코드/설정과 최신 기록을 같은 기준에 모았다. 개선 병합/반영 기록7d038cf의 push·원격 SHA 일치를 확인했으며, [실제 개발 반영](../engineering/operations/backend-improvements-rollout.md)은 source87c2a0e/이미지366e868a·177/DB0031로 완료했다. API·DB 모두 로그10m×5·healthy,108표993행/키/설정을 보존했다. 아래 기능별 상태와 모집 네이티브 대기는 보존한다. 다른 [개선 후보](../engineering/development/backend-architecture-review.md)는 미착수다.
 
