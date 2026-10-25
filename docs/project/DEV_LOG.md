@@ -2633,3 +2633,12 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - 사용자 push 지시에 따라 feat/raid-recruitment의 c0128c3→7d038cf(개선4커밋·병합87c2a0e·실제반영기록)를 원격에 게시하고 ls-remote SHA 7d038cf289bed2de2f2741049f95cd55dfa7d3a5 일치를 확인했다. 기본 HTTPS credential 연결 실패 후 기존 gh auth git-credential을 해당 명령에만 연결해 성공했고 인증정보 출력/영구 Git 설정 변경은 없었다.
 - 사용 한도 중단 후 재개 시에도 clean·로컬/원격7d038cf 동일을 재확인했다. 남은 작업은 현재 상태 문서의 미push 표시 정정이었으며 NEXT_WORK/AI_CONTEXT/각 개선 안내를 게시 완료로 갱신했다. 과거 DEV_LOG의 당시 미push 기록은 이력으로 보존한다. 이 상태 문서도 같은 브랜치에 커밋/push한다.
 - 문서/lock·호스트 검사와 diff --check로 검증한다. 서버·DB·코드·계약은 변경하지 않아 pytest/실제 서버 검증은 반복하지 않는다. 개선 브랜치는 dev통합 전 보존하며 dev/main·PR·추가 배포/Issue 게시·네이티브 추가시험 요청은 없다.
+
+
+## 2026-10-25 Issue13 베타 변경 계약·검증 사례 수신 검토
+
+- 사용자 지시로 #13 OPEN/댓글147개·본문상단/141~145·최신146/147 전문을 조회했다. [전체146 Flutter 계약협의](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6388828653)·[전체147 Flutter 메모/프리셋추가](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6393242839). 순번은 실제전체댓글 기준, Backend 단계가 아니다.
+- [인계 검토](../features/recruitment/weekly-cycles/beta-contract-intake.md)에 제품결정·현행코드 차이·요청된 기대시험과 담당을 정리했다. 원격고정Flutter56bbcbd5의 설계37.63만 추가조회했고37.64는147본문기준이다. Flutter 로컬 경로/소스는 접근하지 않았다.
+- 단일기본출발·더이른조율·30분전인원무관fallback,실제참가개인표원자복사/전체미설정예외,서버페이지전 날짜/상태필터,실제T참가자전용 전역순차번호/5자리,신청메모snapshot/본인계정최대5프리셋은 기존 실행177계약과 다르다. 문자계수/nullable·오류/멱등·권한·원자성 세부는 Backend 제안 후 소비대조가 필요하다. 기대시험 목록을 통과결과로 간주하지 않는다.
+- NEXT_WORK/AI_CONTEXT/#13 로컬추적표의 단순대기·구후보계약대기를 최신 인계로 보완했다. #13외부본문상단은145당시이력이 남아 있어 최신상태로 읽지 않는다. #26기존인수·IF-001·현재개발source87c2a0e/366e868a·DB0031은 유지한다.
+- 이번은 읽기/정적대조·작업기록이며 코드/실행계약·서버/DB·Issue본문/댓글·새Issue·Flutter시험·pytest는 변경/실행하지 않았다. 문서/lock/호스트 정적검사·diffcheck로 기록을 마감한다. 검토기록은같은모집브랜치에로컬커밋하며push/배포없음. 다음Backend는계약제안·구체차이/검증계획회신,다음Flutter는소비대조/시안·앱구현이다.
