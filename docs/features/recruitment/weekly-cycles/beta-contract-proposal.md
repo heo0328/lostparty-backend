@@ -8,6 +8,8 @@
 
 공식 회신: [전체150번째 Backend · 계약 고정안2](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6394448231) / 다음 Flutter 잔여차이·최종합의 확인 대기. 고정SHA/원격 게시 상태는 같은 회신에 기록한다.
 
+후속 상태: [전체151](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6394870853)에서 계약을 최종 수용했다. [Backend 구현/격리검증](beta-implementation.md)·[전체153 Backend · 베타 구현/격리검증](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6395894539)로 이어진다. 위 인계 당시의 미구현/합의대기 설명과 현재 소스/실제반영 상태를 구분한다.
+
 ## 1. 사용자 확정과 제안의 경계
 
 사용자는 토의1/2/4를 채택한 뒤 지연 사례를 설명받고3도 채택했다.

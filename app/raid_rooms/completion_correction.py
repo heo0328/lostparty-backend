@@ -17,7 +17,7 @@ from app.raids import service as raids
 
 
 def ready(db):
-    if list(db.scalars(text('SELECT version_num FROM alembic_version')))not in (['0030_completion_corrections'],['0031_membership_actions']):
+    if list(db.scalars(text('SELECT version_num FROM alembic_version')))not in (['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment']):
         fail('RECRUITMENT_COMMAND_NOT_READY',503)
 
 

@@ -1,4 +1,5 @@
 """Global commands bind every actual effect; no invented target or G1 fallback."""
+from app.raid_rooms import beta_profile
 from datetime import timedelta,datetime
 from sqlalchemy import select
 from fastapi.encoders import jsonable_encoder
@@ -119,7 +120,7 @@ def get(principal,rid,kind):
 
 
 def execute(principal,rid,key,data,kind):
-    body=data.model_dump(mode='json')
+    body=beta_profile.body(data)
     def run(db,uid,stamp):
         if body['expected_cycle_key']!=commands.raids.cycle(stamp).cycle_key:fail('CYCLE_CHANGED')
         token=opaque.unseal(body['context_token'])

@@ -3,6 +3,7 @@
 Only isolated tests mount this router against the shadow schema. Publishing
 these paths in the runtime OpenAPI would falsely claim mixed-worker readiness.
 """
+from app.raid_rooms import beta_profile,beta_schemas
 import json
 from typing import Annotated, Literal
 from uuid import UUID
@@ -39,13 +40,20 @@ from app.raid_rooms import membership_actions, membership_readers, membership_ac
 
 
 class CycleRoute(AvailabilityRoute):
+    def capture_body(self,request,value):
+        beta_profile.capture_body(value)
+
     def repeated_query(self,request):
         return {'experience_levels'} if request.method=='GET' and request.url.path.endswith('/raid-rooms') else set()
 
     def get_route_handler(self):
         parent=super().get_route_handler()
         async def bounded(request:Request):
-            try:return await parent(request)
+            try:
+                profile=request.query_params.get('contract_profile')
+                if profile is not None and profile!=beta_profile.PROFILE:fail('INVALID_REQUEST',400)
+                with beta_profile.request_scope(dict(request.query_params) if profile else None):
+                    return await parent(request)
             except (AuthError,RequestValidationError,SQLAlchemyError) as error:
                 code=('SERVICE_UNAVAILABLE' if isinstance(error,SQLAlchemyError) else
                       getattr(error,'code','INVALID_REQUEST'))
@@ -56,7 +64,18 @@ class CycleRoute(AvailabilityRoute):
                 return JSONResponse(status_code=status,headers={k:v for k,v in value.headers.items() if k!='content-length'},content=body)
         return bounded
 
-    def allowed_query(self, request):
+    def allowed_query(self,request):
+        fields=self.legacy_allowed_query(request)|{'contract_profile'}
+        if beta_profile.enabled():
+            if request.method=='GET' and request.url.path.endswith(('/raid-room-creation-context','/opening-context')):
+                fields|={'base_starts_at','early_coordination_enabled','early_additional_members'}
+                if request.url.path.endswith('/raid-room-creation-context'):
+                    fields|={'next_base_starts_at','next_early_coordination_enabled','next_early_additional_members'}
+            if request.method=='GET' and request.url.path.endswith('/raid-rooms'):
+                fields|={'departure_windows','schedule_states'}
+        return fields
+
+    def legacy_allowed_query(self, request):
         if request.method=='POST' and request.url.path.endswith('/weekly-resume-proposals'):return {'preview_only'}
         if request.method!='GET':return set()
         if request.url.path.endswith('/raid-room-character-candidates'):return {'filter_context_token','limit','cursor'}
@@ -110,7 +129,8 @@ def creation_context(principal:Principal,target_cycle_key:str,character_id:UUID,
 
 
 @router.post('/raid-rooms',response_model=s.CreateAck,status_code=201,responses=errors)
-def create(data:inputs.Create,principal:Principal,key:Key):
+def create(data:inputs.Create|beta_schemas.BetaCreateRequest,principal:Principal,key:Key):
+    data=beta_profile.request_model(data,inputs.Create,beta_schemas.BetaCreateRequest)
     return creation.create(principal,key,data)[1]
 
 
@@ -136,7 +156,8 @@ def join(room_id:UUID,data:inputs.Admission,principal:Principal,key:Key):
 
 @router.post('/raid-rooms/{room_id}/applications',response_model=s.OutputContract3PostV2RaidRoomsRoomIdApplications,status_code=201,responses=errors,
     description='Revalidate admission-eligibility-2 and exact displayed target parties before creating pending. Unsupported roles are ROLE_NOT_SUPPORTED. Capture item_level/item_level_source=application_snapshot/item_level_fetched_at in application display from the selected character and original confirmation time. No confirmed assignment, weekly occupancy or reservation is created; original ACK replay is preserved.')
-def apply(room_id:UUID,data:inputs.Admission,principal:Principal,key:Key):
+def apply(room_id:UUID,data:inputs.Admission|beta_schemas.BetaApplyRequest,principal:Principal,key:Key):
+    data=beta_profile.request_model(data,inputs.Admission,beta_schemas.BetaApplyRequest)
     return commands.admit(principal,room_id,key,data,applying=True)[1]
 
 
@@ -162,7 +183,9 @@ def withdraw(application_id:UUID,data:inputs.Withdraw,principal:Principal,key:Ke
 
 @router.post('/raid-rooms/search',response_model=s.OutputContract3PostV2RaidRoomsSearch,responses=errors,
     description='Authenticated search excludes own active persistent membership with participating/review_required CM in the selected actual T/current generation, in SQL before sorting and pagination. Opposite-only, pending and historical relations are preserved. Cursor semantics: own-target-participation-excluded-v1; old semantics/head changes return CURSOR_STALE (409), foreign/tampered scope INVALID_REQUEST (400).')
-def search(data:inputs.Search,principal:OptionalPrincipal=None):return queries.search(principal,data)
+def search(data:inputs.Search|beta_schemas.BetaSearchRequest,principal:OptionalPrincipal=None):
+    data=beta_profile.request_model(data,inputs.Search,beta_schemas.BetaSearchRequest)
+    return queries.search(principal,data)
 
 
 @router.get('/raid-rooms',response_model=s.OutputContract3PostV2RaidRoomsSearch,responses=errors,description='GET adapter uses the same SQL exclusion, cursor scope and own-target-participation-excluded-v1 semantics as POST /v2/raid-rooms/search.')
@@ -172,11 +195,11 @@ def room_list(target_cycle_key:str,principal:OptionalPrincipal=None,scope:Litera
     experience_levels:Annotated[list[s.ExperienceFilterValue],Query()]=[]):
     if difficulty_id and not raid_id:fail('INVALID_REQUEST',400)
     try:
-        data=inputs.Search.model_validate(dict(category='all',admission_scope=scope,group_ids=[group_id] if group_id else [],
+        data=(beta_schemas.BetaSearchRequest if beta_profile.enabled() else inputs.Search).model_validate(dict(category='all',admission_scope=scope,group_ids=[group_id] if group_id else [],
             filter_context_token=None,member_conditions=[],raid_ids=[raid_id] if raid_id else [],
             difficulty_ids=[difficulty_id] if difficulty_id else [],limit=limit,cursor=cursor,
-            target_cycle_key=target_cycle_key,experience_levels=experience_levels))
-    except ValidationError:fail('INVALID_REQUEST',400)
+            target_cycle_key=target_cycle_key,experience_levels=experience_levels,**({k:json.loads(beta_profile.query()[k],object_pairs_hook=unique_pairs) for k in ('departure_windows','schedule_states') if k in beta_profile.query()} if beta_profile.enabled() else {})))
+    except (ValidationError,ValueError,TypeError):fail('INVALID_REQUEST',400)
     return queries.search(principal,data)
 
 
@@ -273,7 +296,8 @@ def opening_context(room_id:UUID,principal:Principal,target_cycle_key:str,intent
 
 
 @router.post('/raid-rooms/{room_id}/recruitment-openings',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
-def open_recruitment(room_id:UUID,principal:Principal,key:Key,data:inputs.Open):
+def open_recruitment(room_id:UUID,principal:Principal,key:Key,data:inputs.Open|beta_schemas.BetaOpenRequest):
+    data=beta_profile.request_model(data,inputs.Open,beta_schemas.BetaOpenRequest)
     return cycle_opening.execute(principal,room_id,key,data)[1]
 
 
@@ -329,7 +353,8 @@ def confirm_participation(session_id:UUID,principal:Principal,key:Key,data:input
 
 
 @router.put('/raid-rooms/{room_id}/schedule-groups',response_model=s.OutputContract3PostV2RaidRoomsRoomIdJoin,responses=errors)
-def edit_schedule(room_id:UUID,principal:Principal,key:Key,data:inputs.EditGroups):
+def edit_schedule(room_id:UUID,principal:Principal,key:Key,data:inputs.EditGroups|beta_schemas.BetaScheduleEditRequest):
+    data=beta_profile.request_model(data,inputs.EditGroups,beta_schemas.BetaScheduleEditRequest)
     return cycle_schedule_service.edit(principal,room_id,key,data)[1]
 
 
@@ -481,3 +506,25 @@ def membership_action_context(room_id:UUID,target_cycle_key:atomic_schemas.Cycle
 @router.post('/raid-rooms/{room_id}/membership-actions',response_model=membership_schemas.Result,responses=errors,description='Exact six-field actor/view-T/action/opaque-token command. One transaction validates the complete selected option, cleans up, succeeds departure despite no qualified successor, records explicit recovery and C-to-N effects. Original ACK replay lasts24h; unchanged legacy operations use separate namespaces. Requires schema0031.')
 def membership_action(room_id:UUID,data:membership_schemas.Command,principal:Principal,key:Key):
     return membership_actions.execute(principal,room_id,key,data)[1]
+
+
+# include_router rebuilds each APIRoute with these opt-in response unions.
+# Each legacy model remains untouched; beta models have their own required keys.
+for _route in router.routes:
+    _beta=beta_schemas.annotation(_route.response_model)
+    if _beta != _route.response_model:
+        _route.response_model=_route.response_model|_beta
+    _parameters=[dict(name='contract_profile',**{'in':'query'},required=False,
+        schema=dict(type='string',enum=[beta_profile.PROFILE]))]
+    if _route.path.endswith(('/raid-room-creation-context','/opening-context')):
+        for _prefix in ('','next_') if _route.path.endswith('/raid-room-creation-context') else ('',):
+            for _key,_schema in [('base_starts_at',dict(type='string',format='date-time')),
+                    ('early_coordination_enabled',dict(type='boolean')),
+                    ('early_additional_members',dict(type='integer',minimum=1,maximum=7))]:
+                _parameters.append(dict(name=_prefix+_key,**{'in':'query'},required=False,schema=_schema,
+                    description='Required as specified by beta-recruitment-wire-2 only when contract_profile opts in.'))
+    if _route.path=='/v2/raid-rooms' and 'GET' in _route.methods:
+        for _key in ('departure_windows','schedule_states'):
+            _parameters.append(dict(name=_key,**{'in':'query'},required=False,
+                content={'application/json':{'schema':json.loads(json.dumps(beta_schemas.BetaSearchRequest.model_json_schema()['properties'][_key]).replace('#/$defs/','#/components/schemas/'))}}))
+    _route.openapi_extra={'parameters':_parameters,'x-beta-contract-profile':beta_profile.PROFILE}

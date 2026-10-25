@@ -1,18 +1,16 @@
 # 다음 실행
 
-## 현재 계약 인계·다음 실행
+## 현재 작업 구간 마감 — 베타 Backend 구현·격리검증
 
-2026-10-25 작업 파트 **베타 계약 최종 고정·소비 인계**. [#13 전체149 Flutter 조건부 수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6393878499)에 대응해 [고정안2](../features/recruitment/weekly-cycles/beta-contract-wire.md)·[정책](../features/recruitment/weekly-cycles/beta-contract-proposal.md)·완결 wire/예시를 작성·정적 검증했다. 기존 목적브랜치 `feat/raid-recruitment`에서 수신 기록과 함께 한 작업 파트로 묶어 게시한다. [전체150번째 Backend · 계약 고정안2](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6394448231)로 회신했다. 고정SHA/원격 게시 여부는 같은 회신에서 추적한다.
+2026-10-25 **베타 모집 구현·격리검증**을 같은 목적브랜치 `feat/raid-recruitment`에서 마감한다. 기준은 [전체151 Flutter 계약 최종수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6394870853)의267afe5/beta-recruitment-wire-2다. [전체153 Backend · 베타 구현/격리검증](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6395894539)에 구현·검증 결과를 회신했고, 같은 댓글에서 정확 소스 SHA/원격 게시 확인·실행계약 고정 링크를 관리한다. [구현/검증](../features/recruitment/weekly-cycles/beta-implementation.md)을 따른다.
 
-다음 **Flutter**는 고정안2의 잔여 소비차이와 최종합의 상태를 확인한다. 제한문자/NFC 후 코드포인트20/emoji 거절·앱로컬금칙어를 반영했고, operation별 입출력/오류·reader 조합·record content=null·identity/memo 권한·candidates/review 포함 profile 전달·구버전 차단/안전목록을 고정했다. 제품결정 재질문/기존정상시험 반복 요청은 없다.
+**Backend 소스 구현/격리검증 완료:** 기본약속/개인표 복사·예약/조기/기한/지연복구·번호권한·메모/presets·검색·profile/원ACK·구버전 안전경계를 연결했다. 추가 migration0032, 소스API178경로/199 operation, 기존612 schema·기본앱116/133 보존. 최종beta22 PASS, 관련 기존 HTTP/신청20·일정/이탈85 PASS(중첩 beta 수치는 제외), 실행계약 전체일치/정적검사 PASS다. 기본 two-cycle 검증 묶음에도 beta 시험을 포함했다.
 
-다음 **Backend**는 구체 차이가 오면 같은 파트의 보완으로 대응하고, 양측 wire 합의 후 구현·마이그레이션·격리검증을 별도 의미 있는 작업 파트로 진행한다. 현재 계약 고정안 작성/인계이며 최종합의·구현·실제 개발 반영은 미완료다. 서버·DB·실행 OpenAPI는 변경하지 않았다.
+**실제 개발 서버는 미변경:** 기존source87c2a0e/이미지366e868a·177/DB0031이다. 새소스를 push하는 것과 서버교체/실제 DB migration은 다르다. 현재 실행 서버에 beta profile을 자동 전송하지 않는다. 실제반영은 별도 승인된 범위에서 자료보존·0032 적용·서버검증을 수행한 뒤 인계해야 한다. dev/main통합·AWS배포·실데이터 변경은 이번 마감 범위가 아니다.
 
-정적 근거: 시간/DTO48(정상21/거절27), 최신문자25벡터 실행. 66 operation의 전체 fixture118(요청35/성공75/오류8), 기존ACK32 동일성·잘못된metadata위치3 거절. 이는 API/DB/Flutter 런타임 성공이 아니다. HTTP 기대9개와 격리 기능시험·기기 인수는 미실행이다. 제안1의6 EGC벡터는 최신문자25개로 대체했다.
+다음 **Flutter**는 [전체152 A](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6395265140)의 query/원요청·ACK 영속저장 기반 소스12cd2e9a에 전용DTO/후속화면 연결을 이어가되 서버 반영 전 beta 활성화/실기기통신은 분리한다. 기본legacy·기존 Controller 메모리pending 유지/화면 연결 미완료라는 수신 상태를 그대로 보존한다. 새제품결정/기존시험 반복·최종계약 재수용 요청은 없다. 구체차이는 같은 Issue13에서 Backend가 대응한다.
 
-Flutter의 query 전달·원요청 영속복구는 계속 미완료다. 원profile/path/query/T/원본문/key를 보존하며 원profile 없는 pending을 업그레이드하지 않는다. ACK 후 조회실패는 조회만 재시도한다.
-
-**커밋·push 단위:** 채팅마다가 아닌 검증/인계 가능한 소제목 작업 파트로 묶는다. 이번은 수신 문서·제안2/schema·전체 wire/예시·정적검증·협업회신 기록을 한 번 게시하며 기존 이력을 유지한다. merge·배포·실데이터 변경으로 확대하지 않는다.
+Beta 구현 완료가 전체 모집 인수/Flutter 적용·실회원/기기 성공은 아니다. Issue13 OPEN·기존인수/IF-001·원ACK는 유지한다. 원profile/path/query/T/원본문/key 보존, ACK후조회실패는 조회만재시도한다. 이번은 누적 수신·구현·계약·검증·인계기록을 한 소제목 작업 파트로 묶어 commit/push하며 채팅별로 분리하지 않는다.
 
 ## 현재 실행 기준·다음 작업
 

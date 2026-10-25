@@ -1,4 +1,5 @@
 """Target-specific schedule graph, bounded automatic search and immutable evidence."""
+from app.raid_rooms import beta_schedule
 import uuid
 from datetime import datetime,timedelta,timezone
 from sqlalchemy import select,func
@@ -59,6 +60,7 @@ def members(db,row,sess=None):
 
 
 def candidate(db,room,row,group,stamp,*,sess=None,alternative=None):
+    if beta_schedule.get(db,row) is not None:return beta_schedule.candidate(db,room,row,stamp)
     if group.planning_mode!='coordinated':fail('SCHEDULE_NOT_COORDINATED')
     actual=members(db,row,sess)
     if not group.required and sess is None:
@@ -134,6 +136,9 @@ def consent(db,room,row,cm,sess,command,stamp,authorization):
 
 
 def initial(db,room,row,uid,command,stamp):
+    if beta_schedule.get(db,row) is not None:
+        beta_schedule.initial(db,room,row,stamp,command)
+        return
     if row.state!='open':return
     changed=[]
     for group in graph.groups(db,row):

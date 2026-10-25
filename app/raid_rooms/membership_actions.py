@@ -23,16 +23,17 @@ ACTIONS = ('leave_target','leave_all','dissolve_led_targets','recover_leadership
 LIVE = ('participating','review_required')
 
 
-def bounded(model,value):
+def bounded(model,value, *, snapshot=None):
     # Required new fields stay closed while legacy optional content keeps its exact presence.
     import json
-    result=model.model_validate(atomic.encoded(value)).model_dump(mode="json",exclude_unset=True)
+    from app.raid_rooms import beta_output
+    result=beta_output.render(*snapshot,model,value,exclude_unset=True) if snapshot is not None else model.model_validate(atomic.encoded(value)).model_dump(mode="json",exclude_unset=True)
     if len(json.dumps(result,ensure_ascii=False,separators=(',',':')).encode())>1048576:fail('RESPONSE_TOO_LARGE',413)
     return result
 
 
 def ready(db):
-    if list(db.scalars(text('SELECT version_num FROM alembic_version'))) != ['0031_membership_actions']:
+    if list(db.scalars(text('SELECT version_num FROM alembic_version'))) not in (['0031_membership_actions'],['0032_beta_recruitment']):
         fail('RECRUITMENT_COMMAND_NOT_READY',503)
 
 

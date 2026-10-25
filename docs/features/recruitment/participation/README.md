@@ -79,3 +79,7 @@ admission-context는 선택한 실제T와 intent에 필요한 현재 자격·조
 | GET | `/v2/me/raid-room-applications` |
 | GET | `/v2/me/raid-room-memberships` |
 | POST | `/v2/raid-rooms/{room_id}/character-changes` |
+| GET | `/v2/me/application-message-presets` |
+| PUT | `/v2/me/application-message-presets` |
+
+베타 모집의 신청 메모·계정 저장문구와 profile별 요청/응답은 [고정 계약](../weekly-cycles/beta-contract-wire.md)·[구현/검증 현황](../weekly-cycles/beta-implementation.md)을 따른다. 소스 API 추가와 실제 개발 서버 반영은 구분한다.

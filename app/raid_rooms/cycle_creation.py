@@ -1,4 +1,5 @@
 """Actor-bound creation preflight and atomic C/N command; staged until cutover."""
+from app.raid_rooms import beta_profile, beta_schedule, beta_output
 import uuid
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal, InvalidOperation
@@ -36,7 +37,7 @@ def creation_id(room_id, kind, name):
     return uuid.uuid5(room_id, kind + ':' + name)
 
 
-def preflight(db, uid, cid, role, items, gid, key, continuation, next_cid, next_role, stamp, *, room_id=None):
+def preflight(db, uid, cid, role, items, gid, key, continuation, next_cid, next_role, stamp, *, room_id=None, beta_targets=None):
     target = cycles.target(stamp, key)
     if not items or len(items) > len(raids.catalog().raids) or len({i.raid_id for i in items}) != len(items):
         fail('INVALID_REQUEST', 400)
@@ -103,11 +104,25 @@ def preflight(db, uid, cid, role, items, gid, key, continuation, next_cid, next_
         continuation=continuation, first=first, second=second, group=group,
         catalog=raids.catalog().catalog_version, power_revision=power['power_revision'],
         room_count=admission.core.room_count(db, uid)))
+    if beta_profile.enabled():
+        from app.raid_rooms.beta_schemas import BetaScheduleTarget
+        expected=[target.key]+([target.key+timedelta(days=7)] if combined else [])
+        if beta_targets is None:
+            if not combined and any(k.startswith('next_') and k in ('next_base_starts_at','next_early_coordination_enabled','next_early_additional_members') for k in beta_profile.query()):
+                fail('INVALID_REQUEST',400)
+            beta_targets=[dict(target_cycle_key=k.isoformat(),**beta_schedule.query_config('' if index==0 else 'next_').model_dump(mode='json')) for index,k in enumerate(expected)]
+        if len(beta_targets)!=len(expected) or {v['target_cycle_key'] for v in beta_targets}!={k.isoformat() for k in expected}:fail('INVALID_REQUEST',400)
+        size=next(r.party_size for r in raids.catalog().raids if r.raid_id==items[0].raid_id) if len(items)==1 else 4
+        duration=sum(base.DEFAULT_DURATION.get(v.difficulty_id,0) for v in items)
+        if not duration:fail('DURATION_POLICY_UNAVAILABLE')
+        for value in beta_targets:
+            beta_schedule.config({k:v for k,v in value.items() if k!='target_cycle_key'},key=value['target_cycle_key'],capacity=size,duration=duration,stamp=stamp)
+        stable['beta']=[beta_targets,beta_schedule.context_basis(db,uid)]
     snapshot = digest(stable)
     expires = min(stamp+timedelta(seconds=opaque.LIFETIME_SECONDS), raids.cycle(stamp).ends_at)
     token = opaque.seal(dict(actor=str(uid), command='create-v2', room=str(room_id), target=key,
         continuation=continuation, next_cid=str(next_cid) if next_cid else None, next_role=next_role,
-        expires=expires.isoformat(), digest=snapshot))
+        expires=expires.isoformat(), digest=snapshot, **beta_profile.marker()))
     data = dict(expected_cycle_key=target.current.isoformat(), server_time=stamp,
         catalog_version=raids.catalog().catalog_version, policy_snapshot=snapshot, context_token=token,
         selection=choice, targets=[{k:t[k] for k in ('raid_id', 'difficulty_id', 'expected_weekly_revision')}
@@ -118,17 +133,17 @@ def preflight(db, uid, cid, role, items, gid, key, continuation, next_cid, next_
         comparison=power, permissions=dict(create=permission(reason)), target_cycle_key=key,
         expected_target_revision=None, issued_at=stamp, expires_at=expires, prospective_room_id=room_id,
         target_creation=first, next_cycle_creation=second, continuation_effect=effect)
+    if beta_profile.enabled():data['beta_schedule_targets']=beta_targets
     return dict(scope=scope(stamp,key), data=data)
 
 
 def get(principal, cid, role, items, gid, key, continuation=False, next_cid=None, next_role=None):
     with base.snapshot(principal) as (db, uid, stamp):
-        return wire.OutputContract3GetV2MeRaidRoomCreationContext.model_validate(
-            jsonable_encoder(preflight(db,uid,cid,role,items,gid,key,continuation,next_cid,next_role,stamp))).model_dump(mode='json')
+        return beta_output.render(db,uid,stamp,wire.OutputContract3GetV2MeRaidRoomCreationContext,jsonable_encoder(preflight(db,uid,cid,role,items,gid,key,continuation,next_cid,next_role,stamp)))
 
 
 def create(principal, command_id, data):
-    body = data.model_dump(mode='json')
+    body = beta_profile.body(data)
     failure = dict(conflicts=[],available_at=None,failed_cycle_key=body['target_cycle_key'])
     def run(db, uid, stamp):
         key = body['target_cycle_key']
@@ -138,6 +153,7 @@ def create(principal, command_id, data):
         if body['expected_target_revision'] is not None:
             fail('TARGET_CONTEXT_STALE')
         token = opaque.unseal(body['selection_context']['context_token'])
+        beta_profile.check_marker(token)
         if token.get('actor') != str(uid) or token.get('command') != 'create-v2' or token.get('target') != key:
             fail('CONTEXT_INVALID', 400)
         if stamp >= datetime.fromisoformat(token['expires']):
@@ -149,7 +165,7 @@ def create(principal, command_id, data):
         current = preflight(db, uid, data.selection.character_id, data.selection.selected_role,
             data.items, data.group_id, key, token['continuation'],
             uuid.UUID(token['next_cid']) if token['next_cid'] else None, token['next_role'], stamp,
-            room_id=uuid.UUID(token['room']))['data']
+            room_id=uuid.UUID(token['room']),beta_targets=body.get('beta_schedule_targets'))['data']
         if current['permissions']['create']['reason']:
             denied=current['target_creation'] if not current['target_creation']['permission']['allowed'] else current['next_cycle_creation']
             failure.update(failed_cycle_key=denied['target_cycle_key'].isoformat(),conflicts=denied['conflicts'])
@@ -248,7 +264,10 @@ def create(principal, command_id, data):
             saved_selection=prospective['selection']
             selection=context.selection(db,uid,saved_selection.character_id,saved_selection.selected_role)
             member, assignments,_=admission.admit_bundle(db,uid,room,row,selection,targets,command_id,stamp,opening=True)
-            schedule.install(db,room,row,data.schedule_groups,member,stamp,copied=target_key!=value.current)
+            if beta_profile.enabled():
+                cfg=next(v for v in body['beta_schedule_targets'] if v['target_cycle_key']==target_key.isoformat())
+                beta_schedule.install(db,room,row,{k:v for k,v in cfg.items() if k!='target_cycle_key'},member,stamp)
+            else:schedule.install(db,room,row,data.schedule_groups,member,stamp,copied=target_key!=value.current)
             row.revision=row.members_revision=row.plan_revision=1
             admitted.append(dict(target_cycle_key=target_key,room_cycle_id=row.id,generation=1,target_revision=1,
                 leader_cycle_member_id=generation.leader_cycle_member_id))

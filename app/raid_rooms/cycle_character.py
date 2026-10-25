@@ -1,4 +1,5 @@
 """Replace an unfinished target bundle; old character usability is not a gate."""
+from app.raid_rooms import beta_profile
 from fastapi.encoders import jsonable_encoder
 from app.game_accounts.support import fail,GameError
 from app.game_accounts.lifecycle import digest
@@ -55,11 +56,11 @@ def prepare(db,uid,rid,key,cid,role,stamp,*,include_session_display=False):
 def get(principal,rid,key,cid,role,include_session_display=False):
     with commands.base.snapshot(principal) as (db,uid,stamp):
         value,*_=prepare(db,uid,rid,key,cid,role,stamp,include_session_display=include_session_display)
-        return display.output(display_schemas.AdmissionDisplayContext,value,include_session_display)
+        return display.output(display_schemas.AdmissionDisplayContext,value,include_session_display,snapshot=(db,uid,stamp))
 
 
 def execute(principal,rid,command,data):
-    body=data.model_dump(mode='json')
+    body=beta_profile.body(data)
     def run(db,uid,stamp):
         token=life.verify_token(uid,rid,body|dict(context_token=body['selection_context']['context_token']),'character',stamp)
         value,binding,room,row,cm,owned=prepare(db,uid,rid,body['target_cycle_key'],data.selection.character_id,data.selection.selected_role,stamp,include_session_display=display.enabled(token))
@@ -78,7 +79,7 @@ def execute(principal,rid,command,data):
             participations=leadership.release_parts(db,row,cm,stamp,ending=False))
         member,_,_=admission.admit_bundle(db,uid,room,row,Selection.model_validate(body['selection']),
             [Target.model_validate(v) for v in body['target_items']],command,stamp,replacing=cm,unified=True)
-        schedule.enrol(db,row,member,data.target_session_ids,stamp)
+        schedule.enrol(db,row,member,data.target_session_ids,stamp,copy=False)
         cm.revision+=1;life.event(db,row,cm,command,'character_changed',stamp,evidence)
         row.revision+=1;row.members_revision+=1;row.plan_revision+=1
         cycles.touch_directory(db,row.cycle_key);db.flush()

@@ -1,4 +1,5 @@
 """W3 authority, evidence and bounded contexts. Callers own the transaction."""
+from app.raid_rooms import beta_profile,beta_schedule
 import uuid
 from decimal import Decimal,InvalidOperation
 from datetime import datetime,timedelta
@@ -119,13 +120,17 @@ def candidates(db,room,row,actor):
     return result,proof
 
 
-def sign(uid,rid,key,command,data,hidden,stamp,*,row=None,extra=None):
+def sign(uid,rid,key,command,data,hidden,stamp,*,row=None,extra=None,db=None):
     envelope=dict(scope=scope(stamp,key,row),data=data)
     stable_scope={k:v for k,v in envelope['scope'].items() if k!='server_now'}
-    binding=digest(jsonable_encoder([uid,rid,command,stable_scope,data,hidden]))
+    profile_basis=[beta_profile.PROFILE,beta_schedule.context_basis(db,uid)] if beta_profile.enabled() and command in ('opening','continue-join') else beta_profile.marker()
+    basis=[uid,rid,command,stable_scope,data,hidden]
+    if beta_profile.enabled():basis.append(profile_basis)
+    binding=digest(jsonable_encoder(basis))
     expires=min(stamp+timedelta(seconds=120),raids.cycle(stamp).ends_at)
     token=dict(actor=str(uid),room=str(rid),target=key,command=command,expires=expires.isoformat(),digest=binding)
     token.update(extra or {})
+    token.update(beta_profile.marker())
     data.update(context_token=opaque.seal(token),issued_at=stamp,expires_at=expires)
     return envelope,binding
 
@@ -133,6 +138,7 @@ def sign(uid,rid,key,command,data,hidden,stamp,*,row=None,extra=None):
 def verify_token(uid,rid,body,command,stamp):
     if body['expected_cycle_key']!=raids.cycle(stamp).cycle_key:fail('CYCLE_CHANGED')
     token=opaque.unseal(body['context_token'])
+    beta_profile.check_marker(token)
     if (token.get('actor')!=str(uid) or token.get('room')!=str(rid) or token.get('target')!=body['target_cycle_key']
             or token.get('command')!=command):fail('TARGET_SCOPE_MISMATCH',400)
     if stamp>=datetime.fromisoformat(token['expires']):fail('COMMAND_CONTEXT_EXPIRED')

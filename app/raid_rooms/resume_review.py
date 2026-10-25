@@ -25,8 +25,9 @@ def command_body(data):
     return value
 
 
-def output(model, value, bounded=True):
-    result = model.model_validate(jsonable_encoder(value)).model_dump(mode='json', exclude_unset=True)
+def output(model, value, bounded=True, *, snapshot=None):
+    from app.raid_rooms import beta_output
+    result = beta_output.render(*snapshot,model,value,exclude_unset=True) if snapshot is not None else model.model_validate(jsonable_encoder(value)).model_dump(mode='json', exclude_unset=True)
     if bounded and len(json.dumps(result, ensure_ascii=False, separators=(',', ':')).encode()) > MAX_RESPONSE_BYTES:
         fail('RESPONSE_TOO_LARGE', 413)
     return result

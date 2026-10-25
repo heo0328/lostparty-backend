@@ -26062,6 +26062,77 @@
               ],
               "title": "Next Selected Role"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
+          },
+          {
+            "name": "base_starts_at",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "Required as specified by beta-recruitment-wire-2 only when contract_profile opts in."
+          },
+          {
+            "name": "early_coordination_enabled",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Required as specified by beta-recruitment-wire-2 only when contract_profile opts in."
+          },
+          {
+            "name": "early_additional_members",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 7
+            },
+            "description": "Required as specified by beta-recruitment-wire-2 only when contract_profile opts in."
+          },
+          {
+            "name": "next_base_starts_at",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "Required as specified by beta-recruitment-wire-2 only when contract_profile opts in."
+          },
+          {
+            "name": "next_early_coordination_enabled",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Required as specified by beta-recruitment-wire-2 only when contract_profile opts in."
+          },
+          {
+            "name": "next_early_additional_members",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 7
+            },
+            "description": "Required as specified by beta-recruitment-wire-2 only when contract_profile opts in."
           }
         ],
         "responses": {
@@ -26070,7 +26141,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OutputContract3GetV2MeRaidRoomCreationContext"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/OutputContract3GetV2MeRaidRoomCreationContext"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_OutputContract3GetV2MeRaidRoomCreationContext"
+                    }
+                  ],
+                  "title": "Response Contract3 Get  V2 Me Raid-Room-Creation-Context"
                 }
               }
             },
@@ -26246,7 +26325,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms": {
@@ -26271,6 +26351,17 @@
               "format": "uuid4",
               "title": "Idempotency-Key"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
           }
         ],
         "requestBody": {
@@ -26278,7 +26369,15 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/app__raid_rooms__cycle_schemas__Create"
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/app__raid_rooms__cycle_schemas__Create"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BetaCreateRequest"
+                  }
+                ],
+                "title": "Data"
               }
             }
           }
@@ -26465,7 +26564,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       },
       "get": {
         "tags": [
@@ -26592,6 +26692,64 @@
               "default": [],
               "title": "Experience Levels"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
+          },
+          {
+            "name": "departure_windows",
+            "in": "query",
+            "required": false,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/DepartureWindow"
+                  },
+                  "maxItems": 16,
+                  "minItems": 1,
+                  "title": "Departure Windows",
+                  "type": "array"
+                }
+              }
+            }
+          },
+          {
+            "name": "schedule_states",
+            "in": "query",
+            "required": false,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "enum": [
+                      "base_committed",
+                      "coordinating",
+                      "early_confirmed",
+                      "base_confirmed",
+                      "proposal_confirmed",
+                      "deadline_pending",
+                      "needs_review",
+                      "ended",
+                      "legacy"
+                    ],
+                    "type": "string"
+                  },
+                  "maxItems": 9,
+                  "minItems": 1,
+                  "title": "Schedule States",
+                  "type": "array"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -26600,7 +26758,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OutputContract3PostV2RaidRoomsSearch"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/OutputContract3PostV2RaidRoomsSearch"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_OutputContract3PostV2RaidRoomsSearch"
+                    }
+                  ],
+                  "title": "Response Contract3 Get  V2 Raid-Rooms"
                 }
               }
             },
@@ -26777,7 +26943,8 @@
             }
           }
         },
-        "description": "GET adapter uses the same SQL exclusion, cursor scope and own-target-participation-excluded-v1 semantics as POST /v2/raid-rooms/search."
+        "description": "GET adapter uses the same SQL exclusion, cursor scope and own-target-participation-excluded-v1 semantics as POST /v2/raid-rooms/search.",
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/admission-context": {
@@ -26862,6 +27029,17 @@
               "default": "false",
               "title": "Include Session Display"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
           }
         ],
         "responses": {
@@ -26870,7 +27048,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AdmissionDisplayContext"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/AdmissionDisplayContext"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_AdmissionDisplayContext"
+                    }
+                  ],
+                  "title": "Response Contract3 Get  V2 Raid-Rooms Room Id Admission-Context"
                 }
               }
             },
@@ -27047,7 +27233,8 @@
             }
           }
         },
-        "description": "Apply/change_character use admission-eligibility-2: product-supported roles, bundle level, role-specific retained power, actual-target completion/occupancy and per-party composition. Change targets bind the exact own assignments and original-party-first valid placement. Pending never reserves a slot; current command tokens and consent must still match."
+        "description": "Apply/change_character use admission-eligibility-2: product-supported roles, bundle level, role-specific retained power, actual-target completion/occupancy and per-party composition. Change targets bind the exact own assignments and original-party-first valid placement. Pending never reserves a slot; current command tokens and consent must still match.",
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/join": {
@@ -27081,6 +27268,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -27276,7 +27474,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/applications": {
@@ -27311,6 +27510,17 @@
               "format": "uuid4",
               "title": "Idempotency-Key"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
           }
         ],
         "requestBody": {
@@ -27318,7 +27528,15 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/app__raid_rooms__cycle_schemas__Admission"
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/app__raid_rooms__cycle_schemas__Admission"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BetaApplyRequest"
+                  }
+                ],
+                "title": "Data"
               }
             }
           }
@@ -27506,7 +27724,8 @@
             }
           }
         },
-        "description": "Revalidate admission-eligibility-2 and exact displayed target parties before creating pending. Unsupported roles are ROLE_NOT_SUPPORTED. Capture item_level/item_level_source=application_snapshot/item_level_fetched_at in application display from the selected character and original confirmation time. No confirmed assignment, weekly occupancy or reservation is created; original ACK replay is preserved."
+        "description": "Revalidate admission-eligibility-2 and exact displayed target parties before creating pending. Unsupported roles are ROLE_NOT_SUPPORTED. Capture item_level/item_level_source=application_snapshot/item_level_fetched_at in application display from the selected character and original confirmation time. No confirmed assignment, weekly occupancy or reservation is created; original ACK replay is preserved.",
+        "x-beta-contract-profile": "beta-recruitment-1"
       },
       "get": {
         "tags": [
@@ -27603,6 +27822,17 @@
               ],
               "title": "Reader Profile"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
           }
         ],
         "responses": {
@@ -27617,6 +27847,12 @@
                     },
                     {
                       "$ref": "#/components/schemas/ApplicationDisplayPageResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_OutputContract3GetV2RaidRoomsRoomIdApplications"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_ApplicationDisplayPageResponse"
                     }
                   ],
                   "title": "Response Contract3 Get  V2 Raid-Rooms Room Id Applications"
@@ -27796,7 +28032,8 @@
             }
           }
         },
-        "description": "application-display-1 always includes display.item_level, item_level_source and item_level_fetched_at. Preserve a real application_snapshot; legacy missing values use current_saved only for the same applicant/character/ownership revision and confirmed active source, otherwise unavailable. Original fetched time may be null; no backfill, provider calls, extra queries or approval decision. Other display fields stay application snapshots."
+        "description": "application-display-1 always includes display.item_level, item_level_source and item_level_fetched_at. Preserve a real application_snapshot; legacy missing values use current_saved only for the same applicant/character/ownership revision and confirmed active source, otherwise unavailable. Original fetched time may be null; no backfill, provider calls, extra queries or approval decision. Other display fields stay application snapshots.",
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-room-applications/{application_id}": {
@@ -27821,6 +28058,17 @@
               "format": "uuid",
               "title": "Application Id"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
           }
         ],
         "responses": {
@@ -27829,7 +28077,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OutputContract3GetV2RaidRoomApplicationsApplicationId"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/OutputContract3GetV2RaidRoomApplicationsApplicationId"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_OutputContract3GetV2RaidRoomApplicationsApplicationId"
+                    }
+                  ],
+                  "title": "Response Contract3 Get  V2 Raid-Room-Applications Application Id"
                 }
               }
             },
@@ -28005,7 +28261,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-room-applications/{application_id}/approve": {
@@ -28039,6 +28296,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -28235,7 +28503,8 @@
             }
           }
         },
-        "description": "Revalidate admission-eligibility-2 at the stored application parties under the mutation lock. Qualification failure preserves pending and all business occupancy/reservations; no automatic rejection, withdrawal or party relocation. Original ACK replay is preserved."
+        "description": "Revalidate admission-eligibility-2 at the stored application parties under the mutation lock. Qualification failure preserves pending and all business occupancy/reservations; no automatic rejection, withdrawal or party relocation. Original ACK replay is preserved.",
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-room-applications/{application_id}/reject": {
@@ -28269,6 +28538,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -28464,7 +28744,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-room-applications/{application_id}/withdraw": {
@@ -28498,6 +28779,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -28693,7 +28985,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/search": {
@@ -28707,7 +29000,15 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/app__raid_rooms__cycle_schemas__Search"
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/app__raid_rooms__cycle_schemas__Search"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BetaSearchRequest"
+                  }
+                ],
+                "title": "Data"
               }
             }
           },
@@ -28719,7 +29020,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OutputContract3PostV2RaidRoomsSearch"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/OutputContract3PostV2RaidRoomsSearch"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_OutputContract3PostV2RaidRoomsSearch"
+                    }
+                  ],
+                  "title": "Response Contract3 Post  V2 Raid-Rooms Search"
                 }
               }
             },
@@ -28901,7 +29210,21 @@
             "HTTPBearer": []
           }
         ],
-        "description": "Authenticated search excludes own active persistent membership with participating/review_required CM in the selected actual T/current generation, in SQL before sorting and pagination. Opposite-only, pending and historical relations are preserved. Cursor semantics: own-target-participation-excluded-v1; old semantics/head changes return CURSOR_STALE (409), foreign/tampered scope INVALID_REQUEST (400)."
+        "description": "Authenticated search excludes own active persistent membership with participating/review_required CM in the selected actual T/current generation, in SQL before sorting and pagination. Opposite-only, pending and historical relations are preserved. Cursor semantics: own-target-participation-excluded-v1; old semantics/head changes return CURSOR_STALE (409), foreign/tampered scope INVALID_REQUEST (400).",
+        "parameters": [
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
+          }
+        ],
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/me/raid-room-filter-context": {
@@ -28925,6 +29248,17 @@
               "type": "string",
               "maxLength": 32768,
               "title": "Group Ids"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -29110,7 +29444,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/groups/{group_id}/raid-room-character-candidates": {
@@ -29176,6 +29511,17 @@
                 }
               ],
               "title": "Cursor"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -29361,7 +29707,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}": {
@@ -29395,6 +29742,17 @@
               "type": "string",
               "title": "Target Cycle Key"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
           }
         ],
         "responses": {
@@ -29403,7 +29761,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OutputContract3GetV2RaidRoomsRoomId"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/OutputContract3GetV2RaidRoomsRoomId"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_OutputContract3GetV2RaidRoomsRoomId"
+                    }
+                  ],
+                  "title": "Response Contract3 Get  V2 Raid-Rooms Room Id"
                 }
               }
             },
@@ -29579,7 +29945,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/detail": {
@@ -29667,6 +30034,17 @@
               ],
               "title": "Cycle Member Id"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
           }
         ],
         "responses": {
@@ -29684,6 +30062,15 @@
                     },
                     {
                       "$ref": "#/components/schemas/ApplicationDisplayDetailResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_OutputContract3GetV2RaidRoomsRoomIdDetail"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_MembershipActionDetailProfile"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_ApplicationDisplayDetailResponse"
                     }
                   ],
                   "title": "Response Contract3 Get  V2 Raid-Rooms Room Id Detail"
@@ -29862,7 +30249,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/me/raid-rooms/{room_id}/plan": {
@@ -29961,6 +30349,17 @@
               ],
               "title": "Cycle Member Id"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
           }
         ],
         "responses": {
@@ -29975,6 +30374,12 @@
                     },
                     {
                       "$ref": "#/components/schemas/MembershipActionPlanProfile"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_ResumePlanContext"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_MembershipActionPlanProfile"
                     }
                   ],
                   "title": "Response Contract3 Get  V2 Me Raid-Rooms Room Id Plan"
@@ -30153,7 +30558,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/me/raid-room-applications": {
@@ -30225,6 +30631,17 @@
               ],
               "title": "Cursor"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
           }
         ],
         "responses": {
@@ -30233,7 +30650,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OutputContract3GetV2RaidRoomsRoomIdApplications"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/OutputContract3GetV2RaidRoomsRoomIdApplications"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_OutputContract3GetV2RaidRoomsRoomIdApplications"
+                    }
+                  ],
+                  "title": "Response Contract3 Get  V2 Me Raid-Room-Applications"
                 }
               }
             },
@@ -30409,7 +30834,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/me/raid-room-memberships": {
@@ -30494,6 +30920,17 @@
               ],
               "title": "Reader Profile"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
           }
         ],
         "responses": {
@@ -30508,6 +30945,12 @@
                     },
                     {
                       "$ref": "#/components/schemas/MembershipActionMembershipPage"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_OutputContract3GetV2MeRaidRoomMemberships"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_MembershipActionMembershipPage"
                     }
                   ],
                   "title": "Response Contract3 Get  V2 Me Raid-Room-Memberships"
@@ -30686,7 +31129,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/groups/{group_id}/raid-room-member-projections": {
@@ -30762,6 +31206,17 @@
                 }
               ],
               "title": "Group Ids"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -30947,7 +31402,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/me/raid-rooms/{room_id}/continuation-context": {
@@ -31046,6 +31502,17 @@
               "default": "false",
               "title": "Include Session Display"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
           }
         ],
         "responses": {
@@ -31054,7 +31521,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContinuationDisplayContext"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/ContinuationDisplayContext"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_ContinuationDisplayContext"
+                    }
+                  ],
+                  "title": "Response Get  V2 Me Raid-Rooms Room Id Continuation-Context"
                 }
               }
             },
@@ -31230,7 +31705,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/continuation-participations": {
@@ -31264,6 +31740,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -31459,7 +31946,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/continuation-declines": {
@@ -31493,6 +31981,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -31688,7 +32187,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/me/raid-rooms/{room_id}/opening-context": {
@@ -31786,6 +32286,47 @@
               "default": "false",
               "title": "Include Session Display"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
+          },
+          {
+            "name": "base_starts_at",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "Required as specified by beta-recruitment-wire-2 only when contract_profile opts in."
+          },
+          {
+            "name": "early_coordination_enabled",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Required as specified by beta-recruitment-wire-2 only when contract_profile opts in."
+          },
+          {
+            "name": "early_additional_members",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 7
+            },
+            "description": "Required as specified by beta-recruitment-wire-2 only when contract_profile opts in."
           }
         ],
         "responses": {
@@ -31794,7 +32335,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OpeningDisplayContext"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/OpeningDisplayContext"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_OpeningDisplayContext"
+                    }
+                  ],
+                  "title": "Response Get  V2 Me Raid-Rooms Room Id Opening-Context"
                 }
               }
             },
@@ -31970,7 +32519,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/recruitment-openings": {
@@ -32005,6 +32555,17 @@
               "format": "uuid4",
               "title": "Idempotency-Key"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
           }
         ],
         "requestBody": {
@@ -32012,7 +32573,15 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Open"
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/Open"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BetaOpenRequest"
+                  }
+                ],
+                "title": "Data"
               }
             }
           }
@@ -32199,7 +32768,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/me/raid-rooms/{room_id}/participation-cancellation-context": {
@@ -32232,6 +32802,17 @@
             "schema": {
               "type": "string",
               "title": "Target Cycle Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -32417,7 +32998,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/participation-cancellations": {
@@ -32451,6 +33033,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -32646,7 +33239,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/me/raid-rooms/{room_id}/leadership-transfer-context": {
@@ -32679,6 +33273,17 @@
             "schema": {
               "type": "string",
               "title": "Target Cycle Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -32864,7 +33469,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/leadership-transfers": {
@@ -32898,6 +33504,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -33093,7 +33710,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/character-changes": {
@@ -33127,6 +33745,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -33323,7 +33952,8 @@
             }
           }
         },
-        "description": "Atomically replace only the exact own current target assignments under admission-eligibility-2. Original party is preferred, then an eligible opposite party in eight-person rooms. Current token, actor revisions, target parties and consent must match; failure preserves old character, reservations and opposite target. Original ACK replay is preserved."
+        "description": "Atomically replace only the exact own current target assignments under admission-eligibility-2. Original party is preferred, then an eligible opposite party in eight-person rooms. Current token, actor revisions, target parties and consent must match; failure preserves old character, reservations and opposite target. Original ACK replay is preserved.",
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/me/raid-rooms/{room_id}/availability-submission": {
@@ -33357,6 +33987,17 @@
               "type": "string",
               "title": "Target Cycle Key"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
           }
         ],
         "responses": {
@@ -33365,7 +34006,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OutputContract3GetV2MeRaidRoomsRoomIdAvailabilitySubmission"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/OutputContract3GetV2MeRaidRoomsRoomIdAvailabilitySubmission"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_OutputContract3GetV2MeRaidRoomsRoomIdAvailabilitySubmission"
+                    }
+                  ],
+                  "title": "Response Contract3 Get  V2 Me Raid-Rooms Room Id Availability-Submission"
                 }
               }
             },
@@ -33541,7 +34190,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       },
       "put": {
         "tags": [
@@ -33574,6 +34224,17 @@
               "format": "uuid4",
               "title": "Idempotency-Key"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
           }
         ],
         "requestBody": {
@@ -33592,7 +34253,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OutputContract3GetV2MeRaidRoomsRoomIdAvailabilitySubmission"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/OutputContract3GetV2MeRaidRoomsRoomIdAvailabilitySubmission"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_OutputContract3GetV2MeRaidRoomsRoomIdAvailabilitySubmission"
+                    }
+                  ],
+                  "title": "Response Contract3 Put  V2 Me Raid-Rooms Room Id Availability-Submission"
                 }
               }
             },
@@ -33768,7 +34437,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/me/raid-rooms/{room_id}/schedule-context": {
@@ -33819,6 +34489,17 @@
               ],
               "title": "Target Session Id"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
           }
         ],
         "responses": {
@@ -33827,7 +34508,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OutputContract3GetV2MeRaidRoomsRoomIdScheduleContext"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/OutputContract3GetV2MeRaidRoomsRoomIdScheduleContext"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_OutputContract3GetV2MeRaidRoomsRoomIdScheduleContext"
+                    }
+                  ],
+                  "title": "Response Contract3 Get  V2 Me Raid-Rooms Room Id Schedule-Context"
                 }
               }
             },
@@ -34003,7 +34692,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/me/raid-schedule-overlaps": {
@@ -34055,6 +34745,17 @@
                 }
               ],
               "title": "Cursor"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -34240,7 +34941,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-sessions/{session_id}/participation-confirmations": {
@@ -34274,6 +34976,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -34469,7 +35182,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/schedule-groups": {
@@ -34504,6 +35218,17 @@
               "format": "uuid4",
               "title": "Idempotency-Key"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
           }
         ],
         "requestBody": {
@@ -34511,7 +35236,15 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/app__raid_rooms__cycle_schemas__EditGroups"
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/app__raid_rooms__cycle_schemas__EditGroups"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BetaScheduleEditRequest"
+                  }
+                ],
+                "title": "Data"
               }
             }
           }
@@ -34698,7 +35431,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-schedule-groups/{group_id}/candidates": {
@@ -34731,6 +35465,17 @@
             "schema": {
               "type": "string",
               "title": "Target Cycle Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -34916,7 +35661,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-schedule-groups/{group_id}/selections": {
@@ -34950,6 +35696,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -35145,7 +35902,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/schedule-proposals": {
@@ -35179,6 +35937,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -35374,7 +36143,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-schedule-proposals/{proposal_id}/responses": {
@@ -35408,6 +36178,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -35603,7 +36384,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/command-context": {
@@ -35667,6 +36449,17 @@
                 }
               ],
               "title": "Round Id"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -35852,7 +36645,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/weekly-incomplete-closures": {
@@ -35886,6 +36680,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -36081,7 +36886,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rounds/{round_id}/completion": {
@@ -36115,6 +36921,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -36310,7 +37127,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rounds/{round_id}/personal-completion": {
@@ -36344,6 +37162,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -36539,7 +37368,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/weekly-resume-proposals": {
@@ -36594,6 +37424,17 @@
                 }
               ],
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -36797,7 +37638,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/me/characters/{character_id}/raid-weekly-states/{raid_id}/manual-completion": {
@@ -36840,6 +37682,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -37035,7 +37888,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/me/raid-rooms/{room_id}/settings": {
@@ -37068,6 +37922,17 @@
             "schema": {
               "type": "string",
               "title": "Target Cycle Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -37253,7 +38118,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/settings": {
@@ -37287,6 +38153,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -37482,7 +38359,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/formation": {
@@ -37516,6 +38394,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -37711,7 +38600,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/removals": {
@@ -37745,6 +38635,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -37940,7 +38841,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/me/raid-rooms/{room_id}/common-context": {
@@ -37978,6 +38880,17 @@
               ],
               "type": "string",
               "title": "Command"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -38163,7 +39076,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/common-settings": {
@@ -38197,6 +39111,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -38392,7 +39317,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/leave": {
@@ -38427,6 +39353,17 @@
               "format": "uuid4",
               "title": "Idempotency-Key"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
           }
         ],
         "requestBody": {
@@ -38621,7 +39558,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/end": {
@@ -38656,6 +39594,17 @@
               "format": "uuid4",
               "title": "Idempotency-Key"
             }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
           }
         ],
         "requestBody": {
@@ -38850,7 +39799,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/me/raid-rooms/{room_id}/continuation-choices": {
@@ -38883,6 +39833,17 @@
             "schema": {
               "type": "string",
               "title": "Target Cycle Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -39068,7 +40029,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/me/characters/{character_id}/raid-weekly-states/{raid_id}/completion-correction-context": {
@@ -39110,6 +40072,17 @@
             "schema": {
               "type": "string",
               "title": "Target Cycle Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -39295,7 +40268,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/me/characters/{character_id}/raid-weekly-states/{raid_id}/completion-corrections": {
@@ -39338,6 +40312,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -39533,7 +40518,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/personal-completion-departure-context": {
@@ -39578,6 +40564,17 @@
               "type": "string",
               "format": "uuid",
               "title": "Round Id"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -39763,7 +40760,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/personal-completion-departures": {
@@ -39797,6 +40795,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -39992,7 +41001,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/member-removal-context": {
@@ -40037,6 +41047,17 @@
               "type": "string",
               "format": "uuid",
               "title": "Target Cycle Member Id"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -40222,7 +41243,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/member-removals": {
@@ -40256,6 +41278,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -40451,7 +41484,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/membership-action-context": {
@@ -40487,6 +41521,17 @@
               "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
               "format": "date",
               "title": "Target Cycle Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -40672,7 +41717,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/membership-actions": {
@@ -40707,6 +41753,17 @@
               "type": "string",
               "format": "uuid4",
               "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -40902,7 +41959,8 @@
               }
             }
           }
-        }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
       }
     },
     "/v2/raid-rooms/{room_id}/admission-character-candidates": {
@@ -40979,6 +42037,17 @@
                 }
               ],
               "title": "Cursor"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
             }
           }
         ],
@@ -41100,6 +42169,407 @@
                 "schema": {
                   "type": "integer",
                   "const": 2
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Request Entity Too Large",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Too Many Requests",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "const": 60
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
+      }
+    },
+    "/v2/me/application-message-presets": {
+      "get": {
+        "tags": [
+          "application-message-presets"
+        ],
+        "summary": "Read Presets",
+        "operationId": "read_presets_v2_me_application_message_presets_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PresetDocument"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Request Entity Too Large",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Too Many Requests",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "const": 60
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "application-message-presets"
+        ],
+        "summary": "Write Presets",
+        "operationId": "write_presets_v2_me_application_message_presets_put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid4",
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PresetPut"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PresetDocument"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
                 }
               }
             }
@@ -69997,6 +71467,3763 @@
           "data"
         ],
         "title": "ApplicationDisplayPageResponse"
+      },
+      "AvailabilityCopyView": {
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "unset",
+              "configured"
+            ],
+            "title": "State"
+          },
+          "source_personal_version": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Source Personal Version"
+          },
+          "copied_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Copied At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "state",
+          "source_personal_version",
+          "copied_at"
+        ],
+        "title": "AvailabilityCopyView"
+      },
+      "BetaApplyRequest": {
+        "properties": {
+          "expected_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "expected_room_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Room Revision"
+          },
+          "expected_members_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Members Revision"
+          },
+          "expected_plan_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Plan Revision"
+          },
+          "expected_policy_snapshot": {
+            "type": "string",
+            "title": "Expected Policy Snapshot"
+          },
+          "expected_catalog_version": {
+            "type": "string",
+            "title": "Expected Catalog Version"
+          },
+          "selection_context": {
+            "$ref": "#/components/schemas/BContextRef"
+          },
+          "selection": {
+            "$ref": "#/components/schemas/BSelection"
+          },
+          "target_items": {
+            "items": {
+              "$ref": "#/components/schemas/BAppRaidRoomsParticipationCommandsTarget"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Target Items"
+          },
+          "target_session_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "title": "Target Session Ids"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "expected_target_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "application_memo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Application Memo"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_cycle_key",
+          "expected_room_revision",
+          "expected_members_revision",
+          "expected_plan_revision",
+          "expected_policy_snapshot",
+          "expected_catalog_version",
+          "selection_context",
+          "selection",
+          "target_items",
+          "target_session_ids",
+          "target_cycle_key",
+          "expected_target_revision"
+        ],
+        "title": "BetaApplyRequest"
+      },
+      "BetaCreateRequest": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 60,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope1"
+          },
+          "group_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group Id"
+          },
+          "admission_mode": {
+            "$ref": "#/components/schemas/AdmissionMode"
+          },
+          "app_mode": {
+            "$ref": "#/components/schemas/AppMode"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/BCreateItem"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Items"
+          },
+          "selection": {
+            "$ref": "#/components/schemas/BSelection"
+          },
+          "selection_context": {
+            "$ref": "#/components/schemas/BContextRef"
+          },
+          "experience_level": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ExperienceLevel"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "combat_requirement": {
+            "$ref": "#/components/schemas/BCombat"
+          },
+          "continuation": {
+            "$ref": "#/components/schemas/BContinuationInput"
+          },
+          "expected_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "expected_catalog_version": {
+            "type": "string",
+            "title": "Expected Catalog Version"
+          },
+          "expected_group_revision": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2147483647.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Group Revision"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "expected_target_revision": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Version"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "beta_schedule_targets": {
+            "items": {
+              "$ref": "#/components/schemas/BetaScheduleTarget"
+            },
+            "type": "array",
+            "maxItems": 2,
+            "minItems": 1,
+            "title": "Beta Schedule Targets"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "title",
+          "scope",
+          "group_id",
+          "admission_mode",
+          "app_mode",
+          "items",
+          "selection",
+          "selection_context",
+          "experience_level",
+          "combat_requirement",
+          "continuation",
+          "expected_cycle_key",
+          "expected_catalog_version",
+          "expected_group_revision",
+          "target_cycle_key",
+          "expected_target_revision",
+          "beta_schedule_targets"
+        ],
+        "title": "BetaCreateRequest"
+      },
+      "BetaOpenRequest": {
+        "properties": {
+          "expected_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "expected_target_revision": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Version"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "context_token": {
+            "type": "string",
+            "maxLength": 4096,
+            "minLength": 1,
+            "title": "Context Token"
+          },
+          "selection": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Selection"
+          },
+          "target_items": {
+            "items": {
+              "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Target"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Target Items"
+          },
+          "target_session_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "minItems": 0,
+            "title": "Target Session Ids"
+          },
+          "intent": {
+            "$ref": "#/components/schemas/Intent"
+          },
+          "beta_schedule": {
+            "$ref": "#/components/schemas/BetaScheduleConfig"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_cycle_key",
+          "target_cycle_key",
+          "expected_target_revision",
+          "context_token",
+          "selection",
+          "target_items",
+          "target_session_ids",
+          "intent",
+          "beta_schedule"
+        ],
+        "title": "BetaOpenRequest"
+      },
+      "BetaScheduleConfig": {
+        "properties": {
+          "base_starts_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Base Starts At"
+          },
+          "early_coordination_enabled": {
+            "type": "boolean",
+            "title": "Early Coordination Enabled"
+          },
+          "early_additional_members": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 7.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Early Additional Members"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "base_starts_at",
+          "early_coordination_enabled",
+          "early_additional_members"
+        ],
+        "title": "BetaScheduleConfig"
+      },
+      "BetaScheduleEditRequest": {
+        "properties": {
+          "expected_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "expected_plan_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Plan Revision"
+          },
+          "expected_members_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Members Revision"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "expected_target_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "expected_leadership_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "early_coordination_enabled": {
+            "type": "boolean",
+            "title": "Early Coordination Enabled"
+          },
+          "early_additional_members": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 7.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Early Additional Members"
+          },
+          "accept_immediate_confirmation": {
+            "type": "boolean",
+            "title": "Accept Immediate Confirmation"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_cycle_key",
+          "expected_plan_revision",
+          "expected_members_revision",
+          "target_cycle_key",
+          "expected_target_revision",
+          "expected_leadership_revision",
+          "early_coordination_enabled",
+          "early_additional_members",
+          "accept_immediate_confirmation"
+        ],
+        "title": "BetaScheduleEditRequest"
+      },
+      "BetaScheduleTarget": {
+        "properties": {
+          "base_starts_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Base Starts At"
+          },
+          "early_coordination_enabled": {
+            "type": "boolean",
+            "title": "Early Coordination Enabled"
+          },
+          "early_additional_members": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 7.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Early Additional Members"
+          },
+          "target_cycle_key": {
+            "type": "string",
+            "title": "Target Cycle Key"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "base_starts_at",
+          "early_coordination_enabled",
+          "early_additional_members",
+          "target_cycle_key"
+        ],
+        "title": "BetaScheduleTarget"
+      },
+      "BetaScheduleView": {
+        "properties": {
+          "policy_version": {
+            "type": "string",
+            "const": "beta-schedule-1",
+            "title": "Policy Version"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "session_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Session Id"
+          },
+          "base_starts_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Base Starts At"
+          },
+          "base_ends_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Base Ends At"
+          },
+          "base_deadline_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Base Deadline At"
+          },
+          "early_coordination_enabled": {
+            "type": "boolean",
+            "title": "Early Coordination Enabled"
+          },
+          "early_additional_members": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 7.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Early Additional Members"
+          },
+          "coordination_state": {
+            "type": "string",
+            "enum": [
+              "base_committed",
+              "coordinating",
+              "early_confirmed",
+              "base_confirmed",
+              "proposal_confirmed",
+              "deadline_pending",
+              "needs_review",
+              "ended"
+            ],
+            "title": "Coordination State"
+          },
+          "coordination_active": {
+            "type": "boolean",
+            "title": "Coordination Active"
+          },
+          "confirmed_starts_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confirmed Starts At"
+          },
+          "confirmed_ends_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confirmed Ends At"
+          },
+          "effective_starts_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Effective Starts At"
+          },
+          "effective_ends_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Effective Ends At"
+          },
+          "admission_deadline": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Admission Deadline"
+          },
+          "deadline_status": {
+            "type": "string",
+            "enum": [
+              "not_due",
+              "due_unprocessed",
+              "processed",
+              "obsolete"
+            ],
+            "title": "Deadline Status"
+          },
+          "pending_transition": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "base_confirmation_due",
+                  "departure_review_due"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pending Transition"
+          },
+          "review_reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "departure_passed_unconfirmed"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Review Reason"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "policy_version",
+          "revision",
+          "session_id",
+          "base_starts_at",
+          "base_ends_at",
+          "base_deadline_at",
+          "early_coordination_enabled",
+          "early_additional_members",
+          "coordination_state",
+          "coordination_active",
+          "confirmed_starts_at",
+          "confirmed_ends_at",
+          "effective_starts_at",
+          "effective_ends_at",
+          "admission_deadline",
+          "deadline_status",
+          "pending_transition",
+          "review_reason",
+          "evaluated_at"
+        ],
+        "title": "BetaScheduleView"
+      },
+      "BetaSearchRequest": {
+        "properties": {
+          "category": {
+            "$ref": "#/components/schemas/Category"
+          },
+          "admission_scope": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AdmissionScope"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "group_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "title": "Group Ids"
+          },
+          "filter_context_token": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 64,
+                "minLength": 64
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filter Context Token"
+          },
+          "member_conditions": {
+            "items": {
+              "$ref": "#/components/schemas/BCondition"
+            },
+            "type": "array",
+            "title": "Member Conditions"
+          },
+          "raid_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Raid Ids"
+          },
+          "difficulty_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Difficulty Ids"
+          },
+          "sort": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BSort"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "remaining_slot_counts": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "integer",
+                  "maximum": 7.0,
+                  "minimum": 1.0
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Remaining Slot Counts"
+          },
+          "limit": {
+            "type": "integer",
+            "maximum": 50.0,
+            "minimum": 1.0,
+            "title": "Limit"
+          },
+          "cursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2048
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cursor"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "experience_levels": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ExperienceFilterValues"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "group_character_candidates_token": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 64,
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Group Character Candidates Token"
+          },
+          "departure_windows": {
+            "items": {
+              "$ref": "#/components/schemas/DepartureWindow"
+            },
+            "type": "array",
+            "maxItems": 16,
+            "minItems": 1,
+            "title": "Departure Windows"
+          },
+          "schedule_states": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "base_committed",
+                "coordinating",
+                "early_confirmed",
+                "base_confirmed",
+                "proposal_confirmed",
+                "deadline_pending",
+                "needs_review",
+                "ended",
+                "legacy"
+              ]
+            },
+            "type": "array",
+            "maxItems": 9,
+            "minItems": 1,
+            "title": "Schedule States"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "category",
+          "admission_scope",
+          "group_ids",
+          "filter_context_token",
+          "member_conditions",
+          "raid_ids",
+          "difficulty_ids",
+          "limit",
+          "cursor",
+          "target_cycle_key"
+        ],
+        "title": "BetaSearchRequest"
+      },
+      "Beta_AdmissionDisplayContext": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_AdmissionDisplayData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "Beta_AdmissionDisplayContext"
+      },
+      "Beta_AdmissionDisplayData": {
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "room_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Room Revision"
+          },
+          "members_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Members Revision"
+          },
+          "plan_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Plan Revision"
+          },
+          "expected_cycle_key": {
+            "type": "string",
+            "title": "Expected Cycle Key"
+          },
+          "server_time": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Server Time"
+          },
+          "catalog_version": {
+            "type": "string",
+            "title": "Catalog Version"
+          },
+          "policy_snapshot": {
+            "type": "string",
+            "title": "Policy Snapshot"
+          },
+          "context_token": {
+            "type": "string",
+            "title": "Context Token"
+          },
+          "selection": {
+            "$ref": "#/components/schemas/BSelection"
+          },
+          "targets": {
+            "items": {
+              "$ref": "#/components/schemas/BAppRaidRoomsParticipationCommandsTarget"
+            },
+            "type": "array",
+            "title": "Targets"
+          },
+          "session_choices": {
+            "items": {
+              "$ref": "#/components/schemas/SessionChoice"
+            },
+            "type": "array",
+            "maxItems": 64,
+            "minItems": 0,
+            "title": "Session Choices"
+          },
+          "comparison": {
+            "$ref": "#/components/schemas/BPowerComparison"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Permissions"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "expected_target_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "issued_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Issued At"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          },
+          "leadership": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Leadership"
+          },
+          "session_display": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ExistingSessionDisplay"
+              },
+              {
+                "$ref": "#/components/schemas/OpeningPreviewDisplay"
+              },
+              {
+                "$ref": "#/components/schemas/NoSelectionDisplay"
+              }
+            ],
+            "title": "Session Display",
+            "discriminator": {
+              "propertyName": "kind",
+              "mapping": {
+                "existing": "#/components/schemas/ExistingSessionDisplay",
+                "none": "#/components/schemas/NoSelectionDisplay",
+                "opening_preview": "#/components/schemas/OpeningPreviewDisplay"
+              }
+            }
+          },
+          "beta_schedule": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BetaScheduleView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "room_id",
+          "room_revision",
+          "members_revision",
+          "plan_revision",
+          "expected_cycle_key",
+          "server_time",
+          "catalog_version",
+          "policy_snapshot",
+          "context_token",
+          "selection",
+          "targets",
+          "session_choices",
+          "comparison",
+          "permissions",
+          "target_cycle_key",
+          "expected_target_revision",
+          "issued_at",
+          "expires_at",
+          "leadership",
+          "beta_schedule"
+        ],
+        "title": "Beta_AdmissionDisplayData"
+      },
+      "Beta_ApplicationDisplayDetail": {
+        "properties": {
+          "room": {
+            "$ref": "#/components/schemas/Beta_BCard"
+          },
+          "settings": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BSettings"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "members_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Members Revision"
+          },
+          "members": {
+            "items": {
+              "$ref": "#/components/schemas/BRoomMember"
+            },
+            "type": "array",
+            "title": "Members"
+          },
+          "my_membership": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BAppRaidRoomsAdmissionSchemasMyMembership"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "plan_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Plan Revision"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/Permissions3"
+          },
+          "access": {
+            "$ref": "#/components/schemas/BAccess"
+          },
+          "leadership": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Leadership"
+          },
+          "my_target_role": {
+            "$ref": "#/components/schemas/MyTargetRole"
+          },
+          "formation_slots": {
+            "items": {
+              "$ref": "#/components/schemas/FormationSlot"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "minItems": 0,
+            "title": "Formation Slots"
+          },
+          "formation_history": {
+            "items": {
+              "$ref": "#/components/schemas/FormationSlot"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "minItems": 0,
+            "title": "Formation History"
+          },
+          "unplaced_assignments": {
+            "items": {
+              "$ref": "#/components/schemas/UnplacedAssignment"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "minItems": 0,
+            "title": "Unplaced Assignments"
+          },
+          "my_application": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Beta_ApplicationDisplayOwnApplication"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "beta_schedule": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BetaScheduleView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "recruitment_identity": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RecruitmentIdentity"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "room",
+          "settings",
+          "members_revision",
+          "members",
+          "my_membership",
+          "plan_revision",
+          "permissions",
+          "access",
+          "leadership",
+          "my_target_role",
+          "formation_slots",
+          "formation_history",
+          "unplaced_assignments",
+          "my_application",
+          "beta_schedule",
+          "recruitment_identity"
+        ],
+        "title": "Beta_ApplicationDisplayDetail"
+      },
+      "Beta_ApplicationDisplayDetailResponse": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_ApplicationDisplayDetail"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "Beta_ApplicationDisplayDetailResponse"
+      },
+      "Beta_ApplicationDisplayItem": {
+        "properties": {
+          "application_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Application Id"
+          },
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "state": {
+            "type": "string",
+            "title": "State"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "expires_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expires At"
+          },
+          "ended_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ended At"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "selected_role": {
+            "$ref": "#/components/schemas/SelectedRole"
+          },
+          "display": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Display"
+          },
+          "admission_origin": {
+            "$ref": "#/components/schemas/BOrigin"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "target_generation": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "comparison": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BPowerComparison"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "analysis": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ApplicationDisplayAnalysis"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "display_reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "APPLICATION_CONTEXT_CHANGED",
+                  "CHARACTER_DATA_UNAVAILABLE"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Reason"
+          },
+          "beta_schedule": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BetaScheduleView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "application_memo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Application Memo"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "application_id",
+          "room_id",
+          "revision",
+          "state",
+          "created_at",
+          "expires_at",
+          "ended_at",
+          "character_id",
+          "selected_role",
+          "display",
+          "admission_origin",
+          "target_cycle_key",
+          "target_generation",
+          "comparison",
+          "analysis",
+          "display_reason",
+          "beta_schedule",
+          "application_memo"
+        ],
+        "title": "Beta_ApplicationDisplayItem"
+      },
+      "Beta_ApplicationDisplayOwnApplication": {
+        "properties": {
+          "application_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Application Id"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "accepted",
+              "rejected",
+              "withdrawn",
+              "expired",
+              "cancelled"
+            ],
+            "title": "State"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          },
+          "application_memo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Application Memo"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "application_id",
+          "revision",
+          "state",
+          "expires_at",
+          "application_memo"
+        ],
+        "title": "Beta_ApplicationDisplayOwnApplication"
+      },
+      "Beta_ApplicationDisplayPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Beta_ApplicationDisplayItem"
+            },
+            "type": "array",
+            "maxItems": 50,
+            "title": "Items"
+          },
+          "applications_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Applications Revision"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "items",
+          "applications_revision",
+          "next_cursor",
+          "evaluated_at"
+        ],
+        "title": "Beta_ApplicationDisplayPage"
+      },
+      "Beta_ApplicationDisplayPageResponse": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_ApplicationDisplayPage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "Beta_ApplicationDisplayPageResponse"
+      },
+      "Beta_BApplication": {
+        "properties": {
+          "application_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Application Id"
+          },
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "state": {
+            "type": "string",
+            "title": "State"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "expires_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expires At"
+          },
+          "ended_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ended At"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "selected_role": {
+            "$ref": "#/components/schemas/SelectedRole"
+          },
+          "display": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Display"
+          },
+          "admission_origin": {
+            "$ref": "#/components/schemas/BOrigin"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "target_generation": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "beta_schedule": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BetaScheduleView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "application_memo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Application Memo"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "application_id",
+          "room_id",
+          "revision",
+          "state",
+          "created_at",
+          "expires_at",
+          "ended_at",
+          "character_id",
+          "selected_role",
+          "display",
+          "admission_origin",
+          "target_cycle_key",
+          "target_generation",
+          "beta_schedule",
+          "application_memo"
+        ],
+        "title": "Beta_BApplication"
+      },
+      "Beta_BApplicationPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Beta_BApplication"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "applications_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Applications Revision"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "items",
+          "applications_revision",
+          "next_cursor",
+          "evaluated_at"
+        ],
+        "title": "Beta_BApplicationPage"
+      },
+      "Beta_BApplicationView": {
+        "properties": {
+          "application_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Application Id"
+          },
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "state": {
+            "type": "string",
+            "title": "State"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          },
+          "ended_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ended At"
+          },
+          "display": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Display"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "selected_role": {
+            "$ref": "#/components/schemas/SelectedRole"
+          },
+          "admission_origin": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Admission Origin"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "target_generation": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "beta_schedule": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BetaScheduleView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "application_memo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Application Memo"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "application_id",
+          "room_id",
+          "revision",
+          "state",
+          "created_at",
+          "expires_at",
+          "ended_at",
+          "display",
+          "character_id",
+          "selected_role",
+          "admission_origin",
+          "target_cycle_key",
+          "target_generation",
+          "beta_schedule",
+          "application_memo"
+        ],
+        "title": "Beta_BApplicationView"
+      },
+      "Beta_BCard": {
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope1"
+          },
+          "group_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group Id"
+          },
+          "admission_mode": {
+            "$ref": "#/components/schemas/AdmissionMode2"
+          },
+          "experience_level": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ExperienceLevel"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "app_capacity": {
+            "$ref": "#/components/schemas/AppCapacity"
+          },
+          "app_member_count": {
+            "type": "integer",
+            "maximum": 8.0,
+            "minimum": 0.0,
+            "title": "App Member Count",
+            "description": "Distinct target cycle members holding active assignment leases, including review-held slots, not persistent global member count or legacy choices."
+          },
+          "state": {
+            "$ref": "#/components/schemas/State1"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/BCardItem"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "game_items": {
+            "items": {
+              "$ref": "#/components/schemas/BCardItem"
+            },
+            "type": "array",
+            "title": "Game Items"
+          },
+          "leader_display": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Leader Display"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "phase": {
+            "$ref": "#/components/schemas/Phase"
+          },
+          "restricted": {
+            "type": "boolean",
+            "title": "Restricted"
+          },
+          "schedule_summary": {
+            "$ref": "#/components/schemas/BAppRaidRoomsSearchRouterSummary"
+          },
+          "combat_requirement": {
+            "$ref": "#/components/schemas/BCombat"
+          },
+          "continuation_enabled": {
+            "type": "boolean",
+            "title": "Continuation Enabled"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/Permissions1"
+          },
+          "leadership": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Leadership"
+          },
+          "my_target_role": {
+            "$ref": "#/components/schemas/MyTargetRole"
+          },
+          "target_cycle_key": {
+            "type": "string",
+            "title": "Target Cycle Key"
+          },
+          "target_state": {
+            "$ref": "#/components/schemas/TargetState"
+          },
+          "target_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "room_cycle_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Cycle Id"
+          },
+          "target_generation": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "beta_schedule": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BetaScheduleView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "room_id",
+          "revision",
+          "title",
+          "scope",
+          "group_id",
+          "admission_mode",
+          "experience_level",
+          "app_capacity",
+          "app_member_count",
+          "state",
+          "items",
+          "game_items",
+          "leader_display",
+          "created_at",
+          "phase",
+          "restricted",
+          "schedule_summary",
+          "combat_requirement",
+          "continuation_enabled",
+          "permissions",
+          "leadership",
+          "my_target_role",
+          "target_cycle_key",
+          "target_state",
+          "target_revision",
+          "room_cycle_id",
+          "target_generation",
+          "beta_schedule"
+        ],
+        "title": "Beta_BCard"
+      },
+      "Beta_BCreationContext": {
+        "properties": {
+          "expected_cycle_key": {
+            "type": "string",
+            "title": "Expected Cycle Key"
+          },
+          "server_time": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Server Time"
+          },
+          "catalog_version": {
+            "type": "string",
+            "title": "Catalog Version"
+          },
+          "policy_snapshot": {
+            "type": "string",
+            "title": "Policy Snapshot"
+          },
+          "context_token": {
+            "type": "string",
+            "title": "Context Token"
+          },
+          "selection": {
+            "$ref": "#/components/schemas/BSelection"
+          },
+          "targets": {
+            "items": {
+              "$ref": "#/components/schemas/BCreateTarget"
+            },
+            "type": "array",
+            "title": "Targets"
+          },
+          "group_revision": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2147483647.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group Revision"
+          },
+          "settings_defaults": {
+            "$ref": "#/components/schemas/BDefaults"
+          },
+          "comparison": {
+            "$ref": "#/components/schemas/BPowerComparison"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/Permissions2"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "expected_target_revision": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Version"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "issued_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Issued At"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          },
+          "prospective_room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Prospective Room Id"
+          },
+          "target_creation": {
+            "$ref": "#/components/schemas/ProspectiveCreateCycle"
+          },
+          "next_cycle_creation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProspectiveCreateCycle"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "continuation_effect": {
+            "$ref": "#/components/schemas/ContinuationEffect"
+          },
+          "beta_schedule_targets": {
+            "items": {
+              "$ref": "#/components/schemas/BetaScheduleTarget"
+            },
+            "type": "array",
+            "maxItems": 2,
+            "minItems": 1,
+            "title": "Beta Schedule Targets"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_cycle_key",
+          "server_time",
+          "catalog_version",
+          "policy_snapshot",
+          "context_token",
+          "selection",
+          "targets",
+          "group_revision",
+          "settings_defaults",
+          "comparison",
+          "permissions",
+          "target_cycle_key",
+          "expected_target_revision",
+          "issued_at",
+          "expires_at",
+          "prospective_room_id",
+          "target_creation",
+          "next_cycle_creation",
+          "continuation_effect",
+          "beta_schedule_targets"
+        ],
+        "title": "Beta_BCreationContext"
+      },
+      "Beta_BDetail": {
+        "properties": {
+          "room": {
+            "$ref": "#/components/schemas/Beta_BCard"
+          },
+          "settings": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BSettings"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "members_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Members Revision"
+          },
+          "members": {
+            "items": {
+              "$ref": "#/components/schemas/BRoomMember"
+            },
+            "type": "array",
+            "title": "Members"
+          },
+          "my_membership": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BAppRaidRoomsAdmissionSchemasMyMembership"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "plan_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Plan Revision"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/Permissions3"
+          },
+          "access": {
+            "$ref": "#/components/schemas/BAccess"
+          },
+          "leadership": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Leadership"
+          },
+          "my_target_role": {
+            "$ref": "#/components/schemas/MyTargetRole"
+          },
+          "formation_slots": {
+            "items": {
+              "$ref": "#/components/schemas/FormationSlot"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "minItems": 0,
+            "title": "Formation Slots"
+          },
+          "formation_history": {
+            "items": {
+              "$ref": "#/components/schemas/FormationSlot"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "minItems": 0,
+            "title": "Formation History"
+          },
+          "unplaced_assignments": {
+            "items": {
+              "$ref": "#/components/schemas/UnplacedAssignment"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "minItems": 0,
+            "title": "Unplaced Assignments"
+          },
+          "beta_schedule": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BetaScheduleView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "recruitment_identity": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RecruitmentIdentity"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "room",
+          "settings",
+          "members_revision",
+          "members",
+          "my_membership",
+          "plan_revision",
+          "permissions",
+          "access",
+          "leadership",
+          "my_target_role",
+          "formation_slots",
+          "formation_history",
+          "unplaced_assignments",
+          "beta_schedule",
+          "recruitment_identity"
+        ],
+        "title": "Beta_BDetail"
+      },
+      "Beta_BMembership": {
+        "properties": {
+          "membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Membership Id"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "state": {
+            "$ref": "#/components/schemas/State7"
+          },
+          "joined_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Joined At"
+          },
+          "ended_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ended At"
+          },
+          "assignments": {
+            "items": {
+              "$ref": "#/components/schemas/BOwnAssignment"
+            },
+            "type": "array",
+            "title": "Assignments"
+          },
+          "room": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Beta_BCard"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "recovery_only": {
+            "type": "boolean",
+            "title": "Recovery Only"
+          },
+          "history_only": {
+            "type": "boolean",
+            "title": "History Only"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/Permissions8"
+          },
+          "target_role": {
+            "$ref": "#/components/schemas/TargetRole"
+          },
+          "cycle_member_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cycle Member Id"
+          },
+          "cycle_member_revision": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Version"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "joined_order": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/JoinedOrder"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "target_participation_state": {
+            "$ref": "#/components/schemas/TargetParticipationState"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "room_cycle_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Room Cycle Id"
+          },
+          "target_generation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Version"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "target_revision": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Version"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "beta_schedule": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BetaScheduleView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "membership_id",
+          "revision",
+          "room_id",
+          "state",
+          "joined_at",
+          "ended_at",
+          "assignments",
+          "room",
+          "recovery_only",
+          "history_only",
+          "permissions",
+          "target_role",
+          "cycle_member_id",
+          "cycle_member_revision",
+          "joined_order",
+          "target_participation_state",
+          "target_cycle_key",
+          "room_cycle_id",
+          "target_generation",
+          "target_revision",
+          "beta_schedule"
+        ],
+        "title": "Beta_BMembership"
+      },
+      "Beta_BMembershipPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Beta_BMembership"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "membership_head": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Membership Head"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "items",
+          "membership_head",
+          "next_cursor",
+          "evaluated_at"
+        ],
+        "title": "Beta_BMembershipPage"
+      },
+      "Beta_BPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Beta_BCard"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "directory_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Directory Revision"
+          },
+          "filter_scope_digest": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filter Scope Digest"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "items",
+          "directory_revision",
+          "filter_scope_digest",
+          "next_cursor",
+          "evaluated_at"
+        ],
+        "title": "Beta_BPage"
+      },
+      "Beta_BReview": {
+        "properties": {
+          "application": {
+            "$ref": "#/components/schemas/Beta_BApplicationView"
+          },
+          "room_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Room Revision"
+          },
+          "members_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Members Revision"
+          },
+          "plan_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Plan Revision"
+          },
+          "server_time": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Server Time"
+          },
+          "eligibility": {
+            "$ref": "#/components/schemas/BEligibility"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/Permissions5"
+          },
+          "beta_schedule": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BetaScheduleView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "application",
+          "room_revision",
+          "members_revision",
+          "plan_revision",
+          "server_time",
+          "eligibility",
+          "permissions",
+          "beta_schedule"
+        ],
+        "title": "Beta_BReview"
+      },
+      "Beta_BSubmissionOut": {
+        "properties": {
+          "membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Membership Id"
+          },
+          "state": {
+            "$ref": "#/components/schemas/State2"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "source_personal_version": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 2147483647.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Personal Version"
+          },
+          "intervals": {
+            "items": {
+              "$ref": "#/components/schemas/BInterval"
+            },
+            "type": "array",
+            "title": "Intervals"
+          },
+          "normalized_intervals": {
+            "items": {
+              "$ref": "#/components/schemas/BNormalizedInterval"
+            },
+            "type": "array",
+            "title": "Normalized Intervals"
+          },
+          "submitted_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Submitted At"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "cycle_member_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Cycle Member Id"
+          },
+          "cycle_member_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "availability_copy": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AvailabilityCopyView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "membership_id",
+          "state",
+          "revision",
+          "source_personal_version",
+          "intervals",
+          "normalized_intervals",
+          "submitted_at",
+          "target_cycle_key",
+          "cycle_member_id",
+          "cycle_member_revision",
+          "availability_copy"
+        ],
+        "title": "Beta_BSubmissionOut"
+      },
+      "Beta_BTimeContext": {
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "members_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Members Revision"
+          },
+          "plan_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Plan Revision"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          },
+          "members": {
+            "items": {
+              "$ref": "#/components/schemas/Beta_BTimeMember"
+            },
+            "type": "array",
+            "title": "Members"
+          },
+          "target_session_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Session Id"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/Permissions7"
+          },
+          "target_cycle_key": {
+            "type": "string",
+            "title": "Target Cycle Key"
+          },
+          "beta_schedule": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BetaScheduleView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "room_id",
+          "members_revision",
+          "plan_revision",
+          "evaluated_at",
+          "members",
+          "target_session_id",
+          "permissions",
+          "target_cycle_key",
+          "beta_schedule"
+        ],
+        "title": "Beta_BTimeContext"
+      },
+      "Beta_BTimeMember": {
+        "properties": {
+          "membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Membership Id"
+          },
+          "display": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display"
+          },
+          "submission": {
+            "$ref": "#/components/schemas/Beta_BSubmissionOut"
+          },
+          "anonymous_busy": {
+            "$ref": "#/components/schemas/BAnonymousBusy"
+          },
+          "cycle_member_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Cycle Member Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "membership_id",
+          "display",
+          "submission",
+          "anonymous_busy",
+          "cycle_member_id"
+        ],
+        "title": "Beta_BTimeMember"
+      },
+      "Beta_ContinuationDisplayContext": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_ContinuationDisplayData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "Beta_ContinuationDisplayContext"
+      },
+      "Beta_ContinuationDisplayData": {
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "action": {
+            "$ref": "#/components/schemas/Action"
+          },
+          "source": {
+            "$ref": "#/components/schemas/Source"
+          },
+          "selection": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Selection"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "targets": {
+            "items": {
+              "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Target"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 0,
+            "title": "Targets"
+          },
+          "target_session_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "minItems": 0,
+            "title": "Target Session Ids"
+          },
+          "context_token": {
+            "type": "string",
+            "maxLength": 4096,
+            "minLength": 1,
+            "title": "Context Token"
+          },
+          "issued_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Issued At"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          },
+          "permission": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Permission"
+          },
+          "conflicts": {
+            "items": {
+              "$ref": "#/components/schemas/Conflict"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 0,
+            "title": "Conflicts"
+          },
+          "session_display": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ExistingSessionDisplay"
+              },
+              {
+                "$ref": "#/components/schemas/OpeningPreviewDisplay"
+              },
+              {
+                "$ref": "#/components/schemas/NoSelectionDisplay"
+              }
+            ],
+            "title": "Session Display",
+            "discriminator": {
+              "propertyName": "kind",
+              "mapping": {
+                "existing": "#/components/schemas/ExistingSessionDisplay",
+                "none": "#/components/schemas/NoSelectionDisplay",
+                "opening_preview": "#/components/schemas/OpeningPreviewDisplay"
+              }
+            }
+          },
+          "beta_schedule": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BetaScheduleView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "room_id",
+          "action",
+          "source",
+          "selection",
+          "targets",
+          "target_session_ids",
+          "context_token",
+          "issued_at",
+          "expires_at",
+          "permission",
+          "conflicts",
+          "beta_schedule"
+        ],
+        "title": "Beta_ContinuationDisplayData"
+      },
+      "Beta_MembershipActionDetailProfile": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/MembershipActionDetailReaderScope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_MembershipActionDetailProfileData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "Beta_MembershipActionDetailProfile"
+      },
+      "Beta_MembershipActionDetailProfileData": {
+        "properties": {
+          "target": {
+            "$ref": "#/components/schemas/MembershipActionReaderTarget"
+          },
+          "viewer": {
+            "$ref": "#/components/schemas/MembershipActionReaderRelation"
+          },
+          "access": {
+            "$ref": "#/components/schemas/MembershipActionReaderAccess"
+          },
+          "recovery": {
+            "$ref": "#/components/schemas/MembershipActionRecovery"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/MembershipActionReaderPermissions"
+          },
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Beta_OutputContract3GetV2RaidRoomsRoomIdDetail"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "record": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MembershipActionRecordSnapshot"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "beta_schedule": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BetaScheduleView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "recruitment_identity": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RecruitmentIdentity"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "target",
+          "viewer",
+          "access",
+          "recovery",
+          "permissions",
+          "content",
+          "record",
+          "beta_schedule",
+          "recruitment_identity"
+        ],
+        "title": "Beta_MembershipActionDetailProfileData"
+      },
+      "Beta_MembershipActionMembershipEntry": {
+        "properties": {
+          "target": {
+            "$ref": "#/components/schemas/MembershipActionReaderTarget"
+          },
+          "viewer": {
+            "$ref": "#/components/schemas/MembershipActionReaderRelation"
+          },
+          "recovery": {
+            "$ref": "#/components/schemas/MembershipActionRecovery"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/MembershipActionReaderPermissions"
+          },
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Beta_BMembership"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "beta_schedule": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BetaScheduleView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "target",
+          "viewer",
+          "recovery",
+          "permissions",
+          "content",
+          "beta_schedule"
+        ],
+        "title": "Beta_MembershipActionMembershipEntry"
+      },
+      "Beta_MembershipActionMembershipPage": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/MembershipActionMembershipReaderScope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_MembershipActionMembershipPageData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "Beta_MembershipActionMembershipPage"
+      },
+      "Beta_MembershipActionMembershipPageData": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Beta_MembershipActionMembershipEntry"
+            },
+            "type": "array",
+            "maxItems": 50,
+            "minItems": 0,
+            "title": "Items"
+          },
+          "membership_head": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Membership Head"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2048
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "items",
+          "membership_head",
+          "next_cursor",
+          "evaluated_at"
+        ],
+        "title": "Beta_MembershipActionMembershipPageData"
+      },
+      "Beta_MembershipActionPlanProfile": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/MembershipActionPlanReaderScope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_MembershipActionPlanProfileData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "Beta_MembershipActionPlanProfile"
+      },
+      "Beta_MembershipActionPlanProfileData": {
+        "properties": {
+          "target": {
+            "$ref": "#/components/schemas/MembershipActionReaderTarget"
+          },
+          "viewer": {
+            "$ref": "#/components/schemas/MembershipActionReaderRelation"
+          },
+          "access": {
+            "$ref": "#/components/schemas/MembershipActionReaderAccess"
+          },
+          "recovery": {
+            "$ref": "#/components/schemas/MembershipActionRecovery"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/MembershipActionReaderPermissions"
+          },
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Beta_ResumePlanContext"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "record": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MembershipActionRecordSnapshot"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "beta_schedule": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BetaScheduleView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "recruitment_identity": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RecruitmentIdentity"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "target",
+          "viewer",
+          "access",
+          "recovery",
+          "permissions",
+          "content",
+          "record",
+          "beta_schedule",
+          "recruitment_identity"
+        ],
+        "title": "Beta_MembershipActionPlanProfileData"
+      },
+      "Beta_OpeningDisplayContext": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_OpeningDisplayData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "Beta_OpeningDisplayContext"
+      },
+      "Beta_OpeningDisplayData": {
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "source": {
+            "$ref": "#/components/schemas/Source"
+          },
+          "selection": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Selection"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "targets": {
+            "items": {
+              "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Target"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "title": "Targets"
+          },
+          "target_session_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 64,
+            "title": "Target Session Ids"
+          },
+          "leadership": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Leadership"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "context_token": {
+            "type": "string",
+            "maxLength": 4096,
+            "minLength": 1,
+            "title": "Context Token"
+          },
+          "issued_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Issued At"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          },
+          "opening_effect": {
+            "$ref": "#/components/schemas/OpeningEffect"
+          },
+          "permission": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Permission"
+          },
+          "conflicts": {
+            "items": {
+              "$ref": "#/components/schemas/Conflict"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "title": "Conflicts"
+          },
+          "prospective_room_cycle_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Prospective Room Cycle Id"
+          },
+          "prospective_generation": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "prospective_target_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "item_settings": {
+            "items": {
+              "$ref": "#/components/schemas/ItemSetting"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Item Settings"
+          },
+          "session_display": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ExistingSessionDisplay"
+              },
+              {
+                "$ref": "#/components/schemas/OpeningPreviewDisplay"
+              },
+              {
+                "$ref": "#/components/schemas/NoSelectionDisplay"
+              }
+            ],
+            "title": "Session Display",
+            "discriminator": {
+              "propertyName": "kind",
+              "mapping": {
+                "existing": "#/components/schemas/ExistingSessionDisplay",
+                "none": "#/components/schemas/NoSelectionDisplay",
+                "opening_preview": "#/components/schemas/OpeningPreviewDisplay"
+              }
+            }
+          },
+          "beta_schedule_config": {
+            "$ref": "#/components/schemas/BetaScheduleConfig"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "room_id",
+          "source",
+          "selection",
+          "targets",
+          "target_session_ids",
+          "leadership",
+          "context_token",
+          "issued_at",
+          "expires_at",
+          "opening_effect",
+          "permission",
+          "conflicts",
+          "prospective_room_cycle_id",
+          "prospective_generation",
+          "prospective_target_revision",
+          "item_settings",
+          "beta_schedule_config"
+        ],
+        "title": "Beta_OpeningDisplayData"
+      },
+      "Beta_OutputContract3GetV2MeRaidRoomCreationContext": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_BCreationContext"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "Beta_OutputContract3GetV2MeRaidRoomCreationContext"
+      },
+      "Beta_OutputContract3GetV2MeRaidRoomMemberships": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_BMembershipPage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "Beta_OutputContract3GetV2MeRaidRoomMemberships"
+      },
+      "Beta_OutputContract3GetV2MeRaidRoomsRoomIdAvailabilitySubmission": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_BSubmissionOut"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "Beta_OutputContract3GetV2MeRaidRoomsRoomIdAvailabilitySubmission"
+      },
+      "Beta_OutputContract3GetV2MeRaidRoomsRoomIdScheduleContext": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_BTimeContext"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "Beta_OutputContract3GetV2MeRaidRoomsRoomIdScheduleContext"
+      },
+      "Beta_OutputContract3GetV2RaidRoomApplicationsApplicationId": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Beta_BApplicationView"
+              },
+              {
+                "$ref": "#/components/schemas/Beta_BReview"
+              }
+            ],
+            "title": "Data"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "Beta_OutputContract3GetV2RaidRoomApplicationsApplicationId"
+      },
+      "Beta_OutputContract3GetV2RaidRoomsRoomId": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_BCard"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "Beta_OutputContract3GetV2RaidRoomsRoomId"
+      },
+      "Beta_OutputContract3GetV2RaidRoomsRoomIdApplications": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_BApplicationPage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "Beta_OutputContract3GetV2RaidRoomsRoomIdApplications"
+      },
+      "Beta_OutputContract3GetV2RaidRoomsRoomIdDetail": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_BDetail"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "Beta_OutputContract3GetV2RaidRoomsRoomIdDetail"
+      },
+      "Beta_OutputContract3PostV2RaidRoomsSearch": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_BPage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "Beta_OutputContract3PostV2RaidRoomsSearch"
+      },
+      "Beta_ResumePlanContext": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_ResumePlanData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "Beta_ResumePlanContext"
+      },
+      "Beta_ResumePlanData": {
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "members_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Members Revision"
+          },
+          "server_time": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Server Time"
+          },
+          "app_capacity": {
+            "$ref": "#/components/schemas/AppCapacity"
+          },
+          "game_items": {
+            "items": {
+              "$ref": "#/components/schemas/BGameItem"
+            },
+            "type": "array",
+            "title": "Game Items"
+          },
+          "schedule_state": {
+            "$ref": "#/components/schemas/ScheduleState"
+          },
+          "schedule_groups": {
+            "items": {
+              "$ref": "#/components/schemas/BGroup"
+            },
+            "type": "array",
+            "title": "Schedule Groups"
+          },
+          "sessions": {
+            "items": {
+              "$ref": "#/components/schemas/BSession"
+            },
+            "type": "array",
+            "title": "Sessions"
+          },
+          "session_segments": {
+            "items": {
+              "$ref": "#/components/schemas/BSegmentSet"
+            },
+            "type": "array",
+            "title": "Session Segments"
+          },
+          "my_membership": {
+            "$ref": "#/components/schemas/BAppRaidRoomsAdmissionSchemasMyMembership"
+          },
+          "my_assignments": {
+            "items": {
+              "$ref": "#/components/schemas/BAssignmentView"
+            },
+            "type": "array",
+            "title": "My Assignments"
+          },
+          "my_participations": {
+            "items": {
+              "$ref": "#/components/schemas/BAppRaidRoomsScheduleOutputParticipation"
+            },
+            "type": "array",
+            "title": "My Participations"
+          },
+          "proposals": {
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/BScheduleProposal"
+                },
+                {
+                  "$ref": "#/components/schemas/ResumeProposalReview"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Proposals"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/Permissions4"
+          },
+          "leadership": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Leadership"
+          },
+          "my_target_role": {
+            "$ref": "#/components/schemas/MyTargetRole"
+          },
+          "formation_slots": {
+            "items": {
+              "$ref": "#/components/schemas/FormationSlot"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "minItems": 0,
+            "title": "Formation Slots"
+          },
+          "formation_history": {
+            "items": {
+              "$ref": "#/components/schemas/FormationSlot"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "minItems": 0,
+            "title": "Formation History"
+          },
+          "unplaced_assignments": {
+            "items": {
+              "$ref": "#/components/schemas/UnplacedAssignment"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "minItems": 0,
+            "title": "Unplaced Assignments"
+          },
+          "target_cycle_key": {
+            "type": "string",
+            "title": "Target Cycle Key"
+          },
+          "target_state": {
+            "$ref": "#/components/schemas/TargetState"
+          },
+          "beta_schedule": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BetaScheduleView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "recruitment_identity": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RecruitmentIdentity"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "room_id",
+          "revision",
+          "members_revision",
+          "server_time",
+          "app_capacity",
+          "game_items",
+          "schedule_state",
+          "schedule_groups",
+          "sessions",
+          "session_segments",
+          "my_membership",
+          "my_assignments",
+          "my_participations",
+          "proposals",
+          "permissions",
+          "leadership",
+          "my_target_role",
+          "formation_slots",
+          "formation_history",
+          "unplaced_assignments",
+          "target_cycle_key",
+          "target_state",
+          "beta_schedule",
+          "recruitment_identity"
+        ],
+        "title": "Beta_ResumePlanData"
+      },
+      "DepartureWindow": {
+        "properties": {
+          "starts_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Starts At"
+          },
+          "ends_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Ends At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "starts_at",
+          "ends_at"
+        ],
+        "title": "DepartureWindow"
+      },
+      "PresetDocument": {
+        "properties": {
+          "version": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Version"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/PresetItem"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "title": "Items"
+          },
+          "saved_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Saved At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "version",
+          "items",
+          "saved_at"
+        ],
+        "title": "PresetDocument"
+      },
+      "PresetItem": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid4",
+            "title": "Id"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "text"
+        ],
+        "title": "PresetItem"
+      },
+      "PresetPut": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/PresetItem"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "title": "Items"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "items"
+        ],
+        "title": "PresetPut"
+      },
+      "RecruitmentIdentity": {
+        "properties": {
+          "number": {
+            "type": "integer",
+            "maximum": 9007199254740991.0,
+            "minimum": 1.0,
+            "title": "Number"
+          },
+          "password": {
+            "type": "string",
+            "pattern": "^[0-9]{5}$",
+            "title": "Password"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "number",
+          "password"
+        ],
+        "title": "RecruitmentIdentity"
       }
     },
     "securitySchemes": {
@@ -70332,7 +75559,7 @@
     }
   },
   "x-recruitment-policy": {
-    "schema_revision": "0031_membership_actions",
+    "schema_revision": "0032_beta_recruitment",
     "cycle": "Asia/Seoul Wednesday 06:00; maintenance Wednesday [06:00,10:00)",
     "time": "UTC, 5-minute ticks, positive at most 24h per session; stored authorized opening +30m floor",
     "admission_deadline": "strictly before confirmed start minus 30m; initial threshold and existing participant confirmation are distinct",
@@ -70382,6 +75609,15 @@
       "change": "exact own assignment/lease exclusion; original party then opposite party; consent bound to target parties",
       "reads": "own candidates, bulk read-only, no provider or occupancy writes",
       "compatibility": "existing write DTOs and original 24h ACK; creation/direct join policy preserved"
+    },
+    "beta_recruitment": {
+      "contract_version": "beta-recruitment-wire-2",
+      "contract_profile": "beta-recruitment-1",
+      "required_schema": "0032_beta_recruitment",
+      "default_reader": "legacy shape preserved",
+      "promises": "atomic participant/personal-copy/base reservation; earlier-only automatic confirmation; deadline fallback",
+      "presets": "/v2/me/application-message-presets",
+      "compatibility": "original ACK before unsafe new-write guard; no automatic legacy conversion"
     }
   }
 }

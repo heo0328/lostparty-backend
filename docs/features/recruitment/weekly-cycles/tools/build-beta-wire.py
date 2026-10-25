@@ -2,6 +2,7 @@
 import argparse
 from copy import deepcopy
 import hashlib
+import gzip
 import json
 from pathlib import Path
 
@@ -27,8 +28,9 @@ def nullable(name):
 
 
 def build():
-    source = ROOT / 'openapi/two-cycle.openapi.yaml'
-    base = json.loads(source.read_text())
+    source = FOLDER / 'beta-recruitment-v2.base-openapi.json.gz'
+    source_bytes = gzip.decompress(source.read_bytes())
+    base = json.loads(source_bytes)
     original = refs(base['components']['schemas'], '#/components/schemas/', '#/$defs/')
     proposed = json.loads((FOLDER/'beta-recruitment-v1.schema.json').read_text())['$defs']
     proposed = refs(proposed, '#/$defs/', '#/$defs/Proposed_')
@@ -172,7 +174,7 @@ def build():
         if more <= used: break
         used |= more
     return {'$schema':'https://json-schema.org/draft/2020-12/schema','contract_version':'beta-recruitment-wire-2',
-            'status':'review_only_not_runtime','profile':PROFILE,'base_openapi_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
+            'status':'review_only_not_runtime','profile':PROFILE,'base_openapi_sha256':hashlib.sha256(source_bytes).hexdigest(),
             'securitySchemes':deepcopy(base['components']['securitySchemes']),
             'operations':operations,'$defs':{n:definitions[n] for n in sorted(used)}}
 

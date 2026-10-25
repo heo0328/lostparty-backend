@@ -206,13 +206,16 @@ def execute(principal, operation, key, payload, run):
 W2 commands supply a validated mutation callback. Reuse the existing durable
 lease store; do not introduce a second dedup namespace or in-memory cache.
     """
-    name = 'recruitment-v2-' + operation
+    from app.raid_rooms import beta_profile,beta_schedule
+    name = ('beta-v2-' if beta_profile.enabled() else 'recruitment-v2-') + operation
     if len(name) > 32:
         raise ValueError('Operation name exceeds durable store limit')
-    ticket, replay = reserve(principal, name, key, payload)
+    stored_payload=dict(contract_profile=beta_profile.PROFILE,payload=payload,raw_body=beta_profile.raw_body(payload.get('body',payload))) if beta_profile.enabled() else payload
+    ticket, replay = reserve(principal, name, key, stored_payload)
     if replay:
         return replay
     try:
+        beta_schedule.reconcile_before(principal,payload)
         with session() as db, db.begin():
             uid = authorize(db, principal, write=True)
             stamp = now(db)
@@ -222,6 +225,7 @@ lease store; do not introduce a second dedup namespace or in-memory cache.
                 from app.raid_rooms.admission_service import room as visible_room
                 visible_room(db, uid, rid)
                 archive.require_active(db, rid)
+            beta_schedule.require_client(db,rid,operation,payload)
             outcome = run(db, uid, stamp)
             db.flush()
             if rid is not None and archive.is_archived(db, rid):

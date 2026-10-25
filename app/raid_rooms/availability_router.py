@@ -27,6 +27,9 @@ class AvailabilityRoute(APIRoute):
     def repeated_query(self, request):
         return set()
 
+    def capture_body(self,request,value):
+        pass
+
     def get_route_handler(self):
         handler = super().get_route_handler()
 
@@ -47,10 +50,11 @@ class AvailabilityRoute(APIRoute):
             request._body = bytes(body)
             if body:
                 try:
-                    json.loads(body, object_pairs_hook=unique_pairs,
+                    parsed=json.loads(body, object_pairs_hook=unique_pairs,
                                parse_constant=lambda _: (_ for _ in ()).throw(ValueError()))
                 except (ValueError, UnicodeDecodeError, RecursionError):
                     fail('INVALID_REQUEST', 400)
+                self.capture_body(request,parsed)
             return await handler(request)
         return bounded
 

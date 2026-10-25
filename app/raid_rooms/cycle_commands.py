@@ -1,4 +1,5 @@
 """Staged v2 general admission commands. Each write owns one target only."""
+from app.raid_rooms import beta_profile, beta_schedule, beta_output
 import uuid
 from datetime import datetime, time, timedelta
 from fastapi.encoders import jsonable_encoder
@@ -113,10 +114,11 @@ def preflight(db,uid,room,row,cid,role,intent,stamp,*,include_session_display=Fa
     metadata=display.existing(db,uid,row,stamp,intent,choices) if include_session_display else None
     if evaluation is not None:stable.append(evaluation['evidence'])
     if include_session_display:stable.append(metadata)
+    if beta_profile.enabled():stable.append([beta_profile.PROFILE,beta_schedule.context_basis(db,uid)])
     policy=digest(stable)
     expires=min(stamp+timedelta(seconds=opaque.LIFETIME_SECONDS),raids.cycle(stamp).ends_at)
     token=opaque.seal(dict(actor=str(uid),room=str(room.id),cycle=str(row.id),intent=intent,
-        command='admit-v2',expires=expires.isoformat(),digest=policy,**display.marker(include_session_display)))
+        command='admit-v2',expires=expires.isoformat(),digest=policy,**display.marker(include_session_display),**beta_profile.marker()))
     result=dict(scope=scope(stamp,row.cycle_key.isoformat(),row),data=dict(room_id=room.id,room_revision=room.revision,
         members_revision=row.members_revision,plan_revision=row.plan_revision,
         expected_cycle_key=raids.cycle(stamp).cycle_key,server_time=stamp,catalog_version=raids.catalog().catalog_version,
@@ -134,7 +136,7 @@ def get_context(principal,rid,key,cid,role,intent,include_session_display=False)
     with base.snapshot(principal) as (db,uid,stamp):
         room,row=resolve(db,uid,rid,key,stamp)
         return display.output(display_schemas.AdmissionDisplayContext, jsonable_encoder(
-            preflight(db,uid,room,row,cid,role,intent,stamp,include_session_display=include_session_display)), include_session_display)
+            preflight(db,uid,room,row,cid,role,intent,stamp,include_session_display=include_session_display)), include_session_display, snapshot=(db,uid,stamp))
 
 
 def ack(db,command_id,room,row,member,assignments,stamp):
@@ -156,11 +158,12 @@ def application_ack(command_id,app,row,stamp):
 
 
 def admit(principal,rid,command_id,data,*,applying=False):
-    body=data.model_dump(mode='json');intent='apply' if applying else 'join'
+    body=beta_profile.body(data);intent='apply' if applying else 'join'
     def run(db,uid,stamp):
         room,row=resolve(db,uid,rid,body['target_cycle_key'],stamp,write=True)
         cas(db,row,body,stamp)
         token=opaque.unseal(body['selection_context']['context_token'])
+        beta_profile.check_marker(token)
         if (token.get('actor')!=str(uid) or token.get('command')!='admit-v2' or token.get('room')!=str(rid)
                 or token.get('cycle')!=str(row.id) or token.get('intent')!=intent):fail('CONTEXT_INVALID',400)
         if stamp>=datetime.fromisoformat(token['expires']):fail('CONTEXT_EXPIRED')
@@ -192,6 +195,13 @@ def admit(principal,rid,command_id,data,*,applying=False):
                 build=jsonable_encoder(power),origin_scope=room.scope,origin_group_id=room.group_id,state='pending',
                 created_at=stamp,expires_at=datetime.combine(row.cycle_key+timedelta(days=7),time(6),raids.KST))
             db.add(app);db.flush()
+            if beta_profile.enabled():
+                from app.raid_rooms.beta_models import BetaApplicationMemo
+                from app.raid_rooms import beta_text
+                saved=beta_schedule.get(db,row)
+                db.add(BetaApplicationMemo(application_id=app.id,memo=beta_text.normalize(body.get('application_memo')),
+                    promise_revision=db.get(schedule.Session,saved.session_id).schedule_revision if saved else None))
+                db.flush()
             # A pending application changes neither target participants nor leases.
             result=(201,application_ack(command_id,app,row,stamp))
         else:
@@ -251,11 +261,11 @@ def application(principal,aid):
                 eligibility=dict(evaluated_at=stamp,state='blocked' if reason else 'eligible',
                     reasons=[reason] if reason else [],comparison=power),permissions=dict(approve=permission(reason),
                     reject=permission(None if app.state=='pending' and stamp<app.expires_at and app.generation==row.generation else 'APPLICATION_NOT_PENDING')))
-        return wire.OutputContract3GetV2RaidRoomApplicationsApplicationId.model_validate(result).model_dump(mode='json')
+        return beta_output.render(db,uid,stamp,wire.OutputContract3GetV2RaidRoomApplicationsApplicationId,result)
 
 
 def process(principal,aid,command_id,data,*,action='approve'):
-    body=data.model_dump(mode='json')
+    body=beta_profile.body(data)
     def run(db,uid,stamp):
         app,row=load_application(db,uid,aid,stamp)
         cycles.target(stamp,body['target_cycle_key'])
@@ -284,7 +294,13 @@ def process(principal,aid,command_id,data,*,action='approve'):
             final_guard=schedule.final_deadlines(db,row,selected,stamp)
             member,assignments,_=admission.admit_bundle(db,app.user_id,room,row,selection,targets,command_id,stamp,
                 public_origin_application=app,unified=True)
-            schedule.enrol(db,row,member,selected,stamp)
+            agreed=True
+            if beta_schedule.get(db,row) is not None:
+                from app.raid_rooms.beta_models import BetaApplicationMemo
+                promise=db.get(BetaApplicationMemo,app.id)
+                saved=beta_schedule.get(db,row)
+                agreed=promise is not None and promise.promise_revision==db.get(schedule.Session,saved.session_id).schedule_revision
+            schedule.enrol(db,row,member,selected,stamp,consent=agreed)
             if schedule.planning_enabled(db):
                 from app.raid_rooms import cycle_planning
                 cycle_planning.refresh(db,room,row,uid,command_id,stamp)

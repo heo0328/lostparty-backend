@@ -3,6 +3,7 @@
 No current-week/global-leader inference. Coordinated resolution, edits and
 worker transitions belong to W4. Copying an N graph never creates consent.
 """
+from app.raid_rooms import beta_schedule
 import uuid
 from datetime import date,datetime,time,timedelta,timezone
 from sqlalchemy import select,func,text
@@ -16,7 +17,7 @@ from app.raid_rooms.schedule_heads import ScheduleHead
 
 
 def planning_enabled(db):
-    return list(db.scalars(text('SELECT version_num FROM public.alembic_version')))in (['0028_cycle_planning'],['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'])
+    return list(db.scalars(text('SELECT version_num FROM public.alembic_version')))in (['0028_cycle_planning'],['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment'])
 
 
 def groups(db,target):
@@ -67,7 +68,8 @@ def choices(db, target, stamp):
     result = []
     for session in sessions(db, target):
         binding = db.get(SessionBinding, session.id)
-        deadline = session.starts_at - timedelta(minutes=30) if session.state == 'confirmed' else None
+        beta=beta_schedule.get(db,target)
+        deadline = session.starts_at - timedelta(minutes=30) if session.state == 'confirmed' or beta is not None else None
         closed = deadline is not None and stamp >= deadline
         result.append(dict(session_id=session.id, required=binding.required, join_deadline=deadline,
             permission=dict(allowed=not closed, reason='RECRUITMENT_CLOSED' if closed else None,
@@ -96,8 +98,13 @@ def final_deadlines(db,target,selected,stamp,*,join=True):
     return final
 
 
-def enrol(db, target, member, selected, stamp, *, creating=False, copied=False):
+def enrol(db, target, member, selected, stamp, *, creating=False, copied=False, consent=True, copy=True):
     deadlines(db, target, selected, stamp)
+    if beta_schedule.get(db,target) is not None:
+        from app.raid_rooms import cycle_lifecycle
+        cm=cycle_lifecycle.actual_member(db,target,member.user_id,states=('participating',))
+        beta_schedule.enrol(db,target,cm,stamp,consent=consent,copy=copy)
+        return
     for session in sessions(db, target):
         if creating or db.get(SessionBinding, session.id).required or session.id in selected:
             old=db.scalar(select(SessionParticipation).where(SessionParticipation.session_id==session.id,

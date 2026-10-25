@@ -2,6 +2,7 @@
 import argparse
 from datetime import datetime, timedelta
 import hashlib
+import gzip
 import json
 from pathlib import Path
 import unicodedata
@@ -125,10 +126,10 @@ def main():
     else:
         root = Path(__file__).resolve().parents[5]
         folder = root / 'docs/features/recruitment/weekly-cycles/proposals'
-        base = root / 'openapi/two-cycle.openapi.yaml'
+        base = folder / 'beta-recruitment-v2.base-openapi.json.gz'
         payload = {'schema': json.loads((folder/'beta-recruitment-v1.schema.json').read_text()),
                    'examples': json.loads((folder/'beta-recruitment-v1.examples.json').read_text()),
-                   'base_sha256': hashlib.sha256(base.read_bytes()).hexdigest()}
+                   'base_sha256': hashlib.sha256(gzip.decompress(base.read_bytes())).hexdigest()}
     schema = payload['schema']
     Draft202012Validator.check_schema(schema)
     assert schema['x-base-openapi-sha256'] == payload['base_sha256'], 'Base contract changed; review proposal inheritance'

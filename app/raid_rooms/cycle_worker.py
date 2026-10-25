@@ -22,11 +22,13 @@ def process_room(rid):
             recovery=None
             if row.state=='review_required':
                 from sqlalchemy import text
-                if list(db.scalars(text('SELECT version_num FROM alembic_version')))!=['0031_membership_actions']:continue
+                if list(db.scalars(text('SELECT version_num FROM alembic_version')))not in (['0031_membership_actions'],['0032_beta_recruitment']):continue
                 from app.raid_rooms.membership_action_models import LeadershipRecovery
                 recovery=db.get(LeadershipRecovery,(row.id,row.generation))
                 if recovery is None:continue
             if row.cycle_key==current:
+                from app.raid_rooms import beta_schedule
+                beta_schedule.reconcile(db,room,row,stamp)
                 if row.state=='review_required':continue
                 # N -> C is a label change, with the SAME actual rows/consents.
                 # Invalid sources retain their proven seats/leases for review.

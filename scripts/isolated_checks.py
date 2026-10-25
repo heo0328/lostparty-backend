@@ -19,6 +19,7 @@ SUITES = {
         "tests/test_raid_room_http.py",
     ),
     "two-cycle": (
+        "tests/test_beta_recruitment.py",
         "tests/test_application_composition.py", "tests/test_admission_eligibility.py",
         "tests/test_application_display.py", "tests/test_application_display_references.py",
         "tests/test_application_item_level.py", "tests/test_membership_actions.py",

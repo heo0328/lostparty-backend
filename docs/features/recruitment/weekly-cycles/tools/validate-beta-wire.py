@@ -2,6 +2,7 @@
 import argparse
 from copy import deepcopy
 import hashlib
+import gzip
 import json
 from pathlib import Path
 import re
@@ -126,7 +127,8 @@ def cases(bundle):
 
 
 def validate(bundle, fixtures):
-    assert bundle['base_openapi_sha256']==hashlib.sha256((ROOT/'openapi/two-cycle.openapi.yaml').read_bytes()).hexdigest()
+    baseline=gzip.decompress((FOLDER/'beta-recruitment-v2.base-openapi.json.gz').read_bytes())
+    assert bundle['base_openapi_sha256']==hashlib.sha256(baseline).hexdigest()
     Draft202012Validator.check_schema({'$defs':bundle['$defs']})
     for case in fixtures:
         op=bundle['operations'][case['operation']]
@@ -142,7 +144,7 @@ def validate(bundle, fixtures):
             if p.get('required'):assert key in case['parameters'],case['name']+' missing '+key
             if key in case['parameters']:
                 validator(bundle,p.get('schema') or p['content']['application/json']['schema']).validate(case['parameters'][key])
-    base=json.loads((ROOT/'openapi/two-cycle.openapi.yaml').read_text())
+    base=json.loads(baseline)
     for name,schema in base['components']['schemas'].items():
         if name in bundle['$defs']:
             canonical=json.loads(json.dumps(schema).replace('#/components/schemas/','#/$defs/'))

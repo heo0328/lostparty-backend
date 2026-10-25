@@ -1,11 +1,27 @@
 # 베타 일정·모집표시·신청 메모 인계 검토
 
-후속: 사용자결정4개를채택하고 [Backend 제안1](beta-contract-proposal.md)을 [전체148번째 계약 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6393622793)로 회신했다. 아래 최초수신/검토이력과 구분한다. 최신149 회신을 반영한 [고정안2](beta-contract-wire.md) 작성/정적검증까지 진행했고 다음은 Flutter 잔여차이/최종합의 확인이다.
+후속: 사용자결정4개를채택하고 [Backend 제안1](beta-contract-proposal.md)을 [전체148번째 계약 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6393622793)로 회신했다. 아래 최초수신/검토이력과 구분한다. 최신151에서 [고정안2](beta-contract-wire.md)가 최종 수용돼 계약 협의를 마쳤다. 전체152는 Flutter A 기반 구현 보고이며 다음 Backend는 합의안 구현·격리검증이다.
+
+후속 구현: [Beta 구현/격리검증](beta-implementation.md)·[전체153 Backend · 베타 구현/격리검증](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6395894539). 최종beta22/기존105 회귀 PASS, 소스0032/178/199와 실제개발0031/177은 구분한다. 아래151/152 수신 시점의 구현 대기 기록은 당시 이력이다.
 
 2026-10-25 / 작업 구간: 네이티브 베타 계약 변경 수신·대조 / `feat/raid-recruitment`.
 기준 소스a241790. 사용자 요청은 Issue13 전달 내역 확인이며 **이 문서는 인계 검토 기록이다. 새 wire 계약 제안/합의·구현·배포가 아니다.** 코드/실행 OpenAPI/DB는 변경하지 않았다.
 
-## 최신 회신 — 전체149번째 Flutter / 조건부 소비 수용
+## 최신 회신 — 전체151/152번째 Flutter / 계약 최종 수용·A 기반 구현 보고
+
+2026-10-25 Issue13 본문과 전체152개 댓글 중 새151/152 전문을 확인했다. 댓글 순번은 본문 제외 전체 작성 순서이며 두 건 모두 Flutter다. 현재 Issue는 OPEN이다.
+
+- [전체151 · Flutter · 고정안2 최종 소비수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6394870853): Backend `267afe560033291df6317c2f712e395f13e68818`의 `beta-recruitment-wire-2 / contract_profile=beta-recruitment-1`을 최종 수용했고 구현을 막는 잔여 계약 차이를 발견하지 못했다고 회신했다. **계약 협의 완료**, Backend/앱 구현·실제반영/통합인수는 별도 미완료다. 공통문자25벡터는 로컬 JS로 독립 대조해25개 일치 보고이며 Dart/UI·실서버 성공이 아니다.
+- [전체152 · Flutter · A 베타 계약 모델·요청 재전송 기반](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6395265140): 브랜치 `feature/raid-recruitment-scheduling`, 소스 `12cd2e9a879b42b9b55be498a86017eb0db9f689`의 commit/push·origin 일치 보고다. 전용 config/C·N draft·일정/개인표복사/번호/메모/preset 모델·닫힌 wire 검증, 고정64 operation profile 전달/새presets profile 제외, Gateway.write query 전달을 구현했다고 보고했다. Flutter 소스/원격 SHA를 Backend가 별도 재검증한 근거는 아니다.
+- 모집전용 Drift 저장 기반에 환경+회원+creation/participation/presets 영역별 원요청을 보관하고 operation/method/path/query/T/원본문/key/시각을 고정한다. 저장후 전송·ACK 저장후 성공 반환·불명결과 원요청 유지/재시작 복구·24h needsReview·회원/환경/세션/늦은응답 격리와 DI/종료 해제를 보고했다. Bearer는 저장하지 않는다.
+- **기반 구현과 실제 사용은 구분한다.** 운영 기본은 legacy이고 기존 Controller의 메모리 pending/쓰기흐름을 변환하지 않았다. 베타 생성/일정/메모 화면과 새 복구안내 연결·앱 beta 활성화는 후속이다. 따라서 'query 전달/영속복구 기반 미구현'이라는 이전 상태는 갱신하지만 '앱 전체 영속복구 적용완료'로 올리지 않는다. 원profile 없는 pending 무변형·ACK후GET실패 조회재시도는 유지한다.
+- Flutter 검증 자체보고: 직접영향15파일 묶음563PASS 후 보강 최종신규33PASS, 변경파일 analyze문제0·format/diff/review. 중첩수치는 합산하지 않으며 Backend 독립재현/실제 beta HTTP·실회원/기기 성공이 아니다. 금칙어 패키지·그래프/리디자인·IF-001/BUG-025는 A 범위 제외다.
+
+다음 **Backend**는 합의 고정안2 기준 구현·격리검증 파트: 기본약속/기한/예약·실제가입/승인/개인표 원자성·번호권한·메모/presets·검색/구버전/원ACK를 구현/검증하고 정확 소스·push·실행계약/실제반영 상태를 구분해 인계한다. 다음 **Flutter**는 서버반영 상태를 구분하며 후속 화면 연결 설계를 이어간다. 새제품결정/추가 실기기시험 요청은 없다.
+
+이번 사용자 요청은 회신 확인이다. 수신/현재상태 기록만 누적하고 서비스/실행계약/DB·고정 schema를 변경하거나 구현을 시작하지 않았다. 새 Issue 댓글/본문변경·commit/push·merge/서버교체/자료변경/배포도 수행하지 않는다. 다음 의미 있는 구현 파트에 기록을 함께 묶는다.
+
+## 이전 회신 — 전체149번째 Flutter / 조건부 소비 수용
 
 2026-10-25 [전체149번째 Flutter 소비 대조](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6393878499)를 확인했다. 제안1의 구조·사용자확정4항목·프로필/원ACK·일정/예약/표·검색·표시권한·메모snapshot/계정프리셋은 수용됐고, **최종 문자정책과 operation별 완결 wire를 보완한 고정본 확인 전까지 조건부 수용**이다. 구현/서버 반영 승인은 아니다.
 

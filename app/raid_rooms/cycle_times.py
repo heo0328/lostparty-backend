@@ -1,4 +1,5 @@
 """Explicit target submissions and consent. GETs share one read-only snapshot."""
+from app.raid_rooms import beta_profile, beta_schedule, beta_output
 import uuid
 from copy import deepcopy
 from datetime import datetime,timedelta
@@ -18,7 +19,7 @@ from app.raid_rooms.member_reads import paginate
 
 
 def ready(db):
-    if list(db.scalars(text('SELECT version_num FROM public.alembic_version'))) not in (['0027_cycle_consents'],['0028_cycle_planning'],['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions']):
+    if list(db.scalars(text('SELECT version_num FROM public.alembic_version'))) not in (['0027_cycle_consents'],['0028_cycle_planning'],['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment']):
         fail('RECRUITMENT_COMMAND_NOT_READY',503)
 
 
@@ -46,12 +47,11 @@ def submission_view(db,row,cm):
 def get_submission(principal,rid,key):
     with commands.base.snapshot(principal) as (db,uid,stamp):
         room,row,cm=own_target(db,uid,rid,key,stamp)
-        return wire.OutputContract3GetV2MeRaidRoomsRoomIdAvailabilitySubmission.model_validate(
-            dict(scope=scope(stamp,key,row),data=submission_view(db,row,cm))).model_dump(mode='json')
+        return beta_output.render(db,uid,stamp,wire.OutputContract3GetV2MeRaidRoomsRoomIdAvailabilitySubmission,dict(scope=scope(stamp,key,row),data=submission_view(db,row,cm)))
 
 
 def put_submission(principal,rid,command,data):
-    body=data.model_dump(mode='json')
+    body=beta_profile.body(data)
     def run(db,uid,stamp):
         room,row,cm=own_target(db,uid,rid,body['target_cycle_key'],stamp,write=True)
         commands.cas(db,row,body,stamp)
@@ -61,8 +61,13 @@ def put_submission(principal,rid,command,data):
         if (body['expected_cycle_member_revision']!=cm.revision or
                 body['expected_personal_version']!=(personal.revision if personal else 1) or
                 body['expected_submission_revision']!=(current.revision if current else 1)):fail('REVISION_CONFLICT')
-        if personal is None:fail('PERSONAL_AVAILABILITY_REQUIRED')
-        if current is None or current.source_personal_revision!=personal.revision:
+        beta=beta_schedule.get(db,row)
+        if beta is not None:
+            beta_schedule.copy_personal(db,row,cm,stamp)
+            row.revision+=1;row.plan_revision+=1;cycles.touch_directory(db,row.cycle_key)
+            current=db.get(CycleSubmission,cm.id)
+        elif personal is None:fail('PERSONAL_AVAILABILITY_REQUIRED')
+        if beta is None and (current is None or current.source_personal_revision!=personal.revision):
             if current is None:
                 current=CycleSubmission(cycle_member_id=cm.id,room_id=rid,cycle_id=row.id,generation=row.generation,
                     membership_id=cm.membership_id,user_id=uid,revision=1)
@@ -76,8 +81,7 @@ def put_submission(principal,rid,command,data):
         if schedule.planning_enabled(db):
             from app.raid_rooms import cycle_planning
             cycle_planning.refresh(db,room,row,uid,command,stamp)
-        result=wire.OutputContract3GetV2MeRaidRoomsRoomIdAvailabilitySubmission.model_validate(
-            dict(scope=scope(stamp,body['target_cycle_key'],row),data=submission_view(db,row,cm))).model_dump(mode='json')
+        result=beta_output.render(db,uid,stamp,wire.OutputContract3GetV2MeRaidRoomsRoomIdAvailabilitySubmission,dict(scope=scope(stamp,body['target_cycle_key'],row),data=submission_view(db,row,cm)))
         return 200,result,final_guard
     return cycles.execute(principal,'submission',command,dict(room_id=str(rid),body=body),run)
 
@@ -148,7 +152,7 @@ def record_confirmation(db,row,cm,current,part,values,owned,command,stamp,*,auth
 
 
 def confirm(principal,sid,command,data):
-    body=data.model_dump(mode='json')
+    body=beta_profile.body(data)
     def run(db,uid,stamp):
         room,row,cm,current,part,values,owned=session_target(db,uid,sid,body['target_cycle_key'],stamp)
         commands.cas(db,row,body,stamp)
@@ -197,10 +201,10 @@ def time_context(principal,rid,key,target_session_id=None):
             members.append(dict(membership_id=m.membership_id,cycle_member_id=m.id,display=owned[0].display if owned else None,
                 submission=submission_view(db,row,m),anonymous_busy=dict(state='ready',
                     revision=1+sum(r.schedule_revision+1+int(r.released_at is not None) for r in reservations),intervals=intervals)))
-        return wire.OutputContract3GetV2MeRaidRoomsRoomIdScheduleContext.model_validate(dict(scope=scope(stamp,key,row),
+        return beta_output.render(db,uid,stamp,wire.OutputContract3GetV2MeRaidRoomsRoomIdScheduleContext,dict(scope=scope(stamp,key,row),
             data=dict(room_id=rid,target_cycle_key=key,members_revision=row.members_revision,plan_revision=row.plan_revision,
                 evaluated_at=stamp,members=members,target_session_id=target_session_id,
-                permissions=dict(view_schedule_context=permission())))).model_dump(mode='json')
+                permissions=dict(view_schedule_context=permission()))))
 
 
 def overlaps(principal,key,limit=20,cursor=None):
@@ -234,6 +238,6 @@ def overlaps(principal,key,limit=20,cursor=None):
         revision=digest(jsonable_encoder([key,value.current,limit,[[r.id,r.schedule_revision] for r in reservations]]))
         page,token=paginate(pairs,limit,cursor,['v2-overlaps',str(uid),str(principal[1].id)],revision)
         # This account-wide projection has no single RoomCycle head.
-        return wire.OutputContract3GetV2MeRaidScheduleOverlaps.model_validate(dict(scope=scope(stamp,key),
+        return beta_output.render(db,uid,stamp,wire.OutputContract3GetV2MeRaidScheduleOverlaps,dict(scope=scope(stamp,key),
             data=dict(items=page,pair_count=len(pairs),affected_room_count=len({r.room_id for r in reservations if r.id in ids}),
-                reservation_count=len(ids),revision=revision,next_cursor=token,evaluated_at=stamp,target_cycle_key=key))).model_dump(mode='json')
+                reservation_count=len(ids),revision=revision,next_cursor=token,evaluated_at=stamp,target_cycle_key=key)))

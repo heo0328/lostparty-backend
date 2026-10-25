@@ -1,4 +1,5 @@
 """Read-only target directory. All predicates run in SQL before pagination."""
+from app.raid_rooms import beta_profile, beta_schedule, beta_output
 from datetime import timedelta
 from sqlalchemy import select, func, or_
 from fastapi.encoders import jsonable_encoder
@@ -74,8 +75,8 @@ def get_card(principal,rid,key):
         _,row=cycles.resolve(db,rid,key,stamp)
         if row is None:fail('TARGET_NOT_OPEN')
         admission.capacity(row)
-        return wire.OutputContract3GetV2RaidRoomsRoomId.model_validate(dict(scope=scope(stamp,key,row),
-            data=card(db,room,row,uid,stamp))).model_dump(mode='json')
+        return beta_output.render(db,uid,stamp,wire.OutputContract3GetV2RaidRoomsRoomId,dict(scope=scope(stamp,key,row),
+            data=card(db,room,row,uid,stamp)))
 
 
 def search(principal,data):
@@ -143,6 +144,10 @@ def search(principal,data):
         if body['remaining_slot_counts']:
             size=RoomCycle.settings_snapshot['app_capacity'].as_integer()
             query=query.where((size-count).in_(body['remaining_slot_counts']))
+        beta_clock=None
+        if beta_profile.enabled():
+            from app.raid_rooms import beta_search
+            query,beta_clock=beta_search.apply(db,query,data,body,target,stamp)
         body['member_conditions']=sorted([dict(member_ref=c.member_ref,character_ids=sorted(map(str,c.character_ids)))
             for c in data.member_conditions],key=lambda c:c['member_ref'])
         sort=body['sort'] or dict(criterion='member_count',direction='descending')
@@ -154,6 +159,9 @@ def search(principal,data):
             GroupMembership.ended_at.is_(None),Group.ended_at.is_(None)).order_by(Group.id))) if uid else []
         revision=digest(jsonable_encoder([SEARCH_SEMANTICS,head,target.current,body,context_digest,[list(r) for r in permissions]]))
         binding=['cycle-directory',str(uid),str(principal[1].id) if principal else None,target.key.isoformat()]
+        if beta_profile.enabled():
+            binding.append(beta_profile.PROFILE)
+            revision=digest([revision,beta_clock])
         offset=cursor_decode(data.cursor,binding,revision) if data.cursor else 0
         primary=count.asc() if sort['direction']=='ascending' else count.desc()
         rows=list(db.execute(query.order_by(primary,Room.created_at.desc(),Room.id.desc()).offset(offset).limit(data.limit+1)))
@@ -162,4 +170,4 @@ def search(principal,data):
         loaded=load(db,[t for _,t in rows[:data.limit]],uid)
         result=dict(scope=scope(stamp,target.key.isoformat()),data=dict(items=[card(db,r,t,uid,stamp,loaded[t.id]) for r,t in rows[:data.limit]],
             directory_revision=head,filter_scope_digest=context_digest,next_cursor=token,evaluated_at=stamp))
-        return wire.OutputContract3PostV2RaidRoomsSearch.model_validate(result).model_dump(mode='json')
+        return beta_output.render(db,uid,stamp,wire.OutputContract3PostV2RaidRoomsSearch,result)

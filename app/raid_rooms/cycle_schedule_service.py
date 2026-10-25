@@ -1,3 +1,5 @@
+from app.raid_rooms import beta_schedule
+from app.raid_rooms import beta_profile
 """W4-A2 commands own exactly one actual target and the original ACK transaction."""
 import uuid
 from sqlalchemy import select
@@ -42,11 +44,12 @@ def final_schedules(db,row,versions):
 
 
 def edit(principal,rid,command,data):
-    body=data.model_dump(mode='json')
+    body=beta_profile.body(data)
     def run(db,uid,stamp):
         room,row,cm=target(db,uid,rid,body['target_cycle_key'],stamp,body,leader=True)
         before={s.id for s in graph.sessions(db,row) if s.state=='confirmed'}
-        plan.edit(db,room,row,uid,command,data.groups,stamp)
+        if beta_profile.enabled():beta_schedule.edit(db,room,row,body,stamp,command)
+        else:plan.edit(db,room,row,uid,command,data.groups,stamp)
         versions=[(s.id,s.schedule_revision) for s in graph.sessions(db,row) if s.state=='confirmed' and s.id not in before]
         return 200,life.ack(db,row,command,stamp),final_schedules(db,row,versions)
     return cycles.execute(principal,'edit-schedule',command,dict(room_id=str(rid),body=body),run)
@@ -61,10 +64,13 @@ def candidates(principal,gid,key):
 
 
 def select_group(principal,gid,command,data):
-    body=data.model_dump(mode='json')
+    body=beta_profile.body(data)
     def run(db,uid,stamp):
         room,row,cm,group=load_group(db,uid,gid,body['target_cycle_key'],stamp,body,leader=True)
         final_guard=graph.final_deadlines(db,row,[],stamp,join=False)
+        if beta_profile.enabled():
+            if beta_schedule.get(db,row) is None:fail('BETA_SCHEDULE_REQUIRED')
+            fail('SCHEDULE_PROPOSAL_REQUIRED')
         if group.revision!=body['expected_group_revision']:fail('REVISION_CONFLICT')
         if group.selected_session_id is not None:fail('SCHEDULE_PROPOSAL_REQUIRED')
         alt=next((a for a in graph.alternatives(db,group) if a.id==data.alternative_id),None)
@@ -90,9 +96,10 @@ def select_group(principal,gid,command,data):
 
 
 def propose(principal,rid,command,data):
-    body=data.model_dump(mode='json')
+    body=beta_profile.body(data)
     def run(db,uid,stamp):
         room,row,cm=target(db,uid,rid,body['target_cycle_key'],stamp,body,leader=True)
+        if beta_profile.enabled() and beta_schedule.get(db,row) is None:fail('BETA_SCHEDULE_REQUIRED')
         proposal=proposals.create(db,room,row,cm,command,data.targets,stamp)
         return 200,life.ack(db,row,command,stamp,outcome='recorded',revisions=[dict(resource='target',id=row.id,revision=row.revision),
             dict(resource='proposal',id=proposal.id,revision=proposal.revision)])

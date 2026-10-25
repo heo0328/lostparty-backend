@@ -94,8 +94,9 @@ def preview(db, uid, source, key, cycle_id, generation, settings, inputs):
          settings, jsonable_encoder(inputs)])
 
 
-def output(model, value, include):
-    result = model.model_validate(value).model_dump(mode='json', exclude_unset=True)
+def output(model, value, include, *, snapshot=None):
+    from app.raid_rooms import beta_output
+    result = beta_output.render(*snapshot,model,value,exclude_unset=True) if snapshot is not None else model.model_validate(value).model_dump(mode='json', exclude_unset=True)
     if include and len(json.dumps(result, ensure_ascii=False, separators=(',', ':')).encode()) > MAX_RESPONSE_BYTES:
         fail('RESPONSE_TOO_LARGE', 413)
     return result

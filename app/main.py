@@ -410,11 +410,13 @@ def create_two_cycle_app():
     legacy.routes.extend(route for route in app.routes if isinstance(route,APIRoute))
     result.include_router(legacy)
     result.include_router(cycle_router)
+    from app.raid_rooms.application_presets import router as presets_router
+    result.include_router(presets_router)
     register(result);result.middleware('http')(no_store)
     generate=result.openapi
     def schema():
         value=_decorate_openapi(generate())
-        value['x-recruitment-policy'].update(schema_revision='0031_membership_actions',policy_version='two-cycle-contract-4',
+        value['x-recruitment-policy'].update(schema_revision='0032_beta_recruitment',policy_version='two-cycle-contract-4',
             search_semantics='own-target-participation-excluded-v1',
             admission_eligibility=dict(policy_version='admission-eligibility-2',required_schema='0031_membership_actions',
                 intents=['apply','change_character'],approval='stored parties; qualification failure keeps pending',
@@ -429,6 +431,11 @@ def create_two_cycle_app():
                 inactive_features='IF-001: close_weekly/weekly_resume app entry disabled; APIs/history/original pending retained'),
             continuation='Explicit N opening only; 06:00 N becomes C with the same UUID/leader/assignments/consents; no automatic new N',
             compatibility='v1 current-C read adapters; unsafe room writes replay original ACK then CLIENT_UPGRADE_REQUIRED; personal availability/manual completion remain safe')
+        value['x-recruitment-policy']['beta_recruitment']=dict(
+            contract_version='beta-recruitment-wire-2',contract_profile='beta-recruitment-1',
+            required_schema='0032_beta_recruitment',default_reader='legacy shape preserved',
+            promises='atomic participant/personal-copy/base reservation; earlier-only automatic confirmation; deadline fallback',
+            presets='/v2/me/application-message-presets',compatibility='original ACK before unsafe new-write guard; no automatic legacy conversion')
         return value
     result.openapi=schema
     return result

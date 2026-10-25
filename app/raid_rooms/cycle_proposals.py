@@ -1,4 +1,5 @@
 """Per-target quorum and append-only votes bound to the current CM revision."""
+from app.raid_rooms import beta_schedule
 import uuid
 from datetime import datetime,timedelta
 from sqlalchemy import select,func
@@ -42,9 +43,10 @@ def create(db,room,row,cm,command,targets,stamp):
     for target in targets:
         sess=sessions.get(target.session_id)
         if sess is None:fail('TARGET_SCOPE_MISMATCH',400)
-        if sess.state!='confirmed':fail('SCHEDULE_NOT_CONFIRMED')
+        beta=beta_schedule.get(db,row)
+        if sess.state!='confirmed' and beta is None:fail('SCHEDULE_NOT_CONFIRMED')
         if sess.schedule_revision!=target.expected_schedule_revision:fail('REVISION_CONFLICT')
-        if stamp>=sess.ends_at:fail('SCHEDULE_ENDED')
+        if stamp>=sess.ends_at and not (beta and beta.needs_review):fail('SCHEDULE_ENDED')
         segments=graph.graph.active_segments(db,sess.id);requested={v.item_id:v.duration_minutes for v in target.item_durations}
         if len(requested)!=len(target.item_durations) or not segments or set(requested)!={s.item_id for s in segments}:fail('ROOM_ITEMS_CHANGED')
         cursor=target.starts_at;planned=[]
@@ -81,7 +83,7 @@ def evaluate(db,room,row,proposal,binding,uid,command,stamp):
     if not binding.content:return False
     if proposal.state!='pending':return False
     sessions={s.id:s for s in graph.sessions(db,row)}
-    if any(uuid.UUID(t['session_id']) not in sessions or sessions[uuid.UUID(t['session_id'])].state!='confirmed' or
+    if any(uuid.UUID(t['session_id']) not in sessions or (sessions[uuid.UUID(t['session_id'])].state!='confirmed' and beta_schedule.get(db,row) is None) or
             sessions[uuid.UUID(t['session_id'])].schedule_revision!=t['base_schedule_revision'] for t in binding.content):
         proposal.state='obsolete';proposal.revision+=1
         plan.event(db,row,uid,command,'proposal_obsolete',stamp,dict(proposal_id=proposal.id));plan.bump(db,row);return False
@@ -89,7 +91,8 @@ def evaluate(db,room,row,proposal,binding,uid,command,stamp):
     prepared=[]
     for target in binding.content:
         sess=sessions[uuid.UUID(target['session_id'])];values=target['segments'];start=datetime.fromisoformat(values[0]['starts_at']);end=datetime.fromisoformat(values[-1]['ends_at'])
-        if stamp>=sess.ends_at:fail('SCHEDULE_ENDED')
+        beta=beta_schedule.get(db,row)
+        if stamp>=sess.ends_at and not (beta and beta.needs_review):fail('SCHEDULE_ENDED')
         graph.graph.time.interval(start,end,row.cycle_key.isoformat(),floor=plan.floor(db,row),current=stamp)
         existing={s.id:s for s in graph.graph.active_segments(db,sess.id)}
         if {uuid.UUID(v['segment_id']) for v in values}!=set(existing):fail('PROPOSAL_CONTEXT_CHANGED')
@@ -104,7 +107,10 @@ def evaluate(db,room,row,proposal,binding,uid,command,stamp):
             part=db.scalar(select(Participation).where(Participation.session_id==sess.id,Participation.membership_id==cm.membership_id))
             graph.graph.release(db,participation=part,reason='schedule_changed',stamp=stamp)
             part.confirmation_state='confirmation_pending';part.confirmed_at=part.confirmed_schedule_revision=None;part.revision+=1
-        sess.starts_at=start;sess.ends_at=end;sess.schedule_revision+=1;sess.revision+=1
+        sess.starts_at=start;sess.ends_at=end;sess.schedule_revision+=1;sess.revision+=1;sess.state='confirmed'
+        beta=beta_schedule.get(db,row)
+        if beta is not None:
+            beta.confirmation_kind='proposal_confirmed';beta.needs_review=False;beta.revision+=1
         for value in values:
             segment=existing[uuid.UUID(value['segment_id'])]
             for name in ('duration_minutes','duration_source'):setattr(segment,name,value[name])

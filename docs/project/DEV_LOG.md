@@ -1,5 +1,23 @@
 # 영구 개발 이력
 
+## 2026-10-25 — 베타 모집 Backend 구현·격리검증·소스 인계
+
+- 작업 내용/구간/브랜치: 합의된267afe5/beta-recruitment-wire-2의 실제 명령/조회·저장·기한처리를 구현했다. 구간명 **베타 모집 구현·격리검증**, `feat/raid-recruitment`에서151/152 수신기록과 함께 의미 있는 한 파트로 commit/push한다. [구현 책임/검증](../features/recruitment/weekly-cycles/beta-implementation.md)·[전체153 Backend · 베타 구현/격리검증](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6395894539)의 정확 소스/원격 게시/고정 실행계약을 따른다.
+- 구현: profile별 closed DTO·원본문/키 존재·null 재송, additive0032와 전역number/문자열5자리·개인표 원자복사/promise·조기/기한/지연review 및 기존제안/quorum, SQL 검색·identity/memo 권한, 계정프리셋 CAS/원ACK/동시수정. 원ACK와 기존612 schema를 보존했다. 실제개발서버/자료는 바꾸지 않았다.
+- 최종Beta21 전체 통합 PASS 후 본인 예약근거 서명 보강의 신규1/직접영향6 재검증으로 Beta22 고유사례 PASS. 개인표 revision/본인 활성예약 변경을 모두 컨텍스트에 바인딩했다. 기존 HTTP/신청20 PASS와 일정/멤버관리/원자이탈85 PASS. 앞선25건/99건 묶음의 beta 중복을 합산하지 않는다. 실제 reader 스키마 대조에서 source_personal_version=null 불일치를 발견해 기존 미저장 개인표 논리버전1로 수정했고 최종 전체가 통과했다. 초기 ACK 렌더러 범위와 N컨텍스트 서명 DB 전달도 수정·재검증했다. 출발시각을 넘긴 기한 트랜잭션은 롤백/다음review 전환을 검증했다.
+- 계약: 기본116경로/133 operation 및 two-cycle178/199의 실행 OpenAPI 전체 일치, 기존612 schema 정의 동일. 새 presets GET/PUT 1경로2operation만 추가했다. 합의 제안 생성/정적도구는267afe5의 원본 압축본/SHA를 기준으로 유지하며 현재 실행계약 일치 검증과 분리했다.
+- 정적/기타: dependency31/43 lock·문서/링크·정적12·diff·제안48/문자25/합성118 PASS. 기본 two-cycle 시험 묶음에 beta를 추가했다. 기존 Starlette/AnyIO 경고는 유지하고 패키지를 변경하지 않았다.
+- 다음: Flutter A 기반/후속화면 연결·구체차이 대응. 현재 실제 개발87c2a0e/이미지366e868a/177/0031 미변경. 실제beta HTTP/기기/전체인수·실제migration/서버교체·merge/AWS배포는 미완료/별도 승인범위이며 이번 검증을 운영 성공으로 합산하지 않는다. Issue13은 OPEN이다.
+
+
+## 2026-10-25 — Flutter 최종 계약 수용·A 기반 구현 보고 수신
+
+- [전체151 Flutter · 고정안2 최종수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6394870853): Backend267afe560033291df6317c2f712e395f13e68818/beta-recruitment-wire-2를 최종수용했고 잔여차이 없음. 계약협의 완료이며 Backend/앱 구현·반영·인수는 별개다. JS 문자25벡터 일치는 Flutter 독립대조 보고이고 Dart/UI·실서버 근거가 아니다.
+- [전체152 Flutter · A 모델/재전송 기반](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6395265140): feature/raid-recruitment-scheduling/12cd2e9a879b42b9b55be498a86017eb0db9f689 commit/push·origin일치 자체보고. query/profile 전달·전용DTO/C·N draft·회원/환경/영역별 원요청/ACK 영속저장·재시작재생/격리/DI 기반 구현. 기본legacy·기존Controller 메모리pending 유지, 베타화면/복구안내 연결·활성화 미완료다.
+- 검증 자체보고563PASS와 보강최종신규33PASS/analyze0는 중첩 합산하지 않았다. Backend가 Flutter 코드를 재검증하거나 beta HTTP/실회원/기기 성공을 확인한 것이 아니다. 새제품결정/실기기시험 요청은 없다.
+- 다음 Backend 합의안 구현·격리검증/정확소스·반영상태 인계. 이번 회신확인에서는 작업기록만 누적했고 서비스/고정schema/실행OpenAPI/DB·실제서버·Issue·commit/push를 변경하지 않았다. 다음 의미 있는 구현 파트에서 기록을 함께 보존한다.
+
+
 ## 2026-10-25 — 베타 계약 최종 고정·소비 인계
 
 - 작업 내용: #13 전체149 Flutter 조건부 수용을 반영해 최신 문자정책과 operation별 완결 wire를 고정했다. 작업 구간명은 **베타 계약 최종 고정·소비 인계**, 브랜치는 `feat/raid-recruitment`다. 수신 문서부터 계약/예시·정적 도구·회신을 한 마감 구간으로 게시하며 기존 이력은 유지한다.

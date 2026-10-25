@@ -150,7 +150,7 @@ def get(principal,rid,key,kind,*,membership_id=None,cycle_member_id=None,include
         value['access']=dict(state='allowed',basis='historical_membership' if historical and member.ended_at else 'target_record' if historical else 'current_membership',
             read_only=historical,evaluated_at=stamp)
         model=wire.DetailProfile if kind=='detail' else wire.PlanProfile
-        return actions.bounded(model,dict(scope=scope(stamp,key,kind),data=value))
+        return actions.bounded(model,dict(scope=scope(stamp,key,kind),data=value),snapshot=(db,uid,stamp))
 
 
 def legacy_membership(db,uid,room,row,member,cm,key,stamp):
@@ -194,4 +194,4 @@ def memberships(principal,key,state='current',limit=20,cursor=None):
             value['content']=None if historical else legacy_membership(db,uid,room,row,member,cm,key,stamp)
             items.append(value)
         return actions.bounded(wire.MembershipPage,dict(scope=scope(stamp,key,'memberships'),data=dict(
-            items=items,membership_head=revision,next_cursor=token,evaluated_at=stamp)))
+            items=items,membership_head=revision,next_cursor=token,evaluated_at=stamp)),snapshot=(db,uid,stamp))

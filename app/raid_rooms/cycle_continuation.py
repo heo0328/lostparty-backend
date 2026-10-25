@@ -1,4 +1,5 @@
 """Existing C participants explicitly join or decline an already open N."""
+from app.raid_rooms import beta_profile
 import uuid
 from fastapi.encoders import jsonable_encoder
 from app.game_accounts.support import fail,GameError
@@ -51,18 +52,18 @@ def prepare(db,uid,rid,key,action,cid,role,stamp,*,include_session_display=False
         source_character=str(owned[0].character_id))
     hidden=[source_proof,room.revision,room.scope,selection_context.group_stamp(db,room.group_id),
         row.settings_snapshot,commands.leadership(db,row),choices,comparison['power_revision'] if comparison else None]
-    result,binding=life.sign(uid,rid,key,'continue-'+action,jsonable_encoder(data),hidden,stamp,row=row,extra=extra)
+    result,binding=life.sign(uid,rid,key,'continue-'+action,jsonable_encoder(data),hidden,stamp,row=row,extra=extra,db=db)
     return result,binding,room,row
 
 
 def get(principal,rid,key,action='join',cid=None,role=None,include_session_display=False):
     with commands.base.snapshot(principal) as (db,uid,stamp):
         value,*_=prepare(db,uid,rid,key,action,cid,role,stamp,include_session_display=include_session_display)
-        return display.output(display_schemas.ContinuationDisplayContext,value,include_session_display)
+        return display.output(display_schemas.ContinuationDisplayContext,value,include_session_display,snapshot=(db,uid,stamp))
 
 
 def execute(principal,rid,command,data,*,decline=False):
-    body=data.model_dump(mode='json');action='decline' if decline else 'join'
+    body=beta_profile.body(data);action='decline' if decline else 'join'
     def run(db,uid,stamp):
         token=life.verify_token(uid,rid,body,'continue-'+action,stamp)
         value,binding,room,row=prepare(db,uid,rid,body['target_cycle_key'],action,

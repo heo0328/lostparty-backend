@@ -1,4 +1,5 @@
 """Actor/target-scoped membership and application pages, without GET writes."""
+from app.raid_rooms import beta_profile, beta_schedule, beta_output
 from sqlalchemy import select,func,and_,or_
 from app.game_accounts.support import fail,cursor_encode,cursor_decode
 from app.game_accounts.lifecycle import digest
@@ -54,8 +55,8 @@ def applications(principal,key,*,rid=None,state='pending',limit=20,cursor=None,r
                 target_generation=app.generation))
             if reader_profile is not None:items[-1].update(projected[app.id])
         model=display_schemas.ApplicationDisplayPageResponse if reader_profile is not None else wire.OutputContract3GetV2RaidRoomsRoomIdApplications
-        result=model.model_validate(dict(scope=scope(stamp,key,row),
-            data=dict(items=items,applications_revision=head,next_cursor=token,evaluated_at=stamp))).model_dump(mode='json')
+        result=beta_output.render(db,uid,stamp,model,dict(scope=scope(stamp,key,row),
+            data=dict(items=items,applications_revision=head,next_cursor=token,evaluated_at=stamp)))
         return display.bounded(result) if reader_profile is not None else result
 
 
@@ -102,8 +103,8 @@ def memberships(principal,key,state='current',limit=20,cursor=None):
                 target_participation_state=('cancelled' if actual.state=='removed' else actual.state) if actual else 'review_required' if row and not ready else 'not_selected',
                 target_cycle_key=key,room_cycle_id=row.id if row else None,target_generation=row.generation if row else None,
                 target_revision=row.revision if row else None))
-        return wire.OutputContract3GetV2MeRaidRoomMemberships.model_validate(dict(scope=scope(stamp,key),
-            data=dict(items=items,membership_head=revision,next_cursor=token,evaluated_at=stamp))).model_dump(mode='json')
+        return beta_output.render(db,uid,stamp,wire.OutputContract3GetV2MeRaidRoomMemberships,dict(scope=scope(stamp,key),
+            data=dict(items=items,membership_head=revision,next_cursor=token,evaluated_at=stamp)))
 
 
 def projections(principal,gid,rids,key,token=None,gids=None):
@@ -135,6 +136,6 @@ def projections(principal,gid,rids,key,token=None,gids=None):
                     target_cycle_key=key,cycle_member_id=actual.id))
             values.append(dict(room_id=rid,members=result,target_cycle_key=key,room_cycle_id=row.id,
                 target_generation=row.generation,target_revision=row.revision))
-        return wire.OutputContract3GetV2GroupsGroupIdRaidRoomMemberProjections.model_validate(dict(scope=scope(stamp,key),
+        return beta_output.render(db,uid,stamp,wire.OutputContract3GetV2GroupsGroupIdRaidRoomMemberProjections,dict(scope=scope(stamp,key),
             data=dict(group_id=gid,members_revision=next(g['members_revision'] for g in source['groups'] if g['group_id']==gid),
-                evaluated_at=stamp,rooms=values))).model_dump(mode='json')
+                evaluated_at=stamp,rooms=values)))

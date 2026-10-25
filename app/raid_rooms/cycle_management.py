@@ -1,4 +1,5 @@
 """Actual target settings, seats and removal; persistent and other targets survive."""
+from app.raid_rooms import beta_profile
 from copy import deepcopy
 from decimal import Decimal
 from sqlalchemy import select
@@ -44,7 +45,7 @@ def remove_member(db,room,row,cm,command,stamp):
 
 
 def command(principal,rid,key,data,operation):
-    body=data.model_dump(mode='json')
+    body=beta_profile.body(data)
     def run(db,uid,stamp):
         room,row,actor=target(db,uid,rid,body['target_cycle_key'],stamp,body)
         guard=graph.final_deadlines(db,row,[],stamp,join=False)

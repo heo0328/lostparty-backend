@@ -1,4 +1,5 @@
 """Private target detail and plan. Historical/global assignments are not aliases."""
+from app.raid_rooms import beta_profile, beta_schedule, beta_output
 from datetime import timedelta
 from contextlib import nullcontext
 from sqlalchemy import select, or_
@@ -138,7 +139,7 @@ def detail(principal,rid,key,*,read_snapshot=None,reader_profile=None):
         if reader_profile is not None:
             result['data']['my_application']=application_display.own_application(db,uid,room,row,stamp)
         model=application_display_schemas.ApplicationDisplayDetailResponse if reader_profile is not None else wire.OutputContract3GetV2RaidRoomsRoomIdDetail
-        result=model.model_validate(result).model_dump(mode='json')
+        result=beta_output.render(db,uid,stamp,model,result)
         return application_display.bounded(result) if reader_profile is not None else result
 
 
@@ -164,6 +165,7 @@ def schedule_fields(db,room,row,mine,stamp,include_resume_display=False):
             resolution='selected' if group.selected_session_id else 'all' if group.occurrence_mode=='each' else 'unresolved',
             candidate_state=value['state'] if value else 'not_evaluated',permissions=dict(select=permission(None if leader and group.selected_session_id is None and group.planning_mode!='unscheduled' else 'SCHEDULE_PROPOSAL_REQUIRED' if enabled else 'RECRUITMENT_COMMAND_NOT_READY'))))
     actual=own_cycle_member(db,row,mine)
+    beta=beta_schedule.get(db,row) if beta_profile.enabled() else None
     for session in schedule.sessions(db,row,history=row.state!='open'):
         binding=db.get(SessionBinding,session.id);group=db.get(ScheduleGroup,binding.group_id)
         values=graph.segments(db,session.id)
@@ -172,8 +174,8 @@ def schedule_fields(db,room,row,mine,stamp,include_resume_display=False):
             required=binding.required,mode=group.planning_mode,state=session.state,schedule_revision=session.schedule_revision,
             starts_at=session.starts_at,ends_at=session.ends_at,duration_minutes=sum(s.duration_minutes for s in values),
             duration_source='item_sum',duration_policy_version='difficulty-duration-v1',earliest_start=session.starts_at,
-            latest_start=session.starts_at,join_deadline=session.starts_at-timedelta(minutes=30) if session.state=='confirmed' else None,
-            candidate_state='ready' if session.starts_at else 'not_evaluated',permissions=dict(propose_schedule=permission(None if leader and session.state=='confirmed' and stamp<session.ends_at else 'SCHEDULE_NOT_CONFIRMED' if enabled else 'RECRUITMENT_COMMAND_NOT_READY'))))
+            latest_start=session.starts_at,join_deadline=session.starts_at-timedelta(minutes=30) if session.state=='confirmed' or beta else None,
+            candidate_state='ready' if session.starts_at else 'not_evaluated',permissions=dict(propose_schedule=permission(None if leader and (session.state=='confirmed' or beta) and (stamp<session.ends_at or beta and beta.needs_review) else 'SCHEDULE_NOT_CONFIRMED' if enabled else 'RECRUITMENT_COMMAND_NOT_READY'))))
         own=db.scalar(select(Participation).where(Participation.session_id==session.id,Participation.membership_id==mine.id))
         if own is not None:
             from app.raid_rooms.cycle_times import confirm_permission
@@ -184,7 +186,9 @@ def schedule_fields(db,room,row,mine,stamp,include_resume_display=False):
             warnings=[]
             if any(graph.busy(db,mine.user_id,r.starts_at,r.ends_at,excluding=session.id) for r in active):warnings.append('TIME_OVERLAP')
             submission=db.get(CycleSubmission,actual.id) if actual else None
-            if session.starts_at and (submission is None or not graph.time.covered(session.starts_at,session.ends_at,submission.normalized_intervals)):
+            from app.raid_rooms.beta_models import BetaAvailabilityCopy
+            copied=db.get(BetaAvailabilityCopy,actual.id) if beta and actual else None
+            if session.starts_at and not (copied and copied.state=='unset') and (submission is None or not graph.time.covered(session.starts_at,session.ends_at,submission.normalized_intervals)):
                 warnings.append('OUTSIDE_AVAILABILITY')
             parts.append(dict(participation_id=own.id,revision=own.revision,session_id=session.id,
                 assignment_ids=[a.id for a,link in assignments(db,row,mine.id) if a.round_id in {s.round_id for s in values}],state=own.state,required=binding.required,
@@ -229,6 +233,10 @@ def plan(principal,rid,key,include_resume_display=False,*,read_snapshot=None):
             try:target(db,uid,room.id,key,stamp,leader=True)
             except GameError as error:reason=error.code
             if reason is None and any(s.state=='confirmed' for s in schedule.sessions(db,row)):reason='SCHEDULE_PROPOSAL_REQUIRED'
+            if beta_profile.enabled() and reason is None:
+                beta=beta_schedule.get(db,row)
+                if beta and beta.needs_review:reason='SCHEDULE_REVIEW_REQUIRED'
+                elif beta and stamp>=beta.base_starts_at-timedelta(minutes=30):reason='RECRUITMENT_CLOSED'
             result['data']['permissions']['edit_schedule_groups']=permission(reason)
         from app.raid_rooms import cycle_outcomes,cycle_common
         if cycle_outcomes.enabled(db):
@@ -239,5 +247,5 @@ def plan(principal,rid,key,include_resume_display=False,*,read_snapshot=None):
         if archive.is_archived(db,rid):archive.permissions(result['data']['permissions'])
         if include_resume_display:
             from app.raid_rooms import resume_review, resume_review_schemas
-            return resume_review.output(resume_review_schemas.ResumePlanContext,result)
-        return wire.OutputContract3GetV2MeRaidRoomsRoomIdPlan.model_validate(jsonable_encoder(result)).model_dump(mode='json')
+            return resume_review.output(resume_review_schemas.ResumePlanContext,result,snapshot=(db,uid,stamp))
+        return beta_output.render(db,uid,stamp,wire.OutputContract3GetV2MeRaidRoomsRoomIdPlan,jsonable_encoder(result))

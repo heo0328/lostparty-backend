@@ -1182,6 +1182,18 @@
       "path": "/v2/raid-rooms/{room_id}/admission-character-candidates",
       "operation_id": "contract3_get__v2_raid-rooms_room_id_admission-character-candidates",
       "topic": "recruitment/participation"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/application-message-presets",
+      "operation_id": "read_presets_v2_me_application_message_presets_get",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "PUT",
+      "path": "/v2/me/application-message-presets",
+      "operation_id": "write_presets_v2_me_application_message_presets_put",
+      "topic": "recruitment/participation"
     }
   ]
 }

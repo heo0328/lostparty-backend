@@ -7,6 +7,8 @@
 
 공식 회신: [전체150번째 Backend · 계약 고정안2](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6394448231) / 다음 Flutter 잔여차이·최종합의 확인 대기. 고정SHA/원격 게시 상태는 같은 회신에 기록한다.
 
+후속 상태: [전체151](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6394870853)에서 계약을 최종 수용했다. [Backend 구현/격리검증](beta-implementation.md)·[전체153 Backend · 베타 구현/격리검증](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6395894539)로 이어진다. 위 인계 당시의 미구현/합의대기 설명과 현재 소스/실제반영 상태를 구분한다.
+
 ## 소비 원본과 재현
 
 - [완결 wire JSON](proposals/beta-recruitment-v2.wire.json): `operations`에 method/path, 전체 path/query/header, requestBody, 성공/오류 response schema·header, security, 구버전 처리분류와 추가 오류를 제공한다. `$defs`는 해당 operation의 참조 전체를 포함한다. 외부 base 문서와 수동으로 DTO를 합칠 필요가 없다. 실행 OpenAPI가 아닌 **제안 전용 bundle**이다.

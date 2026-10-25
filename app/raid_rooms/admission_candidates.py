@@ -1,4 +1,5 @@
 """Bulk own-character candidates in one read-only snapshot; no provider/writes."""
+from app.raid_rooms import beta_profile,beta_schedule
 from collections import Counter
 import hashlib
 import hmac
@@ -56,6 +57,7 @@ def get(principal, rid, key, intent, limit=50, cursor=None):
     if intent not in ('apply','change_character') or type(limit) is not int or not 1 <= limit <= 100:
         fail('INVALID_REQUEST',400)
     with commands.base.snapshot(principal) as (db,uid,stamp):
+        if beta_profile.enabled() and not beta_schedule.available(db):fail('RECRUITMENT_COMMAND_NOT_READY',503)
         room,target = commands.resolve(db,uid,rid,key,stamp)
         if intent == 'apply' and target.settings_snapshot['admission_mode'] != 'leader_only':
             fail('ADMISSION_MODE_CHANGED')
@@ -88,6 +90,9 @@ def get(principal, rid, key, intent, limit=50, cursor=None):
         token = mac(['snapshot',uid,principal[1].id,room.id,intent,stable_scope,actor,eligibility.facts(room),
             source_facts,eligibility.evidence(bundle),eligibility.POLICY])
         binding = mac(['cursor',uid,principal[1].id,room.id,key,intent,eligibility.POLICY])
+        if beta_profile.enabled():
+            token=mac([beta_profile.PROFILE,token])
+            binding=mac([beta_profile.PROFILE,binding])
         offset = cursor_decode(cursor,binding,token) if cursor is not None else 0
         if offset > len(eligible):
             fail('INVALID_REQUEST',400)

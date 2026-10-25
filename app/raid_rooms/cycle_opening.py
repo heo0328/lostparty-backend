@@ -1,3 +1,5 @@
+from app.raid_rooms import beta_schedule
+from app.raid_rooms import beta_profile
 """Explicit future opening/reopening with the source C leader's own bundle."""
 import uuid
 from copy import deepcopy
@@ -41,7 +43,7 @@ def schedule_inputs(db,source):
     return result
 
 
-def prepare(db,uid,rid,key,intent,cid,role,stamp,*,seed=None,include_session_display=False):
+def prepare(db,uid,rid,key,intent,cid,role,stamp,*,seed=None,include_session_display=False,beta_config=None):
     if intent not in ('open','reopen') or (cid is None)!=(role is None):fail('INVALID_REQUEST',400)
     room,row,value=life.target_row(db,uid,rid,key,stamp,next_only=True)
     source,cm,owned,selected,public,source_proof,reason=life.source(db,uid,room,stamp)
@@ -116,7 +118,11 @@ def prepare(db,uid,rid,key,intent,cid,role,stamp,*,seed=None,include_session_dis
     hidden=[source_proof,room.revision,room.scope,selection_context.group_stamp(db,room.group_id),settings,proof,
         comparison['power_revision'] if comparison else None,
         jsonable_encoder(inputs),[row.id,row.revision,row.generation,row.state] if row else None]
-    value,binding=life.sign(uid,rid,key,'opening',jsonable_encoder(data),hidden,stamp,row=row,
+    if beta_profile.enabled():
+        setting=beta_schedule.config(beta_config or beta_schedule.query_config(),key=key,
+            capacity=settings['app_capacity'],duration=sum(v['duration_minutes'] for v in settings['items']),stamp=stamp)
+        data['beta_schedule_config']=setting.model_dump(mode='json')
+    value,binding=life.sign(uid,rid,key,'opening',jsonable_encoder(data),hidden,stamp,row=row,db=db,
         extra=dict(**display.marker(include_session_display),seed=str(rid_cycle),intent=intent,cid=str(cid),role=role))
     return value,binding,room,row,source,settings,inputs
 
@@ -124,16 +130,16 @@ def prepare(db,uid,rid,key,intent,cid,role,stamp,*,seed=None,include_session_dis
 def get(principal,rid,key,intent,cid=None,role=None,include_session_display=False):
     with commands.base.snapshot(principal) as (db,uid,stamp):
         value,*_=prepare(db,uid,rid,key,intent,cid,role,stamp,include_session_display=include_session_display)
-        return display.output(display_schemas.OpeningDisplayContext,value,include_session_display)
+        return display.output(display_schemas.OpeningDisplayContext,value,include_session_display,snapshot=(db,uid,stamp))
 
 
 def execute(principal,rid,command,data):
-    body=data.model_dump(mode='json')
+    body=beta_profile.body(data)
     def run(db,uid,stamp):
         token=life.verify_token(uid,rid,body,'opening',stamp)
         if body['intent']!=token['intent']:fail('TARGET_SCOPE_MISMATCH',400)
         result,binding,room,row,source,settings,inputs=prepare(db,uid,rid,body['target_cycle_key'],token['intent'],
-            uuid.UUID(token['cid']),token['role'],stamp,seed=token['seed'],include_session_display=display.enabled(token))
+            uuid.UUID(token['cid']),token['role'],stamp,seed=token['seed'],include_session_display=display.enabled(token),beta_config=body.get('beta_schedule'))
         expected=row.revision if row else None
         if body['expected_target_revision']!=expected:fail('TARGET_CONTEXT_STALE')
         life.require_match(token,binding)
@@ -174,7 +180,8 @@ def execute(principal,rid,command,data):
                 evidence={'source_cycle':str(source.id),'search_floor_at':(stamp+life.timedelta(minutes=30)).isoformat()}))
         db.flush()
         member,_,_=admission.admit_bundle(db,uid,room,row,Selection.model_validate(body['selection']),targets,command,stamp,opening=True)
-        schedule.install(db,room,row,inputs,member,stamp,copied=True)
+        if beta_profile.enabled():beta_schedule.install(db,room,row,body['beta_schedule'],member,stamp)
+        else:schedule.install(db,room,row,inputs,member,stamp,copied=True)
         # Exactly one epoch for the entire opening, including its first bundle.
         row.revision=epoch
         if gen==1:row.members_revision=row.plan_revision=1
