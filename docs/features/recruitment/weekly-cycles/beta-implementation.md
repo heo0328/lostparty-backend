@@ -19,7 +19,7 @@
 
 ## 계약과 정적 원본
 
-소스 실행 계약은 [two-cycle OpenAPI](../../../../openapi/two-cycle.openapi.yaml)의178경로/199 operation이며 presets GET/PUT 두 operation만 새 경로에 추가했다. 기본앱 OpenAPI116/133은 유지한다. 실제 개발 서버는 여전히 source87c2a0e/177/DB0031이며 이번 작업은 서버 교체나 실제 DB migration을 수행하지 않는다.
+소스 실행 계약은 [two-cycle OpenAPI](../../../../openapi/two-cycle.openapi.yaml)의178경로/199 operation이며 presets GET/PUT 두 operation만 새 경로에 추가했다. 기본앱 OpenAPI116/133은 유지한다. 이 구현 구간 당시 실제 서버는87c2a0e/177/0031이었다. 이후 별도 승인된 [베타 개발 반영](../../../engineering/operations/beta-recruitment-rollout.md)으로 동일소스d95e382/이미지f458e6d5·178/199·DB0032를 적용하고 기존 자료 보존/실제HTTP16을 확인했다.
 
 합의된 제안 bundle과 예시를 현재 실행 OpenAPI로 재생성하지 않는다. 계약 도구는 [합의 당시 실행 원본의 압축본](proposals/beta-recruitment-v2.base-openapi.json.gz)을 읽고 원 SHA256 `cc235345ff48726506389a4ba9dcd09ac7452206568a2a3bf2e905ff8412b1fb`와 대조한다. 이는267afe5의 실행 계약 원본을 그대로 압축한 것이다. 현재 실행계약 일치 검증은 `verify_isolated.py contracts`로 별도 수행한다.
 

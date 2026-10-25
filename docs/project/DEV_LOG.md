@@ -1,5 +1,14 @@
 # 영구 개발 이력
 
+## 2026-10-25 — 베타 개발 반영·자료 보존 검증·인계
+
+- 작업내용/구간/브랜치: 사용자의 진행 승인으로 합의 beta 소스d95e382를 실제 로컬 개발 서버에 적용했다. 구간명 **베타 개발 반영·자료 보존 검증·인계**, 동일 `feat/raid-recruitment`에서 기록/협업을 한 파트로 마감한다. [반영 기록](../engineering/operations/beta-recruitment-rollout.md)·[집계](../engineering/operations/records/beta-recruitment-rollout.json)·[전체154 Backend · 베타 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6396368027)를 따른다.
+- API 이미지f458e6d5/0032·178/199, 기본116/133 유지. 후보/실행259파일·두OpenAPI 전체일치·runtime31 정확설치 확인. tmpfs 내부DB 복원·제한계정 migration/시작 리허설 후 실제API 중지·최신백업·0032 적용·API만 재생성했다. 기존DB 컨테이너/볼륨/이미지·APIenv/command/보안/포트/로그/키source/readonly 동일.
+- 기존108표934행의 전체hash/열/기존sequence/DBprofile·키를 migration직후 및 재시작후 보존했다. 새5표0행·새sequence미사용. 과거993행 백업을 실제DB에 복원하지 않았다. 원문백업/키/환경은 비공개 보존, 이번전용임시자원 제거·API/DB healthy.
+- 실제HTTP16 PASS(공개2/인증거절10/C·N legacy·beta공개검색4), 허용JSON로그62줄/ERROR0·3종worker 성공. 정상회원 새명령/기기/provider·성능·운영 인수는 미실행. 기존beta22/회귀105와 합산하지 않는다.
+- 복원 도중 Desktop 파일복사 전달문제를 표준입력으로 해결하고 readiness 검증은 실제 ASGI 모델초기화를 맞춰 통과했다. 공개주차 검증경로도 v1로 정정했다. 서버 코드/기존 자료 변경을 추가하지 않았다. DB32 커밋후 구API366e868a 단독롤백 금지·전진복구/자료보존 기준을 남겼다.
+- 다음Flutter A 기반화면/영속복구·정상회원 실제연동, Backend 구체차이대응. Issue13 OPEN·전체모집 인수/IF-001/원ACK 미완료 유지. 동일계약 재수용/일괄재시험 없음. dev/main 병합·AWS배포 미실행. 정확 반영기록SHA/게시확인은 회신에 보완한다.
+
 ## 2026-10-25 — 베타 모집 Backend 구현·격리검증·소스 인계
 
 - 작업 내용/구간/브랜치: 합의된267afe5/beta-recruitment-wire-2의 실제 명령/조회·저장·기한처리를 구현했다. 구간명 **베타 모집 구현·격리검증**, `feat/raid-recruitment`에서151/152 수신기록과 함께 의미 있는 한 파트로 commit/push한다. [구현 책임/검증](../features/recruitment/weekly-cycles/beta-implementation.md)·[전체153 Backend · 베타 구현/격리검증](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6395894539)의 정확 소스/원격 게시/고정 실행계약을 따른다.

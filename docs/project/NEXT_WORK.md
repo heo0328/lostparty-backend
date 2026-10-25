@@ -1,5 +1,13 @@
 # 다음 실행
 
+## 현재 실행·다음 담당 — 베타 개발 반영 완료
+
+2026-10-25 사용자 승인으로 [베타 개발 반영](../engineering/operations/beta-recruitment-rollout.md)을 완료했다. 소스d95e382/이미지f458e6d5·178경로/199 operation·DB0032가 실제 개발 실행 기준이다. 기존108표934행·열/기존sequence·키/설정 보존, 복원/제한계정 migration 리허설·실제HTTP16·두계약/259파일/runtime31·worker 로그·API/DB healthy 확인. [전체154 Backend · 베타 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6396368027)에 회신했다. 이 구간 기록을 동일 목적브랜치에서 묶어 commit/push하고 회신에 정확SHA·원격 확인을 남긴다.
+
+**다음 Flutter:** A 기반 beta DTO/화면/영속복구 연결·정상회원 실제개발 연동, 구체차이는 Issue13. Backend는 수신 차이를 재현/대응한다. 네이티브 상세 작업순서는 해당측이 관리한다. 동일계약 재수용·정상시험 반복 요청은 없다. Flutter 활성화/기기/전체모집 인수는 미완료·Issue13 OPEN·IF-001/원ACK/독립후속은 유지한다. dev/main 병합·AWS 운영배포는 미실행이다. DB32에서 구이미지366e868a만 재시작하거나 과거백업을 덮어쓰지 않는다.
+
+아래 구현 마감·이전 개선 반영은 각 시점의 기록이며 현재 실행 기준은 이 상단이다.
+
 ## 현재 작업 구간 마감 — 베타 Backend 구현·격리검증
 
 2026-10-25 **베타 모집 구현·격리검증**을 같은 목적브랜치 `feat/raid-recruitment`에서 마감한다. 기준은 [전체151 Flutter 계약 최종수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6394870853)의267afe5/beta-recruitment-wire-2다. [전체153 Backend · 베타 구현/격리검증](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6395894539)에 구현·검증 결과를 회신했고, 같은 댓글에서 정확 소스 SHA/원격 게시 확인·실행계약 고정 링크를 관리한다. [구현/검증](../features/recruitment/weekly-cycles/beta-implementation.md)을 따른다.
