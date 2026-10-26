@@ -1,5 +1,7 @@
 # 즉시가입 후보조회 확장 구현
 
+2026-10-26 이후 [실제개발반영](../../../engineering/operations/join-candidates-rollout.md) 완료. source690f36f/이미지061dc562·DB0032, 서비스후보1/목록12·HTTP6와worker/healthy를확인했다. 아래구현시점의미반영/게시전설명과구분한다. 한도/조율제안은여전히별도대기다.
+
 2026-10-26 / 작업 구간 **즉시가입 후보 계약·구현·직접검증·인계** / `feat/raid-recruitment`.
 
 [전체167 Flutter 소비수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410375489)에따라 기존 GET admission-character-candidates에 query/data.intent=join을 추가했다. direct_join만허용·409 ADMISSION_MODE_CHANGED·actor=null. 기존 apply/change_character·admission-eligibility-2/페이지·제외집계·snapshot/cursor의회원/세션/room/T/intent/profile 바인딩을유지한다. 새endpoint·DBmigration·회원자료변환은없다.

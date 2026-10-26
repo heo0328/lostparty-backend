@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+2026-10-26 최신실행: [join 개발반영](../engineering/operations/join-candidates-rollout.md) 완료·source690f36f/이미지061dc562·178/199·DB0032. 고유6시험/소스계약검증재사용·실제서비스후보1(제보1704제외)/목록12·HTTP6·worker/healthy/키환경유지. [전체170 Backend · join 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6411011928)의반영기록SHA/인계를따른다. 다음Flutter일반join시트연결및169한도상태표/조율선택조회소비확인→Backend나머지구현/개발반영. 한도/조율은미구현·현재한도코드유지/활성3방은기대값이며전체계획미완료다. 원ACK키매칭/전체기기인수·dev/main/AWS 별도미완료.
+
 2026-10-26 최신작업: [join 수용167](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410375489)→[독립구현/직접6PASS](../features/recruitment/participation/join-candidates-implementation.md), query/data join·direct_join/actor=null·기존공통판정/페이지·원ACK유지. 다음소스게시/승인된개발반영. [169 한도상태표·조율 선택조회 제안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410756326)·[제안/닫힌DTO](../features/recruitment/weekly-cycles/active-room-and-wait-proposal.md)는소비확인대기/미구현·실행계약미추가. 사용자정정한도는현재C/N활성방이며기대3방·과거관계7자료삭제없음. 실제개발은신규반영기록전0fd43f9/DB0032유지. 원ACKnonbeta/null대조수용·실제키매칭/전체기기인수는별개미완료.
 
 2026-10-26 최신 실제실행: 사용자 승인한 [문자/목록 보완 개발 반영](../engineering/operations/device-feedback-rollout.md) 완료. source0fd43f9/이미지5f7c5b63·178/199·DB0032·wire2/profile1·hangul-printable-ascii-1. API만교체·기존DB/환경/키/설정유지·서비스읽기12/HTTP6/실행계약·runtime31/worker/healthy 확인. [전체165 Backend · 문자/목록 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410058244)를따른다. 다음Flutter 새기호문구저장/재조회·종료목록두변경확인, join제안/원ACKnull대조는별도대기. 전체기기인수/dev·main/AWS 미완료. 아래0fd소스미반영/d95유지는이전조사당시이력이다.

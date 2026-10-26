@@ -1,5 +1,12 @@
 # 영구 개발 이력
 
+## 2026-10-26 — join 후보 개발 반영·실행 확인·인계
+
+- 사용자승인범위에서합의된join을독립구간으로반영했다. source690f36f15880f7766526288ec515183b2b4d077apush/원격일치후이미지061dc562를API에교체. [반영근거](../engineering/operations/join-candidates-rollout.md)·[집계](../engineering/operations/records/join-candidates-rollout.json)·[전체170 Backend · join 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6411011928). 구간명 **join 후보 개발 반영·실행 확인·인계**, 같은feat/raid-recruitment.
+- 소스258/runtime31·기본116/133·현재178/199전체일치,기존쓰기operation동일·원612중AdmissionCandidateData intent만확장. 직접6시험재사용·전체회귀미반복. DB0032컨테이너/이미지/볼륨/환경·API설정/command/포트/보안/tmpfs/로그/키/.env유지·migration/자료변환/삭제·dump/restore/회원명령없음.
+- 기존유효세션READONLY join서비스에서9중6허용/1704제외·제외레벨1/완료1/참가1. 기존목록12PASS·실제HTTP6(공개2/인증거절4)PASS·API/DBhealthy·허용로그45줄/ERROR0/3종worker확인. 정상회원HTTP/기기/성능미확인·합성/서비스/HTTP수치미합산.
+- 직전0fd/5f7c5b63·설정보존/실제rollback없음. 반영기록한구간commit/push후고정기록SHA/네이티브join시트연결을같은회신에보완한다. 169한도상태표/선택조율DTO는아직소비확인미수신·미구현/미반영. 사용자정정한도는현재C/N활성방이나현재코드는여전히이전집계·READONLY기대3방이다. 과거7관계삭제없음. 승인계획전체완료로표시하지않고수용후Backend나머지구현/개발반영을이어간다. Issue13OPEN·원ACK키매칭/전체기기·dev/main/AWS 미완료.
+
 ## 2026-10-26 — join 후보 독립 구현·한도/조율 소비 제안
 
 - 사용자계획승인으로전체166한도제품정정/167join수용/168대기한줄을수신했다. 기존164의과거관계10정상설명을정정. READONLY현재목록같은기준C2/N2중복제거3방을확인했다. [169 Backend제안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410756326)에활성방공통상태표·include_coordination_wait/5상태·선택속성/구응답유지·우선순위를자기완결문장으로전달했다. [제안/schema](../features/recruitment/weekly-cycles/active-room-and-wait-proposal.md)는미합의/미구현이며DB·실행계약추가없음.

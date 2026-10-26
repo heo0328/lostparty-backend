@@ -1,5 +1,13 @@
 # 다음 실행
 
+## 최신 실행 — join 후보 개발 반영 완료 / 한도·조율 소비 확인 대기
+
+[전체167 수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410375489)의join은독립구현/고유6PASS·source690f36fpush/원격확인→[개발반영](../engineering/operations/join-candidates-rollout.md)까지완료했다. 실제이미지061dc562·178/199·DB0032. API만교체·DB/키/설정유지·소스258/두계약/runtime31·서비스후보1/목록12·HTTP6·worker/healthy확인. [전체170 Backend · join 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6411011928)에반영기록구간게시/일반join시트연결을인계한다.
+
+**다음 Flutter:** 일반join시트의query/data join·actor=null/전용후보·역할/페이지연결, 선택후기존최신context/POST. 전체169의[한도상태표·조율선택DTO](../features/recruitment/weekly-cycles/active-room-and-wait-proposal.md) 소비확인도대기중이다. Backend는수용회신뒤나머지구현·직접검증·개발반영까지진행한다. **한도/조율은아직구현·반영하지않았다.** 현재한도10집계는제품정정전코드이며10→3은READONLY기대값이다. 과거7관계삭제/강제종료없음. 이구간은승인계획전체완료가아니다.
+
+아래구현당시0fd실행/게시전설명은이전이력이다. 원ACK키일치/전체기기·성능·dev/main/AWS 미완료를유지한다.
+
 ## 현재 작업 — join 독립 구현·개발 반영 / 한도·조율 소비 확인 대기
 
 [전체166~168 수신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410375489)으로 한도제품기준을현재C/N활성방으로정정하고join을수용받았다. [join 구현/직접검증](../features/recruitment/participation/join-candidates-implementation.md)은고유6PASS·실행계약178/199·기본116/133유지·대표예시를완료했다. 같은목적브랜치에서이구간을묶어commit/push후승인된개발API반영을이어간다. 코드상기존AdmissionCandidateData의intent만확장·그외611schema유지·DB변경없음.

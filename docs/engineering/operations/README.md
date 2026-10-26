@@ -4,7 +4,7 @@
 
 ## 현재 운영 경계
 
-최신 실행은 [문자/목록 개발 반영](device-feedback-rollout.md)·[집계](records/device-feedback-rollout.json)다. source0fd43f9/이미지5f7c5b63·178/199·DB0032, API만교체·DB컨테이너/볼륨·환경/키유지·읽기전용서비스12/실제HTTP6·두계약/runtime31/worker/healthy 확인 완료다. 이전 [베타 반영](beta-recruitment-rollout.md)의934행보존/복원은당시기록이다. 이전 [Backend 개선 반영](backend-improvements-rollout.md)은 당시 이력이다. [로깅 조회](logging.md)를 사용할 수 있다. 아래 아이템레벨 반영은 업무 구현·인수 근거로 보존한다.
+최신 실행은 [join 개발 반영](join-candidates-rollout.md)·[집계](records/join-candidates-rollout.json)다. source690f36f/이미지061dc562·178/199·DB0032, API만교체·DB/환경/키유지·서비스후보1/목록12·HTTP6·두계약/runtime31/worker/healthy 확인 완료다. 한도/조율 선택안은소비확인대기/미구현이다. 직전 [문자/목록 반영](device-feedback-rollout.md)은기존근거다. 이전 [베타 반영](beta-recruitment-rollout.md)의934행보존/복원은당시기록이다. 이전 [Backend 개선 반영](backend-improvements-rollout.md)은 당시 이력이다. [로깅 조회](logging.md)를 사용할 수 있다. 아래 아이템레벨 반영은 업무 구현·인수 근거로 보존한다.
 
 직전 업무 보완은 [신청자 아이템레벨 보완 개발 반영](application-item-level-rollout.md)·[집계](records/application-item-level-rollout.json)다. sourcef471e31/이미지6d5857b3·177경로·DB0031, 기존자료/키보존·실행12PASS 완료이며 [전체25 Flutter 인수 결과](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386859737)로 레벨표시 기기통과·두 예외분기 구현/자동검증 근거 수용을 확인했다. 두 예외분기의 실제 기기관찰과 전체모집 인수는 미완료다. 아래 표시프로필 반영은 직전 이력이다.
 
