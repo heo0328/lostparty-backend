@@ -1,5 +1,11 @@
 # 영구 개발 이력
 
+## 2026-10-27 — 명시 출발 정수분 개발 반영·실행 확인
+
+- source420e057 push/원격일치후이미지cd581ac0로API만교체. [반영기록](../engineering/operations/explicit-minute-rollout.md)·[공개집계](../engineering/operations/records/explicit-minute-rollout.json). DB0032컨테이너/이미지/볼륨/환경·API환경/command/포트/보안/로그/readonly키/.env유지. migration/자료변환/삭제·dump/restore·실회원시험명령/원pending재실행없음.
+- 실행259소스/runtime31/두계약전체일치·기본116/133/현재178/199·기존operation/본문/ACK동일. 직접17재사용/전체회귀미반복·130fixture/원ACK32/음성3. 합성시각순수분설정/18:03기한17:33·기본5분/TICK5분·실자료READONLY검색/HTTP9/healthy/3종worker/확인JSON로그34줄ERROR0. 정상회원생성/제안/수락HTTP·기기와구분한다.
+- 직전1307ac36/설정보존·실제rollback없음. 새분자료/완료명령/호환불명이면자료유지전진수정. [전체180번째 Backend · 명시 출발 정수분 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6422693611)게시/실제순번확인·반영기록구간push/원격확인후같은댓글에고정문서/분생성개방·제안수락직접영향만인계. Native기기/전체성능·원ACK키매칭/dev·main/AWS별도·Issue13OPEN.
+
 ## 2026-10-27 — 베타 명시 출발 정수분 구현·직접 검증
 
 - 사용자승인계획/전체179수용을 [명시출발정수분구현](../features/recruitment/weekly-cycles/explicit-minute-departures.md)으로반영. 기본false옵션으로생성/CN개방·실제베타세션제안create/evaluate/수락·재평가/needs_review복구만UTC정수분허용,공용기본/자동조율/개인표/진행시간/구대안5분·정확기한/동의/예약/원ACK보존. DB필드/자료변환/삭제없음.

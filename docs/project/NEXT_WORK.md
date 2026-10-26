@@ -1,10 +1,10 @@
 # 다음 실행
 
-## 최신 작업 — 베타 명시 출발 정수분 구현·직접17PASS → 개발 반영
+## 최신 작업 — 명시 출발 정수분 개발 반영·인계 완료
 
-[전체179 수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6422070028)의 [구현/검증](../features/recruitment/weekly-cycles/explicit-minute-departures.md)을완료했다. 생성/CN개방과실제베타세션의제안/수락/재평가/검토복구만정수분옵션을전달·공용기본/자동후보/개인표/진행시간5분·정확30분/주차/점검·동의/예약/원ACK유지. 신규11/검색4/기존2고유17PASS·두계약/완결130예시/원ACK32확인이다.
+[179수용/구현·직접17PASS](../features/recruitment/weekly-cycles/explicit-minute-departures.md)과 [개발 반영·실행 확인](../engineering/operations/explicit-minute-rollout.md)을완료했다. source420e057/이미지cd581ac0·178/199·DB0032. 베타생성/CN개방·실제베타세션제안/수락/재평가/검토복구만분정밀도,기본5분/자동후보/개인표/진행시간·정확30분/동의예약/원ACK유지. 실행259소스/runtime31/두계약일치·합성시각순수검사/실자료READONLY검색·HTTP9/healthy/worker·로그ERROR0확인이다.
 
-**다음Backend:** 구현/계약/검증/수신기록을묶어commit/push·원격확인→후보검증→승인된API만교체/실행확인→Issue13고정인계. DB0032/자료/키/환경유지·migration/자료변환/삭제·복원/회원시험명령없음. 현재실제서버는반영전a358a1a/1307ac36/0032다. 다음Flutter는분생성/개방·제안/수락직접영향만확인·Backend차이대응,전체인수/원ACK키매칭/dev·main/AWS별도. 아래미구현/소비대기는이전시점이다.
+[전체180번째 Backend · 명시 출발 정수분 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6422693611)에인계한다. **다음Flutter:** 분생성/개방·직접제안/수락의직접영향확인·구체차이회신. **Backend:** 차이대응. 이번구현/직접검증/게시/개발반영/실행확인은완료,정상회원쓰기·기기/전체성능·원ACK키매칭/dev·main/AWS는별도다. DB0032/자료/키/환경유지·migration/자료변환/삭제·복원/실회원시험명령없음. 아래검색반영/추천소비대기/미구현은당시이력이다.
 
 ## 최신 작업 — 검색 정수분 개발 반영·생성 정책 검토 인계 완료
 

@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-2026-10-27 최신작업: [179수용/베타명시출발정수분구현·직접17PASS](../features/recruitment/weekly-cycles/explicit-minute-departures.md) 완료·두계약/130예시검증. 생성/CN개방·실제베타세션제안/수락/재평가/검토복구만분정밀도·기본/자동/개인표/진행시간5분/동의예약/원ACK유지. 다음소스게시/승인된개발반영/고정인계·아직서버a358a1a/1307ac36/0032유지. DB변경/자료변환없음·전체인수/원ACK키매칭/dev·main/AWS별도.
+2026-10-27 최신실행: [명시출발정수분구현/직접17PASS](../features/recruitment/weekly-cycles/explicit-minute-departures.md)·[개발반영](../engineering/operations/explicit-minute-rollout.md) 완료. source420e057/이미지cd581ac0·178/199·DB0032. 베타생성/CN개방·실제베타세션제안/수락/재평가/검토복구만분정밀도·기본/자동/개인표/진행시간5분/동의예약/원ACK유지. 실행259소스/runtime31/두계약·순수/READONLY검색·HTTP9/healthy/worker확인·DB자료/키환경유지. 다음Flutter직접영향·Backend차이대응,정상회원쓰기/기기·성능/원ACK키매칭/dev·main/AWS별도다.
 
 2026-10-27 최신실행: [검색정수분구현/직접6PASS·생성정책검토](../features/recruitment/weekly-cycles/search-minute-precision.md)·[개발반영](../engineering/operations/search-minute-rollout.md) 완료. sourcea358a1a/이미지1307ac36·178/199·DB0032. GET/POST검색만분경계허용·공용5분/생성/제안/예약유지. 실행259소스/runtime31/두계약·실자료READONLY검색·HTTP9/healthy/worker확인·DB/키/환경유지. 다음Flutter검색직접영향/생성추천소비의견·Backend차이대응. 생성추천미구현/전체인수·원ACK키매칭/dev·main/AWS별도.
 

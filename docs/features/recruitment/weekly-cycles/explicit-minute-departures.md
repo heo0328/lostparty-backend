@@ -2,7 +2,7 @@
 
 2026-10-27 / 작업 구간 **명시 출발 정수분 구현·직접 검증·개발 반영·인계** / `feat/raid-recruitment`.
 
-[전체179번째 Flutter 수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6422070028)과 사용자 승인 계획을 구현했다. 베타 생성/C/N개방·직접제안/수락/재평가/needs_review복구만 정수분을 허용한다. [이전 검토](search-minute-precision.md)를 실제구현으로 잇는 구간이며 정확소스/이미지·게시/반영상태는 최종반영기록/Issue13인계를 따른다.
+[전체179번째 Flutter 수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6422070028)과 사용자 승인 계획을 구현했다. 베타 생성/C/N개방·직접제안/수락/재평가/needs_review복구만 정수분을 허용한다. [이전 검토](search-minute-precision.md)를 실제구현으로 잇는 구간이며 source420e057을push/원격확인후 [개발 반영·실행 확인](../../../engineering/operations/explicit-minute-rollout.md)을완료했다. 정확이미지/검증경계는해당기록과Issue13인계를따른다.
 
 ## 정책과 데이터 책임
 
@@ -26,6 +26,8 @@
 
 ## 반영·후속 경계
 
-구현/계약/직접검증을같은모집브랜치에묶어commit/push·원격확인후후보소스/고정패키지/두계약을검증하고API만교체한다. DB0032·자료·키·환경/실행설정유지·마이그레이션/자료변환/삭제·dump/restore·실회원시험명령/원pending재실행은없다. 실제서버는이구간반영전a358a1a/1307ac36/0032다.
+구현/계약/직접검증을같은모집브랜치에묶어commit/push·원격확인후후보검증/API교체·실행확인까지완료했다. DB0032·자료·키·환경/실행설정유지·마이그레이션/자료변환/삭제·dump/restore·실회원시험명령/원pending재실행은없다. 실제서버는420e057/cd581ac0/0032다.
 
 교체후소스·계약·health/worker/가능한읽기조회로실행확인하고정상회원생성/제안/수락·기기인수는별도로표시한다. 새정수분자료/완료명령이있거나구버전호환이불명확하면이전5분코드로단순복귀하지않고자료를유지한전진수정이다. Native에는분단위생성/개방·제안/수락의직접영향만확인요청한다. 전체기기/성능·원ACK동일키매칭·dev/main/AWS는별도다.
+
+[전체180번째 Backend · 명시 출발 정수분 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6422693611)게시/실제전체순번·본문확인. 반영기록push·원격확인후같은댓글에고정문서/기록SHA와Native직접영향확인을보완한다.
