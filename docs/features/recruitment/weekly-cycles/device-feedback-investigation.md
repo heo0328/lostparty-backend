@@ -1,5 +1,7 @@
 # 1차 기기 차이 조사·문자 정책 보완
 
+2026-10-26 이후 사용자 승인으로 [실제 개발 반영](../../../engineering/operations/device-feedback-rollout.md)을 완료했다. 실제source0fd43f9/이미지5f7c5b63·DB0032이며 읽기전용서비스12/HTTP6·계약/runtime31/worker/healthy를 확인했다. 아래 미반영 설명은 조사·소스인계 당시이력이다. join소비확인/원ACK대상분기와전체기기인수는별도미완료다.
+
 2026-10-26 / 작업 구간 **기기 차이 실자료 조사·문자/목록 보완·인계** / `feat/raid-recruitment`.
 
 대상 요청은 [전체162 Flutter 기기 차이](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6409130575)·[전체163 native 수정/조사 대기](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6409312568), 중간 회신은 [전체164 Backend 조사·join 제안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6409485714)이다. 실제 개발 d95e3827/이미지f458e6d5·DB0032를 REPEATABLE READ/READ ONLY로 조사했다. [공개 집계](../../../engineering/operations/records/device-feedback-investigation.json)를 함께 따른다. 실자료·원키/ACK 변경이나 명령 재실행은 하지 않았다. 민감 원문은 비공개 임시자료에만 보관하며 아래는 집계/정책 근거다.

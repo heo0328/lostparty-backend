@@ -1,5 +1,14 @@
 # 영구 개발 이력
 
+## 2026-10-26 — 문자/목록 보완 개발 반영·실행 확인·인계
+
+- 작업구간 **문자/목록 보완 개발 반영·실행 확인·인계**, `feat/raid-recruitment`. 사용자승인계획으로 source0fd43f9를 API이미지5f7c5b63에적용했다. [반영근거](../engineering/operations/device-feedback-rollout.md)·[집계](../engineering/operations/records/device-feedback-rollout.json)·[전체165 Backend · 문자/목록 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410058244)를따른다.
+- 후보/실행 소스258파일·기본116/133·two-cycle178/199 전체OpenAPI·공식runtime31검사PASS. 패키지보조검사에서extras표시를배포명으로조회한오류는프로젝트공식정규화도구로확인해통과했다. 서버코드/패키지를변경하지않았다. 같은소스7개직접시험을재사용·pytest전체회귀미반복.
+- API만교체. DB컨테이너ID/이미지/볼륨/환경과API환경/command/포트/보안/tmpfs/로그·키mount source/readonly·키hash/.envhash유지·DB0032. migration/자료변환/삭제·dump/restore/전체행hash재검사·실회원명령·미확인재전송없음.
+- 실제배포소스의기존세션READONLY목록12개PASS·content=null/비공개번호부재. HTTP6PASS는공개2/문구·종료목록인증거절4이며정상회원쓰기와다르다. 실행문자ASCII95/금지5확인. API/DBhealthy·JSON로그53줄/ERROR0·3종worker성공. 수치합산안함·기기/성능미실행.
+- 직전f458e6d5+실행설정보존·실제복구없음. 복구는문자자료의이전허용범위호환확인조건이며새기호저장/불명확시전진수정. 과거DB백업덮어쓰기없음.
+- 한구간commit/push·원격확인후같은회신에고정기록SHA를보완하고Flutter새기호문구저장/재조회·종료목록열기두변경만확인요청한다. join소비합의/ACK대상대조는전체164별도대기·기기전체/완료해체·두주차/dev·main/AWS 미완료·Issue13OPEN.
+
 ## 2026-10-26 — 기기 차이 읽기 전용 조사·문자/목록 보완
 
 - 사용자 작업 승인으로 #13 전체162/163의6개항목을 조사했다. 구간 **기기 차이 실자료 조사·문자/목록 보완·인계**, 동일 `feat/raid-recruitment`. [근거/책임/경계](../features/recruitment/weekly-cycles/device-feedback-investigation.md)·[전체164 Backend 조사/join 제안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6409485714).

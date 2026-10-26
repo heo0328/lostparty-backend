@@ -1,5 +1,13 @@
 # 다음 실행
 
+## 최신 실행 — 문자/목록 보완 실제 개발 반영 완료
+
+2026-10-26 승인계획에 따라 [문자/목록 보완 개발 반영](../engineering/operations/device-feedback-rollout.md)을 완료했다. 실제source0fd43f9/이미지5f7c5b63·178/199·DB0032, wire2/profile1·hangul-printable-ascii-1이다. API만교체/DB컨테이너·볼륨·환경/키/설정유지. 소스258/두계약/runtime31·읽기전용서비스12·실제HTTP6·문자실행코드/worker/healthy 확인. 동일소스7시험재사용·전체회귀/자료변환/복원/삭제/실회원쓰기 없음. [전체165 Backend · 문자/목록 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410058244)에 결과기록·게시확인과기기확인범위를인계한다.
+
+**다음 Flutter:** 새기호 문구저장/재조회·종료모집목록 열기 두변경을기기에서 확인하고차이를같은Issue13에회신한다. 전체기능반복요청은없다. **별도 합의대기:** 전체164의join후보 최소안 소비확인·비beta/null ACK대상분기대조→Backend합의구현. 이번반영으로join/기기전체인수·dev/main/AWS를완료로표시하지않는다.
+
+아래조사·소스인계는이전시점의기록이며 실제실행은이상단을따른다.
+
 ## 현재 작업 — 기기 차이 조사·문자/목록 보완
 
 [전체162/163 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6409312568)에 대응한 [조사/보완](../features/recruitment/weekly-cycles/device-feedback-investigation.md)·[전체164 Backend 조사/join 제안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6409485714)을 따른다. 기본10/사용10은 beta3방+이전미종료7관계이며 종료관계/주차 중복집계 없음. 번호5는 direct_join/1720이며1704는 공통판정에서제외. 번호3/5 공통후보없음·4 인원미달. 관찰한 성공ACK는copy=null/비beta대상으로 실제미확인 원키일치는미확정이다.
