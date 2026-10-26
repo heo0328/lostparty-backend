@@ -1,5 +1,11 @@
 # 다음 실행
 
+## 최신 작업 — 베타 명시 출발 정수분 구현·직접17PASS → 개발 반영
+
+[전체179 수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6422070028)의 [구현/검증](../features/recruitment/weekly-cycles/explicit-minute-departures.md)을완료했다. 생성/CN개방과실제베타세션의제안/수락/재평가/검토복구만정수분옵션을전달·공용기본/자동후보/개인표/진행시간5분·정확30분/주차/점검·동의/예약/원ACK유지. 신규11/검색4/기존2고유17PASS·두계약/완결130예시/원ACK32확인이다.
+
+**다음Backend:** 구현/계약/검증/수신기록을묶어commit/push·원격확인→후보검증→승인된API만교체/실행확인→Issue13고정인계. DB0032/자료/키/환경유지·migration/자료변환/삭제·복원/회원시험명령없음. 현재실제서버는반영전a358a1a/1307ac36/0032다. 다음Flutter는분생성/개방·제안/수락직접영향만확인·Backend차이대응,전체인수/원ACK키매칭/dev·main/AWS별도. 아래미구현/소비대기는이전시점이다.
+
 ## 최신 작업 — 검색 정수분 개발 반영·생성 정책 검토 인계 완료
 
 [전체177 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6421096990)에대해 [검색구현/직접6PASS·생성정책검토](../features/recruitment/weekly-cycles/search-minute-precision.md)·[개발반영/실행확인](../engineering/operations/search-minute-rollout.md)을완료했다. sourcea358a1a/이미지1307ac36·178/199·DB0032,API만교체·기존DB/자료/환경/키유지. 실행259소스/runtime31/두계약일치·실자료READONLY검색범위/끝제외·실제HTTP9(GET/POST분검색200동일/초400포함)·healthy/worker/로그ERROR0확인. 생성/제안/예약·공용5분은미변경이다.

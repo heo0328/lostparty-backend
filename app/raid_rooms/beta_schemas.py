@@ -20,6 +20,7 @@ class Closed(BaseModel):
 
 
 class BetaScheduleConfig(Closed):
+    """Beta explicit departure uses UTC whole-minute precision; duration, personal availability and automatic candidates retain five-minute grids."""
     base_starts_at: AwareDatetime
     early_coordination_enabled: StrictBool
     early_additional_members: Threshold | None

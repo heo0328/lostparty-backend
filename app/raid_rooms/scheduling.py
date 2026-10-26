@@ -117,12 +117,12 @@ def participation(db,session,member,*,confirm=False,stamp):
     return row
 
 
-def set_times(db,session,start,cycle_key,stamp,*,validate_floor=True):
+def set_times(db,session,start,cycle_key,stamp,*,validate_floor=True,minute_precision=False):
     values=segments(db,session.id)
     total=sum(s.duration_minutes for s in values)
     if not values or total>1440:fail('SESSION_DURATION_EXCEEDED')
     end=start+timedelta(minutes=total)
-    time.interval(start,end,cycle_key,floor=floor(db,session.room_id,cycle_key) if validate_floor else None,current=stamp)
+    time.interval(start,end,cycle_key,floor=floor(db,session.room_id,cycle_key) if validate_floor else None,current=stamp,minute_precision=minute_precision)
     cursor=start
     for segment in values:
         segment.starts_at=cursor;segment.ends_at=cursor+timedelta(minutes=segment.duration_minutes);cursor=segment.ends_at

@@ -99,18 +99,7 @@ def test_minute_search_invalid_bounds_and_write_grid_preserved(beta):
     assert time_policy.TICK==timedelta(minutes=5)
     assert not time_policy.aligned(base+timedelta(minutes=1))
     with pytest.raises(GameError,match='INVALID_REQUEST'):
-        beta_schedule.config(dict(base_starts_at=base+timedelta(minutes=1),early_coordination_enabled=False,early_additional_members=None),
-            key=key,capacity=4,duration=30,stamp=base-timedelta(hours=1))
-    with beta_profile.using():
-        view=cycle_member_reads.plan(actor(a['uid']),rid,key);p=view['data'];sess=p['sessions'][0]
-        segments=p['session_segments'][0]['segments']
-        data=cycle_schemas.Propose.model_validate(dict(expected_cycle_key=view['scope']['current_cycle_key'],target_cycle_key=key,
-            expected_target_revision=view['scope']['target_revision'],expected_plan_revision=p['revision'],
-            expected_members_revision=p['members_revision'],expected_leadership_revision=p['leadership']['leadership_revision'],
-            targets=[dict(session_id=sess['session_id'],expected_schedule_revision=sess['schedule_revision'],
-                starts_at=base+timedelta(minutes=61),item_durations=[dict(item_id=s['item_id'],duration_minutes=None) for s in segments])]))
-        with pytest.raises(GameError,match='INVALID_REQUEST'):
-            cycle_schedule_service.propose(actor(a['uid']),rid,uuid.uuid4(),data)
+        time_policy.interval(base+timedelta(minutes=1),base+timedelta(minutes=31),key)
 
 
 def test_minute_search_union_before_pagination_and_cursor_binding(beta):

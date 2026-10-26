@@ -6,12 +6,19 @@ from app.game_accounts.support import fail
 TICK=timedelta(minutes=5)
 
 
+def minute_aligned(stamp):
+    return stamp.tzinfo is not None and stamp.utcoffset()==timedelta(0) and stamp.second==0 and stamp.microsecond==0
+
+
 def aligned(stamp):
-    return stamp.tzinfo is not None and stamp.utcoffset()==timedelta(0) and stamp.second==0 and stamp.microsecond==0 and stamp.minute%5==0
+    return minute_aligned(stamp) and stamp.minute%5==0
 
 
-def interval(start,end,cycle_key,*,floor=None,current=None):
-    if not aligned(start) or not aligned(end) or not timedelta(0)<end-start<=timedelta(days=1):fail('INVALID_REQUEST',400)
+def interval(start,end,cycle_key,*,floor=None,current=None,minute_precision=False):
+    # Explicit beta departures opt in; default boundaries and all durations keep the five-minute policy.
+    boundary=minute_aligned if minute_precision else aligned
+    if (not boundary(start) or not boundary(end) or not timedelta(0)<end-start<=timedelta(days=1)
+            or (end-start)%TICK!=timedelta(0)):fail('INVALID_REQUEST',400)
     bounds=cycle(start)
     if bounds.cycle_key!=cycle_key or end>bounds.ends_at:fail('CYCLE_CHANGED')
     maintenance_start=bounds.starts_at;maintenance_end=maintenance_start+timedelta(hours=4)

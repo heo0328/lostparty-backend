@@ -59,7 +59,8 @@ def create(db,room,row,cm,command,targets,stamp):
                 duration_source='explicit' if explicit is not None else setting['duration_source'],
                 policy_version=setting['duration_policy_version'],item_settings_revision=setting['item_settings_revision']))
             cursor=end
-        graph.graph.time.interval(target.starts_at,cursor,row.cycle_key.isoformat(),floor=plan.floor(db,row),current=stamp)
+        graph.graph.time.interval(target.starts_at,cursor,row.cycle_key.isoformat(),floor=plan.floor(db,row),current=stamp,
+            minute_precision=beta is not None and beta.session_id==sess.id)
         content.append(dict(session_id=sess.id,base_schedule_revision=sess.schedule_revision,segments=planned))
     proposal=Proposal(id=uuid.uuid4(),room_id=room.id,creator_membership_id=cm.membership_id,revision=1,
         proposal_plan_revision=1,created_from_plan_revision=row.plan_revision,state='pending',created_at=stamp)
@@ -93,7 +94,8 @@ def evaluate(db,room,row,proposal,binding,uid,command,stamp):
         sess=sessions[uuid.UUID(target['session_id'])];values=target['segments'];start=datetime.fromisoformat(values[0]['starts_at']);end=datetime.fromisoformat(values[-1]['ends_at'])
         beta=beta_schedule.get(db,row)
         if stamp>=sess.ends_at and not (beta and beta.needs_review):fail('SCHEDULE_ENDED')
-        graph.graph.time.interval(start,end,row.cycle_key.isoformat(),floor=plan.floor(db,row),current=stamp)
+        graph.graph.time.interval(start,end,row.cycle_key.isoformat(),floor=plan.floor(db,row),current=stamp,
+            minute_precision=beta is not None and beta.session_id==sess.id)
         existing={s.id:s for s in graph.graph.active_segments(db,sess.id)}
         if {uuid.UUID(v['segment_id']) for v in values}!=set(existing):fail('PROPOSAL_CONTEXT_CHANGED')
         for v in values:

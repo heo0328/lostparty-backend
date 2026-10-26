@@ -134,6 +134,19 @@ def cases(bundle):
     search['value']['departure_windows']=[dict(starts_at='2026-10-26T09:03:00Z',ends_at='2026-10-26T11:17:00Z')]
     page=extra(lambda c:c['kind']=='response' and c.get('status')=='200' and bundle['operations'][c['operation']]['path']=='/v2/raid-rooms', 'whole-minute-search')
     page['parameters']['query:departure_windows']=deepcopy(search['value']['departure_windows'])
+    explicit=extra(lambda c:c['kind']=='request' and bundle['operations'][c['operation']]['path']=='/v2/raid-rooms', 'explicit-minute-departure')
+    explicit['value']['beta_schedule_targets'][0]['base_starts_at']='2026-10-26T09:03:00Z'
+    combined=extra(lambda c:c['name']==explicit['name'], 'both-cycles')
+    combined['value']['continuation'].update(enabled=True,next_selection=deepcopy(combined['value']['selection']))
+    combined['value']['beta_schedule_targets'].append(dict(target_cycle_key='2026-10-28',base_starts_at='2026-11-02T09:04:00Z',early_coordination_enabled=False,early_additional_members=None))
+    opening=extra(lambda c:c['kind']=='request' and bundle['operations'][c['operation']]['path'].endswith('/recruitment-openings'), 'explicit-minute-departure')
+    opening['value']['beta_schedule']['base_starts_at']='2026-10-26T09:17:00Z'
+    proposal=extra(lambda c:c['kind']=='request' and bundle['operations'][c['operation']]['path'].endswith('/schedule-proposals'), 'explicit-minute-departure')
+    proposal['value']['targets'][0]['starts_at']='2026-10-26T09:23:00Z'
+    shown=extra(lambda c:c['name']==detail['name'], 'explicit-minute-deadline')
+    for schedule in [shown['value']['data']['beta_schedule'],shown['value']['data']['room']['beta_schedule']]:
+        schedule.update(base_starts_at='2026-10-26T09:03:00Z',base_ends_at='2026-10-26T10:03:00Z',base_deadline_at='2026-10-26T08:33:00Z',
+            effective_starts_at='2026-10-26T09:03:00Z',effective_ends_at='2026-10-26T10:03:00Z',admission_deadline='2026-10-26T08:33:00Z')
     return result
 
 

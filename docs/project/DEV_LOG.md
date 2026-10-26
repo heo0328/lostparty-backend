@@ -1,5 +1,16 @@
 # 영구 개발 이력
 
+## 2026-10-27 — 베타 명시 출발 정수분 구현·직접 검증
+
+- 사용자승인계획/전체179수용을 [명시출발정수분구현](../features/recruitment/weekly-cycles/explicit-minute-departures.md)으로반영. 기본false옵션으로생성/CN개방·실제베타세션제안create/evaluate/수락·재평가/needs_review복구만UTC정수분허용,공용기본/자동조율/개인표/진행시간/구대안5분·정확기한/동의/예약/원ACK보존. DB필드/자료변환/삭제없음.
+- 고유17PASS(신규11/검색4/기존2). 첫13PASS/3FAIL은시험Version래퍼연산/보호된예약직접시각변경이라시험을정상DTO/해제후신규예약으로정정후그3건만PASS. 최종기한전체롤백1건추가PASS,업무코드변경없음/통과분재사용·전체회귀/복원반복없음. 기본116/133/현재178/199두계약전체일치·BetaScheduleConfig설명/explicit_departure정책외operation/쓰기동일·130fixture/원ACK32/음성3·문서/diff검증. 기존AnyIO경고유지.
+- 다음같은모집브랜치에구현/계약/검증/수신기록을묶어commit/push→후보검증/승인된API반영→실행확인/고정인계. 현재실행a358a1a/1307ac36/0032유지. 정상회원명령/기기인수·dev/main/AWS미실행이며새분자료/완료명령/호환불명이면자료유지전진수정한다.
+
+## 2026-10-27 — 명시 출발 정책 수용·남은 모집 요청 확인
+
+- [#13 전체179번째 Flutter · 명시 출발 정수분 수용/착수](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6422070028)수신. 생성추천소비대기해소·Backend생성/C/N개방·직접제안/수락/재평가/검토복구의정수분구현요청1구간이남았다. 기존5분자동탐색/개인표/진행시간·정확기한/주차/점검·개인표밖직접동의·예약/원ACK보존및직접검증항목을확인했다. 현재미구현/미반영이며Native일반앱연결도착수보고일뿐완료/기기통과는아니다.
+- 검색서버반영수신확인·검색기기결과미확인. 다른모집이슈22~26갱신없음. 이번은읽기조회/로컬기록만이며코드/DB/서버/계약변경·시험·새댓글/commit/push없음. 현서버a358a1a/1307ac36/0032유지. 다음은명시분정밀도구간의설계/구현이며전체인수/원ACK키매칭/dev·main/AWS는별도다.
+
 ## 2026-10-27 — 검색 정수분 개발 반영·실행 확인·검토 인계
 
 - sourcea358a1a push/원격일치후이미지1307ac36로API만교체. [반영기록](../engineering/operations/search-minute-rollout.md)·[집계](../engineering/operations/records/search-minute-rollout.json). DB0032컨테이너/이미지/볼륨/환경·API환경/command/포트/보안/로그/readonly키/.env내용유지, migration/자료변환/삭제·dump/restore·회원시험명령/원pending재실행없음.

@@ -71846,7 +71846,8 @@
           "early_coordination_enabled",
           "early_additional_members"
         ],
-        "title": "BetaScheduleConfig"
+        "title": "BetaScheduleConfig",
+        "description": "Beta explicit departure uses UTC whole-minute precision; duration, personal availability and automatic candidates retain five-minute grids."
       },
       "BetaScheduleEditRequest": {
         "properties": {
@@ -75759,7 +75760,8 @@
       "presets": "/v2/me/application-message-presets",
       "compatibility": "original ACK before unsafe new-write guard; no automatic legacy conversion",
       "text_policy": "hangul-printable-ascii-1",
-      "search_time": "UTC whole-minute bounds; start inclusive, end exclusive; no rounding; departure grids unchanged"
+      "search_time": "UTC whole-minute bounds; start inclusive, end exclusive; no rounding; departure grids unchanged",
+      "explicit_departure": "UTC whole-minute beta creation/opening/proposal; automatic candidates, personal availability and duration retain 5-minute grids; exact 30-minute deadlines"
     },
     "room_usage_semantics": "active-target-rooms-1",
     "coordination_wait": {

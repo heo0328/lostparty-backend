@@ -6287,6 +6287,397 @@
           "evaluated_at": "2026-10-23T00:00:00Z"
         }
       }
+    },
+    {
+      "name": "POST /v2/raid-rooms request explicit-minute-departure",
+      "operation": 1,
+      "kind": "request",
+      "parameters": {
+        "header:Idempotency-Key": "가",
+        "query:contract_profile": "beta-recruitment-1"
+      },
+      "value": {
+        "title": "가",
+        "scope": "public",
+        "group_id": null,
+        "admission_mode": "leader_only",
+        "app_mode": "single",
+        "items": [
+          {
+            "raid_id": "sample",
+            "difficulty_id": "sample",
+            "duration_minutes": null,
+            "expected_weekly_revision": 1.0,
+            "party_no": 1.0
+          }
+        ],
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000001",
+          "selected_role": "dealer",
+          "expected_registration_version": 1.0,
+          "expected_ownership_revision": 1.0,
+          "expected_roster_revision": 1.0,
+          "expected_lifecycle_revision": 1.0,
+          "expected_role_summary_version": 1.0,
+          "expected_limits_revision": 1.0,
+          "expected_usage_revision": 1.0
+        },
+        "selection_context": {
+          "context_token": "가"
+        },
+        "experience_level": null,
+        "combat_requirement": {
+          "input_mode": "shared",
+          "dealer_min": null,
+          "support_min": null
+        },
+        "continuation": {
+          "enabled": false,
+          "next_selection": null
+        },
+        "expected_cycle_key": "2026-10-21",
+        "expected_catalog_version": "가",
+        "expected_group_revision": null,
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": null,
+        "beta_schedule_targets": [
+          {
+            "target_cycle_key": "2026-10-21",
+            "base_starts_at": "2026-10-26T09:03:00Z",
+            "early_coordination_enabled": false,
+            "early_additional_members": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "POST /v2/raid-rooms request explicit-minute-departure both-cycles",
+      "operation": 1,
+      "kind": "request",
+      "parameters": {
+        "header:Idempotency-Key": "가",
+        "query:contract_profile": "beta-recruitment-1"
+      },
+      "value": {
+        "title": "가",
+        "scope": "public",
+        "group_id": null,
+        "admission_mode": "leader_only",
+        "app_mode": "single",
+        "items": [
+          {
+            "raid_id": "sample",
+            "difficulty_id": "sample",
+            "duration_minutes": null,
+            "expected_weekly_revision": 1.0,
+            "party_no": 1.0
+          }
+        ],
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000001",
+          "selected_role": "dealer",
+          "expected_registration_version": 1.0,
+          "expected_ownership_revision": 1.0,
+          "expected_roster_revision": 1.0,
+          "expected_lifecycle_revision": 1.0,
+          "expected_role_summary_version": 1.0,
+          "expected_limits_revision": 1.0,
+          "expected_usage_revision": 1.0
+        },
+        "selection_context": {
+          "context_token": "가"
+        },
+        "experience_level": null,
+        "combat_requirement": {
+          "input_mode": "shared",
+          "dealer_min": null,
+          "support_min": null
+        },
+        "continuation": {
+          "enabled": true,
+          "next_selection": {
+            "registration_id": "00000000-0000-4000-8000-000000000001",
+            "character_id": "00000000-0000-4000-8000-000000000001",
+            "selected_role": "dealer",
+            "expected_registration_version": 1.0,
+            "expected_ownership_revision": 1.0,
+            "expected_roster_revision": 1.0,
+            "expected_lifecycle_revision": 1.0,
+            "expected_role_summary_version": 1.0,
+            "expected_limits_revision": 1.0,
+            "expected_usage_revision": 1.0
+          }
+        },
+        "expected_cycle_key": "2026-10-21",
+        "expected_catalog_version": "가",
+        "expected_group_revision": null,
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": null,
+        "beta_schedule_targets": [
+          {
+            "target_cycle_key": "2026-10-21",
+            "base_starts_at": "2026-10-26T09:03:00Z",
+            "early_coordination_enabled": false,
+            "early_additional_members": null
+          },
+          {
+            "target_cycle_key": "2026-10-28",
+            "base_starts_at": "2026-11-02T09:04:00Z",
+            "early_coordination_enabled": false,
+            "early_additional_members": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "POST /v2/raid-rooms/{room_id}/recruitment-openings request explicit-minute-departure",
+      "operation": 24,
+      "kind": "request",
+      "parameters": {
+        "path:room_id": "00000000-0000-4000-8000-000000000001",
+        "header:Idempotency-Key": "가",
+        "query:contract_profile": "beta-recruitment-1"
+      },
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": null,
+        "context_token": "가",
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000001",
+          "selected_role": "dealer",
+          "expected_registration_version": 1.0,
+          "expected_ownership_revision": 1.0,
+          "expected_roster_revision": 1.0,
+          "expected_lifecycle_revision": 1.0,
+          "expected_role_summary_version": 1.0,
+          "expected_limits_revision": 1.0,
+          "expected_usage_revision": 1.0
+        },
+        "target_items": [
+          {
+            "item_id": "00000000-0000-4000-8000-000000000001",
+            "round_id": "00000000-0000-4000-8000-000000000001",
+            "party_no": 1.0,
+            "expected_round_revision": 1.0,
+            "expected_weekly_revision": 1.0
+          }
+        ],
+        "target_session_ids": [],
+        "intent": "open",
+        "beta_schedule": {
+          "base_starts_at": "2026-10-26T09:17:00Z",
+          "early_coordination_enabled": false,
+          "early_additional_members": null
+        }
+      }
+    },
+    {
+      "name": "POST /v2/raid-rooms/{room_id}/schedule-proposals request explicit-minute-departure",
+      "operation": 38,
+      "kind": "request",
+      "parameters": {
+        "path:room_id": "00000000-0000-4000-8000-000000000001",
+        "header:Idempotency-Key": "가",
+        "query:contract_profile": "beta-recruitment-1"
+      },
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_plan_revision": 1.0,
+        "expected_members_revision": 1.0,
+        "targets": [
+          {
+            "session_id": "00000000-0000-4000-8000-000000000001",
+            "expected_schedule_revision": 1.0,
+            "starts_at": "2026-10-26T09:23:00Z",
+            "item_durations": []
+          }
+        ],
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": 1.0,
+        "expected_leadership_revision": 1.0
+      }
+    },
+    {
+      "name": "GET /v2/raid-rooms/{room_id}/detail 200 Beta_OutputContract3GetV2RaidRoomsRoomIdDetail actual-T-participant explicit-minute-deadline",
+      "operation": 15,
+      "kind": "response",
+      "status": "200",
+      "schema": {
+        "$ref": "#/$defs/Beta_OutputContract3GetV2RaidRoomsRoomIdDetail"
+      },
+      "parameters": {
+        "path:room_id": "00000000-0000-4000-8000-000000000001",
+        "query:target_cycle_key": "가",
+        "query:contract_profile": "beta-recruitment-1"
+      },
+      "value": {
+        "scope": {
+          "server_now": "2026-10-23T00:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-23T00:00:00Z",
+          "phase": "current",
+          "target_revision": null,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": null,
+          "target_generation": null
+        },
+        "data": {
+          "room": {
+            "room_id": "00000000-0000-4000-8000-000000000001",
+            "revision": 1.0,
+            "title": "가",
+            "scope": "public",
+            "group_id": null,
+            "admission_mode": "leader_only",
+            "experience_level": null,
+            "app_capacity": 4,
+            "app_member_count": 0.0,
+            "state": "active",
+            "items": [
+              {
+                "item_id": "00000000-0000-4000-8000-000000000001",
+                "raid_id": "가",
+                "difficulty_id": "가",
+                "game_party_size": 4,
+                "round_id": "00000000-0000-4000-8000-000000000001"
+              }
+            ],
+            "game_items": [],
+            "leader_display": null,
+            "created_at": "2026-10-23T00:00:00Z",
+            "phase": "current",
+            "restricted": false,
+            "schedule_summary": {
+              "mode": "가",
+              "occurrence_mode": null,
+              "confirmed_starts_at": [],
+              "earliest_start": null,
+              "latest_start": null
+            },
+            "combat_requirement": {
+              "input_mode": "shared",
+              "dealer_min": null,
+              "support_min": null
+            },
+            "continuation_enabled": false,
+            "permissions": {
+              "view_detail": {
+                "allowed": false,
+                "reason": null,
+                "next_change_at": null
+              },
+              "view_plan": {
+                "allowed": false,
+                "reason": null,
+                "next_change_at": null
+              }
+            },
+            "leadership": {
+              "leader_cycle_member_id": null,
+              "leadership_revision": 1.0,
+              "leader_membership_id": null
+            },
+            "my_target_role": "leader",
+            "target_cycle_key": "가",
+            "target_state": "open",
+            "target_revision": 1.0,
+            "room_cycle_id": "00000000-0000-4000-8000-000000000001",
+            "target_generation": 1.0,
+            "beta_schedule": {
+              "policy_version": "beta-schedule-1",
+              "revision": 1,
+              "session_id": "00000000-0000-4000-8000-000000000001",
+              "base_starts_at": "2026-10-26T09:03:00Z",
+              "base_ends_at": "2026-10-26T10:03:00Z",
+              "base_deadline_at": "2026-10-26T08:33:00Z",
+              "early_coordination_enabled": true,
+              "early_additional_members": 2,
+              "coordination_state": "coordinating",
+              "coordination_active": true,
+              "confirmed_starts_at": null,
+              "confirmed_ends_at": null,
+              "effective_starts_at": "2026-10-26T09:03:00Z",
+              "effective_ends_at": "2026-10-26T10:03:00Z",
+              "admission_deadline": "2026-10-26T08:33:00Z",
+              "deadline_status": "not_due",
+              "pending_transition": null,
+              "review_reason": null,
+              "evaluated_at": "2026-10-22T03:00:00Z"
+            }
+          },
+          "settings": null,
+          "members_revision": 1.0,
+          "members": [],
+          "my_membership": {
+            "membership_id": "00000000-0000-4000-8000-000000000001",
+            "revision": 1.0,
+            "group_member": false,
+            "target_role": "member",
+            "cycle_member_id": "00000000-0000-4000-8000-000000000001",
+            "cycle_member_revision": 1,
+            "joined_order": "1"
+          },
+          "plan_revision": 1.0,
+          "permissions": {
+            "view_detail": {
+              "allowed": false,
+              "reason": null,
+              "next_change_at": null
+            },
+            "view_plan": {
+              "allowed": false,
+              "reason": null,
+              "next_change_at": null
+            }
+          },
+          "access": {
+            "state": "가",
+            "policy_snapshot": "가",
+            "evaluated_at": "2026-10-23T00:00:00Z",
+            "issues": []
+          },
+          "leadership": {
+            "leader_cycle_member_id": null,
+            "leadership_revision": 1.0,
+            "leader_membership_id": null
+          },
+          "my_target_role": "member",
+          "formation_slots": [],
+          "formation_history": [],
+          "unplaced_assignments": [],
+          "beta_schedule": {
+            "policy_version": "beta-schedule-1",
+            "revision": 1,
+            "session_id": "00000000-0000-4000-8000-000000000001",
+            "base_starts_at": "2026-10-26T09:03:00Z",
+            "base_ends_at": "2026-10-26T10:03:00Z",
+            "base_deadline_at": "2026-10-26T08:33:00Z",
+            "early_coordination_enabled": true,
+            "early_additional_members": 2,
+            "coordination_state": "coordinating",
+            "coordination_active": true,
+            "confirmed_starts_at": null,
+            "confirmed_ends_at": null,
+            "effective_starts_at": "2026-10-26T09:03:00Z",
+            "effective_ends_at": "2026-10-26T10:03:00Z",
+            "admission_deadline": "2026-10-26T08:33:00Z",
+            "deadline_status": "not_due",
+            "pending_transition": null,
+            "review_reason": null,
+            "evaluated_at": "2026-10-22T03:00:00Z"
+          },
+          "recruitment_identity": {
+            "number": 1201,
+            "password": "00007"
+          }
+        }
+      },
+      "access_context": "Current persistent member and participating CM of the exact T/current generation; no opposite-T or historical grant."
     }
   ]
 }

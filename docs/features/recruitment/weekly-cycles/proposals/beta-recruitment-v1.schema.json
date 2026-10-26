@@ -32,7 +32,8 @@
         "base_starts_at",
         "early_coordination_enabled",
         "early_additional_members"
-      ]
+      ],
+      "description": "Beta explicit departure uses UTC whole-minute precision; duration, personal availability and automatic candidates retain five-minute grids."
     },
     "BetaScheduleTarget": {
       "type": "object",

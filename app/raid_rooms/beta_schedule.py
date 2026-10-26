@@ -45,9 +45,8 @@ def config(value, *, key, capacity, duration, stamp, require_future=True):
     if value.early_additional_members is not None and value.early_additional_members>=capacity:
         fail('INVALID_REQUEST',400)
     start=value.base_starts_at
-    if not time_policy.aligned(start):fail('INVALID_REQUEST',400)
     time_policy.interval(start,start+timedelta(minutes=duration),key,
-        floor=stamp+timedelta(minutes=30) if require_future else None,current=stamp if require_future else None)
+        floor=stamp+timedelta(minutes=30) if require_future else None,current=stamp if require_future else None,minute_precision=True)
     if require_future and stamp>=start-timedelta(minutes=30):fail('RECRUITMENT_CLOSED')
     return value
 
@@ -118,7 +117,7 @@ def install(db,room,row,config_value,member,stamp):
     db.add(CycleScheduleGroup(group_id=group.id,room_id=room.id,cycle_id=row.id,generation=row.generation));db.flush()
     order=[uuid.UUID(v['item_id']) for v in row.settings_snapshot['items']]
     sess=plan.make_session(db,room,row,group,order,None,stamp)
-    graph.graph.set_times(db,sess,setting.base_starts_at,row.cycle_key.isoformat(),stamp,validate_floor=False)
+    graph.graph.set_times(db,sess,setting.base_starts_at,row.cycle_key.isoformat(),stamp,validate_floor=False,minute_precision=True)
     saved=db.get(BetaSchedule,row.id)
     if saved is None:
         saved=BetaSchedule(cycle_id=row.id,number=None,password=f'{secrets.randbelow(100000):05d}')
@@ -251,7 +250,7 @@ def confirm(db,room,row,saved,start,kind,stamp,command=None):
             SessionParticipation.membership_id==cm.membership_id))
         graph.graph.release(db,participation=part,reason='schedule_changed',stamp=stamp)
     if start!=sess.starts_at:
-        graph.graph.set_times(db,sess,start,row.cycle_key.isoformat(),stamp,validate_floor=False)
+        graph.graph.set_times(db,sess,start,row.cycle_key.isoformat(),stamp,validate_floor=False,minute_precision=kind=='base_confirmed')
         sess.schedule_revision+=1
     sess.state='confirmed';sess.revision+=1
     saved.confirmation_kind=kind;saved.needs_review=False;saved.revision+=1

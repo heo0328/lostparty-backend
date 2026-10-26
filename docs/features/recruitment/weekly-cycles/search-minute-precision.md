@@ -1,5 +1,7 @@
 # 검색 분 단위 범위 구현·생성 시간 정책 검토
 
+후속: 전체179수용으로 [베타명시출발정수분구현](explicit-minute-departures.md)을진행했다. 아래생성미구현/검토내용과비5분거절시험은검색반영당시이력이다.
+
 2026-10-27 / 작업 구간 **검색 분 단위 허용·직접검증·개발반영·인계** / `feat/raid-recruitment`.
 
 [전체177번째 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6421096990)과 사용자 승인 계획에 따른다. 검색을 구현하고 생성·직접 지정은 검토만 한다. source a358a1a를push/원격확인후 [개발 반영·실행 확인](../../../engineering/operations/search-minute-rollout.md)을완료했다. 정확이미지/검증경계·고정기록은해당문서와Issue13인계를따른다.

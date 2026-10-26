@@ -439,6 +439,7 @@ def create_two_cycle_app():
             contract_version='beta-recruitment-wire-2',contract_profile='beta-recruitment-1',
             text_policy='hangul-printable-ascii-1',
             search_time='UTC whole-minute bounds; start inclusive, end exclusive; no rounding; departure grids unchanged',
+            explicit_departure='UTC whole-minute beta creation/opening/proposal; automatic candidates, personal availability and duration retain 5-minute grids; exact 30-minute deadlines',
             required_schema='0032_beta_recruitment',default_reader='legacy shape preserved',
             promises='atomic participant/personal-copy/base reservation; earlier-only automatic confirmation; deadline fallback',
             presets='/v2/me/application-message-presets',compatibility='original ACK before unsafe new-write guard; no automatic legacy conversion')
