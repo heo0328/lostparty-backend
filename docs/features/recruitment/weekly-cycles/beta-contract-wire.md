@@ -1,5 +1,7 @@
 # 베타 모집 계약 고정안2 — 완결 wire와 호환 경계
 
+2026-10-26 문자 보완: [기기 차이 조사·보완](device-feedback-investigation.md)의 `hangul-printable-ascii-1`을 적용한다. 한글/호환자모와 출력 ASCII U+0020~007E 전체 허용이며 wire2/profile1·나머지 계약은 유지한다. 이전267afe5 SHA는 당시 제한문자 기준이고 최신 보완SHA/서버 반영 여부는 협업 회신에서 구분한다.
+
 2026-10-25 / `beta-recruitment-wire-2` / profile `beta-recruitment-1`.
 
 [#13 전체149 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6393878499)의 조건부 수용에 대한 Backend 고정안이다. [정책/트랜잭션 원문](beta-contract-proposal.md)을 보완한다. 이번 완료 조건은 네이티브가 전체 envelope를 소비하고 잔여 차이를 확인할 수 있는 계약 인계다. **양측 최종합의·실행 구현·개발 반영은 아직 아니다.** 현재 실행 OpenAPI/서비스/DB는 변경하지 않았다.

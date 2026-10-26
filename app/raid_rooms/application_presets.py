@@ -4,19 +4,20 @@ from typing import Annotated
 from datetime import datetime
 from uuid import UUID
 from fastapi import APIRouter
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, UUID4, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, UUID4, field_validator
 from app.core.database import session, now
 from app.game_accounts.router import Principal, Key
 from app.game_accounts.support import authorize, reserve, commit_result, release, lock, fail
 from app.raid_rooms.availability_router import AvailabilityRoute
 from app.raid_rooms import beta_text, beta_profile, cycle_wire
 from app.raid_rooms.beta_models import ApplicationMessagePresets
+from app.raid_rooms.beta_schemas import Memo, MemoStored
 
 
 class PresetItem(BaseModel):
     model_config = ConfigDict(extra='forbid')
     id: UUID4
-    text: StrictStr
+    text: Memo
 
     @field_validator('text')
     @classmethod
@@ -45,10 +46,14 @@ class PresetPut(BaseModel):
         return value
 
 
+class StoredPresetItem(PresetItem):
+    text: MemoStored
+
+
 class PresetDocument(BaseModel):
     model_config = ConfigDict(extra='forbid')
     version: Annotated[StrictInt, Field(ge=1, le=2147483647)]
-    items: Annotated[list[PresetItem], Field(max_length=5)]
+    items: Annotated[list[StoredPresetItem], Field(max_length=5)]
     saved_at: datetime | None
 
 

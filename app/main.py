@@ -433,6 +433,7 @@ def create_two_cycle_app():
             compatibility='v1 current-C read adapters; unsafe room writes replay original ACK then CLIENT_UPGRADE_REQUIRED; personal availability/manual completion remain safe')
         value['x-recruitment-policy']['beta_recruitment']=dict(
             contract_version='beta-recruitment-wire-2',contract_profile='beta-recruitment-1',
+            text_policy='hangul-printable-ascii-1',
             required_schema='0032_beta_recruitment',default_reader='legacy shape preserved',
             promises='atomic participant/personal-copy/base reservation; earlier-only automatic confirmation; deadline fallback',
             presets='/v2/me/application-message-presets',compatibility='original ACK before unsafe new-write guard; no automatic legacy conversion')

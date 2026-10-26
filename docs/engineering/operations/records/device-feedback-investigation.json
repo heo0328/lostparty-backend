@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-26",
+  "request_issue": 13,
+  "request_comments": [
+    162,
+    163
+  ],
+  "reply_comment": 164,
+  "actual_runtime_source": "d95e3827187966ddfa7a111407afdf9e7dd0c3eb",
+  "database_revision": "0032_beta_recruitment",
+  "database_access": "REPEATABLE READ READ ONLY",
+  "business_commands_replayed": false,
+  "member_or_ack_data_changed": false,
+  "server_replaced": false,
+  "limits": {
+    "effective": 10,
+    "used": 10,
+    "current_beta_distinct_rooms": 3,
+    "current_beta_cycle_entries": 4,
+    "older_active_review_relationships": 7,
+    "ended_relationships_excluded": 8,
+    "policy_changed": false
+  },
+  "candidate": {
+    "reported_room_number": 5,
+    "admission_mode": "direct_join",
+    "required_level": 1720,
+    "reported_stored_level": "1704.00",
+    "evaluation": "RAID_ITEM_LEVEL_REQUIRED",
+    "join_contract": "proposed; pending Flutter acceptance; not implemented"
+  },
+  "schedule": {
+    "current_snapshot_only": true,
+    "numbers3_and5_common_candidate": 0,
+    "number4_threshold": 3,
+    "number4_participants": 2,
+    "number4_valid_common_starts": 131
+  },
+  "observed_ack": {
+    "status": 200,
+    "submission_revision": 2,
+    "source_personal_version": 5,
+    "beta_schedule_exists": false,
+    "availability_copy": null,
+    "reported_pending_key_match": "unconfirmed; pending key not supplied"
+  },
+  "fixed_record_list": {
+    "baseline_membership_actions_ended_all_failures": 4,
+    "read_only_source_patched_projections_pass": 12,
+    "runtime_replaced": false
+  },
+  "text_policy": "hangul-printable-ascii-1",
+  "targeted_unique_tests_pass": 7,
+  "shared_character_vectors": 32,
+  "contracts": {
+    "base_paths": 116,
+    "base_operations": 133,
+    "current_paths": 178,
+    "current_operations": 199,
+    "original_schemas_preserved": 612,
+    "static_proposal_cases": 48,
+    "wire_fixtures": 118,
+    "ack_operations_unchanged": 32
+  },
+  "migration_added": false,
+  "next_owner": [
+    "Flutter: join intent proposal acceptance and legacy/null ACK target check",
+    "Backend: implement join only after agreement; development runtime rollout separately authorized"
+  ]
+}

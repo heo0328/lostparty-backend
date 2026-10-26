@@ -1,5 +1,7 @@
 # 베타 모집 Backend 구현·격리검증
 
+2026-10-26 후속: [기기 차이 조사·문자/목록 보완](device-feedback-investigation.md)을 같은 목적브랜치에서 진행했다. 기본API/DB0032·기존ACK를 유지하며 추가migration은 없다. 아래 구현 당시 검증과 후속 직접검증/실제서버 상태를 구분한다.
+
 2026-10-25 / `feat/raid-recruitment` / 작업 구간 **베타 모집 구현·격리검증**.
 
 기준은 [#13 전체151 Flutter 최종수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6394870853)의 `267afe5 / beta-recruitment-wire-2`다. [전체152 Flutter A 기반 구현](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6395265140)은 별도 앱 소스12cd2e9a의 보고이며, 이 문서의 Backend 검증과 합산하지 않는다.

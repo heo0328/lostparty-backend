@@ -1,5 +1,7 @@
 # 베타 일정·모집표시·신청 메모 인계 검토
 
+2026-10-26 최신 문자 지시는 [기기 차이 보완](device-feedback-investigation.md)의 ASCII U+0020~007E 전체다. 아래 기존 제한기호 수신은 이전 이력으로 보존한다.
+
 후속: 사용자결정4개를채택하고 [Backend 제안1](beta-contract-proposal.md)을 [전체148번째 계약 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6393622793)로 회신했다. 아래 최초수신/검토이력과 구분한다. 최신151에서 [고정안2](beta-contract-wire.md)가 최종 수용돼 계약 협의를 마쳤다. 전체152는 Flutter A 기반 구현 보고이며 다음 Backend는 합의안 구현·격리검증이다.
 
 후속 구현: [Beta 구현/격리검증](beta-implementation.md)·[전체153 Backend · 베타 구현/격리검증](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6395894539). 최종beta22/기존105 회귀 PASS, 소스0032/178/199와 실제개발0031/177은 구분한다. 아래151/152 수신 시점의 구현 대기 기록은 당시 이력이다.

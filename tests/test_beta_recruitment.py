@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 import subprocess
 import uuid
-from datetime import datetime,timedelta,timezone
+from datetime import date,datetime,timedelta,timezone
 from concurrent.futures import ThreadPoolExecutor
 import pytest
 from sqlalchemy import select,func,inspect
@@ -69,10 +69,21 @@ def beta_join(w,rid,key):
 
 
 def test_shared_character_vectors():
+    from pydantic import TypeAdapter, ValidationError
+    from jsonschema import Draft202012Validator
+    stored=TypeAdapter(beta_schemas.MemoStored)
+    schema=json.loads(Path('docs/features/recruitment/weekly-cycles/proposals/beta-recruitment-v1.schema.json').read_text())['$defs']['MemoStored']
+    for value in ['가\n','가\r','가\t','가\x7f',' 가','가 ']:
+        with pytest.raises((GameError,ValidationError)):
+            stored.validate_python(value)
+        assert list(Draft202012Validator(schema).iter_errors(value))
     vectors=json.loads(Path('docs/features/recruitment/weekly-cycles/proposals/beta-recruitment-v1.examples.json').read_text())['character_vectors']
     for case in vectors:
         if case['valid']:
             assert beta_text.normalize(case['input'],preset=case['preset'])==case['normalized']
+            if case['normalized'] is not None:
+                assert stored.validate_python(case['normalized'])==case['normalized']
+                Draft202012Validator(schema).validate(case['normalized'])
         else:
             with pytest.raises(GameError):beta_text.normalize(case['input'],preset=case['preset'])
 
@@ -179,19 +190,19 @@ def test_application_memo_snapshot_pending_no_copy_approval_atomic(beta):
     _,a,b=beta;rid,key,base,_,_=create_beta(a,mode='leader_only')
     with beta_profile.using():
         ctx=context(b,rid,key,'apply')
-        raw=admission_request(ctx).model_dump(mode='json')|{'application_memo':'  가 함께!  '}
+        raw=admission_request(ctx).model_dump(mode='json')|{'application_memo':'  가 함께:[]!  '}
         body=beta_schemas.BetaApplyRequest.model_validate(raw);command=uuid.uuid4()
         status,ack=cycle_commands.admit(actor(b['uid']),rid,command,body,applying=True)
         assert status==201
         aid=uuid.UUID(ack['data']['application_id'])
         assert cycle_commands.admit(actor(b['uid']),rid,command,body,applying=True)==(status,ack)
         own=cycle_commands.application(actor(b['uid']),aid)
-        assert own['data']['application_memo']=='가 함께!'
+        assert own['data']['application_memo']=='가 함께:[]!'
         leader=cycle_commands.application(actor(a['uid']),aid)
-        assert leader['data']['application']['application_memo']=='가 함께!'
+        assert leader['data']['application']['application_memo']=='가 함께:[]!'
         with session() as db:
             assert db.scalar(select(func.count()).select_from(BetaAvailabilityCopy))==1
-            assert db.get(BetaApplicationMemo,aid).memo=='가 함께!'
+            assert db.get(BetaApplicationMemo,aid).memo=='가 함께:[]!'
         cycle_commands.process(actor(a['uid']),aid,uuid.uuid4(),decision(ack['data'],context(a,rid,key,'apply')))
         with session() as db:
             assert db.get(CycleApplication,aid).state=='accepted'
@@ -470,3 +481,74 @@ def test_creation_context_binds_changed_own_reservation_evidence(beta):
             reservation.released_at=now(db);reservation.released_reason='schedule_changed'
         with pytest.raises(GameError,match='SELECTION_CONTEXT_CHANGED'):
             cycle_creation.create(actor(b['uid']),uuid.uuid4(),data)
+
+
+def test_printable_ascii_preset_storage_and_original_payload_replay(beta):
+    _,a,b=beta
+    text='  :;[]{}<>\\|`"\'=$%^*  '
+    expected=text.strip(' ')
+    key=str(uuid.uuid4());item=str(uuid.uuid4())
+    body=dict(expected_version=1,items=[dict(id=item,text=text)])
+    with client(a) as http:
+        http.app.include_router(application_presets.router)
+        path='/v2/me/application-message-presets'
+        first=http.put(path,json=body,headers={'Idempotency-Key':key})
+        assert first.status_code==200,first.json()
+        assert first.json()['items']==[dict(id=item,text=expected)]
+        validate_beta_wire(path,'PUT',200,first.json())
+        assert http.put(path,json=body,headers={'Idempotency-Key':key}).json()==first.json()
+        assert http.get(path).json()==first.json()
+        # Equivalent normalized text is still a different original body.
+        changed={**body,'items':[dict(id=item,text=expected)]}
+        conflict=http.put(path,json=changed,headers={'Idempotency-Key':key})
+        assert conflict.status_code==409 and conflict.json()['error']['code']=='IDEMPOTENCY_CONFLICT'
+        assert http.get(path).json()==first.json()
+
+
+def test_ended_membership_without_selected_cycle_member_remains_readable(beta):
+    from tests.test_membership_actions import run
+    _,a,b=beta
+    rid,c,_,_,_=create_beta(a,combined=True)
+    beta_join(b,rid,c)
+    with beta_profile.using():run(b,rid,c,'leave_all')
+    n=(date.fromisoformat(c)+timedelta(days=7)).isoformat()
+    with client(b) as http:
+        path='/v2/me/raid-room-memberships'
+        for key in [c,n]:
+            for state in ['ended','all']:
+                result=http.get(path,params={**PROFILE,'reader_profile':'membership-actions-1',
+                    'target_cycle_key':key,'state':state})
+                assert result.status_code==200,result.json()
+                validate_beta_wire(path,'GET',200,result.json())
+                item=next(v for v in result.json()['data']['items'] if v['target']['room_id']==str(rid))
+                assert item['content'] is None
+                assert item['beta_schedule'] is None
+                assert 'recruitment_identity' not in item
+                if key==n:
+                    assert item['viewer']['cycle_member_id'] is None
+                    assert item['viewer']['mode']=='relation_only'
+
+
+def test_explicit_beta_copy_increments_same_personal_version_and_replays_once(beta):
+    from app.raid_rooms import cycle_times
+    _,a,b=beta
+    rid,key,_,_,_=create_beta(a)
+    with beta_profile.using():
+        initial=cycle_times.get_submission(actor(a['uid']),rid,key)
+        assert initial['data']['revision']==1
+        assert initial['data']['availability_copy']['state']=='unset'
+        from app.raid_rooms import cycle_wire as wire
+        # Use the same existing explicit submission request as native clients.
+        value=initial['data'];scope=initial['scope']
+        request=wire.InputContract3PutV2MeRaidRoomsRoomIdAvailabilitySubmission.model_validate(dict(
+            expected_cycle_key=scope['current_cycle_key'],target_cycle_key=key,
+            expected_target_revision=scope['target_revision'],
+            expected_cycle_member_revision=value['cycle_member_revision'],
+            expected_submission_revision=value['revision'],expected_personal_version=value['source_personal_version']))
+        command=uuid.uuid4()
+        status,ack=cycle_times.put_submission(actor(a['uid']),rid,command,request)
+        assert status==200 and ack['data']['revision']==2
+        assert ack['data']['source_personal_version']==initial['data']['source_personal_version']==1
+        assert ack['data']['availability_copy']['state']=='unset'
+        assert cycle_times.put_submission(actor(a['uid']),rid,command,request)==(status,ack)
+        assert cycle_times.get_submission(actor(a['uid']),rid,key)['data']==ack['data']

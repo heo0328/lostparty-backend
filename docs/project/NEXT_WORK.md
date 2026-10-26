@@ -1,5 +1,15 @@
 # 다음 실행
 
+## 현재 작업 — 기기 차이 조사·문자/목록 보완
+
+[전체162/163 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6409312568)에 대응한 [조사/보완](../features/recruitment/weekly-cycles/device-feedback-investigation.md)·[전체164 Backend 조사/join 제안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6409485714)을 따른다. 기본10/사용10은 beta3방+이전미종료7관계이며 종료관계/주차 중복집계 없음. 번호5는 direct_join/1720이며1704는 공통판정에서제외. 번호3/5 공통후보없음·4 인원미달. 관찰한 성공ACK는copy=null/비beta대상으로 실제미확인 원키일치는미확정이다.
+
+- **Backend 소스:** 최신ASCII 전체·입출력DTO/계약/벡터, 종료관계+선택주차CM없음 목록500 수정·고유7개 직접검증PASS/기존612 schema·기본116/133/현재178/199 유지·실자료읽기전용12조회PASS/인계를 한 구간으로 마감한다. 추가migration/자료보정 없음. 실제개발 d95e3827/이미지f458e6d5·DB0032는 미변경. 이번 요청은 조사/필요구현 인계이며 실제서버교체/배포 요청이 아니다.
+- **다음 Flutter:** join 후보 intent/actor=null·모드/페이지 최소안 소비 확인, 원ACK 대상/null/기존일정 분기 대조. 서버 보완 반영 전 새ASCII 실저장/목록500 해소로 인수하지 않는다. 새UI일정은 네이티브측 관리. 동일 전체시험 반복 요청 없음.
+- **대기:** join 합의 후 Backend 구현·직접검증/게시. 실제개발 반영·기기 잔여/완료해체/두주차 인수·dev/main/AWS는 별개 미완료다. 실자료/원키/ACK를 임의 삭제·수정·재실행하지 않는다. 개발자료는beta시작때폐기할전제이며 이를 위한 이중운영/변환통로를 선행조건으로 추가하지 않는다.
+
+아래 베타 개발 반영은 기존 실행 기준의 이력이다.
+
 ## 현재 실행·다음 담당 — 베타 개발 반영 완료
 
 2026-10-25 사용자 승인으로 [베타 개발 반영](../engineering/operations/beta-recruitment-rollout.md)을 완료했다. 소스d95e382/이미지f458e6d5·178경로/199 operation·DB0032가 실제 개발 실행 기준이다. 기존108표934행·열/기존sequence·키/설정 보존, 복원/제한계정 migration 리허설·실제HTTP16·두계약/259파일/runtime31·worker 로그·API/DB healthy 확인. [전체154 Backend · 베타 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6396368027)에 회신했다. 이 구간 기록을 동일 목적브랜치에서 묶어 commit/push하고 회신에 정확SHA·원격 확인을 남긴다.

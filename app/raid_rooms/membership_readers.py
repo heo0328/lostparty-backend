@@ -107,7 +107,7 @@ def projection(db,uid,room,row,member,cm,stamp,*,anchored=False):
     target=dict(room_id=room.id,title=room.title,room_revision=room.revision,room_state='ended' if room.ended_at else 'active',
         target_cycle_key=row.cycle_key if row else None,room_cycle_id=row.id if row else None,
         target_generation=cm.generation if cm else row.generation if row else None,target_revision=row.revision if row else None,
-        target_state='closed' if historical and cm.generation!=row.generation else row.state if row else None,
+        target_state='closed' if historical and known and cm.generation!=row.generation else row.state if row else None,
         generation_state=gen.state if gen else None,leadership=lead)
     if cm is None and row and row.generation:
         target['leadership']=actions.leadership(db,row);target['generation_state']=db.get(CycleGeneration,(row.id,row.generation)).state

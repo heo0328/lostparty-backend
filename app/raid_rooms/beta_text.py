@@ -1,8 +1,11 @@
 """Shared memo/preset wire policy. Raw values remain intact for idempotency."""
+import string
 import unicodedata
 from app.game_accounts.support import fail
 
-PUNCTUATION = frozenset('.,!?~()-_/@#&+')
+PUNCTUATION = frozenset(string.punctuation)
+TEXT_POLICY = 'hangul-printable-ascii-1'
+STORED_PATTERN = r'^(?! )(?!.* $)[가-힣ㄱ-ㅣ\x20-\x7e]+$(?![\s\S])'
 
 
 def normalize(value, *, preset=False):

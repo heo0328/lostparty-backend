@@ -1,5 +1,14 @@
 # 영구 개발 이력
 
+## 2026-10-26 — 기기 차이 읽기 전용 조사·문자/목록 보완
+
+- 사용자 작업 승인으로 #13 전체162/163의6개항목을 조사했다. 구간 **기기 차이 실자료 조사·문자/목록 보완·인계**, 동일 `feat/raid-recruitment`. [근거/책임/경계](../features/recruitment/weekly-cycles/device-feedback-investigation.md)·[전체164 Backend 조사/join 제안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6409485714).
+- 실제개발자료는 REPEATABLE READ/READ ONLY. 한도10=beta3방+이전미종료7관계, 종료8제외/주차중복없음. 번호5 direct_join/최소1720/1704공통판정제외. 조율3/5는현재공통가능0·4는3명중2명. 관찰200/revision2/personal5 원ACK는BetaSchedule없음/copy=null로 beta대상으로단정불가·실제원키매칭미확정이다. 회원자료/원ACK 변경·명령재실행 없음.
+- membership-actions ended/all 목록의 선택CM없음 참조오류/500을 실제자료서비스조회로재현했다. known세대만 비교하도록 수정·별도프로세스함수대체의읽기전용12조회PASS. API 실제프로세스교체/HTTP검증이 아니다.
+- 최신문자 한글/호환자모+출력ASCII전체를서버입력·저장출력DTO/계약·공통벡터로확대하고 원본문digest/기존ACK/20자/NFC/공백/제어거절을유지. 추가migration/패키지변경 없음. join 후보intent는제안만게시·합의전실행계약/구현미추가. 기본한도/카탈로그/조율정책·새오류미적용allowlist를변경하지않았다.
+- 직접영향 고유7개 PASS·최종문자1 재확인은중복미합산. OpenAPI116/133·178/199전체일치·기존612 schema 보존/제안48·문자32·66operation/118fixture/원ACK32동일성·문서/링크/diff PASS. 기존 Starlette/AnyIO경고유지. 직접영향검증만실행했다. 정규식엔진lookahead 수집오류를 Python compiled regex로바로잡았고, 종료목록 시험의목록에identity가없어야하는기대값을정정했다. 기존전체회귀반복/실개발API재검증·자료복원은하지않았다. 최종수치/소스SHA/원격게시·고정링크는회신에보완한다.
+- 다음Flutter join계약소비확인/ACK기존대상분기대조, Backend합의후join구현. 기존개발d95e3827/이미지f458e6d5/0032 유지·새소스실제반영/실회원기기 잔여·완료해체/두주차인수·dev/main/AWS 미완료. 개발자료폐기전제로별도변환통로/삭제를추가하지않았다. Issue13 OPEN.
+
 ## 2026-10-25 — 베타 개발 반영·자료 보존 검증·인계
 
 - 작업내용/구간/브랜치: 사용자의 진행 승인으로 합의 beta 소스d95e382를 실제 로컬 개발 서버에 적용했다. 구간명 **베타 개발 반영·자료 보존 검증·인계**, 동일 `feat/raid-recruitment`에서 기록/협업을 한 파트로 마감한다. [반영 기록](../engineering/operations/beta-recruitment-rollout.md)·[집계](../engineering/operations/records/beta-recruitment-rollout.json)·[전체154 Backend · 베타 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6396368027)를 따른다.

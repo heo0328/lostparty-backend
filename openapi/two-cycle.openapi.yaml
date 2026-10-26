@@ -71561,7 +71561,11 @@
           "application_memo": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "description": "NFC then printable ASCII/Hangul validation, trim U+0020; at most 20 code points. Raw idempotency body preserved.",
+                "x-allowed-after-nfc": "U+AC00-D7A3,U+3131-3163,U+0020-U+007E",
+                "x-max-utf8-bytes": 4096,
+                "x-text-policy": "hangul-printable-ascii-1"
               },
               {
                 "type": "null"
@@ -72707,7 +72711,10 @@
           "application_memo": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 20,
+                "minLength": 1,
+                "pattern": "^(?! )(?!.* $)[가-힣ㄱ-ㅣ\\x20-\\x7e]+$(?![\\s\\S])"
               },
               {
                 "type": "null"
@@ -72773,7 +72780,10 @@
           "application_memo": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 20,
+                "minLength": 1,
+                "pattern": "^(?! )(?!.* $)[가-힣ㄱ-ㅣ\\x20-\\x7e]+$(?![\\s\\S])"
               },
               {
                 "type": "null"
@@ -72948,7 +72958,10 @@
           "application_memo": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 20,
+                "minLength": 1,
+                "pattern": "^(?! )(?!.* $)[가-힣ㄱ-ㅣ\\x20-\\x7e]+$(?![\\s\\S])"
               },
               {
                 "type": "null"
@@ -73119,7 +73132,10 @@
           "application_memo": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 20,
+                "minLength": 1,
+                "pattern": "^(?! )(?!.* $)[가-힣ㄱ-ㅣ\\x20-\\x7e]+$(?![\\s\\S])"
               },
               {
                 "type": "null"
@@ -75130,7 +75146,7 @@
           },
           "items": {
             "items": {
-              "$ref": "#/components/schemas/PresetItem"
+              "$ref": "#/components/schemas/StoredPresetItem"
             },
             "type": "array",
             "maxItems": 5,
@@ -75167,7 +75183,11 @@
           },
           "text": {
             "type": "string",
-            "title": "Text"
+            "title": "Text",
+            "description": "NFC then printable ASCII/Hangul validation, trim U+0020; at most 20 code points. Raw idempotency body preserved.",
+            "x-allowed-after-nfc": "U+AC00-D7A3,U+3131-3163,U+0020-U+007E",
+            "x-max-utf8-bytes": 4096,
+            "x-text-policy": "hangul-printable-ascii-1"
           }
         },
         "additionalProperties": false,
@@ -75224,6 +75244,29 @@
           "password"
         ],
         "title": "RecruitmentIdentity"
+      },
+      "StoredPresetItem": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid4",
+            "title": "Id"
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 1,
+            "pattern": "^(?! )(?!.* $)[가-힣ㄱ-ㅣ\\x20-\\x7e]+$(?![\\s\\S])",
+            "title": "Text"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "text"
+        ],
+        "title": "StoredPresetItem"
       }
     },
     "securitySchemes": {
@@ -75617,7 +75660,8 @@
       "default_reader": "legacy shape preserved",
       "promises": "atomic participant/personal-copy/base reservation; earlier-only automatic confirmation; deadline fallback",
       "presets": "/v2/me/application-message-presets",
-      "compatibility": "original ACK before unsafe new-write guard; no automatic legacy conversion"
+      "compatibility": "original ACK before unsafe new-write guard; no automatic legacy conversion",
+      "text_policy": "hangul-printable-ascii-1"
     }
   }
 }

@@ -38,10 +38,8 @@ def memo(value, *, preset=False):
     if len(value.encode('utf-8')) > 4096:
         raise ValueError('Memo byte limit')
     normalized = unicodedata.normalize('NFC', value)
-    punctuation = '.,!?~()-_/@#&+'
     if any(not ('가' <= c <= '힣' or 'ㄱ' <= c <= 'ㅣ' or
-                'A' <= c <= 'Z' or 'a' <= c <= 'z' or
-                '0' <= c <= '9' or c == ' ' or c in punctuation) for c in normalized):
+                ' ' <= c <= '~') for c in normalized):
         raise ValueError('Invalid memo character')
     normalized = normalized.strip(' ')
     if len(normalized) > 20:

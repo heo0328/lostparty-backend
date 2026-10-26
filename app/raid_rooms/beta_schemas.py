@@ -2,10 +2,11 @@
 from copy import deepcopy
 from datetime import datetime
 from functools import lru_cache
+import re
 import types
 from typing import Annotated, Literal, Union, get_args, get_origin
 from uuid import UUID
-from pydantic import (AwareDatetime, BaseModel, ConfigDict, Field, StrictBool, StrictInt,
+from pydantic import (AfterValidator, AwareDatetime, BaseModel, ConfigDict, Field, StrictBool, StrictInt,
                       StrictStr, create_model, field_validator, model_validator)
 from app.raid_rooms import cycle_schemas as legacy, beta_text
 from app.game_accounts.support import fail
@@ -81,8 +82,22 @@ BetaScheduleEditRequest=request('BetaScheduleEditRequest',legacy.EditGroups,['gr
     'accept_immediate_confirmation':(StrictBool,...)})
 
 
+def stored_text(value):
+    if beta_text.normalize(value, preset=True) != value:
+        raise ValueError('Stored memo must already be normalized')
+    return value
+
+
+Memo = Annotated[StrictStr, Field(json_schema_extra={
+    'x-text-policy': beta_text.TEXT_POLICY,
+    'x-allowed-after-nfc': 'U+AC00-D7A3,U+3131-3163,U+0020-U+007E',
+    'x-max-utf8-bytes': 4096,
+    'description': 'NFC then printable ASCII/Hangul validation, trim U+0020; at most 20 code points. Raw idempotency body preserved.'})]
+MemoStored = Annotated[StrictStr, Field(min_length=1, max_length=20, pattern=re.compile(beta_text.STORED_PATTERN)), AfterValidator(stored_text)]
+
+
 class BetaApplyRequest(legacy.Admission):
-    application_memo: StrictStr | None = None
+    application_memo: Memo | None = None
 
     @field_validator('application_memo')
     @classmethod
@@ -118,7 +133,7 @@ for _name in ['BCard','BDetail','ApplicationDisplayDetail','ResumePlanData','BPl
 for _name in ['BDetail','ApplicationDisplayDetail','ResumePlanData','BPlan','MembershipActionDetailProfileData','MembershipActionPlanProfileData']:
     ADDITIONS[_name]['recruitment_identity']=(RecruitmentIdentity|None,...)
 for _name in ['BApplication','ApplicationDisplayItem','BApplicationView','ApplicationDisplayOwnApplication']:
-    ADDITIONS.setdefault(_name,{})['application_memo']=(StrictStr|None,...)
+    ADDITIONS.setdefault(_name,{})['application_memo']=(MemoStored|None,...)
 ADDITIONS['BSubmissionOut']={'availability_copy':(AvailabilityCopyView|None,...)}
 ADDITIONS['BCreationContext']={'beta_schedule_targets':(Annotated[list[BetaScheduleTarget],Field(min_length=1,max_length=2)],...)}
 ADDITIONS['OpeningDisplayData']={'beta_schedule_config':(BetaScheduleConfig,...)}
