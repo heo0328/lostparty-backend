@@ -16,7 +16,7 @@ Python3.12·FastAPI/Uvicorn·SQLAlchemy·Alembic·PostgreSQL17/psycopg를 Docker
 
 현재 개발 API는 `compose.yaml`에 `compose.two-cycle.yaml`을 덮어써 `app.main:create_two_cycle_app --factory`를 선택한다. 기본 Dockerfile의 `app.main:app`는 기존 앱이며 현재 개발 DB에 기본 Compose 단독으로 혼용하지 않는다. `two-cycle`은 실행 구성 이름, `0032_beta_recruitment`는 현재 DB구조 이행 식별자다.
 
-현재 실제 개발 서버는178경로/199 operation·DB0032이며 [한도·조율 개발 반영](../operations/active-usage-wait-rollout.md)의 source1800160/이미지0a540425를 사용한다. join후보와171수용된활성방한도/조율선택조회를지원한다. 고정runtime31개·JSON로깅·API/DB10m×5와 기존DB컨테이너/볼륨·설정/키를 유지하고 읽기전용사용3/목록일치·상세/plan8·실제HTTP6/두계약/worker를 확인했다. 문자hangul-printable-ascii-1·종료관계목록보완이실행중이다. DB32에 구이미지366e868a만 재적용하지 않는다. 아이템레벨 보완 인수는 수용됐고 전체 모집·실회원/기기 인수는 미완료다. 상세 전환 근거는 [운영 기록](../operations/README.md)을 따른다.
+현재 실제 개발 서버는178경로/199 operation·DB0032이며 [검색 정수분 개발 반영](../operations/search-minute-rollout.md)의 sourcea358a1a/이미지1307ac36를 사용한다. join후보/활성방한도/조율선택조회와검색정수분범위를지원한다. 생성/제안시간5분규칙은유지한다. 고정runtime31개·JSON로깅·API/DB10m×5와 기존DB컨테이너/볼륨·설정/키를 유지하고 읽기전용검색·실제HTTP9/두계약/worker를 확인했다. 문자hangul-printable-ascii-1·종료관계목록보완이실행중이다. DB32에 구이미지366e868a만 재적용하지 않는다. 아이템레벨 보완 인수는 수용됐고 전체 모집·실회원/기기 인수는 미완료다. 상세 전환 근거는 [운영 기록](../operations/README.md)을 따른다.
 
 기존 DB가 해당 단계로 검증된 개발환경의 API 재기동 예시는 다음과 같다. 이 명령은 DB migration·초기 설정·복원을 대신하지 않는다.
 

@@ -1,5 +1,11 @@
 # 영구 개발 이력
 
+## 2026-10-27 — 검색 정수분 개발 반영·실행 확인·검토 인계
+
+- sourcea358a1a push/원격일치후이미지1307ac36로API만교체. [반영기록](../engineering/operations/search-minute-rollout.md)·[집계](../engineering/operations/records/search-minute-rollout.json). DB0032컨테이너/이미지/볼륨/환경·API환경/command/포트/보안/로그/readonly키/.env내용유지, migration/자료변환/삭제·dump/restore·회원시험명령/원pending재실행없음.
+- 실행259소스/runtime31/두계약전체일치·실제READONLY공개검색범위포함/정확끝제외·HTTP9(GET/POST분범위200동일·초400포함)/healthy/3종worker·허용로그37줄ERROR0. 같은소스직접6PASS재사용·전체회귀미반복/생성제안5분보존·생성추천미구현. 정상회원쓰기/기기·성능인수미확인.
+- 직전0a540425/설정보존·실제rollback없음,호환불명은전진수정. [전체178번째 Backend · 검색 정수분 개발 반영/생성 정책 검토](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6421669821)게시/전체순번확인·반영기록구간push후고정SHA/검색직접영향만인계. 전체174~176기기통과수신유지·새전체시험요청없음. 원ACK키매칭·전체기기/성능·dev/main/AWS별도·Issue13OPEN.
+
 ## 2026-10-27 — 검색 분 단위 구현·생성 시간 정책 영향 검토
 
 - 사용자승인계획/전체177을따라검색전용정수분검사를분리했다. [구현·시험/후속검토](../features/recruitment/weekly-cycles/search-minute-precision.md). GET/POST공유·UTC/정수분/구간·주차/정확범위·필터/커서유지,공용5분/생성/제안/예약미변경·DB변경없음.

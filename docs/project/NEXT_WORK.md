@@ -1,10 +1,10 @@
 # 다음 실행
 
-## 최신 작업 — 검색 정수분 구현·직접6PASS → 개발 반영
+## 최신 작업 — 검색 정수분 개발 반영·생성 정책 검토 인계 완료
 
-[전체177 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6421096990)의 [검색구현/생성정책검토](../features/recruitment/weekly-cycles/search-minute-precision.md)를완료했다. GET/POST의UTC정수분검색·기존경계/페이지/커서·검색쓰기0·생성/제안5분유지를고유6시험과두계약/완결125예시로확인했다. 생성/개방·제안/수락·기한/예약의명시분정밀도분리추천은검토결과이며미구현이다. 기존조사/전체174~177수신기록을같은구간에보존한다.
+[전체177 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6421096990)에대해 [검색구현/직접6PASS·생성정책검토](../features/recruitment/weekly-cycles/search-minute-precision.md)·[개발반영/실행확인](../engineering/operations/search-minute-rollout.md)을완료했다. sourcea358a1a/이미지1307ac36·178/199·DB0032,API만교체·기존DB/자료/환경/키유지. 실행259소스/runtime31/두계약일치·실자료READONLY검색범위/끝제외·실제HTTP9(GET/POST분검색200동일/초400포함)·healthy/worker/로그ERROR0확인. 생성/제안/예약·공용5분은미변경이다.
 
-**다음Backend:** 구현/계약/검증/검토를묶어commit/push·원격확인→후보검증→사용자승인된API만교체/실행확인→Issue13고정인계. DB0032/기존자료/키/환경유지·migration/복원/실회원시험명령없음. Native에는비5분검색의직접영향만확인요청하고생성정책은별도소비협의한다. 현재개발API는이구간반영전1800160/0a540425/0032다. 전체기기/성능·원ACK키매칭/dev·main/AWS는별도다.
+[전체178번째 Backend · 검색 정수분 개발 반영/생성 정책 검토](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6421669821)에인계한다. **다음Flutter:** 비5분검색직접영향확인·생성/직접지정정수분분리추천의소비의견. **Backend:** 구체차이대응·소비합의후생성정책별도설계/구현. 이번검색구현/개발반영/정책검토는완료이며전체기기/성능·원ACK키매칭/dev·main/AWS는별도다. 자료변환/삭제/migration/실회원시험명령없음. 아래한도반영/기기수신/과거대기는이전이력으로보존한다.
 
 ## 현재 작업 — 활성방 한도·조율 안내 개발 반영 완료
 

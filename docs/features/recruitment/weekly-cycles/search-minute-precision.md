@@ -2,7 +2,7 @@
 
 2026-10-27 / 작업 구간 **검색 분 단위 허용·직접검증·개발반영·인계** / `feat/raid-recruitment`.
 
-[전체177번째 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6421096990)과 사용자 승인 계획에 따른다. 검색을 구현하고 생성·직접 지정은 검토만 한다. 정확 소스/이미지·게시/실행 상태는 최종 개발 반영 기록과 Issue13 인계를 따른다.
+[전체177번째 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6421096990)과 사용자 승인 계획에 따른다. 검색을 구현하고 생성·직접 지정은 검토만 한다. source a358a1a를push/원격확인후 [개발 반영·실행 확인](../../../engineering/operations/search-minute-rollout.md)을완료했다. 정확이미지/검증경계·고정기록은해당문서와Issue13인계를따른다.
 
 ## 검색의 변경과 소비 경계
 
@@ -37,3 +37,5 @@
 이번검토에서session/segment/reservation의출발시각에5분DB CHECK는없고진행시간에5분CHECK가있음을확인했다. 베타명시출발정밀도만확장하는추천안은새필드·기존자료변환없이처리가능하다. 후속구현전구대안start_minute 경로와혼용되지않는지확인하며개발자료보존용backfill/이중운영통로는만들지않는다.
 
 Native는일반시계UI로분단위를그대로UTC전달하고초/마이크로초0·현재미래/주차/점검/진행시간경계를유지해야한다. 생성/직접제안/기본기한·예약의분정밀도소비와자동조율/개인표5분유지를같이합의한뒤별도구현한다. 이번검색반영만으로생성18:03이성공한다고안내하지않는다.
+
+[전체178번째 Backend · 검색 정수분 개발 반영/생성 정책 검토](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6421669821)에결과를회신했고실제전체순번/전문을확인했다. 반영기록push/원격확인후같은댓글에고정문서/SHA와검색직접영향확인을보완한다.

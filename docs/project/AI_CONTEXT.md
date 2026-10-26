@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-2026-10-27 최신작업: [검색정수분구현/생성정책검토](../features/recruitment/weekly-cycles/search-minute-precision.md)·직접6PASS/두계약/완결125fixture완료. GET/POST검색만분경계를허용하고공용5분정책은유지. 생성/직접지정은후속추천/미구현. 다음같은목적브랜치commit/push→승인된개발API반영/실행확인→#13고정인계. 반영전실제1800160/0a540425/0032유지. 전체174~176기기통과수신은DEV_LOG참조,전체인수/원ACK키매칭/dev·main/AWS는별도다.
+2026-10-27 최신실행: [검색정수분구현/직접6PASS·생성정책검토](../features/recruitment/weekly-cycles/search-minute-precision.md)·[개발반영](../engineering/operations/search-minute-rollout.md) 완료. sourcea358a1a/이미지1307ac36·178/199·DB0032. GET/POST검색만분경계허용·공용5분/생성/제안/예약유지. 실행259소스/runtime31/두계약·실자료READONLY검색·HTTP9/healthy/worker확인·DB/키/환경유지. 다음Flutter검색직접영향/생성추천소비의견·Backend차이대응. 생성추천미구현/전체인수·원ACK키매칭/dev·main/AWS별도.
 
 2026-10-26 최신상태: [171 수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6412692643)한 [활성방 한도·조율 안내 구현/직접18PASS](../features/recruitment/weekly-cycles/active-usage-and-wait-implementation.md)·[개발반영](../engineering/operations/active-usage-wait-rollout.md) 완료. source1800160/이미지0a540425·178/199·DB0032. 공통활성SQL·거래/usage revision·선택5상태/평가공유·원ACK/join유지. 실자료READONLY사용3/두목록합집합일치·상세/plan8·HTTP6/healthy/worker확인, DB/키/환경유지. 다음Flutter직접영향연결·구체차이/Backend대응. 기기·성능/원ACK키매칭/dev·main/AWS미완료. 아래는이전시점의이력이다.
 
