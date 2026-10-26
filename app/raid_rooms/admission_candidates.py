@@ -54,12 +54,13 @@ def actor_value(cm, owned):
 
 
 def get(principal, rid, key, intent, limit=50, cursor=None):
-    if intent not in ('apply','change_character') or type(limit) is not int or not 1 <= limit <= 100:
+    if intent not in ('apply','join','change_character') or type(limit) is not int or not 1 <= limit <= 100:
         fail('INVALID_REQUEST',400)
     with commands.base.snapshot(principal) as (db,uid,stamp):
         if beta_profile.enabled() and not beta_schedule.available(db):fail('RECRUITMENT_COMMAND_NOT_READY',503)
         room,target = commands.resolve(db,uid,rid,key,stamp)
-        if intent == 'apply' and target.settings_snapshot['admission_mode'] != 'leader_only':
+        modes = {'apply':'leader_only','join':'direct_join'}
+        if intent in modes and target.settings_snapshot['admission_mode'] != modes[intent]:
             fail('ADMISSION_MODE_CHANGED')
         cm, owned = replacement(db,uid,target) if intent == 'change_character' else (None,[])
         actor = actor_value(cm,owned)

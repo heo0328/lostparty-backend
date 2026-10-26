@@ -1,5 +1,13 @@
 # 다음 실행
 
+## 현재 작업 — join 독립 구현·개발 반영 / 한도·조율 소비 확인 대기
+
+[전체166~168 수신](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410375489)으로 한도제품기준을현재C/N활성방으로정정하고join을수용받았다. [join 구현/직접검증](../features/recruitment/participation/join-candidates-implementation.md)은고유6PASS·실행계약178/199·기본116/133유지·대표예시를완료했다. 같은목적브랜치에서이구간을묶어commit/push후승인된개발API반영을이어간다. 코드상기존AdmissionCandidateData의intent만확장·그외611schema유지·DB변경없음.
+
+**별도 대기:** [전체169 Backend 제안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410756326)·[상태표/선택DTO](../features/recruitment/weekly-cycles/active-room-and-wait-proposal.md)의네이티브소비확인뒤한도/조율구현을진행한다. 미합의기능은실행계약에없다. 한도10→활성3방(C2/N2중복제거)은READONLY판정기대값이고아직서버한도를고친것은아니다. 다음네이티브소비확인, Backend합의후구현/직접검증·서버반영까지사용자승인됨. 이전미종료7관계를삭제/강제종료하지않는다. join은이대기로중단하지않는다.
+
+실제개발은반영기록이갱신되기전0fd43f9/이미지5f7c5b63·DB0032다. 아래문자/목록반영은기존실행기준이다. 원ACK키매칭·전체기기/성능·dev/main/AWS는미완료다.
+
 ## 최신 실행 — 문자/목록 보완 실제 개발 반영 완료
 
 2026-10-26 승인계획에 따라 [문자/목록 보완 개발 반영](../engineering/operations/device-feedback-rollout.md)을 완료했다. 실제source0fd43f9/이미지5f7c5b63·178/199·DB0032, wire2/profile1·hangul-printable-ascii-1이다. API만교체/DB컨테이너·볼륨·환경/키/설정유지. 소스258/두계약/runtime31·읽기전용서비스12·실제HTTP6·문자실행코드/worker/healthy 확인. 동일소스7시험재사용·전체회귀/자료변환/복원/삭제/실회원쓰기 없음. [전체165 Backend · 문자/목록 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410058244)에 결과기록·게시확인과기기확인범위를인계한다.

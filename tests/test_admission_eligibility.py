@@ -173,7 +173,7 @@ def test_candidate_http_closed_queries_contract_and_no_store(current,monkeypatch
     with client(b) as http:
         response=http.get(route,params=query);assert response.status_code==200,response.text
         assert response.headers['cache-control']=='no-store';Draft202012Validator(SCHEMA,format_checker=FormatChecker()).validate(response.json())
-        for params in (query|dict(extra='x'),query|dict(intent='join'),list(query.items())+[('intent','apply')],query|dict(limit=0)):
+        for params in (query|dict(extra='x'),query|dict(intent='invented'),list(query.items())+[('intent','apply')],query|dict(limit=0)):
             assert http.get(route,params=params).status_code==400
         assert http.request('GET',route,params=query,json={}).status_code==400
         monkeypatch.setattr(candidates,'MAX_RESPONSE_BYTES',1)
@@ -307,3 +307,41 @@ def test_corrupt_lease_not_hidden_by_a_filtered_low_level_character(current):
         assignment.state,assignment.ended_at='left',now(db)
         char=db.get(Character,uuid.UUID(b['ids'][0]));char.summary={**char.summary,'item_level':'1'}
     denied('WEEKLY_OCCUPANCY_CHANGED',page,b,rid,c)
+
+
+def test_join_candidates_exclude_low_level_and_match_context_without_writes(current):
+    from tests.test_recruitment_cycle_commands import create_room
+    _,a,b=current;rid=uuid.UUID(create_room(a)['room_id'])
+    with session() as db:
+        row=db.scalar(select(RoomCycle).where(RoomCycle.room_id==rid).order_by(RoomCycle.cycle_key))
+        key=row.cycle_key.isoformat();item,rd=commands.admission.rounds(db,row)[0]
+        difficulty=commands.raids.difficulty(item.raid_id,rd.difficulty_id,rd.catalog_version)
+    p=page(b,rid,key,'join');assert p['intent']=='join' and p['actor'] is None and picked(p,b)
+    with session() as db,db.begin():
+        char=db.get(Character,uuid.UUID(b['ids'][0]));char.summary={**char.summary,'item_level':str(int(difficulty.min_item_level)-1)}
+    before=occupancy()
+    result=page(b,rid,key,'join');assert picked(result,b) is None
+    assert any(v['reason']=='RAID_ITEM_LEVEL_REQUIRED' for v in result['exclusion_summary'])
+    assert context(b,rid,key,'join')['data']['permissions']['join']['reason']=='RAID_ITEM_LEVEL_REQUIRED'
+    assert occupancy()==before
+    denied('ADMISSION_MODE_CHANGED',page,b,rid,key,'apply')
+
+
+def test_join_candidates_cursor_scope_and_existing_intents(current):
+    from tests.test_recruitment_cycle_commands import create_room
+    _,a,b=current;ack=create_room(a);rid=uuid.UUID(ack['room_id']);c,n=[v['target_cycle_key'] for v in ack['created_cycles']]
+    p=page(b,rid,c,'join',limit=1);assert p['next_cursor']
+    full=page(b,rid,c,'join',limit=100);ids=[v['character_id'] for v in p['items']]
+    while p['next_cursor']:
+        p=page(b,rid,c,'join',limit=1,cursor=p['next_cursor']);ids.extend(v['character_id'] for v in p['items'])
+    assert ids==[v['character_id'] for v in full['items']]
+    cursor=page(b,rid,c,'join',limit=1)['next_cursor']
+    denied('INVALID_REQUEST',page,b,rid,n,'join',cursor=cursor)
+    denied('INVALID_REQUEST',page,a,rid,c,'join',cursor=cursor)
+    denied('WEEKLY_PARTICIPANT_REQUIRED',page,b,rid,c,'change_character')
+    with session() as db,db.begin():
+        row=db.scalar(select(RoomCycle).where(RoomCycle.room_id==rid,RoomCycle.cycle_key==date.fromisoformat(c)))
+        row.settings_snapshot={**row.settings_snapshot,'admission_mode':'leader_only'}
+        row.settings_revision+=1
+    denied('ADMISSION_MODE_CHANGED',page,b,rid,c,'join')
+    assert page(b,rid,c,'apply')['intent']=='apply'

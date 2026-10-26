@@ -1,5 +1,12 @@
 # 영구 개발 이력
 
+## 2026-10-26 — join 후보 독립 구현·한도/조율 소비 제안
+
+- 사용자계획승인으로전체166한도제품정정/167join수용/168대기한줄을수신했다. 기존164의과거관계10정상설명을정정. READONLY현재목록같은기준C2/N2중복제거3방을확인했다. [169 Backend제안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410756326)에활성방공통상태표·include_coordination_wait/5상태·선택속성/구응답유지·우선순위를자기완결문장으로전달했다. [제안/schema](../features/recruitment/weekly-cycles/active-room-and-wait-proposal.md)는미합의/미구현이며DB·실행계약추가없음.
+- 작업구간 **즉시가입 후보 계약·구현·직접검증·인계**, feat/raid-recruitment. 합의된join만독립구현: 기존query/dataenum추가·direct_join만/actor=null·공통evaluator/페이지/제외/원ACK유지. [구현근거](../features/recruitment/participation/join-candidates-implementation.md)·closed schema/대표예시와실행OpenAPI를함께갱신했다. AdmissionCandidateData의단일intent확장외611schema·기본116/133불변,현재178/199유지.
+- 고유6개PASS(신규3/기존apply·change·HTTP3), 초기actor oneOf 및테스트middleware기대차이를정정해실패3/직접HTTP만재검증. 생성계약전체비교·작성예시/동결wire·문서/링크/diff확인. 기존Starlette/AnyIO경고유지·전체pytest반복없음.
+- 코드/계약/제안을한소제목으로commit/push후사용자승인된join개발API반영을이어간다. 한도/조율은네이티브소비회신후구현·직접검증·게시/반영을진행한다. 기존자료/원키/ACK/미확인명령변경·DBmigration/강제탈퇴·dev/main/AWS없음. 당시실제0fd43f9/이미지5f7c5b63·DB0032 유지.
+
 ## 2026-10-26 — 문자/목록 보완 개발 반영·실행 확인·인계
 
 - 작업구간 **문자/목록 보완 개발 반영·실행 확인·인계**, `feat/raid-recruitment`. 사용자승인계획으로 source0fd43f9를 API이미지5f7c5b63에적용했다. [반영근거](../engineering/operations/device-feedback-rollout.md)·[집계](../engineering/operations/records/device-feedback-rollout.json)·[전체165 Backend · 문자/목록 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410058244)를따른다.

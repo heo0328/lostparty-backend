@@ -16186,6 +16186,7 @@
           "schema": {
             "enum": [
               "apply",
+              "join",
               "change_character"
             ],
             "type": "string",
@@ -17346,6 +17347,7 @@
           "type": "string",
           "enum": [
             "apply",
+            "join",
             "change_character"
           ],
           "title": "Intent"

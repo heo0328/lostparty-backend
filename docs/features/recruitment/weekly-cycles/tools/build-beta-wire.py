@@ -35,6 +35,8 @@ def build():
     proposed = json.loads((FOLDER/'beta-recruitment-v1.schema.json').read_text())['$defs']
     proposed = refs(proposed, '#/$defs/', '#/$defs/Proposed_')
     definitions = {**deepcopy(original), **{'Proposed_'+k: v for k, v in proposed.items()}}
+    # Issue13/167 accepted join intent; all other inherited DTO fields stay fixed.
+    definitions['AdmissionCandidateData']['properties']['intent']['enum'] = ['apply','join','change_character']
     additions = {}
 
     def add(name, **fields):
@@ -113,6 +115,8 @@ def build():
             op['parameters'] = op.get('parameters', []) + [{'in':'query','name':'contract_profile','required':True,'schema':{'type':'string','const':PROFILE}}]
             name = op['method'] + ' ' + path
             leaf = path.rsplit('/',1)[-1]
+            if leaf == 'admission-character-candidates':
+                next(p for p in op['parameters'] if p['name']=='intent')['schema']['enum'] = ['apply','join','change_character']
             writing = method != 'get' and leaf != 'search'
             if not writing:
                 op['responses'] = beta(op['responses'])

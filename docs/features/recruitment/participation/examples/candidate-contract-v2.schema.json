@@ -618,6 +618,7 @@
         "intent": {
           "enum": [
             "apply",
+            "join",
             "change_character"
           ]
         },
@@ -701,7 +702,10 @@
         {
           "properties": {
             "intent": {
-              "const": "apply"
+              "enum": [
+                "apply",
+                "join"
+              ]
             },
             "actor": {
               "type": "null"

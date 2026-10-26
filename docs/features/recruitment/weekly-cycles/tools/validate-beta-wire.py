@@ -148,7 +148,9 @@ def validate(bundle, fixtures):
     for name,schema in base['components']['schemas'].items():
         if name in bundle['$defs']:
             canonical=json.loads(json.dumps(schema).replace('#/components/schemas/','#/$defs/'))
-            assert bundle['$defs'][name]==canonical,'Legacy schema altered: '+name
+            if name=='AdmissionCandidateData':
+                canonical['properties']['intent']['enum']=['apply','join','change_character']  # Issue13/167
+            assert bundle['$defs'][name]==canonical,'Unapproved inherited schema change: '+name
     counts={'requests':0,'success_envelopes':0,'error_envelopes':0}
     for case in fixtures:
         key='requests' if case['kind']=='request' else 'success_envelopes' if case['status'].startswith('2') else 'error_envelopes'

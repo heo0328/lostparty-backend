@@ -1390,6 +1390,123 @@
       },
       "note": "",
       "pagination_group": "three-candidates"
+    },
+    {
+      "name": "join-eligible",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "join",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "join",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 1,
+          "exclusion_summary": [],
+          "items": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "registration_id": "00000000-0000-4000-8000-000000000003",
+              "server_name": "synthetic-server",
+              "character_name": "synthetic-10",
+              "class_name": "synthetic-dealer-class",
+              "item_level": "1750.00",
+              "roles": {
+                "dealer": {
+                  "supported": true,
+                  "allowed": true,
+                  "reason": null,
+                  "comparison": {
+                    "selected_role": "dealer",
+                    "requirement": "100",
+                    "actual": "120",
+                    "state": "meets",
+                    "source": "flutter_analysis",
+                    "trust": "client_submitted",
+                    "current_summary_version": 2,
+                    "success_summary_version": 2,
+                    "power_revision": 2,
+                    "observed_at": "2026-10-10T00:00:00Z",
+                    "success_saved_at": "2026-10-10T01:00:00Z",
+                    "success_issues": [],
+                    "current_issues": []
+                  }
+                },
+                "support": {
+                  "supported": false,
+                  "allowed": false,
+                  "reason": "ROLE_NOT_SUPPORTED",
+                  "comparison": null
+                }
+              }
+            }
+          ],
+          "next_cursor": null
+        }
+      },
+      "note": "지원하지 않는 support가 후보/계수를 살리지 않는다."
+    },
+    {
+      "name": "join-no-eligible",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "join",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "join",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 0,
+          "exclusion_summary": [
+            {
+              "reason": "ROOM_COMPOSITION_CONFLICT",
+              "detail": null,
+              "character_count": 1
+            }
+          ],
+          "items": [],
+          "next_cursor": null
+        }
+      },
+      "note": "가상 판정 결과를 작성한 자료이며 실제 evaluator/DB 시험은 아니다."
     }
   ]
 }

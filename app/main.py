@@ -419,7 +419,7 @@ def create_two_cycle_app():
         value['x-recruitment-policy'].update(schema_revision='0032_beta_recruitment',policy_version='two-cycle-contract-4',
             search_semantics='own-target-participation-excluded-v1',
             admission_eligibility=dict(policy_version='admission-eligibility-2',required_schema='0031_membership_actions',
-                intents=['apply','change_character'],approval='stored parties; qualification failure keeps pending',
+                intents=['apply','join','change_character'],approval='stored parties; qualification failure keeps pending',
                 change='exact own assignment/lease exclusion; original party then opposite party; consent bound to target parties',
                 reads='own candidates, bulk read-only, no provider or occupancy writes',
                 compatibility='existing write DTOs and original 24h ACK; creation/direct join policy preserved'),

@@ -552,3 +552,19 @@ def test_explicit_beta_copy_increments_same_personal_version_and_replays_once(be
         assert ack['data']['availability_copy']['state']=='unset'
         assert cycle_times.put_submission(actor(a['uid']),rid,command,request)==(status,ack)
         assert cycle_times.get_submission(actor(a['uid']),rid,key)['data']==ack['data']
+
+
+def test_beta_join_candidates_http_profile_closed_shape_and_latest_write(beta):
+    from tests.test_recruitment_cycle_times_http import client
+    _,a,b=beta;rid,key,_,_,_=create_beta(a)
+    with client(b) as http:
+        path=f'/v2/raid-rooms/{rid}/admission-character-candidates'
+        response=http.get(path,params={**PROFILE,'target_cycle_key':key,'intent':'join'})
+        assert response.status_code==200,response.json()
+        data=response.json()['data'];assert data['intent']=='join' and data['actor'] is None
+        validate_beta_wire('/v2/raid-rooms/{room_id}/admission-character-candidates','GET',200,response.json())
+        assert response.headers['Cache-Control']=='no-store'
+        assert http.get(path,params={**PROFILE,'target_cycle_key':key,'intent':'apply'}).json()['error']['code']=='ADMISSION_MODE_CHANGED'
+        assert http.get(path,params={**PROFILE,'target_cycle_key':key,'intent':'invented'}).status_code==400
+    # A candidate is a preview: the selected character still uses the existing context/write.
+    assert beta_join(b,rid,key)[0]==200

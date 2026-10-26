@@ -1,4 +1,6 @@
-# 신청·캐릭터 변경 후보조회 보완 계약2
+# 신청·즉시가입·캐릭터 변경 후보조회 계약2
+
+2026-10-26 join확장은 [전체167 Flutter 수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410375489) 기준으로구현/직접검증했다. 기존형태와actor의미를유지하며data/query의join enum만추가한다. 아래개발177/0031은이전#26당시반영이력이다. 정확소스/최신개발반영은Issue13인계와NEXT_WORK를따른다.
 
 2026-10-24 / **계약2 구현·격리 검증·실제 개발 반영 완료/실회원 인수 대기** / 작업 구간 `모집 신청·캐릭터 변경 통합 자격 보완(#26)` / `feat/raid-recruitment`. [공통 설계](eligibility-design.md)가 판정 원본이다. [제안1](candidate-proposal.md)은 이전 범위로 보존한다. 현재 구현후보의 정확한 HTTP shape는 [실행 OpenAPI](../../../../openapi/two-cycle.openapi.yaml)다. 독립 schema/작성 예시는 소비검증 자료이며 실제 개발서버 성공 근거가 아니다.
 
@@ -14,6 +16,7 @@
 
 - 공통: 기존 방 가시성·현재 활성/open/explicit 실제T·양수gen·카탈로그 resolve. 비공개 타방404, target/room 상태 오류는 기존 code/409다.
 - apply: leader_only 신청모드만, 아니면409 ADMISSION_MODE_CHANGED. actor=null. 기존 멤버/신청중·한도/일정 등 전체 쓰기 권한은 선택 후 context에서 확인한다.
+- join: direct_join만, 아니면409 ADMISSION_MODE_CHANGED. actor=null·data.intent=join. 전체167에서소비수용. apply와동일한통합자격/페이지/제외판정이며선택후기존join context/POST가최종한도/일정/자격을확정한다.
 - change_character: 본인 target/현세대 participating CM·현재 active Assignment 완전묶음을 서버 도출. 없으면403 WEEKLY_PARTICIPANT_REQUIRED, 불완전/상태변화는 기존409. 어떤 admission_mode든 기존 변경 권한으로 평가한다. 클라이언트 membership/CM/assignment query를 받지 않는다. actor는 본인 현재 관계 식별·revision/배치를 제공하고 snapshot에 결합한다.
 
 응답 root는 `{scope,data}`. scope는 기존two-cycle Scope를 재사용하되 이 읽기는 target_revision/room_cycle_id/target_generation이 반드시 양수/비null이다. 모든 속성은 [closed schema2](examples/candidate-contract-v2.schema.json)의 필수/nullable/상한대로만 반환한다. source의 전체평가가 실패하면 부분 items/정상0건200을 반환하지 않는다.
@@ -22,7 +25,7 @@
 |---|---|
 | room_id, intent | 요청의 명시 문맥 |
 | eligibility_policy_version | 항상 admission-eligibility-2; 순서/역할/필터 의미 식별 |
-| actor | apply=null, change는 membership_id·cycle_member_id/revision과 대상 assignments. IDs는 기존 본인 관계 UUID |
+| actor | apply/join=null, change는 membership_id·cycle_member_id/revision과 대상 assignments. IDs는 기존 본인 관계 UUID |
 | evaluated_at, catalog_version | 한 snapshot의 서버시각/기존 카탈로그 version |
 | snapshot_token |64hex opaque HMAC. 권한 token/선택동의 아님 |
 | raw_candidate_count, eligible_candidate_count | 현재 인증·활동·usable 본인 캐릭터 distinct 전체/통합자격의 유효역할1개 이상인 전체 수. 페이지와 독립 |

@@ -98,7 +98,7 @@ class AdmissionCandidateExclusion(DTO):
 
 class AdmissionCandidateData(DTO):
     room_id: UUID
-    intent: Literal['apply','change_character']
+    intent: Literal['apply','join','change_character']
     eligibility_policy_version: Literal['admission-eligibility-2']
     actor: AdmissionCandidateActor | None
     evaluated_at: datetime

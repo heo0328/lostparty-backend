@@ -41969,7 +41969,7 @@
           "recruitment-cycle-candidate"
         ],
         "summary": "Admission Character Candidates",
-        "description": "Read-only own candidates for apply/change_character under admission-eligibility-2. All roles and counts use the same eligibility as commands; no occupancy, provider calls or writes. Cursors bind actor/session, room, actual target and intent; changed snapshot is CURSOR_STALE.",
+        "description": "Read-only own candidates for apply/join/change_character under admission-eligibility-2. All roles and counts use the same eligibility as commands; no occupancy, provider calls or writes. Cursors bind actor/session, room, actual target and intent; changed snapshot is CURSOR_STALE.",
         "operationId": "contract3_get__v2_raid-rooms_room_id_admission-character-candidates",
         "security": [
           {
@@ -42003,6 +42003,7 @@
             "schema": {
               "enum": [
                 "apply",
+                "join",
                 "change_character"
               ],
               "type": "string",
@@ -70628,6 +70629,7 @@
             "type": "string",
             "enum": [
               "apply",
+              "join",
               "change_character"
             ],
             "title": "Intent"
@@ -75646,6 +75648,7 @@
       "required_schema": "0031_membership_actions",
       "intents": [
         "apply",
+        "join",
         "change_character"
       ],
       "approval": "stored parties; qualification failure keeps pending",

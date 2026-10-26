@@ -135,9 +135,9 @@ def create(data:inputs.Create|beta_schemas.BetaCreateRequest,principal:Principal
 
 
 @router.get('/raid-rooms/{room_id}/admission-character-candidates',response_model=AdmissionCandidatePage,responses=errors,
-    description='Read-only own candidates for apply/change_character under admission-eligibility-2. All roles and counts use the same eligibility as commands; no occupancy, provider calls or writes. Cursors bind actor/session, room, actual target and intent; changed snapshot is CURSOR_STALE.')
+    description='Read-only own candidates for apply/join/change_character under admission-eligibility-2. All roles and counts use the same eligibility as commands; no occupancy, provider calls or writes. Cursors bind actor/session, room, actual target and intent; changed snapshot is CURSOR_STALE.')
 def admission_character_candidates(room_id:UUID,principal:Principal,target_cycle_key:str,
-    intent:Literal['apply','change_character'],limit:Annotated[int,Query(ge=1,le=100)]=50,
+    intent:Literal['apply','join','change_character'],limit:Annotated[int,Query(ge=1,le=100)]=50,
     cursor:Annotated[str,Query(min_length=1,max_length=2048)]|None=None):
     return admission_candidates.get(principal,room_id,target_cycle_key,intent,limit,cursor)
 
