@@ -61,7 +61,7 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
         fail('ROOM_TARGET_UNAVAILABLE')
     member = db.scalar(select(Member).where(Member.room_id == room.id, Member.user_id == uid,
         Member.ended_at.is_(None)))
-    core._limits(db, uid, selection, member is None and not pending)
+    core._limits(db, uid, selection, not pending and replacing is None, room_id=room.id)
     origin = public_origin_application
     allow_external = (origin is not None and origin.room_id == room.id and origin.user_id == uid
         and origin.origin_scope == 'public' and origin.state == 'pending')

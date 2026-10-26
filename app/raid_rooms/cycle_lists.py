@@ -68,10 +68,10 @@ def memberships(principal,key,state='current',limit=20,cursor=None):
         actual_query=select(CycleMember.id).join(RoomCycle,RoomCycle.id==CycleMember.cycle_id).where(
             RoomCycle.room_id==Member.room_id,RoomCycle.cycle_key==target.key,CycleMember.membership_id==Member.id,
             or_(CycleMember.generation==RoomCycle.generation,and_(CycleMember.generation.is_(None),RoomCycle.generation.is_(None))))
-        active=actual_query.where(CycleMember.state.in_(('participating','review_required')),
-            RoomCycle.state.in_(('open','review_required'))).correlate(Member).exists()
+        from app.raid_rooms.active_usage import predicate
+        active=actual_query.where(predicate()).correlate(Member,Room).exists()
         history=actual_query.where(CycleMember.state.in_(('completed','stopped','cancelled','removed'))).correlate(Member).exists()
-        if state=='current':query=query.where(Member.ended_at.is_(None),Room.ended_at.is_(None),~archive.archived(Room.id),active)
+        if state=='current':query=query.where(active)
         elif state=='ended':query=query.where(or_(Member.ended_at.is_not(None),Room.ended_at.is_not(None),archive.archived(Room.id),history))
         head=db.get(MemberHead,uid)
         revision=head.membership_revision if head else 1

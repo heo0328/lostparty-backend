@@ -62,7 +62,7 @@ def snapshot(db, uid, *, room_count=None):
     if used > limits.joined_groups:
         issues.append(dict(code='MEMBER_GROUP_LIMIT_EXCEEDED', dimension='joined_groups',
                            used=used, limit=limits.joined_groups))
-    return dict(policy_version='member-room-limits-v1', evaluated_at=now(db),
+    return dict(policy_version='member-room-limits-v1', evaluated_at=db.info.get('active_usage_stamp') or now(db),
                 limits_revision=row.revision if row else 1, usage_revision=head.revision if head else 1,
                 limit_source='account' if row else 'default', updated_at=row.updated_at if row else None,
                 limits=asdict(limits), usage=dict(joined_groups=metric(used, limits.joined_groups),
@@ -73,9 +73,11 @@ def get(principal):
     with session() as db, db.begin():
         db.connection(execution_options={'isolation_level': 'REPEATABLE READ'})
         from app.raid_rooms.participation_core import room_count
-        from app.raid_rooms.readiness import require_active
-        require_active(db)
-        return snapshot(db, authorize(db, principal),room_count=room_count)
+        from app.raid_rooms.readiness import require_active,require_two_cycle_active
+        from app.raid_rooms.active_usage import enabled
+        (require_two_cycle_active if enabled(db) else require_active)(db)
+        uid=authorize(db,principal);db.info['active_usage_stamp']=now(db)
+        return snapshot(db,uid,room_count=room_count)
 
 
 def record_group_membership_change(db, uid):

@@ -1,16 +1,57 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:lostparty:coordination-wait:proposal-1",
-  "title": "Coordination wait proposal1 — pending consumer acceptance",
+  "title": "Accepted Issue13/171 coordination wait contract",
   "type": "object",
   "additionalProperties": false,
-  "required": ["status", "missing_members"],
+  "required": [
+    "status",
+    "missing_members"
+  ],
   "properties": {
-    "status": {"enum": ["waiting_members", "no_earlier_candidate", "pending", "unavailable", "not_applicable"]},
-    "missing_members": {"type": ["integer", "null"], "minimum": 1, "maximum": 8}
+    "status": {
+      "enum": [
+        "waiting_members",
+        "no_earlier_candidate",
+        "pending",
+        "unavailable",
+        "not_applicable"
+      ]
+    },
+    "missing_members": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 8
+    }
   },
   "oneOf": [
-    {"properties": {"status": {"const": "waiting_members"}, "missing_members": {"type": "integer"}}},
-    {"properties": {"status": {"enum": ["no_earlier_candidate", "pending", "unavailable", "not_applicable"]}, "missing_members": {"type": "null"}}}
+    {
+      "properties": {
+        "status": {
+          "const": "waiting_members"
+        },
+        "missing_members": {
+          "type": "integer"
+        }
+      }
+    },
+    {
+      "properties": {
+        "status": {
+          "enum": [
+            "no_earlier_candidate",
+            "pending",
+            "unavailable",
+            "not_applicable"
+          ]
+        },
+        "missing_members": {
+          "type": "null"
+        }
+      }
+    }
   ]
 }

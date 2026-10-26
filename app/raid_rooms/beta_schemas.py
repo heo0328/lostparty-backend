@@ -35,6 +35,21 @@ class BetaScheduleTarget(BetaScheduleConfig):
     target_cycle_key: StrictStr
 
 
+class CoordinationWait(Closed):
+    model_config=ConfigDict(json_schema_extra={'oneOf':[
+        {'properties':{'status':{'const':'waiting_members'},'missing_members':{'type':'integer'}}},
+        {'properties':{'status':{'enum':['no_earlier_candidate','pending','unavailable','not_applicable']},'missing_members':{'type':'null'}}}
+    ]})
+    status: Literal['waiting_members','no_earlier_candidate','pending','unavailable','not_applicable']
+    missing_members: Annotated[StrictInt,Field(ge=1,le=8)] | None
+
+    @model_validator(mode='after')
+    def coherent(self):
+        if (self.status=='waiting_members') != (self.missing_members is not None):
+            raise ValueError('Only waiting_members carries a positive missing count')
+        return self
+
+
 class BetaScheduleView(Closed):
     policy_version: Literal['beta-schedule-1']
     revision: Version
@@ -55,6 +70,7 @@ class BetaScheduleView(Closed):
     pending_transition: Literal['base_confirmation_due','departure_review_due'] | None
     review_reason: Literal['departure_passed_unconfirmed'] | None
     evaluated_at: AwareDatetime
+    coordination_wait: CoordinationWait = Field(default=None,exclude_if=lambda value:value is None)
 
 
 class AvailabilityCopyView(Closed):

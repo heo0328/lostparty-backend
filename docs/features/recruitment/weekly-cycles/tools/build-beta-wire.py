@@ -115,6 +115,9 @@ def build():
             op['parameters'] = op.get('parameters', []) + [{'in':'query','name':'contract_profile','required':True,'schema':{'type':'string','const':PROFILE}}]
             name = op['method'] + ' ' + path
             leaf = path.rsplit('/',1)[-1]
+            if method=='get' and path in ('/v2/raid-rooms/{room_id}/detail','/v2/me/raid-rooms/{room_id}/plan'):
+                op['parameters'].append(dict(name='include_coordination_wait',**{'in':'query'},required=False,
+                    schema=dict(type='string',enum=['true','false'],default='false')))
             if leaf == 'admission-character-candidates':
                 next(p for p in op['parameters'] if p['name']=='intent')['schema']['enum'] = ['apply','join','change_character']
             writing = method != 'get' and leaf != 'search'

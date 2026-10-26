@@ -1,8 +1,8 @@
 # 활성방 한도 공통판정·조율 대기 선택조회 제안
 
-2026-10-26 / `feat/raid-recruitment` / 상태: **네이티브 소비 확인 대기·실행계약 미추가**.
+2026-10-26 / `feat/raid-recruitment` / 상태: **전체171 소비 수용·구현/직접검증 완료·실제반영 별도**.
 
-요구는 [전체166 사용자 한도 정정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410274718), [전체167 join수용·분기대조](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410375489), [전체168 조율 한줄 승인](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410454752)이다. [전체169 Backend 상태표·선택조회 제안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410756326)에 아래 소비 확인을 요청했다. 이미 합의된 join 후보 구현은 이 대기로 중단하지 않는다. 이 문서/schema는 제안이며 현재 API/DB에 필드를 추가한 것이 아니다.
+요구는 [전체166 사용자 한도 정정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410274718), [전체167 join수용·분기대조](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410375489), [전체168 조율 한줄 승인](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410454752)이다. [전체169 Backend 상태표·선택조회 제안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410756326)에 아래 소비 확인을 요청했다. 이미 합의된 join 후보 구현은 이 대기로 중단하지 않는다. 아래는합의의기준이며 [전체171 수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6412692643) 후 [구현/검증](active-usage-and-wait-implementation.md)에반영했다. DB필드추가는없고실제개발반영은별도기록을따른다.
 
 ## 한도 — active-target-rooms-1
 

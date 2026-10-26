@@ -1,5 +1,13 @@
 # 영구 개발 이력
 
+## 2026-10-26 — 활성방 한도·조율 안내 합의 구현·직접검증
+
+- 사용자승인계획과 [전체171 소비수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6412692643)을구현했다. 구간 **활성방 한도·조율 선택조회 구현·직접검증·인계**, feat/raid-recruitment. [책임/선택/근거](../features/recruitment/weekly-cycles/active-usage-and-wait-implementation.md). 자료삭제/강제탈퇴/새집계저장/migration없음.
+- 한도공통SQL predicate를두목록/개인한도/증가·해제에사용·기존관계만으로증가검사생략하지않음·C/N중복없음. 같은쓰기잠금/시각에서영향회원전후집합검사/usage head중복갱신방지·원ACK우선·주차롤백. 개인한도GET의0023전용readiness로0032에서503이던연계결함을프로필별기존검사로정정·기존0023/현재0032직접확인.
+- 조율선택query와5상태의닫힌DTO·기존응답/null기록/권한/no-store보존·같은READONLY평가재사용. 실제자동조율과candidate adapter공유·복사누락과unset구분/DB오류전달·GET쓰기없음. 기본116/133/현재178/199·기존쓰기operation/원ACK동일, BetaScheduleView선택속성+CoordinationWait만추가.
+- 고유직접18PASS(한도7/조율6/관련기존5)·정적12/lock·OpenAPI전체일치·제안48/문자32·123fixture/원ACK32·DTO정상5/오류6·문서/diff PASS. 초기합성fixture의FK순서·기록앵커기대값만정정한후실패/직접영향검증. 첫실자료후보503을발견해readiness정정후재대조통과. 기존Starlette/AnyIO경고유지/전체pytest반복없음.
+- 후보소스+실자료READONLY: 한도10/사용3·두현재목록C2/N2합집합일치; 조율3/5후보없음·4추가1명·6대상아님. 회원명령/자료/원ACK수정없음·실제서버는690f36f/061dc562/0032유지. 다음소스묶음commit/push/원격확인→승인된API반영/실행확인→고정인계. 원ACK키매칭/전체기기·성능·dev/main/AWS 미완료.
+
 ## 2026-10-26 — join 후보 개발 반영·실행 확인·인계
 
 - 사용자승인범위에서합의된join을독립구간으로반영했다. source690f36f15880f7766526288ec515183b2b4d077apush/원격일치후이미지061dc562를API에교체. [반영근거](../engineering/operations/join-candidates-rollout.md)·[집계](../engineering/operations/records/join-candidates-rollout.json)·[전체170 Backend · join 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6411011928). 구간명 **join 후보 개발 반영·실행 확인·인계**, 같은feat/raid-recruitment.

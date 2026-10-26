@@ -123,6 +123,13 @@ def cases(bundle):
     review['access_context']='Current authorized leader; review branch, no reader_profile or applicant-identity grant.'
     review['value']['data']=sample(bundle,{'$ref':'#/$defs/Beta_BReview'})
     review['value']['data']['application']['application_memo']='함께 가요!'
+    for state in ['waiting_members','no_earlier_candidate','pending','unavailable','not_applicable']:
+        item=deepcopy(detail);item['name']+=' coordination-wait-'+state
+        item['parameters']['query:include_coordination_wait']='true'
+        wait=dict(status=state,missing_members=1 if state=='waiting_members' else None)
+        item['value']['data']['beta_schedule']['coordination_wait']=wait
+        item['value']['data']['room']['beta_schedule']['coordination_wait']=deepcopy(wait)
+        result.append(item)
     return result
 
 

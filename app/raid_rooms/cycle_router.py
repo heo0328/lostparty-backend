@@ -71,6 +71,8 @@ class CycleRoute(AvailabilityRoute):
                 fields|={'base_starts_at','early_coordination_enabled','early_additional_members'}
                 if request.url.path.endswith('/raid-room-creation-context'):
                     fields|={'next_base_starts_at','next_early_coordination_enabled','next_early_additional_members'}
+            if request.method=='GET' and request.url.path.endswith(('/detail','/plan')):
+                fields|={'include_coordination_wait'}
             if request.method=='GET' and request.url.path.endswith('/raid-rooms'):
                 fields|={'departure_windows','schedule_states'}
         return fields
@@ -223,7 +225,7 @@ def card(room_id:UUID,target_cycle_key:str,principal:OptionalPrincipal=None):ret
 
 
 @router.get('/raid-rooms/{room_id}/detail',response_model=s.OutputContract3GetV2RaidRoomsRoomIdDetail|membership_schemas.DetailProfile|application_display_schemas.ApplicationDisplayDetailResponse,response_model_exclude_unset=True,responses=errors)
-def detail(room_id:UUID,target_cycle_key:str,principal:Principal,reader_profile:Literal['membership-actions-1','application-display-1']|None=None,
+def detail(room_id:UUID,target_cycle_key:str,principal:Principal,include_coordination_wait:Literal['true','false']='false',reader_profile:Literal['membership-actions-1','application-display-1']|None=None,
     membership_id:UUID|None=None,cycle_member_id:UUID|None=None):
     if reader_profile == 'membership-actions-1':
         return membership_readers.get(principal,room_id,target_cycle_key,'detail',membership_id=membership_id,cycle_member_id=cycle_member_id)
@@ -232,7 +234,7 @@ def detail(room_id:UUID,target_cycle_key:str,principal:Principal,reader_profile:
 
 
 @router.get('/me/raid-rooms/{room_id}/plan',response_model=resume_review_schemas.ResumePlanContext|membership_schemas.PlanProfile,response_model_exclude_unset=True,responses=errors)
-def plan(room_id:UUID,target_cycle_key:str,principal:Principal,include_resume_display:Literal['true','false']='false',
+def plan(room_id:UUID,target_cycle_key:str,principal:Principal,include_coordination_wait:Literal['true','false']='false',include_resume_display:Literal['true','false']='false',
     reader_profile:Literal['membership-actions-1']|None=None,membership_id:UUID|None=None,cycle_member_id:UUID|None=None):
     if reader_profile is not None:
         return membership_readers.get(principal,room_id,target_cycle_key,'plan',membership_id=membership_id,cycle_member_id=cycle_member_id,include_resume_display=include_resume_display=='true')

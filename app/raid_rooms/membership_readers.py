@@ -174,9 +174,8 @@ def memberships(principal,key,state='current',limit=20,cursor=None):
         query=select(Member,Room,RoomCycle,CycleMember).join(Room,Room.id==Member.room_id).outerjoin(RoomCycle,
             and_(RoomCycle.room_id==Room.id,RoomCycle.cycle_key==target.key)).outerjoin(CycleMember,
             and_(CycleMember.cycle_id==RoomCycle.id,CycleMember.membership_id==Member.id)).where(Member.user_id==uid)
-        current=and_(Member.ended_at.is_(None),Room.ended_at.is_(None),~archive.archived(Room.id),
-            CycleMember.state.in_(actions.LIVE),RoomCycle.state.in_(('open','review_required')),
-            or_(CycleMember.generation==RoomCycle.generation,and_(CycleMember.generation.is_(None),RoomCycle.generation.is_(None))))
+        from app.raid_rooms.active_usage import predicate
+        current=predicate()
         history=or_(Member.ended_at.is_not(None),Room.ended_at.is_not(None),archive.archived(Room.id),
             CycleMember.state.in_(('completed','stopped','cancelled','removed')),CycleMember.generation!=RoomCycle.generation)
         if state=='current':query=query.where(current)

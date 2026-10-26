@@ -195,6 +195,9 @@
           "type": "string",
           "format": "date-time",
           "pattern": "(Z|\\+00:00)$"
+        },
+        "coordination_wait": {
+          "$ref": "#/$defs/CoordinationWait"
         }
       },
       "required": [
@@ -2046,6 +2049,60 @@
       "minLength": 1,
       "pattern": "^(?! )(?!.* $)[가-힣ㄱ-ㅣ\\x20-\\x7e]+$(?![\\s\\S])",
       "x-normalization": "Already NFC, no leading/trailing U+0020"
+    },
+    "CoordinationWait": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "missing_members"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "waiting_members",
+            "no_earlier_candidate",
+            "pending",
+            "unavailable",
+            "not_applicable"
+          ]
+        },
+        "missing_members": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 8
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "status": {
+              "const": "waiting_members"
+            },
+            "missing_members": {
+              "type": "integer"
+            }
+          }
+        },
+        {
+          "properties": {
+            "status": {
+              "enum": [
+                "no_earlier_candidate",
+                "pending",
+                "unavailable",
+                "not_applicable"
+              ]
+            },
+            "missing_members": {
+              "type": "null"
+            }
+          }
+        }
+      ]
     }
   },
   "x-text-policy": "hangul-printable-ascii-1"

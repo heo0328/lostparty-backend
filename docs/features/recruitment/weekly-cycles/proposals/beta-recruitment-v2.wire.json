@@ -4094,6 +4094,19 @@
             "type": "string",
             "const": "beta-recruitment-1"
           }
+        },
+        {
+          "name": "include_coordination_wait",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "true",
+              "false"
+            ],
+            "default": "false"
+          }
         }
       ],
       "responses": {
@@ -4403,6 +4416,19 @@
           "schema": {
             "type": "string",
             "const": "beta-recruitment-1"
+          }
+        },
+        {
+          "name": "include_coordination_wait",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "true",
+              "false"
+            ],
+            "default": "false"
           }
         }
       ],
@@ -30008,6 +30034,9 @@
           "type": "string",
           "format": "date-time",
           "pattern": "(Z|\\+00:00)$"
+        },
+        "coordination_wait": {
+          "$ref": "#/$defs/Proposed_CoordinationWait"
         }
       },
       "required": [
@@ -30196,6 +30225,60 @@
         "target_cycle_key"
       ],
       "title": "Search"
+    },
+    "Proposed_CoordinationWait": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "missing_members"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "waiting_members",
+            "no_earlier_candidate",
+            "pending",
+            "unavailable",
+            "not_applicable"
+          ]
+        },
+        "missing_members": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 8
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "status": {
+              "const": "waiting_members"
+            },
+            "missing_members": {
+              "type": "integer"
+            }
+          }
+        },
+        {
+          "properties": {
+            "status": {
+              "enum": [
+                "no_earlier_candidate",
+                "pending",
+                "unavailable",
+                "not_applicable"
+              ]
+            },
+            "missing_members": {
+              "type": "null"
+            }
+          }
+        }
+      ]
     },
     "Proposed_DepartureWindow": {
       "type": "object",

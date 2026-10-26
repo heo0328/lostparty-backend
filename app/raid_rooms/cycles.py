@@ -219,6 +219,7 @@ lease store; do not introduce a second dedup namespace or in-memory cache.
         with session() as db, db.begin():
             uid = authorize(db, principal, write=True)
             stamp = now(db)
+            db.info['active_usage_stamp']=stamp
             from app.raid_rooms import completed_room_lifecycle as archive
             rid = archive.mutation_room(db, payload) if operation != 'create' else None
             if rid is not None:
@@ -226,7 +227,11 @@ lease store; do not introduce a second dedup namespace or in-memory cache.
                 visible_room(db, uid, rid)
                 archive.require_active(db, rid)
             beta_schedule.require_client(db,rid,operation,payload)
+            from app.raid_rooms import active_usage
+            usage_before=active_usage.capture(db,uid,rid,payload)
             outcome = run(db, uid, stamp)
+            db.flush()
+            active_usage.finish(db,usage_before)
             db.flush()
             if rid is not None and archive.is_archived(db, rid):
                 for cycle_key in db.scalars(select(RoomCycle.cycle_key).where(RoomCycle.room_id==rid)):

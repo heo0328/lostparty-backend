@@ -418,6 +418,10 @@ def create_two_cycle_app():
         value=_decorate_openapi(generate())
         value['x-recruitment-policy'].update(schema_revision='0032_beta_recruitment',policy_version='two-cycle-contract-4',
             search_semantics='own-target-participation-excluded-v1',
+            room_usage_semantics='active-target-rooms-1',
+            coordination_wait=dict(query='include_coordination_wait',default=False,
+                reads=['/v2/raid-rooms/{room_id}/detail','/v2/me/raid-rooms/{room_id}/plan'],
+                states=['waiting_members','no_earlier_candidate','pending','unavailable','not_applicable']),
             admission_eligibility=dict(policy_version='admission-eligibility-2',required_schema='0031_membership_actions',
                 intents=['apply','join','change_character'],approval='stored parties; qualification failure keeps pending',
                 change='exact own assignment/lease exclusion; original party then opposite party; consent bound to target parties',

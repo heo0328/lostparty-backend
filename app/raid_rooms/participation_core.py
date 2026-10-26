@@ -29,6 +29,8 @@ from app.raid_rooms.weekly_links import WeeklyOccupancy
 
 
 def room_count(db, uid):
+    from app.raid_rooms import active_usage
+    if active_usage.enabled(db):return active_usage.count(db,uid)
     # Integrated rooms are authoritative, including ended memberships. Never
     # resurrect usage from the preserved legacy copy after integrated cleanup.
     old = select(OldMember.room_id).join(OldRoom, OldRoom.id == OldMember.room_id).where(
@@ -62,11 +64,14 @@ def power_value(role, minimum, head, success):
         current_issues=deepcopy(head.summary.get('issues',[])) if head else [])
 
 
-def _limits(db, uid, selection, increasing):
+def _limits(db, uid, selection, increasing, *, room_id=None):
     row,head=db.get(MemberUsageLimits,uid),db.get(MemberUsageHead,uid)
     if ((row.revision if row else 1)!=selection.expected_limits_revision or
             (head.revision if head else 1)!=selection.expected_usage_revision):
         fail('POLICY_CONTEXT_CHANGED')
+    from app.raid_rooms import active_usage
+    if increasing and room_id is not None and active_usage.enabled(db) and active_usage.contains(db,uid,room_id):
+        increasing=False
     if increasing and room_count(db,uid)>=limits.values(row).raid_rooms:
         fail('MEMBER_RAID_LIMIT_REACHED')
 

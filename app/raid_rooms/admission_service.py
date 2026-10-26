@@ -25,7 +25,10 @@ def snapshot(principal):
     with session() as db,db.begin():
         db.connection(execution_options={'isolation_level':'REPEATABLE READ'})
         db.execute(text('SET TRANSACTION READ ONLY'))
-        yield db,authorize(db,principal),now(db)
+        uid=authorize(db,principal);stamp=now(db)
+        db.info['active_usage_stamp']=stamp
+        db.info['read_snapshot']=True
+        yield db,uid,stamp
 
 
 def room(db,uid,rid):

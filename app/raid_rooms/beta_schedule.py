@@ -169,24 +169,54 @@ def enrol(db,row,cm,stamp,*,consent=True,copy=True):
     db.flush()
 
 
-def candidate(db,room,row,stamp):
-    from app.raid_rooms import cycle_planning as plan,cycle_schedule as graph,cycle_times as times
+def evaluate(db,room,row,stamp):
+    """One read evaluation; incomplete evidence is never a normal empty result."""
+    key=(row.id,row.generation,row.revision,stamp)
+    cache=db.info.setdefault('beta_evaluations',{}) if db.info.get('read_snapshot') else None
+    if cache is not None and key in cache:return cache[key]
+    result=_evaluate(db,room,row,stamp)
+    if cache is not None:cache[key]=result
+    return result
+
+
+def _evaluate(db,room,row,stamp):
+    from app.raid_rooms import cycle_planning as plan,cycle_schedule as graph,cycle_times as times,availability
     from app.raid_rooms.cycle_models import CycleSubmission
     from app.raid_rooms.source_models import TimeReservation
+    from app.raid_rooms.availability_schemas import PersonalIn
+    from pydantic import ValidationError
+    def empty(status):return dict(state='no_candidate',earliest_start=None,latest_start=None,status=status,missing_members=None)
     saved=get(db,row)
-    empty=dict(state='no_candidate',earliest_start=None,latest_start=None)
-    if saved is None or saved.confirmation_kind or saved.needs_review or not saved.early_enabled or stamp>=saved.base_starts_at-timedelta(minutes=30):return empty
-    actual=plan.members(db,row,db.get(graph.Session,saved.session_id))
-    if not actual:return empty
+    if saved is None:return empty('not_applicable')
+    sess=db.get(graph.Session,saved.session_id)
+    if sess is None:return empty('unavailable')
+    if saved.confirmation_kind or saved.needs_review or not saved.early_enabled or row.state!='open' or room.ended_at is not None or sess.state in ('finished','cancelled'):
+        return empty('not_applicable')
+    if stamp>=saved.base_starts_at-timedelta(minutes=30):return empty('pending')
+    actual=plan.members(db,row,sess)
+    from app.raid_rooms.cycle_models import CycleMember
+    from app.raid_rooms.integrated_models import RecruitmentMembership as Member
+    declared=set(db.scalars(select(CycleMember.id).join(Member,Member.id==CycleMember.membership_id).where(
+        CycleMember.cycle_id==row.id,CycleMember.generation==row.generation,
+        CycleMember.state.in_(('participating','review_required')),Member.ended_at.is_(None))))
+    if not actual or {cm.id for cm in actual}!=declared:return empty('unavailable')
     duration=saved.base_ends_at-saved.base_starts_at
     first,last=times.bounds(row)
-    tick=time_policy.ceil_tick(max(stamp,plan.floor(db,row),first+timedelta(hours=4))).astimezone(timezone.utc)
+    try:floor=plan.floor(db,row)
+    except plan.GameError:return empty('unavailable')
+    tick=time_policy.ceil_tick(max(stamp,floor,first+timedelta(hours=4))).astimezone(timezone.utc)
     tables={};busy={}
     for cm in actual:
         copy=db.get(BetaAvailabilityCopy,cm.id);table=db.get(CycleSubmission,cm.id)
-        if copy is None or table is None:return empty
-        try:plan.life.qualify(db,room,row,cm)
-        except plan.GameError:return empty
+        if copy is None or table is None:return empty('unavailable')
+        try:
+            PersonalIn.model_validate(dict(expected_version=table.source_personal_revision,timezone='Asia/Seoul',intervals=table.intervals))
+            if (copy.source_personal_version!=table.source_personal_revision or
+                    availability.normalize(table.intervals)!=table.normalized_intervals or
+                    (copy.state=='unset')!= (not table.normalized_intervals)):
+                return empty('unavailable')
+            plan.life.qualify(db,room,row,cm)
+        except (plan.GameError,ValidationError,ValueError,TypeError,KeyError):return empty('unavailable')
         tables[cm.id]=(copy,table)
         own_promises=select(BetaPromiseReservation.reservation_id).where(BetaPromiseReservation.cycle_id==row.id,
             BetaPromiseReservation.generation==row.generation,BetaPromiseReservation.cycle_member_id==cm.id)
@@ -200,7 +230,14 @@ def candidate(db,room,row,stamp):
                not any(a<end and b>tick for a,b in busy[cm.id])
                for cm in actual for copy,table in [tables[cm.id]]):found.append(tick)
         tick+=time_policy.TICK
-    return dict(state='ready' if found else 'no_candidate',earliest_start=found[0] if found else None,latest_start=found[-1] if found else None)
+    missing=max(0,1+saved.early_additional_members-len(actual))
+    return dict(state='ready' if found else 'no_candidate',earliest_start=found[0] if found else None,latest_start=found[-1] if found else None,
+        status='waiting_members' if missing else 'pending' if found else 'no_earlier_candidate',missing_members=missing or None)
+
+
+def candidate(db,room,row,stamp):
+    result=evaluate(db,room,row,stamp)
+    return {k:result[k] for k in ('state','earliest_start','latest_start')}
 
 
 def confirm(db,room,row,saved,start,kind,stamp,command=None):
@@ -268,13 +305,17 @@ def view(db,row,stamp):
     actual_start=sess.starts_at if kind else None;actual_end=sess.ends_at if kind else None
     effective=actual_start or saved.base_starts_at;effective_end=actual_end or saved.base_ends_at
     deadline_status=('obsolete' if ended or kind in ('early_confirmed','proposal_confirmed') else 'processed' if kind or saved.needs_review else 'due_unprocessed' if due else 'not_due')
-    return dict(policy_version='beta-schedule-1',revision=saved.revision,session_id=sess.id,
+    value=dict(policy_version='beta-schedule-1',revision=saved.revision,session_id=sess.id,
         base_starts_at=saved.base_starts_at,base_ends_at=saved.base_ends_at,base_deadline_at=saved.base_starts_at-timedelta(minutes=30),
         early_coordination_enabled=saved.early_enabled,early_additional_members=saved.early_additional_members,
         coordination_state=state,coordination_active=state=='coordinating',confirmed_starts_at=actual_start,confirmed_ends_at=actual_end,
         effective_starts_at=effective,effective_ends_at=effective_end,admission_deadline=effective-timedelta(minutes=30),
         deadline_status=deadline_status,pending_transition=('departure_review_due' if stamp>=saved.base_starts_at else 'base_confirmation_due') if due else None,
         review_reason='departure_passed_unconfirmed' if state=='needs_review' else None,evaluated_at=stamp)
+    if beta_profile.query().get('include_coordination_wait')=='true':
+        result=evaluate(db,db.get(RecruitmentRoom,row.room_id),row,stamp)
+        value['coordination_wait']={k:result[k] for k in ('status','missing_members')}
+    return value
 
 
 def reconcile_before(principal,payload):

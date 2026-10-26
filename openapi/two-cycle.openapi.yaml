@@ -29982,6 +29982,20 @@
             }
           },
           {
+            "name": "include_coordination_wait",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "title": "Include Coordination Wait",
+              "enum": [
+                "true",
+                "false"
+              ],
+              "type": "string",
+              "default": "false"
+            }
+          },
+          {
             "name": "reader_profile",
             "in": "query",
             "required": false,
@@ -30286,7 +30300,7 @@
             }
           },
           {
-            "name": "include_resume_display",
+            "name": "include_coordination_wait",
             "in": "query",
             "required": false,
             "schema": {
@@ -30296,7 +30310,21 @@
               ],
               "type": "string",
               "default": "false",
-              "title": "Include Resume Display"
+              "title": "Include Coordination Wait"
+            }
+          },
+          {
+            "name": "include_resume_display",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "title": "Include Resume Display",
+              "enum": [
+                "true",
+                "false"
+              ],
+              "type": "string",
+              "default": "false"
             }
           },
           {
@@ -30306,8 +30334,8 @@
             "schema": {
               "anyOf": [
                 {
-                  "const": "membership-actions-1",
-                  "type": "string"
+                  "type": "string",
+                  "const": "membership-actions-1"
                 },
                 {
                   "type": "null"
@@ -72070,6 +72098,9 @@
             "type": "string",
             "format": "date-time",
             "title": "Evaluated At"
+          },
+          "coordination_wait": {
+            "$ref": "#/components/schemas/CoordinationWait"
           }
         },
         "additionalProperties": false,
@@ -75269,6 +75300,68 @@
           "text"
         ],
         "title": "StoredPresetItem"
+      },
+      "CoordinationWait": {
+        "oneOf": [
+          {
+            "properties": {
+              "status": {
+                "const": "waiting_members"
+              },
+              "missing_members": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "properties": {
+              "status": {
+                "enum": [
+                  "no_earlier_candidate",
+                  "pending",
+                  "unavailable",
+                  "not_applicable"
+                ]
+              },
+              "missing_members": {
+                "type": "null"
+              }
+            }
+          }
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "waiting_members",
+              "no_earlier_candidate",
+              "pending",
+              "unavailable",
+              "not_applicable"
+            ],
+            "title": "Status"
+          },
+          "missing_members": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 8.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Missing Members"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "status",
+          "missing_members"
+        ],
+        "title": "CoordinationWait"
       }
     },
     "securitySchemes": {
@@ -75665,6 +75758,22 @@
       "presets": "/v2/me/application-message-presets",
       "compatibility": "original ACK before unsafe new-write guard; no automatic legacy conversion",
       "text_policy": "hangul-printable-ascii-1"
+    },
+    "room_usage_semantics": "active-target-rooms-1",
+    "coordination_wait": {
+      "query": "include_coordination_wait",
+      "default": false,
+      "reads": [
+        "/v2/raid-rooms/{room_id}/detail",
+        "/v2/me/raid-rooms/{room_id}/plan"
+      ],
+      "states": [
+        "waiting_members",
+        "no_earlier_candidate",
+        "pending",
+        "unavailable",
+        "not_applicable"
+      ]
     }
   }
 }
