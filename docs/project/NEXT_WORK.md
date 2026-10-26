@@ -1,10 +1,10 @@
 # 다음 실행
 
-## 현재 작업 — 활성방 한도·조율 안내 구현/직접검증 완료 → 개발 반영
+## 현재 작업 — 활성방 한도·조율 안내 개발 반영 완료
 
-[전체171 Flutter 수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6412692643)으로소비대기는해소됐다. [구현/검증](../features/recruitment/weekly-cycles/active-usage-and-wait-implementation.md)의공통활성판정·신규단위/거래/usage revision·선택조율5상태/query·기존응답/원ACK를연결했고고유18PASS·두계약/정적·wire/실자료후보대조를확인했다. 후보READONLY한도10/사용3·C2/N2합집합일치, 번호3/5후보없음·4추가1명·6대상아님. 실제개발은현재690f36f/061dc562/0032이며새반영전이다.
+[구현/직접18PASS](../features/recruitment/weekly-cycles/active-usage-and-wait-implementation.md)와 [개발 반영/실행 확인](../engineering/operations/active-usage-wait-rollout.md)을 완료했다. source1800160/이미지0a540425·178/199·DB0032, API만교체·DB/키/설정유지. 실행259소스/runtime31/두계약일치·실자료READONLY사용3/한도10·C2/N2두목록합집합3·상세/plan8선택조회·HTTP6·worker/healthy/ERROR0확인. join은유지한다.
 
-**다음 Backend:** 같은목적브랜치에구현/계약/검증기록묶어commit/push·원격확인→사용자승인된API반영/실행검증→Issue13고정소스/이미지/예시인계. 정상회원쓰기/미확인원명령재실행없이DB0032/키/환경유지. 다음Flutter는그인계후한도·기존일정한줄안내연결/직접기기차이회신이다. 원ACK키매칭·전체기기/성능·dev/main/AWS는미완료. 아래169소비대기·미구현설명은이전시점의이력이다.
+[전체172번째 Backend · 한도·조율 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6414001866)에인계한다. **다음 Flutter:** 활성방 한도와 기존 일정 카드의 선택 조율 한 줄 안내 연결·직접 영향 확인 후 구체 차이 회신. **Backend:** 그 차이 대응. 이번두기능의Backend구현·개발반영은완료, 정상회원HTTP/기기·전체성능/원ACK동일키매칭·dev/main/AWS는별도미완료다. 자료삭제/변환/migration/실회원시험명령없음. 아래 소비대기·미구현은 당시 이력이다.
 
 ## 최신 실행 — join 후보 개발 반영 완료 / 한도·조율 소비 확인 대기
 

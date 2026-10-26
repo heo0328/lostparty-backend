@@ -1,5 +1,11 @@
 # 영구 개발 이력
 
+## 2026-10-26 — 활성방 한도·조율 안내 개발 반영·실행 확인
+
+- 사용자승인범위에서 source1800160 push/원격일치 후 API이미지0a540425로교체했다. [반영근거](../engineering/operations/active-usage-wait-rollout.md)·[공개집계](../engineering/operations/records/active-usage-wait-rollout.json). DB0032컨테이너/이미지/볼륨/환경·API설정/command/보안/로그/포트/키/.env유지·migration/자료변환/삭제·dump/restore·회원시험명령없음.
+- 실행259소스/runtime31/두계약전체일치·기본116/133/현재178/199·쓰기operation동일·직접18PASS재사용/전체회귀미반복. 실제기존세션READONLY한도10/사용3·C2/N2두목록합집합일치·상세/plan8선택조회·HTTP6·healthy/3종worker/확인로그32줄ERROR0. 번호3은후보대조후상태가변해not_applicable이며현재근거를기록했다. 실회원HTTP/기기와구분한다.
+- 직전이미지061dc562/설정보존·실제rollback없음. 새정책완료명령또는호환불명시자료를유지한전진수정. [전체172번째 Backend · 한도·조율 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6414001866)게시/실제전체순번172확인. 반영기록구간push/원격확인후같은댓글에고정근거/직접영향만인계. 다음Flutter한도·기존카드한줄안내연결, Backend구체차이대응. 원ACK키매칭/전체기기·성능/dev·main/AWS미완료·Issue13OPEN.
+
 ## 2026-10-26 — 활성방 한도·조율 안내 합의 구현·직접검증
 
 - 사용자승인계획과 [전체171 소비수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6412692643)을구현했다. 구간 **활성방 한도·조율 선택조회 구현·직접검증·인계**, feat/raid-recruitment. [책임/선택/근거](../features/recruitment/weekly-cycles/active-usage-and-wait-implementation.md). 자료삭제/강제탈퇴/새집계저장/migration없음.

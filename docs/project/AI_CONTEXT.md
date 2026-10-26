@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-2026-10-26 최신상태: [171 한도/조율수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6412692643)→[구현/직접17PASS](../features/recruitment/weekly-cycles/active-usage-and-wait-implementation.md). 현재C/N활성판정을두목록/한도/명령에공유·기존관계우회/거래/usage head보완, include_coordination_wait선택5상태·같은평가/기존응답·원ACK유지. 추가migration없음·후보READONLY사용3/목록합집합일치. 다음Backend소스게시/승인된개발반영/고정인계→Flutter연결. 실제서버는반영기록전690f36f/061dc562/0032다. 아래소비대기설명은과거이며원ACK키매칭/전체기기·성능/dev·main/AWS만별도미완료다.
+2026-10-26 최신상태: [171 수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6412692643)한 [활성방 한도·조율 안내 구현/직접18PASS](../features/recruitment/weekly-cycles/active-usage-and-wait-implementation.md)·[개발반영](../engineering/operations/active-usage-wait-rollout.md) 완료. source1800160/이미지0a540425·178/199·DB0032. 공통활성SQL·거래/usage revision·선택5상태/평가공유·원ACK/join유지. 실자료READONLY사용3/두목록합집합일치·상세/plan8·HTTP6/healthy/worker확인, DB/키/환경유지. 다음Flutter직접영향연결·구체차이/Backend대응. 기기·성능/원ACK키매칭/dev·main/AWS미완료. 아래는이전시점의이력이다.
 
 2026-10-26 최신실행: [join 개발반영](../engineering/operations/join-candidates-rollout.md) 완료·source690f36f/이미지061dc562·178/199·DB0032. 고유6시험/소스계약검증재사용·실제서비스후보1(제보1704제외)/목록12·HTTP6·worker/healthy/키환경유지. [전체170 Backend · join 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6411011928)의반영기록SHA/인계를따른다. 다음Flutter일반join시트연결및169한도상태표/조율선택조회소비확인→Backend나머지구현/개발반영. 한도/조율은미구현·현재한도코드유지/활성3방은기대값이며전체계획미완료다. 원ACK키매칭/전체기기인수·dev/main/AWS 별도미완료.
 

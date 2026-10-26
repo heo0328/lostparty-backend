@@ -1,0 +1,236 @@
+{
+  "source_commit": "1800160dcb883a13b76bd8602bbdf5fcb8eb2986",
+  "image": "sha256:0a540425e334ce628eff4d1c013111374338bdfc4d05461d43af0dfa47f0ae69",
+  "previous_image": "sha256:061dc5620d53b80d7f01f65b39d8ac75a667a3d96b1d5962d0646d6fe50b7e5d",
+  "applied_at": "2026-10-26T10:38:21.393825+00:00",
+  "database_revision": "0032_beta_recruitment",
+  "api_only_replaced": true,
+  "db_container_image_volume_environment_unchanged": true,
+  "api_environment_command_security_ports_logging_key_mount_preserved": true,
+  "key_hashes_equal": true,
+  "source_files_equal": 259,
+  "runtime_packages": 31,
+  "base_openapi": {
+    "paths": 116,
+    "operations": 133
+  },
+  "current_openapi": {
+    "paths": 178,
+    "operations": 199,
+    "text_policy": "hangul-printable-ascii-1",
+    "room_usage_semantics": "active-target-rooms-1",
+    "coordination_wait": "opt-in on beta detail/plan"
+  },
+  "full_openapi_equal": true,
+  "migration_or_data_conversion": false,
+  "dump_or_restore": false,
+  "member_commands_or_pending_replays": false,
+  "reused_targeted_tests": 18,
+  "active_usage_and_wait": {
+    "service_checks": [
+      {
+        "number": 6,
+        "reader": "detail",
+        "opt_in": true,
+        "omitted_false_preserved": true,
+        "status": "not_applicable"
+      },
+      {
+        "number": 6,
+        "reader": "plan",
+        "opt_in": true,
+        "omitted_false_preserved": true,
+        "status": "not_applicable"
+      },
+      {
+        "number": 3,
+        "reader": "detail",
+        "opt_in": true,
+        "omitted_false_preserved": true,
+        "status": "not_applicable"
+      },
+      {
+        "number": 3,
+        "reader": "plan",
+        "opt_in": true,
+        "omitted_false_preserved": true,
+        "status": "not_applicable"
+      },
+      {
+        "number": 4,
+        "reader": "detail",
+        "opt_in": true,
+        "omitted_false_preserved": true,
+        "status": "waiting_members"
+      },
+      {
+        "number": 4,
+        "reader": "plan",
+        "opt_in": true,
+        "omitted_false_preserved": true,
+        "status": "waiting_members"
+      },
+      {
+        "number": 5,
+        "reader": "detail",
+        "opt_in": true,
+        "omitted_false_preserved": true,
+        "status": "no_earlier_candidate"
+      },
+      {
+        "number": 5,
+        "reader": "plan",
+        "opt_in": true,
+        "omitted_false_preserved": true,
+        "status": "no_earlier_candidate"
+      }
+    ],
+    "used": 3,
+    "limit": 10,
+    "current_list_union_matches": true,
+    "lists": [
+      {
+        "reader": "app.raid_rooms.cycle_lists",
+        "target": "2026-10-21",
+        "count": 2
+      },
+      {
+        "reader": "app.raid_rooms.membership_readers",
+        "target": "2026-10-21",
+        "count": 2
+      },
+      {
+        "reader": "app.raid_rooms.cycle_lists",
+        "target": "2026-10-28",
+        "count": 2
+      },
+      {
+        "reader": "app.raid_rooms.membership_readers",
+        "target": "2026-10-28",
+        "count": 2
+      }
+    ],
+    "coordination": [
+      {
+        "number": 6,
+        "wait": {
+          "status": "not_applicable",
+          "missing_members": null
+        }
+      },
+      {
+        "number": 3,
+        "wait": {
+          "status": "not_applicable",
+          "missing_members": null
+        }
+      },
+      {
+        "number": 4,
+        "wait": {
+          "status": "waiting_members",
+          "missing_members": 1
+        }
+      },
+      {
+        "number": 5,
+        "wait": {
+          "status": "no_earlier_candidate",
+          "missing_members": null
+        }
+      }
+    ],
+    "scope": "deployed source + real data READ ONLY; no member command or normal-member HTTP"
+  },
+  "read_only_service_projections": [
+    {
+      "reader": "app.raid_rooms.cycle_lists",
+      "target": "2026-10-21",
+      "count": 2
+    },
+    {
+      "reader": "app.raid_rooms.membership_readers",
+      "target": "2026-10-21",
+      "count": 2
+    },
+    {
+      "reader": "app.raid_rooms.cycle_lists",
+      "target": "2026-10-28",
+      "count": 2
+    },
+    {
+      "reader": "app.raid_rooms.membership_readers",
+      "target": "2026-10-28",
+      "count": 2
+    }
+  ],
+  "actual_http": [
+    {
+      "case": "health",
+      "status": 200
+    },
+    {
+      "case": "public_cycle",
+      "status": 200
+    },
+    {
+      "case": "presets_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "presets_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "join_candidates_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "join_candidates_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    }
+  ],
+  "text_code_check": {
+    "printable_ascii_characters": 95,
+    "forbidden_samples": 5,
+    "scope": "deployed code only; no member write"
+  },
+  "logs": {
+    "lines": 32,
+    "events": {
+      "server_event": 4,
+      "http_request": 10,
+      "job_completed": 14,
+      "api_rejected": 4
+    },
+    "successful_jobs": [
+      "auth_cleanup",
+      "ownership_settlement",
+      "recruitment"
+    ],
+    "allowlisted": true,
+    "errors": 0
+  },
+  "api_healthy": true,
+  "db_healthy": true,
+  "rollback_used": false,
+  "not_verified": [
+    "normal-member HTTP writes",
+    "native device acceptance",
+    "load/performance acceptance",
+    "dev/main merge",
+    "AWS production"
+  ]
+}

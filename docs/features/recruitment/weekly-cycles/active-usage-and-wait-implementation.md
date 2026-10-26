@@ -36,4 +36,6 @@ active_usage의같은 SQL predicate를 두 현재목록의페이지전필터·�
 
 직접고유18개PASS(한도7·조율6·관련기존5). 9→10/11거절·C/N생성/합류·기존관계우회방지·동시생성/승인·상대회원해산/원ACK/실패롤백·과거/검토/주차·기존한도조회, 다섯상태/기존reader·query/권한/null/평가1회·DB실패503·GET쓰기0·기존자동확정/예약을검증했다. 합성fixture의FK삽입순서와기록anchored식별자를수정후해당실패만재검증했다. 첫후보실자료503은readiness보완뒤직접2시험과READONLY재대조를통과했다. 마지막oneOf추가는schema명시이며DTO정상5/오류6으로검증했다. 두OpenAPI전체일치·정적12/lock·제안48/문자32·wire123/원ACK32·문서/diff PASS다. 기존Starlette/AnyIO경고유지·전체pytest미반복.
 
-위후보/합성검증은실제API교체/정상회원HTTP/기기성공이아니다. 다음같은목적브랜치에서묶어commit/push→후보runtime소스/계약/패키지검증→사용자승인된API만교체/실행확인→고정소스/이미지/대표예시인계다. DB/키/환경·원ACK를유지한다. 원ACK동일키매칭·전체기기/성능·dev/main/AWS는별도미완료이며자료변환·삭제/복원은없다.
+위후보/합성검증과별도로source1800160을push/원격확인후 [개발API반영/실행확인](../../../engineering/operations/active-usage-wait-rollout.md)을완료했다. 실제259소스/runtime31/두계약일치·사용3/목록일치·상세/plan8·HTTP6/healthy/worker확인이다. 정상회원HTTP/기기성공으로확대하지않는다. DB/키/환경·원ACK를유지한다. 원ACK동일키매칭·전체기기/성능·dev/main/AWS는별도미완료이며자료변환·삭제/복원은없다.
+
+[전체172번째 Backend · 한도·조율 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6414001866)에실행소스·이미지·검증경계·다음담당을인계한다. 반영기록구간을push/원격확인후고정링크와네이티브직접영향확인범위를같은댓글에보완한다.
