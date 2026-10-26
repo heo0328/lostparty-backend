@@ -130,6 +130,10 @@ def cases(bundle):
         item['value']['data']['beta_schedule']['coordination_wait']=wait
         item['value']['data']['room']['beta_schedule']['coordination_wait']=deepcopy(wait)
         result.append(item)
+    search=extra(lambda c:c['kind']=='request' and bundle['operations'][c['operation']]['path']=='/v2/raid-rooms/search', 'whole-minute-search')
+    search['value']['departure_windows']=[dict(starts_at='2026-10-26T09:03:00Z',ends_at='2026-10-26T11:17:00Z')]
+    page=extra(lambda c:c['kind']=='response' and c.get('status')=='200' and bundle['operations'][c['operation']]['path']=='/v2/raid-rooms', 'whole-minute-search')
+    page['parameters']['query:departure_windows']=deepcopy(search['value']['departure_windows'])
     return result
 
 

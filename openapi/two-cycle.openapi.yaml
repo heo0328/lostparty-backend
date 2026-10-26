@@ -75167,7 +75167,8 @@
           "starts_at",
           "ends_at"
         ],
-        "title": "DepartureWindow"
+        "title": "DepartureWindow",
+        "description": "Search-only UTC whole-minute bounds, start inclusive and end exclusive; no rounding. Positive at most 24h, within the selected cycle. Departure grids are unchanged."
       },
       "PresetDocument": {
         "properties": {
@@ -75757,7 +75758,8 @@
       "promises": "atomic participant/personal-copy/base reservation; earlier-only automatic confirmation; deadline fallback",
       "presets": "/v2/me/application-message-presets",
       "compatibility": "original ACK before unsafe new-write guard; no automatic legacy conversion",
-      "text_policy": "hangul-printable-ascii-1"
+      "text_policy": "hangul-printable-ascii-1",
+      "search_time": "UTC whole-minute bounds; start inclusive, end exclusive; no rounding; departure grids unchanged"
     },
     "room_usage_semantics": "active-target-rooms-1",
     "coordination_wait": {

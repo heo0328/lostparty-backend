@@ -3,7 +3,7 @@ from datetime import datetime,timedelta
 from sqlalchemy import select,case,and_,or_,literal
 from sqlalchemy.orm import aliased
 from app.game_accounts.support import fail
-from app.raid_rooms import beta_profile,beta_schedule,time_policy
+from app.raid_rooms import beta_profile,beta_schedule
 from app.raid_rooms.beta_models import BetaSchedule
 from app.raid_rooms.cycle_models import RoomCycle
 from app.raid_rooms.cycle_application_models import CycleSession
@@ -11,6 +11,11 @@ from app.raid_rooms.integrated_models import RecruitmentSession
 from app.raid_rooms.source_models import SessionBinding
 from app.raid_rooms.schedule_heads import ScheduleHead
 from app.raids.service import KST
+
+
+def minute_boundary(stamp):
+    # Search bounds describe a range, independently of the departure grid.
+    return stamp.tzinfo is not None and stamp.utcoffset()==timedelta(0) and stamp.second==0 and stamp.microsecond==0
 
 
 def apply(db,query,data,body,target,stamp):
@@ -23,7 +28,7 @@ def apply(db,query,data,body,target,stamp):
     normalized=[]
     for window in windows or []:
         start,end=window.starts_at,window.ends_at
-        if not time_policy.aligned(start) or not time_policy.aligned(end) or not timedelta(0)<end-start<=timedelta(days=1):fail('INVALID_REQUEST',400)
+        if not minute_boundary(start) or not minute_boundary(end) or not timedelta(0)<end-start<=timedelta(days=1):fail('INVALID_REQUEST',400)
         if start<first or end>last:fail('INVALID_REQUEST',400)
         normalized.append((start,end))
     merged=[]

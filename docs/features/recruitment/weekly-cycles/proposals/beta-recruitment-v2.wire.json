@@ -30298,7 +30298,8 @@
       "required": [
         "starts_at",
         "ends_at"
-      ]
+      ],
+      "description": "Search-only UTC whole-minute bounds, start inclusive and end exclusive; no rounding. Positive at most 24h, within the selected cycle. Departure grids are unchanged."
     },
     "Proposed_Legacy_AdmissionMode": {
       "type": "string",

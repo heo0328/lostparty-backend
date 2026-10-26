@@ -6166,6 +6166,127 @@
         }
       },
       "access_context": "Current persistent member and participating CM of the exact T/current generation; no opposite-T or historical grant."
+    },
+    {
+      "name": "POST /v2/raid-rooms/search request whole-minute-search",
+      "operation": 11,
+      "kind": "request",
+      "parameters": {
+        "query:contract_profile": "beta-recruitment-1"
+      },
+      "value": {
+        "category": "general",
+        "admission_scope": null,
+        "group_ids": [],
+        "filter_context_token": null,
+        "member_conditions": [],
+        "raid_ids": [],
+        "difficulty_ids": [],
+        "limit": 1.0,
+        "cursor": null,
+        "target_cycle_key": "2026-10-21",
+        "departure_windows": [
+          {
+            "starts_at": "2026-10-26T09:03:00Z",
+            "ends_at": "2026-10-26T11:17:00Z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GET /v2/raid-rooms 200 Beta_OutputContract3PostV2RaidRoomsSearch whole-minute-search",
+      "operation": 2,
+      "kind": "response",
+      "status": "200",
+      "schema": {
+        "$ref": "#/$defs/Beta_OutputContract3PostV2RaidRoomsSearch"
+      },
+      "parameters": {
+        "query:target_cycle_key": "가",
+        "query:contract_profile": "beta-recruitment-1",
+        "query:departure_windows": [
+          {
+            "starts_at": "2026-10-26T09:03:00Z",
+            "ends_at": "2026-10-26T11:17:00Z"
+          }
+        ]
+      },
+      "value": {
+        "scope": {
+          "server_now": "2026-10-23T00:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-23T00:00:00Z",
+          "phase": "current",
+          "target_revision": null,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": null,
+          "target_generation": null
+        },
+        "data": {
+          "items": [
+            {
+              "room_id": "00000000-0000-4000-8000-000000000001",
+              "revision": 1.0,
+              "title": "가",
+              "scope": "public",
+              "group_id": null,
+              "admission_mode": "leader_only",
+              "experience_level": null,
+              "app_capacity": 4,
+              "app_member_count": 0.0,
+              "state": "active",
+              "items": [],
+              "game_items": [],
+              "leader_display": null,
+              "created_at": "2026-10-23T00:00:00Z",
+              "phase": "current",
+              "restricted": false,
+              "schedule_summary": {
+                "mode": "가",
+                "occurrence_mode": null,
+                "confirmed_starts_at": [],
+                "earliest_start": null,
+                "latest_start": null
+              },
+              "combat_requirement": {
+                "input_mode": "shared",
+                "dealer_min": null,
+                "support_min": null
+              },
+              "continuation_enabled": false,
+              "permissions": {
+                "view_detail": {
+                  "allowed": false,
+                  "reason": null,
+                  "next_change_at": null
+                },
+                "view_plan": {
+                  "allowed": false,
+                  "reason": null,
+                  "next_change_at": null
+                }
+              },
+              "leadership": {
+                "leader_cycle_member_id": null,
+                "leadership_revision": 1.0,
+                "leader_membership_id": null
+              },
+              "my_target_role": "leader",
+              "target_cycle_key": "가",
+              "target_state": "open",
+              "target_revision": 1.0,
+              "room_cycle_id": "00000000-0000-4000-8000-000000000001",
+              "target_generation": 1.0,
+              "beta_schedule": null
+            }
+          ],
+          "directory_revision": 1.0,
+          "filter_scope_digest": null,
+          "next_cursor": null,
+          "evaluated_at": "2026-10-23T00:00:00Z"
+        }
+      }
     }
   ]
 }

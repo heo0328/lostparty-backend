@@ -1,6 +1,14 @@
 # 다음 실행
 
+## 최신 작업 — 검색 정수분 구현·직접6PASS → 개발 반영
+
+[전체177 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6421096990)의 [검색구현/생성정책검토](../features/recruitment/weekly-cycles/search-minute-precision.md)를완료했다. GET/POST의UTC정수분검색·기존경계/페이지/커서·검색쓰기0·생성/제안5분유지를고유6시험과두계약/완결125예시로확인했다. 생성/개방·제안/수락·기한/예약의명시분정밀도분리추천은검토결과이며미구현이다. 기존조사/전체174~177수신기록을같은구간에보존한다.
+
+**다음Backend:** 구현/계약/검증/검토를묶어commit/push·원격확인→후보검증→사용자승인된API만교체/실행확인→Issue13고정인계. DB0032/기존자료/키/환경유지·migration/복원/실회원시험명령없음. Native에는비5분검색의직접영향만확인요청하고생성정책은별도소비협의한다. 현재개발API는이구간반영전1800160/0a540425/0032다. 전체기기/성능·원ACK키매칭/dev·main/AWS는별도다.
+
 ## 현재 작업 — 활성방 한도·조율 안내 개발 반영 완료
+
+추가읽기조사: 사용자제보카드C3/N4·배지6/10은지평의성당동일방C/N중복1개를제거한합집합6으로두reader/한도GET과일치했다. 시작경과2건은여전히참가중으로포함된다. 서버수정대상없음·네이티브별도확인은사용자진행. [전체173 Flutter 연결결과](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6414804154)수신·새Backend구현요청없음/실기기인수별도다.
 
 [구현/직접18PASS](../features/recruitment/weekly-cycles/active-usage-and-wait-implementation.md)와 [개발 반영/실행 확인](../engineering/operations/active-usage-wait-rollout.md)을 완료했다. source1800160/이미지0a540425·178/199·DB0032, API만교체·DB/키/설정유지. 실행259소스/runtime31/두계약일치·실자료READONLY사용3/한도10·C2/N2두목록합집합3·상세/plan8선택조회·HTTP6·worker/healthy/ERROR0확인. join은유지한다.
 

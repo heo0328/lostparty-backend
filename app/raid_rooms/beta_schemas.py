@@ -123,6 +123,7 @@ class BetaApplyRequest(legacy.Admission):
 
 
 class DepartureWindow(Closed):
+    """Search-only UTC whole-minute bounds, start inclusive and end exclusive; no rounding. Positive at most 24h, within the selected cycle. Departure grids are unchanged."""
     starts_at: AwareDatetime
     ends_at: AwareDatetime
 
