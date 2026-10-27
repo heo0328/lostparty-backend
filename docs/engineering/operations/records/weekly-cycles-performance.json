@@ -1,0 +1,801 @@
+{
+  "date": "2026-10-22",
+  "starting_commit": "fff8806c809b781959605ea86a478ea78c1639e1",
+  "environment": {
+    "isolated": true,
+    "database": "tmpfs PostgreSQL / restricted LOGIN",
+    "python": "3.12.15",
+    "postgresql": "17.11",
+    "sqlalchemy": "2.1.4",
+    "fastapi": "0.115.12",
+    "pydantic": "2.14.1"
+  },
+  "methodology": {
+    "warmup": 2,
+    "samples": 12,
+    "p50": "median",
+    "p95": "nearest-rank",
+    "time_unit": "milliseconds",
+    "timing": "in-process service call, no HTTP network/JWT validation",
+    "rows": "sum of SELECT cursor.rowcount in calling thread; not DB rows scanned",
+    "bytes": "jsonable_encoder/compact UTF-8 JSON service result",
+    "baseline": "same 0029 data, original per-card loader; summary pre-cycle-evidence logic",
+    "explain": "last sample SELECT statements replayed with ANALYZE/BUFFERS in READ ONLY; aggregate and slowest five roots; no SQL/parameters persisted",
+    "final_refinement": "leader display fetches only first assignment display, excluding unbounded resumed history; final related tests rerun",
+    "bundle_adapter": "bundle_sessions includes two synthetic actor lookup SELECTs per sample on both sides; other cases prefetch the principal"
+  },
+  "reports": {
+    "bundle_sessions": {
+      "items": 2,
+      "sessions": 2,
+      "before": {
+        "samples": 12,
+        "p50_ms": 12.683,
+        "p95_ms": 14.938,
+        "select_statements": [
+          21
+        ],
+        "returned_sql_rows": [
+          22
+        ],
+        "response_bytes": [
+          2368
+        ],
+        "explain": {
+          "select_plans": 21,
+          "total_execution_ms": 0.482,
+          "shared_hit_blocks": 108,
+          "shared_read_blocks": 0,
+          "slowest_roots": [
+            {
+              "node": "Limit",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.16,
+              "shared_hit_blocks": 31,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Sort",
+              "actual_rows": 2,
+              "estimated_rows": 1,
+              "execution_ms": 0.055,
+              "shared_hit_blocks": 14,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Aggregate",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.044,
+              "shared_hit_blocks": 23,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Nested Loop",
+              "actual_rows": 2,
+              "estimated_rows": 1,
+              "execution_ms": 0.036,
+              "shared_hit_blocks": 5,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Limit",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.031,
+              "shared_hit_blocks": 2,
+              "shared_read_blocks": 0
+            }
+          ]
+        }
+      },
+      "after": {
+        "samples": 12,
+        "p50_ms": 11.294,
+        "p95_ms": 13.24,
+        "select_statements": [
+          17
+        ],
+        "returned_sql_rows": [
+          18
+        ],
+        "response_bytes": [
+          2368
+        ],
+        "explain": {
+          "select_plans": 17,
+          "total_execution_ms": 0.354,
+          "shared_hit_blocks": 111,
+          "shared_read_blocks": 0,
+          "slowest_roots": [
+            {
+              "node": "Limit",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.067,
+              "shared_hit_blocks": 28,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Nested Loop",
+              "actual_rows": 2,
+              "estimated_rows": 1,
+              "execution_ms": 0.046,
+              "shared_hit_blocks": 8,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Aggregate",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.043,
+              "shared_hit_blocks": 27,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Index Only Scan",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.034,
+              "shared_hit_blocks": 4,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Sort",
+              "actual_rows": 2,
+              "estimated_rows": 1,
+              "execution_ms": 0.034,
+              "shared_hit_blocks": 15,
+              "shared_read_blocks": 0
+            }
+          ]
+        }
+      }
+    },
+    "directory_C": {
+      "baseline": "same search/snapshot, original per-card loader",
+      "optimized": "request-local batched card loader",
+      "rooms": 50,
+      "cycles": 2,
+      "before": {
+        "samples": 12,
+        "p50_ms": 255.558,
+        "p95_ms": 271.942,
+        "select_statements": [
+          507
+        ],
+        "returned_sql_rows": [
+          356
+        ],
+        "response_bytes": [
+          80774
+        ],
+        "explain": {
+          "select_plans": 507,
+          "total_execution_ms": 10.637,
+          "shared_hit_blocks": 2024,
+          "shared_read_blocks": 0,
+          "slowest_roots": [
+            {
+              "node": "Limit",
+              "actual_rows": 50,
+              "estimated_rows": 43,
+              "execution_ms": 0.741,
+              "shared_hit_blocks": 419,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Hash Join",
+              "actual_rows": 0,
+              "estimated_rows": 1,
+              "execution_ms": 0.065,
+              "shared_hit_blocks": 4,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Sort",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.058,
+              "shared_hit_blocks": 5,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Sort",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.052,
+              "shared_hit_blocks": 5,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Sort",
+              "actual_rows": 0,
+              "estimated_rows": 1,
+              "execution_ms": 0.052,
+              "shared_hit_blocks": 1,
+              "shared_read_blocks": 0
+            }
+          ]
+        }
+      },
+      "after": {
+        "samples": 12,
+        "p50_ms": 19.583,
+        "p95_ms": 95.465,
+        "select_statements": [
+          15
+        ],
+        "returned_sql_rows": [
+          306
+        ],
+        "response_bytes": [
+          80774
+        ],
+        "explain": {
+          "select_plans": 15,
+          "total_execution_ms": 1.832,
+          "shared_hit_blocks": 937,
+          "shared_read_blocks": 0,
+          "slowest_roots": [
+            {
+              "node": "Limit",
+              "actual_rows": 50,
+              "estimated_rows": 43,
+              "execution_ms": 0.644,
+              "shared_hit_blocks": 419,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Sort",
+              "actual_rows": 50,
+              "estimated_rows": 1,
+              "execution_ms": 0.497,
+              "shared_hit_blocks": 203,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Seq Scan",
+              "actual_rows": 50,
+              "estimated_rows": 50,
+              "execution_ms": 0.336,
+              "shared_hit_blocks": 253,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Aggregate",
+              "actual_rows": 50,
+              "estimated_rows": 44,
+              "execution_ms": 0.164,
+              "shared_hit_blocks": 31,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Hash Join",
+              "actual_rows": 50,
+              "estimated_rows": 47,
+              "execution_ms": 0.05,
+              "shared_hit_blocks": 19,
+              "shared_read_blocks": 0
+            }
+          ]
+        }
+      }
+    },
+    "directory_N": {
+      "baseline": "same search/snapshot, original per-card loader",
+      "optimized": "request-local batched card loader",
+      "rooms": 50,
+      "cycles": 2,
+      "before": {
+        "samples": 12,
+        "p50_ms": 250.186,
+        "p95_ms": 264.121,
+        "select_statements": [
+          507
+        ],
+        "returned_sql_rows": [
+          356
+        ],
+        "response_bytes": [
+          80723
+        ],
+        "explain": {
+          "select_plans": 507,
+          "total_execution_ms": 10.772,
+          "shared_hit_blocks": 2024,
+          "shared_read_blocks": 0,
+          "slowest_roots": [
+            {
+              "node": "Limit",
+              "actual_rows": 50,
+              "estimated_rows": 41,
+              "execution_ms": 0.638,
+              "shared_hit_blocks": 419,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Sort",
+              "actual_rows": 0,
+              "estimated_rows": 1,
+              "execution_ms": 0.214,
+              "shared_hit_blocks": 1,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Sort",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.069,
+              "shared_hit_blocks": 5,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Sort",
+              "actual_rows": 0,
+              "estimated_rows": 1,
+              "execution_ms": 0.064,
+              "shared_hit_blocks": 1,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Sort",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.059,
+              "shared_hit_blocks": 5,
+              "shared_read_blocks": 0
+            }
+          ]
+        }
+      },
+      "after": {
+        "samples": 12,
+        "p50_ms": 18.616,
+        "p95_ms": 20.996,
+        "select_statements": [
+          15
+        ],
+        "returned_sql_rows": [
+          306
+        ],
+        "response_bytes": [
+          80723
+        ],
+        "explain": {
+          "select_plans": 15,
+          "total_execution_ms": 1.888,
+          "shared_hit_blocks": 937,
+          "shared_read_blocks": 0,
+          "slowest_roots": [
+            {
+              "node": "Limit",
+              "actual_rows": 50,
+              "estimated_rows": 41,
+              "execution_ms": 0.753,
+              "shared_hit_blocks": 419,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Sort",
+              "actual_rows": 50,
+              "estimated_rows": 1,
+              "execution_ms": 0.473,
+              "shared_hit_blocks": 203,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Seq Scan",
+              "actual_rows": 50,
+              "estimated_rows": 50,
+              "execution_ms": 0.341,
+              "shared_hit_blocks": 253,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Aggregate",
+              "actual_rows": 50,
+              "estimated_rows": 44,
+              "execution_ms": 0.137,
+              "shared_hit_blocks": 31,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Hash Join",
+              "actual_rows": 50,
+              "estimated_rows": 47,
+              "execution_ms": 0.056,
+              "shared_hit_blocks": 19,
+              "shared_read_blocks": 0
+            }
+          ]
+        }
+      }
+    },
+    "eight_participants": {
+      "participants": 8,
+      "before": {
+        "samples": 12,
+        "p50_ms": 11.177,
+        "p95_ms": 12.764,
+        "select_statements": [
+          19
+        ],
+        "returned_sql_rows": [
+          16
+        ],
+        "response_bytes": [
+          1936
+        ],
+        "explain": {
+          "select_plans": 19,
+          "total_execution_ms": 0.588,
+          "shared_hit_blocks": 121,
+          "shared_read_blocks": 0,
+          "slowest_roots": [
+            {
+              "node": "Nested Loop",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.178,
+              "shared_hit_blocks": 4,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Limit",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.13,
+              "shared_hit_blocks": 46,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Aggregate",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.052,
+              "shared_hit_blocks": 41,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Sort",
+              "actual_rows": 0,
+              "estimated_rows": 1,
+              "execution_ms": 0.042,
+              "shared_hit_blocks": 1,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Index Scan",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.034,
+              "shared_hit_blocks": 2,
+              "shared_read_blocks": 0
+            }
+          ]
+        }
+      },
+      "after": {
+        "samples": 12,
+        "p50_ms": 10.616,
+        "p95_ms": 13.106,
+        "select_statements": [
+          15
+        ],
+        "returned_sql_rows": [
+          12
+        ],
+        "response_bytes": [
+          1936
+        ],
+        "explain": {
+          "select_plans": 15,
+          "total_execution_ms": 0.447,
+          "shared_hit_blocks": 138,
+          "shared_read_blocks": 0,
+          "slowest_roots": [
+            {
+              "node": "Limit",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.138,
+              "shared_hit_blocks": 46,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Aggregate",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.066,
+              "shared_hit_blocks": 57,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Nested Loop",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.048,
+              "shared_hit_blocks": 5,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Sort",
+              "actual_rows": 0,
+              "estimated_rows": 1,
+              "execution_ms": 0.041,
+              "shared_hit_blocks": 3,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Nested Loop",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.033,
+              "shared_hit_blocks": 6,
+              "shared_read_blocks": 0
+            }
+          ]
+        }
+      }
+    },
+    "group_page_7": {
+      "rooms": 50,
+      "page_size": 7,
+      "before": {
+        "samples": 12,
+        "p50_ms": 44.256,
+        "p95_ms": 46.834,
+        "select_statements": [
+          80
+        ],
+        "returned_sql_rows": [
+          109
+        ],
+        "response_bytes": [
+          12045
+        ],
+        "explain": {
+          "select_plans": 80,
+          "total_execution_ms": 2.238,
+          "shared_hit_blocks": 651,
+          "shared_read_blocks": 0,
+          "slowest_roots": [
+            {
+              "node": "Limit",
+              "actual_rows": 8,
+              "estimated_rows": 8,
+              "execution_ms": 0.764,
+              "shared_hit_blocks": 419,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Sort",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.054,
+              "shared_hit_blocks": 5,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Sort",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.047,
+              "shared_hit_blocks": 5,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Sort",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.047,
+              "shared_hit_blocks": 5,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Sort",
+              "actual_rows": 1,
+              "estimated_rows": 1,
+              "execution_ms": 0.046,
+              "shared_hit_blocks": 5,
+              "shared_read_blocks": 0
+            }
+          ]
+        }
+      },
+      "after": {
+        "samples": 12,
+        "p50_ms": 17.511,
+        "p95_ms": 19.115,
+        "select_statements": [
+          18
+        ],
+        "returned_sql_rows": [
+          102
+        ],
+        "response_bytes": [
+          12045
+        ],
+        "explain": {
+          "select_plans": 18,
+          "total_execution_ms": 1.167,
+          "shared_hit_blocks": 543,
+          "shared_read_blocks": 0,
+          "slowest_roots": [
+            {
+              "node": "Limit",
+              "actual_rows": 8,
+              "estimated_rows": 8,
+              "execution_ms": 0.678,
+              "shared_hit_blocks": 419,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Sort",
+              "actual_rows": 7,
+              "estimated_rows": 1,
+              "execution_ms": 0.149,
+              "shared_hit_blocks": 31,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Seq Scan",
+              "actual_rows": 7,
+              "estimated_rows": 7,
+              "execution_ms": 0.071,
+              "shared_hit_blocks": 38,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Aggregate",
+              "actual_rows": 7,
+              "estimated_rows": 6,
+              "execution_ms": 0.067,
+              "shared_hit_blocks": 34,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Hash Join",
+              "actual_rows": 7,
+              "estimated_rows": 7,
+              "execution_ms": 0.037,
+              "shared_hit_blocks": 6,
+              "shared_read_blocks": 0
+            }
+          ]
+        }
+      }
+    },
+    "summary_500": {
+      "baseline": "same 0029 data, pre-cycle-evidence projection; no declined/review cases",
+      "characters": 50,
+      "entries": 500,
+      "before": {
+        "samples": 12,
+        "p50_ms": 13.896,
+        "p95_ms": 15.09,
+        "select_statements": [
+          10
+        ],
+        "returned_sql_rows": [
+          60
+        ],
+        "response_bytes": [
+          292106
+        ],
+        "explain": {
+          "select_plans": 10,
+          "total_execution_ms": 0.274,
+          "shared_hit_blocks": 156,
+          "shared_read_blocks": 0,
+          "slowest_roots": [
+            {
+              "node": "Nested Loop",
+              "actual_rows": 50,
+              "estimated_rows": 1,
+              "execution_ms": 0.132,
+              "shared_hit_blocks": 128,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Nested Loop",
+              "actual_rows": 2,
+              "estimated_rows": 1,
+              "execution_ms": 0.06,
+              "shared_hit_blocks": 17,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Index Scan",
+              "actual_rows": 2,
+              "estimated_rows": 1,
+              "execution_ms": 0.016,
+              "shared_hit_blocks": 2,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Index Scan",
+              "actual_rows": 2,
+              "estimated_rows": 1,
+              "execution_ms": 0.014,
+              "shared_hit_blocks": 2,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Index Scan",
+              "actual_rows": 0,
+              "estimated_rows": 1,
+              "execution_ms": 0.012,
+              "shared_hit_blocks": 2,
+              "shared_read_blocks": 0
+            }
+          ]
+        }
+      },
+      "after": {
+        "samples": 12,
+        "p50_ms": 16.231,
+        "p95_ms": 18.067,
+        "select_statements": [
+          13
+        ],
+        "returned_sql_rows": [
+          63
+        ],
+        "response_bytes": [
+          292106
+        ],
+        "explain": {
+          "select_plans": 13,
+          "total_execution_ms": 0.404,
+          "shared_hit_blocks": 182,
+          "shared_read_blocks": 0,
+          "slowest_roots": [
+            {
+              "node": "Nested Loop",
+              "actual_rows": 50,
+              "estimated_rows": 1,
+              "execution_ms": 0.133,
+              "shared_hit_blocks": 128,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Nested Loop",
+              "actual_rows": 2,
+              "estimated_rows": 1,
+              "execution_ms": 0.114,
+              "shared_hit_blocks": 17,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Nested Loop",
+              "actual_rows": 2,
+              "estimated_rows": 1,
+              "execution_ms": 0.061,
+              "shared_hit_blocks": 23,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Index Scan",
+              "actual_rows": 2,
+              "estimated_rows": 1,
+              "execution_ms": 0.016,
+              "shared_hit_blocks": 2,
+              "shared_read_blocks": 0
+            },
+            {
+              "node": "Index Scan",
+              "actual_rows": 2,
+              "estimated_rows": 1,
+              "execution_ms": 0.014,
+              "shared_hit_blocks": 2,
+              "shared_read_blocks": 0
+            }
+          ]
+        }
+      }
+    }
+  }
+}

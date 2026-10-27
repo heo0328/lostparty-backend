@@ -1,0 +1,1381 @@
+{
+  "notice": "Synthetic authored examples; static DTO/state checks only, no API/DB execution. Grapheme vectors are specification expectations, not executed segmentation conformance tests.",
+  "cases": [
+    {
+      "name": "coordination-on-capacity4",
+      "schema": "BetaScheduleConfig",
+      "value": {
+        "base_starts_at": "2026-10-24T09:00:00Z",
+        "early_coordination_enabled": true,
+        "early_additional_members": 2
+      },
+      "valid": true,
+      "context": {
+        "capacity": 4
+      }
+    },
+    {
+      "name": "off",
+      "schema": "BetaScheduleConfig",
+      "value": {
+        "base_starts_at": "2026-10-24T09:00:00Z",
+        "early_coordination_enabled": false,
+        "early_additional_members": null
+      },
+      "valid": true,
+      "context": {
+        "capacity": 8
+      }
+    },
+    {
+      "name": "max8",
+      "schema": "BetaScheduleConfig",
+      "value": {
+        "base_starts_at": "2026-10-24T09:00:00Z",
+        "early_coordination_enabled": true,
+        "early_additional_members": 7
+      },
+      "valid": true,
+      "context": {
+        "capacity": 8
+      }
+    },
+    {
+      "name": "false-count",
+      "schema": "BetaScheduleConfig",
+      "value": {
+        "base_starts_at": "2026-10-24T09:00:00Z",
+        "early_coordination_enabled": false,
+        "early_additional_members": 2
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "missing-count",
+      "schema": "BetaScheduleConfig",
+      "value": {
+        "base_starts_at": "2026-10-24T09:00:00Z",
+        "early_coordination_enabled": true,
+        "early_additional_members": null
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "bool-count",
+      "schema": "BetaScheduleConfig",
+      "value": {
+        "base_starts_at": "2026-10-24T09:00:00Z",
+        "early_coordination_enabled": true,
+        "early_additional_members": true
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "capacity4-count4",
+      "schema": "BetaScheduleConfig",
+      "value": {
+        "base_starts_at": "2026-10-24T09:00:00Z",
+        "early_coordination_enabled": true,
+        "early_additional_members": 4
+      },
+      "valid": false,
+      "context": {
+        "capacity": 4
+      }
+    },
+    {
+      "name": "foreign-key",
+      "schema": "BetaScheduleConfig",
+      "value": {
+        "base_starts_at": "2026-10-24T09:00:00Z",
+        "early_coordination_enabled": true,
+        "early_additional_members": 2,
+        "other": 1
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "offset",
+      "schema": "BetaScheduleConfig",
+      "value": {
+        "base_starts_at": "2026-10-24T18:00:00+09:00",
+        "early_coordination_enabled": true,
+        "early_additional_members": 2
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "unaligned",
+      "schema": "BetaScheduleConfig",
+      "value": {
+        "base_starts_at": "2026-10-24T09:01:00Z",
+        "early_coordination_enabled": true,
+        "early_additional_members": 2
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "waiting-base-known",
+      "schema": "BetaScheduleView",
+      "value": {
+        "policy_version": "beta-schedule-1",
+        "revision": 1,
+        "session_id": "00000000-0000-4000-8000-000000000001",
+        "base_starts_at": "2026-10-24T09:00:00Z",
+        "base_ends_at": "2026-10-24T10:00:00Z",
+        "base_deadline_at": "2026-10-24T08:30:00Z",
+        "early_coordination_enabled": true,
+        "early_additional_members": 2,
+        "coordination_state": "coordinating",
+        "coordination_active": true,
+        "confirmed_starts_at": null,
+        "confirmed_ends_at": null,
+        "effective_starts_at": "2026-10-24T09:00:00Z",
+        "effective_ends_at": "2026-10-24T10:00:00Z",
+        "admission_deadline": "2026-10-24T08:30:00Z",
+        "deadline_status": "not_due",
+        "pending_transition": null,
+        "review_reason": null,
+        "evaluated_at": "2026-10-22T03:00:00Z"
+      },
+      "valid": true,
+      "context": {}
+    },
+    {
+      "name": "disabled-base-commitment",
+      "schema": "BetaScheduleView",
+      "value": {
+        "policy_version": "beta-schedule-1",
+        "revision": 1,
+        "session_id": "00000000-0000-4000-8000-000000000001",
+        "base_starts_at": "2026-10-24T09:00:00Z",
+        "base_ends_at": "2026-10-24T10:00:00Z",
+        "base_deadline_at": "2026-10-24T08:30:00Z",
+        "early_coordination_enabled": false,
+        "early_additional_members": null,
+        "coordination_state": "base_committed",
+        "coordination_active": false,
+        "confirmed_starts_at": null,
+        "confirmed_ends_at": null,
+        "effective_starts_at": "2026-10-24T09:00:00Z",
+        "effective_ends_at": "2026-10-24T10:00:00Z",
+        "admission_deadline": "2026-10-24T08:30:00Z",
+        "deadline_status": "not_due",
+        "pending_transition": null,
+        "review_reason": null,
+        "evaluated_at": "2026-10-22T03:00:00Z"
+      },
+      "valid": true,
+      "context": {}
+    },
+    {
+      "name": "previous-day-early",
+      "schema": "BetaScheduleView",
+      "value": {
+        "policy_version": "beta-schedule-1",
+        "revision": 1,
+        "session_id": "00000000-0000-4000-8000-000000000001",
+        "base_starts_at": "2026-10-24T09:00:00Z",
+        "base_ends_at": "2026-10-24T10:00:00Z",
+        "base_deadline_at": "2026-10-24T08:30:00Z",
+        "early_coordination_enabled": true,
+        "early_additional_members": 2,
+        "coordination_state": "early_confirmed",
+        "coordination_active": false,
+        "confirmed_starts_at": "2026-10-23T11:00:00Z",
+        "confirmed_ends_at": "2026-10-23T12:00:00Z",
+        "effective_starts_at": "2026-10-23T11:00:00Z",
+        "effective_ends_at": "2026-10-23T12:00:00Z",
+        "admission_deadline": "2026-10-23T10:30:00Z",
+        "deadline_status": "obsolete",
+        "pending_transition": null,
+        "review_reason": null,
+        "evaluated_at": "2026-10-22T03:00:00Z"
+      },
+      "valid": true,
+      "context": {}
+    },
+    {
+      "name": "late-before-departure-base",
+      "schema": "BetaScheduleView",
+      "value": {
+        "policy_version": "beta-schedule-1",
+        "revision": 1,
+        "session_id": "00000000-0000-4000-8000-000000000001",
+        "base_starts_at": "2026-10-24T09:00:00Z",
+        "base_ends_at": "2026-10-24T10:00:00Z",
+        "base_deadline_at": "2026-10-24T08:30:00Z",
+        "early_coordination_enabled": true,
+        "early_additional_members": 2,
+        "coordination_state": "base_confirmed",
+        "coordination_active": false,
+        "confirmed_starts_at": "2026-10-24T09:00:00Z",
+        "confirmed_ends_at": "2026-10-24T10:00:00Z",
+        "effective_starts_at": "2026-10-24T09:00:00Z",
+        "effective_ends_at": "2026-10-24T10:00:00Z",
+        "admission_deadline": "2026-10-24T08:30:00Z",
+        "deadline_status": "processed",
+        "pending_transition": null,
+        "review_reason": null,
+        "evaluated_at": "2026-10-24T08:40:00Z"
+      },
+      "valid": true,
+      "context": {}
+    },
+    {
+      "name": "late-after-departure-review",
+      "schema": "BetaScheduleView",
+      "value": {
+        "policy_version": "beta-schedule-1",
+        "revision": 1,
+        "session_id": "00000000-0000-4000-8000-000000000001",
+        "base_starts_at": "2026-10-24T09:00:00Z",
+        "base_ends_at": "2026-10-24T10:00:00Z",
+        "base_deadline_at": "2026-10-24T08:30:00Z",
+        "early_coordination_enabled": true,
+        "early_additional_members": 2,
+        "coordination_state": "needs_review",
+        "coordination_active": false,
+        "confirmed_starts_at": null,
+        "confirmed_ends_at": null,
+        "effective_starts_at": "2026-10-24T09:00:00Z",
+        "effective_ends_at": "2026-10-24T10:00:00Z",
+        "admission_deadline": "2026-10-24T08:30:00Z",
+        "deadline_status": "processed",
+        "pending_transition": null,
+        "review_reason": "departure_passed_unconfirmed",
+        "evaluated_at": "2026-10-24T09:20:00Z"
+      },
+      "valid": true,
+      "context": {}
+    },
+    {
+      "name": "due-read-does-not-write",
+      "schema": "BetaScheduleView",
+      "value": {
+        "policy_version": "beta-schedule-1",
+        "revision": 1,
+        "session_id": "00000000-0000-4000-8000-000000000001",
+        "base_starts_at": "2026-10-24T09:00:00Z",
+        "base_ends_at": "2026-10-24T10:00:00Z",
+        "base_deadline_at": "2026-10-24T08:30:00Z",
+        "early_coordination_enabled": true,
+        "early_additional_members": 2,
+        "coordination_state": "deadline_pending",
+        "coordination_active": false,
+        "confirmed_starts_at": null,
+        "confirmed_ends_at": null,
+        "effective_starts_at": "2026-10-24T09:00:00Z",
+        "effective_ends_at": "2026-10-24T10:00:00Z",
+        "admission_deadline": "2026-10-24T08:30:00Z",
+        "deadline_status": "due_unprocessed",
+        "pending_transition": "base_confirmation_due",
+        "review_reason": null,
+        "evaluated_at": "2026-10-24T08:40:00Z"
+      },
+      "valid": true,
+      "context": {}
+    },
+    {
+      "name": "post-departure-unprocessed-read",
+      "schema": "BetaScheduleView",
+      "value": {
+        "policy_version": "beta-schedule-1",
+        "revision": 1,
+        "session_id": "00000000-0000-4000-8000-000000000001",
+        "base_starts_at": "2026-10-24T09:00:00Z",
+        "base_ends_at": "2026-10-24T10:00:00Z",
+        "base_deadline_at": "2026-10-24T08:30:00Z",
+        "early_coordination_enabled": true,
+        "early_additional_members": 2,
+        "coordination_state": "deadline_pending",
+        "coordination_active": false,
+        "confirmed_starts_at": null,
+        "confirmed_ends_at": null,
+        "effective_starts_at": "2026-10-24T09:00:00Z",
+        "effective_ends_at": "2026-10-24T10:00:00Z",
+        "admission_deadline": "2026-10-24T08:30:00Z",
+        "deadline_status": "due_unprocessed",
+        "pending_transition": "departure_review_due",
+        "review_reason": null,
+        "evaluated_at": "2026-10-24T09:20:00Z"
+      },
+      "valid": true,
+      "context": {}
+    },
+    {
+      "name": "early-later-than-base",
+      "schema": "BetaScheduleView",
+      "value": {
+        "policy_version": "beta-schedule-1",
+        "revision": 1,
+        "session_id": "00000000-0000-4000-8000-000000000001",
+        "base_starts_at": "2026-10-24T09:00:00Z",
+        "base_ends_at": "2026-10-24T10:00:00Z",
+        "base_deadline_at": "2026-10-24T08:30:00Z",
+        "early_coordination_enabled": true,
+        "early_additional_members": 2,
+        "coordination_state": "early_confirmed",
+        "coordination_active": false,
+        "confirmed_starts_at": "2026-10-25T11:00:00Z",
+        "confirmed_ends_at": "2026-10-25T12:00:00Z",
+        "effective_starts_at": "2026-10-25T11:00:00Z",
+        "effective_ends_at": "2026-10-25T12:00:00Z",
+        "admission_deadline": "2026-10-25T10:30:00Z",
+        "deadline_status": "obsolete",
+        "pending_transition": null,
+        "review_reason": null,
+        "evaluated_at": "2026-10-22T03:00:00Z"
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "wrong-effective",
+      "schema": "BetaScheduleView",
+      "value": {
+        "policy_version": "beta-schedule-1",
+        "revision": 1,
+        "session_id": "00000000-0000-4000-8000-000000000001",
+        "base_starts_at": "2026-10-24T09:00:00Z",
+        "base_ends_at": "2026-10-24T10:00:00Z",
+        "base_deadline_at": "2026-10-24T08:30:00Z",
+        "early_coordination_enabled": true,
+        "early_additional_members": 2,
+        "coordination_state": "early_confirmed",
+        "coordination_active": false,
+        "confirmed_starts_at": "2026-10-23T11:00:00Z",
+        "confirmed_ends_at": "2026-10-23T12:00:00Z",
+        "effective_starts_at": "2026-10-24T09:00:00Z",
+        "effective_ends_at": "2026-10-23T12:00:00Z",
+        "admission_deadline": "2026-10-23T10:30:00Z",
+        "deadline_status": "obsolete",
+        "pending_transition": null,
+        "review_reason": null,
+        "evaluated_at": "2026-10-22T03:00:00Z"
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "confirmed-null",
+      "schema": "BetaScheduleView",
+      "value": {
+        "policy_version": "beta-schedule-1",
+        "revision": 1,
+        "session_id": "00000000-0000-4000-8000-000000000001",
+        "base_starts_at": "2026-10-24T09:00:00Z",
+        "base_ends_at": "2026-10-24T10:00:00Z",
+        "base_deadline_at": "2026-10-24T08:30:00Z",
+        "early_coordination_enabled": true,
+        "early_additional_members": 2,
+        "coordination_state": "base_confirmed",
+        "coordination_active": false,
+        "confirmed_starts_at": null,
+        "confirmed_ends_at": null,
+        "effective_starts_at": "2026-10-24T09:00:00Z",
+        "effective_ends_at": "2026-10-24T10:00:00Z",
+        "admission_deadline": "2026-10-24T08:30:00Z",
+        "deadline_status": "processed",
+        "pending_transition": null,
+        "review_reason": null,
+        "evaluated_at": "2026-10-24T08:40:00Z"
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "waiting-fake-confirmed",
+      "schema": "BetaScheduleView",
+      "value": {
+        "policy_version": "beta-schedule-1",
+        "revision": 1,
+        "session_id": "00000000-0000-4000-8000-000000000001",
+        "base_starts_at": "2026-10-24T09:00:00Z",
+        "base_ends_at": "2026-10-24T10:00:00Z",
+        "base_deadline_at": "2026-10-24T08:30:00Z",
+        "early_coordination_enabled": true,
+        "early_additional_members": 2,
+        "coordination_state": "coordinating",
+        "coordination_active": true,
+        "confirmed_starts_at": "2026-10-24T09:00:00Z",
+        "confirmed_ends_at": "2026-10-24T10:00:00Z",
+        "effective_starts_at": "2026-10-24T09:00:00Z",
+        "effective_ends_at": "2026-10-24T10:00:00Z",
+        "admission_deadline": "2026-10-24T08:30:00Z",
+        "deadline_status": "not_due",
+        "pending_transition": null,
+        "review_reason": null,
+        "evaluated_at": "2026-10-22T03:00:00Z"
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "past-review-still-active",
+      "schema": "BetaScheduleView",
+      "value": {
+        "policy_version": "beta-schedule-1",
+        "revision": 1,
+        "session_id": "00000000-0000-4000-8000-000000000001",
+        "base_starts_at": "2026-10-24T09:00:00Z",
+        "base_ends_at": "2026-10-24T10:00:00Z",
+        "base_deadline_at": "2026-10-24T08:30:00Z",
+        "early_coordination_enabled": true,
+        "early_additional_members": 2,
+        "coordination_state": "needs_review",
+        "coordination_active": true,
+        "confirmed_starts_at": null,
+        "confirmed_ends_at": null,
+        "effective_starts_at": "2026-10-24T09:00:00Z",
+        "effective_ends_at": "2026-10-24T10:00:00Z",
+        "admission_deadline": "2026-10-24T08:30:00Z",
+        "deadline_status": "processed",
+        "pending_transition": null,
+        "review_reason": "departure_passed_unconfirmed",
+        "evaluated_at": "2026-10-24T09:20:00Z"
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "leading-zero-preserved",
+      "schema": "RecruitmentIdentity",
+      "value": {
+        "number": 1,
+        "password": "04827"
+      },
+      "valid": true,
+      "context": {}
+    },
+    {
+      "name": "integer-password",
+      "schema": "RecruitmentIdentity",
+      "value": {
+        "number": 2,
+        "password": 4827
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "short-password",
+      "schema": "RecruitmentIdentity",
+      "value": {
+        "number": 2,
+        "password": "4827"
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "nonpositive-number",
+      "schema": "RecruitmentIdentity",
+      "value": {
+        "number": 0,
+        "password": "04827"
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "unsafe-number",
+      "schema": "RecruitmentIdentity",
+      "value": {
+        "number": 9007199254740992,
+        "password": "04827"
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "extra-identity-key",
+      "schema": "RecruitmentIdentity",
+      "value": {
+        "number": 2,
+        "password": "04827",
+        "token": "forbidden"
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "no-presets",
+      "schema": "PresetPut",
+      "value": {
+        "expected_version": 1,
+        "items": []
+      },
+      "valid": true,
+      "context": {}
+    },
+    {
+      "name": "one-preset",
+      "schema": "PresetPut",
+      "value": {
+        "expected_version": 1,
+        "items": [
+          {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "text": "18시 가능해요"
+          }
+        ]
+      },
+      "valid": true,
+      "context": {}
+    },
+    {
+      "name": "five-presets",
+      "schema": "PresetPut",
+      "value": {
+        "expected_version": 2,
+        "items": [
+          {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "text": "같은 문구도 가능"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000002",
+            "text": "같은 문구도 가능"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000003",
+            "text": "같은 문구도 가능"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000004",
+            "text": "같은 문구도 가능"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000005",
+            "text": "같은 문구도 가능"
+          }
+        ]
+      },
+      "valid": true,
+      "context": {}
+    },
+    {
+      "name": "six-presets",
+      "schema": "PresetPut",
+      "value": {
+        "expected_version": 1,
+        "items": [
+          {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "text": "가능"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000002",
+            "text": "가능"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000003",
+            "text": "가능"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000004",
+            "text": "가능"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000005",
+            "text": "가능"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000006",
+            "text": "가능"
+          }
+        ]
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "duplicate-id",
+      "schema": "PresetPut",
+      "value": {
+        "expected_version": 1,
+        "items": [
+          {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "text": "첫째"
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "text": "둘째"
+          }
+        ]
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "wrong-owner-key",
+      "schema": "PresetPut",
+      "value": {
+        "expected_version": 1,
+        "items": [],
+        "user_id": "00000000-0000-4000-8000-000000000001"
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "blank-preset",
+      "schema": "PresetPut",
+      "value": {
+        "expected_version": 1,
+        "items": [
+          {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "text": "  "
+          }
+        ]
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "newline-preset",
+      "schema": "PresetPut",
+      "value": {
+        "expected_version": 1,
+        "items": [
+          {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "text": "한줄\n두줄"
+          }
+        ]
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "unset-copy",
+      "schema": "AvailabilityCopyView",
+      "value": {
+        "state": "unset",
+        "source_personal_version": 1,
+        "copied_at": "2026-10-22T03:00:00Z"
+      },
+      "valid": true,
+      "context": {}
+    },
+    {
+      "name": "failure-is-not-unset",
+      "schema": "AvailabilityCopyView",
+      "value": {
+        "state": "error",
+        "source_personal_version": 1,
+        "copied_at": "2026-10-22T03:00:00Z"
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "BetaCreateRequest-closed-body",
+      "schema": "BetaCreateRequest",
+      "value": {
+        "title": "synthetic",
+        "scope": "public",
+        "group_id": null,
+        "admission_mode": "leader_only",
+        "app_mode": "single",
+        "items": [
+          {
+            "raid_id": "horizon_cathedral",
+            "difficulty_id": "normal",
+            "duration_minutes": null,
+            "expected_weekly_revision": 1.0,
+            "party_no": 1.0
+          }
+        ],
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000001",
+          "selected_role": "dealer",
+          "expected_registration_version": 1.0,
+          "expected_ownership_revision": 1.0,
+          "expected_roster_revision": 1.0,
+          "expected_lifecycle_revision": 1.0,
+          "expected_role_summary_version": 1.0,
+          "expected_limits_revision": 1.0,
+          "expected_usage_revision": 1.0
+        },
+        "selection_context": {
+          "context_token": "synthetic-context-not-a-real-token"
+        },
+        "experience_level": null,
+        "combat_requirement": {
+          "input_mode": "shared",
+          "dealer_min": null,
+          "support_min": null
+        },
+        "continuation": {
+          "enabled": false,
+          "next_selection": null
+        },
+        "expected_cycle_key": "2026-10-21",
+        "expected_catalog_version": "synthetic",
+        "expected_group_revision": null,
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": null,
+        "beta_schedule_targets": [
+          {
+            "target_cycle_key": "2026-10-21",
+            "base_starts_at": "2026-10-24T09:00:00Z",
+            "early_coordination_enabled": true,
+            "early_additional_members": 2
+          }
+        ]
+      },
+      "valid": true,
+      "context": {}
+    },
+    {
+      "name": "BetaApplyRequest-closed-body",
+      "schema": "BetaApplyRequest",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_room_revision": 1.0,
+        "expected_members_revision": 1.0,
+        "expected_plan_revision": 1.0,
+        "expected_policy_snapshot": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_catalog_version": "synthetic",
+        "selection_context": {
+          "context_token": "synthetic-context-not-a-real-token"
+        },
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000001",
+          "selected_role": "dealer",
+          "expected_registration_version": 1.0,
+          "expected_ownership_revision": 1.0,
+          "expected_roster_revision": 1.0,
+          "expected_lifecycle_revision": 1.0,
+          "expected_role_summary_version": 1.0,
+          "expected_limits_revision": 1.0,
+          "expected_usage_revision": 1.0
+        },
+        "target_items": [
+          {
+            "item_id": "00000000-0000-4000-8000-000000000001",
+            "round_id": "00000000-0000-4000-8000-000000000001",
+            "party_no": 1.0,
+            "expected_round_revision": 1.0,
+            "expected_weekly_revision": 1.0
+          }
+        ],
+        "target_session_ids": [],
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": 1.0,
+        "application_memo": "18시 가능해요"
+      },
+      "valid": true,
+      "context": {}
+    },
+    {
+      "name": "memo-omitted-compatible",
+      "schema": "BetaApplyRequest",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_room_revision": 1.0,
+        "expected_members_revision": 1.0,
+        "expected_plan_revision": 1.0,
+        "expected_policy_snapshot": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_catalog_version": "synthetic",
+        "selection_context": {
+          "context_token": "synthetic-context-not-a-real-token"
+        },
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000001",
+          "selected_role": "dealer",
+          "expected_registration_version": 1.0,
+          "expected_ownership_revision": 1.0,
+          "expected_roster_revision": 1.0,
+          "expected_lifecycle_revision": 1.0,
+          "expected_role_summary_version": 1.0,
+          "expected_limits_revision": 1.0,
+          "expected_usage_revision": 1.0
+        },
+        "target_items": [
+          {
+            "item_id": "00000000-0000-4000-8000-000000000001",
+            "round_id": "00000000-0000-4000-8000-000000000001",
+            "party_no": 1.0,
+            "expected_round_revision": 1.0,
+            "expected_weekly_revision": 1.0
+          }
+        ],
+        "target_session_ids": [],
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": 1.0
+      },
+      "valid": true,
+      "context": {}
+    },
+    {
+      "name": "memo-null-compatible",
+      "schema": "BetaApplyRequest",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_room_revision": 1.0,
+        "expected_members_revision": 1.0,
+        "expected_plan_revision": 1.0,
+        "expected_policy_snapshot": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_catalog_version": "synthetic",
+        "selection_context": {
+          "context_token": "synthetic-context-not-a-real-token"
+        },
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000001",
+          "selected_role": "dealer",
+          "expected_registration_version": 1.0,
+          "expected_ownership_revision": 1.0,
+          "expected_roster_revision": 1.0,
+          "expected_lifecycle_revision": 1.0,
+          "expected_role_summary_version": 1.0,
+          "expected_limits_revision": 1.0,
+          "expected_usage_revision": 1.0
+        },
+        "target_items": [
+          {
+            "item_id": "00000000-0000-4000-8000-000000000001",
+            "round_id": "00000000-0000-4000-8000-000000000001",
+            "party_no": 1.0,
+            "expected_round_revision": 1.0,
+            "expected_weekly_revision": 1.0
+          }
+        ],
+        "target_session_ids": [],
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": 1.0,
+        "application_memo": null
+      },
+      "valid": true,
+      "context": {}
+    },
+    {
+      "name": "memo-control-rejected",
+      "schema": "BetaApplyRequest",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_room_revision": 1.0,
+        "expected_members_revision": 1.0,
+        "expected_plan_revision": 1.0,
+        "expected_policy_snapshot": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_catalog_version": "synthetic",
+        "selection_context": {
+          "context_token": "synthetic-context-not-a-real-token"
+        },
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000001",
+          "selected_role": "dealer",
+          "expected_registration_version": 1.0,
+          "expected_ownership_revision": 1.0,
+          "expected_roster_revision": 1.0,
+          "expected_lifecycle_revision": 1.0,
+          "expected_role_summary_version": 1.0,
+          "expected_limits_revision": 1.0,
+          "expected_usage_revision": 1.0
+        },
+        "target_items": [
+          {
+            "item_id": "00000000-0000-4000-8000-000000000001",
+            "round_id": "00000000-0000-4000-8000-000000000001",
+            "party_no": 1.0,
+            "expected_round_revision": 1.0,
+            "expected_weekly_revision": 1.0
+          }
+        ],
+        "target_session_ids": [],
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": 1.0,
+        "application_memo": "bad\tcontrol"
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "memo-other-write-key-rejected",
+      "schema": "BetaApplyRequest",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_room_revision": 1.0,
+        "expected_members_revision": 1.0,
+        "expected_plan_revision": 1.0,
+        "expected_policy_snapshot": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_catalog_version": "synthetic",
+        "selection_context": {
+          "context_token": "synthetic-context-not-a-real-token"
+        },
+        "selection": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "character_id": "00000000-0000-4000-8000-000000000001",
+          "selected_role": "dealer",
+          "expected_registration_version": 1.0,
+          "expected_ownership_revision": 1.0,
+          "expected_roster_revision": 1.0,
+          "expected_lifecycle_revision": 1.0,
+          "expected_role_summary_version": 1.0,
+          "expected_limits_revision": 1.0,
+          "expected_usage_revision": 1.0
+        },
+        "target_items": [
+          {
+            "item_id": "00000000-0000-4000-8000-000000000001",
+            "round_id": "00000000-0000-4000-8000-000000000001",
+            "party_no": 1.0,
+            "expected_round_revision": 1.0,
+            "expected_weekly_revision": 1.0
+          }
+        ],
+        "target_session_ids": [],
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": 1.0,
+        "application_memo": "18시 가능해요",
+        "preset_id": "00000000-0000-4000-8000-000000000001"
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "BetaScheduleEditRequest-closed-body",
+      "schema": "BetaScheduleEditRequest",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_plan_revision": 1.0,
+        "expected_members_revision": 1.0,
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": 1.0,
+        "expected_leadership_revision": 1.0,
+        "early_coordination_enabled": true,
+        "early_additional_members": 2,
+        "accept_immediate_confirmation": true
+      },
+      "valid": true,
+      "context": {}
+    },
+    {
+      "name": "on-without-confirmation",
+      "schema": "BetaScheduleEditRequest",
+      "value": {
+        "expected_cycle_key": "2026-10-21",
+        "expected_plan_revision": 1.0,
+        "expected_members_revision": 1.0,
+        "target_cycle_key": "2026-10-21",
+        "expected_target_revision": 1.0,
+        "expected_leadership_revision": 1.0,
+        "early_coordination_enabled": true,
+        "early_additional_members": 2,
+        "accept_immediate_confirmation": false
+      },
+      "valid": false,
+      "context": {}
+    },
+    {
+      "name": "BetaSearchRequest-closed-body",
+      "schema": "BetaSearchRequest",
+      "value": {
+        "category": "general",
+        "admission_scope": null,
+        "group_ids": [],
+        "filter_context_token": null,
+        "member_conditions": [],
+        "raid_ids": [],
+        "difficulty_ids": [],
+        "limit": 1.0,
+        "cursor": null,
+        "target_cycle_key": "2026-10-21",
+        "departure_windows": [
+          {
+            "starts_at": "2026-10-24T13:00:00Z",
+            "ends_at": "2026-10-24T17:00:00Z"
+          }
+        ],
+        "schedule_states": [
+          "coordinating"
+        ]
+      },
+      "valid": true,
+      "context": {}
+    },
+    {
+      "name": "zero-filter-window",
+      "schema": "BetaSearchRequest",
+      "value": {
+        "category": "general",
+        "admission_scope": null,
+        "group_ids": [],
+        "filter_context_token": null,
+        "member_conditions": [],
+        "raid_ids": [],
+        "difficulty_ids": [],
+        "limit": 1.0,
+        "cursor": null,
+        "target_cycle_key": "2026-10-21",
+        "departure_windows": [
+          {
+            "starts_at": "2026-10-24T13:00:00Z",
+            "ends_at": "2026-10-24T13:00:00Z"
+          }
+        ],
+        "schedule_states": [
+          "coordinating"
+        ]
+      },
+      "valid": false,
+      "context": {}
+    }
+  ],
+  "http_expectations_not_executed": [
+    {
+      "case": "preset-get-default",
+      "method": "GET",
+      "path": "/v2/me/application-message-presets",
+      "status": 200,
+      "response": {
+        "version": 1,
+        "items": [],
+        "saved_at": null
+      }
+    },
+    {
+      "case": "preset-version-conflict",
+      "method": "PUT",
+      "path": "/v2/me/application-message-presets",
+      "status": 409,
+      "response": {
+        "error": {
+          "code": "REVISION_CONFLICT",
+          "message": "REVISION_CONFLICT",
+          "request_id": "00000000-0000-4000-8000-000000000090",
+          "details": null
+        }
+      },
+      "effect": "No overwrite; retain draft and fetch current own list"
+    },
+    {
+      "case": "six-presets",
+      "method": "PUT",
+      "path": "/v2/me/application-message-presets",
+      "status": 400,
+      "response": {
+        "error": {
+          "code": "APPLICATION_PRESET_LIMIT_EXCEEDED",
+          "message": "APPLICATION_PRESET_LIMIT_EXCEEDED",
+          "request_id": "00000000-0000-4000-8000-000000000090",
+          "details": null
+        }
+      }
+    },
+    {
+      "case": "twenty-one-normalized-code-points",
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/applications?contract_profile=beta-recruitment-1",
+      "status": 400,
+      "response": {
+        "error": {
+          "code": "APPLICATION_MEMO_TOO_LONG",
+          "message": "APPLICATION_MEMO_TOO_LONG",
+          "request_id": "00000000-0000-4000-8000-000000000090",
+          "details": null
+        }
+      },
+      "effect": "No pending/occupancy/reservation"
+    },
+    {
+      "case": "new-join-at-cutoff",
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/join?contract_profile=beta-recruitment-1",
+      "status": 409,
+      "response": {
+        "error": {
+          "code": "RECRUITMENT_CLOSED",
+          "message": "RECRUITMENT_CLOSED",
+          "request_id": "00000000-0000-4000-8000-000000000090",
+          "details": null
+        }
+      },
+      "effect": "No new member/submission; original successful ACK retry remains original success"
+    },
+    {
+      "case": "legacy-target-new-schedule-command",
+      "method": "PUT",
+      "path": "/v2/raid-rooms/{room_id}/schedule-groups?contract_profile=beta-recruitment-1",
+      "status": 409,
+      "response": {
+        "error": {
+          "code": "BETA_SCHEDULE_REQUIRED",
+          "message": "BETA_SCHEDULE_REQUIRED",
+          "request_id": "00000000-0000-4000-8000-000000000090",
+          "details": null
+        }
+      }
+    },
+    {
+      "case": "old-client-unsafe-new-beta-write",
+      "method": "PUT",
+      "path": "/v2/raid-rooms/{room_id}/schedule-groups",
+      "status": 409,
+      "response": {
+        "error": {
+          "code": "CLIENT_UPGRADE_REQUIRED",
+          "message": "CLIENT_UPGRADE_REQUIRED",
+          "request_id": "00000000-0000-4000-8000-000000000090",
+          "details": null
+        }
+      },
+      "effect": "Original pending replay checked before upgrade guard"
+    },
+    {
+      "case": "public-or-opposite-target-identity",
+      "method": "GET",
+      "path": "/v2/raid-rooms/{room_id}/detail?target_cycle_key=2026-10-21&contract_profile=beta-recruitment-1",
+      "status": 200,
+      "new_data_fields": {
+        "recruitment_identity": null
+      },
+      "effect": "Existing visible detail only; no memo or password"
+    },
+    {
+      "case": "old-preset-update-after-application",
+      "effect": "Application keeps submitted text snapshot; preset GET/PUT success does not rewrite past application or pending request"
+    }
+  ],
+  "character_vectors": [
+    {
+      "name": "hangul20",
+      "input": "가가가가가가가가가가가가가가가가가가가가",
+      "preset": false,
+      "valid": true,
+      "normalized": "가가가가가가가가가가가가가가가가가가가가"
+    },
+    {
+      "name": "hangul21",
+      "input": "가가가가가가가가가가가가가가가가가가가가가",
+      "preset": false,
+      "valid": false,
+      "normalized": "가가가가가가가가가가가가가가가가가가가가가"
+    },
+    {
+      "name": "ascii",
+      "input": "Abc0123",
+      "preset": false,
+      "valid": true,
+      "normalized": "Abc0123"
+    },
+    {
+      "name": "punctuation",
+      "input": ".,!?~()-_/@#&+",
+      "preset": false,
+      "valid": true,
+      "normalized": ".,!?~()-_/@#&+"
+    },
+    {
+      "name": "internal-space",
+      "input": "  가 나  ",
+      "preset": false,
+      "valid": true,
+      "normalized": "가 나"
+    },
+    {
+      "name": "jamo",
+      "input": "ㅋㅋㅎㅎㅏㅣ",
+      "preset": false,
+      "valid": true,
+      "normalized": "ㅋㅋㅎㅎㅏㅣ"
+    },
+    {
+      "name": "nfc-hangul",
+      "input": "가",
+      "preset": false,
+      "valid": true,
+      "normalized": "가"
+    },
+    {
+      "name": "emoji",
+      "input": "😀",
+      "preset": false,
+      "valid": false,
+      "normalized": "😀"
+    },
+    {
+      "name": "family-emoji",
+      "input": "👨‍👩‍👧‍👦",
+      "preset": false,
+      "valid": false,
+      "normalized": "👨‍👩‍👧‍👦"
+    },
+    {
+      "name": "variation",
+      "input": "가️",
+      "preset": false,
+      "valid": false,
+      "normalized": "가️"
+    },
+    {
+      "name": "zwj",
+      "input": "가‍",
+      "preset": false,
+      "valid": false,
+      "normalized": "가‍"
+    },
+    {
+      "name": "combining",
+      "input": "á",
+      "preset": false,
+      "valid": false,
+      "normalized": "á"
+    },
+    {
+      "name": "fullwidth",
+      "input": "！",
+      "preset": false,
+      "valid": false,
+      "normalized": "！"
+    },
+    {
+      "name": "tab",
+      "input": "가\t나",
+      "preset": false,
+      "valid": false,
+      "normalized": "가\t나"
+    },
+    {
+      "name": "newline",
+      "input": "가\n나",
+      "preset": false,
+      "valid": false,
+      "normalized": "가\n나"
+    },
+    {
+      "name": "control",
+      "input": "가\u0000",
+      "preset": false,
+      "valid": false,
+      "normalized": "가\u0000"
+    },
+    {
+      "name": "nbsp",
+      "input": " 가",
+      "preset": false,
+      "valid": false,
+      "normalized": " 가"
+    },
+    {
+      "name": "empty-memo",
+      "input": "",
+      "preset": false,
+      "valid": true,
+      "normalized": null
+    },
+    {
+      "name": "spaces-memo",
+      "input": "  ",
+      "preset": false,
+      "valid": true,
+      "normalized": null
+    },
+    {
+      "name": "null-memo",
+      "input": null,
+      "preset": false,
+      "valid": true,
+      "normalized": null
+    },
+    {
+      "name": "empty-preset",
+      "input": "",
+      "preset": true,
+      "valid": false,
+      "normalized": null
+    },
+    {
+      "name": "spaces-preset",
+      "input": "  ",
+      "preset": true,
+      "valid": false,
+      "normalized": null
+    },
+    {
+      "name": "valid-preset",
+      "input": "함께 가요!",
+      "preset": true,
+      "valid": true,
+      "normalized": "함께 가요!"
+    },
+    {
+      "name": "hangul21-preset",
+      "input": "가가가가가가가가가가가가가가가가가가가가가",
+      "preset": true,
+      "valid": false,
+      "normalized": "가가가가가가가가가가가가가가가가가가가가가"
+    },
+    {
+      "name": "bytes-limit",
+      "input": "가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가",
+      "preset": false,
+      "valid": false,
+      "normalized": "가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가가"
+    },
+    {
+      "name": "del",
+      "input": "가",
+      "preset": false,
+      "valid": false,
+      "normalized": null
+    },
+    {
+      "name": "shift-punctuation",
+      "input": ":;[]{}<>\\|`\"'=$%^*",
+      "preset": true,
+      "valid": true,
+      "normalized": ":;[]{}<>\\|`\"'=$%^*"
+    },
+    {
+      "name": "printable-ascii-1",
+      "input": " !\"#$%&'()*+,-./0123",
+      "preset": true,
+      "valid": true,
+      "normalized": "!\"#$%&'()*+,-./0123"
+    },
+    {
+      "name": "printable-ascii-2",
+      "input": "456789:;<=>?@ABCDEFG",
+      "preset": true,
+      "valid": true,
+      "normalized": "456789:;<=>?@ABCDEFG"
+    },
+    {
+      "name": "printable-ascii-3",
+      "input": "HIJKLMNOPQRSTUVWXYZ[",
+      "preset": true,
+      "valid": true,
+      "normalized": "HIJKLMNOPQRSTUVWXYZ["
+    },
+    {
+      "name": "printable-ascii-4",
+      "input": "\\]^_`abcdefghijklmno",
+      "preset": true,
+      "valid": true,
+      "normalized": "\\]^_`abcdefghijklmno"
+    },
+    {
+      "name": "printable-ascii-5",
+      "input": "pqrstuvwxyz{|}~",
+      "preset": true,
+      "valid": true,
+      "normalized": "pqrstuvwxyz{|}~"
+    }
+  ]
+}

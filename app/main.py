@@ -23,19 +23,36 @@ from app.groups.admission_router import router as group_admissions_router
 from app.ownership_disputes.router import router as ownership_disputes_router
 from app.ownership_disputes.worker import run as run_ownership_worker
 from app.game_accounts.bootstrap_router import router as bootstrap_router
+from app.raid_rooms.admission_router import router as recruitment_router
+from app.raid_rooms.availability_router import router as availability_router
+from app.raid_rooms.schedule_router import router as schedule_router
+from app.raid_rooms.continuation_router import router as continuation_router
+from app.raid_rooms.completion_router import router as completion_router
+from app.raid_rooms.management_router import router as recruitment_management_router
+from app.raid_rooms.search_router import router as recruitment_search_router
+from app.raid_rooms.member_router import router as recruitment_reads_router
+from app.raid_rooms.worker import run as run_recruitment_worker
+from app.raid_rooms.weekly_summary_router import router as weekly_summary_router
 
 
 @asynccontextmanager
 async def lifespan(app):
+    from app.core.database import session
+    from app.raid_rooms.readiness import require_active
+    with session() as db:require_active(db)
     task = asyncio.create_task(run())
     ownership_task = asyncio.create_task(run_ownership_worker())
+    recruitment_task = asyncio.create_task(run_recruitment_worker())
     yield
     task.cancel()
     ownership_task.cancel()
+    recruitment_task.cancel()
     with suppress(asyncio.CancelledError):
         await task
     with suppress(asyncio.CancelledError):
         await ownership_task
+    with suppress(asyncio.CancelledError):
+        await recruitment_task
 
 
 app = FastAPI(title="LostParty API", docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
@@ -53,6 +70,10 @@ app.include_router(groups_router)
 app.include_router(group_admissions_router)
 app.include_router(ownership_disputes_router)
 app.include_router(bootstrap_router)
+app.include_router(weekly_summary_router)
+for recruitment_api in (recruitment_search_router,recruitment_reads_router,recruitment_router,availability_router,
+                        schedule_router,continuation_router,completion_router,recruitment_management_router):
+    app.include_router(recruitment_api)
 register(app)
 
 
@@ -65,8 +86,7 @@ async def no_store(request, call_next):
 
 
 _original_openapi = app.openapi
-def openapi():
-    schema = _original_openapi()
+def _decorate_openapi(schema):
     for path, operations in schema["paths"].items():
         if path.startswith(("/v1/", "/v2/")):
             for operation in operations.values():
@@ -76,7 +96,7 @@ def openapi():
                     headers["Cache-Control"] = {"schema": {"type": "string", "const": "no-store"}}
                     if status == "429":
                         headers["Retry-After"] = {"schema": {"type": "integer", "minimum": 1}} if "game-accounts" in operation.get("tags", []) else {"schema": {"type": "integer", "const": 60}}
-                    if status == "409" and set(operation.get("tags", [])) & {"game-accounts", "member-settings", "lostark-keys", "character-profiles", "raid-weekly", "groups"}:
+                    if status == "409" and (set(operation.get("tags", [])) & {"game-accounts", "member-settings", "lostark-keys", "character-profiles", "raid-weekly", "groups"} or any(t.startswith('recruitment-') for t in operation.get('tags',[]))):
                         headers["Retry-After"] = {"description": "REQUEST_IN_PROGRESS only", "schema": {"type": "integer", "const": 2}}
                     if status == "401":
                         headers["WWW-Authenticate"] = {"schema": {"type": "string", "const": "Bearer"}}
@@ -316,7 +336,21 @@ def openapi():
             if 'game-accounts' in operation.get('tags', []) and '503' in operation.get('responses', {}):
                 operation['responses']['503']['headers']['Retry-After'] = {
                     'description': 'UPSTREAM_RATE_LIMITED only', 'schema': {'type': 'integer', 'minimum': 1}}
+    schema['x-recruitment-policy']={
+        'schema_revision':'0023_recruitment_resume',
+        'cycle':'Asia/Seoul Wednesday 06:00; maintenance Wednesday [06:00,10:00)',
+        'time':'UTC, 5-minute ticks, positive at most 24h per session; stored authorized opening +30m floor',
+        'admission_deadline':'strictly before confirmed start minus 30m; initial threshold and existing participant confirmation are distinct',
+        'reservations':'exact active assignment/segment/schedule generation; explicit overlap allowed with warning, automatic candidates avoid busy',
+        'votes':'each affected session N1 explicit 1, otherwise max(2,ceil(N/2)); all targets atomic; reads never apply',
+        'completion':'personal item manual ledger vs leader item party ledger; preserve other segment times and completed history',
+        'continuation':'future choices are not current assignments; auto default off; boundary authority distinct from processed_at',
+        'command_context':{'algorithm':'AES-256-GCM','seconds':120,'max_token_bytes':4096,'replay':'original minimal ACK before new token expiry/source validation'},
+        'search':'visibility and raid/difficulty/group OR/member AND/within-member character OR, then exact remaining slots OR, member_count ascending/descending (default descending), created_at DESC/id DESC ties, then pagination; cursor binds full normalized conditions and directory/cycle/group generations',
+        'bounds':{'request_bytes':32768,'page_max':50,'cursor_max':2048,'candidate_ticks_max':2016},
+    }
     return schema
+def openapi():return _decorate_openapi(_original_openapi())
 app.openapi = openapi
 
 class HealthResponse(BaseModel):
@@ -340,6 +374,75 @@ def health():
             value = conn.execute("SELECT 1").fetchone()[0]
         if value != 1:
             raise RuntimeError("Unexpected health result")
-    except (psycopg.Error, RuntimeError):
+    except (psycopg.Error, RuntimeError) as error:
+        from app.core.observability import emit, category
+        import logging
+        emit("database_error", level=logging.ERROR, category=category(error))
         return JSONResponse(status_code=503, content={"status": "unhealthy", "database": "unavailable"})
     return {"status": "ok", "database": "ok"}
+
+
+@asynccontextmanager
+async def two_cycle_lifespan(application):
+    from app.core.database import session
+    from app.raid_rooms.readiness import require_two_cycle_active
+    from app.raid_rooms.cycle_worker import process_due
+    with session() as db:require_two_cycle_active(db)
+    tasks=[asyncio.create_task(run()),asyncio.create_task(run_ownership_worker()),
+        asyncio.create_task(run_recruitment_worker(process_due))]
+    try:yield
+    finally:
+        for task in tasks:task.cancel()
+        for task in tasks:
+            with suppress(asyncio.CancelledError):await task
+
+
+def create_two_cycle_app():
+    """Explicit ASGI factory for a verified 0029 cutover; default app stays 0023.
+
+    Preparation only: this factory never migrates DBs or edits deployment config.
+    """
+    from app.raid_rooms.cycle_router import router as cycle_router
+    from fastapi.routing import APIRoute
+    from fastapi import APIRouter
+    result=FastAPI(title="LostParty API",docs_url=None,redoc_url=None,openapi_url=None,lifespan=two_cycle_lifespan)
+    legacy=APIRouter()
+    legacy.routes.extend(route for route in app.routes if isinstance(route,APIRoute))
+    result.include_router(legacy)
+    result.include_router(cycle_router)
+    from app.raid_rooms.application_presets import router as presets_router
+    result.include_router(presets_router)
+    register(result);result.middleware('http')(no_store)
+    generate=result.openapi
+    def schema():
+        value=_decorate_openapi(generate())
+        value['x-recruitment-policy'].update(schema_revision='0032_beta_recruitment',policy_version='two-cycle-contract-4',
+            search_semantics='own-target-participation-excluded-v1',
+            room_usage_semantics='active-target-rooms-1',
+            coordination_wait=dict(query='include_coordination_wait',default=False,
+                reads=['/v2/raid-rooms/{room_id}/detail','/v2/me/raid-rooms/{room_id}/plan'],
+                states=['waiting_members','no_earlier_candidate','pending','unavailable','not_applicable']),
+            admission_eligibility=dict(policy_version='admission-eligibility-2',required_schema='0031_membership_actions',
+                intents=['apply','join','change_character'],approval='stored parties; qualification failure keeps pending',
+                change='exact own assignment/lease exclusion; original party then opposite party; consent bound to target parties',
+                reads='own candidates, bulk read-only, no provider or occupancy writes',
+                compatibility='existing write DTOs and original 24h ACK; creation/direct join policy preserved'),
+            membership_actions=dict(policy_version='membership-actions-1',required_schema='0031_membership_actions',
+                actions=['leave_target','leave_all','dissolve_led_targets','recover_leadership'],
+                reader_profile='membership-actions-1',default_reader='legacy shape preserved',
+                effects_order='actual C then N; empty effects can end persistent membership',
+                compatibility='old cancel/leave/end and D22/E23 retain original operation/pending/24h ACK',
+                inactive_features='IF-001: close_weekly/weekly_resume app entry disabled; APIs/history/original pending retained'),
+            continuation='Explicit N opening only; 06:00 N becomes C with the same UUID/leader/assignments/consents; no automatic new N',
+            compatibility='v1 current-C read adapters; unsafe room writes replay original ACK then CLIENT_UPGRADE_REQUIRED; personal availability/manual completion remain safe')
+        value['x-recruitment-policy']['beta_recruitment']=dict(
+            contract_version='beta-recruitment-wire-2',contract_profile='beta-recruitment-1',
+            text_policy='hangul-printable-ascii-1',
+            search_time='UTC whole-minute bounds; start inclusive, end exclusive; no rounding; departure grids unchanged',
+            explicit_departure='UTC whole-minute beta creation/opening/proposal; automatic candidates, personal availability and duration retain 5-minute grids; exact 30-minute deadlines',
+            required_schema='0032_beta_recruitment',default_reader='legacy shape preserved',
+            promises='atomic participant/personal-copy/base reservation; earlier-only automatic confirmation; deadline fallback',
+            presets='/v2/me/application-message-presets',compatibility='original ACK before unsafe new-write guard; no automatic legacy conversion')
+        return value
+    result.openapi=schema
+    return result

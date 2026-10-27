@@ -28,7 +28,8 @@ def weekly_states(principal: Principal,
 
 
 @router.put('/characters/{character_id}/raid-weekly-states/{raid_id}/manual-completion',
-            response_model=schemas.WeeklyEntry, responses=errors)
+            response_model=schemas.WeeklyEntry, responses=errors,
+            description='Manual ledger completion/correction only for actual C after Wednesday 10:00 KST. Original successful ACK replays before current ownership, cycle or eligibility checks.')
 def manual_completion(character_id: UUID, raid_id: str, data: schemas.ManualCompletionIn,
                       principal: Principal, key: Key):
     _, body = service.put(principal, character_id, raid_id, key, data.model_dump())

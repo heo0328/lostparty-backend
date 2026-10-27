@@ -327,16 +327,33 @@ def test_access_expiry_and_wrong_claims(client,login):
 def test_model_migration_consistency():
     from alembic.autogenerate import compare_metadata
     from alembic.migration import MigrationContext
+    from sqlalchemy import MetaData
     from app.core.database import engine
-    from app.auth.models import Base
-    # Load every model even when this test runs without an API client fixture.
-    from app.game_accounts import models as game_models
+    from app.auth import models as auth_models
+    from app.game_accounts import models as game_models, power_success
     from app.lostark_keys import models as key_models
     from app.member_settings import models as settings_models
     from app.raid_weekly import models as weekly_models
-    from app.groups import models as group_models
-    from app.groups import admission_models as admission_models
+    from app.groups import models as group_models, admission_models
     from app.member_limits import models as limit_models
+    from app.ownership_disputes import models as ownership_models
+    from app.raid_rooms import (models as room_models, integrated_models, source_models,
+        weekly_links, schedule_heads, resume_models)
+    # This is the legacy 0023 runtime check. Collect only its model modules,
+    # independent of which future cycle models API/test collection imports.
+    modules = (auth_models, game_models, key_models, settings_models, weekly_models,
+        group_models, admission_models, limit_models, ownership_models, room_models,
+        integrated_models, source_models, weekly_links, schedule_heads, resume_models, power_success)
+    tables = {value.__table__ for module in modules for value in vars(module).values()
+              if isinstance(value, type) and value.__module__ == module.__name__ and hasattr(value, '__table__')}
+    metadata = MetaData()
+    for table in tables:
+        table.to_metadata(metadata)
+    # 0031 adds this partial index; legacy retains full-history uniqueness.
+    assignments = metadata.tables['recruitment_assignments']
+    for index in list(assignments.indexes):
+        if index.name == 'uq_recruitment_current_assignment':
+            assignments.indexes.remove(index)
     with engine().connect() as connection:
-        # Application-owned external tables are absent in isolated test DB.
-        assert compare_metadata(MigrationContext.configure(connection),Base.metadata)==[]
+        assert connection.exec_driver_sql('SELECT version_num FROM alembic_version').scalar_one() == '0023_recruitment_resume'
+        assert compare_metadata(MigrationContext.configure(connection), metadata) == []

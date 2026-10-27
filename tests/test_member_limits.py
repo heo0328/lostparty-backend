@@ -31,7 +31,7 @@ def rows():
                      for model in (MemberUsageLimits, MemberUsageHead, MemberUsageLimitAudit))
 
 
-def test_default_read_is_write_free_and_rooms_are_unavailable(selection):
+def test_default_read_is_write_free_and_rooms_are_counted(selection):
     uid = selection['uid']
     for _ in range(2):
         out = service.get(actor(uid))
@@ -39,7 +39,7 @@ def test_default_read_is_write_free_and_rooms_are_unavailable(selection):
         assert out['limits_revision'] == out['usage_revision'] == 1
         assert out['limit_source'] == 'default' and out['updated_at'] is None
         assert out['usage']['joined_groups'] == dict(used=0, remaining=5, state='within', can_increase=True)
-        assert out['usage']['raid_rooms'] == dict(used=None, remaining=None, state='unavailable', can_increase=None)
+        assert out['usage']['raid_rooms'] == dict(used=0, remaining=10, state='within', can_increase=True)
         assert out['issues'] == [] and out['evaluated_at'].utcoffset().total_seconds() == 0
         assert rows() == (0, 0, 0)
 

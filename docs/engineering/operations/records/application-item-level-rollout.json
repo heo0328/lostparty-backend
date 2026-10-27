@@ -1,0 +1,110 @@
+{
+  "source_commit": "f471e3133ad60befcad77d7123e1107ba7501bb4",
+  "image": "sha256:6d5857b38b91c6cb1f5ec2f61a047cf4bfd3a31a4b10b6b6efbd299710f4f242",
+  "previous_image": "sha256:d24d7cbd3215ff3c6cf40aa86e3a111d84eef347d788c2b2d7d98820a44e4dfc",
+  "revision": [
+    "0031_membership_actions"
+  ],
+  "source_files": 241,
+  "tables": 108,
+  "rows": 893,
+  "all_rows_columns_sequences_profile_keys_equal": true,
+  "db_container_volume_preserved": true,
+  "environment_command_security_ports_preserved": true,
+  "key_mount_source_and_readonly_preserved": true,
+  "backup": "application-item-level26-73b5dd79d4c9",
+  "migration_run": false,
+  "healthy": true,
+  "verified_at_utc": "2026-10-24T16:40:01.553294+00:00",
+  "local_date": "2026-10-25",
+  "http_checks": [
+    {
+      "case": "health",
+      "status": 200
+    },
+    {
+      "case": "public_cycle",
+      "status": 200
+    },
+    {
+      "case": "display_applications_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "display_applications_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "display_detail_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "display_detail_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "candidate_apply_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "candidate_apply_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "candidate_change_character_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "candidate_change_character_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "public_search_C",
+      "status": 200,
+      "no_store": true
+    },
+    {
+      "case": "public_search_N",
+      "status": 200,
+      "no_store": true
+    }
+  ],
+  "openapi_full_match": {
+    "two_cycle_paths": 177,
+    "legacy_paths": 116
+  },
+  "running_source_files_byte_match": true,
+  "normal_login_member_device_acceptance": false,
+  "scope": "local development API and same-lifespan worker replacement",
+  "private_backup_files_published": false,
+  "restore_rehearsal_executed": false,
+  "flutter_comment": "https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386758343",
+  "flutter_source": "13fb5848a50428600e6a778d746f084627fde345",
+  "rollout_evidence_commit": "6be5c6fee12272858acc5493b06278340096521f",
+  "handoff_comment": "https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386808894",
+  "handoff_overall_ordinal": 24
+}

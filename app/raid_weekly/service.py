@@ -35,7 +35,7 @@ def raid_by_id(raid_id):
     return raid
 
 
-def entry(db, account, character, raid, key, current_cycle, row):
+def entry(db, account, character, raid, key, current_cycle, row, stamp=None):
     sources = []
     if row and row.manual_completed_at is not None:
         sources.append(dict(source='manual', completed_at=row.manual_completed_at,
@@ -45,17 +45,19 @@ def entry(db, account, character, raid, key, current_cycle, row):
                             difficulty_id=row.party_difficulty_id, party_id=row.completed_party_id))
     participation = (dict(party_id=row.active_party_id, difficulty_id=row.active_difficulty_id,
                           joined_at=row.joined_at) if row and row.active_party_id else None)
+    from app.raid_rooms.cycles import target
+    temporal = 'PLAY_NOT_STARTED' if stamp is not None and key.isoformat()==current_cycle.cycle_key and stamp < target(stamp,key.isoformat()).playable_from else None
     reason = ('CURRENT_CYCLE_REQUIRED' if key.isoformat() != current_cycle.cycle_key else
-              'RAID_INACTIVE' if not raid.is_active else
+              temporal or ('RAID_INACTIVE' if not raid.is_active else
               'CHARACTER_UNUSABLE' if not lifecycle.usable(db, character) else
-              'PARTICIPATION_CONFIRMATION_REQUIRED' if participation else None)
+              'PARTICIPATION_CONFIRMATION_REQUIRED' if participation else None))
     return dict(character_id=character.id, raid_id=raid.raid_id, cycle_key=key.isoformat(),
                 revision=row.revision if row else 1, ownership_revision=account.ownership_revision,
                 lifecycle_revision=character.lifecycle_revision,
                 state='completed' if sources else 'participating' if participation else 'incomplete',
                 completion_sources=sources, participation=participation,
                 can_mark_completed=reason is None,
-                can_clear_manual_completion=(key.isoformat() == current_cycle.cycle_key and
+                can_clear_manual_completion=(temporal is None and key.isoformat() == current_cycle.cycle_key and
                                              bool(row and row.manual_completed_at)),
                 mark_blocked_reason=reason)
 
@@ -66,7 +68,8 @@ def get(principal, character_ids, cycle_key=None):
     with session() as db, db.begin():
         db.connection(execution_options={'isolation_level': 'REPEATABLE READ'})
         uid = authorize(db, principal)
-        current_cycle = raids.cycle(now(db))
+        stamp=now(db)
+        current_cycle = raids.cycle(stamp)
         key = parse_cycle(cycle_key if cycle_key is not None else current_cycle.cycle_key)
         if key > date.fromisoformat(current_cycle.cycle_key):
             fail('INVALID_REQUEST', 400)
@@ -75,7 +78,7 @@ def get(principal, character_ids, cycle_key=None):
             account, character = scope(db, uid, cid)
             for raid in raids.catalog().raids:
                 row = db.get(WeeklyState, (uid, cid, raid.raid_id, key))
-                entries.append(entry(db, account, character, raid, key, current_cycle, row))
+                entries.append(entry(db, account, character, raid, key, current_cycle, row,stamp))
         return dict(current_cycle=current_cycle, cycle_key=key.isoformat(),
                     catalog_version=raids.catalog().catalog_version, entries=entries)
 
@@ -97,19 +100,18 @@ def require_available_for_participation(db, uid, cid, raid_id, key):
 def put(principal, cid, raid_id, key, data):
     ticket, replay = reserve(principal, 'raid-weekly-manual-completion', key,
                              {'character_id': str(cid), 'raid_id': raid_id, 'body': data})
-    if replay:
-        with session() as db, db.begin():
-            db.connection(execution_options={'isolation_level': 'REPEATABLE READ'})
-            scope(db, authorize(db, principal), cid, data)
-        return replay
+    if replay:return replay
     try:
         with session() as db, db.begin():
             uid = authorize(db, principal, write=True)
             account, character = scope(db, uid, cid, data)
             requested_cycle = parse_cycle(data['expected_cycle_key'])
-            current_cycle = raids.cycle(now(db))
+            stamp=now(db)
+            current_cycle = raids.cycle(stamp)
             if requested_cycle.isoformat() != current_cycle.cycle_key:
                 fail('CYCLE_CHANGED')
+            from app.raid_rooms.cycle_outcomes import playable as require_playable
+            require_playable(stamp,requested_cycle.isoformat())
             if data['expected_catalog_version'] != raids.catalog().catalog_version:
                 fail('CATALOG_VERSION_CONFLICT')
             raid = raid_by_id(raid_id)
@@ -142,11 +144,11 @@ def put(principal, cid, raid_id, key, data):
                 row.updated_at = stamp
             db.flush()
             # Database clock, not transaction-start time; boundary-crossing writes roll back.
-            final_cycle = raids.cycle(now(db))
-            if final_cycle.cycle_key != current_cycle.cycle_key:
-                fail('CYCLE_CHANGED')
-            return commit_result(db, ticket, 200,
-                                 entry(db, account, character, raid, requested_cycle, final_cycle, row))
+            saved=commit_result(db,ticket,200,entry(db,account,character,raid,requested_cycle,current_cycle,row,stamp))
+            db.flush();final_stamp=now(db)
+            if raids.cycle(final_stamp).cycle_key!=current_cycle.cycle_key:fail('CYCLE_CHANGED')
+            require_playable(final_stamp,requested_cycle.isoformat())
+            return saved
     except Exception:
         release(ticket)
         raise

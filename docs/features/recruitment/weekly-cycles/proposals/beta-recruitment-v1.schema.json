@@ -1,0 +1,2111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Proposal only: beta-recruitment-1 components and alternate requests",
+  "x-base-openapi-sha256": "cc235345ff48726506389a4ba9dcd09ac7452206568a2a3bf2e905ff8412b1fb",
+  "$defs": {
+    "BetaScheduleConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "base_starts_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|\\+00:00)$"
+        },
+        "early_coordination_enabled": {
+          "type": "boolean"
+        },
+        "early_additional_members": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 7
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "base_starts_at",
+        "early_coordination_enabled",
+        "early_additional_members"
+      ],
+      "description": "Beta explicit departure uses UTC whole-minute precision; duration, personal availability and automatic candidates retain five-minute grids."
+    },
+    "BetaScheduleTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "target_cycle_key": {
+          "type": "string",
+          "format": "date"
+        },
+        "base_starts_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|\\+00:00)$"
+        },
+        "early_coordination_enabled": {
+          "type": "boolean"
+        },
+        "early_additional_members": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 7
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "target_cycle_key",
+        "base_starts_at",
+        "early_coordination_enabled",
+        "early_additional_members"
+      ]
+    },
+    "BetaScheduleView": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "policy_version": {
+          "const": "beta-schedule-1"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "session_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "base_starts_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|\\+00:00)$"
+        },
+        "base_ends_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|\\+00:00)$"
+        },
+        "base_deadline_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|\\+00:00)$"
+        },
+        "early_coordination_enabled": {
+          "type": "boolean"
+        },
+        "early_additional_members": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 7
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coordination_state": {
+          "enum": [
+            "base_committed",
+            "coordinating",
+            "early_confirmed",
+            "base_confirmed",
+            "proposal_confirmed",
+            "deadline_pending",
+            "needs_review",
+            "ended"
+          ]
+        },
+        "coordination_active": {
+          "type": "boolean"
+        },
+        "confirmed_starts_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "(Z|\\+00:00)$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "confirmed_ends_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "(Z|\\+00:00)$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "effective_starts_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|\\+00:00)$"
+        },
+        "effective_ends_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|\\+00:00)$"
+        },
+        "admission_deadline": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|\\+00:00)$"
+        },
+        "deadline_status": {
+          "enum": [
+            "not_due",
+            "due_unprocessed",
+            "processed",
+            "obsolete"
+          ]
+        },
+        "pending_transition": {
+          "enum": [
+            null,
+            "base_confirmation_due",
+            "departure_review_due"
+          ]
+        },
+        "review_reason": {
+          "enum": [
+            null,
+            "departure_passed_unconfirmed"
+          ]
+        },
+        "evaluated_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|\\+00:00)$"
+        },
+        "coordination_wait": {
+          "$ref": "#/$defs/CoordinationWait"
+        }
+      },
+      "required": [
+        "policy_version",
+        "revision",
+        "session_id",
+        "base_starts_at",
+        "base_ends_at",
+        "base_deadline_at",
+        "early_coordination_enabled",
+        "early_additional_members",
+        "coordination_state",
+        "coordination_active",
+        "confirmed_starts_at",
+        "confirmed_ends_at",
+        "effective_starts_at",
+        "effective_ends_at",
+        "admission_deadline",
+        "deadline_status",
+        "pending_transition",
+        "review_reason",
+        "evaluated_at"
+      ]
+    },
+    "AvailabilityCopyView": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "enum": [
+            "unset",
+            "configured"
+          ]
+        },
+        "source_personal_version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "copied_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|\\+00:00)$"
+        }
+      },
+      "required": [
+        "state",
+        "source_personal_version",
+        "copied_at"
+      ]
+    },
+    "RecruitmentIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "number": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "password": {
+          "type": "string",
+          "pattern": "^[0-9]{5}$"
+        }
+      },
+      "required": [
+        "number",
+        "password"
+      ]
+    },
+    "Memo": {
+      "type": "string",
+      "maxLength": 4096,
+      "x-max-utf8-bytes": 4096,
+      "x-normalization": "NFC then allowlist validation, trim U+0020 only; normalized code points <=20; empty memo to null",
+      "x-allowed-after-nfc": "U+AC00-D7A3,U+3131-3163,U+0020-U+007E",
+      "description": "Raw input: decomposed Hangul allowed if NFC composes to allowed syllables. Semantic validation required; no silent character deletion."
+    },
+    "PresetItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        },
+        "text": {
+          "$ref": "#/$defs/Memo",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "text"
+      ]
+    },
+    "PresetPut": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "expected_version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "items": {
+          "type": "array",
+          "maxItems": 5,
+          "items": {
+            "$ref": "#/$defs/PresetItem"
+          }
+        }
+      },
+      "required": [
+        "expected_version",
+        "items"
+      ]
+    },
+    "PresetDocument": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "items": {
+          "type": "array",
+          "maxItems": 5,
+          "items": {
+            "$ref": "#/$defs/PresetItem"
+          }
+        },
+        "saved_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "(Z|\\+00:00)$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "version",
+        "items",
+        "saved_at"
+      ]
+    },
+    "Legacy_app__raid_rooms__cycle_schemas__Create": {
+      "properties": {
+        "title": {
+          "type": "string",
+          "maxLength": 60,
+          "minLength": 1,
+          "title": "Title"
+        },
+        "scope": {
+          "$ref": "#/$defs/Legacy_Scope1"
+        },
+        "group_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Group Id"
+        },
+        "admission_mode": {
+          "$ref": "#/$defs/Legacy_AdmissionMode"
+        },
+        "app_mode": {
+          "$ref": "#/$defs/Legacy_AppMode"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/Legacy_BCreateItem"
+          },
+          "type": "array",
+          "minItems": 1,
+          "title": "Items"
+        },
+        "selection": {
+          "$ref": "#/$defs/Legacy_BSelection"
+        },
+        "selection_context": {
+          "$ref": "#/$defs/Legacy_BContextRef"
+        },
+        "experience_level": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Legacy_ExperienceLevel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "combat_requirement": {
+          "$ref": "#/$defs/Legacy_BCombat"
+        },
+        "continuation": {
+          "$ref": "#/$defs/Legacy_BContinuationInput"
+        },
+        "schedule_groups": {
+          "items": {
+            "$ref": "#/$defs/Legacy_BScheduleGroup"
+          },
+          "type": "array",
+          "title": "Schedule Groups"
+        },
+        "expected_cycle_key": {
+          "$ref": "#/$defs/Legacy_CycleKey"
+        },
+        "expected_catalog_version": {
+          "type": "string",
+          "title": "Expected Catalog Version"
+        },
+        "expected_group_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "maximum": 2147483647.0,
+              "minimum": 1.0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Expected Group Revision"
+        },
+        "target_cycle_key": {
+          "$ref": "#/$defs/Legacy_CycleKey"
+        },
+        "expected_target_revision": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Legacy_Version"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "title",
+        "scope",
+        "group_id",
+        "admission_mode",
+        "app_mode",
+        "items",
+        "selection",
+        "selection_context",
+        "experience_level",
+        "combat_requirement",
+        "continuation",
+        "schedule_groups",
+        "expected_cycle_key",
+        "expected_catalog_version",
+        "expected_group_revision",
+        "target_cycle_key",
+        "expected_target_revision"
+      ],
+      "title": "Create"
+    },
+    "Legacy_Scope1": {
+      "type": "string",
+      "enum": [
+        "public",
+        "group"
+      ],
+      "title": "Scope1"
+    },
+    "Legacy_AdmissionMode": {
+      "type": "string",
+      "enum": [
+        "leader_only",
+        "direct_join"
+      ],
+      "title": "AdmissionMode"
+    },
+    "Legacy_AppMode": {
+      "type": "string",
+      "enum": [
+        "single",
+        "mixed_bundle"
+      ],
+      "title": "AppMode"
+    },
+    "Legacy_BCreateItem": {
+      "properties": {
+        "raid_id": {
+          "type": "string",
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-z0-9_]+$",
+          "title": "Raid Id"
+        },
+        "difficulty_id": {
+          "type": "string",
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-z0-9_]+$",
+          "title": "Difficulty Id"
+        },
+        "duration_minutes": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "multipleOf": 5.0,
+              "maximum": 1440.0,
+              "minimum": 10.0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Duration Minutes"
+        },
+        "expected_weekly_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Weekly Revision"
+        },
+        "party_no": {
+          "type": "integer",
+          "maximum": 2.0,
+          "minimum": 1.0,
+          "title": "Party No"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "raid_id",
+        "difficulty_id",
+        "duration_minutes",
+        "expected_weekly_revision",
+        "party_no"
+      ],
+      "title": "BCreateItem"
+    },
+    "Legacy_BSelection": {
+      "properties": {
+        "registration_id": {
+          "type": "string",
+          "format": "uuid",
+          "title": "Registration Id"
+        },
+        "character_id": {
+          "type": "string",
+          "format": "uuid",
+          "title": "Character Id"
+        },
+        "selected_role": {
+          "$ref": "#/$defs/Legacy_SelectedRole"
+        },
+        "expected_registration_version": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Registration Version"
+        },
+        "expected_ownership_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Ownership Revision"
+        },
+        "expected_roster_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Roster Revision"
+        },
+        "expected_lifecycle_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Lifecycle Revision"
+        },
+        "expected_role_summary_version": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Role Summary Version"
+        },
+        "expected_limits_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Limits Revision"
+        },
+        "expected_usage_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Usage Revision"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "registration_id",
+        "character_id",
+        "selected_role",
+        "expected_registration_version",
+        "expected_ownership_revision",
+        "expected_roster_revision",
+        "expected_lifecycle_revision",
+        "expected_role_summary_version",
+        "expected_limits_revision",
+        "expected_usage_revision"
+      ],
+      "title": "BSelection"
+    },
+    "Legacy_SelectedRole": {
+      "type": "string",
+      "enum": [
+        "dealer",
+        "support"
+      ],
+      "title": "SelectedRole"
+    },
+    "Legacy_BContextRef": {
+      "properties": {
+        "context_token": {
+          "type": "string",
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Context Token"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "context_token"
+      ],
+      "title": "BContextRef"
+    },
+    "Legacy_ExperienceLevel": {
+      "type": "string",
+      "enum": [
+        "tryLevel",
+        "clearExp",
+        "multiClearExp",
+        "semiExperienced",
+        "experienced"
+      ],
+      "title": "ExperienceLevel"
+    },
+    "Legacy_BCombat": {
+      "properties": {
+        "input_mode": {
+          "$ref": "#/$defs/Legacy_InputMode"
+        },
+        "dealer_min": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 32,
+              "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Dealer Min"
+        },
+        "support_min": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 32,
+              "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Support Min"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "input_mode",
+        "dealer_min",
+        "support_min"
+      ],
+      "title": "BCombat"
+    },
+    "Legacy_InputMode": {
+      "type": "string",
+      "enum": [
+        "shared",
+        "per_role"
+      ],
+      "title": "InputMode"
+    },
+    "Legacy_BContinuationInput": {
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "title": "Enabled"
+        },
+        "next_selection": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Legacy_app__raid_rooms__cycle_wire__Selection"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "enabled",
+        "next_selection"
+      ],
+      "title": "BContinuationInput"
+    },
+    "Legacy_app__raid_rooms__cycle_wire__Selection": {
+      "properties": {
+        "registration_id": {
+          "type": "string",
+          "format": "uuid",
+          "title": "Registration Id"
+        },
+        "character_id": {
+          "type": "string",
+          "format": "uuid",
+          "title": "Character Id"
+        },
+        "selected_role": {
+          "$ref": "#/$defs/Legacy_SelectedRole"
+        },
+        "expected_registration_version": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Registration Version"
+        },
+        "expected_ownership_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Ownership Revision"
+        },
+        "expected_roster_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Roster Revision"
+        },
+        "expected_lifecycle_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Lifecycle Revision"
+        },
+        "expected_role_summary_version": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Role Summary Version"
+        },
+        "expected_limits_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Limits Revision"
+        },
+        "expected_usage_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Usage Revision"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "registration_id",
+        "character_id",
+        "selected_role",
+        "expected_registration_version",
+        "expected_ownership_revision",
+        "expected_roster_revision",
+        "expected_lifecycle_revision",
+        "expected_role_summary_version",
+        "expected_limits_revision",
+        "expected_usage_revision"
+      ],
+      "title": "Selection"
+    },
+    "Legacy_BScheduleGroup": {
+      "properties": {
+        "client_group_key": {
+          "type": "string",
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Client Group Key"
+        },
+        "existing_group_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Existing Group Id"
+        },
+        "expected_group_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "maximum": 2147483647.0,
+              "minimum": 1.0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Expected Group Revision"
+        },
+        "occurrence_mode": {
+          "$ref": "#/$defs/Legacy_OccurrenceMode"
+        },
+        "planning_mode": {
+          "$ref": "#/$defs/Legacy_PlanningMode"
+        },
+        "required": {
+          "type": "boolean",
+          "title": "Required"
+        },
+        "auto_confirm_additional_members": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "maximum": 7.0,
+              "minimum": 1.0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Auto Confirm Additional Members"
+        },
+        "day_scope": {
+          "$ref": "#/$defs/Legacy_DayScope"
+        },
+        "alternatives": {
+          "items": {
+            "$ref": "#/$defs/Legacy_BAlternativeInput"
+          },
+          "type": "array",
+          "title": "Alternatives"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "client_group_key",
+        "existing_group_id",
+        "expected_group_revision",
+        "occurrence_mode",
+        "planning_mode",
+        "required",
+        "auto_confirm_additional_members",
+        "day_scope",
+        "alternatives"
+      ],
+      "title": "BScheduleGroup"
+    },
+    "Legacy_OccurrenceMode": {
+      "type": "string",
+      "enum": [
+        "one_of",
+        "each"
+      ],
+      "title": "OccurrenceMode"
+    },
+    "Legacy_PlanningMode": {
+      "type": "string",
+      "enum": [
+        "unscheduled",
+        "manual",
+        "coordinated"
+      ],
+      "title": "PlanningMode"
+    },
+    "Legacy_DayScope": {
+      "type": "string",
+      "enum": [
+        "any_current_cycle",
+        "selected_weekdays"
+      ],
+      "title": "DayScope"
+    },
+    "Legacy_BAlternativeInput": {
+      "properties": {
+        "client_alternative_key": {
+          "type": "string",
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Client Alternative Key"
+        },
+        "existing_session_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Existing Session Id"
+        },
+        "expected_session_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "maximum": 2147483647.0,
+              "minimum": 1.0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Expected Session Revision"
+        },
+        "weekday": {
+          "type": "integer",
+          "maximum": 7.0,
+          "minimum": 1.0,
+          "title": "Weekday"
+        },
+        "starts_local": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][05]$"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Starts Local"
+        },
+        "leader_latest_start_local": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][05]$"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Leader Latest Start Local"
+        },
+        "item_order": {
+          "items": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-z0-9_]+$"
+          },
+          "type": "array",
+          "title": "Item Order"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "client_alternative_key",
+        "existing_session_id",
+        "expected_session_revision",
+        "weekday",
+        "starts_local",
+        "leader_latest_start_local",
+        "item_order"
+      ],
+      "title": "BAlternativeInput"
+    },
+    "Legacy_CycleKey": {
+      "type": "string",
+      "format": "date",
+      "title": "CycleKey",
+      "description": "Canonical Wednesday date in KST; server validates target is C or N. No implicit rollover."
+    },
+    "Legacy_Version": {
+      "type": "integer",
+      "maximum": 2147483647.0,
+      "minimum": 1.0,
+      "title": "Version",
+      "description": "Strict integer at server; booleans/floats rejected."
+    },
+    "BetaCreateRequest": {
+      "properties": {
+        "title": {
+          "type": "string",
+          "maxLength": 60,
+          "minLength": 1,
+          "title": "Title"
+        },
+        "scope": {
+          "$ref": "#/$defs/Legacy_Scope1"
+        },
+        "group_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Group Id"
+        },
+        "admission_mode": {
+          "$ref": "#/$defs/Legacy_AdmissionMode"
+        },
+        "app_mode": {
+          "$ref": "#/$defs/Legacy_AppMode"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/Legacy_BCreateItem"
+          },
+          "type": "array",
+          "minItems": 1,
+          "title": "Items"
+        },
+        "selection": {
+          "$ref": "#/$defs/Legacy_BSelection"
+        },
+        "selection_context": {
+          "$ref": "#/$defs/Legacy_BContextRef"
+        },
+        "experience_level": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Legacy_ExperienceLevel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "combat_requirement": {
+          "$ref": "#/$defs/Legacy_BCombat"
+        },
+        "continuation": {
+          "$ref": "#/$defs/Legacy_BContinuationInput"
+        },
+        "expected_cycle_key": {
+          "$ref": "#/$defs/Legacy_CycleKey"
+        },
+        "expected_catalog_version": {
+          "type": "string",
+          "title": "Expected Catalog Version"
+        },
+        "expected_group_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "maximum": 2147483647.0,
+              "minimum": 1.0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Expected Group Revision"
+        },
+        "target_cycle_key": {
+          "$ref": "#/$defs/Legacy_CycleKey"
+        },
+        "expected_target_revision": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Legacy_Version"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "beta_schedule_targets": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/$defs/BetaScheduleTarget"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "title",
+        "scope",
+        "group_id",
+        "admission_mode",
+        "app_mode",
+        "items",
+        "selection",
+        "selection_context",
+        "experience_level",
+        "combat_requirement",
+        "continuation",
+        "expected_cycle_key",
+        "expected_catalog_version",
+        "expected_group_revision",
+        "target_cycle_key",
+        "expected_target_revision",
+        "beta_schedule_targets"
+      ],
+      "title": "Create"
+    },
+    "Legacy_app__raid_rooms__cycle_schemas__Admission": {
+      "properties": {
+        "expected_cycle_key": {
+          "$ref": "#/$defs/Legacy_CycleKey"
+        },
+        "expected_room_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Room Revision"
+        },
+        "expected_members_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Members Revision"
+        },
+        "expected_plan_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Plan Revision"
+        },
+        "expected_policy_snapshot": {
+          "type": "string",
+          "title": "Expected Policy Snapshot"
+        },
+        "expected_catalog_version": {
+          "type": "string",
+          "title": "Expected Catalog Version"
+        },
+        "selection_context": {
+          "$ref": "#/$defs/Legacy_BContextRef"
+        },
+        "selection": {
+          "$ref": "#/$defs/Legacy_BSelection"
+        },
+        "target_items": {
+          "items": {
+            "$ref": "#/$defs/Legacy_BAppRaidRoomsParticipationCommandsTarget"
+          },
+          "type": "array",
+          "minItems": 1,
+          "title": "Target Items"
+        },
+        "target_session_ids": {
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": "array",
+          "title": "Target Session Ids"
+        },
+        "target_cycle_key": {
+          "$ref": "#/$defs/Legacy_CycleKey"
+        },
+        "expected_target_revision": {
+          "$ref": "#/$defs/Legacy_Version"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "expected_cycle_key",
+        "expected_room_revision",
+        "expected_members_revision",
+        "expected_plan_revision",
+        "expected_policy_snapshot",
+        "expected_catalog_version",
+        "selection_context",
+        "selection",
+        "target_items",
+        "target_session_ids",
+        "target_cycle_key",
+        "expected_target_revision"
+      ],
+      "title": "Admission"
+    },
+    "Legacy_BAppRaidRoomsParticipationCommandsTarget": {
+      "properties": {
+        "item_id": {
+          "type": "string",
+          "format": "uuid",
+          "title": "Item Id"
+        },
+        "round_id": {
+          "type": "string",
+          "format": "uuid",
+          "title": "Round Id"
+        },
+        "party_no": {
+          "type": "integer",
+          "maximum": 2.0,
+          "minimum": 1.0,
+          "title": "Party No"
+        },
+        "expected_round_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Round Revision"
+        },
+        "expected_weekly_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Weekly Revision"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "item_id",
+        "round_id",
+        "party_no",
+        "expected_round_revision",
+        "expected_weekly_revision"
+      ],
+      "title": "BAppRaidRoomsParticipationCommandsTarget"
+    },
+    "BetaApplyRequest": {
+      "properties": {
+        "expected_cycle_key": {
+          "$ref": "#/$defs/Legacy_CycleKey"
+        },
+        "expected_room_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Room Revision"
+        },
+        "expected_members_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Members Revision"
+        },
+        "expected_plan_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Plan Revision"
+        },
+        "expected_policy_snapshot": {
+          "type": "string",
+          "title": "Expected Policy Snapshot"
+        },
+        "expected_catalog_version": {
+          "type": "string",
+          "title": "Expected Catalog Version"
+        },
+        "selection_context": {
+          "$ref": "#/$defs/Legacy_BContextRef"
+        },
+        "selection": {
+          "$ref": "#/$defs/Legacy_BSelection"
+        },
+        "target_items": {
+          "items": {
+            "$ref": "#/$defs/Legacy_BAppRaidRoomsParticipationCommandsTarget"
+          },
+          "type": "array",
+          "minItems": 1,
+          "title": "Target Items"
+        },
+        "target_session_ids": {
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": "array",
+          "title": "Target Session Ids"
+        },
+        "target_cycle_key": {
+          "$ref": "#/$defs/Legacy_CycleKey"
+        },
+        "expected_target_revision": {
+          "$ref": "#/$defs/Legacy_Version"
+        },
+        "application_memo": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Memo"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "expected_cycle_key",
+        "expected_room_revision",
+        "expected_members_revision",
+        "expected_plan_revision",
+        "expected_policy_snapshot",
+        "expected_catalog_version",
+        "selection_context",
+        "selection",
+        "target_items",
+        "target_session_ids",
+        "target_cycle_key",
+        "expected_target_revision"
+      ],
+      "title": "Admission"
+    },
+    "Legacy_app__raid_rooms__cycle_schemas__EditGroups": {
+      "properties": {
+        "expected_cycle_key": {
+          "$ref": "#/$defs/Legacy_CycleKey"
+        },
+        "expected_plan_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Plan Revision"
+        },
+        "expected_members_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Members Revision"
+        },
+        "groups": {
+          "items": {
+            "$ref": "#/$defs/Legacy_BEditGroup"
+          },
+          "type": "array",
+          "title": "Groups"
+        },
+        "target_cycle_key": {
+          "$ref": "#/$defs/Legacy_CycleKey"
+        },
+        "expected_target_revision": {
+          "$ref": "#/$defs/Legacy_Version"
+        },
+        "expected_leadership_revision": {
+          "$ref": "#/$defs/Legacy_Version"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "expected_cycle_key",
+        "expected_plan_revision",
+        "expected_members_revision",
+        "groups",
+        "target_cycle_key",
+        "expected_target_revision",
+        "expected_leadership_revision"
+      ],
+      "title": "EditGroups"
+    },
+    "Legacy_BEditGroup": {
+      "properties": {
+        "client_group_key": {
+          "type": "string",
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Client Group Key"
+        },
+        "existing_group_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Existing Group Id"
+        },
+        "expected_group_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "maximum": 2147483647.0,
+              "minimum": 1.0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Expected Group Revision"
+        },
+        "occurrence_mode": {
+          "$ref": "#/$defs/Legacy_OccurrenceMode"
+        },
+        "planning_mode": {
+          "$ref": "#/$defs/Legacy_PlanningMode"
+        },
+        "required": {
+          "type": "boolean",
+          "title": "Required"
+        },
+        "auto_confirm_additional_members": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "maximum": 7.0,
+              "minimum": 1.0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Auto Confirm Additional Members"
+        },
+        "day_scope": {
+          "$ref": "#/$defs/Legacy_DayScope"
+        },
+        "alternatives": {
+          "items": {
+            "$ref": "#/$defs/Legacy_BEditAlternative"
+          },
+          "type": "array",
+          "title": "Alternatives"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "client_group_key",
+        "existing_group_id",
+        "expected_group_revision",
+        "occurrence_mode",
+        "planning_mode",
+        "required",
+        "auto_confirm_additional_members",
+        "day_scope",
+        "alternatives"
+      ],
+      "title": "BEditGroup"
+    },
+    "Legacy_BEditAlternative": {
+      "properties": {
+        "client_alternative_key": {
+          "type": "string",
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Client Alternative Key"
+        },
+        "existing_session_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Existing Session Id"
+        },
+        "expected_session_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "maximum": 2147483647.0,
+              "minimum": 1.0
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Expected Session Revision"
+        },
+        "weekday": {
+          "type": "integer",
+          "maximum": 7.0,
+          "minimum": 1.0,
+          "title": "Weekday"
+        },
+        "starts_local": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][05]$"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Starts Local"
+        },
+        "leader_latest_start_local": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][05]$"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Leader Latest Start Local"
+        },
+        "item_ids": {
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": "array",
+          "title": "Item Ids"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "client_alternative_key",
+        "existing_session_id",
+        "expected_session_revision",
+        "weekday",
+        "starts_local",
+        "leader_latest_start_local",
+        "item_ids"
+      ],
+      "title": "BEditAlternative"
+    },
+    "BetaScheduleEditRequest": {
+      "properties": {
+        "expected_cycle_key": {
+          "$ref": "#/$defs/Legacy_CycleKey"
+        },
+        "expected_plan_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Plan Revision"
+        },
+        "expected_members_revision": {
+          "type": "integer",
+          "maximum": 2147483647.0,
+          "minimum": 1.0,
+          "title": "Expected Members Revision"
+        },
+        "target_cycle_key": {
+          "$ref": "#/$defs/Legacy_CycleKey"
+        },
+        "expected_target_revision": {
+          "$ref": "#/$defs/Legacy_Version"
+        },
+        "expected_leadership_revision": {
+          "$ref": "#/$defs/Legacy_Version"
+        },
+        "early_coordination_enabled": {
+          "type": "boolean"
+        },
+        "early_additional_members": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 7
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accept_immediate_confirmation": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "expected_cycle_key",
+        "expected_plan_revision",
+        "expected_members_revision",
+        "target_cycle_key",
+        "expected_target_revision",
+        "expected_leadership_revision",
+        "early_coordination_enabled",
+        "early_additional_members",
+        "accept_immediate_confirmation"
+      ],
+      "title": "EditGroups"
+    },
+    "Legacy_app__raid_rooms__cycle_schemas__Search": {
+      "properties": {
+        "category": {
+          "$ref": "#/$defs/Legacy_Category"
+        },
+        "admission_scope": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Legacy_AdmissionScope"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group_ids": {
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": "array",
+          "title": "Group Ids"
+        },
+        "filter_context_token": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 64,
+              "minLength": 64
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Filter Context Token"
+        },
+        "member_conditions": {
+          "items": {
+            "$ref": "#/$defs/Legacy_BCondition"
+          },
+          "type": "array",
+          "title": "Member Conditions"
+        },
+        "raid_ids": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "title": "Raid Ids"
+        },
+        "difficulty_ids": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "title": "Difficulty Ids"
+        },
+        "sort": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Legacy_BSort"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remaining_slot_counts": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "integer",
+                "maximum": 7.0,
+                "minimum": 1.0
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Remaining Slot Counts"
+        },
+        "limit": {
+          "type": "integer",
+          "maximum": 50.0,
+          "minimum": 1.0,
+          "title": "Limit"
+        },
+        "cursor": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 2048
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Cursor"
+        },
+        "target_cycle_key": {
+          "$ref": "#/$defs/Legacy_CycleKey"
+        },
+        "experience_levels": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Legacy_ExperienceFilterValues"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group_character_candidates_token": {
+          "type": "string",
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Group Character Candidates Token"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "category",
+        "admission_scope",
+        "group_ids",
+        "filter_context_token",
+        "member_conditions",
+        "raid_ids",
+        "difficulty_ids",
+        "limit",
+        "cursor",
+        "target_cycle_key"
+      ],
+      "title": "Search"
+    },
+    "Legacy_Category": {
+      "type": "string",
+      "enum": [
+        "general",
+        "group_linked",
+        "all"
+      ],
+      "title": "Category"
+    },
+    "Legacy_AdmissionScope": {
+      "type": "string",
+      "enum": [
+        "public",
+        "group"
+      ],
+      "title": "AdmissionScope"
+    },
+    "Legacy_BCondition": {
+      "properties": {
+        "member_ref": {
+          "type": "string",
+          "maxLength": 64,
+          "minLength": 64,
+          "title": "Member Ref"
+        },
+        "character_ids": {
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": "array",
+          "title": "Character Ids"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "member_ref",
+        "character_ids"
+      ],
+      "title": "BCondition"
+    },
+    "Legacy_BSort": {
+      "properties": {
+        "criterion": {
+          "type": "string",
+          "const": "member_count",
+          "title": "Criterion",
+          "default": "member_count"
+        },
+        "direction": {
+          "default": "descending",
+          "$ref": "#/$defs/Legacy_Direction"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "title": "BSort"
+    },
+    "Legacy_Direction": {
+      "type": "string",
+      "enum": [
+        "ascending",
+        "descending"
+      ],
+      "title": "Direction"
+    },
+    "Legacy_ExperienceFilterValues": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/Legacy_ExperienceFilterValue"
+          },
+          "type": "array",
+          "maxItems": 6,
+          "minItems": 0
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "ExperienceFilterValues",
+      "description": "OR values; []/omitted means no filter; unrestricted matches stored null. Null/duplicates/unknown enum rejected; sorting of valid values alone does not stale the cursor.",
+      "default": []
+    },
+    "Legacy_ExperienceFilterValue": {
+      "type": "string",
+      "enum": [
+        "tryLevel",
+        "clearExp",
+        "multiClearExp",
+        "semiExperienced",
+        "experienced",
+        "unrestricted"
+      ],
+      "title": "ExperienceFilterValue"
+    },
+    "BetaSearchRequest": {
+      "properties": {
+        "category": {
+          "$ref": "#/$defs/Legacy_Category"
+        },
+        "admission_scope": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Legacy_AdmissionScope"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group_ids": {
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": "array",
+          "title": "Group Ids"
+        },
+        "filter_context_token": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 64,
+              "minLength": 64
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Filter Context Token"
+        },
+        "member_conditions": {
+          "items": {
+            "$ref": "#/$defs/Legacy_BCondition"
+          },
+          "type": "array",
+          "title": "Member Conditions"
+        },
+        "raid_ids": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "title": "Raid Ids"
+        },
+        "difficulty_ids": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "title": "Difficulty Ids"
+        },
+        "sort": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Legacy_BSort"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remaining_slot_counts": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "integer",
+                "maximum": 7.0,
+                "minimum": 1.0
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Remaining Slot Counts"
+        },
+        "limit": {
+          "type": "integer",
+          "maximum": 50.0,
+          "minimum": 1.0,
+          "title": "Limit"
+        },
+        "cursor": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 2048
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Cursor"
+        },
+        "target_cycle_key": {
+          "$ref": "#/$defs/Legacy_CycleKey"
+        },
+        "experience_levels": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Legacy_ExperienceFilterValues"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group_character_candidates_token": {
+          "type": "string",
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Group Character Candidates Token"
+        },
+        "departure_windows": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "items": {
+            "$ref": "#/$defs/DepartureWindow"
+          }
+        },
+        "schedule_states": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 9,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "base_committed",
+              "coordinating",
+              "early_confirmed",
+              "base_confirmed",
+              "proposal_confirmed",
+              "deadline_pending",
+              "needs_review",
+              "ended",
+              "legacy"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "category",
+        "admission_scope",
+        "group_ids",
+        "filter_context_token",
+        "member_conditions",
+        "raid_ids",
+        "difficulty_ids",
+        "limit",
+        "cursor",
+        "target_cycle_key"
+      ],
+      "title": "Search"
+    },
+    "DepartureWindow": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "starts_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|\\+00:00)$"
+        },
+        "ends_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|\\+00:00)$"
+        }
+      },
+      "required": [
+        "starts_at",
+        "ends_at"
+      ],
+      "description": "Search-only UTC whole-minute bounds, start inclusive and end exclusive; no rounding. Positive at most 24h, within the selected cycle. Departure grids are unchanged."
+    },
+    "MemoStored": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 1,
+      "pattern": "^(?! )(?!.* $)[가-힣ㄱ-ㅣ\\x20-\\x7e]+$(?![\\s\\S])",
+      "x-normalization": "Already NFC, no leading/trailing U+0020"
+    },
+    "CoordinationWait": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "missing_members"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "waiting_members",
+            "no_earlier_candidate",
+            "pending",
+            "unavailable",
+            "not_applicable"
+          ]
+        },
+        "missing_members": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 8
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "status": {
+              "const": "waiting_members"
+            },
+            "missing_members": {
+              "type": "integer"
+            }
+          }
+        },
+        {
+          "properties": {
+            "status": {
+              "enum": [
+                "no_earlier_candidate",
+                "pending",
+                "unavailable",
+                "not_applicable"
+              ]
+            },
+            "missing_members": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "x-text-policy": "hangul-printable-ascii-1"
+}

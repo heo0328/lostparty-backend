@@ -25,7 +25,10 @@ def setup_database():
         c.execute(text("INSERT INTO users (id,status,created_at,updated_at,last_login_at) VALUES (:id,'active',now(),now(),now())"),{'id':existing_id})
         c.execute(text("INSERT INTO auth_transactions (id,nonce_digest,secret_digest,expires_at) VALUES (:id,'legacy-test-nonce','legacy-test-secret',now()+interval '10 minutes')"), {'id':existing_id})
         before=dict(c.execute(text('SELECT * FROM users WHERE id=:id'),{'id':existing_id}).mappings().one())
-    subprocess.run(['alembic','upgrade','head'], check=True, capture_output=True)
+    # 0024 is a staged shadow migration, deliberately rejected by the old API
+    # and worker. Exercise it in disposable migration databases until cutover;
+    # the legacy HTTP regression suite must continue using its runtime schema.
+    subprocess.run(['alembic','upgrade','0023_recruitment_resume'], check=True, capture_output=True)
     with engine().connect() as c:
         after=c.execute(text('SELECT * FROM users WHERE id=:id'),{'id':existing_id}).mappings().one()
         assert {k:after[k] for k in before}==before

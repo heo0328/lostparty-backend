@@ -194,9 +194,10 @@ def test_batch_all_or_nothing_other_actor_and_session_authority(client, owned, l
 
 
 @pytest.mark.parametrize('state,status', [('revoked', 401), ('disabled', 403), ('ownership_lost', 403)])
-def test_current_authority_checked_on_read_write_and_success_replay(client, owned, state, status):
+def test_current_auth_and_original_ack_before_resource_revalidation(client, owned, state, status):
     h, _, cid = owned; key = uuid.uuid4()
-    assert put(client, h, cid, key=key).status_code == 200
+    first=put(client,h,cid,key=key)
+    assert first.status_code == 200
     actor = principal(cid)[0].id
     with session() as db, db.begin():
         if state == 'revoked':
@@ -206,7 +207,11 @@ def test_current_authority_checked_on_read_write_and_success_replay(client, owne
         else:
             db.get(Account, db.get(Character, uuid.UUID(cid)).account_id).owner_id = None
     assert get(client, h, cid).status_code == status
-    assert put(client, h, cid, key=key).status_code == status
+    replay=put(client,h,cid,key=key)
+    if state=='ownership_lost':
+        assert replay.status_code==200 and replay.json()==first.json()
+        assert put(client,h,cid,key=uuid.uuid4()).status_code==status
+    else:assert replay.status_code==status
 
 
 def test_suspect_blocks_new_completion_but_allows_own_manual_correction(client, owned):

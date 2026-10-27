@@ -29,14 +29,18 @@ def cleanup():
             db.delete(s)
 
 
+def cleanup_all():
+    cleanup()
+    from app.game_accounts.cleanup import clean
+    clean()
+
+
 async def run():
-    import logging
+    from app.core.observability import run_job
     while True:
         await asyncio.sleep(30)
         try:
-            await asyncio.to_thread(cleanup)
-            from app.game_accounts.cleanup import clean
-            await asyncio.to_thread(clean)
+            await asyncio.to_thread(run_job, 'auth_cleanup', cleanup_all)
         except Exception:
-            # No SQL, parameters, or credentials in background error output.
-            logging.getLogger(__name__).warning("Authentication cleanup failed")
+            # run_job records a safe failure; preserve the existing retry loop.
+            pass

@@ -1,6 +1,6 @@
 """Durable due/lease loop. Provider I/O is outside the shared mutation transaction."""
 import asyncio
-import logging
+from app.core.observability import run_job
 import os
 import uuid
 from datetime import timedelta
@@ -162,5 +162,5 @@ async def run():
     if os.getenv('OWNERSHIP_WORKER_ENABLED','1')=='0':return
     while True:
         await asyncio.sleep(5)
-        try:await asyncio.to_thread(tick)
-        except Exception:logging.getLogger(__name__).warning('Ownership settlement attempt failed')
+        try:await asyncio.to_thread(run_job, 'ownership_settlement', tick)
+        except Exception:pass  # run_job has recorded the failure

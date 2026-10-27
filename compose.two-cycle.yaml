@@ -1,0 +1,21 @@
+# Explicit cutover override, only after the target DB has been verified at 0029/0030/0031.
+# Personal completion corrections require 0030; membership actions require 0031.
+# Never reset existing data.
+# Build/tag the verified two-cycle image before starting; never use the old tag.
+# This file selects the API image/entrypoint; it never migrates or resets a database.
+# Preserve compose.yaml's database volume and read-only authentication key mount.
+services:
+  api:
+    image: lostparty-backend-api:two-cycle
+    command:
+      - uvicorn
+      - app.main:create_two_cycle_app
+      - --factory
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+      - --no-proxy-headers
+      - --no-access-log
+      - --log-config
+      - app/core/logging.json

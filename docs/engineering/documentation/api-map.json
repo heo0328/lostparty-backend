@@ -1,0 +1,1199 @@
+{
+  "contract": "openapi/two-cycle.openapi.yaml",
+  "operations": [
+    {
+      "method": "POST",
+      "path": "/v1/auth/google/challenges",
+      "operation_id": "challenge_v1_auth_google_challenges_post",
+      "topic": "login-account/google-login"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/auth/google",
+      "operation_id": "google_v1_auth_google_post",
+      "topic": "login-account/google-login"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me",
+      "operation_id": "me_v1_me_get",
+      "topic": "login-account/google-login"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/auth/session",
+      "operation_id": "current_session_v1_auth_session_get",
+      "topic": "login-account/sessions"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/auth/refresh",
+      "operation_id": "refresh_v1_auth_refresh_post",
+      "topic": "login-account/sessions"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/auth/logout",
+      "operation_id": "logout_v1_auth_logout_post",
+      "topic": "login-account/sessions"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/game-accounts/preview",
+      "operation_id": "preview_v1_game_accounts_preview_post",
+      "topic": "rosters/registration"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/game-accounts",
+      "operation_id": "registrations_v1_me_game_accounts_get",
+      "topic": "rosters/registration"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/me/game-accounts",
+      "operation_id": "register_v1_me_game_accounts_post",
+      "topic": "rosters/registration"
+    },
+    {
+      "method": "PATCH",
+      "path": "/v1/me/game-accounts/{registration_id}",
+      "operation_id": "patch_v1_me_game_accounts__registration_id__patch",
+      "topic": "rosters/registration"
+    },
+    {
+      "method": "DELETE",
+      "path": "/v1/me/game-accounts/{registration_id}",
+      "operation_id": "remove_v1_me_game_accounts__registration_id__delete",
+      "topic": "rosters/registration"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/game-accounts/{registration_id}/characters",
+      "operation_id": "characters_v1_me_game_accounts__registration_id__characters_get",
+      "topic": "rosters/registration"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/me/game-accounts/{registration_id}/refresh",
+      "operation_id": "refresh_v1_me_game_accounts__registration_id__refresh_post",
+      "topic": "rosters/registration"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/me/game-accounts/{registration_id}/combat-power/refresh",
+      "operation_id": "refresh_power_v1_me_game_accounts__registration_id__combat_power_refresh_post",
+      "topic": "rosters/power-and-profiles"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/me/game-account-verifications",
+      "operation_id": "start_v1_me_game_account_verifications_post",
+      "topic": "rosters/ownership"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/game-account-verifications/{challenge_id}",
+      "operation_id": "verification_v1_me_game_account_verifications__challenge_id__get",
+      "topic": "rosters/ownership"
+    },
+    {
+      "method": "DELETE",
+      "path": "/v1/me/game-account-verifications/{challenge_id}",
+      "operation_id": "cancel_v1_me_game_account_verifications__challenge_id__delete",
+      "topic": "rosters/ownership"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/me/game-account-verifications/{challenge_id}/confirm",
+      "operation_id": "confirm_v1_me_game_account_verifications__challenge_id__confirm_post",
+      "topic": "rosters/ownership"
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/me/game-accounts/{registration_id}/character-settings",
+      "operation_id": "save_v1_me_game_accounts__registration_id__character_settings_put",
+      "topic": "rosters/activity-and-presentation"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/game-accounts/{registration_id}/representative",
+      "operation_id": "representative_v1_me_game_accounts__registration_id__representative_get",
+      "topic": "rosters/activity-and-presentation"
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/me/game-accounts/{registration_id}/representative",
+      "operation_id": "set_representative_v1_me_game_accounts__registration_id__representative_put",
+      "topic": "rosters/activity-and-presentation"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/game-accounts/{registration_id}/characters",
+      "operation_id": "characters_v2_me_game_accounts__registration_id__characters_get",
+      "topic": "rosters/lifecycle"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/character-retirements",
+      "operation_id": "retirements_v2_me_character_retirements_get",
+      "topic": "rosters/lifecycle"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/characters/{character_id}/personal-profile",
+      "operation_id": "get_v2_me_characters__character_id__personal_profile_get",
+      "topic": "rosters/power-and-profiles"
+    },
+    {
+      "method": "PUT",
+      "path": "/v2/me/characters/{character_id}/role-summaries/{role}",
+      "operation_id": "put_v2_me_characters__character_id__role_summaries__role__put",
+      "topic": "rosters/power-and-profiles"
+    },
+    {
+      "method": "PUT",
+      "path": "/v2/me/characters/{character_id}/personal-preferences",
+      "operation_id": "put_preferences_v2_me_characters__character_id__personal_preferences_put",
+      "topic": "rosters/activity-and-presentation"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/game-accounts/{registration_id}/presentation-settings",
+      "operation_id": "get_presentation_v2_me_game_accounts__registration_id__presentation_settings_get",
+      "topic": "rosters/activity-and-presentation"
+    },
+    {
+      "method": "PUT",
+      "path": "/v2/me/game-accounts/{registration_id}/presentation-settings",
+      "operation_id": "put_presentation_v2_me_game_accounts__registration_id__presentation_settings_put",
+      "topic": "rosters/activity-and-presentation"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/settings",
+      "operation_id": "get_settings_v1_me_settings_get",
+      "topic": "login-account/member-settings"
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/me/settings",
+      "operation_id": "put_settings_v1_me_settings_put",
+      "topic": "login-account/member-settings"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/lostark-api-key",
+      "operation_id": "get_v1_me_lostark_api_key_get",
+      "topic": "login-account/api-keys"
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/me/lostark-api-key",
+      "operation_id": "put_v1_me_lostark_api_key_put",
+      "topic": "login-account/api-keys"
+    },
+    {
+      "method": "DELETE",
+      "path": "/v1/me/lostark-api-key",
+      "operation_id": "delete_v1_me_lostark_api_key_delete",
+      "topic": "login-account/api-keys"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/me/lostark-api-key/restore",
+      "operation_id": "restore_v1_me_lostark_api_key_restore_post",
+      "topic": "login-account/api-keys"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/raid-catalog",
+      "operation_id": "raid_catalog_v1_raid_catalog_get",
+      "topic": "raids/catalog"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/raid-cycle",
+      "operation_id": "raid_cycle_v1_raid_cycle_get",
+      "topic": "raids/weekly-records"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/raid-weekly-states",
+      "operation_id": "weekly_states_v1_me_raid_weekly_states_get",
+      "topic": "raids/weekly-records"
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/me/characters/{character_id}/raid-weekly-states/{raid_id}/manual-completion",
+      "operation_id": "manual_completion_v1_me_characters__character_id__raid_weekly_states__raid_id__manual_completion_put",
+      "topic": "raids/weekly-records"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/usage-limits",
+      "operation_id": "usage_limits_v1_me_usage_limits_get",
+      "topic": "login-account/usage-limits"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/groups",
+      "operation_id": "create_v1_groups_post",
+      "topic": "groups/discovery"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/groups",
+      "operation_id": "public_list_v1_groups_get",
+      "topic": "groups/discovery"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/groups/{group_id}",
+      "operation_id": "public_detail_v1_groups__group_id__get",
+      "topic": "groups/discovery"
+    },
+    {
+      "method": "PATCH",
+      "path": "/v1/groups/{group_id}",
+      "operation_id": "rename_v1_groups__group_id__patch",
+      "topic": "groups/discovery"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/groups",
+      "operation_id": "my_list_v1_me_groups_get",
+      "topic": "groups/discovery"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/groups/{group_id}",
+      "operation_id": "private_detail_v1_me_groups__group_id__get",
+      "topic": "groups/discovery"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/groups/{group_id}/members",
+      "operation_id": "members_v1_groups__group_id__members_get",
+      "topic": "groups/discovery"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/groups/{group_id}/management",
+      "operation_id": "group_management_v1_groups__group_id__management_get",
+      "topic": "groups/management"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/groups/{group_id}/leadership-transfer",
+      "operation_id": "transfer_leadership_v1_groups__group_id__leadership_transfer_post",
+      "topic": "groups/management"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/groups/{group_id}/leave",
+      "operation_id": "leave_group_v1_groups__group_id__leave_post",
+      "topic": "groups/management"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/groups/{group_id}/invite-candidates",
+      "operation_id": "candidates_v1_groups__group_id__invite_candidates_get",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/groups/{group_id}/invitations",
+      "operation_id": "invite_v1_groups__group_id__invitations_post",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/groups/{group_id}/applications",
+      "operation_id": "apply_v1_groups__group_id__applications_post",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/group-relations",
+      "operation_id": "my_relations_v1_me_group_relations_get",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/groups/{group_id}/join-relations",
+      "operation_id": "managed_relations_v1_groups__group_id__join_relations_get",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/group-relations/{relation_id}",
+      "operation_id": "relation_v1_group_relations__relation_id__get",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/group-relations/{relation_id}/accept",
+      "operation_id": "accept_v1_group_relations__relation_id__accept_post",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/group-relations/{relation_id}/approve",
+      "operation_id": "approve_v1_group_relations__relation_id__approve_post",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/group-relations/{relation_id}/reject",
+      "operation_id": "reject_v1_group_relations__relation_id__reject_post",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/group-relations/{relation_id}/cancel",
+      "operation_id": "cancel_v1_group_relations__relation_id__cancel_post",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/groups/{group_id}/blocked-subjects",
+      "operation_id": "blocked_v1_groups__group_id__blocked_subjects_get",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/groups/{group_id}/join-subjects/{subject_id}/block",
+      "operation_id": "block_v1_groups__group_id__join_subjects__subject_id__block_post",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/groups/{group_id}/join-subjects/{subject_id}/unblock",
+      "operation_id": "unblock_v1_groups__group_id__join_subjects__subject_id__unblock_post",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/groups/{group_id}/join-code",
+      "operation_id": "code_v1_groups__group_id__join_code_get",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/groups/{group_id}/join-code",
+      "operation_id": "create_code_v1_groups__group_id__join_code_post",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/groups/{group_id}/join-code/regenerate",
+      "operation_id": "regenerate_code_v1_groups__group_id__join_code_regenerate_post",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/groups/{group_id}/join-code/revoke",
+      "operation_id": "revoke_code_v1_groups__group_id__join_code_revoke_post",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/groups/{group_id}/join-code/visibility",
+      "operation_id": "code_visibility_v1_groups__group_id__join_code_visibility_put",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/group-join-codes/preview",
+      "operation_id": "preview_v1_group_join_codes_preview_post",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/group-join-codes/join",
+      "operation_id": "join_v1_group_join_codes_join_post",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/game-accounts/preview",
+      "operation_id": "preview_v2_game_accounts_preview_post",
+      "topic": "rosters/ownership"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/me/game-account-verifications",
+      "operation_id": "start_v2_me_game_account_verifications_post",
+      "topic": "rosters/ownership"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/game-account-verifications",
+      "operation_id": "proofs_v2_me_game_account_verifications_get",
+      "topic": "rosters/ownership"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/game-account-verifications/{proof_id}",
+      "operation_id": "proof_v2_me_game_account_verifications__proof_id__get",
+      "topic": "rosters/ownership"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/me/game-account-verifications/{proof_id}/confirm",
+      "operation_id": "confirm_v2_me_game_account_verifications__proof_id__confirm_post",
+      "topic": "rosters/ownership"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/me/game-account-verifications/{proof_id}/cancel",
+      "operation_id": "cancel_v2_me_game_account_verifications__proof_id__cancel_post",
+      "topic": "rosters/ownership"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/ownership-disputes",
+      "operation_id": "disputes_v2_me_ownership_disputes_get",
+      "topic": "rosters/ownership"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/ownership-disputes/{dispute_id}",
+      "operation_id": "dispute_v2_me_ownership_disputes__dispute_id__get",
+      "topic": "rosters/ownership"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/me/ownership-disputes/{dispute_id}/cancel",
+      "operation_id": "withdraw_v2_me_ownership_disputes__dispute_id__cancel_post",
+      "topic": "rosters/ownership"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/me/ownership-disputes/{dispute_id}/defenses",
+      "operation_id": "defense_v2_me_ownership_disputes__dispute_id__defenses_post",
+      "topic": "rosters/ownership"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/me/ownership-disputes/{dispute_id}/settle",
+      "operation_id": "settle_v2_me_ownership_disputes__dispute_id__settle_post",
+      "topic": "rosters/ownership"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/account-bootstrap",
+      "operation_id": "account_bootstrap_v2_me_account_bootstrap_get",
+      "topic": "rosters/bootstrap"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/raid-cycles",
+      "operation_id": "get__v2_raid-cycles",
+      "topic": "raids/weekly-records"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/me/raid-weekly-summary",
+      "operation_id": "post__v2_me_raid-weekly-summary",
+      "topic": "raids/weekly-records"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/raid-room-filter-context",
+      "operation_id": "filter_context_v1_me_raid_room_filter_context_get",
+      "topic": "recruitment/search"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-rooms/search",
+      "operation_id": "search_v1_raid_rooms_search_post",
+      "topic": "recruitment/search"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/raid-rooms",
+      "operation_id": "listing_v1_raid_rooms_get",
+      "topic": "recruitment/search"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-rooms",
+      "operation_id": "create_v1_raid_rooms_post",
+      "topic": "recruitment/creation-and-settings"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/raid-rooms/{room_id}",
+      "operation_id": "summary_v1_raid_rooms__room_id__get",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/raid-rooms/{room_id}/detail",
+      "operation_id": "detail_v1_raid_rooms__room_id__detail_get",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/groups/{group_id}/raid-room-member-projections",
+      "operation_id": "projections_v1_groups__group_id__raid_room_member_projections_get",
+      "topic": "recruitment/search"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/raid-room-memberships",
+      "operation_id": "memberships_v1_me_raid_room_memberships_get",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/raid-room-applications",
+      "operation_id": "applications_v1_me_raid_room_applications_get",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/raid-rooms/{room_id}/applications",
+      "operation_id": "room_applications_v1_raid_rooms__room_id__applications_get",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-rooms/{room_id}/applications",
+      "operation_id": "apply_v1_raid_rooms__room_id__applications_post",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/raid-rooms/{room_id}/schedule-context",
+      "operation_id": "time_context_v1_me_raid_rooms__room_id__schedule_context_get",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/raid-schedule-overlaps",
+      "operation_id": "overlaps_v1_me_raid_schedule_overlaps_get",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/raid-room-creation-context",
+      "operation_id": "creation_context_v1_me_raid_room_creation_context_get",
+      "topic": "recruitment/creation-and-settings"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/raid-rooms/{room_id}/admission-context",
+      "operation_id": "admission_context_v1_raid_rooms__room_id__admission_context_get",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-rooms/{room_id}/join",
+      "operation_id": "join_v1_raid_rooms__room_id__join_post",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-room-applications/{application_id}/approve",
+      "operation_id": "approve_v1_raid_room_applications__application_id__approve_post",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/raid-rooms/{room_id}/plan",
+      "operation_id": "plan_v1_me_raid_rooms__room_id__plan_get",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/raid-room-applications/{application_id}",
+      "operation_id": "application_v1_raid_room_applications__application_id__get",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-room-applications/{application_id}/reject",
+      "operation_id": "reject_v1_raid_room_applications__application_id__reject_post",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-room-applications/{application_id}/withdraw",
+      "operation_id": "withdraw_v1_raid_room_applications__application_id__withdraw_post",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/play-availability",
+      "operation_id": "get_personal_v1_me_play_availability_get",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/me/play-availability",
+      "operation_id": "put_personal_v1_me_play_availability_put",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/raid-rooms/{room_id}/availability-submission",
+      "operation_id": "get_submission_v1_me_raid_rooms__room_id__availability_submission_get",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/me/raid-rooms/{room_id}/availability-submission",
+      "operation_id": "put_submission_v1_me_raid_rooms__room_id__availability_submission_put",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/raid-rooms/{room_id}/schedule-groups",
+      "operation_id": "edit_v1_raid_rooms__room_id__schedule_groups_put",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/raid-schedule-groups/{group_id}/candidates",
+      "operation_id": "candidates_v1_raid_schedule_groups__group_id__candidates_get",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-schedule-groups/{group_id}/selections",
+      "operation_id": "select_v1_raid_schedule_groups__group_id__selections_post",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-rooms/{room_id}/schedule-proposals",
+      "operation_id": "propose_v1_raid_rooms__room_id__schedule_proposals_post",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-schedule-proposals/{proposal_id}/responses",
+      "operation_id": "respond_v1_raid_schedule_proposals__proposal_id__responses_post",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-sessions/{session_id}/participation-confirmations",
+      "operation_id": "confirm_v1_raid_sessions__session_id__participation_confirmations_post",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/raid-rooms/{room_id}/continuation-choices",
+      "operation_id": "get_v1_me_raid_rooms__room_id__continuation_choices_get",
+      "topic": "recruitment/weekly-cycles"
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/me/raid-rooms/{room_id}/continuation-choices",
+      "operation_id": "put_v1_me_raid_rooms__room_id__continuation_choices_put",
+      "topic": "recruitment/weekly-cycles"
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/raid-rooms/{room_id}/continuation-settings",
+      "operation_id": "settings_v1_raid_rooms__room_id__continuation_settings_put",
+      "topic": "recruitment/weekly-cycles"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-rooms/{room_id}/recruitment-openings",
+      "operation_id": "opening_v1_raid_rooms__room_id__recruitment_openings_post",
+      "topic": "recruitment/weekly-cycles"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-rooms/{room_id}/weekly-resume-proposals",
+      "operation_id": "resume_weekly_v1_raid_rooms__room_id__weekly_resume_proposals_post",
+      "topic": "recruitment/completion-and-records"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/raid-rooms/{room_id}/command-context",
+      "operation_id": "context_v1_raid_rooms__room_id__command_context_get",
+      "topic": "recruitment/completion-and-records"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-rooms/{room_id}/weekly-incomplete-closures",
+      "operation_id": "close_v1_raid_rooms__room_id__weekly_incomplete_closures_post",
+      "topic": "recruitment/completion-and-records"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-rounds/{round_id}/completion",
+      "operation_id": "complete_v1_raid_rounds__round_id__completion_post",
+      "topic": "recruitment/completion-and-records"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-rounds/{round_id}/personal-completion",
+      "operation_id": "personal_v1_raid_rounds__round_id__personal_completion_post",
+      "topic": "recruitment/completion-and-records"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-rooms/{room_id}/leave",
+      "operation_id": "leave_v1_raid_rooms__room_id__leave_post",
+      "topic": "recruitment/membership-actions"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-rooms/{room_id}/transfer-leadership",
+      "operation_id": "transfer_v1_raid_rooms__room_id__transfer_leadership_post",
+      "topic": "recruitment/weekly-cycles"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-rooms/{room_id}/end",
+      "operation_id": "end_v1_raid_rooms__room_id__end_post",
+      "topic": "recruitment/membership-actions"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-rooms/{room_id}/character-changes",
+      "operation_id": "change_character_v1_raid_rooms__room_id__character_changes_post",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/raid-rooms/{room_id}/settings",
+      "operation_id": "settings_v1_me_raid_rooms__room_id__settings_get",
+      "topic": "recruitment/creation-and-settings"
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/raid-rooms/{room_id}/settings",
+      "operation_id": "edit_v1_raid_rooms__room_id__settings_put",
+      "topic": "recruitment/creation-and-settings"
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/raid-rooms/{room_id}/visibility",
+      "operation_id": "visibility_v1_raid_rooms__room_id__visibility_put",
+      "topic": "recruitment/creation-and-settings"
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/raid-rooms/{room_id}/formation",
+      "operation_id": "formation_v1_raid_rooms__room_id__formation_put",
+      "topic": "recruitment/creation-and-settings"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/raid-rooms/{room_id}/removals",
+      "operation_id": "remove_v1_raid_rooms__room_id__removals_post",
+      "topic": "recruitment/membership-actions"
+    },
+    {
+      "method": "GET",
+      "path": "/health",
+      "operation_id": "health_health_get",
+      "topic": "engineering/development"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/raid-room-creation-context",
+      "operation_id": "contract3_get__v2_me_raid-room-creation-context",
+      "topic": "recruitment/creation-and-settings"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms",
+      "operation_id": "contract3_post__v2_raid-rooms",
+      "topic": "recruitment/creation-and-settings"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/raid-rooms",
+      "operation_id": "contract3_get__v2_raid-rooms",
+      "topic": "recruitment/search"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/raid-rooms/{room_id}/admission-context",
+      "operation_id": "contract3_get__v2_raid-rooms_room_id_admission-context",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/join",
+      "operation_id": "contract3_post__v2_raid-rooms_room_id_join",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/applications",
+      "operation_id": "contract3_post__v2_raid-rooms_room_id_applications",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/raid-rooms/{room_id}/applications",
+      "operation_id": "contract3_get__v2_raid-rooms_room_id_applications",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/raid-room-applications/{application_id}",
+      "operation_id": "contract3_get__v2_raid-room-applications_application_id",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-room-applications/{application_id}/approve",
+      "operation_id": "contract3_post__v2_raid-room-applications_application_id_approve",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-room-applications/{application_id}/reject",
+      "operation_id": "contract3_post__v2_raid-room-applications_application_id_reject",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-room-applications/{application_id}/withdraw",
+      "operation_id": "contract3_post__v2_raid-room-applications_application_id_withdraw",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms/search",
+      "operation_id": "contract3_post__v2_raid-rooms_search",
+      "topic": "recruitment/search"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/raid-room-filter-context",
+      "operation_id": "contract3_get__v2_me_raid-room-filter-context",
+      "topic": "recruitment/search"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/groups/{group_id}/raid-room-character-candidates",
+      "operation_id": "contract3_get__v2_groups_group_id_raid-room-character-candidates",
+      "topic": "recruitment/search"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/raid-rooms/{room_id}",
+      "operation_id": "contract3_get__v2_raid-rooms_room_id",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/raid-rooms/{room_id}/detail",
+      "operation_id": "contract3_get__v2_raid-rooms_room_id_detail",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/raid-rooms/{room_id}/plan",
+      "operation_id": "contract3_get__v2_me_raid-rooms_room_id_plan",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/raid-room-applications",
+      "operation_id": "contract3_get__v2_me_raid-room-applications",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/raid-room-memberships",
+      "operation_id": "contract3_get__v2_me_raid-room-memberships",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/groups/{group_id}/raid-room-member-projections",
+      "operation_id": "contract3_get__v2_groups_group_id_raid-room-member-projections",
+      "topic": "recruitment/search"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/raid-rooms/{room_id}/continuation-context",
+      "operation_id": "get__v2_me_raid-rooms_room_id_continuation-context",
+      "topic": "recruitment/weekly-cycles"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/continuation-participations",
+      "operation_id": "post__v2_raid-rooms_room_id_continuation-participations",
+      "topic": "recruitment/weekly-cycles"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/continuation-declines",
+      "operation_id": "post__v2_raid-rooms_room_id_continuation-declines",
+      "topic": "recruitment/weekly-cycles"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/raid-rooms/{room_id}/opening-context",
+      "operation_id": "get__v2_me_raid-rooms_room_id_opening-context",
+      "topic": "recruitment/weekly-cycles"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/recruitment-openings",
+      "operation_id": "post__v2_raid-rooms_room_id_recruitment-openings",
+      "topic": "recruitment/weekly-cycles"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/raid-rooms/{room_id}/participation-cancellation-context",
+      "operation_id": "get__v2_me_raid-rooms_room_id_participation-cancellation-context",
+      "topic": "recruitment/weekly-cycles"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/participation-cancellations",
+      "operation_id": "post__v2_raid-rooms_room_id_participation-cancellations",
+      "topic": "recruitment/weekly-cycles"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/raid-rooms/{room_id}/leadership-transfer-context",
+      "operation_id": "get__v2_me_raid-rooms_room_id_leadership-transfer-context",
+      "topic": "recruitment/weekly-cycles"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/leadership-transfers",
+      "operation_id": "post__v2_raid-rooms_room_id_leadership-transfers",
+      "topic": "recruitment/weekly-cycles"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/character-changes",
+      "operation_id": "contract3_post__v2_raid-rooms_room_id_character-changes",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/raid-rooms/{room_id}/availability-submission",
+      "operation_id": "contract3_get__v2_me_raid-rooms_room_id_availability-submission",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "PUT",
+      "path": "/v2/me/raid-rooms/{room_id}/availability-submission",
+      "operation_id": "contract3_put__v2_me_raid-rooms_room_id_availability-submission",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/raid-rooms/{room_id}/schedule-context",
+      "operation_id": "contract3_get__v2_me_raid-rooms_room_id_schedule-context",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/raid-schedule-overlaps",
+      "operation_id": "contract3_get__v2_me_raid-schedule-overlaps",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-sessions/{session_id}/participation-confirmations",
+      "operation_id": "contract3_post__v2_raid-sessions_session_id_participation-confirmations",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "PUT",
+      "path": "/v2/raid-rooms/{room_id}/schedule-groups",
+      "operation_id": "contract3_put__v2_raid-rooms_room_id_schedule-groups",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/raid-schedule-groups/{group_id}/candidates",
+      "operation_id": "contract3_get__v2_raid-schedule-groups_group_id_candidates",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-schedule-groups/{group_id}/selections",
+      "operation_id": "contract3_post__v2_raid-schedule-groups_group_id_selections",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/schedule-proposals",
+      "operation_id": "contract3_post__v2_raid-rooms_room_id_schedule-proposals",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-schedule-proposals/{proposal_id}/responses",
+      "operation_id": "contract3_post__v2_raid-schedule-proposals_proposal_id_responses",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/raid-rooms/{room_id}/command-context",
+      "operation_id": "contract3_get__v2_raid-rooms_room_id_command-context",
+      "topic": "recruitment/completion-and-records"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/weekly-incomplete-closures",
+      "operation_id": "contract3_post__v2_raid-rooms_room_id_weekly-incomplete-closures",
+      "topic": "recruitment/completion-and-records"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rounds/{round_id}/completion",
+      "operation_id": "contract3_post__v2_raid-rounds_round_id_completion",
+      "topic": "recruitment/completion-and-records"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rounds/{round_id}/personal-completion",
+      "operation_id": "contract3_post__v2_raid-rounds_round_id_personal-completion",
+      "topic": "recruitment/completion-and-records"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/weekly-resume-proposals",
+      "operation_id": "contract3_post__v2_raid-rooms_room_id_weekly-resume-proposals",
+      "topic": "recruitment/completion-and-records"
+    },
+    {
+      "method": "PUT",
+      "path": "/v2/me/characters/{character_id}/raid-weekly-states/{raid_id}/manual-completion",
+      "operation_id": "contract3_manual_completion",
+      "topic": "raids/weekly-records"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/raid-rooms/{room_id}/settings",
+      "operation_id": "contract3_get__v2_me_raid-rooms_room_id_settings",
+      "topic": "recruitment/creation-and-settings"
+    },
+    {
+      "method": "PUT",
+      "path": "/v2/raid-rooms/{room_id}/settings",
+      "operation_id": "contract3_put__v2_raid-rooms_room_id_settings",
+      "topic": "recruitment/creation-and-settings"
+    },
+    {
+      "method": "PUT",
+      "path": "/v2/raid-rooms/{room_id}/formation",
+      "operation_id": "contract3_put__v2_raid-rooms_room_id_formation",
+      "topic": "recruitment/creation-and-settings"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/removals",
+      "operation_id": "contract3_post__v2_raid-rooms_room_id_removals",
+      "topic": "recruitment/membership-actions"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/raid-rooms/{room_id}/common-context",
+      "operation_id": "contract3_get__v2_me_raid-rooms_room_id_common-context",
+      "topic": "recruitment/creation-and-settings"
+    },
+    {
+      "method": "PUT",
+      "path": "/v2/raid-rooms/{room_id}/common-settings",
+      "operation_id": "contract3_put__v2_raid-rooms_room_id_common-settings",
+      "topic": "recruitment/creation-and-settings"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/leave",
+      "operation_id": "contract3_post__v2_raid-rooms_room_id_leave",
+      "topic": "recruitment/membership-actions"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/end",
+      "operation_id": "contract3_post__v2_raid-rooms_room_id_end",
+      "topic": "recruitment/membership-actions"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/raid-rooms/{room_id}/continuation-choices",
+      "operation_id": "contract3_get__v2_me_raid-rooms_room_id_continuation-choices",
+      "topic": "recruitment/weekly-cycles"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/characters/{character_id}/raid-weekly-states/{raid_id}/completion-correction-context",
+      "operation_id": "completion_correction_context_v2_me_characters__character_id__raid_weekly_states__raid_id__completion_correction_context_get",
+      "topic": "recruitment/completion-and-records"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/me/characters/{character_id}/raid-weekly-states/{raid_id}/completion-corrections",
+      "operation_id": "correct_completion_v2_me_characters__character_id__raid_weekly_states__raid_id__completion_corrections_post",
+      "topic": "recruitment/completion-and-records"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/raid-rooms/{room_id}/personal-completion-departure-context",
+      "operation_id": "departure_context_v2_raid_rooms__room_id__personal_completion_departure_context_get",
+      "topic": "recruitment/membership-actions"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/personal-completion-departures",
+      "operation_id": "personal_departure_v2_raid_rooms__room_id__personal_completion_departures_post",
+      "topic": "recruitment/membership-actions"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/raid-rooms/{room_id}/member-removal-context",
+      "operation_id": "member_removal_context_v2_raid_rooms__room_id__member_removal_context_get",
+      "topic": "recruitment/membership-actions"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/member-removals",
+      "operation_id": "atomic_removal_v2_raid_rooms__room_id__member_removals_post",
+      "topic": "recruitment/membership-actions"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/raid-rooms/{room_id}/membership-action-context",
+      "operation_id": "membership_action_context_v2_raid_rooms__room_id__membership_action_context_get",
+      "topic": "recruitment/membership-actions"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/membership-actions",
+      "operation_id": "membership_action_v2_raid_rooms__room_id__membership_actions_post",
+      "topic": "recruitment/membership-actions"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/raid-rooms/{room_id}/admission-character-candidates",
+      "operation_id": "contract3_get__v2_raid-rooms_room_id_admission-character-candidates",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/application-message-presets",
+      "operation_id": "read_presets_v2_me_application_message_presets_get",
+      "topic": "recruitment/participation"
+    },
+    {
+      "method": "PUT",
+      "path": "/v2/me/application-message-presets",
+      "operation_id": "write_presets_v2_me_application_message_presets_put",
+      "topic": "recruitment/participation"
+    }
+  ]
+}

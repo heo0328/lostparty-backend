@@ -1,0 +1,156 @@
+{
+  "source_commit": "d95e3827187966ddfa7a111407afdf9e7dd0c3eb",
+  "image": "sha256:f458e6d57ab3eab4fd46355758d99f2bb5bd95bf9dface55e387babeca147e57",
+  "previous_image": "sha256:366e868aacb5937f47e54edecc028742338719286f83dd6f99d4ef7a8ebfc773",
+  "applied_at": "2026-10-25T10:11:35.567883+00:00",
+  "revision": [
+    "0032_beta_recruitment"
+  ],
+  "source_files": 259,
+  "tables_before": 108,
+  "tables_after": 113,
+  "rows": 934,
+  "existing_rows_columns_sequences_profile_keys_preserved": true,
+  "new_tables_empty": true,
+  "new_number_sequence_unused": true,
+  "database_container_image_volume_preserved": true,
+  "api_environment_command_security_ports_logging_key_mount_preserved": true,
+  "backup_archive_readable": true,
+  "backup_restore_rehearsal": true,
+  "restricted_role_migration_and_readiness": true,
+  "api_healthy": true,
+  "db_healthy": true,
+  "openapi": {
+    "base_paths": 116,
+    "base_operations": 133,
+    "current_paths": 178,
+    "current_operations": 199,
+    "full_objects_equal": true
+  },
+  "runtime_lock_packages": 31,
+  "http_checks": [
+    {
+      "case": "health",
+      "status": 200
+    },
+    {
+      "case": "public_cycle",
+      "status": 200
+    },
+    {
+      "case": "applications_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "applications_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "detail_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "detail_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "candidates_apply_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "candidates_apply_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "candidates_change_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "candidates_change_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "presets_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "presets_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer_challenge": true
+    },
+    {
+      "case": "public_search_C_legacy",
+      "status": 200,
+      "public_sensitive_fields_absent": true
+    },
+    {
+      "case": "public_search_C_beta",
+      "status": 200,
+      "public_sensitive_fields_absent": true
+    },
+    {
+      "case": "public_search_N_legacy",
+      "status": 200,
+      "public_sensitive_fields_absent": true
+    },
+    {
+      "case": "public_search_N_beta",
+      "status": 200,
+      "public_sensitive_fields_absent": true
+    }
+  ],
+  "logs": {
+    "lines": 62,
+    "events": {
+      "server_event": 4,
+      "http_request": 24,
+      "job_completed": 23,
+      "api_rejected": 11
+    },
+    "successful_jobs": [
+      "auth_cleanup",
+      "ownership_settlement",
+      "recruitment"
+    ],
+    "allowlisted": true,
+    "errors": 0
+  },
+  "not_verified": [
+    "normal-member live commands",
+    "native device acceptance",
+    "provider integration",
+    "load and log rollover",
+    "AWS production",
+    "dev/main integration"
+  ],
+  "owned_temporary_resources_removed": true
+}

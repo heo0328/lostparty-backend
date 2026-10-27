@@ -1,0 +1,1512 @@
+{
+  "kind": "authored_synthetic_contract_vectors_not_runtime_responses",
+  "examples": [
+    {
+      "name": "ordinary-dealer-only",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "apply",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "apply",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 1,
+          "exclusion_summary": [],
+          "items": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "registration_id": "00000000-0000-4000-8000-000000000003",
+              "server_name": "synthetic-server",
+              "character_name": "synthetic-10",
+              "class_name": "synthetic-dealer-class",
+              "item_level": "1750.00",
+              "roles": {
+                "dealer": {
+                  "supported": true,
+                  "allowed": true,
+                  "reason": null,
+                  "comparison": {
+                    "selected_role": "dealer",
+                    "requirement": "100",
+                    "actual": "120",
+                    "state": "meets",
+                    "source": "flutter_analysis",
+                    "trust": "client_submitted",
+                    "current_summary_version": 2,
+                    "success_summary_version": 2,
+                    "power_revision": 2,
+                    "observed_at": "2026-10-10T00:00:00Z",
+                    "success_saved_at": "2026-10-10T01:00:00Z",
+                    "success_issues": [],
+                    "current_issues": []
+                  }
+                },
+                "support": {
+                  "supported": false,
+                  "allowed": false,
+                  "reason": "ROLE_NOT_SUPPORTED",
+                  "comparison": null
+                }
+              }
+            }
+          ],
+          "next_cursor": null
+        }
+      },
+      "note": "지원하지 않는 support가 후보/계수를 살리지 않는다."
+    },
+    {
+      "name": "valkyrie-support-only-same-class-other-role",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "apply",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "apply",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 1,
+          "exclusion_summary": [],
+          "items": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "registration_id": "00000000-0000-4000-8000-000000000003",
+              "server_name": "synthetic-server",
+              "character_name": "synthetic-10",
+              "class_name": "발키리",
+              "item_level": "1750.00",
+              "roles": {
+                "dealer": {
+                  "supported": true,
+                  "allowed": false,
+                  "reason": "ROOM_COMPOSITION_CONFLICT",
+                  "comparison": {
+                    "selected_role": "dealer",
+                    "requirement": "100",
+                    "actual": "120",
+                    "state": "meets",
+                    "source": "flutter_analysis",
+                    "trust": "client_submitted",
+                    "current_summary_version": 2,
+                    "success_summary_version": 2,
+                    "power_revision": 2,
+                    "observed_at": "2026-10-10T00:00:00Z",
+                    "success_saved_at": "2026-10-10T01:00:00Z",
+                    "success_issues": [],
+                    "current_issues": []
+                  }
+                },
+                "support": {
+                  "supported": true,
+                  "allowed": true,
+                  "reason": null,
+                  "comparison": {
+                    "selected_role": "support",
+                    "requirement": "100",
+                    "actual": "120",
+                    "state": "meets",
+                    "source": "flutter_analysis",
+                    "trust": "client_submitted",
+                    "current_summary_version": 2,
+                    "success_summary_version": 2,
+                    "power_revision": 2,
+                    "observed_at": "2026-10-10T00:00:00Z",
+                    "success_saved_at": "2026-10-10T01:00:00Z",
+                    "success_issues": [],
+                    "current_issues": []
+                  }
+                }
+              }
+            }
+          ],
+          "next_cursor": null
+        }
+      },
+      "note": "확정 dealer 발키리가 있어도 support 발키리는 허용할 수 있다."
+    },
+    {
+      "name": "dual-both-roles",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "apply",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "apply",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 1,
+          "exclusion_summary": [],
+          "items": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "registration_id": "00000000-0000-4000-8000-000000000003",
+              "server_name": "synthetic-server",
+              "character_name": "synthetic-10",
+              "class_name": "발키리",
+              "item_level": "1750.00",
+              "roles": {
+                "dealer": {
+                  "supported": true,
+                  "allowed": true,
+                  "reason": null,
+                  "comparison": {
+                    "selected_role": "dealer",
+                    "requirement": "100",
+                    "actual": "120",
+                    "state": "meets",
+                    "source": "flutter_analysis",
+                    "trust": "client_submitted",
+                    "current_summary_version": 2,
+                    "success_summary_version": 2,
+                    "power_revision": 2,
+                    "observed_at": "2026-10-10T00:00:00Z",
+                    "success_saved_at": "2026-10-10T01:00:00Z",
+                    "success_issues": [],
+                    "current_issues": []
+                  }
+                },
+                "support": {
+                  "supported": true,
+                  "allowed": true,
+                  "reason": null,
+                  "comparison": {
+                    "selected_role": "support",
+                    "requirement": "100",
+                    "actual": "120",
+                    "state": "meets",
+                    "source": "flutter_analysis",
+                    "trust": "client_submitted",
+                    "current_summary_version": 2,
+                    "success_summary_version": 2,
+                    "power_revision": 2,
+                    "observed_at": "2026-10-10T00:00:00Z",
+                    "success_saved_at": "2026-10-10T01:00:00Z",
+                    "success_issues": [],
+                    "current_issues": []
+                  }
+                }
+              }
+            }
+          ],
+          "next_cursor": null
+        }
+      },
+      "note": ""
+    },
+    {
+      "name": "ordinary-duplicate-excluded",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "apply",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "apply",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 0,
+          "exclusion_summary": [
+            {
+              "reason": "ROOM_COMPOSITION_CONFLICT",
+              "detail": null,
+              "character_count": 1
+            }
+          ],
+          "items": [],
+          "next_cursor": null
+        }
+      },
+      "note": "가상 판정 결과를 작성한 자료이며 실제 evaluator/DB 시험은 아니다."
+    },
+    {
+      "name": "required-power-missing",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "apply",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "apply",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 0,
+          "exclusion_summary": [
+            {
+              "reason": "COMBAT_POWER_REQUIRED",
+              "detail": "missing",
+              "character_count": 1
+            }
+          ],
+          "items": [],
+          "next_cursor": null
+        }
+      },
+      "note": "가상 판정 결과를 작성한 자료이며 실제 evaluator/DB 시험은 아니다."
+    },
+    {
+      "name": "power-below",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "apply",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "apply",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 0,
+          "exclusion_summary": [
+            {
+              "reason": "COMBAT_POWER_REQUIRED",
+              "detail": "below",
+              "character_count": 1
+            }
+          ],
+          "items": [],
+          "next_cursor": null
+        }
+      },
+      "note": "가상 판정 결과를 작성한 자료이며 실제 evaluator/DB 시험은 아니다."
+    },
+    {
+      "name": "bundle-one-item-level-fails",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "apply",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "apply",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 0,
+          "exclusion_summary": [
+            {
+              "reason": "RAID_ITEM_LEVEL_REQUIRED",
+              "detail": null,
+              "character_count": 1
+            }
+          ],
+          "items": [],
+          "next_cursor": null
+        }
+      },
+      "note": "가상 판정 결과를 작성한 자료이며 실제 evaluator/DB 시험은 아니다."
+    },
+    {
+      "name": "manual-or-party-completed",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "apply",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "apply",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 0,
+          "exclusion_summary": [
+            {
+              "reason": "WEEKLY_ALREADY_COMPLETED",
+              "detail": null,
+              "character_count": 1
+            }
+          ],
+          "items": [],
+          "next_cursor": null
+        }
+      },
+      "note": "가상 판정 결과를 작성한 자료이며 실제 evaluator/DB 시험은 아니다."
+    },
+    {
+      "name": "other-room-participating",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "apply",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "apply",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 0,
+          "exclusion_summary": [
+            {
+              "reason": "WEEKLY_ALREADY_PARTICIPATING",
+              "detail": null,
+              "character_count": 1
+            }
+          ],
+          "items": [],
+          "next_cursor": null
+        }
+      },
+      "note": "가상 판정 결과를 작성한 자료이며 실제 evaluator/DB 시험은 아니다."
+    },
+    {
+      "name": "all-parties-full",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "apply",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "apply",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 0,
+          "exclusion_summary": [
+            {
+              "reason": "ROOM_FULL",
+              "detail": null,
+              "character_count": 1
+            }
+          ],
+          "items": [],
+          "next_cursor": null
+        }
+      },
+      "note": "가상 판정 결과를 작성한 자료이며 실제 evaluator/DB 시험은 아니다."
+    },
+    {
+      "name": "no-source-candidates",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "apply",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "apply",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 0,
+          "eligible_candidate_count": 0,
+          "exclusion_summary": [],
+          "items": [],
+          "next_cursor": null
+        }
+      },
+      "note": ""
+    },
+    {
+      "name": "retained-success-new-head-error-with-old-warning",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "apply",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "apply",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 1,
+          "exclusion_summary": [],
+          "items": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "registration_id": "00000000-0000-4000-8000-000000000003",
+              "server_name": "synthetic-server",
+              "character_name": "synthetic-10",
+              "class_name": "synthetic-dealer-class",
+              "item_level": "1750.00",
+              "roles": {
+                "dealer": {
+                  "supported": true,
+                  "allowed": true,
+                  "reason": null,
+                  "comparison": {
+                    "selected_role": "dealer",
+                    "requirement": "100",
+                    "actual": "120",
+                    "state": "meets",
+                    "source": "flutter_analysis",
+                    "trust": "client_submitted",
+                    "current_summary_version": 4,
+                    "success_summary_version": 2,
+                    "power_revision": 2,
+                    "observed_at": "2026-10-10T00:00:00Z",
+                    "success_saved_at": "2026-10-10T01:00:00Z",
+                    "success_issues": [
+                      {
+                        "code": "SYNTHETIC_BUILD_WARNING",
+                        "severity": "warning"
+                      }
+                    ],
+                    "current_issues": [
+                      {
+                        "code": "SYNTHETIC_HEAD_UNAVAILABLE",
+                        "severity": "error"
+                      }
+                    ]
+                  }
+                },
+                "support": {
+                  "supported": false,
+                  "allowed": false,
+                  "reason": "ROLE_NOT_SUPPORTED",
+                  "comparison": null
+                }
+              }
+            }
+          ],
+          "next_cursor": null
+        }
+      },
+      "note": "기존 저장 성공값으로 비교하며 관측일/현재head실패·경고를 그대로 표시한다. 신규TTL 없음."
+    },
+    {
+      "name": "no-minimum-and-no-success-unrestricted",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "apply",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "apply",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 1,
+          "exclusion_summary": [],
+          "items": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "registration_id": "00000000-0000-4000-8000-000000000003",
+              "server_name": "synthetic-server",
+              "character_name": "synthetic-10",
+              "class_name": "synthetic-dealer-class",
+              "item_level": "1750.00",
+              "roles": {
+                "dealer": {
+                  "supported": true,
+                  "allowed": true,
+                  "reason": null,
+                  "comparison": {
+                    "selected_role": "dealer",
+                    "requirement": null,
+                    "actual": null,
+                    "state": "unrestricted",
+                    "source": "flutter_analysis",
+                    "trust": "client_submitted",
+                    "current_summary_version": 2,
+                    "success_summary_version": null,
+                    "power_revision": 1,
+                    "observed_at": null,
+                    "success_saved_at": null,
+                    "success_issues": [],
+                    "current_issues": []
+                  }
+                },
+                "support": {
+                  "supported": false,
+                  "allowed": false,
+                  "reason": "ROLE_NOT_SUPPORTED",
+                  "comparison": null
+                }
+              }
+            }
+          ],
+          "next_cursor": null
+        }
+      },
+      "note": "최소조건 없음은 전투력0/분석성공을 뜻하지 않는다."
+    },
+    {
+      "name": "dealer-power-missing-support-valid",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "apply",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "apply",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 1,
+          "exclusion_summary": [],
+          "items": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "registration_id": "00000000-0000-4000-8000-000000000003",
+              "server_name": "synthetic-server",
+              "character_name": "synthetic-10",
+              "class_name": "발키리",
+              "item_level": "1750.00",
+              "roles": {
+                "dealer": {
+                  "supported": true,
+                  "allowed": false,
+                  "reason": "COMBAT_POWER_REQUIRED",
+                  "comparison": {
+                    "selected_role": "dealer",
+                    "requirement": "100",
+                    "actual": null,
+                    "state": "missing",
+                    "source": "flutter_analysis",
+                    "trust": "client_submitted",
+                    "current_summary_version": 2,
+                    "success_summary_version": null,
+                    "power_revision": 1,
+                    "observed_at": null,
+                    "success_saved_at": null,
+                    "success_issues": [],
+                    "current_issues": []
+                  }
+                },
+                "support": {
+                  "supported": true,
+                  "allowed": true,
+                  "reason": null,
+                  "comparison": {
+                    "selected_role": "support",
+                    "requirement": "100",
+                    "actual": "120",
+                    "state": "meets",
+                    "source": "flutter_analysis",
+                    "trust": "client_submitted",
+                    "current_summary_version": 2,
+                    "success_summary_version": 2,
+                    "power_revision": 2,
+                    "observed_at": "2026-10-10T00:00:00Z",
+                    "success_saved_at": "2026-10-10T01:00:00Z",
+                    "success_issues": [],
+                    "current_issues": []
+                  }
+                }
+              }
+            }
+          ],
+          "next_cursor": null
+        }
+      },
+      "note": "support 성공값을 dealer에 빌리지 않는다."
+    },
+    {
+      "name": "change-only-own-assignment-removed",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "change_character",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "change_character",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": {
+            "membership_id": "00000000-0000-4000-8000-000000000020",
+            "cycle_member_id": "00000000-0000-4000-8000-000000000021",
+            "cycle_member_revision": 2,
+            "assignments": [
+              {
+                "assignment_id": "00000000-0000-4000-8000-000000000022",
+                "revision": 2,
+                "item_id": "00000000-0000-4000-8000-000000000023",
+                "round_id": "00000000-0000-4000-8000-000000000024",
+                "character_id": "00000000-0000-4000-8000-000000000009",
+                "selected_role": "dealer",
+                "party_no": 1,
+                "slot_no": 3
+              }
+            ]
+          },
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 1,
+          "exclusion_summary": [],
+          "items": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "registration_id": "00000000-0000-4000-8000-000000000003",
+              "server_name": "synthetic-server",
+              "character_name": "synthetic-10",
+              "class_name": "synthetic-dealer-class",
+              "item_level": "1750.00",
+              "roles": {
+                "dealer": {
+                  "supported": true,
+                  "allowed": true,
+                  "reason": null,
+                  "comparison": {
+                    "selected_role": "dealer",
+                    "requirement": "100",
+                    "actual": "120",
+                    "state": "meets",
+                    "source": "flutter_analysis",
+                    "trust": "client_submitted",
+                    "current_summary_version": 2,
+                    "success_summary_version": 2,
+                    "power_revision": 2,
+                    "observed_at": "2026-10-10T00:00:00Z",
+                    "success_saved_at": "2026-10-10T01:00:00Z",
+                    "success_issues": [],
+                    "current_issues": []
+                  }
+                },
+                "support": {
+                  "supported": false,
+                  "allowed": false,
+                  "reason": "ROLE_NOT_SUPPORTED",
+                  "comparison": null
+                }
+              }
+            }
+          ],
+          "next_cursor": null
+        }
+      },
+      "note": "정원4에서도 정확한 교체Assignment만 뺀 가상구성이 유효하면 변경 가능."
+    },
+    {
+      "name": "change-eight-opposite-party-valid",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "change_character",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "change_character",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": {
+            "membership_id": "00000000-0000-4000-8000-000000000020",
+            "cycle_member_id": "00000000-0000-4000-8000-000000000021",
+            "cycle_member_revision": 2,
+            "assignments": [
+              {
+                "assignment_id": "00000000-0000-4000-8000-000000000022",
+                "revision": 2,
+                "item_id": "00000000-0000-4000-8000-000000000023",
+                "round_id": "00000000-0000-4000-8000-000000000024",
+                "character_id": "00000000-0000-4000-8000-000000000009",
+                "selected_role": "dealer",
+                "party_no": 1,
+                "slot_no": 3
+              }
+            ]
+          },
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 1,
+          "exclusion_summary": [],
+          "items": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "registration_id": "00000000-0000-4000-8000-000000000003",
+              "server_name": "synthetic-server",
+              "character_name": "synthetic-10",
+              "class_name": "발키리",
+              "item_level": "1750.00",
+              "roles": {
+                "dealer": {
+                  "supported": true,
+                  "allowed": true,
+                  "reason": null,
+                  "comparison": {
+                    "selected_role": "dealer",
+                    "requirement": "100",
+                    "actual": "120",
+                    "state": "meets",
+                    "source": "flutter_analysis",
+                    "trust": "client_submitted",
+                    "current_summary_version": 2,
+                    "success_summary_version": 2,
+                    "power_revision": 2,
+                    "observed_at": "2026-10-10T00:00:00Z",
+                    "success_saved_at": "2026-10-10T01:00:00Z",
+                    "success_issues": [],
+                    "current_issues": []
+                  }
+                },
+                "support": {
+                  "supported": true,
+                  "allowed": true,
+                  "reason": null,
+                  "comparison": {
+                    "selected_role": "support",
+                    "requirement": "100",
+                    "actual": "120",
+                    "state": "meets",
+                    "source": "flutter_analysis",
+                    "trust": "client_submitted",
+                    "current_summary_version": 2,
+                    "success_summary_version": 2,
+                    "power_revision": 2,
+                    "observed_at": "2026-10-10T00:00:00Z",
+                    "success_saved_at": "2026-10-10T01:00:00Z",
+                    "success_issues": [],
+                    "current_issues": []
+                  }
+                }
+              }
+            }
+          ],
+          "next_cursor": null
+        }
+      },
+      "note": "원파티1은 불가/파티2만 가능인 가상시나리오. 실제 변경context.targets.party_no=2가 기대되지만 후보 wire에 배치권한을 추가하지 않는다."
+    },
+    {
+      "name": "change-other-assignment-not-excluded",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "change_character",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "change_character",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": {
+            "membership_id": "00000000-0000-4000-8000-000000000020",
+            "cycle_member_id": "00000000-0000-4000-8000-000000000021",
+            "cycle_member_revision": 2,
+            "assignments": [
+              {
+                "assignment_id": "00000000-0000-4000-8000-000000000022",
+                "revision": 2,
+                "item_id": "00000000-0000-4000-8000-000000000023",
+                "round_id": "00000000-0000-4000-8000-000000000024",
+                "character_id": "00000000-0000-4000-8000-000000000009",
+                "selected_role": "dealer",
+                "party_no": 1,
+                "slot_no": 3
+              }
+            ]
+          },
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 0,
+          "exclusion_summary": [
+            {
+              "reason": "WEEKLY_ALREADY_PARTICIPATING",
+              "detail": null,
+              "character_count": 1
+            }
+          ],
+          "items": [],
+          "next_cursor": null
+        }
+      },
+      "note": "같은room이라도 교체대상이 아닌 점유는 무시하지 않는다."
+    },
+    {
+      "name": "current-week-completed",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "apply",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "apply",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 0,
+          "exclusion_summary": [
+            {
+              "reason": "WEEKLY_ALREADY_COMPLETED",
+              "detail": null,
+              "character_count": 1
+            }
+          ],
+          "items": [],
+          "next_cursor": null
+        }
+      },
+      "note": ""
+    },
+    {
+      "name": "next-week-same-character-not-completed",
+      "query": {
+        "target_cycle_key": "2026-10-28",
+        "intent": "apply",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-28",
+          "playable_from": "2026-10-28T10:00:00+09:00",
+          "phase": "future",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000030",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "apply",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 1,
+          "exclusion_summary": [],
+          "items": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "registration_id": "00000000-0000-4000-8000-000000000003",
+              "server_name": "synthetic-server",
+              "character_name": "synthetic-10",
+              "class_name": "synthetic-dealer-class",
+              "item_level": "1750.00",
+              "roles": {
+                "dealer": {
+                  "supported": true,
+                  "allowed": true,
+                  "reason": null,
+                  "comparison": {
+                    "selected_role": "dealer",
+                    "requirement": "100",
+                    "actual": "120",
+                    "state": "meets",
+                    "source": "flutter_analysis",
+                    "trust": "client_submitted",
+                    "current_summary_version": 2,
+                    "success_summary_version": 2,
+                    "power_revision": 2,
+                    "observed_at": "2026-10-10T00:00:00Z",
+                    "success_saved_at": "2026-10-10T01:00:00Z",
+                    "success_issues": [],
+                    "current_issues": []
+                  }
+                },
+                "support": {
+                  "supported": false,
+                  "allowed": false,
+                  "reason": "ROLE_NOT_SUPPORTED",
+                  "comparison": null
+                }
+              }
+            }
+          ],
+          "next_cursor": null
+        }
+      },
+      "note": "반대T 완료를 끌어오지 않는다."
+    },
+    {
+      "name": "pagination-first",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "apply",
+        "limit": 2,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "apply",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "raw_candidate_count": 3,
+          "eligible_candidate_count": 3,
+          "exclusion_summary": [],
+          "items": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "registration_id": "00000000-0000-4000-8000-000000000003",
+              "server_name": "synthetic-server",
+              "character_name": "synthetic-10",
+              "class_name": "synthetic-dealer-class",
+              "item_level": "1750.00",
+              "roles": {
+                "dealer": {
+                  "supported": true,
+                  "allowed": true,
+                  "reason": null,
+                  "comparison": {
+                    "selected_role": "dealer",
+                    "requirement": "100",
+                    "actual": "120",
+                    "state": "meets",
+                    "source": "flutter_analysis",
+                    "trust": "client_submitted",
+                    "current_summary_version": 2,
+                    "success_summary_version": 2,
+                    "power_revision": 2,
+                    "observed_at": "2026-10-10T00:00:00Z",
+                    "success_saved_at": "2026-10-10T01:00:00Z",
+                    "success_issues": [],
+                    "current_issues": []
+                  }
+                },
+                "support": {
+                  "supported": false,
+                  "allowed": false,
+                  "reason": "ROLE_NOT_SUPPORTED",
+                  "comparison": null
+                }
+              }
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "registration_id": "00000000-0000-4000-8000-000000000003",
+              "server_name": "synthetic-server",
+              "character_name": "synthetic-11",
+              "class_name": "synthetic-dealer-class",
+              "item_level": "1750.00",
+              "roles": {
+                "dealer": {
+                  "supported": true,
+                  "allowed": true,
+                  "reason": null,
+                  "comparison": {
+                    "selected_role": "dealer",
+                    "requirement": "100",
+                    "actual": "120",
+                    "state": "meets",
+                    "source": "flutter_analysis",
+                    "trust": "client_submitted",
+                    "current_summary_version": 2,
+                    "success_summary_version": 2,
+                    "power_revision": 2,
+                    "observed_at": "2026-10-10T00:00:00Z",
+                    "success_saved_at": "2026-10-10T01:00:00Z",
+                    "success_issues": [],
+                    "current_issues": []
+                  }
+                },
+                "support": {
+                  "supported": false,
+                  "allowed": false,
+                  "reason": "ROLE_NOT_SUPPORTED",
+                  "comparison": null
+                }
+              }
+            }
+          ],
+          "next_cursor": "synthetic-cursor-page2-not-a-real-mac"
+        }
+      },
+      "note": "",
+      "pagination_group": "three-candidates"
+    },
+    {
+      "name": "pagination-last",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "apply",
+        "limit": 2,
+        "cursor": "synthetic-cursor-page2-not-a-real-mac"
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:01+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "apply",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:01+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "raw_candidate_count": 3,
+          "eligible_candidate_count": 3,
+          "exclusion_summary": [],
+          "items": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "registration_id": "00000000-0000-4000-8000-000000000003",
+              "server_name": "synthetic-server",
+              "character_name": "synthetic-12",
+              "class_name": "synthetic-dealer-class",
+              "item_level": "1750.00",
+              "roles": {
+                "dealer": {
+                  "supported": true,
+                  "allowed": true,
+                  "reason": null,
+                  "comparison": {
+                    "selected_role": "dealer",
+                    "requirement": "100",
+                    "actual": "120",
+                    "state": "meets",
+                    "source": "flutter_analysis",
+                    "trust": "client_submitted",
+                    "current_summary_version": 2,
+                    "success_summary_version": 2,
+                    "power_revision": 2,
+                    "observed_at": "2026-10-10T00:00:00Z",
+                    "success_saved_at": "2026-10-10T01:00:00Z",
+                    "success_issues": [],
+                    "current_issues": []
+                  }
+                },
+                "support": {
+                  "supported": false,
+                  "allowed": false,
+                  "reason": "ROLE_NOT_SUPPORTED",
+                  "comparison": null
+                }
+              }
+            }
+          ],
+          "next_cursor": null
+        }
+      },
+      "note": "",
+      "pagination_group": "three-candidates"
+    },
+    {
+      "name": "join-eligible",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "join",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "join",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 1,
+          "exclusion_summary": [],
+          "items": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "registration_id": "00000000-0000-4000-8000-000000000003",
+              "server_name": "synthetic-server",
+              "character_name": "synthetic-10",
+              "class_name": "synthetic-dealer-class",
+              "item_level": "1750.00",
+              "roles": {
+                "dealer": {
+                  "supported": true,
+                  "allowed": true,
+                  "reason": null,
+                  "comparison": {
+                    "selected_role": "dealer",
+                    "requirement": "100",
+                    "actual": "120",
+                    "state": "meets",
+                    "source": "flutter_analysis",
+                    "trust": "client_submitted",
+                    "current_summary_version": 2,
+                    "success_summary_version": 2,
+                    "power_revision": 2,
+                    "observed_at": "2026-10-10T00:00:00Z",
+                    "success_saved_at": "2026-10-10T01:00:00Z",
+                    "success_issues": [],
+                    "current_issues": []
+                  }
+                },
+                "support": {
+                  "supported": false,
+                  "allowed": false,
+                  "reason": "ROLE_NOT_SUPPORTED",
+                  "comparison": null
+                }
+              }
+            }
+          ],
+          "next_cursor": null
+        }
+      },
+      "note": "지원하지 않는 support가 후보/계수를 살리지 않는다."
+    },
+    {
+      "name": "join-no-eligible",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "intent": "join",
+        "limit": 50,
+        "cursor": null
+      },
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00+09:00",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-21T10:00:00+09:00",
+          "phase": "current",
+          "target_revision": 2,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "intent": "join",
+          "eligibility_policy_version": "admission-eligibility-2",
+          "actor": null,
+          "evaluated_at": "2026-10-24T12:00:00+09:00",
+          "catalog_version": "synthetic-catalog",
+          "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "raw_candidate_count": 1,
+          "eligible_candidate_count": 0,
+          "exclusion_summary": [
+            {
+              "reason": "ROOM_COMPOSITION_CONFLICT",
+              "detail": null,
+              "character_count": 1
+            }
+          ],
+          "items": [],
+          "next_cursor": null
+        }
+      },
+      "note": "가상 판정 결과를 작성한 자료이며 실제 evaluator/DB 시험은 아니다."
+    }
+  ]
+}

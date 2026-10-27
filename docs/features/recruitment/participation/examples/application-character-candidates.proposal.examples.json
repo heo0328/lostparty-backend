@@ -1,0 +1,102 @@
+[
+  {
+    "name": "one-role-eligible",
+    "response": {
+      "scope": {
+        "server_now": "2026-10-24T12:00:00+09:00",
+        "current_cycle_key": "2026-10-21",
+        "target_cycle_key": "2026-10-21",
+        "playable_from": "2026-10-21T10:00:00+09:00",
+        "phase": "current",
+        "target_revision": 1,
+        "policy_version": "two-cycle-contract-4",
+        "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+        "target_generation": 1
+      },
+      "data": {
+        "room_id": "00000000-0000-4000-8000-000000000001",
+        "intent": "apply",
+        "evaluated_at": "2026-10-24T12:00:00+09:00",
+        "catalog_version": "synthetic-example",
+        "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "raw_candidate_count": 3,
+        "eligible_candidate_count": 1,
+        "items": [
+          {
+            "character_id": "00000000-0000-4000-8000-000000000003",
+            "registration_id": "00000000-0000-4000-8000-000000000004",
+            "server_name": "synthetic-server",
+            "character_name": "synthetic-character",
+            "class_name": "synthetic-class",
+            "item_level": "1750.00",
+            "roles": {
+              "dealer": {
+                "allowed": false,
+                "reason": "ROOM_COMPOSITION_CONFLICT"
+              },
+              "support": {
+                "allowed": true,
+                "reason": null
+              }
+            }
+          }
+        ],
+        "next_cursor": null
+      }
+    }
+  },
+  {
+    "name": "no-base-candidates",
+    "response": {
+      "scope": {
+        "server_now": "2026-10-24T12:00:00+09:00",
+        "current_cycle_key": "2026-10-21",
+        "target_cycle_key": "2026-10-21",
+        "playable_from": "2026-10-21T10:00:00+09:00",
+        "phase": "current",
+        "target_revision": 1,
+        "policy_version": "two-cycle-contract-4",
+        "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+        "target_generation": 1
+      },
+      "data": {
+        "room_id": "00000000-0000-4000-8000-000000000001",
+        "intent": "apply",
+        "evaluated_at": "2026-10-24T12:00:00+09:00",
+        "catalog_version": "synthetic-example",
+        "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "raw_candidate_count": 0,
+        "eligible_candidate_count": 0,
+        "items": [],
+        "next_cursor": null
+      }
+    }
+  },
+  {
+    "name": "all-filtered",
+    "response": {
+      "scope": {
+        "server_now": "2026-10-24T12:00:00+09:00",
+        "current_cycle_key": "2026-10-21",
+        "target_cycle_key": "2026-10-21",
+        "playable_from": "2026-10-21T10:00:00+09:00",
+        "phase": "current",
+        "target_revision": 1,
+        "policy_version": "two-cycle-contract-4",
+        "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+        "target_generation": 1
+      },
+      "data": {
+        "room_id": "00000000-0000-4000-8000-000000000001",
+        "intent": "apply",
+        "evaluated_at": "2026-10-24T12:00:00+09:00",
+        "catalog_version": "synthetic-example",
+        "snapshot_token": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "raw_candidate_count": 3,
+        "eligible_candidate_count": 0,
+        "items": [],
+        "next_cursor": null
+      }
+    }
+  }
+]

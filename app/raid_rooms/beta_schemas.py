@@ -1,0 +1,185 @@
+"""Closed opt-in DTOs built from existing typed fields; no legacy model mutation."""
+from copy import deepcopy
+from datetime import datetime
+from functools import lru_cache
+import re
+import types
+from typing import Annotated, Literal, Union, get_args, get_origin
+from uuid import UUID
+from pydantic import (AfterValidator, AwareDatetime, BaseModel, ConfigDict, Field, StrictBool, StrictInt,
+                      StrictStr, create_model, field_validator, model_validator)
+from app.raid_rooms import cycle_schemas as legacy, beta_text
+from app.game_accounts.support import fail
+
+Version=Annotated[StrictInt,Field(ge=1,le=2147483647)]
+Threshold=Annotated[StrictInt,Field(ge=1,le=7)]
+
+
+class Closed(BaseModel):
+    model_config=ConfigDict(extra='forbid')
+
+
+class BetaScheduleConfig(Closed):
+    """Beta explicit departure uses UTC whole-minute precision; duration, personal availability and automatic candidates retain five-minute grids."""
+    base_starts_at: AwareDatetime
+    early_coordination_enabled: StrictBool
+    early_additional_members: Threshold | None
+
+    @model_validator(mode='after')
+    def valid_setting(self):
+        if self.early_coordination_enabled != (self.early_additional_members is not None):
+            raise ValueError('Coordination threshold must match enabled flag')
+        return self
+
+
+class BetaScheduleTarget(BetaScheduleConfig):
+    target_cycle_key: StrictStr
+
+
+class CoordinationWait(Closed):
+    model_config=ConfigDict(json_schema_extra={'oneOf':[
+        {'properties':{'status':{'const':'waiting_members'},'missing_members':{'type':'integer'}}},
+        {'properties':{'status':{'enum':['no_earlier_candidate','pending','unavailable','not_applicable']},'missing_members':{'type':'null'}}}
+    ]})
+    status: Literal['waiting_members','no_earlier_candidate','pending','unavailable','not_applicable']
+    missing_members: Annotated[StrictInt,Field(ge=1,le=8)] | None
+
+    @model_validator(mode='after')
+    def coherent(self):
+        if (self.status=='waiting_members') != (self.missing_members is not None):
+            raise ValueError('Only waiting_members carries a positive missing count')
+        return self
+
+
+class BetaScheduleView(Closed):
+    policy_version: Literal['beta-schedule-1']
+    revision: Version
+    session_id: UUID
+    base_starts_at: AwareDatetime
+    base_ends_at: AwareDatetime
+    base_deadline_at: AwareDatetime
+    early_coordination_enabled: StrictBool
+    early_additional_members: Threshold | None
+    coordination_state: Literal['base_committed','coordinating','early_confirmed','base_confirmed','proposal_confirmed','deadline_pending','needs_review','ended']
+    coordination_active: StrictBool
+    confirmed_starts_at: AwareDatetime | None
+    confirmed_ends_at: AwareDatetime | None
+    effective_starts_at: AwareDatetime
+    effective_ends_at: AwareDatetime
+    admission_deadline: AwareDatetime
+    deadline_status: Literal['not_due','due_unprocessed','processed','obsolete']
+    pending_transition: Literal['base_confirmation_due','departure_review_due'] | None
+    review_reason: Literal['departure_passed_unconfirmed'] | None
+    evaluated_at: AwareDatetime
+    coordination_wait: CoordinationWait = Field(default=None,exclude_if=lambda value:value is None)
+
+
+class AvailabilityCopyView(Closed):
+    state: Literal['unset','configured']
+    source_personal_version: Version
+    copied_at: AwareDatetime
+
+
+class RecruitmentIdentity(Closed):
+    number: Annotated[StrictInt,Field(ge=1,le=9007199254740991)]
+    password: Annotated[StrictStr,Field(pattern=r'^[0-9]{5}$')]
+
+
+def request(name,base,remove=(),fields=None):
+    original={key:(info.annotation,deepcopy(info)) for key,info in base.model_fields.items() if key not in remove}
+    original.update(fields or {})
+    return create_model(name,__base__=(legacy.CanonicalCycles,Closed),**original)
+
+
+BetaCreateRequest=request('BetaCreateRequest',legacy.Create,['schedule_groups'],
+    {'beta_schedule_targets':(Annotated[list[BetaScheduleTarget],Field(min_length=1,max_length=2)],...)})
+BetaOpenRequest=request('BetaOpenRequest',legacy.Open,fields={'beta_schedule':(BetaScheduleConfig,...)})
+BetaScheduleEditRequest=request('BetaScheduleEditRequest',legacy.EditGroups,['groups'],{
+    'early_coordination_enabled':(StrictBool,...),'early_additional_members':(Threshold|None,...),
+    'accept_immediate_confirmation':(StrictBool,...)})
+
+
+def stored_text(value):
+    if beta_text.normalize(value, preset=True) != value:
+        raise ValueError('Stored memo must already be normalized')
+    return value
+
+
+Memo = Annotated[StrictStr, Field(json_schema_extra={
+    'x-text-policy': beta_text.TEXT_POLICY,
+    'x-allowed-after-nfc': 'U+AC00-D7A3,U+3131-3163,U+0020-U+007E',
+    'x-max-utf8-bytes': 4096,
+    'description': 'NFC then printable ASCII/Hangul validation, trim U+0020; at most 20 code points. Raw idempotency body preserved.'})]
+MemoStored = Annotated[StrictStr, Field(min_length=1, max_length=20, pattern=re.compile(beta_text.STORED_PATTERN)), AfterValidator(stored_text)]
+
+
+class BetaApplyRequest(legacy.Admission):
+    application_memo: Memo | None = None
+
+    @field_validator('application_memo')
+    @classmethod
+    def valid_memo(cls,value):
+        beta_text.normalize(value)
+        return value
+
+
+class DepartureWindow(Closed):
+    """Search-only UTC whole-minute bounds, start inclusive and end exclusive; no rounding. Positive at most 24h, within the selected cycle. Departure grids are unchanged."""
+    starts_at: AwareDatetime
+    ends_at: AwareDatetime
+
+
+ScheduleState=Literal['base_committed','coordinating','early_confirmed','base_confirmed','proposal_confirmed','deadline_pending','needs_review','ended','legacy']
+
+
+class BetaSearchRequest(legacy.Search):
+    departure_windows: Annotated[list[DepartureWindow],Field(min_length=1,max_length=16)] = Field(default=None,exclude_if=lambda v:v is None)
+    schedule_states: Annotated[list[ScheduleState],Field(min_length=1,max_length=9)] = Field(default=None,exclude_if=lambda v:v is None)
+
+    @field_validator('departure_windows','schedule_states',mode='before')
+    @classmethod
+    def no_explicit_null(cls,value):
+        if value is None:raise ValueError('Omit an unused filter')
+        return value
+
+
+ADDITIONS={}
+for _name in ['BCard','BDetail','ApplicationDisplayDetail','ResumePlanData','BPlan','BTimeContext','AdmissionDisplayData',
+              'ContinuationDisplayData','BApplication','ApplicationDisplayItem','BApplicationView','BReview','BMembership',
+              'MembershipActionMembershipEntry','MembershipActionDetailProfileData','MembershipActionPlanProfileData']:
+    ADDITIONS[_name]={'beta_schedule':(BetaScheduleView|None,...)}
+for _name in ['BDetail','ApplicationDisplayDetail','ResumePlanData','BPlan','MembershipActionDetailProfileData','MembershipActionPlanProfileData']:
+    ADDITIONS[_name]['recruitment_identity']=(RecruitmentIdentity|None,...)
+for _name in ['BApplication','ApplicationDisplayItem','BApplicationView','ApplicationDisplayOwnApplication']:
+    ADDITIONS.setdefault(_name,{})['application_memo']=(MemoStored|None,...)
+ADDITIONS['BSubmissionOut']={'availability_copy':(AvailabilityCopyView|None,...)}
+ADDITIONS['BCreationContext']={'beta_schedule_targets':(Annotated[list[BetaScheduleTarget],Field(min_length=1,max_length=2)],...)}
+ADDITIONS['OpeningDisplayData']={'beta_schedule_config':(BetaScheduleConfig,...)}
+
+
+def annotation(value):
+    if isinstance(value,type) and issubclass(value,BaseModel):
+        return output_model(value)
+    origin=get_origin(value)
+    if origin is None:return value
+    args=get_args(value)
+    if origin is Annotated:
+        return Annotated[annotation(args[0]),*args[1:]]
+    mapped=tuple(annotation(arg) for arg in args)
+    if mapped==args:return value
+    if origin in (Union,types.UnionType):return Union[mapped]
+    if origin is Literal:return value
+    return origin[mapped[0]] if len(mapped)==1 else origin[mapped]
+
+
+@lru_cache(maxsize=None)
+def output_model(model):
+    fields={};changed=False
+    for key,info in model.model_fields.items():
+        replacement=annotation(info.annotation)
+        if replacement!=info.annotation:changed=True
+        fields[key]=(replacement,deepcopy(info))
+    extra=ADDITIONS.get(model.__name__,{})
+    if not changed and not extra:return model
+    fields.update(extra)
+    return create_model('Beta_'+model.__name__,__base__=model,**fields)

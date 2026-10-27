@@ -1,0 +1,65 @@
+> **보관된 작업 원문:** 아래 현재·다음·미구현 표기는 작성 당시 상태입니다. 현재 설명: [weekly-cycles](../../../../../features/recruitment/weekly-cycles/README.md) · [creation-and-settings](../../../../../features/recruitment/creation-and-settings/README.md) · [participation](../../../../../features/recruitment/participation/README.md) · [scheduling](../../../../../features/recruitment/scheduling/README.md) · [completion-and-records](../../../../../features/recruitment/completion-and-records/README.md) · [membership-actions](../../../../../features/recruitment/membership-actions/README.md) · [search](../../../../../features/recruitment/search/README.md). [문서 대응표](../../../../../engineering/documentation/README.md). 원문 바이트와 근거는 기준 커밋 `7f7f767`에서 확인합니다.
+
+# 리크룻 Backend 후속 구현 설계
+
+2026-10-19 / Backend / `feat/raid-recruitment` / F2 구현 전 설계.
+
+기존 [R1/R2 상세 제안](../contracts/ISSUE_13_R1_R2_CONTRACT_DRAFT.md)·[F1 구현/검증](../development/ISSUE_13_F1_FOUNDATION.md)을 재사용한다. 새 도메인 재설계나 F1 재구현이 아니다. #13 전체13번째까지 재조회했으며 Q1~Q3의 새 회신은 없었다. F1은 `9664fb4`로 로컬 커밋했고 이 설계는 후행 문서 커밋에 포함하며 모두 미push, 개발API8000/DB0016은 기존 상태다. 설계안/기능 지원/HTTP 제공·Flutter 적용/운영 완료를 구분한다.
+
+현재 진행: F2-A 내부 조회/권한/context·snapshot 구현 e74d850 및 격리58PASS를 [F2-A 결과](../development/ISSUE_13_F2_READS.md)·[#13 전체14번째](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6260548709)에 기록했다. 다음은 F2-B이며 아래는 설계 당시 기준이다. F3 migration 범위는0017+0018이다.
+
+후속 완료: [F2-B 후보 HTTP](../development/ISSUE_13_F2_HTTP.md) 9fb2058/101PASS·#13 전체15번째 결과 기준 다음F3다. 아래 구현순서/초기지원 경계는 그대로 유지한다.
+
+## 1. 목표와 초기 지원안
+
+모집 조회→본인 참가조건 확인→방 생성 또는 신청/즉시가입→파티장 승인→현재 참가관계 재조회→필요시 탈퇴/이전/마지막종료로 이어지는 서버 흐름을 완성한다. 생성자 즉시참가, 회원당 방1자리, 슬롯·주간점유·한도·ACK의 원자성을 F1에서 가져온다.
+
+초기 연결안은 공개방/현재주차 단일회차/유한일정/별도 최소전투력 문턱 미설정이다. 기본 파티장 승인형·즉시가입을 제공하고 최소 회복을 함께 연결한다. 이는 Q1~Q3를 피할 수 있는 설계 부분집합이며 영구 정책/요구 폐기가 아니다. 범위가 확정되지 않은 분기는 지원표/오류로 명시하고 임의 기본시간/자동삭제/검증되지 않은 수치를 쓰지 않는다.
+
+| 바로 설계·구현할 경계 | 별도 확인·후속 |
+|---|---|
+| 공개요약/본인·파티장별 조회/목록·현재 및 종료관계 | 그룹전용방의 그룹탈퇴 후 조회/잔류·회복(Q3) |
+| 신청·승인·거절·철회·즉시가입과 기본 회복 | 종료불명·주차를 넘는 일정의 명시확인(Q1) |
+| 현재 소유/활동·카탈로그 입장레벨/주간/한도·구성 재검사 | 역할별 최소전투력의 수치 출처·판정 근거(Q2) |
+| 기존 유효관계·당시 표시/빌드와 현재 자격의 분리 | 완료·반복·고급 이동/추방·다중동의·통계·V2/G3 통합 |
+
+## 2. 구성과 책임
+
+| 구성 | 책임 |
+|---|---|
+| `schemas.py` | 최종 strict 요청/응답 DTO·필수 nullable·권한·오류·ACK. F1 내부 dict/DB 모델을 그대로 노출하지 않음 |
+| `queries.py` | 공개요약/권한 있는 상세·본인 관계/신청·파티장 신청·최소관리·admission-context. 하나의 읽기 snapshot, 외부호출/쓰기0 |
+| `projections.py` | 공개/현재회원/신청자/파티장/본인이력별 필드 선택. 전역 타인user UUID·개인키/원정대전체·미승인명단 누출 방지 |
+| `policies.py` | 서버가 명시 선택하는 지원 정책 adapter. 미지원 schedule/scope/전투력 분기를 차단하고 기존 검증을 재사용. client가 policy를 선택/우회하거나 테스트 callback이 기본값이 되지 않음 |
+| `router.py` | 인증·strict query/header/body·UUID/key 검증과 service 연결. 역할/DB/상태 판정은 기존 서비스 경계에서 수행 |
+| 기존 `service.py`/`core.py` | 최종 source/CAS·게임 쓰기락·슬롯/WeeklyState/usage/head/ACK의 원자 처리와 replay/회복. F1 시험을 유지하며 필요한 부분만 확장 |
+
+파일명은 구현 배치안이며 실제 필요 없는 계층을 형식적으로 늘리지 않는다. 공개 GET과 private GET/명령의 권한 경계를 명시적으로 분리한다. 그룹장 지위는 파티장 권한을 만들지 않는다.
+
+## 3. 조회·현재성 설계
+
+1. 공개요약은 허용된 최소 필드만, 신청자는 본인신청만, 현재회원은 허용된 현재방 상세만 받는다. 최소 ACK는 과거 성공이고 현재 GET이 권한/구성의 기준이다.
+2. 현재 방 membership/i·주간점유·완료기록은 서로 다른 원본으로 조회한다. 완료/점유 또는 과거party_id만으로 현재 참가를 추정하지 않는다. 기존 #11 DTO/완료점유 제약·bootstrap을 임의 확장하지 않는다.
+3. 현재 프로필/소유 이상은 `needs_review` 등으로 표시하고 당시 참가 snapshot을 보존한다. 이름/신소유 회원에게 옛 자리·설정을 넘기지 않는다. P1은 표시 분석자료이며 provider 입장레벨/검증 근거를 덮지 않는다.
+4. 목록은 고정정렬·HMAC cursor·권한/필터/주차/revision에 묶는다. 논리만료·room종료·현재자격 변화가 결과/권한에 영향을 주면 stale로 재조회한다. 개인head 하나만으로 다른 방/그룹의 권한·원인이 변하지 않았다고 가정하지 않는다.
+5. 참가조건 조회는 본인 character/선택역할·당·intent를 검사하고 서버 source revision/현재지원/거절사유를 반환한다. 조회는 자리예약·쓰기승인이 아니며 최종 명령이 재검사한다. 복수 후보/페이지는 snapshot을 섞지 않는다.
+
+## 4. 명령과 한도 연결
+
+생성/직접가입/승인은 동일한 최종 검증 경계를 쓴다. 신청은 pending만 저장하고 자리/방수/주간점유를 예약하지 않는다. 원명령 key/body·원성공 ACK·재조회 실패를 분리하고 탈퇴·재가입 후 옛 key가 새 membership을 종료하지 않게 한다.
+
+한도3원인의 범위/정확한도·초과·모든원인 해소는 기존 최종 계약을 따른다. 실제 모집 사용량의 공개 연결은 명시적인 source 활성화 단계에서 한다. 테이블이 아직 없거나 adapter가 미연결인 상태를0건/정상으로 반환하지 않는다. 기존 usage-limits의 nullable를 실제 숫자로 바꾸는 시점도 계약/검증 인계에 포함한다.
+
+그룹전용 adapter를 연결할 때 현재그룹권한/그룹장정원·한도revision과 관련관계를 정책지문/커서/최종검사에 함께 연결한다. F1의 그룹 한도 fixture 시험을 이 adapter 완성으로 보지 않는다. 탈퇴·이전·마지막종료는 진행 명령과 분리하며 과거 캐릭터 자격 상실로 본인 정리를 막지 않는다.
+
+## 5. 구현·활성화 순서와 완료 조건
+
+1. **F2-A 조회/표시·지원 정책**: DTO·권한별 projection·페이지/cursor·admission-context와 명시 정책 adapter를 작성한다. 미정 Q1~Q3는 해당 경계만 분리한다.
+2. **F2-B HTTP 연결·격리 검증**: 후보 router를 격리 테스트 앱에 연결해 인증/누출·권한상실·no-store/strict 입력·ACK 후 현재GET·경합/rollback·기존 F1/G1~G3/#11 회귀를 검증한다. 현재 개발 앱/실행 원본에 먼저 경로만 노출하지 않는다. 최종 DTO가 초안에서 바뀌면 변경점을 #13에 먼저 정리한다.
+3. **F3 개발 반영·인계**: DB0017/서비스 source 활성화·main 앱 router 연결·최종 원본OpenAPI를 같은 검증 구간으로 맞춘다. 기존 자료를 보존하는 migration과 기존 카탈로그/계정/그룹 API를 확인하고 최신 개발 이미지에서 실행 계약 전체를 비교한다. 구현→검증→commit/push·원격확인→#13 인계 순서를 유지한다. 운영 배포/merge·자료 삭제 승인은 포함하지 않는다.
+
+F2 완료 기준은 내부 F1 위에 실제 HTTP 입력/출력과 공개범위가 일관되게 동작하고, 지원표/미정 분기·검증 결과가 명확한 것이다. 후보 API/스키마의 격리 검증과 기존8000/개발DB 반영을 구별한다. F3 전에는 Flutter가 실제 서버에서 모집 API를 사용할 수 있다고 안내하지 않는다.
+
+## 6. 이번 설계 작업 결과
+
+이번에는 문서·기존 코드/계약·Issue 최신 회신만 대조했다. 새 API/DDL/기능코드·OpenAPI·서버/DB를 변경하거나 테스트를 재실행하지 않았다. 기존 F1의 233PASS/최종35PASS(중복)는 이전 검증 근거이며 이번 F2 설계의 구현시험 결과가 아니다. Flutter #15 우선작업을 유지하며 기존 기초시험/전기능 재승인을 요청하지 않는다.

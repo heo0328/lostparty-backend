@@ -1,0 +1,194 @@
+{
+  "source_commit": "0fd43f90b46847a1de40650b3e1812e6ff473218",
+  "image": "sha256:5f7c5b6387591b923b327cc89f50033f4196646b5c52973f85bdd7a25ea005dc",
+  "previous_image": "sha256:f458e6d57ab3eab4fd46355758d99f2bb5bd95bf9dface55e387babeca147e57",
+  "applied_at": "2026-10-26T06:49:27.333568+00:00",
+  "database_revision": "0032_beta_recruitment",
+  "api_only_replaced": true,
+  "db_container_image_volume_environment_unchanged": true,
+  "api_environment_command_security_ports_logging_key_mount_preserved": true,
+  "key_hashes_equal": true,
+  "source_files_equal": 258,
+  "runtime_packages": 31,
+  "base_openapi": {
+    "paths": 116,
+    "operations": 133
+  },
+  "current_openapi": {
+    "paths": 178,
+    "operations": 199,
+    "text_policy": "hangul-printable-ascii-1"
+  },
+  "full_openapi_equal": true,
+  "migration_or_data_conversion": false,
+  "dump_or_restore": false,
+  "member_commands_or_pending_replays": false,
+  "reused_targeted_tests": 7,
+  "read_only_service_projections": [
+    {
+      "reader": "app.raid_rooms.cycle_lists",
+      "target": "2026-10-21",
+      "state": "current",
+      "pass_": true,
+      "count": 2,
+      "historical_null_boundaries": 0
+    },
+    {
+      "reader": "app.raid_rooms.cycle_lists",
+      "target": "2026-10-21",
+      "state": "ended",
+      "pass_": true,
+      "count": 8,
+      "historical_null_boundaries": 0
+    },
+    {
+      "reader": "app.raid_rooms.cycle_lists",
+      "target": "2026-10-21",
+      "state": "all",
+      "pass_": true,
+      "count": 18,
+      "historical_null_boundaries": 0
+    },
+    {
+      "reader": "app.raid_rooms.cycle_lists",
+      "target": "2026-10-28",
+      "state": "current",
+      "pass_": true,
+      "count": 2,
+      "historical_null_boundaries": 0
+    },
+    {
+      "reader": "app.raid_rooms.cycle_lists",
+      "target": "2026-10-28",
+      "state": "ended",
+      "pass_": true,
+      "count": 8,
+      "historical_null_boundaries": 0
+    },
+    {
+      "reader": "app.raid_rooms.cycle_lists",
+      "target": "2026-10-28",
+      "state": "all",
+      "pass_": true,
+      "count": 18,
+      "historical_null_boundaries": 0
+    },
+    {
+      "reader": "app.raid_rooms.membership_readers",
+      "target": "2026-10-21",
+      "state": "current",
+      "pass_": true,
+      "count": 2,
+      "historical_null_boundaries": 0
+    },
+    {
+      "reader": "app.raid_rooms.membership_readers",
+      "target": "2026-10-21",
+      "state": "ended",
+      "pass_": true,
+      "count": 8,
+      "historical_null_boundaries": 8
+    },
+    {
+      "reader": "app.raid_rooms.membership_readers",
+      "target": "2026-10-21",
+      "state": "all",
+      "pass_": true,
+      "count": 18,
+      "historical_null_boundaries": 16
+    },
+    {
+      "reader": "app.raid_rooms.membership_readers",
+      "target": "2026-10-28",
+      "state": "current",
+      "pass_": true,
+      "count": 2,
+      "historical_null_boundaries": 0
+    },
+    {
+      "reader": "app.raid_rooms.membership_readers",
+      "target": "2026-10-28",
+      "state": "ended",
+      "pass_": true,
+      "count": 8,
+      "historical_null_boundaries": 8
+    },
+    {
+      "reader": "app.raid_rooms.membership_readers",
+      "target": "2026-10-28",
+      "state": "all",
+      "pass_": true,
+      "count": 18,
+      "historical_null_boundaries": 16
+    }
+  ],
+  "actual_http": [
+    {
+      "case": "health",
+      "status": 200
+    },
+    {
+      "case": "public_cycle",
+      "status": 200
+    },
+    {
+      "case": "presets_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "presets_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "ended_memberships_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "ended_memberships_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    }
+  ],
+  "text_code_check": {
+    "printable_ascii_characters": 95,
+    "forbidden_samples": 5,
+    "scope": "deployed code only; no member write"
+  },
+  "logs": {
+    "lines": 53,
+    "events": {
+      "server_event": 4,
+      "http_request": 14,
+      "job_completed": 31,
+      "api_rejected": 4
+    },
+    "successful_jobs": [
+      "auth_cleanup",
+      "ownership_settlement",
+      "recruitment"
+    ],
+    "allowlisted": true,
+    "errors": 0
+  },
+  "api_healthy": true,
+  "db_healthy": true,
+  "rollback_used": false,
+  "not_verified": [
+    "normal-member HTTP writes",
+    "native device acceptance",
+    "load/performance acceptance",
+    "dev/main merge",
+    "AWS production"
+  ]
+}

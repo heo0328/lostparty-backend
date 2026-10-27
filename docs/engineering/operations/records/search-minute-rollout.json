@@ -1,0 +1,132 @@
+{
+  "source_commit": "a358a1a13ea0b0852612eef4b7c8d8b5bf008a23",
+  "image": "sha256:1307ac36cf630ea0200a1270e2857cb3d64d68b36ca817febdd81352ca8e0df7",
+  "previous_image": "sha256:0a540425e334ce628eff4d1c013111374338bdfc4d05461d43af0dfa47f0ae69",
+  "applied_at": "2026-10-26T16:41:34.040594+00:00",
+  "database_revision": "0032_beta_recruitment",
+  "api_only_replaced": true,
+  "db_container_image_volume_environment_unchanged": true,
+  "api_environment_command_security_ports_logging_key_mount_preserved": true,
+  "key_hashes_equal": true,
+  "source_files_equal": 259,
+  "runtime_packages": 31,
+  "base_openapi": {
+    "paths": 116,
+    "operations": 133
+  },
+  "current_openapi": {
+    "paths": 178,
+    "operations": 199,
+    "text_policy": "hangul-printable-ascii-1",
+    "room_usage_semantics": "active-target-rooms-1",
+    "coordination_wait": "opt-in on beta detail/plan",
+    "search_time": "UTC whole-minute range"
+  },
+  "full_openapi_equal": true,
+  "migration_or_data_conversion": false,
+  "dump_or_restore": false,
+  "member_commands_or_pending_replays": false,
+  "reused_targeted_tests": 6,
+  "minute_search": {
+    "scope": "deployed source / real DB / read-only public service; no normal-member HTTP or member command",
+    "number": 16,
+    "non_five_minute_range": true,
+    "exact_end_exclusion": true,
+    "pages": 1,
+    "matching_rooms": 1
+  },
+  "read_only_service_projections": [
+    {
+      "scope": "deployed source / real DB / read-only public service; no normal-member HTTP or member command",
+      "number": 16,
+      "non_five_minute_range": true,
+      "exact_end_exclusion": true,
+      "pages": 1,
+      "matching_rooms": 1
+    }
+  ],
+  "actual_http": [
+    {
+      "case": "health",
+      "status": 200
+    },
+    {
+      "case": "public_cycle",
+      "status": 200
+    },
+    {
+      "case": "presets_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "presets_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "join_candidates_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "join_candidates_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "minute_search_get",
+      "status": 200,
+      "no_store": true
+    },
+    {
+      "case": "minute_search_post_same_results",
+      "status": 200,
+      "no_store": true
+    },
+    {
+      "case": "search_seconds_rejected",
+      "status": 400,
+      "code": "INVALID_REQUEST"
+    }
+  ],
+  "text_code_check": {
+    "printable_ascii_characters": 95,
+    "forbidden_samples": 5,
+    "scope": "deployed code only; no member write"
+  },
+  "logs": {
+    "lines": 37,
+    "events": {
+      "server_event": 4,
+      "http_request": 13,
+      "job_completed": 15,
+      "api_rejected": 5
+    },
+    "successful_jobs": [
+      "auth_cleanup",
+      "ownership_settlement",
+      "recruitment"
+    ],
+    "allowlisted": true,
+    "errors": 0
+  },
+  "api_healthy": true,
+  "db_healthy": true,
+  "rollback_used": false,
+  "not_verified": [
+    "normal-member HTTP writes",
+    "native device acceptance",
+    "load/performance acceptance",
+    "dev/main merge",
+    "AWS production"
+  ]
+}

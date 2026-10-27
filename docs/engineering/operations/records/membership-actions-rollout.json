@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-24",
+  "source_revision": "0030_completion_corrections",
+  "revision": "0031_membership_actions",
+  "source_tables": 106,
+  "source_rows": 603,
+  "tables": 108,
+  "rows": 603,
+  "existing_business_tables_preserved": 105,
+  "all_existing_rows_columns_timestamps_preserved": true,
+  "sequences_keys_configuration_preserved": true,
+  "db_container_volume_preserved": true,
+  "restore_rehearsal_pass": true,
+  "restricted_login_readiness": true,
+  "old_image": "sha256:92490ff3bf3e777d6342cb7a416af042ccf6654f8429c37a8a7cfd2796d71352",
+  "image": "sha256:67322372b0e7a92344e62e37b06d06e97f1cbc097d0b8fcaffeab49d86695db6",
+  "source_commit": "15e143aeb9f3105a1b8a5816051e0e837726892c",
+  "backup": "backups/membership0031-7edffda86ab7",
+  "paths": 176,
+  "authenticated_member_writes": "not_executed",
+  "openapi_profiles": {
+    "two_cycle": 176,
+    "legacy": 116
+  },
+  "authentication_rejections": 4,
+  "public_search_checks": 2,
+  "health": 200,
+  "temporary_environment_removed": true
+}

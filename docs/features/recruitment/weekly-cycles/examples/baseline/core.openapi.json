@@ -1,0 +1,3631 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Issue13 two-cycle core REVIEW DRAFT — NOT runtime contract",
+    "version": "0.2.0",
+    "description": "REVIEW DRAFT ONLY. Supersedes global leader/empty N opening/cancellation assumptions in comment73. Eleven core paths; full recruitment detail/plan adapters still NOT fixed. FormationProjection is a draft component, not an implemented endpoint. See leadership R2 for L1/G1/A1 pending product decisions. DO NOT replace runtime openapi/openapi.yaml."
+  },
+  "x-status": "review-draft-not-implemented",
+  "x-source-implementation": "cc003e94996bb4e2fdaef6911df24d055ae831b8",
+  "paths": {
+    "/v2/raid-cycles": {
+      "get": {
+        "operationId": "get__v2_raid-cycles",
+        "description": "C/N metadata. View/create/admit coarse permissions are not character eligibility. No Wednesday midnight gate.",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Draft success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cycles"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/me/raid-rooms/{room_id}/continuation-context": {
+      "get": {
+        "operationId": "get__v2_me_raid-rooms_room_id_continuation-context",
+        "description": "T must be N. Source C actual participation required. Omit both character_id/selected_role to use source character; replacement requires both. Target slots may be empty when permission is false. No writes.",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "target_cycle_key",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CycleKey"
+            }
+          },
+          {
+            "name": "action",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "join",
+                "decline"
+              ],
+              "default": "join"
+            }
+          },
+          {
+            "name": "character_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "selected_role",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "dealer",
+                "support"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Draft success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContinuationContext"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/raid-rooms/{room_id}/continuation-participations": {
+      "post": {
+        "operationId": "post__v2_raid-rooms_room_id_continuation-participations",
+        "description": "Immediate bundle admission; approval bypass derives ONLY from verified source C participant. Token action must be join. Same A/T complete existing bundle returns noop; different character requires explicit change command. No automatic B cancellation.",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Draft success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ack"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContinueCommand"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/raid-rooms/{room_id}/continuation-declines": {
+      "post": {
+        "operationId": "post__v2_raid-rooms_room_id_continuation-declines",
+        "description": "Token action must be decline. Record explicit decline only if no actual target assignment. Failed join/closing UI never calls this. Existing target assignment requires cancellation context.",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Draft success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ack"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScopedCommand"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/me/raid-rooms/{room_id}/participation-cancellation-context": {
+      "get": {
+        "operationId": "get__v2_me_raid-rooms_room_id_participation-cancellation-context",
+        "description": "Only N cancellation initially. Target leader with others: auto_successor in one transaction; no C effects. No eligible successor =>SUCCESSOR_UNAVAILABLE. Last member close_target is L1 proposal: before adoption permission false reason TARGET_POLICY_NOT_READY; no implicit global end.",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "target_cycle_key",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CycleKey"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Draft success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancellationContext"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/raid-rooms/{room_id}/participation-cancellations": {
+      "post": {
+        "operationId": "post__v2_raid-rooms_room_id_participation-cancellations",
+        "description": "Cancel whole N bundle, automatically transfer N leadership to the context-selected eligible successor when needed. Candidate changed => TARGET_CONTEXT_STALE, no mutation. L1 last-one closure remains pending product adoption. No C or global room end.",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Draft success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ack"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancellationCommand"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/me/raid-weekly-summary": {
+      "post": {
+        "operationId": "post__v2_me_raid-weekly-summary",
+        "description": "Read-only RR batch, no Idempotency-Key. Unique 1..50 own verified characters, 1..2 actual C/N cycles. No bootstrap/Armory reload. Any unauthorized character rejects whole batch. entries bounded by characters*targets*catalog raids (draft catalog five =>500).",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Draft success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Summary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SummaryRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/me/raid-rooms/{room_id}/opening-context": {
+      "get": {
+        "operationId": "get__v2_me_raid-rooms_room_id_opening-context",
+        "description": "T=N. Require source C leader. Omit both replacement query keys to use source C character/role. Prospective target IDs bound in opaque context; GET never creates rows. Existing open N => no-op effect; cancelled N reopening remains blocked pending L1. Candidate selection never confirms all copied sessions.",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "target_cycle_key",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CycleKey"
+            }
+          },
+          {
+            "name": "character_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "selected_role",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "dealer",
+                "support"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Draft success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OpeningContext"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/raid-rooms/{room_id}/recruitment-openings": {
+      "post": {
+        "operationId": "post__v2_raid-rooms_room_id_recruitment-openings",
+        "description": "Atomic N opening + first actual participant/target leader. First participant is explicit activating C leader, no other automatic enrollments. Any qualification/conflict failure rolls back all. Existing open N no-op preserves existing leader; original ACK replay precedes current guards.",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Draft success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ack"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpeningCommand"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/me/raid-rooms/{room_id}/leadership-transfer-context": {
+      "get": {
+        "operationId": "get__v2_me_raid-rooms_room_id_leadership-transfer-context",
+        "description": "Only T leader reads eligible actual T participants, at most8. No pending/legacy intent/review candidates. Token binds full list/revisions; POST specifies selected candidate. No slot changes.",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "target_cycle_key",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CycleKey"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Draft success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransferContext"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/raid-rooms/{room_id}/leadership-transfers": {
+      "post": {
+        "operationId": "post__v2_raid-rooms_room_id_leadership-transfers",
+        "description": "Revalidate T leader and selected actual participant; atomically transfer target leadership only. Actor remains participant. No slot/reservation/other-cycle/global leader changes. Context120s and 06:00-bound; idempotent original ACK first.",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Draft success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ack"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "See design error/permission table; no automatic mutation retry.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransferCommand"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "CycleKey": {
+        "type": "string",
+        "format": "date",
+        "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+        "description": "Canonical Wednesday date in KST; server validates target is C or N. No implicit rollover."
+      },
+      "Version": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 2147483647,
+        "description": "Strict integer at server; booleans/floats rejected."
+      },
+      "Permission": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "allowed": {
+            "type": "boolean"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "next_change_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "allowed",
+          "reason",
+          "next_change_at"
+        ]
+      },
+      "Scope": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "server_now": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "current_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "playable_from": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "phase": {
+            "type": "string",
+            "enum": [
+              "current",
+              "future"
+            ]
+          },
+          "target_revision": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Version"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "policy_version": {
+            "const": "two-cycle-draft-2",
+            "type": "string"
+          }
+        },
+        "required": [
+          "server_now",
+          "current_cycle_key",
+          "target_cycle_key",
+          "playable_from",
+          "phase",
+          "target_revision",
+          "policy_version"
+        ]
+      },
+      "CycleMeta": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "starts_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ends_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "playable_from": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "permissions": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "read": {
+                "$ref": "#/components/schemas/Permission"
+              },
+              "create": {
+                "$ref": "#/components/schemas/Permission"
+              },
+              "admit": {
+                "$ref": "#/components/schemas/Permission"
+              },
+              "complete": {
+                "$ref": "#/components/schemas/Permission"
+              }
+            },
+            "required": [
+              "read",
+              "create",
+              "admit",
+              "complete"
+            ]
+          }
+        },
+        "required": [
+          "cycle_key",
+          "starts_at",
+          "ends_at",
+          "playable_from",
+          "permissions"
+        ]
+      },
+      "Cycles": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "server_now": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "current": {
+            "$ref": "#/components/schemas/CycleMeta"
+          },
+          "next": {
+            "$ref": "#/components/schemas/CycleMeta"
+          },
+          "policy_version": {
+            "type": "string",
+            "const": "two-cycle-draft-2"
+          }
+        },
+        "required": [
+          "server_now",
+          "current",
+          "next",
+          "policy_version"
+        ]
+      },
+      "Selection": {
+        "properties": {
+          "registration_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Registration Id"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "selected_role": {
+            "type": "string",
+            "enum": [
+              "dealer",
+              "support"
+            ],
+            "title": "Selected Role"
+          },
+          "expected_registration_version": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Registration Version"
+          },
+          "expected_ownership_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Ownership Revision"
+          },
+          "expected_roster_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Roster Revision"
+          },
+          "expected_lifecycle_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Lifecycle Revision"
+          },
+          "expected_role_summary_version": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Role Summary Version"
+          },
+          "expected_limits_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Limits Revision"
+          },
+          "expected_usage_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Usage Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "registration_id",
+          "character_id",
+          "selected_role",
+          "expected_registration_version",
+          "expected_ownership_revision",
+          "expected_roster_revision",
+          "expected_lifecycle_revision",
+          "expected_role_summary_version",
+          "expected_limits_revision",
+          "expected_usage_revision"
+        ],
+        "title": "Selection"
+      },
+      "Target": {
+        "properties": {
+          "item_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Item Id"
+          },
+          "round_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Round Id"
+          },
+          "party_no": {
+            "type": "integer",
+            "maximum": 2.0,
+            "minimum": 1.0,
+            "title": "Party No"
+          },
+          "expected_round_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Round Revision"
+          },
+          "expected_weekly_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Weekly Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "item_id",
+          "round_id",
+          "party_no",
+          "expected_round_revision",
+          "expected_weekly_revision"
+        ],
+        "title": "Target"
+      },
+      "Conflict": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "room_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "raid_id": {
+            "type": "string"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "can_view_detail": {
+            "type": "boolean"
+          },
+          "room_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "room_id",
+          "target_cycle_key",
+          "raid_id",
+          "character_id",
+          "can_view_detail",
+          "room_title"
+        ]
+      },
+      "ErrorDetails": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "conflicts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Conflict"
+            },
+            "minItems": 0,
+            "maxItems": 5
+          },
+          "available_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "conflicts",
+          "available_at"
+        ]
+      },
+      "Error": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "request_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "details": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/ErrorDetails"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "code",
+              "message",
+              "request_id",
+              "details"
+            ]
+          }
+        },
+        "required": [
+          "error"
+        ]
+      },
+      "Source": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "source_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "membership_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "membership_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "assignment_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "minItems": 1,
+            "maxItems": 5,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "source_cycle_key",
+          "membership_id",
+          "membership_revision",
+          "assignment_ids"
+        ]
+      },
+      "Impact": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "effect_scope": {
+            "type": "string",
+            "enum": [
+              "target_bundle"
+            ]
+          },
+          "assignment_count": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "reservation_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "preserves_other_cycles": {
+            "type": "boolean",
+            "const": true
+          },
+          "preserves_global_membership": {
+            "type": "boolean",
+            "const": true
+          }
+        },
+        "required": [
+          "effect_scope",
+          "assignment_count",
+          "reservation_count",
+          "preserves_other_cycles",
+          "preserves_global_membership"
+        ]
+      },
+      "ContinuationContextData": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "join",
+              "decline"
+            ]
+          },
+          "source": {
+            "$ref": "#/components/schemas/Source"
+          },
+          "selection": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Selection"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "targets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Target"
+            },
+            "minItems": 0,
+            "maxItems": 5
+          },
+          "target_session_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "minItems": 0,
+            "uniqueItems": true
+          },
+          "context_token": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "issued_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "permission": {
+            "$ref": "#/components/schemas/Permission"
+          },
+          "conflicts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Conflict"
+            },
+            "minItems": 0,
+            "maxItems": 5
+          }
+        },
+        "required": [
+          "room_id",
+          "action",
+          "source",
+          "selection",
+          "targets",
+          "target_session_ids",
+          "context_token",
+          "issued_at",
+          "expires_at",
+          "permission",
+          "conflicts"
+        ]
+      },
+      "CancellationContextData": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "context_token": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "issued_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "impact": {
+            "$ref": "#/components/schemas/Impact"
+          },
+          "permission": {
+            "$ref": "#/components/schemas/Permission"
+          },
+          "leadership": {
+            "$ref": "#/components/schemas/Leadership"
+          },
+          "members_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "leave",
+              "auto_successor",
+              "close_target"
+            ]
+          },
+          "successor": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LeadershipCandidate"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "room_id",
+          "context_token",
+          "issued_at",
+          "expires_at",
+          "impact",
+          "permission",
+          "leadership",
+          "members_revision",
+          "mode",
+          "successor"
+        ]
+      },
+      "ScopedCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expected_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "expected_target_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "context_token": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          }
+        },
+        "required": [
+          "expected_cycle_key",
+          "target_cycle_key",
+          "expected_target_revision",
+          "context_token"
+        ]
+      },
+      "ContinueCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expected_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "expected_target_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "context_token": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "selection": {
+            "$ref": "#/components/schemas/Selection"
+          },
+          "target_items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Target"
+            },
+            "minItems": 1,
+            "maxItems": 5
+          },
+          "target_session_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "minItems": 0,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "expected_cycle_key",
+          "target_cycle_key",
+          "expected_target_revision",
+          "context_token",
+          "selection",
+          "target_items",
+          "target_session_ids"
+        ]
+      },
+      "Revision": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "resource": {
+            "type": "string",
+            "enum": [
+              "room",
+              "target",
+              "members",
+              "plan",
+              "round",
+              "membership",
+              "assignment",
+              "application",
+              "session",
+              "participation",
+              "proposal",
+              "choice",
+              "weekly",
+              "continuation",
+              "settings",
+              "leadership",
+              "cycle_membership"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "revision": {
+            "$ref": "#/components/schemas/Version"
+          }
+        },
+        "required": [
+          "resource",
+          "id",
+          "revision"
+        ]
+      },
+      "AckData": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "command_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "applied",
+              "recorded",
+              "noop"
+            ]
+          },
+          "executed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "room_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "revisions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Revision"
+            },
+            "minItems": 0
+          }
+        },
+        "required": [
+          "command_id",
+          "outcome",
+          "executed_at",
+          "room_id",
+          "target_cycle_key",
+          "revisions"
+        ]
+      },
+      "SummaryRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "character_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "minItems": 1,
+            "maxItems": 50,
+            "uniqueItems": true
+          },
+          "target_cycle_keys": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CycleKey"
+            },
+            "minItems": 1,
+            "maxItems": 2,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "character_ids",
+          "target_cycle_keys"
+        ]
+      },
+      "CompletionSource": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "source": {
+            "type": "string",
+            "enum": [
+              "manual",
+              "party"
+            ]
+          },
+          "completed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "difficulty_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "party_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "source",
+          "completed_at",
+          "difficulty_id",
+          "party_id"
+        ]
+      },
+      "Participation": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "round_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "assignment_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "difficulty_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "confirmed",
+              "review_required"
+            ]
+          },
+          "room_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "can_view_detail": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "room_id",
+          "round_id",
+          "assignment_id",
+          "difficulty_id",
+          "status",
+          "room_title",
+          "can_view_detail"
+        ]
+      },
+      "WeeklyEntry": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "character_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "raid_id": {
+            "type": "string"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "weekly_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "ownership_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "lifecycle_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "completion_sources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CompletionSource"
+            },
+            "minItems": 0,
+            "maxItems": 2
+          },
+          "participation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Participation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "continuation_state": {
+            "type": "string",
+            "enum": [
+              "not_selected",
+              "declined",
+              "legacy_intent",
+              "confirmed",
+              "blocked"
+            ]
+          },
+          "permissions": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "mark_completed": {
+                "$ref": "#/components/schemas/Permission"
+              },
+              "clear_manual_completion": {
+                "$ref": "#/components/schemas/Permission"
+              },
+              "view_participation": {
+                "$ref": "#/components/schemas/Permission"
+              }
+            },
+            "required": [
+              "mark_completed",
+              "clear_manual_completion",
+              "view_participation"
+            ]
+          }
+        },
+        "required": [
+          "character_id",
+          "raid_id",
+          "target_cycle_key",
+          "weekly_revision",
+          "ownership_revision",
+          "lifecycle_revision",
+          "completion_sources",
+          "participation",
+          "continuation_state",
+          "permissions"
+        ]
+      },
+      "Summary": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "server_now": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "current_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "target_cycle_keys": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CycleKey"
+            },
+            "minItems": 1,
+            "maxItems": 2,
+            "uniqueItems": true
+          },
+          "catalog_version": {
+            "type": "string"
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WeeklyEntry"
+            },
+            "minItems": 0,
+            "maxItems": 500
+          }
+        },
+        "required": [
+          "server_now",
+          "current_cycle_key",
+          "target_cycle_keys",
+          "catalog_version",
+          "entries"
+        ]
+      },
+      "ContinuationContext": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ContinuationContextData"
+          }
+        },
+        "required": [
+          "scope",
+          "data"
+        ]
+      },
+      "CancellationContext": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CancellationContextData"
+          }
+        },
+        "required": [
+          "scope",
+          "data"
+        ]
+      },
+      "Ack": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/AckData"
+          }
+        },
+        "required": [
+          "scope",
+          "data"
+        ]
+      },
+      "Leadership": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "leader_cycle_member_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "leadership_revision": {
+            "$ref": "#/components/schemas/Version"
+          }
+        },
+        "required": [
+          "leader_cycle_member_id",
+          "leadership_revision"
+        ]
+      },
+      "LeadershipCandidate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "cycle_member_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "joined_order": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "character_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "permission": {
+            "$ref": "#/components/schemas/Permission"
+          }
+        },
+        "required": [
+          "cycle_member_id",
+          "revision",
+          "joined_order",
+          "character_id",
+          "character_name",
+          "permission"
+        ]
+      },
+      "CancellationCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expected_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "expected_target_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "context_token": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "expected_leadership_revision": {
+            "$ref": "#/components/schemas/Version"
+          }
+        },
+        "required": [
+          "expected_cycle_key",
+          "target_cycle_key",
+          "expected_target_revision",
+          "context_token",
+          "expected_leadership_revision"
+        ]
+      },
+      "OpeningCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expected_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "expected_target_revision": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Version"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "context_token": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "selection": {
+            "$ref": "#/components/schemas/Selection"
+          },
+          "target_items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Target"
+            },
+            "minItems": 1,
+            "maxItems": 5
+          },
+          "target_session_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "minItems": 0,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "expected_cycle_key",
+          "target_cycle_key",
+          "expected_target_revision",
+          "context_token",
+          "selection",
+          "target_items",
+          "target_session_ids"
+        ]
+      },
+      "OpeningContextData": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "source": {
+            "$ref": "#/components/schemas/Source"
+          },
+          "selection": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Selection"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "targets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Target"
+            },
+            "maxItems": 5
+          },
+          "target_session_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "maxItems": 64,
+            "uniqueItems": true
+          },
+          "leadership": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Leadership"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "context_token": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "issued_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "opening_effect": {
+            "type": "string",
+            "enum": [
+              "create_and_join",
+              "already_open",
+              "reopen_blocked"
+            ]
+          },
+          "permission": {
+            "$ref": "#/components/schemas/Permission"
+          },
+          "conflicts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Conflict"
+            },
+            "maxItems": 5
+          }
+        },
+        "required": [
+          "room_id",
+          "source",
+          "selection",
+          "targets",
+          "target_session_ids",
+          "leadership",
+          "context_token",
+          "issued_at",
+          "expires_at",
+          "opening_effect",
+          "permission",
+          "conflicts"
+        ]
+      },
+      "TransferContextData": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "leadership": {
+            "$ref": "#/components/schemas/Leadership"
+          },
+          "members_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "candidates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LeadershipCandidate"
+            },
+            "maxItems": 8
+          },
+          "context_token": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "issued_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "permission": {
+            "$ref": "#/components/schemas/Permission"
+          },
+          "preserves_other_cycles": {
+            "type": "boolean",
+            "const": true
+          },
+          "changes_formation": {
+            "type": "boolean",
+            "const": false
+          }
+        },
+        "required": [
+          "room_id",
+          "leadership",
+          "members_revision",
+          "candidates",
+          "context_token",
+          "issued_at",
+          "expires_at",
+          "permission",
+          "preserves_other_cycles",
+          "changes_formation"
+        ]
+      },
+      "TransferCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "expected_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "expected_target_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "context_token": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "expected_leadership_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "candidate_cycle_member_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expected_candidate_revision": {
+            "$ref": "#/components/schemas/Version"
+          }
+        },
+        "required": [
+          "expected_cycle_key",
+          "target_cycle_key",
+          "expected_target_revision",
+          "context_token",
+          "expected_leadership_revision",
+          "candidate_cycle_member_id",
+          "expected_candidate_revision"
+        ]
+      },
+      "OpeningContext": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/OpeningContextData"
+          }
+        },
+        "required": [
+          "scope",
+          "data"
+        ]
+      },
+      "TransferContext": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/TransferContextData"
+          }
+        },
+        "required": [
+          "scope",
+          "data"
+        ]
+      },
+      "FormationSlot": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "round_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "party_no": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2
+          },
+          "slot_no": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4
+          },
+          "assignment_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "empty",
+              "participating",
+              "completed",
+              "review_required"
+            ]
+          },
+          "is_leader": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "target_cycle_key",
+          "round_id",
+          "party_no",
+          "slot_no",
+          "assignment_id",
+          "status",
+          "is_leader"
+        ]
+      },
+      "UnplacedAssignment": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "assignment_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "round_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "status": {
+            "type": "string",
+            "const": "review_required"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "assignment_id",
+          "round_id",
+          "target_cycle_key",
+          "status",
+          "reason"
+        ]
+      },
+      "FormationProjection": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "leadership": {
+            "$ref": "#/components/schemas/Leadership"
+          },
+          "my_target_role": {
+            "type": "string",
+            "enum": [
+              "leader",
+              "member",
+              "none"
+            ]
+          },
+          "formation_slots": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormationSlot"
+            },
+            "maxItems": 40
+          },
+          "unplaced_assignments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UnplacedAssignment"
+            },
+            "maxItems": 40
+          }
+        },
+        "required": [
+          "target_cycle_key",
+          "leadership",
+          "my_target_role",
+          "formation_slots",
+          "unplaced_assignments"
+        ]
+      }
+    }
+  }
+}

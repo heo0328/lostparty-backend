@@ -1,0 +1,1947 @@
+{
+  "status": "Captured service responses from isolated tmpfs PostgreSQL/schema0031 and synthetic identities only. Context tokens redacted. Independent scenarios; not existing development/live-user responses.",
+  "examples": [
+    {
+      "name": "eight-members-two-targets-context",
+      "schema": "Context",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-23T17:45:14.215168Z",
+          "current_cycle_key": "2026-10-21",
+          "view_cycle_key": "2026-10-28",
+          "policy_version": "membership-actions-1"
+        },
+        "data": {
+          "room_id": "78084399-a30c-4471-b8b7-1de412ba41d6",
+          "room_revision": 1,
+          "actor": {
+            "membership_id": "f25f4003-5e48-47c6-8c6b-fbc34bc1352d",
+            "membership_revision": 1
+          },
+          "options": {
+            "leave_target": {
+              "visible": true,
+              "permission": {
+                "allowed": true,
+                "reason": null,
+                "next_change_at": null
+              },
+              "impact": {
+                "action": "leave_target",
+                "affected_cycle_keys": [
+                  "2026-10-28"
+                ],
+                "targets": [
+                  {
+                    "target_cycle_key": "2026-10-28",
+                    "room_cycle_id": "c91fe3d4-1eb3-56f9-859d-8fde6f1183d5",
+                    "target_generation": 1,
+                    "target_revision": 8,
+                    "members_revision": 8,
+                    "plan_revision": 8,
+                    "target_state": "open",
+                    "generation_state": "open",
+                    "planned_target_state": "open",
+                    "planned_generation_state": "open",
+                    "revision_rules": {
+                      "target": {
+                        "before": 8,
+                        "comparison": "increase",
+                        "exact_after": null
+                      },
+                      "members": {
+                        "before": 8,
+                        "comparison": "increase",
+                        "exact_after": 9
+                      },
+                      "plan": {
+                        "before": 8,
+                        "comparison": "increase",
+                        "exact_after": null
+                      },
+                      "leadership": {
+                        "before": 1,
+                        "comparison": "increase",
+                        "exact_after": 2
+                      }
+                    },
+                    "leadership_before": {
+                      "leader_cycle_member_id": "c4a63068-2828-4171-9e7c-c48c0e688cca",
+                      "leader_membership_id": "f25f4003-5e48-47c6-8c6b-fbc34bc1352d",
+                      "leadership_revision": 1
+                    },
+                    "transition": "automatic_successor",
+                    "affected_members": [
+                      {
+                        "membership_id": "f25f4003-5e48-47c6-8c6b-fbc34bc1352d",
+                        "cycle_member_id": "c4a63068-2828-4171-9e7c-c48c0e688cca",
+                        "cycle_member_revision": 1,
+                        "character_id": "e50bbb2d-a62e-4c06-9acb-a3def99407d1",
+                        "character_name": "sample-0",
+                        "joined_order": "1",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "cancelled",
+                        "cancelled_assignment_ids": [
+                          "0f21b25a-37af-4075-9cfa-aba5f7a843cb"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      }
+                    ],
+                    "successor": {
+                      "membership_id": "4a0b2039-a9b9-4d98-8901-f2b40f43d1d8",
+                      "cycle_member_id": "a9d3697e-bb61-4093-ad0d-2dfe3bcd7d25",
+                      "cycle_member_revision": 1,
+                      "planned_cycle_member_revision": 1,
+                      "character_id": "8f48049d-c8a9-439a-83fc-ef6684bfbf00",
+                      "character_name": "sample-0",
+                      "joined_order": "2"
+                    },
+                    "leadership_after": {
+                      "leader_cycle_member_id": "a9d3697e-bb61-4093-ad0d-2dfe3bcd7d25",
+                      "leader_membership_id": "4a0b2039-a9b9-4d98-8901-f2b40f43d1d8",
+                      "leadership_revision": 2,
+                      "status": "active",
+                      "recovery_reason": null
+                    },
+                    "cleanup": {
+                      "released_reservation_count": 0,
+                      "ended_participation_count": 0,
+                      "cancelled_application_count": 0,
+                      "cancelled_session_count": 0
+                    }
+                  }
+                ],
+                "room_effect": {
+                  "kind": "preserve",
+                  "actor_membership_will_end": false,
+                  "ended_persistent_membership_count": 0,
+                  "preserves_unaffected_cycles": true,
+                  "room_revision_rule": {
+                    "before": 1,
+                    "comparison": "equal",
+                    "exact_after": 1
+                  },
+                  "actor_membership_revision_rule": {
+                    "before": 1,
+                    "comparison": "equal",
+                    "exact_after": 1
+                  }
+                },
+                "existing_completion_preserved": true,
+                "display_revision": "b45d9c2197b5393b74d02a0bddef45cc6709a65e6dd4c47f9cc6447cd65a9287"
+              },
+              "confirmation": {
+                "context_token": "<redacted-context-token>",
+                "issued_at": "2026-10-23T17:45:14.215168Z",
+                "expires_at": "2026-10-23T17:47:14.215168Z"
+              }
+            },
+            "leave_all": {
+              "visible": true,
+              "permission": {
+                "allowed": true,
+                "reason": null,
+                "next_change_at": null
+              },
+              "impact": {
+                "action": "leave_all",
+                "affected_cycle_keys": [
+                  "2026-10-21",
+                  "2026-10-28"
+                ],
+                "targets": [
+                  {
+                    "target_cycle_key": "2026-10-21",
+                    "room_cycle_id": "f33a5ad1-c60b-5850-be21-5c671b725143",
+                    "target_generation": 1,
+                    "target_revision": 8,
+                    "members_revision": 8,
+                    "plan_revision": 8,
+                    "target_state": "open",
+                    "generation_state": "open",
+                    "planned_target_state": "open",
+                    "planned_generation_state": "open",
+                    "revision_rules": {
+                      "target": {
+                        "before": 8,
+                        "comparison": "increase",
+                        "exact_after": null
+                      },
+                      "members": {
+                        "before": 8,
+                        "comparison": "increase",
+                        "exact_after": 9
+                      },
+                      "plan": {
+                        "before": 8,
+                        "comparison": "increase",
+                        "exact_after": null
+                      },
+                      "leadership": {
+                        "before": 1,
+                        "comparison": "increase",
+                        "exact_after": 2
+                      }
+                    },
+                    "leadership_before": {
+                      "leader_cycle_member_id": "3be5770b-5fcc-4cd1-bc8e-d06d4fd5579a",
+                      "leader_membership_id": "f25f4003-5e48-47c6-8c6b-fbc34bc1352d",
+                      "leadership_revision": 1
+                    },
+                    "transition": "automatic_successor",
+                    "affected_members": [
+                      {
+                        "membership_id": "f25f4003-5e48-47c6-8c6b-fbc34bc1352d",
+                        "cycle_member_id": "3be5770b-5fcc-4cd1-bc8e-d06d4fd5579a",
+                        "cycle_member_revision": 1,
+                        "character_id": "e50bbb2d-a62e-4c06-9acb-a3def99407d1",
+                        "character_name": "sample-0",
+                        "joined_order": "1",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "cancelled",
+                        "cancelled_assignment_ids": [
+                          "2c40ab38-30bb-490a-b71b-74c24886c1c8"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      }
+                    ],
+                    "successor": {
+                      "membership_id": "4a0b2039-a9b9-4d98-8901-f2b40f43d1d8",
+                      "cycle_member_id": "a1e46a85-7ecf-47a8-a7b1-770f855f734c",
+                      "cycle_member_revision": 1,
+                      "planned_cycle_member_revision": 1,
+                      "character_id": "8f48049d-c8a9-439a-83fc-ef6684bfbf00",
+                      "character_name": "sample-0",
+                      "joined_order": "2"
+                    },
+                    "leadership_after": {
+                      "leader_cycle_member_id": "a1e46a85-7ecf-47a8-a7b1-770f855f734c",
+                      "leader_membership_id": "4a0b2039-a9b9-4d98-8901-f2b40f43d1d8",
+                      "leadership_revision": 2,
+                      "status": "active",
+                      "recovery_reason": null
+                    },
+                    "cleanup": {
+                      "released_reservation_count": 0,
+                      "ended_participation_count": 0,
+                      "cancelled_application_count": 0,
+                      "cancelled_session_count": 0
+                    }
+                  },
+                  {
+                    "target_cycle_key": "2026-10-28",
+                    "room_cycle_id": "c91fe3d4-1eb3-56f9-859d-8fde6f1183d5",
+                    "target_generation": 1,
+                    "target_revision": 8,
+                    "members_revision": 8,
+                    "plan_revision": 8,
+                    "target_state": "open",
+                    "generation_state": "open",
+                    "planned_target_state": "open",
+                    "planned_generation_state": "open",
+                    "revision_rules": {
+                      "target": {
+                        "before": 8,
+                        "comparison": "increase",
+                        "exact_after": null
+                      },
+                      "members": {
+                        "before": 8,
+                        "comparison": "increase",
+                        "exact_after": 9
+                      },
+                      "plan": {
+                        "before": 8,
+                        "comparison": "increase",
+                        "exact_after": null
+                      },
+                      "leadership": {
+                        "before": 1,
+                        "comparison": "increase",
+                        "exact_after": 2
+                      }
+                    },
+                    "leadership_before": {
+                      "leader_cycle_member_id": "c4a63068-2828-4171-9e7c-c48c0e688cca",
+                      "leader_membership_id": "f25f4003-5e48-47c6-8c6b-fbc34bc1352d",
+                      "leadership_revision": 1
+                    },
+                    "transition": "automatic_successor",
+                    "affected_members": [
+                      {
+                        "membership_id": "f25f4003-5e48-47c6-8c6b-fbc34bc1352d",
+                        "cycle_member_id": "c4a63068-2828-4171-9e7c-c48c0e688cca",
+                        "cycle_member_revision": 1,
+                        "character_id": "e50bbb2d-a62e-4c06-9acb-a3def99407d1",
+                        "character_name": "sample-0",
+                        "joined_order": "1",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "cancelled",
+                        "cancelled_assignment_ids": [
+                          "0f21b25a-37af-4075-9cfa-aba5f7a843cb"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      }
+                    ],
+                    "successor": {
+                      "membership_id": "4a0b2039-a9b9-4d98-8901-f2b40f43d1d8",
+                      "cycle_member_id": "a9d3697e-bb61-4093-ad0d-2dfe3bcd7d25",
+                      "cycle_member_revision": 1,
+                      "planned_cycle_member_revision": 1,
+                      "character_id": "8f48049d-c8a9-439a-83fc-ef6684bfbf00",
+                      "character_name": "sample-0",
+                      "joined_order": "2"
+                    },
+                    "leadership_after": {
+                      "leader_cycle_member_id": "a9d3697e-bb61-4093-ad0d-2dfe3bcd7d25",
+                      "leader_membership_id": "4a0b2039-a9b9-4d98-8901-f2b40f43d1d8",
+                      "leadership_revision": 2,
+                      "status": "active",
+                      "recovery_reason": null
+                    },
+                    "cleanup": {
+                      "released_reservation_count": 0,
+                      "ended_participation_count": 0,
+                      "cancelled_application_count": 0,
+                      "cancelled_session_count": 0
+                    }
+                  }
+                ],
+                "room_effect": {
+                  "kind": "preserve",
+                  "actor_membership_will_end": true,
+                  "ended_persistent_membership_count": 1,
+                  "preserves_unaffected_cycles": true,
+                  "room_revision_rule": {
+                    "before": 1,
+                    "comparison": "equal",
+                    "exact_after": 1
+                  },
+                  "actor_membership_revision_rule": {
+                    "before": 1,
+                    "comparison": "increase",
+                    "exact_after": 2
+                  }
+                },
+                "existing_completion_preserved": true,
+                "display_revision": "4a80d59cd267a669b96a572b9ad3027f9688c13000cc96437998c7b2cee88a05"
+              },
+              "confirmation": {
+                "context_token": "<redacted-context-token>",
+                "issued_at": "2026-10-23T17:45:14.215168Z",
+                "expires_at": "2026-10-23T17:47:14.215168Z"
+              }
+            },
+            "dissolve_led_targets": {
+              "visible": true,
+              "permission": {
+                "allowed": true,
+                "reason": null,
+                "next_change_at": null
+              },
+              "impact": {
+                "action": "dissolve_led_targets",
+                "affected_cycle_keys": [
+                  "2026-10-21",
+                  "2026-10-28"
+                ],
+                "targets": [
+                  {
+                    "target_cycle_key": "2026-10-21",
+                    "room_cycle_id": "f33a5ad1-c60b-5850-be21-5c671b725143",
+                    "target_generation": 1,
+                    "target_revision": 8,
+                    "members_revision": 8,
+                    "plan_revision": 8,
+                    "target_state": "open",
+                    "generation_state": "open",
+                    "planned_target_state": "closed",
+                    "planned_generation_state": "cancelled",
+                    "revision_rules": {
+                      "target": {
+                        "before": 8,
+                        "comparison": "increase",
+                        "exact_after": null
+                      },
+                      "members": {
+                        "before": 8,
+                        "comparison": "increase",
+                        "exact_after": 9
+                      },
+                      "plan": {
+                        "before": 8,
+                        "comparison": "increase",
+                        "exact_after": null
+                      },
+                      "leadership": {
+                        "before": 1,
+                        "comparison": "increase",
+                        "exact_after": 2
+                      }
+                    },
+                    "leadership_before": {
+                      "leader_cycle_member_id": "3be5770b-5fcc-4cd1-bc8e-d06d4fd5579a",
+                      "leader_membership_id": "f25f4003-5e48-47c6-8c6b-fbc34bc1352d",
+                      "leadership_revision": 1
+                    },
+                    "transition": "dissolve",
+                    "affected_members": [
+                      {
+                        "membership_id": "f25f4003-5e48-47c6-8c6b-fbc34bc1352d",
+                        "cycle_member_id": "3be5770b-5fcc-4cd1-bc8e-d06d4fd5579a",
+                        "cycle_member_revision": 1,
+                        "character_id": "e50bbb2d-a62e-4c06-9acb-a3def99407d1",
+                        "character_name": "sample-0",
+                        "joined_order": "1",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "removed",
+                        "cancelled_assignment_ids": [
+                          "2c40ab38-30bb-490a-b71b-74c24886c1c8"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      },
+                      {
+                        "membership_id": "4a0b2039-a9b9-4d98-8901-f2b40f43d1d8",
+                        "cycle_member_id": "a1e46a85-7ecf-47a8-a7b1-770f855f734c",
+                        "cycle_member_revision": 1,
+                        "character_id": "8f48049d-c8a9-439a-83fc-ef6684bfbf00",
+                        "character_name": "sample-0",
+                        "joined_order": "2",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "removed",
+                        "cancelled_assignment_ids": [
+                          "e72d32b3-9637-455b-aa37-8f4226afa2ff"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      },
+                      {
+                        "membership_id": "f054c68a-dce6-455c-8dcc-b9850fd80d11",
+                        "cycle_member_id": "c6c2579b-9fb8-4198-a9f7-f97182b3664f",
+                        "cycle_member_revision": 1,
+                        "character_id": "13afcd49-034c-4629-b498-4d2947b23396",
+                        "character_name": "sample-0",
+                        "joined_order": "3",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "removed",
+                        "cancelled_assignment_ids": [
+                          "9fd64a80-1cb6-4e20-a9d6-a673baa58238"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      },
+                      {
+                        "membership_id": "d7b01375-af50-43f2-b1f7-d4f5c13748c9",
+                        "cycle_member_id": "d03c1a84-1065-42fa-accd-4f2fe249e905",
+                        "cycle_member_revision": 1,
+                        "character_id": "9deba9ad-cb09-4790-a633-d561eb62bb72",
+                        "character_name": "sample-0",
+                        "joined_order": "4",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "removed",
+                        "cancelled_assignment_ids": [
+                          "06991aa2-19d7-4fce-9fde-a15b80d07c90"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      },
+                      {
+                        "membership_id": "e5bdc3ba-f523-48f4-8a85-3c7ad87b73df",
+                        "cycle_member_id": "826372f9-835d-472f-8924-d58e350abe3a",
+                        "cycle_member_revision": 1,
+                        "character_id": "386e3748-2f0c-4a6a-bb1e-3cfcd1499179",
+                        "character_name": "sample-0",
+                        "joined_order": "5",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "removed",
+                        "cancelled_assignment_ids": [
+                          "30b25901-3871-4433-b6e8-b21242181c9a"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      },
+                      {
+                        "membership_id": "9f7bc3c1-dff4-4478-a1b2-437939cc7a75",
+                        "cycle_member_id": "956c1478-7adb-4a64-a7ed-6fbb3b67ed9a",
+                        "cycle_member_revision": 1,
+                        "character_id": "096a45ab-89d7-4146-8c73-7749f71a1a1b",
+                        "character_name": "sample-0",
+                        "joined_order": "6",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "removed",
+                        "cancelled_assignment_ids": [
+                          "8e1181a4-24d0-466a-a786-c74be1f70137"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      },
+                      {
+                        "membership_id": "8e363e4a-05b9-4c66-acb0-428ffa2b8d25",
+                        "cycle_member_id": "6f4e2f6b-0211-4521-8e26-3e55698d8ce1",
+                        "cycle_member_revision": 1,
+                        "character_id": "e54970c7-95f7-4d00-ad61-bdb906fb0f84",
+                        "character_name": "sample-0",
+                        "joined_order": "7",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "removed",
+                        "cancelled_assignment_ids": [
+                          "42a99a70-5728-4d24-a224-33c24ca23468"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      },
+                      {
+                        "membership_id": "cc9667f4-0fdd-45c0-a8fa-5d28f2d94a48",
+                        "cycle_member_id": "098e76aa-5fb4-455d-ac78-63935b4e68b6",
+                        "cycle_member_revision": 1,
+                        "character_id": "168d7a1a-25c6-4e1f-a4f5-bc40fd768a4d",
+                        "character_name": "sample-0",
+                        "joined_order": "8",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "removed",
+                        "cancelled_assignment_ids": [
+                          "70ce1c04-e5f3-40e3-82fc-e6698e2b7279"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      }
+                    ],
+                    "successor": null,
+                    "leadership_after": {
+                      "leader_cycle_member_id": null,
+                      "leader_membership_id": null,
+                      "leadership_revision": 2,
+                      "status": "closed",
+                      "recovery_reason": null
+                    },
+                    "cleanup": {
+                      "released_reservation_count": 0,
+                      "ended_participation_count": 0,
+                      "cancelled_application_count": 0,
+                      "cancelled_session_count": 0
+                    }
+                  },
+                  {
+                    "target_cycle_key": "2026-10-28",
+                    "room_cycle_id": "c91fe3d4-1eb3-56f9-859d-8fde6f1183d5",
+                    "target_generation": 1,
+                    "target_revision": 8,
+                    "members_revision": 8,
+                    "plan_revision": 8,
+                    "target_state": "open",
+                    "generation_state": "open",
+                    "planned_target_state": "closed",
+                    "planned_generation_state": "cancelled",
+                    "revision_rules": {
+                      "target": {
+                        "before": 8,
+                        "comparison": "increase",
+                        "exact_after": null
+                      },
+                      "members": {
+                        "before": 8,
+                        "comparison": "increase",
+                        "exact_after": 9
+                      },
+                      "plan": {
+                        "before": 8,
+                        "comparison": "increase",
+                        "exact_after": null
+                      },
+                      "leadership": {
+                        "before": 1,
+                        "comparison": "increase",
+                        "exact_after": 2
+                      }
+                    },
+                    "leadership_before": {
+                      "leader_cycle_member_id": "c4a63068-2828-4171-9e7c-c48c0e688cca",
+                      "leader_membership_id": "f25f4003-5e48-47c6-8c6b-fbc34bc1352d",
+                      "leadership_revision": 1
+                    },
+                    "transition": "dissolve",
+                    "affected_members": [
+                      {
+                        "membership_id": "f25f4003-5e48-47c6-8c6b-fbc34bc1352d",
+                        "cycle_member_id": "c4a63068-2828-4171-9e7c-c48c0e688cca",
+                        "cycle_member_revision": 1,
+                        "character_id": "e50bbb2d-a62e-4c06-9acb-a3def99407d1",
+                        "character_name": "sample-0",
+                        "joined_order": "1",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "removed",
+                        "cancelled_assignment_ids": [
+                          "0f21b25a-37af-4075-9cfa-aba5f7a843cb"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      },
+                      {
+                        "membership_id": "4a0b2039-a9b9-4d98-8901-f2b40f43d1d8",
+                        "cycle_member_id": "a9d3697e-bb61-4093-ad0d-2dfe3bcd7d25",
+                        "cycle_member_revision": 1,
+                        "character_id": "8f48049d-c8a9-439a-83fc-ef6684bfbf00",
+                        "character_name": "sample-0",
+                        "joined_order": "2",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "removed",
+                        "cancelled_assignment_ids": [
+                          "4c6478b6-d0d4-4b53-a302-044d40ef91af"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      },
+                      {
+                        "membership_id": "f054c68a-dce6-455c-8dcc-b9850fd80d11",
+                        "cycle_member_id": "999c90ee-08c2-4d52-a111-7297b0765f16",
+                        "cycle_member_revision": 1,
+                        "character_id": "13afcd49-034c-4629-b498-4d2947b23396",
+                        "character_name": "sample-0",
+                        "joined_order": "3",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "removed",
+                        "cancelled_assignment_ids": [
+                          "d7968131-4040-421f-9ccc-a2c6413e07d3"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      },
+                      {
+                        "membership_id": "d7b01375-af50-43f2-b1f7-d4f5c13748c9",
+                        "cycle_member_id": "66143bea-2d43-4020-8cf8-a75e599598ff",
+                        "cycle_member_revision": 1,
+                        "character_id": "9deba9ad-cb09-4790-a633-d561eb62bb72",
+                        "character_name": "sample-0",
+                        "joined_order": "4",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "removed",
+                        "cancelled_assignment_ids": [
+                          "ef3f267e-447a-4532-951d-99633d88c4eb"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      },
+                      {
+                        "membership_id": "e5bdc3ba-f523-48f4-8a85-3c7ad87b73df",
+                        "cycle_member_id": "4200e4f6-61b1-493b-9156-974cd7a6137c",
+                        "cycle_member_revision": 1,
+                        "character_id": "386e3748-2f0c-4a6a-bb1e-3cfcd1499179",
+                        "character_name": "sample-0",
+                        "joined_order": "5",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "removed",
+                        "cancelled_assignment_ids": [
+                          "34915809-e09a-4a9f-b457-4617df5819b0"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      },
+                      {
+                        "membership_id": "9f7bc3c1-dff4-4478-a1b2-437939cc7a75",
+                        "cycle_member_id": "fc4d023f-22f4-4080-af42-2ef4f3194d57",
+                        "cycle_member_revision": 1,
+                        "character_id": "096a45ab-89d7-4146-8c73-7749f71a1a1b",
+                        "character_name": "sample-0",
+                        "joined_order": "6",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "removed",
+                        "cancelled_assignment_ids": [
+                          "8fb577f9-debf-4e9c-b208-8f7c589b0b8f"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      },
+                      {
+                        "membership_id": "8e363e4a-05b9-4c66-acb0-428ffa2b8d25",
+                        "cycle_member_id": "c38c7a15-a85b-415c-bea0-b79e6a5c0b1f",
+                        "cycle_member_revision": 1,
+                        "character_id": "e54970c7-95f7-4d00-ad61-bdb906fb0f84",
+                        "character_name": "sample-0",
+                        "joined_order": "7",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "removed",
+                        "cancelled_assignment_ids": [
+                          "ee25934a-afc8-450d-af65-a4a6e3459dff"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      },
+                      {
+                        "membership_id": "cc9667f4-0fdd-45c0-a8fa-5d28f2d94a48",
+                        "cycle_member_id": "1b824f36-7ba8-4a59-a1e7-c3b6e5dfd314",
+                        "cycle_member_revision": 1,
+                        "character_id": "168d7a1a-25c6-4e1f-a4f5-bc40fd768a4d",
+                        "character_name": "sample-0",
+                        "joined_order": "8",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "removed",
+                        "cancelled_assignment_ids": [
+                          "e036f425-20f2-4a83-9657-28de657c9c0b"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      }
+                    ],
+                    "successor": null,
+                    "leadership_after": {
+                      "leader_cycle_member_id": null,
+                      "leader_membership_id": null,
+                      "leadership_revision": 2,
+                      "status": "closed",
+                      "recovery_reason": null
+                    },
+                    "cleanup": {
+                      "released_reservation_count": 0,
+                      "ended_participation_count": 0,
+                      "cancelled_application_count": 0,
+                      "cancelled_session_count": 0
+                    }
+                  }
+                ],
+                "room_effect": {
+                  "kind": "end",
+                  "actor_membership_will_end": true,
+                  "ended_persistent_membership_count": 8,
+                  "preserves_unaffected_cycles": true,
+                  "room_revision_rule": {
+                    "before": 1,
+                    "comparison": "increase",
+                    "exact_after": 2
+                  },
+                  "actor_membership_revision_rule": {
+                    "before": 1,
+                    "comparison": "increase",
+                    "exact_after": 2
+                  }
+                },
+                "existing_completion_preserved": true,
+                "display_revision": "f42aa5033f2597e1073a92edd9cbf2c34e23f16315a10eaea3d7040131a751e9"
+              },
+              "confirmation": {
+                "context_token": "<redacted-context-token>",
+                "issued_at": "2026-10-23T17:45:14.215168Z",
+                "expires_at": "2026-10-23T17:47:14.215168Z"
+              }
+            },
+            "recover_leadership": {
+              "visible": false,
+              "permission": {
+                "allowed": false,
+                "reason": "LEADERSHIP_RECOVERY_NOT_REQUIRED",
+                "next_change_at": null
+              },
+              "impact": null,
+              "confirmation": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "eight-members-two-targets-result",
+      "schema": "Result",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-23T17:45:14.952511Z",
+          "current_cycle_key": "2026-10-21",
+          "view_cycle_key": "2026-10-28",
+          "policy_version": "membership-actions-1"
+        },
+        "data": {
+          "command_id": "6a398df0-fc62-48eb-9285-9f06f1f7cbb6",
+          "action": "dissolve_led_targets",
+          "outcome": "applied",
+          "executed_at": "2026-10-23T17:45:14.952511Z",
+          "room_id": "78084399-a30c-4471-b8b7-1de412ba41d6",
+          "room_revision": 2,
+          "actor_membership_id": "f25f4003-5e48-47c6-8c6b-fbc34bc1352d",
+          "actor_membership_revision": 2,
+          "actor_membership_ended": true,
+          "affected_cycle_keys": [
+            "2026-10-21",
+            "2026-10-28"
+          ],
+          "effects": [
+            {
+              "target_cycle_key": "2026-10-21",
+              "room_cycle_id": "f33a5ad1-c60b-5850-be21-5c671b725143",
+              "target_generation": 1,
+              "target_revision": 9,
+              "members_revision": 9,
+              "plan_revision": 9,
+              "target_state": "closed",
+              "generation_state": "cancelled",
+              "leadership": {
+                "leader_cycle_member_id": null,
+                "leader_membership_id": null,
+                "leadership_revision": 2
+              },
+              "leadership_status": "closed",
+              "recovery_reason": null,
+              "members": [
+                {
+                  "membership_id": "f25f4003-5e48-47c6-8c6b-fbc34bc1352d",
+                  "cycle_member_id": "3be5770b-5fcc-4cd1-bc8e-d06d4fd5579a",
+                  "cycle_member_revision": 2,
+                  "state": "removed",
+                  "cancelled_assignment_ids": [
+                    "2c40ab38-30bb-490a-b71b-74c24886c1c8"
+                  ],
+                  "preserved_completed_assignment_ids": []
+                },
+                {
+                  "membership_id": "4a0b2039-a9b9-4d98-8901-f2b40f43d1d8",
+                  "cycle_member_id": "a1e46a85-7ecf-47a8-a7b1-770f855f734c",
+                  "cycle_member_revision": 2,
+                  "state": "removed",
+                  "cancelled_assignment_ids": [
+                    "e72d32b3-9637-455b-aa37-8f4226afa2ff"
+                  ],
+                  "preserved_completed_assignment_ids": []
+                },
+                {
+                  "membership_id": "f054c68a-dce6-455c-8dcc-b9850fd80d11",
+                  "cycle_member_id": "c6c2579b-9fb8-4198-a9f7-f97182b3664f",
+                  "cycle_member_revision": 2,
+                  "state": "removed",
+                  "cancelled_assignment_ids": [
+                    "9fd64a80-1cb6-4e20-a9d6-a673baa58238"
+                  ],
+                  "preserved_completed_assignment_ids": []
+                },
+                {
+                  "membership_id": "d7b01375-af50-43f2-b1f7-d4f5c13748c9",
+                  "cycle_member_id": "d03c1a84-1065-42fa-accd-4f2fe249e905",
+                  "cycle_member_revision": 2,
+                  "state": "removed",
+                  "cancelled_assignment_ids": [
+                    "06991aa2-19d7-4fce-9fde-a15b80d07c90"
+                  ],
+                  "preserved_completed_assignment_ids": []
+                },
+                {
+                  "membership_id": "e5bdc3ba-f523-48f4-8a85-3c7ad87b73df",
+                  "cycle_member_id": "826372f9-835d-472f-8924-d58e350abe3a",
+                  "cycle_member_revision": 2,
+                  "state": "removed",
+                  "cancelled_assignment_ids": [
+                    "30b25901-3871-4433-b6e8-b21242181c9a"
+                  ],
+                  "preserved_completed_assignment_ids": []
+                },
+                {
+                  "membership_id": "9f7bc3c1-dff4-4478-a1b2-437939cc7a75",
+                  "cycle_member_id": "956c1478-7adb-4a64-a7ed-6fbb3b67ed9a",
+                  "cycle_member_revision": 2,
+                  "state": "removed",
+                  "cancelled_assignment_ids": [
+                    "8e1181a4-24d0-466a-a786-c74be1f70137"
+                  ],
+                  "preserved_completed_assignment_ids": []
+                },
+                {
+                  "membership_id": "8e363e4a-05b9-4c66-acb0-428ffa2b8d25",
+                  "cycle_member_id": "6f4e2f6b-0211-4521-8e26-3e55698d8ce1",
+                  "cycle_member_revision": 2,
+                  "state": "removed",
+                  "cancelled_assignment_ids": [
+                    "42a99a70-5728-4d24-a224-33c24ca23468"
+                  ],
+                  "preserved_completed_assignment_ids": []
+                },
+                {
+                  "membership_id": "cc9667f4-0fdd-45c0-a8fa-5d28f2d94a48",
+                  "cycle_member_id": "098e76aa-5fb4-455d-ac78-63935b4e68b6",
+                  "cycle_member_revision": 2,
+                  "state": "removed",
+                  "cancelled_assignment_ids": [
+                    "70ce1c04-e5f3-40e3-82fc-e6698e2b7279"
+                  ],
+                  "preserved_completed_assignment_ids": []
+                }
+              ]
+            },
+            {
+              "target_cycle_key": "2026-10-28",
+              "room_cycle_id": "c91fe3d4-1eb3-56f9-859d-8fde6f1183d5",
+              "target_generation": 1,
+              "target_revision": 9,
+              "members_revision": 9,
+              "plan_revision": 9,
+              "target_state": "closed",
+              "generation_state": "cancelled",
+              "leadership": {
+                "leader_cycle_member_id": null,
+                "leader_membership_id": null,
+                "leadership_revision": 2
+              },
+              "leadership_status": "closed",
+              "recovery_reason": null,
+              "members": [
+                {
+                  "membership_id": "f25f4003-5e48-47c6-8c6b-fbc34bc1352d",
+                  "cycle_member_id": "c4a63068-2828-4171-9e7c-c48c0e688cca",
+                  "cycle_member_revision": 2,
+                  "state": "removed",
+                  "cancelled_assignment_ids": [
+                    "0f21b25a-37af-4075-9cfa-aba5f7a843cb"
+                  ],
+                  "preserved_completed_assignment_ids": []
+                },
+                {
+                  "membership_id": "4a0b2039-a9b9-4d98-8901-f2b40f43d1d8",
+                  "cycle_member_id": "a9d3697e-bb61-4093-ad0d-2dfe3bcd7d25",
+                  "cycle_member_revision": 2,
+                  "state": "removed",
+                  "cancelled_assignment_ids": [
+                    "4c6478b6-d0d4-4b53-a302-044d40ef91af"
+                  ],
+                  "preserved_completed_assignment_ids": []
+                },
+                {
+                  "membership_id": "f054c68a-dce6-455c-8dcc-b9850fd80d11",
+                  "cycle_member_id": "999c90ee-08c2-4d52-a111-7297b0765f16",
+                  "cycle_member_revision": 2,
+                  "state": "removed",
+                  "cancelled_assignment_ids": [
+                    "d7968131-4040-421f-9ccc-a2c6413e07d3"
+                  ],
+                  "preserved_completed_assignment_ids": []
+                },
+                {
+                  "membership_id": "d7b01375-af50-43f2-b1f7-d4f5c13748c9",
+                  "cycle_member_id": "66143bea-2d43-4020-8cf8-a75e599598ff",
+                  "cycle_member_revision": 2,
+                  "state": "removed",
+                  "cancelled_assignment_ids": [
+                    "ef3f267e-447a-4532-951d-99633d88c4eb"
+                  ],
+                  "preserved_completed_assignment_ids": []
+                },
+                {
+                  "membership_id": "e5bdc3ba-f523-48f4-8a85-3c7ad87b73df",
+                  "cycle_member_id": "4200e4f6-61b1-493b-9156-974cd7a6137c",
+                  "cycle_member_revision": 2,
+                  "state": "removed",
+                  "cancelled_assignment_ids": [
+                    "34915809-e09a-4a9f-b457-4617df5819b0"
+                  ],
+                  "preserved_completed_assignment_ids": []
+                },
+                {
+                  "membership_id": "9f7bc3c1-dff4-4478-a1b2-437939cc7a75",
+                  "cycle_member_id": "fc4d023f-22f4-4080-af42-2ef4f3194d57",
+                  "cycle_member_revision": 2,
+                  "state": "removed",
+                  "cancelled_assignment_ids": [
+                    "8fb577f9-debf-4e9c-b208-8f7c589b0b8f"
+                  ],
+                  "preserved_completed_assignment_ids": []
+                },
+                {
+                  "membership_id": "8e363e4a-05b9-4c66-acb0-428ffa2b8d25",
+                  "cycle_member_id": "c38c7a15-a85b-415c-bea0-b79e6a5c0b1f",
+                  "cycle_member_revision": 2,
+                  "state": "removed",
+                  "cancelled_assignment_ids": [
+                    "ee25934a-afc8-450d-af65-a4a6e3459dff"
+                  ],
+                  "preserved_completed_assignment_ids": []
+                },
+                {
+                  "membership_id": "cc9667f4-0fdd-45c0-a8fa-5d28f2d94a48",
+                  "cycle_member_id": "1b824f36-7ba8-4a59-a1e7-c3b6e5dfd314",
+                  "cycle_member_revision": 2,
+                  "state": "removed",
+                  "cancelled_assignment_ids": [
+                    "e036f425-20f2-4a83-9657-28de657c9c0b"
+                  ],
+                  "preserved_completed_assignment_ids": []
+                }
+              ]
+            }
+          ],
+          "room_ended": true,
+          "ended_persistent_membership_count": 8
+        }
+      }
+    },
+    {
+      "name": "empty-effects-context",
+      "schema": "Context",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-23T17:43:04.466422Z",
+          "current_cycle_key": "2026-10-21",
+          "view_cycle_key": "2026-10-21",
+          "policy_version": "membership-actions-1"
+        },
+        "data": {
+          "room_id": "ee77bab5-f101-4203-b87e-90f600315095",
+          "room_revision": 1,
+          "actor": {
+            "membership_id": "ed2d0903-e83f-48c3-bf31-f89ab9729a11",
+            "membership_revision": 1
+          },
+          "options": {
+            "leave_target": {
+              "visible": false,
+              "permission": {
+                "allowed": false,
+                "reason": "WEEKLY_PARTICIPANT_REQUIRED",
+                "next_change_at": null
+              },
+              "impact": null,
+              "confirmation": null
+            },
+            "leave_all": {
+              "visible": true,
+              "permission": {
+                "allowed": true,
+                "reason": null,
+                "next_change_at": null
+              },
+              "impact": {
+                "action": "leave_all",
+                "affected_cycle_keys": [],
+                "targets": [],
+                "room_effect": {
+                  "kind": "preserve",
+                  "actor_membership_will_end": true,
+                  "ended_persistent_membership_count": 1,
+                  "preserves_unaffected_cycles": true,
+                  "room_revision_rule": {
+                    "before": 1,
+                    "comparison": "equal",
+                    "exact_after": 1
+                  },
+                  "actor_membership_revision_rule": {
+                    "before": 1,
+                    "comparison": "increase",
+                    "exact_after": 2
+                  }
+                },
+                "existing_completion_preserved": true,
+                "display_revision": "3c3578483124cf2369ae133599b9bb5d430936df1de3573ff01be6080a20e8bf"
+              },
+              "confirmation": {
+                "context_token": "<redacted-context-token>",
+                "issued_at": "2026-10-23T17:43:04.466422Z",
+                "expires_at": "2026-10-23T17:45:04.466422Z"
+              }
+            },
+            "dissolve_led_targets": {
+              "visible": false,
+              "permission": {
+                "allowed": false,
+                "reason": "TARGET_LEADER_REQUIRED",
+                "next_change_at": null
+              },
+              "impact": null,
+              "confirmation": null
+            },
+            "recover_leadership": {
+              "visible": false,
+              "permission": {
+                "allowed": false,
+                "reason": "LEADERSHIP_RECOVERY_NOT_REQUIRED",
+                "next_change_at": null
+              },
+              "impact": null,
+              "confirmation": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "empty-effects-result",
+      "schema": "Result",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-23T17:43:04.506744Z",
+          "current_cycle_key": "2026-10-21",
+          "view_cycle_key": "2026-10-21",
+          "policy_version": "membership-actions-1"
+        },
+        "data": {
+          "command_id": "583099f0-27bc-4a3a-9d05-e03604731ae1",
+          "action": "leave_all",
+          "outcome": "applied",
+          "executed_at": "2026-10-23T17:43:04.506744Z",
+          "room_id": "ee77bab5-f101-4203-b87e-90f600315095",
+          "room_revision": 1,
+          "actor_membership_id": "ed2d0903-e83f-48c3-bf31-f89ab9729a11",
+          "actor_membership_revision": 2,
+          "actor_membership_ended": true,
+          "affected_cycle_keys": [],
+          "effects": [],
+          "room_ended": false,
+          "ended_persistent_membership_count": 1
+        }
+      }
+    },
+    {
+      "name": "ended-own-record-plan",
+      "schema": "PlanProfile",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-23T17:42:49.651159Z",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "policy_version": "membership-actions-1",
+          "reader_kind": "plan"
+        },
+        "data": {
+          "target": {
+            "room_id": "bf0b2438-07d5-4dd1-be37-827df6920b85",
+            "title": "synthetic two-cycle",
+            "room_revision": 2,
+            "room_state": "ended",
+            "target_cycle_key": "2026-10-21",
+            "room_cycle_id": "32f48e06-0614-5279-9654-2e24da5c393f",
+            "target_generation": 1,
+            "target_revision": 2,
+            "target_state": "closed",
+            "generation_state": "cancelled",
+            "leadership": {
+              "leader_cycle_member_id": null,
+              "leader_membership_id": null,
+              "leadership_revision": 2
+            }
+          },
+          "viewer": {
+            "membership_id": "3e8c766b-c611-490c-bc65-d456eafd9e9b",
+            "membership_revision": 2,
+            "membership_state": "ended",
+            "cycle_member_id": "a07c079a-173d-498d-8c96-4d6fa07d9a17",
+            "cycle_member_revision": 2,
+            "cycle_member_state": "cancelled",
+            "joined_order": "1",
+            "role": "none",
+            "mode": "record",
+            "record_locator": {
+              "membership_id": "3e8c766b-c611-490c-bc65-d456eafd9e9b",
+              "cycle_member_id": "a07c079a-173d-498d-8c96-4d6fa07d9a17",
+              "room_cycle_id": "32f48e06-0614-5279-9654-2e24da5c393f",
+              "target_cycle_key": "2026-10-21",
+              "target_generation": 1
+            }
+          },
+          "access": {
+            "state": "allowed",
+            "basis": "historical_membership",
+            "read_only": true,
+            "evaluated_at": "2026-10-23T17:42:49.651159Z"
+          },
+          "recovery": {
+            "state": "none",
+            "reason": null,
+            "revision": null,
+            "remaining_review_reasons": [],
+            "menu_access": false,
+            "can_request_recovery": {
+              "allowed": false,
+              "reason": "LEADERSHIP_RECOVERY_NOT_REQUIRED",
+              "next_change_at": null
+            }
+          },
+          "permissions": {
+            "view_detail": {
+              "allowed": true,
+              "reason": null,
+              "next_change_at": null
+            },
+            "view_plan": {
+              "allowed": true,
+              "reason": null,
+              "next_change_at": null
+            },
+            "manage_target": {
+              "allowed": false,
+              "reason": "ROOM_READ_ONLY",
+              "next_change_at": null
+            },
+            "resume_weekly": {
+              "allowed": false,
+              "reason": "ROOM_READ_ONLY",
+              "next_change_at": null
+            },
+            "read_action_menu": {
+              "allowed": false,
+              "reason": "ROOM_READ_ONLY",
+              "next_change_at": null
+            }
+          },
+          "content": null,
+          "record": {
+            "locator": {
+              "membership_id": "3e8c766b-c611-490c-bc65-d456eafd9e9b",
+              "cycle_member_id": "a07c079a-173d-498d-8c96-4d6fa07d9a17",
+              "room_cycle_id": "32f48e06-0614-5279-9654-2e24da5c393f",
+              "target_cycle_key": "2026-10-21",
+              "target_generation": 1
+            },
+            "rounds": [
+              {
+                "item_id": "9febbee8-472a-5ca3-8993-499620ddc705",
+                "round_id": "7afa19d3-6378-515c-82a8-eeb531f294e2",
+                "raid_id": "horizon_cathedral",
+                "difficulty_id": "stage1",
+                "catalog_version": "2026.08.20",
+                "state": "stopped_incomplete"
+              },
+              {
+                "item_id": "adef603a-c194-525a-aac2-c59fcdca5cb8",
+                "round_id": "3ea345f9-69f3-5921-934a-7f25e00a82cc",
+                "raid_id": "kazeros_act4",
+                "difficulty_id": "normal",
+                "catalog_version": "2026.08.20",
+                "state": "stopped_incomplete"
+              }
+            ],
+            "assignments": [
+              {
+                "assignment_id": "0dc043f0-2d21-4088-b3be-cbc8e97b07c1",
+                "item_id": "9febbee8-472a-5ca3-8993-499620ddc705",
+                "round_id": "7afa19d3-6378-515c-82a8-eeb531f294e2",
+                "character_id": "fda522c8-6d31-4d4a-b64c-673e396eef04",
+                "character_name": "sample-0",
+                "raid_id": "horizon_cathedral",
+                "difficulty_id": "stage1",
+                "catalog_version": "2026.08.20",
+                "state": "left",
+                "completion_source": null,
+                "completed_at": null,
+                "ended_at": "2026-10-23T17:42:49.284528Z"
+              },
+              {
+                "assignment_id": "b820444b-721e-449d-ab0f-fcfe1caa751c",
+                "item_id": "adef603a-c194-525a-aac2-c59fcdca5cb8",
+                "round_id": "3ea345f9-69f3-5921-934a-7f25e00a82cc",
+                "character_id": "fda522c8-6d31-4d4a-b64c-673e396eef04",
+                "character_name": "sample-0",
+                "raid_id": "kazeros_act4",
+                "difficulty_id": "normal",
+                "catalog_version": "2026.08.20",
+                "state": "left",
+                "completion_source": null,
+                "completed_at": null,
+                "ended_at": "2026-10-23T17:42:49.284528Z"
+              }
+            ],
+            "schedule_segments": [
+              {
+                "segment_id": "c8701526-28c2-4c9b-b8a1-a54636175ad9",
+                "round_id": "3ea345f9-69f3-5921-934a-7f25e00a82cc",
+                "session_id": "39e5028d-c829-43d0-bfcd-9a9e0d6a1453",
+                "starts_at": "2026-10-23T18:45:00Z",
+                "ends_at": "2026-10-23T18:55:00Z",
+                "state": "released"
+              },
+              {
+                "segment_id": "e54aca57-f89e-4789-b5ac-7f160f0be209",
+                "round_id": "7afa19d3-6378-515c-82a8-eeb531f294e2",
+                "session_id": "39e5028d-c829-43d0-bfcd-9a9e0d6a1453",
+                "starts_at": "2026-10-23T18:55:00Z",
+                "ends_at": "2026-10-23T19:05:00Z",
+                "state": "released"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "no-successor-context",
+      "schema": "Context",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-23T17:42:34.884741Z",
+          "current_cycle_key": "2026-10-21",
+          "view_cycle_key": "2026-10-21",
+          "policy_version": "membership-actions-1"
+        },
+        "data": {
+          "room_id": "bcfe38ae-6803-4592-98f7-f9518723cfe8",
+          "room_revision": 1,
+          "actor": {
+            "membership_id": "f1d2b057-4502-4dba-a76a-7b99820d4cd9",
+            "membership_revision": 1
+          },
+          "options": {
+            "leave_target": {
+              "visible": true,
+              "permission": {
+                "allowed": true,
+                "reason": null,
+                "next_change_at": null
+              },
+              "impact": {
+                "action": "leave_target",
+                "affected_cycle_keys": [
+                  "2026-10-21"
+                ],
+                "targets": [
+                  {
+                    "target_cycle_key": "2026-10-21",
+                    "room_cycle_id": "a2973318-0f36-5843-b9ff-477670878370",
+                    "target_generation": 1,
+                    "target_revision": 2,
+                    "members_revision": 2,
+                    "plan_revision": 2,
+                    "target_state": "open",
+                    "generation_state": "open",
+                    "planned_target_state": "review_required",
+                    "planned_generation_state": "review_required",
+                    "revision_rules": {
+                      "target": {
+                        "before": 2,
+                        "comparison": "increase",
+                        "exact_after": null
+                      },
+                      "members": {
+                        "before": 2,
+                        "comparison": "increase",
+                        "exact_after": 3
+                      },
+                      "plan": {
+                        "before": 2,
+                        "comparison": "increase",
+                        "exact_after": null
+                      },
+                      "leadership": {
+                        "before": 1,
+                        "comparison": "increase",
+                        "exact_after": 2
+                      }
+                    },
+                    "leadership_before": {
+                      "leader_cycle_member_id": "ff448c3a-3c64-444c-bd29-85fc34aa83d1",
+                      "leader_membership_id": "f1d2b057-4502-4dba-a76a-7b99820d4cd9",
+                      "leadership_revision": 1
+                    },
+                    "transition": "leadership_pending",
+                    "affected_members": [
+                      {
+                        "membership_id": "f1d2b057-4502-4dba-a76a-7b99820d4cd9",
+                        "cycle_member_id": "ff448c3a-3c64-444c-bd29-85fc34aa83d1",
+                        "cycle_member_revision": 1,
+                        "character_id": "28f5ac2b-2221-47ab-9413-039e3fc27aef",
+                        "character_name": "sample-0",
+                        "joined_order": "1",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "cancelled",
+                        "cancelled_assignment_ids": [
+                          "45fd5885-e09f-45e2-ba1b-354d93300bd1",
+                          "74cc4f05-9377-44e6-bf96-d7fca5468acc"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      }
+                    ],
+                    "successor": null,
+                    "leadership_after": {
+                      "leader_cycle_member_id": null,
+                      "leader_membership_id": null,
+                      "leadership_revision": 2,
+                      "status": "pending_review",
+                      "recovery_reason": "SUCCESSOR_UNAVAILABLE"
+                    },
+                    "cleanup": {
+                      "released_reservation_count": 2,
+                      "ended_participation_count": 1,
+                      "cancelled_application_count": 0,
+                      "cancelled_session_count": 0
+                    }
+                  }
+                ],
+                "room_effect": {
+                  "kind": "preserve_review",
+                  "actor_membership_will_end": false,
+                  "ended_persistent_membership_count": 0,
+                  "preserves_unaffected_cycles": true,
+                  "room_revision_rule": {
+                    "before": 1,
+                    "comparison": "equal",
+                    "exact_after": 1
+                  },
+                  "actor_membership_revision_rule": {
+                    "before": 1,
+                    "comparison": "equal",
+                    "exact_after": 1
+                  }
+                },
+                "existing_completion_preserved": true,
+                "display_revision": "8e008c27f2b440970bff0607ebbe221b442d15e728caef50a0dc8549a3c4f90c"
+              },
+              "confirmation": {
+                "context_token": "<redacted-context-token>",
+                "issued_at": "2026-10-23T17:42:34.884741Z",
+                "expires_at": "2026-10-23T17:44:34.884741Z"
+              }
+            },
+            "leave_all": {
+              "visible": true,
+              "permission": {
+                "allowed": true,
+                "reason": null,
+                "next_change_at": null
+              },
+              "impact": {
+                "action": "leave_all",
+                "affected_cycle_keys": [
+                  "2026-10-21",
+                  "2026-10-28"
+                ],
+                "targets": [
+                  {
+                    "target_cycle_key": "2026-10-21",
+                    "room_cycle_id": "a2973318-0f36-5843-b9ff-477670878370",
+                    "target_generation": 1,
+                    "target_revision": 2,
+                    "members_revision": 2,
+                    "plan_revision": 2,
+                    "target_state": "open",
+                    "generation_state": "open",
+                    "planned_target_state": "review_required",
+                    "planned_generation_state": "review_required",
+                    "revision_rules": {
+                      "target": {
+                        "before": 2,
+                        "comparison": "increase",
+                        "exact_after": null
+                      },
+                      "members": {
+                        "before": 2,
+                        "comparison": "increase",
+                        "exact_after": 3
+                      },
+                      "plan": {
+                        "before": 2,
+                        "comparison": "increase",
+                        "exact_after": null
+                      },
+                      "leadership": {
+                        "before": 1,
+                        "comparison": "increase",
+                        "exact_after": 2
+                      }
+                    },
+                    "leadership_before": {
+                      "leader_cycle_member_id": "ff448c3a-3c64-444c-bd29-85fc34aa83d1",
+                      "leader_membership_id": "f1d2b057-4502-4dba-a76a-7b99820d4cd9",
+                      "leadership_revision": 1
+                    },
+                    "transition": "leadership_pending",
+                    "affected_members": [
+                      {
+                        "membership_id": "f1d2b057-4502-4dba-a76a-7b99820d4cd9",
+                        "cycle_member_id": "ff448c3a-3c64-444c-bd29-85fc34aa83d1",
+                        "cycle_member_revision": 1,
+                        "character_id": "28f5ac2b-2221-47ab-9413-039e3fc27aef",
+                        "character_name": "sample-0",
+                        "joined_order": "1",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "cancelled",
+                        "cancelled_assignment_ids": [
+                          "45fd5885-e09f-45e2-ba1b-354d93300bd1",
+                          "74cc4f05-9377-44e6-bf96-d7fca5468acc"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      }
+                    ],
+                    "successor": null,
+                    "leadership_after": {
+                      "leader_cycle_member_id": null,
+                      "leader_membership_id": null,
+                      "leadership_revision": 2,
+                      "status": "pending_review",
+                      "recovery_reason": "SUCCESSOR_UNAVAILABLE"
+                    },
+                    "cleanup": {
+                      "released_reservation_count": 2,
+                      "ended_participation_count": 1,
+                      "cancelled_application_count": 0,
+                      "cancelled_session_count": 0
+                    }
+                  },
+                  {
+                    "target_cycle_key": "2026-10-28",
+                    "room_cycle_id": "da76d67d-76b1-5ee0-b462-ef43cf290d37",
+                    "target_generation": 1,
+                    "target_revision": 1,
+                    "members_revision": 1,
+                    "plan_revision": 1,
+                    "target_state": "open",
+                    "generation_state": "open",
+                    "planned_target_state": "closed",
+                    "planned_generation_state": "cancelled",
+                    "revision_rules": {
+                      "target": {
+                        "before": 1,
+                        "comparison": "increase",
+                        "exact_after": null
+                      },
+                      "members": {
+                        "before": 1,
+                        "comparison": "increase",
+                        "exact_after": 2
+                      },
+                      "plan": {
+                        "before": 1,
+                        "comparison": "increase",
+                        "exact_after": null
+                      },
+                      "leadership": {
+                        "before": 1,
+                        "comparison": "increase",
+                        "exact_after": 2
+                      }
+                    },
+                    "leadership_before": {
+                      "leader_cycle_member_id": "39e4ede4-b9fd-4b08-b024-58b431f634a3",
+                      "leader_membership_id": "f1d2b057-4502-4dba-a76a-7b99820d4cd9",
+                      "leadership_revision": 1
+                    },
+                    "transition": "close_empty",
+                    "affected_members": [
+                      {
+                        "membership_id": "f1d2b057-4502-4dba-a76a-7b99820d4cd9",
+                        "cycle_member_id": "39e4ede4-b9fd-4b08-b024-58b431f634a3",
+                        "cycle_member_revision": 1,
+                        "character_id": "28f5ac2b-2221-47ab-9413-039e3fc27aef",
+                        "character_name": "sample-0",
+                        "joined_order": "1",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "cancelled",
+                        "cancelled_assignment_ids": [
+                          "d210e09d-8768-4598-a0ac-ddff7205a608",
+                          "6f82ac77-15fd-49f9-a343-b83894484da4"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      }
+                    ],
+                    "successor": null,
+                    "leadership_after": {
+                      "leader_cycle_member_id": null,
+                      "leader_membership_id": null,
+                      "leadership_revision": 2,
+                      "status": "closed",
+                      "recovery_reason": null
+                    },
+                    "cleanup": {
+                      "released_reservation_count": 0,
+                      "ended_participation_count": 1,
+                      "cancelled_application_count": 0,
+                      "cancelled_session_count": 1
+                    }
+                  }
+                ],
+                "room_effect": {
+                  "kind": "preserve_review",
+                  "actor_membership_will_end": true,
+                  "ended_persistent_membership_count": 1,
+                  "preserves_unaffected_cycles": true,
+                  "room_revision_rule": {
+                    "before": 1,
+                    "comparison": "equal",
+                    "exact_after": 1
+                  },
+                  "actor_membership_revision_rule": {
+                    "before": 1,
+                    "comparison": "increase",
+                    "exact_after": 2
+                  }
+                },
+                "existing_completion_preserved": true,
+                "display_revision": "326f159b8e7dc825e16cdc405a0789051b222593192ec493390c10877cf07d8f"
+              },
+              "confirmation": {
+                "context_token": "<redacted-context-token>",
+                "issued_at": "2026-10-23T17:42:34.884741Z",
+                "expires_at": "2026-10-23T17:44:34.884741Z"
+              }
+            },
+            "dissolve_led_targets": {
+              "visible": true,
+              "permission": {
+                "allowed": true,
+                "reason": null,
+                "next_change_at": null
+              },
+              "impact": {
+                "action": "dissolve_led_targets",
+                "affected_cycle_keys": [
+                  "2026-10-21",
+                  "2026-10-28"
+                ],
+                "targets": [
+                  {
+                    "target_cycle_key": "2026-10-21",
+                    "room_cycle_id": "a2973318-0f36-5843-b9ff-477670878370",
+                    "target_generation": 1,
+                    "target_revision": 2,
+                    "members_revision": 2,
+                    "plan_revision": 2,
+                    "target_state": "open",
+                    "generation_state": "open",
+                    "planned_target_state": "closed",
+                    "planned_generation_state": "cancelled",
+                    "revision_rules": {
+                      "target": {
+                        "before": 2,
+                        "comparison": "increase",
+                        "exact_after": null
+                      },
+                      "members": {
+                        "before": 2,
+                        "comparison": "increase",
+                        "exact_after": 3
+                      },
+                      "plan": {
+                        "before": 2,
+                        "comparison": "increase",
+                        "exact_after": null
+                      },
+                      "leadership": {
+                        "before": 1,
+                        "comparison": "increase",
+                        "exact_after": 2
+                      }
+                    },
+                    "leadership_before": {
+                      "leader_cycle_member_id": "ff448c3a-3c64-444c-bd29-85fc34aa83d1",
+                      "leader_membership_id": "f1d2b057-4502-4dba-a76a-7b99820d4cd9",
+                      "leadership_revision": 1
+                    },
+                    "transition": "dissolve",
+                    "affected_members": [
+                      {
+                        "membership_id": "f1d2b057-4502-4dba-a76a-7b99820d4cd9",
+                        "cycle_member_id": "ff448c3a-3c64-444c-bd29-85fc34aa83d1",
+                        "cycle_member_revision": 1,
+                        "character_id": "28f5ac2b-2221-47ab-9413-039e3fc27aef",
+                        "character_name": "sample-0",
+                        "joined_order": "1",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "removed",
+                        "cancelled_assignment_ids": [
+                          "45fd5885-e09f-45e2-ba1b-354d93300bd1",
+                          "74cc4f05-9377-44e6-bf96-d7fca5468acc"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      },
+                      {
+                        "membership_id": "9c21a797-e079-4871-bbbc-231ad5245f9c",
+                        "cycle_member_id": "0ee5214f-9c6e-498e-b885-8e84938b8b26",
+                        "cycle_member_revision": 1,
+                        "character_id": "dacad944-8082-4a4f-bb21-78662603a2a8",
+                        "character_name": "sample-0",
+                        "joined_order": "2",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "removed",
+                        "cancelled_assignment_ids": [
+                          "0cb9eb4a-2138-4b93-9a73-6735fac97847",
+                          "888d8fff-f60b-4574-8f59-f3306ccdd979"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      }
+                    ],
+                    "successor": null,
+                    "leadership_after": {
+                      "leader_cycle_member_id": null,
+                      "leader_membership_id": null,
+                      "leadership_revision": 2,
+                      "status": "closed",
+                      "recovery_reason": null
+                    },
+                    "cleanup": {
+                      "released_reservation_count": 2,
+                      "ended_participation_count": 2,
+                      "cancelled_application_count": 0,
+                      "cancelled_session_count": 1
+                    }
+                  },
+                  {
+                    "target_cycle_key": "2026-10-28",
+                    "room_cycle_id": "da76d67d-76b1-5ee0-b462-ef43cf290d37",
+                    "target_generation": 1,
+                    "target_revision": 1,
+                    "members_revision": 1,
+                    "plan_revision": 1,
+                    "target_state": "open",
+                    "generation_state": "open",
+                    "planned_target_state": "closed",
+                    "planned_generation_state": "cancelled",
+                    "revision_rules": {
+                      "target": {
+                        "before": 1,
+                        "comparison": "increase",
+                        "exact_after": null
+                      },
+                      "members": {
+                        "before": 1,
+                        "comparison": "increase",
+                        "exact_after": 2
+                      },
+                      "plan": {
+                        "before": 1,
+                        "comparison": "increase",
+                        "exact_after": null
+                      },
+                      "leadership": {
+                        "before": 1,
+                        "comparison": "increase",
+                        "exact_after": 2
+                      }
+                    },
+                    "leadership_before": {
+                      "leader_cycle_member_id": "39e4ede4-b9fd-4b08-b024-58b431f634a3",
+                      "leader_membership_id": "f1d2b057-4502-4dba-a76a-7b99820d4cd9",
+                      "leadership_revision": 1
+                    },
+                    "transition": "dissolve",
+                    "affected_members": [
+                      {
+                        "membership_id": "f1d2b057-4502-4dba-a76a-7b99820d4cd9",
+                        "cycle_member_id": "39e4ede4-b9fd-4b08-b024-58b431f634a3",
+                        "cycle_member_revision": 1,
+                        "character_id": "28f5ac2b-2221-47ab-9413-039e3fc27aef",
+                        "character_name": "sample-0",
+                        "joined_order": "1",
+                        "revision_rule": {
+                          "before": 1,
+                          "comparison": "increase",
+                          "exact_after": 2
+                        },
+                        "planned_state": "removed",
+                        "cancelled_assignment_ids": [
+                          "d210e09d-8768-4598-a0ac-ddff7205a608",
+                          "6f82ac77-15fd-49f9-a343-b83894484da4"
+                        ],
+                        "preserved_completed_assignment_ids": [],
+                        "state": "participating"
+                      }
+                    ],
+                    "successor": null,
+                    "leadership_after": {
+                      "leader_cycle_member_id": null,
+                      "leader_membership_id": null,
+                      "leadership_revision": 2,
+                      "status": "closed",
+                      "recovery_reason": null
+                    },
+                    "cleanup": {
+                      "released_reservation_count": 0,
+                      "ended_participation_count": 1,
+                      "cancelled_application_count": 0,
+                      "cancelled_session_count": 1
+                    }
+                  }
+                ],
+                "room_effect": {
+                  "kind": "end",
+                  "actor_membership_will_end": true,
+                  "ended_persistent_membership_count": 2,
+                  "preserves_unaffected_cycles": true,
+                  "room_revision_rule": {
+                    "before": 1,
+                    "comparison": "increase",
+                    "exact_after": 2
+                  },
+                  "actor_membership_revision_rule": {
+                    "before": 1,
+                    "comparison": "increase",
+                    "exact_after": 2
+                  }
+                },
+                "existing_completion_preserved": true,
+                "display_revision": "b488a31f6091460f74dc35770fc6d72c53cb46bb1c6720ebc0963511e3d6eaef"
+              },
+              "confirmation": {
+                "context_token": "<redacted-context-token>",
+                "issued_at": "2026-10-23T17:42:34.884741Z",
+                "expires_at": "2026-10-23T17:44:34.884741Z"
+              }
+            },
+            "recover_leadership": {
+              "visible": false,
+              "permission": {
+                "allowed": false,
+                "reason": "LEADERSHIP_RECOVERY_NOT_REQUIRED",
+                "next_change_at": null
+              },
+              "impact": null,
+              "confirmation": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "no-successor-result",
+      "schema": "Result",
+      "value": {
+        "scope": {
+          "server_now": "2026-10-23T17:42:35.099394Z",
+          "current_cycle_key": "2026-10-21",
+          "view_cycle_key": "2026-10-21",
+          "policy_version": "membership-actions-1"
+        },
+        "data": {
+          "command_id": "21b383fc-f373-450d-8d9a-1ddc544b5497",
+          "action": "leave_target",
+          "outcome": "applied",
+          "executed_at": "2026-10-23T17:42:35.099394Z",
+          "room_id": "bcfe38ae-6803-4592-98f7-f9518723cfe8",
+          "room_revision": 1,
+          "actor_membership_id": "f1d2b057-4502-4dba-a76a-7b99820d4cd9",
+          "actor_membership_revision": 1,
+          "actor_membership_ended": false,
+          "affected_cycle_keys": [
+            "2026-10-21"
+          ],
+          "effects": [
+            {
+              "target_cycle_key": "2026-10-21",
+              "room_cycle_id": "a2973318-0f36-5843-b9ff-477670878370",
+              "target_generation": 1,
+              "target_revision": 3,
+              "members_revision": 3,
+              "plan_revision": 3,
+              "target_state": "review_required",
+              "generation_state": "review_required",
+              "leadership": {
+                "leader_cycle_member_id": null,
+                "leader_membership_id": null,
+                "leadership_revision": 2
+              },
+              "leadership_status": "pending_review",
+              "recovery_reason": "SUCCESSOR_UNAVAILABLE",
+              "members": [
+                {
+                  "membership_id": "f1d2b057-4502-4dba-a76a-7b99820d4cd9",
+                  "cycle_member_id": "ff448c3a-3c64-444c-bd29-85fc34aa83d1",
+                  "cycle_member_revision": 2,
+                  "state": "cancelled",
+                  "cancelled_assignment_ids": [
+                    "45fd5885-e09f-45e2-ba1b-354d93300bd1",
+                    "74cc4f05-9377-44e6-bf96-d7fca5468acc"
+                  ],
+                  "preserved_completed_assignment_ids": []
+                }
+              ]
+            }
+          ],
+          "room_ended": false,
+          "ended_persistent_membership_count": 0
+        }
+      }
+    }
+  ]
+}

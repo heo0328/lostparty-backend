@@ -1,0 +1,157 @@
+{
+  "status": "PASS",
+  "checkpoint_report": "docs/features/recruitment/artifacts/issue13-cutover-checkpoint.json",
+  "source_revision": [
+    "0023_recruitment_resume"
+  ],
+  "target_revision": [
+    "0029_cycle_outcomes"
+  ],
+  "source_image": "sha256:efde69d269a405358d99a45b1a2bbf243b0cb3f1408a29d878ee05e759d2b5fb",
+  "active_image": "sha256:ccc787cb9ccb3bf5731336398d3fedf6645178244ac2b5014243208d479250a2",
+  "runtime_source_matches": true,
+  "runtime_code_base_commit": "f27634246a6e54988d815cb8009fd02ec621b6b7",
+  "migrated_existing_tables": 82,
+  "migrated_existing_rows": 413,
+  "all_original_columns_rows_timestamps_preserved": true,
+  "keys_preserved": true,
+  "key_count": 4,
+  "sequences_preserved": true,
+  "database_volume_unchanged": true,
+  "api_environment_keys_ports_security_preserved": true,
+  "mount_source_path_rendering": "Same WSL source, POSIX path became Docker Desktop UNC; normalized path and key bytes verified",
+  "api_factory": "app.main:create_two_cycle_app",
+  "health": "healthy",
+  "prepared": {
+    "revision": [
+      "0029_cycle_outcomes"
+    ],
+    "restricted_login": true,
+    "database_owner": false,
+    "cycles": {
+      "review_required": 7
+    },
+    "provenance": {
+      "legacy_unknown": 7
+    },
+    "unknown_generations": 7,
+    "members": {
+      "review_required": 7
+    },
+    "evidence": {
+      "assignment": 7
+    },
+    "explicit_cycles": 0,
+    "executable_members": 0,
+    "new_consents": 0
+  },
+  "projections": {
+    "public_items": {
+      "C": 0,
+      "N": 0
+    },
+    "eligible_session_users": 2,
+    "membership_items": {
+      "C": 7,
+      "N": 7
+    },
+    "membership_states": {
+      "not_selected": 14
+    },
+    "current_plan_results": {
+      "TARGET_NOT_OPEN": 7
+    },
+    "leave_context_results": {
+      "allowed": 7,
+      "zero_impact_contexts": 7
+    },
+    "cycle_phase_counts": {
+      "outside_C_N": 7
+    },
+    "scope": "read-only service projections using existing valid sessions; no JWT/command/provider/device test"
+  },
+  "http": {
+    "checks": [
+      {
+        "method": "GET",
+        "path": "/health",
+        "status": 200
+      },
+      {
+        "method": "POST",
+        "path": "/v1/raid-rooms/search",
+        "status": 200,
+        "items": 0
+      },
+      {
+        "method": "POST",
+        "path": "/v2/raid-rooms/search",
+        "status": 200,
+        "items": 0
+      },
+      {
+        "method": "POST",
+        "path": "/v2/raid-rooms/search",
+        "status": 200,
+        "items": 0
+      },
+      {
+        "method": "GET",
+        "path": "/v2/raid-cycles",
+        "status": 401,
+        "code": "ACCESS_INVALID"
+      },
+      {
+        "method": "GET",
+        "path": "/v2/raid-cycles",
+        "status": 401,
+        "code": "ACCESS_INVALID"
+      },
+      {
+        "method": "POST",
+        "path": "/v2/me/raid-weekly-summary",
+        "status": 401,
+        "code": "ACCESS_INVALID"
+      },
+      {
+        "method": "GET",
+        "path": "/v1/me",
+        "status": 401,
+        "code": "ACCESS_INVALID"
+      }
+    ],
+    "current_cycle_key": "2026-10-21",
+    "next_cycle_key": "2026-10-28"
+  },
+  "post_start_worker_and_reads_all_tables_unchanged": true,
+  "old_week_exclusion": "Expected; all 7 legacy cycles are outside C/N; original data and persistent relationships retained",
+  "backup_relative_path": "backups/lostparty-preflight-f2b2a14f7162",
+  "limitations": [
+    "Local development cutover, not production deployment",
+    "Authenticated HTTP/provider/device acceptance pending; no test access token minted",
+    "Session projections are service reads; public HTTP and auth rejection were tested separately",
+    "No actual leave/end or member command executed",
+    "After new writes, do not restore the old snapshot over the database"
+  ],
+  "runtime_openapi": {
+    "two_cycle_paths": 167,
+    "legacy_source_paths": 116,
+    "both_full_objects_match": true,
+    "fixed_contract_version": "0.4.1",
+    "policy_version": "two-cycle-contract-4",
+    "fixed_contract_canonical_sha256": "fb4c7d065594a9a0e7e8288e5f73179f90b078b68ac4323d1aade5c7a63b42f1"
+  },
+  "host_health_status": 200,
+  "verification_container_cleaned": true,
+  "compose_override_changes_only": [
+    "command",
+    "image"
+  ],
+  "background_failure_log_counts": {
+    "Recruitment cycle rollover attempt failed": 0,
+    "Recruitment opening attempt failed": 0,
+    "Authentication cleanup failed": 0,
+    "Application startup failed": 0
+  },
+  "background_logs_checked_both_streams": true
+}

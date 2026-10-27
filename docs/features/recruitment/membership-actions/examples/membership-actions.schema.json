@@ -1,0 +1,2414 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lostparty:membership-actions:design-2",
+  "title": "Issue25 design2, non-runtime contract proposal",
+  "$comment": "Design artifacts only. No route/model/migration is implemented. All new object fields required/closed. Legacy content references exactly the consumer OpenAPI resource urn:lostparty:two-cycle-0eed67c. Cross-object invariants are specified in ISSUE_25_CONTRACT_REVIEW_V2.md.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/Context"
+    },
+    {
+      "$ref": "#/$defs/Command"
+    },
+    {
+      "$ref": "#/$defs/Result"
+    },
+    {
+      "$ref": "#/$defs/DetailProfile"
+    },
+    {
+      "$ref": "#/$defs/PlanProfile"
+    },
+    {
+      "$ref": "#/$defs/MembershipPage"
+    }
+  ],
+  "$defs": {
+    "Action": {
+      "type": "string",
+      "enum": [
+        "leave_target",
+        "leave_all",
+        "dissolve_led_targets",
+        "recover_leadership"
+      ]
+    },
+    "Permission": {
+      "type": "object",
+      "properties": {
+        "allowed": {
+          "type": "boolean"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 64
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "next_change_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "allowed",
+        "reason",
+        "next_change_at"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "allowed": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "reason": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "reason": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Confirmation": {
+      "type": "object",
+      "properties": {
+        "context_token": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "issued_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+        }
+      },
+      "required": [
+        "context_token",
+        "issued_at",
+        "expires_at"
+      ],
+      "additionalProperties": false
+    },
+    "Scope": {
+      "type": "object",
+      "properties": {
+        "server_now": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "current_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "view_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "policy_version": {
+          "const": "membership-actions-1"
+        }
+      },
+      "required": [
+        "server_now",
+        "current_cycle_key",
+        "view_cycle_key",
+        "policy_version"
+      ],
+      "additionalProperties": false
+    },
+    "RevisionRule": {
+      "type": "object",
+      "properties": {
+        "before": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "comparison": {
+          "type": "string",
+          "enum": [
+            "equal",
+            "increase"
+          ]
+        },
+        "exact_after": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "before",
+        "comparison",
+        "exact_after"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "comparison": {
+                "const": "equal"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "exact_after": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 2147483647
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Leadership": {
+      "type": "object",
+      "properties": {
+        "leader_cycle_member_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "leader_membership_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "leadership_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "leader_cycle_member_id",
+        "leader_membership_id",
+        "leadership_revision"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "leader_cycle_member_id": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "leader_membership_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "leader_membership_id": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "PlannedLeadership": {
+      "type": "object",
+      "properties": {
+        "leader_cycle_member_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "leader_membership_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "leadership_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "pending_review",
+            "closed"
+          ]
+        },
+        "recovery_reason": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 64
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "leader_cycle_member_id",
+        "leader_membership_id",
+        "leadership_revision",
+        "status",
+        "recovery_reason"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "active"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "leader_cycle_member_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "leader_membership_id": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "leader_cycle_member_id": {
+                "type": "null"
+              },
+              "leader_membership_id": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Actor": {
+      "type": "object",
+      "properties": {
+        "membership_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "membership_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "membership_id",
+        "membership_revision"
+      ],
+      "additionalProperties": false
+    },
+    "Cleanup": {
+      "type": "object",
+      "properties": {
+        "released_reservation_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "ended_participation_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "cancelled_application_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "cancelled_session_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "released_reservation_count",
+        "ended_participation_count",
+        "cancelled_application_count",
+        "cancelled_session_count"
+      ],
+      "additionalProperties": false
+    },
+    "Successor": {
+      "type": "object",
+      "properties": {
+        "membership_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "cycle_member_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "cycle_member_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "planned_cycle_member_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "character_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "character_name": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 64
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "joined_order": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$",
+          "maxLength": 20
+        }
+      },
+      "required": [
+        "membership_id",
+        "cycle_member_id",
+        "cycle_member_revision",
+        "planned_cycle_member_revision",
+        "character_id",
+        "character_name",
+        "joined_order"
+      ],
+      "additionalProperties": false
+    },
+    "MemberEffect": {
+      "type": "object",
+      "properties": {
+        "membership_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "cycle_member_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "cycle_member_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "character_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "character_name": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 64
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "joined_order": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$",
+              "maxLength": 20
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "revision_rule": {
+          "$ref": "#/$defs/RevisionRule"
+        },
+        "planned_state": {
+          "type": "string",
+          "enum": [
+            "participating",
+            "review_required",
+            "cancelled",
+            "removed",
+            "completed",
+            "stopped"
+          ]
+        },
+        "cancelled_assignment_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 0,
+          "maxItems": 5
+        },
+        "preserved_completed_assignment_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 0,
+          "maxItems": 5
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "participating",
+            "review_required",
+            "cancelled",
+            "removed",
+            "completed",
+            "stopped"
+          ]
+        }
+      },
+      "required": [
+        "membership_id",
+        "cycle_member_id",
+        "cycle_member_revision",
+        "character_id",
+        "character_name",
+        "joined_order",
+        "revision_rule",
+        "planned_state",
+        "cancelled_assignment_ids",
+        "preserved_completed_assignment_ids",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "TargetRevisionRules": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/RevisionRule"
+        },
+        "members": {
+          "$ref": "#/$defs/RevisionRule"
+        },
+        "plan": {
+          "$ref": "#/$defs/RevisionRule"
+        },
+        "leadership": {
+          "$ref": "#/$defs/RevisionRule"
+        }
+      },
+      "required": [
+        "target",
+        "members",
+        "plan",
+        "leadership"
+      ],
+      "additionalProperties": false
+    },
+    "TargetPlan": {
+      "type": "object",
+      "properties": {
+        "target_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "room_cycle_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "target_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "members_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "plan_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "target_state": {
+          "type": "string",
+          "enum": [
+            "open",
+            "review_required",
+            "closed"
+          ]
+        },
+        "generation_state": {
+          "type": "string",
+          "enum": [
+            "open",
+            "review_required",
+            "cancelled",
+            "completed",
+            "stopped"
+          ]
+        },
+        "planned_target_state": {
+          "type": "string",
+          "enum": [
+            "open",
+            "review_required",
+            "closed"
+          ]
+        },
+        "planned_generation_state": {
+          "type": "string",
+          "enum": [
+            "open",
+            "review_required",
+            "cancelled",
+            "completed",
+            "stopped"
+          ]
+        },
+        "revision_rules": {
+          "$ref": "#/$defs/TargetRevisionRules"
+        },
+        "leadership_before": {
+          "$ref": "#/$defs/Leadership"
+        },
+        "transition": {
+          "type": "string",
+          "enum": [
+            "leave",
+            "automatic_successor",
+            "leadership_pending",
+            "close_empty",
+            "dissolve",
+            "recover",
+            "eligibility_cleanup"
+          ]
+        },
+        "affected_members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MemberEffect"
+          },
+          "minItems": 0,
+          "maxItems": 8
+        },
+        "successor": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Successor"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "leadership_after": {
+          "$ref": "#/$defs/PlannedLeadership"
+        },
+        "cleanup": {
+          "$ref": "#/$defs/Cleanup"
+        }
+      },
+      "required": [
+        "target_cycle_key",
+        "room_cycle_id",
+        "target_generation",
+        "target_revision",
+        "members_revision",
+        "plan_revision",
+        "target_state",
+        "generation_state",
+        "planned_target_state",
+        "planned_generation_state",
+        "revision_rules",
+        "leadership_before",
+        "transition",
+        "affected_members",
+        "successor",
+        "leadership_after",
+        "cleanup"
+      ],
+      "additionalProperties": false
+    },
+    "RoomEffect": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "preserve",
+            "preserve_review",
+            "end"
+          ]
+        },
+        "actor_membership_will_end": {
+          "type": "boolean"
+        },
+        "ended_persistent_membership_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "preserves_unaffected_cycles": {
+          "const": true
+        },
+        "room_revision_rule": {
+          "$ref": "#/$defs/RevisionRule"
+        },
+        "actor_membership_revision_rule": {
+          "$ref": "#/$defs/RevisionRule"
+        }
+      },
+      "required": [
+        "kind",
+        "actor_membership_will_end",
+        "ended_persistent_membership_count",
+        "preserves_unaffected_cycles",
+        "room_revision_rule",
+        "actor_membership_revision_rule"
+      ],
+      "additionalProperties": false
+    },
+    "Impact": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "$ref": "#/$defs/Action"
+        },
+        "affected_cycle_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "date",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "minItems": 0,
+          "maxItems": 2
+        },
+        "targets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TargetPlan"
+          },
+          "minItems": 0,
+          "maxItems": 2
+        },
+        "room_effect": {
+          "$ref": "#/$defs/RoomEffect"
+        },
+        "existing_completion_preserved": {
+          "const": true
+        },
+        "display_revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "action",
+        "affected_cycle_keys",
+        "targets",
+        "room_effect",
+        "existing_completion_preserved",
+        "display_revision"
+      ],
+      "additionalProperties": false
+    },
+    "Option": {
+      "type": "object",
+      "properties": {
+        "visible": {
+          "type": "boolean"
+        },
+        "permission": {
+          "$ref": "#/$defs/Permission"
+        },
+        "impact": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Impact"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "confirmation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Confirmation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "visible",
+        "permission",
+        "impact",
+        "confirmation"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "permission": {
+                "properties": {
+                  "allowed": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "visible": {
+                "const": true
+              },
+              "impact": {
+                "$ref": "#/$defs/Impact"
+              },
+              "confirmation": {
+                "$ref": "#/$defs/Confirmation"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "impact": {
+                "type": "null"
+              },
+              "confirmation": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Options": {
+      "type": "object",
+      "properties": {
+        "leave_target": {
+          "$ref": "#/$defs/Option"
+        },
+        "leave_all": {
+          "$ref": "#/$defs/Option"
+        },
+        "dissolve_led_targets": {
+          "$ref": "#/$defs/Option"
+        },
+        "recover_leadership": {
+          "$ref": "#/$defs/Option"
+        }
+      },
+      "required": [
+        "leave_target",
+        "leave_all",
+        "dissolve_led_targets",
+        "recover_leadership"
+      ],
+      "additionalProperties": false
+    },
+    "MenuData": {
+      "type": "object",
+      "properties": {
+        "room_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "room_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "actor": {
+          "$ref": "#/$defs/Actor"
+        },
+        "options": {
+          "$ref": "#/$defs/Options"
+        }
+      },
+      "required": [
+        "room_id",
+        "room_revision",
+        "actor",
+        "options"
+      ],
+      "additionalProperties": false
+    },
+    "Context": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "data": {
+          "$ref": "#/$defs/MenuData"
+        }
+      },
+      "required": [
+        "scope",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "Command": {
+      "type": "object",
+      "properties": {
+        "expected_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "view_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "actor_membership_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "expected_actor_membership_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "action": {
+          "$ref": "#/$defs/Action"
+        },
+        "context_token": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "expected_cycle_key",
+        "view_cycle_key",
+        "actor_membership_id",
+        "expected_actor_membership_revision",
+        "action",
+        "context_token"
+      ],
+      "additionalProperties": false
+    },
+    "MemberResult": {
+      "type": "object",
+      "properties": {
+        "membership_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "cycle_member_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "cycle_member_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "participating",
+            "review_required",
+            "cancelled",
+            "removed",
+            "completed",
+            "stopped"
+          ]
+        },
+        "cancelled_assignment_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 0,
+          "maxItems": 5
+        },
+        "preserved_completed_assignment_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 0,
+          "maxItems": 5
+        }
+      },
+      "required": [
+        "membership_id",
+        "cycle_member_id",
+        "cycle_member_revision",
+        "state",
+        "cancelled_assignment_ids",
+        "preserved_completed_assignment_ids"
+      ],
+      "additionalProperties": false
+    },
+    "TargetResult": {
+      "type": "object",
+      "properties": {
+        "target_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "room_cycle_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "target_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "members_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "plan_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "target_state": {
+          "type": "string",
+          "enum": [
+            "open",
+            "review_required",
+            "closed"
+          ]
+        },
+        "generation_state": {
+          "type": "string",
+          "enum": [
+            "open",
+            "review_required",
+            "cancelled",
+            "completed",
+            "stopped"
+          ]
+        },
+        "leadership": {
+          "$ref": "#/$defs/Leadership"
+        },
+        "leadership_status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "pending_review",
+            "closed"
+          ]
+        },
+        "recovery_reason": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 64
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MemberResult"
+          },
+          "minItems": 0,
+          "maxItems": 8
+        }
+      },
+      "required": [
+        "target_cycle_key",
+        "room_cycle_id",
+        "target_generation",
+        "target_revision",
+        "members_revision",
+        "plan_revision",
+        "target_state",
+        "generation_state",
+        "leadership",
+        "leadership_status",
+        "recovery_reason",
+        "members"
+      ],
+      "additionalProperties": false
+    },
+    "ResultData": {
+      "type": "object",
+      "properties": {
+        "command_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "action": {
+          "$ref": "#/$defs/Action"
+        },
+        "outcome": {
+          "const": "applied"
+        },
+        "executed_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "room_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "room_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "actor_membership_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "actor_membership_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "actor_membership_ended": {
+          "type": "boolean"
+        },
+        "affected_cycle_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "date",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "minItems": 0,
+          "maxItems": 2
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TargetResult"
+          },
+          "minItems": 0,
+          "maxItems": 2
+        },
+        "room_ended": {
+          "type": "boolean"
+        },
+        "ended_persistent_membership_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "command_id",
+        "action",
+        "outcome",
+        "executed_at",
+        "room_id",
+        "room_revision",
+        "actor_membership_id",
+        "actor_membership_revision",
+        "actor_membership_ended",
+        "affected_cycle_keys",
+        "effects",
+        "room_ended",
+        "ended_persistent_membership_count"
+      ],
+      "additionalProperties": false
+    },
+    "Result": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "data": {
+          "$ref": "#/$defs/ResultData"
+        }
+      },
+      "required": [
+        "scope",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "ReaderScope": {
+      "type": "object",
+      "properties": {
+        "server_now": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "current_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "target_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "policy_version": {
+          "const": "membership-actions-1"
+        },
+        "reader_kind": {
+          "type": "string",
+          "enum": [
+            "detail",
+            "plan",
+            "memberships"
+          ]
+        }
+      },
+      "required": [
+        "server_now",
+        "current_cycle_key",
+        "target_cycle_key",
+        "policy_version",
+        "reader_kind"
+      ],
+      "additionalProperties": false
+    },
+    "RecordLocator": {
+      "type": "object",
+      "properties": {
+        "membership_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "cycle_member_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "room_cycle_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "target_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "target_generation": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "membership_id",
+        "cycle_member_id",
+        "room_cycle_id",
+        "target_cycle_key",
+        "target_generation"
+      ],
+      "additionalProperties": false
+    },
+    "ReaderTarget": {
+      "type": "object",
+      "properties": {
+        "room_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 60
+        },
+        "room_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "room_state": {
+          "type": "string",
+          "enum": [
+            "active",
+            "ended"
+          ]
+        },
+        "target_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "room_cycle_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "target_generation": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "target_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "target_state": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "open",
+                "review_required",
+                "closed"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "generation_state": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "open",
+                "review_required",
+                "cancelled",
+                "completed",
+                "stopped"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "leadership": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Leadership"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "room_id",
+        "title",
+        "room_revision",
+        "room_state",
+        "target_cycle_key",
+        "room_cycle_id",
+        "target_generation",
+        "target_revision",
+        "target_state",
+        "generation_state",
+        "leadership"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "target_generation": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "generation_state": {
+                "type": "null"
+              },
+              "leadership": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "room_cycle_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "target_revision": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 2147483647
+              },
+              "target_state": {
+                "type": "string",
+                "enum": [
+                  "open",
+                  "review_required",
+                  "closed"
+                ]
+              },
+              "generation_state": {
+                "type": "string",
+                "enum": [
+                  "open",
+                  "review_required",
+                  "cancelled",
+                  "completed",
+                  "stopped"
+                ]
+              },
+              "leadership": {
+                "$ref": "#/$defs/Leadership"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ReaderRelation": {
+      "type": "object",
+      "properties": {
+        "membership_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "membership_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "membership_state": {
+          "type": "string",
+          "enum": [
+            "active",
+            "ended"
+          ]
+        },
+        "cycle_member_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cycle_member_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cycle_member_state": {
+          "type": "string",
+          "enum": [
+            "participating",
+            "review_required",
+            "cancelled",
+            "removed",
+            "completed",
+            "stopped",
+            "not_selected"
+          ]
+        },
+        "joined_order": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[1-9][0-9]*$",
+              "maxLength": 20
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "leader",
+            "member",
+            "none"
+          ]
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "participant",
+            "retained",
+            "recovery",
+            "record",
+            "relation_only"
+          ]
+        },
+        "record_locator": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RecordLocator"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "membership_id",
+        "membership_revision",
+        "membership_state",
+        "cycle_member_id",
+        "cycle_member_revision",
+        "cycle_member_state",
+        "joined_order",
+        "role",
+        "mode",
+        "record_locator"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "enum": [
+                  "record",
+                  "recovery",
+                  "relation_only"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "role": {
+                "const": "none"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ReaderAccess": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "const": "allowed"
+        },
+        "basis": {
+          "type": "string",
+          "enum": [
+            "current_membership",
+            "historical_membership",
+            "target_record"
+          ]
+        },
+        "read_only": {
+          "type": "boolean"
+        },
+        "evaluated_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+        }
+      },
+      "required": [
+        "state",
+        "basis",
+        "read_only",
+        "evaluated_at"
+      ],
+      "additionalProperties": false
+    },
+    "Recovery": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "none",
+            "leadership_pending",
+            "review_remaining",
+            "unverified"
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 64
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remaining_review_reasons": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "minItems": 0,
+          "maxItems": 16
+        },
+        "menu_access": {
+          "type": "boolean"
+        },
+        "can_request_recovery": {
+          "$ref": "#/$defs/Permission"
+        }
+      },
+      "required": [
+        "state",
+        "reason",
+        "revision",
+        "remaining_review_reasons",
+        "menu_access",
+        "can_request_recovery"
+      ],
+      "additionalProperties": false
+    },
+    "ReaderPermissions": {
+      "type": "object",
+      "properties": {
+        "view_detail": {
+          "$ref": "#/$defs/Permission"
+        },
+        "view_plan": {
+          "$ref": "#/$defs/Permission"
+        },
+        "manage_target": {
+          "$ref": "#/$defs/Permission"
+        },
+        "resume_weekly": {
+          "$ref": "#/$defs/Permission"
+        },
+        "read_action_menu": {
+          "$ref": "#/$defs/Permission"
+        }
+      },
+      "required": [
+        "view_detail",
+        "view_plan",
+        "manage_target",
+        "resume_weekly",
+        "read_action_menu"
+      ],
+      "additionalProperties": false
+    },
+    "RecordRound": {
+      "type": "object",
+      "properties": {
+        "item_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "round_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "raid_id": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "difficulty_id": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "catalog_version": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "active",
+            "completed",
+            "stopped_incomplete",
+            "legacy_ended"
+          ]
+        }
+      },
+      "required": [
+        "item_id",
+        "round_id",
+        "raid_id",
+        "difficulty_id",
+        "catalog_version",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "RecordAssignment": {
+      "type": "object",
+      "properties": {
+        "assignment_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "item_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "round_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "character_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "character_name": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 64
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "raid_id": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "difficulty_id": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "catalog_version": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "active",
+            "completed",
+            "left",
+            "stopped_incomplete",
+            "legacy_ended"
+          ]
+        },
+        "completion_source": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "manual",
+                "party"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "completed_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ended_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "assignment_id",
+        "item_id",
+        "round_id",
+        "character_id",
+        "character_name",
+        "raid_id",
+        "difficulty_id",
+        "catalog_version",
+        "state",
+        "completion_source",
+        "completed_at",
+        "ended_at"
+      ],
+      "additionalProperties": false
+    },
+    "RecordSegment": {
+      "type": "object",
+      "properties": {
+        "segment_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "round_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "session_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "starts_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ends_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "planned",
+            "released"
+          ]
+        }
+      },
+      "required": [
+        "segment_id",
+        "round_id",
+        "session_id",
+        "starts_at",
+        "ends_at",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "RecordSnapshot": {
+      "type": "object",
+      "properties": {
+        "locator": {
+          "$ref": "#/$defs/RecordLocator"
+        },
+        "rounds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RecordRound"
+          },
+          "minItems": 0,
+          "maxItems": 5
+        },
+        "assignments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RecordAssignment"
+          },
+          "minItems": 0,
+          "maxItems": 40
+        },
+        "schedule_segments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RecordSegment"
+          },
+          "minItems": 0,
+          "maxItems": 40
+        }
+      },
+      "required": [
+        "locator",
+        "rounds",
+        "assignments",
+        "schedule_segments"
+      ],
+      "additionalProperties": false
+    },
+    "LegacyDetail": {
+      "$ref": "urn:lostparty:two-cycle-0eed67c#/components/schemas/OutputContract3GetV2RaidRoomsRoomIdDetail"
+    },
+    "LegacyPlan": {
+      "$ref": "urn:lostparty:two-cycle-0eed67c#/components/schemas/ResumePlanContext"
+    },
+    "LegacyMembership": {
+      "$ref": "urn:lostparty:two-cycle-0eed67c#/components/schemas/BMembership"
+    },
+    "DetailProfileData": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/ReaderTarget"
+        },
+        "viewer": {
+          "$ref": "#/$defs/ReaderRelation"
+        },
+        "access": {
+          "$ref": "#/$defs/ReaderAccess"
+        },
+        "recovery": {
+          "$ref": "#/$defs/Recovery"
+        },
+        "permissions": {
+          "$ref": "#/$defs/ReaderPermissions"
+        },
+        "content": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LegacyDetail"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "record": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RecordSnapshot"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "target",
+        "viewer",
+        "access",
+        "recovery",
+        "permissions",
+        "content",
+        "record"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "viewer": {
+                "properties": {
+                  "mode": {
+                    "const": "record"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "content": {
+                "type": "null"
+              },
+              "record": {
+                "$ref": "#/$defs/RecordSnapshot"
+              },
+              "access": {
+                "properties": {
+                  "read_only": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "DetailProfile": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/DetailReaderScope"
+        },
+        "data": {
+          "$ref": "#/$defs/DetailProfileData"
+        }
+      },
+      "required": [
+        "scope",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "PlanProfileData": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/ReaderTarget"
+        },
+        "viewer": {
+          "$ref": "#/$defs/ReaderRelation"
+        },
+        "access": {
+          "$ref": "#/$defs/ReaderAccess"
+        },
+        "recovery": {
+          "$ref": "#/$defs/Recovery"
+        },
+        "permissions": {
+          "$ref": "#/$defs/ReaderPermissions"
+        },
+        "content": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LegacyPlan"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "record": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RecordSnapshot"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "target",
+        "viewer",
+        "access",
+        "recovery",
+        "permissions",
+        "content",
+        "record"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "viewer": {
+                "properties": {
+                  "mode": {
+                    "const": "record"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "content": {
+                "type": "null"
+              },
+              "record": {
+                "$ref": "#/$defs/RecordSnapshot"
+              },
+              "access": {
+                "properties": {
+                  "read_only": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "PlanProfile": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/PlanReaderScope"
+        },
+        "data": {
+          "$ref": "#/$defs/PlanProfileData"
+        }
+      },
+      "required": [
+        "scope",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "MembershipEntry": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/ReaderTarget"
+        },
+        "viewer": {
+          "$ref": "#/$defs/ReaderRelation"
+        },
+        "recovery": {
+          "$ref": "#/$defs/Recovery"
+        },
+        "permissions": {
+          "$ref": "#/$defs/ReaderPermissions"
+        },
+        "content": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LegacyMembership"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "target",
+        "viewer",
+        "recovery",
+        "permissions",
+        "content"
+      ],
+      "additionalProperties": false
+    },
+    "MembershipPageData": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MembershipEntry"
+          },
+          "minItems": 0,
+          "maxItems": 50
+        },
+        "membership_head": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "next_cursor": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 2048
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evaluated_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+        }
+      },
+      "required": [
+        "items",
+        "membership_head",
+        "next_cursor",
+        "evaluated_at"
+      ],
+      "additionalProperties": false
+    },
+    "MembershipPage": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/MembershipReaderScope"
+        },
+        "data": {
+          "$ref": "#/$defs/MembershipPageData"
+        }
+      },
+      "required": [
+        "scope",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "Error": {
+      "$ref": "urn:lostparty:two-cycle-0eed67c#/components/schemas/GameErrorOut"
+    },
+    "DetailReaderScope": {
+      "type": "object",
+      "properties": {
+        "server_now": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "current_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "target_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "policy_version": {
+          "const": "membership-actions-1"
+        },
+        "reader_kind": {
+          "const": "detail"
+        }
+      },
+      "required": [
+        "server_now",
+        "current_cycle_key",
+        "target_cycle_key",
+        "policy_version",
+        "reader_kind"
+      ],
+      "additionalProperties": false
+    },
+    "PlanReaderScope": {
+      "type": "object",
+      "properties": {
+        "server_now": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "current_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "target_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "policy_version": {
+          "const": "membership-actions-1"
+        },
+        "reader_kind": {
+          "const": "plan"
+        }
+      },
+      "required": [
+        "server_now",
+        "current_cycle_key",
+        "target_cycle_key",
+        "policy_version",
+        "reader_kind"
+      ],
+      "additionalProperties": false
+    },
+    "MembershipReaderScope": {
+      "type": "object",
+      "properties": {
+        "server_now": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "(Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "current_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "target_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "policy_version": {
+          "const": "membership-actions-1"
+        },
+        "reader_kind": {
+          "const": "memberships"
+        }
+      },
+      "required": [
+        "server_now",
+        "current_cycle_key",
+        "target_cycle_key",
+        "policy_version",
+        "reader_kind"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

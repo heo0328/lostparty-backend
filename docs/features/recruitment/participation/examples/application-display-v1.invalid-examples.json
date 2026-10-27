@@ -1,0 +1,1566 @@
+{
+  "kind": "authored_invalid_reference_vectors_not_runtime_responses",
+  "source_commit": "06ea4b214591f475d422f4599ca10260cda83d08",
+  "source_file_sha256": "c651d5a9412ff2a5df50b617b2561a2f2e89dad5390a528edf73c33deb6752ad",
+  "expected_failure": "Assignments and formation reference an item/round absent from room.items/game_items",
+  "examples": [
+    {
+      "name": "no_current_generation_history",
+      "kind": "detail",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "reader_profile": "application-display-1"
+      },
+      "status": 200,
+      "meaning": "",
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-20T21:00:00Z",
+          "phase": "current",
+          "target_revision": 1,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-0000-0000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room": {
+            "room_id": "00000000-0000-0000-0000-000000000001",
+            "revision": 1,
+            "title": "합성 모집방",
+            "scope": "public",
+            "group_id": null,
+            "admission_mode": "leader_only",
+            "experience_level": null,
+            "app_capacity": 4,
+            "app_member_count": 1,
+            "state": "active",
+            "items": [],
+            "game_items": [],
+            "leader_display": null,
+            "created_at": "2026-10-24T12:00:00Z",
+            "phase": "current",
+            "restricted": false,
+            "schedule_summary": {
+              "mode": "unscheduled",
+              "occurrence_mode": null,
+              "confirmed_starts_at": [],
+              "earliest_start": null,
+              "latest_start": null
+            },
+            "combat_requirement": {
+              "input_mode": "shared",
+              "dealer_min": null,
+              "support_min": null
+            },
+            "continuation_enabled": false,
+            "permissions": {
+              "view_detail": {
+                "allowed": true,
+                "reason": null,
+                "next_change_at": null
+              },
+              "view_plan": {
+                "allowed": false,
+                "reason": "WEEKLY_PARTICIPANT_REQUIRED",
+                "next_change_at": null
+              }
+            },
+            "leadership": {
+              "leader_cycle_member_id": "00000000-0000-0000-0000-000000000015",
+              "leadership_revision": 1,
+              "leader_membership_id": "00000000-0000-0000-0000-000000000010"
+            },
+            "my_target_role": "none",
+            "target_cycle_key": "2026-10-21",
+            "target_state": "open",
+            "target_revision": 1,
+            "room_cycle_id": "00000000-0000-0000-0000-000000000002",
+            "target_generation": 1
+          },
+          "settings": null,
+          "members_revision": 1,
+          "members": [
+            {
+              "membership_id": "00000000-0000-0000-0000-000000000010",
+              "revision": 1,
+              "group_member": false,
+              "joined_at": "2026-10-24T10:00:00Z",
+              "character": {
+                "character_id": "00000000-0000-0000-0000-000000000011",
+                "display": {
+                  "character_name": "합성공대장",
+                  "class_name": "버서커",
+                  "item_level": "1700"
+                },
+                "selected_role": "dealer"
+              },
+              "assignments": [
+                {
+                  "assignment_id": "00000000-0000-0000-0000-000000000012",
+                  "item_id": "00000000-0000-0000-0000-000000000013",
+                  "round_id": "00000000-0000-0000-0000-000000000014",
+                  "state": "active",
+                  "party_no": 1,
+                  "slot_no": 1
+                }
+              ],
+              "comparison": null,
+              "build": null,
+              "is_me": false,
+              "status": "valid",
+              "status_reason": null,
+              "target_role": "leader",
+              "cycle_member_id": "00000000-0000-0000-0000-000000000015",
+              "cycle_member_revision": 1,
+              "joined_order": "1",
+              "target_state": "participating"
+            }
+          ],
+          "my_membership": null,
+          "plan_revision": 1,
+          "permissions": {
+            "view_detail": {
+              "allowed": true,
+              "reason": null,
+              "next_change_at": null
+            },
+            "view_plan": {
+              "allowed": false,
+              "reason": "WEEKLY_PARTICIPANT_REQUIRED",
+              "next_change_at": null
+            }
+          },
+          "access": {
+            "state": "allowed",
+            "policy_snapshot": "example",
+            "evaluated_at": "2026-10-24T12:00:00Z",
+            "issues": []
+          },
+          "leadership": {
+            "leader_cycle_member_id": "00000000-0000-0000-0000-000000000015",
+            "leadership_revision": 1,
+            "leader_membership_id": "00000000-0000-0000-0000-000000000010"
+          },
+          "my_target_role": "none",
+          "formation_slots": [
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 1,
+              "assignment_id": "00000000-0000-0000-0000-000000000012",
+              "status": "participating",
+              "is_leader": true
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 2,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 3,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 4,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            }
+          ],
+          "formation_history": [],
+          "unplaced_assignments": [],
+          "my_application": null
+        }
+      }
+    },
+    {
+      "name": "detail_pending",
+      "kind": "detail",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "reader_profile": "application-display-1"
+      },
+      "status": 200,
+      "meaning": "",
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-20T21:00:00Z",
+          "phase": "current",
+          "target_revision": 1,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-0000-0000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room": {
+            "room_id": "00000000-0000-0000-0000-000000000001",
+            "revision": 1,
+            "title": "합성 모집방",
+            "scope": "public",
+            "group_id": null,
+            "admission_mode": "leader_only",
+            "experience_level": null,
+            "app_capacity": 4,
+            "app_member_count": 1,
+            "state": "active",
+            "items": [],
+            "game_items": [],
+            "leader_display": null,
+            "created_at": "2026-10-24T12:00:00Z",
+            "phase": "current",
+            "restricted": false,
+            "schedule_summary": {
+              "mode": "unscheduled",
+              "occurrence_mode": null,
+              "confirmed_starts_at": [],
+              "earliest_start": null,
+              "latest_start": null
+            },
+            "combat_requirement": {
+              "input_mode": "shared",
+              "dealer_min": null,
+              "support_min": null
+            },
+            "continuation_enabled": false,
+            "permissions": {
+              "view_detail": {
+                "allowed": true,
+                "reason": null,
+                "next_change_at": null
+              },
+              "view_plan": {
+                "allowed": false,
+                "reason": "WEEKLY_PARTICIPANT_REQUIRED",
+                "next_change_at": null
+              }
+            },
+            "leadership": {
+              "leader_cycle_member_id": "00000000-0000-0000-0000-000000000015",
+              "leadership_revision": 1,
+              "leader_membership_id": "00000000-0000-0000-0000-000000000010"
+            },
+            "my_target_role": "none",
+            "target_cycle_key": "2026-10-21",
+            "target_state": "open",
+            "target_revision": 1,
+            "room_cycle_id": "00000000-0000-0000-0000-000000000002",
+            "target_generation": 1
+          },
+          "settings": null,
+          "members_revision": 1,
+          "members": [
+            {
+              "membership_id": "00000000-0000-0000-0000-000000000010",
+              "revision": 1,
+              "group_member": false,
+              "joined_at": "2026-10-24T10:00:00Z",
+              "character": {
+                "character_id": "00000000-0000-0000-0000-000000000011",
+                "display": {
+                  "character_name": "합성공대장",
+                  "class_name": "버서커",
+                  "item_level": "1700"
+                },
+                "selected_role": "dealer"
+              },
+              "assignments": [
+                {
+                  "assignment_id": "00000000-0000-0000-0000-000000000012",
+                  "item_id": "00000000-0000-0000-0000-000000000013",
+                  "round_id": "00000000-0000-0000-0000-000000000014",
+                  "state": "active",
+                  "party_no": 1,
+                  "slot_no": 1
+                }
+              ],
+              "comparison": null,
+              "build": null,
+              "is_me": false,
+              "status": "valid",
+              "status_reason": null,
+              "target_role": "leader",
+              "cycle_member_id": "00000000-0000-0000-0000-000000000015",
+              "cycle_member_revision": 1,
+              "joined_order": "1",
+              "target_state": "participating"
+            }
+          ],
+          "my_membership": null,
+          "plan_revision": 1,
+          "permissions": {
+            "view_detail": {
+              "allowed": true,
+              "reason": null,
+              "next_change_at": null
+            },
+            "view_plan": {
+              "allowed": false,
+              "reason": "WEEKLY_PARTICIPANT_REQUIRED",
+              "next_change_at": null
+            }
+          },
+          "access": {
+            "state": "allowed",
+            "policy_snapshot": "example",
+            "evaluated_at": "2026-10-24T12:00:00Z",
+            "issues": []
+          },
+          "leadership": {
+            "leader_cycle_member_id": "00000000-0000-0000-0000-000000000015",
+            "leadership_revision": 1,
+            "leader_membership_id": "00000000-0000-0000-0000-000000000010"
+          },
+          "my_target_role": "none",
+          "formation_slots": [
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 1,
+              "assignment_id": "00000000-0000-0000-0000-000000000012",
+              "status": "participating",
+              "is_leader": true
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 2,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 3,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 4,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            }
+          ],
+          "formation_history": [],
+          "unplaced_assignments": [],
+          "my_application": {
+            "application_id": "00000000-0000-0000-0000-000000000003",
+            "revision": 1,
+            "state": "pending",
+            "expires_at": "2026-10-24T13:00:00Z"
+          }
+        }
+      }
+    },
+    {
+      "name": "detail_expired_boundary",
+      "kind": "detail",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "reader_profile": "application-display-1"
+      },
+      "status": 200,
+      "meaning": "",
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-20T21:00:00Z",
+          "phase": "current",
+          "target_revision": 1,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-0000-0000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room": {
+            "room_id": "00000000-0000-0000-0000-000000000001",
+            "revision": 1,
+            "title": "합성 모집방",
+            "scope": "public",
+            "group_id": null,
+            "admission_mode": "leader_only",
+            "experience_level": null,
+            "app_capacity": 4,
+            "app_member_count": 1,
+            "state": "active",
+            "items": [],
+            "game_items": [],
+            "leader_display": null,
+            "created_at": "2026-10-24T12:00:00Z",
+            "phase": "current",
+            "restricted": false,
+            "schedule_summary": {
+              "mode": "unscheduled",
+              "occurrence_mode": null,
+              "confirmed_starts_at": [],
+              "earliest_start": null,
+              "latest_start": null
+            },
+            "combat_requirement": {
+              "input_mode": "shared",
+              "dealer_min": null,
+              "support_min": null
+            },
+            "continuation_enabled": false,
+            "permissions": {
+              "view_detail": {
+                "allowed": true,
+                "reason": null,
+                "next_change_at": null
+              },
+              "view_plan": {
+                "allowed": false,
+                "reason": "WEEKLY_PARTICIPANT_REQUIRED",
+                "next_change_at": null
+              }
+            },
+            "leadership": {
+              "leader_cycle_member_id": "00000000-0000-0000-0000-000000000015",
+              "leadership_revision": 1,
+              "leader_membership_id": "00000000-0000-0000-0000-000000000010"
+            },
+            "my_target_role": "none",
+            "target_cycle_key": "2026-10-21",
+            "target_state": "open",
+            "target_revision": 1,
+            "room_cycle_id": "00000000-0000-0000-0000-000000000002",
+            "target_generation": 1
+          },
+          "settings": null,
+          "members_revision": 1,
+          "members": [
+            {
+              "membership_id": "00000000-0000-0000-0000-000000000010",
+              "revision": 1,
+              "group_member": false,
+              "joined_at": "2026-10-24T10:00:00Z",
+              "character": {
+                "character_id": "00000000-0000-0000-0000-000000000011",
+                "display": {
+                  "character_name": "합성공대장",
+                  "class_name": "버서커",
+                  "item_level": "1700"
+                },
+                "selected_role": "dealer"
+              },
+              "assignments": [
+                {
+                  "assignment_id": "00000000-0000-0000-0000-000000000012",
+                  "item_id": "00000000-0000-0000-0000-000000000013",
+                  "round_id": "00000000-0000-0000-0000-000000000014",
+                  "state": "active",
+                  "party_no": 1,
+                  "slot_no": 1
+                }
+              ],
+              "comparison": null,
+              "build": null,
+              "is_me": false,
+              "status": "valid",
+              "status_reason": null,
+              "target_role": "leader",
+              "cycle_member_id": "00000000-0000-0000-0000-000000000015",
+              "cycle_member_revision": 1,
+              "joined_order": "1",
+              "target_state": "participating"
+            }
+          ],
+          "my_membership": null,
+          "plan_revision": 1,
+          "permissions": {
+            "view_detail": {
+              "allowed": true,
+              "reason": null,
+              "next_change_at": null
+            },
+            "view_plan": {
+              "allowed": false,
+              "reason": "WEEKLY_PARTICIPANT_REQUIRED",
+              "next_change_at": null
+            }
+          },
+          "access": {
+            "state": "allowed",
+            "policy_snapshot": "example",
+            "evaluated_at": "2026-10-24T12:00:00Z",
+            "issues": []
+          },
+          "leadership": {
+            "leader_cycle_member_id": "00000000-0000-0000-0000-000000000015",
+            "leadership_revision": 1,
+            "leader_membership_id": "00000000-0000-0000-0000-000000000010"
+          },
+          "my_target_role": "none",
+          "formation_slots": [
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 1,
+              "assignment_id": "00000000-0000-0000-0000-000000000012",
+              "status": "participating",
+              "is_leader": true
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 2,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 3,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 4,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            }
+          ],
+          "formation_history": [],
+          "unplaced_assignments": [],
+          "my_application": {
+            "application_id": "00000000-0000-0000-0000-000000000003",
+            "revision": 1,
+            "state": "expired",
+            "expires_at": "2026-10-24T12:00:00Z"
+          }
+        }
+      }
+    },
+    {
+      "name": "detail_withdrawn",
+      "kind": "detail",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "reader_profile": "application-display-1"
+      },
+      "status": 200,
+      "meaning": "",
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-20T21:00:00Z",
+          "phase": "current",
+          "target_revision": 1,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-0000-0000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room": {
+            "room_id": "00000000-0000-0000-0000-000000000001",
+            "revision": 1,
+            "title": "합성 모집방",
+            "scope": "public",
+            "group_id": null,
+            "admission_mode": "leader_only",
+            "experience_level": null,
+            "app_capacity": 4,
+            "app_member_count": 1,
+            "state": "active",
+            "items": [],
+            "game_items": [],
+            "leader_display": null,
+            "created_at": "2026-10-24T12:00:00Z",
+            "phase": "current",
+            "restricted": false,
+            "schedule_summary": {
+              "mode": "unscheduled",
+              "occurrence_mode": null,
+              "confirmed_starts_at": [],
+              "earliest_start": null,
+              "latest_start": null
+            },
+            "combat_requirement": {
+              "input_mode": "shared",
+              "dealer_min": null,
+              "support_min": null
+            },
+            "continuation_enabled": false,
+            "permissions": {
+              "view_detail": {
+                "allowed": true,
+                "reason": null,
+                "next_change_at": null
+              },
+              "view_plan": {
+                "allowed": false,
+                "reason": "WEEKLY_PARTICIPANT_REQUIRED",
+                "next_change_at": null
+              }
+            },
+            "leadership": {
+              "leader_cycle_member_id": "00000000-0000-0000-0000-000000000015",
+              "leadership_revision": 1,
+              "leader_membership_id": "00000000-0000-0000-0000-000000000010"
+            },
+            "my_target_role": "none",
+            "target_cycle_key": "2026-10-21",
+            "target_state": "open",
+            "target_revision": 1,
+            "room_cycle_id": "00000000-0000-0000-0000-000000000002",
+            "target_generation": 1
+          },
+          "settings": null,
+          "members_revision": 1,
+          "members": [
+            {
+              "membership_id": "00000000-0000-0000-0000-000000000010",
+              "revision": 1,
+              "group_member": false,
+              "joined_at": "2026-10-24T10:00:00Z",
+              "character": {
+                "character_id": "00000000-0000-0000-0000-000000000011",
+                "display": {
+                  "character_name": "합성공대장",
+                  "class_name": "버서커",
+                  "item_level": "1700"
+                },
+                "selected_role": "dealer"
+              },
+              "assignments": [
+                {
+                  "assignment_id": "00000000-0000-0000-0000-000000000012",
+                  "item_id": "00000000-0000-0000-0000-000000000013",
+                  "round_id": "00000000-0000-0000-0000-000000000014",
+                  "state": "active",
+                  "party_no": 1,
+                  "slot_no": 1
+                }
+              ],
+              "comparison": null,
+              "build": null,
+              "is_me": false,
+              "status": "valid",
+              "status_reason": null,
+              "target_role": "leader",
+              "cycle_member_id": "00000000-0000-0000-0000-000000000015",
+              "cycle_member_revision": 1,
+              "joined_order": "1",
+              "target_state": "participating"
+            }
+          ],
+          "my_membership": null,
+          "plan_revision": 1,
+          "permissions": {
+            "view_detail": {
+              "allowed": true,
+              "reason": null,
+              "next_change_at": null
+            },
+            "view_plan": {
+              "allowed": false,
+              "reason": "WEEKLY_PARTICIPANT_REQUIRED",
+              "next_change_at": null
+            }
+          },
+          "access": {
+            "state": "allowed",
+            "policy_snapshot": "example",
+            "evaluated_at": "2026-10-24T12:00:00Z",
+            "issues": []
+          },
+          "leadership": {
+            "leader_cycle_member_id": "00000000-0000-0000-0000-000000000015",
+            "leadership_revision": 1,
+            "leader_membership_id": "00000000-0000-0000-0000-000000000010"
+          },
+          "my_target_role": "none",
+          "formation_slots": [
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 1,
+              "assignment_id": "00000000-0000-0000-0000-000000000012",
+              "status": "participating",
+              "is_leader": true
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 2,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 3,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 4,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            }
+          ],
+          "formation_history": [],
+          "unplaced_assignments": [],
+          "my_application": {
+            "application_id": "00000000-0000-0000-0000-000000000003",
+            "revision": 1,
+            "state": "withdrawn",
+            "expires_at": "2026-10-24T13:00:00Z"
+          }
+        }
+      }
+    },
+    {
+      "name": "detail_rejected",
+      "kind": "detail",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "reader_profile": "application-display-1"
+      },
+      "status": 200,
+      "meaning": "",
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-20T21:00:00Z",
+          "phase": "current",
+          "target_revision": 1,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-0000-0000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room": {
+            "room_id": "00000000-0000-0000-0000-000000000001",
+            "revision": 1,
+            "title": "합성 모집방",
+            "scope": "public",
+            "group_id": null,
+            "admission_mode": "leader_only",
+            "experience_level": null,
+            "app_capacity": 4,
+            "app_member_count": 1,
+            "state": "active",
+            "items": [],
+            "game_items": [],
+            "leader_display": null,
+            "created_at": "2026-10-24T12:00:00Z",
+            "phase": "current",
+            "restricted": false,
+            "schedule_summary": {
+              "mode": "unscheduled",
+              "occurrence_mode": null,
+              "confirmed_starts_at": [],
+              "earliest_start": null,
+              "latest_start": null
+            },
+            "combat_requirement": {
+              "input_mode": "shared",
+              "dealer_min": null,
+              "support_min": null
+            },
+            "continuation_enabled": false,
+            "permissions": {
+              "view_detail": {
+                "allowed": true,
+                "reason": null,
+                "next_change_at": null
+              },
+              "view_plan": {
+                "allowed": false,
+                "reason": "WEEKLY_PARTICIPANT_REQUIRED",
+                "next_change_at": null
+              }
+            },
+            "leadership": {
+              "leader_cycle_member_id": "00000000-0000-0000-0000-000000000015",
+              "leadership_revision": 1,
+              "leader_membership_id": "00000000-0000-0000-0000-000000000010"
+            },
+            "my_target_role": "none",
+            "target_cycle_key": "2026-10-21",
+            "target_state": "open",
+            "target_revision": 1,
+            "room_cycle_id": "00000000-0000-0000-0000-000000000002",
+            "target_generation": 1
+          },
+          "settings": null,
+          "members_revision": 1,
+          "members": [
+            {
+              "membership_id": "00000000-0000-0000-0000-000000000010",
+              "revision": 1,
+              "group_member": false,
+              "joined_at": "2026-10-24T10:00:00Z",
+              "character": {
+                "character_id": "00000000-0000-0000-0000-000000000011",
+                "display": {
+                  "character_name": "합성공대장",
+                  "class_name": "버서커",
+                  "item_level": "1700"
+                },
+                "selected_role": "dealer"
+              },
+              "assignments": [
+                {
+                  "assignment_id": "00000000-0000-0000-0000-000000000012",
+                  "item_id": "00000000-0000-0000-0000-000000000013",
+                  "round_id": "00000000-0000-0000-0000-000000000014",
+                  "state": "active",
+                  "party_no": 1,
+                  "slot_no": 1
+                }
+              ],
+              "comparison": null,
+              "build": null,
+              "is_me": false,
+              "status": "valid",
+              "status_reason": null,
+              "target_role": "leader",
+              "cycle_member_id": "00000000-0000-0000-0000-000000000015",
+              "cycle_member_revision": 1,
+              "joined_order": "1",
+              "target_state": "participating"
+            }
+          ],
+          "my_membership": null,
+          "plan_revision": 1,
+          "permissions": {
+            "view_detail": {
+              "allowed": true,
+              "reason": null,
+              "next_change_at": null
+            },
+            "view_plan": {
+              "allowed": false,
+              "reason": "WEEKLY_PARTICIPANT_REQUIRED",
+              "next_change_at": null
+            }
+          },
+          "access": {
+            "state": "allowed",
+            "policy_snapshot": "example",
+            "evaluated_at": "2026-10-24T12:00:00Z",
+            "issues": []
+          },
+          "leadership": {
+            "leader_cycle_member_id": "00000000-0000-0000-0000-000000000015",
+            "leadership_revision": 1,
+            "leader_membership_id": "00000000-0000-0000-0000-000000000010"
+          },
+          "my_target_role": "none",
+          "formation_slots": [
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 1,
+              "assignment_id": "00000000-0000-0000-0000-000000000012",
+              "status": "participating",
+              "is_leader": true
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 2,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 3,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 4,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            }
+          ],
+          "formation_history": [],
+          "unplaced_assignments": [],
+          "my_application": {
+            "application_id": "00000000-0000-0000-0000-000000000003",
+            "revision": 1,
+            "state": "rejected",
+            "expires_at": "2026-10-24T13:00:00Z"
+          }
+        }
+      }
+    },
+    {
+      "name": "detail_cancelled",
+      "kind": "detail",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "reader_profile": "application-display-1"
+      },
+      "status": 200,
+      "meaning": "",
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-20T21:00:00Z",
+          "phase": "current",
+          "target_revision": 1,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-0000-0000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room": {
+            "room_id": "00000000-0000-0000-0000-000000000001",
+            "revision": 1,
+            "title": "합성 모집방",
+            "scope": "public",
+            "group_id": null,
+            "admission_mode": "leader_only",
+            "experience_level": null,
+            "app_capacity": 4,
+            "app_member_count": 1,
+            "state": "active",
+            "items": [],
+            "game_items": [],
+            "leader_display": null,
+            "created_at": "2026-10-24T12:00:00Z",
+            "phase": "current",
+            "restricted": false,
+            "schedule_summary": {
+              "mode": "unscheduled",
+              "occurrence_mode": null,
+              "confirmed_starts_at": [],
+              "earliest_start": null,
+              "latest_start": null
+            },
+            "combat_requirement": {
+              "input_mode": "shared",
+              "dealer_min": null,
+              "support_min": null
+            },
+            "continuation_enabled": false,
+            "permissions": {
+              "view_detail": {
+                "allowed": true,
+                "reason": null,
+                "next_change_at": null
+              },
+              "view_plan": {
+                "allowed": false,
+                "reason": "WEEKLY_PARTICIPANT_REQUIRED",
+                "next_change_at": null
+              }
+            },
+            "leadership": {
+              "leader_cycle_member_id": "00000000-0000-0000-0000-000000000015",
+              "leadership_revision": 1,
+              "leader_membership_id": "00000000-0000-0000-0000-000000000010"
+            },
+            "my_target_role": "none",
+            "target_cycle_key": "2026-10-21",
+            "target_state": "open",
+            "target_revision": 1,
+            "room_cycle_id": "00000000-0000-0000-0000-000000000002",
+            "target_generation": 1
+          },
+          "settings": null,
+          "members_revision": 1,
+          "members": [
+            {
+              "membership_id": "00000000-0000-0000-0000-000000000010",
+              "revision": 1,
+              "group_member": false,
+              "joined_at": "2026-10-24T10:00:00Z",
+              "character": {
+                "character_id": "00000000-0000-0000-0000-000000000011",
+                "display": {
+                  "character_name": "합성공대장",
+                  "class_name": "버서커",
+                  "item_level": "1700"
+                },
+                "selected_role": "dealer"
+              },
+              "assignments": [
+                {
+                  "assignment_id": "00000000-0000-0000-0000-000000000012",
+                  "item_id": "00000000-0000-0000-0000-000000000013",
+                  "round_id": "00000000-0000-0000-0000-000000000014",
+                  "state": "active",
+                  "party_no": 1,
+                  "slot_no": 1
+                }
+              ],
+              "comparison": null,
+              "build": null,
+              "is_me": false,
+              "status": "valid",
+              "status_reason": null,
+              "target_role": "leader",
+              "cycle_member_id": "00000000-0000-0000-0000-000000000015",
+              "cycle_member_revision": 1,
+              "joined_order": "1",
+              "target_state": "participating"
+            }
+          ],
+          "my_membership": null,
+          "plan_revision": 1,
+          "permissions": {
+            "view_detail": {
+              "allowed": true,
+              "reason": null,
+              "next_change_at": null
+            },
+            "view_plan": {
+              "allowed": false,
+              "reason": "WEEKLY_PARTICIPANT_REQUIRED",
+              "next_change_at": null
+            }
+          },
+          "access": {
+            "state": "allowed",
+            "policy_snapshot": "example",
+            "evaluated_at": "2026-10-24T12:00:00Z",
+            "issues": []
+          },
+          "leadership": {
+            "leader_cycle_member_id": "00000000-0000-0000-0000-000000000015",
+            "leadership_revision": 1,
+            "leader_membership_id": "00000000-0000-0000-0000-000000000010"
+          },
+          "my_target_role": "none",
+          "formation_slots": [
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 1,
+              "assignment_id": "00000000-0000-0000-0000-000000000012",
+              "status": "participating",
+              "is_leader": true
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 2,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 3,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 4,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            }
+          ],
+          "formation_history": [],
+          "unplaced_assignments": [],
+          "my_application": {
+            "application_id": "00000000-0000-0000-0000-000000000003",
+            "revision": 1,
+            "state": "cancelled",
+            "expires_at": "2026-10-24T13:00:00Z"
+          }
+        }
+      }
+    },
+    {
+      "name": "detail_accepted",
+      "kind": "detail",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "reader_profile": "application-display-1"
+      },
+      "status": 200,
+      "meaning": "Accepted alone does not assert current participation",
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-20T21:00:00Z",
+          "phase": "current",
+          "target_revision": 1,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-0000-0000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room": {
+            "room_id": "00000000-0000-0000-0000-000000000001",
+            "revision": 1,
+            "title": "합성 모집방",
+            "scope": "public",
+            "group_id": null,
+            "admission_mode": "leader_only",
+            "experience_level": null,
+            "app_capacity": 4,
+            "app_member_count": 1,
+            "state": "active",
+            "items": [],
+            "game_items": [],
+            "leader_display": null,
+            "created_at": "2026-10-24T12:00:00Z",
+            "phase": "current",
+            "restricted": false,
+            "schedule_summary": {
+              "mode": "unscheduled",
+              "occurrence_mode": null,
+              "confirmed_starts_at": [],
+              "earliest_start": null,
+              "latest_start": null
+            },
+            "combat_requirement": {
+              "input_mode": "shared",
+              "dealer_min": null,
+              "support_min": null
+            },
+            "continuation_enabled": false,
+            "permissions": {
+              "view_detail": {
+                "allowed": true,
+                "reason": null,
+                "next_change_at": null
+              },
+              "view_plan": {
+                "allowed": false,
+                "reason": "WEEKLY_PARTICIPANT_REQUIRED",
+                "next_change_at": null
+              }
+            },
+            "leadership": {
+              "leader_cycle_member_id": "00000000-0000-0000-0000-000000000015",
+              "leadership_revision": 1,
+              "leader_membership_id": "00000000-0000-0000-0000-000000000010"
+            },
+            "my_target_role": "none",
+            "target_cycle_key": "2026-10-21",
+            "target_state": "open",
+            "target_revision": 1,
+            "room_cycle_id": "00000000-0000-0000-0000-000000000002",
+            "target_generation": 1
+          },
+          "settings": null,
+          "members_revision": 1,
+          "members": [
+            {
+              "membership_id": "00000000-0000-0000-0000-000000000010",
+              "revision": 1,
+              "group_member": false,
+              "joined_at": "2026-10-24T10:00:00Z",
+              "character": {
+                "character_id": "00000000-0000-0000-0000-000000000011",
+                "display": {
+                  "character_name": "합성공대장",
+                  "class_name": "버서커",
+                  "item_level": "1700"
+                },
+                "selected_role": "dealer"
+              },
+              "assignments": [
+                {
+                  "assignment_id": "00000000-0000-0000-0000-000000000012",
+                  "item_id": "00000000-0000-0000-0000-000000000013",
+                  "round_id": "00000000-0000-0000-0000-000000000014",
+                  "state": "active",
+                  "party_no": 1,
+                  "slot_no": 1
+                }
+              ],
+              "comparison": null,
+              "build": null,
+              "is_me": false,
+              "status": "valid",
+              "status_reason": null,
+              "target_role": "leader",
+              "cycle_member_id": "00000000-0000-0000-0000-000000000015",
+              "cycle_member_revision": 1,
+              "joined_order": "1",
+              "target_state": "participating"
+            }
+          ],
+          "my_membership": null,
+          "plan_revision": 1,
+          "permissions": {
+            "view_detail": {
+              "allowed": true,
+              "reason": null,
+              "next_change_at": null
+            },
+            "view_plan": {
+              "allowed": false,
+              "reason": "WEEKLY_PARTICIPANT_REQUIRED",
+              "next_change_at": null
+            }
+          },
+          "access": {
+            "state": "allowed",
+            "policy_snapshot": "example",
+            "evaluated_at": "2026-10-24T12:00:00Z",
+            "issues": []
+          },
+          "leadership": {
+            "leader_cycle_member_id": "00000000-0000-0000-0000-000000000015",
+            "leadership_revision": 1,
+            "leader_membership_id": "00000000-0000-0000-0000-000000000010"
+          },
+          "my_target_role": "none",
+          "formation_slots": [
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 1,
+              "assignment_id": "00000000-0000-0000-0000-000000000012",
+              "status": "participating",
+              "is_leader": true
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 2,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 3,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 4,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            }
+          ],
+          "formation_history": [],
+          "unplaced_assignments": [],
+          "my_application": {
+            "application_id": "00000000-0000-0000-0000-000000000003",
+            "revision": 1,
+            "state": "accepted",
+            "expires_at": "2026-10-24T13:00:00Z"
+          }
+        }
+      }
+    },
+    {
+      "name": "accepted_current_participation",
+      "kind": "detail",
+      "query": {
+        "target_cycle_key": "2026-10-21",
+        "reader_profile": "application-display-1"
+      },
+      "status": 200,
+      "meaning": "",
+      "response": {
+        "scope": {
+          "server_now": "2026-10-24T12:00:00Z",
+          "current_cycle_key": "2026-10-21",
+          "target_cycle_key": "2026-10-21",
+          "playable_from": "2026-10-20T21:00:00Z",
+          "phase": "current",
+          "target_revision": 1,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-0000-0000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "room": {
+            "room_id": "00000000-0000-0000-0000-000000000001",
+            "revision": 1,
+            "title": "합성 모집방",
+            "scope": "public",
+            "group_id": null,
+            "admission_mode": "leader_only",
+            "experience_level": null,
+            "app_capacity": 4,
+            "app_member_count": 2,
+            "state": "active",
+            "items": [],
+            "game_items": [],
+            "leader_display": null,
+            "created_at": "2026-10-24T12:00:00Z",
+            "phase": "current",
+            "restricted": false,
+            "schedule_summary": {
+              "mode": "unscheduled",
+              "occurrence_mode": null,
+              "confirmed_starts_at": [],
+              "earliest_start": null,
+              "latest_start": null
+            },
+            "combat_requirement": {
+              "input_mode": "shared",
+              "dealer_min": null,
+              "support_min": null
+            },
+            "continuation_enabled": false,
+            "permissions": {
+              "view_detail": {
+                "allowed": true,
+                "reason": null,
+                "next_change_at": null
+              },
+              "view_plan": {
+                "allowed": true,
+                "reason": null,
+                "next_change_at": null
+              }
+            },
+            "leadership": {
+              "leader_cycle_member_id": "00000000-0000-0000-0000-000000000015",
+              "leadership_revision": 1,
+              "leader_membership_id": "00000000-0000-0000-0000-000000000010"
+            },
+            "my_target_role": "member",
+            "target_cycle_key": "2026-10-21",
+            "target_state": "open",
+            "target_revision": 1,
+            "room_cycle_id": "00000000-0000-0000-0000-000000000002",
+            "target_generation": 1
+          },
+          "settings": null,
+          "members_revision": 1,
+          "members": [
+            {
+              "membership_id": "00000000-0000-0000-0000-000000000010",
+              "revision": 1,
+              "group_member": false,
+              "joined_at": "2026-10-24T10:00:00Z",
+              "character": {
+                "character_id": "00000000-0000-0000-0000-000000000011",
+                "display": {
+                  "character_name": "합성공대장",
+                  "class_name": "버서커",
+                  "item_level": "1700"
+                },
+                "selected_role": "dealer"
+              },
+              "assignments": [
+                {
+                  "assignment_id": "00000000-0000-0000-0000-000000000012",
+                  "item_id": "00000000-0000-0000-0000-000000000013",
+                  "round_id": "00000000-0000-0000-0000-000000000014",
+                  "state": "active",
+                  "party_no": 1,
+                  "slot_no": 1
+                }
+              ],
+              "comparison": null,
+              "build": null,
+              "is_me": false,
+              "status": "valid",
+              "status_reason": null,
+              "target_role": "leader",
+              "cycle_member_id": "00000000-0000-0000-0000-000000000015",
+              "cycle_member_revision": 1,
+              "joined_order": "1",
+              "target_state": "participating"
+            },
+            {
+              "membership_id": "00000000-0000-0000-0000-000000000005",
+              "revision": 1,
+              "group_member": false,
+              "joined_at": "2026-10-24T10:00:00Z",
+              "character": {
+                "character_id": "00000000-0000-0000-0000-000000000004",
+                "display": {
+                  "character_name": "합成테스트",
+                  "class_name": "바드",
+                  "item_level": "1700"
+                },
+                "selected_role": "support"
+              },
+              "assignments": [
+                {
+                  "assignment_id": "00000000-0000-0000-0000-000000000016",
+                  "item_id": "00000000-0000-0000-0000-000000000013",
+                  "round_id": "00000000-0000-0000-0000-000000000014",
+                  "state": "active",
+                  "party_no": 1,
+                  "slot_no": 4
+                }
+              ],
+              "comparison": null,
+              "build": null,
+              "is_me": true,
+              "status": "valid",
+              "status_reason": null,
+              "target_role": "member",
+              "cycle_member_id": "00000000-0000-0000-0000-000000000006",
+              "cycle_member_revision": 1,
+              "joined_order": "2",
+              "target_state": "participating"
+            }
+          ],
+          "my_membership": {
+            "membership_id": "00000000-0000-0000-0000-000000000005",
+            "revision": 1,
+            "group_member": false,
+            "target_role": "member",
+            "cycle_member_id": "00000000-0000-0000-0000-000000000006",
+            "cycle_member_revision": 1,
+            "joined_order": "2"
+          },
+          "plan_revision": 1,
+          "permissions": {
+            "view_detail": {
+              "allowed": true,
+              "reason": null,
+              "next_change_at": null
+            },
+            "view_plan": {
+              "allowed": true,
+              "reason": null,
+              "next_change_at": null
+            }
+          },
+          "access": {
+            "state": "allowed",
+            "policy_snapshot": "example",
+            "evaluated_at": "2026-10-24T12:00:00Z",
+            "issues": []
+          },
+          "leadership": {
+            "leader_cycle_member_id": "00000000-0000-0000-0000-000000000015",
+            "leadership_revision": 1,
+            "leader_membership_id": "00000000-0000-0000-0000-000000000010"
+          },
+          "my_target_role": "member",
+          "formation_slots": [
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 1,
+              "assignment_id": "00000000-0000-0000-0000-000000000012",
+              "status": "participating",
+              "is_leader": true
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 2,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 3,
+              "assignment_id": null,
+              "status": "empty",
+              "is_leader": false
+            },
+            {
+              "target_cycle_key": "2026-10-21",
+              "round_id": "00000000-0000-0000-0000-000000000014",
+              "party_no": 1,
+              "slot_no": 4,
+              "assignment_id": "00000000-0000-0000-0000-000000000016",
+              "status": "participating",
+              "is_leader": false
+            }
+          ],
+          "formation_history": [],
+          "unplaced_assignments": [],
+          "my_application": {
+            "application_id": "00000000-0000-0000-0000-000000000003",
+            "revision": 2,
+            "state": "accepted",
+            "expires_at": "2026-10-24T13:00:00Z"
+          }
+        }
+      }
+    }
+  ]
+}
