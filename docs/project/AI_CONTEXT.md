@@ -1,5 +1,20 @@
 # LostParty Backend 기능 지도
 
+2026-10-27 사용자 명시 승인으로 **Issue13 closed/completed**, [전체192 Backend 종료 기록](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6438046779). 레이드 모집 1차 구현·보고된 정상 흐름/표시의 기기 인수 완료. [차후 Native/계약 보완](../features/recruitment/follow-up-backlog.md)은 사용자와 별도 구간 재시작 때 진행하며 현재 착수/인수 선행 조건 아님. 추가 Backend 요청 없음·새 구체 차이는 별도 주제 Issue 추적. dev/main·AWS·서버/DB 변경 없음. 아래 OPEN/차단 판단은 종료 전 이력이다.
+
+## 2026-10-27 사용자 정정 수신 — 차후 보완은 현재 인수·종료의 선행 조건 아님
+
+[전체191번째 Flutter · 사용자 정정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437976324)을 확인했다. 실제 BetaSchedule.session_id 정밀도 판정·다음 주 개방 알럿 로그·일정 제안 확인/수락 발견성 등은 **사용자와 차후로 합의한 Native 보완**이다. 미수정/개선 기록은 보존하되 현재 착수·즉시 다음 작업·현재 베타 인수의 선행 조건으로 두지 않는다. 별도 보완 구간 재시작 시 최신 계약·코드/UX를 확인한다.
+
+기존 모집 정상 흐름·표시의 사용자 기기 통과/1차 구현 완료는 유지한다. **이전 Backend의 ‘미수정1건 때문에 현재 인수/종료 차단’ 판단을 정정한다.** 현재 추가 Native/Backend 구현·시험·서버 변경 요청은 없다.191에서 Native는 Issue13을 종료하지 않았다고 명시했으며, 이번 최신 회신 조회에서도 이슈 상태는 OPEN이다. 1차 구현 완료와 차후 보완 추적을 구분하며 보완 착수를 다시 요청하지 않는다. 아래190 기준 즉시 다음 작업/종료 차단 표현은 이번 정정으로 대체한다.
+
+
+최신 종료 조건 확인: [전체189 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437895407) 표시 기기 통과·[전체190 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437933418) 누락 대조/최신 담당 수신. 사용자 1차 정상 흐름 인수는 완료, 추가 Backend 요청 없음. 실제 BetaSchedule.session_id 정밀도 판정은 Native 미수정1건으로 명시돼 다음 Native 보완 대기다. Issue13 종료는 해당 완료 또는 별도 Issue 추적 이관 확인 전 보류, 알럿/발견성/소켓 등은 별도 후속이다. 아래 표시 기기 대기는189에서 해소됐다.
+
+2026-10-27 사용자 확정: 네이티브 디바이스 테스트 결과 기준 **레이드 모집 1차 구현 완료**. Backend 구현/개발 반영·Native 연결/사용자 기기 인수를 해당 범위로 완료 기록한다. 추가 Backend 요청 없음·다음 새 요구/구체 차이 대응. 성능/원ACK 검증 등 별도 후속은 추적 유지, Git 통합·AWS·Issue 종료는 실행하지 않는다. 아래 전체 인수 대기는 사용자 확정 전 이력이다.
+
+2026-10-27 최신 수신: [전체186 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437319946) 과거 기록 보존·다른 캐릭터 신청/가입 완료 사용자 기기 통과, [전체187 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437458823) 작은 오류 화면 정상 표시 사용자 확인. 두 문제의 직접 인수 완료·추가 Backend 요청 없음. N/내부 ID/동시성·원ACK 키까지 기기 확인한 의미는 아니다. 다음 새 구체 차이 대응, 전체 인수/별도 후속·Issue13 OPEN 유지. 이번 수신은 문서 로컬 누적만 한다. 아래 기기 대기는 수신 전 이력이다.
+
 2026-10-27 최신 실행: [재신청 보완 구현/고유20PASS](../features/recruitment/participation/reapplication-history-fix-plan.md)·[개발 DB0033/API 반영](../engineering/operations/reapplication-history-rollout.md) 완료. sourcec1f86d8/이미지581a1a5e·178/199. 종료 불변 근거/새 CM·Assignment·과거/N보존, 인덱스 DDL 전후112표1,883행/sequence 동일. 소스262/runtime31/두 계약·HTTP6·실자료READONLY/healthy/worker/ERROR0 확인. [전체185 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6436334435) 다음Flutter 해당 재신청 직접 영향/Backend 차이 대응, 정상회원 기기 재신청 미확인. dev/main18830c2/AWS는 그대로다. 아래 게시/반영 전 상태는 이전 이력이다.
 
 2026-10-27 최신 작업: [재신청 보완 구현·직접20PASS](../features/recruitment/participation/reapplication-history-fix-plan.md), `fix/raid-recruitment-reapplication`. 과거 완료 Assignment/종료 CM과 새 실제 참가를 분리하고 기록/N·기존 자격을 보존한다.0033 인덱스 DDL/명시 head 지원, DTO/178·199 불변. 다음 소스 게시·개발 DB0033/API 반영·Issue13 인계이며 아직 실행420e057/DB0032다. 아래 설계/통합 당시 설명은 이전 이력이다.
