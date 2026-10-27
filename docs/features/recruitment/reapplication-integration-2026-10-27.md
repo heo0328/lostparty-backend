@@ -1,5 +1,7 @@
 # 모집 재신청 보완 브랜치 통합 기록 — 2026-10-27
 
+**통합 결과:** 문서eb8c409를 push한 뒤 [PR28](https://github.com/heo0328/lostparty-backend/pull/28)을 이력 보존 merge해 dev `41a47ed2ae0a0e2e4d6356b885bfd6a589b048aa` 원격 반영을 확인했다. 병합 트리와 PR head 전체 파일 동일, 현재 checkout dev·완료 수정 브랜치 로컬/원격 삭제·미완료 활동 선택 브랜치 보존. main18830c2·실행 API/DB·AWS는 변경하지 않았다. 아래 병합 예정은 문서 게시 당시 계획이며 실제 결과는 이 문단과 DEV_LOG를 따른다.
+
 작업 구간은 **개인 완료 탈퇴 후 다른 캐릭터 재신청 정합성 보완·1차 인수 마감**, 구현 브랜치는 `fix/raid-recruitment-reapplication`이다. 사용자 지시로 이 브랜치의 코드·DB 제약·계약·검증·개발 반영·Native 기기 인수·Issue13 종료를 최신화하고 `dev`에 이력을 보존해 병합한다. 이전 모집 전체 통합은 [기존 체크포인트](integration-checkpoint-2026-10-27.md)다.
 
 ## 구현과 공개 계약

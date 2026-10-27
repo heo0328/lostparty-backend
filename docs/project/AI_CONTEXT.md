@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-2026-10-27 기준. 작업 구간은 **모집 재신청 보완/1차 인수 마감 기록의 dev 통합**, 현재 브랜치는 `fix/raid-recruitment-reapplication`이다. [통합 기록](../features/recruitment/reapplication-integration-2026-10-27.md)·[NEXT_WORK](NEXT_WORK.md)를 따른다. dev/main18830c2에서 수정 브랜치만 dev로 통합하는 사용자 승인 범위이며 main/AWS/서버·DB 변경은 포함하지 않는다.
+2026-10-27 기준. **모집 재신청 보완·1차 인수 마감의 dev 통합 완료**, 현재 checkout은 `dev`다. [PR28](https://github.com/heo0328/lostparty-backend/pull/28)/병합41a47ed·원격 반영 확인·완료 수정 브랜치 로컬/원격 정리를 마쳤다. 미완료 `feat/activity-selection`은 보존한다. [통합 기록](../features/recruitment/reapplication-integration-2026-10-27.md)·[NEXT_WORK](NEXT_WORK.md)를 따른다. main18830c2와 실제 개발 API/DB는 이번 Git 통합에서 변경하지 않았다.
 
 레이드 모집 1차 구현·보고된 정상 흐름/표시의 사용자 기기 인수 완료, [Issue13 전체192 Backend 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6438046779)으로 closed/completed다. 추가 Backend 요청은 없다. 차후 정밀도 소비·알럿·UX/소켓 등은 [보완 대장](../features/recruitment/follow-up-backlog.md)에 보존하며 현재 착수/인수 선행 조건이 아니다. 이전 미완료/종료 차단 판단과 사용자 정정은 [DEV_LOG](DEV_LOG.md)에서 확인한다.
 

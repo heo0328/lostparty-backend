@@ -1,10 +1,10 @@
 # 다음 실행
 
-## 현재 구간 — 모집 재신청 보완 브랜치 dev 통합
+## 현재 기준 — 모집 재신청 보완 dev 통합 완료
 
-사용자 승인으로 `fix/raid-recruitment-reapplication`의 [수정·검증·반영·인수 통합 기록](../features/recruitment/reapplication-integration-2026-10-27.md)을 최신화했다. 구현c1f86d8·반영기록3e905ec·마감기록59f040e는 모두 원격 게시됐고, 사용자 승인으로 [Issue13 전체192 Backend 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6438046779) 및 closed/completed 확인을 마쳤다. 레이드 모집 1차 구현·보고된 정상 흐름/표시의 사용자 기기 인수는 완료다.
+사용자 승인으로 [수정·검증·반영·인수 기록](../features/recruitment/reapplication-integration-2026-10-27.md)을 최신화했고, 문서 구간eb8c409를 게시한 뒤 [PR28](https://github.com/heo0328/lostparty-backend/pull/28)의 `41a47ed2ae0a0e2e4d6356b885bfd6a589b048aa`로 dev 병합·원격 확인을 완료했다. PR head와 병합 결과 파일 전체가 동일하고 구현c1f86d8 이후 코드/DDL/계약·시험 소스 변경이 없음을 확인했다.
 
-다음은 이 문서 구간 commit/push→PR로 dev 이력 보존 병합→원격 SHA 확인→완료 수정 브랜치 로컬/원격 정리다. 현재 checkout은 수정 브랜치이며 dev/main은 통합 전18830c2다. 미완료 `feat/activity-selection`은 보존한다. main 갱신·AWS 배포·서버/DB 변경은 이번 승인 범위에 포함하지 않는다.
+현재 checkout은 `dev`다. 통합 완료한 `fix/raid-recruitment-reapplication`은 로컬/원격 삭제했고 미완료 `feat/activity-selection`은 보존했다. 레이드 모집 1차 구현·보고된 정상 흐름/표시의 사용자 기기 인수와 [Issue13 closed/completed](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6438046779)는 완료다. main은18830c2 유지이며 이번에는 dev만 통합했다. 후행 문서 마감 기록도 dev에 commit/push한다. 서버/DB 재실행·AWS 배포·다른 Issue 종료는 없다.
 
 ## 개발 실행·검증 기준
 

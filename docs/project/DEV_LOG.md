@@ -2859,3 +2859,11 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 사용자 지시로 같은 수정 브랜치의 [통합 기록](../features/recruitment/reapplication-integration-2026-10-27.md)을 작성했다. 구현c1f86d8/DB0033·고유20PASS·개발반영3e905ec·기기 인수/Issue13 종료59f040e·차후 보완을 하나의 검토 기준으로 모았다. NEXT_WORK는 현재 다음 실행 중심, AI_CONTEXT는 최신 기능/실행 기준 중심으로 정리했다. 과거 중간 대기·정정은 기존 DEV_LOG/상세 문서·Git 이력에 보존한다.
 
 원격 재확인: dev/main18830c2, 수정59f040e이며 dev/main 모두 수정 브랜치 조상으로 충돌 없음. Issue13 closed/completed·전체192 이후 새 요청 없음. 코드/DDL/계약·시험 소스는c1f86d8 이후 동일해 기존 직접20·실행 확인을 재사용하며 전체 회귀/서버·DB 재실행 없음. 문서 정적 검증 후 commit/push→PR merge로 dev 통합·원격 확인·완료 브랜치 정리를 진행한다. main/AWS·다른 이슈 변경은 범위 밖이다.
+
+
+## 2026-10-27 — PR28 dev 병합·원격 확인·완료 수정 브랜치 정리
+
+- 사용자 승인 문서 최신화eb8c409418ed2a67febc473d53371c69452b25fe push·정적 링크/diff 통과. [PR28](https://github.com/heo0328/lostparty-backend/pull/28)을 head SHA 고정·mergeable/CLEAN 확인 후 이력 보존 merge했다. 병합 `41a47ed2ae0a0e2e4d6356b885bfd6a589b048aa`가 원격dev에 반영됐고 로컬dev도 fast-forward했다. 기본main은18830c21bd260592a5455526b7565a3a7ef7a1a9 유지다.
+- PR head가 dev의 조상이고 전체 파일 트리가 같음을 확인했다. c1f86d8 이후 app/alembic/OpenAPI/tests/scripts/의존성/Dockerfile 동일성이 확인돼 기존 직접20·개발 실행 검증을 재사용했다. 문서만 수정하므로 전체 회귀·서버/DB 재시작·기존 회원 명령을 반복하지 않았다.
+- 현재 경로 checkout dev, 단일 worktree·깨끗한 작업 트리·수정 브랜치 정확 원격eb8c409 및dev 포함 확인 후 `fix/raid-recruitment-reapplication`을 로컬 `branch -d`·원격 지정 삭제했다. 미완료 `feat/activity-selection`89a3248과 main/dev는 보존했다. 공유 이력 재작성/force push 없음.
+- [통합 기록](../features/recruitment/reapplication-integration-2026-10-27.md)·NEXT_WORK/AI_CONTEXT/추적표에 실제 결과를 기록해 후행 마감 commit/push한다. Issue13은 사용자 승인 completed 유지·차후 보완은 현재 착수하지 않는다. 실제 API sourcec1f86d8/이미지581a1a5e·DB0033·키/환경/자료는 변경하지 않았으며 main 갱신/AWS/다른 이슈 종료는 이번 범위 밖이다.
