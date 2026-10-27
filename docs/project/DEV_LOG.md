@@ -1,5 +1,13 @@
 # 영구 개발 이력
 
+## 2026-10-27 — 모집 dev/main 통합·완료 브랜치 정리·새182 조사 수신
+
+- 상세기록문서 `c69a0ae752b281c3df4bbcf5b9fd0a0560266830` commit/push·원격일치후 [PR27](https://github.com/heo0328/lostparty-backend/pull/27)을merge 방식으로병합했다. 병합 `4a5f59096c66dd6e6a9e0ac5fb65ad418155ad2f`의부모는기존dev ce3064f와문서HEAD c69a0ae이며source tree는그문서HEAD와같다. main을dev로fast-forward/push후양원격SHA4a5f590동일을조회했다. squash/rebase/force push없음.
+- dev포함/원격push/clean/단일작업트리및미사용을확인하고feat/raid-recruitment로컬/원격과통합완료chore/backend-architecture-review로컬을상시정리했다. 미완료feat/activity-selection 89a3248은보존·미통합이다. 후행완료기록은dev에게시하고main도같은시점으로정렬하며후속기능은최신dev에서목적브랜치로진행한다.
+- 업무코드/DB정의/패키지/OpenAPI/실행파일이검증된420e057과동일함을Git대조·문서/링크/동결자료/diff검사로확인했다. 새전체pytest/DB복원·API재시작·실회원명령·migration/자료변환/삭제·AWS작업없음. 실제실행420e057/cd581ac0/0032유지다.
+- 통합인계직전 [전체182 Flutter · 재신청 오류 조사](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6435522815)를새로수신했다. C/N생성참가→C개인완료탈퇴/승계·N보존→C신청모드/위임변경→다른적격캐릭터C재신청에서TARGET_CONTEXT_STALE제보. completed Assignment/persistent관계판정은미확정원인후보이며아직합성재현/수정안함. Native는실자료수정/원키우회없이공통판정/과거기록·예약/N보존검증을요청했다. 새조사는이통합기준후속이고기존180까지완료/현재배포를바꾸지않는다.
+- [전체183 Backend · Git 통합](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6435627035)에병합/정리/다음담당을인계하고새182를미완료우선후속으로보완한다. Native181확인창수정·세션판정후속도보존하며전체기기/성능·원ACK실제자료대조/AWS는별도다. 새로운이슈번호는없고새요청은기존13의182댓글이다.
+
 ## 2026-10-27 — 모집 구간 상세 기록·dev/main 통합 준비
 
 - 사용자 지시로 [통합 체크포인트](../features/recruitment/integration-checkpoint-2026-10-27.md)에 모집 기반→C/N→동의/일정→완료/기록·관계 정리→후보/표시→베타·문자/join/한도·조율/분 검색·명시 출발을 대표 커밋·원본 계약·검증/실행 근거와 함께 기록했다. 기능별 최신 안내도 보완했다. Backend 완료와 Native/전체인수·운영 미완료를 구분한다.

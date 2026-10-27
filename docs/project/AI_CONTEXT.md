@@ -1,10 +1,12 @@
 # LostParty Backend 기능 지도
 
-## 현재 기준 — 모집 통합 체크포인트
+## 현재 기준 — 모집 통합 완료·새 조사 대기
 
-[모집·일정 상세 기록](../features/recruitment/integration-checkpoint-2026-10-27.md)에 기능·커밋·계약·검증·개발 반영·Native 수신/미완료를 모았다. 사용자가 dev 병합/main 동일 시점 정렬·푸시를 승인해 통합 구간을 진행한다. 실행 API source420e057/이미지cd581ac0·178/199·DB0032는 유지하며 Git 통합으로 서버를 교체하지 않는다.
+[통합 체크포인트](../features/recruitment/integration-checkpoint-2026-10-27.md)에누적기능·대표커밋·계약·검증·개발반영·미완료를정리했다. 문서c69a0ae게시→[PR27](https://github.com/heo0328/lostparty-backend/pull/27)/병합4a5f590→dev/main원격동일SHA확인·완료모집/개선브랜치정리까지완료했다. 후행완료기록도양기준으로게시하며후속은최신dev의새목적브랜치에서진행한다. 활동선택미완료로컬브랜치는보존했다.
 
-전체181 Flutter는 Native 확인창 수정 보고이며 추가 Backend 구현 요청은 없다. Native 분 제안 세션 판정/기기·검색 기기/전체 인수·성능/원ACK 실제자료 대조/AWS는 별도다. 아래는 통합 전 개별 시점의 이력이며 최신 다음 작업은 NEXT_WORK를 따른다.
+**새Backend후속:** [#13 전체182 재신청 TARGET_CONTEXT_STALE 조사](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6435522815). C개인완료탈퇴·N지속관계유지뒤다른적격캐릭터재신청에서과거completed Assignment판정과새참가판정이충돌하는지원인미확정·미조사/미수정이다. 합성재현/후보·context·신청/승인/가입동일판정과기록/예약/N보존이필요하다. 이전180까지의구현/반영완료와구분한다.
+
+실행API source420e057/이미지cd581ac0·178/199·DB0032는Git통합으로바꾸지않았다. Native181확인창수정·분제안실제세션판정/기기·전체성능·원ACK실제자료대조/AWS는별도다. 아래는통합전개별시점기록이며최신다음작업은NEXT_WORK를따른다.
 
 ## 통합 전 상태 기록
 

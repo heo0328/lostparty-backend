@@ -1,10 +1,12 @@
 # 다음 실행
 
-## 현재 구간 — 모집 상세 기록·dev/main 통합
+## 현재 기준 — 모집 통합 완료 / 새 재신청 오류 조사 대기
 
-사용자 승인으로 [모집 통합 체크포인트](../features/recruitment/integration-checkpoint-2026-10-27.md)를 작성하고 기존 작업 이력을 보존해 dev PR 병합·main 동일 커밋 정렬/푸시를 진행한다. 기능 코드는420e057, 실행 이미지cd581ac0/DB0032로 유지한다. 이번 Git 통합은 새 서버/DB/AWS 배포를 하지 않는다.
+[모집 상세 체크포인트](../features/recruitment/integration-checkpoint-2026-10-27.md)를c69a0ae로게시하고 [PR27](https://github.com/heo0328/lostparty-backend/pull/27)의4a5f590으로dev병합·main fast-forward/push를완료했다. 두원격동일SHA확인·완료모집브랜치로컬/원격/기존개선로컬브랜치정리·미완료활동브랜치보존. 후행완료기록도dev/main같은기준으로게시한다. 실행API420e057/cd581ac0·178/199·DB0032는변경하지않았다.
 
-이슈13 전체181 Flutter의 Native 해산 확인창 수정·분 제안 실제 세션 판정 후속을 수신했으며 새 Backend 구현 요청은 없다. 통합 후 다음 작업은 Native 직접 영향 결과/구체 차이 대응이다. 전체기기/성능·원ACK 실제자료 대조·AWS는 별도이며 같은 주제 후속은 최신dev에서 목적 브랜치를 새로 만든다. 아래 개별 구간의 dev/main 미완료·브랜치/소비대기 표현은 통합 전 시점 기록이다.
+**다음Backend — [전체182 Flutter 재신청 오류 조사](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6435522815):** 최신dev에서모집후속목적브랜치를만들어C/N참가→C개인완료탈퇴/승계·N유지→C만신청모드/위임변경→다른적격캐릭터재신청의합성재현을진행한다. 과거completed Assignment와persistent Member의충돌은미확정원인후보이며미조사/미수정이다. 후보/context/validate_only·신청/승인/가입의동일판정·과거완료/해제예약/N참가보존을확인하고필요한수정/직접검증/게시/반영상태를같은Issue에회신한다. 실제회원자료변경/삭제·강제가입/stale무시·원키우회는하지않는다.
+
+**다음Flutter:** 분제안의실제BetaSchedule.session_id판정·분생성/개방/제안수락/검색기기·해산확인창수정후직접영향/구체차이회신. 전체기기/성능·실제자료가있는원ACK대조·AWS는별도다. 이번Git통합은전체모집인수나새182해결이아니다. 아래dev/main미완료·예전브랜치/소비대기표현은통합전시점기록이다.
 
 ## 최신 작업 — 명시 출발 정수분 개발 반영·인계 완료
 

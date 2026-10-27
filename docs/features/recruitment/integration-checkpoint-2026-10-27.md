@@ -4,7 +4,7 @@
 
 현재까지 `feat/raid-recruitment`에서 누적한 구현·계약·직접 검증·개발 서버 반영·네이티브 인계를 하나의 통합 기준으로 보존한다. 사용자는 후속 확인·수정 가능성을 유지하면서 문서를 정리해 `dev`에 병합하고 `main`도 같은 커밋으로 맞추도록 승인했다.
 
-현재 승인된 Backend 기능 구간은 구현·검증·게시·개발 API 반영·인계까지 완료했다. 전체 모집의 실회원·기기·성능 인수와 AWS 운영 배포는 별도로 남는다. 이 체크포인트가 열린 이슈의 종료나 남은 요구의 폐기를 뜻하지 않는다.
+전체180까지 인계한 Backend 기능 구간은 구현·검증·게시·개발 API 반영·인계까지 완료했다. 통합 중 새로 수신한 전체182의 재신청 오류 조사는 미착수 후속으로 분리한다. 전체 모집의 실회원·기기·성능 인수와 AWS 운영 배포는 별도로 남는다. 이 체크포인트가 열린 이슈의 종료나 남은 요구의 폐기를 뜻하지 않는다.
 
 정리 시작 시 기준은 모집 브랜치 `a1d124e16f0cc26349ebe60702618812a7887f9a`, 원격 dev `ce3064f779206684bcd4babf5751a94dd30f5f3a`, 원격 main `77a1fe53875ddbe1a972361c90468106815c6f5b`였다. dev는 모집 브랜치의 조상이고 main은 dev의 조상이었다. 통합 전 모집 쪽에 누적된 커밋은179개였다. 기존 이력을 squash/rebase/force push하지 않는다.
 
@@ -98,8 +98,11 @@
 - [전체179 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6422070028): 명시 출발 정수분 정책 수용/구현 착수. [전체180 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6422693611): 구현·개발 반영·직접영향 인계 완료.
 - [전체181 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6422980400): 해산 확인창 최초 조회의 build 중 알림 예외를 Native에서 재현/수정하고bd7e0492를 게시했다. 새 Backend 요청은 없다. 실제 제보의 중복 쓰기는 요청 횟수 자료가 없어 확정하지 않는다. 분 제안 판정을 실제 BetaSchedule.session_id로 맞추는 Native 후속도 별도로 남겼다.
 
+- [전체182 Flutter · 재신청 TARGET_CONTEXT_STALE 조사 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6435522815): C/N 참가 후 A가 C 개인 완료 탈퇴·리더 승계·N유지, B의 C만 신청 모드 변경/위임을 거쳐 A의 다른 적격 캐릭터가 C에 재신청하면 후보는 보이지만 context가 거절된다는 제보다. 과거 completed Assignment와 살아 있는 N 지속 관계의 판정 차이는 원인 후보이며 아직 확정하지 않았다. 합성 재현과 후보/context/validate_only·신청/승인/실제가입의 동일 판정·과거 완료/해제예약/N 보존 확인이 필요한 새 Backend 후속이다. 실자료 변경·stale 무시·강제가입·원키 변경 우회는 요청되지 않았다.
+
 | 남은 항목 | 다음 담당·완료 조건 |
 |---|---|
+| 재신청 TARGET_CONTEXT_STALE 조사 | Backend가 최신 dev에서 후속 목적 브랜치를 만들어 전체182의 합성 시나리오를 재현·원인 확정한다. 수정 필요 시 계약/직접검증/게시·반영상태를 구분해 회신한다. 현재 미조사·미수정이며 기존 완료/예약 이력과 N 참가를 보존한다. |
 | 분 단위 생성/개방·제안/수락 | Flutter가 실제 베타 세션 판정을 맞추고 일반 앱 연결·직접 기기 결과를 회신한다. Backend는 구체 차이에 대응한다. |
 | 검색 비5분 범위 | Backend 반영은 수신 확인됐다. Native 실제 검색 기기 결과는 아직 미확인이다. |
 | 해산 확인창 수정·기타 직접 영향 | Flutter가 수정 후 기기 로그/직접 영향과 추방·해산 권한 경계를 관리한다. 통과한 전체 목록을 재요청하지 않는다. |
@@ -111,4 +114,14 @@
 
 ## Git 통합 실행 기록
 
-현재는 문서 정리·검증을 마친 뒤 모집 브랜치 게시→dev PR 병합→main fast-forward/동일 시점 push를 진행하는 구간이다. 정확한 문서 SHA·PR·병합 SHA·push 및 브랜치 정리 결과는 완료 후 이 절에 누적한다. 활동 선택의 미완료 로컬 작업은 이번 모집 통합에 포함하지 않는다.
+| 항목 | 확인 결과 |
+|---|---|
+| 상세 기록 게시 | `c69a0ae752b281c3df4bbcf5b9fd0a0560266830`를 모집 브랜치에commit/push하고원격일치를확인했다. |
+| dev 병합 | [PR27](https://github.com/heo0328/lostparty-backend/pull/27)을2026-10-27에merge 방식으로병합했다. 병합SHA `4a5f59096c66dd6e6a9e0ac5fb65ad418155ad2f`. 부모는기존dev ce3064f와모집문서HEAD c69a0ae이며기존이력을보존한다. |
+| main 정렬 | main을병합된dev로fast-forward하고push했다. dev/main원격둘다 `4a5f59096c66dd6e6a9e0ac5fb65ad418155ad2f`로일치함을조회했다. |
+| 완료 브랜치 정리 | dev포함/원격게시/다른작업트리미사용·clean을확인하고feat/raid-recruitment를로컬/원격에서삭제했다. 이미모집에통합된chore/backend-architecture-review도로컬정리했다. |
+| 별도 미완료 보존 | feat/activity-selection의89a3248은이번통합에포함하지않고로컬보존했다. |
+| 통합 후 소스 확인 | 업무코드/DB정의/OpenAPI/패키지/실행파일은검증된420e057과같다. 이번추가작업은문서이며문서/링크·동결자료/diff검사를통과했다. 새전체시험/서버재시작/DB작업은없다. |
+| 인계·새 후속 | [전체183 Backend · Git 통합](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6435627035)에결과를인계한다. 전체182신규조사는기존완료기준의Git통합을되돌리지않고미착수후속으로기록했다. |
+
+이완료결과기록도dev에commit/push한뒤main을같은커밋으로fast-forward/push한다. 최종문서게시커밋은각원격ref와DEV_LOG의통합이력으로확인한다. 후속기능작업은최신dev에서새목적브랜치로이어가며,기존고정SHA/계약/실행이미지근거는유지된다. 현재checkout을바꾼것은API실행소스교체가아니다.

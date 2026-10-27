@@ -27,6 +27,6 @@
 
 ## 개발 상태·문서
 
-현재 개발 중이며 주요 기능의 백엔드 구현과 Flutter 연동을 진행하고 있습니다. [모집·일정 통합 체크포인트](docs/features/recruitment/integration-checkpoint-2026-10-27.md)에 현재까지의 구현·검증·개발 서버 반영과 남은 인수를 정리했습니다. 기능별 연결·실회원·기기 인수는 별도로 추적하며 AWS 운영 배포는 후속입니다.
+현재 개발 중이며 주요 기능의 백엔드 구현과 Flutter 연동을 진행하고 있습니다. [모집·일정 통합 체크포인트](docs/features/recruitment/integration-checkpoint-2026-10-27.md)에 현재까지의 구현·검증·개발 서버 반영·dev/main 통합과 남은 인수 및 새 후속 조사를 정리했습니다. 기능별 연결·실회원·기기 인수는 별도로 추적하며 AWS 운영 배포는 후속입니다.
 
 [기능별 문서 안내](docs/README.md) · [현재 기능 상태](docs/project/AI_CONTEXT.md) · [다음 작업](docs/project/NEXT_WORK.md) · [개발 환경](docs/engineering/development/environment.md) · [협업 규칙](docs/engineering/collaboration/api-collaboration.md)
