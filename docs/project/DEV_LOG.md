@@ -1,5 +1,12 @@
 # 영구 개발 이력
 
+## 2026-10-27 — 재신청 후속 브랜치 분기·182 갱신 확인·설계
+
+- 사용자지시로최신origin/dev18830c2에서fix/raid-recruitment-reapplication을분기·checkout했다. origin/dev자동상류연결은해제해잘못된기준브랜치push를막고후속게시때동일이름원격에연결한다. main/dev·활동미완료브랜치는유지했다.
+- 이슈13전체182의15:47:02KST갱신본수신(새댓글아님). Native4833a164/111PASS자체보고·확인창라벨측정/재조회안내·denied context POST0/미확인슬롯없음·기존다른기능통과를반영했다. 서버재신청원인/해결/기기성공은여전히미확인이다.
+- [수정설계](../features/recruitment/participation/reapplication-history-fix-plan.md): 개인완료탈퇴는CMcancelled/Assignmentcompleted를보존하지만N지속Member로old배정을찾아TARGET_CONTEXT_STALE거절하는정적경로를확인했다. 실제DB구조만READONLY조회해0032·current_assignment인덱스가completed를유일성에포함함을확인,코드만완화하면새배정추가가막힘도설계에반영했다. 회원자료/환경조회없음.
+- 최소0033으로active/stopped유일성만유지·공통종료근거/새CM·Assignment/기록anchor·예약/N보존/명시head지원·위험직접시험/개발반영순서를정리했다. 이는기존행변환/초기화아닌제약DDL이다. 기능코드/테스트작성·합성재현/DB이행·실회원명령·배포·commit/push는미실행이며계획기록만같은목적브랜치에누적했다. [전체184번째 Backend · 재신청 정적 조사/수정 설계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6435892485)게시/실제순번·본문확인,추가Native시험요청없이다음Backend재현/구현·직접검증이다. 실행source420e057/이미지cd581ac0/DB0032유지.
+
 ## 2026-10-27 — 모집 dev/main 통합·완료 브랜치 정리·새182 조사 수신
 
 - 상세기록문서 `c69a0ae752b281c3df4bbcf5b9fd0a0560266830` commit/push·원격일치후 [PR27](https://github.com/heo0328/lostparty-backend/pull/27)을merge 방식으로병합했다. 병합 `4a5f59096c66dd6e6a9e0ac5fb65ad418155ad2f`의부모는기존dev ce3064f와문서HEAD c69a0ae이며source tree는그문서HEAD와같다. main을dev로fast-forward/push후양원격SHA4a5f590동일을조회했다. squash/rebase/force push없음.
@@ -2789,3 +2796,11 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - [전체148번째 Backend · 제안1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6393622793)을게시하고실제전체댓글순번/본문일치를확인했다. 작성측Backend,단계계약제안/소비대조인계완료,다음Flutter구체차이회신대기다. 같은Issue본문상단을최신화하고기존본문이력/OPEN을보존했다. 다른Issue/새Issue·구현시험/정상사용자재시험요청은없다.
 - 채팅마다커밋/push하던세분화를바로잡아AGENTS/개발·협업지침명확화와누적토의·제안·예시/정적검증·회신을이번소제목파트에함께묶어커밋/push한다. 기존96644fe등이력은수정하지않는다. 원격확인후같은댓글에문서/자료고정SHA링크를추가하며새댓글/진행반복댓글은작성하지않는다.
 - 다음Flutter는profile조합/원pending·조율OFF기본약속·ON즉시효과·지연review복구·예약/동의/필터·표시권한·문자분할버전/예시·프리셋전체PUT의구체소비차이를회신한다. Backend는차이를반영해wire를닫은후구현한다. 현재개발source87c2a0e/366e868a·177/DB0031과기존#26인수는유지하며새배포/자료삭제/dev·main통합은없다.
+
+
+## 2026-10-27 — 재신청 종료 이력/새 참가 정합성 구현·직접 검증
+
+- 사용자 승인 설계를 같은 `fix/raid-recruitment-reapplication`에서 구현했다. [전체182 갱신본](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6435522815), [184 설계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6435892485), [설계·구현/검증](../features/recruitment/participation/reapplication-history-fix-plan.md) 기준.184 이후 새 댓글 없음(전체184 재확인).
+- 합성 RED에서 후보 존재/context stale 재현. 공통 불변 종료 근거→새 CM/Assignment, 과거 record snapshot/기존 해제 예약 fallback·N/과거 업무행 보존,0033 부분 유일 인덱스 DDL과 명시 head 지원 구현. DB 기존 행 변환/삭제 없음.
+- 고유20PASS(신규14/관련 기존6), 두 OpenAPI/paths/components·닫힌 bundle·130예시/32원ACK/음성3·문서 링크/diff 통과. 초기0032 오류 반환 기대와 historical reader profile 누락의 시험 호출을 정정한 재실행 포함/중복 합산 안 함. 전체 회귀/실회원 명령/실기기 검증 없음.
+- 소스 구간 게시 후 후보 검증·API 중지/0033 DDL/새 API 반영·실행 확인/기록 게시·Issue13 인계를 이어간다. 이 기록 시점 실행420e057/cd581ac0/0032 유지, dev/main/AWS는 변경하지 않는다.

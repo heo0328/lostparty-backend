@@ -1,5 +1,9 @@
 # LostParty Backend 기능 지도
 
+2026-10-27 최신 작업: [재신청 보완 구현·직접20PASS](../features/recruitment/participation/reapplication-history-fix-plan.md), `fix/raid-recruitment-reapplication`. 과거 완료 Assignment/종료 CM과 새 실제 참가를 분리하고 기록/N·기존 자격을 보존한다.0033 인덱스 DDL/명시 head 지원, DTO/178·199 불변. 다음 소스 게시·개발 DB0033/API 반영·Issue13 인계이며 아직 실행420e057/DB0032다. 아래 설계/통합 당시 설명은 이전 이력이다.
+
+현재작업: `fix/raid-recruitment-reapplication` / 기준dev18830c2. [182갱신·수정설계](../features/recruitment/participation/reapplication-history-fix-plan.md) 완료. 과거completed배정의코드거절과DB유일인덱스포함을정적/구조읽기로확인했으나합성재현은전이다. 공통종료근거/새CM·Assignment/과거기록·N보존과0033인덱스DDL·명시head지원이구현계획이다. Native4833a164는표시/POST0수정·서버해결아님. 현재기능수정/시험/DB이행·배포·새게시없음·실행420e057/cd581ac0/0032유지.
+
 ## 현재 기준 — 모집 통합 완료·새 조사 대기
 
 [통합 체크포인트](../features/recruitment/integration-checkpoint-2026-10-27.md)에누적기능·대표커밋·계약·검증·개발반영·미완료를정리했다. 문서c69a0ae게시→[PR27](https://github.com/heo0328/lostparty-backend/pull/27)/병합4a5f590→dev/main원격동일SHA확인·완료모집/개선브랜치정리까지완료했다. 후행완료기록도양기준으로게시하며후속은최신dev의새목적브랜치에서진행한다. 활동선택미완료로컬브랜치는보존했다.

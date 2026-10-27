@@ -1,5 +1,7 @@
 # 신청·즉시가입·캐릭터 변경 후보조회 계약2
 
+2026-10-27 재참가 보완: 증명된 현재 T/세대의 종료 참가와 과거 완료를 분리해 다른 적격 캐릭터를 새 참가로 평가한다. 후보→context→신청/승인·직접가입의 공통 종료 근거와 새 CM/Assignment 설치는 [구현·검증 기록](reapplication-history-fix-plan.md)을 따른다. 완료 캐릭터·직업/레벨/전투력·점유·한도·권한/동의는 유지하며 DTO/기존 원ACK는 바꾸지 않는다. 개발 반영 여부는 NEXT_WORK의 최신 실행 기록을 확인한다.
+
 2026-10-26 join확장은 [전체167 Flutter 수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410375489) 기준으로구현/직접검증했다. 기존형태와actor의미를유지하며data/query의join enum만추가한다. 아래개발177/0031은이전#26당시반영이력이다. 정확소스/최신개발반영은Issue13인계와NEXT_WORK를따른다.
 
 2026-10-24 / **계약2 구현·격리 검증·실제 개발 반영 완료/실회원 인수 대기** / 작업 구간 `모집 신청·캐릭터 변경 통합 자격 보완(#26)` / `feat/raid-recruitment`. [공통 설계](eligibility-design.md)가 판정 원본이다. [제안1](candidate-proposal.md)은 이전 범위로 보존한다. 현재 구현후보의 정확한 HTTP shape는 [실행 OpenAPI](../../../../openapi/two-cycle.openapi.yaml)다. 독립 schema/작성 예시는 소비검증 자료이며 실제 개발서버 성공 근거가 아니다.

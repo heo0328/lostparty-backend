@@ -104,6 +104,8 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
         fail('ROOM_MEMBER_EXISTS')
     if replacing is None and member_count(db, target) >= size:
         fail('ROOM_FULL')
+    from app.raid_rooms import admission_history
+    history=admission_history.resolve(db,target,member) if replacing is None and resuming is None else None
     plans = []
     # Only the target capacity is visible to the pure composition helper.
     from types import SimpleNamespace
@@ -127,6 +129,9 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
         if not core.raids.meets_item_level(level, difficulty):
             fail('RAID_ITEM_LEVEL_REQUIRED')
         old=evaluation['owned'].get(item.id) if evaluation is not None and replacing is not None else (db.scalar(select(Assignment).where(Assignment.round_id==rd.id,Assignment.membership_id==member.id).order_by(Assignment.joined_at.desc(),Assignment.id.desc())) if member else None)
+        if history is not None and old is not None:
+            if old.id not in {a.id for a in history.assignments}:fail('TARGET_CONTEXT_STALE')
+            old=None  # fresh assignment; never recycle the ended locator
         if old is not None and (old.state!='active' if replacing else old.state!='left'):
             fail('TARGET_CONTEXT_STALE')
         if replacing is None and old is not None and old.state=='left':

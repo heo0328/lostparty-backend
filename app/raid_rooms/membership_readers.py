@@ -9,7 +9,7 @@ from app.raid_rooms import (membership_actions as actions, membership_action_sch
 from app.raid_rooms.cycle_models import RoomCycle, CycleGeneration, CycleMember, CycleAssignment
 from app.raid_rooms.cycle_application_models import CycleSession
 from app.raid_rooms.integrated_models import RecruitmentRoom as Room, RecruitmentMembership as Member, RecruitmentAssignment as Assignment, RecruitmentRound as Round, RecruitmentItem as Item, RecruitmentSegment as Segment, RecruitmentSession as Session
-from app.raid_rooms.source_models import SessionParticipation as Participation
+from app.raid_rooms.source_models import SessionParticipation as Participation,TimeReservation
 from app.raid_rooms.models import MemberHead
 from app.raid_rooms.membership_action_models import LeadershipRecovery
 from app.raid_rooms.cycle_creation import permission
@@ -56,8 +56,19 @@ def record(db,row,cm):
             starts_at=seg.starts_at,ends_at=seg.ends_at,state='released' if part.state!='active' or sess.state=='cancelled' else 'planned'))
     from app.raid_rooms.cycle_models import ParticipationEvent
     ended=db.scalar(select(ParticipationEvent).where(ParticipationEvent.cycle_member_id==cm.id,ParticipationEvent.action.in_(('cancelled','removed'))).order_by(ParticipationEvent.member_revision.desc()).limit(1))
-    if ended is not None and ended.evidence.get('membership_action') is True:
+    if ended is not None and 'record_schedule_segments' in ended.evidence:
         segments=ended.evidence['record_schedule_segments']
+    elif ended is not None and cm.state in ('cancelled','removed'):
+        # Existing atomic-departure events predate segment snapshots. Read the
+        # immutable reservations owned by these old assignments, not a reused part.
+        historical={}
+        for saved in db.scalars(select(TimeReservation).where(TimeReservation.assignment_id.in_([a.id for a in values]),
+                TimeReservation.released_at.is_not(None),TimeReservation.released_at<=cm.ended_at)
+                .order_by(TimeReservation.released_at.desc(),TimeReservation.schedule_revision.desc(),TimeReservation.id.desc())):
+            historical.setdefault(saved.segment_id,saved)
+        segments=[dict(segment_id=v.segment_id,round_id=v.round_id,session_id=v.session_id,
+            starts_at=v.starts_at,ends_at=v.ends_at,state='released') for v in historical.values()]
+        segments.sort(key=lambda v:(str(v['session_id']),str(v['segment_id'])))
     return dict(locator=locator(row,cm),rounds=rds,assignments=assignments,schedule_segments=segments)
 
 

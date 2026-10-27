@@ -1,5 +1,11 @@
 # 다음 실행
 
+## 현재 작업 — 재신청 오류 구현·직접 검증 완료 / 개발 반영 진행
+
+`fix/raid-recruitment-reapplication`에서 [전체182 갱신 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6435522815)의 실패를 합성 재현하고 [공통 종료 근거·새 참가 ID/과거·N 보존·0033 인덱스 수정](../features/recruitment/participation/reapplication-history-fix-plan.md)을 구현했다. 직접 고유20PASS(신규14/기존6), 현재178/199·기본116/133·DTO/원ACK/예시130 보존 확인이다.0033은 DDL만이며 자료 변환/삭제·backfill은 없다.
+
+**다음 Backend:** 이 소스 구간 commit/push·원격 확인→후보 이미지 검증→API/동일 worker 중지 후0033 DDL·새 API 반영→실행·읽기 검증/기록 게시→같은 Issue13 인계. 현재 서버는 아직420e057/cd581ac0/0032이며 실제 적용 완료와 구분한다. Native 재신청 인수는 아직 요청 전/미확인이다. dev/main18830c2·AWS·전체 기기/성능·원ACK 실제 키 매칭은 이번 범위 밖이다. 아래 통합 당시/설계 대기 상태는 이전 시점 기록이다.
+
 ## 현재 기준 — 모집 통합 완료 / 새 재신청 오류 조사 대기
 
 [모집 상세 체크포인트](../features/recruitment/integration-checkpoint-2026-10-27.md)를c69a0ae로게시하고 [PR27](https://github.com/heo0328/lostparty-backend/pull/27)의4a5f590으로dev병합·main fast-forward/push를완료했다. 두원격동일SHA확인·완료모집브랜치로컬/원격/기존개선로컬브랜치정리·미완료활동브랜치보존. 후행완료기록도dev/main같은기준으로게시한다. 실행API420e057/cd581ac0·178/199·DB0032는변경하지않았다.

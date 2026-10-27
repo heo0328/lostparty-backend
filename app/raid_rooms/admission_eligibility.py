@@ -42,6 +42,7 @@ class Bundle:
     successes: dict
     owned: tuple
     lease_sources: dict
+    reentry: object = None
 
     def comparison(self, cid, ownership, role):
         key = (cid, ownership, role)
@@ -99,7 +100,9 @@ def load(db, uid, target, character_ids, *, owned=()):
         lease = leases.get((assignment.character_id,raid))
         if lease is None or lease.assignment_id != assignment.id:
             fail('WEEKLY_OCCUPANCY_CHANGED')
-    return Bundle(uid, target, pairs, assignments, states, leases, heads, successes, tuple(owned), lease_sources)
+    from app.raid_rooms import admission_history
+    history=admission_history.for_user(db,uid,target) if not owned else None
+    return Bundle(uid, target, pairs, assignments, states, leases, heads, successes, tuple(owned), lease_sources,history)
 
 
 def evaluate(bundle, character, ownership, role, *, pinned=None):
@@ -206,4 +209,4 @@ def evidence(bundle):
         [facts(s) for _, s in sorted(bundle.states.items(), key=lambda v: str(v[0]))], [facts(s) for _, s in sorted(bundle.leases.items(), key=lambda v: str(v[0]))],
         [facts(s) for _, s in sorted(bundle.heads.items(), key=lambda v: str(v[0]))], [facts(s) for _, s in sorted(bundle.successes.items(), key=lambda v: str(v[0]))],
         [facts(a) for a in bundle.owned],
-        [[facts(a),facts(r)] for _,(a,r) in sorted(bundle.lease_sources.items(),key=lambda v:str(v[0]))]]))
+        [[facts(a),facts(r)] for _,(a,r) in sorted(bundle.lease_sources.items(),key=lambda v:str(v[0]))]] + ([bundle.reentry.evidence()] if bundle.reentry is not None else [])))

@@ -107,7 +107,6 @@ class RecruitmentAssignment(Base):
     joined_at = stamp()
     ended_at = stamp(nullable=True)
     __table_args__ = (
-        UniqueConstraint('round_id', 'membership_id'),
         UniqueConstraint('room_id','id','membership_id','user_id','item_id','round_id',name='uq_assignment_reservation_owner'),
         UniqueConstraint('room_id', 'item_id', 'round_id', 'id', 'user_id', 'character_id'),
         ForeignKeyConstraint(['room_id', 'item_id', 'round_id'],
@@ -118,7 +117,7 @@ class RecruitmentAssignment(Base):
         CheckConstraint('revision>=1 AND ownership_revision>=1 AND lifecycle_revision>=1'),
         CheckConstraint("(state='active' AND ended_at IS NULL) OR (state IN ('completed','left','stopped_incomplete','legacy_ended') AND ended_at IS NOT NULL)"),
         Index('uq_recruitment_current_assignment', 'round_id', 'membership_id', unique=True,
-              postgresql_where=text("state <> 'left' AND state <> 'legacy_ended'")),
+              postgresql_where=text("state <> 'left' AND state <> 'legacy_ended' AND state <> 'completed'")),
         Index('uq_recruitment_active_slot', 'round_id', 'party_no', 'slot_no', unique=True,
               postgresql_where=text("state='active'")),
     )

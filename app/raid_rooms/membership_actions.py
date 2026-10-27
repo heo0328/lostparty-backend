@@ -33,7 +33,7 @@ def bounded(model,value, *, snapshot=None):
 
 
 def ready(db):
-    if list(db.scalars(text('SELECT version_num FROM alembic_version'))) not in (['0031_membership_actions'],['0032_beta_recruitment']):
+    if list(db.scalars(text('SELECT version_num FROM alembic_version'))) not in (['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history']):
         fail('RECRUITMENT_COMMAND_NOT_READY',503)
 
 
