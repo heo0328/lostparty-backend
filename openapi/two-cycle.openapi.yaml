@@ -75699,7 +75699,7 @@
     }
   },
   "x-recruitment-policy": {
-    "schema_revision": "0032_beta_recruitment",
+    "schema_revision": "0033_reapplication_history",
     "cycle": "Asia/Seoul Wednesday 06:00; maintenance Wednesday [06:00,10:00)",
     "time": "UTC, 5-minute ticks, positive at most 24h per session; stored authorized opening +30m floor",
     "admission_deadline": "strictly before confirmed start minus 30m; initial threshold and existing participant confirmation are distinct",
@@ -75778,6 +75778,10 @@
         "unavailable",
         "not_applicable"
       ]
+    },
+    "reapplication_history": {
+      "required_schema": "0033_reapplication_history",
+      "semantics": "fresh participation after proven termination; completed history and opposite cycle preserved"
     }
   }
 }

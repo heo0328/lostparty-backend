@@ -416,9 +416,10 @@ def create_two_cycle_app():
     generate=result.openapi
     def schema():
         value=_decorate_openapi(generate())
-        value['x-recruitment-policy'].update(schema_revision='0032_beta_recruitment',policy_version='two-cycle-contract-4',
+        value['x-recruitment-policy'].update(schema_revision='0033_reapplication_history',policy_version='two-cycle-contract-4',
             search_semantics='own-target-participation-excluded-v1',
             room_usage_semantics='active-target-rooms-1',
+            reapplication_history=dict(required_schema='0033_reapplication_history',semantics='fresh participation after proven termination; completed history and opposite cycle preserved'),
             coordination_wait=dict(query='include_coordination_wait',default=False,
                 reads=['/v2/raid-rooms/{room_id}/detail','/v2/me/raid-rooms/{room_id}/plan'],
                 states=['waiting_members','no_earlier_candidate','pending','unavailable','not_applicable']),

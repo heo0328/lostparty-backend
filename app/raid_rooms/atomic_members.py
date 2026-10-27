@@ -271,7 +271,13 @@ def get(principal,rid,key,*,round_id=None,cmid=None):
 
 
 def cleanup(db,row,cm,owned,command,stamp,*,selected=None):
-    evidence=dict(assignments=[life.assignment_snapshot(a) for a in owned],participations=leaders.release_parts(db,row,cm,stamp))
+    from app.raid_rooms.integrated_models import RecruitmentSegment as Segment
+    parts=leaders.own_parts(db,row,cm)
+    segments=list(db.scalars(select(Segment).where(Segment.session_id.in_([p.session_id for p in parts]),
+        Segment.round_id.in_([a.round_id for a in owned])).order_by(Segment.session_id,Segment.ordinal)))
+    evidence=dict(record_schedule_segments=[dict(segment_id=s.id,round_id=s.round_id,session_id=s.session_id,
+        starts_at=s.starts_at,ends_at=s.ends_at,state='released') for s in segments],
+        assignments=[life.assignment_snapshot(a) for a in owned],participations=leaders.release_parts(db,row,cm,stamp))
     submission=db.get(CycleSubmission,cm.id)
     if submission is not None:evidence['submission']=plan.snapshot(submission);db.delete(submission)
     for a in owned:

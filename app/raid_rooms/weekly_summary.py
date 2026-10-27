@@ -119,7 +119,7 @@ def participation(state, lease, candidates, by_id, account, character, visible_g
 
 def cycle_evidence(db,uid,ids,keys):
     revision=list(db.scalars(text('SELECT version_num FROM public.alembic_version')))
-    if revision not in (['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment']):return None,set()
+    if revision not in (['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history']):return None,set()
     from app.raid_rooms.cycle_models import CycleAssignment,CycleMember,RoomCycle,CycleRound
     from app.raid_rooms.cycle_lifecycle_models import CycleDecision
     query=select(Assignment,Item,RoomCycle,CycleMember,CycleRound).join(CycleAssignment,CycleAssignment.assignment_id==Assignment.id).join(

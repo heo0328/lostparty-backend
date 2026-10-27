@@ -22,7 +22,7 @@ def process_room(rid):
             recovery=None
             if row.state=='review_required':
                 from sqlalchemy import text
-                if list(db.scalars(text('SELECT version_num FROM alembic_version')))not in (['0031_membership_actions'],['0032_beta_recruitment']):continue
+                if list(db.scalars(text('SELECT version_num FROM alembic_version')))not in (['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history']):continue
                 from app.raid_rooms.membership_action_models import LeadershipRecovery
                 recovery=db.get(LeadershipRecovery,(row.id,row.generation))
                 if recovery is None:continue

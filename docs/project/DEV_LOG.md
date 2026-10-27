@@ -1,5 +1,12 @@
 # 영구 개발 이력
 
+## 2026-10-27 — 재신청 후속 브랜치 분기·182 갱신 확인·설계
+
+- 사용자지시로최신origin/dev18830c2에서fix/raid-recruitment-reapplication을분기·checkout했다. origin/dev자동상류연결은해제해잘못된기준브랜치push를막고후속게시때동일이름원격에연결한다. main/dev·활동미완료브랜치는유지했다.
+- 이슈13전체182의15:47:02KST갱신본수신(새댓글아님). Native4833a164/111PASS자체보고·확인창라벨측정/재조회안내·denied context POST0/미확인슬롯없음·기존다른기능통과를반영했다. 서버재신청원인/해결/기기성공은여전히미확인이다.
+- [수정설계](../features/recruitment/participation/reapplication-history-fix-plan.md): 개인완료탈퇴는CMcancelled/Assignmentcompleted를보존하지만N지속Member로old배정을찾아TARGET_CONTEXT_STALE거절하는정적경로를확인했다. 실제DB구조만READONLY조회해0032·current_assignment인덱스가completed를유일성에포함함을확인,코드만완화하면새배정추가가막힘도설계에반영했다. 회원자료/환경조회없음.
+- 최소0033으로active/stopped유일성만유지·공통종료근거/새CM·Assignment/기록anchor·예약/N보존/명시head지원·위험직접시험/개발반영순서를정리했다. 이는기존행변환/초기화아닌제약DDL이다. 기능코드/테스트작성·합성재현/DB이행·실회원명령·배포·commit/push는미실행이며계획기록만같은목적브랜치에누적했다. [전체184번째 Backend · 재신청 정적 조사/수정 설계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6435892485)게시/실제순번·본문확인,추가Native시험요청없이다음Backend재현/구현·직접검증이다. 실행source420e057/이미지cd581ac0/DB0032유지.
+
 ## 2026-10-27 — 모집 dev/main 통합·완료 브랜치 정리·새182 조사 수신
 
 - 상세기록문서 `c69a0ae752b281c3df4bbcf5b9fd0a0560266830` commit/push·원격일치후 [PR27](https://github.com/heo0328/lostparty-backend/pull/27)을merge 방식으로병합했다. 병합 `4a5f59096c66dd6e6a9e0ac5fb65ad418155ad2f`의부모는기존dev ce3064f와문서HEAD c69a0ae이며source tree는그문서HEAD와같다. main을dev로fast-forward/push후양원격SHA4a5f590동일을조회했다. squash/rebase/force push없음.
@@ -2789,3 +2796,66 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - [전체148번째 Backend · 제안1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6393622793)을게시하고실제전체댓글순번/본문일치를확인했다. 작성측Backend,단계계약제안/소비대조인계완료,다음Flutter구체차이회신대기다. 같은Issue본문상단을최신화하고기존본문이력/OPEN을보존했다. 다른Issue/새Issue·구현시험/정상사용자재시험요청은없다.
 - 채팅마다커밋/push하던세분화를바로잡아AGENTS/개발·협업지침명확화와누적토의·제안·예시/정적검증·회신을이번소제목파트에함께묶어커밋/push한다. 기존96644fe등이력은수정하지않는다. 원격확인후같은댓글에문서/자료고정SHA링크를추가하며새댓글/진행반복댓글은작성하지않는다.
 - 다음Flutter는profile조합/원pending·조율OFF기본약속·ON즉시효과·지연review복구·예약/동의/필터·표시권한·문자분할버전/예시·프리셋전체PUT의구체소비차이를회신한다. Backend는차이를반영해wire를닫은후구현한다. 현재개발source87c2a0e/366e868a·177/DB0031과기존#26인수는유지하며새배포/자료삭제/dev·main통합은없다.
+
+
+## 2026-10-27 — 재신청 종료 이력/새 참가 정합성 구현·직접 검증
+
+- 사용자 승인 설계를 같은 `fix/raid-recruitment-reapplication`에서 구현했다. [전체182 갱신본](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6435522815), [184 설계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6435892485), [설계·구현/검증](../features/recruitment/participation/reapplication-history-fix-plan.md) 기준.184 이후 새 댓글 없음(전체184 재확인).
+- 합성 RED에서 후보 존재/context stale 재현. 공통 불변 종료 근거→새 CM/Assignment, 과거 record snapshot/기존 해제 예약 fallback·N/과거 업무행 보존,0033 부분 유일 인덱스 DDL과 명시 head 지원 구현. DB 기존 행 변환/삭제 없음.
+- 고유20PASS(신규14/관련 기존6), 두 OpenAPI/paths/components·닫힌 bundle·130예시/32원ACK/음성3·문서 링크/diff 통과. 초기0032 오류 반환 기대와 historical reader profile 누락의 시험 호출을 정정한 재실행 포함/중복 합산 안 함. 전체 회귀/실회원 명령/실기기 검증 없음.
+- 소스 구간 게시 후 후보 검증·API 중지/0033 DDL/새 API 반영·실행 확인/기록 게시·Issue13 인계를 이어간다. 이 기록 시점 실행420e057/cd581ac0/0032 유지, dev/main/AWS는 변경하지 않는다.
+
+
+## 2026-10-27 — 재신청0033/새 API 개발 반영·실행 확인·인계
+
+- 구현c1f86d8948601781e6c593341899c07ce83f1b68 commit/push·원격 일치 후 후보 이미지581a1a5ed2566061d4c1d23a83d622e36ed9f6da166666b74c1e76a28dfe13f2 검증·개발 반영. [운영 기록](../engineering/operations/reapplication-history-rollout.md)·[공개 집계](../engineering/operations/records/reapplication-history-rollout.json).
+- API/동일 worker 중지→0033 부분 유일 인덱스 DDL→새 API healthy. DB 컨테이너/이미지/볼륨/환경·112업무표1,883행/sequence·API 환경/보안/명령/포트/로그·읽기 전용 키 내용 유지. 환경 배열의 순서 차이는 키/값 동일로 검증 마감했으며 DDL/교체 재실행 없음. 자료 변환/삭제/backfill·dump/restore 없음.
+- 배포262소스/runtime31/두 계약 일치·실제HTTP6·READONLY2계정 C/N 현재목록7/한도일치2·역사목록66/anchor34·해제22/종료근거13·API/DB healthy/3주기 작업 성공/확인JSON70줄 ERROR0. 합성고유20은 재사용, 정상회원 명령/원pending 재실행·기기 인수 없음.
+- [전체185번째 Backend · 재신청 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6436334435)에 결과 회신. 반영 기록을 게시한 뒤 같은 댓글에 고정 기록 SHA/Flutter의 제보 재신청 직접 영향 확인을 보완한다. 다음 Flutter 실제 앱 결과, Backend 차이 대응. dev/main18830c2/AWS·기존 전체 인수/원ACK키 대조는 별도다.
+
+
+## 2026-10-27 — 재신청·오류 확인창 사용자 기기 인수 회신 수신
+
+- [전체186번째 Flutter · 재신청 수정 기기 확인](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437319946): 사용자 보고로 과거 기록 보존과 다른 캐릭터 신청→가입 완료를 확인했다. 재신청 TARGET_CONTEXT_STALE 차단은 해당 동선의 사용자 기기 통과다. 별도 N 정보·내부 ID/동시성·실제 원ACK 키까지 새 기기 검증한 것으로 확대하지 않는다.
+- [전체187번째 Flutter · 오류 확인창 가독성 기기 확인](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437458823): 작은 오류 화면 정상 표시를 사용자 확인했다. Native4833a164 라벨 보완도 해당 기기 인수 완료다.
+- 이번 두 문제는 직접 범위 인수 완료이며 추가 Backend 구현/계약 변경 요청은 없다. 다음 Backend는 새 구체 차이 발생 시 대응한다. 전체 모집/기기·성능·원ACK 키/별도 후속은 유지하고 Issue13 OPEN이다. 결과 확인만으로 코드/서버/DB 변경·반복 시험·별도 commit/push·dev/main 통합/Issue 종료는 하지 않는다. 기록은 같은 수정 브랜치에 로컬 누적한다.
+
+
+## 2026-10-27 사용자 확정 — 레이드 모집 1차 구현·디바이스 인수 완료
+
+사용자가 네이티브 디바이스 테스트 결과를 기준으로 **레이드 모집 1차 구현 완료**를 확정했다. Backend 구현·개발 서버 반영과 Native 연결·사용자 기기 확인을 이번 1차 구현의 완료 기준으로 기록한다. [전체186 Flutter 재신청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437319946)·[전체187 Flutter 오류 확인창](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437458823)의 직접 인수도 포함한다.
+
+현재 추가 Backend 수정 요청은 없다. 다음은 새 요구/구체 차이 발생 시 대응이며 기존 별도 성능·원ACK 동일 키 검증 등 후속은 각각 추적한다. 실행 sourcec1f86d8/이미지581a1a5e·DB0033, 작업 브랜치 `fix/raid-recruitment-reapplication`, 마지막 원격 기록3e905ec이다. 이 사용자 인수 보고로 dev/main 병합·AWS 배포·Issue 종료를 실행하지 않는다. 결과 문서는 기존 수신 기록과 함께 로컬 누적하며 별도 commit/push나 반복 시험·서버/DB 변경은 없다. 아래 이전 미완료/대기는 각 기록 당시 상태다.
+
+
+[전체188번째 Flutter · 베타 기기 결과/표시 마무리](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437762638)도 확인했다. 비5분 검색/생성·제안/변경/확정과 해산 setState 결함은 사용자 기기 통과 보고다. Native cf75ea75 표시 보완은18PASS/분석0 자체보고이며 변경 표시의 기기 시각 확인은 별도다. 다음 주 함께하기 개방 알럿의 유사 로그·제안 확인/수락 진입 UX·실제 BetaSchedule.session_id 정밀도 경계 보완은 Native 후속으로 유지하며 현재 Backend 구현 요청은 없다. UX 방식은 별도 협의 전 미확정이다.
+
+
+## 2026-10-27 최신 종료 조건 확인 — Native 정밀도 보완1건 미완료
+
+사용자가 Native 작업 완료/회신 누락 가능성을 들어 Issue13을 다시 확인하고 종료 가능한지 판단하도록 요청했다. [전체189번째 Flutter · 표시 기기 인수](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437895407)와 [전체190번째 Flutter · 전달 누락 대조/최신 인수·담당](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437933418)을 새로 확인했다. 필터 한글 기본 시계·비활성 선택 아이콘도 사용자 기기 통과이며 추가 Backend 기능/계약 요청 누락은 없다. Native 구현cf75ea75·문서bd3b6e586520600004bfa108f72266df3bb07ce9 push/원격 일치는 Native 자체보고다. 보고된 정상 흐름의 사용자 1차 인수 완료는 유지한다.
+
+그러나190은 **실제 BetaSchedule.session_id 기반 정밀도 판정이 Native 미수정1건**이라고 명시한다. 다음 Native 담당은 이 소비 경계 보완이며 Backend 새 구현/배포 요청은 없다. 다음 주 개방 알럿 로그·제안 확인/수락 발견성·웹소켓·Penpot02·초기 빌드갱신/그룹·통계·출시 경계는 별도 후속/사용자 보류다. 구현된 기능/기기 통과와 별도 후속을 섞어 다시 시험 대기로 돌리지 않는다.
+
+**Issue13은 아직 종료하지 않았다.** 남은 정밀도 보완의 완료 근거 또는 별도 Issue로 담당/완료 조건을 이관한 근거가 있어야 종료한다.190은 해당 항목 완료나 Issue 종료 회신이 아니다. 현재 추가 Backend 수정 없음·Native 정밀도 보완 대기, 같은 요청/시험 반복 없음. 코드/서버/DB·Git 통합/commit/push 변경 없이 수신 결과를 문서에 누적한다. 아래188 기준 표시 확인 대기 등은 이전 이력이다.
+
+
+## 2026-10-27 사용자 정정 수신 — 차후 보완은 현재 인수·종료의 선행 조건 아님
+
+[전체191번째 Flutter · 사용자 정정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437976324)을 확인했다. 실제 BetaSchedule.session_id 정밀도 판정·다음 주 개방 알럿 로그·일정 제안 확인/수락 발견성 등은 **사용자와 차후로 합의한 Native 보완**이다. 미수정/개선 기록은 보존하되 현재 착수·즉시 다음 작업·현재 베타 인수의 선행 조건으로 두지 않는다. 별도 보완 구간 재시작 시 최신 계약·코드/UX를 확인한다.
+
+기존 모집 정상 흐름·표시의 사용자 기기 통과/1차 구현 완료는 유지한다. **이전 Backend의 ‘미수정1건 때문에 현재 인수/종료 차단’ 판단을 정정한다.** 현재 추가 Native/Backend 구현·시험·서버 변경 요청은 없다.191에서 Native는 Issue13을 종료하지 않았다고 명시했으며, 이번 최신 회신 조회에서도 이슈 상태는 OPEN이다. 1차 구현 완료와 차후 보완 추적을 구분하며 보완 착수를 다시 요청하지 않는다. 아래190 기준 즉시 다음 작업/종료 차단 표현은 이번 정정으로 대체한다.
+
+
+## 2026-10-27 마감 — Issue13 사용자 승인 종료
+
+사용자가 이슈13 클로즈를 명시적으로 지시했고 **closed/completed**를 실제 확인했다. [전체192번째 Backend · 1차 구현/기기 인수 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6438046779)이 종료 근거다. Backend 구현/개발 반영과 Native 보고 정상 흐름·표시의 사용자 기기 인수는 완료다.190/191의 정밀도 소비·알럿·UX 등은 [차후 보완 추적](../features/recruitment/follow-up-backlog.md)에 담당·현재 보류·재착수 조건으로 보존했다. 이들은 현재 착수/1차 인수 선행 조건이 아니다.
+
+현재 추가 Backend 구현·시험 요청은 없다. 다음은 사용자와 별도 구간을 재시작하거나 새 구체 차이가 생길 때 해당 주제 Issue에서 진행한다. dev/main18830c2·실행 sourcec1f86d8/이미지581a1a5e·DB0033 유지, 서버/DB/자료·다른 이슈 상태 변경 없음. 기기 회신 수신부터 이번 사용자 승인 종료까지의 누적 문서 기록을 같은 수정 브랜치에서 의미 있는 마감 구간으로 게시한다. 별도 merge/AWS·반복 시험은 없다. 아래 OPEN/종료 차단·확인 대기는 종료 전 각 시점의 이력이다.
+
+
+## 2026-10-27 — 재신청 수정 브랜치 문서 최신화·dev 통합 준비
+
+사용자 지시로 같은 수정 브랜치의 [통합 기록](../features/recruitment/reapplication-integration-2026-10-27.md)을 작성했다. 구현c1f86d8/DB0033·고유20PASS·개발반영3e905ec·기기 인수/Issue13 종료59f040e·차후 보완을 하나의 검토 기준으로 모았다. NEXT_WORK는 현재 다음 실행 중심, AI_CONTEXT는 최신 기능/실행 기준 중심으로 정리했다. 과거 중간 대기·정정은 기존 DEV_LOG/상세 문서·Git 이력에 보존한다.
+
+원격 재확인: dev/main18830c2, 수정59f040e이며 dev/main 모두 수정 브랜치 조상으로 충돌 없음. Issue13 closed/completed·전체192 이후 새 요청 없음. 코드/DDL/계약·시험 소스는c1f86d8 이후 동일해 기존 직접20·실행 확인을 재사용하며 전체 회귀/서버·DB 재실행 없음. 문서 정적 검증 후 commit/push→PR merge로 dev 통합·원격 확인·완료 브랜치 정리를 진행한다. main/AWS·다른 이슈 변경은 범위 밖이다.

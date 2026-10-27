@@ -10,7 +10,7 @@ from app.game_accounts.support import fail
 
 
 def enabled(db=None):
-    if db is not None:return list(db.scalars(text('SELECT version_num FROM public.alembic_version')))in (['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment'])
+    if db is not None:return list(db.scalars(text('SELECT version_num FROM public.alembic_version')))in (['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history'])
     with session() as connection:return enabled(connection)
 
 

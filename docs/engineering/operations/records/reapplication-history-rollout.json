@@ -1,0 +1,100 @@
+{
+  "source_commit": "c1f86d8948601781e6c593341899c07ce83f1b68",
+  "image": "sha256:581a1a5ed2566061d4c1d23a83d622e36ed9f6da166666b74c1e76a28dfe13f2",
+  "previous_image": "sha256:cd581ac04aa8bb5d429af25bf5553d26bd117d4f382244216416eddc024bfa39",
+  "applied_at": "2026-10-27T07:32:14.670869+00:00",
+  "database_revision": "0033_reapplication_history",
+  "ddl": {
+    "type": "partial unique index only; completed history excluded",
+    "application_tables": 112,
+    "existing_rows": 1883,
+    "rows_unchanged": true,
+    "sequences_unchanged": true
+  },
+  "db_container_image_volume_environment_preserved": true,
+  "api_environment_command_security_ports_logging_key_mount_preserved": true,
+  "key_hashes_equal": true,
+  "source_files_equal": 262,
+  "runtime_packages": 31,
+  "full_openapi_equal": true,
+  "base_openapi": {
+    "paths": 116,
+    "operations": 133
+  },
+  "current_openapi": {
+    "paths": 178,
+    "operations": 199
+  },
+  "actual_http": [
+    {
+      "case": "health",
+      "status": 200
+    },
+    {
+      "case": "public_cycle",
+      "status": 200
+    },
+    {
+      "case": "presets_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "presets_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "join_candidates_missing",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "join_candidates_invalid",
+      "status": 401,
+      "code": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    }
+  ],
+  "health": {
+    "api": "healthy",
+    "db": "healthy"
+  },
+  "json_log_lines": 70,
+  "error_log_count": 0,
+  "synthetic_unique_tests": 20,
+  "dump_restore_data_conversion_deletion": false,
+  "member_commands_pending_replays": false,
+  "scope": "synthetic tests, deployed code/contracts/health, public/auth-rejection HTTP and real read-only services; device/member-write acceptance excluded",
+  "read_only_service_results": {
+    "database_revision": "0033_reapplication_history",
+    "ready": true,
+    "worker_head_supported": true,
+    "valid_session_users": 2,
+    "read_only_services": {
+      "current_list_items": 7,
+      "historical_list_items": 66,
+      "usage_list_pairs_equal": 2
+    },
+    "history": {
+      "anchored_records": 34,
+      "released_segments": 22
+    },
+    "terminal_evidence": {
+      "proven_ended_history": 13
+    },
+    "scope": "READ ONLY deployed service queries using existing sessions; no authenticated member HTTP/command/device test"
+  },
+  "periodic_jobs_success": {
+    "ownership_settlement": 21,
+    "recruitment": 21,
+    "auth_cleanup": 3
+  }
+}

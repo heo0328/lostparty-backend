@@ -158,10 +158,8 @@ and allocates one target-specific order, in the SAME transaction as admission.
     if member is not None and member.state not in ('cancelled', 'removed'):
         fail('TARGET_CONTEXT_STALE')  # Completed/stopped history is not a new join.
     if member is not None:
-        ended_event=db.scalar(select(ParticipationEvent).where(ParticipationEvent.cycle_member_id==member.id,
-            ParticipationEvent.member_revision==member.revision,ParticipationEvent.action.in_(('cancelled','removed'))))
-        if ended_event is not None and ended_event.evidence.get('membership_action') is True:
-            member=None  # the historical locator must never be recycled as a new writer
+        from app.raid_rooms import admission_history
+        if admission_history.resolve(db,row,persistent) is not None:member=None
     order = allocate_join_order(db, generation)
     if member is None:
         member = CycleMember(id=uuid.uuid4(), room_id=row.room_id, cycle_id=row.id, generation=row.generation,

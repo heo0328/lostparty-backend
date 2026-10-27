@@ -75,7 +75,6 @@ class CycleMember(Base):
     ended_at = stamp(nullable=True)
     __table_args__ = (
         UniqueConstraint('cycle_id', 'generation', 'id'),
-        UniqueConstraint('cycle_id', 'generation', 'membership_id'),
         UniqueConstraint('cycle_id', 'generation', 'joined_order'),
         UniqueConstraint('room_id', 'cycle_id', 'generation', 'id', 'membership_id', 'user_id'),
         ForeignKeyConstraint(['room_id', 'cycle_id'], ['recruitment_room_cycles.room_id', 'recruitment_room_cycles.id']),

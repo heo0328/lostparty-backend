@@ -1,15 +1,34 @@
 # 이슈 주제별 추적표
 
+**현재 Git 통합 구간:** [재신청 수정 브랜치 통합 기록](../features/recruitment/reapplication-integration-2026-10-27.md)에 사용자 승인 dev 병합 범위·수정/검증/반영·기기 인수/Issue13 종료를 정리했다. 최신 실행/다음 작업은 NEXT_WORK이며 아래 종료 전 검토 문장은 당시 이력이다.
+
+## 2026-10-27 마감 — Issue13 사용자 승인 종료
+
+사용자가 이슈13 클로즈를 명시적으로 지시했고 **closed/completed**를 실제 확인했다. [전체192번째 Backend · 1차 구현/기기 인수 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6438046779)이 종료 근거다. Backend 구현/개발 반영과 Native 보고 정상 흐름·표시의 사용자 기기 인수는 완료다.190/191의 정밀도 소비·알럿·UX 등은 [차후 보완 추적](../features/recruitment/follow-up-backlog.md)에 담당·현재 보류·재착수 조건으로 보존했다. 이들은 현재 착수/1차 인수 선행 조건이 아니다.
+
+현재 추가 Backend 구현·시험 요청은 없다. 다음은 사용자와 별도 구간을 재시작하거나 새 구체 차이가 생길 때 해당 주제 Issue에서 진행한다. dev/main18830c2·실행 sourcec1f86d8/이미지581a1a5e·DB0033 유지, 서버/DB/자료·다른 이슈 상태 변경 없음. 기기 회신 수신부터 이번 사용자 승인 종료까지의 누적 문서 기록을 같은 수정 브랜치에서 의미 있는 마감 구간으로 게시한다. 별도 merge/AWS·반복 시험은 없다. 아래 OPEN/종료 차단·확인 대기는 종료 전 각 시점의 이력이다.
+
+
+## 2026-10-27 사용자 정정 수신 — 차후 보완은 현재 인수·종료의 선행 조건 아님
+
+[전체191번째 Flutter · 사용자 정정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437976324)을 확인했다. 실제 BetaSchedule.session_id 정밀도 판정·다음 주 개방 알럿 로그·일정 제안 확인/수락 발견성 등은 **사용자와 차후로 합의한 Native 보완**이다. 미수정/개선 기록은 보존하되 현재 착수·즉시 다음 작업·현재 베타 인수의 선행 조건으로 두지 않는다. 별도 보완 구간 재시작 시 최신 계약·코드/UX를 확인한다.
+
+기존 모집 정상 흐름·표시의 사용자 기기 통과/1차 구현 완료는 유지한다. **이전 Backend의 ‘미수정1건 때문에 현재 인수/종료 차단’ 판단을 정정한다.** 현재 추가 Native/Backend 구현·시험·서버 변경 요청은 없다.191에서 Native는 Issue13을 종료하지 않았다고 명시했으며, 이번 최신 회신 조회에서도 이슈 상태는 OPEN이다. 1차 구현 완료와 차후 보완 추적을 구분하며 보완 착수를 다시 요청하지 않는다. 아래190 기준 즉시 다음 작업/종료 차단 표현은 이번 정정으로 대체한다.
+
+
+최신 #13 종료 검토: [전체189 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437895407) 표시 기기 확인 완료·[전체190 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437933418) 추가 Backend 누락 없음. **실제 세션 정밀도 Native 미수정1건**이 남아 OPEN 유지. 다음 Native 보완 완료 또는 별도 Issue로 담당/완료 조건 이관 확인 뒤 종료한다. 사용자 1차 구현/정상 흐름 기기 인수 완료와 구분한다.
+
+2026-10-27 사용자 확정으로 **레이드 모집 1차 구현·네이티브 디바이스 인수 완료**를 기록한다. 추가 Backend 수정 요청은 없으며 새 구체 차이에 대응한다. 별도 성능/원ACK 검증·Git 통합·AWS/Issue 종료와 구분한다. 아래 미완료 표현은 당시 이력이며 현재 단계는 NEXT_WORK를 따른다.
+
 모집 누적 이력은 `feat/raid-recruitment`이며 사용자 승인으로 [2026-10-27 통합 체크포인트](../features/recruitment/integration-checkpoint-2026-10-27.md)를 정리해 PR27/4a5f590으로 dev/main 같은 기준에 병합·푸시했고 완료 브랜치를 정리했다. 후행 결과 기록도 양 기준에 함께 게시하며 후속은 최신 dev에서 새 목적 브랜치로 진행한다. 이슈 OPEN과 부분/전체 인수는 Git 통합과 구분한다. 활동 선택의 미완료 로컬 작업은 별도로 보존한다. 아래 각 이슈의 고정 댓글·구현/검증 근거와 당시 이력은 유지한다.
 
-2026-10-18 사용자 지시로 정리했다. 한 이슈의 직접 기능/완료 조건에 집중하고 독립 후속은 링크로만 연결한다. 아래 번호는 GitHub 이슈 번호이며 Backend 작업 단계 번호가 아니다. 당시 통합 기준은 dev/ce3064f·main/77a1fe5였다. 현재 개발API는 two-cycle178경로/199 operation·DB0032이며 최신실행은 NEXT_WORK를 따른다.
+2026-10-18 사용자 지시로 정리했다. 한 이슈의 직접 기능/완료 조건에 집중하고 독립 후속은 링크로만 연결한다. 아래 번호는 GitHub 이슈 번호이며 Backend 작업 단계 번호가 아니다. 당시 통합 기준은 dev/ce3064f·main/77a1fe5였다. 현재 개발API는 two-cycle178경로/199 operation·DB0033이며 최신실행은 NEXT_WORK를 따른다.
 
 ## 열려 있는 주제
 
 | 이슈 | 주제 | 다음 담당·상태/완료 조건 |
 |---|---|---|
 | [#12](https://github.com/heo0328/lostparty-backend/issues/12) | 그룹 G1/G2 Flutter 연결 | Backend 구현/통합 완료. Flutter 연결/관련 검증과 사용SHA 회신 미확인. 현재 Flutter 우선작업을 중단시키지 않음 |
-| [#13](https://github.com/heo0328/lostparty-backend/issues/13) | 통합모집·기기 차이 조사/보완 | [모집 통합 체크포인트](../features/recruitment/integration-checkpoint-2026-10-27.md) 정리/PR27·dev/main통합완료. [전체182 Flutter 재신청조사](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6435522815) 신규Backend후속·원인미확정/미조사/미수정·합성재현/공통판정/기록N보존필요.  [전체181 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6422980400) Native확인창수정/세션판정후속·새Backend요청없음. 아래는기존구현근거: [명시분개발반영420e057/cd581ac0/0032](../engineering/operations/explicit-minute-rollout.md)·직접17/HTTP9/순수/READONLY/healthy완료·[전체180번째 Backend · 명시 출발 정수분 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6422693611)인계·다음Flutter분생성개방/제안수락직접영향·Backend차이대응. 이하이전이력: [검색정수분개발반영a358a1a/1307ac36/0032](../engineering/operations/search-minute-rollout.md)·직접6/HTTP9/실제READONLY/healthy완료,[전체178번째 Backend · 검색 정수분 개발 반영/생성 정책 검토](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6421669821)인계·생성정책검토추천은미구현·다음Flutter검색직접영향/추천소비의견·Backend차이대응. 아래는이전이력. [167join수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410375489)→[독립구현6PASS](../features/recruitment/participation/join-candidates-implementation.md)/[전체170 Backend · join 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6411011928)·[실제개발690f36f/061dc562/0032](../engineering/operations/join-candidates-rollout.md) 완료. 다음Flutter join연결·한도/조율소비확인. [171 소비수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6412692643)→[한도/조율 구현18PASS](../features/recruitment/weekly-cycles/active-usage-and-wait-implementation.md)·[개발반영1800160/0a540425/0032](../engineering/operations/active-usage-wait-rollout.md)·실제사용3/목록일치·상세/plan8/HTTP6/healthy완료. [전체172번째 Backend · 한도·조율 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6414001866)인계·다음Flutter직접영향연결·Backend차이대응. 아래169대기는이전이력이다. 한도제품기준정정/현재기대3방·자료삭제없음. 이전이력: [최신 기기 조사/문자·목록 보완](../features/recruitment/weekly-cycles/device-feedback-investigation.md)·[전체164 Backend 조사/join 제안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6409485714): join소비확인/ACK대상분기 Flutter대기, ASCII/목록500 소스보완 후 [전체165 Backend · 문자/목록 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410058244)에서 실제개발0fd43f9/이미지5f7c5b63·0032 반영/서비스12·HTTP6·healthy 확인. 다음Flutter두변경기기확인·join별도합의대기. 기존이력: 151 최종계약수용→[전체153 Backend · 베타 구현/격리검증](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6395894539): [소스 구현/격리검증](../features/recruitment/weekly-cycles/beta-implementation.md) 완료, 0032·소스178/199·beta22/기존105 회귀 PASS(중첩제외). 게시SHA/고정계약은 회신 참조. 이후 [전체154 Backend · 베타 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6396368027)에서 실제개발d95e382/이미지f458e6d5·178/199·0032 반영/자료보존·실제HTTP16 완료. Flutter화면/활성화·기존인수 미완료. Flutter A/12cd2e9a는 기반구현 자체보고. 다음 Flutter 실제개발 연결/구체차이 대응·IF-001/원ACK보존·OPEN |
 | [#15](https://github.com/heo0328/lostparty-backend/issues/15) | V2 Flutter 인증/분쟁 | #13 전체16번째Flutter 보고기준 D1~D4 dev반영·마감, 분쟁실기기는사용자판단보류. 이후 #13 전체17번째에서 로그인화면재구성수정 별도마감·계약검토전환을보고했으며분쟁실기기보류는별도 |
 | [#16](https://github.com/heo0328/lostparty-backend/issues/16) | G3 완료 구현/dev 통합·조건부 해산 후속 | 관리GET/이전/일반탈퇴는 구현332a8ab·인계349fb79/PR20 bb144e0 dev통합·원격확인/완료브랜치정리. 통합전45PASS·실행계약일치(기존148PASS와중복), [전체6번째 Backend 통합결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6262944673). 조건부해산은실제그룹모집원본후속·추방/대표변경미구현/Flutter연결·실기기별도, 이슈유지 |
 | [#17](https://github.com/heo0328/lostparty-backend/issues/17) | 캐릭터 소멸 근거·이력·이름 재사용 ID | Flutter전체1번째범위확인·Backend 현재기능/증거공백 검토·최소계약 보완. 기존L1/claim/조회 재사용. 실제삭제/보류해제 승인 아님 |
@@ -26,6 +45,7 @@
 
 | 이슈 | 종료 구분 | 근거/보존한 미완료 |
 |---|---|---|
+| [#13](https://github.com/heo0328/lostparty-backend/issues/13) | completed (사용자 승인·모집 1차 구현/기기 인수) | [전체192 Backend 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6438046779). 보고된 정상 흐름·표시 사용자 인수 완료,190/191의 Native 보완/UX·별도 검증은 [차후 보완 대장](../features/recruitment/follow-up-backlog.md)에 담당·재착수 조건 보존. 현재 착수/인수 선행 조건 아님·추가 Backend 요청 없음. 새 주제 재시작 시 별도 Issue 추적·merge/AWS/다른 이슈 종료 아님 |
 | [#21](https://github.com/heo0328/lostparty-backend/issues/21) | completed (내용전달·문서정리) | 사용자 종료 지시. 공통원문62240fe·[Backend 품질/UX 기준](../engineering/development/quality-and-ux.md)을 AGENTS/개발·협업에 연결·보존, 추가댓글/회신대기없음. 이후승인작업에적용·기능/전면감사/최적화완료뜻아님·사용자지시로지침/전달정리 작업브랜치push |
 | [#10](https://github.com/heo0328/lostparty-backend/issues/10) | completed | 카탈로그/주차2GET 구현/검증·Flutter소비/실기기로그. 최신게임패치 검증/기능전체인수까지 완료라는 뜻 아님 |
 | [#11](https://github.com/heo0328/lostparty-backend/issues/11) | completed (개인원장 구간) | 개인GET/manual완료·정정 구현/연결·manual true 실제보고. 미완료 실제파티/membership/i/영향확인·전체완료권한은 #13 본문에 이관 |
