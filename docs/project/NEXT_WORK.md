@@ -1,10 +1,10 @@
 # 다음 실행
 
-## 현재 작업 — 재신청 오류 구현·직접 검증 완료 / 개발 반영 진행
+## 현재 작업 — 재신청 보완 개발 반영·실행 확인 완료 / Native 직접 영향 확인
 
-`fix/raid-recruitment-reapplication`에서 [전체182 갱신 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6435522815)의 실패를 합성 재현하고 [공통 종료 근거·새 참가 ID/과거·N 보존·0033 인덱스 수정](../features/recruitment/participation/reapplication-history-fix-plan.md)을 구현했다. 직접 고유20PASS(신규14/기존6), 현재178/199·기본116/133·DTO/원ACK/예시130 보존 확인이다.0033은 DDL만이며 자료 변환/삭제·backfill은 없다.
+`fix/raid-recruitment-reapplication`의 [구현·직접 고유20PASS](../features/recruitment/participation/reapplication-history-fix-plan.md)와 [개발 반영/실행 확인](../engineering/operations/reapplication-history-rollout.md)을 완료했다. sourcec1f86d8/이미지581a1a5e·DB0033·178/199·기본116/133.0033 인덱스 DDL 전후112표/1,883행·sequence 동일, 기존 DB/환경/키·API 설정 유지. 실행262소스/runtime31/두 계약·HTTP6·실자료READONLY 목록/한도2계정 일치·anchor34/종료근거13·healthy/주기작업/ERROR0 확인이다. 자료 변환/삭제·backfill·dump/restore·실회원 시험 명령 없음.
 
-**다음 Backend:** 이 소스 구간 commit/push·원격 확인→후보 이미지 검증→API/동일 worker 중지 후0033 DDL·새 API 반영→실행·읽기 검증/기록 게시→같은 Issue13 인계. 현재 서버는 아직420e057/cd581ac0/0032이며 실제 적용 완료와 구분한다. Native 재신청 인수는 아직 요청 전/미확인이다. dev/main18830c2·AWS·전체 기기/성능·원ACK 실제 키 매칭은 이번 범위 밖이다. 아래 통합 당시/설계 대기 상태는 이전 시점 기록이다.
+[전체185번째 Backend · 재신청 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6436334435)에 회신했다. 반영 기록 게시 후 같은 댓글에 고정 기록 SHA/직접 영향 요청을 보완한다. **다음 Flutter:** 제보한 C완료탈퇴/N유지→다른 캐릭터 C후보/context/신청·승인→새 참가와 과거 완료/N보존을 기기 확인·구체 차이 회신. **Backend:** 차이 대응. 정상회원/기기 재신청은 미확인, 전체 시험 반복 요청은 없다. dev/main18830c2·AWS·전체 기기/성능·실제 원ACK 동일 키는 별도다. DB33에서 구420 API만 복귀하지 않으며 자료 유지 전진 수정이다. 아래 통합 당시/설계 대기는 이전 시점 기록이다.
 
 ## 현재 기준 — 모집 통합 완료 / 새 재신청 오류 조사 대기
 

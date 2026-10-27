@@ -1,5 +1,7 @@
 # 개인 완료 탈퇴 후 다른 캐릭터 재신청 — 수정 설계
 
+**최신 상태 — 개발 반영·실행 확인 완료:** 소스c1f86d8/이미지581a1a5e·DB0033, [반영·검증 기록](../../../engineering/operations/reapplication-history-rollout.md)·[전체185 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6436334435)를 따른다. 아래 게시/반영 예정은 소스 검증 당시 이력이다. 다음 Native 제보 재신청 기기 확인/Backend 차이 대응이며 정상회원 성공은 미확인이다.
+
 2026-10-27 / 작업 구간 **모집 재신청의 과거 기록·새 참가 판정 정합성 보완** / 브랜치 `fix/raid-recruitment-reapplication`.
 
 최신 origin/dev `18830c21bd260592a5455526b7565a3a7ef7a1a9`에서 분기했다. 현재 checkout은 같은 수정 브랜치다. 사용자 구현 승인 후 아래 수정과 직접 검증을 완료했다. **이 소스 구간을 게시한 뒤 개발 DB0033·API 반영과 Issue13 인계를 이어간다.** dev/main 통합과 AWS는 범위 밖이다.

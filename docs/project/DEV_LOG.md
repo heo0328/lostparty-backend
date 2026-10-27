@@ -2804,3 +2804,11 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - 합성 RED에서 후보 존재/context stale 재현. 공통 불변 종료 근거→새 CM/Assignment, 과거 record snapshot/기존 해제 예약 fallback·N/과거 업무행 보존,0033 부분 유일 인덱스 DDL과 명시 head 지원 구현. DB 기존 행 변환/삭제 없음.
 - 고유20PASS(신규14/관련 기존6), 두 OpenAPI/paths/components·닫힌 bundle·130예시/32원ACK/음성3·문서 링크/diff 통과. 초기0032 오류 반환 기대와 historical reader profile 누락의 시험 호출을 정정한 재실행 포함/중복 합산 안 함. 전체 회귀/실회원 명령/실기기 검증 없음.
 - 소스 구간 게시 후 후보 검증·API 중지/0033 DDL/새 API 반영·실행 확인/기록 게시·Issue13 인계를 이어간다. 이 기록 시점 실행420e057/cd581ac0/0032 유지, dev/main/AWS는 변경하지 않는다.
+
+
+## 2026-10-27 — 재신청0033/새 API 개발 반영·실행 확인·인계
+
+- 구현c1f86d8948601781e6c593341899c07ce83f1b68 commit/push·원격 일치 후 후보 이미지581a1a5ed2566061d4c1d23a83d622e36ed9f6da166666b74c1e76a28dfe13f2 검증·개발 반영. [운영 기록](../engineering/operations/reapplication-history-rollout.md)·[공개 집계](../engineering/operations/records/reapplication-history-rollout.json).
+- API/동일 worker 중지→0033 부분 유일 인덱스 DDL→새 API healthy. DB 컨테이너/이미지/볼륨/환경·112업무표1,883행/sequence·API 환경/보안/명령/포트/로그·읽기 전용 키 내용 유지. 환경 배열의 순서 차이는 키/값 동일로 검증 마감했으며 DDL/교체 재실행 없음. 자료 변환/삭제/backfill·dump/restore 없음.
+- 배포262소스/runtime31/두 계약 일치·실제HTTP6·READONLY2계정 C/N 현재목록7/한도일치2·역사목록66/anchor34·해제22/종료근거13·API/DB healthy/3주기 작업 성공/확인JSON70줄 ERROR0. 합성고유20은 재사용, 정상회원 명령/원pending 재실행·기기 인수 없음.
+- [전체185번째 Backend · 재신청 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6436334435)에 결과 회신. 반영 기록을 게시한 뒤 같은 댓글에 고정 기록 SHA/Flutter의 제보 재신청 직접 영향 확인을 보완한다. 다음 Flutter 실제 앱 결과, Backend 차이 대응. dev/main18830c2/AWS·기존 전체 인수/원ACK키 대조는 별도다.

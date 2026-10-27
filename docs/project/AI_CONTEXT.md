@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+2026-10-27 최신 실행: [재신청 보완 구현/고유20PASS](../features/recruitment/participation/reapplication-history-fix-plan.md)·[개발 DB0033/API 반영](../engineering/operations/reapplication-history-rollout.md) 완료. sourcec1f86d8/이미지581a1a5e·178/199. 종료 불변 근거/새 CM·Assignment·과거/N보존, 인덱스 DDL 전후112표1,883행/sequence 동일. 소스262/runtime31/두 계약·HTTP6·실자료READONLY/healthy/worker/ERROR0 확인. [전체185 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6436334435) 다음Flutter 해당 재신청 직접 영향/Backend 차이 대응, 정상회원 기기 재신청 미확인. dev/main18830c2/AWS는 그대로다. 아래 게시/반영 전 상태는 이전 이력이다.
+
 2026-10-27 최신 작업: [재신청 보완 구현·직접20PASS](../features/recruitment/participation/reapplication-history-fix-plan.md), `fix/raid-recruitment-reapplication`. 과거 완료 Assignment/종료 CM과 새 실제 참가를 분리하고 기록/N·기존 자격을 보존한다.0033 인덱스 DDL/명시 head 지원, DTO/178·199 불변. 다음 소스 게시·개발 DB0033/API 반영·Issue13 인계이며 아직 실행420e057/DB0032다. 아래 설계/통합 당시 설명은 이전 이력이다.
 
 현재작업: `fix/raid-recruitment-reapplication` / 기준dev18830c2. [182갱신·수정설계](../features/recruitment/participation/reapplication-history-fix-plan.md) 완료. 과거completed배정의코드거절과DB유일인덱스포함을정적/구조읽기로확인했으나합성재현은전이다. 공통종료근거/새CM·Assignment/과거기록·N보존과0033인덱스DDL·명시head지원이구현계획이다. Native4833a164는표시/POST0수정·서버해결아님. 현재기능수정/시험/DB이행·배포·새게시없음·실행420e057/cd581ac0/0032유지.
