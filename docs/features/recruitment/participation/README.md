@@ -2,6 +2,12 @@
 
 방의 실제 주차에 신청·직접 참가·승인하거나 참가 캐릭터를 명시적으로 교체한다. 지속 회원·그룹 가입만으로 실제 참가와 예약이 생기지 않는다.
 
+## 베타 최신 보완
+
+기존 admission-character-candidates는 apply/change_character 외에 direct_join 전용 join을 지원한다. join 응답 actor=null이며 모드 불일치409와 공통 자격·역할·집계·페이지를 유지한다. 후보 선택 뒤 최신 context/POST 검사를 생략하지 않는다. [join 구현](join-candidates-implementation.md).
+
+베타 신청 메모는 snapshot으로 보존하고 본인 계정 문구 프리셋은 최대5개/전체목록 PUT·CAS·원ACK를 사용한다. 출력 가능한 ASCII 기호를 허용하되 제어문자·길이/정규화·권한 검사는 유지한다. [베타 계약](../weekly-cycles/beta-contract-wire.md).
+
 <a id="behavior"></a>
 
 ## 현재 동작

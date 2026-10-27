@@ -1,5 +1,13 @@
 # LostParty Backend 기능 지도
 
+## 현재 기준 — 모집 통합 체크포인트
+
+[모집·일정 상세 기록](../features/recruitment/integration-checkpoint-2026-10-27.md)에 기능·커밋·계약·검증·개발 반영·Native 수신/미완료를 모았다. 사용자가 dev 병합/main 동일 시점 정렬·푸시를 승인해 통합 구간을 진행한다. 실행 API source420e057/이미지cd581ac0·178/199·DB0032는 유지하며 Git 통합으로 서버를 교체하지 않는다.
+
+전체181 Flutter는 Native 확인창 수정 보고이며 추가 Backend 구현 요청은 없다. Native 분 제안 세션 판정/기기·검색 기기/전체 인수·성능/원ACK 실제자료 대조/AWS는 별도다. 아래는 통합 전 개별 시점의 이력이며 최신 다음 작업은 NEXT_WORK를 따른다.
+
+## 통합 전 상태 기록
+
 2026-10-27 최신실행: [명시출발정수분구현/직접17PASS](../features/recruitment/weekly-cycles/explicit-minute-departures.md)·[개발반영](../engineering/operations/explicit-minute-rollout.md) 완료. source420e057/이미지cd581ac0·178/199·DB0032. 베타생성/CN개방·실제베타세션제안/수락/재평가/검토복구만분정밀도·기본/자동/개인표/진행시간5분/동의예약/원ACK유지. 실행259소스/runtime31/두계약·순수/READONLY검색·HTTP9/healthy/worker확인·DB자료/키환경유지. 다음Flutter직접영향·Backend차이대응,정상회원쓰기/기기·성능/원ACK키매칭/dev·main/AWS별도다.
 
 2026-10-27 최신실행: [검색정수분구현/직접6PASS·생성정책검토](../features/recruitment/weekly-cycles/search-minute-precision.md)·[개발반영](../engineering/operations/search-minute-rollout.md) 완료. sourcea358a1a/이미지1307ac36·178/199·DB0032. GET/POST검색만분경계허용·공용5분/생성/제안/예약유지. 실행259소스/runtime31/두계약·실자료READONLY검색·HTTP9/healthy/worker확인·DB/키/환경유지. 다음Flutter검색직접영향/생성추천소비의견·Backend차이대응. 생성추천미구현/전체인수·원ACK키매칭/dev·main/AWS별도.

@@ -1,5 +1,11 @@
 # 영구 개발 이력
 
+## 2026-10-27 — 모집 구간 상세 기록·dev/main 통합 준비
+
+- 사용자 지시로 [통합 체크포인트](../features/recruitment/integration-checkpoint-2026-10-27.md)에 모집 기반→C/N→동의/일정→완료/기록·관계 정리→후보/표시→베타·문자/join/한도·조율/분 검색·명시 출발을 대표 커밋·원본 계약·검증/실행 근거와 함께 기록했다. 기능별 최신 안내도 보완했다. Backend 완료와 Native/전체인수·운영 미완료를 구분한다.
+- 이슈13 전체181 [Flutter 해산 확인창 수정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6422980400) 수신. Native bd7e0492 게시/직접103 자체보고·수정 후 기기미확인, 분 제안 실제BetaSchedule.session_id 판정 후속이 남고 새 Backend 요청은 없다. 실제제보 중복쓰기 여부는 요청수 자료가 없어 판단하지 않았다.
+- 시작 상태: feat/raid-recruitment a1d124e·원격일치/clean, dev ce3064f/main77a1fe5는 모집 HEAD의 조상·통합 전 누적179커밋·충돌할 분기 없음, 열린PR0/양기준브랜치보호없음. 관련 기능 소스/계약/패키지/실행파일은 검증된420e057과동일. 문서검사·Git대조 후 모집문서commit/push→dev PR 이력보존merge→main fast-forward/동일시점push한다. 서버/DB/새시험/자료변경·AWS는범위밖이다.
+
 ## 2026-10-27 — 명시 출발 정수분 개발 반영·실행 확인
 
 - source420e057 push/원격일치후이미지cd581ac0로API만교체. [반영기록](../engineering/operations/explicit-minute-rollout.md)·[공개집계](../engineering/operations/records/explicit-minute-rollout.json). DB0032컨테이너/이미지/볼륨/환경·API환경/command/포트/보안/로그/readonly키/.env유지. migration/자료변환/삭제·dump/restore·실회원시험명령/원pending재실행없음.

@@ -1,5 +1,11 @@
 # 다음 실행
 
+## 현재 구간 — 모집 상세 기록·dev/main 통합
+
+사용자 승인으로 [모집 통합 체크포인트](../features/recruitment/integration-checkpoint-2026-10-27.md)를 작성하고 기존 작업 이력을 보존해 dev PR 병합·main 동일 커밋 정렬/푸시를 진행한다. 기능 코드는420e057, 실행 이미지cd581ac0/DB0032로 유지한다. 이번 Git 통합은 새 서버/DB/AWS 배포를 하지 않는다.
+
+이슈13 전체181 Flutter의 Native 해산 확인창 수정·분 제안 실제 세션 판정 후속을 수신했으며 새 Backend 구현 요청은 없다. 통합 후 다음 작업은 Native 직접 영향 결과/구체 차이 대응이다. 전체기기/성능·원ACK 실제자료 대조·AWS는 별도이며 같은 주제 후속은 최신dev에서 목적 브랜치를 새로 만든다. 아래 개별 구간의 dev/main 미완료·브랜치/소비대기 표현은 통합 전 시점 기록이다.
+
 ## 최신 작업 — 명시 출발 정수분 개발 반영·인계 완료
 
 [179수용/구현·직접17PASS](../features/recruitment/weekly-cycles/explicit-minute-departures.md)과 [개발 반영·실행 확인](../engineering/operations/explicit-minute-rollout.md)을완료했다. source420e057/이미지cd581ac0·178/199·DB0032. 베타생성/CN개방·실제베타세션제안/수락/재평가/검토복구만분정밀도,기본5분/자동후보/개인표/진행시간·정확30분/동의예약/원ACK유지. 실행259소스/runtime31/두계약일치·합성시각순수검사/실자료READONLY검색·HTTP9/healthy/worker·로그ERROR0확인이다.
