@@ -1,5 +1,7 @@
 # 개인 완료 탈퇴 후 다른 캐릭터 재신청 — 수정 설계
 
+**최종 인수/통합 기준:** 사용자 기기에서 과거 기록 보존·다른 캐릭터 신청/가입 완료를 확인한 뒤 Issue13을 사용자 승인 종료했다. [수정 브랜치 통합 기록](../reapplication-integration-2026-10-27.md)에 구현/DDL·직접20PASS·개발 반영·기기 인수/차후 보완을 모았다. 아래 정상회원 미확인/Native 확인 대기는 당시 구현·반영 시점 기록이다.
+
 **최신 상태 — 개발 반영·실행 확인 완료:** 소스c1f86d8/이미지581a1a5e·DB0033, [반영·검증 기록](../../../engineering/operations/reapplication-history-rollout.md)·[전체185 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6436334435)를 따른다. 아래 게시/반영 예정은 소스 검증 당시 이력이다. 다음 Native 제보 재신청 기기 확인/Backend 차이 대응이며 정상회원 성공은 미확인이다.
 
 2026-10-27 / 작업 구간 **모집 재신청의 과거 기록·새 참가 판정 정합성 보완** / 브랜치 `fix/raid-recruitment-reapplication`.

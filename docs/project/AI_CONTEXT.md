@@ -1,57 +1,8 @@
 # LostParty Backend 기능 지도
 
-2026-10-27 사용자 명시 승인으로 **Issue13 closed/completed**, [전체192 Backend 종료 기록](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6438046779). 레이드 모집 1차 구현·보고된 정상 흐름/표시의 기기 인수 완료. [차후 Native/계약 보완](../features/recruitment/follow-up-backlog.md)은 사용자와 별도 구간 재시작 때 진행하며 현재 착수/인수 선행 조건 아님. 추가 Backend 요청 없음·새 구체 차이는 별도 주제 Issue 추적. dev/main·AWS·서버/DB 변경 없음. 아래 OPEN/차단 판단은 종료 전 이력이다.
+2026-10-27 기준. 작업 구간은 **모집 재신청 보완/1차 인수 마감 기록의 dev 통합**, 현재 브랜치는 `fix/raid-recruitment-reapplication`이다. [통합 기록](../features/recruitment/reapplication-integration-2026-10-27.md)·[NEXT_WORK](NEXT_WORK.md)를 따른다. dev/main18830c2에서 수정 브랜치만 dev로 통합하는 사용자 승인 범위이며 main/AWS/서버·DB 변경은 포함하지 않는다.
 
-## 2026-10-27 사용자 정정 수신 — 차후 보완은 현재 인수·종료의 선행 조건 아님
-
-[전체191번째 Flutter · 사용자 정정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437976324)을 확인했다. 실제 BetaSchedule.session_id 정밀도 판정·다음 주 개방 알럿 로그·일정 제안 확인/수락 발견성 등은 **사용자와 차후로 합의한 Native 보완**이다. 미수정/개선 기록은 보존하되 현재 착수·즉시 다음 작업·현재 베타 인수의 선행 조건으로 두지 않는다. 별도 보완 구간 재시작 시 최신 계약·코드/UX를 확인한다.
-
-기존 모집 정상 흐름·표시의 사용자 기기 통과/1차 구현 완료는 유지한다. **이전 Backend의 ‘미수정1건 때문에 현재 인수/종료 차단’ 판단을 정정한다.** 현재 추가 Native/Backend 구현·시험·서버 변경 요청은 없다.191에서 Native는 Issue13을 종료하지 않았다고 명시했으며, 이번 최신 회신 조회에서도 이슈 상태는 OPEN이다. 1차 구현 완료와 차후 보완 추적을 구분하며 보완 착수를 다시 요청하지 않는다. 아래190 기준 즉시 다음 작업/종료 차단 표현은 이번 정정으로 대체한다.
-
-
-최신 종료 조건 확인: [전체189 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437895407) 표시 기기 통과·[전체190 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437933418) 누락 대조/최신 담당 수신. 사용자 1차 정상 흐름 인수는 완료, 추가 Backend 요청 없음. 실제 BetaSchedule.session_id 정밀도 판정은 Native 미수정1건으로 명시돼 다음 Native 보완 대기다. Issue13 종료는 해당 완료 또는 별도 Issue 추적 이관 확인 전 보류, 알럿/발견성/소켓 등은 별도 후속이다. 아래 표시 기기 대기는189에서 해소됐다.
-
-2026-10-27 사용자 확정: 네이티브 디바이스 테스트 결과 기준 **레이드 모집 1차 구현 완료**. Backend 구현/개발 반영·Native 연결/사용자 기기 인수를 해당 범위로 완료 기록한다. 추가 Backend 요청 없음·다음 새 요구/구체 차이 대응. 성능/원ACK 검증 등 별도 후속은 추적 유지, Git 통합·AWS·Issue 종료는 실행하지 않는다. 아래 전체 인수 대기는 사용자 확정 전 이력이다.
-
-2026-10-27 최신 수신: [전체186 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437319946) 과거 기록 보존·다른 캐릭터 신청/가입 완료 사용자 기기 통과, [전체187 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437458823) 작은 오류 화면 정상 표시 사용자 확인. 두 문제의 직접 인수 완료·추가 Backend 요청 없음. N/내부 ID/동시성·원ACK 키까지 기기 확인한 의미는 아니다. 다음 새 구체 차이 대응, 전체 인수/별도 후속·Issue13 OPEN 유지. 이번 수신은 문서 로컬 누적만 한다. 아래 기기 대기는 수신 전 이력이다.
-
-2026-10-27 최신 실행: [재신청 보완 구현/고유20PASS](../features/recruitment/participation/reapplication-history-fix-plan.md)·[개발 DB0033/API 반영](../engineering/operations/reapplication-history-rollout.md) 완료. sourcec1f86d8/이미지581a1a5e·178/199. 종료 불변 근거/새 CM·Assignment·과거/N보존, 인덱스 DDL 전후112표1,883행/sequence 동일. 소스262/runtime31/두 계약·HTTP6·실자료READONLY/healthy/worker/ERROR0 확인. [전체185 Backend](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6436334435) 다음Flutter 해당 재신청 직접 영향/Backend 차이 대응, 정상회원 기기 재신청 미확인. dev/main18830c2/AWS는 그대로다. 아래 게시/반영 전 상태는 이전 이력이다.
-
-2026-10-27 최신 작업: [재신청 보완 구현·직접20PASS](../features/recruitment/participation/reapplication-history-fix-plan.md), `fix/raid-recruitment-reapplication`. 과거 완료 Assignment/종료 CM과 새 실제 참가를 분리하고 기록/N·기존 자격을 보존한다.0033 인덱스 DDL/명시 head 지원, DTO/178·199 불변. 다음 소스 게시·개발 DB0033/API 반영·Issue13 인계이며 아직 실행420e057/DB0032다. 아래 설계/통합 당시 설명은 이전 이력이다.
-
-현재작업: `fix/raid-recruitment-reapplication` / 기준dev18830c2. [182갱신·수정설계](../features/recruitment/participation/reapplication-history-fix-plan.md) 완료. 과거completed배정의코드거절과DB유일인덱스포함을정적/구조읽기로확인했으나합성재현은전이다. 공통종료근거/새CM·Assignment/과거기록·N보존과0033인덱스DDL·명시head지원이구현계획이다. Native4833a164는표시/POST0수정·서버해결아님. 현재기능수정/시험/DB이행·배포·새게시없음·실행420e057/cd581ac0/0032유지.
-
-## 현재 기준 — 모집 통합 완료·새 조사 대기
-
-[통합 체크포인트](../features/recruitment/integration-checkpoint-2026-10-27.md)에누적기능·대표커밋·계약·검증·개발반영·미완료를정리했다. 문서c69a0ae게시→[PR27](https://github.com/heo0328/lostparty-backend/pull/27)/병합4a5f590→dev/main원격동일SHA확인·완료모집/개선브랜치정리까지완료했다. 후행완료기록도양기준으로게시하며후속은최신dev의새목적브랜치에서진행한다. 활동선택미완료로컬브랜치는보존했다.
-
-**새Backend후속:** [#13 전체182 재신청 TARGET_CONTEXT_STALE 조사](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6435522815). C개인완료탈퇴·N지속관계유지뒤다른적격캐릭터재신청에서과거completed Assignment판정과새참가판정이충돌하는지원인미확정·미조사/미수정이다. 합성재현/후보·context·신청/승인/가입동일판정과기록/예약/N보존이필요하다. 이전180까지의구현/반영완료와구분한다.
-
-실행API source420e057/이미지cd581ac0·178/199·DB0032는Git통합으로바꾸지않았다. Native181확인창수정·분제안실제세션판정/기기·전체성능·원ACK실제자료대조/AWS는별도다. 아래는통합전개별시점기록이며최신다음작업은NEXT_WORK를따른다.
-
-## 통합 전 상태 기록
-
-2026-10-27 최신실행: [명시출발정수분구현/직접17PASS](../features/recruitment/weekly-cycles/explicit-minute-departures.md)·[개발반영](../engineering/operations/explicit-minute-rollout.md) 완료. source420e057/이미지cd581ac0·178/199·DB0032. 베타생성/CN개방·실제베타세션제안/수락/재평가/검토복구만분정밀도·기본/자동/개인표/진행시간5분/동의예약/원ACK유지. 실행259소스/runtime31/두계약·순수/READONLY검색·HTTP9/healthy/worker확인·DB자료/키환경유지. 다음Flutter직접영향·Backend차이대응,정상회원쓰기/기기·성능/원ACK키매칭/dev·main/AWS별도다.
-
-2026-10-27 최신실행: [검색정수분구현/직접6PASS·생성정책검토](../features/recruitment/weekly-cycles/search-minute-precision.md)·[개발반영](../engineering/operations/search-minute-rollout.md) 완료. sourcea358a1a/이미지1307ac36·178/199·DB0032. GET/POST검색만분경계허용·공용5분/생성/제안/예약유지. 실행259소스/runtime31/두계약·실자료READONLY검색·HTTP9/healthy/worker확인·DB/키/환경유지. 다음Flutter검색직접영향/생성추천소비의견·Backend차이대응. 생성추천미구현/전체인수·원ACK키매칭/dev·main/AWS별도.
-
-2026-10-26 최신상태: [171 수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6412692643)한 [활성방 한도·조율 안내 구현/직접18PASS](../features/recruitment/weekly-cycles/active-usage-and-wait-implementation.md)·[개발반영](../engineering/operations/active-usage-wait-rollout.md) 완료. source1800160/이미지0a540425·178/199·DB0032. 공통활성SQL·거래/usage revision·선택5상태/평가공유·원ACK/join유지. 실자료READONLY사용3/두목록합집합일치·상세/plan8·HTTP6/healthy/worker확인, DB/키/환경유지. 다음Flutter직접영향연결·구체차이/Backend대응. 기기·성능/원ACK키매칭/dev·main/AWS미완료. 아래는이전시점의이력이다.
-
-2026-10-26 최신실행: [join 개발반영](../engineering/operations/join-candidates-rollout.md) 완료·source690f36f/이미지061dc562·178/199·DB0032. 고유6시험/소스계약검증재사용·실제서비스후보1(제보1704제외)/목록12·HTTP6·worker/healthy/키환경유지. [전체170 Backend · join 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6411011928)의반영기록SHA/인계를따른다. 다음Flutter일반join시트연결및169한도상태표/조율선택조회소비확인→Backend나머지구현/개발반영. 한도/조율은미구현·현재한도코드유지/활성3방은기대값이며전체계획미완료다. 원ACK키매칭/전체기기인수·dev/main/AWS 별도미완료.
-
-2026-10-26 최신작업: [join 수용167](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410375489)→[독립구현/직접6PASS](../features/recruitment/participation/join-candidates-implementation.md), query/data join·direct_join/actor=null·기존공통판정/페이지·원ACK유지. 다음소스게시/승인된개발반영. [169 한도상태표·조율 선택조회 제안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410756326)·[제안/닫힌DTO](../features/recruitment/weekly-cycles/active-room-and-wait-proposal.md)는소비확인대기/미구현·실행계약미추가. 사용자정정한도는현재C/N활성방이며기대3방·과거관계7자료삭제없음. 실제개발은신규반영기록전0fd43f9/DB0032유지. 원ACKnonbeta/null대조수용·실제키매칭/전체기기인수는별개미완료.
-
-2026-10-26 최신 실제실행: 사용자 승인한 [문자/목록 보완 개발 반영](../engineering/operations/device-feedback-rollout.md) 완료. source0fd43f9/이미지5f7c5b63·178/199·DB0032·wire2/profile1·hangul-printable-ascii-1. API만교체·기존DB/환경/키/설정유지·서비스읽기12/HTTP6/실행계약·runtime31/worker/healthy 확인. [전체165 Backend · 문자/목록 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410058244)를따른다. 다음Flutter 새기호문구저장/재조회·종료목록두변경확인, join제안/원ACKnull대조는별도대기. 전체기기인수/dev·main/AWS 미완료. 아래0fd소스미반영/d95유지는이전조사당시이력이다.
-
-2026-10-26 최신 차이 대응: [전체162/163 Flutter 기기 요청](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6409312568)·[전체164 Backend 조사/join 제안](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6409485714)·[실자료 조사/소스 보완](../features/recruitment/weekly-cycles/device-feedback-investigation.md). ASCII전체확대/저장DTO·종료관계CM없음 목록500을 수정하며 DB변경 없음. 한도10=beta3+이전미종료7, 번호5 direct_join/레벨판정 정상·join후보계약제안, 조율현재후보/인원근거, 관찰ACK는비beta대상/null로분리했다. 실제개발d95e3827/DB0032 미변경·새소스 반영/기기 인수와 구분. 다음Flutter join소비확인/ACK분기대조→Backend합의구현·직접검증/인계. 자료변환·이중운영/삭제는 추가하지 않는다.
-
-2026-10-25 최신 베타 상태: [전체151 Flutter 최종수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6394870853)의267afe5/고정안2 기준으로 **Backend 소스 구현·격리검증 완료**. 추가0032·소스178/199·기존612 schema/기본116/133 보존, 최종beta22·관련기존105 회귀 PASS(중첩제외). [구현 근거](../features/recruitment/weekly-cycles/beta-implementation.md)·[전체153 Backend · 베타 구현/격리검증](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6395894539)의 소스SHA/게시/실행계약을 따른다. 이후 사용자 승인된 [베타 개발 반영](../engineering/operations/beta-recruitment-rollout.md)으로 실제d95e382/이미지f458e6d5·178/199·DB0032를 적용했다. 기존108표934행/키/설정 보존·복원리허설/실제HTTP16/두계약/worker/healthy를 확인했다. [전체154 Backend · 베타 개발 반영](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6396368027)를 따른다. Flutter화면연결/활성화·실회원인수는 미완료다. Flutter A/12cd2e9a 기반 구현 보고와 Backend 독립검증은 구분한다. 다음은 Flutter 연결/정상회원 실제개발 연동·구체차이 대응이다. merge/AWS배포는 별도 승인 범위다. 아래87c2a0e는 이전 개선 반영 이력이다.
-
-2026-10-25 사용자 지시로 별도 개선 브랜치 `chore/backend-architecture-review`의 검증 이력을 **feat/raid-recruitment**에 병합했다. 현재 checkout도 모집 브랜치다. [격리 검증](../engineering/development/isolated-verification.md)·[의존성 고정](../engineering/development/dependency-locking.md)·[로깅](../engineering/operations/logging.md)의 코드/설정과 최신 기록을 같은 기준에 모았다. 개선 병합/반영 기록7d038cf의 push·원격 SHA 일치를 확인했으며, [실제 개발 반영](../engineering/operations/backend-improvements-rollout.md)은 source87c2a0e/이미지366e868a·177/DB0031로 완료했다. API·DB 모두 로그10m×5·healthy,108표993행/키/설정을 보존했다. 아래 기능별 상태와 모집 네이티브 대기는 보존한다. 다른 [개선 후보](../engineering/development/backend-architecture-review.md)는 미착수다.
-
-현재 작업 구간은 **모집 Backend 구현·개발 반영·인수 기록 정리(#26)**, 브랜치는 **feat/raid-recruitment**, 실제 프로젝트 경로는 `/home/heowork/projects/lostparty-backend`다. 문서 정리와 최신 현황/회신 기록을 모집 코드와 이력 보존 통합했다. 문서 수정/기록이라는 작업 내용과 작업 구간명·브랜치를 구분하는 [제1원칙](../engineering/development/workflow.md)을 따른다. 브랜치 정리 이후 같은 브랜치에서 계약2 후보API를 구현·격리 검증했으며 실제 개발 서버177 반영·자료 보존 검증도 완료했다. 아이템레벨 보완은 사용자 인수 수용됐으며 전체 모집 인수는 미완료다.
-
-2026-10-25 기준. 현재 실행·다음 담당은 [NEXT_WORK](NEXT_WORK.md), 주제별 미완료는 [ISSUE_TRACKER](ISSUE_TRACKER.md), 결정·검증 이력은 [DEV_LOG](DEV_LOG.md)를 따른다. 아래는 기능 상태와 기준 링크이며 UI 화면 동선을 추정한 분류가 아니다.
+레이드 모집 1차 구현·보고된 정상 흐름/표시의 사용자 기기 인수 완료, [Issue13 전체192 Backend 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6438046779)으로 closed/completed다. 추가 Backend 요청은 없다. 차후 정밀도 소비·알럿·UX/소켓 등은 [보완 대장](../features/recruitment/follow-up-backlog.md)에 보존하며 현재 착수/인수 선행 조건이 아니다. 이전 미완료/종료 차단 판단과 사용자 정정은 [DEV_LOG](DEV_LOG.md)에서 확인한다.
 
 | 기능 | 상태·기준 |
 |---|---|
@@ -59,11 +10,9 @@
 | [원정대·캐릭터](../features/rosters/README.md) | 등록/갱신·소유 인증/V2분쟁·현재/퇴역 읽기·전투력/분석·대표/활동/표시·일괄조회 구현. V2분쟁 실인수 보류, 생명주기 증거/활동 자동추가·명시제외 후속은 별도. |
 | [레이드·주간 기록](../features/raids/README.md) | 공개 카탈로그·서버 주차·개인 완료/주간 summary 구현. 최신 게임패치 검증과 실제 이용 통계 집계는 별도 미완료. |
 | [그룹](../features/groups/README.md) | 생성/가입/초대·코드/차단·관리조회·그룹장 이전/일반탈퇴 구현·dev통합. Flutter 연결/실기기와 조건부 해산·추방/대표변경 후속 미완료. |
-| [모집·일정](../features/recruitment/README.md) | 기존176/DB0031 개발반영·#25 A/B/C/#24연결 보고수신. #26 계약2의 공통자격/변경원자성·후보GET 구현/격리 고유45PASS·후보177/기본116·기존DTO보존 완료, [실제 개발177 반영·자료보존검증](../engineering/operations/eligibility-rollout.md) 완료. [실행 소비 계약](../features/recruitment/participation/candidate-contract.md), Flutter 전체9 f89c009f 두intent 통합연결/493PASS 자체보고 수신·Backend 독립재현 아님. [전체11 Flutter 가입소수3항목 사용자 정상보고/표시계약 요청](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384482003) 수신. [표시 계약 제안1](../features/recruitment/participation/application-display-proposal.md) 작성/22예시·음성15 정적검증 완료·[전체13 Flutter 소비수용](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6384902537)·새프로필 구현/격리28PASS·기본116/소스177/기존DTO 보존 완료·[실제 개발반영/자료보존 검증](../engineering/operations/application-display-rollout.md) 완료. [전체16 Flutter 연결/413PASS 보고](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6385536441) 수신·독립재현아님. 상세예시8 참조정정/추가12PASS 완료·API코드불변. [전체17 자료보완회신](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6385820194) 완료·[전체19 아이템레벨누락](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386174761) 확인·나머지표시1/2정상사용자보고. [레벨출처보완](../features/recruitment/participation/application-item-level-proposal.md)은[전체21 Flutter 소비/UX수용](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386405233) 완료·신규저장/기존누락읽기구현·격리35PASS/후보6d5857b3…·177/116/기존DTO보존·[실제개발 반영·자료보존 검증](../engineering/operations/application-item-level-rollout.md) 완료(sourcef471e31/이미지6d5857b3). [전체23 Flutter 연결](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386758343) 13fb5848/158PASS 자체보고 수신. [전체25 Flutter 보완 인수 수용](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386859737) 확인: 레벨표시 기기 통과, current_saved/unavailable은 구현·자동검증 근거 수용/실제분기관찰 미수행. 네이티브 작업 순서/시험 진행은 네이티브 측 기록으로 관리하며 Backend는 구체 API/계약 차이에 대응한다. #26 전체8의 1~5는 수동시험 분량만 구분/구현범위 제외 기준 아님. 실회원/기기·운영 인수 별도 미완료. |
-| [공통 개발·운영](../engineering/README.md) | GitHub Issues·OpenAPI 계약 협업, 품질/트랜잭션/데이터보존 기준. 최신 전환 근거는API177/DB0031. 현황 조회에서 API/DB healthy·health200·DB0031을 읽기 확인했으며 실회원 명령 재검증은 아니다. |
+| [모집·일정](../features/recruitment/README.md) | C/N 생성·참가/관리·일정/조율·완료/탈퇴·검색/후보·표시·분 단위 명시 시각과 재신청 보완까지 구현/개발 반영. 1차 사용자 기기 인수 완료·Issue13 종료. [기존 모집 통합](../features/recruitment/integration-checkpoint-2026-10-27.md)·[재신청 통합](../features/recruitment/reapplication-integration-2026-10-27.md). 다른 관련 Issue 상태는 추적표를 따르며 이번에 일괄 종료하지 않는다. |
+| [공통 개발·운영](../engineering/README.md) | 격리 PostgreSQL 검증·의존성 고정·구조화 로그 사용. 현재 개발 실행sourcec1f86d8/이미지581a1a5e·DB0033·현재178/199/기본116/133. [재신청 반영](../engineering/operations/reapplication-history-rollout.md)의 소스262/runtime31/계약·health/worker/READONLY/HTTP 근거를 재사용하며 이번 문서 통합에서 서버를 재실행하지 않는다. |
 
-현재 개발 실행 계약은 [two-cycle OpenAPI](../../openapi/two-cycle.openapi.yaml), 기본앱 보존 계약은 [기본 OpenAPI](../../openapi/openapi.yaml)다. two-cycle은 실행 구성 이름이며0031은 DB마이그레이션 단계다.
+개발 계약은 [two-cycle OpenAPI](../../openapi/two-cycle.openapi.yaml), 기본앱 보존 계약은 [기본 OpenAPI](../../openapi/openapi.yaml)다. two-cycle은 실행 구성,0033은 DB마이그레이션 단계다. 구현·합성 검증·실제 서비스 읽기/HTTP·사용자 기기·성능/운영 인수는 구분한다. 현재 문서 정리로 미수행 성능/실회원 원ACK 동일 키 검증을 완료로 바꾸지 않는다.
 
-[IF-001](../features/recruitment/completion-and-records/inactive-features.md)의 앱 비활성과 서버권한/구명령/원ACK보존을 구분한다. 공대장복구 UX는미승인 제안이다. Backend 구현·자동검증·계약인계·Flutter적용·실회원/기기·운영완료는 각각 별개이며 dev/main 통합·운영배포를 이번 문서 작업으로 완료하지 않는다.
-
-과거 문서 위치와 작성 당시 상태는 [대응표](../engineering/documentation/README.md), [보관 문서](../archive/README.md)에서 확인한다. 작업자는 [AGENTS](../../AGENTS.md)와 [API협업](../engineering/collaboration/api-collaboration.md)을 따른다.
+주제별 미완료는 [ISSUE_TRACKER](ISSUE_TRACKER.md), 과거 결정/검증/장애·통합은 [DEV_LOG](DEV_LOG.md)를 따른다. [AGENTS](../../AGENTS.md)·[협업 규칙](../engineering/collaboration/api-collaboration.md)·[문서 대응표](../engineering/documentation/README.md)를 작업 기준으로 사용한다.

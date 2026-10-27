@@ -1,5 +1,7 @@
 # 이슈 주제별 추적표
 
+**현재 Git 통합 구간:** [재신청 수정 브랜치 통합 기록](../features/recruitment/reapplication-integration-2026-10-27.md)에 사용자 승인 dev 병합 범위·수정/검증/반영·기기 인수/Issue13 종료를 정리했다. 최신 실행/다음 작업은 NEXT_WORK이며 아래 종료 전 검토 문장은 당시 이력이다.
+
 ## 2026-10-27 마감 — Issue13 사용자 승인 종료
 
 사용자가 이슈13 클로즈를 명시적으로 지시했고 **closed/completed**를 실제 확인했다. [전체192번째 Backend · 1차 구현/기기 인수 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6438046779)이 종료 근거다. Backend 구현/개발 반영과 Native 보고 정상 흐름·표시의 사용자 기기 인수는 완료다.190/191의 정밀도 소비·알럿·UX 등은 [차후 보완 추적](../features/recruitment/follow-up-backlog.md)에 담당·현재 보류·재착수 조건으로 보존했다. 이들은 현재 착수/1차 인수 선행 조건이 아니다.

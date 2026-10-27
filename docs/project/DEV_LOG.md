@@ -2852,3 +2852,10 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 사용자가 이슈13 클로즈를 명시적으로 지시했고 **closed/completed**를 실제 확인했다. [전체192번째 Backend · 1차 구현/기기 인수 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6438046779)이 종료 근거다. Backend 구현/개발 반영과 Native 보고 정상 흐름·표시의 사용자 기기 인수는 완료다.190/191의 정밀도 소비·알럿·UX 등은 [차후 보완 추적](../features/recruitment/follow-up-backlog.md)에 담당·현재 보류·재착수 조건으로 보존했다. 이들은 현재 착수/1차 인수 선행 조건이 아니다.
 
 현재 추가 Backend 구현·시험 요청은 없다. 다음은 사용자와 별도 구간을 재시작하거나 새 구체 차이가 생길 때 해당 주제 Issue에서 진행한다. dev/main18830c2·실행 sourcec1f86d8/이미지581a1a5e·DB0033 유지, 서버/DB/자료·다른 이슈 상태 변경 없음. 기기 회신 수신부터 이번 사용자 승인 종료까지의 누적 문서 기록을 같은 수정 브랜치에서 의미 있는 마감 구간으로 게시한다. 별도 merge/AWS·반복 시험은 없다. 아래 OPEN/종료 차단·확인 대기는 종료 전 각 시점의 이력이다.
+
+
+## 2026-10-27 — 재신청 수정 브랜치 문서 최신화·dev 통합 준비
+
+사용자 지시로 같은 수정 브랜치의 [통합 기록](../features/recruitment/reapplication-integration-2026-10-27.md)을 작성했다. 구현c1f86d8/DB0033·고유20PASS·개발반영3e905ec·기기 인수/Issue13 종료59f040e·차후 보완을 하나의 검토 기준으로 모았다. NEXT_WORK는 현재 다음 실행 중심, AI_CONTEXT는 최신 기능/실행 기준 중심으로 정리했다. 과거 중간 대기·정정은 기존 DEV_LOG/상세 문서·Git 이력에 보존한다.
+
+원격 재확인: dev/main18830c2, 수정59f040e이며 dev/main 모두 수정 브랜치 조상으로 충돌 없음. Issue13 closed/completed·전체192 이후 새 요청 없음. 코드/DDL/계약·시험 소스는c1f86d8 이후 동일해 기존 직접20·실행 확인을 재사용하며 전체 회귀/서버·DB 재실행 없음. 문서 정적 검증 후 commit/push→PR merge로 dev 통합·원격 확인·완료 브랜치 정리를 진행한다. main/AWS·다른 이슈 변경은 범위 밖이다.
