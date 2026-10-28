@@ -47,3 +47,7 @@ GET은 그룹·회원·설정 기본행이나 외부 게임 호출을 만들지 
 | GET | `/v1/me/groups` |
 | GET | `/v1/me/groups/{group_id}` |
 | GET | `/v1/groups/{group_id}/members` |
+
+## 표시 조회 보완 제안
+
+[그룹원 카드·활동 캐릭터·활동시각/요청 집계 설계](display-contract-proposal.md)는 Issue #12의 1차 개발 요청에 대한 구현 전 계약 제안이다. 현재 API 표와 분리하며 신규 profile/경로는 아직 제공하지 않는다.

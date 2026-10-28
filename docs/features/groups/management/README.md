@@ -43,3 +43,7 @@ group/member CAS·명령 key와 최소 ACK를 사용한다. 관계 변경·head�
 | GET | `/v1/groups/{group_id}/management` |
 | POST | `/v1/groups/{group_id}/leadership-transfer` |
 | POST | `/v1/groups/{group_id}/leave` |
+
+## 관리 1차 보완 제안
+
+[해산·추방·대표 변경·그룹장 레이드 제한권한 설계](phase-one-contract-proposal.md)는 Issue #16의 최신 개발 요청에 대한 구현 전 계약 제안이다. 그룹 소멸/탈퇴 후 기존 레이드 보존과 신규 참가 차단을 구분한다. 자격상실 정리·복구승계는 사용자 선택에 따라 별도 미결정이며 독립 관리 기능을 차단하지 않는다.

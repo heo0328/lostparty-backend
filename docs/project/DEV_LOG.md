@@ -2875,3 +2875,20 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - PR head가 dev의 조상이고 전체 파일 트리가 같음을 확인했다. c1f86d8 이후 app/alembic/OpenAPI/tests/scripts/의존성/Dockerfile 동일성이 확인돼 기존 직접20·개발 실행 검증을 재사용했다. 문서만 수정하므로 전체 회귀·서버/DB 재시작·기존 회원 명령을 반복하지 않았다.
 - 현재 경로 checkout dev, 단일 worktree·깨끗한 작업 트리·수정 브랜치 정확 원격eb8c409 및dev 포함 확인 후 `fix/raid-recruitment-reapplication`을 로컬 `branch -d`·원격 지정 삭제했다. 미완료 `feat/activity-selection`89a3248과 main/dev는 보존했다. 공유 이력 재작성/force push 없음.
 - [통합 기록](../features/recruitment/reapplication-integration-2026-10-27.md)·NEXT_WORK/AI_CONTEXT/추적표에 실제 결과를 기록해 후행 마감 commit/push한다. Issue13은 사용자 승인 completed 유지·차후 보완은 현재 착수하지 않는다. 실제 API sourcec1f86d8/이미지581a1a5e·DB0033·키/환경/자료는 변경하지 않았으며 main 갱신/AWS/다른 이슈 종료는 이번 범위 밖이다.
+
+## 2026-10-28 — 그룹 Native 결정·1차 개발 요청 수신 확인
+
+- 공식 #12/#16 본문과 전체댓글을 조회했다(#12=19개/#16=9개). #12 전체18/#16 전체7의 계약확인 전용 단계는 최신 #12 전체19 Flutter([G-DISPLAY](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6464116834))/#16 전체9 Flutter([관리1차](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464117245))의 명세·개발·검증·인계 요청으로 대체됐다. 본문 상단의 과거 담당/준비대기만으로 현 상태를 판단하지 않았다.
+- #16 전체8 Flutter([사용자 설명 정정](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6463878563))의 그룹정원초과 정지와 그룹소멸시 기존레이드 보존을 구분한다. 정상해산 활성방검사를 제거하지 않으며 단순그룹탈퇴/추방은 기존레이드 자동탈퇴가 아니다. 기본15/5·소속배지·기존참가/전환전신청 보존·공대장권한분리 유지.
+- 표시/활동/배지 조회와 조건부해산/추방/대표변경·그룹장제한방관리·소멸후보존을 NEXT_WORK/추적표/기능지도에 수신기록했다. 자격상실 유효후임선정/후임없음복구만 미결정으로 분리하며 기존 G1/G2·이전/탈퇴를 재개발하지 않는다.
+- 다음 Backend는 제공된 원격설계 f04f482e(이번엔원문별도미조회)·현행source/OpenAPI 대조와 각 Issue 계약제안이다. 이번 구간은 수신 확인·로컬 문서 기록이며 구현/자동시험·서버/DB·실회원/기기·배포·자료변경 및 Issue회신/상태변경은 없다. 같은 준비 구간에 누적하며 문서 확인만으로 별도 commit/push하지 않는다.
+
+## 2026-10-28 — 그룹 1차 기획·API 계약 제안 구간
+
+- 사용자가 승인한 계획은 설계 문서·Issue 제안까지다. feat/group-management/준비ea52e56에서 수신 로컬기록을 보존·통합하고 현재source/OpenAPI·Native 고정f04f482e 설계39/제품그룹정책·모집37을 대조했다. 공식 #12본문/전체19개·#16본문/전체9개 댓글을 재조회했다.
+- 표시/활동/subject/배지/활동시각과 관리/해산/추방/대표/제한방관리·그룹소멸후보존을 두 제안 문서로 구체화했다. 기존strict DTO는 opt-in reader/management profile로 보존하고 현재계약원본에는 미제공경로를 추가하지 않았다.
+- 코드상 cycle_lifecycle.qualify의그룹소속검사와 cycle_common의참가actor/공대장결합을 확인해 신규참가/기존참가·제한그룹장권한을 분리하는 설계다. 해산검사/관리목록의공통원본·unknown의null/거절·인원1인제한·CN세대/원ACK/rollback을 명시했다. 다인방강제종료는 미승인 차이로 분리한다.
+- 사용자 선택은 모든인증소유권상실의그룹자격상실판정 미정분리다. disabled/대표/소유상실·유효후임/후임없음복구만 별도 질문하고 다른독립기능을 막지 않는다.
+- 이번은 문서/소스대조·JSON예시/링크/diff 검증이다. 신규 기능시험·두런타임계약실행·서버/DB/migration·실회원/기기·배포·자료삭제는 실행하지 않는다. 아래에 commit/push·제안게시 링크/실제댓글순번을 마감기록한다.
+
+- 설계 검증 통과: check_documentation.py(240Markdown/상대링크·앵커2488/보존원문128/고정JSON20/기존API199분류), 신규JSON예시4개 파싱·git diff --check. 신규2문서를 포함한 문서변경만 존재하며 app/alembic/openapi/tests HEAD대비 동일이다. 원격fetch후그룹HEAD/원격ea52e56일치·main/dev1b6f57b동일을확인했다.
