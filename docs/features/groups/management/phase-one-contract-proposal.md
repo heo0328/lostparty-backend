@@ -4,21 +4,21 @@
 
 게시: 설계 고정 `92c1702` push·원격일치 후 [전체10번째 Backend · 계약 제안](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464713503) 게시·실제순번 확인. 다음 Flutter 소비/정책차이대조·Backend 명세보완이며 구현/기기 인수는 미완료다.
 
-**현재 제공 기능이 아닌 설계 제안이다.** 이번 사용자 승인 구간은 문서·Issue 계약 제안까지이며 HTTP 구현·DDL·실행 OpenAPI·서버/DB·배포·기기 인수는 변경하지 않는다. 조건부 해산을 지금 활성화했다는 뜻이 아니다.
+**사용자 승인으로 관리 HTTP·후보계약을 구현했다.** DB0034에서 신규 관리프로필/해산·추방·대표변경·공통방목록을 제공한다. 실제개발서버/DB·배포·Flutter기기인수는변경/완료하지않았다. [구현/검증 기록](../implementation-2026-10-28.md)을 따른다.
 
 ## 최신 정책 정정 — 기존 제안의 같은 항목 교체
 
 [Issue16 전체12번째 Flutter · 사용자 확정 정정](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464943488)이 초기 개발 요청과 이 문서92c1702의 그룹장 제한명령 제안을 대체한다. **그룹원 누구나 기존 membership/캐릭터/한도 조건으로 그룹전용 레이드를 개설하고 해당 레이드 공대장이 관리한다.** 그룹장 지위만으로 비참가 방의 공개전환/해산 권한을 주지 않는다. 그룹장 이전은 레이드 공대장을 바꾸지 않는다.
 
-그룹장용 command-context/make-public/end 신규 경로·GroupRoomCommand/ACK·해당 토큰/권한/시험은 개발 범위에서 제외했다. 마지막1인 대 다인강제종료 선택은 더 이상 대기 질문이 아니다. 초기 제안은 고정커밋/기존댓글에 이력으로 보존하며 현재 구현 기준으로 쓰지 않는다. 실제 현재 API 구현은 이번에도 변경하지 않는다.
+그룹장용 command-context/make-public/end 신규 경로·GroupRoomCommand/ACK·해당 토큰/권한/시험은 개발 범위에서 제외했다. 마지막1인 대 다인강제종료 선택은 더 이상 대기 질문이 아니다. 초기 제안은 고정커밋/기존댓글에 이력으로 보존하며 현재 구현 기준으로 쓰지 않는다. 이후사용자구현승인에따라정정된범위의HTTP를구현했으며그룹장전용명령은계속제외한다.
 
-정정 게시: `cb9b6b9` push·원격확인 후 [#16 전체13번째 Backend · 정정결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6465101118)에 회신했다. 현재는 설계정정 완료/구현 전이며 다음은 Backend 구현구간 준비다.
+정정 게시: `cb9b6b9` push·원격확인 후 [#16 전체13번째 Backend · 정정결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6465101118)에 회신했다. 당시상태는설계정정/구현전이었으며이후구현승인에따라진행한현상태는구현기록을따른다.
 
 ## 기준·문제·기존 구현
 
 근거는 [Issue16 전체9번째 Flutter 개발 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464117245), [전체8번째 그룹 소멸 후 방 보존 정정](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6463878563), [설계39 f04f482e](https://github.com/heo0328/LostParty_flutter/blob/f04f482e/docs/backend-migration/39-group-flutter-integration-design.md), 같은 커밋의 [제품 §13/14](https://github.com/heo0328/LostParty_flutter/blob/f04f482e/docs/product/GROUP_PRODUCT_FLOW.md)·[모집37](https://github.com/heo0328/LostParty_flutter/blob/f04f482e/docs/backend-migration/37-raid-scheduling-and-multi-raid-planning.md)다. Backend 대조는 main/dev1b6f57b·그룹준비ea52e56이다.
 
-관리GET·즉시 이전·일반탈퇴는 이미 제공된다. Group.ended_at/과거membership/FK, 그룹 명령 runner·game-mutations-v1 잠금·멱등 ACK를 재사용한다. 현재는 disband=false/STATE_UNAVAILABLE, 추방·대표변경 API는 없다. 비참가 그룹장 전용 레이드 명령은 최신정책상 개발하지 않는다.
+관리GET·즉시 이전·일반탈퇴는 이미 제공된다. Group.ended_at/과거membership/FK, 그룹 명령 runner·game-mutations-v1 잠금·멱등 ACK를 재사용한다. 기본management 응답은기존 disband=false/STATE_UNAVAILABLE를유지하며 새profile에서실제판정과추방/대표변경을제공한다. 비참가 그룹장 전용 레이드 명령은 최신정책상 개발하지 않는다.
 
 실제 two-cycle 모집 원장은 존재하지만 일반 공통명령은 참가자와 공대장 자격을 함께 요구한다. 또한 cycle_lifecycle.qualify가 현재 그룹소속까지 검사해 단순탈퇴 후 기존진행 보존과 충돌할 수 있다. 기존함수의 권한검사를 제거해 전부 열지 않고 신규 그룹 접근과 기존 레이드 관계의 권한을 구분한다. 표시 조회는 [G-DISPLAY 제안](../discovery/display-contract-proposal.md)을 따른다.
 
@@ -159,7 +159,7 @@ cycle_lifecycle.qualify·공통설정 linked_group·검색/상세 접근·출력
 ## 구현·검증·인계 순서
 
 1. 이 명세와 표시명세를 각 #16/#12에 제안 게시. 제품차이/복구질문만 분리하고 UI시안/동일기초시험 회신을 전체구현 선행조건으로 추가하지 않는다.
-2. nullable 활동시각/표시근거 등 필요한 최소 후속 migration은 실제 구현시 최신head에서 정한다(현재0033). 이번에0034를 선점하거나 적용하지 않는다. 기존행·FK·과거ACK·sequence/자료는 보존한다.
+2. 활동시각/표시근거는0034_group_features의확장테이블을사용한다. migration은격리검증에서만적용하고개발DB에는적용하지않았다. 기존행·FK·과거ACK·sequence/자료는 보존한다.
 3. 그룹 원자명령·기존 레이드 권한보존·동일활성방판정·표시profile·원장접근/배지 소비를 함께 구현한다. 원본 OpenAPI는 구현과 함께 합의범위만 반영한다.
 4. 아래 직접경계 시험과 두실행프로필 계약을 검증→의미있는 작업구간 commit/push→원격확인→같은Issue 고정SHA/검증/미확인 인계. 개발서버 반영·Flutter연결·실기기·운영은 구분한다.
 
@@ -172,4 +172,4 @@ cycle_lifecycle.qualify·공통설정 linked_group·검색/상세 접근·출력
 - 그룹탈퇴/추방/실제소멸후 기존상세·공대장진행·일정·완료·탈퇴/기록 유지, 다른T신규참가/검색/신청은차단·public origin 예외/공개방정책·전체참가자배지.
 - 그룹장 전용명령경로미제공·공대장기존해산조건유지·공개왕복/그룹해산경쟁·원ACK/완료기록 보존·독립회원/소유/한도제한 유지.
 
-이번 실제 검증은 소스/고정원문 대조·문서경로/JSON예시·git diff 검사다. 서버/DB/새합성기능시험·회원명령·배포·자료삭제/복원·Flutter기기시험은 미실행이다.
+설계당시에는문서검증만수행했으며이후사용자승인으로구현·격리PostgreSQL검증과두후보계약전체비교를완료했다. 결과는구현기록을따른다. 실제개발서버/DB반영·실회원·배포/자료삭제·Flutter기기인수는미실행이다.

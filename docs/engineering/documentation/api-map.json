@@ -1212,6 +1212,30 @@
       "path": "/v1/groups/{group_id}/join-request-counts",
       "operation_id": "join_request_counts_v1_groups__group_id__join_request_counts_get",
       "topic": "groups/joining"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/groups/{group_id}/disband",
+      "operation_id": "disband_v1_groups__group_id__disband_post",
+      "topic": "groups/management"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/groups/{group_id}/members/{membership_id}/remove",
+      "operation_id": "remove_member_v1_groups__group_id__members__membership_id__remove_post",
+      "topic": "groups/management"
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/groups/{group_id}/representative",
+      "operation_id": "change_representative_v1_groups__group_id__representative_put",
+      "topic": "groups/management"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/groups/{group_id}/raid-rooms",
+      "operation_id": "group_raid_rooms_v1_groups__group_id__raid_rooms_get",
+      "topic": "groups/management"
     }
   ]
 }

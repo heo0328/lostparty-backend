@@ -1,5 +1,6 @@
 """Explicit opt-in readers; historical anchors never become current authority."""
 from datetime import date
+from contextlib import nullcontext
 from sqlalchemy import select, or_, and_
 from app.game_accounts.support import fail, GameError, cursor_encode, cursor_decode
 from app.game_accounts.lifecycle import digest
@@ -130,9 +131,9 @@ def projection(db,uid,room,row,member,cm,stamp,*,anchored=False):
     return dict(target=target,viewer=viewer,recovery=recovery,permissions=perms),historical
 
 
-def get(principal,rid,key,kind,*,membership_id=None,cycle_member_id=None,include_resume_display=False):
+def get(principal,rid,key,kind,*,membership_id=None,cycle_member_id=None,include_resume_display=False,read_snapshot=None):
     if (membership_id is None)!=(cycle_member_id is None):fail('INVALID_REQUEST',400)
-    with actions.commands.base.snapshot(principal) as (db,uid,stamp):
+    with (nullcontext(read_snapshot) if read_snapshot is not None else actions.commands.base.snapshot(principal)) as (db,uid,stamp):
         actions.ready(db)
         if membership_id is not None:
             parse_cycle(key)

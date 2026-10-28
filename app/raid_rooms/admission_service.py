@@ -7,7 +7,7 @@ from sqlalchemy import select, text
 from app.core.database import session, now
 from app.game_accounts.support import authorize,fail,reserve,release,commit_result,GameError
 from app.groups.admission_core import display
-from app.groups.models import GroupMembership
+from app.groups.models import Group, GroupMembership
 from app.raid_rooms import admission_context as context, participation_core as core
 from app.raid_rooms import admission_schemas as s
 from app.raid_rooms.participation_commands import Selection, Target
@@ -35,7 +35,7 @@ def room(db,uid,rid):
     row=db.get(Room,rid)
     if row is None:fail('ROOM_NOT_FOUND',404)
     if row.scope=='group' and db.scalar(select(Member.id).where(Member.room_id==rid,Member.user_id==uid,Member.ended_at.is_(None))) is None:
-        if db.scalar(select(GroupMembership.id).where(GroupMembership.group_id==row.group_id,
+        if db.scalar(select(GroupMembership.id).join(Group,Group.id==GroupMembership.group_id).where(Group.ended_at.is_(None),GroupMembership.group_id==row.group_id,
                 GroupMembership.user_id==uid,GroupMembership.ended_at.is_(None))) is None:fail('ROOM_NOT_FOUND',404)
     return row
 
@@ -256,7 +256,7 @@ def plan(principal,rid):
                 round_id=value.round_id,cycle_key=cycle,character_id=value.character_id,selected_role=value.selected_role,
                 state=value.state,ended_at=value.ended_at,raid_participation_state=value.state,
                 completion_source=(value.build or {}).get('completion_source'),completed_at=(value.build or {}).get('completed_at')))
-        group_member=row.group_id is not None and db.scalar(select(GroupMembership.id).where(GroupMembership.group_id==row.group_id,
+        group_member=row.group_id is not None and db.scalar(select(GroupMembership.id).join(Group,Group.id==GroupMembership.group_id).where(Group.ended_at.is_(None),GroupMembership.group_id==row.group_id,
             GroupMembership.user_id==uid,GroupMembership.ended_at.is_(None))) is not None
         result=dict(room_id=rid,revision=row.plan_revision,members_revision=row.members_revision,cycle_key=cycle,server_time=stamp,
             app_capacity=row.app_capacity,game_items=items,schedule_state='unscheduled',schedule_groups=[],sessions=[],session_segments=[],
@@ -297,7 +297,7 @@ def application(principal,aid):
             display=app.display,character_id=app.selection['character_id'],selected_role=app.selection['selected_role'],
             admission_origin=dict(scope=app.origin_scope,group_id=str(app.origin_group_id) if app.origin_group_id else None))
         if not leader:return view
-        if row.scope=='group' and db.scalar(select(GroupMembership.id).where(GroupMembership.group_id==row.group_id,
+        if row.scope=='group' and db.scalar(select(GroupMembership.id).join(Group,Group.id==GroupMembership.group_id).where(Group.ended_at.is_(None),GroupMembership.group_id==row.group_id,
                 GroupMembership.user_id==uid,GroupMembership.ended_at.is_(None))) is None:fail('GROUP_MEMBERSHIP_REQUIRED',403)
         unscheduled(db,row)
         require_origin(app)

@@ -25,3 +25,13 @@ def remember(db, subject, character, account):
     reference.character_id = character.id
     reference.ownership_revision = account.ownership_revision
     reference.lifecycle_revision = character.lifecycle_revision
+
+
+def group_state(db, gid):
+    """Public retained link metadata; never grants access to a linked group."""
+    from app.groups.models import Group
+    if gid is None:
+        return None
+    row = db.get(Group, gid)
+    return dict(group_id=gid, name=row.name if row else None,
+        state='unavailable' if row is None else 'ended' if row.ended_at is not None else 'active')

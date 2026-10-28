@@ -7,6 +7,7 @@ from app.game_accounts.schemas import GameErrorOut
 from app.game_accounts.support import fail
 from app.groups import schemas, http_service, management, display
 from app.groups import display_schemas as ds
+from app.groups import extended_management, raid_state, management_schemas as ms
 from app.member_limits import schemas as limit_schemas, service as limits
 
 
@@ -14,10 +15,12 @@ async def strict_input(request: Request):
     path = request.url.path
     allowed = set()
     if request.method == 'GET':
-        if path in ('/v1/groups', '/v1/me/groups') or path.endswith(('/members', '/activity-characters')):
+        if path in ('/v1/groups', '/v1/me/groups') or path.endswith(('/members', '/activity-characters', '/raid-rooms')):
             allowed = {'limit', 'cursor'}
         if path == '/v1/me/groups' or path.startswith('/v1/me/groups/') or path.endswith('/members'):
             allowed.add('reader_profile')
+        if path.endswith('/management'):
+            allowed.add('management_profile')
         if path == '/v1/groups':
             allowed.add('q')
     if (set(request.query_params)-allowed or
@@ -75,8 +78,9 @@ def rename(group_id: UUID, data: schemas.GroupRenameIn, principal: Principal, ke
     return http_service.rename(principal, group_id, key, data)[1]
 
 
-@router.get('/groups/{group_id}/management', response_model=schemas.GroupManagement, responses=errors)
-def group_management(group_id: UUID, principal: Principal):
+@router.get('/groups/{group_id}/management', response_model=ms.ExtendedGroupManagement | schemas.GroupManagement, responses=errors)
+def group_management(group_id: UUID, principal: Principal, management_profile: Literal['group-management-1'] | None = None):
+    if management_profile: return extended_management.get(principal, group_id)
     return management.get(principal, group_id)
 
 
@@ -103,3 +107,23 @@ def request_counts(principal: Principal):
 @router.get('/groups/{group_id}/join-request-counts', response_model=ds.GroupJoinRequestCounts, responses=errors)
 def join_request_counts(group_id: UUID, principal: Principal):
     return display.counts(principal, group_id)
+
+
+@router.post('/groups/{group_id}/disband', response_model=ms.GroupDisbandAck, responses=errors)
+def disband(group_id: UUID, data: ms.DisbandGroupIn, principal: Principal, key: Key):
+    return extended_management.command(principal, group_id, key, data, 'disband')[1]
+
+
+@router.post('/groups/{group_id}/members/{membership_id}/remove', response_model=ms.GroupRemoveAck, responses=errors)
+def remove_member(group_id: UUID, membership_id: UUID, data: ms.RemoveGroupMemberIn, principal: Principal, key: Key):
+    return extended_management.command(principal, group_id, key, data, 'remove', membership_id)[1]
+
+
+@router.put('/groups/{group_id}/representative', response_model=ms.GroupRepresentativeAck, responses=errors)
+def change_representative(group_id: UUID, data: ms.ChangeGroupRepresentativeIn, principal: Principal, key: Key):
+    return extended_management.command(principal, group_id, key, data, 'representative')[1]
+
+
+@router.get('/groups/{group_id}/raid-rooms', response_model=ms.GroupRaidRoomPage, responses=errors)
+def group_raid_rooms(group_id: UUID, principal: Principal, limit: Limit = 20, cursor: Cursor = None):
+    return raid_state.listing(principal, group_id, limit, cursor)

@@ -16,7 +16,7 @@
 
 group/member CAS·명령 key와 최소 ACK를 사용한다. 관계 변경·head·초대 종료·ACK 저장은 같은 트랜잭션이다. 재가입 뒤 옛 탈퇴 key의 ACK 복구가 새 membership을 종료하지 않는다. ACK를 현재 관리 권한으로 사용하지 않고 management/detail/members를 다시 읽는다.
 
-조건부 해산·그룹 추방·그룹 대표 변경·실제 그룹모집 후처리는 제공 완료가 아니다. 실제 활성 그룹모집 원본을0으로 가정하지 않으며 `GROUP_RECRUITMENT_STATE_UNAVAILABLE` 제한을 유지한다. [계정 한도](../../login-account/usage-limits/README.md)의 group_capacity와 가입 그룹 수를 구분한다.
+조건부 해산·그룹 추방·그룹 대표 변경은DB0034 후보코드에구현·격리검증했으며 실제개발환경에는미반영이다. 실제 활성 그룹모집 원본을0으로 가정하지 않으며 `GROUP_RECRUITMENT_STATE_UNAVAILABLE` 제한을 유지한다. [계정 한도](../../login-account/usage-limits/README.md)의 group_capacity와 가입 그룹 수를 구분한다.
 
 <a id="decisions"></a>
 
@@ -49,3 +49,17 @@ group/member CAS·명령 key와 최소 ACK를 사용한다. 관계 변경·head�
 [해산·추방·대표 변경·레이드 생명주기 설계](phase-one-contract-proposal.md)는 Issue #16의 최신 개발 요청에 대한 구현 전 계약 제안이다. 그룹 소멸/탈퇴 후 기존 레이드 보존과 신규 참가 차단을 구분한다. 자격상실 정리·복구승계는 사용자 선택에 따라 별도 미결정이며 독립 관리 기능을 차단하지 않는다.
 
 최신 [#16 전체12번째 Flutter 사용자 확정](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464943488): 그룹원 누구나 현재 조건으로 개설하며 해당 레이드 공대장이 관리한다. 그룹장 전용 공개전환/해산 명령은 제외하고 방/공대장 안내와 기존 상세를 사용한다.
+
+| POST | `/v1/groups/{group_id}/disband` |
+
+| POST | `/v1/groups/{group_id}/members/{membership_id}/remove` |
+
+| PUT | `/v1/groups/{group_id}/representative` |
+
+| GET | `/v1/groups/{group_id}/raid-rooms` |
+
+## 0034 후보 구현
+
+사용자승인으로 관리프로필·해산/추방/대표변경·그룹원공통활성방목록을구현했다. 기본management응답은유지하며 신규기능은DB0034가필요하다. 그룹장전용레이드명령은없고기존실제T공대장권한을재사용한다. 현재개발서버DB0033에는미반영이며 [구현/검증 기록](../implementation-2026-10-28.md)을따른다.
+
+레이드의기존상세/계획은 include_group_state=true에서만 root.group_state의보존된그룹식별자/이름/active·ended·unavailable 상태를추가한다. 같은readonly스냅샷/기존상세권한을쓰며 기본응답/원ACK는바꾸지않는다.

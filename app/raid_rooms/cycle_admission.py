@@ -65,7 +65,8 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
     origin = public_origin_application
     allow_external = (origin is not None and origin.room_id == room.id and origin.user_id == uid
         and origin.origin_scope == 'public' and origin.state == 'pending')
-    core._group(db, room, uid, allow_external=allow_external)
+    core._group(db, room, uid, allow_external=allow_external,
+        existing=replacing is not None or resuming is not None)
     core._room_restrictions(db, room)
     character = core.identity.selected_character(db, uid, selection.model_dump(mode='json'))
     if not character.summary.get('class_name'):

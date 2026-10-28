@@ -42,7 +42,7 @@ def linked_group(db,uid,room):
 
 
 def common_permission(db,uid,room,stamp):
-    try:authority(db,uid,room,stamp);linked_group(db,uid,room);return permission(None)
+    try:authority(db,uid,room,stamp);return permission(None)
     except GameError as error:return permission(error.code)
 
 
@@ -99,10 +99,6 @@ def context(db,uid,rid,kind,stamp):
     data=dict(room_id=rid,command=kind,room_revision=room.revision,persistent_membership_revision=actor.revision,
         impact_cycles=public,permission=permission(reason),expected_cycle_key=current,authorization_cycle_key=auth.cycle_key if auth else None,
         current_settings=dict(title=room.title,scope=room.scope,group_id=room.group_id,group_revision=group.revision if group else None))
-    if kind=='edit_common_settings':
-        try:linked_group(db,uid,room)
-        except GameError as error:reason=reason or error.code
-        data['permission']=permission(reason)
     auth_proof=None
     if kind!='leave' and reason is None:
         auth_cm=life.actual_member(db,auth,uid);_,auth_proof=life.qualify(db,room,auth,auth_cm)
@@ -139,10 +135,11 @@ def execute(principal,rid,key,data,kind):
             if data.scope=='group' and room.group_id is None:fail('GROUP_MEMBERSHIP_REQUIRED',403)
             if room.group_id is not None:
                 group=db.get(Group,room.group_id)
-                if group is None or group.ended_at is not None:fail('GROUP_NOT_ACTIVE')
-                if body['expected_group_revision']!=group.revision:fail('REVISION_CONFLICT')
-                if db.scalar(select(GroupMembership.id).where(GroupMembership.group_id==group.id,GroupMembership.user_id==uid,
-                        GroupMembership.ended_at.is_(None))) is None:fail('GROUP_MEMBERSHIP_REQUIRED',403)
+                if body['expected_group_revision']!=(group.revision if group else None):fail('REVISION_CONFLICT')
+                # Only entering group scope needs new group authority. Existing
+                # raid leadership survives leaving or losing the linked group.
+                if data.scope=='group' and room.scope!='group':
+                    linked_group(db,uid,room)
             elif data.expected_group_revision is not None:fail('INVALID_REQUEST',400)
             changed=(room.title,room.scope)!=(data.title,data.scope)
             if changed:

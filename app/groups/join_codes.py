@@ -10,6 +10,7 @@ from app.core.config import settings
 from app.core.database import session, now
 from app.core.rate_limit import check
 from app.game_accounts.support import authorize, fail
+from app.game_accounts.models import Character, Account
 from app.groups import service as groups, http_service, admissions
 from app.groups import admission_core as core
 from app.groups.admission_models import GroupJoinCode
@@ -226,6 +227,9 @@ def join(principal, key, command, client_host):
             core.finish(pending, 'joined_by_code', current)
         subject = core.subject(db, group, uid, create=True, snapshot=membership.display)
         subject.display = membership.display
+        from app.groups.features import remember
+        character = db.get(Character, uuid.UUID(data['character_id']))
+        remember(db, subject, character, db.get(Account, character.account_id))
         admissions.touch(subject, current)
         return 200, http_service.detail(db, group, membership), None
     return admissions.execute(principal, 'group-code-join', key, safe, run, admissions.check_replay_membership)

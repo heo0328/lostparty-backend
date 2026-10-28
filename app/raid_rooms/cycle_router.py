@@ -32,7 +32,7 @@ from app.raid_rooms import resume_review, resume_review_schemas
 from app.raid_rooms import completion_correction, completion_correction_schemas as correction_schemas
 from app.raid_rooms import admission_candidates
 from app.raid_rooms.admission_candidate_schemas import AdmissionCandidatePage
-from app.raid_rooms import application_display_schemas
+from app.raid_rooms import application_display_schemas, group_link_display as group_link
 
 
 from app.raid_rooms import atomic_members, atomic_member_schemas as atomic_schemas
@@ -104,9 +104,9 @@ class CycleRoute(AvailabilityRoute):
         if request.url.path.endswith('/admission-character-candidates'):return {'target_cycle_key','intent','limit','cursor'}
         if request.url.path.endswith('/admission-context'):
             return {'target_cycle_key','character_id','selected_role','intent','include_session_display'}
-        if request.url.path.endswith('/plan'):return {'target_cycle_key','include_resume_display','reader_profile','membership_id','cycle_member_id'}
+        if request.url.path.endswith('/plan'):return {'target_cycle_key','include_resume_display','reader_profile','membership_id','cycle_member_id','include_group_state'}
         if request.url.path.endswith('/detail'):
-            return {'target_cycle_key','reader_profile','membership_id','cycle_member_id'}
+            return {'target_cycle_key','reader_profile','membership_id','cycle_member_id','include_group_state'}
         if '/raid-rooms/' in request.url.path:return {'target_cycle_key'}
         return set()
 
@@ -224,18 +224,24 @@ def group_character_candidates(group_id:UUID,principal:Principal,
 def card(room_id:UUID,target_cycle_key:str,principal:OptionalPrincipal=None):return queries.get_card(principal,room_id,target_cycle_key)
 
 
-@router.get('/raid-rooms/{room_id}/detail',response_model=s.OutputContract3GetV2RaidRoomsRoomIdDetail|membership_schemas.DetailProfile|application_display_schemas.ApplicationDisplayDetailResponse,response_model_exclude_unset=True,responses=errors)
+@router.get('/raid-rooms/{room_id}/detail',response_model=group_link.GroupLinkedDetail|group_link.GroupLinkedMembershipDetail|group_link.GroupLinkedApplicationDetail|s.OutputContract3GetV2RaidRoomsRoomIdDetail|membership_schemas.DetailProfile|application_display_schemas.ApplicationDisplayDetailResponse,response_model_exclude_unset=True,responses=errors)
 def detail(room_id:UUID,target_cycle_key:str,principal:Principal,include_coordination_wait:Literal['true','false']='false',reader_profile:Literal['membership-actions-1','application-display-1']|None=None,
-    membership_id:UUID|None=None,cycle_member_id:UUID|None=None):
+    membership_id:UUID|None=None,cycle_member_id:UUID|None=None,include_group_state:Literal['true','false']='false'):
+    if include_group_state=='true':
+        if reader_profile!='membership-actions-1' and (membership_id is not None or cycle_member_id is not None):fail('INVALID_REQUEST',400)
+        return group_link.get(principal,room_id,target_cycle_key,'detail',reader_profile=reader_profile,membership_id=membership_id,cycle_member_id=cycle_member_id)
     if reader_profile == 'membership-actions-1':
         return membership_readers.get(principal,room_id,target_cycle_key,'detail',membership_id=membership_id,cycle_member_id=cycle_member_id)
     if membership_id is not None or cycle_member_id is not None:fail('INVALID_REQUEST',400)
     return members.detail(principal,room_id,target_cycle_key,reader_profile=reader_profile)
 
 
-@router.get('/me/raid-rooms/{room_id}/plan',response_model=resume_review_schemas.ResumePlanContext|membership_schemas.PlanProfile,response_model_exclude_unset=True,responses=errors)
+@router.get('/me/raid-rooms/{room_id}/plan',response_model=group_link.GroupLinkedPlan|group_link.GroupLinkedMembershipPlan|resume_review_schemas.ResumePlanContext|membership_schemas.PlanProfile,response_model_exclude_unset=True,responses=errors)
 def plan(room_id:UUID,target_cycle_key:str,principal:Principal,include_coordination_wait:Literal['true','false']='false',include_resume_display:Literal['true','false']='false',
-    reader_profile:Literal['membership-actions-1']|None=None,membership_id:UUID|None=None,cycle_member_id:UUID|None=None):
+    reader_profile:Literal['membership-actions-1']|None=None,membership_id:UUID|None=None,cycle_member_id:UUID|None=None,include_group_state:Literal['true','false']='false'):
+    if include_group_state=='true':
+        if reader_profile is None and (membership_id is not None or cycle_member_id is not None):fail('INVALID_REQUEST',400)
+        return group_link.get(principal,room_id,target_cycle_key,'plan',reader_profile=reader_profile,membership_id=membership_id,cycle_member_id=cycle_member_id,include_resume_display=include_resume_display=='true')
     if reader_profile is not None:
         return membership_readers.get(principal,room_id,target_cycle_key,'plan',membership_id=membership_id,cycle_member_id=cycle_member_id,include_resume_display=include_resume_display=='true')
     if membership_id is not None or cycle_member_id is not None:fail('INVALID_REQUEST',400)

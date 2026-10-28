@@ -349,7 +349,7 @@ def _decorate_openapi(schema):
         'search':'visibility and raid/difficulty/group OR/member AND/within-member character OR, then exact remaining slots OR, member_count ascending/descending (default descending), created_at DESC/id DESC ties, then pagination; cursor binds full normalized conditions and directory/cycle/group generations',
         'bounds':{'request_bytes':32768,'page_max':50,'cursor_max':2048,'candidate_ticks_max':2016},
     }
-    schema['x-group-features'] = dict(required_schema='0034_group_features', display_profile='group-display-1', legacy_default_shape='preserved', reads='stored current group-scoped data only; no provider or read-side writes')
+    schema['x-group-features'] = dict(required_schema='0034_group_features', display_profile='group-display-1', management_profile='group-management-1', group_link_query='include_group_state=true', raid_authority='existing actual-target raid leader; group role grants no raid command', legacy_default_shape='preserved', reads='stored current group-scoped data only; no provider or read-side writes')
     return schema
 def openapi():return _decorate_openapi(_original_openapi())
 app.openapi = openapi

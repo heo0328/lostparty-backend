@@ -1,47 +1,25 @@
 # 다음 실행
 
-## 현재 기준 — 그룹 핵심 흐름 구현·격리 검증 완료
+## 현재 기준 — 그룹 1차 Backend 구현·격리검증
 
-사용자가 핵심흐름과관리기능까지의 구현계획을 승인했다. 현재브랜치/checkout은 feat/group-management·공통출발 main/dev1b6f57b이며 개발API/DB는변경하지않는다. 핵심표시/활동/집계·0034확장표와기존모집후보연결을구현했다. [구현/검증 기록](../features/groups/implementation-2026-10-28.md)·두OpenAPI가실제후보계약이다.
+현재브랜치/checkout은 `feat/group-management`, main/dev는공통출발 `1b6f57b`다. 승인범위는 **Backend 구현·격리검증·고정계약게시**이며 실제개발반영·Flutter연결/기기인수·merge/배포는별도다. [구현/검증 기록](../features/groups/implementation-2026-10-28.md)을기준으로이어간다.
 
-핵심선택70건은68PASS후구성/관찰자실패2건을고쳐그2건PASS로마감했다. 두계약전체일치PASS(기본119/136·현재181/202)·문서/diff검증이며 실제개발반영/Flutter연결·기기인수아니다. 이구간commit/push·원격확인후#12에고정인계하고같은브랜치에서관리기능을이어간다.
+핵심표시/활동/집계는 `d075def` push·원격확인후 [#12 전체24번째 Backend · 핵심구현인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6465656746)를게시했다. 이후같은브랜치에서관리프로필·조건부해산/추방/대표변경·공통활성방목록과기존레이드보존을구현·검증했다. 최종후보계약은기본123경로/140동작·two-cycle185/206이다. 관리구간게시/댓글링크는아래및DEV_LOG에마감기록한다.
 
-## 게시·인계 상태
+## 다음 실행 — Native 계약 소비·실제개발반영은 별도
 
-설계 고정 SHA `92c1702f84720ce76789f100bf0acdb1efd29c82`를 같은 그룹 브랜치에 commit/push하고 원격 일치를 확인했다. [#12 전체20번째 Backend · 표시조회 계약 제안](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6464713065)과 [#16 전체10번째 Backend · 관리/레이드 계약 제안](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464713503)을 게시하고 실제순번/내용을 재조회했다. 양 Issue 본문 상단은 현재범위·설계제안/구현미완료·다음담당으로 갱신하고 과거본문을 보존했다. Issue는 OPEN이다.
+- Flutter: 고정 source/두OpenAPI·예시를소비해표시·활동캐릭터·집계·관리의구체차이를각 #12/#16에회신한다. gemValidationSnapshot/integrity labels의동등표시는실제DTO대조로남기며저장없는보석정상상태나개인자료를합성하지않는다. 현재개발서버는DB0033이므로신규API실회원/기기시험은아직요청하지않는다.
+- Backend: 실제소비차이에대응한다. 개발반영이요청되면같은목적브랜치에서DB0034/후보이미지·기존DB/설정/키보존과반영검증을별도구간으로정한다. 이번소스push만으로개발서버가변경됐다고해석하지않는다.
+- 핵심흐름은초대/가입→활동캐릭터확인→기존모집필터→상세/참가/신청이다. 관리/복구전체를Native독립연결의선행조건으로두지않는다. 현재membership/캐릭터는기존검색alias/context/candidate와대조하고변경후함께재조회한다.
+- 그룹원누구나현재조건으로개설하고각실제T레이드공대장이관리한다. 그룹장이전은레이드권한을바꾸지않으며그룹장전용command-context/make-public/end는없다. 그룹탈퇴/추방/소멸후기존레이드진행/완료/탈퇴·기록은보존하고신규그룹접근은차단한다. 기본15/5·유효한도·정원초과제한·C/N독립/원ACK/재가입보호는유지한다.
+- G-RECOVERY(회원disabled/소유/대표문제·유효후임/후임없음복구)는사용자선택에따라별도미정이다. 미완료활동선택로컬89a3248은보존하며Native확인후별도재착수한다. 웹소켓/통계/운영정리·자료삭제/초기화·운영배포는포함하지않는다.
 
-이번 문서검사·예시JSON4개·diff검사는 통과했고 기능시험/서버반영·Flutter기기인수는 미실행이다. 후행 게시/링크 기록도 이 목적 브랜치에서 보존한다. 다음 담당은 Flutter의 구체소비/정책차이대조와 Backend 명세보완·차기구현준비다.
+## 검증과 실제 개발 실행 기준
 
-## 최신 Native 회신 — 그룹원 개설·레이드 공대장 관리 확정
+실행한격리검증: 핵심선택70건의68PASS후실패2건수정/재검증PASS, 관리/G2/생명주기최종86PASS, 직접영향재신청/실제T관리회귀41PASS, 두후보OpenAPI객체전체일치·문서/JSON/diff/lock검사·호스트12시험PASS. 서로겹치는실행수를합산하지않는다. 상세실패원인/정정·최종추가경계는구현기록을따른다.
 
-[#12 전체21번째 Flutter · 표시계약 검토](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6464852611)는 현재 제품 차단충돌없음을 확인했다. gemValidationSnapshot/integrity displayLabels의 동등표시는 실제DTO 인계때 대조하며 저장없는 보석정상합성·개인정보확대는 하지 않는다. Native1차시안/7eeca229 자체보고는 사용자검토전이며 기능/기기인수아니다.
+실제개발실행은기존기록source `c1f86d8`/이미지 `581a1a5e`·DB0033·현재178/199/기본116/133이다. [개발반영 기록](../engineering/operations/reapplication-history-rollout.md)·[공개집계](../engineering/operations/records/reapplication-history-rollout.json)를보존하며이번에컨테이너/DB를조회하거나교체하지않았다. 기존검증을현재신규API/기기통과로확대하지않는다.
 
-[#16 전체11번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464853005)의 마지막1인/다인해산 질문대기는 [전체12번째 Flutter · 사용자확정정정](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464943488)으로 해소·대체됐다. **그룹원 누구나 현재 조건으로 그룹전용 레이드를 개설하고 해당 레이드 공대장이 관리한다. 그룹장 지위의 비참가 command-context/make-public/end는 개발범위에서 제외한다.** 그룹장 이전은 레이드 공대장을 바꾸지 않는다. 기존 제안의 해당경로/DTO·토큰·시험을 같은 문서에서 교체한다.
+## 다른 미완료 주제
 
-정정 설계 `cb9b6b9` commit/push·원격확인 후 [#16 전체13번째 Backend · 설계정정 결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6465101118)에 회신했다. 실제전체순번/본문을 조회하고 Issue상단도 최신확정/다음담당으로 갱신했다. 구현/서버반영은 미완료이며 양Issue OPEN이다.
-
-## 최신 우선순위 — 초대·가입에서 모집 조합 찾기
-
-[#12 전체22번째 Flutter · 사용자 핵심목적](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6465156288)을 확인했다. 초대/가입→활동캐릭터확인→기존모집그룹/그룹원/특정캐릭터필터→상세/참가/신청이주력이다. [표시설계](../features/groups/discovery/display-contract-proposal.md)에 membership/후보alias·canonical UUID 연결, 독립조회/검색context 구분과 membership변경후 동시무효화/갱신 기준을 추가했다. 별도조합자동화/대리참가/새공개범위는없다. #16은전체13개로새Native댓글없고권한정정대기는해소됐다.
-
-핵심흐름 연결기준은 [#12 전체23번째 Backend · 설계연결/우선순위 회신](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6465215418)에 결과를 게시하고 실제순번/내용을 확인했다. 기능구현인계가 아닌 설계기록이다.
-
-## 다음 실행 — 정정 설계 기준의 구현 구간 준비
-
-- Backend: 현재 승인범위는 Backend구현·격리검증·계약게시이며 실제개발서버/DB반영은별도다. 다음구간은 핵심초대/가입→활동표시→기존모집필터/참가연결과 직접경계검증을 우선인계하고, 그룹해산/추방/대표변경·활성방공통목록/기존레이드보존을 독립진행한다. 관리/복구전체완료를핵심연결선행조건으로두지않는다. UI시안/단순소비회신은 전체선행조건이 아니다.
-- 그룹해산의 실제활성전용방없음 검사는 유지한다. 공통목록에서 방/실제T 공대장을 안내하고 각 레이드공대장이 기존상세에서 정리한다. 그룹장이 다른 공대장 방을 대신 공개전환/강제해산하지 않는다. 실패/불명확=0건금지·원ACK·C/N독립·기존공대장해산조건 유지.
-- Flutter: 실제 DTO 인계때 남은 보석/분석 표시매핑을 대조한다. 1인대다인해산 권한질문은 더이상 대기항목이 아니다. G-RECOVERY(회원disabled/소유/대표문제·유효후임/후임없음복구)만 별도미결정이며 독립기능을 막지 않는다.
-- 그룹탈퇴/추방/소멸후 기존레이드접근/진행/완료/기록보존·신규그룹접근차단·기본15/5·정원초과제한·공개왕복/소속배지는 유지한다.
-- 미완료활동선택로컬89a3248은보존한다. 서버/DB/실행OpenAPI/기능시험·배포·자료변경·Issue종료/merge없음.
-
-## 개발 실행·검증 기준
-
-현재 개발 API sourcec1f86d8/이미지581a1a5e·DB0033·현재178/199/기본116/133. [재신청 구현](../features/recruitment/participation/reapplication-history-fix-plan.md)·[개발 반영](../engineering/operations/reapplication-history-rollout.md)·[공개 집계](../engineering/operations/records/reapplication-history-rollout.json)를 따른다. 고유 격리20PASS, 실행262소스/runtime31/두 계약·HTTP6·READONLY 목록/한도2계정 일치·anchor34/종료근거13·health/주기작업 확인이다. DDL 전후112업무표1,883행/sequence와 기존 DB/환경/키/API 설정을 보존했다.
-
-이번은 Backend코드/후보계약을변경하는그룹구현이며 실제개발DB/실행컨테이너는바꾸지않는다. 기존 기능·실행 검증을 재사용하며 문서 참조/diff·원격/포함 관계를 확인한다. 전체 회귀/DB 복원·실회원 명령·서버 재시작은 반복하지 않는다. DB33에서 구420 API만 단순 복귀하지 않고 자료·구조 유지 전진 수정이다.
-
-## 다음 기능 작업·차후 보완
-
-모집 관련 추가 Backend 구현·시험 요청은 없다. 그룹 신규 요청과 분리한다. [전체190 Native 인수/후속](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437933418)과 [전체191 사용자 정정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6437976324)의 정밀도 소비·개방 알럿·제안 발견성/소켓 등은 [차후 보완 대장](../features/recruitment/follow-up-backlog.md)에 담당·재착수 조건으로 보존했다. 현재 착수/인수 선행 조건이 아니며 사용자와 별도 구간을 재시작할 때 최신 계약/코드·UX 및 새 주제 Issue를 확인한다.
-
-다른 그룹·V2 분쟁·생명주기·활동 선택/통계 등의 열린 주제는 [ISSUE_TRACKER](ISSUE_TRACKER.md)를 따른다. 이번 준비로 다른 Issue를 종료하지 않으며 그룹 구현은 다음 구현 구간에서 제안/정책 차이를 확인한 뒤 진행한다. IF-001/002/003 비활성·구명령/자료/원pending·ACK 보존과 별도 성능/실회원 원ACK 키 검증·출시 경계는 유지한다. Native 시험 순서와 구현 내부 이력은 Native가 관리한다. 과거 완료/결정/오류·사용자 정정은 [DEV_LOG](DEV_LOG.md)에 누적 보존한다.
+모집1차인수/Issue13종료는유지하고차후정밀도/알럿/UX/소켓은 [보완대장](../features/recruitment/follow-up-backlog.md)을따른다. 다른Issue상태는 [추적표](ISSUE_TRACKER.md), 완료/결정/실패·게시이력은 [DEV_LOG](DEV_LOG.md)에보존한다. IF-001/002/003 비활성·원자료/pending/ACK·별도성능/실회원원ACK 검증경계는유지한다.

@@ -46,10 +46,12 @@ def selection(db,uid,cid,role):
     return result
 
 
-def group_stamp(db,gid):
+def group_stamp(db,gid,*,retained=False):
     if gid is None:return None
     group=db.get(Group,gid)
-    if group is None or group.ended_at is not None:fail('GROUP_NOT_FOUND',404)
+    if group is None or group.ended_at is not None:
+        if retained:return [str(gid),group.revision if group else None,group.members_revision if group else None,'ended' if group else 'unavailable']
+        fail('GROUP_NOT_FOUND',404)
     return [str(group.id),group.revision,group.members_revision]
 
 
@@ -61,7 +63,7 @@ def policy(db,room):
                      core.room_count(db,uid),core.limits.joined_group_count(db,uid)])
     settings=db.get(RoomSettings,room.id)
     return digest([str(room.id),room.revision,room.members_revision,room.plan_revision,
-        settings.revision if settings else None,group_stamp(db,room.group_id),rows])
+        settings.revision if settings else None,group_stamp(db,room.group_id,retained=True),rows])
 
 
 def creation(db,uid,cid,role,items,gid,stamp):
