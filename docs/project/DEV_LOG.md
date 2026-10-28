@@ -2895,3 +2895,9 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 
 - 설계 구간92c1702f84720ce76789f100bf0acdb1efd29c82를 feat/group-management에 commit/push·원격일치확인했다. [#12 전체20번째 Backend · 표시조회계약제안](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6464713065), [#16 전체10번째 Backend · 관리/레이드계약제안](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464713503) 게시후전체순번·작성측·본문확인, 기존본문보존하며상단현재범위/설계상태/다음담당을갱신했다. 양Issue OPEN이며새Issue/종료없음. 같은구간후행게시기록을묶어보존한다.
 - 다음Flutter는표시소비차이·그룹장1인해산제한범위를대조하고 Backend는명세보완/다음구현구간준비다. 자격상실복구질문은별도이며독립기능전체대기아니다. 테스트요청/서버반영/배포/merge없음; main/dev1b6f57b·현재개발실행기록유지.
+
+## 2026-10-28 — Native 검토·사용자확정 레이드권한 정정 수신
+
+- 공식 #12본문/전체21댓글·#16본문/전체12댓글 재조회. [#12 전체21 Flutter](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6464852611)는 opt-in/현재membership·역할분리/null·과거subject금지·배지합집합/활동시각 방향에 현재제품차단없음, 보석snapshot/labels동등지원은DTO인계때대조·독립구현차단아님을 회신했다. Penpot/7eeca229은Native자체보고·사용자검토전이다.
+- #16 전체11 Flutter의1인/다인해산질문대기는 [전체12 Flutter 사용자확정](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464943488)으로대체됐다. 그룹원누구나현재조건으로개설·해당레이드공대장관리이며 그룹장이전은레이드권한을바꾸지않는다. 이전요청/초안의그룹장전용context/make-public/end·GroupRoomDTO/토큰·시험을같은문서에서제외/교체했다. 초기92c1702/댓글은이력보존하며현재개발범위아니다.
+- 그룹해산활성방검사/공통목록·실제T공대장안내/각공대장기존상세정리·추방/대표/기존참가보존·정원/공개왕복/배지는유지한다. 복구승계만미결정이며독립구현전체대기아니다. 수신/정정문서작업만수행·기능구현/DDL/실행OpenAPI/서버·DB/실회원/기기/배포/자료변경·Issue종료없음. 결과는같은#16에회신한다.

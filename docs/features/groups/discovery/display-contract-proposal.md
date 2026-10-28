@@ -6,6 +6,12 @@
 
 **설계 제안이며 현재 제공 API·실행 OpenAPI가 아니다.** 사용자 승인 범위는 이번 설계와 Issue 제안 게시까지다. 구현·migration·서버 반영·Flutter 적용·기기 인수는 미완료다.
 
+## Native 검토 회신
+
+[#12 전체21번째 Flutter · 제안 검토](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6464852611)에서 opt-in profile/현재 membership·역할별성공과현재오류·nullable/과거subject연결금지·배지합집합·실제쓰기활동시각에 현재 제품 차단 충돌이 없음을 확인했다. 계약제안접수이며 최종DTO/구현/실행OpenAPI·기기인수 완료는 아니다.
+
+기존 카드의 gemValidationSnapshot과 활동캐릭터 integrity displayLabels의 동등표시는 아직 미확정이다. 실제 DTO 인계 때 필요한 코드/차이를 대조하며 저장없는 보석정상 합성·개인정보확대는 하지 않는다. 이 대조는 독립 조회/집계 전체의 차단조건이 아니다. Native Penpot1차/Flutter기록7eeca229은 자체보고이며 사용자검토전·기능구현/기기인수아니다.
+
 ## 기준과 현재 차이
 
 - 요청: [Issue12 전체19번째 Flutter · 명세/개발 요청](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6464116834). 이전 전체18의 계약확인 전용 단계는 최신 요청으로 대체됐다.

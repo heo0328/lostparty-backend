@@ -12,4 +12,6 @@
 
 ## 1차 보완 설계 — 구현 전
 
-2026-10-28 사용자 승인 설계는 [표시·활동 캐릭터·요청 집계](discovery/display-contract-proposal.md)와 [관리·레이드 제한권한](management/phase-one-contract-proposal.md)으로 구분한다. 기존 제공 기능을 대체하지 않는 계약 제안이며 실행 OpenAPI·서버 구현/기기 인수 완료가 아니다.
+2026-10-28 사용자 승인 설계는 [표시·활동 캐릭터·요청 집계](discovery/display-contract-proposal.md)와 [관리·레이드 생명주기](management/phase-one-contract-proposal.md)으로 구분한다. 기존 제공 기능을 대체하지 않는 계약 제안이며 실행 OpenAPI·서버 구현/기기 인수 완료가 아니다.
+
+최신 [#16 전체12번째 Flutter 사용자 확정](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464943488): 그룹원 누구나 현재 조건으로 개설하며 해당 레이드 공대장이 관리한다. 그룹장 전용 공개전환/해산 명령은 제외하고 방/공대장 안내와 기존 상세를 사용한다.

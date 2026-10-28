@@ -1,4 +1,4 @@
-# 그룹 관리·그룹장 레이드 제한권한 1차 계약 제안
+# 그룹 관리·레이드 생명주기 1차 계약 제안
 
 2026-10-28 / Backend / `feat/group-management` / G-MANAGE·G-RAID 1차 설계.
 
@@ -6,36 +6,40 @@
 
 **현재 제공 기능이 아닌 설계 제안이다.** 이번 사용자 승인 구간은 문서·Issue 계약 제안까지이며 HTTP 구현·DDL·실행 OpenAPI·서버/DB·배포·기기 인수는 변경하지 않는다. 조건부 해산을 지금 활성화했다는 뜻이 아니다.
 
+## 최신 정책 정정 — 기존 제안의 같은 항목 교체
+
+[Issue16 전체12번째 Flutter · 사용자 확정 정정](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464943488)이 초기 개발 요청과 이 문서92c1702의 그룹장 제한명령 제안을 대체한다. **그룹원 누구나 기존 membership/캐릭터/한도 조건으로 그룹전용 레이드를 개설하고 해당 레이드 공대장이 관리한다.** 그룹장 지위만으로 비참가 방의 공개전환/해산 권한을 주지 않는다. 그룹장 이전은 레이드 공대장을 바꾸지 않는다.
+
+그룹장용 command-context/make-public/end 신규 경로·GroupRoomCommand/ACK·해당 토큰/권한/시험은 개발 범위에서 제외했다. 마지막1인 대 다인강제종료 선택은 더 이상 대기 질문이 아니다. 초기 제안은 고정커밋/기존댓글에 이력으로 보존하며 현재 구현 기준으로 쓰지 않는다. 실제 현재 API 구현은 이번에도 변경하지 않는다.
+
 ## 기준·문제·기존 구현
 
 근거는 [Issue16 전체9번째 Flutter 개발 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464117245), [전체8번째 그룹 소멸 후 방 보존 정정](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6463878563), [설계39 f04f482e](https://github.com/heo0328/LostParty_flutter/blob/f04f482e/docs/backend-migration/39-group-flutter-integration-design.md), 같은 커밋의 [제품 §13/14](https://github.com/heo0328/LostParty_flutter/blob/f04f482e/docs/product/GROUP_PRODUCT_FLOW.md)·[모집37](https://github.com/heo0328/LostParty_flutter/blob/f04f482e/docs/backend-migration/37-raid-scheduling-and-multi-raid-planning.md)다. Backend 대조는 main/dev1b6f57b·그룹준비ea52e56이다.
 
-관리GET·즉시 이전·일반탈퇴는 이미 제공된다. Group.ended_at/과거membership/FK, 그룹 명령 runner·game-mutations-v1 잠금·멱등 ACK를 재사용한다. 현재는 disband=false/STATE_UNAVAILABLE, 추방·대표변경·비참가 그룹장 관리 API는 없다.
+관리GET·즉시 이전·일반탈퇴는 이미 제공된다. Group.ended_at/과거membership/FK, 그룹 명령 runner·game-mutations-v1 잠금·멱등 ACK를 재사용한다. 현재는 disband=false/STATE_UNAVAILABLE, 추방·대표변경 API는 없다. 비참가 그룹장 전용 레이드 명령은 최신정책상 개발하지 않는다.
 
-실제 two-cycle 모집 원장은 존재하지만 일반 공통명령은 참가자와 공대장 자격을 함께 요구한다. 또한 cycle_lifecycle.qualify가 현재 그룹소속까지 검사해 단순탈퇴 후 기존진행 보존과 충돌할 수 있다. 기존함수의 권한검사를 제거해 전부 열지 않고 권한과 상태변경 책임을 분리한다. 표시 조회는 [G-DISPLAY 제안](../discovery/display-contract-proposal.md)을 따른다.
+실제 two-cycle 모집 원장은 존재하지만 일반 공통명령은 참가자와 공대장 자격을 함께 요구한다. 또한 cycle_lifecycle.qualify가 현재 그룹소속까지 검사해 단순탈퇴 후 기존진행 보존과 충돌할 수 있다. 기존함수의 권한검사를 제거해 전부 열지 않고 신규 그룹 접근과 기존 레이드 관계의 권한을 구분한다. 표시 조회는 [G-DISPLAY 제안](../discovery/display-contract-proposal.md)을 따른다.
 
 ## 권한과 제안 API
 
 | 동작 | 현재 그룹장 | 일반 그룹원 | 비그룹 기존 레이드 참가자 |
 |---|---|---|---|
 | 그룹 해산/추방/대표변경 | 아래 조건/CAS 충족 시 허용 | 불가 | 불가 |
-| 그룹장 전용방 목록/context | 허용, 방 비참가도 가능 | 불가 | 불가 |
-| 그룹장 권한의 공개전환/모집해산 | 대상·상태·최종조건 충족 시 허용 | 불가 | 불가 |
+| 현재 그룹전용 방 목록·기존 상세 진입 | 현재 그룹원 범위 | 같은 현재 그룹원 범위 | 기존 레이드관계의 상세 접근만 |
+| 그룹전용 레이드 개설 | 기존 membership/캐릭터/한도 조건 | 같은 조건 | 현재 그룹원 아니면 불가 |
+| 공개전환/모집해산 | 해당 레이드 공대장/실제T 권한일 때만 | 같은 레이드 권한 | 기존 레이드 역할/실제T 정책 |
 | 기존 레이드 상세/진행/완료/탈퇴 | 원래 레이드 역할로 별도 판정 | 같음 | 현재 레이드 관계/독립 자격으로 판정 |
 | 레이드 승인/편성/캐릭터변경/일정·완료 | 그룹장 지위로 추가 허용하지 않음 | 기존 레이드 계약 | 기존 레이드 계약 |
 
 | Method·경로(제안) | 입력/응답 |
 |---|---|
-| `GET /v1/groups/{group_id}/management?management_profile=group-management-1` | 기존 관리정보 + 해산 판정·추방/대표변경/방관리 permissions. 생략 시 기존 DTO 그대로 |
+| `GET /v1/groups/{group_id}/management?management_profile=group-management-1` | 기존 관리정보 + 해산 판정·추방/대표변경 permissions. 생략 시 기존 DTO 그대로 |
 | `POST /v1/groups/{group_id}/disband` | 아래 GroupCAS → GroupDisbandAck |
 | `POST /v1/groups/{group_id}/members/{membership_id}/remove` | GroupCAS + expected_target_membership_revision → GroupRemoveAck |
 | `PUT /v1/groups/{group_id}/representative` | GroupCAS + 기존 CharacterSelection → GroupRepresentativeAck |
-| `GET /v1/groups/{group_id}/raid-rooms` | limit/cursor → GroupRaidRoomPage |
-| `GET /v1/groups/{group_id}/raid-rooms/{room_id}/command-context?command=make_public\|end` | 현재 actor·그룹/방·실제영향C/N의 읽기전용 context |
-| `POST /v1/groups/{group_id}/raid-rooms/{room_id}/make-public` | GroupRoomCommand → GroupRoomAck |
-| `POST /v1/groups/{group_id}/raid-rooms/{room_id}/end` | GroupRoomCommand → GroupRoomAck |
+| `GET /v1/groups/{group_id}/raid-rooms` | limit/cursor → GroupRaidRoomPage(현재 그룹원 공통 목록) |
 
-새 그룹 관리 경로의 미지 query/body 필드·중복query/잘못된 enum은400이다. management_profile 생략은 기존 disband=false DTO를 유지하며 신규 기능 소비자는 프로필을 명시한다. 신규 방관리 경로는 실제 two-cycle 원장이 준비된 실행에만 제공하고 기본0023 앱에 원장없는 우회동작을 추가하지 않는다. 구현 시 두 OpenAPI를 각 프로필과 대조한다.
+그룹 방 목록은 현재 그룹원 공통 열람이며 신규 그룹장용 관리명령을 제공하지 않는다. 새 그룹 관리 경로의 미지 query/body 필드·중복query/잘못된 enum은400이다. management_profile 생략은 기존 disband=false DTO를 유지하며 신규 기능 소비자는 프로필을 명시한다. 신규 방 목록은 실제 two-cycle 원장이 준비된 실행에만 제공하고 기본0023 앱에 원장없는 우회동작을 추가하지 않는다. 구현 시 두 OpenAPI를 각 프로필과 대조한다.
 
 ### 공통 DTO·오류·명령 책임
 
@@ -46,7 +50,7 @@
 - 정상 실행 권한을 재검증한 뒤 game-mutations-v1 잠금·동일 DB 트랜잭션에서 효과/사용량/revision/활동시각/ACK를 원자 확정한다. ACK 저장/최종가드 실패는 모두 rollback한다. 외부 I/O는 없다.
 - 과거 성공 replay는 현재 membership/리더 재승격을 요구하지 않는다. actor·원명령·원대상·과거 membership 소유 증거를 검사하고 저장된 최소 ACK만 복구한다. 탈퇴/해산/이전/재가입 후 새 관계는 건드리지 않는다.
 
-## 해산 판정과 동일한 그룹장 관리 목록
+## 해산 판정과 동일한 그룹원 공통 방 목록
 
 공통 평가 함수는 그룹에 연결된 모집 원본에서 `clear / blocked / unavailable`과 `blocking_room_count: int|null`, `evidence_revision`을 계산한다. unavailable의 count는 null이고 disband.allowed=false/reason=GROUP_RECRUITMENT_STATE_UNAVAILABLE이다. 방 원본 조회의 실제 DB오류는503이며 빈목록200으로 바꾸지 않는다.
 
@@ -55,9 +59,9 @@
 3. 원장 migration_state=ready·explicit provenance와 실제 cycle/generation/round 연결을 확인한다. 세대없음/review_required/레거시 미검증·연결모순은 unavailable이다. 미확인 방도 관리 목록에서 누락하지 않고 review 항목으로 제공한다.
 4. 실제 C/N row·세대와 지속 방 상태를 사용한다. 현재 페이지에 없거나 해당주차가 미개방인 것은 종료 증거가 아니다. 과거의 미완료/불명확 방도 지속 방이 종료/보관으로 입증되지 않으면 차단한다. 다른 주차를 C/N 별칭으로 변환하지 않는다.
 
-방 목록은 위 차단/미확인 대상 방을 room_id당 한 번 제공한다. 실제T별 상태는 nested targets이며 `room_cycle_id/target_cycle_key/generation/target_revision/state`를 포함한다. 과거 미확인은 해당 실제키와 검토 사유로만 표시하며 현재 명령대상으로 승격하지 않는다. 루트는 `group_id/group_revision/members_revision/evaluated_at/evidence_revision/state/blocking_room_count/items/next_cursor`다. item은 `room_id/title/scope/group_id/room_revision/state/reason/targets/permissions`이고 참가자 상세·신청명단/시간표는 공개하지 않는다.
+방 목록은 위 차단/미확인 대상 방을 room_id당 한 번 제공한다. 실제T별 상태는 nested targets이며 `room_cycle_id/target_cycle_key/generation/target_revision/state`를 포함한다. 과거 미확인은 해당 실제키와 검토 사유로만 표시하며 현재 명령대상으로 승격하지 않는다. 루트는 `group_id/group_revision/members_revision/evaluated_at/evidence_revision/state/blocking_room_count/items/next_cursor`다. item은 `room_id/title/scope/group_id/room_revision/state/reason/targets`이다. 각 실제T target에 기존 공개용 `leader_display`(이름/서버/직업 또는 null)와 현재T 상세 진입 가능 여부를 제공한다. 그룹해산 안내에서 그룹장이 타 공대장에게 정리를 요청할 수 있도록 안내하되 전역 user_id·신청명단/개인시간표는 공개하지 않는다. 상세 진입은 기존 접근권한을 그대로 재검사한다.
 
-목록은 created_at DESC·room_id DESC, limit기본20/최대50, 전체평가 후 페이지를 자른다. cursor는 actor/session·현재 그룹장 membership/revision·그룹 revision·전체 방/세대/evidence·limit에 결합한다. 권한변경은403, 자료변경은409 CURSOR_STALE이다. 목록 count와 해산 검사는 같은 스냅샷에서 같은 집합을 계산하며 모든 변경 명령은 잠금 뒤 다시 계산한다.
+목록은 created_at DESC·room_id DESC, limit기본20/최대50, 전체평가 후 페이지를 자른다. cursor는 actor/session·현재 조회자 membership/revision·그룹 revision·전체 방/세대/evidence·limit에 결합한다. 권한변경은403, 자료변경은409 CURSOR_STALE이다. 목록 count와 해산 검사는 같은 스냅샷에서 같은 집합을 계산하며 모든 변경 명령은 잠금 뒤 다시 계산한다.
 
 ## 그룹 명령 상태 전이·원자성
 
@@ -85,35 +89,14 @@ GroupRemoveAck: `group_id/membership_id/membership_revision/group_revision/membe
 
 그룹 revision/directory/활동시각·ACK만 갱신한다. members_revision과 기존 membership revision은 바꾸지 않는다. GroupRepresentativeAck: `group_id/group_revision/character_id/representative{display,status}/changed_at/outcome(applied|noop)`. noop changed_at은 null이다. 새로운 GET에서 현재 needs_update를 다시 판정하며 과거ACK valid를 현재자격으로 쓰지 않는다.
 
-## 그룹장 레이드 제한 명령
+## 그룹원 개설·기존 레이드 공대장 관리 재사용
 
-그룹장 권한 검사와 모집 상태변경을 분리한다. 기존 cycle_common의 참가 actor/authority를 새 그룹장에게 가짜로 생성하지 않는다. 그룹전용 원본 방·그룹장·허용 동작을 먼저 검사하고, 기존 effect 계산/예약·점유·신청·ACK 원자성은 재사용한다.
-
-### context와 CAS
-
-context 응답: `group_id/group_revision/members_revision/actor_membership_id/actor_membership_revision/room_id/room_revision/command/expected_cycle_key/impact_cycles/permissions/evidence_revision/context_token/issued_at/expires_at`.
-
-impact_cycles에는 현재 실제 C/N의 cycle_id/key/generation·target/members/plan/leadership revisions 및 영향 assignment/reservation/pending 개수, 방 종료 시 대상 persistent membership ID/revision을 포함한다. 미개방이면 영향대상에 가짜row를 만들지 않는다. C/N 밖 활성효과나 검토상태가 있으면 실행불가 사유로 제공한다.
-
-토큰은 기존 opaque 서명을 재사용하되 새 operation namespace를 사용한다. actor/session·현재그룹장membership/역할·그룹/CAS·scope/group link·방/CN원본·유효한도·정확한명령/영향을 결합한다. 만료는120초와 주차경계 중 이른시각이며 response에 명시한다. GET이 DB에 명령/세대/default를 만들지 않는다.
-
-GroupRoomCommand 필수: GroupCAS + `expected_cycle_key/expected_room_revision/context_token`. 대상과 operation은 경로에서 결정되며 임의 target_user_id·title·scope·group_id 변경필드는 받지 않는다. stale409 TARGET_CONTEXT_STALE/REVISION_CONFLICT, 만료409 COMMAND_CONTEXT_EXPIRED, 주차변경409 CYCLE_CHANGED. 최종 ACK 저장 직전 만료/주차·업무기한을 다시 검사한다.
-
-### 공개 전환
-
-현재 그룹전용 방만 `scope=public`으로 바꾼다. 연결 group_id·제목·신청·참가/역할·일정·C/N 설정은 보존한다. 완료보관/종료방은409 ROOM_NOT_ACTIVE. 기존 소유/한도·검토상태 제한은 필요한 현재 동작별 정책을 적용하며 신규 대표 캐릭터 선택은 요구하지 않는다.
-
-현재 그룹장이 비참가자여도 허용하지만 일반 공대장 권한을 얻지는 않는다. 공개된 방은 관리 차단목록에서 빠지며 재차 group장 권한의 새key 호출은409 GROUP_ROOM_NOT_GROUP_ONLY. 동일key 원ACK는 복구한다. 공개→그룹전용 왕복은 기존 공대장 경로/그룹불변 정책을 유지한다.
-
-### 모집 해산
-
-**기존 ‘마지막 참가자 방 해산’의 인원 제한을 유지한다.** 전체 지속 membership이1명이고 C/N에 다른 실제참가/활성배정이 없어야 한다. 2명 이상이면409 ROOM_LAST_MEMBER_REQUIRED이며 그룹장이 다수 참가자를 일괄 제거하는 새 기능을 만들지 않는다.
-
-비참가 그룹장은 명령 actor일 뿐이며 기존 유일 참가자를 사칭하지 않는다. 효과 계산은 유일 지속membership을 별도 대상으로 명시하고 C/N 실제배정·예약/주간점유·pending·방종료를 기존 해산 방식대로 처리한다. 완료 기록은 보존한다. 대상/원장 불명확·기존 해산의 상태/기한/독립자격 거절은 그대로 유지한다. 0명/일관성 불명확은 ROOM_REVIEW_REQUIRED로 보류하며 자동수정하지 않는다.
-
-이는 참가인원 제한을 늘리는 제안이 아니라 #16이 요청한 비참가그룹장 권한을 기존1인해산 효과에 연결하는 제안이다. 네이티브가 요청한 ‘모집해산’이 다인 방 강제종료까지 뜻한다면 정책변경으로 별도 질문하며 그 범위는 구현하지 않는다.
-
-GroupRoomAck: `command_id/group_id/room_id/command/outcome/executed_at/room_revision/room_ended/affected_cycle_keys/revisions`. 현재 권한·명단은 넣지 않는다. 이전후 과거그룹장 key의 과거성공복구는 가능하되 새context/새명령은 거절한다. 그룹 activity/directory·실제영향 cycle directory·사용량/주간원장 head를 효과에 맞게 함께 갱신한다.
+- 현재 그룹원은 그룹장/일반멤버 구분 없이 기존 생성 context/POST로 개설한다. 최신 membership·현재선택/소유/생명주기·유효한도 검사는 그대로다. 그룹 가입만으로 레이드 참가를 생성하지 않는다.
+- 공개범위·신청 승인·편성·완료·해산은 기존 실제T/세대의 공대장 및 해당 동작 권한을 그대로 사용한다. 다른 레이드의 공대장이라는 이유로 해당T 권한을 얻지 않는다.
+- 그룹장 이전은 group의 역할만 바꾸며 기존 C/N 레이드 공대장·원ACK·참가관계를 변경하지 않는다. 그룹장 명목의 새 역할·토큰·명령 namespace를 추가하지 않는다.
+- 활성 전용방 때문에 그룹해산이 막히면 공통 방 목록과 실제T의 공대장 표시를 안내한다. 정리는 각 레이드 공대장이 기존 상세의 공개전환/해산 명령으로 수행하고 그룹장은 최신 그룹해산 판정을 다시 조회한다.
+- 일반 공대장의 기존 마지막1인·실제참가·상태/기한·CAS/원ACK 조건은 유지한다. 다인방강제종료·그룹장에 의한 다른참가자 명령대행·자동공개전환은 추가하지 않는다.
+- 한 방이 public으로 전환되면 그룹해산 차단집합에서 빠지지만 그룹연결·참가·기록은 보존한다. 다시group으로 전환되는 경쟁은 기존 명령과 그룹해산을 같은 잠금/최신그룹상태로 검증한다. 종료그룹으로 새group전환은 거절한다.
 
 ## 그룹 소멸·탈퇴 후 기존 레이드 보존
 
@@ -143,7 +126,7 @@ cycle_lifecycle.qualify·공통설정 linked_group·검색/상세 접근·출력
 2. 제품의 ‘유효한 다음 가입멤버’가 요구하는 회원/소유/한도조건·동일joined_at tie-break·기존정원 수용불가 시 처리. 대표/활동문제만으로 후임을 제외할지 임의 결정하지 않는다.
 3. 유효후임없음은 자동삭제/운영자승격 없이 복구필요 유지. 누가 어떤 복구를 요청할지 후속제품결정이 필요하다.
 
-이 질문은 G-DISPLAY·조건부해산/추방/대표변경·제한방관리의 독립 구현을 막지 않는다.
+이 질문은 G-DISPLAY·조건부해산/추방/대표변경·공통방안내의 독립 구현을 막지 않는다.
 
 ## 대표 예시
 
@@ -169,22 +152,22 @@ cycle_lifecycle.qualify·공통설정 linked_group·검색/상세 접근·출력
 }
 ```
 
-그룹장 방 context에서 permissions는 `make_public/end` 각각 `{allowed,reason}`다. 다인방은 make_public.allowed=true일 수 있어도 end.allowed=false/ROOM_LAST_MEMBER_REQUIRED이며 그룹 해산 자체는 blocked다. 미확인 원장은 blocking_room_count=null/state=unavailable이며 clear와 구분한다.
+관리GET의 disband 판정은 `{allowed,reason}`다. 활성방이 있으면 그룹해산은 blocked다. 일반멤버도 공통 목록에서 방과 실제T 공대장을 볼 수 있으나 그룹장 지위의 make_public/end 권한은 없다. 미확인 원장은 blocking_room_count=null/state=unavailable이며 clear와 구분한다.
 
 ## 구현·검증·인계 순서
 
 1. 이 명세와 표시명세를 각 #16/#12에 제안 게시. 제품차이/복구질문만 분리하고 UI시안/동일기초시험 회신을 전체구현 선행조건으로 추가하지 않는다.
 2. nullable 활동시각/표시근거 등 필요한 최소 후속 migration은 실제 구현시 최신head에서 정한다(현재0033). 이번에0034를 선점하거나 적용하지 않는다. 기존행·FK·과거ACK·sequence/자료는 보존한다.
-3. 그룹 원자명령·모집 공통효과/권한분리·동일활성방판정·표시profile·원장접근/배지 소비를 함께 구현한다. 원본 OpenAPI는 구현과 함께 합의범위만 반영한다.
+3. 그룹 원자명령·기존 레이드 권한보존·동일활성방판정·표시profile·원장접근/배지 소비를 함께 구현한다. 원본 OpenAPI는 구현과 함께 합의범위만 반영한다.
 4. 아래 직접경계 시험과 두실행프로필 계약을 검증→의미있는 작업구간 commit/push→원격확인→같은Issue 고정SHA/검증/미확인 인계. 개발서버 반영·Flutter연결·실기기·운영은 구분한다.
 
 구현시 검증할 항목(이번 설계에서 실행하지 않음):
 
-- 현재그룹장/일반멤버/비참가그룹장/탈퇴그룹장·타그룹/위조membership·다른operation token·과다권한 없음.
+- 현재그룹장/일반멤버의동등개설·공통목록·타그룹/위조membership 거절, 비참가그룹장은공대장명령거절·그룹장이전후레이드리더불변.
 - 마지막1인/pending실효만료/코드폐기·동시가입/이전/해산/추방/방생성/공개왕복/정원한도변경·group/members/CN CAS.
 - 활성C만/N만/양T·완료보관/미완료/다음세대/review/원장없음/DB오류·부분페이지·본인참가검색제외에도 동일해산판정.
 - ACK실패/최종만료/주차전환 rollback·응답유실 원key·다른본문·이전/재가입 뒤과거ACK·no-op 활동시각/사용량보존.
 - 그룹탈퇴/추방/실제소멸후 기존상세·공대장진행·일정·완료·탈퇴/기록 유지, 다른T신규참가/검색/신청은차단·public origin 예외/공개방정책·전체참가자배지.
-- 2명이상 방강제종료 거절·1인C/N종료 효과·예약/점유/신청 원자성·완료기록 보존·독립회원/소유/한도제한 유지.
+- 그룹장 전용명령경로미제공·공대장기존해산조건유지·공개왕복/그룹해산경쟁·원ACK/완료기록 보존·독립회원/소유/한도제한 유지.
 
 이번 실제 검증은 소스/고정원문 대조·문서경로/JSON예시·git diff 검사다. 서버/DB/새합성기능시험·회원명령·배포·자료삭제/복원·Flutter기기시험은 미실행이다.
