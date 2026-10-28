@@ -2892,3 +2892,6 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - 이번은 문서/소스대조·JSON예시/링크/diff 검증이다. 신규 기능시험·두런타임계약실행·서버/DB/migration·실회원/기기·배포·자료삭제는 실행하지 않는다. 아래에 commit/push·제안게시 링크/실제댓글순번을 마감기록한다.
 
 - 설계 검증 통과: check_documentation.py(240Markdown/상대링크·앵커2488/보존원문128/고정JSON20/기존API199분류), 신규JSON예시4개 파싱·git diff --check. 신규2문서를 포함한 문서변경만 존재하며 app/alembic/openapi/tests HEAD대비 동일이다. 원격fetch후그룹HEAD/원격ea52e56일치·main/dev1b6f57b동일을확인했다.
+
+- 설계 구간92c1702f84720ce76789f100bf0acdb1efd29c82를 feat/group-management에 commit/push·원격일치확인했다. [#12 전체20번째 Backend · 표시조회계약제안](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6464713065), [#16 전체10번째 Backend · 관리/레이드계약제안](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464713503) 게시후전체순번·작성측·본문확인, 기존본문보존하며상단현재범위/설계상태/다음담당을갱신했다. 양Issue OPEN이며새Issue/종료없음. 같은구간후행게시기록을묶어보존한다.
+- 다음Flutter는표시소비차이·그룹장1인해산제한범위를대조하고 Backend는명세보완/다음구현구간준비다. 자격상실복구질문은별도이며독립기능전체대기아니다. 테스트요청/서버반영/배포/merge없음; main/dev1b6f57b·현재개발실행기록유지.

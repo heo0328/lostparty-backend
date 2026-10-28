@@ -2,6 +2,8 @@
 
 2026-10-28 / Backend / `feat/group-management` / G-DISPLAY 1차 설계.
 
+게시: 설계 고정 `92c1702` push·원격일치 후 [전체20번째 Backend · 계약 제안](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6464713065) 게시·실제순번 확인. 다음 Flutter 소비/정책차이대조·Backend 명세보완이며 구현/기기 인수는 미완료다.
+
 **설계 제안이며 현재 제공 API·실행 OpenAPI가 아니다.** 사용자 승인 범위는 이번 설계와 Issue 제안 게시까지다. 구현·migration·서버 반영·Flutter 적용·기기 인수는 미완료다.
 
 ## 기준과 현재 차이

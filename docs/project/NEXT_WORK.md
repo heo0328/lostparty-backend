@@ -6,6 +6,12 @@
 
 기준은 [#12 전체19번째 Flutter · 표시 조회 개발 요청](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6464116834), [#16 전체9번째 Flutter · 관리 1차 개발 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464117245), 원격 고정설계 f04f482e·제품 그룹정책/모집37이다. 현재 코드와 대조한 [표시 조회 제안](../features/groups/discovery/display-contract-proposal.md)·[관리/레이드 제안](../features/groups/management/phase-one-contract-proposal.md)을 기준으로 이어간다. 게시 결과와 실제 댓글 순번은 아래 인계기록 및 DEV_LOG에 남긴다.
 
+## 게시·인계 상태
+
+설계 고정 SHA `92c1702f84720ce76789f100bf0acdb1efd29c82`를 같은 그룹 브랜치에 commit/push하고 원격 일치를 확인했다. [#12 전체20번째 Backend · 표시조회 계약 제안](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6464713065)과 [#16 전체10번째 Backend · 관리/레이드 계약 제안](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464713503)을 게시하고 실제순번/내용을 재조회했다. 양 Issue 본문 상단은 현재범위·설계제안/구현미완료·다음담당으로 갱신하고 과거본문을 보존했다. Issue는 OPEN이다.
+
+이번 문서검사·예시JSON4개·diff검사는 통과했고 기능시험/서버반영·Flutter기기인수는 미실행이다. 후행 게시/링크 기록도 이 목적 브랜치에서 보존한다. 다음 담당은 Flutter의 구체소비/정책차이대조와 Backend 명세보완·차기구현준비다.
+
 ## 다음 실행 — 제안 계약 대조 후 구현 구간
 
 - Backend: 같은 그룹 목적 브랜치에서 위 두 제안·최신 Issue 회신을 확인한다. 이번 사용자 지시는 설계까지이므로 현재 새 기능 구현/서버반영을 시작하지 않는다. 다음 구현 구간에서는 확정 범위부터 코드/최소 migration/두 OpenAPI·직접경계 검증을 진행하고 UI시안·단순소비회신을 전체 선행조건으로 두지 않는다.

@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-2026-10-28 기준. main/dev 공통기준 `1b6f57b`, 현재 checkout은 `feat/group-management`다. **그룹 1차 표시조회·관리/레이드 계약 제안 문서 구간**이며 현재 API 구현은 바꾸지 않았다. [표시 조회 설계](../features/groups/discovery/display-contract-proposal.md)·[관리/레이드 설계](../features/groups/management/phase-one-contract-proposal.md)·[NEXT_WORK](NEXT_WORK.md)를 따른다. 자격상실 정리/복구승계는 사용자 선택에 따라 미결정으로 분리한다. 미완료 활동선택 로컬브랜치와 실제 개발 API/DB는 보존한다.
+2026-10-28 기준. main/dev 공통기준 `1b6f57b`, 현재 checkout은 `feat/group-management`다. **그룹 1차 표시조회·관리/레이드 계약 제안 문서 구간**이며 현재 API 구현은 바꾸지 않았다. [표시 조회 설계](../features/groups/discovery/display-contract-proposal.md)·[관리/레이드 설계](../features/groups/management/phase-one-contract-proposal.md)·[NEXT_WORK](NEXT_WORK.md)를 따른다. 설계92c1702 push·[#12 전체20 Backend](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6464713065)/[#16 전체10 Backend](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464713503) 제안게시 완료이며 다음은 소비/정책차이대조·명세보완이다. 자격상실 정리/복구승계는 사용자 선택에 따라 미결정으로 분리한다. 미완료 활동선택 로컬브랜치와 실제 개발 API/DB는 보존한다.
 
 레이드 모집 1차 구현·보고된 정상 흐름/표시의 사용자 기기 인수 완료, [Issue13 전체192 Backend 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6438046779)으로 closed/completed다. 모집 관련 추가 Backend 요청은 없다. 차후 정밀도 소비·알럿·UX/소켓 등은 [보완 대장](../features/recruitment/follow-up-backlog.md)에 보존하며 현재 착수/인수 선행 조건이 아니다. 이전 미완료/종료 차단 판단과 사용자 정정은 [DEV_LOG](DEV_LOG.md)에서 확인한다.
 
