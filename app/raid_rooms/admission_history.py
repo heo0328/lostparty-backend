@@ -24,7 +24,7 @@ def resolve(db,target,persistent):
     if 'admission_history_head' not in db.info:
         db.info['admission_history_head']=db.scalar(text('SELECT version_num FROM public.alembic_version'))
     head=db.info['admission_history_head']
-    if head not in ('0031_membership_actions','0032_beta_recruitment',HEAD):return None
+    if head not in ('0031_membership_actions','0032_beta_recruitment',HEAD,'0034_group_features'):return None
     cm=db.scalar(select(CycleMember).where(CycleMember.cycle_id==target.id,CycleMember.generation==target.generation,
         CycleMember.membership_id==persistent.id).order_by(CycleMember.joined_order.desc().nullslast(),CycleMember.id.desc()))
     if cm is None or cm.state not in ('cancelled','removed'):return None
@@ -37,7 +37,7 @@ def resolve(db,target,persistent):
     if event is None or not rows or any(a.state not in ('left','completed') or a.ended_at is None for a in rows):fail('TARGET_CONTEXT_STALE')
     recorded={v.get('id') for v in event.evidence.get('assignments',[])}
     if recorded!={str(a.id) for a in rows}:fail('TARGET_CONTEXT_STALE')
-    if any(a.state=='completed' for a in rows) and head!=HEAD:
+    if any(a.state=='completed' for a in rows) and head not in (HEAD,'0034_group_features'):
         fail('RECRUITMENT_COMMAND_NOT_READY',503)
     return Reentry(cm,event,tuple(rows))
 

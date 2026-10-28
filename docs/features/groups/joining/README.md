@@ -70,3 +70,7 @@
 ## 표시·집계 보완 제안
 
 차단 subject의 스펙과 정확한 개인/그룹 요청 배지는 [표시 조회 계약 제안](../discovery/display-contract-proposal.md)을 따른다. 현재 제공 API를 변경한 것이 아니며 과거 subject를 이름으로 새 캐릭터에 연결하지 않는다.
+
+| GET | `/v1/me/group-request-counts` |
+
+| GET | `/v1/groups/{group_id}/join-request-counts` |

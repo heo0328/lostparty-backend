@@ -171,6 +171,9 @@ def new_request(principal, gid, key, command, kind):
             fail('GROUP_RELATION_EXISTS')
         subject = core.subject(db, group, target, create=True, snapshot=core.display(character))
         subject.display = core.display(character)
+        from app.groups.features import remember
+        account = db.get(Account, character.account_id)
+        remember(db, subject, character, account)
         if kind == 'application':
             subject.application_count += 1
         touch(subject, current)

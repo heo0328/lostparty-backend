@@ -217,7 +217,7 @@ def test_actual_bearer_authentication_and_foreign_group(group_candidates, people
         assert http.get(path,params=params,headers=a['headers']).status_code==401
 
 
-def test_candidate_token_keeps_actual_target_sql_matching(group_candidates):
+def test_candidate_token_keeps_actual_target_sql_matching(group_candidates, people):
     from tests.test_recruitment_cycle_creation import request
     from tests.test_recruitment_cycle_commands import commands, context as admission_context, admission_request
     from app.raid_rooms import cycle_creation
@@ -226,13 +226,20 @@ def test_candidate_token_keeps_actual_target_sql_matching(group_candidates):
         scope='group',group_id=str(gid)))[1]['data']
     rid=uuid.UUID(room['room_id']);c,n=[v['target_cycle_key'] for v in room['created_cycles']]
     commands.admit(actor(b['uid']),rid,uuid.uuid4(),admission_request(admission_context(b,rid,n)))
-    candidates=page(a,gid)
+    # Observe from a third current group member: the owner is intentionally
+    # excluded by own-target-participation-excluded-v1 search semantics.
+    observer=people('candidate-target-observer')
+    with session() as db, db.begin():
+        db.add(GroupMembership(id=uuid.uuid4(),group_id=gid,user_id=observer['uid'],
+            character_id=uuid.UUID(observer['ids'][0]),display=None,revision=1,joined_at=now(db)))
+        db.get(Group,gid).members_revision+=1
+    candidates=page(observer,gid)
     member=next(g for g in candidates['groups'] if str(b['ids'][0]) in {v['character_id'] for v in g['characters']})
     for key,count in ((c,0),(n,1)):
         body=search_request(key,group_ids=[gid],filter_context_token=candidates['filter_context_token'],
             member_conditions=[dict(member_ref=member['member_ref'],character_ids=[b['ids'][0]])]).model_dump(mode='json',exclude_unset=True)
         body['group_character_candidates_token']=candidates['candidate_token']
-        response=cycle_queries.search(actor(a['uid']),inputs.Search.model_validate(body))
+        response=cycle_queries.search(actor(observer['uid']),inputs.Search.model_validate(body))
         assert len(response['data']['items'])==count
 
 

@@ -7,6 +7,7 @@ from app.game_accounts.support import fail
 from app.groups import admission_schemas as s, admissions, join_codes
 from app.groups.router import Limit, Cursor
 from app.groups.schemas import GroupDetail
+from app.groups import display, display_schemas as ds
 
 
 async def strict_input(request: Request):
@@ -20,7 +21,7 @@ async def strict_input(request: Request):
         elif path.endswith('/join-relations'):
             allowed = {'state', 'limit', 'cursor'}
         elif path.endswith('/blocked-subjects'):
-            allowed = {'limit', 'cursor'}
+            allowed = {'limit', 'cursor', 'reader_profile'}
     if (set(request.query_params)-allowed or
             any(len(request.query_params.getlist(key)) != 1 for key in request.query_params) or
             (request.method == 'GET' and await request.body())):
@@ -84,8 +85,9 @@ def cancel(relation_id: UUID, data: s.RelationAction, principal: Principal, key:
     return admissions.action(principal, relation_id, 'cancel', key, data)[1]
 
 
-@router.get('/groups/{group_id}/blocked-subjects', response_model=s.BlockPage, responses=errors)
-def blocked(group_id: UUID, principal: Principal, limit: Limit = 20, cursor: Cursor = None):
+@router.get('/groups/{group_id}/blocked-subjects', response_model=ds.DisplayBlockPage | s.BlockPage, responses=errors)
+def blocked(group_id: UUID, principal: Principal, limit: Limit = 20, cursor: Cursor = None, reader_profile: Literal['group-display-1'] | None = None):
+    if reader_profile: return display.blocked(principal, group_id, limit, cursor)
     return admissions.blocked_list(principal, group_id, limit, cursor)
 
 

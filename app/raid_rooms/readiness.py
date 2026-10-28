@@ -10,7 +10,7 @@ from app.raid_rooms.models import Room, Round, Membership, Application, Director
 
 REVISION = '0018_room_application_build'
 # Known additive source revisions; legacy F2 schema/semantics stay intact.
-SUPPORTED_REVISIONS = (REVISION, '0019_integrated_recruitment', '0020_recruitment_sources', '0021_recruitment_weekly_links','0022_recruitment_schedule_heads','0023_recruitment_resume','0024_recruitment_cycles','0025_cycle_admissions','0026_cycle_lifecycle','0027_cycle_consents','0028_cycle_planning','0029_cycle_outcomes','0030_completion_corrections','0031_membership_actions','0032_beta_recruitment','0033_reapplication_history')
+SUPPORTED_REVISIONS = (REVISION, '0019_integrated_recruitment', '0020_recruitment_sources', '0021_recruitment_weekly_links','0022_recruitment_schedule_heads','0023_recruitment_resume','0024_recruitment_cycles','0025_cycle_admissions','0026_cycle_lifecycle','0027_cycle_consents','0028_cycle_planning','0029_cycle_outcomes','0030_completion_corrections','0031_membership_actions','0032_beta_recruitment','0033_reapplication_history','0034_group_features')
 MODELS = (Room, Round, Membership, Application, DirectoryHead, MemberHead)
 
 
@@ -71,16 +71,16 @@ def require_ready(db, *, integrated=False):
         if versions[0] in SUPPORTED_REVISIONS[10:]:
             from app.raid_rooms.cycle_planning_models import CYCLE_PLANNING_MODELS
             models += CYCLE_PLANNING_MODELS
-    if integrated and versions[0] in ('0029_cycle_outcomes','0030_completion_corrections','0031_membership_actions','0032_beta_recruitment','0033_reapplication_history'):
+    if integrated and versions[0] in ('0029_cycle_outcomes','0030_completion_corrections','0031_membership_actions','0032_beta_recruitment','0033_reapplication_history','0034_group_features'):
         from app.raid_rooms.cycle_outcome_models import CYCLE_OUTCOME_MODELS
         models += CYCLE_OUTCOME_MODELS
-    if integrated and versions[0] in ('0030_completion_corrections','0031_membership_actions','0032_beta_recruitment','0033_reapplication_history'):
+    if integrated and versions[0] in ('0030_completion_corrections','0031_membership_actions','0032_beta_recruitment','0033_reapplication_history','0034_group_features'):
         from app.raid_rooms.completion_correction_models import CompletionCorrection
         models += (CompletionCorrection,)
-    if integrated and versions[0] in ('0031_membership_actions','0032_beta_recruitment','0033_reapplication_history'):
+    if integrated and versions[0] in ('0031_membership_actions','0032_beta_recruitment','0033_reapplication_history','0034_group_features'):
         from app.raid_rooms.membership_action_models import LeadershipRecovery, MembershipActionAudit
         models += (LeadershipRecovery, MembershipActionAudit)
-    if integrated and versions[0] in ('0032_beta_recruitment','0033_reapplication_history'):
+    if integrated and versions[0] in ('0032_beta_recruitment','0033_reapplication_history','0034_group_features'):
         from app.raid_rooms.beta_models import BETA_MODELS
         models += BETA_MODELS
         require(db.scalar(text("SELECT has_sequence_privilege(current_user, 'public.recruitment_beta_number_seq', 'USAGE')")))
@@ -111,18 +111,18 @@ def require_ready(db, *, integrated=False):
                 require(matches[0]['options'].get('deferrable') is True)
                 require(matches[0]['options'].get('initially') == fk.initially)
         unique = {tuple(v['column_names']) for v in schema.get_unique_constraints(name, schema='public')}
-        if versions[0] not in ('0031_membership_actions','0032_beta_recruitment','0033_reapplication_history'):
+        if versions[0] not in ('0031_membership_actions','0032_beta_recruitment','0033_reapplication_history','0034_group_features'):
             if name=='recruitment_assignments':require(('round_id','membership_id') in unique)
             if name=='recruitment_cycle_members':require(('cycle_id','generation','membership_id') in unique)
         for constraint in table.constraints:
             if isinstance(constraint, UniqueConstraint):
-                if versions[0] in ('0031_membership_actions','0032_beta_recruitment','0033_reapplication_history') and name=='recruitment_cycle_members' and tuple(c.name for c in constraint.columns)==('cycle_id','generation','membership_id'):
+                if versions[0] in ('0031_membership_actions','0032_beta_recruitment','0033_reapplication_history','0034_group_features') and name=='recruitment_cycle_members' and tuple(c.name for c in constraint.columns)==('cycle_id','generation','membership_id'):
                     continue  # current/retained CM uniqueness is enforced by the partial index below
                 if (versions[0] in SUPPORTED_REVISIONS[10:] and name=='recruitment_cycle_consents' and
                         tuple(c.name for c in constraint.columns)==('user_id','command_id')):
                     require(('user_id','command_id','participation_id') in unique)
                     continue
-                if versions[0] in ('0031_membership_actions','0032_beta_recruitment','0033_reapplication_history') and name=='recruitment_assignments' and tuple(c.name for c in constraint.columns)==('round_id','membership_id'):
+                if versions[0] in ('0031_membership_actions','0032_beta_recruitment','0033_reapplication_history','0034_group_features') and name=='recruitment_assignments' and tuple(c.name for c in constraint.columns)==('round_id','membership_id'):
                     continue
                 # The model retains this constraint for the 0023 runtime.
                 # 0027 keeps live (participation,segment) uniqueness and allows
@@ -146,7 +146,7 @@ def require_ready(db, *, integrated=False):
                 sum(isinstance(c, CheckConstraint) for c in table.constraints))
         indexes = {v['name']: v for v in schema.get_indexes(name, schema='public')}
         for index in table.indexes:
-            if index.name in ('uq_recruitment_current_cycle_member','uq_recruitment_current_assignment') and versions[0] not in ('0031_membership_actions','0032_beta_recruitment','0033_reapplication_history'):continue
+            if index.name in ('uq_recruitment_current_cycle_member','uq_recruitment_current_assignment') and versions[0] not in ('0031_membership_actions','0032_beta_recruitment','0033_reapplication_history','0034_group_features'):continue
             actual = indexes.get(index.name)
             require(actual is not None)
             require(actual['column_names'] == [c.name for c in index.columns])
@@ -186,16 +186,16 @@ def require_ready(db, *, integrated=False):
             AND t.tgname='cycle_planning_immutable' AND (t.tgtype & 27)=27
             AND f.proname='protect_cycle_decision' AND fn.nspname='public'""")))
         require({m.__tablename__ for m in CYCLE_PLANNING_MODELS}<=guarded)
-    if versions[0] in ('0029_cycle_outcomes','0030_completion_corrections','0031_membership_actions','0032_beta_recruitment','0033_reapplication_history'):
+    if versions[0] in ('0029_cycle_outcomes','0030_completion_corrections','0031_membership_actions','0032_beta_recruitment','0033_reapplication_history','0034_group_features'):
         guarded=set(db.scalars(text("""SELECT c.relname FROM pg_trigger t JOIN pg_class c ON c.oid=t.tgrelid
             JOIN pg_namespace n ON n.oid=c.relnamespace JOIN pg_proc f ON f.oid=t.tgfoid
             WHERE n.nspname='public' AND NOT t.tgisinternal AND t.tgenabled IN ('O','A')
             AND t.tgname='cycle_outcome_immutable' AND (t.tgtype & 27)=27 AND f.proname='protect_cycle_decision'""")))
         from app.raid_rooms.cycle_outcome_models import CYCLE_OUTCOME_MODELS
         require({m.__tablename__ for m in CYCLE_OUTCOME_MODELS}<=guarded)
-    if versions[0] in ('0030_completion_corrections','0031_membership_actions','0032_beta_recruitment','0033_reapplication_history'):
+    if versions[0] in ('0030_completion_corrections','0031_membership_actions','0032_beta_recruitment','0033_reapplication_history','0034_group_features'):
         require(db.scalar(text("SELECT count(*) FROM pg_trigger t JOIN pg_proc f ON f.oid=t.tgfoid WHERE t.tgrelid='raid_completion_corrections'::regclass AND NOT t.tgisinternal AND t.tgenabled IN ('O','A') AND t.tgname='completion_correction_immutable' AND (t.tgtype & 27)=27 AND f.proname='protect_cycle_decision'"))==1)
-    if versions[0] in ('0031_membership_actions','0032_beta_recruitment','0033_reapplication_history'):
+    if versions[0] in ('0031_membership_actions','0032_beta_recruitment','0033_reapplication_history','0034_group_features'):
         require(db.scalar(text("SELECT count(*) FROM pg_trigger t JOIN pg_proc f ON f.oid=t.tgfoid WHERE t.tgrelid='recruitment_membership_action_audit'::regclass AND NOT t.tgisinternal AND t.tgenabled IN ('O','A') AND t.tgname='membership_action_immutable' AND (t.tgtype & 27)=27 AND f.proname='protect_cycle_decision'"))==1)
     head = db.get(DirectoryHead, 1)
     require(head is not None and head.revision >= 1)
@@ -212,7 +212,7 @@ def require_legacy_worker(db):
 
 
 def require_cycle_worker(db):
-    require(list(db.scalars(text('SELECT version_num FROM public.alembic_version')))in (['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history']))
+    require(list(db.scalars(text('SELECT version_num FROM public.alembic_version')))in (['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history'],['0034_group_features']))
 
 
 def require_two_cycle_active(db):

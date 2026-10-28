@@ -349,6 +349,7 @@ def _decorate_openapi(schema):
         'search':'visibility and raid/difficulty/group OR/member AND/within-member character OR, then exact remaining slots OR, member_count ascending/descending (default descending), created_at DESC/id DESC ties, then pagination; cursor binds full normalized conditions and directory/cycle/group generations',
         'bounds':{'request_bytes':32768,'page_max':50,'cursor_max':2048,'candidate_ticks_max':2016},
     }
+    schema['x-group-features'] = dict(required_schema='0034_group_features', display_profile='group-display-1', legacy_default_shape='preserved', reads='stored current group-scoped data only; no provider or read-side writes')
     return schema
 def openapi():return _decorate_openapi(_original_openapi())
 app.openapi = openapi
@@ -416,7 +417,7 @@ def create_two_cycle_app():
     generate=result.openapi
     def schema():
         value=_decorate_openapi(generate())
-        value['x-recruitment-policy'].update(schema_revision='0033_reapplication_history',policy_version='two-cycle-contract-4',
+        value['x-recruitment-policy'].update(schema_revision='0034_group_features',policy_version='two-cycle-contract-4',
             search_semantics='own-target-participation-excluded-v1',
             room_usage_semantics='active-target-rooms-1',
             reapplication_history=dict(required_schema='0033_reapplication_history',semantics='fresh participation after proven termination; completed history and opposite cycle preserved'),

@@ -4,7 +4,7 @@
 
 게시: 설계 고정 `92c1702` push·원격일치 후 [전체20번째 Backend · 계약 제안](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6464713065) 게시·실제순번 확인. 다음 Flutter 소비/정책차이대조·Backend 명세보완이며 구현/기기 인수는 미완료다.
 
-**설계 제안이며 현재 제공 API·실행 OpenAPI가 아니다.** 사용자 승인 범위는 이번 설계와 Issue 제안 게시까지다. 구현·migration·서버 반영·Flutter 적용·기기 인수는 미완료다.
+**사용자 승인으로 핵심 표시·활동·집계의 Backend 구현을 진행했다.** 현재 계약은 두 OpenAPI의 실제 DTO를 기준으로 한다. 신규 기능은 DB0034에서만 실행하며 기존0023/0033은 새기능503·기본응답보존이다. 격리 검증/게시 결과는 [구현 기록](../implementation-2026-10-28.md)을 따른다. 개발서버 반영·Flutter 연결/기기 인수는 미완료다.
 
 ## Native 검토 회신
 
@@ -83,7 +83,7 @@ analysis는 현재 유효한 RoleSummary head의 `version/saved_at/analyzed_at/i
 
 ### 차단 subject의 표시
 
-과거 subject.display는 이름/서버/직업 snapshot뿐이며 character_id가 없다. 이름으로 현재 캐릭터나 새 소유자를 찾아 붙이지 않는다. 구현 시 신규 subject 표시 변경에만 canonical 참조·관측 당시 ownership/lifecycle 근거를 함께 저장하는 nullable 필드를 도입한다. 과거행을 이름 매칭으로 backfill하지 않는다.
+과거 subject.display는 이름/서버/직업 snapshot뿐이며 character_id가 없다. 이름으로 현재 캐릭터나 새 소유자를 찾아 붙이지 않는다. 구현 시 신규 subject 표시 변경에만 canonical 참조·관측 당시 ownership/lifecycle 근거를 함께 저장하는 group_subject_character_references 확장 테이블을 도입한다. 과거행을 이름 매칭으로 backfill하지 않는다.
 
 현재 target_user_id와 저장된 참조/세대·소유가 일치하고 현재 자격을 만족하면 해당 캐릭터 스펙만 제공한다. 참조 없음은 CHARACTER_REFERENCE_UNAVAILABLE, 세대/소유/활동 상실은 CHARACTER_NOT_CURRENTLY_ELIGIBLE이다. 기존 표시명·application_count는 그대로 유지한다. 차단당한 회원의 다른 캐릭터/원정대를 찾아 대체하지 않는다.
 
@@ -107,7 +107,7 @@ counts_revision은 권한 범위·포함 relation ID/revision/실효 state의 di
 
 ## 활동시각·cursor·쓰기 후 갱신
 
-Group.last_activity_at nullable 추가를 제안한다. 새 그룹 생성은 생성시각, 기존 그룹은 null 유지, 이후 실제 성공한 변경에만 서버시각을 기록한다. 이름/대표·가입/탈퇴/추방·초대/신청/차단·코드관리·이전/해산·연결 레이드 생성/공개범위 변경을 포함한다. no-op·과거ACK replay·GET·실패/rollback은 갱신하지 않는다. 최종 변경 후 과거시각으로 퇴행하지 않게 한다. 일반 레이드 전체 활동/운영정리·TTL은 이번 범위가 아니다.
+기존 Group 모델의 DB0023 호환을 위해 group_activity_heads 확장 테이블의 last_activity_at으로 제공한다. 새 그룹 생성은 생성시각, 기존 그룹은 null 유지, 이후 실제 성공한 변경에만 서버시각을 기록한다. 이름/대표·가입/탈퇴/추방·초대/신청/차단·코드관리·이전/해산·연결 레이드 생성/공개범위 변경을 포함한다. no-op·과거ACK replay·GET·실패/rollback은 갱신하지 않는다. 최종 변경 후 과거시각으로 퇴행하지 않게 한다. 일반 레이드 전체 활동/운영정리·TTL은 이번 범위가 아니다.
 
 같은 REPEATABLE READ/READ ONLY 스냅샷에서 권한과 표시 자료를 묶어 읽는다. 그룹/members revision만으로는 다른 회원의 활동/분석 변경을 알 수 없으므로 snapshot_revision에 대상 membership·현재 소유/설정/claim/lifecycle·표시값/분석 revision과 활동시각을 결합한다. cursor는 actor/session·경로/profile·group·대상membership·limit·snapshot_revision에 묶는다. 값이 바뀌면409 CURSOR_STALE로 첫 페이지를 재조회하고, 권한이 사라졌다면 권한 거절을 먼저 적용한다. GET은 없는 기본행/토큰/관측 이력을 만들지 않는다.
 

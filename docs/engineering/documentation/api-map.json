@@ -1194,6 +1194,24 @@
       "path": "/v2/me/application-message-presets",
       "operation_id": "write_presets_v2_me_application_message_presets_put",
       "topic": "recruitment/participation"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/groups/{group_id}/members/{membership_id}/activity-characters",
+      "operation_id": "activity_characters_v1_groups__group_id__members__membership_id__activity_characters_get",
+      "topic": "groups/discovery"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/group-request-counts",
+      "operation_id": "request_counts_v1_me_group_request_counts_get",
+      "topic": "groups/joining"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/groups/{group_id}/join-request-counts",
+      "operation_id": "join_request_counts_v1_groups__group_id__join_request_counts_get",
+      "topic": "groups/joining"
     }
   ]
 }
