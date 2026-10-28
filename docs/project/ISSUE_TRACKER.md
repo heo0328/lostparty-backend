@@ -1,6 +1,6 @@
 # 이슈 주제별 추적표
 
-**현재 Git 통합 완료:** [재신청 수정 브랜치 통합 기록](../features/recruitment/reapplication-integration-2026-10-27.md)·[PR28](https://github.com/heo0328/lostparty-backend/pull/28)/병합41a47ed의 dev 원격 반영과 완료 브랜치 로컬/원격 정리를 확인했다. checkout dev·미완료 활동 선택 브랜치 보존·main18830c2/실행 API·DB 유지. 최신 실행/다음 작업은 NEXT_WORK이며 아래 종료 전 검토 문장은 당시 이력이다.
+**현재 Git 통합 완료:** [재신청 수정 브랜치 통합 기록](../features/recruitment/reapplication-integration-2026-10-27.md)·[PR28](https://github.com/heo0328/lostparty-backend/pull/28)/병합41a47ed의 dev 원격 반영과 완료 브랜치 로컬/원격 정리를 확인했다. 2026-10-28 main/dev를1b6f57b로동기화·원격확인후동일지점에서feat/group-management분기·checkout. 미완료 활동 선택 브랜치와 실행 API·DB는 보존. 최신 실행/다음 작업은 NEXT_WORK이며 아래 종료 전 검토 문장은 당시 이력이다.
 
 ## 2026-10-27 마감 — Issue13 사용자 승인 종료
 

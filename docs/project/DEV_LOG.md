@@ -1,5 +1,13 @@
 # 영구 개발 이력
 
+## 2026-10-28 — main/dev 정렬·그룹 작업 브랜치 준비
+
+- 사용자 지시로 원격 fetch 후 clean·단일 worktree 및 로컬/원격 main/dev 일치를 확인했다. main18830c2는 dev1b6f57b의 조상이며 dev 측 6커밋만 미반영이었다.
+- main을 dev1b6f57b로 fast-forward하고 원격 main push를 완료했다. 이력 재작성 없이 양 기준을 같은 커밋으로 맞추고 해당 지점에서 `feat/group-management`를 생성·checkout했다. 그룹 준비 문서 변경은 이 목적 브랜치에서 이어간다.
+- 기본 Git HTTPS push는 인증 helper 부재로 실패했으나 기존 GitHub CLI 인증 유효성을 확인하고 해당 명령에만 CLI helper를 지정해 재시도·성공했다. 인증정보를 파일에 추가하거나 출력하지 않았다.
+- 미완료 활동 선택89a3248의 로컬 문서 3커밋은 통합/삭제하지 않았다. 사용자는 Native 확인 후 활동 자동추가·명시제외 개발 구간을 별도로 정하기로 했다.
+- 검증은 Git 포함 관계·원격 SHA/동일 tree·문서 diff 확인이다. 그룹 계약/코드 변경이나 새로운 자동/서버/기기 시험은 없으며 서버·DB·배포·자료 변경도 없다. 다음 Backend는 그룹 Issue #12/#16 최신 본문/댓글·계약/구현 대조와 범위 확인이다. 이번 준비에서 Issue 조회/게시·종료는 하지 않았다.
+
 ## 2026-10-27 — 재신청 후속 브랜치 분기·182 갱신 확인·설계
 
 - 사용자지시로최신origin/dev18830c2에서fix/raid-recruitment-reapplication을분기·checkout했다. origin/dev자동상류연결은해제해잘못된기준브랜치push를막고후속게시때동일이름원격에연결한다. main/dev·활동미완료브랜치는유지했다.
