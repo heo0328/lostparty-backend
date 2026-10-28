@@ -18,6 +18,8 @@
 
 [#16 전체11번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464853005)의 마지막1인/다인해산 질문대기는 [전체12번째 Flutter · 사용자확정정정](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464943488)으로 해소·대체됐다. **그룹원 누구나 현재 조건으로 그룹전용 레이드를 개설하고 해당 레이드 공대장이 관리한다. 그룹장 지위의 비참가 command-context/make-public/end는 개발범위에서 제외한다.** 그룹장 이전은 레이드 공대장을 바꾸지 않는다. 기존 제안의 해당경로/DTO·토큰·시험을 같은 문서에서 교체한다.
 
+정정 설계 `cb9b6b9` commit/push·원격확인 후 [#16 전체13번째 Backend · 설계정정 결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6465101118)에 회신했다. 실제전체순번/본문을 조회하고 Issue상단도 최신확정/다음담당으로 갱신했다. 구현/서버반영은 미완료이며 양Issue OPEN이다.
+
 ## 다음 실행 — 정정 설계 기준의 구현 구간 준비
 
 - Backend: 현재 승인범위는 설계/정정회신이며 기능구현/서버반영을 시작하지 않는다. 다음구간은 표시/활동/배지·그룹해산/추방/대표변경·활성방공통목록과 기존레이드보존의 확정범위를 같은브랜치에서 구현·검증/인계한다. UI시안/단순소비회신은 전체선행조건이 아니다.

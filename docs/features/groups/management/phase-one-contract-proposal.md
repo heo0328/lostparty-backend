@@ -12,6 +12,8 @@
 
 그룹장용 command-context/make-public/end 신규 경로·GroupRoomCommand/ACK·해당 토큰/권한/시험은 개발 범위에서 제외했다. 마지막1인 대 다인강제종료 선택은 더 이상 대기 질문이 아니다. 초기 제안은 고정커밋/기존댓글에 이력으로 보존하며 현재 구현 기준으로 쓰지 않는다. 실제 현재 API 구현은 이번에도 변경하지 않는다.
 
+정정 게시: `cb9b6b9` push·원격확인 후 [#16 전체13번째 Backend · 정정결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6465101118)에 회신했다. 현재는 설계정정 완료/구현 전이며 다음은 Backend 구현구간 준비다.
+
 ## 기준·문제·기존 구현
 
 근거는 [Issue16 전체9번째 Flutter 개발 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464117245), [전체8번째 그룹 소멸 후 방 보존 정정](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6463878563), [설계39 f04f482e](https://github.com/heo0328/LostParty_flutter/blob/f04f482e/docs/backend-migration/39-group-flutter-integration-design.md), 같은 커밋의 [제품 §13/14](https://github.com/heo0328/LostParty_flutter/blob/f04f482e/docs/product/GROUP_PRODUCT_FLOW.md)·[모집37](https://github.com/heo0328/LostParty_flutter/blob/f04f482e/docs/backend-migration/37-raid-scheduling-and-multi-raid-planning.md)다. Backend 대조는 main/dev1b6f57b·그룹준비ea52e56이다.
