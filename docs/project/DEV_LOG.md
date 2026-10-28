@@ -2903,3 +2903,11 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - 그룹해산활성방검사/공통목록·실제T공대장안내/각공대장기존상세정리·추방/대표/기존참가보존·정원/공개왕복/배지는유지한다. 복구승계만미결정이며독립구현전체대기아니다. 수신/정정문서작업만수행·기능구현/DDL/실행OpenAPI/서버·DB/실회원/기기/배포/자료변경·Issue종료없음. 결과는같은#16에회신한다.
 
 - 정정cb9b6b9cbbf770a744d01be6294f0c028031de38 commit/push·원격일치후 [#16 전체13번째 Backend · 설계정정](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6465101118) 회신·전체순번/본문확인, 과거본문보존하며상단갱신. 문서/상대링크2490·JSON예시/삭제경로/diff검사PASS·기능코드/계약미변경. 후행회신링크를같은목적브랜치에묶어보존한다.
+
+## 2026-10-28 — 그룹 핵심목적·구현 인계 우선순위 회신 수신
+
+- #12본문/전체22댓글·#16본문/전체13댓글을조회했다. 신규는 [#12 전체22 Flutter · 핵심목적/우선순위](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6465156288)이며 #16새댓글없음. 초대/가입→활동캐릭터확인→기존모집필터→상세/참가/신청을우선하고관리/복구전체대기는두지않는다. 기존확정관리/필수권한/동시성검증폐기는아니다.
+- 같은표시설계에membership/canonical UUID→모집filter context/후보alias·member_ref연결·검색token과일반열람구분·membership변경후표시/모집context동시무효화/지연응답회복을명시했다. 별도조합자동화/대리참가/공개범위정책없음. 보석snapshot/labels는실제DTO대조이며반복질문/시험요청없다.
+- 이번은수신·설계연결보완/회신이며기능코드/DDL/실행OpenAPI/서버·DB/기기·배포미변경이다. 다음Backend 핵심확정범위구현준비, Flutter실제DTO소비대조이며현재설계승인범위유지다.
+
+- [#12 전체23번째 Backend · 설계연결/우선순위](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6465215418) 회신후실제순번/본문확인. source/계약미변경·문서검사2491링크/diff통과, 설계/회신기록은같은브랜치에보존한다.

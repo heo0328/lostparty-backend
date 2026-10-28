@@ -21,6 +21,20 @@
 
 사용자가 현재 그룹 카드와 활동 캐릭터를 볼 수 있게 하되 개인 원정대 전체·개인 설정을 공개하지 않는다. 표시 실패로 카드/멤버 자체를 누락하거나 숫자0·정상 보석 상태를 합성하지 않는다.
 
+## 핵심 사용 흐름과 기존 모집 계약 연결
+
+[#12 전체22번째 Flutter · 사용자 목적/우선순위](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6465156288)에 따라 **초대/가입 → 활동 캐릭터 확인 → 기존 모집 필터 → 기존 상세/참가/신청**을 우선한다. 관리/복구 전체를 선행조건으로 두지 않으며 확정된 관리정책·필수권한/동시성 검증을 폐기하지 않는다.
+
+1. 기존 초대수락/신청승인/코드가입 성공 후 현재 membership·내그룹/멤버·요청/사용량을 갱신한다. Relation 승인응답과 GroupDetail 수락/코드가입 응답을 구분하며 ACK를 현재membership으로 쓰지 않는다.
+2. 이 명세의 그룹표시/활동캐릭터 GET은 현재 membership_id와 canonical character_id로 확인자료를 제공한다. 모집검색 권한token을 새로 발급하거나 일반열람자격과 혼용하지 않는다.
+3. 검색 진입시 기존 `GET /v2/me/raid-room-filter-context`의 최신 그룹/alias를 받고, 필요한 그룹의 `GET /v2/groups/{group_id}/raid-room-character-candidates`를 현재 filter context로 조회한다. 표시조회에서 확인한 membership_id는 후보의 alias.group_membership_id와, 선택캐릭터는 현재 후보 canonical character_id와 대조한다. 이름/전역 user_id로 매칭하지 않으며 이미무효인 선택을 다른캐릭터로 대체하지 않는다.
+4. 기존 `POST /v2/raid-rooms/search`의 member_ref/character_ids와 context/candidate 증거를 사용한다. 그룹OR·그룹원AND·같은그룹원캐릭터OR 등 기존논리와 실제T/세대·페이지전필터/본인실제참가방제외를 유지한다. 표시스냅샷·cursor는 모집context/token을 대신하지 않는다.
+5. 검색결과는 기존실제T 상세/후보·참가/신청context와 명령으로 이어진다. 검색조건은 원하는조합을 찾는 조건이지 슬롯예약·자동조합/대리참가·새공개범위 권한이 아니다.
+
+가입/탈퇴/추방/해산·회원/환경 변경 후에는 해당 그룹표시/활동캐릭터와 모집group/filter/candidate context를 함께 무효화하고 현재membership에서 재조회한다. 늦은응답/이전세션 cursor를 합치지 않으며 권한검증은 최종명령에서 반복한다. 기존참가방 접근은 신규그룹검색/참가와 분리해 보존한다. 다른기기변경은 기존명시재조회·stale회복을 쓰며 새상시polling/웹소켓은 없다.
+
+구현인계는 위 핵심흐름의 표시/집계·기존모집연결과 직접경계 검증을 먼저 묶고, 그룹관리 독립기능을 이어간다. 보석snapshot/labels 매핑은 실제DTO대조 항목으로 남기며 전체연결을 막지 않는다. 현재는 이 연결의 설계인계이며 신규HTTP/Flutter연결 완료가 아니다.
+
 ## 인터페이스와 호환성
 
 다음 경로와 DTO는 제안이다. 기존 GET에 `reader_profile=group-display-1`을 명시한 경우에만 새 shape를 반환한다. 생략 시 현재 shape·정렬·기본 동작을 그대로 유지하며 알 수 없는 프로필·중복/불허 query는400이다. 쓰기 DTO와 과거 ACK는 확장하지 않는다.
