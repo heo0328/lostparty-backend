@@ -6,6 +6,10 @@
 
 핵심표시/활동/집계는 `d075def` push·원격확인후 [#12 전체24번째 Backend · 핵심구현인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6465656746)를게시했다. 이후같은브랜치에서관리프로필·조건부해산/추방/대표변경·공통활성방목록과기존레이드보존을구현·검증했다. 최종후보계약은기본123경로/140동작·two-cycle185/206이다. 관리구간게시/댓글링크는아래및DEV_LOG에마감기록한다.
 
+## 최종 게시·인계
+
+관리/전체계약 source `22b1620747707afaa87ba84223e5a2beb886f658`를 commit/push·원격일치확인했다. [#12 전체25번째 Backend · 최종핵심계약](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6466328231)과 [#16 전체14번째 Backend · 관리/레이드구현인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6466327755)를게시하고실제전체순번·작성측·본문을확인했다. 양Issue는OPEN이며서버미반영/다음담당을상단에명시한다. 이후마감기록은문서만갱신하며같은구현소스를유지한다.
+
 ## 다음 실행 — Native 계약 소비·실제개발반영은 별도
 
 - Flutter: 고정 source/두OpenAPI·예시를소비해표시·활동캐릭터·집계·관리의구체차이를각 #12/#16에회신한다. gemValidationSnapshot/integrity labels의동등표시는실제DTO대조로남기며저장없는보석정상상태나개인자료를합성하지않는다. 현재개발서버는DB0033이므로신규API실회원/기기시험은아직요청하지않는다.

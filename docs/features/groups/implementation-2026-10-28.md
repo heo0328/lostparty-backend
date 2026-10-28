@@ -53,3 +53,5 @@
 다음Flutter는고정DTO소비/보석snapshot·integrity labels의구체차이를대조한다. 실회원/기기시험은개발반영후별도로진행한다. Backend는그차이에대응하고실제개발반영이요청되면대상/보존/이행범위를별도구간으로잡는다. G-RECOVERY·활동자동추가·운영정리/웹소켓·통계는별도미완료이며이번에완료로바꾸지않는다. main/dev통합·배포·자료삭제/초기화·새환경/복원리허설은없다.
 
 최종 원본검토에서 generation 자체의 review와 실제 item/round 연결도 unavailable로 처리하도록 보강하고 해당 차단집합·정상 공개전환/해산의 2건만 재검증해2PASS/38.45초했다. 문서에 나열한 전체 시험범위의 중복제거 노드는152개이며, 동일HEAD 일괄재실행이라는 의미가 아니다. [검증 집계/노드 목록](verification-2026-10-28.json)에 각 실행과 미실행을 구분했다.
+
+최종게시source는 `22b1620747707afaa87ba84223e5a2beb886f658` / feat/group-management이며 push·원격확인후 [#12 전체25 Backend](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6466328231)·[#16 전체14 Backend](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6466327755)에인계했다. 이후문서마감커밋은업무코드/두계약을변경하지않는다.

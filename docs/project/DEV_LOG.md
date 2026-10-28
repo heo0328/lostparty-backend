@@ -2928,3 +2928,5 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - 최종두계약전체객체일치PASS: 기본123/140·two-cycle185/206. 이전component schema 값변경/삭제0·새DTO/명시프로필/query·신규7경로만추가했다. 문서/JSON/의존성/diff·호스트12시험PASS. 기존AnyIO경고1개는남는다. 실제개발서버/DB반영·실회원/기기·merge/배포·자료삭제/새환경·복원리허설은없음. 최종원본검토의gen-review/round링크보강은해당경계만추가확인한다.
 
 - 최종gen-review/실제item-round원본보강후해당두경계만2PASS/38.45초. 최종검증노드152개는구현체크포인트별선택의합집합이며동일HEAD일괄재실행아니다. 실행별집계/미실행과노드는그룹verification-2026-10-28.json에기록했다. 후보계약/형태는불변이며추가서버/DB시험없음.
+
+- 관리/전체계약22b1620747707afaa87ba84223e5a2beb886f658 commit/push·원격일치확인후 [#12 전체25 Backend · 최종핵심계약](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6466328231)/[#16 전체14 Backend · 관리/레이드구현인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6466327755) 게시·실제순번/본문재조회. 현재구현/격리/게시완료와개발미반영/Native소비·기기미완료를분리해양Issue상단에반영·원문보존/OPEN유지다. 다음Flutter DTO차이대조·Backend대응, 개발반영은별도지시구간이다. main/dev1b6f57b·활동선택89a3248보존·merge/배포없음. 후행문서마감도같은브랜치에보존한다.
