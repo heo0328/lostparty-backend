@@ -12,6 +12,8 @@ checkout `feat/group-management`, main/dev 공통 `1b6f57b` 유지. 사용자 �
 - 최종직접/표시19PASS·기존초대/이름해석46PASS·두계약전체일치(123/140·185/206). 초회시험자료FK/NOTNULL·UUID순서가정실패는시험만정정했고실행별결과는구현기록에보존한다. READ ONLY 개발집계는적격31중summary null30,그중역할성공자료있는15/없는15다. 특정회원요청의재현은아니다.
 - 다음Flutter: 고정후보DTO/현재분석·last-success분리소비의구체차이를#12에회신. 다음Backend: 그차이에대응하고별도요청된개발반영구간에서후보이미지/실행확인을진행한다. 현재개발서버에이수정의실회원/기기시험을요청하지않는다. DBmigration·중복저장·provider조회는추가하지않았다.
 
+후속 source `c38144528c42eda7fcf2912fa412d3a005fc68e7` push·원격확인후 [#12 전체32번째 Backend · 후보검색/역할전투력 구현인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496536145)를게시·실제순번확인했고본문상단에개발미반영/다음담당을갱신했다.
+
 ## 다음 담당 — 실제 연동·기기 인수
 
 - Flutter [#12 전체27](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6488900145)·[#16 전체17](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6488900495): 연결구현/전체2691시험·직접12포함/분석지적0 자체보고, 추가API요청없음. Backend시험과합산하지않는다.

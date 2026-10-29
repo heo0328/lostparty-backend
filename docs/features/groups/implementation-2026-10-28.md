@@ -120,3 +120,5 @@ Native 신규 [#12 전체27번째 Flutter](https://github.com/heo0328/lostparty-
 - 두후보OpenAPI전체객체일치PASS(기본123/140·two-cycle185/206). 변경경로1개·새DTO2개·기존component값변경0이다. 문서/의존성lock/diff검사를통과했고기존AnyIO경고1개는유지한다. 격리실행기프로젝트/DB는정리했고개발API/DB를재시작하지않았다.
 
 **이번 후보검색/표시 수정은 개발서버 미반영**이다. 실제개발sourcecf214d0/이미지eecda79d·DB0034는앞선반영상태를유지한다. 다음Flutter는게시된고정DTO의구체소비차이를회신하고 Backend는대응한다. 실제개발반영과정상초대성공·기기인수는별도다. 대표선택레벨정렬은Flutter담당이며merge/운영배포·DB/자료변경·Issue종료는없다.
+
+후속 source `c38144528c42eda7fcf2912fa412d3a005fc68e7` commit/push·원격일치확인후 [#12 전체32번째 Backend · 후보검색/역할전투력 구현인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496536145)를게시했다. 전체순번/작성측/단계와본문상단의완료·미반영/다음담당을확인했다. 후행기록은업무코드/고정계약·개발실행을변경하지않는다.

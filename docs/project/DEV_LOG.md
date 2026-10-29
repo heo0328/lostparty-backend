@@ -2956,3 +2956,5 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - 실제READONLY집계적격31·summarynull30(역할성공존재15/없음15)·head/성공18·다른소유/생명주기/잘못된성공0. 코드경로차이근거이며특정회원null원인확정은아니다. 원본이름/ID공개없음.
 - 초회65선택53PASS/12FAIL(신규11fixture이름FK·기존1UUID순서가정)→fixture/의도한ID선택정정. 신규10PASS/1FAIL은모의verified_at=null NOTNULL위반으로허용preview등록상태로정정했다. 최종신규11+공통표시8=19PASS/60.25초·초회기존초대/이름해석46PASS. 두전체계약일치·1경로/새2DTO/기존schema값변경0·문서/lock/diff검사통과. 반복합산없음·AnyIO기존경고1. 상세는 [실행집계](../features/groups/invite-candidates-verification-2026-10-29.json).
 - 개발실행cf214d0/eecda79d·0034는미교체·DB/자료쓰기없음. 다음고정DTO소비차이대응·별도개발반영/기기인수다. 같은브랜치검증구간commit/push후원격확인·#12인계하며main/dev·운영배포·Issue종료는없다.
+
+- 후보구간c38144528c42eda7fcf2912fa412d3a005fc68e7 commit/push·원격일치확인후 [#12 전체32번째 Backend · 후보검색/역할전투력 구현인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496536145) 게시·전체순번/단계확인, 본문상단에후속구현완료/개발미반영·Native다음소비차이대조를반영하고과거본문/OPEN보존. 후행인계기록도같은목적브랜치에보존한다.
