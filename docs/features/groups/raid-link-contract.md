@@ -1,6 +1,6 @@
 # 모집 그룹 최초 연결·목록 표시 계약
 
-2026-10-30 / feat/group-management / 구현·격리검증·계약 인계 구간. 개발서버 교체·DB migration·자료변경 실행·병합/운영배포는 제외한다. [#16 전체22 Flutter 실행계획](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6502336731), [#12 전체35 그룹명](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6501551683)·[전체36 소속표시](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6502226347)가 기준이다.
+2026-10-30 / feat/group-management / 구현·격리검증·고정계약게시 후 사용자별도지시로개발서버 source2602e45/이미지5bd8dde6·DB0034 반영·실행검증까지완료했다. DBmigration·자료변경/삭제·병합/운영배포는없으며새Flutter연결/기기인수는별도다. [#16 전체22 Flutter 실행계획](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6502336731), [#12 전체35 그룹명](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6501551683)·[전체36 소속표시](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6502226347)가 기준이다.
 
 ## 생성과 최초 연결
 

@@ -154,3 +154,17 @@ Native 신규 [#12 전체27번째 Flutter](https://github.com/heo0328/lostparty-
 Native#12전체36/#16전체21의기존그룹안내범위기기통과는수용하고재시험대기로돌리지않는다. #16전체22의Flutter9d1baa39 생성UI기본값/기존생성1회·29PASS는자체보고로기록하며Backend시험에합산하지않는다. **새최초연결/목록표시후속은개발미반영**이다. 실제개발실행은이전검증기록source5d24244/이미지507cd78a·DB0034를유지한다. 다음Flutter는고정context/목록DTO·응답위치예시를소비하고직접차이를회신하며Backend는대응한다. 신규개발반영·기기인수는별도다.
 
 후속구현/고정계약 source `6dac5ab2cc67e197979e7188a9c97ce2c27fb548` commit/push·원격확인후 [#12 전체38번째 Backend · 목록/소속표시 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6503052363)·[#16 전체24번째 Backend · 최초연결 명령 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6503052848)를게시·전체순번/단계명을확인했다. 양본문상단도후속개발미반영/Native다음소비차이로갱신했고OPEN유지다. 후행문서마감은업무코드/두계약/실제개발실행을바꾸지않는다.
+
+
+## 2026-10-30 — 최초 그룹 연결·목록 표시 개발서버 반영 완료
+
+사용자 서버반영 지시에 따라 **실제 실행 source `2602e4595a868eebdf12b04e1fd51502142069b3` / 이미지 `sha256:5bd8dde6eba275bdad448315aee67d554ef4cb60d35e3702795f97bb761f9cf3` / DB `0034_group_features` 유지**로 API/내부worker를 교체했다. 업무 구현·계약은6dac5ab과같고 앞선 새후속 개발미반영 상태는 해소됐다. [실제 실행 집계](../../engineering/operations/records/raid-group-link-rollout.json)를따른다.
+
+- 기존507cd78a의고정runtime을재사용한전체소스후보274파일/runtime31·두계약전체일치(기본123/140·two-cycle185/206)를후보와실제컨테이너에서확인했다. 생성/공통명령body와ACK는기존계약이고새옵션/context를설치했다. migration은실행하지않았다.
+- 기존API와같은lifespan worker를중지한기준과새API시작직후의114업무표2,015행/열정의/기록시각·sequence·키·DB0034는모두같다. DB컨테이너/이미지/볼륨/환경·API환경전체/명령/사용자·포트/보안/로그/키mount/.env를보존했다. 원문설정/상세비교근거는ignored backups에만보존하고임시reader는제거했다. 이전1,833행은그시점자료이며이번교체전후집계와혼동하지않는다.
+- 실제유효세션2명·익명공개검색의기본/옵션목록은동일방결과였다. 참가목록기본/멤버십profile·내신청목록과페이지연결/그룹이름·상태를저장원본에대조했다. 방연결33관측/그룹표시7관측은여러페이지/프로필에반복된관측횟수다. 연결방상세4조회와프로필8조합의동일참가자group_member도일치했다. READONLY SQL SELECT5,880/SET61/provider0이다.
+- 최초연결context 실제샘플은정상응답3건모두permission거절이었다. 별도집계에서COMMON_AUTHORITY_UNAVAILABLE2/COMMON_LEADER_REQUIRED1이며추가3샘플은ROOM_NOT_ACTIVE였다. 현재G1/방상태를우회하지않았다. 진단추가조회는SELECT839/SET13/provider0이고실자료에서허용context/최초연결write성공은확인하지않았다. 긍정경계는앞선격리검증으로보호하며새UI연결·기기인수에서확인한다.
+- 실제HTTP12PASS: health/공개주차·옵션GET목록/POST검색2004건, 참가/신청목록·target_group_id context·공통설정의missing/invalid Bearer4018건이다. ACCESS_INVALID/no-store/Bearer확인이다. 실회원HTTP토큰발급·원명령/초대·최초연결쓰기시험은하지않았다.
+- API/DB healthy·관찰44JSON로그/ERROR0·worker ownership_settlement8/recruitment7/auth_cleanup1모두success/failed_items0이다. 기존격리47PASS/추가4·토큰1을재사용하고전체시험을반복하지않았다.
+
+다음Flutter는고정목록DTO/targetcontext·기존common-settings연결과실제배지진입조건을반영하고사용자는새최초연결/표시변경경계를기기로확인한다. 기존그룹정상시험통과는유지하며반복요청하지않는다. Backend는구체차이에대응한다. 개발반영과새기기인수·merge/운영배포·자료변경/삭제·Issue종료는구분한다.

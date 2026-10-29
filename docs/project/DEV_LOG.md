@@ -2979,3 +2979,10 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - Native기존그룹잔여기기통과(#12전체36/#16전체21)수용/반복정상시험요청없음. Flutter9d1baa39 생성UI기본값수정/29PASS는자체보고·Backend합산없음. 다음고정context/DTO소비/Native진입배지차이대응·실제개발반영/새기기인수별도다. source/push/공식결과링크는아래마감한다.
 
 - 구현/고정계약6dac5ab2cc67e197979e7188a9c97ce2c27fb548 commit/push·원격일치확인후 [#12 전체38번째 Backend · 목록/소속표시 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6503052363)·[#16 전체24번째 Backend · 최초연결 명령 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6503052848) 게시·실제순번/작성측/단계명확인. 양본문상단은기존기기통과/새후속구현완료·개발미반영·다음Native소비를구분해갱신/과거본문·OPEN보존이다. 후행인계기록은같은목적브랜치에보존한다.
+
+
+## 2026-10-30 — 최초 그룹 연결/목록 표시 개발서버 반영
+
+- 사용자반영지시로실제source2602e4595a868eebdf12b04e1fd51502142069b3/이미지5bd8dde6eba275bdad448315aee67d554ef4cb60d35e3702795f97bb761f9cf3·DB0034유지로API/내부worker교체. 기존114업무표2,015행/열/기록시각·sequence·키/설정·DB컨테이너/볼륨일치, migration없음·임시reader제거다.
+- 후보/실행274소스·runtime31·두전체계약123/140·185/206일치. 실제유효세션2명/공개검색·참가/신청목록그룹표시대조(연결33/그룹7반복관측)·연결상세4/프로필8동일배지·READONLY SELECT5880/SET61/provider0. 최초연결context정상응답3은G1거절(공통권한없음2/다른공대장1),별도3ROOM_NOT_ACTIVE. 진단추가SELECT839/SET13/provider0·허용실자료context/write는미확인이다.
+- 실제HTTP12PASS(공개4/보호4018),API/DB healthy·관찰44JSON로그/ERROR0·ownership8/recruitment7/auth1모두성공/failed_items0. [실행집계](../engineering/operations/records/raid-group-link-rollout.json). 기존격리검증재사용/전체반복없음. 다음Flutter계약/UI연결·사용자새경계기기인수·Backend차이대응. 기존정상그룹기기통과유지·merge/운영배포·자료변경/삭제없음.
