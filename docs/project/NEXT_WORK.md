@@ -10,6 +10,8 @@ checkout `feat/group-management`, main/dev `1b6f57b` 유지. #16 전체22 사용
 - 검증: 신규/기존그룹레이드·공통관리47PASS, 최종추가경계4PASS·토큰1PASS(반복합산없음·선택49시나리오). 두전체OpenAPI일치/기본객체불변·기존schema값변경0·5경로/새11schema. [실행집계](../features/groups/raid-link-verification-2026-10-30.json).
 - 다음Flutter는고정DTO/context소비를연결하고실제진입/배지조건의구체차이를회신한다. Backend는차이에대응한다. 실제개발반영/신규변경기기인수는별도다.
 
+구현/고정계약 source `6dac5ab2cc67e197979e7188a9c97ce2c27fb548`를commit/push·원격일치확인후 [#12 전체38번째 Backend · 목록/소속표시 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6503052363)·[#16 전체24번째 Backend · 최초연결 명령 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6503052848)를게시했다. 실제전체순번/작성측/단계확인·양본문상단에개발미반영/다음담당갱신·OPEN유지다.
+
 ## 유지할 기존 완료·실제 실행 기준
 
 - [#12 전체36 Flutter 사용자기기인수](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6502226347)·[#16 전체21](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6502226876)의안내된기존그룹잔여시험전체통과를수용한다. 생성/조회·신청/승인/취소·대소문자/역할별표시/정렬·활동·차단/코드·이전/탈퇴/조건부해산·필터/기존참가보존·카드배치의보고범위다. 새최초연결/목록그룹명/소속표시결함해결인수로확대하지않고반복정상시험을요청하지않는다.

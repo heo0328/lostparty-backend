@@ -152,3 +152,5 @@ Native 신규 [#12 전체27번째 Flutter](https://github.com/heo0328/lostparty-
 - 기본/two-cycle OpenAPI전체객체일치PASS(123/140·185/206). 기본객체불변, 기존component값변경0·새schema11·변경경로5개이고PUT명령/생성body·ACK는불변이다. 문서/예시JSON/compile/diff/lock검사통과·격리프로젝트정리다. DBmigration·새원장·개발API/DB조회/교체·실회원명령·merge/운영배포·자료변경실행없음.
 
 Native#12전체36/#16전체21의기존그룹안내범위기기통과는수용하고재시험대기로돌리지않는다. #16전체22의Flutter9d1baa39 생성UI기본값/기존생성1회·29PASS는자체보고로기록하며Backend시험에합산하지않는다. **새최초연결/목록표시후속은개발미반영**이다. 실제개발실행은이전검증기록source5d24244/이미지507cd78a·DB0034를유지한다. 다음Flutter는고정context/목록DTO·응답위치예시를소비하고직접차이를회신하며Backend는대응한다. 신규개발반영·기기인수는별도다.
+
+후속구현/고정계약 source `6dac5ab2cc67e197979e7188a9c97ce2c27fb548` commit/push·원격확인후 [#12 전체38번째 Backend · 목록/소속표시 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6503052363)·[#16 전체24번째 Backend · 최초연결 명령 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6503052848)를게시·전체순번/단계명을확인했다. 양본문상단도후속개발미반영/Native다음소비차이로갱신했고OPEN유지다. 후행문서마감은업무코드/두계약/실제개발실행을바꾸지않는다.
