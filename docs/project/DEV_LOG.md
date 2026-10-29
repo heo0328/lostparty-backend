@@ -2937,3 +2937,11 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - 공식 본문과 최신 댓글을 조회했다. [#12 전체26번째 Flutter · 소비대조](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6488471404)는 현재 analysis/issues로 보석/아크그리드 매핑 가능, 구 snapshot/count 복원·추가API 불필요 및 핵심 흐름의 새 차단 없음이다. 실제 어댑터/기기 통과는 별도다.
 - [#16 전체15번째 Flutter · 반영준비 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6488471756)에 따라 기존 구현기록에 기존 개발환경 대상·전체소스/0034/two-cycle/주간/worker 조합·실행전 확인/중지/DDL/시작/보존/실행인계·실패시 전진수정 경계를 추가했다. 과거 Firebase 구조 복제를 요구하지 않으며 임의 공통코드 제거도 하지 않는다.
 - 이번은 문서 준비다. 실제 컨테이너/DB 재조회·migration·서버변경·전체격리시험·새환경/import·실회원 쓰기·merge/운영배포·자료삭제/Issue종료는 없다. 다음은 별도 지시된 Backend 개발반영, Flutter 어댑터 연결/반영후 인수다. 승인된 요청 결과는 같은 #16에 회신한다.
+
+
+## 2026-10-29 — 그룹 기존 개발환경 반영·실행검증
+
+- 사용자 승인으로 기존 개발환경을 sourcecf214d0/이미지eecda79d·DB0034로 반영했다. Docker Desktop 중지상태를 시작하고기존c1f86d8/581a1a5e·0033확인→후보계약/소스/의존성→API/worker중지→0034→같은설정후보API시작순서다. 기존이미지실행Python3.12.16과환경표시3.12.15불일치는기존runtime재사용/환경전체보존으로처리했고업무소스/계약변경없음.
+- 중지구간112업무표1,857행/열/기록시각·sequence동일/신규2표0행, DB컨테이너·볼륨/키/.env/API환경·명령·보안·포트유지. FK/권한/활동trigger7/0034readiness통과. 실제이미지272소스·runtime31·기본123/140·현재185/206계약전체일치PASS.
+- 실제HTTP26PASS(공개2/보호경로missing·invalid401 24),유효세션2명의READONLY계정/집계/주간/모집5항목상세·계획/group_state확인·provider0. 현재가입그룹없어멤버/활동/관리등실자료성공조회미확인·임의실회원쓰기없음. 보조코드httpx미설치/health헤더가정은보조만수정. 최종관찰603JSON로그/ERROR0·ownership210/recruitment200/auth35모두성공/failed_items0. [공개집계](../engineering/operations/records/group-features-rollout.json)·구현기록에상세보존.
+- 사용한도로인계전중단후재개시실행상태/저장된검증을확인해DDL/교체미반복·임시reader제거. #12전체27/#16전체17 Flutter연결2691PASS·직접12포함자체보고수신/추가API요청없음. 실제기기/Penpot미확인·Backend시험과합산없음. 다음Native/사용자실제인수·Backend차이대응. main/dev병합·운영배포·초기화/삭제없음.

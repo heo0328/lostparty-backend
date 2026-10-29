@@ -84,3 +84,21 @@
 0034 DDL이 실패해0033으로 롤백된 경우에만 실제0033 호환성을 확인한 기존 이미지를 재시작할 수 있다.0034 커밋 이후에는 기존0033 전용 이미지로 되돌리지 않으며 DB/업무자료를 유지한 전진 수정으로 대응한다. migration downgrade는 지원하지 않는다. 실패 시 새 기능 연결을 완료로 알리지 않는다.
 
 준비 완료는 대상·조합·순서·보존 확인·인계 항목이 정리된 상태다. **현재는 준비만 완료했고 개발환경 반영은 미실행**이다. 다음 Backend 작업은 별도로 지시된 개발반영 구간이며, Flutter는 어댑터/화면 연결을 진행하되 실제 신규 API 인수는 반영 후 수행한다. G-RECOVERY/활동자동추가는 계속 별도 미결정이다.
+
+
+## 2026-10-29 — 기존 개발환경 반영·실행 검증 완료
+
+사용자가 준비 계획의 실제 실행을 승인했다. 개발환경은 **source `cf214d016fc650e216782432f9c9c33823367808` / 이미지 `sha256:eecda79d926fef610cd01910cf2d6c94b07201b80a21603a1dd4a176e1a13463` / DB `0034_group_features`**로 반영했다. 업무 구현·두 계약은22b1620과 동일하다. [공개 실행 집계](../../engineering/operations/records/group-features-rollout.json)에 실제 실행 근거와 미확인을 구분한다. 위 준비단계의 미반영 기록은 당시 이력이다.
+
+- 중지된 Docker Desktop을 시작한 뒤 기존API c1f86d8/581a1a5e·DB0033을 확인했다. 이미지 기본환경과 기존컨테이너의 PYTHON_VERSION 표시가 달랐으나 실제 실행은 양쪽3.12.16이었다. 기존 immutable runtime 이미지를 재사용해 기존 app/alembic 디렉터리를 교체한 전체소스 후보를 만들고 기존 환경값도 그대로 유지했다. 최초 일반Dockerfile 후보는 실행환경 차이검사에서 제외했고 실제 반영하지 않았다. 추후 기본이미지 갱신은 별도 판단이다.
+- API/내부worker를 함께 중지한 구간에서0034만 트랜잭션 적용했다. 기존112개 업무표1,857행의 모든 행/열정의/기록시각 hash와 sequence가 동일하고 신규 두표는0행이었다. FK·앱역할 권한·활동trigger7개와 two-cycle/group/worker readiness를 확인했다. 과거시각/이름참조 backfill·자료이전/삭제는 없다.
+- DB컨테이너/이미지/볼륨/환경과 API환경 전체·명령/사용자·포트·보안·로그·readonly키mount/키내용/.env를 보존했다. 민감 원문과 상세 비교근거는 gitignore backups에만 보관한다. 임시 reader는 제거했고 API/DB는 healthy다.
+- 실제 실행소스272파일 일치·고정runtime31·두생성계약 전체일치PASS: 기본123경로/140동작·two-cycle185/206. health/공개주차 HTTP200 2건, 신규그룹12경로의 missing/invalid Bearer401 24건을 확인했다. 보호응답 ACCESS_INVALID/no-store/Bearer는 모두 일치한다. health에는 기존 공개헤더 동작을 유지했다.
+- 실제 유효세션2명의 계정bootstrap/등록·사용한도·개인요청집계·내그룹기본/표시·주간summary와 C/N현재/역사목록을 READ ONLY로 조회했다. 현재참가항목5건의 상세/계획/명시group_state도 확인했다. SQL7,596문장은 SELECT/SET/SHOW만 허용했고 provider 호출0이었다. 정상회원 HTTP나 명령 성공을 뜻하지 않는다.
+- 유효세션 회원의 현재가입그룹이 없어 멤버/활동/차단/관리/그룹방목록의 실자료 성공조회는 미확인이다. 새 그룹/가입자료를 만들거나 실회원 추방/해산으로 검증하지 않았다. 이 경계의 기존 격리검증을 재사용하고 사용자 기기 인수는 Flutter와 별도로 진행한다.
+- 최종 관찰로그603줄 중ERROR0, worker ownership_settlement210/recruitment200/auth_cleanup35건 모두 success·failed_items0이다. 수치는 이 관찰구간뿐이며 이전 격리시험수와 합산하지 않는다. 읽기검증 보조스크립트의 테스트전용 httpx import 및 health no-store 가정은 보조코드만 정정했고 업무코드/API계약은 변경하지 않았다.
+- 사용한도 때문에 반영 후 인계 전 중단됐으며 재개시 실행이미지·DB0034·API/DB healthy와 저장된 읽기검증 결과를 확인해 migration/교체를 반복하지 않았다.
+
+Native 신규 [#12 전체27번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6488900145)·[#16 전체17번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6488900495)는 그룹 Router/DI/화면·명령/CAS/원ACK·표시/관리/모집연결 구현과 Flutter전체2691PASS(직접12포함)·lib/test분석지적0을 자체보고했다. Backend시험에 합산하지 않으며 실제 서버연동/기기/Penpot대조는 미완료다. 추가API 수정요청은 없다.
+
+다음 Flutter/사용자는 기존 개발서버에서 초대/가입→활동캐릭터→모집필터→상세/참가 및 관리흐름을 정상UI로 확인하고 차이가 있는 항목만 #12/#16에 회신한다. Backend는 직접차이에 대응한다. G-RECOVERY/활동자동추가·main/dev병합·운영배포·초기화/삭제는 실행하지 않았다. 실행검증/계약게시와 실제기기인수를 구분하고 양Issue는 OPEN으로 유지한다.
