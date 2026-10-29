@@ -2958,3 +2958,10 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - 개발실행cf214d0/eecda79d·0034는미교체·DB/자료쓰기없음. 다음고정DTO소비차이대응·별도개발반영/기기인수다. 같은브랜치검증구간commit/push후원격확인·#12인계하며main/dev·운영배포·Issue종료는없다.
 
 - 후보구간c38144528c42eda7fcf2912fa412d3a005fc68e7 commit/push·원격일치확인후 [#12 전체32번째 Backend · 후보검색/역할전투력 구현인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496536145) 게시·전체순번/단계확인, 본문상단에후속구현완료/개발미반영·Native다음소비차이대조를반영하고과거본문/OPEN보존. 후행인계기록도같은목적브랜치에보존한다.
+
+
+## 2026-10-29 — 초대 후보 검색/전투력 보완 개발서버 반영
+
+- 사용자승인에따라기존cf214d0/eecda79d에서source5d24244bb29bc3870a4dc6dfd47decf56f194bd2·이미지507cd78abc93e2e6b0c3f2c26730d6c207810ce31fc8db179b8bdfc483441755로API/내부worker교체. DB0034유지·migration없음·114업무표1,833행/열/시각·sequence동일/키·설정·DB컨테이너/볼륨보존·임시reader제거다.
+- 후보/실행272소스/runtime31/두전체OpenAPI일치(123/140·185/206). 유효세션2명의현재그룹권한에서ASCII대상3이름·변형18요청동등/역할profile검증,표시18관측중legacy null/역할값존재6관측. READONLY SELECT361/SET49/provider0이며고유캐릭터수나정상회원HTTP/명령인수가아니다.
+- 실제HTTP6PASS(공개2/보호4014), API/DB healthy·관찰39JSON로그/ERROR0·ownership10/recruitment9/auth1모두success/failed_items0. [실행집계](../engineering/operations/records/invite-candidates-rollout.json). 기존격리검증재사용·전체반복없음. 다음Native/사용자검색/profile·정상초대전송/수락기기인수·Backend차이대응이며main/dev병합·운영배포·자료삭제없음.

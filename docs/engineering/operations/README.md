@@ -4,7 +4,7 @@
 
 ## 현재 운영 경계
 
-최신 개발 실행은 [그룹 기능 반영 기록](../../features/groups/implementation-2026-10-28.md)·[집계](records/group-features-rollout.json)다. sourcecf214d0/이미지eecda79d·DB0034·two-cycle185경로/206동작(기본123/140). 기존112업무표1,857행/sequence·DB/설정/키보존·소스272/runtime31/두계약전체일치·READONLY/HTTP26·healthy/worker/ERROR0확인. 실제가입그룹조회·실회원명령/기기는미확인이고다음Native/사용자인수·Backend차이대응이다. 병합/운영배포/초기화·삭제는없다. 이전 [재신청 개발반영](reapplication-history-rollout.md)·[명시출발정수분](explicit-minute-rollout.md)은당시이력으로보존한다.
+최신 개발 실행은 [그룹 후보검색/역할표시 반영 기록](../../features/groups/implementation-2026-10-28.md)·[집계](records/invite-candidates-rollout.json)다. source5d24244/이미지507cd78a·DB0034·two-cycle185/206(기본123/140). 기존114업무표1,833행/sequence·DB/설정/키보존·소스272/runtime31/두계약전체일치·READONLY대소문자18요청/HTTP6·worker/healthy/ERROR0확인. 정상초대전송/수락·기기인수는미확인이고다음Native/사용자인수·Backend차이대응이다. migration/병합/운영배포/초기화·삭제없음. 이전 [그룹1차집계](records/group-features-rollout.json)·[재신청 개발반영](reapplication-history-rollout.md)은당시이력으로보존한다.
 
 직전 업무 보완은 [신청자 아이템레벨 보완 개발 반영](application-item-level-rollout.md)·[집계](records/application-item-level-rollout.json)다. sourcef471e31/이미지6d5857b3·177경로·DB0031, 기존자료/키보존·실행12PASS 완료이며 [전체25 Flutter 인수 결과](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386859737)로 레벨표시 기기통과·두 예외분기 구현/자동검증 근거 수용을 확인했다. 두 예외분기의 실제 기기관찰과 전체모집 인수는 미완료다. 아래 표시프로필 반영은 직전 이력이다.
 

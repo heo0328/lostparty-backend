@@ -18,7 +18,7 @@
 
 `reader_profile=group-display-1`을 명시하면 `profile/evaluated_at/items`를 반환하고 각 후보에 기존 필드와 `character_spec`을 함께 제공한다. [공통 표시 계약](../discovery/display-contract-proposal.md)의 dealer/support별 마지막 성공 전투력·현재 분석·출처/관측/누락사유를 재사용한다. 현재 owner·ownership/lifecycle 세대가 맞는 기존 저장자료만 일괄조회하고 개인설정·등록/회원ID·타회원 원정대전체는 공개하지 않는다. 후보는 기존 서버/UUID 순서·최대50건, 새 cursor는 없다.
 
-새 프로필은 DB0034가 필요하고0023/0033의 명시 요청은503 `GROUP_FEATURE_NOT_READY`다. 생략 시 기존 조회는 유지한다. GET은 동일 REPEATABLE READ/READ ONLY에서 조회하고 provider/키 접근·자료 쓰기·정상값 합성을 하지 않는다. 신규 전투력 저장이나 migration은 없다. **이 후보검색/표시 보완은 아직 개발서버 미반영**이며 고정 소스·검증과 실제 실행 상태는 [구현 기록](../implementation-2026-10-28.md)을 따른다.
+새 프로필은 DB0034가 필요하고0023/0033의 명시 요청은503 `GROUP_FEATURE_NOT_READY`다. 생략 시 기존 조회는 유지한다. GET은 동일 REPEATABLE READ/READ ONLY에서 조회하고 provider/키 접근·자료 쓰기·정상값 합성을 하지 않는다. 신규 전투력 저장이나 migration은 없다. **이 후보검색/표시 보완은 source5d24244/이미지507cd78a·DB0034로 개발반영·실행검증 완료**이며 실제 초대성공·기기인수는 별도다. 고정 소스·검증과 실제 실행 상태는 [구현 기록](../implementation-2026-10-28.md)을 따른다.
 
 <a id="section"></a>
 

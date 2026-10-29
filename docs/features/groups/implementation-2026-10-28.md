@@ -122,3 +122,16 @@ Native 신규 [#12 전체27번째 Flutter](https://github.com/heo0328/lostparty-
 **이번 후보검색/표시 수정은 개발서버 미반영**이다. 실제개발sourcecf214d0/이미지eecda79d·DB0034는앞선반영상태를유지한다. 다음Flutter는게시된고정DTO의구체소비차이를회신하고 Backend는대응한다. 실제개발반영과정상초대성공·기기인수는별도다. 대표선택레벨정렬은Flutter담당이며merge/운영배포·DB/자료변경·Issue종료는없다.
 
 후속 source `c38144528c42eda7fcf2912fa412d3a005fc68e7` commit/push·원격일치확인후 [#12 전체32번째 Backend · 후보검색/역할전투력 구현인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496536145)를게시했다. 전체순번/작성측/단계와본문상단의완료·미반영/다음담당을확인했다. 후행기록은업무코드/고정계약·개발실행을변경하지않는다.
+
+
+## 2026-10-29 — 초대 후보 보완 개발서버 반영 완료
+
+사용자가 서버반영을 승인해 **실제 실행 source `5d24244bb29bc3870a4dc6dfd47decf56f194bd2` / 이미지 `sha256:507cd78abc93e2e6b0c3f2c26730d6c207810ce31fc8db179b8bdfc483441755` / DB `0034_group_features`**로 API를 교체했다. 구현/계약은 `c381445`와 같다. 앞선 후속구간의 개발미반영 기록은 이번 반영으로 해소됐으며 [공개 반영집계](../../engineering/operations/records/invite-candidates-rollout.json)를 따른다.
+
+- 기존 eecda79d 실행이미지의 고정runtime을 재사용해 app/alembic 디렉터리를 전체 후보소스로 교체했다. 소스272파일/runtime31·기본123/140·two-cycle185/206의 두 계약 전체 일치를 후보 및 실제 컨테이너에서 확인했다. DBmigration은 실행하지 않았다.
+- API/같은lifespan worker를 함께 중지한 구간의 기준과 새API 시작직후를 비교해114업무표1,833행/열정의/기록시각·sequence·키·DB0034가 모두 동일했다. DB컨테이너/이미지/볼륨/환경과 API환경 전체·명령/사용자·포트·보안/로그·키mount/.env를 유지했다. 원본·상세 비교자료는 ignored backups에만 보존하고 임시 reader는 제거했다. 이전 반영의1,857행은 당시 자료이며 이번 교체 전후 집계와 혼동하지 않는다.
+- 현재 유효세션2명/현재그룹권한으로 저장된ASCII이름3개를 조회했다. 각현재회원의 lowercase/uppercase/공백 변형18요청에서 기본후보필드의동등결과·profile DTO검증을확인했다. 표시후보18회 중6회는기존단일combat_power가null이면서역할성공수치가있었다. 이 수치는중복관측횟수이며고유회원/캐릭터수나기기성공수가아니다.
+- 실제 서비스 검증은READ ONLY·SQL SELECT361/SET49·provider0이었다. 정상회원HTTP토큰을발급하거나초대전송/수락명령은실행하지않았다. 실제HTTP6PASS는health/공개주차200 2건과기본/새프로필missing/invalid Bearer401 4건이며ACCESS_INVALID/no-store/Bearer를확인했다.
+- API/DB healthy, 관찰39JSON로그/ERROR0·worker ownership_settlement10/recruitment9/auth_cleanup1 모두success·failed_items0. 기존격리검증19PASS와관련46PASS를재사용하고전체반복시험은하지않았다.
+
+다음Flutter/사용자는반영된기존개발서버에서대소문자검색과reader_profile=group-display-1 소비·역할분리/미확인표시·정상초대전송/수락을확인하고구체차이를#12에회신한다. Backend는차이에대응한다. 단일legacy전투력을역할max로해석하지않으며회원/소유/등록/활동정책은기존대로다. 실제초대성공·기기인수/merge·운영배포/자료삭제/Issue종료는별도미실행이다.

@@ -1,0 +1,103 @@
+{
+  "source_commit": "5d24244bb29bc3870a4dc6dfd47decf56f194bd2",
+  "implementation_contract_commit": "c38144528c42eda7fcf2912fa412d3a005fc68e7",
+  "image": "sha256:507cd78abc93e2e6b0c3f2c26730d6c207810ce31fc8db179b8bdfc483441755",
+  "previous_image": "sha256:eecda79d926fef610cd01910cf2d6c94b07201b80a21603a1dd4a176e1a13463",
+  "applied_at": "2026-10-29T12:30:23.044325053Z",
+  "database_revision": "0034_group_features",
+  "migration_executed": false,
+  "existing_application_tables": 114,
+  "existing_rows": 1833,
+  "all_rows_columns_timestamps_and_sequences_unchanged": true,
+  "db_container_image_volume_environment_preserved": true,
+  "api_environment_command_security_ports_logging_key_mount_preserved": true,
+  "keys_and_environment_file_preserved": true,
+  "source_files_equal": 272,
+  "runtime_packages": 31,
+  "full_openapi_equal": true,
+  "base_openapi": {
+    "paths": 123,
+    "operations": 140
+  },
+  "current_openapi": {
+    "paths": 185,
+    "operations": 206
+  },
+  "read_only_service_results": {
+    "revision": "0034_group_features",
+    "valid_session_users": 2,
+    "ascii_target_names_available": 3,
+    "checks": {
+      "current_group_members_with_valid_session": 2,
+      "case_profile_equal_requests": 18,
+      "displayed_candidate_occurrences": 18,
+      "legacy_null_with_role_power_occurrences": 6,
+      "checked_names": 6
+    },
+    "read_only_sql": {
+      "SET": 49,
+      "SELECT": 361
+    },
+    "provider_calls": 0,
+    "scope": "Actual deployed service reads using existing valid sessions/current membership; no authenticated member HTTP, commands, or device acceptance"
+  },
+  "actual_http": [
+    {
+      "case": "health",
+      "status": 200
+    },
+    {
+      "case": "public_cycle",
+      "status": 200
+    },
+    {
+      "case": "default_missing",
+      "status": 401,
+      "error": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "default_invalid",
+      "status": 401,
+      "error": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "profile_missing",
+      "status": 401,
+      "error": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "profile_invalid",
+      "status": 401,
+      "error": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    }
+  ],
+  "logs": {
+    "json_lines": 39,
+    "jobs": {
+      "ownership_settlement": 10,
+      "recruitment": 9,
+      "auth_cleanup": 1
+    },
+    "errors": 0,
+    "failed_items": 0
+  },
+  "health": {
+    "api": "healthy",
+    "db": "healthy"
+  },
+  "temporary_reader_removed": true,
+  "limitations": [
+    "Service reads using existing valid session and group membership; no authenticated member HTTP tokens minted",
+    "No state-changing member commands, actual invite success or Flutter/device acceptance",
+    "Previously passed isolated tests reused; no full suite rerun, DB migration, import or deletion",
+    "READ ONLY variants are occurrences, not distinct members or characters"
+  ]
+}

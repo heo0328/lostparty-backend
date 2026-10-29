@@ -2,15 +2,16 @@
 
 ## 현재 기준 — 그룹 개발환경 반영·실행 검증 완료
 
-checkout `feat/group-management`, main/dev 공통 `1b6f57b` 유지. 사용자 승인 계획에 따라 기존 개발환경에 전체 그룹 소스와DB0034를 반영했다. 실제 실행 source `cf214d016fc650e216782432f9c9c33823367808`, 이미지 `eecda79d`이며 업무 구현/계약은 `22b1620`과 동일하다. [구현·반영 기록](../features/groups/implementation-2026-10-28.md)·[실행 집계](../engineering/operations/records/group-features-rollout.json)를 따른다.
+checkout `feat/group-management`, main/dev 공통 `1b6f57b` 유지. 사용자 승인 계획에 따라 기존 개발환경에 전체 그룹 소스와DB0034를 반영했다. 실제 실행 source `5d24244bb29bc3870a4dc6dfd47decf56f194bd2`, 이미지 `507cd78a`·DB0034이며 업무 구현/계약은후속초대후보보완 `c381445`와동일하다. [구현·반영 기록](../features/groups/implementation-2026-10-28.md)·[실행 집계](../engineering/operations/records/group-features-rollout.json)를 따른다.
 
 실행기록 `9e37868` push·원격일치 후 [#12 전체28번째 Backend · 핵심 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6489008365)·[#16 전체18번째 Backend · 관리 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6489008735)를 게시하고 실제 전체순번을 확인했다. 양Issue 상단도 실제반영/다음담당으로 갱신·OPEN유지했다.
 
-## 초대 후보 검색·전투력 보완 — 후보 구현/격리검증 완료·개발미반영
+## 초대 후보 검색·전투력 보완 — 개발반영·실행검증 완료
 
 - #12 전체29/30 요청에따라ASCII대소문자무시정확검색과invite-candidates의reader_profile=group-display-1을구현했다. [전체31 Backend 구현전계약제안](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496315881)·[검증집계](../features/groups/invite-candidates-verification-2026-10-29.json)를따른다. 기본DTO/단일전투력은보존하고현재owner/ownership/lifecycle의역할별자료를재사용한다.
 - 최종직접/표시19PASS·기존초대/이름해석46PASS·두계약전체일치(123/140·185/206). 초회시험자료FK/NOTNULL·UUID순서가정실패는시험만정정했고실행별결과는구현기록에보존한다. READ ONLY 개발집계는적격31중summary null30,그중역할성공자료있는15/없는15다. 특정회원요청의재현은아니다.
-- 다음Flutter: 고정후보DTO/현재분석·last-success분리소비의구체차이를#12에회신. 다음Backend: 그차이에대응하고별도요청된개발반영구간에서후보이미지/실행확인을진행한다. 현재개발서버에이수정의실회원/기기시험을요청하지않는다. DBmigration·중복저장·provider조회는추가하지않았다.
+- 사용자승인으로5d24244/507cd78a를기존개발서버에반영했다. [반영집계](../engineering/operations/records/invite-candidates-rollout.json): DB0034/114업무표1,833행·sequence/설정/키보존·272소스/runtime31/두계약전체일치·실제READONLY대소문자/공백18요청동등/역할표시·HTTP6·worker/healthy확인. migration없음.
+- 다음Flutter/사용자: 현재개발서버에서새프로필을소비해대소문자검색·역할분리표시·정상초대전송/수락을확인하고구체차이만#12회신. Backend는차이에대응한다. 실제정상초대성공/기기인수는미확인이다.
 
 후속 source `c38144528c42eda7fcf2912fa412d3a005fc68e7` push·원격확인후 [#12 전체32번째 Backend · 후보검색/역할전투력 구현인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496536145)를게시·실제순번확인했고본문상단에개발미반영/다음담당을갱신했다.
 
