@@ -135,3 +135,5 @@ Native 신규 [#12 전체27번째 Flutter](https://github.com/heo0328/lostparty-
 - API/DB healthy, 관찰39JSON로그/ERROR0·worker ownership_settlement10/recruitment9/auth_cleanup1 모두success·failed_items0. 기존격리검증19PASS와관련46PASS를재사용하고전체반복시험은하지않았다.
 
 다음Flutter/사용자는반영된기존개발서버에서대소문자검색과reader_profile=group-display-1 소비·역할분리/미확인표시·정상초대전송/수락을확인하고구체차이를#12에회신한다. Backend는차이에대응한다. 단일legacy전투력을역할max로해석하지않으며회원/소유/등록/활동정책은기존대로다. 실제초대성공·기기인수/merge·운영배포/자료삭제/Issue종료는별도미실행이다.
+
+실제반영기록0f55610 push·원격확인후 [#12 전체33번째 Backend · 후보검색/역할표시 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496785817)를게시했다. 전체순번/작성측/단계확인과본문상단최신실행/다음담당갱신을마쳤고OPEN유지다. 후행문서커밋은업무소스/실행이미지를변경하지않는다.

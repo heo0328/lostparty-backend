@@ -15,6 +15,8 @@ checkout `feat/group-management`, main/dev 공통 `1b6f57b` 유지. 사용자 �
 
 후속 source `c38144528c42eda7fcf2912fa412d3a005fc68e7` push·원격확인후 [#12 전체32번째 Backend · 후보검색/역할전투력 구현인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496536145)를게시·실제순번확인했고본문상단에개발미반영/다음담당을갱신했다.
 
+실제반영기록 `0f5561015820708bab926b57b80aaf267b9b27f7` push·원격일치확인후 [#12 전체33번째 Backend · 후보검색/역할표시 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496785817) 게시·실제순번확인, 본문상단을최신실행/Native다음인수로갱신하고OPEN유지했다.
+
 ## 다음 담당 — 실제 연동·기기 인수
 
 - Flutter [#12 전체27](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6488900145)·[#16 전체17](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6488900495): 연결구현/전체2691시험·직접12포함/분석지적0 자체보고, 추가API요청없음. Backend시험과합산하지않는다.

@@ -2965,3 +2965,5 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - 사용자승인에따라기존cf214d0/eecda79d에서source5d24244bb29bc3870a4dc6dfd47decf56f194bd2·이미지507cd78abc93e2e6b0c3f2c26730d6c207810ce31fc8db179b8bdfc483441755로API/내부worker교체. DB0034유지·migration없음·114업무표1,833행/열/시각·sequence동일/키·설정·DB컨테이너/볼륨보존·임시reader제거다.
 - 후보/실행272소스/runtime31/두전체OpenAPI일치(123/140·185/206). 유효세션2명의현재그룹권한에서ASCII대상3이름·변형18요청동등/역할profile검증,표시18관측중legacy null/역할값존재6관측. READONLY SELECT361/SET49/provider0이며고유캐릭터수나정상회원HTTP/명령인수가아니다.
 - 실제HTTP6PASS(공개2/보호4014), API/DB healthy·관찰39JSON로그/ERROR0·ownership10/recruitment9/auth1모두success/failed_items0. [실행집계](../engineering/operations/records/invite-candidates-rollout.json). 기존격리검증재사용·전체반복없음. 다음Native/사용자검색/profile·정상초대전송/수락기기인수·Backend차이대응이며main/dev병합·운영배포·자료삭제없음.
+
+- 반영기록0f5561015820708bab926b57b80aaf267b9b27f7 commit/push·원격일치확인후 [#12 전체33번째 Backend · 후보검색/역할표시 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496785817) 게시·전체순번/작성측/단계명확인. 본문상단을실행source5d24244/507cd78a·0034·Native실제검색/profile/초대수락인수대기로갱신/과거본문·OPEN유지. 후행링크기록은동일목적브랜치에보존한다.
