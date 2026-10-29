@@ -2930,3 +2930,10 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - 최종gen-review/실제item-round원본보강후해당두경계만2PASS/38.45초. 최종검증노드152개는구현체크포인트별선택의합집합이며동일HEAD일괄재실행아니다. 실행별집계/미실행과노드는그룹verification-2026-10-28.json에기록했다. 후보계약/형태는불변이며추가서버/DB시험없음.
 
 - 관리/전체계약22b1620747707afaa87ba84223e5a2beb886f658 commit/push·원격일치확인후 [#12 전체25 Backend · 최종핵심계약](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6466328231)/[#16 전체14 Backend · 관리/레이드구현인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6466327755) 게시·실제순번/본문재조회. 현재구현/격리/게시완료와개발미반영/Native소비·기기미완료를분리해양Issue상단에반영·원문보존/OPEN유지다. 다음Flutter DTO차이대조·Backend대응, 개발반영은별도지시구간이다. main/dev1b6f57b·활동선택89a3248보존·merge/배포없음. 후행문서마감도같은브랜치에보존한다.
+
+
+## 2026-10-29 — Native #12/#16 최신 회신 확인·개발반영 준비
+
+- 공식 본문과 최신 댓글을 조회했다. [#12 전체26번째 Flutter · 소비대조](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6488471404)는 현재 analysis/issues로 보석/아크그리드 매핑 가능, 구 snapshot/count 복원·추가API 불필요 및 핵심 흐름의 새 차단 없음이다. 실제 어댑터/기기 통과는 별도다.
+- [#16 전체15번째 Flutter · 반영준비 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6488471756)에 따라 기존 구현기록에 기존 개발환경 대상·전체소스/0034/two-cycle/주간/worker 조합·실행전 확인/중지/DDL/시작/보존/실행인계·실패시 전진수정 경계를 추가했다. 과거 Firebase 구조 복제를 요구하지 않으며 임의 공통코드 제거도 하지 않는다.
+- 이번은 문서 준비다. 실제 컨테이너/DB 재조회·migration·서버변경·전체격리시험·새환경/import·실회원 쓰기·merge/운영배포·자료삭제/Issue종료는 없다. 다음은 별도 지시된 Backend 개발반영, Flutter 어댑터 연결/반영후 인수다. 승인된 요청 결과는 같은 #16에 회신한다.

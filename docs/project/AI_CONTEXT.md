@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-2026-10-28 기준. main/dev1b6f57b·checkout feat/group-management. **그룹1차 핵심표시/활동/집계·조건부해산/추방/대표변경·공통방안내/기존레이드보존을구현·격리검증했다.** [구현기록](../features/groups/implementation-2026-10-28.md)·[NEXT_WORK](NEXT_WORK.md)를따른다. 후보계약은기본123/140·two-cycle185/206·신규기능DB0034필요이며 실제개발API/DB는기존c1f86d8/581a1a5e·0033미변경이다. 다음은Native고정DTO소비/차이대응이며서버반영·기기인수는별도다. 그룹장전용레이드명령·복구승계·활동자동추가는제외한다.
+2026-10-28 기준. main/dev1b6f57b·checkout feat/group-management. **그룹1차 핵심표시/활동/집계·조건부해산/추방/대표변경·공통방안내/기존레이드보존을구현·격리검증했다.** [구현기록](../features/groups/implementation-2026-10-28.md)·[NEXT_WORK](NEXT_WORK.md)를따른다. 후보계약은기본123/140·two-cycle185/206·신규기능DB0034필요이며 실제개발API/DB는기존c1f86d8/581a1a5e·0033미변경이다. 2026-10-29 Native #12 전체26에서 표시소비 차단없음/구 보석snapshot 복제불필요를 확인했다. #16 전체15의 개발반영 준비 요청은 구현기록에 정리했으며 실제 서버/DB는 조회·변경하지 않았다. 다음은 별도 지시된 개발반영과 Flutter 연결/기기검증이다. 그룹장전용레이드명령·복구승계·활동자동추가는제외한다.
 
 레이드 모집 1차 구현·보고된 정상 흐름/표시의 사용자 기기 인수 완료, [Issue13 전체192 Backend 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6438046779)으로 closed/completed다. 모집 관련 추가 Backend 요청은 없다. 차후 정밀도 소비·알럿·UX/소켓 등은 [보완 대장](../features/recruitment/follow-up-backlog.md)에 보존하며 현재 착수/인수 선행 조건이 아니다. 이전 미완료/종료 차단 판단과 사용자 정정은 [DEV_LOG](DEV_LOG.md)에서 확인한다.
 
