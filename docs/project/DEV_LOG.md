@@ -2986,3 +2986,6 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - 사용자반영지시로실제source2602e4595a868eebdf12b04e1fd51502142069b3/이미지5bd8dde6eba275bdad448315aee67d554ef4cb60d35e3702795f97bb761f9cf3·DB0034유지로API/내부worker교체. 기존114업무표2,015행/열/기록시각·sequence·키/설정·DB컨테이너/볼륨일치, migration없음·임시reader제거다.
 - 후보/실행274소스·runtime31·두전체계약123/140·185/206일치. 실제유효세션2명/공개검색·참가/신청목록그룹표시대조(연결33/그룹7반복관측)·연결상세4/프로필8동일배지·READONLY SELECT5880/SET61/provider0. 최초연결context정상응답3은G1거절(공통권한없음2/다른공대장1),별도3ROOM_NOT_ACTIVE. 진단추가SELECT839/SET13/provider0·허용실자료context/write는미확인이다.
 - 실제HTTP12PASS(공개4/보호4018),API/DB healthy·관찰44JSON로그/ERROR0·ownership8/recruitment7/auth1모두성공/failed_items0. [실행집계](../engineering/operations/records/raid-group-link-rollout.json). 기존격리검증재사용/전체반복없음. 다음Flutter계약/UI연결·사용자새경계기기인수·Backend차이대응. 기존정상그룹기기통과유지·merge/운영배포·자료변경/삭제없음.
+
+
+반영 기록 `ad095c30e32e41d9ac90a4a34e50ba87dc062a9c` commit/push·원격 일치 후 [#12 전체39번째 Backend · 표시 기능 서버 반영](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6503318325)·[#16 전체25번째 Backend · 최초 연결 서버 반영](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6503318794)를 게시하고 실제 전체 순번·작성 측·단계를 확인했다. 양 Issue 본문 상단은 개발반영 완료/Flutter 신규 계약 연결·새 경계 기기 인수 대기로 갱신했으며 OPEN을 유지한다. 실제 실행은 source2602e45/이미지5bd8dde6·DB0034이며 후행 기록 커밋은 실행 소스를 바꾸지 않는다.

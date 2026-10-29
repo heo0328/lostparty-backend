@@ -168,3 +168,6 @@ Native#12전체36/#16전체21의기존그룹안내범위기기통과는수용하
 - API/DB healthy·관찰44JSON로그/ERROR0·worker ownership_settlement8/recruitment7/auth_cleanup1모두success/failed_items0이다. 기존격리47PASS/추가4·토큰1을재사용하고전체시험을반복하지않았다.
 
 다음Flutter는고정목록DTO/targetcontext·기존common-settings연결과실제배지진입조건을반영하고사용자는새최초연결/표시변경경계를기기로확인한다. 기존그룹정상시험통과는유지하며반복요청하지않는다. Backend는구체차이에대응한다. 개발반영과새기기인수·merge/운영배포·자료변경/삭제·Issue종료는구분한다.
+
+
+반영 기록 `ad095c30e32e41d9ac90a4a34e50ba87dc062a9c` commit/push·원격 일치 후 [#12 전체39번째 Backend · 표시 기능 서버 반영](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6503318325)·[#16 전체25번째 Backend · 최초 연결 서버 반영](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6503318794)를 게시하고 실제 전체 순번·작성 측·단계를 확인했다. 양 Issue 본문 상단은 개발반영 완료/Flutter 신규 계약 연결·새 경계 기기 인수 대기로 갱신했으며 OPEN을 유지한다. 실제 실행은 source2602e45/이미지5bd8dde6·DB0034이며 후행 기록 커밋은 실행 소스를 바꾸지 않는다.

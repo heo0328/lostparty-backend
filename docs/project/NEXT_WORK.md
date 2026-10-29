@@ -19,6 +19,8 @@ checkout `feat/group-management`, main/dev `1b6f57b` 유지. #16 전체22 사용
 - 실제개발반영기록은source2602e45/이미지5bd8dde6·DB0034(기본123/140·two-cycle185/206)이며 [실행집계](../engineering/operations/records/raid-group-link-rollout.json)를따른다. 기존114업무표2,015행/sequence·설정/키·DB볼륨보존, 274소스/runtime31/두전체계약·HTTP12/READONLY목록·프로필·worker/healthy확인. 실제context샘플은G1/방상태거절로최초연결성공write미확인이고신규UI/기기에서확인한다.
 - G-RECOVERY·활동자동추가미정/로컬89a3248보존·main/dev병합/운영배포·자료삭제없음. 그룹원동등개설·실제T공대장관리/그룹장전용레이드명령없음을유지한다.
 
+반영 기록 `ad095c30e32e41d9ac90a4a34e50ba87dc062a9c` commit/push·원격 일치 후 [#12 전체39번째 Backend · 표시 기능 서버 반영](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6503318325)·[#16 전체25번째 Backend · 최초 연결 서버 반영](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6503318794)를 게시하고 실제 전체 순번·작성 측·단계를 확인했다. 양 Issue 본문 상단은 개발반영 완료/Flutter 신규 계약 연결·새 경계 기기 인수 대기로 갱신했으며 OPEN을 유지한다. 실제 실행은 source2602e45/이미지5bd8dde6·DB0034이며 후행 기록 커밋은 실행 소스를 바꾸지 않는다.
+
 ## 다른 미완료 주제
 
 모집1차인수/Issue13종료는유지하고차후정밀도/알럿/UX/소켓은 [보완대장](../features/recruitment/follow-up-backlog.md)을따른다. 다른Issue상태는 [추적표](ISSUE_TRACKER.md), 완료/결정/검증·장애는 [DEV_LOG](DEV_LOG.md)에보존한다. IF-001/002/003 비활성·원자료/pending/ACK·별도성능/실회원원ACK 검증경계는유지한다.
