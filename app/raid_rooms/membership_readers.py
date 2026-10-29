@@ -179,7 +179,8 @@ def legacy_membership(db,uid,room,row,member,cm,key,stamp):
         target_participation_state=cm.state,target_cycle_key=key,room_cycle_id=row.id,target_generation=row.generation,target_revision=row.revision)
 
 
-def memberships(principal,key,state='current',limit=20,cursor=None):
+def memberships(principal,key,state='current',limit=20,cursor=None,include_group_state=False):
+    from app.raid_rooms import group_list_display
     if state not in ('current','ended','all') or type(limit) is not int or not 1<=limit<=50:fail('INVALID_REQUEST',400)
     with actions.commands.base.snapshot(principal) as (db,uid,stamp):
         actions.ready(db);target=actions.cycles.target(stamp,key)
@@ -195,6 +196,7 @@ def memberships(principal,key,state='current',limit=20,cursor=None):
         head=db.get(MemberHead,uid);revision=head.membership_revision if head else 1
         binding=['membership-actions-1',str(uid),str(principal[1].id),key,state,limit]
         epoch=digest([revision,actions.cycles.directory_revision(db,target.key),target.current.isoformat()])
+        binding,epoch=group_list_display.bind(db,binding,epoch,include_group_state,target.key)
         offset=cursor_decode(cursor,binding,epoch) if cursor else 0
         values=list(db.execute(query.order_by(Member.joined_at.desc(),Member.id.desc(),CycleMember.generation.desc().nullslast(),CycleMember.id.desc()).offset(offset).limit(limit+1)))
         token=cursor_encode(dict(scope=binding,revision=epoch,offset=offset+limit)) if len(values)>limit else None
@@ -204,5 +206,6 @@ def memberships(principal,key,state='current',limit=20,cursor=None):
             value['target']['target_cycle_key']=key
             value['content']=None if historical else legacy_membership(db,uid,room,row,member,cm,key,stamp)
             items.append(value)
-        return actions.bounded(wire.MembershipPage,dict(scope=scope(stamp,key,'memberships'),data=dict(
+        result=actions.bounded(wire.MembershipPage,dict(scope=scope(stamp,key,'memberships'),data=dict(
             items=items,membership_head=revision,next_cursor=token,evaluated_at=stamp)),snapshot=(db,uid,stamp))
+        return group_list_display.attach(db,result,[room.id for _,room,_,_ in values[:limit]],include_group_state)

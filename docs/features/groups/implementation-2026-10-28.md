@@ -137,3 +137,18 @@ Native 신규 [#12 전체27번째 Flutter](https://github.com/heo0328/lostparty-
 다음Flutter/사용자는반영된기존개발서버에서대소문자검색과reader_profile=group-display-1 소비·역할분리/미확인표시·정상초대전송/수락을확인하고구체차이를#12에회신한다. Backend는차이에대응한다. 단일legacy전투력을역할max로해석하지않으며회원/소유/등록/활동정책은기존대로다. 실제초대성공·기기인수/merge·운영배포/자료삭제/Issue종료는별도미실행이다.
 
 실제반영기록0f55610 push·원격확인후 [#12 전체33번째 Backend · 후보검색/역할표시 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496785817)를게시했다. 전체순번/작성측/단계확인과본문상단최신실행/다음담당갱신을마쳤고OPEN유지다. 후행문서커밋은업무소스/실행이미지를변경하지않는다.
+
+
+## 2026-10-30 — 모집 최초 그룹 연결·목록 이름·소속 표시
+
+사용자 승인 계획으로 같은 feat/group-management에서구현·격리검증했다. 구현 전 [#12 전체37 Backend 표시/예시제안](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6502475245)·[#16 전체23 Backend 연결/예시제안](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6502474634)을게시하고실제순번확인했다. [고정 소비계약](raid-link-contract.md)·[합성 동일참가자 예시](raid-link-examples.json)·[실행별 검증집계](raid-link-verification-2026-10-30.json)를따른다.
+
+- common-context의선택target_group_id는미연결방/edit_common_settings에만허용하고root.target_group에현재그룹/membership revision/permission을준다. 기존CommonContext/명령body/원ACK는유지한다. 토큰은G1·C/N·현재raid자격과선택그룹/멤버십/그룹장/인원·한도근거에결합한다. 기본한도행없는정상계정도지원한다.
+- 기존common-settings 한명령에서null→검토그룹+scope=group만최초연결하며A→B/해제는거절한다. 같은A public↔group은유지하고group진입은현재그룹/한도를검사한다. 같은write lock·현재CAS·최종시각/근거/ACK를원자확정하고실패rollback/과거ACK복구는재실행없음이다. room/C/N directory/기존그룹활동trigger외기존참가/신청·배정/일정/예약/완료기록은보존한다.
+- 목록4경로의include_group_state=true는root.group_states{group_id,name,state}와room_groups{room_id,group_id}를페이지한정일괄조회한다. 내신청origin은과거값이고일부참가이력content에현재group_id가없어이대응표를필수보완했다. 제안댓글도같은내용으로갱신했으며기본DTO/origin/권한은불변이다. 같은스냅샷/READONLY·provider없음·옵션/그룹directory/실제T directory cursor결합·DB실패503·기존schema에서신규옵션503이다.
+- 참가자배지는그룹원/비그룹원조회자×기본/application-display/membership-actions×그룹상태옵션12조합에서동일했다. 현재group_member생산은대상참가자로계산하며Backend누락은재현되지않아기존배지코드는바꾸지않았다. membership-actions의현재content.data.members와기본data.members를구분한정규화합성예시를인계한다. content=null/누락을false로합성하지않고역사읽기에현재참가목록을만들지않는다. 그룹종료후false/기존접근보존도검증했다. 실제Native진입/표시결함재확인은별도다.
+- 초회직접12건9PASS/3FAIL은fixture의기존한도행중복생성과두번째그룹생성의구usage CAS때문이었다. 최신한도행수정/실제usage조회로시험만정정했다. 코드검토에서기본한도row없음의근거snapshot도지원하도록보강하고해당시험을추가했다.
+- 신규15+기존그룹레이드생명주기5+공통관리27의47PASS/600.06초. 최종예시/목록readonly/provider·DB실패/이전schema추가4PASS/56.03초와토큰위조1PASS/15.86초다. 후자는시험보조모델scope를실제enum으로바꿔직렬화경고를해소한재검증이다. 중복제거선택49시나리오이며전체프로젝트/동일HEAD일괄시험을뜻하지않고반복수를합산하지않는다. 기존AnyIO경고1개는남는다.
+- 기본/two-cycle OpenAPI전체객체일치PASS(123/140·185/206). 기본객체불변, 기존component값변경0·새schema11·변경경로5개이고PUT명령/생성body·ACK는불변이다. 문서/예시JSON/compile/diff/lock검사통과·격리프로젝트정리다. DBmigration·새원장·개발API/DB조회/교체·실회원명령·merge/운영배포·자료변경실행없음.
+
+Native#12전체36/#16전체21의기존그룹안내범위기기통과는수용하고재시험대기로돌리지않는다. #16전체22의Flutter9d1baa39 생성UI기본값/기존생성1회·29PASS는자체보고로기록하며Backend시험에합산하지않는다. **새최초연결/목록표시후속은개발미반영**이다. 실제개발실행은이전검증기록source5d24244/이미지507cd78a·DB0034를유지한다. 다음Flutter는고정context/목록DTO·응답위치예시를소비하고직접차이를회신하며Backend는대응한다. 신규개발반영·기기인수는별도다.

@@ -1,0 +1,235 @@
+{
+  "note": "Normalized fragments of synthetic isolated detail observations, not complete response envelopes or real members",
+  "first_connection": {
+    "context_query": {
+      "command": "edit_common_settings",
+      "target_group_id": "00000000-0000-4000-8000-000000000001"
+    },
+    "target_group": {
+      "group_id": "00000000-0000-4000-8000-000000000001",
+      "group_revision": 3,
+      "members_revision": 5,
+      "membership_id": "00000000-0000-4000-8000-000000000002",
+      "membership_revision": 2,
+      "permission": {
+        "allowed": true,
+        "reason": null,
+        "next_change_at": null
+      }
+    },
+    "command_overrides": {
+      "group_id": "00000000-0000-4000-8000-000000000001",
+      "expected_group_revision": 3,
+      "scope": "group"
+    }
+  },
+  "list_metadata": {
+    "group_states": [
+      {
+        "group_id": "00000000-0000-4000-8000-000000000001",
+        "name": "표시 그룹",
+        "state": "active"
+      }
+    ],
+    "room_groups": [
+      {
+        "room_id": "00000000-0000-4000-8000-000000000003",
+        "group_id": "00000000-0000-4000-8000-000000000001"
+      }
+    ]
+  },
+  "badge_observations": [
+    {
+      "reader_profile": null,
+      "include_group_state": false,
+      "viewer_group_member": false,
+      "members_path": "data.members",
+      "members": [
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000011",
+          "group_member": true
+        },
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000012",
+          "group_member": false
+        }
+      ]
+    },
+    {
+      "reader_profile": null,
+      "include_group_state": false,
+      "viewer_group_member": true,
+      "members_path": "data.members",
+      "members": [
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000011",
+          "group_member": true
+        },
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000012",
+          "group_member": false
+        }
+      ]
+    },
+    {
+      "reader_profile": null,
+      "include_group_state": true,
+      "viewer_group_member": false,
+      "members_path": "data.members",
+      "members": [
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000011",
+          "group_member": true
+        },
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000012",
+          "group_member": false
+        }
+      ]
+    },
+    {
+      "reader_profile": null,
+      "include_group_state": true,
+      "viewer_group_member": true,
+      "members_path": "data.members",
+      "members": [
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000011",
+          "group_member": true
+        },
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000012",
+          "group_member": false
+        }
+      ]
+    },
+    {
+      "reader_profile": "application-display-1",
+      "include_group_state": false,
+      "viewer_group_member": false,
+      "members_path": "data.members",
+      "members": [
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000011",
+          "group_member": true
+        },
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000012",
+          "group_member": false
+        }
+      ]
+    },
+    {
+      "reader_profile": "application-display-1",
+      "include_group_state": false,
+      "viewer_group_member": true,
+      "members_path": "data.members",
+      "members": [
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000011",
+          "group_member": true
+        },
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000012",
+          "group_member": false
+        }
+      ]
+    },
+    {
+      "reader_profile": "application-display-1",
+      "include_group_state": true,
+      "viewer_group_member": false,
+      "members_path": "data.members",
+      "members": [
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000011",
+          "group_member": true
+        },
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000012",
+          "group_member": false
+        }
+      ]
+    },
+    {
+      "reader_profile": "application-display-1",
+      "include_group_state": true,
+      "viewer_group_member": true,
+      "members_path": "data.members",
+      "members": [
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000011",
+          "group_member": true
+        },
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000012",
+          "group_member": false
+        }
+      ]
+    },
+    {
+      "reader_profile": "membership-actions-1",
+      "include_group_state": false,
+      "viewer_group_member": false,
+      "members_path": "data.content.data.members",
+      "members": [
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000011",
+          "group_member": true
+        },
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000012",
+          "group_member": false
+        }
+      ]
+    },
+    {
+      "reader_profile": "membership-actions-1",
+      "include_group_state": false,
+      "viewer_group_member": true,
+      "members_path": "data.content.data.members",
+      "members": [
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000011",
+          "group_member": true
+        },
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000012",
+          "group_member": false
+        }
+      ]
+    },
+    {
+      "reader_profile": "membership-actions-1",
+      "include_group_state": true,
+      "viewer_group_member": false,
+      "members_path": "data.content.data.members",
+      "members": [
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000011",
+          "group_member": true
+        },
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000012",
+          "group_member": false
+        }
+      ]
+    },
+    {
+      "reader_profile": "membership-actions-1",
+      "include_group_state": true,
+      "viewer_group_member": true,
+      "members_path": "data.content.data.members",
+      "members": [
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000011",
+          "group_member": true
+        },
+        {
+          "membership_id": "00000000-0000-4000-8000-000000000012",
+          "group_member": false
+        }
+      ]
+    }
+  ]
+}

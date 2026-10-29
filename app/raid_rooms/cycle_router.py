@@ -32,7 +32,7 @@ from app.raid_rooms import resume_review, resume_review_schemas
 from app.raid_rooms import completion_correction, completion_correction_schemas as correction_schemas
 from app.raid_rooms import admission_candidates
 from app.raid_rooms.admission_candidate_schemas import AdmissionCandidatePage
-from app.raid_rooms import application_display_schemas, group_link_display as group_link
+from app.raid_rooms import application_display_schemas, group_link_display as group_link,group_connection
 
 
 from app.raid_rooms import atomic_members, atomic_member_schemas as atomic_schemas
@@ -79,12 +79,13 @@ class CycleRoute(AvailabilityRoute):
 
     def legacy_allowed_query(self, request):
         if request.method=='POST' and request.url.path.endswith('/weekly-resume-proposals'):return {'preview_only'}
+        if request.method=='POST' and request.url.path.endswith('/raid-rooms/search'):return {'include_group_state'}
         if request.method!='GET':return set()
         if request.url.path.endswith('/raid-room-character-candidates'):return {'filter_context_token','limit','cursor'}
         if request.url.path.endswith('/personal-completion-departure-context'):return {'target_cycle_key','round_id'}
         if request.url.path.endswith('/member-removal-context'):return {'target_cycle_key','target_cycle_member_id'}
         if request.url.path.endswith('/completion-correction-context'):return {'target_cycle_key'}
-        if request.url.path.endswith('/common-context'):return {'command'}
+        if request.url.path.endswith('/common-context'):return {'command','target_group_id'}
         if request.url.path.endswith('/command-context'):return {'target_cycle_key','command','round_id'}
         if request.url.path.endswith('/candidates'):return {'target_cycle_key'}
         if request.url.path.endswith('/schedule-context'):return {'target_cycle_key','target_session_id'}
@@ -94,10 +95,10 @@ class CycleRoute(AvailabilityRoute):
         if request.url.path.endswith(('/participation-cancellation-context','/leadership-transfer-context')):return {'target_cycle_key'}
         if request.url.path.endswith('/raid-room-member-projections'):return {'room_ids','target_cycle_key','group_ids','filter_context_token'}
         if request.url.path.endswith('/raid-room-filter-context'):return {'group_ids'}
-        if request.url.path.endswith('/raid-rooms'):return {'scope','group_id','raid_id','difficulty_id','limit','cursor','target_cycle_key','experience_levels'}
-        if request.url.path.endswith('/raid-room-memberships'):return {'target_cycle_key','state','limit','cursor','reader_profile'}
+        if request.url.path.endswith('/raid-rooms'):return {'scope','group_id','raid_id','difficulty_id','limit','cursor','target_cycle_key','experience_levels','include_group_state'}
+        if request.url.path.endswith('/raid-room-memberships'):return {'target_cycle_key','state','limit','cursor','reader_profile','include_group_state'}
         if request.url.path.endswith('/applications') or request.url.path.endswith('/raid-room-applications'):
-            return {'target_cycle_key','state','limit','cursor','reader_profile'} if request.url.path.endswith('/applications') else {'target_cycle_key','state','limit','cursor'}
+            return {'target_cycle_key','state','limit','cursor','reader_profile'} if request.url.path.endswith('/applications') else {'target_cycle_key','state','limit','cursor','include_group_state'}
         if request.url.path.endswith('/raid-room-creation-context'):
             return {'target_cycle_key','character_id','selected_role','items','group_id',
                 'continuation_enabled','next_character_id','next_selected_role'}
@@ -183,18 +184,18 @@ def withdraw(application_id:UUID,data:inputs.Withdraw,principal:Principal,key:Ke
     return commands.process(principal,application_id,key,data,action='withdraw')[1]
 
 
-@router.post('/raid-rooms/search',response_model=s.OutputContract3PostV2RaidRoomsSearch,responses=errors,
+@router.post('/raid-rooms/search',response_model=group_link.GroupSearchPage|s.OutputContract3PostV2RaidRoomsSearch,responses=errors,
     description='Authenticated search excludes own active persistent membership with participating/review_required CM in the selected actual T/current generation, in SQL before sorting and pagination. Opposite-only, pending and historical relations are preserved. Cursor semantics: own-target-participation-excluded-v1; old semantics/head changes return CURSOR_STALE (409), foreign/tampered scope INVALID_REQUEST (400).')
-def search(data:inputs.Search|beta_schemas.BetaSearchRequest,principal:OptionalPrincipal=None):
+def search(data:inputs.Search|beta_schemas.BetaSearchRequest,principal:OptionalPrincipal=None,include_group_state:Literal['true','false']='false'):
     data=beta_profile.request_model(data,inputs.Search,beta_schemas.BetaSearchRequest)
-    return queries.search(principal,data)
+    return queries.search(principal,data,include_group_state=='true')
 
 
-@router.get('/raid-rooms',response_model=s.OutputContract3PostV2RaidRoomsSearch,responses=errors,description='GET adapter uses the same SQL exclusion, cursor scope and own-target-participation-excluded-v1 semantics as POST /v2/raid-rooms/search.')
+@router.get('/raid-rooms',response_model=group_link.GroupSearchPage|s.OutputContract3PostV2RaidRoomsSearch,responses=errors,description='GET adapter uses the same SQL exclusion, cursor scope and own-target-participation-excluded-v1 semantics as POST /v2/raid-rooms/search.')
 def room_list(target_cycle_key:str,principal:OptionalPrincipal=None,scope:Literal['public','group']='public',
     group_id:UUID|None=None,raid_id:str|None=None,difficulty_id:str|None=None,
     limit:Annotated[int,Query(ge=1,le=50)]=20,cursor:Annotated[str|None,Query(max_length=2048)]=None,
-    experience_levels:Annotated[list[s.ExperienceFilterValue],Query()]=[]):
+    experience_levels:Annotated[list[s.ExperienceFilterValue],Query()]=[],include_group_state:Literal['true','false']='false'):
     if difficulty_id and not raid_id:fail('INVALID_REQUEST',400)
     try:
         data=(beta_schemas.BetaSearchRequest if beta_profile.enabled() else inputs.Search).model_validate(dict(category='all',admission_scope=scope,group_ids=[group_id] if group_id else [],
@@ -202,7 +203,7 @@ def room_list(target_cycle_key:str,principal:OptionalPrincipal=None,scope:Litera
             difficulty_ids=[difficulty_id] if difficulty_id else [],limit=limit,cursor=cursor,
             target_cycle_key=target_cycle_key,experience_levels=experience_levels,**({k:json.loads(beta_profile.query()[k],object_pairs_hook=unique_pairs) for k in ('departure_windows','schedule_states') if k in beta_profile.query()} if beta_profile.enabled() else {})))
     except (ValidationError,ValueError,TypeError):fail('INVALID_REQUEST',400)
-    return queries.search(principal,data)
+    return queries.search(principal,data,include_group_state=='true')
 
 
 @router.get('/me/raid-room-filter-context',response_model=FilterContext,responses=errors)
@@ -253,9 +254,9 @@ Limit=Annotated[int,Query(ge=1,le=50)]
 Cursor=Annotated[str|None,Query(max_length=2048)]
 
 
-@router.get('/me/raid-room-applications',response_model=s.OutputContract3GetV2RaidRoomsRoomIdApplications,responses=errors)
-def my_applications(principal:Principal,target_cycle_key:str,state:AppState='pending',limit:Limit=20,cursor:Cursor=None):
-    return lists.applications(principal,target_cycle_key,state=state,limit=limit,cursor=cursor)
+@router.get('/me/raid-room-applications',response_model=group_link.GroupApplicationPage|s.OutputContract3GetV2RaidRoomsRoomIdApplications,responses=errors)
+def my_applications(principal:Principal,target_cycle_key:str,state:AppState='pending',limit:Limit=20,cursor:Cursor=None,include_group_state:Literal['true','false']='false'):
+    return lists.applications(principal,target_cycle_key,state=state,limit=limit,cursor=cursor,include_group_state=include_group_state=='true')
 
 
 @router.get('/raid-rooms/{room_id}/applications',response_model=s.OutputContract3GetV2RaidRoomsRoomIdApplications|application_display_schemas.ApplicationDisplayPageResponse,responses=errors,
@@ -265,10 +266,10 @@ def applications(room_id:UUID,principal:Principal,target_cycle_key:str,state:App
     return lists.applications(principal,target_cycle_key,rid=room_id,state=state,limit=limit,cursor=cursor,reader_profile=reader_profile)
 
 
-@router.get('/me/raid-room-memberships',response_model=s.OutputContract3GetV2MeRaidRoomMemberships|membership_schemas.MembershipPage,responses=errors)
-def memberships(principal:Principal,target_cycle_key:str,state:Literal['current','ended','all']='current',limit:Limit=20,cursor:Cursor=None,reader_profile:Literal['membership-actions-1']|None=None):
-    if reader_profile is not None:return membership_readers.memberships(principal,target_cycle_key,state,limit,cursor)
-    return lists.memberships(principal,target_cycle_key,state,limit,cursor)
+@router.get('/me/raid-room-memberships',response_model=group_link.GroupMembershipPage|group_link.GroupActionMembershipPage|s.OutputContract3GetV2MeRaidRoomMemberships|membership_schemas.MembershipPage,responses=errors)
+def memberships(principal:Principal,target_cycle_key:str,state:Literal['current','ended','all']='current',limit:Limit=20,cursor:Cursor=None,reader_profile:Literal['membership-actions-1']|None=None,include_group_state:Literal['true','false']='false'):
+    if reader_profile is not None:return membership_readers.memberships(principal,target_cycle_key,state,limit,cursor,include_group_state=='true')
+    return lists.memberships(principal,target_cycle_key,state,limit,cursor,include_group_state=='true')
 
 
 @router.get('/groups/{group_id}/raid-room-member-projections',response_model=s.OutputContract3GetV2GroupsGroupIdRaidRoomMemberProjections,responses=errors)
@@ -439,9 +440,9 @@ def remove_target_member(room_id:UUID,principal:Principal,key:Key,data:inputs.Re
     return cycle_management.command(principal,room_id,key,data,'remove')[1]
 
 
-@router.get('/me/raid-rooms/{room_id}/common-context',response_model=s.CommonContext,responses=errors)
-def common_context(room_id:UUID,principal:Principal,command:Literal['edit_common_settings','leave','end']):
-    return cycle_common.get(principal,room_id,command)
+@router.get('/me/raid-rooms/{room_id}/common-context',response_model=group_connection.GroupConnectionContext|s.CommonContext,responses=errors)
+def common_context(room_id:UUID,principal:Principal,command:Literal['edit_common_settings','leave','end'],target_group_id:UUID|None=None):
+    return cycle_common.get(principal,room_id,command,target_group_id)
 
 
 @router.put('/raid-rooms/{room_id}/common-settings',response_model=s.CommonSettingsAck,responses=errors)

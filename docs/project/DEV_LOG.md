@@ -2967,3 +2967,13 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - 실제HTTP6PASS(공개2/보호4014), API/DB healthy·관찰39JSON로그/ERROR0·ownership10/recruitment9/auth1모두success/failed_items0. [실행집계](../engineering/operations/records/invite-candidates-rollout.json). 기존격리검증재사용·전체반복없음. 다음Native/사용자검색/profile·정상초대전송/수락기기인수·Backend차이대응이며main/dev병합·운영배포·자료삭제없음.
 
 - 반영기록0f5561015820708bab926b57b80aaf267b9b27f7 commit/push·원격일치확인후 [#12 전체33번째 Backend · 후보검색/역할표시 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496785817) 게시·전체순번/작성측/단계명확인. 본문상단을실행source5d24244/507cd78a·0034·Native실제검색/profile/초대수락인수대기로갱신/과거본문·OPEN유지. 후행링크기록은동일목적브랜치에보존한다.
+
+
+## 2026-10-30 — 최초 그룹 연결・목록 그룹명/소속 표시 구현·격리검증
+
+- #16전체22/#12전체35·36의사용자승인계획으로같은브랜치에서진행했다. [#12 전체37 구현전표시제안](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6502475245)·[#16 전체23 연결제안](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6502474634)게시·실제순번확인. 내신청origin/이력content에는현재group_id가없어옵션응답root.room_groups도제공하도록동일제안보완했다. 새권한/개별조회는없다.
+- common-context 선택target_group_id/root.target_group과기존common-settings의최초null→그룹+group scope원자변경을구현했다. G1/C/N/토큰/CAS·대상membership/그룹장/한도·최종검증/원ACK/rollback·기존원장보존을검증했다. 새명령endpoint/body필수필드/DBmigration없음. 기존A→B/해제불가·같은A public왕복유지.
+- 목록4경로root.group_states/room_groups·기존DTO·프로필/cursor/read-only를구현했다. 상세12조합의같은대상group_member일치로Backend누락미재현·기존배지코드미변경, data.members와membership-actions content.data.members의합성예시인계다.
+- 초회직접9PASS/3FAIL은기존한도행중복/두번째그룹구usage CAS의시험준비오류로정정했다. 기본한도row없음의코드근거처리도추가검증했다. 최종신규15+기존생명주기5/공통관리27=47PASS/600.06초, 추가경계4PASS/56.03초·토큰모델enum정정1PASS/15.86초. 선택합집합49/반복합산없음·전체repo/동일HEAD일괄아님. AnyIO기존경고유지.
+- 두전체OpenAPI일치(123/140·185/206)·기본불변/기존schema값변경0/새11schema·5조회경로·문서/JSON/compile/diff/lock통과. [계약](../features/groups/raid-link-contract.md)·[정규화예시](../features/groups/raid-link-examples.json)·[검증집계](../features/groups/raid-link-verification-2026-10-30.json). 격리프로젝트정리·실제개발API/DB조회/교체·자료쓰기/삭제·merge/운영배포없음이다.
+- Native기존그룹잔여기기통과(#12전체36/#16전체21)수용/반복정상시험요청없음. Flutter9d1baa39 생성UI기본값수정/29PASS는자체보고·Backend합산없음. 다음고정context/DTO소비/Native진입배지차이대응·실제개발반영/새기기인수별도다. source/push/공식결과링크는아래마감한다.

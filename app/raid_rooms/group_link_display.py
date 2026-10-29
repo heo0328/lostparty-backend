@@ -49,3 +49,29 @@ def get(principal, rid, key, kind, *, reader_profile=None, membership_id=None, c
             result = members.plan(principal,rid,key,include_resume_display,read_snapshot=snap)
         room = db.get(RecruitmentRoom, rid)
         return dict(result, group_state=features.group_state(db,room.group_id))
+
+
+class RoomGroupLink(DTO):
+    room_id: UUID
+    group_id: UUID | None
+
+
+class ListGroupMetadata(DTO):
+    group_states: list[GroupLinkState]
+    room_groups: list[RoomGroupLink]
+
+
+class GroupSearchPage(cycle_wire.OutputContract3PostV2RaidRoomsSearch,ListGroupMetadata):
+    pass
+
+
+class GroupApplicationPage(cycle_wire.OutputContract3GetV2RaidRoomsRoomIdApplications,ListGroupMetadata):
+    pass
+
+
+class GroupMembershipPage(cycle_wire.OutputContract3GetV2MeRaidRoomMemberships,ListGroupMetadata):
+    pass
+
+
+class GroupActionMembershipPage(membership_action_schemas.MembershipPage,ListGroupMetadata):
+    pass

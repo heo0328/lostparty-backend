@@ -26844,6 +26844,20 @@
             }
           },
           {
+            "name": "include_group_state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ],
+              "default": "false",
+              "title": "Include Group State"
+            }
+          },
+          {
             "name": "contract_profile",
             "in": "query",
             "required": false,
@@ -26910,7 +26924,13 @@
                 "schema": {
                   "anyOf": [
                     {
+                      "$ref": "#/components/schemas/GroupSearchPage"
+                    },
+                    {
                       "$ref": "#/components/schemas/OutputContract3PostV2RaidRoomsSearch"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_GroupSearchPage"
                     },
                     {
                       "$ref": "#/components/schemas/Beta_OutputContract3PostV2RaidRoomsSearch"
@@ -29172,7 +29192,13 @@
                 "schema": {
                   "anyOf": [
                     {
+                      "$ref": "#/components/schemas/GroupSearchPage"
+                    },
+                    {
                       "$ref": "#/components/schemas/OutputContract3PostV2RaidRoomsSearch"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_GroupSearchPage"
                     },
                     {
                       "$ref": "#/components/schemas/Beta_OutputContract3PostV2RaidRoomsSearch"
@@ -29362,6 +29388,20 @@
         ],
         "description": "Authenticated search excludes own active persistent membership with participating/review_required CM in the selected actual T/current generation, in SQL before sorting and pagination. Opposite-only, pending and historical relations are preserved. Cursor semantics: own-target-participation-excluded-v1; old semantics/head changes return CURSOR_STALE (409), foreign/tampered scope INVALID_REQUEST (400).",
         "parameters": [
+          {
+            "name": "include_group_state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ],
+              "default": "false",
+              "title": "Include Group State"
+            }
+          },
           {
             "name": "contract_profile",
             "in": "query",
@@ -30869,6 +30909,20 @@
             }
           },
           {
+            "name": "include_group_state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ],
+              "default": "false",
+              "title": "Include Group State"
+            }
+          },
+          {
             "name": "contract_profile",
             "in": "query",
             "required": false,
@@ -30888,7 +30942,13 @@
                 "schema": {
                   "anyOf": [
                     {
+                      "$ref": "#/components/schemas/GroupApplicationPage"
+                    },
+                    {
                       "$ref": "#/components/schemas/OutputContract3GetV2RaidRoomsRoomIdApplications"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_GroupApplicationPage"
                     },
                     {
                       "$ref": "#/components/schemas/Beta_OutputContract3GetV2RaidRoomsRoomIdApplications"
@@ -31158,6 +31218,20 @@
             }
           },
           {
+            "name": "include_group_state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ],
+              "default": "false",
+              "title": "Include Group State"
+            }
+          },
+          {
             "name": "contract_profile",
             "in": "query",
             "required": false,
@@ -31177,10 +31251,22 @@
                 "schema": {
                   "anyOf": [
                     {
+                      "$ref": "#/components/schemas/GroupMembershipPage"
+                    },
+                    {
+                      "$ref": "#/components/schemas/GroupActionMembershipPage"
+                    },
+                    {
                       "$ref": "#/components/schemas/OutputContract3GetV2MeRaidRoomMemberships"
                     },
                     {
                       "$ref": "#/components/schemas/MembershipActionMembershipPage"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_GroupMembershipPage"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_GroupActionMembershipPage"
                     },
                     {
                       "$ref": "#/components/schemas/Beta_OutputContract3GetV2MeRaidRoomMemberships"
@@ -39119,6 +39205,23 @@
             }
           },
           {
+            "name": "target_group_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Target Group Id"
+            }
+          },
+          {
             "name": "contract_profile",
             "in": "query",
             "required": false,
@@ -39136,7 +39239,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CommonContext"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/GroupConnectionContext"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CommonContext"
+                    }
+                  ],
+                  "title": "Response Contract3 Get  V2 Me Raid-Rooms Room Id Common-Context"
                 }
               }
             },
@@ -78685,6 +78796,356 @@
           "items"
         ],
         "title": "DisplayInviteCandidates"
+      },
+      "Beta_GroupActionMembershipPage": {
+        "properties": {
+          "group_states": {
+            "items": {
+              "$ref": "#/components/schemas/GroupLinkState"
+            },
+            "type": "array",
+            "title": "Group States"
+          },
+          "room_groups": {
+            "items": {
+              "$ref": "#/components/schemas/RoomGroupLink"
+            },
+            "type": "array",
+            "title": "Room Groups"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/MembershipActionMembershipReaderScope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_MembershipActionMembershipPageData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_states",
+          "room_groups",
+          "scope",
+          "data"
+        ],
+        "title": "Beta_GroupActionMembershipPage"
+      },
+      "Beta_GroupApplicationPage": {
+        "properties": {
+          "group_states": {
+            "items": {
+              "$ref": "#/components/schemas/GroupLinkState"
+            },
+            "type": "array",
+            "title": "Group States"
+          },
+          "room_groups": {
+            "items": {
+              "$ref": "#/components/schemas/RoomGroupLink"
+            },
+            "type": "array",
+            "title": "Room Groups"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_BApplicationPage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_states",
+          "room_groups",
+          "scope",
+          "data"
+        ],
+        "title": "Beta_GroupApplicationPage"
+      },
+      "Beta_GroupMembershipPage": {
+        "properties": {
+          "group_states": {
+            "items": {
+              "$ref": "#/components/schemas/GroupLinkState"
+            },
+            "type": "array",
+            "title": "Group States"
+          },
+          "room_groups": {
+            "items": {
+              "$ref": "#/components/schemas/RoomGroupLink"
+            },
+            "type": "array",
+            "title": "Room Groups"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_BMembershipPage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_states",
+          "room_groups",
+          "scope",
+          "data"
+        ],
+        "title": "Beta_GroupMembershipPage"
+      },
+      "Beta_GroupSearchPage": {
+        "properties": {
+          "group_states": {
+            "items": {
+              "$ref": "#/components/schemas/GroupLinkState"
+            },
+            "type": "array",
+            "title": "Group States"
+          },
+          "room_groups": {
+            "items": {
+              "$ref": "#/components/schemas/RoomGroupLink"
+            },
+            "type": "array",
+            "title": "Room Groups"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_BPage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_states",
+          "room_groups",
+          "scope",
+          "data"
+        ],
+        "title": "Beta_GroupSearchPage"
+      },
+      "GroupActionMembershipPage": {
+        "properties": {
+          "group_states": {
+            "items": {
+              "$ref": "#/components/schemas/GroupLinkState"
+            },
+            "type": "array",
+            "title": "Group States"
+          },
+          "room_groups": {
+            "items": {
+              "$ref": "#/components/schemas/RoomGroupLink"
+            },
+            "type": "array",
+            "title": "Room Groups"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/MembershipActionMembershipReaderScope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/MembershipActionMembershipPageData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_states",
+          "room_groups",
+          "scope",
+          "data"
+        ],
+        "title": "GroupActionMembershipPage"
+      },
+      "GroupApplicationPage": {
+        "properties": {
+          "group_states": {
+            "items": {
+              "$ref": "#/components/schemas/GroupLinkState"
+            },
+            "type": "array",
+            "title": "Group States"
+          },
+          "room_groups": {
+            "items": {
+              "$ref": "#/components/schemas/RoomGroupLink"
+            },
+            "type": "array",
+            "title": "Room Groups"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/BApplicationPage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_states",
+          "room_groups",
+          "scope",
+          "data"
+        ],
+        "title": "GroupApplicationPage"
+      },
+      "GroupConnectionContext": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/GlobalScope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CommonContextData"
+          },
+          "target_group": {
+            "$ref": "#/components/schemas/TargetGroup"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data",
+          "target_group"
+        ],
+        "title": "GroupConnectionContext"
+      },
+      "GroupMembershipPage": {
+        "properties": {
+          "group_states": {
+            "items": {
+              "$ref": "#/components/schemas/GroupLinkState"
+            },
+            "type": "array",
+            "title": "Group States"
+          },
+          "room_groups": {
+            "items": {
+              "$ref": "#/components/schemas/RoomGroupLink"
+            },
+            "type": "array",
+            "title": "Room Groups"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/BMembershipPage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_states",
+          "room_groups",
+          "scope",
+          "data"
+        ],
+        "title": "GroupMembershipPage"
+      },
+      "GroupSearchPage": {
+        "properties": {
+          "group_states": {
+            "items": {
+              "$ref": "#/components/schemas/GroupLinkState"
+            },
+            "type": "array",
+            "title": "Group States"
+          },
+          "room_groups": {
+            "items": {
+              "$ref": "#/components/schemas/RoomGroupLink"
+            },
+            "type": "array",
+            "title": "Room Groups"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/BPage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_states",
+          "room_groups",
+          "scope",
+          "data"
+        ],
+        "title": "GroupSearchPage"
+      },
+      "RoomGroupLink": {
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "group_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "room_id",
+          "group_id"
+        ],
+        "title": "RoomGroupLink"
+      },
+      "TargetGroup": {
+        "properties": {
+          "group_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Group Id"
+          },
+          "group_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "members_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Membership Id"
+          },
+          "membership_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "permission": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Permission"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_id",
+          "group_revision",
+          "members_revision",
+          "membership_id",
+          "membership_revision",
+          "permission"
+        ],
+        "title": "TargetGroup"
       }
     },
     "securitySchemes": {

@@ -1,5 +1,5 @@
 """Read-only target directory. All predicates run in SQL before pagination."""
-from app.raid_rooms import beta_profile, beta_schedule, beta_output
+from app.raid_rooms import beta_profile, beta_schedule, beta_output, group_list_display
 from datetime import timedelta
 from sqlalchemy import select, func, or_
 from fastapi.encoders import jsonable_encoder
@@ -79,7 +79,7 @@ def get_card(principal,rid,key):
             data=card(db,room,row,uid,stamp)))
 
 
-def search(principal,data):
+def search(principal,data,include_group_state=False):
     body=data.model_dump(mode='json')
     candidate_token=body.pop('group_character_candidates_token',None)
     if candidate_token is not None:
@@ -162,6 +162,7 @@ def search(principal,data):
         if beta_profile.enabled():
             binding.append(beta_profile.PROFILE)
             revision=digest([revision,beta_clock])
+        binding,revision=group_list_display.bind(db,binding,revision,include_group_state,target.key)
         offset=cursor_decode(data.cursor,binding,revision) if data.cursor else 0
         primary=count.asc() if sort['direction']=='ascending' else count.desc()
         rows=list(db.execute(query.order_by(primary,Room.created_at.desc(),Room.id.desc()).offset(offset).limit(data.limit+1)))
@@ -170,4 +171,5 @@ def search(principal,data):
         loaded=load(db,[t for _,t in rows[:data.limit]],uid)
         result=dict(scope=scope(stamp,target.key.isoformat()),data=dict(items=[card(db,r,t,uid,stamp,loaded[t.id]) for r,t in rows[:data.limit]],
             directory_revision=head,filter_scope_digest=context_digest,next_cursor=token,evaluated_at=stamp))
-        return beta_output.render(db,uid,stamp,wire.OutputContract3PostV2RaidRoomsSearch,result)
+        result=beta_output.render(db,uid,stamp,wire.OutputContract3PostV2RaidRoomsSearch,result)
+        return group_list_display.attach(db,result,[r.id for r,_ in rows[:data.limit]],include_group_state)

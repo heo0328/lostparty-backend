@@ -1,6 +1,8 @@
 """Global commands bind every actual effect; no invented target or G1 fallback."""
-from app.raid_rooms import beta_profile
+from app.raid_rooms import beta_profile,group_connection
 from datetime import timedelta,datetime
+from uuid import UUID
+from types import SimpleNamespace
 from sqlalchemy import select
 from fastapi.encoders import jsonable_encoder
 from app.auth.models import User
@@ -39,6 +41,7 @@ def linked_group(db,uid,room):
     if group is None or group.ended_at is not None:fail('GROUP_NOT_ACTIVE')
     if db.scalar(select(GroupMembership.id).where(GroupMembership.group_id==group.id,GroupMembership.user_id==uid,
             GroupMembership.ended_at.is_(None))) is None:fail('GROUP_MEMBERSHIP_REQUIRED',403)
+    life.admission.core._group(db,SimpleNamespace(scope='group',group_id=room.group_id),uid)
 
 
 def common_permission(db,uid,room,stamp):
@@ -46,7 +49,7 @@ def common_permission(db,uid,room,stamp):
     except GameError as error:return permission(error.code)
 
 
-def context(db,uid,rid,kind,stamp):
+def context(db,uid,rid,kind,stamp,target_group_id=None):
     outcomes.ready(db)
     if kind not in ('edit_common_settings','leave','end'):fail('INVALID_REQUEST',400)
     room=commands.base.room(db,uid,rid);actor=commands.base.member(db,uid,room)
@@ -93,6 +96,12 @@ def context(db,uid,rid,kind,stamp):
             members_revision=row.members_revision,plan_revision=row.plan_revision,actor_cycle_member_id=mine.id if mine else None,
             actor_cycle_member_revision=mine.revision if mine else None))
         effects.append((row,actual,mine))
+    target=None;target_proof=None
+    if target_group_id is not None:
+        if kind!='edit_common_settings':fail('INVALID_REQUEST',400)
+        if room.group_id is not None:fail('GROUP_LINK_IMMUTABLE')
+        target,target_proof=group_connection.evaluate(db,uid,target_group_id)
+        reason=reason or target['permission']['reason']
     group=db.get(Group,room.group_id) if room.group_id else None
     memberships=list(db.scalars(select(GroupMembership).where(GroupMembership.group_id==room.group_id,
         GroupMembership.user_id==uid).order_by(GroupMembership.id))) if group else []
@@ -102,17 +111,24 @@ def context(db,uid,rid,kind,stamp):
     auth_proof=None
     if kind!='leave' and reason is None:
         auth_cm=life.actual_member(db,auth,uid);_,auth_proof=life.qualify(db,room,auth,auth_cm)
-    binding=digest(jsonable_encoder([auth_proof,uid,kind,scope(stamp)['current_cycle_key'],data,snapshot(room),snapshot(actor),
-        [snapshot(m) for m in members],hidden,snapshot(group),[snapshot(m) for m in memberships]]))
+    evidence=[auth_proof,uid,kind,scope(stamp)['current_cycle_key'],data,snapshot(room),snapshot(actor),
+        [snapshot(m) for m in members],hidden,snapshot(group),[snapshot(m) for m in memberships]]
+    if target is not None:evidence.append(target_proof)
+    binding=digest(jsonable_encoder(evidence))
     expires=min(stamp+timedelta(seconds=120),commands.raids.cycle(stamp).ends_at)
-    data.update(context_token=opaque.seal(dict(actor=str(uid),room=str(rid),command=kind,digest=binding,expires=expires.isoformat())),issued_at=stamp,expires_at=expires)
-    return dict(scope=scope(stamp),data=data),binding,room,actor,effects
+    claims=dict(actor=str(uid),room=str(rid),command=kind,digest=binding,expires=expires.isoformat())
+    if target is not None:claims['target_group_id']=str(target_group_id)
+    data.update(context_token=opaque.seal(claims),issued_at=stamp,expires_at=expires)
+    result=dict(scope=scope(stamp),data=data)
+    if target is not None:result['target_group']=target
+    return result,binding,room,actor,effects
 
 
-def get(principal,rid,kind):
+def get(principal,rid,kind,target_group_id=None):
     with commands.base.snapshot(principal) as (db,uid,stamp):
-        result,*_=context(db,uid,rid,kind,stamp)
-        return wire.CommonContext.model_validate(result).model_dump(mode='json')
+        result,*_=context(db,uid,rid,kind,stamp,target_group_id)
+        model=group_connection.GroupConnectionContext if target_group_id is not None else wire.CommonContext
+        return model.model_validate(result).model_dump(mode='json')
 
 
 def execute(principal,rid,key,data,kind):
@@ -122,7 +138,11 @@ def execute(principal,rid,key,data,kind):
         token=opaque.unseal(body['context_token'])
         if (token.get('actor'),token.get('room'),token.get('command'))!=(str(uid),str(rid),kind):fail('TARGET_SCOPE_MISMATCH',400)
         if stamp>=datetime.fromisoformat(token['expires']):fail('COMMAND_CONTEXT_EXPIRED')
-        result,binding,room,actor,effects=context(db,uid,rid,kind,stamp)
+        selected=UUID(token['target_group_id']) if token.get('target_group_id') else None
+        if selected is not None and (kind!='edit_common_settings' or data.group_id!=selected or data.scope!='group'):
+            fail('TARGET_SCOPE_MISMATCH',400)
+        result,binding,room,actor,effects=context(db,uid,rid,kind,stamp,selected)
+        target_proof=group_connection.evaluate(db,uid,selected)[1] if selected is not None else None
         if body['expected_room_revision']!=room.revision or body.get('expected_persistent_membership_revision',actor.revision)!=actor.revision:fail('REVISION_CONFLICT')
         life.require_match(token,binding)
         allowed=result['data']['permission']
@@ -131,8 +151,11 @@ def execute(principal,rid,key,data,kind):
         guards=[graph.final_deadlines(db,row,[],stamp,join=False) for row,_,_ in effects] if kind!='edit_common_settings' else []
         affected=[];changed=True
         if kind=='edit_common_settings':
-            if data.group_id!=room.group_id:fail('GROUP_LINK_IMMUTABLE')
-            if data.scope=='group' and room.group_id is None:fail('GROUP_MEMBERSHIP_REQUIRED',403)
+            initial=room.group_id is None and selected is not None
+            if data.group_id!=room.group_id and not initial:fail('GROUP_LINK_IMMUTABLE')
+            if initial:
+                if body['expected_group_revision']!=result['target_group']['group_revision']:fail('REVISION_CONFLICT')
+            elif data.scope=='group' and room.group_id is None:fail('GROUP_MEMBERSHIP_REQUIRED',403)
             if room.group_id is not None:
                 group=db.get(Group,room.group_id)
                 if body['expected_group_revision']!=(group.revision if group else None):fail('REVISION_CONFLICT')
@@ -140,10 +163,10 @@ def execute(principal,rid,key,data,kind):
                 # raid leadership survives leaving or losing the linked group.
                 if data.scope=='group' and room.scope!='group':
                     linked_group(db,uid,room)
-            elif data.expected_group_revision is not None:fail('INVALID_REQUEST',400)
-            changed=(room.title,room.scope)!=(data.title,data.scope)
+            elif not initial and data.expected_group_revision is not None:fail('INVALID_REQUEST',400)
+            changed=(room.title,room.scope,room.group_id)!=(data.title,data.scope,data.group_id)
             if changed:
-                room.title=data.title;room.scope=data.scope;room.revision+=1
+                room.title=data.title;room.scope=data.scope;room.group_id=data.group_id;room.revision+=1
                 affected=[row.cycle_key for row,_,_ in effects]
                 for cycle in affected:cycles.touch_directory(db,cycle)
             value=dict(scope=scope(stamp),data=dict(command_id=key,outcome='applied' if changed else 'noop',executed_at=stamp,
@@ -185,6 +208,8 @@ def execute(principal,rid,key,data,kind):
         def final(current):
             for guard in guards:guard(current)
             if current>=datetime.fromisoformat(token['expires']):fail('COMMAND_CONTEXT_EXPIRED')
+            if selected is not None and group_connection.evaluate(db,uid,selected)[1]!=target_proof:
+                fail('TARGET_CONTEXT_STALE')
         return 200,dto.model_validate(value).model_dump(mode='json'),final
     return cycles.execute(principal,{'edit_common_settings':'common-settings','leave':'global-leave','end':'global-end'}[kind],key,
         dict(room_id=str(rid),body=body),run)
