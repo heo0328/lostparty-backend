@@ -2945,3 +2945,5 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - 중지구간112업무표1,857행/열/기록시각·sequence동일/신규2표0행, DB컨테이너·볼륨/키/.env/API환경·명령·보안·포트유지. FK/권한/활동trigger7/0034readiness통과. 실제이미지272소스·runtime31·기본123/140·현재185/206계약전체일치PASS.
 - 실제HTTP26PASS(공개2/보호경로missing·invalid401 24),유효세션2명의READONLY계정/집계/주간/모집5항목상세·계획/group_state확인·provider0. 현재가입그룹없어멤버/활동/관리등실자료성공조회미확인·임의실회원쓰기없음. 보조코드httpx미설치/health헤더가정은보조만수정. 최종관찰603JSON로그/ERROR0·ownership210/recruitment200/auth35모두성공/failed_items0. [공개집계](../engineering/operations/records/group-features-rollout.json)·구현기록에상세보존.
 - 사용한도로인계전중단후재개시실행상태/저장된검증을확인해DDL/교체미반복·임시reader제거. #12전체27/#16전체17 Flutter연결2691PASS·직접12포함자체보고수신/추가API요청없음. 실제기기/Penpot미확인·Backend시험과합산없음. 다음Native/사용자실제인수·Backend차이대응. main/dev병합·운영배포·초기화/삭제없음.
+
+- 실행기록9e37868cb1096d013a6ae405ae16170511d92a8a commit/push·원격일치확인후 [#12 전체28번째 Backend · 핵심 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6489008365)·[#16 전체18번째 Backend · 관리 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6489008735) 게시·실제순번/단계명확인. 양Issue 상단은실행sourcecf214d0/DB0034·Native다음인수·미확인으로갱신하고과거본문보존/OPEN유지다. 후행인계링크도같은목적브랜치에보존한다.

@@ -4,6 +4,8 @@
 
 checkout `feat/group-management`, main/dev 공통 `1b6f57b` 유지. 사용자 승인 계획에 따라 기존 개발환경에 전체 그룹 소스와DB0034를 반영했다. 실제 실행 source `cf214d016fc650e216782432f9c9c33823367808`, 이미지 `eecda79d`이며 업무 구현/계약은 `22b1620`과 동일하다. [구현·반영 기록](../features/groups/implementation-2026-10-28.md)·[실행 집계](../engineering/operations/records/group-features-rollout.json)를 따른다.
 
+실행기록 `9e37868` push·원격일치 후 [#12 전체28번째 Backend · 핵심 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6489008365)·[#16 전체18번째 Backend · 관리 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6489008735)를 게시하고 실제 전체순번을 확인했다. 양Issue 상단도 실제반영/다음담당으로 갱신·OPEN유지했다.
+
 ## 다음 담당 — 실제 연동·기기 인수
 
 - Flutter [#12 전체27](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6488900145)·[#16 전체17](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6488900495): 연결구현/전체2691시험·직접12포함/분석지적0 자체보고, 추가API요청없음. Backend시험과합산하지않는다.

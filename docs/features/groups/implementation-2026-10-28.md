@@ -102,3 +102,5 @@
 Native 신규 [#12 전체27번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6488900145)·[#16 전체17번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6488900495)는 그룹 Router/DI/화면·명령/CAS/원ACK·표시/관리/모집연결 구현과 Flutter전체2691PASS(직접12포함)·lib/test분석지적0을 자체보고했다. Backend시험에 합산하지 않으며 실제 서버연동/기기/Penpot대조는 미완료다. 추가API 수정요청은 없다.
 
 다음 Flutter/사용자는 기존 개발서버에서 초대/가입→활동캐릭터→모집필터→상세/참가 및 관리흐름을 정상UI로 확인하고 차이가 있는 항목만 #12/#16에 회신한다. Backend는 직접차이에 대응한다. G-RECOVERY/활동자동추가·main/dev병합·운영배포·초기화/삭제는 실행하지 않았다. 실행검증/계약게시와 실제기기인수를 구분하고 양Issue는 OPEN으로 유지한다.
+
+실행기록9e37868 push·원격확인후 [#12 전체28번째 Backend · 핵심 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6489008365)·[#16 전체18번째 Backend · 관리 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6489008735)를게시했다. 실제전체순번/작성측·단계명을확인하고각본문상단을현재실행/Native다음인수로갱신했다. 후행문서커밋은실행업무소스/계약을변경하지않는다.
