@@ -128,7 +128,8 @@ def test_role_success_current_error_and_ownership_loss(group_features, client):
             role='dealer',version=2,summary=payload,saved_at=now(db));db.add(head);db.flush();capture(db,head)
         payload=dict(payload,combat_power=None,combat_power_observed_at=None,integrity_status='error',issues=[{'code':'GEM_INVALID','severity':'error'}])
         head.summary=payload;head.version=3
-    shown=get(client,a,f'/v1/groups/{gid}/members/{mid}/activity-characters')['items'][0]['character_spec']
+    shown=next(item['character_spec'] for item in get(client,a,
+        f'/v1/groups/{gid}/members/{mid}/activity-characters')['items'] if item['character_id']==b['ids'][0])
     assert shown['dealer']['combat_power']=='123.45'
     assert shown['dealer']['analysis']['integrity_status']=='error'
     with session() as db,db.begin():db.get(Account,b['aid']).owner_id=None

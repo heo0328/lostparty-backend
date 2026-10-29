@@ -2947,3 +2947,12 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - 사용한도로인계전중단후재개시실행상태/저장된검증을확인해DDL/교체미반복·임시reader제거. #12전체27/#16전체17 Flutter연결2691PASS·직접12포함자체보고수신/추가API요청없음. 실제기기/Penpot미확인·Backend시험과합산없음. 다음Native/사용자실제인수·Backend차이대응. main/dev병합·운영배포·초기화/삭제없음.
 
 - 실행기록9e37868cb1096d013a6ae405ae16170511d92a8a commit/push·원격일치확인후 [#12 전체28번째 Backend · 핵심 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6489008365)·[#16 전체18번째 Backend · 관리 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6489008735) 게시·실제순번/단계명확인. 양Issue 상단은실행sourcecf214d0/DB0034·Native다음인수·미확인으로갱신하고과거본문보존/OPEN유지다. 후행인계링크도같은목적브랜치에보존한다.
+
+
+## 2026-10-29 — 초대 후보 대소문자·저장 역할전투력 보완
+
+- #12전체29/30을확인하고사용자승인계획에따라 [전체31 Backend 계약제안](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496315881)을먼저게시했다. 실제ASCII입력해석은기존provider/등록/소유/분쟁에서이미canonical처리하며검색변경은후보1경로다. 이름/UUID/claim·증거비교는유지한다.
+- 기존후보DTO/summary단일전투력은유지하고명시group-display-1에서기존CharacterSpec의역할성공/현재분석/출처/시각/null을재사용했다. caller권한과공통자료표시를분리해초대에활동선택조건을추가하지않았고일반활동은현재조건보존이다.0034gate·READONLY·일괄저장조회/provider없음·migration없음이다.
+- 실제READONLY집계적격31·summarynull30(역할성공존재15/없음15)·head/성공18·다른소유/생명주기/잘못된성공0. 코드경로차이근거이며특정회원null원인확정은아니다. 원본이름/ID공개없음.
+- 초회65선택53PASS/12FAIL(신규11fixture이름FK·기존1UUID순서가정)→fixture/의도한ID선택정정. 신규10PASS/1FAIL은모의verified_at=null NOTNULL위반으로허용preview등록상태로정정했다. 최종신규11+공통표시8=19PASS/60.25초·초회기존초대/이름해석46PASS. 두전체계약일치·1경로/새2DTO/기존schema값변경0·문서/lock/diff검사통과. 반복합산없음·AnyIO기존경고1. 상세는 [실행집계](../features/groups/invite-candidates-verification-2026-10-29.json).
+- 개발실행cf214d0/eecda79d·0034는미교체·DB/자료쓰기없음. 다음고정DTO소비차이대응·별도개발반영/기기인수다. 같은브랜치검증구간commit/push후원격확인·#12인계하며main/dev·운영배포·Issue종료는없다.

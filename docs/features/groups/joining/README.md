@@ -10,6 +10,16 @@
 
 초대/신청은24시간 수명과 발신 membership의 유효성을 따른다. 같은 회원의 새 캐릭터나 코드로 차단을 우회하지 않는다. 거절·만료·권한 회복이 끝난 관계를 자동 부활시키지 않는다. 재가입은 새 membership UUID이며 과거 가입·종료 이력을 덮지 않는다.
 
+## 초대 후보 검색·역할별 표시
+
+캐릭터명은 앞뒤 공백을 제거한 뒤 ASCII 영문 대소문자를 무시하는 정확검색이다. 부분검색/와일드카드로 확대하지 않으며 응답의 원래 이름·서버·canonical UUID는 보존한다. 현재 그룹원만 조회하고 현재 인증 소유·활성 회원·유효 등록·생명주기/claim 검사를 통과한 대상만 제공한다. 초대 대상 선정에 활동 선택을 추가 요구하지 않는다.
+
+`GET /v1/groups/{group_id}/invite-candidates?character_name=...`의 기본 응답은 기존 DTO와 단일 `combat_power`(Character.summary 출처)를 유지한다. 이 값에 역할별 최댓값이나 임의 역할을 대입하지 않는다.
+
+`reader_profile=group-display-1`을 명시하면 `profile/evaluated_at/items`를 반환하고 각 후보에 기존 필드와 `character_spec`을 함께 제공한다. [공통 표시 계약](../discovery/display-contract-proposal.md)의 dealer/support별 마지막 성공 전투력·현재 분석·출처/관측/누락사유를 재사용한다. 현재 owner·ownership/lifecycle 세대가 맞는 기존 저장자료만 일괄조회하고 개인설정·등록/회원ID·타회원 원정대전체는 공개하지 않는다. 후보는 기존 서버/UUID 순서·최대50건, 새 cursor는 없다.
+
+새 프로필은 DB0034가 필요하고0023/0033의 명시 요청은503 `GROUP_FEATURE_NOT_READY`다. 생략 시 기존 조회는 유지한다. GET은 동일 REPEATABLE READ/READ ONLY에서 조회하고 provider/키 접근·자료 쓰기·정상값 합성을 하지 않는다. 신규 전투력 저장이나 migration은 없다. **이 후보검색/표시 보완은 아직 개발서버 미반영**이며 고정 소스·검증과 실제 실행 상태는 [구현 기록](../implementation-2026-10-28.md)을 따른다.
+
 <a id="section"></a>
 
 ## 가입 코드

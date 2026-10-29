@@ -73,17 +73,30 @@ def load(db, users):
         .where(Registration.user_id.in_(users), User.status == 'active', Registration.deleted_at.is_(None),
             Account.owner_id == Registration.user_id, Account.verified_at.is_not(None),
             Configuration.ended_at.is_(None), Character.status == 'confirmed', Character.lifecycle_state == 'active')))
-    ids = {c.id for _, _, _, c, _ in rows}
+    specs = character_specs(db, [(reg.user_id, account, char) for reg, account, _, char, _ in rows])
+    found, evidence = {}, []
+    for reg, account, config, char, claim_revision in rows:
+        found[(reg.user_id, char.id)] = (char, account, specs[(reg.user_id, char.id)])
+        evidence.append([reg.id, reg.version, account.id, account.ownership_revision, account.roster_revision,
+            config.id, config.version, char.id, char.lifecycle_revision, claim_revision])
+    evidence.sort(key=lambda v: str(v))
+    return found, evidence
+
+
+def character_specs(db, characters):
+    """Bulk stored facts for caller-authorized characters; no activity/access gate here."""
+    ids = {char.id for _, _, char in characters}
+    users = {uid for uid, _, _ in characters}
     heads = {(v.user_id, v.character_id, v.ownership_revision, v.role): v for v in db.scalars(
         select(CharacterRoleSummary).where(CharacterRoleSummary.user_id.in_(users), CharacterRoleSummary.character_id.in_(ids)))} if ids else {}
     successes = {(v.user_id, v.character_id, v.ownership_revision, v.role): v for v in db.scalars(
         select(RolePowerSuccess).where(RolePowerSuccess.user_id.in_(users), RolePowerSuccess.character_id.in_(ids)))} if ids else {}
-    found, evidence = {}, []
-    for reg, account, config, char, claim_revision in rows:
+    found = {}
+    for uid, account, char in characters:
         roles = {}
         for role in ('dealer', 'support'):
             out = empty_role()
-            key = (reg.user_id, char.id, account.ownership_revision, role)
+            key = (uid, char.id, account.ownership_revision, role)
             head, success = heads.get(key), successes.get(key)
             if head is not None:
                 try:
@@ -111,11 +124,8 @@ def load(db, users):
         spec = dict(character_id=char.id, state=state, reason=reason, item_level=level,
             item_level_source='stored_character_summary' if level is not None else 'unavailable',
             summary_fetched_at=char.fetched_at, **roles)
-        found[(reg.user_id, char.id)] = (char, account, spec)
-        evidence.append([reg.id, reg.version, account.id, account.ownership_revision, account.roster_revision,
-            config.id, config.version, char.id, char.lifecycle_revision, claim_revision])
-    evidence.sort(key=lambda v: str(v))
-    return found, evidence
+        found[(uid, char.id)] = spec
+    return found
 
 
 def member_rows(db, gid):

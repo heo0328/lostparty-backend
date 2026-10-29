@@ -2,6 +2,8 @@
 
 2026-10-29 기준. main/dev1b6f57b·checkout feat/group-management. 그룹1차 구현·격리검증·개발환경 반영과 실행검증 완료. 실제sourcecf214d0/이미지eecda79d·DB0034, 기본123/140·two-cycle185/206이다. [구현·반영기록](../features/groups/implementation-2026-10-28.md)·[NEXT_WORK](NEXT_WORK.md)를 따른다. Native #12 전체27/#16 전체17은 연결구현·자동검증을 자체보고했고 실제연동/기기인수는미완료다. 다음Flutter/사용자 인수·Backend차이대응이며복구승계/활동자동추가·병합/운영배포는별도다.
 
+후속초대후보검색/전투력: #12전체29/30을받아ASCII대소문자무시정확검색·opt-in역할별character_spec후보구현/격리검증을완료했다. [검증집계](../features/groups/invite-candidates-verification-2026-10-29.json)·구현기록참조. **이후속은개발미반영**이며현재실행cf214d0/DB0034와구분한다. 기본DTO보존·migration/provider/중복저장없음. 다음Native고정DTO차이/Backend대응·별도개발반영이다.
+
 레이드 모집 1차 구현·보고된 정상 흐름/표시의 사용자 기기 인수 완료, [Issue13 전체192 Backend 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6438046779)으로 closed/completed다. 모집 관련 추가 Backend 요청은 없다. 차후 정밀도 소비·알럿·UX/소켓 등은 [보완 대장](../features/recruitment/follow-up-backlog.md)에 보존하며 현재 착수/인수 선행 조건이 아니다. 이전 미완료/종료 차단 판단과 사용자 정정은 [DEV_LOG](DEV_LOG.md)에서 확인한다.
 
 | 기능 | 상태·기준 |

@@ -163,3 +163,10 @@ counts_revision은 권한 범위·포함 relation ID/revision/실효 state의 di
 - 호환: profile 생략 시 기존 G1/G2/ACK shape 동일·strict query, 기본/실행 두 OpenAPI의 구현 전체일치(구현 때만 실행).
 
 다음 Backend는 이 제안을 #12에 게시하고 기술 차이에 대응하며 확정 계약을 구현한다. Flutter는 필요한 표시 코드/소비상 충돌만 회신한다. 시안/단순 소비회신이나 G-RECOVERY 미결정으로 독립 구현 전체를 보류하지 않는다. API 구현·개발환경 반영·Flutter 연결/기기 인수 완료는 각각 별도다.
+
+
+## 2026-10-29 — 초대 후보 표시 프로필 확장
+
+[#12 전체29 Flutter 검색 수정 요청](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6495682192)·[전체30 Flutter 전투력 경로 확인](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496105720)에 따라 [구현 전 계약제안](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496315881)을 게시했다. 후보 endpoint의 opt-in `reader_profile=group-display-1`도 기존 CharacterSpec 형식을 재사용한다. [초대 후보 계약](../joining/README.md)의 profile/evaluated_at/items·기존 후보필드+character_spec을 따르며 기존 기본DTO/단일combat_power는 유지한다.
+
+공통 내부함수는 caller가 이미 권한을 검증한 character/owner의 저장 역할자료만 일괄 표시한다. 활동펼침은 현재활동 자격, 초대후보는 기존초대 자격을 각각 적용한다. 일반활동의 자격을 후보에 강제하거나 후보검색을 타회원 활동/개인설정 공개로 확대하지 않는다. 현재 역할분석과 이전성공 수치·소유/생명주기 근거는 같은 규칙을 사용하며 GET쓰기/provider/중복저장/migration은 없다. 신규 프로필은0034 필요·기본0023/0033은 보존한다. 구현후 검증/게시와 개발반영/기기인수는 별도다.

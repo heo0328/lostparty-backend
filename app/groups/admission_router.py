@@ -15,7 +15,7 @@ async def strict_input(request: Request):
     allowed = set()
     if request.method == 'GET':
         if path.endswith('/invite-candidates'):
-            allowed = {'character_name'}
+            allowed = {'character_name', 'reader_profile'}
         elif path == '/v1/me/group-relations':
             allowed = {'view', 'state', 'limit', 'cursor'}
         elif path.endswith('/join-relations'):
@@ -34,9 +34,10 @@ State = Literal['pending', 'all']
 View = Literal['received_invitations', 'sent_applications', 'sent_invitations']
 
 
-@router.get('/groups/{group_id}/invite-candidates', response_model=s.InviteCandidates, responses=errors)
-def candidates(group_id: UUID, character_name: Name, principal: Principal):
-    return admissions.candidates(principal, group_id, character_name)
+@router.get('/groups/{group_id}/invite-candidates', response_model=ds.DisplayInviteCandidates | s.InviteCandidates, responses=errors)
+def candidates(group_id: UUID, character_name: Name, principal: Principal,
+               reader_profile: Literal['group-display-1'] | None = None):
+    return admissions.candidates(principal, group_id, character_name, reader_profile)
 
 
 @router.post('/groups/{group_id}/invitations', status_code=201, response_model=s.GroupRelation, responses=errors)

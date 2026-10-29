@@ -104,3 +104,19 @@ Native 신규 [#12 전체27번째 Flutter](https://github.com/heo0328/lostparty-
 다음 Flutter/사용자는 기존 개발서버에서 초대/가입→활동캐릭터→모집필터→상세/참가 및 관리흐름을 정상UI로 확인하고 차이가 있는 항목만 #12/#16에 회신한다. Backend는 직접차이에 대응한다. G-RECOVERY/활동자동추가·main/dev병합·운영배포·초기화/삭제는 실행하지 않았다. 실행검증/계약게시와 실제기기인수를 구분하고 양Issue는 OPEN으로 유지한다.
 
 실행기록9e37868 push·원격확인후 [#12 전체28번째 Backend · 핵심 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6489008365)·[#16 전체18번째 Backend · 관리 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6489008735)를게시했다. 실제전체순번/작성측·단계명을확인하고각본문상단을현재실행/Native다음인수로갱신했다. 후행문서커밋은실행업무소스/계약을변경하지않는다.
+
+
+## 2026-10-29 — 초대 후보 대소문자·역할별 전투력 보완
+
+[#12 전체29 Flutter](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6495682192)·[전체30 Flutter](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496105720)의 사용자 승인 계획을 같은 feat/group-management에서 구현했다. 구현 전에 [전체31 Backend 계약제안](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496315881)을 게시·실제순번확인했다. [실행별 검증/집계](invite-candidates-verification-2026-10-29.json)를 따른다.
+
+- 후보 검색은 trim+ASCII 영문 대소문자 무시 정확비교다. PostgreSQL translate와 기존 verification_context.resolve_input의 동일 ASCII 규칙을 공유한다. `%`/`_`·부분문자열은 검색기호가 아니고 원래이름/서버/UUID를 그대로 반환한다.
+- 다른 사용자 입력 경로의 preview/등록/직접소유검증/분쟁은 observations→resolve_input→canonical 이름 선택을 이미 사용한다. 기존 입력해석 시험을 재사용·실행했다. 이후 canonical profile/NameClaim·소유증거·전투력cache/캐릭터선택의 정확 일치는 식별자 비교이므로 완화하지 않았다. 저장이름·원정대cache키를 재작성하지 않는다. 실제 검색동작 변경은 invite-candidates 한 경로다.
+- reader_profile=group-display-1에서 profile/evaluated_at/items와 기존후보필드+character_spec을 반환한다. 생략한 기존 단일combat_power 의미/DTO는 유지한다. 역할별max나임의선택을기존값에넣지않는다. 기존CharacterSpec dealer/support의 저장last-success/현재analysis·출처/시각/null사유를 재사용했다.
+- display.character_specs는 caller가권한검증한 캐릭터/현재owner의 두종류역할표를 일괄조회한다. 기존그룹활동은현재활동조건을유지하고초대후보에는활동선택을추가하지않았다. 기존 currentowner/인증·등록·활성회원·lifecycle/claim 검사를유지한다. GET은RR/READ ONLY·provider/키접근없음·새표/저장/migration없음이다. 후보profile은0034에서만제공하고0023/0033의기본조회는유지한다.
+- 개발DB READ ONLY 집계: 현재초대적격31캐릭터 중summary단일전투력null30·존재1. null30 중현재세대역할성공자료존재15/없음15, 역할head18/성공18이었다. 이 적격집합에서다른소유세대/생명주기불일치/잘못된성공자료는각0이었다. 저장경로차이로후보만null일수있음을확인했으며특정회원/검색요청을재현한결론은아니다. 이름/ID·원본응답은공개하지않았다.
+- 초회선택65건은53PASS/12FAIL이었다. 신규11건은모의이름변경에서기존claim FK를위반해fixture를삭제→이름변경→claim재등록으로정정했다. 기존표시1건은같은레벨캐릭터의UUID순서에서첫항목을가정한시험을canonical ID로선택하도록정정했다. 제품FK/정렬/권한은완화하지않았다.
+- 신규재검증10PASS/1FAIL(34.16초)의실패는모의Account.verified_at=null이기존NOT NULL제약을위반한것이다. 인증이전등록의account_id=null이라는실제허용상태로바꿨고, 잘못된claim원본은FK로금지되므로유효claim없음제외를검증했다. 최종신규11+공통표시8은19PASS/60.25초이며초회기존초대/수락·입력이름해석46PASS를함께근거로사용한다. 반복시험수를합산하지않는다.
+- 두후보OpenAPI전체객체일치PASS(기본123/140·two-cycle185/206). 변경경로1개·새DTO2개·기존component값변경0이다. 문서/의존성lock/diff검사를통과했고기존AnyIO경고1개는유지한다. 격리실행기프로젝트/DB는정리했고개발API/DB를재시작하지않았다.
+
+**이번 후보검색/표시 수정은 개발서버 미반영**이다. 실제개발sourcecf214d0/이미지eecda79d·DB0034는앞선반영상태를유지한다. 다음Flutter는게시된고정DTO의구체소비차이를회신하고 Backend는대응한다. 실제개발반영과정상초대성공·기기인수는별도다. 대표선택레벨정렬은Flutter담당이며merge/운영배포·DB/자료변경·Issue종료는없다.

@@ -8905,6 +8905,23 @@
               "maxLength": 64,
               "title": "Character Name"
             }
+          },
+          {
+            "name": "reader_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "const": "group-display-1",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Reader Profile"
+            }
           }
         ],
         "responses": {
@@ -8913,7 +8930,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/InviteCandidates"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/DisplayInviteCandidates"
+                    },
+                    {
+                      "$ref": "#/components/schemas/InviteCandidates"
+                    }
+                  ],
+                  "title": "Response Candidates V1 Groups  Group Id  Invite Candidates Get"
                 }
               }
             },
@@ -78572,6 +78597,94 @@
           "expected_target_membership_revision"
         ],
         "title": "RemoveGroupMemberIn"
+      },
+      "DisplayInviteCandidate": {
+        "properties": {
+          "target_character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Target Character Id"
+          },
+          "display": {
+            "$ref": "#/components/schemas/CharacterDisplay"
+          },
+          "ownership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Ownership Revision"
+          },
+          "lifecycle_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Lifecycle Revision"
+          },
+          "item_level": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Level"
+          },
+          "combat_power": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Combat Power"
+          },
+          "character_spec": {
+            "$ref": "#/components/schemas/CharacterSpec"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "target_character_id",
+          "display",
+          "ownership_revision",
+          "lifecycle_revision",
+          "item_level",
+          "combat_power",
+          "character_spec"
+        ],
+        "title": "DisplayInviteCandidate"
+      },
+      "DisplayInviteCandidates": {
+        "properties": {
+          "profile": {
+            "type": "string",
+            "const": "group-display-1",
+            "title": "Profile"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/DisplayInviteCandidate"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "profile",
+          "evaluated_at",
+          "items"
+        ],
+        "title": "DisplayInviteCandidates"
       }
     },
     "securitySchemes": {

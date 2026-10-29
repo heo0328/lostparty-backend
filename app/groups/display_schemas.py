@@ -6,7 +6,7 @@ from pydantic import Field
 from app.game_accounts.schemas import DTO, Version
 from app.game_accounts.profile_schemas import AnalysisIssue, DecimalValue
 from app.groups.schemas import GroupMember, GroupDetail, CharacterDisplay
-from app.groups.admission_schemas import JoinSubject
+from app.groups.admission_schemas import JoinSubject, InviteCandidate
 from app.member_limits.schemas import Nonnegative
 
 
@@ -122,3 +122,13 @@ class GroupJoinRequestCounts(DTO):
     pending_applications: Nonnegative
     pending_invitations: Nonnegative
     action_required: Nonnegative
+
+
+class DisplayInviteCandidate(InviteCandidate):
+    character_spec: CharacterSpec
+
+
+class DisplayInviteCandidates(DTO):
+    profile: Literal['group-display-1']
+    evaluated_at: datetime
+    items: list[DisplayInviteCandidate]

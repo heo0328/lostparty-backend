@@ -28,7 +28,7 @@
 
 | 이슈 | 주제 | 다음 담당·상태/완료 조건 |
 |---|---|---|
-| [#12](https://github.com/heo0328/lostparty-backend/issues/12) | 그룹 핵심 표시·활동·집계/Flutter 연결 | 구현계약22b1620·개발실행cf214d0/DB0034반영·실행검증완료. [전체27 Flutter 연결구현](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6488900145)·자동검증자체보고/추가API요청없음. 다음Flutter/사용자 실제서버·기기인수·Backend차이대응. [반영기록](../features/groups/implementation-2026-10-28.md) |
+| [#12](https://github.com/heo0328/lostparty-backend/issues/12) | 그룹 핵심 표시·활동·집계/Flutter 연결 | 구현계약22b1620·개발실행cf214d0/DB0034반영·실행검증완료. [전체27 Flutter 연결구현](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6488900145)·자동검증자체보고/추가API요청없음. 후속#12전체29/30후보검색/역할표시구현·격리검증완료/개발미반영·전체31계약제안. 다음Native후보DTO차이/Backend대응·별도반영/기기인수. [반영기록](../features/groups/implementation-2026-10-28.md) |
 | [#15](https://github.com/heo0328/lostparty-backend/issues/15) | V2 Flutter 인증/분쟁 | #13 전체16번째Flutter 보고기준 D1~D4 dev반영·마감, 분쟁실기기는사용자판단보류. 이후 #13 전체17번째에서 로그인화면재구성수정 별도마감·계약검토전환을보고했으며분쟁실기기보류는별도 |
 | [#16](https://github.com/heo0328/lostparty-backend/issues/16) | 그룹 관리·레이드 생명주기 | 관리/기존레이드보존 구현·개발실행cf214d0/DB0034반영·자료보존/실행검증완료. [전체17 Flutter 연결구현](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6488900495)자체보고. 다음실제연동/기기·Backend차이대응, 복구승계미정/그룹장전용레이드권한없음. [반영기록](../features/groups/implementation-2026-10-28.md) |
 | [#17](https://github.com/heo0328/lostparty-backend/issues/17) | 캐릭터 소멸 근거·이력·이름 재사용 ID | Flutter전체1번째범위확인·Backend 현재기능/증거공백 검토·최소계약 보완. 기존L1/claim/조회 재사용. 실제삭제/보류해제 승인 아님 |
