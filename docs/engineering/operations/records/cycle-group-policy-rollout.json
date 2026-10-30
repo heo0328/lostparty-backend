@@ -1,0 +1,158 @@
+{
+  "source_commit": "b8542ef739593ffaad6da618215ff4f38fd87929",
+  "implementation_contract_commit": "b212ad0f45e36e1bd5c6c860bb1e118f590bbc79",
+  "image": "sha256:930c25f8ff6ff57e698e4066ea93a673c14bff5269dfe5a55e3099fbc2af9a8b",
+  "previous_image": "sha256:5bd8dde6eba275bdad448315aee67d554ef4cb60d35e3702795f97bb761f9cf3",
+  "applied_at": "2026-10-30T13:50:08.35264294Z",
+  "database_revision": "0035_cycle_group_policy",
+  "migration_executed_once": true,
+  "ddl": {
+    "existing_application_tables": 114,
+    "existing_rows": 2038,
+    "all_existing_rows_columns_timestamps_unchanged": true,
+    "sequences_unchanged": true,
+    "new_table": "recruitment_cycle_group_policies",
+    "current_generation_policy_rows": 36,
+    "normalization_mismatches": 0,
+    "historical_backfill": false
+  },
+  "db_container_image_volume_environment_preserved": true,
+  "api_environment_command_security_ports_logging_key_mount_preserved": true,
+  "keys_and_env_file_preserved": true,
+  "source_files_equal": 274,
+  "runtime_packages": 31,
+  "full_openapi_equal": true,
+  "base_openapi": {
+    "paths": 123,
+    "operations": 140
+  },
+  "two_cycle_openapi": {
+    "paths": 185,
+    "operations": 206
+  },
+  "read_only_service_results": {
+    "valid_session_users": 2,
+    "checks": {
+      "public_search": 2,
+      "member_search": 4,
+      "memberships": 4,
+      "applications": 4,
+      "detail:None": 13,
+      "detail:application-display-1": 13,
+      "detail:membership-actions-1": 13,
+      "settings": 13,
+      "general_change_review": 8,
+      "group_active_targets": 3
+    },
+    "expected_access_or_state_denials": {
+      "general_change_review:ROUND_NOT_ACTIVE": 2,
+      "general_change_review:ROOM_LEADER_REQUIRED": 3
+    },
+    "sql": {
+      "SET": 171,
+      "SELECT": 14377
+    },
+    "provider_calls": 0,
+    "scope": "Actual deployed services, existing sessions, read-only transactions; no member HTTP credentials issued or mutations"
+  },
+  "actual_http": [
+    {
+      "case": "health",
+      "status": 200
+    },
+    {
+      "case": "public_cycle",
+      "status": 200
+    },
+    {
+      "case": "protected_cycle_missing",
+      "status": 401,
+      "error": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "invalid_group_version",
+      "status": 400
+    },
+    {
+      "case": "search_with_new_metadata",
+      "status": 200
+    },
+    {
+      "case": "settings_missing",
+      "status": 401,
+      "error": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "group_review_missing",
+      "status": 401,
+      "error": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "title_review_missing",
+      "status": 401,
+      "error": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "settings_invalid",
+      "status": 401,
+      "error": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "group_review_invalid",
+      "status": 401,
+      "error": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "title_review_invalid",
+      "status": 401,
+      "error": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    }
+  ],
+  "logs": {
+    "json_lines": 65,
+    "periodic_jobs_success": {
+      "ownership_settlement": 15,
+      "recruitment": 14,
+      "auth_cleanup": 2
+    },
+    "error_count": 0,
+    "failed_items": 0,
+    "health": {
+      "api": "healthy",
+      "db": "healthy"
+    }
+  },
+  "isolated_followup": {
+    "project": "lostparty-check-ef258d336ace",
+    "passed": 3,
+    "failed": 0,
+    "seconds": 69.4
+  },
+  "f01": {
+    "code_included": true,
+    "pending_mask_rows_before": 0,
+    "manual_cleanup_executed": false
+  },
+  "initial_rollout_issue": "Read-only detail of completed generation with null leader raised AttributeError in edit permission. API paused; same branch forward fix b8542ef verified in disposable DB and actual reads. No DB retry/reset/data workaround.",
+  "limitations": [
+    "Live authenticated group-policy write/succession/old ACK replay and user device acceptance not executed; isolated evidence is separate.",
+    "Existing valid-session service reads are not authenticated member HTTP token issuance.",
+    "No provider live calls, load/performance, restore rehearsal, AWS/release, dev/main merge, or data reset.",
+    "Observed counts repeat across profiles/pages; do not sum as unique objects.",
+    "Periodic workers continue normal maintenance after startup; DDL preservation compares stopped pre/post snapshots."
+  ]
+}

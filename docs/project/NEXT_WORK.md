@@ -2,21 +2,19 @@
 
 문서 운영 #29는 공통 원본·양측 참조 반영 및 [상호 대조](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6520322169) 완료로 추가 수정 대기를 해소했다. Issue 종료는 별도이며 상세 근거는 [DEV_LOG](DEV_LOG.md)에 보존한다. 기존 그룹 기기 인수와 기술 진단 후속은 별도다.
 
-## 다음 실행 — 그룹 주차별 연결·승계 정책 정정
+## 다음 실행 — Flutter 주차별 그룹 정책 연결·기기 확인
 
-사용자 지시로 개선 상태를 기록·commit/push한 뒤 그룹 작업을 우선한다. [#16 전체27번째 Flutter · 정책 정정/Backend 구현 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521839291)과 [전체28번째 Flutter · 고정 문서 게시](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521897849)를 재조회했다. Flutter 문서 기준은 `78e53aa0b88d042d8468e08b351b5e75a4fadb4d`이며 새 앱 기능은 아직 미연결이다. Backend는 고정 계약·구현/검증·개발 미반영 상태를 인계했다. 다음 담당은 Flutter 새 계약 연결/시험·소비 차이 회신이며, 실제 연결/기기 인수는 별도0035 반영 후다.
+사용자 승인에 따라 `feat/raid-group-policy`의 주차별 그룹 변경·승계를 실제 개발 백엔드에 반영했다. 실행 소스 **b8542ef739593ffaad6da618215ff4f38fd87929**, 이미지 **930c25f8**·DB **0035_cycle_group_policy**다. [개발 반영/자료 보존·검증](../engineering/operations/cycle-group-policy-rollout.md)·[실행 집계](../engineering/operations/records/cycle-group-policy-rollout.json)·[소비 계약](../features/groups/cycle-group-policy.md)을 기준으로 한다. 구현b212ad0에 완료주차/null공대장 조회 보완을 더했고 해당 경계3PASS·실제 조회/HTTP/worker 정상 확인을 마쳤다.
 
-주차·세대별 원본0035와 명령·조회·승계·구 요청 전환을 `feat/raid-group-policy`에서 구현했다. [신규 소비 계약](../features/groups/cycle-group-policy.md)·[합성 예시](../features/groups/cycle-group-policy.examples.json)·[검증 집계](../features/groups/cycle-group-policy-verification.json)를 기준으로 한다. 새 정책은 **Backend 구현/격리 검증 인계 구간**이며 실제0035 반영·Flutter 새 연결·기기 인수는 별도다. [전체30번째 Backend · 구현/고정 계약 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6523975291)를 게시했다. 구현 `b212ad0f45e36e1bd5c6c860bb1e118f590bbc79`는 commit/push·local/origin 일치 확인 완료다. 전체29 후보는 고정 계약으로 구체화됐다.
+[#16 전체27/28 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521839291)·문서78e53aa0과 [전체30번째 Backend 고정 계약 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6523975291)를 잇는 실제 반영 구간이다. 다음 담당 Flutter는 group_policy_version·실제T 검토/설정·승계/개방 영향·cycle_groups와 구ACK 처리를 연결하고 시험/분석·구체 차이를 같은Issue에 회신한다. 새 앱 연결/사용자 기기 인수는 미확인이고 기존 정상 기기 인수는 유지한다. Backend는 구체 차이에 대응한다.
 
-다음은 Flutter가 고정 계약의 group_policy_version·실제T 설정context/명령·cycle_groups와 원ACK 복구를 연결하고 소비 차이를 회신하는 것이다. 실제 개발환경은 source2602e45/이미지5bd8dde6·DB0034로 유지하므로 **새0035 명령의 실제 기기 시험은 서버 반영 전 요청하지 않는다.** Backend는 구체 소비 차이 대응 또는 별도 승인된0035 개발반영/실행검증을 진행한다. AWS/release·dev/main merge·자료 초기화·Issue 종료는 수행하지 않는다.
-
-브랜치는 개선 인계 `818a7ec`에서 분기했으며 F01 `c94ce88`과 최신 기록을 포함한다. main/dev는 `ccd1cc8`을 유지하고 `fix/backend-beta-readiness`도 보존한다. 기존 방 공통 그룹 최초 연결/교체불가 계약은0034 실행 이력으로 보존하며 새 정책의 완료 근거로 사용하지 않는다.
+브랜치는818a7ec 분기·F01 c94ce88/개선 기록을 포함하며 main/dev는ccd1cc8을 유지한다.0035 이후 구API만 재시작하는 롤백은 하지 않는다. AWS/release·dev/main merge·자료 초기화·Issue 종료는 수행하지 않았다.
 
 ## 보류 추적 — Backend 베타 개선
 
-[F01](DEV_LOG.md#f01-registration-cleanup)은 `c94ce88`로 구현·격리 검증·commit/push 완료, dev/main 미통합·실제 서버 미반영이다. [개선 계획의 F02 재개 조건](backend-improvement-plan.md#f02-resume)을 따른다. F02는 로컬 설정 조사 후 공개 경로 미정으로 보류하며 AWS 공개 준비 때 재개한다. 사용자는 Lightsail 생성 전·테스터 총20~50명 예상·도메인 미보유다. 지금 인프라를 확정하지 않는다. F03 내부 장애 추적은 개선 복귀 시 다음 후보이며 미착수다. 그룹 작업을 막지 않는다.
+[F01](DEV_LOG.md#f01-registration-cleanup)은 `c94ce88`로 구현·격리 검증·commit/push 완료, dev/main 미통합이며 코드가 이번0035 이미지에 함께 반영됐다. 미처리 대상0·수동 정리 실행 없음은 [반영 기록](../engineering/operations/cycle-group-policy-rollout.md)을 따른다. [개선 계획의 F02 재개 조건](backend-improvement-plan.md#f02-resume)을 따른다. F02는 로컬 설정 조사 후 공개 경로 미정으로 보류하며 AWS 공개 준비 때 재개한다. 사용자는 Lightsail 생성 전·테스터 총20~50명 예상·도메인 미보유다. 지금 인프라를 확정하지 않는다. F03 내부 장애 추적은 개선 복귀 시 다음 후보이며 미착수다. 그룹 작업을 막지 않는다.
 
-## 독립 대기 — 그룹 새 변경의 기기 확인
+## 이전0034 기준과 기존 변경의 기기 대기 (이력)
 
 2026-10-30 기준, 그룹 브랜치는 dev/main 통합 후 로컬·원격 정리했으며 현재 checkout은 `feat/raid-group-policy`다. 기존 그룹 핵심 흐름·관리, 초대 후보 대소문자 검색·역할별 표시, 모집 최초 그룹 연결·목록 그룹명 표시까지 Backend 구현·검증·개발반영을 완료했다. main/dev는 그룹 병합 `fc6c06a`와 후행 통합 기록을 포함한다.
 
@@ -27,7 +25,7 @@
 | 기존 게시 기록 | 반영 기록 `ad095c3`, 이슈 인계 링크 기록 `603fe2d`까지 commit/push 완료 |
 | 문서 인계 | `48bf88c` 게시 및 PR30 dev/main 통합 완료. 문서/Git 통합과 실제 실행 소스는 구분한다. |
 
-실행 소스와 후행 문서 커밋을 구분한다. F01은 격리 검증한 소스 수정이며 그룹 계약·실행 서버·실제 DB는 변경하지 않는다. 이전 게시 이력은 유지하며 되돌리거나 재작성하지 않는다.
+위 표는 이전0034 반영 당시 기준이다. 현재0035 실행은 위 다음 실행/반영 기록을 따른다. 실행 소스와 후행 문서 커밋을 구분한다. 이전 게시 이력은 유지하며 되돌리거나 재작성하지 않는다.
 
 ## 이전 계약 소비·기기 확인 대기 (새 #16 정책 요청과 구분)
 

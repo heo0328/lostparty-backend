@@ -1,6 +1,6 @@
 # 실제 주차별 그룹 정책·승계 계약
 
-2026-10-30 / feat/raid-group-policy. [Issue16 전체27 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521839291)·[전체28 Flutter 문서](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521897849), Flutter 문서78e53aa0 기준이다. [전체29 Backend 후보 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6522746434) 후 구현한 신규 소비 계약이다. 구현·격리 검증·실제 반영·Flutter 연결은 별도 상태이며 이번 문서는 서버 반영 완료가 아니다.
+2026-10-30 / feat/raid-group-policy. [Issue16 전체27 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521839291)·[전체28 Flutter 문서](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521897849), Flutter 문서78e53aa0 기준이다. [전체29 Backend 후보 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6522746434) 후 구현한 신규 소비 계약이다. 구현·격리 검증 후 사용자 승인으로 sourceb8542ef/이미지930c25f8·DB0035 개발반영/실행검증을 완료했다([반영 기록](../../engineering/operations/cycle-group-policy-rollout.md)). Flutter 새 연결/기기는 미확인이다.
 
 ## 원본과 전환
 
@@ -43,10 +43,10 @@ include_group_state=true의 room_groups를 cycle_groups로 대체한다. 원소�
 
 ## 검증·게시
 
-고정 wire 원본은 [two-cycle OpenAPI](../../../openapi/two-cycle.openapi.yaml), 합성 context/전환/과거 unavailable은 [대표 예시](cycle-group-policy.examples.json)를 따른다. 예시는 전체 명령의 대체 본문이 아니며 token은 재사용 불가능한 placeholder다. [검증 기록](cycle-group-policy-verification.json)에는 실제 실행·반복/고유 시나리오와 미실행을 구분한다. 대표 오류는 CLIENT_UPGRADE_REQUIRED409, TARGET_CONTEXT_STALE409, TARGET_LEADER_REQUIRED403, GROUP_MEMBERSHIP_REQUIRED403, GROUP_NOT_ACTIVE409, REVISION_CONFLICT409, ROOM_REVIEW_REQUIRED409, ROOM_NOT_FOUND404다. group_policy 조합/대상 불일치는 INVALID_REQUEST400 또는 TARGET_SCOPE_MISMATCH400이다. 현재 API/DB0034·실행source2602e45는 아직 유지한다.
+고정 wire 원본은 [two-cycle OpenAPI](../../../openapi/two-cycle.openapi.yaml), 합성 context/전환/과거 unavailable은 [대표 예시](cycle-group-policy.examples.json)를 따른다. 예시는 전체 명령의 대체 본문이 아니며 token은 재사용 불가능한 placeholder다. [검증 기록](cycle-group-policy-verification.json)에는 실제 실행·반복/고유 시나리오와 미실행을 구분한다. 대표 오류는 CLIENT_UPGRADE_REQUIRED409, TARGET_CONTEXT_STALE409, TARGET_LEADER_REQUIRED403, GROUP_MEMBERSHIP_REQUIRED403, GROUP_NOT_ACTIVE409, REVISION_CONFLICT409, ROOM_REVIEW_REQUIRED409, ROOM_NOT_FOUND404다. group_policy 조합/대상 불일치는 INVALID_REQUEST400 또는 TARGET_SCOPE_MISMATCH400이다. 현재 개발 실행은 sourceb8542ef·이미지930c25f8·DB0035다.
 
 
-## 개발환경 적용 순서 (이번 구간에서는 미실행)
+## 개발환경 적용 순서 (사용자 승인으로 실행 완료)
 
 검증된 코드/계약 SHA를 선택한 뒤 사용자 승인된 반영 구간에서 기존 API/worker의 쓰기를 중지하고 현재 DB가0034인지 확인한다. 같은 기존 DB에0035를 전진 적용하고 새 후보 API/worker를 시작한다. 신규 정책표의 현재세대 대응·public/null 정규화와 기존 업무표/이력 보존을 확인하고 두전체계약·readiness·실제 HTTP/읽기·worker 상태를 검증한 뒤 Flutter 새계약 사용을 안내한다. 새로운 별도DB·이중운영/복원리허설·자료초기화는 추가하지 않는다.
 

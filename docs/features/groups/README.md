@@ -20,4 +20,6 @@
 
 ## 실제 주차별 그룹 변경·승계 후속
 
-Issue16 전체27/28의 사용자 확정에 따라 [주차·세대별 그룹 정책](cycle-group-policy.md)을 구현했다. C/N 독립 그룹 변경·일반 전환·그룹원 우선 승계·외부 위임/승계 시 일반 전환·개방 상속과 모든 조회가0035 원본을 사용한다. [검증 집계](cycle-group-policy-verification.json)와 [대표 예시](cycle-group-policy.examples.json)를 따른다. 실제 개발서버는 아직0034이며 고정 계약 소비·서버반영·기기 인수는 구분한다. 위 최초 연결 계약은 이전 실행의 근거다.
+Issue16 전체27/28의 사용자 확정에 따라 [주차·세대별 그룹 정책](cycle-group-policy.md)을 구현했다. C/N 독립 그룹 변경·일반 전환·그룹원 우선 승계·외부 위임/승계 시 일반 전환·개방 상속과 모든 조회가0035 원본을 사용한다. [검증 집계](cycle-group-policy-verification.json)와 [대표 예시](cycle-group-policy.examples.json)를 따른다. 실제 개발서버는0035에 반영됐으며 고정 계약 소비·서버반영·기기 인수는 구분한다. 위 최초 연결 계약은 이전 실행의 근거다.
+
+현재 주차별 그룹 정책은 [0035 개발반영/실행검증](../../engineering/operations/cycle-group-policy-rollout.md)을 완료했다(sourceb8542ef/이미지930c25f8). 새 Flutter 연결/기기 인수는 별도다.
