@@ -3047,3 +3047,12 @@ NEXT_WORK/AI_CONTEXT/추적표를 갱신했으며 기존 로컬 수정은 보존
 - #29를 재조회했으며 최신은 여전히 [전체5번째 Backend 대조 완료](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6520322169)다. 네이티브 최종 완료는 사용자 보고로 추가 수신했으며 존재하지 않는 새 댓글을 근거로 만들지 않았다. 추가 수정/회신 대기는 없고 Issue 종료는 별도다. 그룹 새 기기 인수 대기는 유지한다.
 - 코드·API·DB·서버·Flutter 로컬 소스·Issue 본문/댓글·브랜치 통합/삭제는 변경하지 않았다. 현재 환경/검증 안내의 F10 잔여 사실 정정도 후보로 보존했으며 이 인계에서 일괄 수정하지 않았다.
 - 인계 검증: `PYTHONDONTWRITEBYTECODE=1 python3 scripts/verify_isolated.py static` 통과(runtime31/test43 잠금·설치 일치 미검사, 문서244개/상대 링크·앵커2540개, 원문128건/동결JSON20건 보존, 도구 unittest12개). Docker 실패/정리 로그는 mock 시험의 의도된 출력이며 실제 Docker/DB를 실행하지 않았다. `git diff --check` 통과. 문서 변경으로 업무 pytest·서버/기기 시험은 반복하지 않았다.
+
+## 2026-10-30 — 그룹 작업 dev 통합·main 동기화·브랜치 정리
+
+- 사용자 명시 지시로 현재 그룹 브랜치를 dev에 병합하고 main도 같은 시점으로 최신화했다. 사전 fetch 결과 로컬/원격 dev·main `1b6f57b`, 그룹 `48bf88c` 일치·미커밋 없음·다른 worktree 없음이었다.
+- #12/#16 최신 댓글은 기존 Flutter 연결 완료 보고와 동일했으며 추가 API 수정 요청은 없었다. 새 최초 연결·목록/배지의 사용자 기기 확인은 계속 대기한다. Git 통합을 기기 인수 완료로 확대하지 않는다.
+- [PR30](https://github.com/heo0328/lostparty-backend/pull/30)을 생성해 head `48bf88cdc7da7f1d257dd366b0a82d4ce13bca0a` 고정·충돌 없음 확인 후 이력 보존 병합했다. 병합 `fc6c06a081c06de201ba074477986baba0033a2a`를 로컬 dev에 fast-forward하고 main도 같은 지점으로 fast-forward·일반 push했다. 원격 dev/main 동일 SHA를 확인했다.
+- 그룹 로컬/원격 ref의 dev 포함·단일 worktree를 확인하고 checkout dev에서 `git branch -d` 및 원격 지정 삭제로 `feat/group-management`를 정리했다. 미완료 `feat/activity-selection`은 보존했다. 통합 결과 문서는 dev에서 기록해 main에도 같은 커밋을 반영한다.
+- 검증: 통합 전 static 통과(runtime31/test43 잠금, 설치 환경 미검사·문서244개/상대 링크·앵커2540개·도구 unittest12개). PR 원격 필수 check는 없었다. 기존 그룹 격리/개발반영 검증은 원본 근거를 재사용하며 이번 Git 통합에서 업무 pytest·계약 생성·서버/DB·provider·기기 검증을 반복하지 않았다. 후행 기록은 문서 검사와 diff 검사로 확인한다.
+- 다음은 최신 dev에서 베타 개선 목적 브랜치로 F01 구현·격리 검증이다. 이번 작업으로 개선 구현·서버 반영·배포·Issue 종료는 하지 않았다. 실제 실행 source2602e45/이미지5bd8dde6·DB0034와 새 기기 대기는 유지한다.
