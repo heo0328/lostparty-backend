@@ -28,7 +28,7 @@
 
 | 이슈 | 주제 | 다음 담당·상태/완료 조건 |
 |---|---|---|
-| [#29](https://github.com/heo0328/lostparty-backend/issues/29) | 문서 역할·갱신·이관 기준 상호 확인 | [전체2번째 Flutter 수용](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6517135733)으로 공통 내용·원본 위치 합의. Backend 원본/참조 반영·검증 후 고정 기준 게시·인계, 다음 Flutter 최소 참조 반영. 양측 적용 근거 확인 전 OPEN 유지·기술 개선 전체와 별도 |
+| [#29](https://github.com/heo0328/lostparty-backend/issues/29) | 문서 역할·갱신·이관 기준 상호 확인 | Backend 원본c1fa205·Flutter 참조4bdec0e 원격 반영/내용 대조 완료. [전체5번째 Backend 완료 조건 확인](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6520322169). 추가 수정 대기 없음·Issue 종료 별도/OPEN 유지 |
 | [#12](https://github.com/heo0328/lostparty-backend/issues/12) | 그룹 핵심 표시·활동·집계/Flutter 연결 | 구현계약22b1620·개발실행2602e45/DB0034반영·실행검증완료. [전체27 Flutter 연결구현](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6488900145)·자동검증자체보고/추가API요청없음. 후속#12전체29/30후보검색/역할표시도5d24244/507cd78a로개발반영·실행검증완료. 전체36사용자기존그룹정상시험통과수용. 새목록그룹명/소속배지후속은[계약](../features/groups/raid-link-contract.md)·개발반영완료/Native신규연결·기기대기. [반영기록](../features/groups/implementation-2026-10-28.md) |
 | [#15](https://github.com/heo0328/lostparty-backend/issues/15) | V2 Flutter 인증/분쟁 | #13 전체16번째Flutter 보고기준 D1~D4 dev반영·마감, 분쟁실기기는사용자판단보류. 이후 #13 전체17번째에서 로그인화면재구성수정 별도마감·계약검토전환을보고했으며분쟁실기기보류는별도 |
 | [#16](https://github.com/heo0328/lostparty-backend/issues/16) | 그룹 관리·레이드 생명주기 | 관리/기존레이드보존 구현·개발실행2602e45/DB0034반영·자료보존/실행검증완료. [전체17 Flutter 연결구현](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6488900495)자체보고. 전체21기존그룹잔여기기통과수용·전체22최초그룹연결/표시승인후속구현·격리검증/개발반영/실행검증완료·Native새UI/기기대기·복구승계미정/그룹장전용레이드권한없음. [반영기록](../features/groups/implementation-2026-10-28.md) |

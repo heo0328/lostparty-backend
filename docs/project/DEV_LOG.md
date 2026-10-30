@@ -3007,3 +3007,14 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - 기존 API 협업 문서에 `shared-document-operation` 절을 반영하고 docs/README·project/README에서 참조했다. 실행/상태/이력·후속 색인, 검증 근거 재사용, 상태·SHA 구분, 저장소별 예외와 후속 공동 변경 절차를 합의대로 명시했다. NEXT_WORK·ISSUE_TRACKER는 현재 대기로 갱신했다.
 - 같은 목적 브랜치 feat/group-management에서 이 문서 반영·검증 구간을 게시한다. 기존 그룹 관련 로컬5문서 변경은 보존하고 공통 협의에 해당하는 변경만 선택한다. 기능 브랜치 조기 통합·전면 문서 이동·코드/API/DB/서버 변경은 없다.
 - 문서 검사·diff 확인 후 고정 커밋/절 링크·원격 게시 근거를 #29에 인계한다. 기능 시험·기기 재인수는 요청하지 않는다.
+
+- 게시 결과: 문서 기준c1fa205db709f97c1d34817c4417b84144a5dde3 / feat/group-management, 공통 원본/참조3파일과 #29 추적3파일만 선택해 commit/push·원격 SHA 일치를 확인했다. 최초 일반 push 인증 연결 부재는 gh credential helper를 해당 명령에만 사용해 해결했다. 기존 그룹 변경5문서는 미커밋 보존했다.
+- 문서 링크/앵커2,521개·원문128건/동결JSON20건 보존·API206분류 검사, 작업트리/선택 변경 diff check 통과. [전체3번째 Backend · 공통 원본 반영/고정 기준 인계](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6517299322)를 게시하고 실제 순번 확인·본문을 Backend 완료/Flutter 참조 반영 대기로 갱신했다. 후행 인계 링크는 로컬 기록이며 다음 관련 구간에 묶는다. Issue OPEN·양측 적용 미완료, 서버/DB/기능 시험 없음.
+
+
+## 2026-10-30 — Issue29 양측 문서 반영 대조 완료
+
+- [전체4번째 Flutter 게시 결과](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6517456235)를 확인했다. GitHub API에서4bdec0e6e71517e5893d29ba48f76397b4ae358e의 실제 문서4파일 diff(13추가/1삭제)와 feature/group-backend-integration 원격 SHA를 직접 대조했다. Flutter 로컬/기능 소스는 읽지 않았다.
+- docs/README·ai_rules의 두 링크가 Backend c1fa205db709f97c1d34817c4417b84144a5dde3/shared-document-operation을 가리키며 원본 복제 없이 자체 분류/보관·후속 변경 절차를 유지한다. Backend 원본 절과 원격 게시도 재확인했다. Flutter 로컬 diff check는 자체 보고이며 Backend 확인은 원격 문서·링크·SHA 대조다.
+- [전체5번째 Backend · 양측 반영 대조 완료](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6520322169)를 게시하고 실제 순번을 확인했다. 문서 협의 완료 조건 충족·추가 수정/시험 요청 없음, 본문 완료 상태·체크리스트를 갱신하며 Issue OPEN/종료 별도를 유지한다. NEXT_WORK의 참조 반영 대기를 해소했다. 기존 그룹 기기/Penpot·별도 기술 개선은 완료로 바꾸지 않는다.
+- 합의 원본c1fa205는 그대로 유지하며 누적 인계·최종 대조·대기 해소 기록만 같은 목적 브랜치의 마감 구간으로 게시한다. 기존 그룹 로컬 변경은 제외·보존한다. 문서 검사와 diff check를 수행하며 코드/API/DB/서버/기기 시험은 실행하지 않는다.
