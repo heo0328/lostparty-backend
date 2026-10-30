@@ -10,11 +10,11 @@
 
 [전체37번째 Flutter 앱기기 전체통과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6529987970)를 수용해 현재 그룹·레이드 변경의 연결/기기 대기는 해소했다. 연결88a69fa7·후행개방/UTC수정3ec0f54f·최신안내055e0608의 자체보고 기준이며 상세500·Penpot/다른보류기능·운영릴리즈 인수와 구분한다. 추가 정상시험을 요청하지 않는다.
 
-현재 실행sourceb8542ef/이미지930c25f8·DB0035·API healthy와 [기존 반영 기록](../engineering/operations/cycle-group-policy-rollout.md)은 유지한다. checkout은 feat/raid-group-policy, main/dev ccd1cc8·F01포함/미통합이다. dev/main merge·AWS/release·자료초기화·Issue종료는 수행하지 않았다.
+현재 실행sourceb8542ef/이미지930c25f8·DB0035·API healthy와 [기존 반영 기록](../engineering/operations/cycle-group-policy-rollout.md)은 유지한다. checkout은 dev다. 사용자 승인으로 [PR31](https://github.com/heo0328/lostparty-backend/pull/31)·병합9fa0f7e에 그룹/F01/개선 인계·상세500 조사기록을 통합하고 main도 dev와 같은 최종 기록 커밋으로 동기화한다. 통합된 feat/raid-group-policy·fix/backend-beta-readiness는 로컬/원격 정리했고 미완료 feat/activity-selection은 보존한다. 후속 구현은 최신 dev의 목적 브랜치에서 이어가며 서버교체·AWS/release·자료초기화·Issue종료는 하지 않았다.
 
 ## 보류 추적 — Backend 베타 개선
 
-[F01](DEV_LOG.md#f01-registration-cleanup)은 `c94ce88`로 구현·격리 검증·commit/push 완료, dev/main 미통합이며 코드가 이번0035 이미지에 함께 반영됐다. 미처리 대상0·수동 정리 실행 없음은 [반영 기록](../engineering/operations/cycle-group-policy-rollout.md)을 따른다. [개선 계획의 F02 재개 조건](backend-improvement-plan.md#f02-resume)을 따른다. F02는 로컬 설정 조사 후 공개 경로 미정으로 보류하며 AWS 공개 준비 때 재개한다. 사용자는 Lightsail 생성 전·테스터 총20~50명 예상·도메인 미보유다. 지금 인프라를 확정하지 않는다. F03 내부 장애 추적은 개선 복귀 시 다음 후보이며 미착수다. 그룹 작업을 막지 않는다.
+[F01](DEV_LOG.md#f01-registration-cleanup)은 `c94ce88`로 구현·격리 검증·commit/push 완료, PR31로 dev/main 통합하며 코드는 기존0035 이미지에 함께 반영됐다. 미처리 대상0·수동 정리 실행 없음은 [반영 기록](../engineering/operations/cycle-group-policy-rollout.md)을 따른다. [개선 계획의 F02 재개 조건](backend-improvement-plan.md#f02-resume)을 따른다. F02는 로컬 설정 조사 후 공개 경로 미정으로 보류하며 AWS 공개 준비 때 재개한다. 사용자는 Lightsail 생성 전·테스터 총20~50명 예상·도메인 미보유다. 지금 인프라를 확정하지 않는다. F03 내부 장애 추적은 개선 복귀 시 다음 후보이며 미착수다. 그룹 작업을 막지 않는다.
 
 ## 이전0034 기준과 기존 변경의 기기 대기 (이력)
 

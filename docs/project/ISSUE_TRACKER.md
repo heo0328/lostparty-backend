@@ -6,6 +6,10 @@
 
 사용자 승인으로 그룹 작업 `48bf88c`를 [PR30](https://github.com/heo0328/lostparty-backend/pull/30)·병합 `fc6c06a`로 dev에 통합하고 main도 fast-forward하여 원격 일치를 확인했다. `feat/group-management`는 로컬·원격 정리하고 checkout은 dev다. 위 2026-10-28 분기 상태는 과거 기준이며 미완료 활동 선택 브랜치는 보존한다. 그룹 새 기기 확인·Issue 상태·실제 실행 서버는 변경하지 않았다.
 
+## 2026-10-31 그룹 Git 통합
+
+사용자 승인으로 [PR31](https://github.com/heo0328/lostparty-backend/pull/31)·병합9fa0f7e에 그룹 주차정책/F01·개선 인계/상세500 조사기록을 dev 통합했다. main은 dev의 최종 기록 커밋으로 동기화하며 통합된 그룹·베타 인계브랜치는 로컬/원격 정리했다. 실제실행b8542ef·DB0035와 상세500 미해결/Flutter 근거대기·Issue OPEN은 유지한다. 후속 코드착수는 최신dev 목적브랜치에서 이어간다. 아래 이전 브랜치/미통합 설명은 당시 이력이다.
+
 ## 2026-10-31 현재 그룹 상태 — 기기 인수 완료·상세500 조사 미완료
 
 [#16 전체37번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6529987970)의 현재 그룹·레이드 앱 기기 전체통과를 수용했다. 연결/그룹변경/승계·개방/상속·표시·이름안내는 현재 안내범위 인수완료이며 아래 과거 기기대기는 해소됐다. [전체36번째 상세500 조사요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6529904340)은 과거2건 확인·현재READ ONLY 미재현/원인미확정, [조사 집계](../features/groups/detail-500-investigation.json)·NEXT_WORK 기준으로 Flutter 당시 입력/동작근거 대기·Backend 후속대조다. 실행b8542ef/DB0035 유지, 서버교체/자료변경·Issue종료/merge 없음. Penpot은 Flutter/디자인도구 대기다.

@@ -3126,3 +3126,10 @@ NEXT_WORK/AI_CONTEXT/추적표를 갱신했으며 기존 로컬 수정은 보존
 - 현재 실제소스/DB의 READ ONLY 서비스·route 호출/전체 응답모델 검증: 유효세션2, C/N19대상행의 beta on/off·기본/application-display/membership-actions·그룹표시 on/off 조합456호출 중316정상/140예상권한거절·예상외예외0. 과거 membership/cycle-member anchor 명시·그룹표시 조합140호출은95정상/45예상거절·예상외예외0이다. 반복조합은 고유시험/행 수로 합산하지 않는다. provider는 호출 시 실패시키고 모든 연결은 READ ONLY로 실행했다. 실제HTTP 인증/기기·전체프로젝트시험이 아니며 당시 상태 재현/오류해결 증거가 아니다. [조사 집계](../features/groups/detail-500-investigation.json)가 상세 원본이다.
 - 결론: 과거500 존재 확인, 현재미재현·원인미확정/미해결이다. 임의제품코드/계약변경·서버교체·자료수정/초기화·과거복원은 수행하지 않았다. F03 보류를 이 요청으로 확대하지 않았다. 이미 정상통과한 앱 시험의 반복 대신 Flutter에 당시 상세 query의 profile/실제T/그룹표시/anchor유무·직전작업과 대상상태를 기존 기록에서 확인하도록 요청한다. 자연재발하면 새UTC/request_id/민감값 없는 query/동작 근거를 받아 같은Issue에서 좁혀 조사한다. 인증헤더·키·원응답·개인정보는 요청하지 않는다.
 - 조사기록1be55a7을 같은브랜치에 commit/push·local/origin 일치 확인 후 [#16 전체38번째 Backend 조사결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6530073442)를 게시했다. 실제전체댓글38/마지막URL을 확인하고 본문상단을 앱기기인수완료·별도500미해결/Flutter입력대기로 최신화했다. 과거본문은 보존하며 OPEN/실행소스b8542ef·DB0035를 유지한다. 후행인계링크 기록만 추가하며 추가 서버시험/교체는 수행하지 않는다.
+
+## 2026-10-31 — 그룹1차 Git 통합·main/dev 동기화
+
+- 사용자 지시로 미커밋 여부를 확인했고 시작시 작업폴더는 깨끗하며 feat/raid-group-policy local/origin73526cc 일치였다. 원격 dev/main ccd1cc8에 별도추가변경/충돌이 없음을 fetch 후 확인했다. 사용자 마지막 문장은 앞선 통합방식대로 main/dev 동일시점 동기화로 해석해 진행했다.
+- [PR31](https://github.com/heo0328/lostparty-backend/pull/31)에 그룹 실제T정책·0035/기존 ACK 보존, F01/개선인계 포함·기존검증·상세500 미해결을 명시하고 head73526cc 일치/mergeable/미설정검사0을 확인했다. 이력보존 merge9fa0f7efca6faa6ecbd48eefd465faedd72a1875의 dev 원격 반영·로컬ff·전체포함을 확인했다. squash/rebase/force는 하지 않았다.
+- dev에 그룹기능·F01 c94ce88·개선보류818a7ec·조사1be55a7/73526cc가 모두 포함됨과 worktree 미사용/미통합변경0을 확인해 feat/raid-group-policy와 fix/backend-beta-readiness를 로컬/원격 정리했다. 미완료 feat/activity-selection89a3248은 보존한다. F02 보류/F03 미착수 기록은 통합했고 후속은 최신dev 목적브랜치에서 이어간다.
+- 후행 현재상태/정리 기록을 dev에 묶어 게시하고 main을 같은 최종 기록 커밋으로 fast-forward한다. 두브랜치 local/origin 동일·깨끗한작업폴더를 최종 확인한다. 기존기능검증은 관련소스불변으로 재사용하고 문서/링크·diff만 검사한다. 상세500은 과거발생확인·현재미재현/원인미확정·Flutter당시근거대기를 유지하며 그룹앱기기인수완료와 구분한다. 추가Issue댓글/종료·서버/DB교체·자료초기화·AWS/release·기기조작은 실행하지 않았다. 실제실행소스b8542ef/이미지930c25f8·DB0035는 Git 통합과 별개로 유지한다.
