@@ -8,6 +8,19 @@
 
 Flutter와 Backend를 동시에 개발하는 동안, 별도 협업툴이나 공유 방식을 채택하기 전까지 **[heo0328/lostparty-backend의 GitHub Issues](https://github.com/heo0328/lostparty-backend/issues)**를 공식 협업 채널로 사용합니다. Backend는 Issue와 합의된 계약을 기준으로 작업합니다. Flutter 로컬 경로나 특정 문서를 찾아 읽는 절차는 두지 않습니다.
 
+<a id="shared-document-operation"></a>
+
+## 공통 문서 운영
+
+[Issue29](https://github.com/heo0328/lostparty-backend/issues/29)의 [Backend 보완안](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6516431229)과 [Flutter 수용](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6517135733)에 따른 공통 항목의 유지 원본이다. 각 저장소는 이 절을 참조하며 자체 배치·검증·보관 방식을 유지한다. 원본이 Backend에 있다는 이유로 일방 변경하지 않는다. 후속 공통 변경은 Issue에서 양쪽 영향을 확인하고 인계에는 소비할 고정 커밋·절 링크를 남긴다.
+
+- **현재 실행:** NEXT_WORK는 현재 실행의 근거·범위·순서·완료 조건과 유효한 대기·다음 행동을 갱신한다. 결정·검증·작업 구간이 정리되면 상세 경과는 DEV_LOG에 누적하고 현재 판단에 필요한 짧은 요약·링크만 남긴다. 댓글 수신이나 채팅 종료마다 이관·커밋하지 않는다.
+- **상태와 이력:** AI_CONTEXT는 기능 상태·기준 링크가 바뀔 때 갱신한다. 상세 검증 수치·댓글 경과는 원본 이력으로 연결한다. 과거 완료를 현재 완료로 자동 간주하지 않되 관련 코드·계약·환경·검증 범위에 영향이 없으면 기존 근거를 재사용한다. 새 변경·실패·불확실성이 있는 경계만 추가 확인한다.
+- **원본과 후속:** 동일 사실의 상세 원본은 한 곳에 두고 다른 문서는 필요한 짧은 요약·링크만 유지한다. 미착수 개선안은 후속 대장/관련 문서에 보존하며 기록만으로 착수·계약 확정이 되지 않는다. 공식 Issue 추적은 상태·담당·다음 행동·완료 조건·근거 링크의 색인이고 NEXT_WORK는 지금 실행할 작업과 유효 대기의 선택 목록이다. 완료 시 대기를 해소하고 결과 이력으로 연결한다.
+- **반영 상태:** 현재 계약·미적용 제안·과거 기록, 사실 정정·설계/계약/정책 변경을 구분한다. 구현·commit/push·실제 서버 반영·Flutter 연결·사용자 기기 인수를 분리하고 문서 SHA·업무 구현 SHA·실행 소스의 의미를 명시한다. 미커밋 로컬 변경을 원격 반영 완료로 표시하지 않으며 과거 원문·당시 검증 수치·동결 자료를 현재 값으로 덮어쓰지 않는다.
+- **범위와 예외:** 제품 목적·베타 전후 데이터 수명·공통 협업 원칙은 기존 합의 원본을 모순 없이 참조한다. 이번 기준은 데이터 삭제·새 보관 정책의 승인이 아니다. 기존 Issue21 품질 기준과 저장소별 브랜치 정책은 유지한다. Flutter의 product/architecture/backend-migration 분류·DETAIL_IMPROVEMENTS·legacy/history, Backend의 features/engineering 분류·기능별 후속 문서·ISSUE_TRACKER·원문 대응표/해시 검증은 각자 유지한다. 새 공통 저장소·긴 동일 본문 복제·파일 구조 통일을 요구하지 않는다.
+- **검증과 인계:** 합의된 최소 문구·참조를 각 저장소에 반영하고 실제 수정 경로·고정 링크·push 여부·문서 검증 결과 또는 변경 불필요 결론을 Issue에 연결한다. 링크/절·내용·상태 구분과 diff를 확인하며 순수 문서 작업에는 기능 시험·기기 재인수를 추가하지 않는다. 양측 반영 근거 확인과 Issue 종료는 구분한다.
+
 <a id="constraints"></a>
 
 ## 이슈 범위와 마감
@@ -72,7 +85,7 @@ Issue·댓글·PR·구현/계약 커밋을 연결합니다. Backend 완료와 Fl
 
 ## 계약 원본과 검증
 
-현재 개발 서버는 [명시 출발 정수분 개발 반영](../operations/explicit-minute-rollout.md)의 source420e057/이미지cd581ac0·178경로/199 operation·DB0032입니다. API만교체·기존DB/설정/키유지·읽기전용검색/실제HTTP9/두계약/runtime31/worker·healthy를확인했습니다. wire2/profile1·hangul-printable-ascii-1과수용된join후보를지원하며한도/조율선택조회도171수용후구현·개발반영했습니다. 최신177검색정수분도지원하며179수용된베타명시출발정수분도개발반영했으며기본/자동/개인표/진행시간은5분유지합니다. 아이템레벨 보완 등 업무 계약은 유지하고 고정 패키지·JSON로깅/보관 설정을 반영했습니다. [아이템레벨 출처 보완](../../features/recruitment/participation/application-item-level-proposal.md)의 구현/격리35PASS와 [실제 개발 반영·자료 보존 검증](../operations/application-item-level-rollout.md)을 완료했습니다. [전체25 Flutter 인수 결과](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386859737)에서 레벨 표시의 사용자 기기 통과, current_saved/unavailable의 구현·자동검증 근거 수용을 확인했습니다. 두 예외 분기의 실제 기기 관찰과 전체 모집 인수는 별도 미완료입니다. 이전 [표시 프로필 반영](../operations/application-display-rollout.md)과 [통합 자격 반영](../operations/eligibility-rollout.md)은 각 시점의 근거로 보존합니다. 네이티브 작업 순서/시험 진행은 네이티브 측에서 기록하고 Backend는 합의 계약·반영 상태·수신 결과 및 구체 차이를 관리합니다. 현재 소스의 REST 계약은 [openapi/two-cycle.openapi.yaml](../../../openapi/two-cycle.openapi.yaml)이며, 기본0023 앱 계약은 [openapi/openapi.yaml](../../../openapi/openapi.yaml)에 보존합니다. 실행 프로필에 맞는 파일과 생성 객체 전체를 비교합니다. [최신 개발 전환과 확인 범위](../operations/README.md)를 따릅니다. 아래 기본 계약 설명은 기존 앱 기준입니다. `/health`, Issue #2의 6개 인증 API, Issue #3의 12개 내 계정 업무 API와 Issue #5의 전투력 갱신 API 및 Issue #6의 회원 설정 GET/PUT 및 Issue #7 회원 키 GET/PUT/DELETE·본인 복원 POST·Issue #8의 대표 전용 GET/PUT·L1b V2현재상태/퇴역이력GET·P1 역할요약GET/PUT·P2 개인설정PUT/원정대표시GET/PUT과 Issue #10의 공개 카탈로그/서버 주차 GET과 Issue #11의 본인 주간 상태 GET/개인 완료 PUT과 Issue #12의 그룹 G1 7개 동작·본인한도 GET 및 G2 초대/신청/코드/차단20동작과 Issue #16의 G3 관리조회·그룹장이전·일반탈퇴3동작을 포함하며 YAML에서 유효한 JSON 형식으로 저장합니다. FastAPI의 `app.openapi()`는 구현에서 생성되는 비교 대상입니다. HTTP OpenAPI·Swagger 경로는 비활성화되어 있습니다. 실제 연동·자동 검증의 범위는 [인증 개발 안내](../../features/login-account/google-login/README.md)와 [내 계정 API 안내](../../features/rosters/registration/README.md)에 있습니다.
+현재 개발 서버는 [그룹 기능 반영 기록](../../features/groups/implementation-2026-10-28.md)·[실행집계](../operations/records/raid-group-link-rollout.json)의 source2602e45/이미지5bd8dde6·DB0034·two-cycle185경로/206동작(기본123/140)이다. 기존자료·설정·키보존/실행계약·READONLY목록그룹표시/프로필·HTTP12/worker/healthy를확인했다. Native #12전체36/#16전체21의안내된기존그룹정상흐름은사용자기기보고통과로수용한다. Backend실회원쓰기검증과는구분한다. 새 [최초그룹연결·목록표시후속](../../features/groups/raid-link-contract.md)은구현/격리검증·계약인계·개발반영/실행검증완료이며새Flutter연결/기기는별도다. 이전 [재신청 반영](../operations/reapplication-history-rollout.md)·[명시출발정수분 반영](../operations/explicit-minute-rollout.md)은각시점근거로보존한다. 업무계약은 [two-cycle OpenAPI](../../../openapi/two-cycle.openapi.yaml), 기본0023보존계약은 [기본 OpenAPI](../../../openapi/openapi.yaml)를따른다. 실행프로필에맞는파일과생성객체전체를비교한다. 아래 기본 계약 설명은 기존 앱 기준입니다. `/health`, Issue #2의 6개 인증 API, Issue #3의 12개 내 계정 업무 API와 Issue #5의 전투력 갱신 API 및 Issue #6의 회원 설정 GET/PUT 및 Issue #7 회원 키 GET/PUT/DELETE·본인 복원 POST·Issue #8의 대표 전용 GET/PUT·L1b V2현재상태/퇴역이력GET·P1 역할요약GET/PUT·P2 개인설정PUT/원정대표시GET/PUT과 Issue #10의 공개 카탈로그/서버 주차 GET과 Issue #11의 본인 주간 상태 GET/개인 완료 PUT과 Issue #12의 그룹 G1 7개 동작·본인한도 GET 및 G2 초대/신청/코드/차단20동작과 Issue #16의 G3 관리조회·그룹장이전·일반탈퇴3동작을 포함하며 YAML에서 유효한 JSON 형식으로 저장합니다. FastAPI의 `app.openapi()`는 구현에서 생성되는 비교 대상입니다. HTTP OpenAPI·Swagger 경로는 비활성화되어 있습니다. 실제 연동·자동 검증의 범위는 [인증 개발 안내](../../features/login-account/google-login/README.md)와 [내 계정 API 안내](../../features/rosters/registration/README.md)에 있습니다.
 
 API 구현·계약을 변경한 경우 최신 API 이미지에서 전체 계약을 검증합니다. 미반영 소스는 격리 후보이미지로 비교하고, 실제 교체 후 실행 컨테이너에서도 전체 계약을 비교합니다. 아래 compose 명령은 실제 API 교체를 포함하므로 별도 반영 범위가 승인된 때에 사용합니다.
 

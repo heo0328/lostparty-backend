@@ -3,11 +3,11 @@ import uuid
 from datetime import timedelta
 from decimal import Decimal, InvalidOperation
 from fastapi.encoders import jsonable_encoder
-from sqlalchemy import select
+from sqlalchemy import select, func, text
 from app.auth.models import User
 from app.core.database import session, now
 from app.core.rate_limit import check
-from app.game_accounts import lifecycle
+from app.game_accounts import lifecycle, verification_context
 from app.game_accounts.models import Account, Character, Registration
 from app.game_accounts.support import authorize, fail, reserve, release, commit_result, cursor_encode, cursor_decode
 from app.groups import service as groups, http_service
@@ -122,15 +122,23 @@ def invitation_target(db, cid):
     return character, account
 
 
-def candidates(principal, gid, name):
+def candidates(principal, gid, name, reader_profile=None):
     with session() as db, db.begin():
         db.connection(execution_options={'isolation_level': 'REPEATABLE READ'})
+        db.execute(text('SET TRANSACTION READ ONLY'))
         uid = authorize(db, principal)
         groups.member(db, uid, groups.group(db, gid))
+        if reader_profile is not None:
+            from app.groups import display, features
+            if reader_profile != display.PROFILE:
+                fail('INVALID_REQUEST', 400)
+            features.ready(db)
         check(('group-invite-search', str(uid)), 30)
-        rows = db.scalars(select(Character.id).where(Character.character_name == name.strip())
+        rows = db.scalars(select(Character.id).where(func.translate(Character.character_name,
+                verification_context.ASCII_UPPER, verification_context.ASCII_LOWER) ==
+                verification_context.ascii_name_key(name.strip()))
                           .order_by(Character.server_name, Character.id).limit(50))
-        items = []
+        items, selected = [], []
         for cid in rows:
             try:
                 c, account = invitation_target(db, cid)
@@ -139,9 +147,15 @@ def candidates(principal, gid, name):
                 if isinstance(error, GameError) and error.code == 'GROUP_TARGET_UNAVAILABLE':
                     continue
                 raise
+            selected.append((account.owner_id, account, c))
             items.append(dict(target_character_id=c.id, display=core.display(c), ownership_revision=account.ownership_revision,
                               lifecycle_revision=c.lifecycle_revision, item_level=decimal_string(c.summary.get('item_level')),
                               combat_power=decimal_string(c.summary.get('combat_power'))))
+        if reader_profile is not None:
+            specs = display.character_specs(db, selected)
+            for item, (owner, _, char) in zip(items, selected):
+                item['character_spec'] = specs[(owner, char.id)]
+            return display.bounded(dict(profile=reader_profile, evaluated_at=now(db), items=items))
         return dict(items=items)
 
 
@@ -171,6 +185,9 @@ def new_request(principal, gid, key, command, kind):
             fail('GROUP_RELATION_EXISTS')
         subject = core.subject(db, group, target, create=True, snapshot=core.display(character))
         subject.display = core.display(character)
+        from app.groups.features import remember
+        account = db.get(Account, character.account_id)
+        remember(db, subject, character, account)
         if kind == 'application':
             subject.application_count += 1
         touch(subject, current)

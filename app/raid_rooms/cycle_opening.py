@@ -115,7 +115,7 @@ def prepare(db,uid,rid,key,intent,cid,role,stamp,*,seed=None,include_session_dis
         old=db.get(CycleGeneration,(row.id,row.generation))
         data['leadership']=dict(leader_cycle_member_id=old.leader_cycle_member_id,leadership_revision=old.leadership_revision,
             leader_membership_id=None)
-    hidden=[source_proof,room.revision,room.scope,selection_context.group_stamp(db,room.group_id),settings,proof,
+    hidden=[source_proof,room.revision,room.scope,selection_context.group_stamp(db,room.group_id,retained=True),settings,proof,
         comparison['power_revision'] if comparison else None,
         jsonable_encoder(inputs),[row.id,row.revision,row.generation,row.state] if row else None]
     if beta_profile.enabled():

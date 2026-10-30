@@ -7,7 +7,7 @@ from fastapi.encoders import jsonable_encoder
 from app.auth.models import User
 from app.game_accounts.support import fail, GameError
 from app.game_accounts.lifecycle import digest
-from app.groups.models import GroupMembership
+from app.groups.models import Group,GroupMembership
 from app.raid_rooms import (admission_service as base, admission_context as context, cycle_admission as admission,
     cycle_queries as directory, cycle_commands as commands, cycle_schedule as schedule, cycle_wire as wire)
 from app.raid_rooms.cycle_creation import scope, permission
@@ -29,8 +29,8 @@ def read_target(db,uid,rid,key,stamp):
 
 
 def badge(db,room,uid):
-    return room.group_id is not None and db.scalar(select(GroupMembership.id).where(
-        GroupMembership.group_id==room.group_id,GroupMembership.user_id==uid,GroupMembership.ended_at.is_(None))) is not None
+    return room.group_id is not None and db.scalar(select(GroupMembership.id).join(Group,Group.id==GroupMembership.group_id).where(
+        Group.ended_at.is_(None),GroupMembership.group_id==room.group_id,GroupMembership.user_id==uid,GroupMembership.ended_at.is_(None))) is not None
 
 
 def own_cycle_member(db,row,member):

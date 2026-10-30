@@ -4,7 +4,7 @@
 
 ## 현재 운영 경계
 
-최신 실행은 [명시 출발 정수분 개발 반영](explicit-minute-rollout.md)·[집계](records/explicit-minute-rollout.json)다. source420e057/이미지cd581ac0·178/199·DB0032. API만교체·DB/자료/환경/키유지·259소스/runtime31/두계약전체일치·순수분설정/기한검사·실자료READONLY검색·HTTP9/healthy/worker/ERROR0확인. 직접17시험재사용/전체회귀미반복. 베타명시출발만분정밀도·기본/자동/개인표/진행시간5분/동의예약유지. 다음Flutter직접영향/Backend차이대응이며전체기기/성능·원ACK키매칭/dev·main/AWS는별도다. 직전 [검색 반영](search-minute-rollout.md)/[한도·조율 반영](active-usage-wait-rollout.md)은이전근거, [로깅 조회](logging.md)를사용할수있다.
+최신 개발 실행은 [그룹 후보검색/역할표시 반영 기록](../../features/groups/implementation-2026-10-28.md)·[집계](records/raid-group-link-rollout.json)다. source2602e45/이미지5bd8dde6·DB0034·two-cycle185/206(기본123/140). 기존114업무표2,015행/sequence·DB/설정/키보존·소스274/runtime31/두계약전체일치·READONLY목록그룹표시/프로필/HTTP12·worker/healthy/ERROR0확인. 안내된기존그룹정상흐름은Native#12전체36/#16전체21사용자기기보고통과이며Backend실회원쓰기시험과구분한다. 새최초그룹연결/목록표시후속도개발반영완료·새Flutter연결/기기는별도인수다. migration/병합/운영배포/초기화·삭제없음. 이전 [그룹1차집계](records/group-features-rollout.json)·[재신청 개발반영](reapplication-history-rollout.md)은당시이력으로보존한다.
 
 직전 업무 보완은 [신청자 아이템레벨 보완 개발 반영](application-item-level-rollout.md)·[집계](records/application-item-level-rollout.json)다. sourcef471e31/이미지6d5857b3·177경로·DB0031, 기존자료/키보존·실행12PASS 완료이며 [전체25 Flutter 인수 결과](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6386859737)로 레벨표시 기기통과·두 예외분기 구현/자동검증 근거 수용을 확인했다. 두 예외분기의 실제 기기관찰과 전체모집 인수는 미완료다. 아래 표시프로필 반영은 직전 이력이다.
 

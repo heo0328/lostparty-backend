@@ -59,7 +59,7 @@ def qualify(db,room,row,cm):
     if any((a.ownership_revision,a.lifecycle_revision)!=(selected.expected_ownership_revision,selected.expected_lifecycle_revision)
             for a in owned):fail('OWNERSHIP_REQUIRED',403)
     admission.core._limits(db,cm.user_id,selected,False)
-    admission.core._group(db,room,cm.user_id)
+    admission.core._group(db,room,cm.user_id,existing=True)
     admission.core._room_restrictions(db,room)
     minimum=row.settings_snapshot['combat_requirement']['dealer_min' if selected.selected_role=='dealer' else 'support_min']
     power=admission.core.power_comparison(db,cm.user_id,selected,minimum)

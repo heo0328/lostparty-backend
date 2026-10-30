@@ -1,5 +1,5 @@
 """Actor/target-scoped membership and application pages, without GET writes."""
-from app.raid_rooms import beta_profile, beta_schedule, beta_output
+from app.raid_rooms import beta_profile, beta_schedule, beta_output, group_list_display
 from sqlalchemy import select,func,and_,or_
 from app.game_accounts.support import fail,cursor_encode,cursor_decode
 from app.game_accounts.lifecycle import digest
@@ -14,7 +14,7 @@ from app.groups.models import GroupMembership
 from app.raid_rooms import completed_room_lifecycle as archive
 
 
-def applications(principal,key,*,rid=None,state='pending',limit=20,cursor=None,reader_profile=None):
+def applications(principal,key,*,rid=None,state='pending',limit=20,cursor=None,reader_profile=None,include_group_state=False):
     from app.raid_rooms import application_display as display, application_display_schemas as display_schemas
     if reader_profile is not None and (reader_profile != display.PROFILE or rid is None):fail('INVALID_REQUEST',400)
     if state not in ('pending','accepted','rejected','withdrawn','expired','cancelled','all') or type(limit) is not int or not 1<=limit<=50:fail('INVALID_REQUEST',400)
@@ -40,6 +40,7 @@ def applications(principal,key,*,rid=None,state='pending',limit=20,cursor=None,r
         if reader_profile is not None:
             binding.append(reader_profile)
             revision=digest([revision,str(row.id),row.generation])
+        binding,revision=group_list_display.bind(db,binding,revision,include_group_state,target.key)
         offset=cursor_decode(cursor,binding,revision) if cursor else 0
         rows=list(db.scalars(query.order_by(Application.created_at.desc(),Application.id.desc()).offset(offset).limit(limit+1)))
         token=cursor_encode(dict(scope=binding,revision=revision,offset=offset+limit)) if len(rows)>limit else None
@@ -57,10 +58,11 @@ def applications(principal,key,*,rid=None,state='pending',limit=20,cursor=None,r
         model=display_schemas.ApplicationDisplayPageResponse if reader_profile is not None else wire.OutputContract3GetV2RaidRoomsRoomIdApplications
         result=beta_output.render(db,uid,stamp,model,dict(scope=scope(stamp,key,row),
             data=dict(items=items,applications_revision=head,next_cursor=token,evaluated_at=stamp)))
+        result=group_list_display.attach(db,result,[app.room_id for app in rows[:limit]],include_group_state)
         return display.bounded(result) if reader_profile is not None else result
 
 
-def memberships(principal,key,state='current',limit=20,cursor=None):
+def memberships(principal,key,state='current',limit=20,cursor=None,include_group_state=False):
     if state not in ('current','ended','all') or type(limit) is not int or not 1<=limit<=50:fail('INVALID_REQUEST',400)
     with base.snapshot(principal) as (db,uid,stamp):
         target=cycles.target(stamp,key)
@@ -77,6 +79,7 @@ def memberships(principal,key,state='current',limit=20,cursor=None):
         revision=head.membership_revision if head else 1
         binding=['cycle-memberships',str(uid),str(principal[1].id),key,state,limit]
         epoch=digest([revision,cycles.directory_revision(db,target.key),target.current.isoformat()])
+        binding,epoch=group_list_display.bind(db,binding,epoch,include_group_state,target.key)
         offset=cursor_decode(cursor,binding,epoch) if cursor else 0
         rows=list(db.execute(query.order_by(Member.joined_at.desc(),Member.id.desc()).offset(offset).limit(limit+1)))
         token=cursor_encode(dict(scope=binding,revision=epoch,offset=offset+limit)) if len(rows)>limit else None
@@ -103,8 +106,9 @@ def memberships(principal,key,state='current',limit=20,cursor=None):
                 target_participation_state=('cancelled' if actual.state=='removed' else actual.state) if actual else 'review_required' if row and not ready else 'not_selected',
                 target_cycle_key=key,room_cycle_id=row.id if row else None,target_generation=row.generation if row else None,
                 target_revision=row.revision if row else None))
-        return beta_output.render(db,uid,stamp,wire.OutputContract3GetV2MeRaidRoomMemberships,dict(scope=scope(stamp,key),
+        result=beta_output.render(db,uid,stamp,wire.OutputContract3GetV2MeRaidRoomMemberships,dict(scope=scope(stamp,key),
             data=dict(items=items,membership_head=revision,next_cursor=token,evaluated_at=stamp)))
+        return group_list_display.attach(db,result,[room.id for _,room in rows[:limit]],include_group_state)
 
 
 def projections(principal,gid,rids,key,token=None,gids=None):

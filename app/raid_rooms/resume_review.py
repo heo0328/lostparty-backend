@@ -125,7 +125,7 @@ def display(uid, row, content, basis, groups, impact, reason, *, proposal=None, 
 
 
 def proof(db, room, row, members):
-    return jsonable_encoder([room.revision, room.scope, life.selection_context.group_stamp(db, room.group_id),
+    return jsonable_encoder([room.revision, room.scope, life.selection_context.group_stamp(db, room.group_id, retained=True),
         row.revision, row.members_revision, row.plan_revision, commands.leadership(db, row),
         [[m.id, m.revision, life.qualify(db, room, row, m)[1]] for m in members]])
 

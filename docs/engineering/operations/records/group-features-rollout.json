@@ -1,0 +1,261 @@
+{
+  "source_commit": "cf214d016fc650e216782432f9c9c33823367808",
+  "implementation_contract_commit": "22b1620747707afaa87ba84223e5a2beb886f658",
+  "image": "sha256:eecda79d926fef610cd01910cf2d6c94b07201b80a21603a1dd4a176e1a13463",
+  "previous_image": "sha256:581a1a5ed2566061d4c1d23a83d622e36ed9f6da166666b74c1e76a28dfe13f2",
+  "applied_at": "2026-10-29T05:23:01.474785463Z",
+  "database_revision": "0034_group_features",
+  "ddl": {
+    "existing_application_tables": 112,
+    "existing_rows": 1857,
+    "existing_rows_columns_timestamps_unchanged": true,
+    "sequences_unchanged": true,
+    "new_tables": [
+      "group_activity_heads",
+      "group_subject_character_references"
+    ],
+    "new_tables_empty_at_migration": true,
+    "backfill": false
+  },
+  "db_container_image_volume_environment_preserved": true,
+  "api_environment_command_security_ports_logging_key_mount_preserved": true,
+  "key_hashes_equal": true,
+  "source_files_equal": 272,
+  "runtime_packages": 31,
+  "python_actual_version_preserved": "3.12.16",
+  "image_build": "Existing immutable runtime image; remove old app/alembic directories and copy all current source; same installed locks; no host secrets in image",
+  "full_openapi_equal": true,
+  "base_openapi": {
+    "paths": 123,
+    "operations": 140
+  },
+  "current_openapi": {
+    "paths": 185,
+    "operations": 206
+  },
+  "read_only_service_results": {
+    "database_revision": "0034_group_features",
+    "ready": true,
+    "valid_session_users": 2,
+    "read_only_checks": {
+      "public_search": 2,
+      "account_bootstrap": 2,
+      "account_registrations": 2,
+      "usage_limits": 2,
+      "personal_request_counts": 2,
+      "my_groups_default": 2,
+      "my_groups_display": 2,
+      "weekly_summary": 2,
+      "current_memberships": 4,
+      "historical_memberships": 4,
+      "current_membership_items": 5,
+      "raid_detail": 5,
+      "raid_plan": 5,
+      "raid_detail_group_state": 5
+    },
+    "access_denials": {},
+    "sql_statements": 7596,
+    "read_only_transactions_enforced": true,
+    "provider_calls": 0,
+    "scope": "Actual deployed read-only services with existing valid sessions; no authenticated member HTTP or commands/device acceptance"
+  },
+  "actual_http": [
+    {
+      "case": "health",
+      "status": 200,
+      "no_store": false
+    },
+    {
+      "case": "public_cycle",
+      "status": 200,
+      "no_store": true
+    },
+    {
+      "case": "my_groups_display_missing",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "my_groups_display_invalid",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "my_group_detail_missing",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "my_group_detail_invalid",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "members_display_missing",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "members_display_invalid",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "blocked_display_missing",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "blocked_display_invalid",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "activity_characters_missing",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "activity_characters_invalid",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "personal_counts_missing",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "personal_counts_invalid",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "group_counts_missing",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "group_counts_invalid",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "management_missing",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "management_invalid",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "raid_rooms_missing",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "raid_rooms_invalid",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "disband_missing",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "disband_invalid",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "remove_missing",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "remove_invalid",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "representative_missing",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    },
+    {
+      "case": "representative_invalid",
+      "status": 401,
+      "no_store": true,
+      "code": "ACCESS_INVALID",
+      "bearer": true
+    }
+  ],
+  "health": {
+    "api": "healthy",
+    "db": "healthy"
+  },
+  "json_log_lines": 603,
+  "error_log_count": 0,
+  "periodic_jobs_success": {
+    "ownership_settlement": 210,
+    "recruitment": 200,
+    "auth_cleanup": 35
+  },
+  "failed_job_items": 0,
+  "limitations": [
+    "No active group memberships for valid-session users: member/activity/blocked/management/room-list success against live member data remains unverified; isolated tests provide prior coverage",
+    "No authenticated member HTTP, state-changing member commands, device acceptance, merge or production deployment",
+    "Existing isolated test results reused; no complete suite rerun or data import/restore rehearsal",
+    "Health public response has existing Cache-Control behavior; protected rejections use no-store and Bearer"
+  ],
+  "temporary_reader_removed": true
+}

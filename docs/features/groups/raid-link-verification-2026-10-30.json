@@ -1,0 +1,112 @@
+{
+  "date": "2026-10-30",
+  "branch": "feat/group-management",
+  "development_rollout": false,
+  "migration_added": false,
+  "baseline": "de93ade",
+  "contract_proposals": {
+    "issue12": {
+      "ordinal": 37,
+      "url": "https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6502475245"
+    },
+    "issue16": {
+      "ordinal": 23,
+      "url": "https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6502474634"
+    }
+  },
+  "runs": [
+    {
+      "selection": [
+        "tests/test_group_room_connection.py (initial12)"
+      ],
+      "passed": 9,
+      "failed": 3,
+      "seconds": 132.88,
+      "reason": "Fixture duplicated existing MemberUsageLimits and reused old usage CAS for second group; corrected fixtures without weakening policies"
+    },
+    {
+      "selection": [
+        "tests/test_group_room_connection.py (15 at this checkpoint)",
+        "tests/test_group_raid_lifecycle.py",
+        "tests/test_recruitment_cycle_management.py"
+      ],
+      "passed": 47,
+      "failed": 0,
+      "seconds": 600.06
+    },
+    {
+      "selection": [
+        "final badge examples/profiles",
+        "page cursor/READ ONLY/provider prohibition",
+        "DB failure503",
+        "pre0034 opt-in rejection"
+      ],
+      "passed": 4,
+      "failed": 0,
+      "seconds": 56.03
+    },
+    {
+      "selection": [
+        "selected group/token/scope/legacy context"
+      ],
+      "passed": 1,
+      "failed": 0,
+      "seconds": 15.86,
+      "reason": "Use actual scope enum in test model; removes test-only serializer warning"
+    }
+  ],
+  "distinct_selected_scenarios": 49,
+  "counting": "47-run includes new15 + existing lifecycle5 + management27; edge4 adds2 distinct and repeats2; token1 repeats1. Not a single final-head suite and not full repository tests.",
+  "contracts": {
+    "full_objects_equal": true,
+    "legacy": {
+      "paths": 123,
+      "operations": 140,
+      "unchanged": true
+    },
+    "two_cycle": {
+      "paths": 185,
+      "operations": 206
+    },
+    "changed_paths": [
+      "/v2/raid-rooms",
+      "/v2/raid-rooms/search",
+      "/v2/me/raid-room-applications",
+      "/v2/me/raid-room-memberships",
+      "/v2/me/raid-rooms/{room_id}/common-context"
+    ],
+    "new_schemas": 11,
+    "existing_component_value_changes": 0
+  },
+  "badge": {
+    "viewer_membership_independent": true,
+    "observations": 12,
+    "profiles": [
+      null,
+      "application-display-1",
+      "membership-actions-1"
+    ],
+    "include_group_state": [
+      false,
+      true
+    ],
+    "backend_omission_reproduced": false,
+    "production_badge_code_changed": false,
+    "example": "raid-link-examples.json"
+  },
+  "data": {
+    "existing_participation_and_ledgers_preserved": true,
+    "pending_application_origin_preserved": true,
+    "normal_creation_still_one_existing_command": true,
+    "first_connection_one_existing_common_command": true
+  },
+  "warnings": [
+    "Existing Starlette AnyIO BlockingPortal deprecation",
+    "Intermediate test-only raw scope enum serializer warning corrected and specific test rerun"
+  ],
+  "limitations": [
+    "No development API/DB queried or replaced in this task; runtime source5d24244/image507cd78a/DB0034 is prior verified record",
+    "No new-flow Flutter integration/device acceptance, migration execution, data deletion, merge or production deployment",
+    "Existing group device acceptance is Native user report for original scope; not new first connection/group-name/badge defect acceptance"
+  ]
+}

@@ -15,7 +15,7 @@ from app.raid_weekly import service as weekly
 from app.raid_weekly.models import WeeklyState
 
 
-def enabled(db):return list(db.scalars(text('SELECT version_num FROM public.alembic_version')))in (['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history'])
+def enabled(db):return list(db.scalars(text('SELECT version_num FROM public.alembic_version')))in (['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history'],['0034_group_features'])
 def ready(db):
     if not enabled(db):fail('RECRUITMENT_COMMAND_NOT_READY',503)
 

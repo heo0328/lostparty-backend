@@ -76,13 +76,15 @@ def _limits(db, uid, selection, increasing, *, room_id=None):
         fail('MEMBER_RAID_LIMIT_REACHED')
 
 
-def _group(db, room, uid, allow_external=False):
+def _group(db, room, uid, allow_external=False, *, existing=False):
     if room.scope!='group':return  # Public admission independent of linked group.
     group=db.get(Group,room.group_id)
-    if group is None or group.ended_at is not None:fail('GROUP_NOT_ACTIVE')
+    if group is None or group.ended_at is not None:
+        if existing:return  # Exact existing target participation is proven by caller.
+        fail('GROUP_NOT_ACTIVE')
     member=db.scalar(select(GroupMembership).where(GroupMembership.group_id==group.id,
         GroupMembership.user_id==uid,GroupMembership.ended_at.is_(None)))
-    if member is None and not allow_external:fail('GROUP_MEMBERSHIP_REQUIRED',403)
+    if member is None and not (allow_external or existing):fail('GROUP_MEMBERSHIP_REQUIRED',403)
     owner=db.get(GroupMembership,group.leader_membership_id)
     if owner is None or owner.ended_at is not None:fail('SERVICE_UNAVAILABLE',503)
     count=db.scalar(select(func.count()).select_from(GroupMembership).where(

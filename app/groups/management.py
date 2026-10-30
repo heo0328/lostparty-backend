@@ -105,20 +105,10 @@ def leave(principal, gid, key, command: LeaveGroup):
             fail('GROUP_LEADER_TRANSFER_REQUIRED')
         _cas(group, membership, command)
         current = now(db)
-        membership.ended_at = current
-        membership.revision += 1
+        from app.groups.extended_management import end_membership
+        end_membership(db, group, membership, current)
         group.revision += 1
         group.members_revision += 1
-        pending = db.scalars(select(GroupJoinRelation).where(
-            GroupJoinRelation.group_id == gid,
-            GroupJoinRelation.issuer_membership_id == membership.id,
-            GroupJoinRelation.kind == 'invitation', GroupJoinRelation.state == 'pending'))
-        for relation in pending:
-            expired = current >= relation.expires_at
-            admission_core.finish(relation, 'expired' if expired else 'cancelled',
-                                  relation.expires_at if expired else current)
-            admissions.touch(db.get(GroupJoinSubject, relation.subject_id), current)
-        limits.record_group_membership_change(db, uid)
         groups.advance_directory(db)
         return 200, dict(group_id=gid, membership_id=membership.id,
             membership_revision=membership.revision, ended_at=current), None

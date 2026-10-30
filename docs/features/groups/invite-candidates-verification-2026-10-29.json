@@ -1,0 +1,83 @@
+{
+  "date": "2026-10-29",
+  "branch": "feat/group-management",
+  "development_rollout": false,
+  "migration": false,
+  "live_read_only_audit": {
+    "revision": [
+      "0034_group_features"
+    ],
+    "counts": {
+      "eligible_characters": 31,
+      "summary_power_null": 30,
+      "summary_null_without_current_role_success": 15,
+      "current_owner_role_heads": 18,
+      "current_generation_role_successes": 18,
+      "summary_null_with_current_role_success": 15,
+      "summary_power_present": 1,
+      "other_owner_generation_role_successes": 0,
+      "lifecycle_mismatch_role_successes": 0,
+      "invalid_role_successes": 0
+    },
+    "scope": "READ ONLY aggregate of currently invite-eligible stored characters; no names/IDs or provider calls; not a specific member request replay"
+  },
+  "validation_runs": [
+    {
+      "selection": [
+        "tests/test_group_invite_display.py",
+        "tests/test_group_display.py",
+        "tests/test_group_admissions.py",
+        "tests/test_input_name_resolution.py"
+      ],
+      "passed": 53,
+      "failed": 12,
+      "seconds": 96.92,
+      "reason": "11 new fixture FK violations; one existing test selected arbitrary first UUID instead of intended character"
+    },
+    {
+      "selection": [
+        "tests/test_group_invite_display.py"
+      ],
+      "passed": 10,
+      "failed": 1,
+      "seconds": 34.16,
+      "reason": "Unverified account fixture violated NOT NULL; replaced with valid preview-only registration state"
+    },
+    {
+      "selection": [
+        "tests/test_group_invite_display.py",
+        "tests/test_group_display.py"
+      ],
+      "passed": 19,
+      "failed": 0,
+      "seconds": 60.25,
+      "reason": "Final fixtures preserve constraints; existing assertion identifies canonical character ID"
+    }
+  ],
+  "regression_scope": "46 existing admissions/input-name tests passed in first selection; final 19 cover new 11 and existing display8. Repeated runs not summed; no full repository suite run.",
+  "contracts": {
+    "full_object_equal": true,
+    "legacy": {
+      "paths": 123,
+      "operations": 140
+    },
+    "two_cycle": {
+      "paths": 185,
+      "operations": 206
+    },
+    "changed_paths": [
+      "/v1/groups/{group_id}/invite-candidates"
+    ],
+    "new_schemas": [
+      "DisplayInviteCandidate",
+      "DisplayInviteCandidates"
+    ],
+    "existing_schema_changes": 0
+  },
+  "known_warning": "Existing Starlette AnyIO BlockingPortal deprecation",
+  "limitations": [
+    "Aggregate stored evidence, not replay of a specified member request",
+    "Current development server still sourcecf214d0/DB0034; candidate fix not deployed",
+    "Flutter opt-in consumption and actual invite success/device acceptance unverified"
+  ]
+}

@@ -34,7 +34,7 @@ def prepare(db,uid,rid,key,cid,role,stamp,*,include_session_display=False):
         except GameError as error:reason=error.code
     choices=schedule.choices(db,row,stamp)
     if any(c['required'] and not c['permission']['allowed'] for c in choices):reason=reason or 'RECRUITMENT_CLOSED'
-    hidden=[room.revision,room.scope,life.selection_context.group_stamp(db,room.group_id),cm.id,cm.revision,
+    hidden=[room.revision,room.scope,life.selection_context.group_stamp(db,room.group_id,retained=True),cm.id,cm.revision,
         [[a.id,a.revision,a.character_id,a.selected_role,a.party_no,a.slot_no] for a in owned],
         row.settings_snapshot,selection,targets,power['power_revision'],choices,evaluation['evidence']]
     metadata=display.existing(db,uid,row,stamp,"character",choices) if include_session_display else None

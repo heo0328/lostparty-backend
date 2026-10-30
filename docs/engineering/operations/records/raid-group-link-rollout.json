@@ -1,0 +1,168 @@
+{
+  "source_commit": "2602e4595a868eebdf12b04e1fd51502142069b3",
+  "implementation_contract_commit": "6dac5ab2cc67e197979e7188a9c97ce2c27fb548",
+  "image": "sha256:5bd8dde6eba275bdad448315aee67d554ef4cb60d35e3702795f97bb761f9cf3",
+  "previous_image": "sha256:507cd78abc93e2e6b0c3f2c26730d6c207810ce31fc8db179b8bdfc483441755",
+  "applied_at": "2026-10-29T17:03:20.460965375Z",
+  "database_revision": "0034_group_features",
+  "migration_executed": false,
+  "existing_application_tables": 114,
+  "existing_rows": 2015,
+  "all_rows_columns_timestamps_and_sequences_unchanged": true,
+  "db_container_image_volume_environment_preserved": true,
+  "api_environment_command_security_ports_logging_key_mount_preserved": true,
+  "keys_and_environment_file_preserved": true,
+  "source_files_equal": 274,
+  "runtime_packages": 31,
+  "full_openapi_equal": true,
+  "base_openapi": {
+    "paths": 123,
+    "operations": 140
+  },
+  "current_openapi": {
+    "paths": 185,
+    "operations": 206
+  },
+  "read_only_service_results": {
+    "database_revision": "0034_group_features",
+    "ready": true,
+    "valid_session_users": 2,
+    "checks": {
+      "default_search": 3,
+      "group_label_search": 3,
+      "authorized_room_link_occurrences": 33,
+      "group_label_occurrences": 7,
+      "membership_labels": 2,
+      "membership_action_labels": 2,
+      "own_application_labels": 2,
+      "linked_detail": 4,
+      "detail_profile_badges": 8,
+      "first_connection_context": 3,
+      "first_connection_context_denied": 3
+    },
+    "expected_access_denials": {
+      "first_connection_context:ROOM_NOT_ACTIVE": 3
+    },
+    "read_only_sql": {
+      "SET": 61,
+      "SELECT": 5880
+    },
+    "provider_calls": 0,
+    "scope": "Deployed services with existing valid sessions/current rights and public search. No authenticated member HTTP token issuance, first-link write or device acceptance."
+  },
+  "focused_context_results": {
+    "database_revision": "0034_group_features",
+    "ready": true,
+    "valid_session_users": 2,
+    "checks": {
+      "first_connection_context": 3,
+      "first_connection_context_denied": 3
+    },
+    "expected_access_denials": {
+      "first_connection_context:ROOM_NOT_ACTIVE": 3,
+      "permission:COMMON_AUTHORITY_UNAVAILABLE": 2,
+      "permission:COMMON_LEADER_REQUIRED": 1
+    },
+    "read_only_sql": {
+      "SET": 13,
+      "SELECT": 839
+    },
+    "provider_calls": 0,
+    "scope": "Deployed services with existing valid sessions/current rights and public search. No authenticated member HTTP token issuance, first-link write or device acceptance."
+  },
+  "actual_http": [
+    {
+      "case": "health",
+      "status": 200
+    },
+    {
+      "case": "public_cycle",
+      "status": 200
+    },
+    {
+      "case": "public_group_names_get",
+      "status": 200
+    },
+    {
+      "case": "public_group_names_post",
+      "status": 200
+    },
+    {
+      "case": "membership_labels_missing",
+      "status": 401,
+      "error": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "application_labels_missing",
+      "status": 401,
+      "error": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "first_connection_context_missing",
+      "status": 401,
+      "error": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "common_settings_missing",
+      "status": 401,
+      "error": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "membership_labels_invalid",
+      "status": 401,
+      "error": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "application_labels_invalid",
+      "status": 401,
+      "error": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "first_connection_context_invalid",
+      "status": 401,
+      "error": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    },
+    {
+      "case": "common_settings_invalid",
+      "status": 401,
+      "error": "ACCESS_INVALID",
+      "no_store": true,
+      "bearer": true
+    }
+  ],
+  "logs": {
+    "json_lines": 44,
+    "periodic_jobs_success": {
+      "ownership_settlement": 8,
+      "recruitment": 7,
+      "auth_cleanup": 1
+    },
+    "error_count": 0,
+    "failed_items": 0
+  },
+  "health": {
+    "api": "healthy",
+    "db": "healthy"
+  },
+  "temporary_reader_removed": true,
+  "limitations": [
+    "Actual first-connection review returned COMMON_AUTHORITY_UNAVAILABLE/COMMON_LEADER_REQUIRED or ROOM_NOT_ACTIVE for available existing samples. No allowed live first-connection context or first-link write was asserted.",
+    "Service reads use existing valid sessions, not minted authenticated member HTTP tokens. No state-changing member commands or device acceptance.",
+    "Room/group observation counts repeat across pages/profiles; not unique members or rooms.",
+    "Existing isolated tests reused; no full suite rerun, migration, import, deletion, merge or production deployment."
+  ]
+}

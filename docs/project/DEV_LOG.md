@@ -1,5 +1,13 @@
 # 영구 개발 이력
 
+## 2026-10-28 — main/dev 정렬·그룹 작업 브랜치 준비
+
+- 사용자 지시로 원격 fetch 후 clean·단일 worktree 및 로컬/원격 main/dev 일치를 확인했다. main18830c2는 dev1b6f57b의 조상이며 dev 측 6커밋만 미반영이었다.
+- main을 dev1b6f57b로 fast-forward하고 원격 main push를 완료했다. 이력 재작성 없이 양 기준을 같은 커밋으로 맞추고 해당 지점에서 `feat/group-management`를 생성·checkout했다. 그룹 준비 문서 변경은 이 목적 브랜치에서 이어간다.
+- 기본 Git HTTPS push는 인증 helper 부재로 실패했으나 기존 GitHub CLI 인증 유효성을 확인하고 해당 명령에만 CLI helper를 지정해 재시도·성공했다. 인증정보를 파일에 추가하거나 출력하지 않았다.
+- 미완료 활동 선택89a3248의 로컬 문서 3커밋은 통합/삭제하지 않았다. 사용자는 Native 확인 후 활동 자동추가·명시제외 개발 구간을 별도로 정하기로 했다.
+- 검증은 Git 포함 관계·원격 SHA/동일 tree·문서 diff 확인이다. 그룹 계약/코드 변경이나 새로운 자동/서버/기기 시험은 없으며 서버·DB·배포·자료 변경도 없다. 다음 Backend는 그룹 Issue #12/#16 최신 본문/댓글·계약/구현 대조와 범위 확인이다. 이번 준비에서 Issue 조회/게시·종료는 하지 않았다.
+
 ## 2026-10-27 — 재신청 후속 브랜치 분기·182 갱신 확인·설계
 
 - 사용자지시로최신origin/dev18830c2에서fix/raid-recruitment-reapplication을분기·checkout했다. origin/dev자동상류연결은해제해잘못된기준브랜치push를막고후속게시때동일이름원격에연결한다. main/dev·활동미완료브랜치는유지했다.
@@ -2867,3 +2875,175 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - PR head가 dev의 조상이고 전체 파일 트리가 같음을 확인했다. c1f86d8 이후 app/alembic/OpenAPI/tests/scripts/의존성/Dockerfile 동일성이 확인돼 기존 직접20·개발 실행 검증을 재사용했다. 문서만 수정하므로 전체 회귀·서버/DB 재시작·기존 회원 명령을 반복하지 않았다.
 - 현재 경로 checkout dev, 단일 worktree·깨끗한 작업 트리·수정 브랜치 정확 원격eb8c409 및dev 포함 확인 후 `fix/raid-recruitment-reapplication`을 로컬 `branch -d`·원격 지정 삭제했다. 미완료 `feat/activity-selection`89a3248과 main/dev는 보존했다. 공유 이력 재작성/force push 없음.
 - [통합 기록](../features/recruitment/reapplication-integration-2026-10-27.md)·NEXT_WORK/AI_CONTEXT/추적표에 실제 결과를 기록해 후행 마감 commit/push한다. Issue13은 사용자 승인 completed 유지·차후 보완은 현재 착수하지 않는다. 실제 API sourcec1f86d8/이미지581a1a5e·DB0033·키/환경/자료는 변경하지 않았으며 main 갱신/AWS/다른 이슈 종료는 이번 범위 밖이다.
+
+## 2026-10-28 — 그룹 Native 결정·1차 개발 요청 수신 확인
+
+- 공식 #12/#16 본문과 전체댓글을 조회했다(#12=19개/#16=9개). #12 전체18/#16 전체7의 계약확인 전용 단계는 최신 #12 전체19 Flutter([G-DISPLAY](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6464116834))/#16 전체9 Flutter([관리1차](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464117245))의 명세·개발·검증·인계 요청으로 대체됐다. 본문 상단의 과거 담당/준비대기만으로 현 상태를 판단하지 않았다.
+- #16 전체8 Flutter([사용자 설명 정정](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6463878563))의 그룹정원초과 정지와 그룹소멸시 기존레이드 보존을 구분한다. 정상해산 활성방검사를 제거하지 않으며 단순그룹탈퇴/추방은 기존레이드 자동탈퇴가 아니다. 기본15/5·소속배지·기존참가/전환전신청 보존·공대장권한분리 유지.
+- 표시/활동/배지 조회와 조건부해산/추방/대표변경·그룹장제한방관리·소멸후보존을 NEXT_WORK/추적표/기능지도에 수신기록했다. 자격상실 유효후임선정/후임없음복구만 미결정으로 분리하며 기존 G1/G2·이전/탈퇴를 재개발하지 않는다.
+- 다음 Backend는 제공된 원격설계 f04f482e(이번엔원문별도미조회)·현행source/OpenAPI 대조와 각 Issue 계약제안이다. 이번 구간은 수신 확인·로컬 문서 기록이며 구현/자동시험·서버/DB·실회원/기기·배포·자료변경 및 Issue회신/상태변경은 없다. 같은 준비 구간에 누적하며 문서 확인만으로 별도 commit/push하지 않는다.
+
+## 2026-10-28 — 그룹 1차 기획·API 계약 제안 구간
+
+- 사용자가 승인한 계획은 설계 문서·Issue 제안까지다. feat/group-management/준비ea52e56에서 수신 로컬기록을 보존·통합하고 현재source/OpenAPI·Native 고정f04f482e 설계39/제품그룹정책·모집37을 대조했다. 공식 #12본문/전체19개·#16본문/전체9개 댓글을 재조회했다.
+- 표시/활동/subject/배지/활동시각과 관리/해산/추방/대표/제한방관리·그룹소멸후보존을 두 제안 문서로 구체화했다. 기존strict DTO는 opt-in reader/management profile로 보존하고 현재계약원본에는 미제공경로를 추가하지 않았다.
+- 코드상 cycle_lifecycle.qualify의그룹소속검사와 cycle_common의참가actor/공대장결합을 확인해 신규참가/기존참가·제한그룹장권한을 분리하는 설계다. 해산검사/관리목록의공통원본·unknown의null/거절·인원1인제한·CN세대/원ACK/rollback을 명시했다. 다인방강제종료는 미승인 차이로 분리한다.
+- 사용자 선택은 모든인증소유권상실의그룹자격상실판정 미정분리다. disabled/대표/소유상실·유효후임/후임없음복구만 별도 질문하고 다른독립기능을 막지 않는다.
+- 이번은 문서/소스대조·JSON예시/링크/diff 검증이다. 신규 기능시험·두런타임계약실행·서버/DB/migration·실회원/기기·배포·자료삭제는 실행하지 않는다. 아래에 commit/push·제안게시 링크/실제댓글순번을 마감기록한다.
+
+- 설계 검증 통과: check_documentation.py(240Markdown/상대링크·앵커2488/보존원문128/고정JSON20/기존API199분류), 신규JSON예시4개 파싱·git diff --check. 신규2문서를 포함한 문서변경만 존재하며 app/alembic/openapi/tests HEAD대비 동일이다. 원격fetch후그룹HEAD/원격ea52e56일치·main/dev1b6f57b동일을확인했다.
+
+- 설계 구간92c1702f84720ce76789f100bf0acdb1efd29c82를 feat/group-management에 commit/push·원격일치확인했다. [#12 전체20번째 Backend · 표시조회계약제안](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6464713065), [#16 전체10번째 Backend · 관리/레이드계약제안](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464713503) 게시후전체순번·작성측·본문확인, 기존본문보존하며상단현재범위/설계상태/다음담당을갱신했다. 양Issue OPEN이며새Issue/종료없음. 같은구간후행게시기록을묶어보존한다.
+- 다음Flutter는표시소비차이·그룹장1인해산제한범위를대조하고 Backend는명세보완/다음구현구간준비다. 자격상실복구질문은별도이며독립기능전체대기아니다. 테스트요청/서버반영/배포/merge없음; main/dev1b6f57b·현재개발실행기록유지.
+
+## 2026-10-28 — Native 검토·사용자확정 레이드권한 정정 수신
+
+- 공식 #12본문/전체21댓글·#16본문/전체12댓글 재조회. [#12 전체21 Flutter](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6464852611)는 opt-in/현재membership·역할분리/null·과거subject금지·배지합집합/활동시각 방향에 현재제품차단없음, 보석snapshot/labels동등지원은DTO인계때대조·독립구현차단아님을 회신했다. Penpot/7eeca229은Native자체보고·사용자검토전이다.
+- #16 전체11 Flutter의1인/다인해산질문대기는 [전체12 Flutter 사용자확정](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464943488)으로대체됐다. 그룹원누구나현재조건으로개설·해당레이드공대장관리이며 그룹장이전은레이드권한을바꾸지않는다. 이전요청/초안의그룹장전용context/make-public/end·GroupRoomDTO/토큰·시험을같은문서에서제외/교체했다. 초기92c1702/댓글은이력보존하며현재개발범위아니다.
+- 그룹해산활성방검사/공통목록·실제T공대장안내/각공대장기존상세정리·추방/대표/기존참가보존·정원/공개왕복/배지는유지한다. 복구승계만미결정이며독립구현전체대기아니다. 수신/정정문서작업만수행·기능구현/DDL/실행OpenAPI/서버·DB/실회원/기기/배포/자료변경·Issue종료없음. 결과는같은#16에회신한다.
+
+- 정정cb9b6b9cbbf770a744d01be6294f0c028031de38 commit/push·원격일치후 [#16 전체13번째 Backend · 설계정정](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6465101118) 회신·전체순번/본문확인, 과거본문보존하며상단갱신. 문서/상대링크2490·JSON예시/삭제경로/diff검사PASS·기능코드/계약미변경. 후행회신링크를같은목적브랜치에묶어보존한다.
+
+## 2026-10-28 — 그룹 핵심목적·구현 인계 우선순위 회신 수신
+
+- #12본문/전체22댓글·#16본문/전체13댓글을조회했다. 신규는 [#12 전체22 Flutter · 핵심목적/우선순위](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6465156288)이며 #16새댓글없음. 초대/가입→활동캐릭터확인→기존모집필터→상세/참가/신청을우선하고관리/복구전체대기는두지않는다. 기존확정관리/필수권한/동시성검증폐기는아니다.
+- 같은표시설계에membership/canonical UUID→모집filter context/후보alias·member_ref연결·검색token과일반열람구분·membership변경후표시/모집context동시무효화/지연응답회복을명시했다. 별도조합자동화/대리참가/공개범위정책없음. 보석snapshot/labels는실제DTO대조이며반복질문/시험요청없다.
+- 이번은수신·설계연결보완/회신이며기능코드/DDL/실행OpenAPI/서버·DB/기기·배포미변경이다. 다음Backend 핵심확정범위구현준비, Flutter실제DTO소비대조이며현재설계승인범위유지다.
+
+- [#12 전체23번째 Backend · 설계연결/우선순위](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6465215418) 회신후실제순번/본문확인. source/계약미변경·문서검사2491링크/diff통과, 설계/회신기록은같은브랜치에보존한다.
+
+## 2026-10-28 — 그룹 핵심 흐름 구현·격리검증
+
+- 사용자가핵심/관리까지Backend구현·격리검증·계약게시를승인했다. DB0023호환을위해0034의두확장표/업무쓰기트랜잭션활동trigger를추가·기존행불변을제한LOGIN격리migration에서검증했다. 표시프로필4조회·활동/집계3조회·역할별last-success/현재오류/null·안전한subject참조·readonly/context연결을구현했다. schema허용목록은0034만명시추가했다.
+- 새표시초회6PASS/1FAIL(모의다수로그인의한도간섭)후해당시험에서모의로그인한도만초기화했다. 이어선택70개는68PASS/2FAIL(구계약COPY/방소유자관찰의본인검색제외정책충돌)이며 고정계약갱신·비참가제3그룹원관찰로구성을고쳐실패2건만2PASS/15.61초했다. 신규표시/연결8개포함·중복수합산없음.
+- 두후보OpenAPI객체전체일치PASS(기본119/136·현재181/202). 그룹GET4프로필/신규3조회·DTO/schema정보외기존쓰기/과거ACK보존. 문서/JSON/diff통과·기존AnyIO경고1. 개발서버/DB/migration적용·실회원/기기·배포/merge·자료변경없다.
+- 같은브랜치관리후속코드는아직미검증로컬진행중이며핵심게시와분리한다. 다음핵심구간commit/push·원격확인→#12인계후조건부해산/추방/대표변경·방안내/기존참가보존을검증한다.
+
+## 2026-10-28 — 그룹 관리·실제T 레이드 보존 구현/검증
+
+- 핵심d075def를push/원격확인후 [#12 전체24 Backend · 핵심구현인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6465656746)에실제DTO/두계약/검증·개발미반영을구분해게시했다. 이후승인된같은브랜치후속구현을이어갔다.
+- 관리profile·해산/추방/대표변경·공통방목록/동일원본차단검사를구현했다. 원ACK/재가입/롤백·사용량/코드/활동시각원자성, 그룹원개설/실제T공대장관리·그룹장전용명령없음, 기본관리shape보존이다. 일반탈퇴/추방cleanup은공유한다.
+- `_group` 신규가입검사와 실제T참가qualify를분리하고room연결stamp·공통설정권한에서그룹상실만으로기존진행을막지않게했다. 새T참가는현재그룹소속검사를유지하며독립활동/소유/회원/정원제한을보존한다. 그룹종료배지는false·기존권한의detail/plan에서include_group_state=true만보존이름/식별자를추가한다. 코드가입subject표시변경도참조와일치시켰다.
+- 신규관리초기7PASS, 생명주기시험보조함수date=str 오류2건은date변환으로수정했다. 별도선택의재신청/실제T관리41PASS, 확장생명주기/DB오류6PASS를확인했다. 최종같은소스의관리/생명주기/G3/G2선택86PASS/194.41초(신규관리10/생명주기5포함)·0034 API/worker readiness통과. 최종직접·회귀시험목록의중복제거수는수집결과152개이며반복실행은합산하지않는다.
+- 최종두계약전체객체일치PASS: 기본123/140·two-cycle185/206. 이전component schema 값변경/삭제0·새DTO/명시프로필/query·신규7경로만추가했다. 문서/JSON/의존성/diff·호스트12시험PASS. 기존AnyIO경고1개는남는다. 실제개발서버/DB반영·실회원/기기·merge/배포·자료삭제/새환경·복원리허설은없음. 최종원본검토의gen-review/round링크보강은해당경계만추가확인한다.
+
+- 최종gen-review/실제item-round원본보강후해당두경계만2PASS/38.45초. 최종검증노드152개는구현체크포인트별선택의합집합이며동일HEAD일괄재실행아니다. 실행별집계/미실행과노드는그룹verification-2026-10-28.json에기록했다. 후보계약/형태는불변이며추가서버/DB시험없음.
+
+- 관리/전체계약22b1620747707afaa87ba84223e5a2beb886f658 commit/push·원격일치확인후 [#12 전체25 Backend · 최종핵심계약](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6466328231)/[#16 전체14 Backend · 관리/레이드구현인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6466327755) 게시·실제순번/본문재조회. 현재구현/격리/게시완료와개발미반영/Native소비·기기미완료를분리해양Issue상단에반영·원문보존/OPEN유지다. 다음Flutter DTO차이대조·Backend대응, 개발반영은별도지시구간이다. main/dev1b6f57b·활동선택89a3248보존·merge/배포없음. 후행문서마감도같은브랜치에보존한다.
+
+
+## 2026-10-29 — Native #12/#16 최신 회신 확인·개발반영 준비
+
+- 공식 본문과 최신 댓글을 조회했다. [#12 전체26번째 Flutter · 소비대조](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6488471404)는 현재 analysis/issues로 보석/아크그리드 매핑 가능, 구 snapshot/count 복원·추가API 불필요 및 핵심 흐름의 새 차단 없음이다. 실제 어댑터/기기 통과는 별도다.
+- [#16 전체15번째 Flutter · 반영준비 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6488471756)에 따라 기존 구현기록에 기존 개발환경 대상·전체소스/0034/two-cycle/주간/worker 조합·실행전 확인/중지/DDL/시작/보존/실행인계·실패시 전진수정 경계를 추가했다. 과거 Firebase 구조 복제를 요구하지 않으며 임의 공통코드 제거도 하지 않는다.
+- 이번은 문서 준비다. 실제 컨테이너/DB 재조회·migration·서버변경·전체격리시험·새환경/import·실회원 쓰기·merge/운영배포·자료삭제/Issue종료는 없다. 다음은 별도 지시된 Backend 개발반영, Flutter 어댑터 연결/반영후 인수다. 승인된 요청 결과는 같은 #16에 회신한다.
+
+
+## 2026-10-29 — 그룹 기존 개발환경 반영·실행검증
+
+- 사용자 승인으로 기존 개발환경을 sourcecf214d0/이미지eecda79d·DB0034로 반영했다. Docker Desktop 중지상태를 시작하고기존c1f86d8/581a1a5e·0033확인→후보계약/소스/의존성→API/worker중지→0034→같은설정후보API시작순서다. 기존이미지실행Python3.12.16과환경표시3.12.15불일치는기존runtime재사용/환경전체보존으로처리했고업무소스/계약변경없음.
+- 중지구간112업무표1,857행/열/기록시각·sequence동일/신규2표0행, DB컨테이너·볼륨/키/.env/API환경·명령·보안·포트유지. FK/권한/활동trigger7/0034readiness통과. 실제이미지272소스·runtime31·기본123/140·현재185/206계약전체일치PASS.
+- 실제HTTP26PASS(공개2/보호경로missing·invalid401 24),유효세션2명의READONLY계정/집계/주간/모집5항목상세·계획/group_state확인·provider0. 현재가입그룹없어멤버/활동/관리등실자료성공조회미확인·임의실회원쓰기없음. 보조코드httpx미설치/health헤더가정은보조만수정. 최종관찰603JSON로그/ERROR0·ownership210/recruitment200/auth35모두성공/failed_items0. [공개집계](../engineering/operations/records/group-features-rollout.json)·구현기록에상세보존.
+- 사용한도로인계전중단후재개시실행상태/저장된검증을확인해DDL/교체미반복·임시reader제거. #12전체27/#16전체17 Flutter연결2691PASS·직접12포함자체보고수신/추가API요청없음. 실제기기/Penpot미확인·Backend시험과합산없음. 다음Native/사용자실제인수·Backend차이대응. main/dev병합·운영배포·초기화/삭제없음.
+
+- 실행기록9e37868cb1096d013a6ae405ae16170511d92a8a commit/push·원격일치확인후 [#12 전체28번째 Backend · 핵심 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6489008365)·[#16 전체18번째 Backend · 관리 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6489008735) 게시·실제순번/단계명확인. 양Issue 상단은실행sourcecf214d0/DB0034·Native다음인수·미확인으로갱신하고과거본문보존/OPEN유지다. 후행인계링크도같은목적브랜치에보존한다.
+
+
+## 2026-10-29 — 초대 후보 대소문자·저장 역할전투력 보완
+
+- #12전체29/30을확인하고사용자승인계획에따라 [전체31 Backend 계약제안](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496315881)을먼저게시했다. 실제ASCII입력해석은기존provider/등록/소유/분쟁에서이미canonical처리하며검색변경은후보1경로다. 이름/UUID/claim·증거비교는유지한다.
+- 기존후보DTO/summary단일전투력은유지하고명시group-display-1에서기존CharacterSpec의역할성공/현재분석/출처/시각/null을재사용했다. caller권한과공통자료표시를분리해초대에활동선택조건을추가하지않았고일반활동은현재조건보존이다.0034gate·READONLY·일괄저장조회/provider없음·migration없음이다.
+- 실제READONLY집계적격31·summarynull30(역할성공존재15/없음15)·head/성공18·다른소유/생명주기/잘못된성공0. 코드경로차이근거이며특정회원null원인확정은아니다. 원본이름/ID공개없음.
+- 초회65선택53PASS/12FAIL(신규11fixture이름FK·기존1UUID순서가정)→fixture/의도한ID선택정정. 신규10PASS/1FAIL은모의verified_at=null NOTNULL위반으로허용preview등록상태로정정했다. 최종신규11+공통표시8=19PASS/60.25초·초회기존초대/이름해석46PASS. 두전체계약일치·1경로/새2DTO/기존schema값변경0·문서/lock/diff검사통과. 반복합산없음·AnyIO기존경고1. 상세는 [실행집계](../features/groups/invite-candidates-verification-2026-10-29.json).
+- 개발실행cf214d0/eecda79d·0034는미교체·DB/자료쓰기없음. 다음고정DTO소비차이대응·별도개발반영/기기인수다. 같은브랜치검증구간commit/push후원격확인·#12인계하며main/dev·운영배포·Issue종료는없다.
+
+- 후보구간c38144528c42eda7fcf2912fa412d3a005fc68e7 commit/push·원격일치확인후 [#12 전체32번째 Backend · 후보검색/역할전투력 구현인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496536145) 게시·전체순번/단계확인, 본문상단에후속구현완료/개발미반영·Native다음소비차이대조를반영하고과거본문/OPEN보존. 후행인계기록도같은목적브랜치에보존한다.
+
+
+## 2026-10-29 — 초대 후보 검색/전투력 보완 개발서버 반영
+
+- 사용자승인에따라기존cf214d0/eecda79d에서source5d24244bb29bc3870a4dc6dfd47decf56f194bd2·이미지507cd78abc93e2e6b0c3f2c26730d6c207810ce31fc8db179b8bdfc483441755로API/내부worker교체. DB0034유지·migration없음·114업무표1,833행/열/시각·sequence동일/키·설정·DB컨테이너/볼륨보존·임시reader제거다.
+- 후보/실행272소스/runtime31/두전체OpenAPI일치(123/140·185/206). 유효세션2명의현재그룹권한에서ASCII대상3이름·변형18요청동등/역할profile검증,표시18관측중legacy null/역할값존재6관측. READONLY SELECT361/SET49/provider0이며고유캐릭터수나정상회원HTTP/명령인수가아니다.
+- 실제HTTP6PASS(공개2/보호4014), API/DB healthy·관찰39JSON로그/ERROR0·ownership10/recruitment9/auth1모두success/failed_items0. [실행집계](../engineering/operations/records/invite-candidates-rollout.json). 기존격리검증재사용·전체반복없음. 다음Native/사용자검색/profile·정상초대전송/수락기기인수·Backend차이대응이며main/dev병합·운영배포·자료삭제없음.
+
+- 반영기록0f5561015820708bab926b57b80aaf267b9b27f7 commit/push·원격일치확인후 [#12 전체33번째 Backend · 후보검색/역할표시 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6496785817) 게시·전체순번/작성측/단계명확인. 본문상단을실행source5d24244/507cd78a·0034·Native실제검색/profile/초대수락인수대기로갱신/과거본문·OPEN유지. 후행링크기록은동일목적브랜치에보존한다.
+
+
+## 2026-10-30 — 최초 그룹 연결・목록 그룹명/소속 표시 구현·격리검증
+
+- #16전체22/#12전체35·36의사용자승인계획으로같은브랜치에서진행했다. [#12 전체37 구현전표시제안](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6502475245)·[#16 전체23 연결제안](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6502474634)게시·실제순번확인. 내신청origin/이력content에는현재group_id가없어옵션응답root.room_groups도제공하도록동일제안보완했다. 새권한/개별조회는없다.
+- common-context 선택target_group_id/root.target_group과기존common-settings의최초null→그룹+group scope원자변경을구현했다. G1/C/N/토큰/CAS·대상membership/그룹장/한도·최종검증/원ACK/rollback·기존원장보존을검증했다. 새명령endpoint/body필수필드/DBmigration없음. 기존A→B/해제불가·같은A public왕복유지.
+- 목록4경로root.group_states/room_groups·기존DTO·프로필/cursor/read-only를구현했다. 상세12조합의같은대상group_member일치로Backend누락미재현·기존배지코드미변경, data.members와membership-actions content.data.members의합성예시인계다.
+- 초회직접9PASS/3FAIL은기존한도행중복/두번째그룹구usage CAS의시험준비오류로정정했다. 기본한도row없음의코드근거처리도추가검증했다. 최종신규15+기존생명주기5/공통관리27=47PASS/600.06초, 추가경계4PASS/56.03초·토큰모델enum정정1PASS/15.86초. 선택합집합49/반복합산없음·전체repo/동일HEAD일괄아님. AnyIO기존경고유지.
+- 두전체OpenAPI일치(123/140·185/206)·기본불변/기존schema값변경0/새11schema·5조회경로·문서/JSON/compile/diff/lock통과. [계약](../features/groups/raid-link-contract.md)·[정규화예시](../features/groups/raid-link-examples.json)·[검증집계](../features/groups/raid-link-verification-2026-10-30.json). 격리프로젝트정리·실제개발API/DB조회/교체·자료쓰기/삭제·merge/운영배포없음이다.
+- Native기존그룹잔여기기통과(#12전체36/#16전체21)수용/반복정상시험요청없음. Flutter9d1baa39 생성UI기본값수정/29PASS는자체보고·Backend합산없음. 다음고정context/DTO소비/Native진입배지차이대응·실제개발반영/새기기인수별도다. source/push/공식결과링크는아래마감한다.
+
+- 구현/고정계약6dac5ab2cc67e197979e7188a9c97ce2c27fb548 commit/push·원격일치확인후 [#12 전체38번째 Backend · 목록/소속표시 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6503052363)·[#16 전체24번째 Backend · 최초연결 명령 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6503052848) 게시·실제순번/작성측/단계명확인. 양본문상단은기존기기통과/새후속구현완료·개발미반영·다음Native소비를구분해갱신/과거본문·OPEN보존이다. 후행인계기록은같은목적브랜치에보존한다.
+
+
+## 2026-10-30 — 최초 그룹 연결/목록 표시 개발서버 반영
+
+- 사용자반영지시로실제source2602e4595a868eebdf12b04e1fd51502142069b3/이미지5bd8dde6eba275bdad448315aee67d554ef4cb60d35e3702795f97bb761f9cf3·DB0034유지로API/내부worker교체. 기존114업무표2,015행/열/기록시각·sequence·키/설정·DB컨테이너/볼륨일치, migration없음·임시reader제거다.
+- 후보/실행274소스·runtime31·두전체계약123/140·185/206일치. 실제유효세션2명/공개검색·참가/신청목록그룹표시대조(연결33/그룹7반복관측)·연결상세4/프로필8동일배지·READONLY SELECT5880/SET61/provider0. 최초연결context정상응답3은G1거절(공통권한없음2/다른공대장1),별도3ROOM_NOT_ACTIVE. 진단추가SELECT839/SET13/provider0·허용실자료context/write는미확인이다.
+- 실제HTTP12PASS(공개4/보호4018),API/DB healthy·관찰44JSON로그/ERROR0·ownership8/recruitment7/auth1모두성공/failed_items0. [실행집계](../engineering/operations/records/raid-group-link-rollout.json). 기존격리검증재사용/전체반복없음. 다음Flutter계약/UI연결·사용자새경계기기인수·Backend차이대응. 기존정상그룹기기통과유지·merge/운영배포·자료변경/삭제없음.
+
+
+반영 기록 `ad095c30e32e41d9ac90a4a34e50ba87dc062a9c` commit/push·원격 일치 후 [#12 전체39번째 Backend · 표시 기능 서버 반영](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6503318325)·[#16 전체25번째 Backend · 최초 연결 서버 반영](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6503318794)를 게시하고 실제 전체 순번·작성 측·단계를 확인했다. 양 Issue 본문 상단은 개발반영 완료/Flutter 신규 계약 연결·새 경계 기기 인수 대기로 갱신했으며 OPEN을 유지한다. 실제 실행은 source2602e45/이미지5bd8dde6·DB0034이며 후행 기록 커밋은 실행 소스를 바꾸지 않는다.
+
+
+## 2026-10-30 — 현재 작업 현황 최신화·다음 작업에 문서 수정 누적
+
+- 사용자 지시로 이번 문서 수정은 커밋·푸시하지 않고 `feat/group-management`의 다음 관련 작업과 함께 반영한다. 기존 게시 기록 `603fe2d`와 실제 실행 source2602e45/이미지5bd8dde6·DB0034를 구분하며 과거 커밋은 재작성하지 않는다.
+- #12·#16 댓글을 읽기 전용으로 재확인했다. 최신은 전체39번째/전체25번째 Backend 서버 반영 인계이며 이후 네이티브 회신은 없었다. 변화 없는 댓글·Issue 본문 수정은 하지 않았다.
+- NEXT_WORK는 현재 실행/게시/로컬 상태와 다음 담당·착수 입력·완료 조건 중심으로 정리했다. AI_CONTEXT의 초대 검색/profile 인수 대기 잔여 문구는 이미 수용한 기존 기기 통과와 맞추고, 계약 끝의 개발미반영 표현을 개발반영 완료와 일치시켰다. 추적표에 최신 인계 링크·실서버 최초연결 성공 미확인을 연결했다.
+- Backend 구현·격리검증·개발반영·계약 인계는 완료, 새 Flutter 계약 연결/변경 경계 기기 인수는 미확인이다. 이번에는 문서 검사만 수행하며 서버·DB·업무자료 변경 또는 자동/실서버 시험 반복은 하지 않는다.
+
+
+## 2026-10-30 — Native 신규 계약 연결 완료 보고 수신
+
+[#12 전체40번째 Flutter · 목록/소속 표시 소비 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6503895589)·[#16 전체26번째 Flutter · 최초 연결 소비 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6503895060) 확인. Flutter는 feature/group-backend-integration의5f024e536fbf4963a77903f7763b7ca460939a34 commit/push·local/origin 일치와 최초 연결/목록/배지 소비 구현을 보고했다. 전체2707PASS(직접43포함)·analyze 오류/경고0/기존info3는 Flutter 자체 보고이며 Backend 결과에 합산하지 않는다.
+
+기존 Backend 인계 대비 Flutter 연결 대기는 해소됐으나 새 기기 인수/실서버 최초 연결 양성 성공은 미확인이다. 배지 원 증상도 미재현이므로 해결로 확정하지 않는다. 추가API변경/Backend반복검증 요청은 없다. 다음 사용자 변경 경계 기기 확인·Flutter결과대응, Backend구체차이대응이다. Penpot03 시각검수는 Flutter 도구미제공 대기 보고로 별도 유지한다.
+
+NEXT_WORK/AI_CONTEXT/추적표를 갱신했으며 기존 로컬 수정은 보존했다. 사용자 지시에 따라 커밋·푸시하지 않고 다음 관련 작업과 함께 반영한다. 이번에는 읽기 확인·문서 검사만 수행하며 Issue댓글/본문·서버/DB·업무코드를 변경하지 않았다.
+
+
+## 2026-10-30 — Issue29 문서 운영 현황 대조·Backend 회신
+
+- 사용자 지시로 현황 비교 → Backend 회신 → 공통 기준/저장소별 예외 정리 → 필요한 최소 문서 반영 순서를 시작했다. 기존 역할 안내·문서 구성/보존 기준·기능 후속 대장·로컬 상태를 대조했다. Flutter는 Issue 본문의 비교 내용을 근거로 했으며 로컬 경로나 소스를 읽지 않았다.
+- [전체1번째 Backend · 현황 대조·합의 준비](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6516431229)를 게시하고 실제 댓글 순번을 조회했다. Issue 본문은 과거 요구를 보존하며 Backend 회신 완료/Flutter 정리 대기로 갱신했다. OPEN·공통 기준 미확정을 유지한다.
+- 역할 대응표와 공통 후보1~7의 취지에 동의했다. 검증 근거의 조건부 재사용, 구현/게시/실행/연결/기기 인수의 구분, 미착수 대장/공식 Issue 색인/현재 실행 목록의 역할을 보완 제안했다. 공통 원본은 기존 API 협업 문서의 짧은 절과 고정 커밋 교차 참조를 제안했으며 합의된 정책으로 적용하지 않았다.
+- 원격 기준603fe2d 이후 기존 로컬5문서 변경은 그룹 연결 최신 보고 반영이며 새로운 문서 정책 확정이 아님을 설명했다. 실제 문서의 오래된 환경/검증 안내·이력 중복은 별도 최소 정리 대상으로 인정했다. 과거 근거 삭제·브랜치 규칙 통일·베타 자료 삭제 승인으로 확대하지 않는다.
+- 다음 Flutter 수용/차이·최소 변경안 정리, Backend 합의 대조 및 필요한 문구 반영이다. 이번에는 협의 추적만 로컬 기록하고 코드/API/서버/DB·브랜치 전환·commit/push는 하지 않았다. 기존 그룹 작업의 미커밋 변경을 보존하며 이 회신만으로 작업 구간 마감을 선언하지 않는다.
+- 검증: 문서 링크/앵커·원문/동결 자료·API 분류 검사 통과, `git diff --check` 통과. 문서 협의 기록만 변경하여 서버/DB/업무 시험은 실행하지 않았다.
+
+
+## 2026-10-30 — Issue29 공통 문서 운영 합의 반영
+
+- [전체2번째 Flutter · 보완 의견/원본 위치 수용](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6517135733)을 확인했다. 다음 담당 Backend 원본 반영 → Flutter 최소 참조 반영이며 양측 적용 완료/Issue 종료는 별도다.
+- 기존 API 협업 문서에 `shared-document-operation` 절을 반영하고 docs/README·project/README에서 참조했다. 실행/상태/이력·후속 색인, 검증 근거 재사용, 상태·SHA 구분, 저장소별 예외와 후속 공동 변경 절차를 합의대로 명시했다. NEXT_WORK·ISSUE_TRACKER는 현재 대기로 갱신했다.
+- 같은 목적 브랜치 feat/group-management에서 이 문서 반영·검증 구간을 게시한다. 기존 그룹 관련 로컬5문서 변경은 보존하고 공통 협의에 해당하는 변경만 선택한다. 기능 브랜치 조기 통합·전면 문서 이동·코드/API/DB/서버 변경은 없다.
+- 문서 검사·diff 확인 후 고정 커밋/절 링크·원격 게시 근거를 #29에 인계한다. 기능 시험·기기 재인수는 요청하지 않는다.
+
+- 게시 결과: 문서 기준c1fa205db709f97c1d34817c4417b84144a5dde3 / feat/group-management, 공통 원본/참조3파일과 #29 추적3파일만 선택해 commit/push·원격 SHA 일치를 확인했다. 최초 일반 push 인증 연결 부재는 gh credential helper를 해당 명령에만 사용해 해결했다. 기존 그룹 변경5문서는 미커밋 보존했다.
+- 문서 링크/앵커2,521개·원문128건/동결JSON20건 보존·API206분류 검사, 작업트리/선택 변경 diff check 통과. [전체3번째 Backend · 공통 원본 반영/고정 기준 인계](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6517299322)를 게시하고 실제 순번 확인·본문을 Backend 완료/Flutter 참조 반영 대기로 갱신했다. 후행 인계 링크는 로컬 기록이며 다음 관련 구간에 묶는다. Issue OPEN·양측 적용 미완료, 서버/DB/기능 시험 없음.
+
+
+## 2026-10-30 — Issue29 양측 문서 반영 대조 완료
+
+- [전체4번째 Flutter 게시 결과](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6517456235)를 확인했다. GitHub API에서4bdec0e6e71517e5893d29ba48f76397b4ae358e의 실제 문서4파일 diff(13추가/1삭제)와 feature/group-backend-integration 원격 SHA를 직접 대조했다. Flutter 로컬/기능 소스는 읽지 않았다.
+- docs/README·ai_rules의 두 링크가 Backend c1fa205db709f97c1d34817c4417b84144a5dde3/shared-document-operation을 가리키며 원본 복제 없이 자체 분류/보관·후속 변경 절차를 유지한다. Backend 원본 절과 원격 게시도 재확인했다. Flutter 로컬 diff check는 자체 보고이며 Backend 확인은 원격 문서·링크·SHA 대조다.
+- [전체5번째 Backend · 양측 반영 대조 완료](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6520322169)를 게시하고 실제 순번을 확인했다. 문서 협의 완료 조건 충족·추가 수정/시험 요청 없음, 본문 완료 상태·체크리스트를 갱신하며 Issue OPEN/종료 별도를 유지한다. NEXT_WORK의 참조 반영 대기를 해소했다. 기존 그룹 기기/Penpot·별도 기술 개선은 완료로 바꾸지 않는다.
+- 합의 원본c1fa205는 그대로 유지하며 누적 인계·최종 대조·대기 해소 기록만 같은 목적 브랜치의 마감 구간으로 게시한다. 기존 그룹 로컬 변경은 제외·보존한다. 문서 검사와 diff check를 수행하며 코드/API/DB/서버/기기 시험은 실행하지 않는다.
+
+
+## 2026-10-30 — 베타 진단·실행 계획의 다른 탭 인계
+
+사용자가 네이티브 문서 최종 확인 완료를 알리고, 기존 조사 내용을 다른 탭에서 이어갈 수 있게 기록하며 미커밋 변경 없이 모두 commit/push할 것을 요청했다. 이전 같은 날의 그룹 문서 게시 보류 지시는 이번 지시로 해소한다. 당시 보류 이력은 지우지 않고 현재 지시와 구분한다.
+
+- [진단 원본](../engineering/development/pre-beta-diagnosis-2026-10-30.md)에 F01~F10의 확인 사실/추론/미확인·근거·선택지·규모·전환 위험·시점·완료 기준을 보존했다. 기존 조사 결과의 문서화이며 새로운 전체 코드 감사나 구현 완료가 아니다.
+- [실행 계획](backend-improvement-plan.md)에 다섯 단계 분류·권장 순서·Backend 독립/사용자 결정/네이티브 협의 경계와 F01 첫 구현 구간을 기록했다. NEXT_WORK/AI_CONTEXT/project 안내에서 원본으로 연결했다. 잔여 기술 개선은 미착수이며 이번 문서화가 미합의 계약·운영 변경 승인은 아니다.
+- 기존 미커밋5문서의 그룹 연결 보고/기기 대기 정정을 보존해 같은 feat/group-management의 인계 구간에 포함한다. 업무 구현6dac5ab·실행source2602e45/이미지5bd8dde6·DB0034는 바뀌지 않는다. 별도 활동 선택 브랜치·미병합 상태도 유지한다.
+- #29를 재조회했으며 최신은 여전히 [전체5번째 Backend 대조 완료](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6520322169)다. 네이티브 최종 완료는 사용자 보고로 추가 수신했으며 존재하지 않는 새 댓글을 근거로 만들지 않았다. 추가 수정/회신 대기는 없고 Issue 종료는 별도다. 그룹 새 기기 인수 대기는 유지한다.
+- 코드·API·DB·서버·Flutter 로컬 소스·Issue 본문/댓글·브랜치 통합/삭제는 변경하지 않았다. 현재 환경/검증 안내의 F10 잔여 사실 정정도 후보로 보존했으며 이 인계에서 일괄 수정하지 않았다.
+- 인계 검증: `PYTHONDONTWRITEBYTECODE=1 python3 scripts/verify_isolated.py static` 통과(runtime31/test43 잠금·설치 일치 미검사, 문서244개/상대 링크·앵커2540개, 원문128건/동결JSON20건 보존, 도구 unittest12개). Docker 실패/정리 로그는 mock 시험의 의도된 출력이며 실제 Docker/DB를 실행하지 않았다. `git diff --check` 통과. 문서 변경으로 업무 pytest·서버/기기 시험은 반복하지 않았다.

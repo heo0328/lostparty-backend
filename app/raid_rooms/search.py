@@ -44,7 +44,7 @@ def get_context(principal,gids):
 
 def visible(uid):
     return or_(Room.scope=='public',select(Member.id).where(Member.room_id==Room.id,Member.user_id==uid,Member.ended_at.is_(None)).exists(),
-        select(GroupMembership.id).where(GroupMembership.group_id==Room.group_id,GroupMembership.user_id==uid,GroupMembership.ended_at.is_(None)).exists()) if uid else Room.scope=='public'
+        select(GroupMembership.id).join(Group,Group.id==GroupMembership.group_id).where(Group.ended_at.is_(None),GroupMembership.group_id==Room.group_id,GroupMembership.user_id==uid,GroupMembership.ended_at.is_(None)).exists()) if uid else Room.scope=='public'
 
 
 def card(db,room,uid,stamp):

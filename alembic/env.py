@@ -19,6 +19,7 @@ import app.raid_rooms.cycle_outcome_models
 import app.raid_rooms.beta_models
 import app.raid_rooms.membership_action_models
 import app.game_accounts.power_success
+import app.groups.feature_models
 import app.groups.models
 import app.groups.admission_models
 import app.member_limits.models

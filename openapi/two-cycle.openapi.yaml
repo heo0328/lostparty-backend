@@ -7722,6 +7722,23 @@
               ],
               "title": "Cursor"
             }
+          },
+          {
+            "name": "reader_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "const": "group-display-1",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Reader Profile"
+            }
           }
         ],
         "responses": {
@@ -7730,7 +7747,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MyGroupPage"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/DisplayMyGroupPage"
+                    },
+                    {
+                      "$ref": "#/components/schemas/MyGroupPage"
+                    }
+                  ],
+                  "title": "Response My List V1 Me Groups Get"
                 }
               }
             },
@@ -7889,6 +7914,23 @@
               "format": "uuid",
               "title": "Group Id"
             }
+          },
+          {
+            "name": "reader_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "const": "group-display-1",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Reader Profile"
+            }
           }
         ],
         "responses": {
@@ -7897,7 +7939,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GroupDetail"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/DisplayDetail"
+                    },
+                    {
+                      "$ref": "#/components/schemas/GroupDetail"
+                    }
+                  ],
+                  "title": "Response Private Detail V1 Me Groups  Group Id  Get"
                 }
               }
             },
@@ -8086,6 +8136,23 @@
               ],
               "title": "Cursor"
             }
+          },
+          {
+            "name": "reader_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "const": "group-display-1",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Reader Profile"
+            }
           }
         ],
         "responses": {
@@ -8094,7 +8161,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GroupMemberPage"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/DisplayMemberPage"
+                    },
+                    {
+                      "$ref": "#/components/schemas/GroupMemberPage"
+                    }
+                  ],
+                  "title": "Response Members V1 Groups  Group Id  Members Get"
                 }
               }
             },
@@ -8253,6 +8328,23 @@
               "format": "uuid",
               "title": "Group Id"
             }
+          },
+          {
+            "name": "management_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "const": "group-management-1",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Management Profile"
+            }
           }
         ],
         "responses": {
@@ -8261,7 +8353,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GroupManagement"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/ExtendedGroupManagement"
+                    },
+                    {
+                      "$ref": "#/components/schemas/GroupManagement"
+                    }
+                  ],
+                  "title": "Response Group Management V1 Groups  Group Id  Management Get"
                 }
               }
             },
@@ -8805,6 +8905,23 @@
               "maxLength": 64,
               "title": "Character Name"
             }
+          },
+          {
+            "name": "reader_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "const": "group-display-1",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Reader Profile"
+            }
           }
         ],
         "responses": {
@@ -8813,7 +8930,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/InviteCandidates"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/DisplayInviteCandidates"
+                    },
+                    {
+                      "$ref": "#/components/schemas/InviteCandidates"
+                    }
+                  ],
+                  "title": "Response Candidates V1 Groups  Group Id  Invite Candidates Get"
                 }
               }
             },
@@ -10958,6 +11083,23 @@
               ],
               "title": "Cursor"
             }
+          },
+          {
+            "name": "reader_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "const": "group-display-1",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Reader Profile"
+            }
           }
         ],
         "responses": {
@@ -10966,7 +11108,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BlockPage"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/DisplayBlockPage"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BlockPage"
+                    }
+                  ],
+                  "title": "Response Blocked V1 Groups  Group Id  Blocked Subjects Get"
                 }
               }
             },
@@ -26694,6 +26844,20 @@
             }
           },
           {
+            "name": "include_group_state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ],
+              "default": "false",
+              "title": "Include Group State"
+            }
+          },
+          {
             "name": "contract_profile",
             "in": "query",
             "required": false,
@@ -26760,7 +26924,13 @@
                 "schema": {
                   "anyOf": [
                     {
+                      "$ref": "#/components/schemas/GroupSearchPage"
+                    },
+                    {
                       "$ref": "#/components/schemas/OutputContract3PostV2RaidRoomsSearch"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_GroupSearchPage"
                     },
                     {
                       "$ref": "#/components/schemas/Beta_OutputContract3PostV2RaidRoomsSearch"
@@ -29022,7 +29192,13 @@
                 "schema": {
                   "anyOf": [
                     {
+                      "$ref": "#/components/schemas/GroupSearchPage"
+                    },
+                    {
                       "$ref": "#/components/schemas/OutputContract3PostV2RaidRoomsSearch"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_GroupSearchPage"
                     },
                     {
                       "$ref": "#/components/schemas/Beta_OutputContract3PostV2RaidRoomsSearch"
@@ -29212,6 +29388,20 @@
         ],
         "description": "Authenticated search excludes own active persistent membership with participating/review_required CM in the selected actual T/current generation, in SQL before sorting and pagination. Opposite-only, pending and historical relations are preserved. Cursor semantics: own-target-participation-excluded-v1; old semantics/head changes return CURSOR_STALE (409), foreign/tampered scope INVALID_REQUEST (400).",
         "parameters": [
+          {
+            "name": "include_group_state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ],
+              "default": "false",
+              "title": "Include Group State"
+            }
+          },
           {
             "name": "contract_profile",
             "in": "query",
@@ -30050,6 +30240,20 @@
             }
           },
           {
+            "name": "include_group_state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ],
+              "default": "false",
+              "title": "Include Group State"
+            }
+          },
+          {
             "name": "contract_profile",
             "in": "query",
             "required": false,
@@ -30069,6 +30273,15 @@
                 "schema": {
                   "anyOf": [
                     {
+                      "$ref": "#/components/schemas/GroupLinkedDetail"
+                    },
+                    {
+                      "$ref": "#/components/schemas/GroupLinkedMembershipDetail"
+                    },
+                    {
+                      "$ref": "#/components/schemas/GroupLinkedApplicationDetail"
+                    },
+                    {
                       "$ref": "#/components/schemas/OutputContract3GetV2RaidRoomsRoomIdDetail"
                     },
                     {
@@ -30076,6 +30289,15 @@
                     },
                     {
                       "$ref": "#/components/schemas/ApplicationDisplayDetailResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_GroupLinkedDetail"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_GroupLinkedMembershipDetail"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_GroupLinkedApplicationDetail"
                     },
                     {
                       "$ref": "#/components/schemas/Beta_OutputContract3GetV2RaidRoomsRoomIdDetail"
@@ -30379,6 +30601,20 @@
             }
           },
           {
+            "name": "include_group_state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ],
+              "default": "false",
+              "title": "Include Group State"
+            }
+          },
+          {
             "name": "contract_profile",
             "in": "query",
             "required": false,
@@ -30398,10 +30634,22 @@
                 "schema": {
                   "anyOf": [
                     {
+                      "$ref": "#/components/schemas/GroupLinkedPlan"
+                    },
+                    {
+                      "$ref": "#/components/schemas/GroupLinkedMembershipPlan"
+                    },
+                    {
                       "$ref": "#/components/schemas/ResumePlanContext"
                     },
                     {
                       "$ref": "#/components/schemas/MembershipActionPlanProfile"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_GroupLinkedPlan"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_GroupLinkedMembershipPlan"
                     },
                     {
                       "$ref": "#/components/schemas/Beta_ResumePlanContext"
@@ -30661,6 +30909,20 @@
             }
           },
           {
+            "name": "include_group_state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ],
+              "default": "false",
+              "title": "Include Group State"
+            }
+          },
+          {
             "name": "contract_profile",
             "in": "query",
             "required": false,
@@ -30680,7 +30942,13 @@
                 "schema": {
                   "anyOf": [
                     {
+                      "$ref": "#/components/schemas/GroupApplicationPage"
+                    },
+                    {
                       "$ref": "#/components/schemas/OutputContract3GetV2RaidRoomsRoomIdApplications"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_GroupApplicationPage"
                     },
                     {
                       "$ref": "#/components/schemas/Beta_OutputContract3GetV2RaidRoomsRoomIdApplications"
@@ -30950,6 +31218,20 @@
             }
           },
           {
+            "name": "include_group_state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ],
+              "default": "false",
+              "title": "Include Group State"
+            }
+          },
+          {
             "name": "contract_profile",
             "in": "query",
             "required": false,
@@ -30969,10 +31251,22 @@
                 "schema": {
                   "anyOf": [
                     {
+                      "$ref": "#/components/schemas/GroupMembershipPage"
+                    },
+                    {
+                      "$ref": "#/components/schemas/GroupActionMembershipPage"
+                    },
+                    {
                       "$ref": "#/components/schemas/OutputContract3GetV2MeRaidRoomMemberships"
                     },
                     {
                       "$ref": "#/components/schemas/MembershipActionMembershipPage"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_GroupMembershipPage"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Beta_GroupActionMembershipPage"
                     },
                     {
                       "$ref": "#/components/schemas/Beta_OutputContract3GetV2MeRaidRoomMemberships"
@@ -38911,6 +39205,23 @@
             }
           },
           {
+            "name": "target_group_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Target Group Id"
+            }
+          },
+          {
             "name": "contract_profile",
             "in": "query",
             "required": false,
@@ -38928,7 +39239,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CommonContext"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/GroupConnectionContext"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CommonContext"
+                    }
+                  ],
+                  "title": "Response Contract3 Get  V2 Me Raid-Rooms Room Id Common-Context"
                 }
               }
             },
@@ -42650,6 +42969,1303 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/groups/{group_id}/members/{membership_id}/activity-characters": {
+      "get": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Activity Characters",
+        "operationId": "activity_characters_v1_groups__group_id__members__membership_id__activity_characters_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Group Id"
+            }
+          },
+          {
+            "name": "membership_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Membership Id"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "minimum": 1,
+              "default": 20,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivityCharacterPage"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/me/group-request-counts": {
+      "get": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Request Counts",
+        "operationId": "request_counts_v1_me_group_request_counts_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupRequestCounts"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/groups/{group_id}/join-request-counts": {
+      "get": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Join Request Counts",
+        "operationId": "join_request_counts_v1_groups__group_id__join_request_counts_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Group Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupJoinRequestCounts"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/groups/{group_id}/disband": {
+      "post": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Disband",
+        "operationId": "disband_v1_groups__group_id__disband_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Group Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid4",
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DisbandGroupIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupDisbandAck"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/groups/{group_id}/members/{membership_id}/remove": {
+      "post": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Remove Member",
+        "operationId": "remove_member_v1_groups__group_id__members__membership_id__remove_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Group Id"
+            }
+          },
+          {
+            "name": "membership_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Membership Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid4",
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveGroupMemberIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupRemoveAck"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/groups/{group_id}/representative": {
+      "put": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Change Representative",
+        "operationId": "change_representative_v1_groups__group_id__representative_put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Group Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid4",
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeGroupRepresentativeIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupRepresentativeAck"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/groups/{group_id}/raid-rooms": {
+      "get": {
+        "tags": [
+          "groups"
+        ],
+        "summary": "Group Raid Rooms",
+        "operationId": "group_raid_rooms_v1_groups__group_id__raid_rooms_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Group Id"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "minimum": 1,
+              "default": 20,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupRaidRoomPage"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
                 }
               }
             },
@@ -75364,6 +76980,2172 @@
           "missing_members"
         ],
         "title": "CoordinationWait"
+      },
+      "ActivityCharacter": {
+        "properties": {
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "display": {
+            "$ref": "#/components/schemas/CharacterDisplay"
+          },
+          "character_spec": {
+            "$ref": "#/components/schemas/CharacterSpec"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "character_id",
+          "display",
+          "character_spec"
+        ],
+        "title": "ActivityCharacter"
+      },
+      "ActivityCharacterPage": {
+        "properties": {
+          "group_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Group Id"
+          },
+          "membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Membership Id"
+          },
+          "group_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Group Revision"
+          },
+          "members_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Members Revision"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          },
+          "snapshot_revision": {
+            "type": "string",
+            "title": "Snapshot Revision"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ActivityCharacter"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_id",
+          "membership_id",
+          "group_revision",
+          "members_revision",
+          "evaluated_at",
+          "snapshot_revision",
+          "items",
+          "next_cursor"
+        ],
+        "title": "ActivityCharacterPage"
+      },
+      "Beta_GroupLinkedApplicationDetail": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_ApplicationDisplayDetail"
+          },
+          "group_state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GroupLinkState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data",
+          "group_state"
+        ],
+        "title": "Beta_GroupLinkedApplicationDetail"
+      },
+      "Beta_GroupLinkedDetail": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_BDetail"
+          },
+          "group_state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GroupLinkState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data",
+          "group_state"
+        ],
+        "title": "Beta_GroupLinkedDetail"
+      },
+      "Beta_GroupLinkedMembershipDetail": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/MembershipActionDetailReaderScope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_MembershipActionDetailProfileData"
+          },
+          "group_state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GroupLinkState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data",
+          "group_state"
+        ],
+        "title": "Beta_GroupLinkedMembershipDetail"
+      },
+      "Beta_GroupLinkedMembershipPlan": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/MembershipActionPlanReaderScope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_MembershipActionPlanProfileData"
+          },
+          "group_state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GroupLinkState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data",
+          "group_state"
+        ],
+        "title": "Beta_GroupLinkedMembershipPlan"
+      },
+      "Beta_GroupLinkedPlan": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_ResumePlanData"
+          },
+          "group_state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GroupLinkState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data",
+          "group_state"
+        ],
+        "title": "Beta_GroupLinkedPlan"
+      },
+      "ChangeGroupRepresentativeIn": {
+        "properties": {
+          "registration_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Registration Id"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "expected_registration_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Registration Version"
+          },
+          "expected_ownership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Ownership Revision"
+          },
+          "expected_roster_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Roster Revision"
+          },
+          "expected_lifecycle_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Lifecycle Revision"
+          },
+          "expected_group_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Group Revision"
+          },
+          "expected_members_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Members Revision"
+          },
+          "expected_membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Expected Membership Id"
+          },
+          "expected_membership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Membership Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "registration_id",
+          "character_id",
+          "expected_registration_version",
+          "expected_ownership_revision",
+          "expected_roster_revision",
+          "expected_lifecycle_revision",
+          "expected_group_revision",
+          "expected_members_revision",
+          "expected_membership_id",
+          "expected_membership_revision"
+        ],
+        "title": "ChangeGroupRepresentativeIn"
+      },
+      "CharacterSpec": {
+        "properties": {
+          "character_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Character Id"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "available",
+              "partial",
+              "unavailable"
+            ],
+            "title": "State"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "CHARACTER_REFERENCE_UNAVAILABLE",
+                  "CHARACTER_NOT_CURRENTLY_ELIGIBLE",
+                  "CHARACTER_DATA_UNAVAILABLE",
+                  "ROLE_ANALYSIS_UNAVAILABLE"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "item_level": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Level"
+          },
+          "item_level_source": {
+            "type": "string",
+            "enum": [
+              "stored_character_summary",
+              "unavailable"
+            ],
+            "title": "Item Level Source"
+          },
+          "summary_fetched_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Summary Fetched At"
+          },
+          "dealer": {
+            "$ref": "#/components/schemas/GroupRolePower"
+          },
+          "support": {
+            "$ref": "#/components/schemas/GroupRolePower"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "character_id",
+          "state",
+          "reason",
+          "item_level",
+          "item_level_source",
+          "summary_fetched_at",
+          "dealer",
+          "support"
+        ],
+        "title": "CharacterSpec"
+      },
+      "DisbandGroupIn": {
+        "properties": {
+          "expected_group_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Group Revision"
+          },
+          "expected_members_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Members Revision"
+          },
+          "expected_membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Expected Membership Id"
+          },
+          "expected_membership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Membership Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_group_revision",
+          "expected_members_revision",
+          "expected_membership_id",
+          "expected_membership_revision"
+        ],
+        "title": "DisbandGroupIn"
+      },
+      "DisplayBlockPage": {
+        "properties": {
+          "profile": {
+            "type": "string",
+            "const": "group-display-1",
+            "title": "Profile"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          },
+          "snapshot_revision": {
+            "type": "string",
+            "title": "Snapshot Revision"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/DisplaySubject"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "profile",
+          "evaluated_at",
+          "snapshot_revision",
+          "items",
+          "next_cursor"
+        ],
+        "title": "DisplayBlockPage"
+      },
+      "DisplayDetail": {
+        "properties": {
+          "group": {
+            "$ref": "#/components/schemas/GroupSummary"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "leader_membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Leader Membership Id"
+          },
+          "members_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Members Revision"
+          },
+          "my_membership": {
+            "$ref": "#/components/schemas/app__groups__schemas__MyMembership"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/app__groups__schemas__Permissions"
+          },
+          "capacity": {
+            "$ref": "#/components/schemas/GroupCapacity"
+          },
+          "profile": {
+            "type": "string",
+            "const": "group-display-1",
+            "title": "Profile"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          },
+          "snapshot_revision": {
+            "type": "string",
+            "title": "Snapshot Revision"
+          },
+          "last_activity_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Activity At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group",
+          "created_at",
+          "leader_membership_id",
+          "members_revision",
+          "my_membership",
+          "permissions",
+          "capacity",
+          "profile",
+          "evaluated_at",
+          "snapshot_revision",
+          "last_activity_at"
+        ],
+        "title": "DisplayDetail"
+      },
+      "DisplayMember": {
+        "properties": {
+          "membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Membership Id"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "leader",
+              "member"
+            ],
+            "title": "Role"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "display": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CharacterDisplay"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "joined_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Joined At"
+          },
+          "is_me": {
+            "type": "boolean",
+            "title": "Is Me"
+          },
+          "character_spec": {
+            "$ref": "#/components/schemas/CharacterSpec"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "membership_id",
+          "role",
+          "revision",
+          "display",
+          "joined_at",
+          "is_me",
+          "character_spec"
+        ],
+        "title": "DisplayMember"
+      },
+      "DisplayMemberPage": {
+        "properties": {
+          "profile": {
+            "type": "string",
+            "const": "group-display-1",
+            "title": "Profile"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          },
+          "snapshot_revision": {
+            "type": "string",
+            "title": "Snapshot Revision"
+          },
+          "group_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Group Id"
+          },
+          "group_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Group Revision"
+          },
+          "members_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Members Revision"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/DisplayMember"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "profile",
+          "evaluated_at",
+          "snapshot_revision",
+          "group_id",
+          "group_revision",
+          "members_revision",
+          "items",
+          "next_cursor"
+        ],
+        "title": "DisplayMemberPage"
+      },
+      "DisplayMyGroupPage": {
+        "properties": {
+          "profile": {
+            "type": "string",
+            "const": "group-display-1",
+            "title": "Profile"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          },
+          "snapshot_revision": {
+            "type": "string",
+            "title": "Snapshot Revision"
+          },
+          "directory_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Directory Revision"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/DisplayDetail"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "profile",
+          "evaluated_at",
+          "snapshot_revision",
+          "directory_revision",
+          "items",
+          "next_cursor"
+        ],
+        "title": "DisplayMyGroupPage"
+      },
+      "DisplaySubject": {
+        "properties": {
+          "subject_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Subject Id"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "display": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CharacterDisplay"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "application_count": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Application Count"
+          },
+          "blocked": {
+            "type": "boolean",
+            "title": "Blocked"
+          },
+          "blocked_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Blocked At"
+          },
+          "character_spec": {
+            "$ref": "#/components/schemas/CharacterSpec"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "subject_id",
+          "revision",
+          "display",
+          "application_count",
+          "blocked",
+          "blocked_at",
+          "character_spec"
+        ],
+        "title": "DisplaySubject"
+      },
+      "ExtendedGroupManagement": {
+        "properties": {
+          "profile": {
+            "type": "string",
+            "const": "group-management-1",
+            "title": "Profile"
+          },
+          "group_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Group Id"
+          },
+          "group_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Group Revision"
+          },
+          "members_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Members Revision"
+          },
+          "my_membership": {
+            "$ref": "#/components/schemas/app__groups__schemas__MyMembership"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/ExtendedManagementPermissions"
+          },
+          "recruitment_state": {
+            "type": "string",
+            "enum": [
+              "clear",
+              "blocked",
+              "unavailable"
+            ],
+            "title": "Recruitment State"
+          },
+          "blocking_room_count": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Blocking Room Count"
+          },
+          "evidence_revision": {
+            "type": "string",
+            "title": "Evidence Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "profile",
+          "group_id",
+          "group_revision",
+          "members_revision",
+          "my_membership",
+          "permissions",
+          "recruitment_state",
+          "blocking_room_count",
+          "evidence_revision"
+        ],
+        "title": "ExtendedGroupManagement"
+      },
+      "ExtendedManagementPermissions": {
+        "properties": {
+          "transfer_leadership": {
+            "$ref": "#/components/schemas/app__groups__schemas__Permission"
+          },
+          "leave": {
+            "$ref": "#/components/schemas/app__groups__schemas__Permission"
+          },
+          "disband": {
+            "$ref": "#/components/schemas/app__groups__schemas__Permission"
+          },
+          "remove_member": {
+            "$ref": "#/components/schemas/app__groups__schemas__Permission"
+          },
+          "change_representative": {
+            "$ref": "#/components/schemas/app__groups__schemas__Permission"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "transfer_leadership",
+          "leave",
+          "disband",
+          "remove_member",
+          "change_representative"
+        ],
+        "title": "ExtendedManagementPermissions"
+      },
+      "GroupAnalysis": {
+        "properties": {
+          "version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Version"
+          },
+          "saved_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Saved At"
+          },
+          "analyzed_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Analyzed At"
+          },
+          "integrity_status": {
+            "type": "string",
+            "enum": [
+              "clean",
+              "review",
+              "error",
+              "unavailable"
+            ],
+            "title": "Integrity Status"
+          },
+          "issues": {
+            "items": {
+              "$ref": "#/components/schemas/AnalysisIssue"
+            },
+            "type": "array",
+            "title": "Issues"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "version",
+          "saved_at",
+          "analyzed_at",
+          "integrity_status",
+          "issues"
+        ],
+        "title": "GroupAnalysis"
+      },
+      "GroupDisbandAck": {
+        "properties": {
+          "group_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Group Id"
+          },
+          "membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Membership Id"
+          },
+          "membership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Membership Revision"
+          },
+          "group_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Group Revision"
+          },
+          "members_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Members Revision"
+          },
+          "ended_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Ended At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_id",
+          "membership_id",
+          "membership_revision",
+          "group_revision",
+          "members_revision",
+          "ended_at"
+        ],
+        "title": "GroupDisbandAck"
+      },
+      "GroupJoinRequestCounts": {
+        "properties": {
+          "group_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Group Id"
+          },
+          "group_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Group Revision"
+          },
+          "members_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Members Revision"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          },
+          "counts_revision": {
+            "type": "string",
+            "title": "Counts Revision"
+          },
+          "valid_until": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Valid Until"
+          },
+          "pending_applications": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Pending Applications"
+          },
+          "pending_invitations": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Pending Invitations"
+          },
+          "action_required": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Action Required"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_id",
+          "group_revision",
+          "members_revision",
+          "evaluated_at",
+          "counts_revision",
+          "valid_until",
+          "pending_applications",
+          "pending_invitations",
+          "action_required"
+        ],
+        "title": "GroupJoinRequestCounts"
+      },
+      "GroupLinkState": {
+        "properties": {
+          "group_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Group Id"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "active",
+              "ended",
+              "unavailable"
+            ],
+            "title": "State"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_id",
+          "name",
+          "state"
+        ],
+        "title": "GroupLinkState"
+      },
+      "GroupLinkedApplicationDetail": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ApplicationDisplayDetail"
+          },
+          "group_state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GroupLinkState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data",
+          "group_state"
+        ],
+        "title": "GroupLinkedApplicationDetail"
+      },
+      "GroupLinkedDetail": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/BDetail"
+          },
+          "group_state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GroupLinkState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data",
+          "group_state"
+        ],
+        "title": "GroupLinkedDetail"
+      },
+      "GroupLinkedMembershipDetail": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/MembershipActionDetailReaderScope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/MembershipActionDetailProfileData"
+          },
+          "group_state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GroupLinkState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data",
+          "group_state"
+        ],
+        "title": "GroupLinkedMembershipDetail"
+      },
+      "GroupLinkedMembershipPlan": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/MembershipActionPlanReaderScope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/MembershipActionPlanProfileData"
+          },
+          "group_state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GroupLinkState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data",
+          "group_state"
+        ],
+        "title": "GroupLinkedMembershipPlan"
+      },
+      "GroupLinkedPlan": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ResumePlanData"
+          },
+          "group_state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GroupLinkState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data",
+          "group_state"
+        ],
+        "title": "GroupLinkedPlan"
+      },
+      "GroupRaidRoom": {
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "scope": {
+            "type": "string",
+            "const": "group",
+            "title": "Scope"
+          },
+          "group_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Group Id"
+          },
+          "room_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Room Revision"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "active",
+              "review_required"
+            ],
+            "title": "State"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "targets": {
+            "items": {
+              "$ref": "#/components/schemas/GroupRaidTarget"
+            },
+            "type": "array",
+            "title": "Targets"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "room_id",
+          "title",
+          "scope",
+          "group_id",
+          "room_revision",
+          "state",
+          "reason",
+          "targets"
+        ],
+        "title": "GroupRaidRoom"
+      },
+      "GroupRaidRoomPage": {
+        "properties": {
+          "group_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Group Id"
+          },
+          "group_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Group Revision"
+          },
+          "members_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Members Revision"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          },
+          "evidence_revision": {
+            "type": "string",
+            "title": "Evidence Revision"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "clear",
+              "blocked",
+              "unavailable"
+            ],
+            "title": "State"
+          },
+          "blocking_room_count": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Blocking Room Count"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/GroupRaidRoom"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_id",
+          "group_revision",
+          "members_revision",
+          "evaluated_at",
+          "evidence_revision",
+          "state",
+          "blocking_room_count",
+          "items",
+          "next_cursor"
+        ],
+        "title": "GroupRaidRoomPage"
+      },
+      "GroupRaidTarget": {
+        "properties": {
+          "room_cycle_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Cycle Id"
+          },
+          "target_cycle_key": {
+            "type": "string",
+            "format": "date",
+            "title": "Target Cycle Key"
+          },
+          "generation": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Generation"
+          },
+          "target_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Target Revision"
+          },
+          "state": {
+            "type": "string",
+            "title": "State"
+          },
+          "leader_display": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CharacterDisplay"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "detail_available": {
+            "type": "boolean",
+            "title": "Detail Available"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "room_cycle_id",
+          "target_cycle_key",
+          "generation",
+          "target_revision",
+          "state",
+          "leader_display",
+          "detail_available"
+        ],
+        "title": "GroupRaidTarget"
+      },
+      "GroupRemoveAck": {
+        "properties": {
+          "group_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Group Id"
+          },
+          "membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Membership Id"
+          },
+          "membership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Membership Revision"
+          },
+          "group_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Group Revision"
+          },
+          "members_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Members Revision"
+          },
+          "ended_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Ended At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_id",
+          "membership_id",
+          "membership_revision",
+          "group_revision",
+          "members_revision",
+          "ended_at"
+        ],
+        "title": "GroupRemoveAck"
+      },
+      "GroupRepresentativeAck": {
+        "properties": {
+          "group_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Group Id"
+          },
+          "group_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Group Revision"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "representative": {
+            "$ref": "#/components/schemas/GroupRepresentative"
+          },
+          "changed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Changed At"
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "applied",
+              "noop"
+            ],
+            "title": "Outcome"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_id",
+          "group_revision",
+          "character_id",
+          "representative",
+          "changed_at",
+          "outcome"
+        ],
+        "title": "GroupRepresentativeAck"
+      },
+      "GroupRequestCounts": {
+        "properties": {
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          },
+          "counts_revision": {
+            "type": "string",
+            "title": "Counts Revision"
+          },
+          "valid_until": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Valid Until"
+          },
+          "received_invitations": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Received Invitations"
+          },
+          "sent_applications": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Sent Applications"
+          },
+          "managed_applications": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Managed Applications"
+          },
+          "managed_invitations": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Managed Invitations"
+          },
+          "action_required": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Action Required"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "evaluated_at",
+          "counts_revision",
+          "valid_until",
+          "received_invitations",
+          "sent_applications",
+          "managed_applications",
+          "managed_invitations",
+          "action_required"
+        ],
+        "title": "GroupRequestCounts"
+      },
+      "GroupRolePower": {
+        "properties": {
+          "combat_power": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 32,
+                "minLength": 1,
+                "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Combat Power"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "stored_role_success",
+              "unavailable"
+            ],
+            "title": "Source"
+          },
+          "trust": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "client_submitted"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trust"
+          },
+          "observed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observed At"
+          },
+          "saved_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Saved At"
+          },
+          "power_revision": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Power Revision"
+          },
+          "analysis": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GroupAnalysis"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "ROLE_ANALYSIS_UNAVAILABLE",
+                  "ROLE_ANALYSIS_INVALID"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "combat_power",
+          "source",
+          "trust",
+          "observed_at",
+          "saved_at",
+          "power_revision",
+          "analysis",
+          "reason"
+        ],
+        "title": "GroupRolePower"
+      },
+      "RemoveGroupMemberIn": {
+        "properties": {
+          "expected_group_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Group Revision"
+          },
+          "expected_members_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Members Revision"
+          },
+          "expected_membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Expected Membership Id"
+          },
+          "expected_membership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Membership Revision"
+          },
+          "expected_target_membership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Target Membership Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_group_revision",
+          "expected_members_revision",
+          "expected_membership_id",
+          "expected_membership_revision",
+          "expected_target_membership_revision"
+        ],
+        "title": "RemoveGroupMemberIn"
+      },
+      "DisplayInviteCandidate": {
+        "properties": {
+          "target_character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Target Character Id"
+          },
+          "display": {
+            "$ref": "#/components/schemas/CharacterDisplay"
+          },
+          "ownership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Ownership Revision"
+          },
+          "lifecycle_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Lifecycle Revision"
+          },
+          "item_level": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Level"
+          },
+          "combat_power": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Combat Power"
+          },
+          "character_spec": {
+            "$ref": "#/components/schemas/CharacterSpec"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "target_character_id",
+          "display",
+          "ownership_revision",
+          "lifecycle_revision",
+          "item_level",
+          "combat_power",
+          "character_spec"
+        ],
+        "title": "DisplayInviteCandidate"
+      },
+      "DisplayInviteCandidates": {
+        "properties": {
+          "profile": {
+            "type": "string",
+            "const": "group-display-1",
+            "title": "Profile"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/DisplayInviteCandidate"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "profile",
+          "evaluated_at",
+          "items"
+        ],
+        "title": "DisplayInviteCandidates"
+      },
+      "Beta_GroupActionMembershipPage": {
+        "properties": {
+          "group_states": {
+            "items": {
+              "$ref": "#/components/schemas/GroupLinkState"
+            },
+            "type": "array",
+            "title": "Group States"
+          },
+          "room_groups": {
+            "items": {
+              "$ref": "#/components/schemas/RoomGroupLink"
+            },
+            "type": "array",
+            "title": "Room Groups"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/MembershipActionMembershipReaderScope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_MembershipActionMembershipPageData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_states",
+          "room_groups",
+          "scope",
+          "data"
+        ],
+        "title": "Beta_GroupActionMembershipPage"
+      },
+      "Beta_GroupApplicationPage": {
+        "properties": {
+          "group_states": {
+            "items": {
+              "$ref": "#/components/schemas/GroupLinkState"
+            },
+            "type": "array",
+            "title": "Group States"
+          },
+          "room_groups": {
+            "items": {
+              "$ref": "#/components/schemas/RoomGroupLink"
+            },
+            "type": "array",
+            "title": "Room Groups"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_BApplicationPage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_states",
+          "room_groups",
+          "scope",
+          "data"
+        ],
+        "title": "Beta_GroupApplicationPage"
+      },
+      "Beta_GroupMembershipPage": {
+        "properties": {
+          "group_states": {
+            "items": {
+              "$ref": "#/components/schemas/GroupLinkState"
+            },
+            "type": "array",
+            "title": "Group States"
+          },
+          "room_groups": {
+            "items": {
+              "$ref": "#/components/schemas/RoomGroupLink"
+            },
+            "type": "array",
+            "title": "Room Groups"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_BMembershipPage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_states",
+          "room_groups",
+          "scope",
+          "data"
+        ],
+        "title": "Beta_GroupMembershipPage"
+      },
+      "Beta_GroupSearchPage": {
+        "properties": {
+          "group_states": {
+            "items": {
+              "$ref": "#/components/schemas/GroupLinkState"
+            },
+            "type": "array",
+            "title": "Group States"
+          },
+          "room_groups": {
+            "items": {
+              "$ref": "#/components/schemas/RoomGroupLink"
+            },
+            "type": "array",
+            "title": "Room Groups"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Beta_BPage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_states",
+          "room_groups",
+          "scope",
+          "data"
+        ],
+        "title": "Beta_GroupSearchPage"
+      },
+      "GroupActionMembershipPage": {
+        "properties": {
+          "group_states": {
+            "items": {
+              "$ref": "#/components/schemas/GroupLinkState"
+            },
+            "type": "array",
+            "title": "Group States"
+          },
+          "room_groups": {
+            "items": {
+              "$ref": "#/components/schemas/RoomGroupLink"
+            },
+            "type": "array",
+            "title": "Room Groups"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/MembershipActionMembershipReaderScope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/MembershipActionMembershipPageData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_states",
+          "room_groups",
+          "scope",
+          "data"
+        ],
+        "title": "GroupActionMembershipPage"
+      },
+      "GroupApplicationPage": {
+        "properties": {
+          "group_states": {
+            "items": {
+              "$ref": "#/components/schemas/GroupLinkState"
+            },
+            "type": "array",
+            "title": "Group States"
+          },
+          "room_groups": {
+            "items": {
+              "$ref": "#/components/schemas/RoomGroupLink"
+            },
+            "type": "array",
+            "title": "Room Groups"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/BApplicationPage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_states",
+          "room_groups",
+          "scope",
+          "data"
+        ],
+        "title": "GroupApplicationPage"
+      },
+      "GroupConnectionContext": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/GlobalScope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CommonContextData"
+          },
+          "target_group": {
+            "$ref": "#/components/schemas/TargetGroup"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data",
+          "target_group"
+        ],
+        "title": "GroupConnectionContext"
+      },
+      "GroupMembershipPage": {
+        "properties": {
+          "group_states": {
+            "items": {
+              "$ref": "#/components/schemas/GroupLinkState"
+            },
+            "type": "array",
+            "title": "Group States"
+          },
+          "room_groups": {
+            "items": {
+              "$ref": "#/components/schemas/RoomGroupLink"
+            },
+            "type": "array",
+            "title": "Room Groups"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/BMembershipPage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_states",
+          "room_groups",
+          "scope",
+          "data"
+        ],
+        "title": "GroupMembershipPage"
+      },
+      "GroupSearchPage": {
+        "properties": {
+          "group_states": {
+            "items": {
+              "$ref": "#/components/schemas/GroupLinkState"
+            },
+            "type": "array",
+            "title": "Group States"
+          },
+          "room_groups": {
+            "items": {
+              "$ref": "#/components/schemas/RoomGroupLink"
+            },
+            "type": "array",
+            "title": "Room Groups"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/BPage"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_states",
+          "room_groups",
+          "scope",
+          "data"
+        ],
+        "title": "GroupSearchPage"
+      },
+      "RoomGroupLink": {
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "group_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "room_id",
+          "group_id"
+        ],
+        "title": "RoomGroupLink"
+      },
+      "TargetGroup": {
+        "properties": {
+          "group_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Group Id"
+          },
+          "group_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "members_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Membership Id"
+          },
+          "membership_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "permission": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Permission"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_id",
+          "group_revision",
+          "members_revision",
+          "membership_id",
+          "membership_revision",
+          "permission"
+        ],
+        "title": "TargetGroup"
       }
     },
     "securitySchemes": {
@@ -75699,7 +79481,7 @@
     }
   },
   "x-recruitment-policy": {
-    "schema_revision": "0033_reapplication_history",
+    "schema_revision": "0034_group_features",
     "cycle": "Asia/Seoul Wednesday 06:00; maintenance Wednesday [06:00,10:00)",
     "time": "UTC, 5-minute ticks, positive at most 24h per session; stored authorized opening +30m floor",
     "admission_deadline": "strictly before confirmed start minus 30m; initial threshold and existing participant confirmation are distinct",
@@ -75783,5 +79565,14 @@
       "required_schema": "0033_reapplication_history",
       "semantics": "fresh participation after proven termination; completed history and opposite cycle preserved"
     }
+  },
+  "x-group-features": {
+    "required_schema": "0034_group_features",
+    "display_profile": "group-display-1",
+    "management_profile": "group-management-1",
+    "group_link_query": "include_group_state=true",
+    "raid_authority": "existing actual-target raid leader; group role grants no raid command",
+    "legacy_default_shape": "preserved",
+    "reads": "stored current group-scoped data only; no provider or read-side writes"
   }
 }
