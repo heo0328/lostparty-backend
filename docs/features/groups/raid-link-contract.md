@@ -77,4 +77,4 @@ group_member는 조회자의소속이아닌 각 대상참가자의현재membersh
 
 최초연결성공후방상세/공통context·C/N모집목록·그룹필터context·그룹방/관리조회는갱신한다. 독립초안/선택주차/미확정다른명령은유지한다. 최초연결은그룹membership자체를바꾸지않으므로membership기반filter context가같은값으로재발급될수있다. 방목록cursor는실제T directory로무효화하고그룹방목록/해산판정은새연결의원본을다시평가한다. 명령성공·후속조회실패와원ACK복구·현재조회는분리한다. 합의된기존그룹기기인수는재시험대기로되돌리지않고새최초연결/표시/배지변경경계만확인한다.
 
-DBnullable FK/scope와기존0034활동trigger를재사용하므로migration없다. 실제구현/검증·고정SHA·게시·개발미반영/Flutter다음담당은 [구현 기록](implementation-2026-10-28.md)과 [NEXT_WORK](../../project/NEXT_WORK.md)에누적한다.
+DBnullable FK/scope와기존0034활동trigger를재사용하므로migration없다. 실제구현/검증·고정SHA·게시·개발반영/Flutter 다음 담당은 [구현 기록](implementation-2026-10-28.md)과 [NEXT_WORK](../../project/NEXT_WORK.md)에누적한다.

@@ -2,26 +2,46 @@
 
 문서 운영 #29는 공통 원본·양측 참조 반영 및 [상호 대조](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6520322169) 완료로 추가 수정 대기를 해소했다. Issue 종료는 별도이며 상세 근거는 [DEV_LOG](DEV_LOG.md)에 보존한다. 기존 그룹 기기 인수와 기술 진단 후속은 별도다.
 
-## 현재 상태 — 최초 그룹 연결·목록 표시 개발반영·실행검증 완료
+## 다음 실행 — Backend 베타 개선
 
-checkout `feat/group-management`, main/dev `1b6f57b` 유지. #16 전체22 사용자승인계획과 #12 전체35/36 요청을같은브랜치에서구현·격리검증·고정계약인계한다. 사용자서버반영지시로**source2602e45/이미지5bd8dde6·DB0034 유지**로개발API를교체했다. migration·병합·운영배포·자료변경실행은없다. [계약/경계](../features/groups/raid-link-contract.md)·[합성표시예시](../features/groups/raid-link-examples.json)를따른다.
+[개선 실행 계획](backend-improvement-plan.md)에 작업 순서·정책/협업 경계·첫 구간·완료 조건을 기록했다. [종합 진단](../engineering/development/pre-beta-diagnosis-2026-10-30.md)은 근거와 대안의 원본이다. 다음 구현 추천은 **F01 삭제 등록정보 정리 배치의 진행 보장**이다. 나머지 항목을 한꺼번에 적용하지 않으며 기록만으로 미합의 계약/운영 변경을 승인한 것은 아니다.
 
-- 기존 common-context의 target_group_id로검토하고기존 common-settings 한명령에서 null→현재내그룹+scope=group을원자처리한다. G1/C/N·토큰/CAS/한도·rollback/원ACK·기존참가/신청/예약/완료원장을보존한다. A→B/해제는거절하고같은A public↔group은유지한다.
-- 목록4경로의include_group_state=true는root.group_states와현재페이지room_groups를일괄제공한다. 내신청origin/과거content를현재그룹으로덮지않고기본DTO/기존cursor는유지한다. 이름/연결변경은opt-in cursor stale로회복한다.
-- 상세배지는기본/application-display-1의data.members, membership-actions-1의data.content.data.members를사용한다. 그룹원/비그룹원조회자·옵션조합12개에서같은참가자bool을확인했고Backend누락은재현되지않았다. null/content없음을false로합성하지않는다. Flutter는실제진입/표시조건을이예시와대조한다.
-- 검증: 신규/기존그룹레이드·공통관리47PASS, 최종추가경계4PASS·토큰1PASS(반복합산없음·선택49시나리오). 두전체OpenAPI일치/기본객체불변·기존schema값변경0·5경로/새11schema. [실행집계](../features/groups/raid-link-verification-2026-10-30.json).
-- 다음Flutter는고정DTO/context소비를연결하고실제진입/배지조건의구체차이를회신한다. Backend는차이에대응한다. 실제개발반영은완료했고Flutter신규계약연결/변경경계기기인수는미완료다.
+이번 사용자 지시로 기존 그룹 문서의 미커밋 보류를 해소하고 진단 인계와 함께 commit/push하는 구간이다. 게시 커밋은 Git 이력으로 확인한다. 문서 협의 완료는 그룹 새 기기 인수나 베타 출시 준비 완료를 의미하지 않는다.
 
-구현/고정계약 source `6dac5ab2cc67e197979e7188a9c97ce2c27fb548`를commit/push·원격일치확인후 [#12 전체38번째 Backend · 목록/소속표시 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6503052363)·[#16 전체24번째 Backend · 최초연결 명령 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6503052848)를게시했다. 실제전체순번/작성측/단계확인·당시 양본문상단에 개발미반영/다음담당을 갱신했다. 이후 서버반영 완료로 현재 상태를 갱신하며 OPEN을 유지한다.
+## 독립 대기 — 그룹 새 변경의 기기 확인
 
-## 유지할 기존 완료·실제 실행 기준
+2026-10-30 기준, 작업 브랜치는 `feat/group-management`다. 기존 그룹 핵심 흐름·관리, 초대 후보 대소문자 검색·역할별 표시, 모집 최초 그룹 연결·목록 그룹명 표시까지 Backend 구현·검증·개발반영을 완료했다. main/dev는 `1b6f57b`이며 이번 작업을 병합하지 않았다.
 
-- [#12 전체36 Flutter 사용자기기인수](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6502226347)·[#16 전체21](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6502226876)의안내된기존그룹잔여시험전체통과를수용한다. 생성/조회·신청/승인/취소·대소문자/역할별표시/정렬·활동·차단/코드·이전/탈퇴/조건부해산·필터/기존참가보존·카드배치의보고범위다. 새최초연결/목록그룹명/소속표시결함해결인수로확대하지않고반복정상시험을요청하지않는다.
-- [#16 전체22 Flutter](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6502336731)의9d1baa39는생성그룹선택/해제기본값과기존API1회연결·29PASS자체보고다. Backend시험/기기인수와합산하지않고Flutter로컬소스는읽지않는다.
-- 실제개발반영기록은source2602e45/이미지5bd8dde6·DB0034(기본123/140·two-cycle185/206)이며 [실행집계](../engineering/operations/records/raid-group-link-rollout.json)를따른다. 기존114업무표2,015행/sequence·설정/키·DB볼륨보존, 274소스/runtime31/두전체계약·HTTP12/READONLY목록·프로필·worker/healthy확인. 실제context샘플은G1/방상태거절로최초연결성공write미확인이고신규UI/기기에서확인한다.
-- G-RECOVERY·활동자동추가미정/로컬89a3248보존·main/dev병합/운영배포·자료삭제없음. 그룹원동등개설·실제T공대장관리/그룹장전용레이드명령없음을유지한다.
+| 구분 | 확인된 기준 |
+|---|---|
+| 업무 구현·계약 | `6dac5ab2cc67e197979e7188a9c97ce2c27fb548` |
+| 실제 개발서버 | source `2602e4595a868eebdf12b04e1fd51502142069b3` / 이미지 `5bd8dde6` / DB `0034_group_features` |
+| 기존 게시 기록 | 반영 기록 `ad095c3`, 이슈 인계 링크 기록 `603fe2d`까지 commit/push 완료 |
+| 문서 인계 | 과거 미게시 보류를 해소하고 이번 진단 인계 구간에 함께 기록. 문서 게시와 실제 실행 소스는 구분한다. |
 
-반영 기록 `ad095c30e32e41d9ac90a4a34e50ba87dc062a9c` commit/push·원격 일치 후 [#12 전체39번째 Backend · 표시 기능 서버 반영](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6503318325)·[#16 전체25번째 Backend · 최초 연결 서버 반영](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6503318794)를 게시하고 실제 전체 순번·작성 측·단계를 확인했다. 양 Issue 본문 상단은 개발반영 완료/Flutter 신규 계약 연결·새 경계 기기 인수 대기로 갱신했으며 OPEN을 유지한다. 실제 실행은 source2602e45/이미지5bd8dde6·DB0034이며 후행 기록 커밋은 실행 소스를 바꾸지 않는다.
+실행 소스와 후행 문서 커밋을 구분한다. 이번 최신화는 코드·계약·실행 서버·DB를 변경하지 않는다. 이전 게시 이력은 유지하며 되돌리거나 재작성하지 않는다.
+
+## 최신 회신과 다음 작업
+
+[#12 전체40번째 Flutter · 목록/소속 표시 소비 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6503895589)·[#16 전체26번째 Flutter · 최초 연결 소비 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6503895060)를 확인했다. Flutter는 `feature/group-backend-integration`의 `5f024e536fbf4963a77903f7763b7ca460939a34` commit/push·local/origin 일치, 최초 연결 context/기존 PUT·목록 metadata·프로필별 배지 연결 완료를 보고했다. 이는 공식 Issue의 자체 보고이며 Flutter 로컬 소스는 읽지 않았다.
+
+- Flutter 검증 보고: 전체 test 2,707PASS이며 직접 경계43PASS는 포함 수다. analyze 오류/경고0·기존 info3, 포맷/diff/review 완료다. Backend 시험과 합산하지 않는다.
+- 기존 인계 대비 변경: Flutter 신규 계약 소비는 구현 완료 보고로 갱신한다. **추가 API 변경이나 Backend 재검증 반복 요청은 없다.** 기존 그룹 정상 기기 인수는 유지한다.
+- 다음 담당은 사용자 변경 경계 기기 확인과 Flutter 결과 대응이다. 일반 방 최초 그룹 연결, 같은 그룹 공개범위 왕복, 서버 그룹명/긴 이름, 비그룹원 시점 배지, 생성 선택 기본값을 확인한다. 실제 최초 연결 허용 context/명령 성공은 여전히 미확인이다.
+- 비그룹원 배지 원 제보는 Backend/Flutter 합성 검사에서 미재현이다. 결함 해결 완료로 판정하지 않고 실제 기기 차이가 생기면 해당 응답/렌더링 위치를 좁혀 대응한다.
+- Backend는 구체 차이가 회신되면 해당 경계만 수정·검증한다. 지금은 구현·서버 재반영·시험 반복 없이 결과를 기다린다. 기존 회신 결과는 이번 진단 인계 구간에 함께 보존한다.
+- Flutter의 Penpot03 갱신/시각 검수는 도구 미제공으로 대기한다는 보고이며 Backend API 추가 작업으로 확대하지 않는다. 새 기기 인수·병합·운영배포·Issue 종료는 미완료/별도다.
+
+완료 조건은 연결된 새 앱의 변경 경계 기기 결과 확인이다. 이번 문서 인계에서는 Issue 변경/추가 댓글·서버/DB 작업은 하지 않는다.
+
+## 유지할 검증·인수 근거
+
+- [격리 검증 집계](../features/groups/raid-link-verification-2026-10-30.json): 신규/기존 회귀47PASS, 추가 경계4PASS, 토큰1PASS. 반복 합산 없이 선택49시나리오이며 전체 프로젝트 또는 동일 HEAD 일괄시험 결과는 아니다. 두 OpenAPI 전체 일치, 기본 객체·기존 schema 값 불변을 확인했다.
+- [개발 반영 집계](../engineering/operations/records/raid-group-link-rollout.json): 교체 전후114업무표2,015행·sequence·설정·키·DB볼륨 보존, migration 없음. 소스274파일/runtime31·두전체계약·HTTP12·읽기전용 목록/프로필·worker·API/DB healthy를 확인했다. 이는 반영 당시 검증 결과이며 이번 문서 작업에서 서버 검증을 반복하지 않았다.
+- 실제 context 샘플은 현재 G1/방 상태로 거절됐다. 긍정 경계는 격리 검증을 따르며 실서버 최초 연결 성공으로 표시하지 않는다. 실회원 변경 명령을 임의 실행하지 않았다.
+- [#12 전체36번째 Flutter · 기존 그룹 사용자 기기 인수](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6502226347)·[#16 전체21번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6502226876)의 안내 범위 통과는 유지한다. 초대 검색/역할별 표시·기존 관리·필터/기존 참가 보존도 해당 보고 범위이며 새 최초 연결/표시 변경 인수로 확대하지 않는다.
+- [#16 전체22번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6502336731)의 `9d1baa39` 생성 UI 기본값/기존 생성 API 1회·29PASS는 Flutter 자체 보고다. Backend 시험에 합산하지 않는다.
+- 그룹원 동등 개설·실제T 공대장 관리를 유지하며 그룹장 전용 레이드 명령은 없다. 복구승계·활동 자동추가는 별도 미결정이고 로컬 활동 선택 브랜치 `89a3248`은 보존한다.
 
 ## 다른 미완료 주제
 

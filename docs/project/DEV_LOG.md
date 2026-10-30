@@ -2991,6 +2991,23 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 반영 기록 `ad095c30e32e41d9ac90a4a34e50ba87dc062a9c` commit/push·원격 일치 후 [#12 전체39번째 Backend · 표시 기능 서버 반영](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6503318325)·[#16 전체25번째 Backend · 최초 연결 서버 반영](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6503318794)를 게시하고 실제 전체 순번·작성 측·단계를 확인했다. 양 Issue 본문 상단은 개발반영 완료/Flutter 신규 계약 연결·새 경계 기기 인수 대기로 갱신했으며 OPEN을 유지한다. 실제 실행은 source2602e45/이미지5bd8dde6·DB0034이며 후행 기록 커밋은 실행 소스를 바꾸지 않는다.
 
 
+## 2026-10-30 — 현재 작업 현황 최신화·다음 작업에 문서 수정 누적
+
+- 사용자 지시로 이번 문서 수정은 커밋·푸시하지 않고 `feat/group-management`의 다음 관련 작업과 함께 반영한다. 기존 게시 기록 `603fe2d`와 실제 실행 source2602e45/이미지5bd8dde6·DB0034를 구분하며 과거 커밋은 재작성하지 않는다.
+- #12·#16 댓글을 읽기 전용으로 재확인했다. 최신은 전체39번째/전체25번째 Backend 서버 반영 인계이며 이후 네이티브 회신은 없었다. 변화 없는 댓글·Issue 본문 수정은 하지 않았다.
+- NEXT_WORK는 현재 실행/게시/로컬 상태와 다음 담당·착수 입력·완료 조건 중심으로 정리했다. AI_CONTEXT의 초대 검색/profile 인수 대기 잔여 문구는 이미 수용한 기존 기기 통과와 맞추고, 계약 끝의 개발미반영 표현을 개발반영 완료와 일치시켰다. 추적표에 최신 인계 링크·실서버 최초연결 성공 미확인을 연결했다.
+- Backend 구현·격리검증·개발반영·계약 인계는 완료, 새 Flutter 계약 연결/변경 경계 기기 인수는 미확인이다. 이번에는 문서 검사만 수행하며 서버·DB·업무자료 변경 또는 자동/실서버 시험 반복은 하지 않는다.
+
+
+## 2026-10-30 — Native 신규 계약 연결 완료 보고 수신
+
+[#12 전체40번째 Flutter · 목록/소속 표시 소비 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6503895589)·[#16 전체26번째 Flutter · 최초 연결 소비 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6503895060) 확인. Flutter는 feature/group-backend-integration의5f024e536fbf4963a77903f7763b7ca460939a34 commit/push·local/origin 일치와 최초 연결/목록/배지 소비 구현을 보고했다. 전체2707PASS(직접43포함)·analyze 오류/경고0/기존info3는 Flutter 자체 보고이며 Backend 결과에 합산하지 않는다.
+
+기존 Backend 인계 대비 Flutter 연결 대기는 해소됐으나 새 기기 인수/실서버 최초 연결 양성 성공은 미확인이다. 배지 원 증상도 미재현이므로 해결로 확정하지 않는다. 추가API변경/Backend반복검증 요청은 없다. 다음 사용자 변경 경계 기기 확인·Flutter결과대응, Backend구체차이대응이다. Penpot03 시각검수는 Flutter 도구미제공 대기 보고로 별도 유지한다.
+
+NEXT_WORK/AI_CONTEXT/추적표를 갱신했으며 기존 로컬 수정은 보존했다. 사용자 지시에 따라 커밋·푸시하지 않고 다음 관련 작업과 함께 반영한다. 이번에는 읽기 확인·문서 검사만 수행하며 Issue댓글/본문·서버/DB·업무코드를 변경하지 않았다.
+
+
 ## 2026-10-30 — Issue29 문서 운영 현황 대조·Backend 회신
 
 - 사용자 지시로 현황 비교 → Backend 회신 → 공통 기준/저장소별 예외 정리 → 필요한 최소 문서 반영 순서를 시작했다. 기존 역할 안내·문서 구성/보존 기준·기능 후속 대장·로컬 상태를 대조했다. Flutter는 Issue 본문의 비교 내용을 근거로 했으며 로컬 경로나 소스를 읽지 않았다.
@@ -3018,3 +3035,15 @@ NEXT_WORK는 Backend 완료 근거와 구체 차이 대응 중심으로 정리�
 - docs/README·ai_rules의 두 링크가 Backend c1fa205db709f97c1d34817c4417b84144a5dde3/shared-document-operation을 가리키며 원본 복제 없이 자체 분류/보관·후속 변경 절차를 유지한다. Backend 원본 절과 원격 게시도 재확인했다. Flutter 로컬 diff check는 자체 보고이며 Backend 확인은 원격 문서·링크·SHA 대조다.
 - [전체5번째 Backend · 양측 반영 대조 완료](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6520322169)를 게시하고 실제 순번을 확인했다. 문서 협의 완료 조건 충족·추가 수정/시험 요청 없음, 본문 완료 상태·체크리스트를 갱신하며 Issue OPEN/종료 별도를 유지한다. NEXT_WORK의 참조 반영 대기를 해소했다. 기존 그룹 기기/Penpot·별도 기술 개선은 완료로 바꾸지 않는다.
 - 합의 원본c1fa205는 그대로 유지하며 누적 인계·최종 대조·대기 해소 기록만 같은 목적 브랜치의 마감 구간으로 게시한다. 기존 그룹 로컬 변경은 제외·보존한다. 문서 검사와 diff check를 수행하며 코드/API/DB/서버/기기 시험은 실행하지 않는다.
+
+
+## 2026-10-30 — 베타 진단·실행 계획의 다른 탭 인계
+
+사용자가 네이티브 문서 최종 확인 완료를 알리고, 기존 조사 내용을 다른 탭에서 이어갈 수 있게 기록하며 미커밋 변경 없이 모두 commit/push할 것을 요청했다. 이전 같은 날의 그룹 문서 게시 보류 지시는 이번 지시로 해소한다. 당시 보류 이력은 지우지 않고 현재 지시와 구분한다.
+
+- [진단 원본](../engineering/development/pre-beta-diagnosis-2026-10-30.md)에 F01~F10의 확인 사실/추론/미확인·근거·선택지·규모·전환 위험·시점·완료 기준을 보존했다. 기존 조사 결과의 문서화이며 새로운 전체 코드 감사나 구현 완료가 아니다.
+- [실행 계획](backend-improvement-plan.md)에 다섯 단계 분류·권장 순서·Backend 독립/사용자 결정/네이티브 협의 경계와 F01 첫 구현 구간을 기록했다. NEXT_WORK/AI_CONTEXT/project 안내에서 원본으로 연결했다. 잔여 기술 개선은 미착수이며 이번 문서화가 미합의 계약·운영 변경 승인은 아니다.
+- 기존 미커밋5문서의 그룹 연결 보고/기기 대기 정정을 보존해 같은 feat/group-management의 인계 구간에 포함한다. 업무 구현6dac5ab·실행source2602e45/이미지5bd8dde6·DB0034는 바뀌지 않는다. 별도 활동 선택 브랜치·미병합 상태도 유지한다.
+- #29를 재조회했으며 최신은 여전히 [전체5번째 Backend 대조 완료](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6520322169)다. 네이티브 최종 완료는 사용자 보고로 추가 수신했으며 존재하지 않는 새 댓글을 근거로 만들지 않았다. 추가 수정/회신 대기는 없고 Issue 종료는 별도다. 그룹 새 기기 인수 대기는 유지한다.
+- 코드·API·DB·서버·Flutter 로컬 소스·Issue 본문/댓글·브랜치 통합/삭제는 변경하지 않았다. 현재 환경/검증 안내의 F10 잔여 사실 정정도 후보로 보존했으며 이 인계에서 일괄 수정하지 않았다.
+- 인계 검증: `PYTHONDONTWRITEBYTECODE=1 python3 scripts/verify_isolated.py static` 통과(runtime31/test43 잠금·설치 일치 미검사, 문서244개/상대 링크·앵커2540개, 원문128건/동결JSON20건 보존, 도구 unittest12개). Docker 실패/정리 로그는 mock 시험의 의도된 출력이며 실제 Docker/DB를 실행하지 않았다. `git diff --check` 통과. 문서 변경으로 업무 pytest·서버/기기 시험은 반복하지 않았다.
