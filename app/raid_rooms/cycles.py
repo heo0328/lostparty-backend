@@ -213,6 +213,9 @@ lease store; do not introduce a second dedup namespace or in-memory cache.
     if replay:
         return replay
     try:
+        with session() as preflight_db:
+            from app.raid_rooms import cycle_group_policy
+            cycle_group_policy.require_client(preflight_db,operation,payload,ticket=ticket)
         beta_schedule.reconcile_before(principal,payload)
         with session() as db, db.begin():
             uid = authorize(db, principal, write=True)
@@ -224,6 +227,8 @@ lease store; do not introduce a second dedup namespace or in-memory cache.
                 from app.raid_rooms.admission_service import room as visible_room
                 visible_room(db, uid, rid)
                 archive.require_active(db, rid)
+            from app.raid_rooms import cycle_group_policy
+            cycle_group_policy.require_client(db,operation,ticket=ticket)
             beta_schedule.require_client(db,rid,operation,payload)
             from app.raid_rooms import active_usage
             usage_before=active_usage.capture(db,uid,rid,payload)

@@ -5,7 +5,7 @@
 ## 현재 완료와 승인 경계
 
 - **완료:** 진단 조사와 후속 문서화. #29 문서 운영 합의·양측 최소 반영·대조 완료. Backend 원본 `c1fa205`, Flutter 참조 `4bdec0e`, [전체5번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6520322169). 사용자도 네이티브 최종 확인 완료를 알렸다. 재회신/재인수 대기 없음, Issue 종료는 별도다.
-- **최신 통합:** 진단·인계 문서 `48bf88c` 게시 후 사용자 승인으로 [PR30](https://github.com/heo0328/lostparty-backend/pull/30)·병합 `fc6c06a`를 dev/main에 원격 반영했다. 그룹 브랜치는 로컬·원격 정리, 통합 기록까지 main/dev `ccd1cc8`에 동기화했다. 현재 checkout은 `fix/backend-beta-readiness`다. 미완료 활동 선택 브랜치는 보존한다. 그룹 통합 당시 코드/API/서버/DB 추가 변경은 없었다.
+- **최신 통합:** 진단·인계 문서 `48bf88c` 게시 후 사용자 승인으로 [PR30](https://github.com/heo0328/lostparty-backend/pull/30)·병합 `fc6c06a`를 dev/main에 원격 반영했다. 그룹 브랜치는 로컬·원격 정리, 통합 기록까지 main/dev `ccd1cc8`에 동기화했다. 개선 인계는 `fix/backend-beta-readiness`의818a7ec에 게시했으며 현재 checkout은 `feat/raid-group-policy`다. 미완료 활동 선택 브랜치는 보존한다. 그룹 통합 당시 코드/API/서버/DB 추가 변경은 없었다.
 - **F01 구현·격리 검증 완료:** 미처리 조건과 삭제 시각/ID 순서를 추가했다. 두 DB 단계 신규10개 포함 선택67PASS·두 전체 계약 일치이며 [상세 결과](DEV_LOG.md#f01-registration-cleanup)를 따른다. 서버 미반영·dev/main 미통합이다.
 - **F02 조사 후 보류:** 현재 로컬 접속/프록시 설정과 배포 후보를 조사했지만 공개 주소·TLS·신뢰 경계는 미확정이다. 아래 재개 조건을 따른다.
 - **미착수:** F03~F09 구현·운영 검증 및 F10 잔여 사실 정정. 문서화는 각 대안의 확정이나 모든 개선의 일괄 실행 승인이 아니다. 다음 탭에서 선택한 구간을 실행하며 필요한 정책/계약 결정만 해당 작업에 앞서 받는다.

@@ -1,3 +1,4 @@
+from app.raid_rooms import cycle_group_policy as group_policy
 from app.raid_rooms import beta_schedule
 from app.raid_rooms import beta_profile
 """Explicit future opening/reopening with the source C leader's own bundle."""
@@ -45,7 +46,7 @@ def schedule_inputs(db,source):
 
 def prepare(db,uid,rid,key,intent,cid,role,stamp,*,seed=None,include_session_display=False,beta_config=None):
     if intent not in ('open','reopen') or (cid is None)!=(role is None):fail('INVALID_REQUEST',400)
-    room,row,value=life.target_row(db,uid,rid,key,stamp,next_only=True)
+    room,row,value=life.target_row(db,uid,rid,key,stamp,next_only=True,authorize_target=False)
     source,cm,owned,selected,public,source_proof,reason=life.source(db,uid,room,stamp)
     if commands.leadership(db,source)['leader_cycle_member_id']!=cm.id:reason=reason or 'TARGET_LEADER_REQUIRED'
     if cid is not None:
@@ -55,6 +56,7 @@ def prepare(db,uid,rid,key,intent,cid,role,stamp,*,seed=None,include_session_dis
         cid,role=owned[0].character_id,owned[0].selected_role
     else:cid,role=(selected.character_id,selected.selected_role) if selected else (cid,role)
     already=row is not None and row.state=='open'
+    if already and group_policy.enabled(db):group_policy.authorize(db,room,row,uid)
     if row is not None and not already:
         generation=db.get(CycleGeneration,(row.id,row.generation))
         if generation.state!='cancelled':reason=reason or 'TARGET_CYCLE_CLOSED'
@@ -115,6 +117,14 @@ def prepare(db,uid,rid,key,intent,cid,role,stamp,*,seed=None,include_session_dis
         old=db.get(CycleGeneration,(row.id,row.generation))
         data['leadership']=dict(leader_cycle_member_id=old.leader_cycle_member_id,leadership_revision=old.leadership_revision,
             leader_membership_id=None)
+    if group_policy.enabled(db):
+        inherited=group_policy.inherited(db,source,uid)
+        data['group_policy_effect']=group_policy.effect(db,row) if already else group_policy.effect(db,source,inherited)
+        data['group_policy_effect']['target_cycle_key']=value.key
+        data['group_policy_effect']['room_cycle_id']=rid_cycle
+        data['group_policy_effect']['generation']=gen
+        source_proof.append(['group_policy',group_policy.state(group_policy.get(db,source)),inherited,
+            group_policy.group_evidence(db,group_policy.get(db,source).group_id,uid)])
     hidden=[source_proof,room.revision,room.scope,selection_context.group_stamp(db,room.group_id,retained=True),settings,proof,
         comparison['power_revision'] if comparison else None,
         jsonable_encoder(inputs),[row.id,row.revision,row.generation,row.state] if row else None]
@@ -151,6 +161,7 @@ def execute(principal,rid,command,data):
         if current['selection']!=body['selection'] or current['targets']!=body['target_items'] or body['target_session_ids']:
             fail('TARGET_SCOPE_MISMATCH',400)
         if current['opening_effect']=='already_open':return 200,life.ack(db,row,command,stamp,outcome='noop')
+        policy_effect=current.get('group_policy_effect')
         gen=current['prospective_generation'];epoch=current['prospective_target_revision']
         if row is None:
             row=RoomCycle(id=uuid.UUID(current['prospective_room_cycle_id']),room_id=rid,
@@ -165,6 +176,7 @@ def execute(principal,rid,command,data):
             row.settings_revision+=1
         generation=CycleGeneration(cycle_id=row.id,generation=gen,state='review_required',leadership_revision=1,next_join_order=1,opened_at=stamp)
         db.add(generation);db.flush()
+        if group_policy.enabled(db):group_policy.install(db,row,policy_effect['after']['scope'],policy_effect['after']['group_id'])
         by_item={i.id:(i,r) for i,r in admission.rounds(db,source)}
         targets=[Target.model_validate(t) for t in body['target_items']]
         for target in targets:
@@ -186,5 +198,9 @@ def execute(principal,rid,command,data):
         row.revision=epoch
         if gen==1:row.members_revision=row.plan_revision=1
         db.flush()
-        return 200,life.ack(db,row,command,stamp),lambda final:schedule.deadlines(db,row,[],final)
+        result=life.ack(db,row,command,stamp)
+        if policy_effect:
+            policy_effect['after']=group_policy.state(group_policy.get(db,row))
+            result['group_policy_effects']=jsonable_encoder([policy_effect])
+        return 200,result,lambda final:schedule.deadlines(db,row,[],final)
     return cycles.execute(principal,'open',command,dict(room_id=str(rid),body=body),run)

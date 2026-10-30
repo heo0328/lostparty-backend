@@ -1,0 +1,180 @@
+{
+  "date": "2026-10-30",
+  "branch": "feat/raid-group-policy",
+  "parent": "818a7ec9b574257e8112b3a3ad5e423404d160a9",
+  "source_files": 269,
+  "source_sha256": "8a57f4d1f34c528b08af761faa6a8a5590f60f6ceab22e88d87ef13ee3f11008",
+  "scope": "Issue16 Flutter comments27/28, documents78e53aa0; isolated implementation verification only",
+  "schemas": [
+    "0023 baseline preserved",
+    "0034 existing regressions",
+    "0035 new cycle group policy"
+  ],
+  "runs": [
+    {
+      "project": "lostparty-check-10aa99a0bbf0",
+      "selection": [
+        "tests/test_cycle_group_policy.py (then 13 cases)",
+        "tests/test_registration_cleanup.py",
+        "tests/test_group_room_connection.py",
+        "tests/test_group_raid_lifecycle.py",
+        "tests/test_recruitment_cycle_management.py"
+      ],
+      "passed": 71,
+      "failed": 1,
+      "failure": "opening context for missing N attempted current-row metadata; corrected and reverified in later runs",
+      "seconds": 1066.71
+    },
+    {
+      "project": "lostparty-check-cb3b5de233f4",
+      "selection": [
+        "tests/test_cycle_group_policy.py (then 18 cases)"
+      ],
+      "passed": 18,
+      "failed": 0,
+      "seconds": 345.2
+    },
+    {
+      "project": "lostparty-check-3edfc4cd1518",
+      "selection": [
+        "tests/test_cycle_group_policy.py (then 21 cases)",
+        "tests/test_membership_actions.py",
+        "tests/test_atomic_members.py",
+        "tests/test_recruitment_cycle_management.py"
+      ],
+      "passed": 101,
+      "failed": 1,
+      "seconds": 1888.44,
+      "failure": "earlier image: unrelated legacy_unknown made group count unavailable; fixed, superseded by f44e9192c5a1 and final privacy run"
+    },
+    {
+      "project": "lostparty-check-f44e9192c5a1",
+      "selection": [
+        "private_target_visibility_search_and_group_metadata",
+        "missing_current_policy_is_not_zero_group_blockers"
+      ],
+      "passed": 2,
+      "failed": 0,
+      "seconds": 37.81
+    },
+    {
+      "project": "lostparty-check-5b3660f6ceb9",
+      "selection": [
+        "settings_context_binds_membership_identity_after_rejoin",
+        "all_detail_profiles_share_target_badges_and_legacy_c_projection",
+        "leave_group_priority_and_leave_all_atomic_public_fallback",
+        "transfer_to_external_is_atomic_public_and_original_ack",
+        "opening_inherits_source_normalizes_nonmember_and_existing_n_unchanged",
+        "n_cancellation_group_priority_then_public_fallback"
+      ],
+      "passed": 6,
+      "failed": 0,
+      "seconds": 127.07
+    },
+    {
+      "project": "lostparty-check-51f730ef964d",
+      "selection": [
+        "target_switches_preserve_other_target_and_participation",
+        "http_settings_confirmation_marker_and_original_ack",
+        "group_change_final_context_expiry_rolls_back_ack"
+      ],
+      "passed": 3,
+      "failed": 0,
+      "seconds": 61.08
+    },
+    {
+      "project": "lostparty-check-11246d1fbc0a",
+      "selection": [
+        "group_context_rejects_actor_and_opposite_target_forgery"
+      ],
+      "passed": 1,
+      "failed": 0,
+      "seconds": 23.13
+    },
+    {
+      "project": "lostparty-check-d65b35365f1e",
+      "selection": [
+        "private_target_visibility_search_and_group_metadata",
+        "n_cancel_reopen_keeps_policy_history_and_current_target"
+      ],
+      "passed": 2,
+      "failed": 0,
+      "seconds": 46.81
+    },
+    {
+      "project": "lostparty-check-2ada19bcca79",
+      "selection": [
+        "cn_different_leaders_change_without_g1_and_title_remains_common"
+      ],
+      "passed": 1,
+      "failed": 0,
+      "seconds": 27.83
+    },
+    {
+      "project": "lostparty-check-e7a186be7742",
+      "selection": [
+        "pre_upgrade_ack_replay_and_old_context_cannot_execute_after_migration",
+        "http_settings_confirmation_marker_and_original_ack",
+        "target_switches_preserve_other_target_and_participation"
+      ],
+      "passed": 3,
+      "failed": 0,
+      "seconds": 66.4
+    },
+    {
+      "project": "lostparty-check-b3130277d0ba",
+      "selection": [
+        "settings_exception_rolls_back_policy_and_revision (same-key retry)",
+        "migration_current_generations_normalize_without_rewriting_history (public/group parameterized)"
+      ],
+      "passed": 3,
+      "failed": 0,
+      "seconds": 64.13
+    },
+    {
+      "project": "lostparty-check-0b0fd7ad2dad",
+      "selection": [
+        "private_target_visibility_search_and_group_metadata (including missing opposite policy: no target/leader disclosure)",
+        "missing_current_policy_is_not_zero_group_blockers"
+      ],
+      "passed": 2,
+      "failed": 0,
+      "seconds": 40.82
+    }
+  ],
+  "counting": "Selections overlap and contain earlier revisions; never sum run counts as a unique total or claim one complete HEAD/full repository run. Targeted final runs supersede corrected failures.",
+  "contracts": {
+    "project": "lostparty-check-5e837e29f5d6",
+    "base_paths": 123,
+    "base_operations": 140,
+    "two_cycle_paths": 185,
+    "two_cycle_operations": 206,
+    "full_objects_equal": true,
+    "base_unchanged": true,
+    "synthetic_examples_closed_models": "passed",
+    "runtime_component_json_schema_check": "passed"
+  },
+  "warnings": [
+    "Existing Starlette/AnyIO deprecation warning1 per pytest run",
+    "Existing SQLAlchemy null-primary-key SAWarning5 in atomic_members on legacy schema; no corresponding test failure"
+  ],
+  "not_executed": [
+    "development0035 migration/API replacement",
+    "real member mutations",
+    "provider live calls",
+    "native new app/device acceptance",
+    "load/performance",
+    "AWS/release deployment",
+    "dev/main merge",
+    "data reset"
+  ],
+  "environment": "compose.test UUID projects, tmpfs PostgreSQL17, temporary keys, restricted app-role DBs, no exposed ports/live volumes; worker disabled; project containers/networks removed by runner",
+  "static": "passed on final code (runtime31/test43 lock checks, documentation245/links2562, tool unittest12, diff)",
+  "documentation": {
+    "markdown_files": 245,
+    "relative_links_and_anchors_checked": 2562,
+    "archived_bodies_preserved": 128,
+    "frozen_json_bytes_preserved": 20,
+    "passed": true
+  }
+}

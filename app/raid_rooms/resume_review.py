@@ -134,7 +134,9 @@ def confirmation(uid, room, row, shown, hidden, stamp, *, proposal=None, request
     expires = min(stamp + timedelta(seconds=120), commands.raids.cycle(stamp).ends_at)
     flow = 'respond' if proposal else 'create'
     binding = digest([shown, hidden, request])
-    token = opaque.seal(dict(actor=str(uid), room=str(room.id), cycle=str(row.id), generation=row.generation,
+    from sqlalchemy.orm import object_session
+    from app.raid_rooms.cycle_group_policy import marker
+    token = opaque.seal(dict(**marker(object_session(row)),actor=str(uid), room=str(room.id), cycle=str(row.id), generation=row.generation,
         target=row.cycle_key.isoformat(), flow='resume-' + flow, proposal=str(proposal.id) if proposal else None,
         expires=expires.isoformat(), digest=binding, review_version=1))
     if len(token.encode()) > 4096: fail('RESPONSE_TOO_LARGE', 413)

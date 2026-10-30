@@ -48,6 +48,8 @@ def member_count(db, target):
 
 def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *,
                  validate_only=False, pending=False, public_origin_application=None, opening=False, replacing=None, resuming=None, resume_items=None, unified=False):
+    from app.raid_rooms import cycle_group_policy as group_policy
+    room=group_policy.project(db,room,target)
     if pending and not validate_only:
         raise ValueError('Pending validation cannot acquire a lease')
     cycles.target(stamp, target.cycle_key.isoformat())
@@ -65,7 +67,7 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
     origin = public_origin_application
     allow_external = (origin is not None and origin.room_id == room.id and origin.user_id == uid
         and origin.origin_scope == 'public' and origin.state == 'pending')
-    core._group(db, room, uid, allow_external=allow_external,
+    core._group(db, room, uid, allow_external=allow_external and not group_policy.enabled(db),
         existing=replacing is not None or resuming is not None)
     core._room_restrictions(db, room)
     character = core.identity.selected_character(db, uid, selection.model_dump(mode='json'))

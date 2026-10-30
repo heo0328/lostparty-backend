@@ -417,7 +417,7 @@ def create_two_cycle_app():
     generate=result.openapi
     def schema():
         value=_decorate_openapi(generate())
-        value['x-recruitment-policy'].update(schema_revision='0034_group_features',policy_version='two-cycle-contract-4',
+        value['x-recruitment-policy'].update(schema_revision='0035_cycle_group_policy',policy_version='two-cycle-contract-4',
             search_semantics='own-target-participation-excluded-v1',
             room_usage_semantics='active-target-rooms-1',
             reapplication_history=dict(required_schema='0033_reapplication_history',semantics='fresh participation after proven termination; completed history and opposite cycle preserved'),
@@ -433,10 +433,24 @@ def create_two_cycle_app():
                 actions=['leave_target','leave_all','dissolve_led_targets','recover_leadership'],
                 reader_profile='membership-actions-1',default_reader='legacy shape preserved',
                 effects_order='actual C then N; empty effects can end persistent membership',
-                compatibility='old cancel/leave/end and D22/E23 retain original operation/pending/24h ACK',
+                compatibility='original operation/key/body ACK retained; DB0035 new execution requires cycle-group-policy-1',
                 inactive_features='IF-001: close_weekly/weekly_resume app entry disabled; APIs/history/original pending retained'),
             continuation='Explicit N opening only; 06:00 N becomes C with the same UUID/leader/assignments/consents; no automatic new N',
             compatibility='v1 current-C read adapters; unsafe room writes replay original ACK then CLIENT_UPGRADE_REQUIRED; personal availability/manual completion remain safe')
+        value['x-recruitment-policy']['cycle_group_policy']=dict(
+            version='cycle-group-policy-1',required_schema='0035_cycle_group_policy',
+            authority='actual cycle/generation; public/null or group/UUID',
+            compatibility='original operation/key/body ACK replay before upgrade guard; no automatic old request conversion',
+            listing='cycle_groups keyed by room/actual cycle/generation; room_groups replaced')
+        for path, operations in value['paths'].items():
+            if path not in {r.path for r in cycle_router.routes}:continue
+            for method,operation in operations.items():
+                if method not in ('get','post','put','delete','patch'):continue
+                parameters=operation.setdefault('parameters',[])
+                if not any(p.get('name')=='group_policy_version' for p in parameters):
+                    parameters.append({'name':'group_policy_version','in':'query','required':False,
+                        'schema':{'type':'string','enum':['cycle-group-policy-1']},
+                        'description':'Required for new writes on DB0035; omitted legacy writes only recover original stored ACKs.'})
         value['x-recruitment-policy']['beta_recruitment']=dict(
             contract_version='beta-recruitment-wire-2',contract_profile='beta-recruitment-1',
             text_policy='hangul-printable-ascii-1',

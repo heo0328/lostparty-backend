@@ -1,3 +1,4 @@
+from app.raid_rooms import cycle_group_policy as group_policy
 """W3 authority, evidence and bounded contexts. Callers own the transaction."""
 from app.raid_rooms import beta_profile,beta_schedule
 import uuid
@@ -21,7 +22,7 @@ from app.raids import service as raids
 VALID_STATES=('participating','completed','stopped')
 
 
-def target_row(db,uid,rid,key,stamp,*,next_only=False):
+def target_row(db,uid,rid,key,stamp,*,next_only=False,authorize_target=True):
     room=commands.base.room(db,uid,rid)
     from app.raid_rooms.completed_room_lifecycle import require_active
     require_active(db,rid)
@@ -29,7 +30,7 @@ def target_row(db,uid,rid,key,stamp,*,next_only=False):
     if next_only and value.phase!='future':fail('TARGET_CYCLE_NOT_FUTURE')
     if room.ended_at is not None:fail('ROOM_NOT_ACTIVE')
     if row is not None:admission.capacity(row)
-    return room,row,value
+    return group_policy.project(db,room,row,uid if authorize_target else None) if row else room,row,value
 
 
 def actual_member(db,row,uid,*,states=VALID_STATES):
@@ -47,6 +48,7 @@ def assignments(db,row,cm):
 
 
 def qualify(db,room,row,cm):
+    room=group_policy.project(db,room,row) if not isinstance(room,group_policy.RoomView) or room._cycle_row.id!=row.id else room
     member=db.get(Member,cm.membership_id)
     if member is None or member.ended_at is not None or cm.state not in VALID_STATES:fail('SOURCE_PARTICIPATION_REQUIRED',403)
     user=db.get(User,cm.user_id)
@@ -104,6 +106,25 @@ def source(db,uid,room,stamp,*,validate=True):
 
 
 def candidates(db,room,row,actor):
+    if group_policy.enabled(db):
+        members=list(db.scalars(select(CycleMember).where(CycleMember.cycle_id==row.id,
+            CycleMember.generation==row.generation,CycleMember.id!=actor.id,CycleMember.state.in_(VALID_STATES))
+            .order_by(CycleMember.joined_order,CycleMember.id)))
+        def qualify_candidate(view,cm):
+            try:return None,qualify(db,view,row,cm)[1]
+            except GameError as error:return error.code,None
+        chosen,proof,reasons,after,values=group_policy.candidates(db,room,row,members,qualify_candidate)
+        result=[]
+        values.sort(key=lambda item:(not item[2],item[0].joined_order or 2**63,str(item[0].id)))
+        current=group_policy.get(db,row)
+        for cm,reason,same in values:
+            owned=assignments(db,row,cm)
+            if not owned or cm.joined_order is None:continue
+            candidate_after=dict(scope=current.scope if same else 'public',group_id=current.group_id if same else None)
+            result.append(dict(cycle_member_id=cm.id,revision=cm.revision,joined_order=str(cm.joined_order),
+                character_id=owned[0].character_id,character_name=owned[0].display.get('character_name'),
+                permission=permission(reason),group_policy_effect=group_policy.effect(db,row,candidate_after)))
+        return result,proof
     result=[];proof=[]
     for cm in db.scalars(select(CycleMember).where(CycleMember.cycle_id==row.id,
             CycleMember.generation==row.generation,CycleMember.id!=actor.id,CycleMember.state.in_(VALID_STATES))
@@ -128,7 +149,13 @@ def sign(uid,rid,key,command,data,hidden,stamp,*,row=None,extra=None,db=None):
     if beta_profile.enabled():basis.append(profile_basis)
     binding=digest(jsonable_encoder(basis))
     expires=min(stamp+timedelta(seconds=120),raids.cycle(stamp).ends_at)
+    from sqlalchemy.orm import object_session
+    db=db or (object_session(row) if row is not None else None)
+    if db is not None and group_policy.enabled(db):
+        envelope['group_policy_version']=group_policy.VERSION
+        if row is not None:envelope['group_policy']=group_policy.metadata(db,row)
     token=dict(actor=str(uid),room=str(rid),target=key,command=command,expires=expires.isoformat(),digest=binding)
+    if db is not None:token.update(group_policy.marker(db))
     token.update(extra or {})
     token.update(beta_profile.marker())
     data.update(context_token=opaque.seal(token),issued_at=stamp,expires_at=expires)
@@ -170,6 +197,7 @@ def ack(db,row,command,stamp,*,outcome='applied',revisions=None):
     result=dict(scope=scope(stamp,row.cycle_key.isoformat(),row),data=dict(command_id=command,outcome=outcome,
         executed_at=stamp,room_id=row.room_id,target_cycle_key=row.cycle_key,
         revisions=revisions or [dict(resource='target',id=row.id,revision=row.revision)]))
+    result=group_policy.enrich(db,result)
     return wire.OutputContract3PostV2RaidRoomsRoomIdJoin.model_validate(result).model_dump(mode='json')
 
 

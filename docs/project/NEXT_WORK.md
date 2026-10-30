@@ -6,9 +6,11 @@
 
 사용자 지시로 개선 상태를 기록·commit/push한 뒤 그룹 작업을 우선한다. [#16 전체27번째 Flutter · 정책 정정/Backend 구현 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521839291)과 [전체28번째 Flutter · 고정 문서 게시](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521897849)를 재조회했다. Flutter 문서 기준은 `78e53aa0b88d042d8468e08b351b5e75a4fadb4d`이며 새 앱 기능은 아직 미연결이다. 다음 담당 Backend는 고정 계약·구현/검증·개발 반영 상태를 인계하고, 이후 Flutter 연결/시험·기기 인수로 이어간다.
 
-다음 작업은 Issue의 고정 문서와 현재 주차별 원본/명령/읽기 계약을 대조해 설계하는 것이다. 일반→A/A→B/A→일반의 실제T별 독립 변경, 그룹원 우선 승계·외부 승계/직접 위임 시 일반 전환, 개방 상속/기존N 보존을 검토한다. 참가·pending·예약/일정/완료·과거 origin과 반대T, 기존 미확정 요청/원ACK 의미를 보존해야 한다. 기존 그룹 자체 탈퇴/추방/해산 정책과 그룹장의 레이드 권한은 확대하지 않는다. 기존 `6dac5ab2`가 새 정책을 구현했다고 표시하지 않는다.
+주차·세대별 원본0035와 명령·조회·승계·구 요청 전환을 `feat/raid-group-policy`에서 구현했다. [신규 소비 계약](../features/groups/cycle-group-policy.md)·[합성 예시](../features/groups/cycle-group-policy.examples.json)·[검증 집계](../features/groups/cycle-group-policy-verification.json)를 기준으로 한다. 새 정책은 **Backend 구현/격리 검증 인계 구간**이며 실제0035 반영·Flutter 새 연결·기기 인수는 별도다. [전체29번째 Backend 계약 후보](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6522746434) 이후 고정 SHA/OpenAPI를 같은 Issue에 인계한다.
 
-그룹 이전 브랜치는 PR30으로 dev/main에 통합·정리됐고 main/dev는 `ccd1cc8`이다. 현재 checkout은 `fix/backend-beta-readiness`이며 이번 기록 게시까지 이 브랜치에서 마감한다. 그룹 구현 복귀 시 실제 checkout과 분기 기준·미통합 F01/최신 문서 포함 여부를 먼저 정하고 기록한다. 이 요청은 dev/main merge·AWS/release·자료초기화·Issue 종료 승인이 아니다.
+다음은 Flutter가 고정 계약의 group_policy_version·실제T 설정context/명령·cycle_groups와 원ACK 복구를 연결하고 소비 차이를 회신하는 것이다. 실제 개발환경은 source2602e45/이미지5bd8dde6·DB0034로 유지하므로 **새0035 명령의 실제 기기 시험은 서버 반영 전 요청하지 않는다.** Backend는 구체 소비 차이 대응 또는 별도 승인된0035 개발반영/실행검증을 진행한다. AWS/release·dev/main merge·자료 초기화·Issue 종료는 수행하지 않는다.
+
+브랜치는 개선 인계 `818a7ec`에서 분기했으며 F01 `c94ce88`과 최신 기록을 포함한다. main/dev는 `ccd1cc8`을 유지하고 `fix/backend-beta-readiness`도 보존한다. 기존 방 공통 그룹 최초 연결/교체불가 계약은0034 실행 이력으로 보존하며 새 정책의 완료 근거로 사용하지 않는다.
 
 ## 보류 추적 — Backend 베타 개선
 
@@ -16,7 +18,7 @@
 
 ## 독립 대기 — 그룹 새 변경의 기기 확인
 
-2026-10-30 기준, 그룹 브랜치는 dev/main 통합 후 로컬·원격 정리했으며 현재 checkout은 `fix/backend-beta-readiness`다. 기존 그룹 핵심 흐름·관리, 초대 후보 대소문자 검색·역할별 표시, 모집 최초 그룹 연결·목록 그룹명 표시까지 Backend 구현·검증·개발반영을 완료했다. main/dev는 그룹 병합 `fc6c06a`와 후행 통합 기록을 포함한다.
+2026-10-30 기준, 그룹 브랜치는 dev/main 통합 후 로컬·원격 정리했으며 현재 checkout은 `feat/raid-group-policy`다. 기존 그룹 핵심 흐름·관리, 초대 후보 대소문자 검색·역할별 표시, 모집 최초 그룹 연결·목록 그룹명 표시까지 Backend 구현·검증·개발반영을 완료했다. main/dev는 그룹 병합 `fc6c06a`와 후행 통합 기록을 포함한다.
 
 | 구분 | 확인된 기준 |
 |---|---|

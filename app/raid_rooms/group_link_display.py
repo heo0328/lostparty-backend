@@ -1,5 +1,7 @@
 """Optional retained group link on authorized detail/plan, in the same snapshot."""
 from typing import Literal
+from pydantic import Field, model_validator
+from app.raid_rooms.cycle_group_schemas import Metadata
 from uuid import UUID
 from app.game_accounts.schemas import DTO
 from app.groups import features
@@ -48,6 +50,12 @@ def get(principal, rid, key, kind, *, reader_profile=None, membership_id=None, c
         else:
             result = members.plan(principal,rid,key,include_resume_display,read_snapshot=snap)
         room = db.get(RecruitmentRoom, rid)
+        from app.raid_rooms import cycles, cycle_group_policy as policy
+        if policy.enabled(db):
+            _,row=cycles.resolve(db,rid,key,stamp)
+            target=result.get('data',{}).get('target',{})
+            value=policy.metadata(db,row,generation=target['target_generation']) if 'target_generation' in target else policy.metadata(db,row)
+            return dict(result,group_state=features.group_state(db,value['group_id']))
         return dict(result, group_state=features.group_state(db,room.group_id))
 
 
@@ -58,7 +66,13 @@ class RoomGroupLink(DTO):
 
 class ListGroupMetadata(DTO):
     group_states: list[GroupLinkState]
-    room_groups: list[RoomGroupLink]
+    room_groups: list[RoomGroupLink] | None = Field(default=None,exclude_if=lambda v:v is None)
+    cycle_groups: list[Metadata] | None = Field(default=None,exclude_if=lambda v:v is None)
+
+    @model_validator(mode='after')
+    def exactly_one_mapping(self):
+        if (self.room_groups is None)==(self.cycle_groups is None):raise ValueError('one explicit group mapping required')
+        return self
 
 
 class GroupSearchPage(cycle_wire.OutputContract3PostV2RaidRoomsSearch,ListGroupMetadata):

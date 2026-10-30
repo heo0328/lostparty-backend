@@ -59,6 +59,10 @@ def get(principal, rid, key, intent, limit=50, cursor=None):
     with commands.base.snapshot(principal) as (db,uid,stamp):
         if beta_profile.enabled() and not beta_schedule.available(db):fail('RECRUITMENT_COMMAND_NOT_READY',503)
         room,target = commands.resolve(db,uid,rid,key,stamp)
+        from app.raid_rooms import cycle_group_policy
+        if cycle_group_policy.enabled(db):
+            eligibility.core._group(db,room,uid,existing=intent=='change_character')
+            eligibility.core._room_restrictions(db,room)
         modes = {'apply':'leader_only','join':'direct_join'}
         if intent in modes and target.settings_snapshot['admission_mode'] != modes[intent]:
             fail('ADMISSION_MODE_CHANGED')

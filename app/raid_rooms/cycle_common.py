@@ -1,3 +1,4 @@
+from app.raid_rooms import cycle_group_policy as group_policy
 """Global commands bind every actual effect; no invented target or G1 fallback."""
 from app.raid_rooms import beta_profile,group_connection
 from datetime import timedelta,datetime
@@ -51,6 +52,7 @@ def common_permission(db,uid,room,stamp):
 
 def context(db,uid,rid,kind,stamp,target_group_id=None):
     outcomes.ready(db)
+    if group_policy.enabled(db) and target_group_id is not None:fail('CLIENT_UPGRADE_REQUIRED')
     if kind not in ('edit_common_settings','leave','end'):fail('INVALID_REQUEST',400)
     room=commands.base.room(db,uid,rid);actor=commands.base.member(db,uid,room)
     from app.raid_rooms.completed_room_lifecycle import require_active
@@ -108,6 +110,7 @@ def context(db,uid,rid,kind,stamp,target_group_id=None):
     data=dict(room_id=rid,command=kind,room_revision=room.revision,persistent_membership_revision=actor.revision,
         impact_cycles=public,permission=permission(reason),expected_cycle_key=current,authorization_cycle_key=auth.cycle_key if auth else None,
         current_settings=dict(title=room.title,scope=room.scope,group_id=room.group_id,group_revision=group.revision if group else None))
+    if group_policy.enabled(db):data['current_settings']={'title':room.title}
     auth_proof=None
     if kind!='leave' and reason is None:
         auth_cm=life.actual_member(db,auth,uid);_,auth_proof=life.qualify(db,room,auth,auth_cm)
@@ -116,10 +119,11 @@ def context(db,uid,rid,kind,stamp,target_group_id=None):
     if target is not None:evidence.append(target_proof)
     binding=digest(jsonable_encoder(evidence))
     expires=min(stamp+timedelta(seconds=120),commands.raids.cycle(stamp).ends_at)
-    claims=dict(actor=str(uid),room=str(rid),command=kind,digest=binding,expires=expires.isoformat())
+    claims=dict(**group_policy.marker(db),actor=str(uid),room=str(rid),command=kind,digest=binding,expires=expires.isoformat())
     if target is not None:claims['target_group_id']=str(target_group_id)
     data.update(context_token=opaque.seal(claims),issued_at=stamp,expires_at=expires)
     result=dict(scope=scope(stamp),data=data)
+    if group_policy.enabled(db):result["group_policy_version"]=group_policy.VERSION
     if target is not None:result['target_group']=target
     return result,binding,room,actor,effects
 
@@ -127,7 +131,8 @@ def context(db,uid,rid,kind,stamp,target_group_id=None):
 def get(principal,rid,kind,target_group_id=None):
     with commands.base.snapshot(principal) as (db,uid,stamp):
         result,*_=context(db,uid,rid,kind,stamp,target_group_id)
-        model=group_connection.GroupConnectionContext if target_group_id is not None else wire.CommonContext
+        from app.raid_rooms.cycle_group_context_schemas import TitleContext
+        model=TitleContext if group_policy.enabled(db) else group_connection.GroupConnectionContext if target_group_id is not None else wire.CommonContext
         return model.model_validate(result).model_dump(mode='json')
 
 
@@ -150,7 +155,18 @@ def execute(principal,rid,key,data,kind):
             reason=allowed['reason'];fail(reason,403 if reason in ('COMMON_LEADER_REQUIRED','COMMON_AUTHORITY_UNAVAILABLE','GROUP_MEMBERSHIP_REQUIRED','OWNERSHIP_REQUIRED','SOURCE_PARTICIPATION_REQUIRED') else 409)
         guards=[graph.final_deadlines(db,row,[],stamp,join=False) for row,_,_ in effects] if kind!='edit_common_settings' else []
         affected=[];changed=True
-        if kind=='edit_common_settings':
+        if kind=='edit_common_settings' and group_policy.enabled(db):
+            if 'scope' in body or token.get('group_policy_version')!=group_policy.VERSION:fail('CLIENT_UPGRADE_REQUIRED')
+            changed=room.title!=data.title
+            if changed:
+                room.title=data.title;room.revision+=1
+                for row,_,_ in effects:cycles.touch_directory(db,row.cycle_key)
+            value=dict(scope=scope(stamp),data=dict(command_id=key,outcome='applied' if changed else 'noop',
+                executed_at=stamp,room_id=rid,room_revision=room.revision,affected_cycle_keys=[row.cycle_key for row,_,_ in effects],
+                ))
+            # The title ACK uses the existing CommonSettingsAckData fields.
+            dto=wire.CommonSettingsAck
+        elif kind=='edit_common_settings':
             initial=room.group_id is None and selected is not None
             if data.group_id!=room.group_id and not initial:fail('GROUP_LINK_IMMUTABLE')
             if initial:

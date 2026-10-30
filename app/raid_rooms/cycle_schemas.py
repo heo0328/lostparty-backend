@@ -1,3 +1,4 @@
+from app.raid_rooms.cycle_group_schemas import GroupChange
 """Strict request semantics layered over the generated fixed wire contract."""
 from datetime import date
 from pydantic import Field, field_validator
@@ -43,7 +44,10 @@ class Closure(CanonicalCycles,wire.InputContract3PostV2RaidRoomsRoomIdWeeklyInco
 class Resume(CanonicalCycles,wire.InputContract3PostV2RaidRoomsRoomIdWeeklyResumeProposals):
     resume_context_token: Token = Field(default=None, exclude_if=lambda v:v is None, json_schema_extra=lambda s:s.pop('default',None))
 class Manual(CanonicalCycles,wire.ManualCompletionCommand):pass
-class TargetSettings(CanonicalCycles,wire.InputContract3PutV2RaidRoomsRoomIdSettings):pass
+class TargetSettings(CanonicalCycles,wire.InputContract3PutV2RaidRoomsRoomIdSettings):
+    group_policy: GroupChange | None = Field(default=None, exclude_if=lambda v:v is None)
+    context_token: str | None = Field(default=None, exclude_if=lambda v:v is None,min_length=1,max_length=4096)
+
 class Formation(CanonicalCycles,wire.InputContract3PutV2RaidRoomsRoomIdFormation):pass
 class Removal(CanonicalCycles,wire.InputContract3PostV2RaidRoomsRoomIdRemovals):pass
 class CommonSettings(CanonicalCycles,wire.CommonSettingsCommand):pass

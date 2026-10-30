@@ -1,3 +1,4 @@
+from app.raid_rooms import cycle_group_policy as group_policy
 """Private target detail and plan. Historical/global assignments are not aliases."""
 from app.raid_rooms import beta_profile, beta_schedule, beta_output
 from datetime import timedelta
@@ -25,7 +26,7 @@ def read_target(db,uid,rid,key,stamp):
     _,row=cycles.resolve(db,rid,key,stamp)
     if row is None:fail('TARGET_NOT_OPEN')
     admission.capacity(row)
-    return room,row
+    return group_policy.project(db,room,row,uid),row
 
 
 def badge(db,room,uid):
@@ -40,6 +41,7 @@ def own_cycle_member(db,row,member):
 
 
 def own_view(db,room,row,member):
+    room=group_policy.project(db,room,row)
     actual=own_cycle_member(db,row,member)
     return dict(membership_id=member.id,revision=member.revision,group_member=badge(db,room,member.user_id),
         target_role=directory.role(db,member.user_id,row),cycle_member_id=actual.id if actual else None,
@@ -78,6 +80,7 @@ def formation(db,row):
 
 
 def settings(db,room,row,uid,stamp):
+    room=group_policy.project(db,room,row)
     source=row.settings_snapshot
     result=dict(room_id=room.id,revision=row.settings_revision,room_revision=room.revision,
         experience_level=source['experience_level'],combat_requirement=source['combat_requirement'],

@@ -1,7 +1,10 @@
+from app.raid_rooms import cycle_group_policy as group_policy
 """Actual target settings, seats and removal; persistent and other targets survive."""
 from app.raid_rooms import beta_profile
 from copy import deepcopy
 from decimal import Decimal
+from datetime import datetime
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
 from app.game_accounts.support import fail,GameError
 from app.raid_rooms import (cycle_commands as commands,cycle_lifecycle as life,cycle_planning as plan,
@@ -17,7 +20,10 @@ def target(db,uid,rid,key,stamp,body=None):
 
 
 def edit_permission(db,uid,room,row,stamp):
-    try:target(db,uid,room.id,row.cycle_key.isoformat(),stamp);return permission(None)
+    try:
+        if group_policy.enabled(db):group_policy.qualify_editor(db,uid,room,row)
+        else:target(db,uid,room.id,row.cycle_key.isoformat(),stamp)
+        return permission(None)
     except GameError as error:return permission(error.code)
 
 
@@ -26,8 +32,9 @@ def get(principal,rid,key):
     with commands.base.snapshot(principal) as (db,uid,stamp):
         outcomes.ready(db);room,row=reads.read_target(db,uid,rid,key,stamp)
         commands.base.member(db,uid,room)
-        return wire.OutputContract3GetV2MeRaidRoomsRoomIdSettings.model_validate(dict(scope=scope(stamp,key,row),
+        result=wire.OutputContract3GetV2MeRaidRoomsRoomIdSettings.model_validate(dict(scope=scope(stamp,key,row),
             data=reads.settings(db,room,row,uid,stamp))).model_dump(mode='json')
+        return group_policy.enrich(db,result)
 
 
 def remove_member(db,room,row,cm,command,stamp):
@@ -47,16 +54,31 @@ def remove_member(db,room,row,cm,command,stamp):
 def command(principal,rid,key,data,operation):
     body=beta_profile.body(data)
     def run(db,uid,stamp):
-        room,row,actor=target(db,uid,rid,body['target_cycle_key'],stamp,body)
+        if operation=='settings' and group_policy.enabled(db) and body.get('group_policy') is not None:
+            room,row=commands.resolve(db,uid,rid,body['target_cycle_key'],stamp,write=True)
+            commands.cas(db,row,body,stamp,leader=True);commands.require_leader(db,uid,row)
+            actor=life.actual_member(db,row,uid)
+            # Existing target membership/character authority stays strict; the old
+            # group's restrictions cannot prevent an explicitly reviewed detach.
+            group_policy.qualify_editor(db,uid,room,row)
+        else:room,row,actor=target(db,uid,rid,body['target_cycle_key'],stamp,body)
         guard=graph.final_deadlines(db,row,[],stamp,join=False)
+        policy_effect=None
         if operation=='settings':
+            if group_policy.enabled(db) and body.get('group_policy') is not None:policy_effect=group_policy.verify_settings(db,uid,room,row,body,stamp)
             if row.settings_revision!=data.expected_settings_revision:fail('REVISION_CONFLICT')
             combat=body['combat_requirement']
             if combat['input_mode']=='shared' and combat['dealer_min']!=combat['support_min']:fail('INVALID_REQUEST',400)
             if any(v is not None and not Decimal(v).is_finite() for v in (combat['dealer_min'],combat['support_min'])):fail('INVALID_REQUEST',400)
             updated={**deepcopy(row.settings_snapshot),**{n:body[n] for n in ('experience_level','combat_requirement','admission_mode')}}
             changed=updated!=row.settings_snapshot
-            if changed:row.settings_snapshot=updated;row.settings_revision+=1;plan.bump(db,row)
+            previous_settings_revision=row.settings_revision
+            policy_changed=group_policy.apply(db,row,policy_effect['after']) if policy_effect else False
+            if changed:
+                row.settings_snapshot=updated;row.settings_revision=previous_settings_revision+1;plan.bump(db,row)
+            elif policy_changed:
+                row.revision+=1;cycles.touch_directory(db,row.cycle_key)
+            changed=changed or policy_changed
         elif operation=='formation':
             pairs=life.admission.rounds(db,row)
             values=outcomes.assignments(db,row);active=[a for a in values if a.state=='active']
@@ -95,6 +117,25 @@ def command(principal,rid,key,data,operation):
             plan.refresh(db,room,row,uid,key,stamp)
         db.flush()
         revisions=[dict(resource='target',id=row.id,revision=row.revision),dict(resource='settings',id=row.id,revision=row.settings_revision)]
-        return 200,life.ack(db,row,key,stamp,outcome='applied' if changed else 'noop',revisions=revisions),guard
+        result=life.ack(db,row,key,stamp,outcome='applied' if changed else 'noop',revisions=revisions)
+        if policy_effect:
+            policy_effect['after']=group_policy.state(group_policy.get(db,row))
+            result['group_policy_effects']=jsonable_encoder([policy_effect])
+        if policy_effect:
+            from app.raid_rooms.command_context import unseal
+            expires=datetime.fromisoformat(unseal(body['context_token'])['expires'])
+            old_guard=guard
+            def final_guard(current):
+                old_guard(current)
+                if current>=expires:fail('COMMAND_CONTEXT_EXPIRED')
+            return 200,result,final_guard
+        return 200,result,guard
     return cycles.execute(principal,{'settings':'target-settings','formation':'formation','remove':'remove'}[operation],key,
         dict(room_id=str(rid),body=body),run)
+
+
+def group_context(principal,rid,key,gid):
+    with commands.base.snapshot(principal) as (db,uid,stamp):
+        room,row=commands.resolve(db,uid,rid,key,stamp)
+        if not group_policy.enabled(db):fail('GROUP_FEATURE_NOT_READY',503)
+        return group_policy.settings_context(db,uid,room,row,gid,stamp)
