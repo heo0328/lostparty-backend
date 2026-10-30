@@ -525,3 +525,16 @@ def test_group_context_rejects_actor_and_opposite_target_forgery(policy_db,clien
     with pytest.raises(GameError) as caught:cycle_management.command(actor(a['uid']),rid,uuid.uuid4(),other,'settings')
     assert caught.value.code=='TARGET_SCOPE_MISMATCH'
     assert table_digests(engine,set(before))==before
+
+
+def test_closed_null_leader_settings_are_readable_with_edit_denied(policy_db,client):
+    engine,a,b=policy_db;rid,c,_,_,_=create_beta(a)
+    with session() as db,db.begin():
+        row=db.scalar(select(RoomCycle).where(RoomCycle.room_id==rid))
+        generation=db.get(CycleGeneration,(row.id,row.generation))
+        row.state='closed';generation.state='completed';generation.closed_at=now(db)
+        generation.leader_cycle_member_id=None
+    value=cycle_member_reads.detail(actor(a['uid']),rid,c)
+    assert value['data']['settings']['permissions']['edit_settings']==dict(allowed=False,reason='ROUND_NOT_ACTIVE',next_change_at=None)
+    value=cycle_management.get(actor(a['uid']),rid,c)
+    assert value['data']['permissions']['edit_settings']['reason']=='ROUND_NOT_ACTIVE'

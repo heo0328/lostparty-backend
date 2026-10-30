@@ -197,6 +197,9 @@ def metadata(db, row, generation=_CURRENT_GENERATION):
 
 def qualify_editor(db, uid, room, row):
     from app.raid_rooms import cycle_commands as commands, cycle_lifecycle as life
+    if row.state!='open':fail('ROOM_REVIEW_REQUIRED' if row.state=='review_required' else 'ROUND_NOT_ACTIVE')
+    if room.ended_at is not None:fail('ROOM_NOT_ACTIVE')
+    if commands.leadership(db,row)['leader_cycle_member_id'] is None:fail('ROOM_LEADER_REQUIRED',403)
     commands.require_leader(db,uid,row)
     actor=life.actual_member(db,row,uid)
     if actor is None:fail('TARGET_LEADER_REQUIRED',403)

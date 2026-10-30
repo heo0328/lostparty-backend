@@ -3,7 +3,7 @@
   "branch": "feat/raid-group-policy",
   "parent": "818a7ec9b574257e8112b3a3ad5e423404d160a9",
   "source_files": 269,
-  "source_sha256": "8a57f4d1f34c528b08af761faa6a8a5590f60f6ceab22e88d87ef13ee3f11008",
+  "source_sha256": "ed776479325100f4c3904988cbe1d07dee15d1dfc6d6b4475a8df1950780f335",
   "scope": "Issue16 Flutter comments27/28, documents78e53aa0; isolated implementation verification only",
   "schemas": [
     "0023 baseline preserved",
@@ -140,6 +140,18 @@
       "passed": 2,
       "failed": 0,
       "seconds": 40.82
+    },
+    {
+      "project": "lostparty-check-ef258d336ace",
+      "selection": [
+        "closed_null_leader_settings_are_readable_with_edit_denied",
+        "cn_different_leaders_change_without_g1_and_title_remains_common",
+        "all_detail_profiles_share_target_badges_and_legacy_c_projection"
+      ],
+      "passed": 3,
+      "failed": 0,
+      "seconds": 69.4,
+      "reason": "Actual development read found null-leader completed-generation edit permission failure; reproduced with synthetic data and fixed"
     }
   ],
   "counting": "Selections overlap and contain earlier revisions; never sum run counts as a unique total or claim one complete HEAD/full repository run. Targeted final runs supersede corrected failures.",

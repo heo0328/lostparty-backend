@@ -3103,3 +3103,14 @@ NEXT_WORK/AI_CONTEXT/추적표를 갱신했으며 기존 로컬 수정은 보존
 - 최종 검토에서 원본누락T는 그룹 차단을 unavailable로 유지하면서 대상/공대장 정보를 그룹 목록에 내보내지 않도록 보완했다. 활성T만 판정하며 닫힌T의 누락을 새 활성 차단으로 집계하지 않는다. 해당 반대T 누락 경계 시험을 추가했다.
 - 최종 원본누락/반대T 비노출 시험0b0fd7ad2dad **2PASS/40.82초**, 임시DB·네트워크 정리 성공. 최종 static도 잠금·문서245/링크2562·도구12개 통과. 앞선 실패 경계의 보완 검증을 완료했으며 source 해시는 격리 집계에 기록했다.
 - 원격 게시: 구현/계약/시험/기록 `b212ad0f45e36e1bd5c6c860bb1e118f590bbc79`를 feat/raid-group-policy에 commit/push하고 local/origin 일치를 확인했다. [#16 전체30번째 Backend · 구현/고정 계약 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6523975291) 게시 후 전체댓글30/마지막URL을 재조회해 실제 순번을 확인했다. 본문 상단은 현재범위·상태·다음담당으로 갱신하고 이전0034 원문을 보존했다. GitHub 연결 도구의 댓글 쓰기403은 기존 gh 인증 경로로 게시했으며 추가 권한/Issue 종료는 요청하지 않았다. 다음 Flutter는 고정계약 소비/시험·분석/구체 차이 회신, Backend 실제0035 반영은 별도 승인 구간이다. 이 후행 기록만 추가하며 검증된 업무 소스는 변경하지 않는다.
+
+<a id="cycle-group-policy-rollout"></a>
+
+## 2026-10-30 — 주차별 그룹 정책 개발환경 반영
+
+- 사용자 ‘백엔드에 반영’ 지시로 기존 개발 API/worker·같은 DB에0035를 적용하는 구간을 승인받았다. feat/raid-group-policy·기존 키/환경/DB볼륨을 유지하며 dev/main merge·AWS/release·자료초기화는 범위에 포함하지 않았다. Issue16 최신은 전체30번째 Backend 고정 계약 인계였고 추가 Flutter 회신은 없었다.
+- 기존 source2602e45/이미지5bd8dde6·DB0034·API/DB healthy를 확인했다. F01도 새 소스에 포함됨을 확인했고 반영 전 미처리 등록정보 마스킹 대상은0건이었다. 별도 수동 cleanup/실회원 변경 명령은 실행하지 않았다.
+- 기존 고정 런타임 이미지에 새 app/alembic을 복사해 후보를 빌드했다. 최초 Dockerfile FROM의 이미지ID 참조는 registry 이름으로 해석돼 빌드 실패했으며, 기존 로컬 태그의 ID 일치를 확인한 뒤 같은 이미지로 다시 빌드했다. 이 준비 실패에서는 서버를 변경하지 않았다. 후보274파일·runtime31·기본/two-cycle 전체계약·Compose환경/command/키mount 일치를 확인했다.
+- API/lifespan worker를 중지하고 READ ONLY 감사에서 기존114업무표2,038행·sequence·열정의/시각/행hash·키hash를 기록했다. 같은 DB에0035를 한 번만 적용해 현재 explicit 세대36건을 초기화했다. 전후 기존114표/sequence/키 불변·정책36건/정규화 불일치0·readiness를 확인했다. 별도DB/복원리허설/dump·자료삭제는 추가하지 않았다. 비공개 비교 기준은 ignored backups의 제한된 폴더에만 보관했다.
+- 이행 후 감사 도구의 앱 모델 초기화 순서와 이전 비교 기준 재로딩을 보완해 후검사만 재실행했다. migration 재실행/기존자료 수정은 없었다. 최초 새API healthy 및 두전체계약을 확인한 뒤 실제 읽기에서 완료세대의 null공대장에 설정편집 permission 계산이 AttributeError가 되는 경계를 발견했다. API/worker를 다시 중지하고 새 설정 자격검사에 기존 open/room-active·공대장 근거 경계를 추가했다. 완료주차는 읽기를 유지하고 ROUND_NOT_ACTIVE로 편집을 거절한다. 실제 자료를 바꾸어 회피하지 않았다.
+- 실자료에서 발견한 경계를 합성 PostgreSQL로 재현한 신규 null공대장 읽기/편집거절·C/N 다른공대장/공통제목·모든profile/v1 투영 **3PASS/69.40초**(ef258d336ace). 기존 Starlette 경고1/nullPK SAWarning1, 실패0·임시DB/네트워크 정리 성공. 업무 보완/시험/기록을 같은 목적 브랜치에서 게시한 뒤 새 이미지를 반영한다.
