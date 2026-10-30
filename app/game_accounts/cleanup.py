@@ -1,5 +1,6 @@
 from datetime import timedelta
-from sqlalchemy import select, delete, update, or_, and_
+from sqlalchemy import select, delete, update, or_, and_, literal
+from sqlalchemy.dialects.postgresql import JSONB
 from app.core.database import session, now
 from app.lostark_keys.models import MemberPreview, MemberFetch, ProviderLimit
 from app.game_accounts.support import lock
@@ -22,7 +23,16 @@ def clean():
             r.result,r.state=None,'expired'
         db.execute(delete(RequestResult).where(RequestResult.completed_at<=current-timedelta(hours=48)))
         db.execute(delete(RequestResult).where(RequestResult.completed_at.is_(None),RequestResult.lease_expires_at<=current-timedelta(hours=48)))
-        for r in db.scalars(select(Registration).where(Registration.deleted_at<=current-timedelta(hours=24)).with_for_update(skip_locked=True).limit(200)):
+        # Completed rows must not consume the next batch. Null-safe JSONB
+        # comparison also repairs partial masking and JSON null previews.
+        registrations = (select(Registration).where(
+            Registration.deleted_at <= current-timedelta(hours=24),
+            or_(Registration.preview.is_distinct_from(literal([], type_=JSONB)),
+                Registration.lookup_name.is_distinct_from('[deleted]'),
+                Registration.label.is_distinct_from('[deleted]')))
+            .order_by(Registration.deleted_at, Registration.id)
+            .with_for_update(skip_locked=True).limit(200))
+        for r in db.scalars(registrations):
             r.preview=[]
             r.lookup_name='[deleted]'
             r.label='[deleted]'

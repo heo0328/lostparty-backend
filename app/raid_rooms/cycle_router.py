@@ -1,3 +1,6 @@
+from app.raid_rooms.cycle_group_context_schemas import TitleContext
+from app.raid_rooms import cycle_group_schemas as group_schemas
+from app.raid_rooms import cycle_group_policy as group_policy
 """Candidate write router. Intentionally absent from main until W4 cutover.
 
 Only isolated tests mount this router against the shadow schema. Publishing
@@ -52,7 +55,13 @@ class CycleRoute(AvailabilityRoute):
             try:
                 profile=request.query_params.get('contract_profile')
                 if profile is not None and profile!=beta_profile.PROFILE:fail('INVALID_REQUEST',400)
-                with beta_profile.request_scope(dict(request.query_params) if profile else None):
+                group_version=request.query_params.get('group_policy_version')
+                if group_version is not None and group_version!=group_policy.VERSION:fail('INVALID_REQUEST',400)
+                if group_version is not None:
+                    from app.core.database import session
+                    with session() as db:
+                        if not group_policy.enabled(db):fail('GROUP_FEATURE_NOT_READY',503)
+                with group_policy.using(group_version==group_policy.VERSION), beta_profile.request_scope(dict(request.query_params) if profile else None):
                     return await parent(request)
             except (AuthError,RequestValidationError,SQLAlchemyError) as error:
                 code=('SERVICE_UNAVAILABLE' if isinstance(error,SQLAlchemyError) else
@@ -65,7 +74,7 @@ class CycleRoute(AvailabilityRoute):
         return bounded
 
     def allowed_query(self,request):
-        fields=self.legacy_allowed_query(request)|{'contract_profile'}
+        fields=self.legacy_allowed_query(request)|{'contract_profile','group_policy_version'}
         if beta_profile.enabled():
             if request.method=='GET' and request.url.path.endswith(('/raid-room-creation-context','/opening-context')):
                 fields|={'base_starts_at','early_coordination_enabled','early_additional_members'}
@@ -86,7 +95,7 @@ class CycleRoute(AvailabilityRoute):
         if request.url.path.endswith('/member-removal-context'):return {'target_cycle_key','target_cycle_member_id'}
         if request.url.path.endswith('/completion-correction-context'):return {'target_cycle_key'}
         if request.url.path.endswith('/common-context'):return {'command','target_group_id'}
-        if request.url.path.endswith('/command-context'):return {'target_cycle_key','command','round_id'}
+        if request.url.path.endswith('/command-context'):return {'target_cycle_key','command','round_id','target_group_id'}
         if request.url.path.endswith('/candidates'):return {'target_cycle_key'}
         if request.url.path.endswith('/schedule-context'):return {'target_cycle_key','target_session_id'}
         if request.url.path.endswith('/raid-schedule-overlaps'):return {'target_cycle_key','limit','cursor'}
@@ -387,8 +396,10 @@ def respond_schedule(proposal_id:UUID,principal:Principal,key:Key,data:inputs.Re
     return cycle_schedule_service.respond(principal,proposal_id,key,data)[1]
 
 
-@router.get('/raid-rooms/{room_id}/command-context',response_model=s.OutputContract3GetV2RaidRoomsRoomIdCommandContext,responses=errors)
-def outcome_context(room_id:UUID,principal:Principal,target_cycle_key:str,command:Literal['close_weekly','complete_item','personal_completion'],round_id:UUID|None=None):
+@router.get('/raid-rooms/{room_id}/command-context',response_model=s.OutputContract3GetV2RaidRoomsRoomIdCommandContext|group_schemas.SettingsContext,responses=errors)
+def outcome_context(room_id:UUID,principal:Principal,target_cycle_key:str,command:Literal['close_weekly','complete_item','personal_completion','edit_group_policy'],round_id:UUID|None=None,target_group_id:UUID|None=None):
+    if command=='edit_group_policy':return cycle_management.group_context(principal,room_id,target_cycle_key,target_group_id)
+    if target_group_id is not None:fail('INVALID_REQUEST',400)
     return cycle_outcomes.get(principal,room_id,target_cycle_key,command,round_id)
 
 
@@ -440,13 +451,13 @@ def remove_target_member(room_id:UUID,principal:Principal,key:Key,data:inputs.Re
     return cycle_management.command(principal,room_id,key,data,'remove')[1]
 
 
-@router.get('/me/raid-rooms/{room_id}/common-context',response_model=group_connection.GroupConnectionContext|s.CommonContext,responses=errors)
+@router.get('/me/raid-rooms/{room_id}/common-context',response_model=TitleContext|group_connection.GroupConnectionContext|s.CommonContext,responses=errors)
 def common_context(room_id:UUID,principal:Principal,command:Literal['edit_common_settings','leave','end'],target_group_id:UUID|None=None):
     return cycle_common.get(principal,room_id,command,target_group_id)
 
 
 @router.put('/raid-rooms/{room_id}/common-settings',response_model=s.CommonSettingsAck,responses=errors)
-def edit_common_settings(room_id:UUID,principal:Principal,key:Key,data:inputs.CommonSettings):
+def edit_common_settings(room_id:UUID,principal:Principal,key:Key,data:inputs.CommonSettings|group_schemas.TitleCommand):
     return cycle_common.execute(principal,room_id,key,data,'edit_common_settings')[1]
 
 

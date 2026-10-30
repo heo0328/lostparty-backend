@@ -3056,3 +3056,73 @@ NEXT_WORK/AI_CONTEXT/추적표를 갱신했으며 기존 로컬 수정은 보존
 - 그룹 로컬/원격 ref의 dev 포함·단일 worktree를 확인하고 checkout dev에서 `git branch -d` 및 원격 지정 삭제로 `feat/group-management`를 정리했다. 미완료 `feat/activity-selection`은 보존했다. 통합 결과 문서는 dev에서 기록해 main에도 같은 커밋을 반영한다.
 - 검증: 통합 전 static 통과(runtime31/test43 잠금, 설치 환경 미검사·문서244개/상대 링크·앵커2540개·도구 unittest12개). PR 원격 필수 check는 없었다. 기존 그룹 격리/개발반영 검증은 원본 근거를 재사용하며 이번 Git 통합에서 업무 pytest·계약 생성·서버/DB·provider·기기 검증을 반복하지 않았다. 후행 기록은 문서 검사와 diff 검사로 확인한다.
 - 다음은 최신 dev에서 베타 개선 목적 브랜치로 F01 구현·격리 검증이다. 이번 작업으로 개선 구현·서버 반영·배포·Issue 종료는 하지 않았다. 실제 실행 source2602e45/이미지5bd8dde6·DB0034와 새 기기 대기는 유지한다.
+
+<a id="f01-registration-cleanup"></a>
+
+## 2026-10-30 — F01 삭제 등록정보 정리 배치 진행 보장
+
+- 사용자 승인 설계에 따라 최신 원격 dev `ccd1cc8`에서 `fix/backend-beta-readiness`를 생성했다. 기존 그룹 브랜치 통합 상태와 미완료 활동 선택 브랜치는 보존한다. 작업 구간은 F01이며 F02~F10 전체 착수·배포 승인으로 확대하지 않았다.
+- 문제: 완료 행도 매번 최대200개 선택 대상에 남아 미처리 자료의 진행을 보장하지 못했다. `cleanup.py`의 Registration 선택에 세 필드의 완료 값과 `IS DISTINCT FROM` 조건(JSONB 빈 배열 포함)을 추가하고 `deleted_at, id` 순서로 정렬했다. 부분 마스킹·JSON null도 다시 처리한다.
+- 삭제 후24시간/회차200개·기존 마스킹 값·단일 트랜잭션·전역 advisory lock·SKIP LOCKED를 유지했다. 모델·migration·API·OpenAPI·worker 주기·물리 삭제·보존 정책은 변경하지 않았다. 새 컬럼/커서/내부 반복 없이 기존 상태로 완료를 판별할 수 있어 최소 수정을 선택했다.
+- 신규 `test_registration_cleanup.py` 10PASS(5시나리오×0023/0034): 완료200/미처리450 혼재의200→200→50 진행·삭제 시각/동일 시각ID 순서·완료 후 무변경, 부분 마스킹8조합·JSON null·활성/유예/정확한24시간 경계, UPDATE 후 예외/롤백/재시도, 두 cleanup의 실제 advisory lock 대기/순차 진행, 일부 행 잠금 건너뛰기/해제 후 완료를 확인했다. 시험 전용 이벤트와 제한시간을 사용했고 운영 훅은 추가하지 않았다.
+- 자료 보존: Registration 행 수/ID/FK/version/업무 시각과 record_created_at을 대조하고, 관련 소유권·캐릭터·설정·활동·감사·검증 이력을 포함한 나머지 전체 테이블 해시 불변을 확인했다. 실제 마스킹 UPDATE의 record_updated_at은 기존 DB 트리거대로 갱신되며 이미 완료된 행과 재실행에서는 바뀌지 않는다. 이는 새 timestamp 정책이 아니다.
+- 격리 PostgreSQL 선택 회귀 **67PASS**(신규10+기존57, 중복 합산 없음): `PYTHONDONTWRITEBYTECODE=1 python3 scripts/verify_isolated.py all tests/test_registration_cleanup.py tests/test_game_accounts.py tests/test_combat_power.py::test_power_retention_keeps_good_and_active_claims tests/test_verification_history.py`. 등록·삭제/재등록·한도/동시 변경·retention·전투력 캐시 정리·검증 이력 보존을 포함한다. 기존 Starlette/AnyIO deprecation 경고1개, 실패0. `all`은 선택 가능한 suite 이름이며 전체 프로젝트 시험을 실행했다는 뜻이 아니다.
+- 환경: 기존 compose.test의 UUID 프로젝트 `lostparty-check-e08ced96c968`·tmpfs PostgreSQL17·임시 키·worker 비활성·외부 호출 mock을 사용했다. 의존성 해시 설치·pip check·runtime31/test43 설치 일치 통과. DB 컨테이너와 네트워크 정리 성공. 호스트 직접 pytest·실제 개발 DB 연결/마스킹은 하지 않았다.
+- 계약: 별도 DB 없는 격리 runner `contracts`(프로젝트 `lostparty-check-ab2874226e49`)에서 기본123경로/140동작·two-cycle185경로/206동작 전체 객체 일치. 네트워크 정리 성공. static(잠금·문서·도구 unittest12개) 통과, 후행 문서244개/상대 링크·앵커2544개 및 diff 검사도 통과했다. 시험 수치는 합산하지 않는다.
+- 최종 시험 환경 제한시간 보완 후 신규10개만 같은 runner로 재확인: `PYTHONDONTWRITEBYTECODE=1 python3 scripts/verify_isolated.py all tests/test_registration_cleanup.py`, **10PASS**/기존 경고1(위67에 포함된 시나리오이므로 합산하지 않음). 테스트 연결에 statement10초/lock5초 제한을 명시했고 운영 설정은 바꾸지 않았다. 프로젝트 `lostparty-check-d7d968d8c4c0`의 DB 컨테이너·네트워크 정리 성공.
+- 게시: 구현·시험·이 기록과 현재 상태 문서는 같은 작업 구간의 commit/push 단위다. 게시 SHA는 해당 브랜치 Git 이력에서 확인한다. merge·서버 반영·실자료 마스킹·provider 실호출·전체 프로젝트 회귀·성능/부하·실회원/기기 검증은 수행하지 않았다. 외부 계약 변경이 없어 Issue 변경/추가 댓글·네이티브 재시험 요청은 없다.
+- 다음 담당: Backend는 같은 베타 개선 브랜치에서 F02의 실제 공개 프록시 경로·신뢰 경계/직접 접근 정책을 확인하고 설계한다. 미확인 환경을 추정해 인증 설정을 바꾸지 않는다. F01 실제 반영은 별도 승인 범위이며 그룹 새 기기 결과 대기는 독립적으로 유지한다.
+
+## 2026-10-30 — F02 조사 보류·개선 재개 조건 보존·그룹 후속 복귀 준비
+
+- 사용자 지시로 F02 공개 인프라 선택을 미정으로 보류하고 개선 기록을 commit/push한 뒤 그룹 작업을 우선한다. F02는 완료/폐기하지 않으며 F03도 착수하지 않았다. 상세 조사와 재개 입력/담당·완료 조건은 [개선 계획](backend-improvement-plan.md#f02-resume)에 한 원본으로 보존한다.
+- 사용자 입력: 현재 로컬 PC Backend/에뮬레이터·USB 연결 실제 기기의 로컬 URL 사용, AWS 서버 생성 전·Lightsail 예정·본인/모집 테스터 총20~50명 예상·도메인 미보유. 기기 식별번호·자격증명은 기록하지 않았다. Caddy/도메인/IP 인증서/AWS 제공 HTTPS 주소는 후보이지 확정 구현이 아니다. 총인원과 동시 사용자/부하 목표·사양을 구분한다.
+- 읽기 조사: 실행 API loopback8000·proxy headers 비활성·명시적 forwarded allow IP/worker 개수 옵션 없음, 인증 제한의 scope+client.host와 그룹 가입 코드의 client.host 소비를 확인했다. 공식 인증 Issue2 본문/최신 완료 회신과 고정 Uvicorn0.34.2·Caddy/AWS/인증서 공식 자료를 확인했다. 현재 장애·실제 공개 프록시 경로를 검증한 것은 아니다. 코드/compose/서버·DB·키·AWS 자원은 변경하지 않았다.
+- F01 `c94ce887b917f79cfb13049fb744b8c2e4f0026c`는 fix/backend-beta-readiness에 commit/push·원격 일치 완료 상태로 기록을 명확히 했다. 신규10 포함 선택67PASS·두 전체 계약 일치 근거는 재사용하며 이번 문서 작업에서 업무/서버 시험을 반복하지 않는다. dev/main ccd1cc8·F01 미통합/미반영은 유지한다.
+- 그룹 공식 Issue 재조회: #12 최신은 전체40번째 Flutter 기존 계약 소비 보고, #16에는 새 전체27번째 Flutter 정책 정정/Backend 구현 요청과 전체28번째 Flutter 고정 문서 게시가 있다. 각각 [요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521839291)·[문서](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521897849), Flutter 문서78e53aa0이다. 기존 구현 실패나 새 정책 구현 완료로 해석하지 않는다.
+- 다음 담당 Backend: 고정 문서·현재 주차 원본을 대조하고 실제T별 그룹 변경/해제·그룹원 우선 승계/외부승계 시 일반전환·개방 상속과 C/N독립·참가/pending/예약/완료·원origin/미확정요청/원ACK 보존의 설계·계약/구현·검증을 준비한다. 이후 Flutter 연결/시험·기기 인수다. 기존 그룹 자체 관계 정책·그룹장 레이드 권한은 확대하지 않는다. 새 정책은 미구현이며 기존6dac5ab를 완료 근거로 사용하지 않는다.
+- 이번 게시 구간은 개선 후속 보류/재개 인계이며 fix/backend-beta-readiness에서 기록을 모은다. 그룹 코드 착수 전에 실제 checkout과 분기 기준·미통합 F01/최신 기록을 확인해야 한다. 문서/상대 링크·diff 검사로 확인하며 PR/merge·그룹 코드 구현·실제 반영·Issue 게시/종료는 이번에 수행하지 않았다.
+
+<a id="cycle-group-policy-implementation"></a>
+
+## 2026-10-30 — 실제 주차별 그룹 변경·승계 구현과 격리 검증
+
+- 사용자 승인 설계/재개 지시를 따라 `feat/raid-group-policy`에서 이어갔다. 분기 기준은 개선 인계818a7ec이며 F01 c94ce88·개선 보류 기록을 포함한다. main/dev ccd1cc8·fix/backend-beta-readiness·미완료 활동 선택은 보존했다. Flutter 로컬 소스는 읽지 않았다.
+- 계약 원본은 [#16 전체27번째 Flutter 확정 정책/Backend 구현 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521839291)과 [전체28번째 Flutter 문서78e53aa0 게시](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521897849)다. [전체29번째 Backend 계약 후보/구현 착수](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6522746434)를 먼저 게시하고 실제 전체순번29를 확인했다. 새 댓글 조회에서도 추가 소비 회신은 없었다. 다음은 Backend 고정 계약/검증 인계 후 Flutter 연결·소비 차이 회신이다.
+- 방 공통 원본으로는 C/N 독립을 보장할 수 없어0035_cycle_group_policy에 `(cycle_id,generation)` PK의 정책 테이블과 FK/일반public-null·그룹group-UUID/양의 revision 제약을 추가했다. 기존 현재 세대만 초기 반영하고 public+그룹 구상태는 public/null로 정규화한다. 과거세대·원origin·완료/명령 기록과 기존 업무표는 재작성하지 않는다. 새 실행은 주차 원본을 사용하며 방 그룹값에 fallback/동시쓰기하지 않는다.
+- 기존 실제T settings/검토context, 생성·개방/재개방·탈퇴/모두탈퇴·N취소·위임/복구를 연결했다. 그룹원 우선/참가 순서 승계, 외부승계·비그룹원 위임 시 일반 전환을 한 트랜잭션/ACK로 묶고 기존 순번 불명확·소유권/예약증거·복구 경계를 유지했다. 변경 후 정책/settings/target revision과 해당T directory를 갱신하며 그룹만 바꾸면 plan/room/반대T를 바꾸지 않는다. 공통 제목의 기존 G1은 유지한다.
+- 권한·후보/신청 승인·검색의 SQL 페이지 전 필터·카드/세 상세profile·배지/그룹명·참가/신청 목록·그룹 활성모집/해산 차단은 실제T 정책을 사용한다. 기존 참가/이력 접근은 정확한 대상 근거로 보존하며 반대T 관계만으로 비공개T를 열지 않는다. cycle_groups는 room/실제T/세대별로 반환하고 과거세대를 현재값으로 덮지 않는다. 불명확한 explicit 현재 원본은 unavailable/null 차단 수이며 무관한 legacy_unknown 전체를 누락으로 오인하지 않는다.
+- 외부 소비 변경: cycle router의 query `group_policy_version=cycle-group-policy-1`, settings의 선택 group_policy/context_token, common-settings의 title-only DTO, context/ACK의 전환 영향·cycle_groups다. [정확한 경로/전후/오류·재조회](../features/groups/cycle-group-policy.md)·[합성 예시](../features/groups/cycle-group-policy.examples.json)를 고정 소비 원본으로 둔다. query/토큰 버전은 새 실행의 명시적 전환 근거이며 구정책 이중 운영/새 dedup 원장은 없다.
+- 구요청 operation/key/기존 body hash·원ACK는 보존했다. 저장 성공 ACK는 week/context/현재권한·업그레이드 검사보다 먼저 원형 복구하며 새필드를 합성하지 않는다. 성공 ACK 없는 구정책 요청/토큰은 CLIENT_UPGRADE_REQUIRED409로 예약 재조정 전에 거절한다. 미확정 원본문을 새정책 본문으로 자동 변경/재전송하지 않는다. 이행 시점을 DB 상수함수로 고정하고 기존 요청의 record_created_at과 비교해 토큰 없는 이행 전 미완료 요청도 새query 표시만으로 실행하지 못하게 했다. 새 dedup 원장이나 과거 요청행 갱신은 없다. 새표시를0034에 보내면503이며 아직 서버반영 전 새기기 시험을 요청하지 않는다.
+- 검증 결과와 실행별 선택/반복 관계는 [격리 집계](../features/groups/cycle-group-policy-verification.json)가 상세 원본이다. 기본0023·기존0034·신규0035의 일회용 PostgreSQL/app-role을 사용했다. 실제 서버/실회원 쓰기·provider실호출·전체프로젝트 일괄시험·부하/성능·기기·AWS/release·dev/main통합은 미실행이다. 각 runner의 임시DB/네트워크는 종료 시 정리하며 운영 컨테이너/볼륨/키를 변경하지 않았다.
+- 시험 중 수정: 최초 import 순서 오류, 없는N의 현재 metadata 접근, 그룹 차단 판정이 무관한legacy_unknown까지 누락으로 간주하던 경계를 재현해 수정했다. 최종 설정 permission/검토/명령의 공대장 자격 검사를 일원화하고 검토 최종만료·가입관계 교체·source가입/그룹 revision 근거를 보완했다. 오류를 숨기거나 제품 규칙을 완화하지 않았다. 실패/재실행 수를 성공 총계로 단순 합산하지 않는다.
+- 두 OpenAPI 전체 일치(기본123경로/140동작·two-cycle185/206), 기본객체 불변을 확인했다. 합성context/effect/metadata의 닫힌DTO·모든runtime component JSON Schema 검사 통과. 잠금runtime31/test43·문서/상대링크·원문128/동결JSON20 보존·도구 unittest12/static·diff 검사도 확인했다. 기존 Starlette/AnyIO deprecation 경고1은 유지한다.
+- 이 구현/계약/검증/문서를 한 구간으로 commit/push하고 원격 SHA를 확인한 뒤 #16에 고정 링크와 개발미반영 상태를 인계한다. 실제source2602e45/이미지5bd8dde6·DB0034는 그대로다. 다음 Flutter는 고정계약 연결/전체시험·분석, Backend는 소비 차이 대응 또는 별도 승인된0035 실제개발반영이다. 기존 기기 인수/Issue13 completed는 보존하며 새정책 연결/기기인수를 완료로 표시하지 않는다.
+- 최종 이행 경계 재검증: e7a186be7742의 구성공ACK/구미완료요청/HTTP/주차독립3PASS(66.40초), b3130277d0ba의 같은키 실패후재시도/0034→0035 public·group 이행3PASS(64.13초). 기존 선택과 중복하므로 합산하지 않는다. 후행 문서245개·상대링크/앵커2562개 검사를 통과했다.
+- 장시간 회귀 묶음3edfc4cd1518 종료: 새정책 당시21개와 membership-actions/atomic-members/모집관리 선택102개 중101PASS·1FAIL(1888.44초). 실패는 이전 이미지의 무관한legacy_unknown→그룹count unavailable 경계이며 수정 후 전용시험으로 재확인했다. 기존 atomic-members의 null PK 조회 SAWarning5와 Starlette 경고1을 기록한다. 동일HEAD 전체PASS로 표시하지 않는다.
+- 최종 검토에서 원본누락T는 그룹 차단을 unavailable로 유지하면서 대상/공대장 정보를 그룹 목록에 내보내지 않도록 보완했다. 활성T만 판정하며 닫힌T의 누락을 새 활성 차단으로 집계하지 않는다. 해당 반대T 누락 경계 시험을 추가했다.
+- 최종 원본누락/반대T 비노출 시험0b0fd7ad2dad **2PASS/40.82초**, 임시DB·네트워크 정리 성공. 최종 static도 잠금·문서245/링크2562·도구12개 통과. 앞선 실패 경계의 보완 검증을 완료했으며 source 해시는 격리 집계에 기록했다.
+- 원격 게시: 구현/계약/시험/기록 `b212ad0f45e36e1bd5c6c860bb1e118f590bbc79`를 feat/raid-group-policy에 commit/push하고 local/origin 일치를 확인했다. [#16 전체30번째 Backend · 구현/고정 계약 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6523975291) 게시 후 전체댓글30/마지막URL을 재조회해 실제 순번을 확인했다. 본문 상단은 현재범위·상태·다음담당으로 갱신하고 이전0034 원문을 보존했다. GitHub 연결 도구의 댓글 쓰기403은 기존 gh 인증 경로로 게시했으며 추가 권한/Issue 종료는 요청하지 않았다. 다음 Flutter는 고정계약 소비/시험·분석/구체 차이 회신, Backend 실제0035 반영은 별도 승인 구간이다. 이 후행 기록만 추가하며 검증된 업무 소스는 변경하지 않는다.
+
+<a id="cycle-group-policy-rollout"></a>
+
+## 2026-10-30 — 주차별 그룹 정책 개발환경 반영
+
+- 사용자 ‘백엔드에 반영’ 지시로 기존 개발 API/worker·같은 DB에0035를 적용하는 구간을 승인받았다. feat/raid-group-policy·기존 키/환경/DB볼륨을 유지하며 dev/main merge·AWS/release·자료초기화는 범위에 포함하지 않았다. Issue16 최신은 전체30번째 Backend 고정 계약 인계였고 추가 Flutter 회신은 없었다.
+- 기존 source2602e45/이미지5bd8dde6·DB0034·API/DB healthy를 확인했다. F01도 새 소스에 포함됨을 확인했고 반영 전 미처리 등록정보 마스킹 대상은0건이었다. 별도 수동 cleanup/실회원 변경 명령은 실행하지 않았다.
+- 기존 고정 런타임 이미지에 새 app/alembic을 복사해 후보를 빌드했다. 최초 Dockerfile FROM의 이미지ID 참조는 registry 이름으로 해석돼 빌드 실패했으며, 기존 로컬 태그의 ID 일치를 확인한 뒤 같은 이미지로 다시 빌드했다. 이 준비 실패에서는 서버를 변경하지 않았다. 후보274파일·runtime31·기본/two-cycle 전체계약·Compose환경/command/키mount 일치를 확인했다.
+- API/lifespan worker를 중지하고 READ ONLY 감사에서 기존114업무표2,038행·sequence·열정의/시각/행hash·키hash를 기록했다. 같은 DB에0035를 한 번만 적용해 현재 explicit 세대36건을 초기화했다. 전후 기존114표/sequence/키 불변·정책36건/정규화 불일치0·readiness를 확인했다. 별도DB/복원리허설/dump·자료삭제는 추가하지 않았다. 비공개 비교 기준은 ignored backups의 제한된 폴더에만 보관했다.
+- 이행 후 감사 도구의 앱 모델 초기화 순서와 이전 비교 기준 재로딩을 보완해 후검사만 재실행했다. migration 재실행/기존자료 수정은 없었다. 최초 새API healthy 및 두전체계약을 확인한 뒤 실제 읽기에서 완료세대의 null공대장에 설정편집 permission 계산이 AttributeError가 되는 경계를 발견했다. API/worker를 다시 중지하고 새 설정 자격검사에 기존 open/room-active·공대장 근거 경계를 추가했다. 완료주차는 읽기를 유지하고 ROUND_NOT_ACTIVE로 편집을 거절한다. 실제 자료를 바꾸어 회피하지 않았다.
+- 실자료에서 발견한 경계를 합성 PostgreSQL로 재현한 신규 null공대장 읽기/편집거절·C/N 다른공대장/공통제목·모든profile/v1 투영 **3PASS/69.40초**(ef258d336ace). 기존 Starlette 경고1/nullPK SAWarning1, 실패0·임시DB/네트워크 정리 성공. 업무 보완/시험/기록을 같은 목적 브랜치에서 게시한 뒤 새 이미지를 반영한다.
+- 보완 sourceb8542ef/이미지930c25f8·DB0035로 재시작 후274파일/runtime31·두전체계약·API 환경/포트/보안/키mount·DB컨테이너/이미지/볼륨·.env 보존을 확인했다. 실제READ ONLY 서비스(유효세션2·각상세profile13/설정13/일반전환검토8/그룹활성3), loopback HTTP11PASS·worker3종 성공·관찰ERROR0/failed_items0·API/DB healthy를 확인했다. 상세 수치와 한계는 [반영 기록](../engineering/operations/cycle-group-policy-rollout.md)·[집계](../engineering/operations/records/cycle-group-policy-rollout.json)가 원본이다. 인증된 실회원 쓰기/원ACK실대조·앱/기기·부하·AWS·merge는 미실행이다.
+- 게시/협업: 보완소스b8542ef 및 반영기록476d1f3을 같은 브랜치에 commit/push·local/origin 확인 후 [#16 전체31번째 Backend · 개발반영/실행검증 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6524503597)를 게시했다. 전체댓글31/마지막URL을 재조회했고 본문 상단은0035 반영완료/Flutter 연결·기기확인 대기로 갱신하며 기존원문/OPEN을 보존했다. 인증된 실회원 쓰기·앱/기기 인수를 완료로 바꾸지 않았다. 후행링크 기록만 추가하며 실제실행소스는b8542ef로 유지한다.
+
+<a id="group-detail-500-investigation"></a>
+
+## 2026-10-31 — Issue16 상세조회500 읽기 전용 조사·인수 정정
+
+- [전체36번째 Flutter 명시 조사 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6529904340)·[전체37번째 Flutter 사용자 앱기기 전체통과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6529987970)를 확인했다. 앞선 전체32 연결88a69fa7/전체2,724PASS·분석0, 전체33 예정ID/seed 비교ffffc4e6, 전체34 UTC 동등비교3ec0f54f/직접110PASS·분석0, 전체35 N방생성 사용자확인, 전체36 안내055e0608/기기인수정정을 수용한다. Flutter 자체보고/수동결과이며 Backend 시험과 합산하지 않는다. 전체37로 현재 안내한 그룹·레이드 앱 기기 대기를 해소하고 과거500 조사·Penpot/다른 보류기능까지 완료로 확대하지 않는다. Flutter 로컬 소스는 읽지 않았다.
+- 지정 request_id f6829146-b078-43e2-8d7d-0c4356414b2c(UTC17:30:38)·17f53b5d-eb52-4ff7-8b97-355b23453f8b(17:39:43)는 실제 실행b8542ef/이미지930c25f8의 GET 상세500/internal+동시간 server_event로 대조했다. 범위17:29~17:41에는 동일route500이 추가1건 있다. 현 안전 formatter는 exception class/traceback·query/room/actor를 기록하지 않아 당시 정확한 프로필/대상세대·원인까지 식별할 수 없다. 로그 결손을 추측으로 채우거나 과거 null공대장 보완을 이번 두건의 원인으로 단정하지 않았다.
+- 현재 실제소스/DB의 READ ONLY 서비스·route 호출/전체 응답모델 검증: 유효세션2, C/N19대상행의 beta on/off·기본/application-display/membership-actions·그룹표시 on/off 조합456호출 중316정상/140예상권한거절·예상외예외0. 과거 membership/cycle-member anchor 명시·그룹표시 조합140호출은95정상/45예상거절·예상외예외0이다. 반복조합은 고유시험/행 수로 합산하지 않는다. provider는 호출 시 실패시키고 모든 연결은 READ ONLY로 실행했다. 실제HTTP 인증/기기·전체프로젝트시험이 아니며 당시 상태 재현/오류해결 증거가 아니다. [조사 집계](../features/groups/detail-500-investigation.json)가 상세 원본이다.
+- 결론: 과거500 존재 확인, 현재미재현·원인미확정/미해결이다. 임의제품코드/계약변경·서버교체·자료수정/초기화·과거복원은 수행하지 않았다. F03 보류를 이 요청으로 확대하지 않았다. 이미 정상통과한 앱 시험의 반복 대신 Flutter에 당시 상세 query의 profile/실제T/그룹표시/anchor유무·직전작업과 대상상태를 기존 기록에서 확인하도록 요청한다. 자연재발하면 새UTC/request_id/민감값 없는 query/동작 근거를 받아 같은Issue에서 좁혀 조사한다. 인증헤더·키·원응답·개인정보는 요청하지 않는다.
+- 조사기록1be55a7을 같은브랜치에 commit/push·local/origin 일치 확인 후 [#16 전체38번째 Backend 조사결과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6530073442)를 게시했다. 실제전체댓글38/마지막URL을 확인하고 본문상단을 앱기기인수완료·별도500미해결/Flutter입력대기로 최신화했다. 과거본문은 보존하며 OPEN/실행소스b8542ef·DB0035를 유지한다. 후행인계링크 기록만 추가하며 추가 서버시험/교체는 수행하지 않는다.

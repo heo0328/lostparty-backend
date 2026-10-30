@@ -14,7 +14,7 @@ HEAD='0032_beta_recruitment'
 
 def available(db):
     if 'beta_schema_ready' not in db.info:
-        db.info['beta_schema_ready']=list(db.scalars(text('SELECT version_num FROM public.alembic_version')))in ([HEAD],['0033_reapplication_history'],['0034_group_features'])
+        db.info['beta_schema_ready']=list(db.scalars(text('SELECT version_num FROM public.alembic_version')))in ([HEAD],['0033_reapplication_history'],['0034_group_features'],['0035_cycle_group_policy'])
     return db.info['beta_schema_ready']
 
 

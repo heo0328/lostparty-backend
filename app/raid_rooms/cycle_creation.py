@@ -1,3 +1,4 @@
+from app.raid_rooms import cycle_group_policy as group_policy
 """Actor-bound creation preflight and atomic C/N command; staged until cutover."""
 from app.raid_rooms import beta_profile, beta_schedule, beta_output
 import uuid
@@ -122,7 +123,7 @@ def preflight(db, uid, cid, role, items, gid, key, continuation, next_cid, next_
     expires = min(stamp+timedelta(seconds=opaque.LIFETIME_SECONDS), raids.cycle(stamp).ends_at)
     token = opaque.seal(dict(actor=str(uid), command='create-v2', room=str(room_id), target=key,
         continuation=continuation, next_cid=str(next_cid) if next_cid else None, next_role=next_role,
-        expires=expires.isoformat(), digest=snapshot, **beta_profile.marker()))
+        expires=expires.isoformat(), digest=snapshot, **beta_profile.marker(), **group_policy.marker(db)))
     data = dict(expected_cycle_key=target.current.isoformat(), server_time=stamp,
         catalog_version=raids.catalog().catalog_version, policy_snapshot=snapshot, context_token=token,
         selection=choice, targets=[{k:t[k] for k in ('raid_id', 'difficulty_id', 'expected_weekly_revision')}
@@ -187,6 +188,7 @@ def create(principal, command_id, data):
             denied=current['target_creation'] if not current['target_creation']['permission']['allowed'] else second
             failure.update(failed_cycle_key=denied['target_cycle_key'].isoformat(),conflicts=denied['conflicts'])
             fail(current['permissions']['create']['reason'])
+        if group_policy.enabled(db) and ((body['scope']=='group') != (data.group_id is not None)):fail('INVALID_REQUEST',400)
         if not body['title'].strip() or (body['scope']=='group' and data.group_id is None):
             fail('INVALID_REQUEST',400)
         if body['app_mode'] != ('single' if len(data.items)==1 else 'mixed_bundle'):
@@ -199,7 +201,7 @@ def create(principal, command_id, data):
             fail('CONTEXT_ALREADY_USED')
         size = next(r.party_size for r in raids.catalog().raids if r.raid_id==data.items[0].raid_id) if len(data.items)==1 else 4
         admission.core._limits(db, uid, current['selection'], True)
-        room=Room(id=rid,leader_membership_id=mid,title=body['title'],scope=body['scope'],group_id=data.group_id,
+        room=Room(id=rid,leader_membership_id=mid,title=body['title'],scope='public' if group_policy.enabled(db) else body['scope'],group_id=None if group_policy.enabled(db) else data.group_id,
             app_capacity=size,revision=1,members_revision=1,plan_revision=1,migration_state='ready',created_at=stamp)
         db.add(room)
         db.flush()
@@ -245,6 +247,7 @@ def create(principal, command_id, data):
                 leadership_revision=1,next_join_order=1,opened_at=stamp)
             db.add(generation)
             db.flush()
+            group_policy.install(db,row,body["scope"],data.group_id)
             targets=[]
             for source, choice in zip(prospective['targets'],data.items):
                 rd=Round(id=source['round_id'],room_id=rid,item_id=source['item_id'],cycle_key=target_key,

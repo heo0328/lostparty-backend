@@ -34,7 +34,8 @@ def snapshot(principal):
 def room(db,uid,rid):
     row=db.get(Room,rid)
     if row is None:fail('ROOM_NOT_FOUND',404)
-    if row.scope=='group' and db.scalar(select(Member.id).where(Member.room_id==rid,Member.user_id==uid,Member.ended_at.is_(None))) is None:
+    from app.raid_rooms import cycle_group_policy as group_policy
+    if not group_policy.enabled(db) and row.scope=='group' and db.scalar(select(Member.id).where(Member.room_id==rid,Member.user_id==uid,Member.ended_at.is_(None))) is None:
         if db.scalar(select(GroupMembership.id).join(Group,Group.id==GroupMembership.group_id).where(Group.ended_at.is_(None),GroupMembership.group_id==row.group_id,
                 GroupMembership.user_id==uid,GroupMembership.ended_at.is_(None))) is None:fail('ROOM_NOT_FOUND',404)
     return row

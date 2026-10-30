@@ -1,3 +1,4 @@
+from app.raid_rooms.cycle_group_schemas import Envelope as PolicyEnvelope, PolicyCandidate
 """Closed wire for the atomic member actions (#22/#23)."""
 from typing import Annotated, Literal
 from uuid import UUID
@@ -90,7 +91,7 @@ class DepartureData(DTO):
     permission: Permission
     confirmation: Confirmation | None
 
-class DepartureContext(DTO):
+class DepartureContext(PolicyEnvelope, DTO):
     scope: Scope
     data: DepartureData
 
@@ -143,7 +144,7 @@ class RemovalData(DTO):
     opposite_relation: OppositeRelation
     options: RemovalOptions
 
-class RemovalContext(DTO):
+class RemovalContext(PolicyEnvelope, DTO):
     scope: Scope
     data: RemovalData
 
@@ -170,6 +171,6 @@ class ActionResultData(DTO):
     affected_cycle_keys: Annotated[list[CycleKey], Field(min_length=1,max_length=2)]
     effects: Annotated[list[ActionEffect], Field(min_length=1,max_length=2)]
 
-class ActionResult(DTO):
+class ActionResult(PolicyEnvelope, DTO):
     scope: Scope
     data: ActionResultData

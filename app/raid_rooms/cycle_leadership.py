@@ -1,3 +1,4 @@
+from app.raid_rooms import cycle_group_policy as group_policy
 """T-only cancellation, deterministic succession and explicit leadership transfer."""
 import uuid
 from sqlalchemy import select
@@ -104,6 +105,8 @@ def cancel(principal,rid,command,data):
             fail('SUCCESSOR_UNAVAILABLE')
         if token['digest']!=binding:
             fail('SUCCESSOR_UNAVAILABLE' if current['mode']=='auto_successor' else 'TARGET_CONTEXT_STALE')
+        policy_effect=successor.get('group_policy_effect') if successor else None
+        if policy_effect:group_policy.apply(db,row,policy_effect['after'])
         evidence=dict(assignments=[life.assignment_snapshot(a) for a in owned],
             participations=release_parts(db,row,cm,stamp),joined_order=str(cm.joined_order),joined_at=cm.joined_at)
         submission=db.get(CycleSubmission,cm.id)
@@ -132,7 +135,11 @@ def cancel(principal,rid,command,data):
         if schedule.planning_enabled(db):
             from app.raid_rooms import cycle_planning
             cycle_planning.refresh(db,room,row,uid,command,stamp)
-        return 200,life.ack(db,row,command,stamp),final_guard
+        result=life.ack(db,row,command,stamp)
+        if policy_effect:
+            policy_effect['after']=group_policy.state(group_policy.get(db,row))
+            result['group_policy_effects']=jsonable_encoder([policy_effect])
+        return 200,result,final_guard
     return cycles.execute(principal,'cancel',command,dict(room_id=str(rid),body=body),run)
 
 
@@ -169,12 +176,18 @@ def transfer(principal,rid,command,data):
         if not current['permission']['allowed']:fail(current['permission']['reason'])
         if candidate is None or not candidate['permission']['allowed']:fail('SUCCESSOR_UNAVAILABLE')
         if candidate['revision']!=body['expected_candidate_revision']:fail('REVISION_CONFLICT')
+        policy_effect=candidate.get('group_policy_effect')
+        if policy_effect:group_policy.apply(db,row,policy_effect['after'])
         generation=db.get(CycleGeneration,(row.id,row.generation))
         generation.leader_cycle_member_id=uuid.UUID(candidate['cycle_member_id']);generation.leadership_revision+=1
         row.revision+=1;row.plan_revision+=1;cycles.touch_directory(db,row.cycle_key)
         life.decision(db,row,uid,command,'leadership_transferred',stamp,dict(previous=cm.id,candidate=candidate))
         db.flush()
-        return 200,life.ack(db,row,command,stamp)
+        result=life.ack(db,row,command,stamp)
+        if policy_effect:
+            policy_effect['after']=group_policy.state(group_policy.get(db,row))
+            result['group_policy_effects']=jsonable_encoder([policy_effect])
+        return 200,result
     return cycles.execute(principal,'transfer',command,dict(room_id=str(rid),body=body),run)
 
 

@@ -1,0 +1,167 @@
+{
+  "description": "Synthetic closed context and metadata/effect fragments; no actual members or reusable token. Full commands follow OpenAPI.",
+  "settings_context": {
+    "scope": {
+      "server_now": "2026-10-28T03:00:00Z",
+      "current_cycle_key": "2026-10-28",
+      "target_cycle_key": "2026-10-28",
+      "playable_from": "2026-10-28T01:00:00Z",
+      "phase": "current",
+      "target_revision": 5,
+      "policy_version": "two-cycle-contract-4",
+      "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+      "target_generation": 1
+    },
+    "data": {
+      "room_id": "00000000-0000-4000-8000-000000000001",
+      "context_token": "<redacted-context-token>",
+      "issued_at": "2026-10-28T03:00:00Z",
+      "expires_at": "2026-10-28T03:02:00Z",
+      "permission": {
+        "allowed": true,
+        "reason": null,
+        "next_change_at": null
+      }
+    },
+    "group_policy_version": "cycle-group-policy-1",
+    "group_policy": {
+      "room_id": "00000000-0000-4000-8000-000000000001",
+      "target_cycle_key": "2026-10-28",
+      "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+      "generation": 1,
+      "scope": "public",
+      "group_id": null,
+      "revision": 1,
+      "state": "known"
+    },
+    "group_policy_effect": {
+      "room_id": "00000000-0000-4000-8000-000000000001",
+      "target_cycle_key": "2026-10-28",
+      "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+      "generation": 1,
+      "before": {
+        "scope": "public",
+        "group_id": null,
+        "revision": 1
+      },
+      "after": {
+        "scope": "group",
+        "group_id": "00000000-0000-4000-8000-00000000000a"
+      }
+    }
+  },
+  "effects": {
+    "public_to_a": {
+      "room_id": "00000000-0000-4000-8000-000000000001",
+      "target_cycle_key": "2026-10-28",
+      "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+      "generation": 1,
+      "before": {
+        "scope": "public",
+        "group_id": null,
+        "revision": 1
+      },
+      "after": {
+        "scope": "group",
+        "group_id": "00000000-0000-4000-8000-00000000000a",
+        "revision": 2
+      }
+    },
+    "a_to_b": {
+      "room_id": "00000000-0000-4000-8000-000000000001",
+      "target_cycle_key": "2026-10-28",
+      "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+      "generation": 1,
+      "before": {
+        "scope": "group",
+        "group_id": "00000000-0000-4000-8000-00000000000a",
+        "revision": 1
+      },
+      "after": {
+        "scope": "group",
+        "group_id": "00000000-0000-4000-8000-00000000000b",
+        "revision": 2
+      }
+    },
+    "a_to_public": {
+      "room_id": "00000000-0000-4000-8000-000000000001",
+      "target_cycle_key": "2026-10-28",
+      "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+      "generation": 1,
+      "before": {
+        "scope": "group",
+        "group_id": "00000000-0000-4000-8000-00000000000a",
+        "revision": 1
+      },
+      "after": {
+        "scope": "public",
+        "group_id": null,
+        "revision": 2
+      }
+    },
+    "same_group_successor": {
+      "room_id": "00000000-0000-4000-8000-000000000001",
+      "target_cycle_key": "2026-10-28",
+      "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+      "generation": 1,
+      "before": {
+        "scope": "group",
+        "group_id": "00000000-0000-4000-8000-00000000000a",
+        "revision": 1
+      },
+      "after": {
+        "scope": "group",
+        "group_id": "00000000-0000-4000-8000-00000000000a",
+        "revision": 1
+      }
+    },
+    "external_successor": {
+      "room_id": "00000000-0000-4000-8000-000000000001",
+      "target_cycle_key": "2026-10-28",
+      "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+      "generation": 1,
+      "before": {
+        "scope": "group",
+        "group_id": "00000000-0000-4000-8000-00000000000a",
+        "revision": 1
+      },
+      "after": {
+        "scope": "public",
+        "group_id": null,
+        "revision": 2
+      }
+    }
+  },
+  "cycle_groups": [
+    {
+      "room_id": "00000000-0000-4000-8000-000000000001",
+      "target_cycle_key": "2026-10-28",
+      "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+      "generation": 1,
+      "scope": "public",
+      "group_id": null,
+      "revision": 1,
+      "state": "known"
+    },
+    {
+      "room_id": "00000000-0000-4000-8000-000000000001",
+      "target_cycle_key": "2026-11-04",
+      "room_cycle_id": "00000000-0000-4000-8000-000000000003",
+      "generation": 1,
+      "scope": "group",
+      "group_id": "00000000-0000-4000-8000-00000000000b",
+      "revision": 1,
+      "state": "known"
+    }
+  ],
+  "unknown_history": {
+    "room_id": "00000000-0000-4000-8000-000000000001",
+    "target_cycle_key": "2026-10-28",
+    "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+    "generation": 9,
+    "scope": null,
+    "group_id": null,
+    "revision": null,
+    "state": "unavailable"
+  }
+}

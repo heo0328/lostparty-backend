@@ -74,6 +74,8 @@ def enrich(db,uid,stamp,model,payload):
 
 
 def render(db,uid,stamp,model,payload,*,exclude_unset=False):
+    from app.raid_rooms import cycle_group_policy
+    if "group_policy_version" in model.model_fields:payload=cycle_group_policy.enrich(db,payload)
     if not beta_profile.enabled():
         return model.model_validate(jsonable_encoder(payload)).model_dump(mode='json',exclude_unset=exclude_unset)
     if not beta_schedule.available(db):

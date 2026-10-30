@@ -1,3 +1,4 @@
+from app.raid_rooms import cycle_group_policy as group_policy
 """Staged v2 general admission commands. Each write owns one target only."""
 from app.raid_rooms import beta_profile, beta_schedule, beta_output
 import uuid
@@ -28,7 +29,7 @@ def resolve(db, uid, rid, key, stamp, *, write=False):
     admission.capacity(row)
     if row.state!='open':fail('ROOM_REVIEW_REQUIRED' if row.state=='review_required' else 'ROUND_NOT_ACTIVE')
     if room.ended_at is not None:fail('ROOM_NOT_ACTIVE')
-    return room,row
+    return group_policy.project(db,room,row,uid),row
 
 
 def leadership(db,row):
@@ -118,7 +119,7 @@ def preflight(db,uid,room,row,cid,role,intent,stamp,*,include_session_display=Fa
     policy=digest(stable)
     expires=min(stamp+timedelta(seconds=opaque.LIFETIME_SECONDS),raids.cycle(stamp).ends_at)
     token=opaque.seal(dict(actor=str(uid),room=str(room.id),cycle=str(row.id),intent=intent,
-        command='admit-v2',expires=expires.isoformat(),digest=policy,**display.marker(include_session_display),**beta_profile.marker()))
+        command='admit-v2',expires=expires.isoformat(),digest=policy,**display.marker(include_session_display),**beta_profile.marker(),**group_policy.marker(db)))
     result=dict(scope=scope(stamp,row.cycle_key.isoformat(),row),data=dict(room_id=room.id,room_revision=room.revision,
         members_revision=row.members_revision,plan_revision=row.plan_revision,
         expected_cycle_key=raids.cycle(stamp).cycle_key,server_time=stamp,catalog_version=raids.catalog().catalog_version,

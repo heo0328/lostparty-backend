@@ -1,3 +1,5 @@
+from app.raid_rooms import cycle_group_policy as group_policy
+from app.raid_rooms.cycle_group_models import CycleGroupPolicy
 """Read-only target directory. All predicates run in SQL before pagination."""
 from app.raid_rooms import beta_profile, beta_schedule, beta_output, group_list_display
 from datetime import timedelta
@@ -41,6 +43,7 @@ def role(db,uid,row):
 
 
 def card(db,room,row,uid,stamp,loaded=None):
+    room=group_policy.project(db,room,row)
     ended=room.ended_at is not None or (loaded['archived'] if loaded is not None else archive.is_archived(db,room.id))
     settings=row.settings_snapshot
     leader=loaded['leadership'] if loaded is not None else commands.leadership(db,row)
@@ -68,13 +71,14 @@ def card(db,room,row,uid,stamp,loaded=None):
 
 def get_card(principal,rid,key):
     with snapshot(principal,public=True) as (db,uid,stamp):
-        query=select(Room).where(Room.id==rid,filters.visible(uid))
+        query=select(Room).where(Room.id==rid) if group_policy.enabled(db) else select(Room).where(Room.id==rid,filters.visible(uid))
         room=db.scalar(query)
         if room is None:fail('ROOM_NOT_FOUND',404)
         if archive.is_archived(db,rid):fail('ROOM_NOT_FOUND',404)
         _,row=cycles.resolve(db,rid,key,stamp)
         if row is None:fail('TARGET_NOT_OPEN')
         admission.capacity(row)
+        if group_policy.enabled(db):group_policy.authorize(db,group_policy.project(db,room,row),row,uid)
         return beta_output.render(db,uid,stamp,wire.OutputContract3GetV2RaidRoomsRoomId,dict(scope=scope(stamp,key,row),
             data=card(db,room,row,uid,stamp)))
 
@@ -112,12 +116,15 @@ def search(principal,data,include_group_state=False):
             CycleRound.is_current.is_(True),Assignment.state=='active').correlate(RoomCycle).scalar_subquery()
         query=select(Room,RoomCycle).join(RoomCycle,RoomCycle.room_id==Room.id).where(
             Room.ended_at.is_(None),RoomCycle.cycle_key==target.key,RoomCycle.state=='open',
-            RoomCycle.generation.is_not(None),~archive.archived(Room.id),filters.visible(uid))
+            RoomCycle.generation.is_not(None),~archive.archived(Room.id),group_policy.visible(uid,RoomCycle) if group_policy.enabled(db) else filters.visible(uid))
         if uid is not None:query=query.where(~own_participation(uid))
-        if data.category=='general':query=query.where(Room.group_id.is_(None))
-        elif data.category=='group_linked':query=query.where(Room.group_id.is_not(None))
-        if data.admission_scope is not None:query=query.where(Room.scope==data.admission_scope)
-        if data.group_ids:query=query.where(Room.group_id.in_(data.group_ids))
+        if group_policy.enabled(db):query=query.join(CycleGroupPolicy,(CycleGroupPolicy.cycle_id==RoomCycle.id)&(CycleGroupPolicy.generation==RoomCycle.generation))
+        group_col=CycleGroupPolicy.group_id if group_policy.enabled(db) else Room.group_id
+        scope_col=CycleGroupPolicy.scope if group_policy.enabled(db) else Room.scope
+        if data.category=='general':query=query.where(group_col.is_(None))
+        elif data.category=='group_linked':query=query.where(group_col.is_not(None))
+        if data.admission_scope is not None:query=query.where(scope_col==data.admission_scope)
+        if data.group_ids:query=query.where(group_col.in_(data.group_ids))
         for condition in data.member_conditions:
             subject=mapping.get(condition.member_ref)
             if subject is None or len(set(condition.character_ids))!=len(condition.character_ids):fail('INVALID_REQUEST',400)

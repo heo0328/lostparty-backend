@@ -1,5 +1,7 @@
 # 모집 그룹 최초 연결·목록 표시 계약
 
+이 문서는0034 실행의 이전 계약이다. Issue16 전체27/28에서 확정한 [주차별 그룹 정책](cycle-group-policy.md)이0035 소비 계약으로 이를 대체한다. 실제 서버는 아직0034이며 새 정책 구현·게시와 서버반영을 구분한다. 아래 당시 원문·예시는 보존한다.
+
 2026-10-30 / feat/group-management / 구현·격리검증·고정계약게시 후 사용자별도지시로개발서버 source2602e45/이미지5bd8dde6·DB0034 반영·실행검증까지완료했다. DBmigration·자료변경/삭제·병합/운영배포는없으며새Flutter연결/기기인수는별도다. [#16 전체22 Flutter 실행계획](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6502336731), [#12 전체35 그룹명](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6501551683)·[전체36 소속표시](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6502226347)가 기준이다.
 
 ## 생성과 최초 연결

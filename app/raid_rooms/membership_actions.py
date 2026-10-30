@@ -1,3 +1,4 @@
+from app.raid_rooms import cycle_group_policy as group_policy
 """Ordinary membership commands. One snapshot planner, one locked transaction.
 
 Legacy cancel/end/leave and #22/#23 keep their original transports and effects.
@@ -33,7 +34,7 @@ def bounded(model,value, *, snapshot=None):
 
 
 def ready(db):
-    if list(db.scalars(text('SELECT version_num FROM alembic_version'))) not in (['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history'],['0034_group_features']):
+    if list(db.scalars(text('SELECT version_num FROM alembic_version'))) not in (['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history'],['0034_group_features'],['0035_cycle_group_policy']):
         fail('RECRUITMENT_COMMAND_NOT_READY',503)
 
 
@@ -81,6 +82,9 @@ def qualified(db,room,row,cm):
 
 
 def successor(db,room,row,members):
+    if group_policy.enabled(db):
+        chosen,proof,reasons,after,_=group_policy.candidates(db,room,row,members,lambda view,cm:qualified(db,view,row,cm))
+        return chosen,proof,reasons
     proof=[];eligible=[];uncertain=False;reasons=[]
     for cm in members:
         reason,value=qualified(db,room,row,cm)
@@ -102,6 +106,7 @@ def member_effect(db,row,cm,state):
 
 
 def plan_target(db,room,row,actor,action,stamp):
+    room=group_policy.project(db,room,row)
     if row.provenance!='explicit' or not row.generation or not row.settings_snapshot:fail('ROOM_REVIEW_REQUIRED')
     gen=db.get(CycleGeneration,(row.id,row.generation))
     if gen is None or row.state not in ('open','review_required') or gen.state not in ('open','review_required'):
@@ -179,6 +184,14 @@ def plan_target(db,room,row,actor,action,stamp):
         leadership_before=lead,transition=transition,affected_members=affected,successor=selected,leadership_after=after,
         cleanup=dict(released_reservation_count=len(reservations),ended_participation_count=sum(p.state=='active' for p in parts),
             cancelled_application_count=len(cancel_apps),cancelled_session_count=len(sessions)))
+    if group_policy.enabled(db):
+        current=group_policy.get(db,row)
+        same=new_leader is not None and group_policy.member(db,current.group_id,new_leader.user_id) is not None
+        changing=transition in ('automatic_successor','leadership_pending','recover')
+        after_policy=dict(scope=current.scope,group_id=current.group_id)
+        if changing and current.scope=='group' and not same:after_policy=dict(scope='public',group_id=None)
+        result['group_policy_effect']=group_policy.effect(db,row,after_policy)
+        candidate_proof.append(['group_policy',group_policy.state(current),after_policy])
     return result,[hidden,candidate_proof,atomic.cycle_proof(db,row),
         [planning.snapshot(m) for m in members],planning.snapshot(recovery) if recovery else None],reasons
 
@@ -232,7 +245,7 @@ def prepare(db,uid,rid,key,stamp,*,only=None):
             expected=dict(expected_cycle_key=current.isoformat(),view_cycle_key=key,actor_membership_id=str(actor.id),
                 expected_actor_membership_revision=actor.revision,action=action)
             confirmation=dict(context_token=seal(dict(actor=str(uid),room=str(rid),command='membership-action',body=expected,
-                digest=bound,expires=expires.isoformat())),issued_at=stamp,expires_at=expires)
+                digest=bound,expires=expires.isoformat(),**group_policy.marker(db))),issued_at=stamp,expires_at=expires)
             options[action]=dict(visible=True,permission=permission(),impact=impact,confirmation=confirmation)
             bindings[action]=bound;plans[action]=remaining
         except GameError as error:
@@ -286,6 +299,7 @@ def execute(principal,rid,command,data):
                 for app in db.scalars(select(CycleApplication).where(CycleApplication.cycle_id==row.id,
                     CycleApplication.generation==row.generation,CycleApplication.state=='pending',CycleApplication.user_id==uid)):
                     if action!='recover_leadership':app.state='cancelled';app.ended_at=stamp;app.revision=inc(app.revision)
+            if group_policy.enabled(db):group_policy.apply(db,row,target['group_policy_effect']['after'])
             after=target['leadership_after']
             gen.leader_cycle_member_id=after['leader_cycle_member_id'];gen.leadership_revision=after['leadership_revision']
             gen.state=target['planned_generation_state'];row.state=target['planned_target_state']
@@ -306,6 +320,10 @@ def execute(principal,rid,command,data):
                     cycle_member_revision=db.get(CycleMember,e['cycle_member_id']).revision,state=e['planned_state'],
                     cancelled_assignment_ids=e['cancelled_assignment_ids'],preserved_completed_assignment_ids=e['preserved_completed_assignment_ids'])
                     for e in target['affected_members']]))
+        if group_policy.enabled(db):
+            for effect_value,target_value in zip(effects,impact['targets']):
+                effect_value['group_policy_effect']=target_value['group_policy_effect']
+                effect_value['group_policy_effect']['after']=group_policy.state(group_policy.get(db,db.get(RoomCycle,target_value['room_cycle_id'])))
         ending=impact['room_effect']['kind']=='end';ended=0
         ending_members=list(db.scalars(select(life.Member).where(life.Member.room_id==rid,life.Member.ended_at.is_(None)))) if ending else [actor] if action=='leave_all' else []
         for member in ending_members:

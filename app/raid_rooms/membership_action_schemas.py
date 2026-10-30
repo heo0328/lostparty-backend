@@ -1,3 +1,4 @@
+from app.raid_rooms.cycle_group_schemas import Envelope as PolicyEnvelope, PolicyCandidate
 """Closed membership-action/profile wire from the agreed Issue25 design2.
 
 Cross-resource authorization/CAS is enforced by the transactional service.
@@ -95,7 +96,7 @@ class MembershipActionTargetRevisionRules(DTO):
     leadership: RevisionRule
 TargetRevisionRules = MembershipActionTargetRevisionRules
 
-class MembershipActionTargetPlan(DTO):
+class MembershipActionTargetPlan(PolicyCandidate, DTO):
     target_cycle_key: CycleKey
     room_cycle_id: UUID
     target_generation: Annotated[StrictInt, Field(ge=1, le=2147483647)]
@@ -154,7 +155,7 @@ class MembershipActionMenuData(DTO):
     options: Options
 MenuData = MembershipActionMenuData
 
-class MembershipActionContext(DTO):
+class MembershipActionContext(PolicyEnvelope, DTO):
     scope: Scope
     data: MenuData
 Context = MembershipActionContext
@@ -182,7 +183,7 @@ class MembershipActionMemberResult(DTO):
     preserved_completed_assignment_ids: Annotated[list[UUID], Field(min_length=0, max_length=5)]
 MemberResult = MembershipActionMemberResult
 
-class MembershipActionTargetResult(DTO):
+class MembershipActionTargetResult(PolicyCandidate, DTO):
     target_cycle_key: CycleKey
     room_cycle_id: UUID
     target_generation: Annotated[StrictInt, Field(ge=1, le=2147483647)]
@@ -213,7 +214,7 @@ class MembershipActionResultData(DTO):
     ended_persistent_membership_count: Annotated[StrictInt, Field(ge=0, le=2147483647)]
 ResultData = MembershipActionResultData
 
-class MembershipActionResult(DTO):
+class MembershipActionResult(PolicyEnvelope, DTO):
     scope: Scope
     data: ResultData
 Result = MembershipActionResult
@@ -346,7 +347,7 @@ class MembershipActionDetailReaderScope(DTO):
     reader_kind: Literal['detail']
 DetailReaderScope = MembershipActionDetailReaderScope
 
-class MembershipActionDetailProfile(DTO):
+class MembershipActionDetailProfile(PolicyEnvelope, DTO):
     scope: DetailReaderScope
     data: DetailProfileData
 DetailProfile = MembershipActionDetailProfile
@@ -369,7 +370,7 @@ class MembershipActionPlanReaderScope(DTO):
     reader_kind: Literal['plan']
 PlanReaderScope = MembershipActionPlanReaderScope
 
-class MembershipActionPlanProfile(DTO):
+class MembershipActionPlanProfile(PolicyEnvelope, DTO):
     scope: PlanReaderScope
     data: PlanProfileData
 PlanProfile = MembershipActionPlanProfile
@@ -397,7 +398,7 @@ class MembershipActionMembershipReaderScope(DTO):
     reader_kind: Literal['memberships']
 MembershipReaderScope = MembershipActionMembershipReaderScope
 
-class MembershipActionMembershipPage(DTO):
+class MembershipActionMembershipPage(PolicyEnvelope, DTO):
     scope: MembershipReaderScope
     data: MembershipPageData
 MembershipPage = MembershipActionMembershipPage

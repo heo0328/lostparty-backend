@@ -100,7 +100,9 @@ def body_base(stamp,row):
 def confirmation(uid,rid,row,action,data,hidden,expected,stamp):
     binding=digest(encoded([uid,rid,action,{k:v for k,v in scope(stamp,row.cycle_key.isoformat(),row).items() if k!='server_now'},data,hidden,expected]))
     expires=min(stamp+timedelta(seconds=120),life.raids.cycle(stamp).ends_at)
-    return dict(context_token=seal(dict(actor=str(uid),room=str(rid),command=action,body=expected,
+    from sqlalchemy.orm import object_session
+    from app.raid_rooms.cycle_group_policy import marker
+    return dict(context_token=seal(dict(**marker(object_session(row)),actor=str(uid),room=str(rid),command=action,body=expected,
         expires=expires.isoformat(),digest=binding)),issued_at=stamp,expires_at=expires),binding
 
 

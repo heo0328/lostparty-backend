@@ -17,7 +17,7 @@ from app.raids import service as raids
 
 
 def ready(db):
-    if list(db.scalars(text('SELECT version_num FROM alembic_version')))not in (['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history'],['0034_group_features']):
+    if list(db.scalars(text('SELECT version_num FROM alembic_version')))not in (['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history'],['0034_group_features'],['0035_cycle_group_policy']):
         fail('RECRUITMENT_COMMAND_NOT_READY',503)
 
 
@@ -46,7 +46,8 @@ def context(principal,cid,raid,key):
         data,binding,_,current=read(db,uid,cid,raid,key,stamp)
         if data['permission']['allowed']:
             expires=min(stamp+timedelta(seconds=120),current.ends_at)
-            token=opaque.seal(dict(flow='completion-correction',actor=str(uid),character=str(cid),raid=raid,target=key,
+            from app.raid_rooms.cycle_group_policy import marker
+            token=opaque.seal(dict(**marker(db),flow='completion-correction',actor=str(uid),character=str(cid),raid=raid,target=key,
                 current=current.cycle_key,digest=binding,expires=expires.isoformat()))
             data['confirmation']=dict(context_token=token,issued_at=stamp,expires_at=expires)
         return schema.CorrectionContext.model_validate(dict(server_now=stamp,current_cycle_key=current.cycle_key,data=data)).model_dump(mode='json')

@@ -12,10 +12,31 @@ from app.raids import service as raids
 
 
 def evaluate(db, group, stamp):
-    rooms = list(db.scalars(select(Room).where(Room.group_id == group.id, Room.scope == 'group',
-        Room.ended_at.is_(None)).order_by(Room.created_at.desc(), Room.id.desc())))
+    from app.raid_rooms import cycle_group_policy as policy
+    from app.raid_rooms.cycle_group_models import CycleGroupPolicy
+    selected=select(Room).where(Room.ended_at.is_(None))
+    if policy.enabled(db):
+        match=select(RoomCycle.id).join(CycleGroupPolicy,(CycleGroupPolicy.cycle_id==RoomCycle.id)&
+            (CycleGroupPolicy.generation==RoomCycle.generation)).where(RoomCycle.room_id==Room.id,
+            RoomCycle.state.in_(('open','review_required')),CycleGroupPolicy.group_id==group.id).exists()
+        unknown=select(RoomCycle.id).where(RoomCycle.room_id==Room.id,RoomCycle.state.in_(('open','review_required')),
+            ~select(CycleGroupPolicy.cycle_id).where(CycleGroupPolicy.cycle_id==RoomCycle.id,
+                CycleGroupPolicy.generation==RoomCycle.generation).exists()).exists()
+        selected=selected.where(match | ((Room.group_id==group.id)&unknown))
+    else:selected=selected.where(Room.group_id==group.id,Room.scope=='group')
+    rooms=list(db.scalars(selected.order_by(Room.created_at.desc(),Room.id.desc())))
     current = date.fromisoformat(raids.cycle(stamp).cycle_key)
     items, evidence, unavailable = [], [], False
+    if policy.enabled(db):
+        # A missing generation policy has no group attribution. Do not treat
+        # that loss of evidence as proof that this group has zero blockers.
+        unresolved=db.scalar(select(RoomCycle.id).join(Room,Room.id==RoomCycle.room_id).where(
+            Room.ended_at.is_(None),RoomCycle.state.in_(('open','review_required')),
+            RoomCycle.provenance=='explicit',RoomCycle.generation.is_not(None),
+            ~select(CycleGroupPolicy.cycle_id).where(CycleGroupPolicy.cycle_id==RoomCycle.id,
+                CycleGroupPolicy.generation==RoomCycle.generation).exists()).limit(1))
+        if unresolved is not None:
+            unavailable=True;evidence.append(['unresolved-active-group-policy'])
     for room in rooms:
         if archive.is_archived(db, room.id):
             evidence.append([room.id, room.revision, 'archived'])
@@ -25,6 +46,13 @@ def evaluate(db, group, stamp):
         unknown = room.migration_state != 'ready' or not cycles or not item_ids
         targets = []
         for row in cycles:
+            if policy.enabled(db):
+                if row.state not in ('open','review_required'):continue
+                value=policy.get(db,row,required=False)
+                if value is None:
+                    unknown=True
+                    continue  # No group attribution: expose no target/leader data.
+                if value.group_id!=group.id:continue
             gen = db.get(CycleGeneration, (row.id, row.generation)) if row.generation is not None else None
             links = cycle_admission.rounds(db, row) if gen is not None else []
             unknown = (unknown or row.provenance != 'explicit' or row.state == 'review_required' or gen is None
@@ -44,6 +72,7 @@ def evaluate(db, group, stamp):
             evidence.append([row.id, row.revision, row.generation, row.state,
                 gen.state if gen else None, gen.leadership_revision if gen else None,
                 leader.id if leader else None, leader.revision if leader else None, shown])
+        if policy.enabled(db) and not targets and not unknown:continue
         unavailable = unavailable or unknown
         items.append(dict(room_id=room.id, title=room.title, scope='group', group_id=group.id,
             room_revision=room.revision, state='review_required' if unknown else 'active',

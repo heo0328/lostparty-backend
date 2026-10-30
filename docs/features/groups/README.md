@@ -17,3 +17,9 @@
 최신 [#16 전체12번째 Flutter 사용자 확정](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6464943488): 그룹원 누구나 현재 조건으로 개설하며 해당 레이드 공대장이 관리한다. 그룹장 전용 공개전환/해산 명령은 제외하고 방/공대장 안내와 기존 상세를 사용한다.
 
 후속 [모집 최초 연결·목록 그룹명·참가자 소속표시](raid-link-contract.md)는 같은 목적 브랜치에서 구현·격리검증·계약 인계하며 개발반영은source2602e45/5bd8dde6·DB0034로완료했고새UI/기기인수는별도다.
+
+## 실제 주차별 그룹 변경·승계 후속
+
+Issue16 전체27/28의 사용자 확정에 따라 [주차·세대별 그룹 정책](cycle-group-policy.md)을 구현했다. C/N 독립 그룹 변경·일반 전환·그룹원 우선 승계·외부 위임/승계 시 일반 전환·개방 상속과 모든 조회가0035 원본을 사용한다. [검증 집계](cycle-group-policy-verification.json)와 [대표 예시](cycle-group-policy.examples.json)를 따른다. 실제 개발서버는0035에 반영됐으며 고정 계약 소비·서버반영·기기 인수는 구분한다. 위 최초 연결 계약은 이전 실행의 근거다.
+
+현재 주차별 그룹 정책은 [0035 개발반영/실행검증](../../engineering/operations/cycle-group-policy-rollout.md)을 완료했다(sourceb8542ef/이미지930c25f8). 새 Flutter 연결/기기 인수는 별도다.

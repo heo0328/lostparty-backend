@@ -96,7 +96,13 @@ def _group(db, room, uid, allow_external=False, *, existing=False):
 
 
 def _room_restrictions(db, room):
-    for uid in db.scalars(select(Member.user_id).where(Member.room_id==room.id,Member.ended_at.is_(None))):
+    query=select(Member.user_id).where(Member.room_id==room.id,Member.ended_at.is_(None))
+    if getattr(room,'_cycle_row',None) is not None:
+        from app.raid_rooms.cycle_models import CycleMember
+        row=room._cycle_row
+        query=query.join(CycleMember,CycleMember.membership_id==Member.id).where(
+            CycleMember.cycle_id==row.id,CycleMember.generation==row.generation,CycleMember.state.in_(('participating','review_required')))
+    for uid in db.scalars(query):
         effective=limits.values(db.get(MemberUsageLimits,uid))
         if room_count(db,uid)>effective.raid_rooms:
             fail('ROOM_RESTRICTED')

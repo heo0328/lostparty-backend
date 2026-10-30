@@ -17,7 +17,7 @@ from app.raid_rooms.schedule_heads import ScheduleHead
 
 
 def planning_enabled(db):
-    return list(db.scalars(text('SELECT version_num FROM public.alembic_version')))in (['0028_cycle_planning'],['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history'],['0034_group_features'])
+    return list(db.scalars(text('SELECT version_num FROM public.alembic_version')))in (['0028_cycle_planning'],['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history'],['0034_group_features'],['0035_cycle_group_policy'])
 
 
 def groups(db,target):
