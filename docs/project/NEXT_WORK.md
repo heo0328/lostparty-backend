@@ -4,9 +4,9 @@
 
 ## 다음 실행 — 그룹 주차별 연결·승계 정책 정정
 
-사용자 지시로 개선 상태를 기록·commit/push한 뒤 그룹 작업을 우선한다. [#16 전체27번째 Flutter · 정책 정정/Backend 구현 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521839291)과 [전체28번째 Flutter · 고정 문서 게시](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521897849)를 재조회했다. Flutter 문서 기준은 `78e53aa0b88d042d8468e08b351b5e75a4fadb4d`이며 새 앱 기능은 아직 미연결이다. 다음 담당 Backend는 고정 계약·구현/검증·개발 반영 상태를 인계하고, 이후 Flutter 연결/시험·기기 인수로 이어간다.
+사용자 지시로 개선 상태를 기록·commit/push한 뒤 그룹 작업을 우선한다. [#16 전체27번째 Flutter · 정책 정정/Backend 구현 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521839291)과 [전체28번째 Flutter · 고정 문서 게시](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521897849)를 재조회했다. Flutter 문서 기준은 `78e53aa0b88d042d8468e08b351b5e75a4fadb4d`이며 새 앱 기능은 아직 미연결이다. Backend는 고정 계약·구현/검증·개발 미반영 상태를 인계했다. 다음 담당은 Flutter 새 계약 연결/시험·소비 차이 회신이며, 실제 연결/기기 인수는 별도0035 반영 후다.
 
-주차·세대별 원본0035와 명령·조회·승계·구 요청 전환을 `feat/raid-group-policy`에서 구현했다. [신규 소비 계약](../features/groups/cycle-group-policy.md)·[합성 예시](../features/groups/cycle-group-policy.examples.json)·[검증 집계](../features/groups/cycle-group-policy-verification.json)를 기준으로 한다. 새 정책은 **Backend 구현/격리 검증 인계 구간**이며 실제0035 반영·Flutter 새 연결·기기 인수는 별도다. [전체29번째 Backend 계약 후보](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6522746434) 이후 고정 SHA/OpenAPI를 같은 Issue에 인계한다.
+주차·세대별 원본0035와 명령·조회·승계·구 요청 전환을 `feat/raid-group-policy`에서 구현했다. [신규 소비 계약](../features/groups/cycle-group-policy.md)·[합성 예시](../features/groups/cycle-group-policy.examples.json)·[검증 집계](../features/groups/cycle-group-policy-verification.json)를 기준으로 한다. 새 정책은 **Backend 구현/격리 검증 인계 구간**이며 실제0035 반영·Flutter 새 연결·기기 인수는 별도다. [전체30번째 Backend · 구현/고정 계약 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6523975291)를 게시했다. 구현 `b212ad0f45e36e1bd5c6c860bb1e118f590bbc79`는 commit/push·local/origin 일치 확인 완료다. 전체29 후보는 고정 계약으로 구체화됐다.
 
 다음은 Flutter가 고정 계약의 group_policy_version·실제T 설정context/명령·cycle_groups와 원ACK 복구를 연결하고 소비 차이를 회신하는 것이다. 실제 개발환경은 source2602e45/이미지5bd8dde6·DB0034로 유지하므로 **새0035 명령의 실제 기기 시험은 서버 반영 전 요청하지 않는다.** Backend는 구체 소비 차이 대응 또는 별도 승인된0035 개발반영/실행검증을 진행한다. AWS/release·dev/main merge·자료 초기화·Issue 종료는 수행하지 않는다.
 
