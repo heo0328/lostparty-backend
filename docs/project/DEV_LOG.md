@@ -3072,3 +3072,13 @@ NEXT_WORK/AI_CONTEXT/추적표를 갱신했으며 기존 로컬 수정은 보존
 - 최종 시험 환경 제한시간 보완 후 신규10개만 같은 runner로 재확인: `PYTHONDONTWRITEBYTECODE=1 python3 scripts/verify_isolated.py all tests/test_registration_cleanup.py`, **10PASS**/기존 경고1(위67에 포함된 시나리오이므로 합산하지 않음). 테스트 연결에 statement10초/lock5초 제한을 명시했고 운영 설정은 바꾸지 않았다. 프로젝트 `lostparty-check-d7d968d8c4c0`의 DB 컨테이너·네트워크 정리 성공.
 - 게시: 구현·시험·이 기록과 현재 상태 문서는 같은 작업 구간의 commit/push 단위다. 게시 SHA는 해당 브랜치 Git 이력에서 확인한다. merge·서버 반영·실자료 마스킹·provider 실호출·전체 프로젝트 회귀·성능/부하·실회원/기기 검증은 수행하지 않았다. 외부 계약 변경이 없어 Issue 변경/추가 댓글·네이티브 재시험 요청은 없다.
 - 다음 담당: Backend는 같은 베타 개선 브랜치에서 F02의 실제 공개 프록시 경로·신뢰 경계/직접 접근 정책을 확인하고 설계한다. 미확인 환경을 추정해 인증 설정을 바꾸지 않는다. F01 실제 반영은 별도 승인 범위이며 그룹 새 기기 결과 대기는 독립적으로 유지한다.
+
+## 2026-10-30 — F02 조사 보류·개선 재개 조건 보존·그룹 후속 복귀 준비
+
+- 사용자 지시로 F02 공개 인프라 선택을 미정으로 보류하고 개선 기록을 commit/push한 뒤 그룹 작업을 우선한다. F02는 완료/폐기하지 않으며 F03도 착수하지 않았다. 상세 조사와 재개 입력/담당·완료 조건은 [개선 계획](backend-improvement-plan.md#f02-resume)에 한 원본으로 보존한다.
+- 사용자 입력: 현재 로컬 PC Backend/에뮬레이터·USB 연결 실제 기기의 로컬 URL 사용, AWS 서버 생성 전·Lightsail 예정·본인/모집 테스터 총20~50명 예상·도메인 미보유. 기기 식별번호·자격증명은 기록하지 않았다. Caddy/도메인/IP 인증서/AWS 제공 HTTPS 주소는 후보이지 확정 구현이 아니다. 총인원과 동시 사용자/부하 목표·사양을 구분한다.
+- 읽기 조사: 실행 API loopback8000·proxy headers 비활성·명시적 forwarded allow IP/worker 개수 옵션 없음, 인증 제한의 scope+client.host와 그룹 가입 코드의 client.host 소비를 확인했다. 공식 인증 Issue2 본문/최신 완료 회신과 고정 Uvicorn0.34.2·Caddy/AWS/인증서 공식 자료를 확인했다. 현재 장애·실제 공개 프록시 경로를 검증한 것은 아니다. 코드/compose/서버·DB·키·AWS 자원은 변경하지 않았다.
+- F01 `c94ce887b917f79cfb13049fb744b8c2e4f0026c`는 fix/backend-beta-readiness에 commit/push·원격 일치 완료 상태로 기록을 명확히 했다. 신규10 포함 선택67PASS·두 전체 계약 일치 근거는 재사용하며 이번 문서 작업에서 업무/서버 시험을 반복하지 않는다. dev/main ccd1cc8·F01 미통합/미반영은 유지한다.
+- 그룹 공식 Issue 재조회: #12 최신은 전체40번째 Flutter 기존 계약 소비 보고, #16에는 새 전체27번째 Flutter 정책 정정/Backend 구현 요청과 전체28번째 Flutter 고정 문서 게시가 있다. 각각 [요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521839291)·[문서](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521897849), Flutter 문서78e53aa0이다. 기존 구현 실패나 새 정책 구현 완료로 해석하지 않는다.
+- 다음 담당 Backend: 고정 문서·현재 주차 원본을 대조하고 실제T별 그룹 변경/해제·그룹원 우선 승계/외부승계 시 일반전환·개방 상속과 C/N독립·참가/pending/예약/완료·원origin/미확정요청/원ACK 보존의 설계·계약/구현·검증을 준비한다. 이후 Flutter 연결/시험·기기 인수다. 기존 그룹 자체 관계 정책·그룹장 레이드 권한은 확대하지 않는다. 새 정책은 미구현이며 기존6dac5ab를 완료 근거로 사용하지 않는다.
+- 이번 게시 구간은 개선 후속 보류/재개 인계이며 fix/backend-beta-readiness에서 기록을 모은다. 그룹 코드 착수 전에 실제 checkout과 분기 기준·미통합 F01/최신 기록을 확인해야 한다. 문서/상대 링크·diff 검사로 확인하며 PR/merge·그룹 코드 구현·실제 반영·Issue 게시/종료는 이번에 수행하지 않았다.

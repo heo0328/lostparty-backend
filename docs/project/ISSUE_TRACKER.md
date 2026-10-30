@@ -6,6 +6,10 @@
 
 사용자 승인으로 그룹 작업 `48bf88c`를 [PR30](https://github.com/heo0328/lostparty-backend/pull/30)·병합 `fc6c06a`로 dev에 통합하고 main도 fast-forward하여 원격 일치를 확인했다. `feat/group-management`는 로컬·원격 정리하고 checkout은 dev다. 위 2026-10-28 분기 상태는 과거 기준이며 미완료 활동 선택 브랜치는 보존한다. 그룹 새 기기 확인·Issue 상태·실제 실행 서버는 변경하지 않았다.
 
+## 최신 그룹 후속 — 주차별 그룹 변경·승계 정책 정정
+
+[#16 전체27번째 Flutter · 확정 정책/Backend 선행 구현 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521839291)·[전체28번째 Flutter · 문서 게시](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521897849)를 확인했다. 고정 Flutter 문서78e53aa0이며 새 앱 미연결·다음 담당 Backend 계약/구현·검증 인계다. C/N별 그룹 변경/해제·그룹원 우선 승계/외부 승계 시 일반 전환·개방 상속은 기존6dac5ab와 다른 새 미구현 범위다. 기존 그룹 기기 인수·Issue13 completed는 유지하고 새 요청을 완료로 확대하지 않는다. 현재 실행과 보존 경계는 [NEXT_WORK](NEXT_WORK.md)를 따른다. 이번에는 Issue 본문/댓글·상태를 변경하지 않았다.
+
 ## 2026-10-27 마감 — Issue13 사용자 승인 종료
 
 사용자가 이슈13 클로즈를 명시적으로 지시했고 **closed/completed**를 실제 확인했다. [전체192번째 Backend · 1차 구현/기기 인수 마감](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6438046779)이 종료 근거다. Backend 구현/개발 반영과 Native 보고 정상 흐름·표시의 사용자 기기 인수는 완료다.190/191의 정밀도 소비·알럿·UX 등은 [차후 보완 추적](../features/recruitment/follow-up-backlog.md)에 담당·현재 보류·재착수 조건으로 보존했다. 이들은 현재 착수/1차 인수 선행 조건이 아니다.

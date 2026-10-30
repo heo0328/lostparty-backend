@@ -2,11 +2,17 @@
 
 문서 운영 #29는 공통 원본·양측 참조 반영 및 [상호 대조](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6520322169) 완료로 추가 수정 대기를 해소했다. Issue 종료는 별도이며 상세 근거는 [DEV_LOG](DEV_LOG.md)에 보존한다. 기존 그룹 기기 인수와 기술 진단 후속은 별도다.
 
-## 다음 실행 — Backend 베타 개선
+## 다음 실행 — 그룹 주차별 연결·승계 정책 정정
 
-[개선 실행 계획](backend-improvement-plan.md)에 작업 순서·정책/협업 경계·첫 구간·완료 조건을 기록했다. [종합 진단](../engineering/development/pre-beta-diagnosis-2026-10-30.md)은 근거와 대안의 원본이다. **F01 삭제 등록정보 정리 배치의 진행 보장은 구현·격리 검증 완료**다. [결과와 실행 명령](DEV_LOG.md#f01-registration-cleanup)을 따른다. 다음은 **F02 공개 접속 경로·인증 제한 정합성**의 실제 프록시/직접 접근 정책을 확인하고 적용안을 설계하는 구간이다. 공개 토폴로지는 미확인이므로 설정을 추측해 변경하지 않는다. 나머지 항목을 한꺼번에 적용하지 않으며 기록만으로 미합의 계약/운영 변경을 승인한 것은 아니다.
+사용자 지시로 개선 상태를 기록·commit/push한 뒤 그룹 작업을 우선한다. [#16 전체27번째 Flutter · 정책 정정/Backend 구현 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521839291)과 [전체28번째 Flutter · 고정 문서 게시](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521897849)를 재조회했다. Flutter 문서 기준은 `78e53aa0b88d042d8468e08b351b5e75a4fadb4d`이며 새 앱 기능은 아직 미연결이다. 다음 담당 Backend는 고정 계약·구현/검증·개발 반영 상태를 인계하고, 이후 Flutter 연결/시험·기기 인수로 이어간다.
 
-진단·인계 문서는 `48bf88c`로 게시 완료했다. 사용자 승인으로 그룹 브랜치를 [PR30](https://github.com/heo0328/lostparty-backend/pull/30)·병합 `fc6c06a`로 dev에 통합하고 main도 같은 시점으로 원격 최신화했다. 통합 결과 기록까지 main/dev `ccd1cc8`에 동기화했다. 현재 `fix/backend-beta-readiness`에서 F01 구현·시험·기록을 한 구간으로 묶어 게시하며 dev/main에는 아직 미통합이다. 실제 개발 서버 반영은 별도 승인 범위로 남긴다. 그룹 새 기기 인수·베타 출시 준비 완료를 의미하지 않는다.
+다음 작업은 Issue의 고정 문서와 현재 주차별 원본/명령/읽기 계약을 대조해 설계하는 것이다. 일반→A/A→B/A→일반의 실제T별 독립 변경, 그룹원 우선 승계·외부 승계/직접 위임 시 일반 전환, 개방 상속/기존N 보존을 검토한다. 참가·pending·예약/일정/완료·과거 origin과 반대T, 기존 미확정 요청/원ACK 의미를 보존해야 한다. 기존 그룹 자체 탈퇴/추방/해산 정책과 그룹장의 레이드 권한은 확대하지 않는다. 기존 `6dac5ab2`가 새 정책을 구현했다고 표시하지 않는다.
+
+그룹 이전 브랜치는 PR30으로 dev/main에 통합·정리됐고 main/dev는 `ccd1cc8`이다. 현재 checkout은 `fix/backend-beta-readiness`이며 이번 기록 게시까지 이 브랜치에서 마감한다. 그룹 구현 복귀 시 실제 checkout과 분기 기준·미통합 F01/최신 문서 포함 여부를 먼저 정하고 기록한다. 이 요청은 dev/main merge·AWS/release·자료초기화·Issue 종료 승인이 아니다.
+
+## 보류 추적 — Backend 베타 개선
+
+[F01](DEV_LOG.md#f01-registration-cleanup)은 `c94ce88`로 구현·격리 검증·commit/push 완료, dev/main 미통합·실제 서버 미반영이다. [개선 계획의 F02 재개 조건](backend-improvement-plan.md#f02-resume)을 따른다. F02는 로컬 설정 조사 후 공개 경로 미정으로 보류하며 AWS 공개 준비 때 재개한다. 사용자는 Lightsail 생성 전·테스터 총20~50명 예상·도메인 미보유다. 지금 인프라를 확정하지 않는다. F03 내부 장애 추적은 개선 복귀 시 다음 후보이며 미착수다. 그룹 작업을 막지 않는다.
 
 ## 독립 대기 — 그룹 새 변경의 기기 확인
 
@@ -21,15 +27,15 @@
 
 실행 소스와 후행 문서 커밋을 구분한다. F01은 격리 검증한 소스 수정이며 그룹 계약·실행 서버·실제 DB는 변경하지 않는다. 이전 게시 이력은 유지하며 되돌리거나 재작성하지 않는다.
 
-## 최신 회신과 다음 작업
+## 이전 계약 소비·기기 확인 대기 (새 #16 정책 요청과 구분)
 
 [#12 전체40번째 Flutter · 목록/소속 표시 소비 인계](https://github.com/heo0328/lostparty-backend/issues/12#issuecomment-6503895589)·[#16 전체26번째 Flutter · 최초 연결 소비 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6503895060)를 확인했다. Flutter는 `feature/group-backend-integration`의 `5f024e536fbf4963a77903f7763b7ca460939a34` commit/push·local/origin 일치, 최초 연결 context/기존 PUT·목록 metadata·프로필별 배지 연결 완료를 보고했다. 이는 공식 Issue의 자체 보고이며 Flutter 로컬 소스는 읽지 않았다.
 
 - Flutter 검증 보고: 전체 test 2,707PASS이며 직접 경계43PASS는 포함 수다. analyze 오류/경고0·기존 info3, 포맷/diff/review 완료다. Backend 시험과 합산하지 않는다.
-- 기존 인계 대비 변경: Flutter 신규 계약 소비는 구현 완료 보고로 갱신한다. **추가 API 변경이나 Backend 재검증 반복 요청은 없다.** 기존 그룹 정상 기기 인수는 유지한다.
+- 기존 인계 대비 변경: Flutter 신규 계약 소비는 구현 완료 보고로 갱신한다. **당시 추가 API 변경이나 Backend 재검증 반복 요청은 없었다.** 이후 #16 전체27/28의 새 정책 정정은 위 다음 실행으로 별도 추적한다. 기존 그룹 정상 기기 인수는 유지한다.
 - 다음 담당은 사용자 변경 경계 기기 확인과 Flutter 결과 대응이다. 일반 방 최초 그룹 연결, 같은 그룹 공개범위 왕복, 서버 그룹명/긴 이름, 비그룹원 시점 배지, 생성 선택 기본값을 확인한다. 실제 최초 연결 허용 context/명령 성공은 여전히 미확인이다.
 - 비그룹원 배지 원 제보는 Backend/Flutter 합성 검사에서 미재현이다. 결함 해결 완료로 판정하지 않고 실제 기기 차이가 생기면 해당 응답/렌더링 위치를 좁혀 대응한다.
-- Backend는 구체 차이가 회신되면 해당 경계만 수정·검증한다. 지금은 구현·서버 재반영·시험 반복 없이 결과를 기다린다. 기존 회신 결과는 이번 진단 인계 구간에 함께 보존한다.
+- Backend는 구체 차이가 회신되면 해당 경계만 수정·검증한다. 이전 계약의 동일 시험을 반복하지 않으며 새 #16 정책 설계는 별도 진행한다. 기존 회신 결과는 이번 진단 인계 구간에 함께 보존한다.
 - Flutter의 Penpot03 갱신/시각 검수는 도구 미제공으로 대기한다는 보고이며 Backend API 추가 작업으로 확대하지 않는다. 새 기기 인수·운영배포·Issue 종료는 미완료/별도다. Backend Git 병합은 PR30으로 완료했다.
 
 완료 조건은 연결된 새 앱의 변경 경계 기기 결과 확인이다. 이번 문서 인계에서는 Issue 변경/추가 댓글·서버/DB 작업은 하지 않는다.
