@@ -83,5 +83,48 @@
     "Direct deployed route/service calls with existing valid sessions and response-model validation; not authenticated live HTTP/device tests.",
     "Selections overlap; do not sum into unique tests or a full regression claim.",
     "No F03 logging expansion, provider calls, user-data mutation/reset, deployment or merge."
-  ]
+  ],
+  "followup": {
+    "date": "2026-10-31",
+    "branch": "fix/raid-detail-errors",
+    "native_evidence_reply": "https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6530221606",
+    "original_query_and_scene_records_available": false,
+    "additional_failure_after_original_window": {
+      "request_id": "1ed8fd9b-7cb1-4a72-a87f-655e8747dba4",
+      "utc": "2026-10-30T17:48:47.380522+00:00",
+      "status": 500,
+      "category": "internal",
+      "exception_details_persisted": false
+    },
+    "later_window": {
+      "from_utc": "2026-10-30T17:41:00Z",
+      "detail_200": 17,
+      "detail_500": 1
+    },
+    "asgi_probe": {
+      "scope": "Deployed source in separate process; no lifespan/background tasks; authenticated dependency overridden with existing valid session; READ ONLY DB; provider blocked; ASGI route/middleware/response validation/serialization included",
+      "valid_session_users": 2,
+      "target_rows": 19,
+      "success_by_profile_and_wait": {
+        "profile=None/wait=false": 36,
+        "profile=None/wait=true": 36,
+        "profile=application-display-1/wait=false": 36,
+        "profile=application-display-1/wait=true": 36,
+        "profile=membership-actions-1/wait=false": 7,
+        "profile=membership-actions-1/wait=true": 7
+      },
+      "expected_denials": {
+        "403:ROOM_MEMBERSHIP_REQUIRED": 62,
+        "404:ROOM_NOT_FOUND": 8
+      },
+      "unexpected_exceptions": 0,
+      "total_requests": 228,
+      "real_listener_http_or_token_issuance": false
+    },
+    "tool_note": "httpx is absent in runtime. No dependency installed; standard ASGI scope/receive/send used.",
+    "conclusion": "Current full HTTP pipeline also did not reproduce; no cause/fix claim. Existing normal device acceptance preserved; await natural recurrence evidence.",
+    "server_replaced": false,
+    "product_code_changed": false,
+    "db_mutated": false
+  }
 }

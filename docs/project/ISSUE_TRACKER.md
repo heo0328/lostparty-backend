@@ -87,3 +87,5 @@
 이번 정리는 서버 구현·DB변경·자동정리·자료삭제/초기화·기존키/로그인 재시험·운영배포 승인이 아니다. 기능코드/실행계약은 같고 새 이슈를 만들었다고 기능 구현을 시작한 것이 아니다.
 
 상세조회500 조사 공식 회신: [#16 전체38번째 Backend · 현재미재현/추가근거 대조](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6530073442). 조사기록1be55a7 commit/push·원격일치 완료, 다음 Flutter 당시기록 확인/Backend 후속대조이며 원인해소·Issue종료가 아니다.
+
+#16 전체39 Flutter는 당시 입력/동작 원기록없음을 회신했다([근거](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6530221606)). 과거기록 제공 대기는 자연재발 근거대기로 바꾸며 정상시험 반복요청은 하지 않는다. 후속 fix/raid-detail-errors의 READ ONLY ASGI 응답직렬화/조율대기 대조도 현재미재현, 과거500 미해결이다. 전체40 Flutter dev/main 통합보고는 기존 인수와 함께 수용한다.

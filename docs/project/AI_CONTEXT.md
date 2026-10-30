@@ -24,3 +24,5 @@
 주제별 미완료는 [ISSUE_TRACKER](ISSUE_TRACKER.md), 과거 결정/검증/장애·통합은 [DEV_LOG](DEV_LOG.md)를 따른다. [AGENTS](../../AGENTS.md)·[협업 규칙](../engineering/collaboration/api-collaboration.md)·[문서 대응표](../engineering/documentation/README.md)를 작업 기준으로 사용한다.
 
 2026-10-31 최신: [#16 전체37 Flutter 사용자 앱기기 전체통과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6529987970)를 수용해 현재 안내한 그룹·레이드 연결/기기대기를 해소한다. 위 기기 미확인 문장은 이전시점 이력이다. 별도 [전체36 상세500 조사요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6529904340)은 [READ ONLY 대조](../features/groups/detail-500-investigation.json)에서 과거500 확인·현재미재현/원인미확정이다. Flutter 당시 query/동작근거 대기 후 Backend 표적조사를 이어가며 서버교체/실자료변경은 하지 않았다. Penpot/운영인수·Issue종료는 별도다.
+
+상세500 후속은 최신dev1f0b588에서 fix/raid-detail-errors로 분기했다. #16 전체39 Flutter는 당시 query/동작 기록없음·자연재발근거대기를 회신했다. 전체40 Flutter 통합b8b20b50/2,730PASS·분석0은 자체보고다. 별도 프로세스의 READ ONLY ASGI HTTP228호출은158정상/70예상거절·예상외예외0(실제리스너 인증HTTP와 구분), 추가과거17:48:47의500도 원인미확정이다. 서버/자료/제품코드는 변경하지 않았다. 최신 다음실행/집계를 따른다.
