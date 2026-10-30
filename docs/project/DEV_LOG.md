@@ -3056,3 +3056,19 @@ NEXT_WORK/AI_CONTEXT/추적표를 갱신했으며 기존 로컬 수정은 보존
 - 그룹 로컬/원격 ref의 dev 포함·단일 worktree를 확인하고 checkout dev에서 `git branch -d` 및 원격 지정 삭제로 `feat/group-management`를 정리했다. 미완료 `feat/activity-selection`은 보존했다. 통합 결과 문서는 dev에서 기록해 main에도 같은 커밋을 반영한다.
 - 검증: 통합 전 static 통과(runtime31/test43 잠금, 설치 환경 미검사·문서244개/상대 링크·앵커2540개·도구 unittest12개). PR 원격 필수 check는 없었다. 기존 그룹 격리/개발반영 검증은 원본 근거를 재사용하며 이번 Git 통합에서 업무 pytest·계약 생성·서버/DB·provider·기기 검증을 반복하지 않았다. 후행 기록은 문서 검사와 diff 검사로 확인한다.
 - 다음은 최신 dev에서 베타 개선 목적 브랜치로 F01 구현·격리 검증이다. 이번 작업으로 개선 구현·서버 반영·배포·Issue 종료는 하지 않았다. 실제 실행 source2602e45/이미지5bd8dde6·DB0034와 새 기기 대기는 유지한다.
+
+<a id="f01-registration-cleanup"></a>
+
+## 2026-10-30 — F01 삭제 등록정보 정리 배치 진행 보장
+
+- 사용자 승인 설계에 따라 최신 원격 dev `ccd1cc8`에서 `fix/backend-beta-readiness`를 생성했다. 기존 그룹 브랜치 통합 상태와 미완료 활동 선택 브랜치는 보존한다. 작업 구간은 F01이며 F02~F10 전체 착수·배포 승인으로 확대하지 않았다.
+- 문제: 완료 행도 매번 최대200개 선택 대상에 남아 미처리 자료의 진행을 보장하지 못했다. `cleanup.py`의 Registration 선택에 세 필드의 완료 값과 `IS DISTINCT FROM` 조건(JSONB 빈 배열 포함)을 추가하고 `deleted_at, id` 순서로 정렬했다. 부분 마스킹·JSON null도 다시 처리한다.
+- 삭제 후24시간/회차200개·기존 마스킹 값·단일 트랜잭션·전역 advisory lock·SKIP LOCKED를 유지했다. 모델·migration·API·OpenAPI·worker 주기·물리 삭제·보존 정책은 변경하지 않았다. 새 컬럼/커서/내부 반복 없이 기존 상태로 완료를 판별할 수 있어 최소 수정을 선택했다.
+- 신규 `test_registration_cleanup.py` 10PASS(5시나리오×0023/0034): 완료200/미처리450 혼재의200→200→50 진행·삭제 시각/동일 시각ID 순서·완료 후 무변경, 부분 마스킹8조합·JSON null·활성/유예/정확한24시간 경계, UPDATE 후 예외/롤백/재시도, 두 cleanup의 실제 advisory lock 대기/순차 진행, 일부 행 잠금 건너뛰기/해제 후 완료를 확인했다. 시험 전용 이벤트와 제한시간을 사용했고 운영 훅은 추가하지 않았다.
+- 자료 보존: Registration 행 수/ID/FK/version/업무 시각과 record_created_at을 대조하고, 관련 소유권·캐릭터·설정·활동·감사·검증 이력을 포함한 나머지 전체 테이블 해시 불변을 확인했다. 실제 마스킹 UPDATE의 record_updated_at은 기존 DB 트리거대로 갱신되며 이미 완료된 행과 재실행에서는 바뀌지 않는다. 이는 새 timestamp 정책이 아니다.
+- 격리 PostgreSQL 선택 회귀 **67PASS**(신규10+기존57, 중복 합산 없음): `PYTHONDONTWRITEBYTECODE=1 python3 scripts/verify_isolated.py all tests/test_registration_cleanup.py tests/test_game_accounts.py tests/test_combat_power.py::test_power_retention_keeps_good_and_active_claims tests/test_verification_history.py`. 등록·삭제/재등록·한도/동시 변경·retention·전투력 캐시 정리·검증 이력 보존을 포함한다. 기존 Starlette/AnyIO deprecation 경고1개, 실패0. `all`은 선택 가능한 suite 이름이며 전체 프로젝트 시험을 실행했다는 뜻이 아니다.
+- 환경: 기존 compose.test의 UUID 프로젝트 `lostparty-check-e08ced96c968`·tmpfs PostgreSQL17·임시 키·worker 비활성·외부 호출 mock을 사용했다. 의존성 해시 설치·pip check·runtime31/test43 설치 일치 통과. DB 컨테이너와 네트워크 정리 성공. 호스트 직접 pytest·실제 개발 DB 연결/마스킹은 하지 않았다.
+- 계약: 별도 DB 없는 격리 runner `contracts`(프로젝트 `lostparty-check-ab2874226e49`)에서 기본123경로/140동작·two-cycle185경로/206동작 전체 객체 일치. 네트워크 정리 성공. static(잠금·문서·도구 unittest12개) 통과, 후행 문서244개/상대 링크·앵커2544개 및 diff 검사도 통과했다. 시험 수치는 합산하지 않는다.
+- 최종 시험 환경 제한시간 보완 후 신규10개만 같은 runner로 재확인: `PYTHONDONTWRITEBYTECODE=1 python3 scripts/verify_isolated.py all tests/test_registration_cleanup.py`, **10PASS**/기존 경고1(위67에 포함된 시나리오이므로 합산하지 않음). 테스트 연결에 statement10초/lock5초 제한을 명시했고 운영 설정은 바꾸지 않았다. 프로젝트 `lostparty-check-d7d968d8c4c0`의 DB 컨테이너·네트워크 정리 성공.
+- 게시: 구현·시험·이 기록과 현재 상태 문서는 같은 작업 구간의 commit/push 단위다. 게시 SHA는 해당 브랜치 Git 이력에서 확인한다. merge·서버 반영·실자료 마스킹·provider 실호출·전체 프로젝트 회귀·성능/부하·실회원/기기 검증은 수행하지 않았다. 외부 계약 변경이 없어 Issue 변경/추가 댓글·네이티브 재시험 요청은 없다.
+- 다음 담당: Backend는 같은 베타 개선 브랜치에서 F02의 실제 공개 프록시 경로·신뢰 경계/직접 접근 정책을 확인하고 설계한다. 미확인 환경을 추정해 인증 설정을 바꾸지 않는다. F01 실제 반영은 별도 승인 범위이며 그룹 새 기기 결과 대기는 독립적으로 유지한다.
