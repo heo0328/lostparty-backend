@@ -6,3 +6,5 @@
 - [DEV_LOG](DEV_LOG.md): 완료·결정·검증·장애의 영구 이력.
 
 기능 설명은 [전체 안내](../README.md), 과거 작업 원문은 [대응표](../engineering/documentation/README.md)에서 찾는다. 현재 상태 문서에 상세 작업 이력을 중복 누적하지 않는다.
+
+갱신·이관·검증 근거 재사용은 [공통 문서 운영](../engineering/collaboration/api-collaboration.md#shared-document-operation)을 따른다. 미착수 개선안은 관련 기능 후속 문서에 두고 ISSUE_TRACKER는 공식 Issue의 색인, NEXT_WORK는 현재 실행과 유효 대기의 선택 목록으로 유지한다.

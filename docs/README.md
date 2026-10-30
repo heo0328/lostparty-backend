@@ -29,3 +29,5 @@
 ## 문서 유지 원칙
 
 현재 기능의 설명은 기능별 원본 한 곳에서 유지하고 연계 기능에서는 연결합니다. Issue·작업 단계는 분류명이 아니라 중요한 결정/이력의 추적 근거입니다. 새 작업 단계마다 문서를 늘리지 않고 기존 기능 설명을 갱신하며 과거 인계·검증은 DEV_LOG나 보관 기록에 남깁니다. 구체 기준은 [문서 구성 기준](engineering/documentation/organization-plan.md)을 따릅니다.
+
+갱신·이관·근거 재사용의 공통 원본은 [공통 문서 운영](engineering/collaboration/api-collaboration.md#shared-document-operation)입니다. 기능별 분류와 원문 대응표·해시 보존은 Backend 방식으로 유지합니다.

@@ -1,5 +1,13 @@
 # 다음 실행
 
+## 문서 운영 협의 — 공통 원본 반영·검증, 고정 기준 인계
+
+[Issue29 전체2번째 Flutter · 보완안/원본 위치 수용](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6517135733)에 따라 [공통 문서 운영](../engineering/collaboration/api-collaboration.md#shared-document-operation)을 반영하고 문서 지도·project 역할 안내에서 참조한다. 공통 내용과 원본 위치는 합의됐으며 양측 적용 완료와는 구분한다.
+
+다음은 검증된 Backend 원본의 commit/push·원격 확인 및 #29 고정 링크 인계 후 Flutter의 docs/README·ai_rules 최소 참조 반영이다. 양측 실제 반영 근거 또는 변경 불필요 결론을 연결하면 완료 조건을 검토한다. 상세 진행/게시 근거는 [DEV_LOG](DEV_LOG.md)와 #29에서 관리한다.
+
+현재 목적 브랜치 `feat/group-management`에서 협의·반영 구간을 묶는다. 기존 그룹 기능의 미커밋 문서와 기기/Penpot 대기는 보존하며 이번 공통 기준 게시에 포함하지 않는다. 브랜치 통합·정리, 기술 개선 전체, API/DB·서버 변경은 이 구간에 포함하지 않는다.
+
 ## 현재 상태 — 최초 그룹 연결·목록 표시 개발반영·실행검증 완료
 
 checkout `feat/group-management`, main/dev `1b6f57b` 유지. #16 전체22 사용자승인계획과 #12 전체35/36 요청을같은브랜치에서구현·격리검증·고정계약인계한다. 사용자서버반영지시로**source2602e45/이미지5bd8dde6·DB0034 유지**로개발API를교체했다. migration·병합·운영배포·자료변경실행은없다. [계약/경계](../features/groups/raid-link-contract.md)·[합성표시예시](../features/groups/raid-link-examples.json)를따른다.
