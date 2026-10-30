@@ -6,6 +6,10 @@
 
 사용자 승인으로 그룹 작업 `48bf88c`를 [PR30](https://github.com/heo0328/lostparty-backend/pull/30)·병합 `fc6c06a`로 dev에 통합하고 main도 fast-forward하여 원격 일치를 확인했다. `feat/group-management`는 로컬·원격 정리하고 checkout은 dev다. 위 2026-10-28 분기 상태는 과거 기준이며 미완료 활동 선택 브랜치는 보존한다. 그룹 새 기기 확인·Issue 상태·실제 실행 서버는 변경하지 않았다.
 
+## 2026-10-31 현재 그룹 상태 — 기기 인수 완료·상세500 조사 미완료
+
+[#16 전체37번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6529987970)의 현재 그룹·레이드 앱 기기 전체통과를 수용했다. 연결/그룹변경/승계·개방/상속·표시·이름안내는 현재 안내범위 인수완료이며 아래 과거 기기대기는 해소됐다. [전체36번째 상세500 조사요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6529904340)은 과거2건 확인·현재READ ONLY 미재현/원인미확정, [조사 집계](../features/groups/detail-500-investigation.json)·NEXT_WORK 기준으로 Flutter 당시 입력/동작근거 대기·Backend 후속대조다. 실행b8542ef/DB0035 유지, 서버교체/자료변경·Issue종료/merge 없음. Penpot은 Flutter/디자인도구 대기다.
+
 ## 최신 그룹 후속 — 주차별 그룹 변경·승계 정책 정정
 
 [#16 전체27번째 Flutter · 정책/구현 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521839291)·[전체28번째 Flutter · 문서78e53aa0 게시](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521897849)에 대응해 [전체29번째 Backend 계약 후보](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6522746434)를 먼저 인계했다. feat/raid-group-policy에서0035 주차/세대 원본·설정/승계/개방·조회/그룹판정과 원ACK 보존 전환을 구현했다. [소비 계약](../features/groups/cycle-group-policy.md)·[검증 집계](../features/groups/cycle-group-policy-verification.json)·NEXT_WORK 기준이며 새 Flutter 미연결이며 사용자 승인으로 sourceb8542ef/이미지930c25f8·개발DB0035 반영/실행검증을 완료했다([반영 기록](../engineering/operations/cycle-group-policy-rollout.md)). 구현b212ad0 commit/push·원격일치 및 [전체30번째 Backend 고정 계약 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6523975291) 완료, 다음 Flutter 연결/소비 차이 회신 대기다. [전체31번째 Backend 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6524503597) 완료. 다음은 새 계약 연결/기기 결과이며 Issue종료·dev/main통합은 별도다. 기존 그룹 기기 인수·Issue13 completed는 유지한다.

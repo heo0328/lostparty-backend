@@ -2,13 +2,15 @@
 
 문서 운영 #29는 공통 원본·양측 참조 반영 및 [상호 대조](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6520322169) 완료로 추가 수정 대기를 해소했다. Issue 종료는 별도이며 상세 근거는 [DEV_LOG](DEV_LOG.md)에 보존한다. 기존 그룹 기기 인수와 기술 진단 후속은 별도다.
 
-## 다음 실행 — Flutter 주차별 그룹 정책 연결·기기 확인
+## 다음 실행 — 상세조회500 추가 근거 대조 (현재 미재현)
 
-사용자 승인에 따라 `feat/raid-group-policy`의 주차별 그룹 변경·승계를 실제 개발 백엔드에 반영했다. 실행 소스 **b8542ef739593ffaad6da618215ff4f38fd87929**, 이미지 **930c25f8**·DB **0035_cycle_group_policy**다. [개발 반영/자료 보존·검증](../engineering/operations/cycle-group-policy-rollout.md)·[실행 집계](../engineering/operations/records/cycle-group-policy-rollout.json)·[소비 계약](../features/groups/cycle-group-policy.md)을 기준으로 한다. 구현b212ad0에 완료주차/null공대장 조회 보완을 더했고 해당 경계3PASS·실제 조회/HTTP/worker 정상 확인을 마쳤다.
+[Issue16 전체36번째 Flutter 조사 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6529904340)의 두request_id는 실제 상세500으로 확인했다. 현재 READ ONLY의 C/N·모든프로필/그룹표시와 과거anchor조회는 예외가 재현되지 않았다. 당시 로그는 예외종류/stack·query/대상세대를 보존하지 않아 원인은 미확정이며 해결 완료가 아니다. [조사 집계](../features/groups/detail-500-investigation.json)·[결과 이력](DEV_LOG.md#group-detail-500-investigation)을 따른다.
 
-[#16 전체27/28 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521839291)·문서78e53aa0과 [전체30번째 Backend 고정 계약 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6523975291)를 잇는 실제 반영 구간이다. [#16 전체31번째 Backend · 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6524503597)를 게시하고 실제 전체댓글31/마지막URL을 확인했다. 다음 담당 Flutter는 group_policy_version·실제T 검토/설정·승계/개방 영향·cycle_groups와 구ACK 처리를 연결하고 시험/분석·구체 차이를 같은Issue에 회신한다. 새 앱 연결/사용자 기기 인수는 미확인이고 기존 정상 기기 인수는 유지한다. Backend는 구체 차이에 대응한다.
+다음 Flutter는 기존 오류 기록에서 reader_profile/include_group_state/contract_profile/target_cycle_key·anchor유무, 직전동작/당시대상상태를 제공한다. 자연재발 시 UTC/request_id와 민감값 없는 입력근거를 받아 Backend가 표적 재현/원인 대조를 이어간다. 정상통과 기기시험을 반복하지 않는다. 서버교체·실자료수정/초기화는 요청범위에서 제외하며 코드/API 변경 필요성은 근거 확인 후 판단한다.
 
-브랜치는818a7ec 분기·F01 c94ce88/개선 기록을 포함하며 main/dev는ccd1cc8을 유지한다.0035 이후 구API만 재시작하는 롤백은 하지 않는다. AWS/release·dev/main merge·자료 초기화·Issue 종료는 수행하지 않았다.
+[전체37번째 Flutter 앱기기 전체통과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6529987970)를 수용해 현재 그룹·레이드 변경의 연결/기기 대기는 해소했다. 연결88a69fa7·후행개방/UTC수정3ec0f54f·최신안내055e0608의 자체보고 기준이며 상세500·Penpot/다른보류기능·운영릴리즈 인수와 구분한다. 추가 정상시험을 요청하지 않는다.
+
+현재 실행sourceb8542ef/이미지930c25f8·DB0035·API healthy와 [기존 반영 기록](../engineering/operations/cycle-group-policy-rollout.md)은 유지한다. checkout은 feat/raid-group-policy, main/dev ccd1cc8·F01포함/미통합이다. dev/main merge·AWS/release·자료초기화·Issue종료는 수행하지 않았다.
 
 ## 보류 추적 — Backend 베타 개선
 

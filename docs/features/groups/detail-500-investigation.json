@@ -1,0 +1,87 @@
+{
+  "date": "2026-10-31",
+  "scope": "Issue16 Flutter comment36 request; read-only investigation, no deployment or real-member writes",
+  "request_ids": [
+    "f6829146-b078-43e2-8d7d-0c4356414b2c",
+    "17f53b5d-eb52-4ff7-8b97-355b23453f8b"
+  ],
+  "route": "GET /v2/raid-rooms/{room_id}/detail",
+  "observed_utc": [
+    "2026-10-30T17:30:38.807905+00:00",
+    "2026-10-30T17:39:43.023108+00:00"
+  ],
+  "deployed_source": "b8542ef739593ffaad6da618215ff4f38fd87929",
+  "image": "sha256:930c25f8ff6ff57e698e4066ea93a673c14bff5269dfe5a55e3099fbc2af9a8b",
+  "logs": {
+    "requests_confirmed": 2,
+    "status": 500,
+    "category": "internal",
+    "paired_server_events": 2,
+    "exception_type_traceback_query_and_locators_persisted": false,
+    "window_utc": [
+      "2026-10-30T17:29:00Z",
+      "2026-10-30T17:41:00Z"
+    ],
+    "additional_same_route_500": 1
+  },
+  "current_read_probes": {
+    "probe": {
+      "valid_session_users": 2,
+      "checks": {
+        "beta=False/profile=None/group=false": 36,
+        "beta=False/profile=None/group=true": 36,
+        "beta=False/profile=application-display-1/group=false": 36,
+        "beta=False/profile=application-display-1/group=true": 36,
+        "beta=False/profile=membership-actions-1/group=false": 7,
+        "beta=False/profile=membership-actions-1/group=true": 7,
+        "beta=True/profile=None/group=false": 36,
+        "beta=True/profile=None/group=true": 36,
+        "beta=True/profile=application-display-1/group=false": 36,
+        "beta=True/profile=application-display-1/group=true": 36,
+        "beta=True/profile=membership-actions-1/group=false": 7,
+        "beta=True/profile=membership-actions-1/group=true": 7
+      },
+      "expected_denials": {
+        "ROOM_MEMBERSHIP_REQUIRED": 124,
+        "ROOM_NOT_FOUND": 16
+      },
+      "unexpected_exceptions": 0,
+      "response_model_validation": true,
+      "transactions_read_only": true,
+      "external_provider_blocked": true
+    },
+    "anchors": {
+      "valid_session_users": 2,
+      "checks": {
+        "anchored/group=false": 63,
+        "anchored/group=true": 32
+      },
+      "expected_denials": {
+        "ROOM_NOT_FOUND": 14,
+        "TARGET_CYCLE_UNAVAILABLE": 31
+      },
+      "unexpected_exceptions": 0,
+      "response_model_validation": true,
+      "transactions_read_only": true,
+      "external_provider_blocked": true
+    }
+  },
+  "conclusion": "Historical failures confirmed; root cause and exact reader profile/generation not established. Current reads did not reproduce. Do not mark fixed.",
+  "needed_evidence": [
+    "At-failure reader_profile, include_group_state, contract_profile, target_cycle_key and presence of membership/cycle-member anchors (no credentials/raw response).",
+    "Failing screen/action and target state: current/history, completed/cancelled/reopened, immediately preceding leave/transfer/opening.",
+    "If naturally recurring: UTC and fresh request_id plus sanitized query/scene. Do not repeat completed normal device acceptance."
+  ],
+  "changes": {
+    "code": false,
+    "contract": false,
+    "db": false,
+    "server_replacement": false
+  },
+  "limitations": [
+    "Current state differs from historical failure-time state; no time-travel restore or reconstruction from current room values.",
+    "Direct deployed route/service calls with existing valid sessions and response-model validation; not authenticated live HTTP/device tests.",
+    "Selections overlap; do not sum into unique tests or a full regression claim.",
+    "No F03 logging expansion, provider calls, user-data mutation/reset, deployment or merge."
+  ]
+}
