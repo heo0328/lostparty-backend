@@ -6,7 +6,7 @@
 
 사용자 승인에 따라 `feat/raid-group-policy`의 주차별 그룹 변경·승계를 실제 개발 백엔드에 반영했다. 실행 소스 **b8542ef739593ffaad6da618215ff4f38fd87929**, 이미지 **930c25f8**·DB **0035_cycle_group_policy**다. [개발 반영/자료 보존·검증](../engineering/operations/cycle-group-policy-rollout.md)·[실행 집계](../engineering/operations/records/cycle-group-policy-rollout.json)·[소비 계약](../features/groups/cycle-group-policy.md)을 기준으로 한다. 구현b212ad0에 완료주차/null공대장 조회 보완을 더했고 해당 경계3PASS·실제 조회/HTTP/worker 정상 확인을 마쳤다.
 
-[#16 전체27/28 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521839291)·문서78e53aa0과 [전체30번째 Backend 고정 계약 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6523975291)를 잇는 실제 반영 구간이다. 다음 담당 Flutter는 group_policy_version·실제T 검토/설정·승계/개방 영향·cycle_groups와 구ACK 처리를 연결하고 시험/분석·구체 차이를 같은Issue에 회신한다. 새 앱 연결/사용자 기기 인수는 미확인이고 기존 정상 기기 인수는 유지한다. Backend는 구체 차이에 대응한다.
+[#16 전체27/28 Flutter 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6521839291)·문서78e53aa0과 [전체30번째 Backend 고정 계약 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6523975291)를 잇는 실제 반영 구간이다. [#16 전체31번째 Backend · 개발반영 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6524503597)를 게시하고 실제 전체댓글31/마지막URL을 확인했다. 다음 담당 Flutter는 group_policy_version·실제T 검토/설정·승계/개방 영향·cycle_groups와 구ACK 처리를 연결하고 시험/분석·구체 차이를 같은Issue에 회신한다. 새 앱 연결/사용자 기기 인수는 미확인이고 기존 정상 기기 인수는 유지한다. Backend는 구체 차이에 대응한다.
 
 브랜치는818a7ec 분기·F01 c94ce88/개선 기록을 포함하며 main/dev는ccd1cc8을 유지한다.0035 이후 구API만 재시작하는 롤백은 하지 않는다. AWS/release·dev/main merge·자료 초기화·Issue 종료는 수행하지 않았다.
 

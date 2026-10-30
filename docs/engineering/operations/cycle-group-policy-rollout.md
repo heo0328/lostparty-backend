@@ -11,3 +11,5 @@
 실서비스 READ ONLY 검증은 기존 유효 세션2계정의 C/N 검색·목록·신청, 기본/application-display/membership-actions 상세 각13건·설정13건·일반전환 검토8건·그룹활성T3건이다. 일반전환 검토의 종료/공대장 권한 거절5건은 예상 결과다. 외부provider0, SQL은 SET/SELECT만 허용했다. 실제 loopback HTTP11PASS는 health/공개주차·검색metadata200, 보호된주차/설정/검토의 무인증·잘못된Bearer401/no-store/Bearer, 잘못된버전400을 구분한다. 인증된 실회원 쓰기/토큰발급·실제승계/원ACK대조·기기 인수로 확대하지 않는다.
 
 다음은 Flutter의 새 계약 연결/시험·분석과 사용자 변경 경계 기기 확인이다. 기존 앱 쓰기는 새표시/검토 계약이 없으면 구 성공ACK 복구 외 CLIENT_UPGRADE_REQUIRED가 정상이다. DB0035 이후 구0034 API 단독롤백은 하지 않으며 문제 시 정책 원본 보존·전진 보완한다. dev/main 병합·AWS/release·자료초기화·복원리허설·부하·Issue종료는 수행하지 않았다.
+
+[Issue16 전체31번째 Backend · 개발반영/실행 검증 인계](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6524503597)를 게시하고 실제 순번31·본문 상단 현재상태/다음담당·OPEN을 확인했다. 실행소스b8542ef와 반영기록476d1f3은 push/원격일치 완료이며 후행 인계링크 기록은 같은 브랜치에서 보존한다.
