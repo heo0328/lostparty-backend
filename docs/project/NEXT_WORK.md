@@ -2,17 +2,13 @@
 
 문서 운영 #29는 공통 원본·양측 참조 반영 및 [상호 대조](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6520322169) 완료로 추가 수정 대기를 해소했다. Issue 종료는 별도이며 상세 근거는 [DEV_LOG](DEV_LOG.md)에 보존한다. 기존 그룹 기기 인수와 기술 진단 후속은 별도다.
 
-## 다음 실행 — 상세조회500 추가 근거 대조 (현재 미재현)
+## 다음 실행 — 소유권 분쟁의 그룹·레이드 영향 정책 협의
 
-[Issue16 전체36번째 Flutter 조사 요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6529904340)의 두request_id는 실제 상세500으로 확인했다. 현재 READ ONLY의 C/N·모든프로필/그룹표시와 과거anchor조회는 예외가 재현되지 않았다. 당시 로그는 예외종류/stack·query/대상세대를 보존하지 않아 원인은 미확정이며 해결 완료가 아니다. [조사 집계](../features/groups/detail-500-investigation.json)·[결과 이력](DEV_LOG.md#group-detail-500-investigation)을 따른다.
+사용자가 상세500 원인추적을 별도로 진행하지 않겠다고 확정했다. [#16 전체44/45 Flutter 탭 로딩보호·기기인수/통합](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6531439956)을 1차대응으로 수용하며 추가조사/재현·정상시험 요청은 중단한다. 과거 서버500의 원인은미확정이며 해결된 것으로 표시하지 않는다. [조사/중단 기록](../features/groups/detail-500-investigation.json)을 보존한다.
 
-[전체39번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6530221606)에서 당시 입력/동작 원기록은 없다고 회신했다. 같은 과거기록 요청은 반복하지 않는다. 후속 ASGI HTTP 확인(조율대기 on/off·모든프로필/그룹표시)도 재현0이며 추가17:48:47의500은 입력/예외근거가 없어 원인미확정이다. 자연재발 시 UTC/request_id와 민감값 없는 입력근거를 받아 Backend가 표적 재현/원인 대조를 이어간다. 정상통과 기기시험을 반복하지 않는다. 서버교체·실자료수정/초기화는 요청범위에서 제외하며 코드/API 변경 필요성은 근거 확인 후 판단한다.
+다음은 #15 소유권분쟁에서 원정대 소유이전 시 기존 사용자의 그룹/레이드 관계 식별·다른 원정대 보존, 자동정리 또는 영향대상 복구필요 표시를 Backend 코드/모델로 조사하고 Flutter와 정책/소비를 협의하는 것이다. 사용자 제안은 검토 대상이며 일괄탈퇴·유저전체경고·자동참가 이전으로 확정하지 않는다. 실제자료/서버·계약은 합의 전 바꾸지 않는다.
 
-[전체37번째 Flutter 앱기기 전체통과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6529987970)를 수용해 현재 그룹·레이드 변경의 연결/기기 대기는 해소했다. 연결88a69fa7·후행개방/UTC수정3ec0f54f·최신안내055e0608의 자체보고 기준이며 상세500·Penpot/다른보류기능·운영릴리즈 인수와 구분한다. 추가 정상시험을 요청하지 않는다.
-
-[전체40번째 Flutter 통합](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6530680059)의 dev/main b8b20b50·전체2,730PASS/분석0은 자체보고로 수용하며 Backend 조사/시험과 합산하지 않는다.
-
-현재 실행sourceb8542ef/이미지930c25f8·DB0035·API healthy와 [기존 반영 기록](../engineering/operations/cycle-group-policy-rollout.md)은 유지한다. 상세500 후속 조사 checkout은 최신 dev1f0b588에서 분기한 fix/raid-detail-errors다. 사용자 승인으로 [PR31](https://github.com/heo0328/lostparty-backend/pull/31)·병합9fa0f7e에 그룹/F01/개선 인계·상세500 조사기록을 통합하고 main도 dev와 같은 최종 기록 커밋으로 동기화한다. 통합된 feat/raid-group-policy·fix/backend-beta-readiness는 로컬/원격 정리했고 미완료 feat/activity-selection은 보존한다. 후속 구현은 최신 dev의 목적 브랜치에서 이어가며 서버교체·AWS/release·자료초기화·Issue종료는 하지 않았다.
+현재 실행sourceb8542ef/이미지930c25f8·DB0035, dev/main1f0b588은 유지한다. 상세500 기록은 fix/raid-detail-errors에 보존하고 분쟁후속은 목적브랜치에서 이어간다. F02 보류/F03 미착수·AWS/release·자료초기화·Issue종료와 구분한다.
 
 ## 보류 추적 — Backend 베타 개선
 

@@ -89,3 +89,5 @@
 상세조회500 조사 공식 회신: [#16 전체38번째 Backend · 현재미재현/추가근거 대조](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6530073442). 조사기록1be55a7 commit/push·원격일치 완료, 다음 Flutter 당시기록 확인/Backend 후속대조이며 원인해소·Issue종료가 아니다.
 
 #16 전체39 Flutter는 당시 입력/동작 원기록없음을 회신했다([근거](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6530221606)). 과거기록 제공 대기는 자연재발 근거대기로 바꾸며 정상시험 반복요청은 하지 않는다. 후속 fix/raid-detail-errors의 READ ONLY ASGI 응답직렬화/조율대기 대조도 현재미재현, 과거500 미해결이다. 전체40 Flutter dev/main 통합보고는 기존 인수와 함께 수용한다.
+
+2026-10-31 사용자 확정으로 #16 상세500 별도원인추적을중단한다. Native 탭로딩보호/기기인수·dev통합은1차대응완료이며 과거서버원인은미확정/해결주장없음으로보존한다. 반복조사/재시험/추가근거 대기는현재실행에서제거한다. 다음기능협의는 #15 원정대 소유이전 시 그룹/레이드 영향 처리다. Issue종료는별도다.

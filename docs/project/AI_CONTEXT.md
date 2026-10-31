@@ -26,3 +26,5 @@
 2026-10-31 최신: [#16 전체37 Flutter 사용자 앱기기 전체통과](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6529987970)를 수용해 현재 안내한 그룹·레이드 연결/기기대기를 해소한다. 위 기기 미확인 문장은 이전시점 이력이다. 별도 [전체36 상세500 조사요청](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6529904340)은 [READ ONLY 대조](../features/groups/detail-500-investigation.json)에서 과거500 확인·현재미재현/원인미확정이다. Flutter 당시 query/동작근거 대기 후 Backend 표적조사를 이어가며 서버교체/실자료변경은 하지 않았다. Penpot/운영인수·Issue종료는 별도다.
 
 상세500 후속은 최신dev1f0b588에서 fix/raid-detail-errors로 분기했다. #16 전체39 Flutter는 당시 query/동작 기록없음·자연재발근거대기를 회신했다. 전체40 Flutter 통합b8b20b50/2,730PASS·분석0은 자체보고다. 별도 프로세스의 READ ONLY ASGI HTTP228호출은158정상/70예상거절·예상외예외0(실제리스너 인증HTTP와 구분), 추가과거17:48:47의500도 원인미확정이다. 서버/자료/제품코드는 변경하지 않았다. 최신 다음실행/집계를 따른다.
+
+2026-10-31 사용자 확정: 상세500은 Native 탭로딩 터치제한·기기확인 완료를1차대응으로 유지하고 별도원인추적은중단한다. 과거500 원인미확정 기록은 보존하며 위 자연재발/추가근거 대기는 현재실행에서 제거한다. 다음은 #15 분쟁 소유이전의 그룹/레이드 영향 식별·타원정대보존/정리·복구정책을 Backend에서 조사하고 Flutter와 협의한다. 제안검토이며 정책구현/실자료변경 승인이 아니다.

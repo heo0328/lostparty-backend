@@ -126,5 +126,13 @@
     "server_replaced": false,
     "product_code_changed": false,
     "db_mutated": false
+  },
+  "tracking_disposition": {
+    "date": "2026-10-31",
+    "decision": "User explicitly stopped separate root-cause investigation after native loading-tab guard and device acceptance.",
+    "mitigation": "Native disables cycle tab while detail/dependent reads are loading; device accepted, Flutter dev merged4a0bf962.",
+    "historical_server_root_cause": "unconfirmed; not marked fixed",
+    "further_investigation_requested": false,
+    "normal_retest_requested": false
   }
 }
