@@ -56,3 +56,5 @@
 상세조회500 조사 공식 회신: [#16 전체38번째 Backend · 현재미재현/추가근거 대조](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6530073442). 조사기록1be55a7 commit/push·원격일치 완료, 다음 Flutter 당시기록 확인/Backend 후속대조이며 원인해소·Issue종료가 아니다.
 
 후속 확인 회신: [#16 전체41번째 Backend HTTP 경계 대조](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6530965340), 근거6279daf 게시/원격확인 완료. 과거입력 기록없음을 수용하며 다음은 자연재발근거 수신 후 표적대조다.
+
+분쟁 협의 인계: [#15 전체10번째 Backend · 원정대별 그룹/레이드영향 검토](https://github.com/heo0328/lostparty-backend/issues/15#issuecomment-6541847499), 검토·시험7408ab0 commit/push·원격일치 확인. 다음 Flutter5항목소비검토/사용자정책확정이며 새API·실기기시험 요청이 아니다.
