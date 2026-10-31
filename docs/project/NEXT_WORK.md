@@ -6,9 +6,9 @@
 
 사용자가 상세500 원인추적을 별도로 진행하지 않겠다고 확정했다. [#16 전체44/45 Flutter 탭 로딩보호·기기인수/통합](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6531439956)을 1차대응으로 수용하며 추가조사/재현·정상시험 요청은 중단한다. 과거 서버500의 원인은미확정이며 해결된 것으로 표시하지 않는다. [조사/중단 기록](../features/groups/detail-500-investigation.json)을 보존한다.
 
-다음은 #15 소유권분쟁에서 원정대 소유이전 시 기존 사용자의 그룹/레이드 관계 식별·다른 원정대 보존, 자동정리 또는 영향대상 복구필요 표시를 Backend 코드/모델로 조사하고 Flutter와 정책/소비를 협의하는 것이다. 사용자 제안은 검토 대상이며 일괄탈퇴·유저전체경고·자동참가 이전으로 확정하지 않는다. 실제자료/서버·계약은 합의 전 바꾸지 않는다.
+[분쟁 영향 검토](../features/rosters/ownership/dispute-impact-review.md)에 현재연결·보류가드와 미합의정책/Flutter5개검토항목을 정리했다. 원정대3개중1개상실의그룹활동/다른설정보존2PASS와기존동작4PASS를격리확인했다. 다음은 #15에서 Flutter와 최종이전의 자동정리/영향대상복구필요·그룹표시/공대장승계·예약정책을 협의하는 것이다. 사용자 제안은 검토 대상이며 일괄탈퇴·유저전체경고·자동참가 이전으로 확정하지 않는다. 실제자료/서버·계약은 합의 전 바꾸지 않는다.
 
-현재 실행sourceb8542ef/이미지930c25f8·DB0035, dev/main1f0b588은 유지한다. 상세500 기록은 fix/raid-detail-errors에 보존하고 분쟁후속은 목적브랜치에서 이어간다. F02 보류/F03 미착수·AWS/release·자료초기화·Issue종료와 구분한다.
+현재 실행sourceb8542ef/이미지930c25f8·DB0035, dev/main1f0b588은 유지한다. 상세500 기록은 fix/raid-detail-errors에 보존하고 분쟁후속 checkout은 feat/ownership-dispute-policy다. 미통합500중단기록9a13af7을 보존한tip에서분기했으며dev/main1f0b588과분리한다. F02 보류/F03 미착수·AWS/release·자료초기화·Issue종료와 구분한다.
 
 ## 보류 추적 — Backend 베타 개선
 

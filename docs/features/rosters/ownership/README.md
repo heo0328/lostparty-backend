@@ -57,3 +57,7 @@
 | POST | `/v2/me/ownership-disputes/{dispute_id}/cancel` |
 | POST | `/v2/me/ownership-disputes/{dispute_id}/defenses` |
 | POST | `/v2/me/ownership-disputes/{dispute_id}/settle` |
+
+## 소유 이전의 그룹·레이드 후처리 검토
+
+사용자 요청으로 [분쟁 영향 연결·정리/복구 정책 검토](dispute-impact-review.md)를 진행한다. 관계를 식별할 원본은 있으나 활성참가의 이전 후처리는 현재보류다. 새 탈퇴/복구/경고 계약은 미합의·미구현이며 현재원본/실자료는 변경하지 않는다.
