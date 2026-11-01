@@ -1,10 +1,12 @@
 # 다음 실행
 
-## 현재 실행 — 첫 태그 시험 실패 대조 완료·다음 태그 승인 대기 (2026-11-02)
+## 현재 실행 — 첫 태그 실패 원인 확정·수정 검증 완료 (2026-11-02)
 
-사용자승인으로PR35통합/main·dev동일ceea2f4·v0.1.0태그1회push를완료했다. 기존운영6154e45대비앱/API/DB/Compose동일이다. [태그run41317120737](https://github.com/heo0328/lostparty-backend/actions/runs/41317120737)은4attempt모두소스검증일반예외로실패·게시/배포skip, 태그이동/재push없음. [수동run41318263421](https://github.com/heo0328/lostparty-backend/actions/runs/41318263421)은verify·전체8그룹/1811PASS다. [원본태그push환경재현41320810991](https://github.com/heo0328/lostparty-backend/actions/runs/41320810991)도verifyPASS여서중복회귀만취소했다. 실제태그경로실패원인은미확정이다.
+태그 run41317120737의 verify job124891259189 원본 로그에서 `would clobber existing tag`를 확인했다. checkout이 러너 내부 annotated tag를 source commit 참조로 바꾼 뒤, 배포 스크립트의 `git fetch ... --tags`가 원격 annotated tag를 다시 받으려다 거절됐다. AWS/SSH·앱·DB 단계 이전 실패다. 기존 수동 재현은 이 checkout 상태가 달라 충분한 재현이 아니었다.
 
-[시험집계](../engineering/operations/records/backend-first-tag-trial.json)를따른다. 후행작업브랜치에서임시진단을제거하고예외종류/HTTP상태/허용환경변수이름/코드위치만남기는안전진단을보완·scripts42PASS했다. 서버/API/DB변경·이미지/Release게시없음, 자동배포완료가아니다. [전체7번째 Backend 결과인계](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6559972464) 완료·다음사용자가추가버전/태그승인을결정한다. v0.1.0은그대로보존하고맹목재시도/태그이동없음. 아래통합/첫태그대기는당시준비이력이다.
+브랜치만 `--no-tags`/명시 refspec으로 갱신하도록 수정했다. 실제 격리 Git 저장소에서 원래 명령의 동일 실패와 수정 후 main/dev 갱신·HEAD/로컬/원격 태그 보존을 검증했고 scripts43PASS다. [시험 집계](../engineering/operations/records/backend-first-tag-trial.json)를 따른다. 기존 수동 전체 회귀1811PASS는 유지하며 이번에는 운영/새 태그/전체 회귀를 실행하지 않았다.
+
+다음은 수정 구간 통합과 새 불변 버전/태그 승인 후 실제 자동 배포 확인이다. v0.1.0은 보존한다. 아래는 이전 준비 이력이며 원인 미확정 대기는 해소됐다.
 
 ## 현재 실행 — Backend 태그 기반 자동 배포 구현
 

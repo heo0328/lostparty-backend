@@ -1,5 +1,11 @@
 # 영구 개발 이력
 
+## 2026-11-02 — 첫 태그 실패 원인 확정·Git 재수신 수정
+
+- 최신 실패 job124891259189 전체 로그의 checkout 구간과 오류 stderr를 대조했다. annotated tag object7c590f4를 받은 checkout이 +ceea2f4:refs/tags/v0.1.0으로 러너 내부 태그를 commit ref로 바꿨다. 후속 `git fetch origin main dev --tags`가 원격 annotated tag 복원을 거절(`would clobber existing tag`)해 CalledProcessError로 종료했다. 이전 일반 예외 메시지 아래의 Git stderr에 원인 근거가 있었고, 이를 놓친 원인 미확정 기록을 정정한다.
+- 기존 수동 재현은 branch checkout 이후 tag checkout이므로 러너 내부 태그 변형을 재현하지 못했다. 수정은 --no-tags와 main/dev 명시 remote-tracking refspec으로 제한하며 force tag fetch/원격 태그 변경을 하지 않는다. 실제 로컬 임시 Git 저장소에서 원래 명령 실패/수정 성공·main/dev 전진/HEAD와 양쪽 태그 보존을 확인했다. scripts43PASS. API/DB/계약 변경이 없어 전체 앱 회귀는 반복하지 않았다.
+- 새 태그·workflow 재실행·운영 변경 없음. 자동 배포 성공으로 표시하지 않으며 다음 통합/새 버전 태그 승인 후 실배포 확인이 필요하다.
+
 ## 2026-11-02 — 첫 태그 시험 재개 결과·안전 오류 진단 보완
 
 - [첫태그시험집계](../engineering/operations/records/backend-first-tag-trial.json)에PR35/e341145·main/devceea2f4·annotatedv0.1.0/1회push·실행을정리했다. 사용자승인범위에서통합/태그를수행했고운영6154e45대비앱·migration·OpenAPI·Dockerfile·Compose동일을확인했다.

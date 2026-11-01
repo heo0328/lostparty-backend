@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-첫태그최신(2026-11-02): 사용자승인PR35·dev/main ceea2f4/v0.1.0 1회push완료. 태그run41317120737은4attempt소스검증실패·게시/배포skip. 수동전체8그룹1811PASS와원본태그push환경재현verifyPASS를확보했으나실태그오류원인은미확정이다. 안전오류분류보완/scripts42PASS·운영미변경이며 [시험집계](../engineering/operations/records/backend-first-tag-trial.json)·NEXT_WORK 기준으로다음추가버전/태그승인대기다. v0.1.0이동/재push없음.
+첫태그최신(2026-11-02): 실패 원인은 checkout의 러너 내부 annotated tag→commit 참조 변경 후 `fetch --tags` 충돌(`would clobber existing tag`)로 확정했다. 브랜치만 명시 refspec/--no-tags로 갱신하도록 수정, 실제 격리 Git 재현 및 scripts43PASS. 기존 수동 전체1811PASS는 유지한다. 운영/태그 변경 없음·자동 배포는 아직 미완료이며 다음은 통합/새 버전 태그 승인이다. [시험집계](../engineering/operations/records/backend-first-tag-trial.json)·NEXT_WORK를 따른다.
 
 자동배포 최신: 사용자 확정안에 따라 chore/release-management에서 태그→GHCR→전용 SSH→API만 교체/복귀·journal 구현. [운영 계약](../engineering/operations/backend-release.md) 기준. GitHub production/태그불변설정·서버도구/복귀기준·배포없는preflight 준비, 실제API교체없음. 새AWS가입방식이 OIDC provider를 제한하여 사용자승인으로전용SSH키로변경했고 최소강제명령·production Secret준비와[전체6번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6559243667)를완료했다. GHCR public/workflow·첫태그 인수는미확인이다. 다음 dev/main통합승인·수동workflow·첫태그승인 후 활성화다. 기존 release 로그인 인수와 외부백업 미완료는 별도 보존한다.
 

@@ -20,7 +20,7 @@
     "last_conclusion": "failure",
     "failed_step": "Validate release source",
     "publication_and_deployment_jobs": "skipped",
-    "exception_kind_or_root_cause": "NOT CONFIRMED; original tag exception handler emits generic message only"
+    "exception_kind_or_root_cause": "CONFIRMED: checkout replaced runner-local annotated v0.1.0 with its commit; git fetch origin main dev --tags rejected annotated tag restoration (would clobber existing tag), raising CalledProcessError."
   },
   "manual_validation": {
     "url": "https://github.com/heo0328/lostparty-backend/actions/runs/41318263421",
@@ -84,7 +84,7 @@
     "temporary_hardcoded_diagnosis_removed": true,
     "safe_error_classifier_added": true,
     "script_unit_tests_passed": 42,
-    "next": "Request approval for next immutable version/tag with safe failure diagnostic; do not move or keep blindly retrying v0.1.0.",
+    "next": "Root cause fixed and verified offline. Integration and next immutable tag require approval; production deployment remains unverified.",
     "safe_diagnostic_commit": "752d8ba288e813bac11a49d1f7f4b62c6d40b444"
   },
   "production": {
@@ -94,5 +94,13 @@
     "github_release_or_ghcr_published": false
   },
   "first_automatic_deployment_accepted": false,
-  "handoff_comment": "https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6559972464"
+  "handoff_comment": "https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6559972464",
+  "root_cause_confirmation": {
+    "job_id": 124891259189,
+    "evidence": "checkout fetched +ceea2f44807eeaf7922c8f40a8c836b347095389:refs/tags/v0.1.0; subsequent fetch --tags rejected v0.1.0 (would clobber existing tag)",
+    "fix": "Fetch --no-tags with explicit main/dev remote-tracking refspecs; no tag updates",
+    "offline_real_git_reproduction": "Original command fails with same stderr; fixed command succeeds, refreshes main/dev and preserves HEAD/local tag/remote annotated tag",
+    "script_tests_passed": 43,
+    "production_or_new_tag_execution": false
+  }
 }

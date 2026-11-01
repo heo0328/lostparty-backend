@@ -36,6 +36,14 @@ def validate_source(tag, source, version, main, dev, ancestor):
         raise ValueError('tag/version/main/dev validation failed')
 
 
+def refresh_branches():
+    # checkout can materialize an annotated event tag as a local commit ref.
+    # Refresh only validation branches; never replace or auto-follow event tags.
+    run(['git', 'fetch', '--no-tags', 'origin',
+         'refs/heads/main:refs/remotes/origin/main',
+         'refs/heads/dev:refs/remotes/origin/dev'])
+
+
 def existing(tag, source):
     release = api('/releases/tags/' + tag)
     if release is None:
@@ -96,7 +104,7 @@ def main():
     if previous is not None:
         m = existing(tag, source)
         print('Existing release reused: ' + m['tag']); return
-    run(['git', 'fetch', 'origin', 'main', 'dev', '--tags'])
+    refresh_branches()
     main_ref = run(['git', 'rev-parse', 'origin/main'])
     dev_ref = run(['git', 'rev-parse', 'origin/dev'])
     ancestor = subprocess.call(['git', 'merge-base', '--is-ancestor', source, main_ref]) == 0
