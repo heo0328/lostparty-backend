@@ -54,7 +54,8 @@ def registry_digest(reference, *, anonymous=False):
     suffix = reference.removeprefix(IMAGE)
     if not suffix.startswith((':', '@')):
         raise ValueError('unexpected registry reference')
-    query = 'https://ghcr.io/token?service=ghcr.io&scope=repository:' + REPOSITORY + ':pull'
+    scope = 'pull' if anonymous else 'pull,push'
+    query = 'https://ghcr.io/token?service=ghcr.io&scope=repository:' + REPOSITORY + ':' + scope
     headers = {}
     if not anonymous:
         basic = base64.b64encode((os.environ['GITHUB_ACTOR'] + ':' + os.environ['GH_TOKEN']).encode()).decode()
@@ -65,7 +66,7 @@ def registry_digest(reference, *, anonymous=False):
     except urllib.error.HTTPError:
         raise ValueError('GHCR anonymous access not enabled' if anonymous else 'GHCR authentication failed') from None
     headers = {'Authorization': 'Bearer ' + token,
-               'Accept': 'application/vnd.oci.image.index.v1+json, application/vnd.oci.image.manifest.v1+json, application/vnd.docker.distribution.manifest.v2+json'}
+               'Accept': 'application/vnd.oci.image.index.v1+json, application/vnd.oci.image.manifest.v1+json, application/vnd.docker.distribution.manifest.v2+json, application/vnd.docker.distribution.manifest.list.v2+json'}
     request = urllib.request.Request('https://ghcr.io/v2/' + REPOSITORY + '/manifests/' + suffix[1:], headers=headers, method='HEAD')
     try:
         with urllib.request.urlopen(request, timeout=30) as response:
