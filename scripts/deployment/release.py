@@ -5,6 +5,7 @@ import base64
 import json
 import os
 import subprocess
+import sys
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -84,7 +85,21 @@ def main():
     tag = os.environ.get('GITHUB_REF_NAME', '')
     source = run(['git', 'rev-parse', 'HEAD'])
     if args.action == 'validate' and os.environ.get('GITHUB_EVENT_NAME') == 'workflow_dispatch':
-        print('Manual validation only: no publication or deployment'); return
+        if os.environ.get('GITHUB_REF_NAME') != 'chore/release-management':
+            print('Manual validation only: no publication or deployment'); return
+        # Temporary read-only diagnosis of the immutable first tag. No publish/deploy action.
+        tag = 'v0.1.0'
+        source = run(['git', 'rev-parse', 'v0.1.0^{}'])
+        def trace(frame, event, arg):
+            if event == 'exception' and frame.f_code.co_filename == __file__:
+                kind, error, _ = arg
+                status = getattr(error, 'code', None)
+                print(json.dumps({'diagnostic': 'release_control', 'function': frame.f_code.co_name,
+                                  'line': frame.f_lineno, 'exception': kind.__name__,
+                                  'http_status': status if type(status) is int else None}), flush=True)
+            return trace
+        sys.settrace(trace)
+        print('Read-only first-tag validation diagnosis; no publication or deployment', flush=True)
     require(tag, TAG); require(source, SHA)
     Path('dist').mkdir(exist_ok=True)
     if args.action == 'download':
