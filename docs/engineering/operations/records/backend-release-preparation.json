@@ -189,5 +189,8 @@
   "public_api_changed": false,
   "database_migrations_or_production_data_edits": false,
   "next": "Authorize dev/main integration and run the non-deploying manual workflow; after green CI, separately approve first tag, confirm GHCR public access and verify actual rollout.",
-  "temporary_credential_copies_removed_at_completion": true
+  "temporary_credential_copies_removed_at_completion": true,
+  "implementation_sha": "014a8dd3875621b9443fa3f341436438cceb8f1d",
+  "implementation_pushed_verified": true,
+  "handoff_comment": "https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6559243667"
 }

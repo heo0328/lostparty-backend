@@ -9,7 +9,7 @@
 - 배포제어25경계포함scripts37PASS, 실제Docker교체/unhealthy복귀·untagged imageID복귀PASS, 두OpenAPI전체비교PASS, 인증/Google격리46PASS근거는유지한다. 이미지기본환경Python패치값과Compose운영환경을구분해후자/키를보존하며, 사전점검은중단journal복구조차수행하지않도록보강했다. 이미성공한동일릴리즈의새attempt는재시작없이확인/기록한다. 빌드시각은이미지created label에서재사용해retry시각으로덮지않는다.
 - 최종서버설치3파일지문이workspace와일치하며전용키의preflight/HTTPS·DB정상, 기존API시작13:00:31Z/image dfad04e8·DB10:53:14Z/Caddy10:55:02Z보존을확인했다. API/DB재기동·키/환경변경·migration/자료쓰기없음. GitHubSSHSecret/고정호스트키변수·production태그제한·불변규칙준비, GHCRpublic/실GitHubworkflow/첫자동배포는미확인이다.
 - CLI Git 인증은workflow scope가없어최초push를거절했다. 기존연결GitHub앱으로같은브랜치에workflow4fccfb7을게시하고로컬구현0b4212e와일반merge35ce799로통합·push확인했다. 공유이력재작성·main/dev변경없음. 이후검증보정은같은목적브랜치에누적해게시한다. 임시관리자AWS/SSH·배포개인키복사본은마감시삭제하고productionSecret·서버공개키/원래프로필을보존한다.
-- [운영계약](../engineering/operations/backend-release.md)·[준비/검증집계](../engineering/operations/records/backend-release-preparation.json)를따른다. 다음사용자통합승인→수동workflow전체green→첫태그별도승인/GHCR공개확인→실반영인수다. Issue34OPEN/외부백업미구성·기존release로그인사용자인수를유지한다.
+- 구현/검증보정014a8dd commit/push·원격일치와 [전체6번째 Backend · 구현/준비 인계](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6559243667) 게시후전체6댓글순번을확인했다. 다음담당Backend/사용자의통합·수동CI이며Native추가구현/정상인수반복요청없다. [운영계약](../engineering/operations/backend-release.md)·[준비/검증집계](../engineering/operations/records/backend-release-preparation.json)를따른다. 다음사용자통합승인→수동workflow전체green→첫태그별도승인/GHCR공개확인→실반영인수다. Issue34OPEN/외부백업미구성·기존release로그인사용자인수를유지한다.
 
 ## 2026-11-01 — Backend 태그 자동 배포 구현·전용 SSH 사전 준비
 
