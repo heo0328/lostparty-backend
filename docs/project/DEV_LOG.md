@@ -1,5 +1,17 @@
 # 영구 개발 이력
 
+<a id="lightsail-manual-test-verification"></a>
+
+## 2026-11-01 — 사용자 요청 원정대1개 테스트용 수동 인증
+
+- 사용자명시요청: 운영서버의본인테스트회원1명/인증시도원정대1개를인증성공으로처리. 운영자료변경의대상/목적은이1개로한정했고타소유이전/분쟁해소/일반검증우회기능추가로확대하지않았다. 작업브랜치·checkout은chore/lightsail-deployment/기본경로, 실제실행source6154e45유지다. #15본문기준/최신댓글10개를확인했으며공식정책협의/Issue게시·변경은없다.
+- READ ONLY 확인: 회원1·미인증등록1·V2 pending claim1·정식원정대/캐릭터/nameclaim/분쟁0. 등록원정대와proof의18캐릭터식별집합·소스버전·현재키세대/범위일치, 다른소유자없음을확인했다. 두스냅샷의combat_power관찰값차이는있어완전본문동일을요구하지않고식별집합/출처버전을검증했다. 회원ID/캐릭터명/키/원본스냅샷은출력하지않고대상ID는임시보호파일에만고정했다.
+- 변경전DB459,858bytes덤프를서버0600으로생성하고archive목록확인PASS. 이번덤프의실복원은미실행이며[집계](../engineering/operations/records/lightsail-manual-test-verification.json)에경로/검증경계를남겼다.
+- 실행: user→등록→proof행잠금후유일대상/버전/미소유/분쟁없음을재검증해한트랜잭션으로원정대소유계정1·18캐릭터/이름claim·기본unconfigured설정·소유감사1을생성하고기존등록을연결했다. V2 proof를passed/verified/VERIFIED로종료하고member proof revision을갱신했다. proof.identity_snapshot.manual_test_override에는명시적수동테스트승인/사유·시각/감사참조와actual_equipment_proof_passed=false를저장했다. 일반장비증거통과를위조하거나provider관찰/서명·인증로직을바꾸지않았다. 적용UTC11:35:27.217(한국시간20:35:27), 작업참조ed0a2ddd-618b-4cf3-baab-03d7db9497ef다.
+- 중간검증에서DTO의allowed_actions를actions로잘못조회해첫트랜잭션전체가rollback됐다. 정식계정/nameclaim0·원버전보존을재확인한뒤필드명을정정해1회commit했고부분반영/중복생성은없다.
+- 별도새READ ONLY조회PASS: 등록verified/owned·캐릭터18·원정대1·proof passed/verified/VERIFIED/self·open_registration가능, 등록v3/proofv2·감사1/수동주석존재. 대표/활동선택은자동변경하지않아unconfigured/활동0·대표없음이다. APIhealthy/HTTPS health200·DB정상, API시작시각11:21:13그대로로재시작/이미지/코드/DDL변경없다. 실제장비인증정상경로/기기UI인수와구분한다.
+- 다음사용자는원정대목록을새로고침해현재인증상태를확인한다. 이후대표·활동설정은기존흐름을사용한다. 로컬개발DB이관·다른회원/원정대/그룹/모집자료변경·전역인증완화는없다. Google로그인은사용자성공보고/운영회원1명확인을수용하며반복로그인을추가요청하지않는다. 임시접속/대상선택파일을삭제하고서버백업은보존했다. 문서248파일/상대링크·anchor2,613건/고정자료·계약분류·diff검사를통과해같은목적브랜치에실행/검증기록을묶어commit/push한다.
+
 <a id="lightsail-google-azp-rollout"></a>
 
 ## 2026-11-01 — Lightsail 확정 Android azp 반영·API 재생성
