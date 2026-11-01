@@ -1,5 +1,11 @@
 # 다음 실행
 
+## 현재 실행 — 첫 태그 시험 실패 대조 완료·다음 태그 승인 대기 (2026-11-02)
+
+사용자승인으로PR35통합/main·dev동일ceea2f4·v0.1.0태그1회push를완료했다. 기존운영6154e45대비앱/API/DB/Compose동일이다. [태그run41317120737](https://github.com/heo0328/lostparty-backend/actions/runs/41317120737)은4attempt모두소스검증일반예외로실패·게시/배포skip, 태그이동/재push없음. [수동run41318263421](https://github.com/heo0328/lostparty-backend/actions/runs/41318263421)은verify·전체8그룹/1811PASS다. [원본태그push환경재현41320810991](https://github.com/heo0328/lostparty-backend/actions/runs/41320810991)도verifyPASS여서중복회귀만취소했다. 실제태그경로실패원인은미확정이다.
+
+[시험집계](../engineering/operations/records/backend-first-tag-trial.json)를따른다. 후행작업브랜치에서임시진단을제거하고예외종류/HTTP상태/허용환경변수이름/코드위치만남기는안전진단을보완·scripts42PASS했다. 서버/API/DB변경·이미지/Release게시없음, 자동배포완료가아니다. 다음사용자가추가버전/태그승인을결정한다. v0.1.0은그대로보존하고맹목재시도/태그이동없음. 아래통합/첫태그대기는당시준비이력이다.
+
 ## 현재 실행 — Backend 태그 기반 자동 배포 구현
 
 사용자 확정안으로 `chore/release-management`에서 VERSION0.1.0·태그 검증/이미지·Release 게시·전용 SSH·서버 단일 실행/journal·DB/구성 사전 거절·API만 교체/복귀를 구현한다. [운영 계약](../engineering/operations/backend-release.md)을 따른다. GitHub production 환경(v*태그만)·SSH Secret/고정호스트키 변수·태그 수정/삭제 방지 ruleset 준비, 서버 root배포도구/기존 정상 복귀기준과 배포없는 preflight를 완료했다. API/DB/Caddy 시작시각은 보존했다.

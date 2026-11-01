@@ -8,7 +8,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'deployment'))
-from release import IMAGE, registry_digest
+from release import IMAGE, registry_digest, safe_failure
 
 
 class Response(io.BytesIO):
@@ -39,3 +39,26 @@ class RegistryTests(unittest.TestCase):
                 else:
                     with self.assertRaises(ValueError):
                         registry_digest(IMAGE + ':v0.1.0')
+
+
+class SafeFailureTests(unittest.TestCase):
+    def test_exception_text_and_response_are_never_exposed(self):
+        import json
+        import subprocess
+        secret = 'synthetic-secret-canary'
+        for error in [RuntimeError(secret), ValueError(secret), KeyError(secret),
+                      subprocess.CalledProcessError(7, ['private', secret], output=secret, stderr=secret),
+                      urllib.error.HTTPError('https://private/' + secret, 403, secret, {}, None)]:
+            with self.subTest(kind=type(error).__name__):
+                self.assertNotIn(secret, json.dumps(safe_failure(error)))
+        self.assertEqual(safe_failure(KeyError('GH_TOKEN'))['missing_environment_name'], 'GH_TOKEN')
+        self.assertEqual(safe_failure(urllib.error.HTTPError('https://private', 403, secret, {}, None))['http_status'], 403)
+
+    def test_control_location_is_reported_without_traceback_source(self):
+        with patch('release.urllib.request.urlopen', side_effect=OSError('synthetic-secret-canary')), patch.dict(os.environ, {'GITHUB_ACTOR': 'test', 'GH_TOKEN': 'synthetic-secret-canary'}):
+            try:
+                registry_digest(IMAGE + ':v0.1.0')
+            except OSError as error:
+                result = safe_failure(error)
+        self.assertEqual(result['location']['function'], 'registry_digest')
+        self.assertNotIn('synthetic-secret-canary', str(result))

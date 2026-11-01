@@ -85,36 +85,7 @@ def main():
     tag = os.environ.get('GITHUB_REF_NAME', '')
     source = run(['git', 'rev-parse', 'HEAD'])
     if args.action == 'validate' and os.environ.get('GITHUB_EVENT_NAME') == 'workflow_dispatch':
-        if os.environ.get('GITHUB_REF_NAME') != 'chore/release-management':
-            print('Manual validation only: no publication or deployment'); return
-        # Execute the original immutable tag script under the exact push environment.
-        import runpy
-        import tempfile
-        original = run(['git', 'show', 'v0.1.0:scripts/deployment/release.py'])
-        with tempfile.TemporaryDirectory(prefix='tag-validation-') as directory:
-            target = Path(directory) / 'original_release.py'
-            target.write_text(original)
-            def trace(frame, event, arg):
-                if event == 'exception' and frame.f_code.co_filename == str(target):
-                    kind, error, _ = arg
-                    status = getattr(error, 'code', None)
-                    print(json.dumps({'diagnostic': 'original_tag_control', 'function': frame.f_code.co_name,
-                                      'line': frame.f_lineno, 'exception': kind.__name__,
-                                      'http_status': status if type(status) is int else None}), flush=True)
-                return trace
-            os.environ['GITHUB_EVENT_NAME'] = 'push'
-            os.environ['GITHUB_REF_NAME'] = 'v0.1.0'
-            print(json.dumps({'diagnostic': 'tag_checkout', 'tag_source': run(['git', 'rev-parse', 'v0.1.0^{}']),
-                              'runner_checkout': source}), flush=True)
-            # The original main resolves HEAD; validate at the immutable tag commit.
-            run(['git', 'checkout', '--detach', 'v0.1.0'])
-            sys.settrace(trace)
-            try:
-                runpy.run_path(str(target), run_name='__main__')
-            finally:
-                sys.settrace(None)
-                run(['git', 'checkout', '--detach', source])
-        return
+        print('Manual validation only: no publication or deployment'); return
     require(tag, TAG); require(source, SHA)
     Path('dist').mkdir(exist_ok=True)
     if args.action == 'download':
@@ -183,10 +154,31 @@ def main():
     print('Published ' + tag)
 
 
+def safe_failure(error):
+    """Expose failure location/type/status, never exception text, response or credential values."""
+    result = {'event': 'release_control_failed', 'exception': type(error).__name__}
+    if isinstance(error, urllib.error.HTTPError):
+        result['http_status'] = error.code
+    if isinstance(error, subprocess.CalledProcessError):
+        result['exit_code'] = error.returncode
+    if isinstance(error, KeyError) and error.args and error.args[0] in {
+            'GH_TOKEN', 'GITHUB_ACTOR', 'GITHUB_REF_NAME', 'GITHUB_EVENT_NAME'}:
+        result['missing_environment_name'] = error.args[0]
+    frames = []
+    traceback = error.__traceback__
+    while traceback:
+        frame = traceback.tb_frame
+        if Path(frame.f_code.co_filename).resolve() == Path(__file__).resolve():
+            frames.append({'function': frame.f_code.co_name, 'line': traceback.tb_lineno})
+        traceback = traceback.tb_next
+    if frames:
+        result['location'] = frames[-1]
+    return result
+
+
 if __name__ == '__main__':
     try:
         main()
-    except ValueError as error:
-        raise SystemExit('Release control failed: ' + str(error)) from None
-    except Exception:
-        raise SystemExit('Release control failed; inspect stage, never print tokens or environment') from None
+    except Exception as error:
+        print(json.dumps(safe_failure(error)), flush=True)
+        raise SystemExit(1) from None
