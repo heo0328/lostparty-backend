@@ -71,3 +71,8 @@ Native는package/build/서명인증서digest, Backend는DB revision/환경변경
 **현재조합의표시:** Native v1.1.2/source9e4a18f7/APK게시성공 ↔ Backend태그없음/source6154e45/image dfad04e8/DB0035/azp환경반영기록. API계약ref는해당Backend소스의`openapi/two-cycle.openapi.yaml`로연결할수있다. 이연결은비교후보이며release APK와서버의통합인수완료가아니다. 기존실행에새태그를소급발급하지않는다.
 
 [전체2번째 Backend · 현재 사실 대조·최소 추적안](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558101459)으로 회신했다. 다음은 사용자와 Backend 버전/태그·배포 인증/승인·실패 처리 방식을 정리하는 것이다. Native의현재운영방식회신대기는해소한다. release OAuth는기존debug ID만등록된Backend기준과별도로해당서명의정확한공개client ID를확인해야하며미확인값을추정허용하지않는다. 자동배포나기기정상인수반복을이번에추가실행하지않는다.
+
+
+## release OAuth 후속 운영 반영
+
+사용자콘솔화면과공개ID전사·반영승인으로 release SHA-1/Android client대조대기를해소했다. [전체4번째 Backend](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558294576)·[반영집계](records/lightsail-release-azp-rollout.json)대로기존debug ID에release ID추가/동일API재생성·14분리검증을완료했다. API시작13:00:31Z·health정상, DB/Caddy·키/다른환경보존이다. 위회신당시release등록미확인은과거이력이며직접콘솔API조회/APK독립인증서추출이나실Google로그인성공을의미하지않는다. 다음사용자가v1.1.2 APK새로그인거래를확인한다. 태그자동화/전체호환manifest는별도미완료다.

@@ -1,5 +1,14 @@
 # 영구 개발 이력
 
+<a id="lightsail-release-azp-rollout"></a>
+
+## 2026-11-01 — 확정 release Android azp 운영 반영
+
+- 사용자 Firebase/Google콘솔 화면의 package·SHA-1/인증서SHA256과 정확한 공개Android ID전사로release등록을대조했다. 이어사용자가반영진행을승인해기존debug ID에release ID하나를추가했다. 직접콘솔API조회/APK인증서독립추출은수행하지않았으며입력근거를[반영집계](../engineering/operations/records/lightsail-release-azp-rollout.json)에명시했다.
+- 실제경로/home/ubuntu/lostparty-backend·compose.lightsail.yaml·.env.lightsail에서 원래allowlist/debug·Web audience·source/image를사전일치확인했다. 0600백업후원자적env교체·compose config검사·no-deps/no-build/force-recreate로API만재생성했다. API시작2026-11-01T13:00:31.154811009Z·healthy·공개HTTPS health200/status/database ok. APIimage/command/mount·다른env와DB/Caddy ID/start/mount·인증키bytes/소유/권한동일을비교했다. migration/DB쓰기·키교체·코드교체없음.
+- 실제설정별도프로세스/일회성RSA/모의Google공개키로release/debug/Web허용과미등록/다른aud·issuer·nonce/시간/subject·서명/알고리즘거절·provider503등14경계PASS. 실제Google토큰/운영DB시험없음. 실Google성공/refresh는사용자APK새거래확인대기다.
+- [Issue34 전체4번째 Backend · 운영 반영 완료](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558294576)회신·전체4댓글순번확인. 다음사용자의v1.1.2로그인결과대조이며기존전체정상인수반복요청없음. 태그CI/CD설계/merge/새APK게시없음. 임시AWS로그인복사본/SSH키/CLI는마감시삭제하고원본캐시·서버비공개백업은보존한다. 문서/diff검증후같은목적브랜치구간으로commit/push한다.
+
 <a id="lightsail-release-google-login-investigation"></a>
 
 ## 2026-11-01 — v1.1.2 release Google 로그인 실패 읽기 진단
