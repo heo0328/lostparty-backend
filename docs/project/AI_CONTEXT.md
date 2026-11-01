@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+Git 최신(2026-11-01): 사용자승인 [PR33](https://github.com/heo0328/lostparty-backend/pull/33)·병합c0b13cc로Lightsail첫배포구성/기록·Google등록보완·수동테스트원정대/짧은운영안내를dev에통합했다. checkout dev, main도최종dev의후행통합기록까지동일커밋으로동기화한다. 통합완료chore/lightsail-deployment는로컬/원격정리하고미완료activity-selection은보존한다. 아래작업checkout은당시이력이며서버source6154e45·DB0035/환경/키는이번Git통합에서변경하지않는다. [통합이력](DEV_LOG.md#lightsail-git-integration)을따른다.
+
 운영안내 최신(2026-11-01): [Lightsail 짧은 운영 안내](../engineering/operations/lightsail-quick-ops.md)를추가했다. 실제경로/Compose·Docker자동시작·3서비스restart/log제한은확인, 실제재부팅/회복시험은미실행이다. 서버내덤프만확인했고외부DB/키백업/자동화는미구성·완료근거없음이다. [이력](DEV_LOG.md#lightsail-quick-ops)을따른다.
 
 2026-11-01 테스트원정대 최신: 사용자명시승인으로운영회원1명의미소유원정대1개/V2대기1개를수동인증했다. 현재verified/owned·18캐릭터·소유감사/수동테스트주석을확인했으며실장비증거통과가아니다. 대표/활동은기존unconfigured흐름을유지했고앱목록새로고침이필요하다. [집계](../engineering/operations/records/lightsail-manual-test-verification.json)·[이력](DEV_LOG.md#lightsail-manual-test-verification)을따른다. Google로그인사용자성공보고/운영회원1확인도수용하며아래실로그인미확인문장은이전시점이력이다.

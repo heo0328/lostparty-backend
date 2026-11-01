@@ -1,5 +1,14 @@
 # 영구 개발 이력
 
+<a id="lightsail-git-integration"></a>
+
+## 2026-11-01 — Lightsail 작업 dev 통합·main 동기화
+
+- 사용자지시: 현재내용을dev에merge하고main도동일최신시점으로맞춘다. 사전fetch에서로컬/원격작업HEADb85b80d·devac0526f/main6151fa0일치·clean/단일worktree를확인했다. main의후행README수정6151fa0도작업이력에포함되어보존된다. 독립미완료feat/activity-selection은통합/삭제대상에서제외했다.
+- [PR33](https://github.com/heo0328/lostparty-backend/pull/33)로독립LightsailCompose/Caddy/신규키생성기와첫배포/azp진단·보완/승인수동테스트인증·운영안내를dev에이력보존merge했다. 고정headb85b80d·충돌없음/mergeable확인후병합`c0b13ccf109472417cc10e13bf70e706724dddc2`, 로컬dev도원격merge로fast-forward했다. 작업브랜치전체와기존main이dev의조상임을확인했다. squash/rebase/force push없음.
+- 현재checkout dev, 이번후행통합기록을포함해dev/main을같은최종커밋으로일반push한다. 원격통합게시/전체포함·단일worktree·사용충돌없음을확인한완료chore/lightsail-deployment는로컬/원격정리하고activity-selection은보존한다. 최종SHA/게시·정리결과는Git ref/최종보고를따른다. 미래의신규설치는삭제된작업브랜치대신통합된main의고정SHA를사용하도록설치절차도정정했다.
+- 검증은문서/참조·동결자료·diff와Git이력/원격상태대조다. 실제Compose/Caddy/OpenAPI/HTTPS/격리복원/인증경계의기존검증은각배포기록을재사용하며새서버·DB시험/배포/재부팅·원정대자료수정·Issue댓글/종료는하지않았다. 실행source6154e45/이미지dfad04e8·DB0035/등록환경과키는보존하고서버밖백업/장기운영·미결정정책후속을완료로바꾸지않는다.
+
 <a id="lightsail-quick-ops"></a>
 
 ## 2026-11-01 — Lightsail 짧은 운영 안내·자동시작/로그/외부백업 확인

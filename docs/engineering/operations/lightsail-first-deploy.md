@@ -66,10 +66,10 @@ Docker 그룹 추가 대신 `sudo docker`를 사용한다. Docker/Compose를 설
 
 ## 3. 고정 소스와 환경변수
 
-공개 저장소면 아래 clone을 사용하고, private이면 읽기 전용 deploy key 등으로 접근한다. PAT를 URL/명령행에 넣지 않는다. 원격 게시가 확인된 작업 브랜치에서 고정 SHA를 정하고 서버 checkout을 확인한다. 아직 dev/main 병합 승인은 포함하지 않는다.
+공개 저장소면 아래 clone을 사용하고, private이면 읽기 전용 deploy key 등으로 접근한다. PAT를 URL/명령행에 넣지 않는다. PR33으로구성을dev/main에통합한후신규설치는main의검증된고정SHA를정하고서버checkout을확인한다. 기존운영서버의source6154e45를이번Git통합때변경한것은아니다.
 
 ```bash
-git clone --branch chore/lightsail-deployment https://github.com/heo0328/lostparty-backend.git
+git clone --branch main https://github.com/heo0328/lostparty-backend.git
 cd lostparty-backend
 git status --short --branch
 git rev-parse HEAD
