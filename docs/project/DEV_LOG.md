@@ -1,5 +1,12 @@
 # 영구 개발 이력
 
+## 2026-11-02 — v0.1.1 첫 자동 서버 배포 성공
+
+- 사용자 승인 PR36/77c9de2 통합·main/dev 일치 후 v0.1.1을 1회 push했다. 실제 태그 소스검증/정적/Docker복귀/계약·전체8그룹1811PASS, GHCR digest259e8234·Release 게시 완료. v0.1.0은 불변 보존했다.
+- attempt1은 SSH 인증 전 종료로 submit/API교체 없음. 원래 gh secret set stdin 경로가 끝 CR/LF를 제거하며 마지막 LF 없는 OpenSSH 키는 libcrypto 오류를 내는 것을 재현했다. [공식 CLI 구현](https://github.com/cli/cli/blob/trunk/pkg/cmd/secret/set/set.go)의 getBody/TrimRight와 대조했다. 이전 Secret 원문을 읽어 확인한 것은 아니며 등록 경로·서버 preauth 로그·격리 재현 근거다. 같은 제한권한 키로 교체하고 dotenv stdin 등록으로 LF를 보존했다. preflight 성공·일반셸 거절 후 실패 배포 단계만 재실행, 동일 소스/태그/이미지를 재사용했다. 이전 전용키 폐기·임시 AWS/SSH/개인키 복사본 삭제 완료.
+- Actions41323830955 attempt2·production Deployment7475782412 success. API 시작16:30:20.793876134Z/배포완료16:30:33.045451Z(한국11월2일01:30). DB/Caddy 시작시각·운영환경/Google허용목록·mount/인증키 보존을 제어기에서 확인했고 공개health200/status·database ok, 공개조회200/me401을 독립 대조했다. DB0035 유지·migration/재부팅/유료리소스추가 없음.
+- [고정 배포 집계](../engineering/operations/records/backend-v0.1.1-deployment.json)·[Issue34 전체9번째 Backend 최종 인계](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6560737194), 전체9댓글 실제 순번 확인. 자동 서버배포 도입/실제반영은 완료이며 전체 앱/새 사용자 기기 인수는 별도다. 기존 release Google 로그인 인수 유지, 외부 DB/키 백업 미구성은 별도 후속으로 보존한다.
+
 ## 2026-11-02 — v0.1.1 자동 배포 재시험 승인
 
 사용자가 원인 수정 후 “진행합시다”로 수정 통합/dev·main 동기화와 새 v0.1.1 태그 자동 배포를 승인했다. VERSION을0.1.1로 올리고 기존v0.1.0은 보존한다. 원인 확정·수정은 [Issue34 전체8번째 Backend](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6560278698)이며 실제 배포 결과는 후속 기록에서 구분한다.

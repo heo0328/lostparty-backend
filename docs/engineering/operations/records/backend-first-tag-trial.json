@@ -84,7 +84,7 @@
     "temporary_hardcoded_diagnosis_removed": true,
     "safe_error_classifier_added": true,
     "script_unit_tests_passed": 42,
-    "next": "Root cause fixed and verified offline. Integration and next immutable tag require approval; production deployment remains unverified.",
+    "next": "Resolved by approved v0.1.1 integration/tag and successful automatic deployment; see backend-v0.1.1-deployment.json. Original v0.1.0 failure remains preserved.",
     "safe_diagnostic_commit": "752d8ba288e813bac11a49d1f7f4b62c6d40b444"
   },
   "production": {

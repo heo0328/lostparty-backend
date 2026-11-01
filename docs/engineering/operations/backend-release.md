@@ -2,6 +2,10 @@
 
 작업 목적은 승인된 고정 릴리즈와 실제 운영 반영을 연결하는 것이다. [Issue34](https://github.com/heo0328/lostparty-backend/issues/34)에서 Native와 합의한 독립 버전·4단계 추적을 따른다. 구현 브랜치는 `chore/release-management`이며 첫 버전은 `VERSION`의 `0.1.0`이다. OpenAPI의 버전과 별도다. 기존 APK release Google 로그인 사용자 인수는 보존하며 다시 요구하지 않는다.
 
+## 현재 적용 상태
+
+v0.1.1/source77c9de2/image259e8234를 2026-11-01T16:30:33Z에 자동 반영했다. [배포 집계](records/backend-v0.1.1-deployment.json)·[Actions attempt2](https://github.com/heo0328/lostparty-backend/actions/runs/41323830955/attempts/2) 기준으로 전체1811PASS/이미지·Release/실제 서버health 성공이다. v0.1.0은 소스검증 실패 태그로 보존했다. 아래 일회 준비 설명과 초기 시험 수치는 당시 이력이며 현재 상태는 이 집계를 따른다.
+
 ## 실행 경계
 
 목적 브랜치→dev→main 통합과 완료 브랜치 정리를 유지하고 release 브랜치는 추가하지 않는다. 사용자가 승인한 `vMAJOR.MINOR.PATCH` 태그 push가 운영 배포 승인이다. 태그와 VERSION 일치·main/dev 동일 SHA·태그 소스의 main 포함을 **최초 산출물 게시 전** 검사한다. 뒤에 main/dev가 전진해도 게시된 Release 재실행은 원래 태그/source/digest를 재사용한다. GitHub의 태그 update/deletion 규칙이 공개 태그 이동/삭제를 막는다.
@@ -22,11 +26,13 @@ GitHub production 환경은 reviewer/wait 없이 `v*` **태그만** 허용한다
 
 **인증 방식 변경 근거:** 초기 확정안은 OIDC였지만 실제 IAM 호출은 조직 SCP explicit deny로 거절됐다. 공식 [새 AWS 가입 방식의 관리 정책](https://docs.aws.amazon.com/accounts/latest/reference/scps-and-rcps-for-projects.html)은 iam:*Provider*를 제한한다. [고급 기능 활성화](https://docs.aws.amazon.com/accounts/latest/reference/activate-advanced-features.html)는 계정 업그레이드가 필요하므로 현재 Free plan 유지와 맞지 않는다. 사용자에게 원인을 설명하고 **전용 SSH 키 방식으로 변경하는 명시 승인을 받았다.** 별도 관리자를 찾는 방식으로 해결된다고 안내한 초기 추정은 정정했다. OIDC 역할/provider는 생성하지 않았고 계정 업그레이드·정책 우회도 하지 않았다.
 
-배포 전용 계정은 암호가 잠겨 있고, root 소유 authorized_keys의 `restrict`·강제 명령으로 셸/PTY/에이전트·TCP 포워딩을 허용하지 않는다. 강제 명령은 `submit`, `preflight`, `status <run>-<attempt>`만 받고 제한된 sudo 명령으로 root 소유 배포 도구를 호출한다. 사용자 홈/키 파일을 root 소유로 두어 배포 키로 허용 명령을 바꿀 수 없다. 개인키는 Git에 넣지 않으며 production Secret에 암호화 저장했다. key rotation은 새 키 준비→전용 명령 검증→Secret 교체→이전 키 폐기의 별도 승인된 운영 작업으로 진행한다. 운영 env/인증 키/DB는 이 SSH 키와 다르다.
+배포 전용 계정은 암호가 잠겨 있고, root 소유 authorized_keys의 `restrict`·강제 명령으로 셸/PTY/에이전트·TCP 포워딩을 허용하지 않는다. 강제 명령은 `submit`, `preflight`, `status <run>-<attempt>`만 받고 제한된 sudo 명령으로 root 소유 배포 도구를 호출한다. 사용자 홈/키 파일을 root 소유로 두어 배포 키로 허용 명령을 바꿀 수 없다. 개인키는 Git에 넣지 않으며 production Secret에 암호화 저장했다. GitHub Secret에 OpenSSH 개인키를 등록할 때 끝 LF를 보존한다. 일반 `gh secret set < key`는 끝 CR/LF를 제거하므로 사용하지 않는다. 검증된 등록 방식은 Python에서 개인키 문자열을 JSON 인용한 dotenv 항목으로 만들어 `gh secret set --env production --env-file -`의 stdin으로 전달하는 것이다. 키 원문/환경파일은 출력·커밋하지 않고 마지막 LF가 있는 파일로 `ssh-keygen -y` 및 제한 preflight를 확인한다.
+
+key rotation은 새 키 준비→전용 명령 검증→Secret 교체→이전 키 폐기의 별도 승인된 운영 작업으로 진행한다. 운영 env/인증 키/DB는 이 SSH 키와 다르다.
 
 `bootstrap_server.py`는 관리자 SSH에서 검토한 코드·public key·기존 설치본 expected hash를 stdin JSON으로 받아 root 도구와 전용 계정/최소 sudoers를 준비한다. 개인키를 서버에 보내지 않는다. 기존 계정/authorized_keys/sudo 정책이 다르면 덮어쓰지 않는다. 실제 키로 preflight 성공·일반 명령/포워딩 거절을 확인했고, 키와 임시 관리자 인증의 로컬 복사본은 작업 종료 시 제거한다.
 
-GHCR 신규 package는 기본 private일 수 있다. 최초 게시 후 소유자가 package 설정에서 이 package를 public으로 전환해야 한다. workflow는 **익명 digest 조회가 성공하기 전에는 Release 완료/운영 배포로 넘어가지 않는다.** 첫 게시가 이 지점에서 멈추면 public 전환 후 같은 run을 재실행해 기존 소스 이미지를 재사용한다. package public 전환은 현재 도구로 미확인이고 첫 태그는 아직 발행하지 않았다. 이미지는 공개 소스/런타임만 포함하며 `.env`·인증 키·백업/개인정보를 넣지 않는다. GHCR/Actions 요금과 공개 여부가 바뀌면 운영자가 다시 검토하며 유료 runner·AWS ECR/S3 등은 추가하지 않는다.
+GHCR 신규 package는 기본 private일 수 있다. 최초 게시 후 소유자가 package 설정에서 이 package를 public으로 전환해야 한다. workflow는 **익명 digest 조회가 성공하기 전에는 Release 완료/운영 배포로 넘어가지 않는다.** 첫 게시가 이 지점에서 멈추면 public 전환 후 같은 run을 재실행해 기존 소스 이미지를 재사용한다. 현재 v0.1.1 이미지는 익명 digest 접근 확인을 완료했다. 최초 준비 당시에는 public 전환과 첫 태그가 미확인이었다. 이미지는 공개 소스/런타임만 포함하며 `.env`·인증 키·백업/개인정보를 넣지 않는다. GHCR/Actions 요금과 공개 여부가 바뀌면 운영자가 다시 검토하며 유료 runner·AWS ECR/S3 등은 추가하지 않는다.
 
 서버에는 root 소유 `/usr/local/lib/lostparty-deploy/{server.py,common.py}`와 비공개 `/var/lib/lostparty-deploy`를 준비했다. bootstrap은 현재 API image ID·실행 source·DB revision과 root만 읽는 해석된 Compose를 동결해 초기 복귀 기준으로 보존한다. 운영 checkout과 `.env.lightsail`·4종 키·DB/Caddy·서비스 시작 시각을 바꾸지 않았다. 설치 스크립트 자체의 변경은 별도 검증/승인된 준비 작업으로 반영하며 일반 릴리즈가 임의로 교체하지 않는다.
 
@@ -60,4 +66,4 @@ status는 비밀 없는 결과만 출력한다. `current.json`·동결 Compose·
 
 최초전체8그룹은1805PASS/6옛검사FAIL, 보정후대상11경계PASS다. 수정후전체8그룹재실행을완료한것은아니며첫수동GitHubworkflow의전체green으로확인한다. scripts37PASS에는배포제어25개가포함된다.
 
-다음 순서: 검증된 작업 구간 dev/main 통합 승인 → 수동 workflow 검증 → 사용자 승인 첫 v0.1.0 태그 → 최초 GHCR public 접근 확인/필요시 같은 run 재실행 → 실제 GitHub Secret/자동 배포 결과 확인. 현재 실제 운영은 source6154e45/image dfad04e8·DB0035이며 후행 구현/문서 commit과 다르다. 외부 백업 미구성은 별도 미완료이고 migration 자동화의 선행 해결이 필요하다.
+다음 순서: 검증된 작업 구간 dev/main 통합 승인 → 수동 workflow 검증 → 사용자 승인 첫 v0.1.0 태그 → 최초 GHCR public 접근 확인/필요시 같은 run 재실행 → 실제 GitHub Secret/자동 배포 결과 확인. 현재 실제 운영은 v0.1.1/source77c9de2/image259e8234·DB0035이며 후행 문서 통합 commit과 다르다. 위 초기 준비 순서는 완료했고 다음 릴리즈부터 새 VERSION/승인 태그로 실행한다. 외부 백업 미구성은 별도 미완료이고 migration 자동화의 선행 해결이 필요하다.
