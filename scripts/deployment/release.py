@@ -5,6 +5,7 @@ import base64
 import json
 import os
 import subprocess
+import sys
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -33,6 +34,14 @@ def validate_source(tag, source, version, main, dev, ancestor):
     require(tag, TAG); require(source, SHA)
     if tag != 'v' + version.strip() or main != dev or not ancestor:
         raise ValueError('tag/version/main/dev validation failed')
+
+
+def refresh_branches():
+    # checkout can materialize an annotated event tag as a local commit ref.
+    # Refresh only validation branches; never replace or auto-follow event tags.
+    run(['git', 'fetch', '--no-tags', 'origin',
+         'refs/heads/main:refs/remotes/origin/main',
+         'refs/heads/dev:refs/remotes/origin/dev'])
 
 
 def existing(tag, source):
@@ -95,7 +104,7 @@ def main():
     if previous is not None:
         m = existing(tag, source)
         print('Existing release reused: ' + m['tag']); return
-    run(['git', 'fetch', 'origin', 'main', 'dev', '--tags'])
+    refresh_branches()
     main_ref = run(['git', 'rev-parse', 'origin/main'])
     dev_ref = run(['git', 'rev-parse', 'origin/dev'])
     ancestor = subprocess.call(['git', 'merge-base', '--is-ancestor', source, main_ref]) == 0
@@ -153,10 +162,31 @@ def main():
     print('Published ' + tag)
 
 
+def safe_failure(error):
+    """Expose failure location/type/status, never exception text, response or credential values."""
+    result = {'event': 'release_control_failed', 'exception': type(error).__name__}
+    if isinstance(error, urllib.error.HTTPError):
+        result['http_status'] = error.code
+    if isinstance(error, subprocess.CalledProcessError):
+        result['exit_code'] = error.returncode
+    if isinstance(error, KeyError) and error.args and error.args[0] in {
+            'GH_TOKEN', 'GITHUB_ACTOR', 'GITHUB_REF_NAME', 'GITHUB_EVENT_NAME'}:
+        result['missing_environment_name'] = error.args[0]
+    frames = []
+    traceback = error.__traceback__
+    while traceback:
+        frame = traceback.tb_frame
+        if Path(frame.f_code.co_filename).resolve() == Path(__file__).resolve():
+            frames.append({'function': frame.f_code.co_name, 'line': traceback.tb_lineno})
+        traceback = traceback.tb_next
+    if frames:
+        result['location'] = frames[-1]
+    return result
+
+
 if __name__ == '__main__':
     try:
         main()
-    except ValueError as error:
-        raise SystemExit('Release control failed: ' + str(error)) from None
-    except Exception:
-        raise SystemExit('Release control failed; inspect stage, never print tokens or environment') from None
+    except Exception as error:
+        print(json.dumps(safe_failure(error)), flush=True)
+        raise SystemExit(1) from None

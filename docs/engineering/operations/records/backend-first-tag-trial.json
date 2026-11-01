@@ -1,0 +1,106 @@
+{
+  "date_kst": "2026-11-02",
+  "scope": "User-authorized first tag push and automatic deployment trial; resumed after conversation usage limit",
+  "integration": {
+    "pr": 35,
+    "merge": "e341145fc8c28d20bb1d218b94824b1aee8dc16f",
+    "main_dev_source": "ceea2f44807eeaf7922c8f40a8c836b347095389",
+    "application_api_migration_docker_compose_identical_to_deployed_source": true
+  },
+  "tag": {
+    "name": "v0.1.0",
+    "source": "ceea2f44807eeaf7922c8f40a8c836b347095389",
+    "annotated_object": "7c590f4ac007526581e22ec045d836ccaa83f2bd",
+    "push_count": 1,
+    "moved_or_deleted": false
+  },
+  "tag_run": {
+    "url": "https://github.com/heo0328/lostparty-backend/actions/runs/41317120737",
+    "attempts": 4,
+    "last_conclusion": "failure",
+    "failed_step": "Validate release source",
+    "publication_and_deployment_jobs": "skipped",
+    "exception_kind_or_root_cause": "CONFIRMED: checkout replaced runner-local annotated v0.1.0 with its commit; git fetch origin main dev --tags rejected annotated tag restoration (would clobber existing tag), raising CalledProcessError."
+  },
+  "manual_validation": {
+    "url": "https://github.com/heo0328/lostparty-backend/actions/runs/41318263421",
+    "source": "df74fb32e76f483e3706e228fd07a9e627a247c6",
+    "result": "success",
+    "original_tag_source_validation": "PASS; Release404 is expected absence branch",
+    "regression_groups": [
+      {
+        "name": "regression (4)",
+        "conclusion": "success",
+        "passed": 211
+      },
+      {
+        "name": "regression (6)",
+        "conclusion": "success",
+        "passed": 194
+      },
+      {
+        "name": "regression (2)",
+        "conclusion": "success",
+        "passed": 245
+      },
+      {
+        "name": "regression (7)",
+        "conclusion": "success",
+        "passed": 191
+      },
+      {
+        "name": "regression (0)",
+        "conclusion": "success",
+        "passed": 255
+      },
+      {
+        "name": "regression (5)",
+        "conclusion": "success",
+        "passed": 252
+      },
+      {
+        "name": "regression (1)",
+        "conclusion": "success",
+        "passed": 212
+      },
+      {
+        "name": "regression (3)",
+        "conclusion": "success",
+        "passed": 251
+      }
+    ],
+    "regression_total_passed": 1811,
+    "publication_or_deployment": false
+  },
+  "exact_tag_script_push_environment_reproduction": {
+    "url": "https://github.com/heo0328/lostparty-backend/actions/runs/41320810991",
+    "source": "a0dee7cc1800cb23cdab812cb5825a5b50b25672",
+    "verified_original_tag_script": "PASS",
+    "verify_job": "success",
+    "workflow_conclusion": "cancelled intentionally after diagnosis; avoid repeated complete regression",
+    "original_tag_script_exception_observed": "HTTP404 handled as expected, source validation completed"
+  },
+  "followup": {
+    "temporary_hardcoded_diagnosis_removed": true,
+    "safe_error_classifier_added": true,
+    "script_unit_tests_passed": 42,
+    "next": "Root cause fixed and verified offline. Integration and next immutable tag require approval; production deployment remains unverified.",
+    "safe_diagnostic_commit": "752d8ba288e813bac11a49d1f7f4b62c6d40b444"
+  },
+  "production": {
+    "public_health": "status ok, database ok",
+    "image_or_api_recreation_started_by_workflows": false,
+    "db_migration_or_data_changes": false,
+    "github_release_or_ghcr_published": false
+  },
+  "first_automatic_deployment_accepted": false,
+  "handoff_comment": "https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6559972464",
+  "root_cause_confirmation": {
+    "job_id": 124891259189,
+    "evidence": "checkout fetched +ceea2f44807eeaf7922c8f40a8c836b347095389:refs/tags/v0.1.0; subsequent fetch --tags rejected v0.1.0 (would clobber existing tag)",
+    "fix": "Fetch --no-tags with explicit main/dev remote-tracking refspecs; no tag updates",
+    "offline_real_git_reproduction": "Original command fails with same stderr; fixed command succeeds, refreshes main/dev and preserves HEAD/local tag/remote annotated tag",
+    "script_tests_passed": 43,
+    "production_or_new_tag_execution": false
+  }
+}

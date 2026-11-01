@@ -1,5 +1,13 @@
 # 다음 실행
 
+## 현재 실행 — 첫 태그 실패 원인 확정·수정 검증 완료 (2026-11-02)
+
+태그 run41317120737의 verify job124891259189 원본 로그에서 `would clobber existing tag`를 확인했다. checkout이 러너 내부 annotated tag를 source commit 참조로 바꾼 뒤, 배포 스크립트의 `git fetch ... --tags`가 원격 annotated tag를 다시 받으려다 거절됐다. AWS/SSH·앱·DB 단계 이전 실패다. 기존 수동 재현은 이 checkout 상태가 달라 충분한 재현이 아니었다.
+
+브랜치만 `--no-tags`/명시 refspec으로 갱신하도록 수정했다. 실제 격리 Git 저장소에서 원래 명령의 동일 실패와 수정 후 main/dev 갱신·HEAD/로컬/원격 태그 보존을 검증했고 scripts43PASS다. [시험 집계](../engineering/operations/records/backend-first-tag-trial.json)를 따른다. 기존 수동 전체 회귀1811PASS는 유지하며 이번에는 운영/새 태그/전체 회귀를 실행하지 않았다.
+
+사용자가 수정 통합과 새 태그 시험을 승인했다. VERSION0.1.1로 dev/main 통합·동일 SHA 확인 후 v0.1.1을 1회 push하고 실제 자동 배포를 확인한다. v0.1.0은 보존한다. 아래는 이전 준비 이력이며 원인 미확정 대기는 해소됐다.
+
 ## 현재 실행 — Backend 태그 기반 자동 배포 구현
 
 사용자 확정안으로 `chore/release-management`에서 VERSION0.1.0·태그 검증/이미지·Release 게시·전용 SSH·서버 단일 실행/journal·DB/구성 사전 거절·API만 교체/복귀를 구현한다. [운영 계약](../engineering/operations/backend-release.md)을 따른다. GitHub production 환경(v*태그만)·SSH Secret/고정호스트키 변수·태그 수정/삭제 방지 ruleset 준비, 서버 root배포도구/기존 정상 복귀기준과 배포없는 preflight를 완료했다. API/DB/Caddy 시작시각은 보존했다.
