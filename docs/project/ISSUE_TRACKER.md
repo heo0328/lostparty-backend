@@ -2,7 +2,7 @@
 
 | 현재 추가 주제 | 상태·다음 담당·완료 조건 |
 |---|---|
-| [#34 Native 태그·Release APK/Backend 반영 추적](https://github.com/heo0328/lostparty-backend/issues/34) | Backend 본문에 운영 확인 게시·댓글0개(게시후조회기준), Flutter 현재 규칙/근거 회신 대기 → Backend 공통 추적 필드/적용안 정리. [조사 원본](../engineering/operations/release-tracking-review.md). 태그/자동배포·브랜치정책 변경은 미확정·미실행. |
+| [#34 Native 태그·Release APK/Backend 반영 추적](https://github.com/heo0328/lostparty-backend/issues/34) | [전체1번째 Flutter 운영 회신](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558053848) 확인·[전체2번째 Backend 최소안](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558101459) 회신 완료. 다음 Backend/사용자: 버전·태그/배포 인증·승인/실패 처리 확정. [대조 원본](../engineering/operations/release-tracking-review.md). CI/CD 미구현, release OAuth·전체 호환 기록/실기기 인수 미확인. OPEN 유지. |
 
 **현재 Git 통합 완료:** [재신청 수정 브랜치 통합 기록](../features/recruitment/reapplication-integration-2026-10-27.md)·[PR28](https://github.com/heo0328/lostparty-backend/pull/28)/병합41a47ed의 dev 원격 반영과 완료 브랜치 로컬/원격 정리를 확인했다. 2026-10-28 main/dev를1b6f57b로동기화·원격확인후동일지점에서feat/group-management분기·checkout. 미완료 활동 선택 브랜치와 실행 API·DB는 보존. 최신 실행/다음 작업은 NEXT_WORK이며 아래 종료 전 검토 문장은 당시 이력이다.
 

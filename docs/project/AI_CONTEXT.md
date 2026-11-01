@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-릴리즈운영협의 최신(2026-11-01): 사용자요청으로 [Issue34](https://github.com/heo0328/lostparty-backend/issues/34)에Native태그/Release APK·브랜치운영과Backend실제반영시점추적질문을게시했다. `chore/release-management`에서 [근거/검토안](../engineering/operations/release-tracking-review.md)을기록했고다음Flutter회신→Backend차이/적용안정리다. 태그/자동배포·공통정책은미확정이며서버/자료변경없다. 아래checkout dev는직전통합이력이다.
+릴리즈 운영 협의 최신(2026-11-01): [Issue34 전체1번째 Flutter 운영 회신](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558053848) 확인·[전체2번째 Backend 최소 추적안](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558101459) 회신 완료. Native v1.1.2/source9e4a18f7의 CI 성공·APK 게시를 대조했다. 독립 버전+4단계 추적 원칙에 의견이 일치하며 [근거/최소안](../engineering/operations/release-tracking-review.md)을 따른다. 다음 Backend/사용자가 버전·태그/배포 인증·승인/실패 처리를 정한다. release OAuth·실기기 인수/전체 호환 기록과 CI/CD 구현은 미완료다. checkout `chore/release-management`, 서버/자료 변경 없음. 아래 checkout dev는 직전 통합 이력이다.
 
 Git 최신(2026-11-01): 사용자승인 [PR33](https://github.com/heo0328/lostparty-backend/pull/33)·병합c0b13cc로Lightsail첫배포구성/기록·Google등록보완·수동테스트원정대/짧은운영안내를dev에통합했다. checkout dev, main도최종dev의후행통합기록까지동일커밋으로동기화한다. 통합완료chore/lightsail-deployment는로컬/원격정리하고미완료activity-selection은보존한다. 아래작업checkout은당시이력이며서버source6154e45·DB0035/환경/키는이번Git통합에서변경하지않는다. [통합이력](DEV_LOG.md#lightsail-git-integration)을따른다.
 

@@ -2,7 +2,9 @@
 
 ## 현재 협의 — Native 릴리즈 방식·Backend 서버 반영 추적
 
-사용자 요청으로 [Issue34](https://github.com/heo0328/lostparty-backend/issues/34) **본문**에 Backend 조사/질문을 게시했다(댓글과 구분). 현재checkout `chore/release-management`, 기반 dev/main `a6c6d7b`. [조사·확인항목](../engineering/operations/release-tracking-review.md)을따른다. Native원격워크플로는v*태그→서명APK/SHA256→Release이나최신v1.1.1 asset없음/배포중단상태여서현재운영방식은미확정이다. 다음Flutter가문서/성공run/유효Release·브랜치/태그·버전/실제배포경계·환경/호환기록을회신하고Backend가차이·공통추적필드/적용안을정리한다. 회신대기는유효하며태그생성/자동화구현·정책확정/서버변경은이번범위가아니다. 외부백업과다른기능후속은아래상태로보존한다.
+[Issue34 전체1번째 Flutter · 운영 기준 회신](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558053848)을 확인하고 [전체2번째 Backend · 현재 사실 대조·최소 추적안](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558101459)으로 회신했다. Native v1.1.2/source9e4a18f7의 Actions 성공·APK/checksum 게시를 읽기 확인했다. 앱/Backend 독립 버전과 소스 통합·산출물 게시·실제 반영·사용자 인수의 4단계 분리에 의견이 일치한다. [대조·최소안](../engineering/operations/release-tracking-review.md)을 따른다. 현재 checkout은 `chore/release-management`이며 Native 운영 회신 대기는 해소됐다.
+
+다음 담당은 Backend/사용자다. Backend 버전·태그 이름, 배포 인증/승인과 실패·복귀 방식을 정리한 뒤 구현 범위를 확정한다. Native release 브랜치 보존을 Backend에 자동 채택하지 않는다. CI/CD·태그 정책 구현은 미실행이다. release OAuth/서버 allowlist 일치와 게시 APK의 실제 로그인·전체 호환 기록/기기 인수는 미확인으로 남기며 debug ID 확인으로 대체하지 않는다. 기존 운영 source6154e45·이미지dfad04e8·DB0035/환경과 외부 백업 후속은 보존한다.
 
 Git 통합 최신(2026-11-01): 사용자승인 [PR33](https://github.com/heo0328/lostparty-backend/pull/33)·병합`c0b13cc`로 Lightsail 구성·실제반영/인증보완·운영안내 기록을dev에통합했다. 현재checkout은dev이며main도후행통합기록을포함한최종dev와동일커밋으로맞춘다. 완료한chore/lightsail-deployment는원격게시/전체포함확인후로컬·원격정리대상이고미완료feat/activity-selection은보존한다. 아래작업브랜치표시는당시이력이다. 실제운영source6154e45/이미지dfad04e8·DB0035/환경/키·수동인증자료는이번Git통합으로변경하지않는다. 외부백업등남은운영후속은계속미완료다.
 

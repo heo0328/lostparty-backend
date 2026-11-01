@@ -1,6 +1,6 @@
 # 릴리즈·서버 반영 이력 운영 협의
 
-2026-11-01 사용자 요청으로 [Issue34](https://github.com/heo0328/lostparty-backend/issues/34)에 Native 운영 확인을 게시했다. **조사/질문 게시 완료·Flutter 회신 대기**이며 공통 정책이나 Backend 태그/자동배포 구현 확정이 아니다. 작업 목적은 릴리즈 소스와 실제 사용/서버 반영 시점의 추적이고, 브랜치는 `chore/release-management`다.
+2026-11-01 사용자 요청으로 [Issue34](https://github.com/heo0328/lostparty-backend/issues/34)에 Native 운영 확인을 게시했다. 현재는 **[전체1번째 Flutter 운영 기준 회신](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558053848) 수신·Backend 최소 추적안 정리** 단계다. 아래 최초 조사/질문은 당시 근거로 보존한다. 공통 추적 원칙은 양측 의견이 일치하지만 Backend 태그/자동배포·release 브랜치 정책 채택은 미확정이다. 작업 목적은 릴리즈 소스와 실제 사용/서버 반영 시점의 추적이고, 브랜치는 `chore/release-management`다.
 
 ## 조사 근거
 
@@ -36,3 +36,38 @@ Git dev/main 통합 기준은 `a6c6d7b`, 실제 서버 source는 `6154e45`, API�
 검토안은 기존 목적 브랜치/dev/main 역할을 유지하면서 **고정 릴리즈 태그·소스 SHA → 이미지 ID/digest → 실제 환경 반영 시각/결과 → 사용자 인수**를 연결하는 것이다. DB revision·비밀 아닌 환경 버전 표식·이전 정상 기준/롤백 제약과 같은이미지 환경 변경도 남긴다. 앱/Backend 버전 일치 강제 여부, 태그 규칙·발급 시점·실제 적용 완료 기준은 회신 전 미확정이다.
 
 Backend 태그/Release·CI/CD 구현이나 기존 공유 브랜치 규칙을 변경하지 않았고 과거 배포 태그도 생성하지 않았다. 서버/DB/키/자료·외부 백업 구성은 변경하지 않았다. 기존 통합 완료 Lightsail 브랜치를 되살리지 않고 같은 릴리즈 목적 브랜치에서 협의를 이어간다.
+
+## Native 회신 수신과 확인 결과
+
+전체1번째 Flutter 회신은 현재 APK를 **[v1.1.2](https://github.com/heo0328/LostParty_flutter/releases/tag/v1.1.2)** / `1.1.2+4`, source `9e4a18f733f18506752a910f0ae5b6a45b3ede98`로 명시했다. [Actions41306739482](https://github.com/heo0328/LostParty_flutter/actions/runs/41306739482)의completed/success·push/tag v1.1.2·동일head SHA, Release의게시시각`2026-11-01T12:36:02Z`(한국시간21:36:02)와APK/checksum uploaded·APK digest일치를Backend가읽기대조했다. APK SHA256은`568a59cd1d21560ab1a48908cf801a99043a335aaf87b9c6679a6696c2a5b236`이다. APK 바이너리를 내려받아 설치하거나 독립 서명 검증을 수행한 것은 아니다.
+
+고정 [Native 운영 계약](https://github.com/heo0328/LostParty_flutter/blob/9e4a18f733f18506752a910f0ae5b6a45b3ede98/docs/architecture/GITHUB_ANDROID_RELEASE_PIPELINE.md)을 읽어 태그/수동 실행·서명/산출물·실패 처리 경계를 대조했다. 최초 v1.1.1 asset0/중단상태는당시사실이며현재는v1.1.2로게시를재개했다. CI의명시dart-define이없어도제품의release기본URL을사용한다는회신으로주소주입의질문을해소했다. release기본URL은lostparty.duckdns.org이고Web client ID기본값/명시define우선이며debug로컬기본값은별개라는것은Flutter보고/고정계약기준이다.
+
+| 주제 | 회신 결과와 Backend 처리 |
+|---|---|
+| Native 브랜치 | 목적브랜치→dev→release/버전, 검증후main/dev반영. release브랜치는보존. Backend에PR/동일보존정책을강제하지않음 |
+| 소스와 후행 기록 | APK태그는9e4a18f7에유지, Native최신통합/기록f074e7dd는별도. Backend도실행6154e45와Git최신을구분 |
+| 버전 | Native pubspec `<name>+<code>`/v태그, 공개후코드수정은새버전. 앱/Backend는독립버전+호환조합연결에동의 |
+| 자동화 경계 | 태그는APK게시까지자동, 수동dispatch는artifact까지. 기기설치/인수는별도 |
+| 불변성 | 기존Release/asset덮어쓰기거절·공개태그이동/force push없음. 설명보완은산출물교체와구분 |
+| 남은 항목 | release OAuth등록/실제서버allowlist일치·게시APK실로그인, 전체호환manifest/기기인수는미확인 |
+
+## Backend 최소 공통 추적안 — 검토용
+
+같은 원칙은 **소스 통합 / 태그·산출물 게시 / 실제 환경 반영 / 사용자 인수**의 구분이다. 각 단계는 `미실행·진행·성공·실패·미확인`과 실제 UTC시각/근거를 남긴다. 이전 단계 성공으로 다음 단계 성공을 추정하지 않는다. Native `release/<버전>` 보존을 Backend에자동복제하지않고기존목적브랜치→dev→main과완료브랜치정리규칙을유지한다. 별도release브랜치필요성·Backend태그이름/버전원장은설계시결정한다.
+
+| 최소 필드 | 기록 내용 |
+|---|---|
+| component / release_ref | Native 또는 Backend, 독립 version/tag. 아직태그없으면없음으로기록 |
+| source_ref / integration_ref | 실제빌드/실행고정SHA와후행문서/Git통합SHA구분 |
+| artifact_ref / digest | APK·checksum/Release/run 또는서버이미지ID/registry digest·build근거 |
+| environment_ref / contract_ref | 대상주소/환경·비밀아닌설정식별자, 고정API계약commit/파일 |
+| stage / status / timestamp_utc / evidence | 위4단계별결과와실제해당단계시각·검증근거 |
+| previous_good_ref / rollback_constraints | 이전정상소스/이미지와DB·설정호환제약. DB자동downgrade를전제하지않음 |
+| owner / next_action | 담당·남은입력·완료조건 |
+
+Native는package/build/서명인증서digest, Backend는DB revision/환경변경·API재생성시각을덧붙인다. 비밀키·토큰·회원식별자·전체env는기록하지않는다. 장기원칙은운영문서, 실제반영사실은개별기록, 현재대기는NEXT_WORK로분리한다. 이 표는최소문서안이며기계판독manifest/CI schema나자동화구현이아니다.
+
+**현재조합의표시:** Native v1.1.2/source9e4a18f7/APK게시성공 ↔ Backend태그없음/source6154e45/image dfad04e8/DB0035/azp환경반영기록. API계약ref는해당Backend소스의`openapi/two-cycle.openapi.yaml`로연결할수있다. 이연결은비교후보이며release APK와서버의통합인수완료가아니다. 기존실행에새태그를소급발급하지않는다.
+
+[전체2번째 Backend · 현재 사실 대조·최소 추적안](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558101459)으로 회신했다. 다음은 사용자와 Backend 버전/태그·배포 인증/승인·실패 처리 방식을 정리하는 것이다. Native의현재운영방식회신대기는해소한다. release OAuth는기존debug ID만등록된Backend기준과별도로해당서명의정확한공개client ID를확인해야하며미확인값을추정허용하지않는다. 자동배포나기기정상인수반복을이번에추가실행하지않는다.

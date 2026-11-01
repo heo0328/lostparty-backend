@@ -1,5 +1,14 @@
 # 영구 개발 이력
 
+<a id="release-tracking-native-reply"></a>
+
+## 2026-11-01 — Native 운영 회신 대조·Backend 최소 추적안 회신
+
+- [Issue34 전체1번째 Flutter · 운영 기준 회신](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558053848)의 본문과 현재 전체 댓글을 확인했다. Native v1.1.2/1.1.2+4/source9e4a18f733f18506752a910f0ae5b6a45b3ede98, Actions41306739482 completed/success·push, Release 게시2026-11-01T12:36:02Z·APK/checksum uploaded·APK digest568a59cd1d21560ab1a48908cf801a99043a335aaf87b9c6679a6696c2a5b236을 GitHub 읽기로 대조했다. 고정 Native 운영 계약을 읽었으며 로컬 Flutter 소스/바이너리 설치·독립 서명 검증은 수행하지 않았다.
+- Native 태그 소스와 후행 기록f074e7dd를 구분하고 release 기본 서버 주소 회신으로 주소 주입 질문을 해소했다. Native release 브랜치 보존은 Backend 규칙으로 자동 채택하지 않는다. 독립 버전·소스 통합/산출물 게시/실제 반영/사용자 인수 4단계와 UTC 근거·소스/산출물/환경·계약·복귀·다음 담당의 최소 필드를 정리했다. [대조·최소안](../engineering/operations/release-tracking-review.md)이 원본이다.
+- [전체2번째 Backend · 현재 사실 대조·최소 추적안](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558101459) 회신 후 전체 댓글2개·순번을 확인했다. 다음 Backend/사용자: 버전·태그/배포 인증·승인/실패 처리 설계. Native 운영 회신 대기는 해소됐고 release OAuth·실기기 인수/전체 호환 기록은 미확인이다. 기존 debug azp를 release 검증으로 간주하지 않는다. Issue OPEN 유지, 반복 기기 시험 요청 없음.
+- chore/release-management/90d2073의 원격 일치에서 같은 목적 구간을 이어갔다. 실제 Backend source6154e45·이미지dfad04e8·DB0035/환경을 보존했고 태그/Release 생성·CI/CD 구현·서버/DB/자료 변경·merge는 수행하지 않았다. 문서 검증과 diff 확인만 수행하며 기능/운영 테스트를 추가 실행하지 않는다.
+
 <a id="release-tracking-consultation"></a>
 
 ## 2026-11-01 — Native 릴리즈 운영 확인·Backend 배포 시점 추적 협의 게시
