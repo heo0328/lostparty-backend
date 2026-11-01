@@ -1,0 +1,104 @@
+{
+  "scope": "Read-only release Google login diagnosis; no runtime changes",
+  "observed_at_utc": "2026-11-01T12:49:26.147141+00:00",
+  "native_release": "v1.1.2",
+  "native_source": "9e4a18f733f18506752a910f0ae5b6a45b3ede98",
+  "deployed_source": "6154e459cbd8de7562c331eacc60928c61f8ac09",
+  "api_image": "sha256:dfad04e82b253ea35bb55b2ba362c3b1dc9224c9aac90bb533db1375b0414694",
+  "api_started_at_utc": "2026-11-01T11:21:13.406291968Z",
+  "auth_events": [
+    {
+      "time": "2026-11-01T11:24:34.949487+00:00",
+      "event": "http_request",
+      "status": 201,
+      "route": "/v1/auth/google/challenges",
+      "request_id": "8e23c6db-2043-413f-9bed-a8e915121ba1"
+    },
+    {
+      "time": "2026-11-01T11:24:37.306359+00:00",
+      "event": "http_request",
+      "status": 200,
+      "route": "/v1/auth/google",
+      "request_id": "7eafd839-b9c9-41d8-9329-865ff933e1d5"
+    },
+    {
+      "time": "2026-11-01T12:42:42.863562+00:00",
+      "event": "http_request",
+      "status": 201,
+      "route": "/v1/auth/google/challenges",
+      "request_id": "c5a054ac-9b43-4dcc-8e35-e492a695bb48"
+    },
+    {
+      "time": "2026-11-01T12:42:45.846489+00:00",
+      "event": "google_verification",
+      "stage": "azp_allowlist"
+    },
+    {
+      "time": "2026-11-01T12:42:45.847436+00:00",
+      "event": "api_rejected",
+      "status": 401,
+      "code": "GOOGLE_PROOF_INVALID",
+      "request_id": "afce31fe-eaec-4e53-84ae-3470d5a0f0ba"
+    },
+    {
+      "time": "2026-11-01T12:42:45.848590+00:00",
+      "event": "http_request",
+      "status": 401,
+      "route": "/v1/auth/google",
+      "request_id": "afce31fe-eaec-4e53-84ae-3470d5a0f0ba"
+    },
+    {
+      "time": "2026-11-01T12:42:48.614039+00:00",
+      "event": "http_request",
+      "status": 201,
+      "route": "/v1/auth/google/challenges",
+      "request_id": "849eebf0-29f6-465b-97ff-67e1ae78f6b5"
+    },
+    {
+      "time": "2026-11-01T12:42:50.938864+00:00",
+      "event": "google_verification",
+      "stage": "azp_allowlist"
+    },
+    {
+      "time": "2026-11-01T12:42:50.939573+00:00",
+      "event": "api_rejected",
+      "status": 401,
+      "code": "GOOGLE_PROOF_INVALID",
+      "request_id": "c51b7aa6-fcc3-4ef3-971c-721ba7338f80"
+    },
+    {
+      "time": "2026-11-01T12:42:50.940302+00:00",
+      "event": "http_request",
+      "status": 401,
+      "route": "/v1/auth/google",
+      "request_id": "c51b7aa6-fcc3-4ef3-971c-721ba7338f80"
+    }
+  ],
+  "configuration": {
+    "web_audience": "574337852234-vdkvdobbq8es2rdpumc1icqt6ja3a3cr.apps.googleusercontent.com",
+    "azp_allowlist": [
+      "574337852234-pje249p14id708ieg1t4q6fa9tmljih5.apps.googleusercontent.com"
+    ]
+  },
+  "health": {
+    "status": "ok",
+    "database": "ok"
+  },
+  "release_signing": {
+    "package": "kr.co.heowork0921.lostparty",
+    "workflow_expected_certificate_sha256": "f9b9ee5a2ec4059ef329ae6b2e4b5392f729124c0a4f5f55248c9da8cd8bc5ea",
+    "apk_certificate_independently_extracted": false,
+    "full_release_sha1": "NOT CONFIRMED",
+    "release_android_client_id": "NOT CONFIRMED",
+    "google_console_registration": "NOT DIRECTLY ACCESSIBLE; operator confirmation required"
+  },
+  "conclusion": "Two recent login exchanges rejected at azp_allowlist; current runtime contains only the confirmed debug client. Exact release client correspondence needs console evidence. Web audience matches native source default.",
+  "next_action": "Operator/Flutter confirms full release signing SHA-1 and corresponding console Android client ID/package/SHA-1; then compare and obtain runtime-change authorization.",
+  "runtime_changes_or_restarts": false,
+  "tokens_claims_secrets_raw_logs_collected_or_printed": false,
+  "sources": {
+    "issue_comment": "https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558173241",
+    "native_workflow": "https://github.com/heo0328/LostParty_flutter/blob/9e4a18f733f18506752a910f0ae5b6a45b3ede98/.github/workflows/android-apk-release.yml",
+    "native_configuration": "https://github.com/heo0328/LostParty_flutter/blob/9e4a18f733f18506752a910f0ae5b6a45b3ede98/lib/app/backend_app.dart"
+  }
+}

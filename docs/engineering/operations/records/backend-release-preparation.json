@@ -1,0 +1,196 @@
+{
+  "scope": "Backend tag deployment implementation and non-deploying preparation",
+  "date_kst": "2026-11-01",
+  "branch": "chore/release-management",
+  "version": "0.1.0",
+  "deployment_authentication": "Dedicated restricted SSH, explicitly approved after AWS-managed SCP blocked OIDC",
+  "aws_plan_upgraded": false,
+  "iam_resources_created": false,
+  "github_prepared": {
+    "production_environment_tags_only": "v*",
+    "required_reviewers": false,
+    "immutable_tag_ruleset_id": 26311584,
+    "ssh_secret": "LIGHTSAIL_DEPLOY_SSH_KEY",
+    "known_hosts_variable": "LIGHTSAIL_SSH_KNOWN_HOSTS",
+    "unused_oidc_variable_removed": true
+  },
+  "server_preparation": {
+    "path": "/usr/local/lib/lostparty-deploy",
+    "private_state": "/var/lib/lostparty-deploy",
+    "account": "lostparty-deploy",
+    "commands": [
+      "submit",
+      "preflight",
+      "status RUN_ID-ATTEMPT"
+    ],
+    "bootstrap_preserved_all_service_ids_and_start_times": true,
+    "deployed_source_unchanged": "6154e459cbd8de7562c331eacc60928c61f8ac09",
+    "api_image_unchanged": "sha256:dfad04e82b253ea35bb55b2ba362c3b1dc9224c9aac90bb533db1375b0414694",
+    "final_state": {
+      "api": {
+        "started_at": "2026-11-01T13:00:31.154811009Z",
+        "running": true,
+        "health": "healthy"
+      },
+      "db": {
+        "started_at": "2026-11-01T10:53:14.108219623Z",
+        "running": true,
+        "health": "healthy"
+      },
+      "caddy": {
+        "started_at": "2026-11-01T10:55:02.005384187Z",
+        "running": true,
+        "health": null
+      },
+      "tools": {
+        "ssh_entrypoint.py": "ed43823a849eacbe9d41e920dd8095b8e02e363597ff551bd14b33ced9626883",
+        "server.py": "fbf4bf18deb3fc103da1528bf0bb3d8eced479ff626838b5c23d6c713c9acadf",
+        "common.py": "2eb9a6cd3bc66a883ba2bbe29b3b949bb68be470c83b8f31443f5160b6b6ee56"
+      }
+    },
+    "final_installed_code_matches_workspace": true
+  },
+  "verification": {
+    "deployment_control_unit_tests": 25,
+    "script_tests": "37 PASS; includes the 25 deployment control tests, not an additional count",
+    "both_openapi_objects": "PASS; 140 original and 206 two-cycle operations",
+    "auth_google_isolated_postgresql": "46 PASS",
+    "real_local_docker_api_replacement_and_unhealthy_rollback": "PASS; cached untagged image-ID rollback and DB/Caddy preservation; no production/application DB used",
+    "restricted_ssh": {
+      "restricted_ssh_preflight": {
+        "status": "success",
+        "request_sha256": "7683b16d0eb0a256a433d19171210825960e54bbe94ea1ce227fb15aca9fe09a",
+        "started_at_utc": "2026-11-01T14:18:17.967915Z",
+        "tag": "v0.1.0",
+        "source": "35ce7994f09cad37785c926c74e186baa56fea09",
+        "image": "ghcr.io/heo0328/lostparty-backend@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "db_revision": "0035_cycle_group_policy",
+        "contract_sha256": {
+          "openapi.yaml": "8ad2fe07be6514e0dd58253fdc2ca7d17215645571bb4c6cf733c2925940f7c4",
+          "two-cycle.openapi.yaml": "e9dca944bbd8841ae7290281dce7c8298b031b31621036d19e45cbbc7cf5a9cb"
+        },
+        "configuration_revision": "lightsail-release-azp-20261101",
+        "run_url": "https://github.com/heo0328/lostparty-backend/actions/runs/0/attempts/4",
+        "attempt": "0-4",
+        "user_acceptance": "not_checked",
+        "rollback": "not_needed",
+        "mode": "preflight_only",
+        "finished_at_utc": "2026-11-01T14:18:20.148432Z"
+      },
+      "general_shell_rejected": true,
+      "port_forwarding_rejected": true,
+      "image_pulled_or_api_recreated": false,
+      "preflight_uses_placeholder_image_and_does_not_pull_or_validate_it": true
+    },
+    "actionlint": "1.7.12 PASS excluding only unsupported queue syntax; queue:max checked against official GitHub workflow docs",
+    "full_regression": {
+      "strategy": "8 disjoint file shards; every pytest file included",
+      "first_complete_execution_passed": 1805,
+      "first_complete_execution_failed": 6,
+      "groups": [
+        {
+          "shard": 0,
+          "passed": 254,
+          "failed": 1,
+          "failed_nodes": [
+            "tests/test_recruitment_cycle_lifecycle_http.py::test_http_same_character_role_change_keeps_exact_weekly_lease"
+          ],
+          "project_cleaned": true
+        },
+        {
+          "shard": 1,
+          "passed": 212,
+          "failed": 0,
+          "failed_nodes": [],
+          "project_cleaned": true
+        },
+        {
+          "shard": 2,
+          "passed": 245,
+          "failed": 0,
+          "failed_nodes": [],
+          "project_cleaned": true
+        },
+        {
+          "shard": 3,
+          "passed": 251,
+          "failed": 0,
+          "failed_nodes": [],
+          "project_cleaned": true
+        },
+        {
+          "shard": 4,
+          "passed": 209,
+          "failed": 2,
+          "failed_nodes": [
+            "tests/test_record_timestamps.py::test_all_application_tables_have_database_clocks",
+            "tests/test_recruitment_cycle_cutover.py::test_prepared_app_startup_and_full_route_contract"
+          ],
+          "project_cleaned": true
+        },
+        {
+          "shard": 5,
+          "passed": 251,
+          "failed": 1,
+          "failed_nodes": [
+            "tests/test_recruitment_cycle_http.py::test_candidate_not_published_in_main"
+          ],
+          "project_cleaned": true
+        },
+        {
+          "shard": 6,
+          "passed": 194,
+          "failed": 0,
+          "failed_nodes": [],
+          "project_cleaned": true
+        },
+        {
+          "shard": 7,
+          "passed": 189,
+          "failed": 2,
+          "failed_nodes": [
+            "tests/test_recruitment_cycle_lifecycle.py::test_closed_c_retains_valid_opening_source[completed]",
+            "tests/test_recruitment_cycle_lifecycle.py::test_closed_target_transfer_keeps_historical_assignments[completed]"
+          ],
+          "project_cleaned": true
+        }
+      ],
+      "failure_corrections": "Tests aligned to existing legacy DB/OpenAPI/archive/dual-role contracts; application code and migrations unchanged",
+      "corrected_targeted_rerun_passed": 11,
+      "targeted_runs": [
+        {
+          "description": "legacy metadata, three storage-clock tests, current route-contract check",
+          "passed": 5
+        },
+        {
+          "description": "supported-class role switch, current route contract, completed archive/stopped-state boundaries",
+          "passed": 6
+        }
+      ],
+      "complete_eight_shards_rerun_after_corrections": false,
+      "next": "First manual GitHub workflow must confirm all 8 shards green before any tag publication/deployment."
+    },
+    "earlier_failures_fixed": [
+      "0023 metadata comparator missing legacy full-history unique constraint after 0031 model change",
+      "test import still using removed docs.design validator location",
+      "Legacy timestamp cohort included future model tables absent from 0023",
+      "Two old route-count assertions still expected 116 instead of the current fixed contract",
+      "Support role-change fixture used a synthetic class outside the supported dual-role class set",
+      "Two pre-archive lifecycle expectations allowed new writes to fully completed rooms with no live N"
+    ],
+    "single_full_run": "Stopped with cleanup/exit130 after changing to complete disjoint shard strategy; no pass claim"
+  },
+  "not_yet_executed": [
+    "GHCR first package publication/public visibility/anonymous pull",
+    "GitHub-hosted manual workflow",
+    "first release tag",
+    "actual automated production rollout"
+  ],
+  "public_api_changed": false,
+  "database_migrations_or_production_data_edits": false,
+  "next": "Authorize dev/main integration and run the non-deploying manual workflow; after green CI, separately approve first tag, confirm GHCR public access and verify actual rollout.",
+  "temporary_credential_copies_removed_at_completion": true,
+  "implementation_sha": "014a8dd3875621b9443fa3f341436438cceb8f1d",
+  "implementation_pushed_verified": true,
+  "handoff_comment": "https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6559243667"
+}

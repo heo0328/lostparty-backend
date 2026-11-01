@@ -285,11 +285,15 @@ def close_current_fixture(rid,key,state):
 
 
 @pytest.mark.parametrize('state',['completed','stopped'])
-def test_closed_c_retains_valid_opening_source(lifecycle,state):
+def test_closed_c_opening_respects_completed_archive(lifecycle,state):
     _,a,b=lifecycle
     room=create_room(a,combined=False);rid=uuid.UUID(room['room_id']);c=room['created_cycles'][0]['target_cycle_key']
     add_member(b,rid,c)
     close_current_fixture(rid,c,state)
+    if state=='completed':
+        # All items complete with no open N is archived; new writes stay disabled.
+        denied('ROOM_NOT_ACTIVE',opening.get,actor(a['uid']),rid,next_key(),'open')
+        return
     ctx=opening.get(actor(a['uid']),rid,next_key(),'open')
     assert ctx['data']['permission']['allowed']
     opening.execute(actor(a['uid']),rid,uuid.uuid4(),opening_body(ctx))
@@ -301,10 +305,15 @@ def test_closed_c_retains_valid_opening_source(lifecycle,state):
 
 
 @pytest.mark.parametrize('state',['completed','stopped'])
-def test_closed_target_transfer_keeps_historical_assignments(lifecycle,state):
+def test_closed_target_transfer_or_archive_preserves_history(lifecycle,state):
     _,a,b=lifecycle
     room=create_room(a,combined=False);rid=uuid.UUID(room['room_id']);c=room['created_cycles'][0]['target_cycle_key']
     add_member(b,rid,c);close_current_fixture(rid,c,state)
+    if state=='completed':
+        with session() as db,db.begin():before=table_digests(db.bind,{'recruitment_assignments','recruitment_memberships'})
+        denied('ROOM_NOT_ACTIVE',leadership.get_transfer,actor(a['uid']),rid,c)
+        with session() as db,db.begin():assert table_digests(db.bind,set(before))==before
+        return
     ctx=leadership.get_transfer(actor(a['uid']),rid,c);candidate=ctx['data']['candidates'][0]
     body=wire.TransferCommand.model_validate(scoped(ctx)|dict(expected_leadership_revision=ctx['data']['leadership']['leadership_revision'],
         candidate_cycle_member_id=candidate['cycle_member_id'],expected_candidate_revision=candidate['revision']))

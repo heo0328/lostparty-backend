@@ -3,21 +3,16 @@ import uuid
 
 from sqlalchemy import inspect, text
 
-from app.auth.models import Base, Transaction
+from app.auth.models import Transaction
 from app.core.database import engine, session
 
 
 def test_all_application_tables_have_database_clocks():
     with engine().connect() as c:
         schema = inspect(c)
-        from app.raid_rooms.cycle_models import CYCLE_MODELS
-        from app.raid_rooms.cycle_application_models import CYCLE_ADMISSION_MODELS
-        from app.raid_rooms.cycle_lifecycle_models import CYCLE_LIFECYCLE_MODELS
-        from app.raid_rooms.cycle_consent_models import CYCLE_CONSENT_MODELS
-        from app.raid_rooms.cycle_planning_models import CYCLE_PLANNING_MODELS
-        from app.raid_rooms.cycle_outcome_models import CYCLE_OUTCOME_MODELS
-        staged = {m.__tablename__ for m in CYCLE_MODELS+CYCLE_ADMISSION_MODELS+CYCLE_LIFECYCLE_MODELS+CYCLE_CONSENT_MODELS+CYCLE_PLANNING_MODELS+CYCLE_OUTCOME_MODELS}
-        runtime_tables = set(Base.metadata.tables) - staged
+        # The fixture is 0023; later model imports must not expand its table cohort.
+        from tests.legacy_metadata import legacy_metadata
+        runtime_tables = set(legacy_metadata().tables)
         assert runtime_tables == set(schema.get_table_names()) - {'alembic_version'}
         for table in runtime_tables:
             columns = {v['name']: v for v in schema.get_columns(table)}

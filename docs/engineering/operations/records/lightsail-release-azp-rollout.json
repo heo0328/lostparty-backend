@@ -1,0 +1,56 @@
+{
+  "applied_at_utc": "2026-11-01T13:00:43.559753+00:00",
+  "api_started_at_utc": "2026-11-01T13:00:31.154811009Z",
+  "api_health": "healthy",
+  "same_api_image_command_mounts": true,
+  "other_api_environment_preserved": true,
+  "db_caddy_ids_mounts_start_times_preserved": true,
+  "secret_file_bytes_owner_modes_preserved": true,
+  "public_https_health": {
+    "status": "ok",
+    "database": "ok"
+  },
+  "private_backup_path": "backups/lightsail-env-before-release-azp-20261101T130029Z.env",
+  "allowlist_after": [
+    "574337852234-pje249p14id708ieg1t4q6fa9tmljih5.apps.googleusercontent.com",
+    "574337852234-orom669nbg1u80j38ov5hamoeor8v59p.apps.googleusercontent.com"
+  ],
+  "web_audience_preserved": "574337852234-vdkvdobbq8es2rdpumc1icqt6ja3a3cr.apps.googleusercontent.com",
+  "environment_file_mode": "0o600",
+  "scope": "User-authorized release Android azp addition; API-only recreation",
+  "source": "6154e459cbd8de7562c331eacc60928c61f8ac09",
+  "image": "sha256:dfad04e82b253ea35bb55b2ba362c3b1dc9224c9aac90bb533db1375b0414694",
+  "release_registration_evidence": {
+    "source": "User console screenshots and exact public client ID transcription",
+    "package": "kr.co.heowork0921.lostparty",
+    "sha1": "DF:13:E0:D2:0A:AE:BF:D3:DE:72:E8:B7:3B:20:C0:7C:96:D1:06:43",
+    "direct_console_api_or_independent_apk_certificate_check": false
+  },
+  "verification": {
+    "isolated_checks_passed": [
+      "release azp accepted",
+      "debug azp preserved",
+      "Web azp preserved",
+      "absent azp policy preserved",
+      "unknown azp rejected",
+      "wrong audience rejected",
+      "wrong issuer rejected",
+      "wrong nonce rejected",
+      "expired rejected",
+      "future iat rejected",
+      "empty subject rejected",
+      "wrong signature rejected",
+      "wrong algorithm rejected",
+      "provider503 preserved"
+    ],
+    "count": 14,
+    "db_writes": false,
+    "live_google_tokens_used": false
+  },
+  "actual_release_google_login_success": "NOT YET VERIFIED",
+  "database_migrations_or_data_edits": false,
+  "secret_values_printed_or_committed": false,
+  "temporary_access_copies_removed_at_completion": true,
+  "issue_comment": "https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558294576",
+  "next": "User retries login in installed v1.1.2 release APK; Backend compares safe logs if needed. Release/debug operational separation remains a future decision; debug allowlist retained by current authorization."
+}

@@ -1,5 +1,11 @@
 # LostParty Backend 기능 지도
 
+자동배포 최신: 사용자 확정안에 따라 chore/release-management에서 태그→GHCR→전용 SSH→API만 교체/복귀·journal 구현. [운영 계약](../engineering/operations/backend-release.md) 기준. GitHub production/태그불변설정·서버도구/복귀기준·배포없는preflight 준비, 실제API교체없음. 새AWS가입방식이 OIDC provider를 제한하여 사용자승인으로전용SSH키로변경했고 최소강제명령·production Secret준비와[전체6번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6559243667)를완료했다. GHCR public/workflow·첫태그 인수는미확인이다. 다음 dev/main통합승인·수동workflow·첫태그승인 후 활성화다. 기존 release 로그인 인수와 외부백업 미완료는 별도 보존한다.
+
+release 로그인 최신: 사용자확정release Android ID·반영승인으로 allowlist에추가하고기존debug/Web audience·검증을유지했다. 동일이미지API만13:00:31Z재생성·health200/분리검증14PASS, DB/Caddy·키보존. [반영](../engineering/operations/records/lightsail-release-azp-rollout.json)·[전체4번째 Backend](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558294576) 이후 사용자 v1.1.2 실제 로그인 성공 보고를 [전체5번째 Backend](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558340814)으로 수용했다. release 로그인/등록값 대기를 해소했고 refresh·전체 기능 인수는 별도 미확인이다.
+
+릴리즈 운영 협의 최신(2026-11-01): [Issue34 전체1번째 Flutter 운영 회신](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558053848) 확인·[전체2번째 Backend 최소 추적안](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558101459) 회신 완료. Native v1.1.2/source9e4a18f7의 CI 성공·APK 게시를 대조했다. 독립 버전+4단계 추적 원칙에 의견이 일치하며 [근거/최소안](../engineering/operations/release-tracking-review.md)을 따른다. 다음 Backend/사용자가 버전·태그/배포 인증·승인/실패 처리를 정한다. release ID 운영반영은위기록대로완료, 실기기 인수/전체 호환 기록과 CI/CD 구현은 미완료다. checkout `chore/release-management`, 아래최소안협의당시에는서버/자료변경없었으며후속release등록환경반영은위기록과구분한다. 아래 checkout dev는 직전 통합 이력이다.
+
 Git 최신(2026-11-01): 사용자승인 [PR33](https://github.com/heo0328/lostparty-backend/pull/33)·병합c0b13cc로Lightsail첫배포구성/기록·Google등록보완·수동테스트원정대/짧은운영안내를dev에통합했다. checkout dev, main도최종dev의후행통합기록까지동일커밋으로동기화한다. 통합완료chore/lightsail-deployment는로컬/원격정리하고미완료activity-selection은보존한다. 아래작업checkout은당시이력이며서버source6154e45·DB0035/환경/키는이번Git통합에서변경하지않는다. [통합이력](DEV_LOG.md#lightsail-git-integration)을따른다.
 
 운영안내 최신(2026-11-01): [Lightsail 짧은 운영 안내](../engineering/operations/lightsail-quick-ops.md)를추가했다. 실제경로/Compose·Docker자동시작·3서비스restart/log제한은확인, 실제재부팅/회복시험은미실행이다. 서버내덤프만확인했고외부DB/키백업/자동화는미구성·완료근거없음이다. [이력](DEV_LOG.md#lightsail-quick-ops)을따른다.

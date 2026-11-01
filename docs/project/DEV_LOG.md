@@ -1,5 +1,66 @@
 # 영구 개발 이력
 
+<a id="backend-release-implementation"></a>
+
+## 2026-11-01 — Backend 자동 배포 검증 마감·운영 반영 전 대기
+
+- 최초 전체8그룹은1805PASS/6FAIL로종료·UUID정리했다. 실패는기존검증기준의누락으로확인했다: timestamp0023cohort에후행모델포함, 두곳의옛116경로수, 합성직업의지원불가support역할전환, 전부완료/열린N없음에도새쓰기를허용하던옛lifecycle기대다. 현재고정OpenAPI·admission-eligibility-2·완료보관기준/기존통과시험에대조해테스트만보정했다. 실제readiness FK경계는별도재현에서PASS였고수정하지않았다.
+- 0023 copied metadata공통helper를Auth/Clock검사에사용하고원full-history제약을copy에만복원했다. 타임스탬프전체표/trigger검사는유지, 완료보관은ROOM_NOT_ACTIVE거절+기록보존을검사하고stopped기존허용도계속검사한다. 역할시험은실제dual-role직업을사용한다. 보정후관련11경계(5+6)PASS이며전체8그룹을수정후재실행한것은아니다. 합산하여전수green으로표시하지않고첫수동GitHubworkflow의8/8green을다음완료조건으로둔다.
+- 배포제어25경계포함scripts37PASS, 실제Docker교체/unhealthy복귀·untagged imageID복귀PASS, 두OpenAPI전체비교PASS, 인증/Google격리46PASS근거는유지한다. 이미지기본환경Python패치값과Compose운영환경을구분해후자/키를보존하며, 사전점검은중단journal복구조차수행하지않도록보강했다. 이미성공한동일릴리즈의새attempt는재시작없이확인/기록한다. 빌드시각은이미지created label에서재사용해retry시각으로덮지않는다.
+- 최종서버설치3파일지문이workspace와일치하며전용키의preflight/HTTPS·DB정상, 기존API시작13:00:31Z/image dfad04e8·DB10:53:14Z/Caddy10:55:02Z보존을확인했다. API/DB재기동·키/환경변경·migration/자료쓰기없음. GitHubSSHSecret/고정호스트키변수·production태그제한·불변규칙준비, GHCRpublic/실GitHubworkflow/첫자동배포는미확인이다.
+- CLI Git 인증은workflow scope가없어최초push를거절했다. 기존연결GitHub앱으로같은브랜치에workflow4fccfb7을게시하고로컬구현0b4212e와일반merge35ce799로통합·push확인했다. 공유이력재작성·main/dev변경없음. 이후검증보정은같은목적브랜치에누적해게시한다. 임시관리자AWS/SSH·배포개인키복사본은마감시삭제하고productionSecret·서버공개키/원래프로필을보존한다.
+- 구현/검증보정014a8dd commit/push·원격일치와 [전체6번째 Backend · 구현/준비 인계](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6559243667) 게시후전체6댓글순번을확인했다. 다음담당Backend/사용자의통합·수동CI이며Native추가구현/정상인수반복요청없다. [운영계약](../engineering/operations/backend-release.md)·[준비/검증집계](../engineering/operations/records/backend-release-preparation.json)를따른다. 다음사용자통합승인→수동workflow전체green→첫태그별도승인/GHCR공개확인→실반영인수다. Issue34OPEN/외부백업미구성·기존release로그인사용자인수를유지한다.
+
+## 2026-11-01 — Backend 태그 자동 배포 구현·전용 SSH 사전 준비
+
+- 사용자 확정 계획으로 같은 chore/release-management에서 VERSION0.1.0·태그/원장/main/dev 검증·불변 GHCR/Release·API만 교체/DB·구성 사전 거절/120초health·자동복귀·중단journal/멱등·실제반영 결과를 구현했다. [운영 계약](../engineering/operations/backend-release.md)·[준비 집계](../engineering/operations/records/backend-release-preparation.json)를 원본으로 한다. API/OpenAPI 동작은 변경하지 않았다.
+- 초기 OIDC 준비는 실제 IAM provider 조회가 SCP explicit deny로 실패했다. 새 AWS가입방식의 공식정책 iam:*Provider* 제한과 advanced활성화의upgrade필요를 확인해 단순 관리자접속 문제라는 초기추정을정정했다. 사용자 명시승인으로 전용SSH키 방식으로변경했다. IAM resource/provider/role생성·Paid전환·정책우회없음, 불필요한 OIDC코드/변수/id-token권한은제거했다.
+- GitHub production환경(v*태그만/reviewer없음), 공개태그 update/deletion금지 ruleset26311584, production Secret/고정호스트키변수 준비. 서버는 root배포도구/비공개동결Compose·현재untagged이미지/source/DB복귀기준을보존했다. root관리authorized_keys/restrict/강제명령·잠긴암호·제한sudo의 lostparty-deploy계정을준비했고 실제전용키 preflight·일반셸/포워딩거절을확인했다. 원래API6154e45/image dfad04e8·DB/Caddy·시작시각을보존했다. 서버에는AWS CLI/runner를설치하지않았다.
+- 제어단위23경계·두OpenAPI 전체계약(140/206operations)·인증/Google격리PostgreSQL46PASS. 실제UUID로컬Docker에서API교체성공/unhealthy복귀·DB/Caddy보존을확인했다. 최초인증회귀의오래된0023 metadata제약누락과전체수집의옛docs.design validator import를테스트범위에서만보정했다. 모델/migration수정없음. actionlint1.7.12는공식새queue구문을미지원하므로그진단한개만제외하고검사/공식문법대조했다.
+- 전체pytest 단일실행은8개비중복파일그룹병렬전략으로교체해정상중단/UUID정리(exit130)했고현재8그룹결과는진행중으로보존한다. 전체PASS로기록하지않는다. GitHub표준Linux runner의전체회귀도같은8그룹이며모두성공해야게시/배포한다. GHCR익명접근전API미변경·신규private package는owner public전환후같은run이미지재사용으로재개한다.
+- 이번에는태그/Release발행·GHCR게시·실GitHubworkflow/운영API교체·DB자료변경·dev/main병합없음. 다음검증마감→통합승인/수동workflow→첫태그별도승인/실배포확인이다. 기존release로그인인수/외부백업미완료는보존하며정상기기시험을반복요청하지않는다.
+
+## 2026-11-01 — release Google 로그인 사용자 인수 완료
+
+사용자가 release ID 운영 반영 후 “로그인이 정상적으로 진행됩니다”라고 보고했다. [전체5번째 Backend · 사용자 인수 확인](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558340814)에 회신하고 release 실제 로그인 대기를 해소했다. 근거는 사용자 기기 보고이며 추가 서버로그/HTTP200·DB 독립 수집을 수행하지 않았다. 모의14경계와 별도 인수이며 refresh·전체기능/호환manifest 완료로 확대하지 않는다. 추가 로그인 반복 요청·서버/DB/설정 재변경·재시작·APK/태그게시없다. Issue34는 Backend 버전/태그·배포인증/승인·실패복귀 설계가 남아 OPEN 유지, 다음 Backend/사용자다. 문서 검사·diff 확인 후 같은 목적 구간의 로그인 장애 인수를 마감 기록한다.
+
+<a id="lightsail-release-azp-rollout"></a>
+
+## 2026-11-01 — 확정 release Android azp 운영 반영
+
+- 사용자 Firebase/Google콘솔 화면의 package·SHA-1/인증서SHA256과 정확한 공개Android ID전사로release등록을대조했다. 이어사용자가반영진행을승인해기존debug ID에release ID하나를추가했다. 직접콘솔API조회/APK인증서독립추출은수행하지않았으며입력근거를[반영집계](../engineering/operations/records/lightsail-release-azp-rollout.json)에명시했다.
+- 실제경로/home/ubuntu/lostparty-backend·compose.lightsail.yaml·.env.lightsail에서 원래allowlist/debug·Web audience·source/image를사전일치확인했다. 0600백업후원자적env교체·compose config검사·no-deps/no-build/force-recreate로API만재생성했다. API시작2026-11-01T13:00:31.154811009Z·healthy·공개HTTPS health200/status/database ok. APIimage/command/mount·다른env와DB/Caddy ID/start/mount·인증키bytes/소유/권한동일을비교했다. migration/DB쓰기·키교체·코드교체없음.
+- 실제설정별도프로세스/일회성RSA/모의Google공개키로release/debug/Web허용과미등록/다른aud·issuer·nonce/시간/subject·서명/알고리즘거절·provider503등14경계PASS. 실제Google토큰/운영DB시험없음. 실Google성공/refresh는사용자APK새거래확인대기다.
+- [Issue34 전체4번째 Backend · 운영 반영 완료](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558294576)회신·전체4댓글순번확인. 다음사용자의v1.1.2로그인결과대조이며기존전체정상인수반복요청없음. 태그CI/CD설계/merge/새APK게시없음. 임시AWS로그인복사본/SSH키/CLI는마감시삭제하고원본캐시·서버비공개백업은보존한다. 문서/diff검증후같은목적브랜치구간으로commit/push한다.
+
+<a id="lightsail-release-google-login-investigation"></a>
+
+## 2026-11-01 — v1.1.2 release Google 로그인 실패 읽기 진단
+
+- 사용자 요청으로 현재 Lightsail API의 안전 이벤트/공개 Google설정·health와 Native 고정9e4a18f7 설정/서명workflow를 대조했다. source6154e45·이미지dfad04e8·API시작11:21:13Z/healthy는 이전 반영과 동일하다. 한국시간21:42의 Google교환2건은401/GOOGLE_PROOF_INVALID·azp_allowlist이며 challenge201이다. 앞선11:24Z교환200과구분한다. 검증 코드 순서상 서명/audience/시간·issuer·subject·nonce는 통과한 뒤 거절됐다.
+- Web audience는 Native기본값과일치, runtime allowlist는확정debug ID한개다. 정확한release client ID와전체SHA-1·콘솔등록은직접확인하지못했다. CI의release인증서SHA256기준만확인했으며APK독립인증서추출/기기시험은수행하지않았다. [진단집계](../engineering/operations/records/lightsail-release-google-login-investigation.json)를 원본으로 한다. 토큰·claims·키·전체환경·원시로그는 수집/출력하지 않았다.
+- Issue34의 release OAuth 잔여 경계에 [전체3번째 Backend · 실패 진단](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558173241)을 회신했다. 다음운영자/Flutter가 전체release SHA-1과콘솔client/package/SHA-1대응을확인한다. 비밀값은요청하지않으며미확정ID허용/검증우회없음. 사용자에게도동일공개등록값을요청했다. 환경변경/재생성은현재범위에서실행하지않았다.
+- 기존AWS로그인캐시의임시복사본·API호스트키검증SSH로읽기접속했고임시접속자료는진단후삭제한다. 서버/DB자료·설정/키변경·서비스재시작·새태그/Release·기능코드/계약수정없음. 문서검사와diff검사를실행하고DB/기능시험은반복하지않는다.
+
+<a id="release-tracking-native-reply"></a>
+
+## 2026-11-01 — Native 운영 회신 대조·Backend 최소 추적안 회신
+
+- [Issue34 전체1번째 Flutter · 운영 기준 회신](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558053848)의 본문과 현재 전체 댓글을 확인했다. Native v1.1.2/1.1.2+4/source9e4a18f733f18506752a910f0ae5b6a45b3ede98, Actions41306739482 completed/success·push, Release 게시2026-11-01T12:36:02Z·APK/checksum uploaded·APK digest568a59cd1d21560ab1a48908cf801a99043a335aaf87b9c6679a6696c2a5b236을 GitHub 읽기로 대조했다. 고정 Native 운영 계약을 읽었으며 로컬 Flutter 소스/바이너리 설치·독립 서명 검증은 수행하지 않았다.
+- Native 태그 소스와 후행 기록f074e7dd를 구분하고 release 기본 서버 주소 회신으로 주소 주입 질문을 해소했다. Native release 브랜치 보존은 Backend 규칙으로 자동 채택하지 않는다. 독립 버전·소스 통합/산출물 게시/실제 반영/사용자 인수 4단계와 UTC 근거·소스/산출물/환경·계약·복귀·다음 담당의 최소 필드를 정리했다. [대조·최소안](../engineering/operations/release-tracking-review.md)이 원본이다.
+- [전체2번째 Backend · 현재 사실 대조·최소 추적안](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558101459) 회신 후 전체 댓글2개·순번을 확인했다. 다음 Backend/사용자: 버전·태그/배포 인증·승인/실패 처리 설계. Native 운영 회신 대기는 해소됐고 release OAuth·실기기 인수/전체 호환 기록은 미확인이다. 기존 debug azp를 release 검증으로 간주하지 않는다. Issue OPEN 유지, 반복 기기 시험 요청 없음.
+- chore/release-management/90d2073의 원격 일치에서 같은 목적 구간을 이어갔다. 실제 Backend source6154e45·이미지dfad04e8·DB0035/환경을 보존했고 태그/Release 생성·CI/CD 구현·서버/DB/자료 변경·merge는 수행하지 않았다. 문서 검증과 diff 확인만 수행하며 기능/운영 테스트를 추가 실행하지 않는다.
+
+<a id="release-tracking-consultation"></a>
+
+## 2026-11-01 — Native 릴리즈 운영 확인·Backend 배포 시점 추적 협의 게시
+
+- 사용자명시요청: Native의태그기반자동Release APK운영을이슈에서확인하고Backend도브랜치/서버반영시점을맞춰추적하도록Native에운영방식확인게시. dev/main a6c6d7b·원격일치/clean을fetch확인하고같은목적브랜치chore/release-management를생성·checkout했다. 미완료activity-selection과통합된Lightsail이력은보존한다.
+- Backend Issues APK/릴리즈/태그검색후관련본문·최신댓글(#4/5/6/7/13/16/21)과Native Issue검색을확인했다. #13전체193 Flutter·#16전체40/45 Flutter의Git통합과릴리즈분리를확인했지만전용최신릴리즈운영합의는찾지못했다. Native로컬소스는읽거나수정하지않았다.
+- Native원격main45bb7f1 고정workflow를조회해v*태그/수동dispatch·pubspec버전검사·main조상검사·APK서명/정체검증·APK/SHA256 artifact7일·태그Release게시/기존Release덮어쓰기거절을확인했다. 공개Release v1.1.0에는2assets, 최신v1.1.1은asset0/배포중단안내가있어현재사용배포방식확인이필요하다. workflow의새서버주소/OAuth주입은확인하지못했다. [조사/고정근거](../engineering/operations/release-tracking-review.md)를원본으로한다.
+- [Issue34](https://github.com/heo0328/lostparty-backend/issues/34) **Backend 본문 / 릴리즈·배포 이력 운영 방식 확인 단계**로게시했다. 본문은댓글순번에포함하지않으며게시후전체댓글조회0건을확인했다. Flutter에현재문서/run/유효Release·브랜치/태그/version/build/담당·자동게시/실설치경계·실패/불변정책·환경/계약/Backend호환기록과공통추적필드의견을요청했다. 완료조건/다음Flutter→Backend와현재Git a6c6d7b/실행6154e45·이미지/DB차이를명시했다.
+- 현재는질문/비교협의이며태그·Release/CI/CD구현·워크플로실행·기존공유브랜치규칙변경/과거배포태그발급·서버/DB/자료/키변경·기기재시험/기존정상인수반복·다른Issue수정없다. 회신후Backend적용안/공통규칙을정리하고실제태그운영은확정기준에따라진행한다. 기록/추적표/NEXT_WORK/AI_CONTEXT를같은목적브랜치의질문인계구간으로묶어게시한다. 문서250파일/상대링크·anchor2628건/고정자료·계약분류·diff검사PASS. 순수협의문서로서버/DB/기능시험을추가실행하지않았다.
+
 <a id="lightsail-git-integration"></a>
 
 ## 2026-11-01 — Lightsail 작업 dev 통합·main 동기화

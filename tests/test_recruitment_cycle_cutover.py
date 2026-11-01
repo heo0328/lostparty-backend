@@ -148,9 +148,11 @@ def test_prepared_app_startup_and_full_route_contract(outcomes):
     candidate=create_two_cycle_app()
     with TestClient(candidate):pass
     with session() as db,db.begin():denied('SERVICE_UNAVAILABLE',readiness.require_active,db);readiness.require_two_cycle_active(db)
-    spec=candidate.openapi();assert len(app.openapi()['paths'])==116
+    spec=candidate.openapi()
     import json
     from pathlib import Path
+    # Compare the current legacy contract, not the historical pre-group route count.
+    assert set(app.openapi()['paths']) == set(json.loads(Path('openapi/openapi.yaml').read_text())['paths'])
     fixed=json.loads(Path('docs/features/recruitment/weekly-cycles/examples/baseline/full.openapi.json').read_text())
     assert set(fixed['paths'])<=set(spec['paths'])
     assert all(method in spec['paths'][path] and spec['paths'][path][method]['operationId']==operation['operationId']

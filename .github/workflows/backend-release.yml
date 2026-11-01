@@ -1,0 +1,93 @@
+name: Backend release
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: backend-release-production
+  cancel-in-progress: false
+  queue: max
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Validate release source (manual runs validate only)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/deployment/release.py validate
+      - run: python3 scripts/verify_isolated.py static
+      - run: python3 scripts/deployment/docker_smoke.py
+      - run: python3 scripts/verify_isolated.py contracts
+      - name: Manual image build, no publication or deployment
+        if: github.event_name == 'workflow_dispatch'
+        run: docker build --platform linux/amd64 -t lostparty-validation:${GITHUB_SHA} .
+  regression:
+    needs: verify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Complete isolated regression shard
+        env:
+          SHARD_INDEX: ${{ matrix.shard }}
+        run: python3 scripts/deployment/regression.py --shard-index "$SHARD_INDEX" --shard-count 8
+  publish:
+    if: github.event_name == 'push'
+    needs: [verify, regression]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Registry login
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+      - name: Publish or reuse fixed image and Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/deployment/release.py publish
+      - name: Remove runner registry credentials
+        if: always()
+        run: docker logout ghcr.io
+  deploy:
+    needs: publish
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment:
+      name: production
+      url: https://lostparty.duckdns.org
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Read immutable release metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/deployment/release.py download
+      - name: Deploy over restricted deployment SSH
+        env:
+          LIGHTSAIL_DEPLOY_SSH_KEY: ${{ secrets.LIGHTSAIL_DEPLOY_SSH_KEY }}
+          LIGHTSAIL_SSH_KNOWN_HOSTS: ${{ vars.LIGHTSAIL_SSH_KNOWN_HOSTS }}
+        run: python3 scripts/deployment/transport.py
