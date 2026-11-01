@@ -1,5 +1,15 @@
 # 영구 개발 이력
 
+<a id="lightsail-quick-ops"></a>
+
+## 2026-11-01 — Lightsail 짧은 운영 안내·자동시작/로그/외부백업 확인
+
+- 요청범위: 실제배포경로/Compose기반상태·최근로그·API만재시작안내, 재부팅자동시작·로그제한·서버외부DB백업상태확인. **실제재부팅금지**를따라서비스재시작/재생성·설정/자료변경도하지않았다. chore/lightsail-deployment/기본작업경로·c1a0d5d에서이어갔고실행source6154e45/이미지dfad04e8은유지했다.
+- UTC12:18:27(한국시간21:18) 실제컨테이너Compose라벨에서/home/ubuntu/lostparty-backend·compose.lightsail.yaml확인, 해당환경파일로Compose config --quiet PASS. docker.service/containerd.service는enabled/active, api/db/caddy전부running/unless-stopped/restart0, API/DBhealthy였다. 볼륨과읽기전용키마운트를확인했고전체env/inspect원문·원본로그·키는출력하지않았다.
+- 셋모두실제HostConfig.LogConfig가json-file/max-size10m/max-file5임을확인했다. 서비스별약50MB/전체약150MB회전설정이며호스트journal/DB/덤프총량제한이아니다. 공식Docker문서로unless-stopped의수동정지예외·로그제한의미를대조했다. 설정확인과실제부팅/회복·로그rollover시험은구분하며후자는미실행이다.
+- 서버backups/에는DB덤프2개(453858/459858bytes)와환경백업1개가모두0600으로존재했다. root/ubuntu crontab없음, /etc/cron*·customsystemd/userunits에서DB백업/전송후보0·관련백업도구없음을확인했다. 기본dpkg-db-backup.timer는패키지관리DB용으로서비스백업근거가아니다. 서버밖DB/환경/키복사·자동화/복구완료근거는없고사용자개별수동복사여부는미확인이다. 최신수동인증후덤프를이번에생성하지않았다.
+- [짧은운영안내](../engineering/operations/lightsail-quick-ops.md)에서버SSH용절대경로dc함수·ps/health·최근30분/100줄로그·API만restart와환경변경시재생성의차이·자동시작예외·외부백업미구성을정리했다. 외부저장위치/담당/주기/보관·키포함암호화/복원검증을다음운영작업으로남겼다. 유료리소스/외부전송/자동화추가·DB조회/수정·Issue게시/변경없음. 실제안내와같은Compose ps/최근로그명령성공·HTTPS health200을확인했다. 임시AWS/SSH인증복사본은정리했고서비스설정/키는보존했다. 문서249파일/상대링크·anchor2621건·고정자료/계약분류·diff검사PASS후같은목적브랜치의운영인계구간으로묶어commit/push한다.
+
 <a id="lightsail-manual-test-verification"></a>
 
 ## 2026-11-01 — 사용자 요청 원정대1개 테스트용 수동 인증

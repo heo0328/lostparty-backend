@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+운영안내 최신(2026-11-01): [Lightsail 짧은 운영 안내](../engineering/operations/lightsail-quick-ops.md)를추가했다. 실제경로/Compose·Docker자동시작·3서비스restart/log제한은확인, 실제재부팅/회복시험은미실행이다. 서버내덤프만확인했고외부DB/키백업/자동화는미구성·완료근거없음이다. [이력](DEV_LOG.md#lightsail-quick-ops)을따른다.
+
 2026-11-01 테스트원정대 최신: 사용자명시승인으로운영회원1명의미소유원정대1개/V2대기1개를수동인증했다. 현재verified/owned·18캐릭터·소유감사/수동테스트주석을확인했으며실장비증거통과가아니다. 대표/활동은기존unconfigured흐름을유지했고앱목록새로고침이필요하다. [집계](../engineering/operations/records/lightsail-manual-test-verification.json)·[이력](DEV_LOG.md#lightsail-manual-test-verification)을따른다. Google로그인사용자성공보고/운영회원1확인도수용하며아래실로그인미확인문장은이전시점이력이다.
 
 2026-11-01 로그인등록 최신: 사용자승인으로Lightsail의GOOGLE_AZP_ALLOWLIST에기존확정debugAndroid ID한개를반영하고동일이미지API만재생성했다. Web audience/인증로직·다른환경·DB/Caddy·키는보존했으며health200·검증기13경계를확인했다. [반영집계](../engineering/operations/records/lightsail-google-azp-rollout.json)·[이력](DEV_LOG.md#lightsail-google-azp-rollout)을따른다. 이전401/azp누락은[진단당시기록](../engineering/operations/records/lightsail-google-login-investigation.json)이다. 다음은새거래실Google로그인/refresh·인증후그룹코드확인이며아직실인증성공을주장하지않는다.

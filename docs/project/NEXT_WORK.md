@@ -1,5 +1,7 @@
 # 다음 실행
 
+운영 참고 최신(2026-11-01): [짧은 운영 안내](../engineering/operations/lightsail-quick-ops.md)에 실제서버경로·상태/최근로그/API만재시작명령을정리했다. Docker부팅enabled·3서비스unless-stopped·로그10m×5실적용을읽기확인했으며실제재부팅/재시작은하지않았다. **서버외부DB/환경/키백업은미구성·전송완료미확인**이다. 다음운영작업은외부암호화보관위치/담당/주기·보관기간확정과키포함복원검증이다. [확인근거](DEV_LOG.md#lightsail-quick-ops)를따른다.
+
 ## 현재 실행 — Lightsail 첫 배포·로그인등록 보완·테스트 원정대 인증 (2026-11-01)
 
 작업 구간: 신규 서버 설치·무료 주소 HTTPS 첫 배포 / 브랜치·checkout: `chore/lightsail-deployment` / 기본 프로젝트 경로. 실행 source는 `6154e459cbd8de7562c331eacc60928c61f8ac09`, API이미지dfad04e8·DB0035다. 후행 문서 커밋과 실행 소스를 구분한다. 아래 과거 checkout/dev 문장은 당시 이력이다.
