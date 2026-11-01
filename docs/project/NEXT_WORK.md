@@ -4,7 +4,7 @@
 
 사용자승인으로PR35통합/main·dev동일ceea2f4·v0.1.0태그1회push를완료했다. 기존운영6154e45대비앱/API/DB/Compose동일이다. [태그run41317120737](https://github.com/heo0328/lostparty-backend/actions/runs/41317120737)은4attempt모두소스검증일반예외로실패·게시/배포skip, 태그이동/재push없음. [수동run41318263421](https://github.com/heo0328/lostparty-backend/actions/runs/41318263421)은verify·전체8그룹/1811PASS다. [원본태그push환경재현41320810991](https://github.com/heo0328/lostparty-backend/actions/runs/41320810991)도verifyPASS여서중복회귀만취소했다. 실제태그경로실패원인은미확정이다.
 
-[시험집계](../engineering/operations/records/backend-first-tag-trial.json)를따른다. 후행작업브랜치에서임시진단을제거하고예외종류/HTTP상태/허용환경변수이름/코드위치만남기는안전진단을보완·scripts42PASS했다. 서버/API/DB변경·이미지/Release게시없음, 자동배포완료가아니다. 다음사용자가추가버전/태그승인을결정한다. v0.1.0은그대로보존하고맹목재시도/태그이동없음. 아래통합/첫태그대기는당시준비이력이다.
+[시험집계](../engineering/operations/records/backend-first-tag-trial.json)를따른다. 후행작업브랜치에서임시진단을제거하고예외종류/HTTP상태/허용환경변수이름/코드위치만남기는안전진단을보완·scripts42PASS했다. 서버/API/DB변경·이미지/Release게시없음, 자동배포완료가아니다. [전체7번째 Backend 결과인계](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6559972464) 완료·다음사용자가추가버전/태그승인을결정한다. v0.1.0은그대로보존하고맹목재시도/태그이동없음. 아래통합/첫태그대기는당시준비이력이다.
 
 ## 현재 실행 — Backend 태그 기반 자동 배포 구현
 

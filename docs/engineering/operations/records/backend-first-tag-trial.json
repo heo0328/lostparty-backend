@@ -84,7 +84,8 @@
     "temporary_hardcoded_diagnosis_removed": true,
     "safe_error_classifier_added": true,
     "script_unit_tests_passed": 42,
-    "next": "Request approval for next immutable version/tag with safe failure diagnostic; do not move or keep blindly retrying v0.1.0."
+    "next": "Request approval for next immutable version/tag with safe failure diagnostic; do not move or keep blindly retrying v0.1.0.",
+    "safe_diagnostic_commit": "752d8ba288e813bac11a49d1f7f4b62c6d40b444"
   },
   "production": {
     "public_health": "status ok, database ok",
@@ -92,5 +93,6 @@
     "db_migration_or_data_changes": false,
     "github_release_or_ghcr_published": false
   },
-  "first_automatic_deployment_accepted": false
+  "first_automatic_deployment_accepted": false,
+  "handoff_comment": "https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6559972464"
 }
