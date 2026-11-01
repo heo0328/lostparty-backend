@@ -1,14 +1,15 @@
 # 다음 실행
 
-## 현재 실행 — Lightsail 첫 배포 준비 (2026-11-01)
+## 현재 실행 — Lightsail 첫 배포 완료·앱 연결 확인 (2026-11-01)
 
-작업 구간: 신규 서버 설치·무료 서브도메인 HTTPS 준비 / 브랜치·현재 checkout: `chore/lightsail-deployment` / 위치: 프로젝트 기본 작업 경로. 실제 Git은 main6151fa0가 devac0526f와 README 후행 수정을 포함하며 이 기준에서 분기했다. 아래 과거 checkout/dev 문장은 당시 이력이다.
+작업 구간: 신규 서버 설치·무료 주소 HTTPS 첫 배포 / 브랜치·checkout: `chore/lightsail-deployment` / 기본 프로젝트 경로. 실행 source는 `6154e459cbd8de7562c331eacc60928c61f8ac09`, API이미지dfad04e8·DB0035다. 후행 문서 커밋과 실행 소스를 구분한다. 아래 과거 checkout/dev 문장은 당시 이력이다.
 
-- 사용자 보고: `lostparty`/`lostparty-server`, 시드니`ap-southeast-2`, Ubuntu24.04 amd64·2GB/2vCPU/60GB·월$12, 브라우저SSH 성공·Backend/DB미설치. Free plan/잔액$120 범위, 도메인 구매 없이 무료 서브도메인 HTTPS를 원한다.
-- 준비: [첫 배포 절차](../engineering/operations/lightsail-first-deploy.md), 독립 `compose.lightsail.yaml`, 환경 예제·신규4종키 생성·Caddy 단일 프록시를 마련했다. Duck DNS+연결된 Lightsail 고정IPv4를 기준으로 한다. F02 구성 준비를 재개했으며 실제 접속IP/HTTPS 검증 전 완료로 표시하지 않는다.
-- 다음 사용자/Backend: Billing에서 Free plan·실제 만료일/크레딧 적용 확인 → 고정IP 연결·Duck DNS 주소 등록 → 대상 서버 Docker 설치 → 게시된 고정SHA checkout·환경/신규키 → 빈DB0035 명시 migration·비공개 API 확인 → DNS/방화벽/HTTPS 공개 검증. 아직 원격 서버 작업·리소스 생성·DB생성·앱 연결은 실행하지 않았다.
-- 남은 입력: 선택한 Duck DNS 호스트명·고정IP 연결 여부·Free plan 종료일. 비밀값/토큰 제출은 불필요하다. 실제 서버 실행은 별도 배포 구간으로 진행한다. 자동백업/격리복원·부하·실제 IP 제한/HTTPS Google로그인도 미확인이다.
-- 준비 검증/게시 상태는 [DEV_LOG](DEV_LOG.md#lightsail-preparation)를 따른다. API 계약/DB스키마 변경·개발서버 교체·네이티브 추가시험 요청·Issue 변경은 없다. 분쟁 정책 협의는 아래 기록대로 보존한다.
+- 공개 주소: **https://lostparty.duckdns.org**, 고정IPv4 `54.253.176.103`, 시드니 `lostparty-server`. Docker/API/PostgreSQL/Caddy를 실제 설치하고 신규DB0035·DB/APIhealthy·Let's Encrypt HTTPS/HTTP308·두 전체OpenAPI·공개조회/인증거절/no-store·8000/5432차단을 확인했다. 키4종은 신규서버 전용이며 기존 개발DB/키/Firebase/기기를 이관·변경하지 않았다.
+- 비용: AWS API에서 Free plan ACTIVE·잔액$120·종료2027-05-01 한국시간18:26:57 확인. 플랜전환/추가유료리소스 생성없음, 기존22/80 규칙보존·IPv4TCP443만 추가했다.
+- 검증/반영 상세 원본: [집계](../engineering/operations/records/lightsail-first-deploy.json)·[DEV_LOG](DEV_LOG.md#lightsail-rollout)·[운영 절차](../engineering/operations/lightsail-first-deploy.md). 위조XFF/Forwarded/다중hop에도 같은 출발지10회400→429, 다른 실제출발지400으로 IP제한분리를 확인했다. 실제 Google성공/refresh·로그인후그룹코드는 미확인이므로 F02전체완료는 아니다.
+- 다음 사용자/Flutter: 앱 환경의 base URL을 위 HTTPS로 사용해 실제 Google로그인/refresh·핵심조회·그룹코드 영향을 확인한다. 새 서버 회원/세션은 기존 로컬과 별개다. 이 기록만으로 Flutter설정변경/기기연결완료를 주장하지 않는다. 아직 네이티브Issue에 추가요청/댓글을 게시하지 않았다.
+- 다음 운영: 초기DB덤프 생성/목록·격리PostgreSQL17복원(0035/115표) PASS. 서버밖 암호화 DB/환경/4종키백업·소유자/ACL포함전체복구·자동백업/알림·부하/장기관찰은 미완료다. 자동인증서갱신은 Caddy설정이며 미래갱신성공을 확인한 것은 아니다.
+- DNS/고정IP/계정종료일 입력대기는 해소했다. 실제 배포는 이번 지시로 승인·실행됐으며 PR/merge·다른기능정책/Issue종료는 별도다. 분쟁 정책 협의는 아래 기록대로 보존한다.
 
 문서 운영 #29는 공통 원본·양측 참조 반영 및 [상호 대조](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6520322169) 완료로 추가 수정 대기를 해소했다. Issue 종료는 별도이며 상세 근거는 [DEV_LOG](DEV_LOG.md)에 보존한다. 기존 그룹 기기 인수와 기술 진단 후속은 별도다.
 
@@ -22,7 +23,7 @@
 
 ## 보류 추적 — Backend 베타 개선
 
-[F01](DEV_LOG.md#f01-registration-cleanup)은 `c94ce88`로 구현·격리 검증·commit/push 완료, PR31로 dev/main 통합하며 코드는 기존0035 이미지에 함께 반영됐다. 미처리 대상0·수동 정리 실행 없음은 [반영 기록](../engineering/operations/cycle-group-policy-rollout.md)을 따른다. [개선 계획의 F02 재개 조건](backend-improvement-plan.md#f02-resume)을 따른다. F02는 위 Lightsail 첫 배포 준비로 재개했으며 실제 공개 검증은 미완료다. 이전 생성 전·공개 경로 미정 보류 기록은 개선 계획에 보존한다. 테스터 총20~50명 예상이며 동시 사용자 보장은 아니다. F03 내부 장애 추적은 개선 복귀 시 다음 후보이며 미착수다. 그룹 작업을 막지 않는다.
+[F01](DEV_LOG.md#f01-registration-cleanup)은 `c94ce88`로 구현·격리 검증·commit/push 완료, PR31로 dev/main 통합하며 코드는 기존0035 이미지에 함께 반영됐다. 미처리 대상0·수동 정리 실행 없음은 [반영 기록](../engineering/operations/cycle-group-policy-rollout.md)을 따른다. [개선 계획의 F02 재개 조건](backend-improvement-plan.md#f02-resume)을 따른다. F02는 위 Lightsail 첫 배포와 실제 프록시 검증까지 진행했으며 실제 앱 인증/그룹코드 영향 확인이 남아 있다. 이전 생성 전·공개 경로 미정 보류 기록은 개선 계획에 보존한다. 테스터 총20~50명 예상이며 동시 사용자 보장은 아니다. F03 내부 장애 추적은 개선 복귀 시 다음 후보이며 미착수다. 그룹 작업을 막지 않는다.
 
 ## 이전0034 기준과 기존 변경의 기기 대기 (이력)
 

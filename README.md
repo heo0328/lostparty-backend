@@ -1,6 +1,6 @@
 # LostParty Backend
 
-Lightsail 신규 서버 설치·무료 서브도메인 HTTPS 준비는 [첫 배포 절차](docs/engineering/operations/lightsail-first-deploy.md)를 따릅니다. `compose.lightsail.yaml`은 로컬 Compose와 합치지 않는 독립 구성입니다. 실제 운영 배포 완료를 의미하지 않습니다.
+Lightsail 신규 서버 설치·무료 서브도메인 HTTPS 준비는 [첫 배포 절차](docs/engineering/operations/lightsail-first-deploy.md)를 따릅니다. `compose.lightsail.yaml`은 로컬 Compose와 합치지 않는 독립 구성입니다. 첫 Lightsail 설치·HTTPS 공개 결과와 남은 앱/운영 검증은 [배포 기록](docs/project/DEV_LOG.md#lightsail-rollout)을 따릅니다.
 
 로스트아크의 원정대·캐릭터와 레이드 모집·일정을 관리하는 LostParty 모바일 앱의 백엔드입니다. Firebase 기반 개발에서 출발해 기능 확장과 데이터·권한 처리를 직접 관리하기 위한 자체 서버를 개발하고 있습니다.
 

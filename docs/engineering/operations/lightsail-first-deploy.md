@@ -101,13 +101,17 @@ nano .env.lightsail
 dc() { sudo docker compose --env-file .env.lightsail -f compose.lightsail.yaml "$@"; }
 dc config --quiet
 dc build api
-mkdir -p .secrets/lightsail
-dc run --rm --no-deps --user 0 \
+mkdir -p .secrets
+sudo install -d -o 10001 -g 10001 -m 0700 .secrets/lightsail
+sudo docker run --rm --user 10001:10001 --read-only --cap-drop ALL \
+  --security-opt no-new-privileges:true --network none \
   -v "$PWD/.secrets/lightsail:/run/secrets:rw" \
-  api python scripts/create_lightsail_secrets.py
+  "lostparty-backend-api:$(git rev-parse HEAD)" python scripts/create_lightsail_secrets.py
 ```
 
 기존 `create_auth_keys.py`는 JWT/복구 키만 만들지만 신규 전용 스크립트는 JWT·복구·Lost Ark 암호화·fingerprint 4개를 만든다. UID10001/권한0600, 디렉터리0700이며 기존 파일이 하나라도 있으면 덮어쓰지 않는다. 실패 후 부분 생성도 자동 재생성하지 않고 확인한다. `.secrets/lightsail`은 개발 키와 분리한다. 개인 Lost Ark API 토큰 원문은 서버 공통 env에 넣지 않는다.
+
+위 디렉터리 생성·소유자 설정은 **새 빈 경로 전용**이다. 기존 키 경로에 재실행하지 않는다. Compose v5의 `run -v ...:rw`는 서비스의 read-only 마운트를 그대로 유지하는 동작이 확인되어, bootstrap에만 직접 `docker run`을 사용한다. 네트워크 없이 UID10001로 생성하고 서비스는 계속 read-only로 읽는다.
 
 ## 4. 신규 DB 초기 구성 — 공개 전에 별도 실행
 
@@ -169,6 +173,14 @@ dc exec -T db pg_dump -U postgres -d lostparty -Fc > "backups/lightsail-$(date -
 
 실제 배포 기록에는 source SHA·이미지 ID/RepoDigest(API/Postgres/Caddy)·Compose 버전·migration current·키 ID(값 제외)·HTTPS 주소·확인 시각/항목·미확인을 남긴다. upstream 이미지 태그는 가변이므로 첫 검증한 digest/이미지를 기록·보존하고 운영 중 무조건 pull하지 않는다. 최초 설치 실패 시 caddy/api를 중지해 공개를 닫고 DB/키는 보존한다. 후속 업데이트는 고정 이미지·사전 백업·migration 호환성 검토 후 시행하며 구 이미지로 교체만 하면 DB가 롤백된다고 가정하지 않는다.
 
-## 이번 준비에서의 검증 범위
+## 최초 준비(ce25368)에서의 검증 범위
 
 정적 YAML/키 생성·덮어쓰기 거절/문서 검증 결과는 [DEV_LOG](../../project/DEV_LOG.md#lightsail-preparation)에 기록한다. 현재 작업 환경에 Docker 실행기가 없어 Compose 실제 렌더링·이미지 build·빈 PostgreSQL migration·Caddy validate·실제 DNS/TLS/IP 제한·provider/기기·복원/부하 검증은 실행하지 않았다. 위 명령은 실행 완료 근거가 아니다.
+
+## 2026-11-01 실제 첫 배포 결과
+
+위 최초 준비 이후 사용자 배포 지시로 source`6154e45`·API이미지`dfad04e8`·신규DB0035를 `lostparty-server`에 실제 반영했다. **https://lostparty.duckdns.org/health**는 인증서검증을 켠 외부요청에서200/DB정상이다. HTTP는308, DB/API는healthy, Caddy는running/실제HTTPS확인이다. 최초 발급 중 약6초의 TLS준비 오류 후 자동발급이 완료됐다. 인증서 SAN/Let's Encrypt YE2·만료2027-01-30을 확인했으며 갱신데이터는 Caddy볼륨에 보존한다.
+
+현재 사용자 계정/세션/인증거래/그룹은0개인 신규환경이다. 실제이미지의 두전체OpenAPI일치·공개조회/인증거절/no-store·직접포트차단·위조전달헤더 제한우회불가·두실제출발지 제한분리·worker3종실행/관찰시ERROR0을 확인했다. 초기덤프는 별도내부망/tmpfs PostgreSQL17에 소유자/ACL제외로 복원해0035/115표를 확인했고 임시시험컨테이너만 제거했다. 서비스DB/키 초기화·개발자료이관은 하지 않았다.
+
+자세한 고정소스/이미지/검증/백업/미확인은 [집계](records/lightsail-first-deploy.json)와 [DEV_LOG](../../project/DEV_LOG.md#lightsail-rollout)를 따른다. 실제 Google성공/refresh·로그인후그룹코드·서버밖키포함암호화백업·자동화/전체복구·부하/장기운영인수는 남아 있다. 후행 문서게시로 서비스 소스를 교체하지 않는다.

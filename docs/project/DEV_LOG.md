@@ -9,6 +9,14 @@
 - 접속: 기존 AWS CLI 로그인프로필lostparty를 임시캐시복사본에서 갱신하고 Lightsail 임시SSH키/인증서·API확인 호스트키로 접속했다. 비밀값은 출력하지 않으며 /tmp보호경로의 임시접속자료는 구간 종료 시 정리한다. 최초 일반SSH키 부재와 플러그인검색을 거친 뒤 기존 로그인캐시를 확인했으므로 사용자 키 제출은 필요하지 않았다.
 - 신규서버 확인: Ubuntu24.04.4 x86_64·RAM1906MiB·swap없음·디스크58GB/사용2.1GB·프로젝트/Docker미설치, 서버망172.26.0.0/20으로 예정Docker망과 비중첩. 공식Docker apt설치를 진행했다.
 - 배포 전 보완: public profile 전에 DB/API를 올리면 동적IP가 Caddy고정`.2`를 선점할 수 있어 Compose IPAM에 동적범위`172.30.85.128/25`를 지정했다. 정적주소가 subnet내/동적범위밖임을 검증했다. API계약/DBmigration변경없음. 이 보완의 고정소스를 게시한 뒤 신규DB/HTTPS 실행결과를 아래 누적한다.
+- 실제 배포source `6154e459cbd8de7562c331eacc60928c61f8ac09` commit/push·원격일치 후 서버detached checkout, API이미지`dfad04e8`를 빌드했다. Docker29.9.2/Compose5.6.1, 실제Compose config·Caddy validate·두전체OpenAPI일치 PASS. 후행 문서 커밋은 실행 소스가 아니다. 정확한 이미지/digest·상태/검증은 [집계](../engineering/operations/records/lightsail-first-deploy.json)를 원본으로 한다.
+- 서버전용서로다른DB암호·환경0600·4종키0600/디렉터리0700·UID10001읽기 PASS. 최초Compose run의 rw추가가 원서비스ro마운트를 해제하지 않아 키생성은읽기전용오류로중단됐다. 파일생성0 확인 후 빈경로소유권을UID10001로준비하고 네트워크없는직접docker run에서만rw마운트로생성했다. 서비스ro/보안설정은유지하며 운영절차를정정했다. 원격stdin실행에서 Compose가후속입력을소비해 DB기동후명령이실행되지않아 별도스크립트파일방식으로전환했고 public0개확인부터재개했다.
+- 신규볼륨비어있음/public표0개·alembic revision없음·단일head0035 확인 후 명시upgrade0035, 최종public115표·앱role superuser/createdb/createrole=false·DB/APIhealthy 확인. users/sessions/auth_transactions/groups=0이며 합성거절검증은provider호출/회원쓰기0이다. 로컬/개발/기존Firebase자료·키를이관하거나삭제하지않았다.
+- AWS IPv4 TCP443추가 Succeeded, 기존22/80보존. Caddy`.2`/DB`.129`/API`.130`으로IP충돌없음, 호스트API/DBportbinding없음. HTTPS실제공개·SAN/Let's Encrypt YE2·인증서검증/TLS1.3 PASS, HTTP308→HTTPS. 최초발급중두번TLS준비오류후약6초내자동발급/health200이됐다. 만료2027-01-30, 향후자동갱신성공은아직관찰하지않았다.
+- 외부확인: /health·/v1/raid-catalog·/v1/raid-cycle200, /v1/me401, /docs·/openapi.json404, 확인한v1응답no-store, 직접8000/5432차단. 같은실제출발지에서XFF/Forwarded/다중hop을바꾸며합성인증10회400→429, 첫출발지429동안서버출발의별도실제요청400으로제한분리 PASS. 임시SSH인증만료로한번접속거절됐고 API의동일호스트키확인후임시인증을갱신해후속검증을마쳤다. 서비스장애/앱인증실패로오인하지않는다.
+- 실행관찰: DB/APIhealthy·Caddyrunning/실제HTTPS확인·3서비스restart0, API안전로그232개중ERROR/CRITICAL0·auth_cleanup/ownership_settlement/recruitment job완료확인. 순간메모리는API129.4MiB/DB45.28MiB/Caddy13.84MiB, 호스트available1191MiB이며 부하수용량/장기운영보장이아니다. 최종ro키마운트·unless-stopped·hostport없음/health재확인 PASS.
+- 초기DB백업: 서버0600덤프453,858bytes·archive목록PASS, 별도internal망/tmpfs PostgreSQL17에--no-owner/--no-privileges복원후0035/115표·users/sessions0확인 PASS. 시험컨테이너/망만정리했고실서비스DB/볼륨/키는보존했다. DB소유자/ACL·환경/4종키포함전체재해복구나서버밖백업완료로확대하지않는다.
+- 남은범위: 실제네이티브HTTPS Google로그인/refresh·인증후그룹코드, 서버밖암호화DB/환경/키백업·자동백업/알림·소유자/ACL포함전체복구·부하/장기관찰. 따라서 첫설치/HTTPS공개는완료이나F02전체/공개베타최종인수는아니다. 네이티브Issue게시/새기능정책/PR·merge·Issue종료는없다. 임시CLI/로그인캐시복사본/SSH인증파일을작업종료시삭제했고원본AWS캐시·서비스키는보존했다. 최종문서248파일/상대링크·anchor2,597건·고정자료/계약분류PASS와diff검사를확인했다. 후행문서/집계/절차보완을같은목적브랜치마감으로묶어게시한다.
 
 <a id="lightsail-preparation"></a>
 
