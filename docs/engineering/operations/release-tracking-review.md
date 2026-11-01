@@ -76,3 +76,6 @@ Native는package/build/서명인증서digest, Backend는DB revision/환경변경
 ## release OAuth 후속 운영 반영
 
 사용자콘솔화면과공개ID전사·반영승인으로 release SHA-1/Android client대조대기를해소했다. [전체4번째 Backend](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558294576)·[반영집계](records/lightsail-release-azp-rollout.json)대로기존debug ID에release ID추가/동일API재생성·14분리검증을완료했다. API시작13:00:31Z·health정상, DB/Caddy·키/다른환경보존이다. 위회신당시release등록미확인은과거이력이며직접콘솔API조회/APK독립인증서추출이나실Google로그인성공을의미하지않는다. 다음사용자가v1.1.2 APK새로그인거래를확인한다. 태그자동화/전체호환manifest는별도미완료다.
+
+
+후속 사용자 인수: [전체5번째 Backend](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558340814)에 사용자 v1.1.2 release 실제 Google 로그인 성공 보고를 기록했다. 로그인 장애 대응/재시도 대기는 완료이며 refresh·전체 기능/호환manifest 인수는 별도다. 이번 보고 수용으로 서버를 다시 조회/변경하지 않았다.

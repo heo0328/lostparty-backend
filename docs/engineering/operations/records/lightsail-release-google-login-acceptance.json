@@ -1,0 +1,13 @@
+{
+  "date_kst": "2026-11-01",
+  "release": "v1.1.2",
+  "scope": "Release Google login after authorized release azp rollout",
+  "result": "PASS; user-reported real device login success",
+  "evidence_type": "User report in conversation",
+  "independent_server_http_or_database_confirmation_this_step": false,
+  "rollout_record": "lightsail-release-azp-rollout.json",
+  "issue_comment": "https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558340814",
+  "refresh_and_full_feature_acceptance": "NOT VERIFIED by this report",
+  "additional_server_changes_or_restarts": false,
+  "next": "Release login wait resolved; Backend/user deployment tracking design remains separate."
+}

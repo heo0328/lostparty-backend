@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-release 로그인 최신: 사용자확정release Android ID·반영승인으로 allowlist에추가하고기존debug/Web audience·검증을유지했다. 동일이미지API만13:00:31Z재생성·health200/분리검증14PASS, DB/Caddy·키보존. [반영](../engineering/operations/records/lightsail-release-azp-rollout.json)·[전체4번째 Backend](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558294576) 기준으로 다음사용자의v1.1.2 실제로그인확인대기다. 이전401진단/등록값대기는해소됐으며실기기로그인성공은아직미확인이다.
+release 로그인 최신: 사용자확정release Android ID·반영승인으로 allowlist에추가하고기존debug/Web audience·검증을유지했다. 동일이미지API만13:00:31Z재생성·health200/분리검증14PASS, DB/Caddy·키보존. [반영](../engineering/operations/records/lightsail-release-azp-rollout.json)·[전체4번째 Backend](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558294576) 이후 사용자 v1.1.2 실제 로그인 성공 보고를 [전체5번째 Backend](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558340814)으로 수용했다. release 로그인/등록값 대기를 해소했고 refresh·전체 기능 인수는 별도 미확인이다.
 
 릴리즈 운영 협의 최신(2026-11-01): [Issue34 전체1번째 Flutter 운영 회신](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558053848) 확인·[전체2번째 Backend 최소 추적안](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558101459) 회신 완료. Native v1.1.2/source9e4a18f7의 CI 성공·APK 게시를 대조했다. 독립 버전+4단계 추적 원칙에 의견이 일치하며 [근거/최소안](../engineering/operations/release-tracking-review.md)을 따른다. 다음 Backend/사용자가 버전·태그/배포 인증·승인/실패 처리를 정한다. release ID 운영반영은위기록대로완료, 실기기 인수/전체 호환 기록과 CI/CD 구현은 미완료다. checkout `chore/release-management`, 아래최소안협의당시에는서버/자료변경없었으며후속release등록환경반영은위기록과구분한다. 아래 checkout dev는 직전 통합 이력이다.
 

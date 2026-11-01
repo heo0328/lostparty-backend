@@ -1,5 +1,9 @@
 # 영구 개발 이력
 
+## 2026-11-01 — release Google 로그인 사용자 인수 완료
+
+사용자가 release ID 운영 반영 후 “로그인이 정상적으로 진행됩니다”라고 보고했다. [전체5번째 Backend · 사용자 인수 확인](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558340814)에 회신하고 release 실제 로그인 대기를 해소했다. 근거는 사용자 기기 보고이며 추가 서버로그/HTTP200·DB 독립 수집을 수행하지 않았다. 모의14경계와 별도 인수이며 refresh·전체기능/호환manifest 완료로 확대하지 않는다. 추가 로그인 반복 요청·서버/DB/설정 재변경·재시작·APK/태그게시없다. Issue34는 Backend 버전/태그·배포인증/승인·실패복귀 설계가 남아 OPEN 유지, 다음 Backend/사용자다. 문서 검사·diff 확인 후 같은 목적 구간의 로그인 장애 인수를 마감 기록한다.
+
 <a id="lightsail-release-azp-rollout"></a>
 
 ## 2026-11-01 — 확정 release Android azp 운영 반영
