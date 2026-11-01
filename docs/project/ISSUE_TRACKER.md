@@ -95,3 +95,5 @@
 #15 사용자요청으로 소유권분쟁의 그룹/레이드영향처리협의를재개한다. 기존의room후처리제외/기기인수보류와새범위의검토착수를구분한다. [검토원본](../features/rosters/ownership/dispute-impact-review.md)·feat/ownership-dispute-policy 기준, 그룹사용자가입/다른원정대보존은현구조로가능하며활성레이드최종이전은아직보류다. 정책/API구현/실제반영완료는아니다.
 
 #15 [전체10번째 Backend 영향검토 협의](https://github.com/heo0328/lostparty-backend/issues/15#issuecomment-6541847499) 게시·실제전체순번10확인. 원문후처리제외는이전범위로보존하고본문상단을사용자요청정책검토/Flutter소비검토대기로갱신했다. 제품코드/실행반영완료와구분한다.
+
+2026-11-01 사용자승인 [PR32](https://github.com/heo0328/lostparty-backend/pull/32)·e3a657a로 분쟁영향검토·합성시험/500추적중단기록을dev통합하고main을동일최종기록커밋으로동기화한다. 통합목적브랜치2개는로컬/원격정리·현재checkout dev, 정책미합의/미구현과#15소비검토대기는유지한다. Git통합은제품정책/API/서버/자료반영이나Issue종료가아니다.

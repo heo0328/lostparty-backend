@@ -8,7 +8,7 @@
 
 [분쟁 영향 검토](../features/rosters/ownership/dispute-impact-review.md)에 현재연결·보류가드와 미합의정책/Flutter5개검토항목을 정리했다. 원정대3개중1개상실의그룹활동/다른설정보존2PASS와기존동작4PASS를격리확인했다. 다음은 #15에서 Flutter와 최종이전의 자동정리/영향대상복구필요·그룹표시/공대장승계·예약정책을 협의하는 것이다. 사용자 제안은 검토 대상이며 일괄탈퇴·유저전체경고·자동참가 이전으로 확정하지 않는다. 실제자료/서버·계약은 합의 전 바꾸지 않는다.
 
-현재 실행sourceb8542ef/이미지930c25f8·DB0035, dev/main1f0b588은 유지한다. 상세500 기록은 fix/raid-detail-errors에 보존하고 분쟁후속 checkout은 feat/ownership-dispute-policy다. 미통합500중단기록9a13af7을 보존한tip에서분기했으며dev/main1f0b588과분리한다. F02 보류/F03 미착수·AWS/release·자료초기화·Issue종료와 구분한다.
+현재 실행sourceb8542ef/이미지930c25f8·DB0035는 유지한다. 사용자 승인 [PR32](https://github.com/heo0328/lostparty-backend/pull/32)·병합e3a657a로 분쟁검토/합성시험·상세500조사/추적중단 기록을 dev에 통합했고 main도 dev의 후행기록 포함 같은커밋으로 맞춘다. 현재 checkout은 dev이며 통합된 feat/ownership-dispute-policy·fix/raid-detail-errors는 로컬/원격정리했다. 후속 정책협의·구현은 최신dev의 목적브랜치에서 이어가며 미완료 feat/activity-selection은 보존한다. F02 보류/F03 미착수·AWS/release·자료초기화·Issue종료와 구분한다.
 
 ## 보류 추적 — Backend 베타 개선
 

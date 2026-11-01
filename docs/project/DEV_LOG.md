@@ -3155,3 +3155,10 @@ NEXT_WORK/AI_CONTEXT/추적표를 갱신했으며 기존 로컬 수정은 보존
 - 격리선택 기존4PASS/12.13초(c3a0ef528b04): 실제worker최종이전·멱등, 개인자료/그룹가입비상속, 활성파티이전보류, 소유상실그룹표시. 신규합성2PASS/11.63초(af9d6bd30019):0034/0035에서한사용자의원정대3개중1개상실결과를주입해그룹활동6→4·가입유지/상실상태·다른2개설정버전/owner보존. 실제분쟁전체/자동정리구현시험과구분하며합산전체회귀주장없음. 임시DB/네트워크정리·기존경고1/실행,실회원쓰기/서버교체없음.
 - [영향검토원본](../features/rosters/ownership/dispute-impact-review.md)에현재기능/제안/미합의5항목을구분했다. 그룹가입은사용자단위보존·표시캐릭터/그룹대표와공대장역할별처리, 최종이전사건경계, 레이드자동정리vs복구필요·예약기한/권한·정원/승계, 내계정재조회와명시적캐릭터교체의구분을Flutter와협의한다. user전체경고/그룹자동탈퇴/참가자B상속은확정하지않았다. 제품코드/DTO/OpenAPI/DB스키마·실자료/배포·merge·Issue종료는수행하지않았다.
 - 검토·신규합성시험7408ab0을 feat/ownership-dispute-policy에commit/push·local/origin일치확인후 [#15 전체10번째 Backend 영향협의](https://github.com/heo0328/lostparty-backend/issues/15#issuecomment-6541847499)를게시했다. 실제전체댓글10/URL을확인하고본문상단에사용자승인검토범위/현재구현·미합의선택/다음Flutter소비검토를갱신하며원문/OPEN을보존했다. 최종정책은사용자와정하며API구현/재기기시험을요청하지않았다. 후행인계링크만추가하고업무소스는변경하지않는다.
+
+## 2026-11-01 — 분쟁영향 검토·500추적중단 기록 dev/main 통합
+
+- 사용자지시로 현재 feat/ownership-dispute-policy 최신eab8787·미커밋0/local-origin일치를 확인했다. 최신원격dev/main1f0b588·분기후별도dev변경0/기존PR없음·worktree1개를확인했다. 통합차이는문서7개/신규합성시험1개이며업무소스/계약/스키마변경없다.
+- [PR32](https://github.com/heo0328/lostparty-backend/pull/32)의고정head eab8787/mergeable/설정검사없음을확인하고이력보존병합e3a657a0d1b98ae68c1a50eaf2f73fa24816fdde로dev원격반영·로컬ff를확인했다. 기존선택4PASS·다중원정대2PASS는소스불변으로재사용하며새기능/전체회귀결과로확대하지않는다. 문서247/상대링크·앵커2581·diff검사통과다.
+- 분쟁검토/협의eab8787 및500조사/사용자추적중단9a13af7의전체dev포함·별도worktree사용없음을확인후 feat/ownership-dispute-policy와 fix/raid-detail-errors를로컬/원격정리했다. 미완료feat/activity-selection89a3248은보존한다. 후속은최신dev 목적브랜치에서이어간다.
+- 후행통합/정리기록을dev에게시하고main을동일커밋으로fast-forward·두원격을atomic push한뒤동일SHA/미커밋0/현재dev를최종확인한다. 이력재작성/force·제품정책확정/API/DB변경·실행서버교체/실자료정리·추가Issue회신/종료·배포는실행하지않는다. #15 협의대기·과거500원인미확정/추가추적중단은유지한다.

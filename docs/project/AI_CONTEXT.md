@@ -30,3 +30,5 @@
 2026-10-31 사용자 확정: 상세500은 Native 탭로딩 터치제한·기기확인 완료를1차대응으로 유지하고 별도원인추적은중단한다. 과거500 원인미확정 기록은 보존하며 위 자연재발/추가근거 대기는 현재실행에서 제거한다. 다음은 #15 분쟁 소유이전의 그룹/레이드 영향 식별·타원정대보존/정리·복구정책을 Backend에서 조사하고 Flutter와 협의한다. 제안검토이며 정책구현/실자료변경 승인이 아니다.
 
 분쟁영향 후속의 현재checkout은 feat/ownership-dispute-policy(500추적중단기록9a13af7보존 분기)다. [관계·현재가드/미합의선택지](../features/rosters/ownership/dispute-impact-review.md)에 그룹사용자가입/원정대별ownership_lost·참가character/실제T 추적을 정리했다. 현재활성레이드소유이전은보류이며자동정리/이전후복구는미구현이다. 격리기존4PASS·다중원정대2PASS는현재기능근거이고 #15 정책/소비협의가다음이다.
+
+2026-11-01 최신 Git: 사용자승인 [PR32](https://github.com/heo0328/lostparty-backend/pull/32)·병합e3a657a에 분쟁영향검토/합성시험·500추적중단기록을 dev통합했다. main은 dev의후행기록 포함같은커밋으로동기화한다. 현재checkout dev·feat/ownership-dispute-policy/fix/raid-detail-errors 로컬/원격정리, 미완료 activity-selection보존이다. 위브랜치/미통합문장은당시이력이며 정책은여전히협의중/미구현,실행sourceb8542ef·DB0035는변경하지않았다.
