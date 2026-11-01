@@ -1,5 +1,9 @@
 # 영구 개발 이력
 
+## 2026-11-02 — v0.1.1 자동 배포 재시험 승인
+
+사용자가 원인 수정 후 “진행합시다”로 수정 통합/dev·main 동기화와 새 v0.1.1 태그 자동 배포를 승인했다. VERSION을0.1.1로 올리고 기존v0.1.0은 보존한다. 원인 확정·수정은 [Issue34 전체8번째 Backend](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6560278698)이며 실제 배포 결과는 후속 기록에서 구분한다.
+
 ## 2026-11-02 — 첫 태그 실패 원인 확정·Git 재수신 수정
 
 - 최신 실패 job124891259189 전체 로그의 checkout 구간과 오류 stderr를 대조했다. annotated tag object7c590f4를 받은 checkout이 +ceea2f4:refs/tags/v0.1.0으로 러너 내부 태그를 commit ref로 바꿨다. 후속 `git fetch origin main dev --tags`가 원격 annotated tag 복원을 거절(`would clobber existing tag`)해 CalledProcessError로 종료했다. 이전 일반 예외 메시지 아래의 Git stderr에 원인 근거가 있었고, 이를 놓친 원인 미확정 기록을 정정한다.
