@@ -1,5 +1,14 @@
 # 영구 개발 이력
 
+<a id="lightsail-release-google-login-investigation"></a>
+
+## 2026-11-01 — v1.1.2 release Google 로그인 실패 읽기 진단
+
+- 사용자 요청으로 현재 Lightsail API의 안전 이벤트/공개 Google설정·health와 Native 고정9e4a18f7 설정/서명workflow를 대조했다. source6154e45·이미지dfad04e8·API시작11:21:13Z/healthy는 이전 반영과 동일하다. 한국시간21:42의 Google교환2건은401/GOOGLE_PROOF_INVALID·azp_allowlist이며 challenge201이다. 앞선11:24Z교환200과구분한다. 검증 코드 순서상 서명/audience/시간·issuer·subject·nonce는 통과한 뒤 거절됐다.
+- Web audience는 Native기본값과일치, runtime allowlist는확정debug ID한개다. 정확한release client ID와전체SHA-1·콘솔등록은직접확인하지못했다. CI의release인증서SHA256기준만확인했으며APK독립인증서추출/기기시험은수행하지않았다. [진단집계](../engineering/operations/records/lightsail-release-google-login-investigation.json)를 원본으로 한다. 토큰·claims·키·전체환경·원시로그는 수집/출력하지 않았다.
+- Issue34의 release OAuth 잔여 경계에 [전체3번째 Backend · 실패 진단](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558173241)을 회신했다. 다음운영자/Flutter가 전체release SHA-1과콘솔client/package/SHA-1대응을확인한다. 비밀값은요청하지않으며미확정ID허용/검증우회없음. 사용자에게도동일공개등록값을요청했다. 환경변경/재생성은현재범위에서실행하지않았다.
+- 기존AWS로그인캐시의임시복사본·API호스트키검증SSH로읽기접속했고임시접속자료는진단후삭제한다. 서버/DB자료·설정/키변경·서비스재시작·새태그/Release·기능코드/계약수정없음. 문서검사와diff검사를실행하고DB/기능시험은반복하지않는다.
+
 <a id="release-tracking-native-reply"></a>
 
 ## 2026-11-01 — Native 운영 회신 대조·Backend 최소 추적안 회신

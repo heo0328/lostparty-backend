@@ -1,5 +1,9 @@
 # 다음 실행
 
+## 우선 확인 — v1.1.2 release Google 로그인
+
+[전체3번째 Backend · release OAuth 실패 진단](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558173241): 한국시간21:42의 실제 교환2건은401/GOOGLE_PROOF_INVALID, 안전로그stage=azp_allowlist다. 현재 Web audience는앱기본값과일치하고 allowlist는확정debug ID한개뿐이다. [읽기 진단 원본](../engineering/operations/records/lightsail-release-google-login-investigation.json)을 따른다. 다음 운영자/Flutter가 실제release서명의전체SHA-1과 콘솔Android client ID·package·등록SHA-1 대응을 확인한다. 콘솔 직접 접근과정확한release ID는미확인이며추정등록하지않는다. 정확한값대조후환경수정/API재생성은별도승인범위에서진행한다. 이번에는서버/DB/키변경·재시작없다. 아래태그자동화설계는이인증경계와구분한다.
+
 ## 현재 협의 — Native 릴리즈 방식·Backend 서버 반영 추적
 
 [Issue34 전체1번째 Flutter · 운영 기준 회신](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558053848)을 확인하고 [전체2번째 Backend · 현재 사실 대조·최소 추적안](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558101459)으로 회신했다. Native v1.1.2/source9e4a18f7의 Actions 성공·APK/checksum 게시를 읽기 확인했다. 앱/Backend 독립 버전과 소스 통합·산출물 게시·실제 반영·사용자 인수의 4단계 분리에 의견이 일치한다. [대조·최소안](../engineering/operations/release-tracking-review.md)을 따른다. 현재 checkout은 `chore/release-management`이며 Native 운영 회신 대기는 해소됐다.
