@@ -1,5 +1,9 @@
 # 다음 실행
 
+## 현재 협의 — Native 릴리즈 방식·Backend 서버 반영 추적
+
+사용자 요청으로 [Issue34](https://github.com/heo0328/lostparty-backend/issues/34) **본문**에 Backend 조사/질문을 게시했다(댓글과 구분). 현재checkout `chore/release-management`, 기반 dev/main `a6c6d7b`. [조사·확인항목](../engineering/operations/release-tracking-review.md)을따른다. Native원격워크플로는v*태그→서명APK/SHA256→Release이나최신v1.1.1 asset없음/배포중단상태여서현재운영방식은미확정이다. 다음Flutter가문서/성공run/유효Release·브랜치/태그·버전/실제배포경계·환경/호환기록을회신하고Backend가차이·공통추적필드/적용안을정리한다. 회신대기는유효하며태그생성/자동화구현·정책확정/서버변경은이번범위가아니다. 외부백업과다른기능후속은아래상태로보존한다.
+
 Git 통합 최신(2026-11-01): 사용자승인 [PR33](https://github.com/heo0328/lostparty-backend/pull/33)·병합`c0b13cc`로 Lightsail 구성·실제반영/인증보완·운영안내 기록을dev에통합했다. 현재checkout은dev이며main도후행통합기록을포함한최종dev와동일커밋으로맞춘다. 완료한chore/lightsail-deployment는원격게시/전체포함확인후로컬·원격정리대상이고미완료feat/activity-selection은보존한다. 아래작업브랜치표시는당시이력이다. 실제운영source6154e45/이미지dfad04e8·DB0035/환경/키·수동인증자료는이번Git통합으로변경하지않는다. 외부백업등남은운영후속은계속미완료다.
 
 운영 참고 최신(2026-11-01): [짧은 운영 안내](../engineering/operations/lightsail-quick-ops.md)에 실제서버경로·상태/최근로그/API만재시작명령을정리했다. Docker부팅enabled·3서비스unless-stopped·로그10m×5실적용을읽기확인했으며실제재부팅/재시작은하지않았다. **서버외부DB/환경/키백업은미구성·전송완료미확인**이다. 다음운영작업은외부암호화보관위치/담당/주기·보관기간확정과키포함복원검증이다. [확인근거](DEV_LOG.md#lightsail-quick-ops)를따른다.

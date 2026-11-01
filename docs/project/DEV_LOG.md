@@ -1,5 +1,15 @@
 # 영구 개발 이력
 
+<a id="release-tracking-consultation"></a>
+
+## 2026-11-01 — Native 릴리즈 운영 확인·Backend 배포 시점 추적 협의 게시
+
+- 사용자명시요청: Native의태그기반자동Release APK운영을이슈에서확인하고Backend도브랜치/서버반영시점을맞춰추적하도록Native에운영방식확인게시. dev/main a6c6d7b·원격일치/clean을fetch확인하고같은목적브랜치chore/release-management를생성·checkout했다. 미완료activity-selection과통합된Lightsail이력은보존한다.
+- Backend Issues APK/릴리즈/태그검색후관련본문·최신댓글(#4/5/6/7/13/16/21)과Native Issue검색을확인했다. #13전체193 Flutter·#16전체40/45 Flutter의Git통합과릴리즈분리를확인했지만전용최신릴리즈운영합의는찾지못했다. Native로컬소스는읽거나수정하지않았다.
+- Native원격main45bb7f1 고정workflow를조회해v*태그/수동dispatch·pubspec버전검사·main조상검사·APK서명/정체검증·APK/SHA256 artifact7일·태그Release게시/기존Release덮어쓰기거절을확인했다. 공개Release v1.1.0에는2assets, 최신v1.1.1은asset0/배포중단안내가있어현재사용배포방식확인이필요하다. workflow의새서버주소/OAuth주입은확인하지못했다. [조사/고정근거](../engineering/operations/release-tracking-review.md)를원본으로한다.
+- [Issue34](https://github.com/heo0328/lostparty-backend/issues/34) **Backend 본문 / 릴리즈·배포 이력 운영 방식 확인 단계**로게시했다. 본문은댓글순번에포함하지않으며게시후전체댓글조회0건을확인했다. Flutter에현재문서/run/유효Release·브랜치/태그/version/build/담당·자동게시/실설치경계·실패/불변정책·환경/계약/Backend호환기록과공통추적필드의견을요청했다. 완료조건/다음Flutter→Backend와현재Git a6c6d7b/실행6154e45·이미지/DB차이를명시했다.
+- 현재는질문/비교협의이며태그·Release/CI/CD구현·워크플로실행·기존공유브랜치규칙변경/과거배포태그발급·서버/DB/자료/키변경·기기재시험/기존정상인수반복·다른Issue수정없다. 회신후Backend적용안/공통규칙을정리하고실제태그운영은확정기준에따라진행한다. 기록/추적표/NEXT_WORK/AI_CONTEXT를같은목적브랜치의질문인계구간으로묶어게시한다. 문서250파일/상대링크·anchor2628건/고정자료·계약분류·diff검사PASS. 순수협의문서로서버/DB/기능시험을추가실행하지않았다.
+
 <a id="lightsail-git-integration"></a>
 
 ## 2026-11-01 — Lightsail 작업 dev 통합·main 동기화

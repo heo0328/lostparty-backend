@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+릴리즈운영협의 최신(2026-11-01): 사용자요청으로 [Issue34](https://github.com/heo0328/lostparty-backend/issues/34)에Native태그/Release APK·브랜치운영과Backend실제반영시점추적질문을게시했다. `chore/release-management`에서 [근거/검토안](../engineering/operations/release-tracking-review.md)을기록했고다음Flutter회신→Backend차이/적용안정리다. 태그/자동배포·공통정책은미확정이며서버/자료변경없다. 아래checkout dev는직전통합이력이다.
+
 Git 최신(2026-11-01): 사용자승인 [PR33](https://github.com/heo0328/lostparty-backend/pull/33)·병합c0b13cc로Lightsail첫배포구성/기록·Google등록보완·수동테스트원정대/짧은운영안내를dev에통합했다. checkout dev, main도최종dev의후행통합기록까지동일커밋으로동기화한다. 통합완료chore/lightsail-deployment는로컬/원격정리하고미완료activity-selection은보존한다. 아래작업checkout은당시이력이며서버source6154e45·DB0035/환경/키는이번Git통합에서변경하지않는다. [통합이력](DEV_LOG.md#lightsail-git-integration)을따른다.
 
 운영안내 최신(2026-11-01): [Lightsail 짧은 운영 안내](../engineering/operations/lightsail-quick-ops.md)를추가했다. 실제경로/Compose·Docker자동시작·3서비스restart/log제한은확인, 실제재부팅/회복시험은미실행이다. 서버내덤프만확인했고외부DB/키백업/자동화는미구성·완료근거없음이다. [이력](DEV_LOG.md#lightsail-quick-ops)을따른다.
