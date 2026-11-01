@@ -1,5 +1,16 @@
 # 영구 개발 이력
 
+<a id="lightsail-google-login-investigation"></a>
+
+## 2026-11-01 — Lightsail Google 로그인401·등록 설정 대조
+
+- 사용자 요청은 실제 /v1/auth/google의 상태·오류/서버로그와 Google audience/client ID·허용azp의 Flutter대조다. `chore/lightsail-deployment`/기본작업경로·HEAD180f906에서 이어가며 실제서버source6154e45/이미지dfad04e8은 유지했다. 이번 구간은 읽기진단이며 설정적용/서비스재생성은 실행하지 않았다.
+- 공식협업 #2본문과최신댓글16개를확인했다. 전체13번째Flutter가확정debugAndroid ID를전달했고 전체14번째Backend가개발allowlist반영, 전체15번째Backend가실제로그인성공을기록했다. 전체16번째마감은과거1차범위이며새공개환경인수를뜻하지않는다. 닫힌과거이슈를새운영스레드로바꾸거나댓글/다른이슈를변경하지않았다.
+- 실제안전로그: challenge201 이후 Google교환4건이모두401/GOOGLE_PROOF_INVALID, google_verification의stage=azp_allowlist였다. KST20:08:05/20:08:12/20:08:17/20:09:48, 최신request_id afbae610-c1ae-427c-a344-84023de5981d. 앞선배포합성400/429와구분했다. 배포코드순서상서명/audience/시각/issuer/subject/nonce검사뒤azp검사에서거절된것이다. /health200·DB정상/APIhealthy도확인했다.
+- 실행Google설정은Web audience가합의값과일치하지만GOOGLE_AZP_ALLOWLIST=[]다. Flutter원격게시commit f907adccb8f1d014fd172e37853723452b7a5023의backend_app.dart175~178은같은Web ID기본값, Android package도기존값과같고native bridge78은거래별nonce를전달한다. Flutter로컬경로/소스는읽거나수정하지않았다. 실제기기build의서명·Dart define override·토큰claims는수집하지않았으며원격게시본과공식등록인계를대조한결과다.
+- 원인: 첫배포환경준비에서기존개발.env에만있던Android허용등록을누락했다. 확정debugclient `574337852234-pje249p14id708ieg1t4q6fa9tmljih5.apps.googleusercontent.com`이허용목록에없다. Web audience를바꾸거나서명/nonce/azp검증을생략할상황이아니다. 공개client ID만비교했고token/secret/nonce/subject/email/키/전체env·민감원본로그는출력하지않았다.
+- [진단집계·고정Flutter/Issue근거·수정안](../engineering/operations/records/lightsail-google-login-investigation.json)을원본으로남겼다. 다음적용은현재빌드의확정등록을사용해정확한Android ID만allowlist에추가하고API만재생성·환경/health확인후새거래로실Google로그인/refresh를검증하는것이다. release/다른서명ID를추정허용하지않는다. 이번에는런타임설정/DB·키·검증규칙변경/서버재시작·실사용자명령을실행하지않았으며수정후성공은미확인이다. 임시AWS/SSH인증복사본은삭제했다. 문서248파일/상대링크·anchor2,603건/고정자료·계약분류와git diff --check를통과했고제품코드/계약변경이없어기존인증/DB시험은반복하지않았다. 진단결과/수정안/다음실행을한기록구간으로commit/push한다.
+
 <a id="lightsail-rollout"></a>
 
 ## 2026-11-01 — Lightsail 첫 배포 실행

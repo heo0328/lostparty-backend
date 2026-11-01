@@ -184,3 +184,15 @@ dc exec -T db pg_dump -U postgres -d lostparty -Fc > "backups/lightsail-$(date -
 현재 사용자 계정/세션/인증거래/그룹은0개인 신규환경이다. 실제이미지의 두전체OpenAPI일치·공개조회/인증거절/no-store·직접포트차단·위조전달헤더 제한우회불가·두실제출발지 제한분리·worker3종실행/관찰시ERROR0을 확인했다. 초기덤프는 별도내부망/tmpfs PostgreSQL17에 소유자/ACL제외로 복원해0035/115표를 확인했고 임시시험컨테이너만 제거했다. 서비스DB/키 초기화·개발자료이관은 하지 않았다.
 
 자세한 고정소스/이미지/검증/백업/미확인은 [집계](records/lightsail-first-deploy.json)와 [DEV_LOG](../../project/DEV_LOG.md#lightsail-rollout)를 따른다. 실제 Google성공/refresh·로그인후그룹코드·서버밖키포함암호화백업·자동화/전체복구·부하/장기운영인수는 남아 있다. 후행 문서게시로 서비스 소스를 교체하지 않는다.
+
+## Google 로그인401 진단 — Android 등록 누락
+
+첫 실제 앱 연결에서401/GOOGLE_PROOF_INVALID·안전진단stage=azp_allowlist를 확인했다. Web audience는 Flutter와 같지만 신규환경의GOOGLE_AZP_ALLOWLIST가 비어 있었다. 최초 설치 때 기존 개발환경에만 있던 확정등록을 빠뜨린 것이다. 현재 설정은 [진단집계](records/lightsail-google-login-investigation.json)·[공식확정등록](https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6151066622)과 대조한다.
+
+기존 확정debug등록을 사용하는 빌드의 수정값은 아래 **공개 client ID** 한 개다. Web audience는 기존값을 유지한다. release/다른서명의등록은 이 값으로 자동대체하거나추정허용하지 않는다.
+
+```dotenv
+GOOGLE_AZP_ALLOWLIST=574337852234-pje249p14id708ieg1t4q6fa9tmljih5.apps.googleusercontent.com
+```
+
+수정 적용 때는 API만재생성해 실행환경과health를확인하고 새로그인거래로실인증을검증한다. DB/키를초기화하거나토큰/claims를로그에추가하지않는다. 이번 진단요청에서는 설정적용/재시작을 실행하지 않았으며 성공 인수로 표시하지 않는다.

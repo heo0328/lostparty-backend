@@ -1,0 +1,61 @@
+{
+  "date_kst": "2026-11-01",
+  "scope": "Read-only diagnosis and comparison of deployed Google authentication configuration",
+  "base_url": "https://lostparty.duckdns.org",
+  "deployed_source": "6154e459cbd8de7562c331eacc60928c61f8ac09",
+  "api_image": "sha256:dfad04e82b253ea35bb55b2ba362c3b1dc9224c9aac90bb533db1375b0414694",
+  "observed": {
+    "health": "200;status ok;database ok",
+    "challenge_status": 201,
+    "login_failures": 4,
+    "login_status": 401,
+    "error_code": "GOOGLE_PROOF_INVALID",
+    "google_verification_stage": "azp_allowlist",
+    "failure_times_utc": [
+      "2026-11-01T11:08:05.574891Z",
+      "2026-11-01T11:08:12.050696Z",
+      "2026-11-01T11:08:17.119246Z",
+      "2026-11-01T11:09:48.460780Z"
+    ],
+    "latest_request_id": "afbae610-c1ae-427c-a344-84023de5981d",
+    "preceding_checks_passed_per_deployed_code": [
+      "algorithm",
+      "signature_audience_time",
+      "issuer",
+      "subject",
+      "nonce"
+    ]
+  },
+  "configuration_comparison": {
+    "server_GOOGLE_CLIENT_ID": "574337852234-vdkvdobbq8es2rdpumc1icqt6ja3a3cr.apps.googleusercontent.com",
+    "server_GOOGLE_AZP_ALLOWLIST": [],
+    "flutter_published_commit": "f907adccb8f1d014fd172e37853723452b7a5023",
+    "flutter_default_GOOGLE_SERVER_CLIENT_ID": "574337852234-vdkvdobbq8es2rdpumc1icqt6ja3a3cr.apps.googleusercontent.com",
+    "flutter_application_id": "kr.co.heowork0921.lostparty",
+    "flutter_native_bridge": "GetSignInWithGoogleOption.Builder(clientId).setNonce(nonce)",
+    "confirmed_debug_android_client_id": "574337852234-pje249p14id708ieg1t4q6fa9tmljih5.apps.googleusercontent.com",
+    "web_audience_matches": true,
+    "confirmed_android_client_missing_from_server_allowlist": true,
+    "current_token_claims_or_runtime_build_signing_identity_collected": false
+  },
+  "sources": {
+    "flutter_server_client_default": "https://github.com/heo0328/LostParty_flutter/blob/f907adccb8f1d014fd172e37853723452b7a5023/lib/app/backend_app.dart#L175",
+    "flutter_native_nonce": "https://github.com/heo0328/LostParty_flutter/blob/f907adccb8f1d014fd172e37853723452b7a5023/android/app/src/main/kotlin/kr/co/heowork0921/lostparty/GoogleAuthenticationBridge.kt#L78",
+    "flutter_package": "https://github.com/heo0328/LostParty_flutter/blob/f907adccb8f1d014fd172e37853723452b7a5023/android/app/build.gradle.kts#L37",
+    "issue2_comment13_flutter_confirmed_registration": "https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6151066622",
+    "issue2_comment14_backend_previous_application": "https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6151144007",
+    "issue2_comment15_backend_previous_success": "https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6151318353"
+  },
+  "conclusion": "The first deployment omitted the separately configured Android azp registration. Web audience matches and the deployed validator rejects the unregistered azp as designed.",
+  "correction_for_confirmed_debug_registration": {
+    "GOOGLE_CLIENT_ID": "keep existing Web client ID",
+    "GOOGLE_AZP_ALLOWLIST": "574337852234-pje249p14id708ieg1t4q6fa9tmljih5.apps.googleusercontent.com",
+    "after_application": "Recreate API only, preserve DB and secrets, verify settings/health and a new real Google login transaction",
+    "other_signing_or_release_clients": "Require exact confirmed registration; do not infer or allow wildcard"
+  },
+  "runtime_configuration_changed": false,
+  "server_or_database_restart_or_writes_performed": false,
+  "tokens_claims_keys_full_environment_or_raw_logs_printed": false,
+  "real_google_success_after_correction": "NOT VERIFIED; diagnostic request only",
+  "temporary_access_credential_copies_removed": true
+}
