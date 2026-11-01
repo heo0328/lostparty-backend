@@ -1,5 +1,13 @@
 # LostParty Backend 기능 지도
 
+운영안내 최신(2026-11-01): [Lightsail 짧은 운영 안내](../engineering/operations/lightsail-quick-ops.md)를추가했다. 실제경로/Compose·Docker자동시작·3서비스restart/log제한은확인, 실제재부팅/회복시험은미실행이다. 서버내덤프만확인했고외부DB/키백업/자동화는미구성·완료근거없음이다. [이력](DEV_LOG.md#lightsail-quick-ops)을따른다.
+
+2026-11-01 테스트원정대 최신: 사용자명시승인으로운영회원1명의미소유원정대1개/V2대기1개를수동인증했다. 현재verified/owned·18캐릭터·소유감사/수동테스트주석을확인했으며실장비증거통과가아니다. 대표/활동은기존unconfigured흐름을유지했고앱목록새로고침이필요하다. [집계](../engineering/operations/records/lightsail-manual-test-verification.json)·[이력](DEV_LOG.md#lightsail-manual-test-verification)을따른다. Google로그인사용자성공보고/운영회원1확인도수용하며아래실로그인미확인문장은이전시점이력이다.
+
+2026-11-01 로그인등록 최신: 사용자승인으로Lightsail의GOOGLE_AZP_ALLOWLIST에기존확정debugAndroid ID한개를반영하고동일이미지API만재생성했다. Web audience/인증로직·다른환경·DB/Caddy·키는보존했으며health200·검증기13경계를확인했다. [반영집계](../engineering/operations/records/lightsail-google-azp-rollout.json)·[이력](DEV_LOG.md#lightsail-google-azp-rollout)을따른다. 이전401/azp누락은[진단당시기록](../engineering/operations/records/lightsail-google-login-investigation.json)이다. 다음은새거래실Google로그인/refresh·인증후그룹코드확인이며아직실인증성공을주장하지않는다.
+
+2026-11-01 Lightsail 최신: 사용자 고정IP/Duck DNS등록과 첫 배포 지시로 `chore/lightsail-deployment`의 source6154e45·API이미지dfad04e8·신규DB0035를 실제 `lostparty-server`에 설치했다. **https://lostparty.duckdns.org** 공개/HTTPS·DB/APIhealth·계약·IP제한분리·직접포트차단·초기덤프/격리복원을 확인했다. 기존 개발환경/자료는 별도로 보존했다. F02는 실제프록시검증까지 진행했으나 앱Google로그인/refresh·인증후그룹코드가 남아 전체완료가 아니다. [배포집계](../engineering/operations/records/lightsail-first-deploy.json)·[이력](DEV_LOG.md#lightsail-rollout)·[NEXT_WORK](NEXT_WORK.md)를 따른다. 아래 AWS미설치/미배포·이전checkout/F02보류 문장은 당시 이력이다.
+
 2026-10-30 기준. 그룹 PR30/병합fc6c06a를 dev/main에 반영·원격 동기화, 그룹/F01/개선 인계·상세500 조사기록은 사용자 승인 [PR31](https://github.com/heo0328/lostparty-backend/pull/31)·병합9fa0f7e로 dev 통합했고 main도 dev의 최종 기록 커밋으로 동기화한다. checkout dev, 통합된 feat/raid-group-policy·fix/backend-beta-readiness 로컬/원격 정리·미완료 feat/activity-selection 보존. 그룹 브랜치 로컬·원격 정리 완료. 그룹1차 구현·격리검증·개발환경 반영과 실행검증 완료. 현재 실제 실행은 주차별 그룹 정책 소스b8542ef/이미지930c25f8·DB0035, 기본123/140·two-cycle185/206이다. [최신 반영](../engineering/operations/cycle-group-policy-rollout.md)을 따른다. [구현·반영기록](../features/groups/implementation-2026-10-28.md)·[NEXT_WORK](NEXT_WORK.md)를 따른다. 기존 그룹 안내범위는 Native #12 전체36/#16 전체21 사용자 기기 통과를 수용했다. 현재 그룹·레이드 앱기기는 #16 전체37 사용자보고 통과이며 별도 상세500의 Backend 원인대조가 남았다. 복구승계/활동자동추가·운영배포는별도다.
 
 후속초대후보검색/전투력: #12전체29/30을받아ASCII대소문자무시정확검색·opt-in역할별character_spec후보구현/격리검증을완료했다. [검증집계](../features/groups/invite-candidates-verification-2026-10-29.json)·구현기록참조. 이후속도5d24244/507cd78a·DB0034로개발반영·실행검증완료했다. 기본DTO보존·migration/provider/중복저장없음. 이후 Native #12 전체36의 안내된 기존 그룹 정상시험 통과를 수용했으며 검색/profile을 다시 인수 대기로 두지 않는다.

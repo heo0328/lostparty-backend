@@ -1,5 +1,20 @@
 # 다음 실행
 
+운영 참고 최신(2026-11-01): [짧은 운영 안내](../engineering/operations/lightsail-quick-ops.md)에 실제서버경로·상태/최근로그/API만재시작명령을정리했다. Docker부팅enabled·3서비스unless-stopped·로그10m×5실적용을읽기확인했으며실제재부팅/재시작은하지않았다. **서버외부DB/환경/키백업은미구성·전송완료미확인**이다. 다음운영작업은외부암호화보관위치/담당/주기·보관기간확정과키포함복원검증이다. [확인근거](DEV_LOG.md#lightsail-quick-ops)를따른다.
+
+## 현재 실행 — Lightsail 첫 배포·로그인등록 보완·테스트 원정대 인증 (2026-11-01)
+
+작업 구간: 신규 서버 설치·무료 주소 HTTPS 첫 배포 / 브랜치·checkout: `chore/lightsail-deployment` / 기본 프로젝트 경로. 실행 source는 `6154e459cbd8de7562c331eacc60928c61f8ac09`, API이미지dfad04e8·DB0035다. 후행 문서 커밋과 실행 소스를 구분한다. 아래 과거 checkout/dev 문장은 당시 이력이다.
+
+- 공개 주소: **https://lostparty.duckdns.org**, 고정IPv4 `54.253.176.103`, 시드니 `lostparty-server`. Docker/API/PostgreSQL/Caddy를 실제 설치하고 신규DB0035·DB/APIhealthy·Let's Encrypt HTTPS/HTTP308·두 전체OpenAPI·공개조회/인증거절/no-store·8000/5432차단을 확인했다. 키4종은 신규서버 전용이며 기존 개발DB/키/Firebase/기기를 이관·변경하지 않았다.
+- 테스트 원정대 수동 인증 완료: 사용자승인으로유일회원/유일미소유원정대의V2대기1개를수동처리했다. 별도새조회에서verified/owned·원정대1/캐릭터18·proof passed/verified·self를확인했고소유감사/수동테스트주석(actual_equipment_proof_passed=false)을보존했다. [집계](../engineering/operations/records/lightsail-manual-test-verification.json)·[이력](DEV_LOG.md#lightsail-manual-test-verification)을따른다. 실제장비증거인수/운영검증우회기능추가가아니며대표/활동은unconfigured상태다.
+- 로그인 등록 보완 완료: 사용자승인으로확정debugAndroid ID한개를GOOGLE_AZP_ALLOWLIST에추가하고API만동일이미지로재생성했다(한국시간20:21:13). Web audience·다른환경·DB/Caddy·키보존, APIhealthy/공개health200·인증검증13경계PASS. [반영집계](../engineering/operations/records/lightsail-google-azp-rollout.json)·[이력](DEV_LOG.md#lightsail-google-azp-rollout)을따른다. 이전401/azp빈목록은진단당시이력이며실Google수정후성공은아직미확인이다.
+- 비용: AWS API에서 Free plan ACTIVE·잔액$120·종료2027-05-01 한국시간18:26:57 확인. 플랜전환/추가유료리소스 생성없음, 기존22/80 규칙보존·IPv4TCP443만 추가했다.
+- 검증/반영 상세 원본: [집계](../engineering/operations/records/lightsail-first-deploy.json)·[DEV_LOG](DEV_LOG.md#lightsail-rollout)·[운영 절차](../engineering/operations/lightsail-first-deploy.md). 위조XFF/Forwarded/다중hop에도 같은 출발지10회400→429, 다른 실제출발지400으로 IP제한분리를 확인했다. 실제 Google성공/refresh·로그인후그룹코드는 미확인이므로 F02전체완료는 아니다.
+- 다음 사용자/Flutter: Google로그인성공사용자보고·운영회원1확인을수용해반복로그인을요청하지않는다. 현재원정대목록을새로고침해수동인증상태를확인하고대표/활동설정은기존흐름으로진행한다. 실제refresh·인증후그룹코드/기기확인은별도이며로컬개발DB를이관한것은아니다. 네이티브Issue추가댓글/요청은없다.
+- 다음 운영: 초기DB덤프 생성/목록·격리PostgreSQL17복원(0035/115표) PASS. 서버밖 암호화 DB/환경/4종키백업·소유자/ACL포함전체복구·자동백업/알림·부하/장기관찰은 미완료다. 자동인증서갱신은 Caddy설정이며 미래갱신성공을 확인한 것은 아니다.
+- DNS/고정IP/계정종료일 입력대기는 해소했다. 실제 배포는 이번 지시로 승인·실행됐으며 PR/merge·다른기능정책/Issue종료는 별도다. 분쟁 정책 협의는 아래 기록대로 보존한다.
+
 문서 운영 #29는 공통 원본·양측 참조 반영 및 [상호 대조](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6520322169) 완료로 추가 수정 대기를 해소했다. Issue 종료는 별도이며 상세 근거는 [DEV_LOG](DEV_LOG.md)에 보존한다. 기존 그룹 기기 인수와 기술 진단 후속은 별도다.
 
 ## 다음 실행 — 소유권 분쟁의 그룹·레이드 영향 정책 협의
@@ -12,7 +27,7 @@
 
 ## 보류 추적 — Backend 베타 개선
 
-[F01](DEV_LOG.md#f01-registration-cleanup)은 `c94ce88`로 구현·격리 검증·commit/push 완료, PR31로 dev/main 통합하며 코드는 기존0035 이미지에 함께 반영됐다. 미처리 대상0·수동 정리 실행 없음은 [반영 기록](../engineering/operations/cycle-group-policy-rollout.md)을 따른다. [개선 계획의 F02 재개 조건](backend-improvement-plan.md#f02-resume)을 따른다. F02는 로컬 설정 조사 후 공개 경로 미정으로 보류하며 AWS 공개 준비 때 재개한다. 사용자는 Lightsail 생성 전·테스터 총20~50명 예상·도메인 미보유다. 지금 인프라를 확정하지 않는다. F03 내부 장애 추적은 개선 복귀 시 다음 후보이며 미착수다. 그룹 작업을 막지 않는다.
+[F01](DEV_LOG.md#f01-registration-cleanup)은 `c94ce88`로 구현·격리 검증·commit/push 완료, PR31로 dev/main 통합하며 코드는 기존0035 이미지에 함께 반영됐다. 미처리 대상0·수동 정리 실행 없음은 [반영 기록](../engineering/operations/cycle-group-policy-rollout.md)을 따른다. [개선 계획의 F02 재개 조건](backend-improvement-plan.md#f02-resume)을 따른다. F02는 위 Lightsail 첫 배포와 실제 프록시 검증까지 진행했으며 실제 앱 인증/그룹코드 영향 확인이 남아 있다. 이전 생성 전·공개 경로 미정 보류 기록은 개선 계획에 보존한다. 테스터 총20~50명 예상이며 동시 사용자 보장은 아니다. F03 내부 장애 추적은 개선 복귀 시 다음 후보이며 미착수다. 그룹 작업을 막지 않는다.
 
 ## 이전0034 기준과 기존 변경의 기기 대기 (이력)
 

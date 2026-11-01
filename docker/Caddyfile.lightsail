@@ -1,0 +1,9 @@
+{$API_DOMAIN} {
+    # Single public edge; never trust an incoming client forwarding chain.
+    reverse_proxy api:8000 {
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+        header_up -Forwarded
+    }
+    # No access log: URLs and authentication data must not enter access logs.
+}

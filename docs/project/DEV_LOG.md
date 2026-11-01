@@ -1,5 +1,80 @@
 # 영구 개발 이력
 
+<a id="lightsail-quick-ops"></a>
+
+## 2026-11-01 — Lightsail 짧은 운영 안내·자동시작/로그/외부백업 확인
+
+- 요청범위: 실제배포경로/Compose기반상태·최근로그·API만재시작안내, 재부팅자동시작·로그제한·서버외부DB백업상태확인. **실제재부팅금지**를따라서비스재시작/재생성·설정/자료변경도하지않았다. chore/lightsail-deployment/기본작업경로·c1a0d5d에서이어갔고실행source6154e45/이미지dfad04e8은유지했다.
+- UTC12:18:27(한국시간21:18) 실제컨테이너Compose라벨에서/home/ubuntu/lostparty-backend·compose.lightsail.yaml확인, 해당환경파일로Compose config --quiet PASS. docker.service/containerd.service는enabled/active, api/db/caddy전부running/unless-stopped/restart0, API/DBhealthy였다. 볼륨과읽기전용키마운트를확인했고전체env/inspect원문·원본로그·키는출력하지않았다.
+- 셋모두실제HostConfig.LogConfig가json-file/max-size10m/max-file5임을확인했다. 서비스별약50MB/전체약150MB회전설정이며호스트journal/DB/덤프총량제한이아니다. 공식Docker문서로unless-stopped의수동정지예외·로그제한의미를대조했다. 설정확인과실제부팅/회복·로그rollover시험은구분하며후자는미실행이다.
+- 서버backups/에는DB덤프2개(453858/459858bytes)와환경백업1개가모두0600으로존재했다. root/ubuntu crontab없음, /etc/cron*·customsystemd/userunits에서DB백업/전송후보0·관련백업도구없음을확인했다. 기본dpkg-db-backup.timer는패키지관리DB용으로서비스백업근거가아니다. 서버밖DB/환경/키복사·자동화/복구완료근거는없고사용자개별수동복사여부는미확인이다. 최신수동인증후덤프를이번에생성하지않았다.
+- [짧은운영안내](../engineering/operations/lightsail-quick-ops.md)에서버SSH용절대경로dc함수·ps/health·최근30분/100줄로그·API만restart와환경변경시재생성의차이·자동시작예외·외부백업미구성을정리했다. 외부저장위치/담당/주기/보관·키포함암호화/복원검증을다음운영작업으로남겼다. 유료리소스/외부전송/자동화추가·DB조회/수정·Issue게시/변경없음. 실제안내와같은Compose ps/최근로그명령성공·HTTPS health200을확인했다. 임시AWS/SSH인증복사본은정리했고서비스설정/키는보존했다. 문서249파일/상대링크·anchor2621건·고정자료/계약분류·diff검사PASS후같은목적브랜치의운영인계구간으로묶어commit/push한다.
+
+<a id="lightsail-manual-test-verification"></a>
+
+## 2026-11-01 — 사용자 요청 원정대1개 테스트용 수동 인증
+
+- 사용자명시요청: 운영서버의본인테스트회원1명/인증시도원정대1개를인증성공으로처리. 운영자료변경의대상/목적은이1개로한정했고타소유이전/분쟁해소/일반검증우회기능추가로확대하지않았다. 작업브랜치·checkout은chore/lightsail-deployment/기본경로, 실제실행source6154e45유지다. #15본문기준/최신댓글10개를확인했으며공식정책협의/Issue게시·변경은없다.
+- READ ONLY 확인: 회원1·미인증등록1·V2 pending claim1·정식원정대/캐릭터/nameclaim/분쟁0. 등록원정대와proof의18캐릭터식별집합·소스버전·현재키세대/범위일치, 다른소유자없음을확인했다. 두스냅샷의combat_power관찰값차이는있어완전본문동일을요구하지않고식별집합/출처버전을검증했다. 회원ID/캐릭터명/키/원본스냅샷은출력하지않고대상ID는임시보호파일에만고정했다.
+- 변경전DB459,858bytes덤프를서버0600으로생성하고archive목록확인PASS. 이번덤프의실복원은미실행이며[집계](../engineering/operations/records/lightsail-manual-test-verification.json)에경로/검증경계를남겼다.
+- 실행: user→등록→proof행잠금후유일대상/버전/미소유/분쟁없음을재검증해한트랜잭션으로원정대소유계정1·18캐릭터/이름claim·기본unconfigured설정·소유감사1을생성하고기존등록을연결했다. V2 proof를passed/verified/VERIFIED로종료하고member proof revision을갱신했다. proof.identity_snapshot.manual_test_override에는명시적수동테스트승인/사유·시각/감사참조와actual_equipment_proof_passed=false를저장했다. 일반장비증거통과를위조하거나provider관찰/서명·인증로직을바꾸지않았다. 적용UTC11:35:27.217(한국시간20:35:27), 작업참조ed0a2ddd-618b-4cf3-baab-03d7db9497ef다.
+- 중간검증에서DTO의allowed_actions를actions로잘못조회해첫트랜잭션전체가rollback됐다. 정식계정/nameclaim0·원버전보존을재확인한뒤필드명을정정해1회commit했고부분반영/중복생성은없다.
+- 별도새READ ONLY조회PASS: 등록verified/owned·캐릭터18·원정대1·proof passed/verified/VERIFIED/self·open_registration가능, 등록v3/proofv2·감사1/수동주석존재. 대표/활동선택은자동변경하지않아unconfigured/활동0·대표없음이다. APIhealthy/HTTPS health200·DB정상, API시작시각11:21:13그대로로재시작/이미지/코드/DDL변경없다. 실제장비인증정상경로/기기UI인수와구분한다.
+- 다음사용자는원정대목록을새로고침해현재인증상태를확인한다. 이후대표·활동설정은기존흐름을사용한다. 로컬개발DB이관·다른회원/원정대/그룹/모집자료변경·전역인증완화는없다. Google로그인은사용자성공보고/운영회원1명확인을수용하며반복로그인을추가요청하지않는다. 임시접속/대상선택파일을삭제하고서버백업은보존했다. 문서248파일/상대링크·anchor2,613건/고정자료·계약분류·diff검사를통과해같은목적브랜치에실행/검증기록을묶어commit/push한다.
+
+<a id="lightsail-google-azp-rollout"></a>
+
+## 2026-11-01 — Lightsail 확정 Android azp 반영·API 재생성
+
+- 사용자명시승인: 확인한debugAndroid ID를배포GOOGLE_AZP_ALLOWLIST에반영하고필요서비스재시작, 기존Web audience/인증검증유지. 작업구간은신규HTTPS배포후인증등록보완, 브랜치·checkout `chore/lightsail-deployment`/기본작업경로·기록HEAD430f9a8에서이어갔다. 공식#2최신댓글16개/확정등록·완료경계를재확인했으며Issue게시/변경은하지않았다.
+- 적용: 실제source6154e45/이미지dfad04e8·Web audience일치·기존azp빈목록을확인하고.env.lightsail에확정debug ID한개만원자교체했다. 다른줄/환경·소유자/그룹·0600보존, 변경전환경은서버0600백업으로보존했다. sudo docker compose up --no-deps --no-build --pull never --force-recreate --wait api로API만재생성했다. API시작UTC11:21:13.406(한국시간20:21:13), 보존확인11:21:25다.
+- 전후대조PASS: Web audience/다른API환경전체·동일이미지/실행명령·DB/Caddy컨테이너ID/마운트·4종키바이트/UID/GID/모드·서비스readonly root/키마운트보존. 비교용비밀fingerprint는임시보호파일안에서만사용하고출력/게시하지않았다. DBmigration/reset/자료수정·소스/인증로직변경·새이미지build/pull은없다.
+- 실행검증PASS: Compose config·APIhealthy·공개HTTPS /health200/status ok/database ok. 별도프로세스의배포검증기에일회성RSA·로컬모의Google공개키전송을사용한13경계PASS: 등록debug/Web/기존azp생략허용, 미등록azp·다른audience/issuer/nonce·만료/미래iat·빈subject·다른서명/알고리즘거절, provider장애503유지. 서비스개인키/실Google토큰을사용하지않고provider외부호출/DB쓰기0이다. 실Google로그인성공이나전체인증회귀로표시하지않는다.
+- 관찰시재생성후ERROR/CRITICAL0·google검증거절0·실Google교환요청0건이다. [고정반영집계](../engineering/operations/records/lightsail-google-azp-rollout.json)를원본으로하며이전[401진단](../engineering/operations/records/lightsail-google-login-investigation.json)은당시설정이력으로보존한다. 다음은사용자가새challenge거래로Google로그인을시도하고Backend가실제상태/code를확인하는것이다. refresh·로그인후그룹코드/운영후속은별도미확인이다. 임시AWS/SSH인증복사본·비교자료는삭제했고서버0600롤백용환경백업은보존했다. 최종문서248파일/상대링크·anchor2,608건/고정자료·계약분류와diff검사를통과해적용·검증·후속기록을같은목적브랜치에묶어commit/push한다.
+
+<a id="lightsail-google-login-investigation"></a>
+
+## 2026-11-01 — Lightsail Google 로그인401·등록 설정 대조
+
+- 사용자 요청은 실제 /v1/auth/google의 상태·오류/서버로그와 Google audience/client ID·허용azp의 Flutter대조다. `chore/lightsail-deployment`/기본작업경로·HEAD180f906에서 이어가며 실제서버source6154e45/이미지dfad04e8은 유지했다. 이번 구간은 읽기진단이며 설정적용/서비스재생성은 실행하지 않았다.
+- 공식협업 #2본문과최신댓글16개를확인했다. 전체13번째Flutter가확정debugAndroid ID를전달했고 전체14번째Backend가개발allowlist반영, 전체15번째Backend가실제로그인성공을기록했다. 전체16번째마감은과거1차범위이며새공개환경인수를뜻하지않는다. 닫힌과거이슈를새운영스레드로바꾸거나댓글/다른이슈를변경하지않았다.
+- 실제안전로그: challenge201 이후 Google교환4건이모두401/GOOGLE_PROOF_INVALID, google_verification의stage=azp_allowlist였다. KST20:08:05/20:08:12/20:08:17/20:09:48, 최신request_id afbae610-c1ae-427c-a344-84023de5981d. 앞선배포합성400/429와구분했다. 배포코드순서상서명/audience/시각/issuer/subject/nonce검사뒤azp검사에서거절된것이다. /health200·DB정상/APIhealthy도확인했다.
+- 실행Google설정은Web audience가합의값과일치하지만GOOGLE_AZP_ALLOWLIST=[]다. Flutter원격게시commit f907adccb8f1d014fd172e37853723452b7a5023의backend_app.dart175~178은같은Web ID기본값, Android package도기존값과같고native bridge78은거래별nonce를전달한다. Flutter로컬경로/소스는읽거나수정하지않았다. 실제기기build의서명·Dart define override·토큰claims는수집하지않았으며원격게시본과공식등록인계를대조한결과다.
+- 원인: 첫배포환경준비에서기존개발.env에만있던Android허용등록을누락했다. 확정debugclient `574337852234-pje249p14id708ieg1t4q6fa9tmljih5.apps.googleusercontent.com`이허용목록에없다. Web audience를바꾸거나서명/nonce/azp검증을생략할상황이아니다. 공개client ID만비교했고token/secret/nonce/subject/email/키/전체env·민감원본로그는출력하지않았다.
+- [진단집계·고정Flutter/Issue근거·수정안](../engineering/operations/records/lightsail-google-login-investigation.json)을원본으로남겼다. 다음적용은현재빌드의확정등록을사용해정확한Android ID만allowlist에추가하고API만재생성·환경/health확인후새거래로실Google로그인/refresh를검증하는것이다. release/다른서명ID를추정허용하지않는다. 이번에는런타임설정/DB·키·검증규칙변경/서버재시작·실사용자명령을실행하지않았으며수정후성공은미확인이다. 임시AWS/SSH인증복사본은삭제했다. 문서248파일/상대링크·anchor2,603건/고정자료·계약분류와git diff --check를통과했고제품코드/계약변경이없어기존인증/DB시험은반복하지않았다. 진단결과/수정안/다음실행을한기록구간으로commit/push한다.
+
+<a id="lightsail-rollout"></a>
+
+## 2026-11-01 — Lightsail 첫 배포 실행
+
+- 사용자 고정IP연결/Duck DNS등록 완료와 첫 배포 실행 지시를 받았다. 대상 `lostparty-server`/ap-southeast-2·`54.253.176.103`·`lostparty.duckdns.org`. 준비브랜치 `chore/lightsail-deployment`에서 이어가며 기존 개발서버/DB/키·Firebase/기기는 변경하지 않는다.
+- 직접 사전확인: DNS A일치/AAAA없음·SSH22열림·HTTP80리스너없음/HTTPS443미개방, AWS running/staticIP·Ubuntu24.04·2GB/2vCPU·전송포함1536GB·자동스냅샷없음. AWS FreeTier FREE/ACTIVE·$120·종료2027-05-01T09:26:57.701Z(한국시간18:26:57) 확인. 플랜전환/유료리소스 추가 없음.
+- 접속: 기존 AWS CLI 로그인프로필lostparty를 임시캐시복사본에서 갱신하고 Lightsail 임시SSH키/인증서·API확인 호스트키로 접속했다. 비밀값은 출력하지 않으며 /tmp보호경로의 임시접속자료는 구간 종료 시 정리한다. 최초 일반SSH키 부재와 플러그인검색을 거친 뒤 기존 로그인캐시를 확인했으므로 사용자 키 제출은 필요하지 않았다.
+- 신규서버 확인: Ubuntu24.04.4 x86_64·RAM1906MiB·swap없음·디스크58GB/사용2.1GB·프로젝트/Docker미설치, 서버망172.26.0.0/20으로 예정Docker망과 비중첩. 공식Docker apt설치를 진행했다.
+- 배포 전 보완: public profile 전에 DB/API를 올리면 동적IP가 Caddy고정`.2`를 선점할 수 있어 Compose IPAM에 동적범위`172.30.85.128/25`를 지정했다. 정적주소가 subnet내/동적범위밖임을 검증했다. API계약/DBmigration변경없음. 이 보완의 고정소스를 게시한 뒤 신규DB/HTTPS 실행결과를 아래 누적한다.
+- 실제 배포source `6154e459cbd8de7562c331eacc60928c61f8ac09` commit/push·원격일치 후 서버detached checkout, API이미지`dfad04e8`를 빌드했다. Docker29.9.2/Compose5.6.1, 실제Compose config·Caddy validate·두전체OpenAPI일치 PASS. 후행 문서 커밋은 실행 소스가 아니다. 정확한 이미지/digest·상태/검증은 [집계](../engineering/operations/records/lightsail-first-deploy.json)를 원본으로 한다.
+- 서버전용서로다른DB암호·환경0600·4종키0600/디렉터리0700·UID10001읽기 PASS. 최초Compose run의 rw추가가 원서비스ro마운트를 해제하지 않아 키생성은읽기전용오류로중단됐다. 파일생성0 확인 후 빈경로소유권을UID10001로준비하고 네트워크없는직접docker run에서만rw마운트로생성했다. 서비스ro/보안설정은유지하며 운영절차를정정했다. 원격stdin실행에서 Compose가후속입력을소비해 DB기동후명령이실행되지않아 별도스크립트파일방식으로전환했고 public0개확인부터재개했다.
+- 신규볼륨비어있음/public표0개·alembic revision없음·단일head0035 확인 후 명시upgrade0035, 최종public115표·앱role superuser/createdb/createrole=false·DB/APIhealthy 확인. users/sessions/auth_transactions/groups=0이며 합성거절검증은provider호출/회원쓰기0이다. 로컬/개발/기존Firebase자료·키를이관하거나삭제하지않았다.
+- AWS IPv4 TCP443추가 Succeeded, 기존22/80보존. Caddy`.2`/DB`.129`/API`.130`으로IP충돌없음, 호스트API/DBportbinding없음. HTTPS실제공개·SAN/Let's Encrypt YE2·인증서검증/TLS1.3 PASS, HTTP308→HTTPS. 최초발급중두번TLS준비오류후약6초내자동발급/health200이됐다. 만료2027-01-30, 향후자동갱신성공은아직관찰하지않았다.
+- 외부확인: /health·/v1/raid-catalog·/v1/raid-cycle200, /v1/me401, /docs·/openapi.json404, 확인한v1응답no-store, 직접8000/5432차단. 같은실제출발지에서XFF/Forwarded/다중hop을바꾸며합성인증10회400→429, 첫출발지429동안서버출발의별도실제요청400으로제한분리 PASS. 임시SSH인증만료로한번접속거절됐고 API의동일호스트키확인후임시인증을갱신해후속검증을마쳤다. 서비스장애/앱인증실패로오인하지않는다.
+- 실행관찰: DB/APIhealthy·Caddyrunning/실제HTTPS확인·3서비스restart0, API안전로그232개중ERROR/CRITICAL0·auth_cleanup/ownership_settlement/recruitment job완료확인. 순간메모리는API129.4MiB/DB45.28MiB/Caddy13.84MiB, 호스트available1191MiB이며 부하수용량/장기운영보장이아니다. 최종ro키마운트·unless-stopped·hostport없음/health재확인 PASS.
+- 초기DB백업: 서버0600덤프453,858bytes·archive목록PASS, 별도internal망/tmpfs PostgreSQL17에--no-owner/--no-privileges복원후0035/115표·users/sessions0확인 PASS. 시험컨테이너/망만정리했고실서비스DB/볼륨/키는보존했다. DB소유자/ACL·환경/4종키포함전체재해복구나서버밖백업완료로확대하지않는다.
+- 남은범위: 실제네이티브HTTPS Google로그인/refresh·인증후그룹코드, 서버밖암호화DB/환경/키백업·자동백업/알림·소유자/ACL포함전체복구·부하/장기관찰. 따라서 첫설치/HTTPS공개는완료이나F02전체/공개베타최종인수는아니다. 네이티브Issue게시/새기능정책/PR·merge·Issue종료는없다. 임시CLI/로그인캐시복사본/SSH인증파일을작업종료시삭제했고원본AWS캐시·서비스키는보존했다. 최종문서248파일/상대링크·anchor2,597건·고정자료/계약분류PASS와diff검사를확인했다. 후행문서/집계/절차보완을같은목적브랜치마감으로묶어게시한다.
+
+<a id="lightsail-preparation"></a>
+
+## 2026-11-01 — Lightsail 신규 설치·무료 주소 HTTPS 준비
+
+- 작업 구간: Lightsail 첫 배포 준비 / 내용: Compose·환경·키·DB/head·HTTPS 검토와 신규 서버 전용 구성/절차 / 브랜치·checkout: `chore/lightsail-deployment`, 기본 프로젝트 경로. 원격 main6151fa0/devac0526f 읽기 확인, main이 dev와 README 후행 기록을 포함해 main 기준을 보존해 분기했다. 기존 활동선택 브랜치는 보존했다.
+- 사용자 보고 대상: `lostparty`/`lostparty-server`, 시드니ap-southeast-2·Ubuntu24.04 amd64·2GB/2vCPU/60GB·월$12, SSH 성공·Backend/DB미설치, Free plan·$120. 후속 답변으로 도메인 미보유/구매 없이 무료 서브도메인 HTTPS 선호를 확정했다. 계정/서버 콘솔 직접 조회 결과는 아니다.
+- 확인: 기존 Compose는 로컬 바인딩/HTTPS없음·기본앱0023, 최신은 two-cycle factory/0035다. init-db.sh는 빈볼륨 앱역할 생성, 기존 create_auth_keys는 JWT/복구만 생성한다. 전달헤더 비활성으로 공개 프록시 뒤 IP 제한을 준비해야 한다.
+- 구현: 독립 `compose.lightsail.yaml`은 별도 프로젝트/볼륨, db/api 호스트 포트없음, public profile Caddy80/443만 게시한다. Uvicorn1worker·정확한 Caddy IP신뢰·XFF덮어쓰기·Forwarded제거, 기존 안전로그/회전/읽기전용API를 유지한다. 신규4종키 생성은 빈디렉터리에만 생성하며0600/0700·root실행시UID10001을 적용한다. Dockerfile에 생성기를 추가했다. API/DB migration·OpenAPI 변경 없음.
+- [실행 절차](../engineering/operations/lightsail-first-deploy.md): Free plan종료/Billing확인, 연결고정IP+Duck DNS무료주소, 공식Docker설치, 환경/고정SHA/키, 빈DB0035명시migration, 비공개API확인, Caddy발급/HTTPS/IP제한/로그인 검증, 백업/격리복원/롤백을 준비했다. Duck DNS IP수동등록으로 서버토큰/cron/DNS플러그인 없이 일반ACME를 사용한다. F02는 준비 재개이며 실제 제한/HTTPS검증 전 완료가 아니다.
+- 검증 PASS: PyYAML로드·db/api미게시·Caddy80/443·factory/정확신뢰IP일치·API관리자암호비전달·키마운트읽기전용·public profile·tmpfs 정적 대조. 임시디렉터리에서 RSA2048/독립랜덤32byte3종·권한0600/0700 확인, 전체키 재실행/부분키기존 각각 생성거절·기존바이트 보존 확인. 검증용 임시자료만 정리했고 실제 키는 생성하지 않았다. 이는 Docker 통합시험이 아니다.
+- 문서검증: DEV_LOG anchor 추가 전 링크검사1회 실패 후 해당 절을 보완했다. 최종 문서검사248파일/상대링크·anchor2,591건·고정자료/API분류206 PASS, git diff --check PASS로 구간을 마감한다. 외부링크 전체검사는 아니며 AWS/Docker/Caddy/Duck DNS 관련 공식자료는 별도로 조회했다.
+- 미실행: 현재 WSL환경 Docker실행기 없음으로 Compose config/build·Caddy validate·PostgreSQL신규migration·UID10001컨테이너접근·DNS/TLS·실제IP/그룹코드/Google/provider/기기·격리복원/부하를 실행하지 않았다. 개발서버·DB·키·Firebase/기기자료 변경 없음. AWS자원생성/설치/공개·PR/merge·Issue변경/종료·네이티브시험요청 없음. GitHub검색에서 독립배포 관련 협업요청을 확인하지 못했고 새 계약 협의/회신은 하지 않았다.
+- 다음 담당: 사용자 주소등록/고정IP연결·Free plan종료일 확인 후 Backend와 별도 대상서버 설치 구간 실행. 준비와 실제배포/운영인수를 구분한다. 이번 파일/검증/기록은 목적브랜치의 한 마감 커밋·push로 묶으며 정확한 SHA·원격게시 결과는 최종 인계와 Git ref를 따른다. dev/main통합은 미실행이다.
+
 ## 2026-10-28 — main/dev 정렬·그룹 작업 브랜치 준비
 
 - 사용자 지시로 원격 fetch 후 clean·단일 worktree 및 로컬/원격 main/dev 일치를 확인했다. main18830c2는 dev1b6f57b의 조상이며 dev 측 6커밋만 미반영이었다.

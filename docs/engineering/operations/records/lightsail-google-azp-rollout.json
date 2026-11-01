@@ -1,0 +1,60 @@
+{
+  "date_kst": "2026-11-01",
+  "scope": "User-authorized exact debug Android azp registration and API-only recreation",
+  "base_url": "https://lostparty.duckdns.org",
+  "source_branch": "chore/lightsail-deployment",
+  "deployed_source": "6154e459cbd8de7562c331eacc60928c61f8ac09",
+  "api_image": "sha256:dfad04e82b253ea35bb55b2ba362c3b1dc9224c9aac90bb533db1375b0414694",
+  "api_started_at_utc": "2026-11-01T11:21:13.406291968Z",
+  "preservation_verified_at_utc": "2026-11-01T11:21:25.245759Z",
+  "configuration": {
+    "GOOGLE_CLIENT_ID_preserved": "574337852234-vdkvdobbq8es2rdpumc1icqt6ja3a3cr.apps.googleusercontent.com",
+    "GOOGLE_AZP_ALLOWLIST_before": [],
+    "GOOGLE_AZP_ALLOWLIST_after": [
+      "574337852234-pje249p14id708ieg1t4q6fa9tmljih5.apps.googleusercontent.com"
+    ],
+    "other_api_environment_preserved": true,
+    "environment_file_mode": "0600",
+    "environment_write": "atomic replace; original owner/group preserved; private pre-change backup retained"
+  },
+  "preservation_checks": {
+    "api_recreated": true,
+    "same_api_image_and_command": true,
+    "db_container_id_mounts_preserved": true,
+    "caddy_container_id_mounts_preserved": true,
+    "all_four_secret_file_bytes_owners_modes_preserved": true,
+    "api_readonly_root_and_secret_mount_preserved": true,
+    "source_or_authentication_logic_modified": false,
+    "database_migration_reset_or_test_writes": false
+  },
+  "verification": {
+    "compose_config": "PASS",
+    "api_health": "healthy",
+    "public_https_health": "200;status ok;database ok;certificate verification enabled",
+    "isolated_verifier_checks": 13,
+    "checks_passed": [
+      "registered debug azp accepted",
+      "existing Web azp accepted",
+      "existing absent-azp policy preserved",
+      "unregistered azp rejected",
+      "wrong audience rejected",
+      "wrong issuer rejected",
+      "wrong nonce rejected",
+      "expired proof rejected",
+      "future iat rejected",
+      "empty subject rejected",
+      "wrong signature rejected",
+      "wrong algorithm rejected",
+      "provider transport failure preserves503"
+    ],
+    "method": "Separate child process in deployed image with actual runtime settings; ephemeral RSA and local mock Google certificate transport; no live Google token/provider network or DB writes",
+    "post_recreation_api_error_or_critical_logs": 0,
+    "post_recreation_google_rejections_at_observation": 0,
+    "real_google_login_attempts_after_change_at_observation": 0,
+    "real_google_login_success": "NOT YET VERIFIED"
+  },
+  "secret_values_printed_or_committed": false,
+  "next": "User retries Google login with a new challenge; observe actual HTTP result. Successful login/refresh and authenticated group-code acceptance remain separate from isolated checks.",
+  "private_environment_backup_server_path": "backups/lightsail-env-before-azp-20261101T112111Z.env",
+  "temporary_access_and_comparison_files_removed": true
+}

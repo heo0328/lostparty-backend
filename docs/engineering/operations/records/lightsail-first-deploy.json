@@ -1,0 +1,119 @@
+{
+  "recorded_at_utc": "2026-11-01T10:59:21Z",
+  "scope": "First deployment and infrastructure checks; not full beta acceptance",
+  "instance": "lostparty-server",
+  "region": "ap-southeast-2",
+  "public_ipv4": "54.253.176.103",
+  "base_url": "https://lostparty.duckdns.org",
+  "source_branch": "chore/lightsail-deployment",
+  "deployed_source": "6154e459cbd8de7562c331eacc60928c61f8ac09",
+  "compose_file": "compose.lightsail.yaml",
+  "docker_engine": "29.9.2",
+  "docker_compose": "5.6.1",
+  "images": {
+    "api": "sha256:dfad04e82b253ea35bb55b2ba362c3b1dc9224c9aac90bb533db1375b0414694",
+    "postgres": "postgres@sha256:839fbb5a4942a7758dd93e18b42ea5649807491a0545b5eeeb8f0b8bb11857a5",
+    "caddy": "caddy@sha256:e70b164da81ef698b3ad19af799ea6086ce6d9e48ed4079eb9fe26f6fbf14ee5"
+  },
+  "account_plan_observed": {
+    "type": "FREE",
+    "status": "ACTIVE",
+    "remaining_credits_usd": 120,
+    "expires_at_utc": "2027-05-01T09:26:57.701Z",
+    "paid_plan_upgrade_performed": false,
+    "additional_billable_resources_created": false
+  },
+  "database": {
+    "fresh_volume_verified_empty": true,
+    "public_tables_before_migration": 0,
+    "revision": "0035_cycle_group_policy",
+    "public_tables_after_migration": 115,
+    "app_role": "lostparty_app",
+    "app_role_superuser_createdb_createrole": [
+      false,
+      false,
+      false
+    ],
+    "users_sessions_auth_transactions_groups_observed": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "existing_development_or_firebase_data_imported": false
+  },
+  "network": {
+    "dns_a_matches": true,
+    "dns_aaaa_present": false,
+    "caddy_ipv4": "172.30.85.2",
+    "api_ipv4": "172.30.85.130",
+    "db_ipv4": "172.30.85.129",
+    "dynamic_range": "172.30.85.128/25",
+    "new_lightsail_rule": "TCP443 IPv4 0.0.0.0/0; existing22/80 preserved",
+    "api_db_host_port_bindings": {},
+    "public_8000_5432_blocked": true,
+    "http_redirect_status": 308
+  },
+  "tls": {
+    "public_trust_validation": "PASS",
+    "hostname": "lostparty.duckdns.org",
+    "issuer": "Let's Encrypt YE2",
+    "observed_protocol": "TLSv1.3",
+    "not_before_utc": "2026-11-01T09:56:36Z",
+    "not_after_utc": "2027-01-30T09:56:35Z",
+    "renewal": "Caddy automatic; future renewal not yet observed"
+  },
+  "verification": {
+    "actual_compose_config": "PASS",
+    "caddy_validate": "PASS",
+    "runtime_uid10001_read_all_four_secrets": "PASS",
+    "private_and_public_health": "200 / database ok",
+    "legacy_and_two_cycle_full_openapi_match": "PASS",
+    "public_routes": {
+      "/health": 200,
+      "/v1/raid-catalog": 200,
+      "/v1/raid-cycle": 200,
+      "/v1/me": 401,
+      "/docs": 404,
+      "/openapi.json": 404
+    },
+    "checked_v1_cache_control": "no-store",
+    "spoofed_xff_forwarded_multihop_one_origin": "10 AUTH_TRANSACTION_INVALID400 then RATE_LIMITED429",
+    "second_actual_origin_while_first_limited": "AUTH_TRANSACTION_INVALID400; independent limit confirmed",
+    "synthetic_login_requests_provider_calls_member_writes": 0,
+    "db_api_health": "healthy",
+    "caddy_state": "running; HTTPS externally verified",
+    "service_restart_counts_at_observation": [
+      0,
+      0,
+      0
+    ],
+    "api_safe_log_records_at_observation": 232,
+    "api_error_or_critical_records_at_observation": 0,
+    "completed_worker_jobs": [
+      "auth_cleanup",
+      "ownership_settlement",
+      "recruitment"
+    ]
+  },
+  "initial_backup": {
+    "server_file": "backups/lightsail-initial-20261101T105817Z.dump",
+    "mode": "0600",
+    "bytes": 453858,
+    "sha256": "733c21c4d6b6a19b3a8722f1b941de3daa6313abee292ec6b5a27396d24822c1",
+    "archive_listing": "PASS",
+    "isolated_postgresql17_restore": "PASS;0035;115public tables;0users/0sessions",
+    "restore_options": "--no-owner --no-privileges; source app role checked separately",
+    "rehearsal_storage": "separate internal network and tmpfs; temporary test container/network removed",
+    "service_database_overwritten_or_reset": false,
+    "off_server_encrypted_backup_and_key_restore": "NOT PERFORMED"
+  },
+  "remaining": [
+    "Real native HTTPS Google login and refresh, authenticated group-code integration",
+    "Off-server encrypted DB/config/key backup and full recovery procedure",
+    "Load testing, long-running observation and future certificate renewal",
+    "Automatic backup and alerting"
+  ],
+  "temporary_access_credentials_removed": true,
+  "final_runtime_mount_restart_health_port_invariants": "PASS"
+}
