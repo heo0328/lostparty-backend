@@ -5,10 +5,10 @@
 작업 구간: 신규 서버 설치·무료 주소 HTTPS 첫 배포 / 브랜치·checkout: `chore/lightsail-deployment` / 기본 프로젝트 경로. 실행 source는 `6154e459cbd8de7562c331eacc60928c61f8ac09`, API이미지dfad04e8·DB0035다. 후행 문서 커밋과 실행 소스를 구분한다. 아래 과거 checkout/dev 문장은 당시 이력이다.
 
 - 공개 주소: **https://lostparty.duckdns.org**, 고정IPv4 `54.253.176.103`, 시드니 `lostparty-server`. Docker/API/PostgreSQL/Caddy를 실제 설치하고 신규DB0035·DB/APIhealthy·Let's Encrypt HTTPS/HTTP308·두 전체OpenAPI·공개조회/인증거절/no-store·8000/5432차단을 확인했다. 키4종은 신규서버 전용이며 기존 개발DB/키/Firebase/기기를 이관·변경하지 않았다.
-- 현재 로그인 장애 진단: 사용자 HTTPS앱로그인은401/GOOGLE_PROOF_INVALID·azp_allowlist 단계4건이다. Web audience는Flutter게시본과일치하지만배포GOOGLE_AZP_ALLOWLIST가비어있어기존확정Android등록이누락됐다. [진단/수정안](../engineering/operations/records/lightsail-google-login-investigation.json)·[이력](DEV_LOG.md#lightsail-google-login-investigation)을따른다. 이번요청에서는읽기진단만했고서버설정/서비스는변경하지않았다.
+- 로그인 등록 보완 완료: 사용자승인으로확정debugAndroid ID한개를GOOGLE_AZP_ALLOWLIST에추가하고API만동일이미지로재생성했다(한국시간20:21:13). Web audience·다른환경·DB/Caddy·키보존, APIhealthy/공개health200·인증검증13경계PASS. [반영집계](../engineering/operations/records/lightsail-google-azp-rollout.json)·[이력](DEV_LOG.md#lightsail-google-azp-rollout)을따른다. 이전401/azp빈목록은진단당시이력이며실Google수정후성공은아직미확인이다.
 - 비용: AWS API에서 Free plan ACTIVE·잔액$120·종료2027-05-01 한국시간18:26:57 확인. 플랜전환/추가유료리소스 생성없음, 기존22/80 규칙보존·IPv4TCP443만 추가했다.
 - 검증/반영 상세 원본: [집계](../engineering/operations/records/lightsail-first-deploy.json)·[DEV_LOG](DEV_LOG.md#lightsail-rollout)·[운영 절차](../engineering/operations/lightsail-first-deploy.md). 위조XFF/Forwarded/다중hop에도 같은 출발지10회400→429, 다른 실제출발지400으로 IP제한분리를 확인했다. 실제 Google성공/refresh·로그인후그룹코드는 미확인이므로 F02전체완료는 아니다.
-- 다음 Backend: 현재빌드의확정Android등록을allowlist에반영하는별도적용구간에서API만재생성하고환경/health를확인한다. 기존Web audience·서명/nonce/미등록azp거절·DB/키를보존한다. 이후사용자/Flutter는새거래로실제Google로그인/refresh·핵심조회·그룹코드영향을확인한다. 설정미적용상태에서같은로그인을반복요청하지않는다. 새서버회원/세션은기존로컬과별개이며실제Flutter기기인수완료를주장하지않는다. 네이티브Issue추가요청/댓글은없다.
+- 다음 사용자/Flutter: 위HTTPS에서새challenge거래로실제Google로그인1회를확인한다. Backend는그결과의상태/code·필요시안전로그를확인한다. 설정적용/API재생성대기는해소했으며서명/audience/nonce/미등록azp거절은보존했다. 실로그인/refresh·핵심조회·그룹코드인수는계속별도다. 새서버회원/세션은로컬과별개이며네이티브Issue추가댓글/요청은없다.
 - 다음 운영: 초기DB덤프 생성/목록·격리PostgreSQL17복원(0035/115표) PASS. 서버밖 암호화 DB/환경/4종키백업·소유자/ACL포함전체복구·자동백업/알림·부하/장기관찰은 미완료다. 자동인증서갱신은 Caddy설정이며 미래갱신성공을 확인한 것은 아니다.
 - DNS/고정IP/계정종료일 입력대기는 해소했다. 실제 배포는 이번 지시로 승인·실행됐으며 PR/merge·다른기능정책/Issue종료는 별도다. 분쟁 정책 협의는 아래 기록대로 보존한다.
 

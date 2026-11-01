@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-2026-11-01 로그인진단 최신: Lightsail실Google교환4건이401/GOOGLE_PROOF_INVALID·azp_allowlist에서거절됐다. Web audience는Flutter원격게시본과일치하지만별도개발설정이던Android허용등록을첫배포에서누락해목록이비어있다. [진단·수정안](../engineering/operations/records/lightsail-google-login-investigation.json)·[이력](DEV_LOG.md#lightsail-google-login-investigation)을따른다. 이번은읽기진단이며설정적용/재시작·수정후실로그인성공은아직없다. 다음은확정등록의API환경반영후새거래실인증이다.
+2026-11-01 로그인등록 최신: 사용자승인으로Lightsail의GOOGLE_AZP_ALLOWLIST에기존확정debugAndroid ID한개를반영하고동일이미지API만재생성했다. Web audience/인증로직·다른환경·DB/Caddy·키는보존했으며health200·검증기13경계를확인했다. [반영집계](../engineering/operations/records/lightsail-google-azp-rollout.json)·[이력](DEV_LOG.md#lightsail-google-azp-rollout)을따른다. 이전401/azp누락은[진단당시기록](../engineering/operations/records/lightsail-google-login-investigation.json)이다. 다음은새거래실Google로그인/refresh·인증후그룹코드확인이며아직실인증성공을주장하지않는다.
 
 2026-11-01 Lightsail 최신: 사용자 고정IP/Duck DNS등록과 첫 배포 지시로 `chore/lightsail-deployment`의 source6154e45·API이미지dfad04e8·신규DB0035를 실제 `lostparty-server`에 설치했다. **https://lostparty.duckdns.org** 공개/HTTPS·DB/APIhealth·계약·IP제한분리·직접포트차단·초기덤프/격리복원을 확인했다. 기존 개발환경/자료는 별도로 보존했다. F02는 실제프록시검증까지 진행했으나 앱Google로그인/refresh·인증후그룹코드가 남아 전체완료가 아니다. [배포집계](../engineering/operations/records/lightsail-first-deploy.json)·[이력](DEV_LOG.md#lightsail-rollout)·[NEXT_WORK](NEXT_WORK.md)를 따른다. 아래 AWS미설치/미배포·이전checkout/F02보류 문장은 당시 이력이다.
 

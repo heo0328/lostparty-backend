@@ -1,5 +1,15 @@
 # 영구 개발 이력
 
+<a id="lightsail-google-azp-rollout"></a>
+
+## 2026-11-01 — Lightsail 확정 Android azp 반영·API 재생성
+
+- 사용자명시승인: 확인한debugAndroid ID를배포GOOGLE_AZP_ALLOWLIST에반영하고필요서비스재시작, 기존Web audience/인증검증유지. 작업구간은신규HTTPS배포후인증등록보완, 브랜치·checkout `chore/lightsail-deployment`/기본작업경로·기록HEAD430f9a8에서이어갔다. 공식#2최신댓글16개/확정등록·완료경계를재확인했으며Issue게시/변경은하지않았다.
+- 적용: 실제source6154e45/이미지dfad04e8·Web audience일치·기존azp빈목록을확인하고.env.lightsail에확정debug ID한개만원자교체했다. 다른줄/환경·소유자/그룹·0600보존, 변경전환경은서버0600백업으로보존했다. sudo docker compose up --no-deps --no-build --pull never --force-recreate --wait api로API만재생성했다. API시작UTC11:21:13.406(한국시간20:21:13), 보존확인11:21:25다.
+- 전후대조PASS: Web audience/다른API환경전체·동일이미지/실행명령·DB/Caddy컨테이너ID/마운트·4종키바이트/UID/GID/모드·서비스readonly root/키마운트보존. 비교용비밀fingerprint는임시보호파일안에서만사용하고출력/게시하지않았다. DBmigration/reset/자료수정·소스/인증로직변경·새이미지build/pull은없다.
+- 실행검증PASS: Compose config·APIhealthy·공개HTTPS /health200/status ok/database ok. 별도프로세스의배포검증기에일회성RSA·로컬모의Google공개키전송을사용한13경계PASS: 등록debug/Web/기존azp생략허용, 미등록azp·다른audience/issuer/nonce·만료/미래iat·빈subject·다른서명/알고리즘거절, provider장애503유지. 서비스개인키/실Google토큰을사용하지않고provider외부호출/DB쓰기0이다. 실Google로그인성공이나전체인증회귀로표시하지않는다.
+- 관찰시재생성후ERROR/CRITICAL0·google검증거절0·실Google교환요청0건이다. [고정반영집계](../engineering/operations/records/lightsail-google-azp-rollout.json)를원본으로하며이전[401진단](../engineering/operations/records/lightsail-google-login-investigation.json)은당시설정이력으로보존한다. 다음은사용자가새challenge거래로Google로그인을시도하고Backend가실제상태/code를확인하는것이다. refresh·로그인후그룹코드/운영후속은별도미확인이다. 임시AWS/SSH인증복사본·비교자료는삭제했고서버0600롤백용환경백업은보존했다. 최종문서248파일/상대링크·anchor2,608건/고정자료·계약분류와diff검사를통과해적용·검증·후속기록을같은목적브랜치에묶어commit/push한다.
+
 <a id="lightsail-google-login-investigation"></a>
 
 ## 2026-11-01 — Lightsail Google 로그인401·등록 설정 대조

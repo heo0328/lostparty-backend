@@ -196,3 +196,10 @@ GOOGLE_AZP_ALLOWLIST=574337852234-pje249p14id708ieg1t4q6fa9tmljih5.apps.googleus
 ```
 
 수정 적용 때는 API만재생성해 실행환경과health를확인하고 새로그인거래로실인증을검증한다. DB/키를초기화하거나토큰/claims를로그에추가하지않는다. 이번 진단요청에서는 설정적용/재시작을 실행하지 않았으며 성공 인수로 표시하지 않는다.
+
+
+## 확정 debug azp 적용 완료 (2026-11-01 후속)
+
+이후 사용자 적용 지시로 위 debug Android ID한개를 서버환경에반영하고 API만동일이미지로재생성했다. Web audience·다른환경/명령·DB/Caddy컨테이너·4종키내용/권한을보존했다. 한국시간20:21:13부터새API가실행중이며APIhealthy·공개HTTPS health200을확인했다.
+
+실제배포검증기의별도프로세스에서등록값허용/미등록값·다른audience/서명/nonce·시각/알고리즘거절등13경계를확인했다. 이는일회성RSA/모의Google공개키를사용한검증이며실Google성공은아직미확인이다. [반영집계](records/lightsail-google-azp-rollout.json)·[DEV_LOG](../../project/DEV_LOG.md#lightsail-google-azp-rollout)를따르고새challenge로그인결과를확인한다. 위진단당시미적용문장은이력이다.
