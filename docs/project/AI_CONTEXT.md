@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+2026-11-01 Lightsail 준비 최신: 사용자 `lostparty-server` 생성/SSH 성공·Backend/DB미설치 보고에 따라 `chore/lightsail-deployment`에서 [첫 배포 준비](../engineering/operations/lightsail-first-deploy.md)를 진행했다. 기준 main6151fa0는 devac0526f 포함이며 기존 README 변경을 보존했다. 독립 Compose·4종키·Duck DNS 무료 주소+Caddy HTTPS 절차를 준비했고 F02는 구성 준비 재개/실제 IP·HTTPS 검증 미완료다. AWS 설치·DB생성·개발서버 교체·공개 인수는 미실행, 상세 다음 행동은 [NEXT_WORK](NEXT_WORK.md), 검증·게시 이력은 [DEV_LOG](DEV_LOG.md#lightsail-preparation)를 따른다. 아래 이전 checkout/서버생성 전/F02보류 문장은 당시 이력이다.
+
 2026-10-30 기준. 그룹 PR30/병합fc6c06a를 dev/main에 반영·원격 동기화, 그룹/F01/개선 인계·상세500 조사기록은 사용자 승인 [PR31](https://github.com/heo0328/lostparty-backend/pull/31)·병합9fa0f7e로 dev 통합했고 main도 dev의 최종 기록 커밋으로 동기화한다. checkout dev, 통합된 feat/raid-group-policy·fix/backend-beta-readiness 로컬/원격 정리·미완료 feat/activity-selection 보존. 그룹 브랜치 로컬·원격 정리 완료. 그룹1차 구현·격리검증·개발환경 반영과 실행검증 완료. 현재 실제 실행은 주차별 그룹 정책 소스b8542ef/이미지930c25f8·DB0035, 기본123/140·two-cycle185/206이다. [최신 반영](../engineering/operations/cycle-group-policy-rollout.md)을 따른다. [구현·반영기록](../features/groups/implementation-2026-10-28.md)·[NEXT_WORK](NEXT_WORK.md)를 따른다. 기존 그룹 안내범위는 Native #12 전체36/#16 전체21 사용자 기기 통과를 수용했다. 현재 그룹·레이드 앱기기는 #16 전체37 사용자보고 통과이며 별도 상세500의 Backend 원인대조가 남았다. 복구승계/활동자동추가·운영배포는별도다.
 
 후속초대후보검색/전투력: #12전체29/30을받아ASCII대소문자무시정확검색·opt-in역할별character_spec후보구현/격리검증을완료했다. [검증집계](../features/groups/invite-candidates-verification-2026-10-29.json)·구현기록참조. 이후속도5d24244/507cd78a·DB0034로개발반영·실행검증완료했다. 기본DTO보존·migration/provider/중복저장없음. 이후 Native #12 전체36의 안내된 기존 그룹 정상시험 통과를 수용했으며 검색/profile을 다시 인수 대기로 두지 않는다.

@@ -1,5 +1,19 @@
 # 영구 개발 이력
 
+<a id="lightsail-preparation"></a>
+
+## 2026-11-01 — Lightsail 신규 설치·무료 주소 HTTPS 준비
+
+- 작업 구간: Lightsail 첫 배포 준비 / 내용: Compose·환경·키·DB/head·HTTPS 검토와 신규 서버 전용 구성/절차 / 브랜치·checkout: `chore/lightsail-deployment`, 기본 프로젝트 경로. 원격 main6151fa0/devac0526f 읽기 확인, main이 dev와 README 후행 기록을 포함해 main 기준을 보존해 분기했다. 기존 활동선택 브랜치는 보존했다.
+- 사용자 보고 대상: `lostparty`/`lostparty-server`, 시드니ap-southeast-2·Ubuntu24.04 amd64·2GB/2vCPU/60GB·월$12, SSH 성공·Backend/DB미설치, Free plan·$120. 후속 답변으로 도메인 미보유/구매 없이 무료 서브도메인 HTTPS 선호를 확정했다. 계정/서버 콘솔 직접 조회 결과는 아니다.
+- 확인: 기존 Compose는 로컬 바인딩/HTTPS없음·기본앱0023, 최신은 two-cycle factory/0035다. init-db.sh는 빈볼륨 앱역할 생성, 기존 create_auth_keys는 JWT/복구만 생성한다. 전달헤더 비활성으로 공개 프록시 뒤 IP 제한을 준비해야 한다.
+- 구현: 독립 `compose.lightsail.yaml`은 별도 프로젝트/볼륨, db/api 호스트 포트없음, public profile Caddy80/443만 게시한다. Uvicorn1worker·정확한 Caddy IP신뢰·XFF덮어쓰기·Forwarded제거, 기존 안전로그/회전/읽기전용API를 유지한다. 신규4종키 생성은 빈디렉터리에만 생성하며0600/0700·root실행시UID10001을 적용한다. Dockerfile에 생성기를 추가했다. API/DB migration·OpenAPI 변경 없음.
+- [실행 절차](../engineering/operations/lightsail-first-deploy.md): Free plan종료/Billing확인, 연결고정IP+Duck DNS무료주소, 공식Docker설치, 환경/고정SHA/키, 빈DB0035명시migration, 비공개API확인, Caddy발급/HTTPS/IP제한/로그인 검증, 백업/격리복원/롤백을 준비했다. Duck DNS IP수동등록으로 서버토큰/cron/DNS플러그인 없이 일반ACME를 사용한다. F02는 준비 재개이며 실제 제한/HTTPS검증 전 완료가 아니다.
+- 검증 PASS: PyYAML로드·db/api미게시·Caddy80/443·factory/정확신뢰IP일치·API관리자암호비전달·키마운트읽기전용·public profile·tmpfs 정적 대조. 임시디렉터리에서 RSA2048/독립랜덤32byte3종·권한0600/0700 확인, 전체키 재실행/부분키기존 각각 생성거절·기존바이트 보존 확인. 검증용 임시자료만 정리했고 실제 키는 생성하지 않았다. 이는 Docker 통합시험이 아니다.
+- 문서검증: DEV_LOG anchor 추가 전 링크검사1회 실패 후 해당 절을 보완했다. 최종 문서검사248파일/상대링크·anchor2,591건·고정자료/API분류206 PASS, git diff --check PASS로 구간을 마감한다. 외부링크 전체검사는 아니며 AWS/Docker/Caddy/Duck DNS 관련 공식자료는 별도로 조회했다.
+- 미실행: 현재 WSL환경 Docker실행기 없음으로 Compose config/build·Caddy validate·PostgreSQL신규migration·UID10001컨테이너접근·DNS/TLS·실제IP/그룹코드/Google/provider/기기·격리복원/부하를 실행하지 않았다. 개발서버·DB·키·Firebase/기기자료 변경 없음. AWS자원생성/설치/공개·PR/merge·Issue변경/종료·네이티브시험요청 없음. GitHub검색에서 독립배포 관련 협업요청을 확인하지 못했고 새 계약 협의/회신은 하지 않았다.
+- 다음 담당: 사용자 주소등록/고정IP연결·Free plan종료일 확인 후 Backend와 별도 대상서버 설치 구간 실행. 준비와 실제배포/운영인수를 구분한다. 이번 파일/검증/기록은 목적브랜치의 한 마감 커밋·push로 묶으며 정확한 SHA·원격게시 결과는 최종 인계와 Git ref를 따른다. dev/main통합은 미실행이다.
+
 ## 2026-10-28 — main/dev 정렬·그룹 작업 브랜치 준비
 
 - 사용자 지시로 원격 fetch 후 clean·단일 worktree 및 로컬/원격 main/dev 일치를 확인했다. main18830c2는 dev1b6f57b의 조상이며 dev 측 6커밋만 미반영이었다.
