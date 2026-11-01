@@ -3133,3 +3133,25 @@ NEXT_WORK/AI_CONTEXT/추적표를 갱신했으며 기존 로컬 수정은 보존
 - [PR31](https://github.com/heo0328/lostparty-backend/pull/31)에 그룹 실제T정책·0035/기존 ACK 보존, F01/개선인계 포함·기존검증·상세500 미해결을 명시하고 head73526cc 일치/mergeable/미설정검사0을 확인했다. 이력보존 merge9fa0f7efca6faa6ecbd48eefd465faedd72a1875의 dev 원격 반영·로컬ff·전체포함을 확인했다. squash/rebase/force는 하지 않았다.
 - dev에 그룹기능·F01 c94ce88·개선보류818a7ec·조사1be55a7/73526cc가 모두 포함됨과 worktree 미사용/미통합변경0을 확인해 feat/raid-group-policy와 fix/backend-beta-readiness를 로컬/원격 정리했다. 미완료 feat/activity-selection89a3248은 보존한다. F02 보류/F03 미착수 기록은 통합했고 후속은 최신dev 목적브랜치에서 이어간다.
 - 후행 현재상태/정리 기록을 dev에 묶어 게시하고 main을 같은 최종 기록 커밋으로 fast-forward한다. 두브랜치 local/origin 동일·깨끗한작업폴더를 최종 확인한다. 기존기능검증은 관련소스불변으로 재사용하고 문서/링크·diff만 검사한다. 상세500은 과거발생확인·현재미재현/원인미확정·Flutter당시근거대기를 유지하며 그룹앱기기인수완료와 구분한다. 추가Issue댓글/종료·서버/DB교체·자료초기화·AWS/release·기기조작은 실행하지 않았다. 실제실행소스b8542ef/이미지930c25f8·DB0035는 Git 통합과 별개로 유지한다.
+
+## 2026-10-31 — 상세500 후속 HTTP 경계 확인
+
+- 사용자 재개에 따라 최신dev1f0b588·미커밋0을 확인하고 fix/raid-detail-errors를 분기했다. [#16 전체39 Flutter](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6530221606)는 당시profile/query/anchor·동작/상태 기록을 찾지 못했고 현재코드로 역추정하지 않겠다고 회신했다. 따라서 기존자료 제공을 반복 요청하지 않는다. [전체40 Flutter](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6530680059)의 dev/main b8b20b50·최종전체2,730PASS/분석0 자체보고·기기인수완료를 수용한다. Backend 검증과 합산하지 않는다.
+- 기존 조사창 이후 실제로그에 UTC2026-10-30T17:48:47.380522/request_id1ed8fd9b-7cb1-4a72-a87f-655e8747dba4의 같은 상세500/internal 추가1건을 확인했다. 이후창 상세200은17건이며 추가500도 예외/입력근거가 없어 원인은미확정이다. 기존두건·앞선17:29추가한건과 함께 과거발생 사실을 유지한다.
+- 이전 직접호출/모델검증에서 빠진 요청파싱·라우터·미들웨어·응답직렬화를 대조했다. 실행컨테이너의 같은소스 별도프로세스에서 lifespan없이 ASGI HTTP·인증의존성만 기존유효세션으로대체·DB전연결READ ONLY·provider차단으로228요청을 처리했다. C/N19행/세profile·include_group_state=true·beta/그룹버전·조율대기 on/off에서158정상/70예상403·404·예상외예외0이다. 실제네트워크리스너/새토큰/실기기 검증이나 자동pytest개수가 아니다. 당시 상태/원인 해결 증거가 아니며 기존호출수와 합산하지 않는다.
+- 실행이미지에httpx가 없어 첫도구호출은 ModuleNotFoundError로 업무조회전 종료됐다. 의존성 추가 없이 ASGI표준scope/receive/send로 대체했다. 제품코드/DTO/API·서버교체/worker기동·자료변경은 없었다. [후속집계](../features/groups/detail-500-investigation.json)의followup이원본이다. 결론은 과거500확인·현재HTTP단계도미재현/원인미확정·자연재발근거대기이며 정상기기시험을 다시 요구하지 않는다. F03로깅확대·배포·merge/Issue종료는 수행하지 않았다.
+- 후속조사6279daf commit/push·원격일치 후 [#16 전체41번째 Backend · HTTP 경계 확인](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6530965340)을 게시하고 실제전체순번/URL을 재조회했다. 전체39의 원기록없음 회신을 수용하며 자연재발근거 대기·과거미해결·현재미재현 상태를 유지한다. 이후 추가코드/서버작업은 없고 인계링크만 같은브랜치에 보존한다.
+
+## 2026-10-31 — 사용자 확정: 상세500 추적 중단·분쟁 영향 검토로 전환
+
+- 사용자는 빠른 C/N 탭왕복 오류의1차대응으로 Native 로딩중탭터치제한·기기인수완료를수용하고 별도이유추적을하지않겠다고확정했다. #16 전체44/45의8c17d827·Flutter dev4a0bf962 보고를수용하며 추가조사/정상시험/회상요청을중단한다. 과거HTTP500은원인미확정으로보존하고 서버원인해결로표시하지않는다. 서버/DB/제품코드·추가시험은변경/실행하지않았다.
+- 다음사용자요청은 #15 소유권분쟁 최종이전의 그룹/레이드 영향 처리 검토·Flutter협의다. A사용자의A원정대만B로이전되고A-1/A-2는보존되는지 식별구조·현재가드를확인한다. 자동탈퇴/전체유저경고/재연결 정책은확정하지않고 영향원정대·캐릭터·실제T/그룹가입/대표/공대장별선택지를정리한다.
+- [#16 전체46번째 Backend 추적중단회신](https://github.com/heo0328/lostparty-backend/issues/16#issuecomment-6541800575) 게시·실제순번/URL확인. 사용자결정에따라현재500추적대기를해소하고미확정원인기록만보존한다.
+
+## 2026-10-31 — 분쟁 최종이전의 그룹·레이드 영향 연결 검토
+
+- 사용자요청으로 #15 최종소유이전 시 A사용자의A원정대관계만 식별/정리하고 A-1/A-2를보존하거나 영향참가에복구필요를표시하는선택지를조사했다. fix/raid-detail-errors의중단기록9a13af7을보존한tip에서 feat/ownership-dispute-policy로분기했으며dev/main1f0b588은바꾸지않았다. Flutter로컬은읽지않았다.
+- Account→Character FK, Assignment→CycleAssignment/CycleMember/실제T/세대와 WeeklyOccupancy/예약, 사용자기반GroupMembership·대표/표시참조·Activity의현재owner필터를대조했다. 기존 ownership_lost 원정대상태가이미있으며 사용자전체의불량/정지표시로대체할필요는없다. 현재worker는활성WeeklyState를발견하면PARTY_IMPACT_REVIEW_REQUIRED로최종이전전보류한다. 원정대별영향추적은가능하나자동탈퇴/소유이전후복구adapter는없다.
+- 격리선택 기존4PASS/12.13초(c3a0ef528b04): 실제worker최종이전·멱등, 개인자료/그룹가입비상속, 활성파티이전보류, 소유상실그룹표시. 신규합성2PASS/11.63초(af9d6bd30019):0034/0035에서한사용자의원정대3개중1개상실결과를주입해그룹활동6→4·가입유지/상실상태·다른2개설정버전/owner보존. 실제분쟁전체/자동정리구현시험과구분하며합산전체회귀주장없음. 임시DB/네트워크정리·기존경고1/실행,실회원쓰기/서버교체없음.
+- [영향검토원본](../features/rosters/ownership/dispute-impact-review.md)에현재기능/제안/미합의5항목을구분했다. 그룹가입은사용자단위보존·표시캐릭터/그룹대표와공대장역할별처리, 최종이전사건경계, 레이드자동정리vs복구필요·예약기한/권한·정원/승계, 내계정재조회와명시적캐릭터교체의구분을Flutter와협의한다. user전체경고/그룹자동탈퇴/참가자B상속은확정하지않았다. 제품코드/DTO/OpenAPI/DB스키마·실자료/배포·merge·Issue종료는수행하지않았다.
+- 검토·신규합성시험7408ab0을 feat/ownership-dispute-policy에commit/push·local/origin일치확인후 [#15 전체10번째 Backend 영향협의](https://github.com/heo0328/lostparty-backend/issues/15#issuecomment-6541847499)를게시했다. 실제전체댓글10/URL을확인하고본문상단에사용자승인검토범위/현재구현·미합의선택/다음Flutter소비검토를갱신하며원문/OPEN을보존했다. 최종정책은사용자와정하며API구현/재기기시험을요청하지않았다. 후행인계링크만추가하고업무소스는변경하지않는다.
