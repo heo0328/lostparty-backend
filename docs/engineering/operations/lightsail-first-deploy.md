@@ -6,6 +6,8 @@
 
 사용자 보고: 프로젝트 `lostparty`, 인스턴스 `lostparty-server`, `ap-southeast-2`(시드니), Ubuntu 24.04 LTS amd64, 2GB RAM/2vCPU/60GB SSD, 월 $12, 브라우저 SSH 성공, Backend/DB 미설치, AWS Free plan·크레딧 $120. 콘솔 계정 상태·만료일·실제 청구는 Backend가 조회하지 않았다.
 
+2026-11-01 후속 배포 입력: 사용자 고정IP 연결/Duck DNS 등록 완료, 주소 `lostparty.duckdns.org`, IPv4 `54.253.176.103`. DNS A 일치/AAAA없음·AWS 인스턴스 running/staticIP/Ubuntu24.04/2GB/2vCPU를 직접 확인했다. FreeTier API는 FREE/ACTIVE·$120·종료2027-05-01T09:26:57.701Z(한국시간18:26:57)를 반환했다. 기존 로그인 프로필의 임시 SSH 접속으로 신규 서버/미설치를 확인하고 첫 설치를 진행한다. 위 미조회 문장은 최초 준비 당시 상태이며 최종 실행 결과는 [배포 기록](../../project/DEV_LOG.md#lightsail-rollout)을 따른다.
+
 - [AWS Free plan](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/free-tier-plans.html)은 가입 후 6개월 또는 크레딧 소진 중 이른 시점에 종료되어 접근이 중단된다. `$120 / $12 = 10개월`을 이용 가능 기간으로 해석하지 않는다. **Paid plan으로 전환하지 않고**, Billing 홈의 현재 plan/잔액/종료일과 Credits 적용 대상을 먼저 확인한다. 다른 서비스 사용도 같은 잔액을 소비한다.
 - [Lightsail 가격](https://aws.amazon.com/lightsail/pricing/)의 번들 외 전송량·스냅샷·디스크 등은 별도 비용이다. 시드니 전송량은 일반 표의 절반이므로 해당 인스턴스 콘솔의 포함량을 기준으로 확인한다. 서버 정지만으로 인스턴스 비용이 없어지지 않는다. 이번 준비에는 RDS/LB/Route53/추가 디스크/스냅샷/유료 모니터링을 추가하지 않는다.
 - [고정 IP](https://docs.aws.amazon.com/lightsail/latest/userguide/understanding-static-ip-addresses-in-amazon-lightsail.html)는 인스턴스에 연결된 동안 별도 요금이 없고 미연결 상태는 과금된다. 생성하면 즉시 **같은 시드니 리전의 lostparty-server에 연결**한다. 계정에서 이 기능이 Paid plan 전환을 요구하면 중단하고 대안을 검토한다. 이 문서 작성 중 리소스를 생성하지 않았다.
@@ -18,6 +20,8 @@
 구조: 인터넷 → Caddy(80/443) → API(8000, 호스트 게시 없음) → PostgreSQL17(5432, 호스트 게시 없음). API 1 worker로 시작해 내장 정리/모집 worker 다중 실행을 피한다. 2GB에서의 부하 수용량은 미측정이며 테스터20~50명을 동시 처리 보장으로 해석하지 않는다. JSON 로그는 서비스별10MB×5개로 제한하며 Caddy access log는 켜지 않는다.
 
 Caddy는 직접 접속 IP로 XFF를 덮어쓰고 Uvicorn은 Caddy의 고정 내부 IP `172.30.85.2`만 신뢰한다. 임의 클라이언트 XFF/Forwarded를 신뢰하지 않는다. `172.30.85.0/24`가 서버/VPN/다른 Docker망과 겹치면 공개 전에 subnet·Caddy IP·Uvicorn allow IP를 함께 수정/검증한다. CDN/LB를 앞에 추가하면 이 신뢰 경계를 다시 검토한다. API 명령/DTO/DB 스키마 계약은 변경하지 않는다.
+
+동적 DB/API 주소는 `172.30.85.128/25`에서 할당한다. DB/API를 public profile보다 먼저 시작해도 Caddy 고정`.2`를 선점하지 않도록 분리했다. subnet을 바꿀 때 이 범위도 함께 맞춘다.
 
 ## 1. 무료 주소와 네트워크 준비
 

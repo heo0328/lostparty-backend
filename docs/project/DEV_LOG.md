@@ -1,5 +1,15 @@
 # 영구 개발 이력
 
+<a id="lightsail-rollout"></a>
+
+## 2026-11-01 — Lightsail 첫 배포 실행
+
+- 사용자 고정IP연결/Duck DNS등록 완료와 첫 배포 실행 지시를 받았다. 대상 `lostparty-server`/ap-southeast-2·`54.253.176.103`·`lostparty.duckdns.org`. 준비브랜치 `chore/lightsail-deployment`에서 이어가며 기존 개발서버/DB/키·Firebase/기기는 변경하지 않는다.
+- 직접 사전확인: DNS A일치/AAAA없음·SSH22열림·HTTP80리스너없음/HTTPS443미개방, AWS running/staticIP·Ubuntu24.04·2GB/2vCPU·전송포함1536GB·자동스냅샷없음. AWS FreeTier FREE/ACTIVE·$120·종료2027-05-01T09:26:57.701Z(한국시간18:26:57) 확인. 플랜전환/유료리소스 추가 없음.
+- 접속: 기존 AWS CLI 로그인프로필lostparty를 임시캐시복사본에서 갱신하고 Lightsail 임시SSH키/인증서·API확인 호스트키로 접속했다. 비밀값은 출력하지 않으며 /tmp보호경로의 임시접속자료는 구간 종료 시 정리한다. 최초 일반SSH키 부재와 플러그인검색을 거친 뒤 기존 로그인캐시를 확인했으므로 사용자 키 제출은 필요하지 않았다.
+- 신규서버 확인: Ubuntu24.04.4 x86_64·RAM1906MiB·swap없음·디스크58GB/사용2.1GB·프로젝트/Docker미설치, 서버망172.26.0.0/20으로 예정Docker망과 비중첩. 공식Docker apt설치를 진행했다.
+- 배포 전 보완: public profile 전에 DB/API를 올리면 동적IP가 Caddy고정`.2`를 선점할 수 있어 Compose IPAM에 동적범위`172.30.85.128/25`를 지정했다. 정적주소가 subnet내/동적범위밖임을 검증했다. API계약/DBmigration변경없음. 이 보완의 고정소스를 게시한 뒤 신규DB/HTTPS 실행결과를 아래 누적한다.
+
 <a id="lightsail-preparation"></a>
 
 ## 2026-11-01 — Lightsail 신규 설치·무료 주소 HTTPS 준비

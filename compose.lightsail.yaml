@@ -99,6 +99,9 @@ networks:
     ipam:
       config:
         - subnet: 172.30.85.0/24
+          # Keep dynamic DB/API allocation away from Caddy's fixed .2 address,
+          # including when DB/API start before the public profile is enabled.
+          ip_range: 172.30.85.128/25
 volumes:
   postgres_data:
   caddy_data:
