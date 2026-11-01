@@ -1,14 +1,14 @@
 # 다음 실행
 
-## 현재 실행 — 첫 태그 실패 원인 확정·수정 검증 완료 (2026-11-02)
+## 완료 — Backend v0.1.1 첫 자동 배포 (2026-11-02)
 
-태그 run41317120737의 verify job124891259189 원본 로그에서 `would clobber existing tag`를 확인했다. checkout이 러너 내부 annotated tag를 source commit 참조로 바꾼 뒤, 배포 스크립트의 `git fetch ... --tags`가 원격 annotated tag를 다시 받으려다 거절됐다. AWS/SSH·앱·DB 단계 이전 실패다. 기존 수동 재현은 이 checkout 상태가 달라 충분한 재현이 아니었다.
+사용자 승인으로 PR36·main/dev 동일77c9de2·v0.1.1 1회push를 완료했다. [Actions attempt2](https://github.com/heo0328/lostparty-backend/actions/runs/41323830955/attempts/2) success, 전체8그룹1811PASS·이미지/Release게시·production Deployment7475782412와 서버journal 성공을 확인했다. 실제 API source77c9de2/image259e8234·DB0035이며 한국11월2일01:30에 API만 교체했다. DB/Caddy·운영env/Google허용목록/키는 보존, 공개health200/DBok·공개조회200·미인증me401을 독립 대조했다.
 
-브랜치만 `--no-tags`/명시 refspec으로 갱신하도록 수정했다. 실제 격리 Git 저장소에서 원래 명령의 동일 실패와 수정 후 main/dev 갱신·HEAD/로컬/원격 태그 보존을 검증했고 scripts43PASS다. [시험 집계](../engineering/operations/records/backend-first-tag-trial.json)를 따른다. 기존 수동 전체 회귀1811PASS는 유지하며 이번에는 운영/새 태그/전체 회귀를 실행하지 않았다.
+[배포 집계](../engineering/operations/records/backend-v0.1.1-deployment.json)·[전체9번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6560737194)를 따른다. v0.1.0의 checkout/tag fetch 충돌은 수정했다. v0.1.1 attempt1의 SSH 인증 전 중단은 Secret 등록 시 끝 개행 제거 문제를 확인해 제한키 교체·개행 보존 등록으로 해소했고 같은 이미지로 재실행했다. 이전 전용키 폐기·임시 인증 복사본 삭제 완료다.
 
-사용자가 수정 통합과 새 태그 시험을 승인했다. VERSION0.1.1로 dev/main 통합·동일 SHA 확인 후 v0.1.1을 1회 push하고 실제 자동 배포를 확인한다. v0.1.0은 보존한다. 아래는 이전 준비 이력이며 원인 미확정 대기는 해소됐다.
+자동 배포 도입/실서버 반영은 완료다. 다음 릴리즈는 변경을 목적브랜치→dev→main으로 통합하고 VERSION과 새 승인 태그를 맞춘다. DB 변경은 계속 자동 migration 금지·별도 승인이다. 외부 DB/키 백업 미구성은 별도 후속이며 새 전체 기기 인수를 주장하거나 기존 release Google 로그인 인수를 반복 요청하지 않는다. 아래는 이전 준비/협의 이력이다.
 
-## 현재 실행 — Backend 태그 기반 자동 배포 구현
+## 이전 준비 — Backend 태그 기반 자동 배포 구현
 
 사용자 확정안으로 `chore/release-management`에서 VERSION0.1.0·태그 검증/이미지·Release 게시·전용 SSH·서버 단일 실행/journal·DB/구성 사전 거절·API만 교체/복귀를 구현한다. [운영 계약](../engineering/operations/backend-release.md)을 따른다. GitHub production 환경(v*태그만)·SSH Secret/고정호스트키 변수·태그 수정/삭제 방지 ruleset 준비, 서버 root배포도구/기존 정상 복귀기준과 배포없는 preflight를 완료했다. API/DB/Caddy 시작시각은 보존했다.
 

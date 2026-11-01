@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "date_kst": "2026-11-02",
+  "version": "0.1.1",
+  "tag": "v0.1.1",
+  "source": "77c9de2e2ee8450fc8122e301ea99090425ddbb9",
+  "integration_pr": 36,
+  "tag_push_count": 1,
+  "previous_tag_preserved": true,
+  "release_url": "https://github.com/heo0328/lostparty-backend/releases/tag/v0.1.1",
+  "published_at_utc": "2026-11-01T16:24:41Z",
+  "manifest": {
+    "api_started_at_utc": "2026-11-01T16:30:20.793876134Z",
+    "attempt": "41323830955-2",
+    "configuration_revision": "lightsail-release-azp-20261101",
+    "contract_sha256": {
+      "openapi.yaml": "8ad2fe07be6514e0dd58253fdc2ca7d17215645571bb4c6cf733c2925940f7c4",
+      "two-cycle.openapi.yaml": "e9dca944bbd8841ae7290281dce7c8298b031b31621036d19e45cbbc7cf5a9cb"
+    },
+    "db_revision": "0035_cycle_group_policy",
+    "finished_at_utc": "2026-11-01T16:30:33.045451Z",
+    "image": "ghcr.io/heo0328/lostparty-backend@sha256:259e8234c44a14f56f4806e944870877be32b7b4067e43d5a9ceafc12df0a58a",
+    "request_sha256": "864a30cc84531ca94d45397a87a6c6175e7740eea9935a937061388995dfe87b",
+    "rollback": "not_needed",
+    "run_url": "https://github.com/heo0328/lostparty-backend/actions/runs/41323830955/attempts/2",
+    "source": "77c9de2e2ee8450fc8122e301ea99090425ddbb9",
+    "started_at_utc": "2026-11-01T16:30:09.707106Z",
+    "status": "success",
+    "tag": "v0.1.1",
+    "user_acceptance": "not_checked"
+  },
+  "validation": {
+    "scripts": 43,
+    "regression_groups": 8,
+    "regression_total_passed": 1811,
+    "source_validation": "success",
+    "static": "success",
+    "real_docker_replace_rollback": "success",
+    "contracts": "success",
+    "public_health": {
+      "status": 200,
+      "api": "ok",
+      "database": "ok"
+    },
+    "public_catalog": 200,
+    "unauthenticated_me": 401,
+    "anonymous_ghcr_digest": "matches"
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "result": "failure",
+      "stage": "deployment SSH before authentication",
+      "server_submit_started": false,
+      "api_recreated": false,
+      "diagnosis": "Original gh secret set stdin registration trims final CR/LF; missing LF breaks OpenSSH private-key parsing. Reproduced offline. Old Secret cannot be read back; server logs showed only preauth closure."
+    },
+    {
+      "attempt": 2,
+      "result": "success",
+      "artifact_rebuilt": false,
+      "tag_moved": false,
+      "ssh_key_registration": "restricted replacement key registered via dotenv stdin preserving final LF; preflight passed, general shell denied; prior public key revoked; private local copies removed at completion"
+    }
+  ],
+  "github_deployment_id": 7475782412,
+  "previous_good": {
+    "source": "6154e459cbd8de7562c331eacc60928c61f8ac09",
+    "image": "sha256:dfad04e82b253ea35bb55b2ba362c3b1dc9224c9aac90bb533db1375b0414694",
+    "db_revision": "0035_cycle_group_policy"
+  },
+  "preservation": {
+    "db_started_at_utc": "2026-11-01T10:53:14.108219623Z",
+    "caddy_started_at_utc": "2026-11-01T10:55:02.005384187Z",
+    "db_caddy_identity_and_operating_env_mounts_keys": "server deployment control passed before/after comparison",
+    "migration": false,
+    "paid_resources_added": false,
+    "external_backup": "not configured; separate follow-up"
+  },
+  "user_acceptance": "No new app acceptance claimed; prior release Google login acceptance preserved",
+  "automatic_deployment_accepted": true,
+  "handoff_comment": "https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6560737194"
+}
