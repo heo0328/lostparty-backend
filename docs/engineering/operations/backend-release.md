@@ -55,7 +55,9 @@ status는 비밀 없는 결과만 출력한다. `current.json`·동결 Compose·
 
 - 제어 단위 시험: 태그/버전, DB·구성 불일치, 이미지 실패, unhealthy/복귀 실패, 낮은 버전, 중단 journal 복구, 중복·다른 attempt, OS flock 배제, 비밀 값 제외.
 - `python3 scripts/deployment/docker_smoke.py`: UUID 로컬 Docker 환경에서 실제 API 교체·unhealthy 복귀·DB/Caddy 보존. 애플리케이션 DB/공개 HTTPS·실 Google 인수는 이 시험에 포함하지 않는다.
-- `python3 scripts/verify_isolated.py static`, `contracts`, `all`: 별도 프로젝트/tmpfs PostgreSQL만 사용한다. 기존 0023 메타데이터 비교 테스트가 0031에서 대체된 unique constraint를 누락한 문제는 복사한 테스트 metadata에만 원래 제약을 복원했다. 운영 모델/migration은 변경하지 않았다.
+- `python3 scripts/verify_isolated.py static`, `contracts`, `all`: 별도 프로젝트/tmpfs PostgreSQL만 사용한다. 기존 0023 메타데이터 비교 테스트가 0031에서 대체된 unique constraint를 누락한 문제는 복사한 테스트 metadata에만 원래 제약을 복원했다. 해당0023cohort를타임스탬프검사와공유하고옛경로수·지원불가합성직업/완료보관기대를현재계약에맞췄다. 운영 모델/migration은 변경하지 않았다.
 - actionlint1.7.12는 새 queue 필드를 아직 인식하지 못하므로 해당 진단 하나만 제외하고 나머지 검사를 실행했다. queue:max는 [공식 workflow 문법](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax)에 대조했다.
+
+최초전체8그룹은1805PASS/6옛검사FAIL, 보정후대상11경계PASS다. 수정후전체8그룹재실행을완료한것은아니며첫수동GitHubworkflow의전체green으로확인한다. scripts37PASS에는배포제어25개가포함된다.
 
 다음 순서: 검증된 작업 구간 dev/main 통합 승인 → 수동 workflow 검증 → 사용자 승인 첫 v0.1.0 태그 → 최초 GHCR public 접근 확인/필요시 같은 run 재실행 → 실제 GitHub Secret/자동 배포 결과 확인. 현재 실제 운영은 source6154e45/image dfad04e8·DB0035이며 후행 구현/문서 commit과 다르다. 외부 백업 미구성은 별도 미완료이고 migration 자동화의 선행 해결이 필요하다.

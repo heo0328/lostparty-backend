@@ -2,6 +2,15 @@
 
 <a id="backend-release-implementation"></a>
 
+## 2026-11-01 — Backend 자동 배포 검증 마감·운영 반영 전 대기
+
+- 최초 전체8그룹은1805PASS/6FAIL로종료·UUID정리했다. 실패는기존검증기준의누락으로확인했다: timestamp0023cohort에후행모델포함, 두곳의옛116경로수, 합성직업의지원불가support역할전환, 전부완료/열린N없음에도새쓰기를허용하던옛lifecycle기대다. 현재고정OpenAPI·admission-eligibility-2·완료보관기준/기존통과시험에대조해테스트만보정했다. 실제readiness FK경계는별도재현에서PASS였고수정하지않았다.
+- 0023 copied metadata공통helper를Auth/Clock검사에사용하고원full-history제약을copy에만복원했다. 타임스탬프전체표/trigger검사는유지, 완료보관은ROOM_NOT_ACTIVE거절+기록보존을검사하고stopped기존허용도계속검사한다. 역할시험은실제dual-role직업을사용한다. 보정후관련11경계(5+6)PASS이며전체8그룹을수정후재실행한것은아니다. 합산하여전수green으로표시하지않고첫수동GitHubworkflow의8/8green을다음완료조건으로둔다.
+- 배포제어25경계포함scripts37PASS, 실제Docker교체/unhealthy복귀·untagged imageID복귀PASS, 두OpenAPI전체비교PASS, 인증/Google격리46PASS근거는유지한다. 이미지기본환경Python패치값과Compose운영환경을구분해후자/키를보존하며, 사전점검은중단journal복구조차수행하지않도록보강했다. 이미성공한동일릴리즈의새attempt는재시작없이확인/기록한다. 빌드시각은이미지created label에서재사용해retry시각으로덮지않는다.
+- 최종서버설치3파일지문이workspace와일치하며전용키의preflight/HTTPS·DB정상, 기존API시작13:00:31Z/image dfad04e8·DB10:53:14Z/Caddy10:55:02Z보존을확인했다. API/DB재기동·키/환경변경·migration/자료쓰기없음. GitHubSSHSecret/고정호스트키변수·production태그제한·불변규칙준비, GHCRpublic/실GitHubworkflow/첫자동배포는미확인이다.
+- CLI Git 인증은workflow scope가없어최초push를거절했다. 기존연결GitHub앱으로같은브랜치에workflow4fccfb7을게시하고로컬구현0b4212e와일반merge35ce799로통합·push확인했다. 공유이력재작성·main/dev변경없음. 이후검증보정은같은목적브랜치에누적해게시한다. 임시관리자AWS/SSH·배포개인키복사본은마감시삭제하고productionSecret·서버공개키/원래프로필을보존한다.
+- [운영계약](../engineering/operations/backend-release.md)·[준비/검증집계](../engineering/operations/records/backend-release-preparation.json)를따른다. 다음사용자통합승인→수동workflow전체green→첫태그별도승인/GHCR공개확인→실반영인수다. Issue34OPEN/외부백업미구성·기존release로그인사용자인수를유지한다.
+
 ## 2026-11-01 — Backend 태그 자동 배포 구현·전용 SSH 사전 준비
 
 - 사용자 확정 계획으로 같은 chore/release-management에서 VERSION0.1.0·태그/원장/main/dev 검증·불변 GHCR/Release·API만 교체/DB·구성 사전 거절/120초health·자동복귀·중단journal/멱등·실제반영 결과를 구현했다. [운영 계약](../engineering/operations/backend-release.md)·[준비 집계](../engineering/operations/records/backend-release-preparation.json)를 원본으로 한다. API/OpenAPI 동작은 변경하지 않았다.

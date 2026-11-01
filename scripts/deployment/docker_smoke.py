@@ -84,7 +84,11 @@ def main():
                 frozen = root / 'baseline.json'
                 server.atomic(frozen, platform.config(project_compose))
                 before = platform.containers()
-                current = {'tag': None, 'source': 'e' * 40, 'image': image_names[0], 'compose': str(frozen)}
+                old_image_id = json.loads(command(['docker', 'image', 'inspect', image_names[0]]))[0]['Id']
+                frozen_config = platform.config(project_compose)
+                frozen_config['services']['api']['image'] = old_image_id
+                server.atomic(frozen, frozen_config)
+                current = {'tag': None, 'source': 'e' * 40, 'image': old_image_id, 'compose': str(frozen)}
                 server.atomic(state / 'current.json', current)
                 raw = project_compose.read_text()
                 bundle = {'manifest': {'schema': 1, 'repository': 'heo0328/lostparty-backend', 'tag': 'v0.1.0',
@@ -95,20 +99,17 @@ def main():
                           'run_url': 'https://github.com/heo0328/lostparty-backend/actions/runs/123/attempts/1'}
                 good = server.execute(bundle, platform, state)
                 assert good['status'] == 'success', good
-                # Reset the isolated current pointer to a direct local image ref before bad candidate.
-                good_config = platform.config(good_path := state / '123-1/compose.json')
-                good_config['services']['api']['image'] = image_names[1]
-                server.atomic(good_path, good_config)
-                server.atomic(state / 'current.json', {'tag': 'v0.1.0', 'source': source,
-                              'image': image_names[1], 'compose': str(good_path)})
+                # Exercise the first-rollout rollback target: cached untagged image ID, not a registry tag.
+                platform.replace(frozen)
+                server.atomic(state / 'current.json', current)
                 image[0] = image_names[2]
                 bundle['attempt'] = '123-2'; bundle['manifest']['tag'] = 'v0.1.1'
                 bad = server.execute(bundle, platform, state)
                 assert bad['status'] == 'failed' and bad['rollback'] == 'success', bad
                 after = platform.containers()
                 assert before['db']['Id'] == after['db']['Id'] and before['caddy']['Id'] == after['caddy']['Id']
-                assert platform.healthy(image_names[1])
-                print(json.dumps({'isolated_docker': name, 'good_deploy': 'PASS', 'unhealthy_api_rollback': 'PASS', 'db_caddy_preserved': True, 'production_used': False}))
+                assert platform.healthy(old_image_id)
+                print(json.dumps({'isolated_docker': name, 'good_deploy': 'PASS', 'unhealthy_api_rollback': 'PASS', 'untagged_image_id_rollback': 'PASS', 'db_caddy_preserved': True, 'production_used': False}))
         finally:
             subprocess.run(prefix + ['-f', str(project_compose), 'down', '--remove-orphans', '--timeout', '5'], capture_output=True)
             subprocess.run([args.docker, 'image', 'rm', *image_names], capture_output=True)

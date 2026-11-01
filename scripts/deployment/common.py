@@ -45,6 +45,8 @@ def validate_manifest(m):
         raise ValueError('invalid contracts')
     for value in m['contract_sha256'].values():
         require(value, r'[0-9a-f]{64}')
+    if not isinstance(m['built_at_utc'], str) or not m['built_at_utc'].endswith('Z'):
+        raise ValueError('build time must be UTC')
     datetime.fromisoformat(m['built_at_utc'].replace('Z', '+00:00'))
     return m
 

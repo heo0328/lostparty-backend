@@ -79,6 +79,11 @@ def test_http_same_character_role_change_keeps_exact_weekly_lease(lifecycle):
     from sqlalchemy import select
     from app.raid_rooms.weekly_links import WeeklyOccupancy
     _,a,b=lifecycle
+    # A support role switch requires a real dual-role class under admission-eligibility-2.
+    from app.game_accounts.models import Character
+    with session() as db,db.begin():
+        character=db.get(Character,uuid.UUID(a['ids'][0]))
+        character.summary={**character.summary,'class_name':'바드'}
     room=create_room(a);rid=uuid.UUID(room['room_id']);n=next_key()
     with client(a) as http:
         plan=http.get(f'/v2/me/raid-rooms/{rid}/plan',params={'target_cycle_key':n})

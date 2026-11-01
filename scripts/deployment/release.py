@@ -112,6 +112,7 @@ def main():
              '--label', 'org.opencontainers.image.source=https://github.com/' + REPOSITORY,
              '--label', 'org.opencontainers.image.revision=' + source,
              '--label', 'org.opencontainers.image.version=' + tag,
+             '--label', 'org.opencontainers.image.created=' + utc(),
              '-t', reference, '.'])
         run(['docker', 'push', reference])
         digest = registry_digest(reference)
@@ -120,8 +121,9 @@ def main():
     image = IMAGE + '@' + digest
     run(['docker', 'pull', image])
     info = json.loads(run(['docker', 'image', 'inspect', image]))[0]
-    if info['Config'].get('Labels', {}).get('org.opencontainers.image.revision') != source:
-        raise ValueError('source image mismatch')
+    labels = info['Config'].get('Labels') or {}
+    if labels.get('org.opencontainers.image.revision') != source or labels.get('org.opencontainers.image.version') != tag or not labels.get('org.opencontainers.image.created'):
+        raise ValueError('source image identity or build time mismatch')
     version_digest = registry_digest(version_ref)
     if version_digest is not None:
         if version_digest != digest:
@@ -138,7 +140,7 @@ def main():
                            'image': image, 'db_revision': revision,
                            'contract_sha256': {p: checksum((Path('openapi') / p).read_bytes())
                                                for p in ['openapi.yaml', 'two-cycle.openapi.yaml']},
-                           'compose_sha256': checksum(compose), 'built_at_utc': utc()})
+                           'compose_sha256': checksum(compose), 'built_at_utc': labels['org.opencontainers.image.created']})
     Path('dist/release.json').write_text(json.dumps(m, indent=2) + '\n')
     Path('dist/compose.lightsail.yaml').write_bytes(compose)
     Path('dist/notes.md').write_text(f"Source: `{source}`\n\nImage: `{image}`\n\nDB: `{revision}`\n\nAPI contracts: https://github.com/{REPOSITORY}/tree/{source}/openapi\n\nImage publication is separate from production deployment and user acceptance. See the production Deployment/Actions result.\n")

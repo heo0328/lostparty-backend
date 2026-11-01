@@ -185,6 +185,21 @@ class DeploymentTests(unittest.TestCase):
         with self.assertRaises(DeployError):
             self.deploy()
 
+    def test_preflight_never_recovers_or_restarts_interrupted_deploy(self):
+        directory = self.state / '122-1'; directory.mkdir()
+        atomic(directory / 'result.json', {'status': 'in_progress',
+               'previous_good': {'image': 'old', 'compose': 'old-compose'}})
+        with self.assertRaises(DeployError):
+            self.deploy(preflight=True)
+        self.assertEqual(self.platform.calls, [])
+
+    def test_successful_release_new_attempt_verifies_without_restart(self):
+        self.deploy()
+        before = [c for c in self.platform.calls if c.startswith('replace:')]
+        self.bundle['attempt'] = '123-2'
+        self.assertEqual(self.deploy()['mode'], 'already_current')
+        self.assertEqual(before, [c for c in self.platform.calls if c.startswith('replace:')])
+
     def test_process_interruption_reconciles_journal_by_restoring(self):
         record = {'status': 'in_progress', 'request_sha256': checksum(canonical(self.bundle)),
                   'previous_good': {'image': 'old', 'compose': 'old-compose'}}

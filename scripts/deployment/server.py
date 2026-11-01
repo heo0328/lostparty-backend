@@ -166,6 +166,8 @@ def execute(bundle, platform, state=STATE, *, preflight=False):
             continue
         prior = json.loads(journal.read_text())
         if prior.get('status') == 'in_progress':
+            if preflight:
+                raise DeployError('deployment_in_progress_preflight_blocked')
             previous = prior.get('previous_good')
             if previous:
                 try:
@@ -186,6 +188,8 @@ def execute(bundle, platform, state=STATE, *, preflight=False):
         if existing['status'] != 'in_progress':
             return existing
         # A host/process interruption during replacement is never assumed successful.
+        if preflight:
+            raise DeployError('incomplete_preflight')
         previous = existing.get('previous_good')
         if previous:
             try:
@@ -250,6 +254,12 @@ def execute(bundle, platform, state=STATE, *, preflight=False):
         atomic(final_compose, candidate)
         if current.get('tag') == manifest['tag'] and (current['source'] != manifest['source'] or current['image'] != manifest['image']):
             raise DeployError('immutable_release_conflict')
+        if current.get('tag') == manifest['tag']:
+            platform.probes()
+            record.update(status='success', mode='already_current',
+                          api_started_at_utc=before['api']['State']['StartedAt'], finished_at_utc=utc())
+            atomic(result_file, record)
+            return record
         record['previous_good'] = current
         atomic(result_file, record)  # Write-ahead journal, before stopping the old API.
         deadline = time.monotonic() + 120

@@ -4,7 +4,7 @@
 
 사용자 확정안으로 `chore/release-management`에서 VERSION0.1.0·태그 검증/이미지·Release 게시·전용 SSH·서버 단일 실행/journal·DB/구성 사전 거절·API만 교체/복귀를 구현한다. [운영 계약](../engineering/operations/backend-release.md)을 따른다. GitHub production 환경(v*태그만)·SSH Secret/고정호스트키 변수·태그 수정/삭제 방지 ruleset 준비, 서버 root배포도구/기존 정상 복귀기준과 배포없는 preflight를 완료했다. API/DB/Caddy 시작시각은 보존했다.
 
-**외부 조건과 다음:** OIDC는 새 AWS 가입 방식의 iam:*Provider* 제한으로 불가함을 공식문서/실제거절로확인했고 사용자승인으로전용SSH키 방식으로변경했다. Free plan/Paid전환없음. 서버 강제명령/최소sudo·GitHub production Secret·고정호스트키를 준비하며 실제 전용키 preflight/셸·포워딩 차단 확인은 마감기록을 따른다. GHCR 최초 package public/익명pull·실GitHub workflow/자동배포는미확인이다. 다음은 dev/main 통합 승인 → 수동workflow검증 → 사용자승인 첫태그 → 최초GHCR공개접근확인 → 실제반영확인이다. 태그/Release/운영API교체는이번준비에서실행하지않는다. 전체회귀 결과는 DEV_LOG 마감 기록을 따른다.
+**외부 조건과 다음:** OIDC는 새 AWS 가입 방식의 iam:*Provider* 제한으로 불가함을 공식문서/실제거절로확인했고 사용자승인으로전용SSH키 방식으로변경했다. Free plan/Paid전환없음. 서버 강제명령/최소sudo·GitHub production Secret·고정호스트키를 준비하며 실제 전용키 preflight/셸·포워딩 차단 확인은 마감기록을 따른다. GHCR 최초 package public/익명pull·실GitHub workflow/자동배포는미확인이다. 다음은 dev/main 통합 승인 → 수동workflow검증 → 사용자승인 첫태그 → 최초GHCR공개접근확인 → 실제반영확인이다. 태그/Release/운영API교체는이번준비에서실행하지않는다. 검증은 최초8그룹1805PASS/6옛기대FAIL→테스트보정후대상11PASS다. 수정후전체8그룹재실행은미실행이며수동GitHubworkflow전체green이선행조건이다. scripts37(배포25포함)·계약·실Docker복귀/untaggedID·전용SSH점검PASS. DEV_LOG 마감기록을따른다.
 
 ## 완료 — v1.1.2 release Google 로그인
 
