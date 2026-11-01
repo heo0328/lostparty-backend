@@ -1,0 +1,78 @@
+{
+  "scope": "Backend tag deployment implementation and non-deploying preparation",
+  "date_kst": "2026-11-01",
+  "branch": "chore/release-management",
+  "version": "0.1.0",
+  "deployment_authentication": "Dedicated restricted SSH, explicitly approved after AWS-managed SCP blocked OIDC",
+  "aws_plan_upgraded": false,
+  "iam_resources_created": false,
+  "github_prepared": {
+    "production_environment_tags_only": "v*",
+    "required_reviewers": false,
+    "immutable_tag_ruleset_id": 26311584,
+    "ssh_secret": "LIGHTSAIL_DEPLOY_SSH_KEY",
+    "known_hosts_variable": "LIGHTSAIL_SSH_KNOWN_HOSTS",
+    "unused_oidc_variable_removed": true
+  },
+  "server_preparation": {
+    "path": "/usr/local/lib/lostparty-deploy",
+    "private_state": "/var/lib/lostparty-deploy",
+    "account": "lostparty-deploy",
+    "commands": [
+      "submit",
+      "preflight",
+      "status RUN_ID-ATTEMPT"
+    ],
+    "bootstrap_preserved_all_service_ids_and_start_times": true,
+    "deployed_source_unchanged": "6154e459cbd8de7562c331eacc60928c61f8ac09",
+    "api_image_unchanged": "sha256:dfad04e82b253ea35bb55b2ba362c3b1dc9224c9aac90bb533db1375b0414694"
+  },
+  "verification": {
+    "deployment_control_unit_tests": 23,
+    "script_tests": "PASS; final count to be recorded at validation close",
+    "both_openapi_objects": "PASS; 140 original and 206 two-cycle operations",
+    "auth_google_isolated_postgresql": "46 PASS",
+    "real_local_docker_api_replacement_and_unhealthy_rollback": "PASS; DB/Caddy preserved; no application DB/public HTTPS in this smoke test",
+    "restricted_ssh": {
+      "restricted_ssh_preflight": {
+        "status": "success",
+        "request_sha256": "f7b0852d7848cf24cbc455bb7ae7ddf11a56825907859c5d8efb15a85a92b7c8",
+        "started_at_utc": "2026-11-01T13:41:35.263079Z",
+        "tag": "v0.1.0",
+        "source": "50fd2af3360b3b5e3ad5ee02e9d8dafcb9803c0e",
+        "image": "ghcr.io/heo0328/lostparty-backend@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "db_revision": "0035_cycle_group_policy",
+        "contract_sha256": {
+          "openapi.yaml": "8ad2fe07be6514e0dd58253fdc2ca7d17215645571bb4c6cf733c2925940f7c4",
+          "two-cycle.openapi.yaml": "e9dca944bbd8841ae7290281dce7c8298b031b31621036d19e45cbbc7cf5a9cb"
+        },
+        "configuration_revision": "lightsail-release-azp-20261101",
+        "run_url": "https://github.com/heo0328/lostparty-backend/actions/runs/0/attempts/3",
+        "attempt": "0-3",
+        "user_acceptance": "not_checked",
+        "rollback": "not_needed",
+        "mode": "preflight_only",
+        "finished_at_utc": "2026-11-01T13:41:37.467304Z"
+      },
+      "general_shell_rejected": true,
+      "port_forwarding_rejected": true,
+      "image_pulled_or_api_recreated": false
+    },
+    "actionlint": "1.7.12 PASS excluding only unsupported queue syntax; queue:max checked against official GitHub workflow docs",
+    "full_regression": "Eight disjoint file shards running; no full PASS claim yet",
+    "earlier_failures_fixed": [
+      "0023 metadata comparator missing legacy full-history unique constraint after 0031 model change",
+      "test import still using removed docs.design validator location"
+    ],
+    "single_full_run": "Stopped with cleanup/exit130 after changing to complete disjoint shard strategy; no pass claim"
+  },
+  "not_yet_executed": [
+    "GHCR first package publication/public visibility/anonymous pull",
+    "GitHub-hosted manual workflow",
+    "first release tag",
+    "actual automated production rollout"
+  ],
+  "public_api_changed": false,
+  "database_migrations_or_production_data_edits": false,
+  "next": "Finish validation; authorize dev/main integration, manual workflow, then separately authorize first tag/public GHCR activation and actual rollout."
+}

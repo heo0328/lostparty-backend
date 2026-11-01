@@ -327,7 +327,7 @@ def test_access_expiry_and_wrong_claims(client,login):
 def test_model_migration_consistency():
     from alembic.autogenerate import compare_metadata
     from alembic.migration import MigrationContext
-    from sqlalchemy import MetaData
+    from sqlalchemy import MetaData, UniqueConstraint
     from app.core.database import engine
     from app.auth import models as auth_models
     from app.game_accounts import models as game_models, power_success
@@ -354,6 +354,9 @@ def test_model_migration_consistency():
     for index in list(assignments.indexes):
         if index.name == 'uq_recruitment_current_assignment':
             assignments.indexes.remove(index)
+    # 0031 replaces 0023's full-history constraint with the partial index above.
+    # Restore that constraint only on the copied legacy metadata, never live models.
+    assignments.append_constraint(UniqueConstraint('round_id', 'membership_id'))
     with engine().connect() as connection:
         assert connection.exec_driver_sql('SELECT version_num FROM alembic_version').scalar_one() == '0023_recruitment_resume'
         assert compare_metadata(MigrationContext.configure(connection), metadata) == []

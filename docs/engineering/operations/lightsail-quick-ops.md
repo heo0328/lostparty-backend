@@ -1,12 +1,16 @@
 # Lightsail 짧은 운영 안내
 
-대상: 시드니 `lostparty-server` / `54.253.176.103` / **https://lostparty.duckdns.org**. 아래 명령은 서버 SSH에서 실행한다. 실제 컨테이너 라벨로 확인한 배포 경로는 `/home/ubuntu/lostparty-backend`, Compose는 `compose.lightsail.yaml`, 환경은 `.env.lightsail`, 프로젝트명은 `lostparty-lightsail`이다. 로컬 개발 Compose와 합치지 않는다.
+대상: 시드니 `lostparty-server` / `54.253.176.103` / **https://lostparty.duckdns.org**. 아래 명령은 서버 SSH에서 실행한다. 실제 컨테이너 라벨로 확인한 배포 경로는 `/home/ubuntu/lostparty-backend`, Compose는 `compose.lightsail.yaml`, 환경은 `.env.lightsail`, 자동배포 준비 후 현재 이미지/동결 구성은 root 전용 `/var/lib/lostparty-deploy/current.json`이 가리키는 Compose이며 프로젝트명은 `lostparty-lightsail`이다. 로컬 개발 Compose와 합치지 않는다.
 
 ## 상태·최근 로그
 
 ```bash
 cd /home/ubuntu/lostparty-backend
-dc() { sudo docker compose --env-file /home/ubuntu/lostparty-backend/.env.lightsail -f /home/ubuntu/lostparty-backend/compose.lightsail.yaml --profile public "$@"; }
+dc() {
+  local active_compose
+  active_compose="$(sudo python3 -c 'import json,pathlib; p=pathlib.Path("/var/lib/lostparty-deploy/current.json"); print(json.loads(p.read_text())["compose"] if p.exists() else "/home/ubuntu/lostparty-backend/compose.lightsail.yaml")" )" || return
+  sudo docker compose --project-directory /home/ubuntu/lostparty-backend --env-file /home/ubuntu/lostparty-backend/.env.lightsail -f "$active_compose" --profile public "$@"
+}
 
 dc ps
 curl --fail --silent --show-error --max-time 10 https://lostparty.duckdns.org/health
@@ -26,7 +30,7 @@ dc ps api
 curl --fail --silent --show-error --max-time 10 https://lostparty.duckdns.org/health
 ```
 
-health가 즉시 정상화되지 않으면 `dc ps api`와 최근 API 로그를 확인하고 잠시 후 health를 다시 조회한다. `restart`는 현재 환경·이미지를 그대로 사용한다. `.env.lightsail` 변경 반영이 목적이면 다음 명령으로 API만 재생성한다(설정 검토 후 실행).
+health가 즉시 정상화되지 않으면 `dc ps api`와 최근 API 로그를 확인하고 잠시 후 health를 다시 조회한다. `restart`는 현재 환경·이미지를 그대로 사용한다. 자동배포 baseline은 당시 환경까지 동결한다. `.env.lightsail` 수정만으로 동결 구성은 바뀌지 않는다. 환경 변경은 별도 승인된 운영 작업에서 현재 image를 보존한 구성 재생성과 baseline/configuration revision 갱신을 함께 수행한다. 아래 명령은 현재 동결 구성을 그대로 재생성할 때만 사용한다.
 
 ```bash
 dc config --quiet

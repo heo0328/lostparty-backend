@@ -1,5 +1,16 @@
 # 영구 개발 이력
 
+<a id="backend-release-implementation"></a>
+
+## 2026-11-01 — Backend 태그 자동 배포 구현·전용 SSH 사전 준비
+
+- 사용자 확정 계획으로 같은 chore/release-management에서 VERSION0.1.0·태그/원장/main/dev 검증·불변 GHCR/Release·API만 교체/DB·구성 사전 거절/120초health·자동복귀·중단journal/멱등·실제반영 결과를 구현했다. [운영 계약](../engineering/operations/backend-release.md)·[준비 집계](../engineering/operations/records/backend-release-preparation.json)를 원본으로 한다. API/OpenAPI 동작은 변경하지 않았다.
+- 초기 OIDC 준비는 실제 IAM provider 조회가 SCP explicit deny로 실패했다. 새 AWS가입방식의 공식정책 iam:*Provider* 제한과 advanced활성화의upgrade필요를 확인해 단순 관리자접속 문제라는 초기추정을정정했다. 사용자 명시승인으로 전용SSH키 방식으로변경했다. IAM resource/provider/role생성·Paid전환·정책우회없음, 불필요한 OIDC코드/변수/id-token권한은제거했다.
+- GitHub production환경(v*태그만/reviewer없음), 공개태그 update/deletion금지 ruleset26311584, production Secret/고정호스트키변수 준비. 서버는 root배포도구/비공개동결Compose·현재untagged이미지/source/DB복귀기준을보존했다. root관리authorized_keys/restrict/강제명령·잠긴암호·제한sudo의 lostparty-deploy계정을준비했고 실제전용키 preflight·일반셸/포워딩거절을확인했다. 원래API6154e45/image dfad04e8·DB/Caddy·시작시각을보존했다. 서버에는AWS CLI/runner를설치하지않았다.
+- 제어단위23경계·두OpenAPI 전체계약(140/206operations)·인증/Google격리PostgreSQL46PASS. 실제UUID로컬Docker에서API교체성공/unhealthy복귀·DB/Caddy보존을확인했다. 최초인증회귀의오래된0023 metadata제약누락과전체수집의옛docs.design validator import를테스트범위에서만보정했다. 모델/migration수정없음. actionlint1.7.12는공식새queue구문을미지원하므로그진단한개만제외하고검사/공식문법대조했다.
+- 전체pytest 단일실행은8개비중복파일그룹병렬전략으로교체해정상중단/UUID정리(exit130)했고현재8그룹결과는진행중으로보존한다. 전체PASS로기록하지않는다. GitHub표준Linux runner의전체회귀도같은8그룹이며모두성공해야게시/배포한다. GHCR익명접근전API미변경·신규private package는owner public전환후같은run이미지재사용으로재개한다.
+- 이번에는태그/Release발행·GHCR게시·실GitHubworkflow/운영API교체·DB자료변경·dev/main병합없음. 다음검증마감→통합승인/수동workflow→첫태그별도승인/실배포확인이다. 기존release로그인인수/외부백업미완료는보존하며정상기기시험을반복요청하지않는다.
+
 ## 2026-11-01 — release Google 로그인 사용자 인수 완료
 
 사용자가 release ID 운영 반영 후 “로그인이 정상적으로 진행됩니다”라고 보고했다. [전체5번째 Backend · 사용자 인수 확인](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558340814)에 회신하고 release 실제 로그인 대기를 해소했다. 근거는 사용자 기기 보고이며 추가 서버로그/HTTP200·DB 독립 수집을 수행하지 않았다. 모의14경계와 별도 인수이며 refresh·전체기능/호환manifest 완료로 확대하지 않는다. 추가 로그인 반복 요청·서버/DB/설정 재변경·재시작·APK/태그게시없다. Issue34는 Backend 버전/태그·배포인증/승인·실패복귀 설계가 남아 OPEN 유지, 다음 Backend/사용자다. 문서 검사·diff 확인 후 같은 목적 구간의 로그인 장애 인수를 마감 기록한다.

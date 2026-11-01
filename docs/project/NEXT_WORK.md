@@ -1,5 +1,11 @@
 # 다음 실행
 
+## 현재 실행 — Backend 태그 기반 자동 배포 구현
+
+사용자 확정안으로 `chore/release-management`에서 VERSION0.1.0·태그 검증/이미지·Release 게시·전용 SSH·서버 단일 실행/journal·DB/구성 사전 거절·API만 교체/복귀를 구현한다. [운영 계약](../engineering/operations/backend-release.md)을 따른다. GitHub production 환경(v*태그만)·SSH Secret/고정호스트키 변수·태그 수정/삭제 방지 ruleset 준비, 서버 root배포도구/기존 정상 복귀기준과 배포없는 preflight를 완료했다. API/DB/Caddy 시작시각은 보존했다.
+
+**외부 조건과 다음:** OIDC는 새 AWS 가입 방식의 iam:*Provider* 제한으로 불가함을 공식문서/실제거절로확인했고 사용자승인으로전용SSH키 방식으로변경했다. Free plan/Paid전환없음. 서버 강제명령/최소sudo·GitHub production Secret·고정호스트키를 준비하며 실제 전용키 preflight/셸·포워딩 차단 확인은 마감기록을 따른다. GHCR 최초 package public/익명pull·실GitHub workflow/자동배포는미확인이다. 다음은 dev/main 통합 승인 → 수동workflow검증 → 사용자승인 첫태그 → 최초GHCR공개접근확인 → 실제반영확인이다. 태그/Release/운영API교체는이번준비에서실행하지않는다. 전체회귀 결과는 DEV_LOG 마감 기록을 따른다.
+
 ## 완료 — v1.1.2 release Google 로그인
 
 사용자 콘솔화면/정확한release client ID·반영승인으로 등록값 대기를 해소했다. [전체4번째 Backend · release azp 운영 반영](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558294576)·[반영집계](../engineering/operations/records/lightsail-release-azp-rollout.json) 기준: 기존debug ID에확정release ID추가, Web audience/인증검증유지, 동일source6154e45/image dfad04e8의 API만2026-11-01T13:00:31Z 재생성했다. DB/Caddy/키·다른환경보존·healthy/공개health200·분리검증14경계PASS다. 사용자가 반영 후 실제 로그인 성공을 보고해 [전체5번째 Backend · 사용자 인수 확인](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558340814)으로 기록했다. release 로그인 대기는 해소됐으며 추가 반복 요청은 없다. refresh·전체 기능 인수는 별도 미확인이다. 과거401/azp실패는[진단이력](../engineering/operations/records/lightsail-release-google-login-investigation.json)이며수정후성공과혼동하지않는다. 태그자동화설계는별도다.
@@ -8,7 +14,7 @@
 
 [Issue34 전체1번째 Flutter · 운영 기준 회신](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558053848)을 확인하고 [전체2번째 Backend · 현재 사실 대조·최소 추적안](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558101459)으로 회신했다. Native v1.1.2/source9e4a18f7의 Actions 성공·APK/checksum 게시를 읽기 확인했다. 앱/Backend 독립 버전과 소스 통합·산출물 게시·실제 반영·사용자 인수의 4단계 분리에 의견이 일치한다. [대조·최소안](../engineering/operations/release-tracking-review.md)을 따른다. 현재 checkout은 `chore/release-management`이며 Native 운영 회신 대기는 해소됐다.
 
-다음 담당은 Backend/사용자다. Backend 버전·태그 이름, 배포 인증/승인과 실패·복귀 방식을 정리한 뒤 구현 범위를 확정한다. Native release 브랜치 보존을 Backend에 자동 채택하지 않는다. CI/CD·태그 정책 구현은 미실행이다. release 등록값 대조·운영 allowlist 반영은 위 기록으로 완료했고 게시 APK 실제 로그인은 사용자 확인 완료다. 전체 호환 기록/전체 기능 인수는 미확인이다. 기존 운영 source6154e45·이미지dfad04e8·DB0035/환경과 외부 백업 후속은 보존한다.
+다음 담당은 Backend/사용자다. Backend 버전·태그/배포 방식은 위 확정 구현으로 진행하며 관리자 OIDC 준비와 첫 활성화가 남았다. Native release 브랜치 보존을 Backend에 자동 채택하지 않는다. 아래 최소안 회신 당시 CI/CD는 미실행이었으며 최신 구현/외부 준비 상태는 위 실행을 따른다. release 등록값 대조·운영 allowlist 반영은 위 기록으로 완료했고 게시 APK 실제 로그인은 사용자 확인 완료다. 전체 호환 기록/전체 기능 인수는 미확인이다. 기존 운영 source6154e45·이미지dfad04e8·DB0035/환경과 외부 백업 후속은 보존한다.
 
 Git 통합 최신(2026-11-01): 사용자승인 [PR33](https://github.com/heo0328/lostparty-backend/pull/33)·병합`c0b13cc`로 Lightsail 구성·실제반영/인증보완·운영안내 기록을dev에통합했다. 현재checkout은dev이며main도후행통합기록을포함한최종dev와동일커밋으로맞춘다. 완료한chore/lightsail-deployment는원격게시/전체포함확인후로컬·원격정리대상이고미완료feat/activity-selection은보존한다. 아래작업브랜치표시는당시이력이다. 실제운영source6154e45/이미지dfad04e8·DB0035/환경/키·수동인증자료는이번Git통합으로변경하지않는다. 외부백업등남은운영후속은계속미완료다.
 

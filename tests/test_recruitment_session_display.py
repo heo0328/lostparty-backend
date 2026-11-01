@@ -20,7 +20,11 @@ from tests.test_recruitment_cycle_commands import create_room, admission_request
 from tests.test_recruitment_cycle_lifecycle import opening_body, continue_body, scoped
 from tests.test_recruitment_cycle_times_http import client
 from tests.test_recruitment_cycle_outcomes import outcomes
-from docs.design.validate_issue13_prejoin_session_display import validate
+# The contract tool moved with the documentation; load its canonical path.
+from pathlib import Path
+from runpy import run_path
+validate = run_path(str(Path(__file__).resolve().parents[1] /
+    'docs/features/recruitment/participation/tools/validate-session-display.py'))['validate']
 
 
 def admission(w, rid, key, intent='join', include=True, cid=None):
