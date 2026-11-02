@@ -1,5 +1,12 @@
 # 영구 개발 이력
 
+## 2026-11-02 — 이슈38 초대 대상 판정 구현·검증 준비
+
+- 사용자 승인 설계로 현재39141a0에서 분기한 feat/group-invite-eligibility를 유지했다. 이슈 본문과 전체1번째 Flutter 선행 인계를 확인하고 [전체2번째 Backend 계약안](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6573015974)을 게시·실제2댓글 순서를 확인했다.
+- 새 opt-in 프로필/DTO, 현재 소유 회원 기준 self 우선·해당 그룹 membership 일괄 판정, 초대 POST의 권한/CAS·대상 세대 검사 후409 SELF_INVITATION을 추가했다. 기존 조회/타 명령/원ACK 보존, 기본·two-cycle 계약을 함께 반영했다. 계약 상세 원본은 가입 문서다.
+- 로컬 정적 문서/의존성 검사·스크립트52PASS. Docker.exe 샌드박스 재확인 후에도 Desktop Linux 엔진 pipe가 없어 로컬 격리 DB/생성계약 검증은 미실행이다. Python 호스트에도 FastAPI가 없으며 운영자료로 대체하지 않았다.
+- 후속 배포 없는 수동 Actions로 실제 Python3.12/격리 PostgreSQL·생성계약을 검증한다. 현재 기준 태그 이후 보호경로 변경 때문에 full 검증을 유지하며 결과는 후속 기록으로 구분한다. 서버 배포·태그·merge·자료변경/Issue종료 없음.
+
 ## 2026-11-02 — 변경 규모별 배포 검증 구현·수동 전체 검증 완료
 
 - 사용자 확정 설계대로 동일 태그 배포 경로에서 selected/full을 선택하도록 구현했다. release-validation.json의 버전/기준태그/사유/정확한 테스트 파일을 확인하며 파일 부재는 full, 잘못된 파일은 중단이다. 게시된 정식 기준 Release/조상 여부와 보호경로 누적 변경을 검사한다. 최신 성공 production 기준 대조는 담당의 명시 검토로 유지하며 파일별 테스트 자동 선택·이전 CI결과 재사용은 넣지 않았다.

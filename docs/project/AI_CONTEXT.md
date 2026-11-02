@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+이슈38: feat/group-invite-eligibility에 opt-in 초대 대상 판정·본인409 전용 오류 구현, 검증/게시·인계 진행 중. [가입 계약](../features/groups/joining/README.md)·[NEXT_WORK](NEXT_WORK.md) 기준이며 실제 서버/Flutter 신규 소비는 미반영이다.
+
 검증 범위 개선: chore/release-validation에 selected/full·release-validation.json·불변 validation.json 구현/게시, [수동 Actions41410922327](https://github.com/heo0328/lostparty-backend/actions/runs/41410922327) 전체1811PASS·artifact대조 PASS·게시/배포skip, scripts52PASS. [운영 기준](../engineering/operations/backend-release.md)·[검증집계](../engineering/operations/records/backend-validation-scope-verification.json)·NEXT_WORK를 따른다. 로컬 selected 실DB는 Docker 엔진 불가로 미실행, 선택분기는 단위 검증 완료. [전체10번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6572819899) 인계 완료. 다음 통합 승인/새 태그 별도 승인, 운영/API/DB/서버 입력 계약은 유지한다.
 
 자동배포 최신(2026-11-02): 사용자 승인 PR36·source77c9de2/v0.1.1 태그1회push·Actions41323830955 attempt2 success로 첫 자동 서버 배포 완료. 실제 API image259e8234·DB0035, UTC16:30:20Z API 시작/16:30:33Z 완료. 전체회귀1811PASS·GHCR/Release·production Deployment/서버journal·공개health/조회200/me401 확인, DB/Caddy·운영환경/키보존. 태그충돌은 수정했고 SSH Secret 개행 손실은 제한키 교체/올바른 등록으로 해소했다. v0.1.0은 보존, 임시 인증 복사본 삭제 완료. [배포집계](../engineering/operations/records/backend-v0.1.1-deployment.json)·[전체9번째 Backend](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6560737194)·NEXT_WORK 기준. 전체 앱 사용자 인수/외부백업 미완료는 별도이며 다음 릴리즈는 새 VERSION/승인 태그로 진행한다.

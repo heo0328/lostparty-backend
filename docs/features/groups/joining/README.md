@@ -22,6 +22,22 @@
 
 <a id="section"></a>
 
+## 초대 대상 판정 프로필 — 이슈 38
+
+`reader_profile=group-invite-eligibility-1`은 기존 표시 후보 필드와 `character_spec`을 유지하고 각 item에 필수 `invitation_eligibility`를 추가한다. 외곽은 `profile/evaluated_at/items`이며 profile은 요청값과 같다. 기본 응답과 `group-display-1`에는 새 필드를 추가하지 않는다.
+
+| 값 | 기준 |
+|---|---|
+| `self` | 후보의 현재 소유 회원이 요청 회원과 같음. 해당 그룹 가입 여부보다 우선한다. |
+| `already_member` | 후보의 현재 소유 회원에게 해당 group_id의 종료되지 않은 membership이 있음. 대표/활동 캐릭터와 무관하다. |
+| `eligible` | 위 두 경우가 아님. 다른 그룹 가입은 거절 이유가 아니다. 차단/pending/CAS/최종 소유 검증을 통과했다는 뜻은 아니다. |
+
+기존 사용 자격을 통과한 본인/그룹원은 결과에서 숨기지 않는다. 사용 불가 후보는 기존처럼 제외한다. 현재 소유 회원 목록으로 membership을 최대 1회 일괄 조회하며 동일 READ ONLY/REPEATABLE READ 스냅샷을 사용한다. 회원 UUID를 공개하지 않고 외부 API·키 접근/쓰기/migration을 추가하지 않는다. 새 프로필도 DB0034/0035가 필요하며 미지원 DB는503 `GROUP_FEATURE_NOT_READY`다. 검색 규칙·정렬·최대50·요청 제한·no-store를 유지한다.
+
+초대 POST는 현재 발신 membership·group/CAS·대상 사용 자격과 ownership/lifecycle revision을 검사한 뒤 본인이면409 `SELF_INVITATION`, 타 기존 그룹원이면409 `ALREADY_GROUP_MEMBER`다. 신청/수락/승인/코드 가입은 바꾸지 않는다. 조회는 evaluated_at의 참고 상태이며 초대 성공 보장이 아니다. 검색 후 가입/소유 변경은 기존 명령 검증으로 거절하고 원자성·멱등 원ACK/결과불명 처리도 유지한다.
+
+**호환성:** 게시된 기존 앱도 본인 초대 POST에서 새 오류 code를 받을 수 있다. Flutter는 이 두 확정 거절을 결과 영역 안내/후보 제거로 소비하고, 503 등 결과불명은 원요청 복구 흐름을 보존한다. 서버 지원 확인 전 새 프로필을 일반 앱에서 켜지 않는다. 현재 구현/검증과 실제 서버 반영은 [NEXT_WORK](../../../project/NEXT_WORK.md)에서 구분한다. [이슈38](https://github.com/heo0328/lostparty-backend/issues/38)·[전체2번째 Backend 계약안](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6573015974).
+
 ## 가입 코드
 
 그룹장만 생성·재발급·폐기·공개 설정을 변경한다. 코드는 혼동 문자를 제외한 영문 대문자·숫자6자리이고 각 종류를 포함한다. 공개ON은 일반 멤버의 조회/복사 허용, OFF는 원문 숨김이며 이미 복사한 코드의 무효화가 아니다.

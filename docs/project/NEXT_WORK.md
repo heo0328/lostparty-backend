@@ -1,5 +1,9 @@
 # 다음 실행
 
+## 현재 실행 — 이슈38 초대 대상 판정
+
+`feat/group-invite-eligibility`에서 사용자 승인 새 조회 프로필·본인409 SELF_INVITATION을 구현했다. [계약](../features/groups/joining/README.md)·[전체2번째 Backend 계약안](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6573015974)을 따른다. 로컬 정적/스크립트52PASS, Docker Desktop 엔진 중지로 로컬 PostgreSQL·생성계약 검증은 미실행이다. 다음은 배포 없는 GitHub 수동 Actions에서 두 전체계약/격리 회귀 확인 후 고정 SHA·결과 인계다. 현재 기준 태그 이후 보호경로 변경이 포함돼 full 계획을 유지한다. VERSION/태그/운영서버/DB/키는 변경하지 않는다. Flutter는 기존 group-display-1을 유지하며 새 프로필·오류 소비와 실제 서버 반영/기기 인수는 미완료다. merge·배포·Issue 종료는 별도다.
+
 ## 구현 완료 — 변경 규모별 배포 검증·통합 대기 (2026-11-02)
 
 chore/release-validation에 selected/full·계획 검사·불변 validation.json을 구현/게시했다. [운영 기준](../engineering/operations/backend-release.md)이 단일 원본이며 [검증 집계](../engineering/operations/records/backend-validation-scope-verification.json)를 따른다. 수동 Actions41410922327/sourcefbb9bc7: 정적·Docker교체/복귀·계약·이미지빌드·전체8그룹1811PASS·검증artifact 생성/내용대조 성공, publish/deploy는 skip이다. scripts52PASS에는 선택 실행/실패전파·잘못된 계획/보호경로/증거 불일치 차단이 포함된다. 로컬 Docker 엔진 불가로 별도 selected 실DB 실행은 미완료이며 GitHub full에서는 전체 파일을 검증했다.
