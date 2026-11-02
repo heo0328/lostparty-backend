@@ -1,5 +1,28 @@
 # 영구 개발 이력
 
+## 2026-11-02 — 이슈38 개발 로컬 API 반영·관련 검증 완료
+
+- 사용자 로컬 반영 지시와 [전체6번째 Flutter 실행 파일/HTTP400 조사](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6575085880)를 확인했다. Docker Desktop이 실행 중이고 기존 API가 cycle-group-b8542ef였으며 실행 파일에 새 프로필·SELF_INVITATION이 없음을 Backend도 직접 확인했다. 새 CI/운영 우회 없이 기존 로컬을 사용했다.
+- 현재737e14d와 업무fdd51c8의 app/alembic/Dockerfile/의존성/계약 동일성을 확인한 뒤 로컬 이미지를 빌드하고 compose.yaml+two-cycle의 API만 --no-deps/--no-build/--pull never로 교체했다. source737e14d/image1333c99d·API 시작10:45:02Z, DB0035/기존 DB 컨테이너·시작시각·mount/환경·116표2156행 내용/sequence·키4개 불변이다. migration·초기화·수동 회원 명령·키/URL 변경은 없다.
+- 초기 API 설정 전체 해시는 달라 보존 검사 도구의 assertion이 실패했다. 이를 전체 설정 불변으로 보고하지 않고, 교체 전후 설정 환경값/명령의 Compose 직접 일치·이전 이미지 기본 환경값 불변·실행 user/read-only root/key mount를 추가 확인했다. DB·행·sequence·키 비교는 모두 통과했다. 원문 inspect/환경·행·키 hash를 공개 기록에 복제하지 않았다.
+- 별도 로컬 임시 PostgreSQL의 초대 판정/기존 표시 두 파일17PASS(신규6 포함)·58.18초·기존 Starlette/AnyIO 경고1, 임시 컨테이너/네트워크 cleanup exit0다. 실행 소스277파일·기본/two-cycle 생성 계약 전체 일치, localhost health200/DBok·카탈로그200·미인증me401·OpenAPI404를 확인했다. READ ONLY 기존 유효 세션/그룹 표본의 검색 서비스에서 새 profile/self 응답도 확인했다. 이것은 별도 프로세스 서비스 호출이며 인증된 실제 리스너 HTTP/실회원 초대 POST·기기 인수로 확대하지 않는다. 토큰 발급/인증값 공유는 없다.
+- [전체7번째 Backend 로컬 반영·검증 인계](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6575270695)를 게시하고 전체7댓글 순서를 재조회했다. [로컬 반영 집계](../features/groups/invite-eligibility-local-rollout-2026-11-02.json)에 실행·검증/보존 경계를 남겼다. 다음 Flutter/사용자는 Android debug 로컬에서 앞서 실패한 검색 변경 경계만 재확인하고 구체 차이를 같은 이슈에 회신한다. 전체 정상시험/운영회원 추가는 요청하지 않았다.
+- AWS 운영v0.1.1·기존 자료는 변경하지 않았고 Actions/태그·Release/APK게시·dev/main 병합·Issue종료도 하지 않았다. 사용자 지시로 누적한 개발/운영 기준 문서와 이번 반영 기록은 같은 feat/group-invite-eligibility 구간 마감으로 묶으며 문서만의 후행 변경에는 서버·전체 회귀를 반복하지 않는다.
+
+## 2026-11-02 — 이슈38 Flutter 소비 연결 결과 확인
+
+- 본문과 전체5댓글을 재조회해 [전체4번째 Flutter 개발/운영 구분](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6574028919), [전체5번째 Flutter 일반 앱 소비 연결 완료](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6574940338)를 확인했다. 작성 측/단계는 Flutter·새 프로필 연결/자동검증·commit/push 완료이며 Backend 작업 단계 번호와 구분한다.
+- Flutter는 fix/group-invite-search-feedback/source0bac63bf commit/push, fdd51c8e 고정 계약의 strict profile/필수 eligibility·기존 spec/revision 소비, 본인/그룹원 사유·eligible만 초대, 두409 안내/후보 제거, 확인 중 후보·검색세대·회원/환경 변경 POST0과 원요청/불명/ACK 보존을 보고했다. 직접/영향2파일41PASS·변경 Dart6파일 분석 문제0·포맷/diff 완료는 Flutter 자체 자동검증이며 Backend/실기기 검증에 합산하지 않는다. Flutter 로컬 소스는 읽지 않았다.
+- debug Android 에뮬레이터 기본 http://10.0.2.2:8000·release AWS·명시 override 유지/일반 debug AWS override 미사용 기준을 수용했다. 로컬 health 정상/DBok·OpenAPI404는 Flutter 읽기 보고이며 Backend가 이번에 직접 확인한 결과가 아니다. 고정 app의 공개 OpenAPI 비활성 상태에서404만으로 실행 구버전을 단정하지 않는다.
+- 다음 담당은 Backend: 로컬 실행 SHA·새 프로필 실응답/지원 상태 확인 후 같은 이슈에 인계한다. 사용자 변경 화면/기기 인수·운영 반영은 미완료이며 전체 정상시험 반복/운영회원 추가 요청은 없다. 이번 작업은 결과 확인과 현재 브랜치의 미커밋 문서 갱신이며 추가 댓글·기동/교체·DB/키/운영·Actions·commit/push·merge·Issue종료는 하지 않았다.
+
+## 2026-11-02 — 로컬 dev 우선·운영 반영 결정권 명확화
+
+- 사용자는 수정·추가 개발·검증의 기본을 개발자 로컬 dev로 확정하고, 운영 AWS 반영은 개발자가 특정 구간·시점을 지시할 때 수행하도록 명확히 했다. 네이티브에는 debug→로컬/release→AWS baseURL 분리를 지시했다고 전달했다. 이는 사용자 전달 기준이며 Backend에서 Flutter 소스·실제 적용을 확인하거나 URL 설정을 바꾼 것은 아니다.
+- 이슈38에서 로컬 Docker가 꺼져 있다는 사실을 사용자 기동 요청으로 해소하지 않고 원격 수동 CI로 대체한 선택은 부적절했다. 기존 Actions41417066498의 통과·publish/deploy skipped 사실은 보존하지만 로컬 완료 근거로 사용하지 않는다. 우회 가능 여부만 보지 않고 단순 복구·대안·시간/비용·사용자 응답 상황과 선택 근거를 확인한다.
+- 상시 기준 원본을 [개발 작업 흐름](../engineering/development/workflow.md#local-dev-and-production)에 두고 AGENTS·환경 안내·운영 배포 문서는 이를 참조하도록 보완했다. Backend는 안정 구간 보존이나 운영에서만 확인 가능한 경계를 근거와 대안으로 제안할 수 있으며 제안·개발 완료·테스트 통과·작업 브랜치 게시를 운영 승인으로 해석하지 않는다. 사용자의 WebSocket 언급은 판단 방식의 예시이고 새 개발 요청이 아니다.
+- NEXT_WORK의 다음 실행을 운영 반영 선행에서 로컬 dev 확인·검증·Flutter debug 연결로 바로잡았다. 이번 수정은 사용자 지시대로 현재 feat/group-invite-eligibility에 누적하고 그룹 초대 구간 마감 시 함께 커밋·push·승인 병합에 포함한다. 이 문서 작업만으로 별도 브랜치/커밋·push·Issue 회신·merge·태그·Actions·서버/DB 작업을 수행하지 않는다. 검증은 문서 내용·참조·diff 확인으로 제한한다.
+
 ## 2026-11-02 — 이슈38 구현 검증·게시 및 계약 인계 완료
 
 - 구현/계약 source fdd51c8e9a4d9a5eda8c5f175485965a013ee99a를 feat/group-invite-eligibility에 commit/push·원격 일치 확인했다. 기본 Git HTTPS helper가 없어 최초 push는 실패했고, 이번 명령에만 기존 gh 인증 helper를 지정해 게시했다. 글로벌 인증 설정/키 변경은 없었다.

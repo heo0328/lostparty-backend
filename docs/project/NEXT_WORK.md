@@ -1,12 +1,16 @@
 # 다음 실행
 
-## 다음 실행 — 이슈38 실제 반영·Flutter 새 계약 소비
+## 다음 실행 — 이슈38 로컬 검색 변경 경계 기기 확인
 
-`feat/group-invite-eligibility`의 구현·계약 source `fdd51c8e9a4d9a5eda8c5f175485965a013ee99a` commit/push·원격 SHA 일치 확인을 완료했다. [전체3번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6573802290)로 고정 계약을 인계했고 실제 전체3댓글 순서를 확인했다. [가입 계약](../features/groups/joining/README.md)·[검증 집계](../features/groups/invite-eligibility-verification-2026-11-02.json)를 따른다.
+**Backend 로컬 반영·관련 검증 완료, 다음 Flutter/사용자 변경 화면 확인 대기**다. [전체6번째 Flutter 로컬 미지원 조사](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6575085880)에 대응해 [전체7번째 Backend 로컬 반영 결과](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6575270695)를 회신했고 실제 전체7댓글 순서를 확인했다. [로컬 반영 집계](../features/groups/invite-eligibility-local-rollout-2026-11-02.json)·[가입 계약](../features/groups/joining/README.md)을 따른다.
 
-[배포 없는 Actions41417066498](https://github.com/heo0328/lostparty-backend/actions/runs/41417066498) success: 전체98파일/8그룹1817PASS(신규6 포함)·스크립트52PASS·두 생성 OpenAPI 전체 일치·Docker교체/복귀·이미지빌드 PASS. validation artifact의 구현 SHA/계획 hash/98파일/성공 checks를 대조했다. 로컬 Docker 엔진 중지로 로컬 PostgreSQL은 미실행이며 DB/HTTP 결과는 GitHub 격리 합성회원 근거다. 후행 기록 커밋과 테스트된 구현 SHA를 구분한다.
+현재 로컬 실행은 source737e14d/image1333c99d·DB0035이며 업무 구현 fdd51c8과 app/migration/의존성/계약이 같다. 기존 실행 파일에는 새 프로필이 없었고 이번에는 API만 재빌드·교체했다. 로컬 Docker가 실행 중이어서 기동 요청이나 다른 환경 우회는 필요하지 않았다. 두 관련 파일17PASS(신규6 포함), 실행 소스277파일·두 생성 계약 전체 일치, 공개/인증거절 HTTP4·healthy를 확인했다. 기존 DB 컨테이너/시작시각·볼륨/환경·116표2156행 내용/sequence·키4개를 보존하고 migration/자료초기화 없이 반영했다. 기존 유효 세션의 READ ONLY 검색 서비스에서 새 profile·self 응답을 확인했으며 인증된 실제 리스너 HTTP/앱 기기 인수와 구분한다.
 
-다음 Backend/사용자는 별도 승인으로 통합·새 버전/태그·실제 서버 반영을 진행하고 실행 소스를 인계한다. 현재 서버는 기존v0.1.1이며 이번 publish/deploy는 skipped, 서버/DB/환경/키·운영회원 변경 없음이다. 다음 Flutter는 고정 DTO·SELF_INVITATION/ALREADY_GROUP_MEMBER 409 처리를 준비하되 **서버 지원 확인 전 일반 앱은 group-display-1 유지**다. 실제 반영·Flutter 신규 연결/기기 인수·Issue 종료는 미완료다. 정상 초대 전수 재시험/운영회원 추가는 요청하지 않는다.
+Flutter는 [전체5번째 소비 완료](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6574940338)의 source0bac63bf/후행97b2ec10을 사용한다. 직접/영향41PASS·분석 문제0은 Flutter 자체 보고이며 Backend 시험과 합산하지 않는다. [전체4번째 환경 구분](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6574028919)에 따라 Android 에뮬레이터 debug 기본 http://10.0.2.2:8000에서 앞서 실패한 검색 변경 경계만 재확인한다. 실제 차이가 있으면 같은 이슈에 회신하고 Backend가 표적 대응한다. 전체 정상시험 반복/운영회원 추가·OpenAPI 공개·인증값 공유 요청은 없다.
+
+기존 [수동 CI 집계](../features/groups/invite-eligibility-verification-2026-11-02.json)의 1817PASS는 당시 격리 검증 이력으로 보존하며 이번 로컬17PASS와 반복 합산하지 않는다. 개발은 로컬이 기본이고 AWS 운영은 기존v0.1.1이다. 운영 반영 여부·시점은 개발자가 정하며 승인 전 운영 통합/태그·배포를 진행하지 않는다. [상시 기준](../engineering/development/workflow.md#local-dev-and-production)을 따른다. 이번 로컬 반영에 운영 배포·Actions·dev/main 병합·Issue종료는 없다.
+
+개발/운영 기준 문서와 이번 로컬 반영·협업 결과는 사용자 지시대로 현재 feat/group-invite-eligibility에서 같은 구간 마감 기록으로 묶어 보존한다. 별도 문서 브랜치를 만들지 않고 승인된 기능 병합에 함께 포함한다.
 
 ## 구현 완료 — 변경 규모별 배포 검증·통합 대기 (2026-11-02)
 

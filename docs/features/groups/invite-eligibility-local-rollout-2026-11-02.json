@@ -1,0 +1,98 @@
+{
+  "date": "2026-11-02",
+  "issue": 38,
+  "branch": "feat/group-invite-eligibility",
+  "implementation_source": "fdd51c8e9a4d9a5eda8c5f175485965a013ee99a",
+  "runtime_source": "737e14d40d269c044b07ab5f18f9eac007832bf7",
+  "implementation_and_runtime_sources_have_identical_app_migrations_dependencies_contracts": true,
+  "image": "sha256:1333c99db08d17d9efdc44de23d96c676bed822ccd1d38fc2f46fbd213683749",
+  "api_started_at_utc": "2026-11-02T10:45:02.521053606Z",
+  "environment": "developer local Docker Desktop; localhost:8000",
+  "request_comment": "https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6575085880",
+  "result_comment": "https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6575270695",
+  "before": {
+    "profile_supported": false,
+    "self_invitation_code_supported": false
+  },
+  "local_isolated_tests": {
+    "files": [
+      "tests/test_group_invite_eligibility.py",
+      "tests/test_group_invite_display.py"
+    ],
+    "passed": 17,
+    "new_direct_tests_included": 6,
+    "seconds": 58.18,
+    "warnings": 1,
+    "temporary_project": "lostparty-check-e5c7f594f559",
+    "cleanup_exit": 0
+  },
+  "runtime_checks": {
+    "source_files_match": 277,
+    "configured_env_and_command_match": true,
+    "read_only_key_mount": true,
+    "local_http": [
+      {
+        "path": "/health",
+        "status": 200,
+        "expected": 200
+      },
+      {
+        "path": "/v1/raid-catalog",
+        "status": 200,
+        "expected": 200
+      },
+      {
+        "path": "/v1/me",
+        "status": 401,
+        "expected": 401
+      },
+      {
+        "path": "/openapi.json",
+        "status": 404,
+        "expected": 404
+      }
+    ],
+    "profile_read": {
+      "read_only_profile": "pass",
+      "profile": "group-invite-eligibility-1",
+      "items": 1,
+      "eligibility_values": [
+        "self"
+      ],
+      "authenticated_listener_http": false
+    },
+    "runtime_revision": "737e14d40d269c044b07ab5f18f9eac007832bf7",
+    "implementation_source": "fdd51c8e9a4d9a5eda8c5f175485965a013ee99a",
+    "api_image": "sha256:1333c99db08d17d9efdc44de23d96c676bed822ccd1d38fc2f46fbd213683749",
+    "contracts": {
+      "default": "whole generated object matches",
+      "two_cycle": "whole generated object matches"
+    }
+  },
+  "preservation": {
+    "db_revision": "0035_cycle_group_policy",
+    "tables_including_alembic": 116,
+    "rows": 2156,
+    "db_container_and_start_time": true,
+    "db_mounts_and_environment": true,
+    "all_row_content": true,
+    "sequences": true,
+    "key_files": 4,
+    "key_contents": true,
+    "configured_api_env_and_command_match_compose_before_and_after": true,
+    "raw_api_settings_combined_hash_equal": false,
+    "raw_hash_follow_up": "Compared configured environment values/command directly against Compose before and after; verified image default environment unchanged and new key mount read-only. Do not claim equality of every raw inspect field/order."
+  },
+  "boundaries": {
+    "migration": false,
+    "application_data_or_keys_manually_changed": false,
+    "tokens_issued": false,
+    "real_member_write_commands": false,
+    "authenticated_listener_http_checked": false,
+    "native_device_acceptance": "pending targeted recheck of previously failing search",
+    "production_touched": false,
+    "actions_invoked": false,
+    "merge_or_tag": false,
+    "issue_closed": false
+  }
+}
