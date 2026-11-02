@@ -1,0 +1,9 @@
+{
+  "version": "0.1.1",
+  "mode": "full",
+  "baseline_tag": "v0.1.1",
+  "change": "변경 규모별 selected/full 검증과 불변 검증 기록 도입",
+  "impact": "GitHub Actions·배포 검증 스크립트·운영 문서. API·DB·서버 제어 계약 변경 없음",
+  "reason": "자동 배포와 검증 기반의 변경이므로 전체 회귀 및 Docker 교체·복귀 검증 실행",
+  "tests": []
+}

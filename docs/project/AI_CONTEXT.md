@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+검증 범위 개선: 사용자 승인으로 selected/full·release-validation.json·불변 validation.json을 chore/release-validation에서 구현 중. 서버 입력/API/DB 계약은 유지하고 새 태그/운영 반영 없이 수동 검증한다. [운영 기준](../engineering/operations/backend-release.md)·NEXT_WORK를 따른다.
+
 자동배포 최신(2026-11-02): 사용자 승인 PR36·source77c9de2/v0.1.1 태그1회push·Actions41323830955 attempt2 success로 첫 자동 서버 배포 완료. 실제 API image259e8234·DB0035, UTC16:30:20Z API 시작/16:30:33Z 완료. 전체회귀1811PASS·GHCR/Release·production Deployment/서버journal·공개health/조회200/me401 확인, DB/Caddy·운영환경/키보존. 태그충돌은 수정했고 SSH Secret 개행 손실은 제한키 교체/올바른 등록으로 해소했다. v0.1.0은 보존, 임시 인증 복사본 삭제 완료. [배포집계](../engineering/operations/records/backend-v0.1.1-deployment.json)·[전체9번째 Backend](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6560737194)·NEXT_WORK 기준. 전체 앱 사용자 인수/외부백업 미완료는 별도이며 다음 릴리즈는 새 VERSION/승인 태그로 진행한다.
 
 release 로그인 최신: 사용자확정release Android ID·반영승인으로 allowlist에추가하고기존debug/Web audience·검증을유지했다. 동일이미지API만13:00:31Z재생성·health200/분리검증14PASS, DB/Caddy·키보존. [반영](../engineering/operations/records/lightsail-release-azp-rollout.json)·[전체4번째 Backend](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558294576) 이후 사용자 v1.1.2 실제 로그인 성공 보고를 [전체5번째 Backend](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6558340814)으로 수용했다. release 로그인/등록값 대기를 해소했고 refresh·전체 기능 인수는 별도 미확인이다.

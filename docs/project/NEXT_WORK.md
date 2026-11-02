@@ -1,5 +1,9 @@
 # 다음 실행
 
+## 현재 실행 — 변경 규모별 배포 검증 개선
+
+사용자 승인 설계로 chore/release-validation에서 selected/full·검증 계획/불변 validation.json을 구현한다. [운영 기준](../engineering/operations/backend-release.md)이 단일 원본이다. 이번 자동화 변경은 full 대상이며 VERSION0.1.1은 배포 없는 시험용으로 유지한다. 새 태그·merge·운영 반영은 승인하지 않은 상태다. 구현 후 격리 검증과 수동 Actions로 확인하고 결과를 Issue34에 묶어 전달한다.
+
 ## 완료 — Backend v0.1.1 첫 자동 배포 (2026-11-02)
 
 사용자 승인으로 PR36·main/dev 동일77c9de2·v0.1.1 1회push를 완료했다. [Actions attempt2](https://github.com/heo0328/lostparty-backend/actions/runs/41323830955/attempts/2) success, 전체8그룹1811PASS·이미지/Release게시·production Deployment7475782412와 서버journal 성공을 확인했다. 실제 API source77c9de2/image259e8234·DB0035이며 한국11월2일01:30에 API만 교체했다. DB/Caddy·운영env/Google허용목록/키는 보존, 공개health200/DBok·공개조회200·미인증me401을 독립 대조했다.
