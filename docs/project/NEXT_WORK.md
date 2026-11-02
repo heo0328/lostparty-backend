@@ -1,8 +1,10 @@
 # 다음 실행
 
-## 현재 실행 — 변경 규모별 배포 검증 개선
+## 구현 완료 — 변경 규모별 배포 검증·통합 대기 (2026-11-02)
 
-사용자 승인 설계로 chore/release-validation에서 selected/full·검증 계획/불변 validation.json을 구현한다. [운영 기준](../engineering/operations/backend-release.md)이 단일 원본이다. 이번 자동화 변경은 full 대상이며 VERSION0.1.1은 배포 없는 시험용으로 유지한다. 새 태그·merge·운영 반영은 승인하지 않은 상태다. 구현 후 격리 검증과 수동 Actions로 확인하고 결과를 Issue34에 묶어 전달한다.
+chore/release-validation에 selected/full·계획 검사·불변 validation.json을 구현/게시했다. [운영 기준](../engineering/operations/backend-release.md)이 단일 원본이며 [검증 집계](../engineering/operations/records/backend-validation-scope-verification.json)를 따른다. 수동 Actions41410922327/sourcefbb9bc7: 정적·Docker교체/복귀·계약·이미지빌드·전체8그룹1811PASS·검증artifact 생성/내용대조 성공, publish/deploy는 skip이다. scripts52PASS에는 선택 실행/실패전파·잘못된 계획/보호경로/증거 불일치 차단이 포함된다. 로컬 Docker 엔진 불가로 별도 selected 실DB 실행은 미완료이며 GitHub full에서는 전체 파일을 검증했다.
+
+[Issue34 전체10번째 Backend · 검증 개선 결과](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6572819899)로 인계했다. 다음은 사용자 통합 승인 후 dev/main 반영이다. 새 운영 태그는 별도 승인하며 VERSION/계획 version을 함께 새 버전으로 바꾼다. 현재0.1.1 계획은 배포 없는 full 검증용이고 기존 태그를 재사용하지 않는다. 실제 운영은 기존v0.1.1/source77c9de2/image259e8234·DB0035이며 서버/env/키 변경 없다. 이후 작은 변경은 “관련 검증으로 배포 준비”, 공통 구조 변경은 “전체 검증으로 배포 준비”, DB/운영 구성 변경은 별도 운영 계획부터 요청하면 된다. CI결과 재사용/자동 테스트 선택은 이번 범위 밖이다.
 
 ## 완료 — Backend v0.1.1 첫 자동 배포 (2026-11-02)
 

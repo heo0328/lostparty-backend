@@ -1,5 +1,14 @@
 # 영구 개발 이력
 
+## 2026-11-02 — 변경 규모별 배포 검증 구현·수동 전체 검증 완료
+
+- 사용자 확정 설계대로 동일 태그 배포 경로에서 selected/full을 선택하도록 구현했다. release-validation.json의 버전/기준태그/사유/정확한 테스트 파일을 확인하며 파일 부재는 full, 잘못된 파일은 중단이다. 게시된 정식 기준 Release/조상 여부와 보호경로 누적 변경을 검사한다. 최신 성공 production 기준 대조는 담당의 명시 검토로 유지하며 파일별 테스트 자동 선택·이전 CI결과 재사용은 넣지 않았다.
+- selected는 지정 파일 1개 격리 작업·Docker교체시험 생략, full은 기존8그룹/Docker교체시험이다. 공통 정적/계약/빌드/서버보호는 유지한다. verify/regression의 실제 success만 별도 gate가 통과시키고 validation.json을 불변 attempt별 artifact로 전달한다. 게시 전 소스/계획해시/테스트/결과/동일run을 확인하며 기존 Release 증거는 덮어쓰지 않는다. 기본 release.json/서버 입력·API/DB 계약은 변경하지 않았다.
+- 구현872e0d5와 GitHub App workflow게시fbb9bc7을 같은 목적브랜치에 모았다. scripts52PASS, 문서/diff PASS. actionlint는 기존 queue:max 미지원 진단 한 개만 제외하고 PASS다.
+- [수동41410922327](https://github.com/heo0328/lostparty-backend/actions/runs/41410922327)/sourcefbb9bc7은 기본검사·실Docker교체/복귀·두계약·수동이미지빌드·전체8그룹1811PASS와 validation artifact생성 success다. artifact의 source/계획해시/97파일/결과를 게시 검증기로 직접 대조했다. publish/deploy skip·태그/Release/GHCR게시/운영접속/운영자료변경 없음. [검증 집계](../engineering/operations/records/backend-validation-scope-verification.json)를 따른다.
+- 로컬 Docker Desktop은 엔진 연결 실패로 선택 실DB 실행을 시작하지 못했고 Linux CLI도 로컬 오류가 있어 환경 변경을 확대하지 않았다. 이를 테스트 통과로 합산하지 않는다. selected 정확파일 실행/실패전파는 단위 검증, 애플리케이션 전체 실DB 검증은 GitHub runner 근거로 구분한다. 새 테스트 작성은 필요할 때만 하며 작은 변경의 절차는 운영 문서에 정리했다.
+- [Issue34 전체10번째 Backend · 구현/검증 인계](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6572819899)를 게시했다. 다음은 사용자 통합 승인과 새 버전 태그 별도 승인이다. VERSION0.1.1과 같은 계획은 이번 배포 없는 시험용이며 v0.1.1 재태깅/새 운영 반영은 하지 않았다. 외부백업 미구성과 기존 release Google 로그인 인수는 유지한다.
+
 ## 2026-11-02 — v0.1.1 첫 자동 서버 배포 성공
 
 - 사용자 승인 PR36/77c9de2 통합·main/dev 일치 후 v0.1.1을 1회 push했다. 실제 태그 소스검증/정적/Docker복귀/계약·전체8그룹1811PASS, GHCR digest259e8234·Release 게시 완료. v0.1.0은 불변 보존했다.
