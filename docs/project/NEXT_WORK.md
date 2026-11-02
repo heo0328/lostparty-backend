@@ -1,8 +1,12 @@
 # 다음 실행
 
-## 현재 실행 — 이슈38 초대 대상 판정
+## 다음 실행 — 이슈38 실제 반영·Flutter 새 계약 소비
 
-`feat/group-invite-eligibility`에서 사용자 승인 새 조회 프로필·본인409 SELF_INVITATION을 구현했다. [계약](../features/groups/joining/README.md)·[전체2번째 Backend 계약안](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6573015974)을 따른다. 로컬 정적/스크립트52PASS, Docker Desktop 엔진 중지로 로컬 PostgreSQL·생성계약 검증은 미실행이다. 다음은 배포 없는 GitHub 수동 Actions에서 두 전체계약/격리 회귀 확인 후 고정 SHA·결과 인계다. 현재 기준 태그 이후 보호경로 변경이 포함돼 full 계획을 유지한다. VERSION/태그/운영서버/DB/키는 변경하지 않는다. Flutter는 기존 group-display-1을 유지하며 새 프로필·오류 소비와 실제 서버 반영/기기 인수는 미완료다. merge·배포·Issue 종료는 별도다.
+`feat/group-invite-eligibility`의 구현·계약 source `fdd51c8e9a4d9a5eda8c5f175485965a013ee99a` commit/push·원격 SHA 일치 확인을 완료했다. [전체3번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6573802290)로 고정 계약을 인계했고 실제 전체3댓글 순서를 확인했다. [가입 계약](../features/groups/joining/README.md)·[검증 집계](../features/groups/invite-eligibility-verification-2026-11-02.json)를 따른다.
+
+[배포 없는 Actions41417066498](https://github.com/heo0328/lostparty-backend/actions/runs/41417066498) success: 전체98파일/8그룹1817PASS(신규6 포함)·스크립트52PASS·두 생성 OpenAPI 전체 일치·Docker교체/복귀·이미지빌드 PASS. validation artifact의 구현 SHA/계획 hash/98파일/성공 checks를 대조했다. 로컬 Docker 엔진 중지로 로컬 PostgreSQL은 미실행이며 DB/HTTP 결과는 GitHub 격리 합성회원 근거다. 후행 기록 커밋과 테스트된 구현 SHA를 구분한다.
+
+다음 Backend/사용자는 별도 승인으로 통합·새 버전/태그·실제 서버 반영을 진행하고 실행 소스를 인계한다. 현재 서버는 기존v0.1.1이며 이번 publish/deploy는 skipped, 서버/DB/환경/키·운영회원 변경 없음이다. 다음 Flutter는 고정 DTO·SELF_INVITATION/ALREADY_GROUP_MEMBER 409 처리를 준비하되 **서버 지원 확인 전 일반 앱은 group-display-1 유지**다. 실제 반영·Flutter 신규 연결/기기 인수·Issue 종료는 미완료다. 정상 초대 전수 재시험/운영회원 추가는 요청하지 않는다.
 
 ## 구현 완료 — 변경 규모별 배포 검증·통합 대기 (2026-11-02)
 

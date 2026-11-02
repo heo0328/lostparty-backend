@@ -1,5 +1,13 @@
 # 영구 개발 이력
 
+## 2026-11-02 — 이슈38 구현 검증·게시 및 계약 인계 완료
+
+- 구현/계약 source fdd51c8e9a4d9a5eda8c5f175485965a013ee99a를 feat/group-invite-eligibility에 commit/push·원격 일치 확인했다. 기본 Git HTTPS helper가 없어 최초 push는 실패했고, 이번 명령에만 기존 gh 인증 helper를 지정해 게시했다. 글로벌 인증 설정/키 변경은 없었다.
+- [수동 Actions41417066498](https://github.com/heo0328/lostparty-backend/actions/runs/41417066498) success: 전체98파일/8그룹1817PASS(신규 직접6 포함, 별도 합산 안 함)·스크립트52PASS·두 생성 OpenAPI 전체 객체 일치(기본123/140, two-cycle185/206)·격리 Docker 교체/복귀·이미지 빌드 PASS다. 기준 v0.1.1 이후 상속된 보호경로 변경으로 full 계획을 유지했다. 새 API 경로/기존 schema 변경 없음, 초대 GET/POST와 추가 schema2개만 계약에 달라진 것을 정적 대조했다.
+- validation-41417066498-1 artifact의 source/plan SHA256/전체98파일 목록·성공 checks를 직접 대조했다. [기능 검증 집계](../features/groups/invite-eligibility-verification-2026-11-02.json)에 분할 결과·지원 경계·로컬 미실행·운영 미반영을 기록했다. Starlette/AnyIO 폐기 경고 및 다른 기존 테스트의 NULL-primary-key SAWarning이 있었고 실패는0이다. 로컬 엔진 부재를 GitHub 격리 PostgreSQL 결과와 구분했다.
+- [전체3번째 Backend 계약 확정·구현 결과](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6573802290)를 회신하고 실제 전체3댓글/작성 측/단계를 확인했다. Issue38 본문 상단만 현재 상태·다음 담당으로 갱신하며 원 요청과 완료 조건을 보존했다. 새 profile과 기존 앱에도 적용되는409 SELF_INVITATION 영향을 고정 계약으로 인계했다.
+- publish/deploy 모두 skipped, 운영은 기존v0.1.1이다. merge/태그·서버/DB/환경/키·운영회원 변경·Issue종료는 하지 않았다. 다음 Backend/사용자 별도 실제 반영 승인·실행 소스 인계 후 Flutter가 새 profile을 연결한다. Flutter는 지금 strict DTO/409 처리만 준비하고 기존 group-display-1 유지, 새 기기 인수는 미완료다. 이 기록만의 후행 commit은 위 검증된 업무 SHA와 구분하며 문서 검사만 수행한다.
+
 ## 2026-11-02 — 이슈38 초대 대상 판정 구현·검증 준비
 
 - 사용자 승인 설계로 현재39141a0에서 분기한 feat/group-invite-eligibility를 유지했다. 이슈 본문과 전체1번째 Flutter 선행 인계를 확인하고 [전체2번째 Backend 계약안](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6573015974)을 게시·실제2댓글 순서를 확인했다.

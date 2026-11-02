@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-이슈38: feat/group-invite-eligibility에 opt-in 초대 대상 판정·본인409 전용 오류 구현, 검증/게시·인계 진행 중. [가입 계약](../features/groups/joining/README.md)·[NEXT_WORK](NEXT_WORK.md) 기준이며 실제 서버/Flutter 신규 소비는 미반영이다.
+이슈38: feat/group-invite-eligibility/sourcefdd51c8에 opt-in 초대 대상 판정·본인409 전용 오류 구현/검증·push·[전체3번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6573802290) 완료. [검증 집계](../features/groups/invite-eligibility-verification-2026-11-02.json)·[가입 계약](../features/groups/joining/README.md)·[NEXT_WORK](NEXT_WORK.md) 기준이다. 실제 서버는 기존v0.1.1이며 새 서버 반영·Flutter 신규 프로필 연결/기기 인수는 별도 대기다.
 
 검증 범위 개선: chore/release-validation에 selected/full·release-validation.json·불변 validation.json 구현/게시, [수동 Actions41410922327](https://github.com/heo0328/lostparty-backend/actions/runs/41410922327) 전체1811PASS·artifact대조 PASS·게시/배포skip, scripts52PASS. [운영 기준](../engineering/operations/backend-release.md)·[검증집계](../engineering/operations/records/backend-validation-scope-verification.json)·NEXT_WORK를 따른다. 로컬 selected 실DB는 Docker 엔진 불가로 미실행, 선택분기는 단위 검증 완료. [전체10번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6572819899) 인계 완료. 다음 통합 승인/새 태그 별도 승인, 운영/API/DB/서버 입력 계약은 유지한다.
 
