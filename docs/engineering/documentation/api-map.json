@@ -1236,6 +1236,18 @@
       "path": "/v1/groups/{group_id}/raid-rooms",
       "operation_id": "group_raid_rooms_v1_groups__group_id__raid_rooms_get",
       "topic": "groups/management"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/characters/personal-profiles",
+      "operation_id": "get_v2_me_characters_personal_profiles_get",
+      "topic": "rosters/bootstrap"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/me/role-summary-batches",
+      "operation_id": "put_v2_me_role_summary_batches_post",
+      "topic": "rosters/bootstrap"
     }
   ]
 }

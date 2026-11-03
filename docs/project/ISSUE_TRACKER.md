@@ -1,5 +1,7 @@
 # 이슈 주제별 추적표
 
+현재 #41: 초기 자동 갱신 일괄 조회/저장 구현·관련 로컬 검증·실제 dev API 반영 완료, Backend 게시/인계 후 Flutter 연결·사용자 로컬 인수 대기. [계약](../features/rosters/bootstrap/startup-batches.md)·[전체2번째 Backend 계약](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6601566667)·[NEXT_WORK](NEXT_WORK.md) 기준. 운영 배포·merge·Issue 종료 없음.
+
 | 현재 추가 주제 | 상태·다음 담당·완료 조건 |
 |---|---|
 | [#38 초대 검색 본인·기존 그룹원 판정](https://github.com/heo0328/lostparty-backend/issues/38) | 로컬17PASS·Flutter 소비/41PASS·사용자 변경 구간 통과 후 개발자 승인 PR40/source2c6070c/v0.1.2·image7c8b8db9·DB0035 운영 반영 완료. [전체9번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6599670183)·[배포 집계](../engineering/operations/records/backend-v0.1.2-deployment.json). 기존1817PASS 한정 재사용·신규 앱시험0/scripts59PASS, 공개health·조회·인증거절 확인. 운영 사용자 전체 인수/APK게시·Issue종료는 별도이며 추가 요청·반복시험 없이 지시 대기, Issue OPEN 유지. |

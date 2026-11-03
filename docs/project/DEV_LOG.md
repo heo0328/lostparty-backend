@@ -1,5 +1,16 @@
 # 영구 개발 이력
 
+<a id="startup-batches"></a>
+
+## 2026-11-03 — Issue41 초기 갱신 일괄 조회·저장
+
+- 사용자 승인 설계와 두 선택(활동 선택 제한 추가 없음, 중단 시 부분 결과 보존)을 현재 feat/startup-batch-refresh에 구현했다. [전체2번째 Backend 계약·구현 착수](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6601566667) 후 최신 댓글을 재확인했으며 추가 수정 요구는 없었다. [계약·합성 예시](../features/rosters/bootstrap/startup-batches.md)·기본/two-cycle OpenAPI·API 분류표를 함께 갱신했다. 기존 경로/DTO 전체 객체는 변경 없음이다.
+- 일괄 GET은 RR/READ ONLY snapshot·현재 소유 세대의 일괄 자료 로딩, 일괄 POST는 기존 단건 서비스/role-summary 멱등 영역을 그대로 재사용한다. 전체 DTO/크기/중복 선검증, 항목별 독립 commit, 업무 실패 계속/DB·인증 장애 중단·미처리 구분, 20초 항목 사이 예산을 적용했다. 외부 호출·키 접근·migration·새 활동 제한·batch 전체 잠금은 없다.
+- 격리 로컬 PostgreSQL에서 신규 최종42PASS(48.98초), 기존 역할 요약/bootstrap/전투력 성공 이력102PASS. 고유144개이며 경계/측정 재실행은 합산하지 않았다. 첫 합동 실행의 실패1개는 다른 회원 helper 인자 순서 오류였고 수정 후 통과했다. 실제 별도 subprocess를 첫 commit 직후 종료한 복구, 응답 유실/DB 장애·중간 세션 상실·예산 소진, 단건↔batch 동일 키, 동시/lease/24시간 만료·외부회원·삭제·revision 변경·UTF-8·chunked·정확한32768/524288바이트 경계를 포함한다. 기존 Starlette BlockingPortal deprecation 경고1개는 기능 실패와 구분한다.
+- 기본125경로142operation/two-cycle187경로208operation 전체 생성 계약 일치 PASS. 1/9/50개 GET SELECT는 인증 포함13/13/13으로 일정했다. 최종 합성9개(단건 dealer/일괄 support) 비교는18회0.9966초8271바이트→2회0.2366초13900바이트. TestClient/격리 DB 측정이며 최종bootstrap·LostArk/실제 앱 전체 시간은 미포함, 실기기 성능 인수로 확대하지 않는다. [검증 집계](../features/rosters/bootstrap/startup-batches-verification.json)에 조건·미실행을 보존했다.
+- 로컬 API만 compose two-cycle로 build/recreate, 실제 image8ca35379 healthy·DB0035. 기존 DB 컨테이너 식별자 보존, migration/키/회원 자료 변경 없음. Windows127.0.0.1:8000 health200/databaseok·새GET/POST 미인증401, 실행 app238파일과 작업 소스의 hash 전체 일치·실행 two-cycle OpenAPI 전체 일치 PASS. 실제 회원의 인증 HTTP/Flutter 연결·기기 결과는 미실행이며 격리 양성 HTTP와 구분한다.
+- 다음은 작업 구간 commit/push·원격 확인 후 같은 Issue에 고정 SHA/로컬 준비 상태를 인계하고 Flutter 연결/사용자 로컬 인수를 기다린다. Flutter commit/push/merge 보류는 별도 사용자 결정이다. dev/main 통합·운영 배포/태그·APK 게시·자료 초기화·Issue 종료는 수행하지 않는다.
+
 <a id="backend-v012-deployment"></a>
 
 ## 2026-11-03 — 그룹 초대 수정 v0.1.2 운영 반영 완료

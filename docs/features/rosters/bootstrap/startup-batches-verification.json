@@ -1,0 +1,62 @@
+{
+  "issue": 41,
+  "branch": "feat/startup-batch-refresh",
+  "environment": "local Docker; disposable isolated PostgreSQL17 only",
+  "tests": {
+    "new_batch_scenarios": 42,
+    "existing_related_scenarios": 102,
+    "unique_passed": 144,
+    "existing_files": [
+      "tests/test_role_summaries.py",
+      "tests/test_account_bootstrap.py",
+      "tests/test_role_power_success.py"
+    ],
+    "new_file": "tests/test_startup_batches.py",
+    "notes": "Existing 102 passed in first combined run; initial one test-helper argument failure corrected. Final new suite42PASS. Boundary/measurement repeats excluded from unique total."
+  },
+  "contracts": {
+    "legacy": "full object PASS, 125 paths/142 operations",
+    "two_cycle": "full object PASS, 187 paths/208 operations",
+    "existing_paths_and_schemas_unchanged": true
+  },
+  "synthetic_measurement": {
+    "kind": "FastAPI TestClient HTTP with isolated PostgreSQL; same local environment, dealer single vs support batch, no LostArk/device",
+    "characters": 9,
+    "read_select_counts": {
+      "1": 13,
+      "9": 13,
+      "50": 13
+    },
+    "single": {
+      "calls": 18,
+      "seconds": 0.9966,
+      "response_bytes": 8271
+    },
+    "batch": {
+      "calls": 2,
+      "seconds": 0.2366,
+      "response_bytes": 13900
+    },
+    "final_bootstrap": "additional one in either flow; not timed here",
+    "app_performance_accepted": false
+  },
+  "local_runtime": {
+    "image": "sha256:8ca3537909c9b20317af23afc2f72885e1a468354264686420eee74bb45120a6",
+    "schema": "0035_cycle_group_policy",
+    "db_container_preserved": true,
+    "windows_local_port": 8000,
+    "health": 200,
+    "unauthenticated_get": 401,
+    "unauthenticated_post": 401,
+    "app_source_files": 238,
+    "app_tree_sha256": "580861f5f1ade351c4346138e90a2238f0f40afda1cc0c8d99f035209fa79c25",
+    "two_cycle_contract_matches": true
+  },
+  "unexecuted": [
+    "Flutter connected app / device performance acceptance",
+    "Authenticated real-member HTTP on running dev API; positive HTTP verified in isolated TestClient"
+  ],
+  "production_changed": false,
+  "merge_performed": false,
+  "migrations_performed": false
+}

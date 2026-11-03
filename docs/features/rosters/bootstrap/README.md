@@ -16,6 +16,8 @@ GET `/v2/me/account-bootstrap`은 회원·메인/등록 원정대·소유/활동
 
 ## 소비·관련 기능
 
+[초기 자동 갱신 일괄 처리](startup-batches.md)는 지정 캐릭터의 준비 조회와 역할 요약 저장을 묶는 추가 계약이다. 저장 이후 현재 상태 조회는 기존 account-bootstrap을 사용한다.
+
 [회원 설정](../../login-account/member-settings/README.md), [캐릭터 profile](../power-and-profiles/README.md), [주간 기록](../../raids/weekly-records/README.md)의 원본 책임은 유지한다. 동일 자료를 이 문서에 별도 정책으로 복제하지 않는다. 오류면 기존 저장값과 조회 실패를 구분하고 초기값을 자동 PUT하지 않는다.
 
 <a id="decisions"></a>
@@ -41,3 +43,5 @@ GET `/v2/me/account-bootstrap`은 회원·메인/등록 원정대·소유/활동
 | Method | 경로 |
 |---|---|
 | GET | `/v2/me/account-bootstrap` |
+| GET | `/v2/me/characters/personal-profiles` |
+| POST | `/v2/me/role-summary-batches` |

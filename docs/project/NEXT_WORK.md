@@ -1,5 +1,11 @@
 # 다음 실행
 
+## 현재 — 초기 자동 갱신 일괄 처리 / Issue41
+
+`feat/startup-batch-refresh`에서 [승인 계약](../features/rosters/bootstrap/startup-batches.md)·일괄 GET/POST를 구현했다. 신규42·관련 기존102의 고유144PASS, 기본/two-cycle 전체 계약 일치, 로컬 dev API 갱신과 Windows8000 health200/새 경로 미인증401을 확인했다. DB0035·기존 DB/키/자료 보존. [검증 집계](../features/rosters/bootstrap/startup-batches-verification.json)·[결과 이력](DEV_LOG.md#startup-batches) 기준이다.
+
+다음 Backend: 이 작업 구간 commit/push·원격 확인 후 [Issue41](https://github.com/heo0328/lostparty-backend/issues/41)에 고정 SHA와 실제 로컬 반영 상태를 인계한다. 이후 Flutter DTO/원명령/일괄 전송·복구/최종bootstrap 연결 및 사용자 로컬 실기기 인수다. Flutter commit/push/merge 보류는 해당 사용자 결정 사항이다. 운영 배포·태그·merge·APK·자료 초기화·Issue 종료 없음. 아래 운영 완료는 이전 v0.1.2이며 이번 API의 운영 지원을 뜻하지 않는다.
+
 ## 완료 — 그룹 초대 수정 운영 반영 v0.1.2
 
 사용자가 승인한 main b649ccf의 앱 코드를 PR40·source2c6070c로 v0.1.2에 게시하고 실제 운영 API에 반영했다. [배포 집계](../engineering/operations/records/backend-v0.1.2-deployment.json)·[전체9번째 Backend 운영 결과](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6599670183)를 따른다. 운영은 image7c8b8db9·DB0035, 한국2026-11-03 18:07:40 API 시작/18:07:53 반영 완료다. Actions41608259484·production Deployment7514620773 success, 공개health200/DBok·카탈로그200·미인증me401을 확인했다.
