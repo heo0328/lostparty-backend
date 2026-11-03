@@ -1,5 +1,25 @@
 # 영구 개발 이력
 
+<a id="activity-continuity"></a>
+
+## 2026-11-03 — Issue42 사용자 최종 범위: 예방 수정, 기존 dev 방 복구 제외
+
+- 사용자가 기존에 이미 막힌 dev 방에 대응하지 않아도 된다고 명시했다. 운영에서는 아직 발견되지 않았고 테스터 모집 전이므로 앞으로 같은 활동 해제로 기존 참가가 새로 제한되지 않도록 예방 수정한 뒤 운영 반영은 별도 지시할 예정이다. [전체2번째 Backend 범위 변경](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6605446700)으로 원요청/전체1번째 착수의 복구 범위를 정정했다.
+- 복구 CLI·읽기 전용 복구 판정·감사 DB 확장은 구현 범위에서 제거했다. 폐기한 복구 초안 소스/시험과 Dockerfile COPY 변경도 제거, 새 DDL/migration 없음. 기존 LegacyCycleEvidence 불변 제약과 자료를 보존한다. 기존 review 복구를 후속 필수 과제로 남기거나 GET/worker에 자동 복구를 추가하지 않는다.
+- 예방 수정은 공통 소유/수명 검증을 추출하고 신규 selected_character의 활동 검사를 유지한다. 기존 참가용 함수가 server room/cycle/현재 generation/CM/Member/CycleAssignment/Assignment를 증명한 뒤 활동 조건만 제외한다. qualify의 공통 일정/권한/관리/승계 경로와 현재 세대 detail/build 표시를 연결했다. 원키/본문/ACK와 공개 path/DTO는 보존하고 두 OpenAPI에는 정책 설명만 추가한다.
+- 최종 격리 예방21PASS(192.99초), 관련 기존36PASS로 고유57개를 확인했다. 앞선38PASS 묶음에 신규2개가 포함됐으므로 중복 합산하지 않는다. 기존 C/N·8명 방·A→B/반대T 보존·신규 생성/신청/승인 거절·선행 context 최종검증·소유/등록/퇴역/정지/수명·위조 방어·일정 확인/완료·탈퇴 및 기존 review 비자동복구를 포함한다. 그룹 신규 가입·일정·관리/편성·승계·완료·멱등 관련 회귀를 확인했고 기존 Starlette 경고는 기능 실패와 구분한다.
+- 기본125경로142operation/two-cycle187경로208operation 전체 생성 계약 일치 PASS, 기존 paths/components 동일/정책 설명만 추가다. [검증 집계](../features/recruitment/membership-actions/activity-continuity-verification.json)에 중첩·미실행과 로컬 실행 경계를 기록했다.
+- 로컬 API만 --no-deps/--no-build/--pull never로 교체, imagebe56f76c healthy·DB0035·기존 DB 컨테이너 ID 동일. 실제 app239파일 hash가 작업 소스와 같고 실행 two-cycle 계약 전체 일치, Windows127.0.0.1:8000 health200/databaseok 확인. 복구 모듈/CLI 없음, migration/키/자료 초기화·실자료 복구·운영 변경 없음. 실행 dev의 실제 회원 인증/변경 기기 인수는 아직 미실행이며 격리 양성 시험과 구분한다.
+- 다음은 이 작업 구간 commit/push·원격 SHA 확인 후 같은 Issue에 예방 수정/제외 범위·고정 SHA·로컬 준비를 인계한다. 아래 감사 제약/결정 대기는 당시 진행 이력이며 현재는 예방 수정만 진행하는 결정으로 해소됐다. 운영/merge/태그/Issue 종료 없음.
+
+## 2026-11-03 — Issue42 구현 중 예방 검증·복구 감사 제약 확인
+
+- 사용자 승인 계획으로 fix/raid-participation-continuity에서 구현 착수, [전체1번째 Backend 계약](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6604762479) 게시. 신규 선택은 활동 검사를 유지하고 기존 참가용 server room/cycle/현재 generation/CM/Member/Assignment 증명 경로를 분리했다. 로컬 Docker/API 정상 실행을 확인했으며 원격 CI/운영으로 우회하지 않았다.
+- 초기 회귀의 fixture +8시간 합성 일정이 실제 현재 주차 종료를 넘는 SCHEDULE_REVIEW_REQUIRED를 확인해 중단 후 테스트 일정 간격만 남은 주차 안으로 보완했다. 런타임 시간/정책을 바꾸지 않았다. 기존 “활동 해제=기존 자격 상실” 회귀3개는 퇴역 거절 검증으로 유지하고 새 요구의 정상 경로를 별도 검증한다.
+- 격리 신규 첫 실행에서 기존 C/N·8명 방·A→B·신규 거절·소유/수명·위조 방어17PASS 후 removed 합성 fixture의 state/ended_at 사이 autoflush 문제를 수정했다. 별도 그룹 가입·일정·완료·관리·탈퇴·멱등 및 신규2건 묶음38PASS(186.39초, Starlette deprecation 경고1)로 확인했다. 최초/반복/부분 실행 수치를 임의 합산하지 않는다.
+- 복구 사전 판정의 읽기 전용·최소 변경 설계를 검증하던 중 LegacyCycleEvidence UPDATE가 DB의 immutable_recruitment_source trigger에 의해 거절됨을 확인했다. 수정 초안의 상태·revision 변경은 같은 트랜잭션에서 전체 rollback됐다. 승인 초안의 “기존 증거 JSON에 복구 내역 추가”는 불가능하며 설계 단계에서 이 trigger까지 확인하지 못한 점을 사용자에게 명시했다. 원본 불변 제약을 해제하거나 다른 이벤트로 위장하지 않는다.
+- 사용자에게 예방/읽기 전용 판정과 복구 쓰기·감사 DB 확장을 분리할지, 이번에 별도 불변 복구 감사 표/migration 구현을 포함할지 선택을 요청했다. 실제 DB 적용·실자료 복구는 어느 선택에서도 별도 승인 전 실행하지 않는다. 결정 전에는 예방 및 읽기 전용 판정 검증만 진행하며 현재 소스/문서는 미커밋·미인계, 실제 로컬 API·운영 미반영이다.
+
 <a id="startup-batches-dev-integration"></a>
 
 ## 2026-11-03 — 초기 갱신 일괄 처리 dev 통합·참가 유지 수정 분기

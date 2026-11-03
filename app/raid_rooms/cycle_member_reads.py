@@ -118,7 +118,8 @@ def detail(principal,rid,key,*,read_snapshot=None,reader_profile=None):
             if recent and mine is not None:
                 try:
                     if db.get(User,actual.user_id).status!='active':fail('ROOM_TARGET_UNAVAILABLE')
-                    selected=context.selection(db,actual.user_id,recent.character_id,recent.selected_role)
+                    from app.raid_rooms import existing_participation
+                    selected=existing_participation.selection(db,room,row,actual)
                     if (selected.expected_ownership_revision,selected.expected_lifecycle_revision)!=(recent.ownership_revision,recent.lifecycle_revision):
                         fail('OWNERSHIP_REQUIRED',403)
                     minimum=row.settings_snapshot['combat_requirement']['dealer_min' if recent.selected_role=='dealer' else 'support_min']

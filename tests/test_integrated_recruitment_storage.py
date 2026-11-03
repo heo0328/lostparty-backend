@@ -1,10 +1,11 @@
 """R1: real PostgreSQL forward import as a restricted LOGIN; no app DB changes."""
 import uuid
+from datetime import timedelta
 import pytest
 from sqlalchemy import inspect, text
 from sqlalchemy.exc import IntegrityError
 from app.core import database
-from app.core.database import session
+from app.core.database import session, now
 from app.raid_rooms import readiness
 from app.raid_rooms.integrated_models import (
     RecruitmentRoom, RecruitmentItem, RecruitmentRound, RecruitmentMembership,
@@ -26,10 +27,21 @@ def imported(people, monkeypatch, client):
             patch.setattr(database, 'engine', lambda: target)
             a, b = people('r1-a'), people('r1-b')
             gid = uuid.UUID(group(client, a))
-            rid = uuid.UUID(create(a)[1]['room_id'])
+            # Keep three distinct future fixtures inside the actual current week,
+            # including the final eight hours before Wednesday 06:00 KST.
+            from app.raids import service as raids
+            with session() as db:
+                stamp = now(db)
+            unit = min(timedelta(hours=1), (raids.cycle(stamp).ends_at-stamp)/10)
+            if unit < timedelta(minutes=2):pytest.skip('Insufficient interval before actual cycle boundary')
+            def future_command(w, position, index=0):
+                command = create_command(w, selection=selection(w,index=index))
+                return command.model_copy(update={'schedule':command.schedule.model_copy(update={
+                    'starts_at':stamp+unit*(1+3*position),'ends_at':stamp+unit*(2+3*position)})})
+            rid = uuid.UUID(create(a, future_command(a,0))[1]['room_id'])
             join(b, rid)
-            second = uuid.UUID(create(a, create_command(a, offset=3, selection=selection(a, index=1)))[1]['room_id'])
-            third = uuid.UUID(create(b, create_command(b, offset=6, selection=selection(b, index=1)))[1]['room_id'])
+            second = uuid.UUID(create(a, future_command(a,1,1))[1]['room_id'])
+            third = uuid.UUID(create(b, future_command(b,2,1))[1]['room_id'])
             recover(b, third, 'end')
             with target.begin() as c:
                 # Preserve a legal legacy interval that has no valid new 5-minute duration.

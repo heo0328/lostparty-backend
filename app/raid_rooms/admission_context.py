@@ -31,7 +31,7 @@ def verify(value, expected):
     if not hmac.compare_digest(value,expected):fail('SELECTION_CONTEXT_CHANGED')
 
 
-def selection(db,uid,cid,role):
+def _selection_snapshot(db,uid,cid,role):
     account,character=owned_character(db,uid,cid)
     registration=db.scalar(select(Registration).where(Registration.user_id==uid,
         Registration.account_id==account.id,Registration.deleted_at.is_(None)))
@@ -42,6 +42,11 @@ def selection(db,uid,cid,role):
         expected_roster_revision=account.roster_revision,expected_lifecycle_revision=character.lifecycle_revision,
         expected_role_summary_version=head.version if head else 1,
         expected_limits_revision=limits.revision if limits else 1,expected_usage_revision=usage.revision if usage else 1)
+    return result
+
+
+def selection(db,uid,cid,role):
+    result=_selection_snapshot(db,uid,cid,role)
     identity.selected_character(db,uid,result.model_dump(mode='json'))
     return result
 

@@ -306,9 +306,9 @@ def test_overlapping_sessions_warn_without_veto_and_cursor_is_target_bound(conse
 
 
 def test_invalid_current_character_blocks_confirmation_but_not_cancellation(consent):
-    from app.game_accounts.models import Activity
+    from app.game_accounts.models import Character
     engine,a,b=consent;rid,c,n=scheduled(a);sid,body=confirmation(a,rid,n)
-    with session() as db,db.begin():db.delete(db.get(Activity,(a['cid'],uuid.UUID(a['ids'][0]))))
+    with session() as db,db.begin():db.get(Character,uuid.UUID(a['ids'][0])).lifecycle_state='retired'
     initial=plan(a,rid,n)['data']['my_participations'][0]
     assert not initial['permissions']['confirm_participation']['allowed']
     before=fingerprints(engine)

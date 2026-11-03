@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+Issue42 현재: 사용자 최종 결정으로 예방 수정만 마감하며 이미 막힌 기존 dev 방 복구는 제외한다. 복구 CLI/사전 판정/감사 DB 확장·migration 없음, 기존 review 자동 복구 없음. fix/raid-participation-continuity에서 기존 참가 증명/신규 활동 선택 검증을 분리했고 관련 고유57PASS·계약 일치·로컬 API imagebe56f76c/DB0035 반영 완료, 원격 게시/인계 마감 중이다. [NEXT_WORK](NEXT_WORK.md)·[최종 결정](DEV_LOG.md#activity-continuity)·[동작 계약](../features/recruitment/membership-actions/activity-participation-continuity.md) 기준. 운영 테스터 전 배포 시점은 개발자 별도 지시다.
+
 Git/다음 작업(2026-11-03): 사용자 승인 [PR43](https://github.com/heo0328/lostparty-backend/pull/43)·68d2624로 초기 갱신 일괄 처리를 dev 통합했다. 통합 기록을 포함한 최신 dev에서 `fix/raid-participation-continuity`를 분기·게시해 Issue42 대응 위치로 사용한다. 완료 startup-batch 로컬/원격 정리·미완료 activity-selection 보존, main515a6c9/실제 로컬·운영은 보존. [NEXT_WORK](NEXT_WORK.md)·[통합 이력](DEV_LOG.md#startup-batches-dev-integration) 기준이며 Issue42 구현/실자료 복구는 아직 수행하지 않았다.
 
 초기 갱신 일괄 처리(#41): 사용자 확인으로 Backend 반복 호출 축소 구간 완료. 업무b1f11bb 구현·검증·원격 게시·로컬 반영과 Flutter 앱 연결/양성HTTP 보고를 기준으로 조회1회·저장1회의 성과를 확인했다. [마감 결정](DEV_LOG.md#startup-batches-backend-closeout)·[계약](../features/rosters/bootstrap/startup-batches.md) 기준이다. 네이티브 LostArk 동시 조회 조정은 후속이며 전체 앱 시작시간 개선·최적 동시성·전체 기기 인수로 확대하지 않는다. 다음은 사용자 지정 Issue42 요구 확인([NEXT_WORK](NEXT_WORK.md)). Flutter 게시/병합 보류와 운영 v0.1.2/새 API 미배포 상태를 유지한다.

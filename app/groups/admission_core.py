@@ -20,7 +20,8 @@ def leader(db, uid, group):
     return membership
 
 
-def selected_character(db, uid, selection):
+def owned_selection_character(db, uid, selection):
+    """Identity/revision checks only; existing participation must be proven by caller."""
     registration = accounts.reg(db, uid, uuid.UUID(str(selection['registration_id'])))
     account, status = accounts.ownership(db, uid, registration)
     if status != 'owned' or account.verified_at is None:
@@ -34,7 +35,12 @@ def selected_character(db, uid, selection):
             account.roster_revision != selection['expected_roster_revision'] or
             character.lifecycle_revision != selection['expected_lifecycle_revision']):
         fail('REVISION_CONFLICT')
-    config = accounts.config(db, uid, account.id)
+    return character
+
+
+def selected_character(db, uid, selection):
+    character = owned_selection_character(db, uid, selection)
+    config = accounts.config(db, uid, character.account_id)
     if config is None or db.get(Activity, (config.id, character.id)) is None:
         fail('ACTIVITY_SELECTION_REQUIRED')
     return character

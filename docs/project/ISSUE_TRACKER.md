@@ -1,6 +1,6 @@
 # 이슈 주제별 추적표
 
-현재 #42: [요청 본문](https://github.com/heo0328/lostparty-backend/issues/42)·댓글0개 확인, 최신 dev에서 fix/raid-participation-continuity를 분기·게시하여 대응 준비. 활동 선택 해제 후 기존 참가 유지/신규 선택 검증 분리와 review 안전 복구 조사·설계가 다음이며 구현/실자료 복구는 미실행이다. #41은 [PR43](https://github.com/heo0328/lostparty-backend/pull/43)·68d2624로 dev 통합, 완료 브랜치 정리·main/실행 서버 보존. [NEXT_WORK](NEXT_WORK.md)·[통합 이력](DEV_LOG.md#startup-batches-dev-integration) 기준.
+현재 #42: 사용자 최종 지시로 예방 수정만 진행하며 기존에 막힌 dev 방은 대응 제외다. [전체2번째 Backend 범위 변경](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6605446700)·[동작 계약](../features/recruitment/membership-actions/activity-participation-continuity.md) 기준. 복구 CLI/사전판정/감사 DB 확장 없음·복구를 후속 필수로 남기지 않음. 최종 검증·로컬 예방 반영·고정 SHA 인계 후 Flutter 연결/사용자 변경 범위 확인으로 이어간다. 운영 테스터 전 배포는 개발자 별도 지시, merge/태그/자료 초기화·Issue 종료 없음.
 
 #41 Backend 구간 완료: 사용자가 반복 호출을 일괄 GET1/POST1로 줄인 성과를 확인했다. [Flutter 전체5번째 실기기 보고](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6603203545)·[마감 결정](DEV_LOG.md#startup-batches-backend-closeout) 기준이며 네이티브 LostArk 동시 조회 조정은 후속이다. 전체 앱 시작시간 개선·기기 전체 인수·원격 Flutter 게시와 구분, Flutter 게시/병합 보류·운영 미배포·Issue OPEN 유지. 다음은 문서 게시 후 사용자 지정 [Issue42](https://github.com/heo0328/lostparty-backend/issues/42) 요구 확인([NEXT_WORK](NEXT_WORK.md)).
 

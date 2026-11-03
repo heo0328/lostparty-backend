@@ -1,10 +1,12 @@
 # 다음 실행
 
-## 현재 — Issue42 대응 브랜치 준비
+## 현재 — Issue42 예방 수정 마감
 
-사용자 승인으로 Issue41의 `feat/startup-batch-refresh`를 [PR43](https://github.com/heo0328/lostparty-backend/pull/43)·병합 `68d26242d46265b0fcc8418b9d23b70270317c37`로 dev에 통합했다. 통합 기록을 포함한 최신 dev에서 `fix/raid-participation-continuity`를 분기·게시하여 다음 작업 위치로 사용한다. 완료한 startup-batch 브랜치는 dev 포함·원격 게시 확인 후 로컬/원격 정리했으며 미완료 `feat/activity-selection`은 보존한다. main은 이번 승인 범위에 없어 기존515a6c9를 유지한다.
+사용자 최종 결정으로 기존에 이미 막힌 dev 방은 대응하지 않으며 예방 수정만 마감한다. 복구 CLI·읽기 전용 복구 판정·감사 DB 확장은 제거했고 후속 필수 과제로 남기지 않는다. [전체2번째 Backend 범위 확정](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6605446700)·[동작 계약](../features/recruitment/membership-actions/activity-participation-continuity.md)·[최종 결정](DEV_LOG.md#activity-continuity) 기준이다.
 
-[Issue42](https://github.com/heo0328/lostparty-backend/issues/42) 본문·댓글0개를 확인했다. 다음은 활동 선택 해제 후 기존 참가 유지와 신규 선택 검증의 분리, 이미 review 상태인 주차/세대의 안전한 회복 경계를 조사·설계하는 것이다. 기존 참가자 상세/일정/관리/완료/탈퇴 경로와 신규 생성/신청/승인/교체 경로를 구분하고 소유·수명·권한·점유/CAS를 보존한다. 구현·검증·로컬 반영은 후속이며 실자료 복구 실행은 별도 승인 사항이다. 운영 배포·태그·자료 초기화·Issue 종료는 하지 않는다. [Git 통합 이력](DEV_LOG.md#startup-batches-dev-integration) 기준이다.
+현재 fix/raid-participation-continuity의 예방 수정은 격리 신규21/관련 기존36 고유57PASS·기본/two-cycle 계약 전체 일치·로컬 API imagebe56f76c/DB0035 반영까지 완료했다. [검증 집계](../features/recruitment/membership-actions/activity-continuity-verification.json)를 기준으로 작업 구간 commit/push·고정 SHA 인계 후 Flutter 변경 연결/사용자 로컬 확인으로 이어간다. 기존 참가 유지와 신규 활동 선택 검증을 분리하되 소유/등록/생명주기/회원/권한/한도/그룹/점유/CAS와 기존 JSON 계약·원 ACK를 보존한다. 기존 dev review는 자동으로 정상화하지 않는다.
+
+운영 테스터 모집 전 예방 수정의 운영 반영은 개발자의 별도 지시 대상이다. 이번에 운영 배포·merge·태그·자료 초기화/복구·Issue 종료는 하지 않는다. Flutter 게시/병합 보류는 별도 사용자 결정 사항이다.
 
 ## 완료 — 초기 자동 갱신 Backend 반복 호출 축소 / Issue41
 

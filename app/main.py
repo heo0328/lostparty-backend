@@ -351,6 +351,14 @@ def _decorate_openapi(schema):
             if 'game-accounts' in operation.get('tags', []) and '503' in operation.get('responses', {}):
                 operation['responses']['503']['headers']['Retry-After'] = {
                     'description': 'UPSTREAM_RATE_LIMITED only', 'schema': {'type': 'integer', 'minimum': 1}}
+    schema['x-existing-participation-policy']={
+        'identity': 'server room/cycle/current-generation/member/assignment proof; never client isExisting',
+        'retained': 'activity deselection alone does not invalidate existing participation, display/build, scheduling or authority',
+        'new_selection': 'activity required for creation/application/join/approval/replacement target/new-week issuance',
+        'other_guards': 'ownership/registration/lifecycle/revisions/member/group/limits/power/item-level/occupancy unchanged',
+        'existing_review': 'developer excluded existing dev review recovery; no repair CLI or automatic GET/worker repair',
+        'compatibility': 'no new API/DTO/reader profile/DDL; original key/body/ACK preserved',
+    }
     schema['x-recruitment-policy']={
         'schema_revision':'0023_recruitment_resume',
         'cycle':'Asia/Seoul Wednesday 06:00; maintenance Wednesday [06:00,10:00)',

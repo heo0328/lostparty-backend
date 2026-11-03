@@ -85238,5 +85238,13 @@
     "raid_authority": "existing actual-target raid leader; group role grants no raid command",
     "legacy_default_shape": "preserved",
     "reads": "stored current group-scoped data only; no provider or read-side writes"
+  },
+  "x-existing-participation-policy": {
+    "identity": "server room/cycle/current-generation/member/assignment proof; never client isExisting",
+    "retained": "activity deselection alone does not invalidate existing participation, display/build, scheduling or authority",
+    "new_selection": "activity required for creation/application/join/approval/replacement target/new-week issuance",
+    "other_guards": "ownership/registration/lifecycle/revisions/member/group/limits/power/item-level/occupancy unchanged",
+    "compatibility": "no new API/DTO/reader profile/DDL; original key/body/ACK preserved",
+    "existing_review": "developer excluded existing dev review recovery; no repair CLI or automatic GET/worker repair"
   }
 }

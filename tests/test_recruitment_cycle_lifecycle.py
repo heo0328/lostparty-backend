@@ -198,12 +198,12 @@ def test_leader_cancel_chooses_first_eligible_and_preserves_c(lifecycle,people):
 
 
 def test_successor_changed_after_context_requires_reconfirmation(lifecycle,people):
-    from app.game_accounts.models import Activity
+    from app.game_accounts.models import Character
     _,a,b=lifecycle
     room=create_room(a);rid=uuid.UUID(room['room_id']);n=next_key()
     add_member(b,rid,n);third=people('w3-successor-next');add_member(third,rid,n)
     ctx=leadership.get_cancel(actor(a['uid']),rid,n)
-    with session() as db,db.begin():db.delete(db.get(Activity,(b['cid'],uuid.UUID(b['ids'][0]))))
+    with session() as db,db.begin():db.get(Character,uuid.UUID(b['ids'][0])).lifecycle_state='retired'
     denied('SUCCESSOR_UNAVAILABLE',leadership.cancel,actor(a['uid']),rid,uuid.uuid4(),cancel_body(ctx))
     refreshed=leadership.get_cancel(actor(a['uid']),rid,n)
     leadership.cancel(actor(a['uid']),rid,uuid.uuid4(),cancel_body(refreshed))
@@ -477,10 +477,10 @@ def test_character_change_failure_preserves_whole_bundle(lifecycle,monkeypatch):
 
 
 def test_invalid_only_successor_blocks_handoff_but_can_cancel_own_target(lifecycle):
-    from app.game_accounts.models import Activity
+    from app.game_accounts.models import Character
     _,a,b=lifecycle
     room=create_room(a);rid=uuid.UUID(room['room_id']);n=next_key();add_member(b,rid,n)
-    with session() as db,db.begin():db.delete(db.get(Activity,(b['cid'],uuid.UUID(b['ids'][0]))))
+    with session() as db,db.begin():db.get(Character,uuid.UUID(b['ids'][0])).lifecycle_state='retired'
     ctx=leadership.get_cancel(actor(a['uid']),rid,n)
     assert ctx['data']['mode']=='auto_successor'
     assert ctx['data']['permission']['reason']=='SUCCESSOR_UNAVAILABLE'
