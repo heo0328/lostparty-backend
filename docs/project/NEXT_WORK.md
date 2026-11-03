@@ -1,5 +1,9 @@
 # 다음 실행
 
+## 현재 실행 — 승인된 그룹 초대 수정 운영 반영 v0.1.2
+
+2026-11-03 사용자가 현재 main b649ccf의 게시와 이미 통과한 검증의 이번 배포 한정 재사용을 승인했다. chore/release-group-invite에서 VERSION0.1.2·고정 run41417066498/sourcefdd51c8의 검증 출처 대조를 준비한다. 앱/DB/의존성/계약은 승인 main과 동일하며 새 소스의 차이는 릴리즈 준비 제어·문서다. 로컬 스크립트59PASS, 앱 회귀/계약 재실행 없음이다. 다음은 실제 artifact/소스 동일성 대조→dev/main 통합→v0.1.2 태그1회→이미지 게시/API 교체→공개 health·복귀 결과 확인이다. DB/설정/키·네이티브 APK·Issue종료는 이번 승인 범위에 포함하지 않는다. [한정 운영 기준](../engineering/operations/backend-release.md)을 따른다.
+
 2026-11-03 사용자 승인 [PR39](https://github.com/heo0328/lostparty-backend/pull/39)·병합323b665로 그룹 초대·상속된 검증 범위 개선과 인수 문서를 dev에 통합했다. checkout dev, 완료한 feat/group-invite-eligibility·chore/release-validation은 로컬/원격 정리했고 미완료 feat/activity-selection은 보존한다. 이 후행 마감 기록까지 포함한 최종 dev 커밋으로 main도 fast-forward 동기화한다. 다음 기능은 개발자 지시에 따라 최신 dev에서 목적 브랜치로 시작한다. 운영 태그·배포·서버/DB·Issue 종료는 이번 Git 통합 범위에 포함하지 않는다. [통합 이력](DEV_LOG.md#invite-eligibility-git-integration)을 따른다.
 
 ## 완료·다음 지시 대기 — 이슈38 초대 검색 변경 구간

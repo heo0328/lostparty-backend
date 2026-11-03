@@ -1,9 +1,9 @@
 {
-  "version": "0.1.1",
-  "mode": "full",
+  "version": "0.1.2",
+  "mode": "reuse",
   "baseline_tag": "v0.1.1",
   "change": "Issue38 초대 검색 본인·기존 그룹원 판정과 SELF_INVITATION",
   "impact": "그룹 초대 후보 opt-in DTO/조회·초대 POST 오류 및 두 OpenAPI; migration 없음",
-  "reason": "새 기능 검증. 기준 v0.1.1 이후 상속된 scripts/워크플로 보호경로 변경 때문에 full 유지; 수동 검증만 실행하며 게시/배포 없음",
+  "reason": "사용자 승인 이번 배포 한정: main b649ccf의 실행 소스는 전체1817PASS의 fdd51c8과 같음. 로컬17PASS·사용자 변경 구간 인수 완료. 기존 Actions41417066498 검증 artifact를 고정 해시로 재사용하고 앱 테스트는 재실행하지 않음. 배포 준비 코드만 짧은 단위 검사, 운영 DB/구성/health/복귀 보호 유지",
   "tests": []
 }
