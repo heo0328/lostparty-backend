@@ -1,0 +1,61 @@
+{
+  "issue": 42,
+  "branch": "fix/raid-participation-continuity",
+  "scope": "prevention only; developer excluded existing dev review recovery",
+  "isolated_postgresql": {
+    "new_final_scenarios": 21,
+    "new_final_seconds": 192.99,
+    "related_existing_scenarios": 36,
+    "unique_passed": 57,
+    "related_run": "38PASS in 186.39s included two of the new scenarios; overlaps not added to unique total",
+    "new_file": "tests/test_activity_participation_continuity.py",
+    "related_files": [
+      "tests/test_group_admissions.py",
+      "tests/test_recruitment_cycle_lifecycle.py",
+      "tests/test_recruitment_cycle_times.py",
+      "tests/test_recruitment_cycle_outcomes.py",
+      "tests/test_recruitment_cycle_management.py",
+      "tests/test_recruitment_cycle_planning.py"
+    ],
+    "warning": "existing Starlette BlockingPortal deprecation"
+  },
+  "contracts": {
+    "legacy": "full object PASS; 125 paths/142 operations",
+    "two_cycle": "full object PASS; 187 paths/208 operations",
+    "existing_paths_and_components_unchanged": true,
+    "policy_annotation_only": true
+  },
+  "local_runtime": {
+    "image": "sha256:be56f76ce10129363b6366a4f86839ec363a33576a2fe9eef33569d72dd92557",
+    "healthy": true,
+    "schema": "0035_cycle_group_policy",
+    "db_container_unchanged": true,
+    "windows_localhost_health": 200,
+    "app_files": 239,
+    "app_tree_sha256": "30cc38f8e55a892db2b88a767ef0ebfacef6fec7b6e680b2690350161de5e1fc",
+    "two_cycle_openapi_matches": true
+  },
+  "excluded_by_developer": [
+    "existing blocked dev room recovery",
+    "recovery preview/CLI",
+    "recovery audit DB extension/migration"
+  ],
+  "unexecuted": [
+    "post-change authenticated real-member HTTP/device acceptance on running dev API; positive service/HTTP fixtures verified in isolated tests",
+    "production deployment"
+  ],
+  "production_changed": false,
+  "migration_executed": false,
+  "existing_room_repaired": false,
+  "merge_performed": false,
+  "tag_created": false,
+  "implementation_commit": "0207d0f6b9ef8734e67bbbdc0701ce75fbdc9c8c",
+  "remote_source_verified": true,
+  "handoff": {
+    "comment_order": 3,
+    "side": "Backend",
+    "stage": "prevention implementation/local readiness",
+    "url": "https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6605617996",
+    "next_owner": "Flutter / user local changed-scope acceptance"
+  }
+}

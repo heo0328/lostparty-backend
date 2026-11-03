@@ -1,5 +1,46 @@
 # 영구 개발 이력
 
+<a id="issues-41-42-close-check"></a>
+
+## 2026-11-04 — Issue41/42 클로즈 가능 여부·Flutter 원격 인계 확인
+
+- 두 Issue 본문/최신 전체 댓글을 재조회했다. Issue41 전체13번째·Issue42 전체7번째의 원격 push 승인 대기는 [41 전체14번째 Flutter 원격 인계](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6608982829)·[42 전체8번째](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6608986700)로 해소됐다. Flutter 원격 dev/main SHA를 읽기 전용으로 직접 대조해 양쪽 `11e9c847900441417c373452fa6fce8dfcf743db` 일치를 확인했다. 로컬 Flutter 소스는 읽거나 수정하지 않았다.
+- Flutter 최종 전체2817PASS/analyze0·변경36Dart 포맷0변경과 기존 사용자 인수는 해당 측 보고다. Backend 독립 시험이나 이전2811/관련321/직접77 등 부분집합과 합산하지 않는다. 코드 기준 성능95befe12·활동선택거절7ac83c30과 통합/최종 문서11e9c847의 의미를 구분한다.
+- Issue41은 Backend 일괄 API/검증144·로컬 지원·반복 호출 축소 사용자 확인, Flutter 연결/실기기 비교·[전체12번째 기본동시2 선택 확정](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6608556182)·원격 게시까지 완료했다. 동시2가 제공자의 최적값/제한임을 주장하지 않는다. Issue42는 예방 수정/Backend57·로컬 지원·Flutter 보완·전체6번째 사용자 변경 구간 인수·원격 게시 완료이며 기존 dev review 복구는 사용자 최종 범위에서 제외됐다. 추가 Backend 변경/재시험 요청은 없다.
+- 따라서 두 이슈 모두 **개발·로컬 인수 완료 기준으로 클로즈 가능**으로 판단한다. AWS/APK/운영 테스터 인수는 이슈 구현 완료 조건에 포함되지 않으며 별도 개발자 지시 대상이다. 이번은 가능 여부 확인 요청이므로 실제 Issue 종료/댓글 게시·merge·배포를 하지 않았다.
+- Backend 원격 dev7d4bfbc/main515a6c9/작업 e6c69cb를 읽기 전용 대조했다. Issue41은 dev에 포함되고 Issue42 업무0207d0f는 아직 dev에 포함되지 않는다. 현재 인수/상태 문서는 미커밋이다. 남은 기록 commit/push·dev 통합은 NEXT_WORK에 별도 Git 작업으로 추적하며 기능 미완료나 배포 대기와 혼동하지 않는다. 기존 사용자 변경을 보존하고 Git ref·서버/DB·운영은 변경하지 않았다.
+
+<a id="activity-continuity-local-acceptance"></a>
+
+## 2026-11-04 — Issue42 Flutter 보완·사용자 로컬 변경 구간 인수 확인
+
+- 본문과 전체6댓글을 조회해 [4번째 Flutter 인계 확인](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6605718383), [5번째 Flutter 네이티브 보완·자동검증](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6606255488), [6번째 Flutter 사용자 로컬 실기기 인수 통과](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6607158974)를 확인했다. 전체 댓글 순번이며 Backend 작업 단계 번호와 구분한다.
+- Flutter는 Backend0207d0f·최종 예방 범위/기존 dev 복구 제외를 수용했다. 신규 후보의 활동 집합 필터·기존 상세의 서버 projection/content·설정 저장 후 invalidateReads/confirmedRoster 복원 경로를 유지하며 추가 API/DTO/스키마·화면·주기조회는 없다는 보고다.
+- Native 보완은 ACTIVITY_SELECTION_REQUIRED 안내와 정확한 HTTP409+code를 확정 no-effect 거절로 분류하여 영속 rejected 저장/복원/release·선택 재조회/초기화로 대기를 해제하는 것이다. 같은code의503은 미확정 원키/본문을 유지하며 신규 자동POST·성공명령 재실행·권한 우회는 없다는 보고다. 관련10파일321PASS(신규5 포함), 직접77은 부분집합으로 미합산, Dart4파일 분석0/포맷/diff 검토를 보고했다. Backend 독립 재현이나 Backend57PASS와 합산하지 않는다.
+- 최신 전체6번째는 사용자가 변경 구간 전체 통과를 보고한 근거다. 활동 해제 후 기존 방 데이터 보존·정상 이용, 신규 생성/교체 후보 제외, 다른 활동 캐릭터로 참가 변경 성공·해제 캐릭터 재노출 없음, 그룹원 활동 캐릭터 목록 제외를 확인했다. 변경 구간 인수 대기를 해소하되 모든 C/N·공대장/공대원·타 계정 전체 기능 전수 인수로 확대하지 않는다.
+- Flutter feature/startup-performance-diagnostics는 미커밋/미push, commit/push/merge는 사용자 결정 대기다. 보류한 로딩2/5 비교 재개 가능 상태라는 보고를 기록하되 Backend가 착수·시험 요청을 확대하지 않는다. 추가 Backend 수정/재시험 요청 없음, 다음 개발자 지시 또는 구체 차이 대응이다. 기존 dev review 복구는 제외한 최종 범위를 유지한다.
+- 현재 목적 브랜치에 수신/인수 상태 문서만 갱신하고 수신마다 별도 commit/push하지 않는다. 기능 코드·서버/DB·운영·태그·merge·APK·자료·Issue 상태 변경 및 중복 확인 댓글/기능시험은 없다. 문서 링크/절·JSON·동결 자료·diff 검증으로 확인한다.
+
+<a id="activity-continuity"></a>
+
+## 2026-11-03 — Issue42 사용자 최종 범위: 예방 수정, 기존 dev 방 복구 제외
+
+- 사용자가 기존에 이미 막힌 dev 방에 대응하지 않아도 된다고 명시했다. 운영에서는 아직 발견되지 않았고 테스터 모집 전이므로 앞으로 같은 활동 해제로 기존 참가가 새로 제한되지 않도록 예방 수정한 뒤 운영 반영은 별도 지시할 예정이다. [전체2번째 Backend 범위 변경](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6605446700)으로 원요청/전체1번째 착수의 복구 범위를 정정했다.
+- 복구 CLI·읽기 전용 복구 판정·감사 DB 확장은 구현 범위에서 제거했다. 폐기한 복구 초안 소스/시험과 Dockerfile COPY 변경도 제거, 새 DDL/migration 없음. 기존 LegacyCycleEvidence 불변 제약과 자료를 보존한다. 기존 review 복구를 후속 필수 과제로 남기거나 GET/worker에 자동 복구를 추가하지 않는다.
+- 예방 수정은 공통 소유/수명 검증을 추출하고 신규 selected_character의 활동 검사를 유지한다. 기존 참가용 함수가 server room/cycle/현재 generation/CM/Member/CycleAssignment/Assignment를 증명한 뒤 활동 조건만 제외한다. qualify의 공통 일정/권한/관리/승계 경로와 현재 세대 detail/build 표시를 연결했다. 원키/본문/ACK와 공개 path/DTO는 보존하고 두 OpenAPI에는 정책 설명만 추가한다.
+- 최종 격리 예방21PASS(192.99초), 관련 기존36PASS로 고유57개를 확인했다. 앞선38PASS 묶음에 신규2개가 포함됐으므로 중복 합산하지 않는다. 기존 C/N·8명 방·A→B/반대T 보존·신규 생성/신청/승인 거절·선행 context 최종검증·소유/등록/퇴역/정지/수명·위조 방어·일정 확인/완료·탈퇴 및 기존 review 비자동복구를 포함한다. 그룹 신규 가입·일정·관리/편성·승계·완료·멱등 관련 회귀를 확인했고 기존 Starlette 경고는 기능 실패와 구분한다.
+- 기본125경로142operation/two-cycle187경로208operation 전체 생성 계약 일치 PASS, 기존 paths/components 동일/정책 설명만 추가다. [검증 집계](../features/recruitment/membership-actions/activity-continuity-verification.json)에 중첩·미실행과 로컬 실행 경계를 기록했다.
+- 로컬 API만 --no-deps/--no-build/--pull never로 교체, imagebe56f76c healthy·DB0035·기존 DB 컨테이너 ID 동일. 실제 app239파일 hash가 작업 소스와 같고 실행 two-cycle 계약 전체 일치, Windows127.0.0.1:8000 health200/databaseok 확인. 복구 모듈/CLI 없음, migration/키/자료 초기화·실자료 복구·운영 변경 없음. 실행 dev의 실제 회원 인증/변경 기기 인수는 아직 미실행이며 격리 양성 시험과 구분한다.
+- 업무 `0207d0f6b9ef8734e67bbbdc0701ce75fbdc9c8c` commit/push 후 원격 동일 SHA 확인·[전체3번째 Backend 예방 수정/로컬 인계](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6605617996) 게시·실제 전체3댓글 순번 확인, Issue 본문에 최종 예방 범위/복구 제외/다음 담당을 정리했다. 다음 Flutter 변경 연결·사용자 로컬 변경 범위 확인/같은 Issue 결과 회신, Backend는 구체 차이 대응이다. 후행 문서 SHA와 실행 업무 SHA는 구분한다. 아래 감사 제약/결정 대기는 당시 진행 이력이며 현재는 예방 수정만 진행하는 결정으로 해소됐다. 운영/merge/태그/Issue 종료 없음.
+
+## 2026-11-03 — Issue42 구현 중 예방 검증·복구 감사 제약 확인
+
+- 사용자 승인 계획으로 fix/raid-participation-continuity에서 구현 착수, [전체1번째 Backend 계약](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6604762479) 게시. 신규 선택은 활동 검사를 유지하고 기존 참가용 server room/cycle/현재 generation/CM/Member/Assignment 증명 경로를 분리했다. 로컬 Docker/API 정상 실행을 확인했으며 원격 CI/운영으로 우회하지 않았다.
+- 초기 회귀의 fixture +8시간 합성 일정이 실제 현재 주차 종료를 넘는 SCHEDULE_REVIEW_REQUIRED를 확인해 중단 후 테스트 일정 간격만 남은 주차 안으로 보완했다. 런타임 시간/정책을 바꾸지 않았다. 기존 “활동 해제=기존 자격 상실” 회귀3개는 퇴역 거절 검증으로 유지하고 새 요구의 정상 경로를 별도 검증한다.
+- 격리 신규 첫 실행에서 기존 C/N·8명 방·A→B·신규 거절·소유/수명·위조 방어17PASS 후 removed 합성 fixture의 state/ended_at 사이 autoflush 문제를 수정했다. 별도 그룹 가입·일정·완료·관리·탈퇴·멱등 및 신규2건 묶음38PASS(186.39초, Starlette deprecation 경고1)로 확인했다. 최초/반복/부분 실행 수치를 임의 합산하지 않는다.
+- 복구 사전 판정의 읽기 전용·최소 변경 설계를 검증하던 중 LegacyCycleEvidence UPDATE가 DB의 immutable_recruitment_source trigger에 의해 거절됨을 확인했다. 수정 초안의 상태·revision 변경은 같은 트랜잭션에서 전체 rollback됐다. 승인 초안의 “기존 증거 JSON에 복구 내역 추가”는 불가능하며 설계 단계에서 이 trigger까지 확인하지 못한 점을 사용자에게 명시했다. 원본 불변 제약을 해제하거나 다른 이벤트로 위장하지 않는다.
+- 사용자에게 예방/읽기 전용 판정과 복구 쓰기·감사 DB 확장을 분리할지, 이번에 별도 불변 복구 감사 표/migration 구현을 포함할지 선택을 요청했다. 실제 DB 적용·실자료 복구는 어느 선택에서도 별도 승인 전 실행하지 않는다. 결정 전에는 예방 및 읽기 전용 판정 검증만 진행하며 현재 소스/문서는 미커밋·미인계, 실제 로컬 API·운영 미반영이다.
+
 <a id="startup-batches-dev-integration"></a>
 
 ## 2026-11-03 — 초기 갱신 일괄 처리 dev 통합·참가 유지 수정 분기

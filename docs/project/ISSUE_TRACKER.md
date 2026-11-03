@@ -1,6 +1,8 @@
 # 이슈 주제별 추적표
 
-현재 #42: [요청 본문](https://github.com/heo0328/lostparty-backend/issues/42)·댓글0개 확인, 최신 dev에서 fix/raid-participation-continuity를 분기·게시하여 대응 준비. 활동 선택 해제 후 기존 참가 유지/신규 선택 검증 분리와 review 안전 복구 조사·설계가 다음이며 구현/실자료 복구는 미실행이다. #41은 [PR43](https://github.com/heo0328/lostparty-backend/pull/43)·68d2624로 dev 통합, 완료 브랜치 정리·main/실행 서버 보존. [NEXT_WORK](NEXT_WORK.md)·[통합 이력](DEV_LOG.md#startup-batches-dev-integration) 기준.
+최신 클로즈 판단(2026-11-04): Issue41/42는 기능·사용자 로컬 인수·Flutter 원격 인계 완료로 개발 범위 종료 가능, 실제로는 아직 OPEN이다. [41 전체14번째](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6608982829)·[42 전체8번째](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6608986700), Flutter dev/main 원격11e9c847 직접 일치 확인. Backend42 dev 미통합·인수 문서 미커밋은 [NEXT_WORK](NEXT_WORK.md)의 별도 Git 정리로 추적하며 배포/merge/이슈종료를 자동 실행하지 않는다. [판단 근거](DEV_LOG.md#issues-41-42-close-check).
+
+현재 #42: Backend0207d0f 예방 수정·로컬 반영/인계와 [전체6번째 Flutter 사용자 로컬 변경 구간 인수](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6607158974) 완료. [전체5번째 Flutter 보완/관련321PASS](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6606255488)는 자체 자동검증이며 Backend57PASS·사용자 보고와 구분한다. 추가 Backend 수정/재시험 없음, 다음 개발자 지시/구체 차이 대기. Flutter 미커밋/미push·게시/병합 보류, 기존 dev review 복구 제외, 운영 미배포·Issue OPEN 유지. [NEXT_WORK](NEXT_WORK.md)·[수신 이력](DEV_LOG.md#activity-continuity-local-acceptance) 기준.
 
 #41 Backend 구간 완료: 사용자가 반복 호출을 일괄 GET1/POST1로 줄인 성과를 확인했다. [Flutter 전체5번째 실기기 보고](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6603203545)·[마감 결정](DEV_LOG.md#startup-batches-backend-closeout) 기준이며 네이티브 LostArk 동시 조회 조정은 후속이다. 전체 앱 시작시간 개선·기기 전체 인수·원격 Flutter 게시와 구분, Flutter 게시/병합 보류·운영 미배포·Issue OPEN 유지. 다음은 문서 게시 후 사용자 지정 [Issue42](https://github.com/heo0328/lostparty-backend/issues/42) 요구 확인([NEXT_WORK](NEXT_WORK.md)).
 

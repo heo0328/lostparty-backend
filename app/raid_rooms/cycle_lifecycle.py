@@ -57,7 +57,8 @@ def qualify(db,room,row,cm):
     if {a.item_id for a in owned}!={i.id for i,r in admission.rounds(db,row)} or not owned:
         fail('ROOM_REVIEW_REQUIRED')
     if len({(a.character_id,a.selected_role) for a in owned})!=1:fail('ROOM_REVIEW_REQUIRED')
-    selected=selection_context.selection(db,cm.user_id,owned[0].character_id,owned[0].selected_role)
+    from app.raid_rooms import existing_participation
+    selected=existing_participation.selection(db,room,row,cm)
     if any((a.ownership_revision,a.lifecycle_revision)!=(selected.expected_ownership_revision,selected.expected_lifecycle_revision)
             for a in owned):fail('OWNERSHIP_REQUIRED',403)
     admission.core._limits(db,cm.user_id,selected,False)
@@ -67,7 +68,7 @@ def qualify(db,room,row,cm):
     power=admission.core.power_comparison(db,cm.user_id,selected,minimum)
     if power['state'] in ('below','missing'):fail('COMBAT_POWER_REQUIRED')
     ledgers=[]
-    character=admission.core.identity.selected_character(db,cm.user_id,selected.model_dump(mode='json'))
+    character=admission.core.identity.owned_selection_character(db,cm.user_id,selected.model_dump(mode='json'))
     try:level=Decimal(str(character.summary.get('item_level')))
     except (ValueError,InvalidOperation):level=None
     for item,rd in admission.rounds(db,row):
