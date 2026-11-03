@@ -1,16 +1,12 @@
 # 다음 실행
 
-## 다음 실행 — 이슈38 로컬 검색 변경 경계 기기 확인
+2026-11-03 사용자 지시로 현재 미커밋 인수 문서를 목적 브랜치에 커밋하고 그룹 초대·상속된 검증 범위 개선 이력을 dev에 통합한 뒤 main을 같은 커밋으로 동기화한다. 이 Git 통합 승인은 운영 태그·배포·서버 교체·Issue 종료 승인이 아니다. 실제 통합 결과는 DEV_LOG의 후행 기록을 따른다.
 
-**Backend 로컬 반영·관련 검증 완료, 다음 Flutter/사용자 변경 화면 확인 대기**다. [전체6번째 Flutter 로컬 미지원 조사](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6575085880)에 대응해 [전체7번째 Backend 로컬 반영 결과](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6575270695)를 회신했고 실제 전체7댓글 순서를 확인했다. [로컬 반영 집계](../features/groups/invite-eligibility-local-rollout-2026-11-02.json)·[가입 계약](../features/groups/joining/README.md)을 따른다.
+## 완료·다음 지시 대기 — 이슈38 초대 검색 변경 구간
 
-현재 로컬 실행은 source737e14d/image1333c99d·DB0035이며 업무 구현 fdd51c8과 app/migration/의존성/계약이 같다. 기존 실행 파일에는 새 프로필이 없었고 이번에는 API만 재빌드·교체했다. 로컬 Docker가 실행 중이어서 기동 요청이나 다른 환경 우회는 필요하지 않았다. 두 관련 파일17PASS(신규6 포함), 실행 소스277파일·두 생성 계약 전체 일치, 공개/인증거절 HTTP4·healthy를 확인했다. 기존 DB 컨테이너/시작시각·볼륨/환경·116표2156행 내용/sequence·키4개를 보존하고 migration/자료초기화 없이 반영했다. 기존 유효 세션의 READ ONLY 검색 서비스에서 새 profile·self 응답을 확인했으며 인증된 실제 리스너 HTTP/앱 기기 인수와 구분한다.
+[전체8번째 Flutter 사용자 로컬 변경 구간 전부 통과](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6576244724)를 확인했다. 이번 초대 검색의 네이티브 소비·자동검증·Backend 로컬 반영·사용자 변경 범위 확인까지 완료이며, 이전 실패 검색/화면 재확인 대기를 해소한다. 앱 전체·AWS 운영 인수로 확대하지 않는다. [로컬 반영 집계](../features/groups/invite-eligibility-local-rollout-2026-11-02.json)·[완료 이력](DEV_LOG.md#invite-eligibility-local-acceptance)을 따른다.
 
-Flutter는 [전체5번째 소비 완료](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6574940338)의 source0bac63bf/후행97b2ec10을 사용한다. 직접/영향41PASS·분석 문제0은 Flutter 자체 보고이며 Backend 시험과 합산하지 않는다. [전체4번째 환경 구분](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6574028919)에 따라 Android 에뮬레이터 debug 기본 http://10.0.2.2:8000에서 앞서 실패한 검색 변경 경계만 재확인한다. 실제 차이가 있으면 같은 이슈에 회신하고 Backend가 표적 대응한다. 전체 정상시험 반복/운영회원 추가·OpenAPI 공개·인증값 공유 요청은 없다.
-
-기존 [수동 CI 집계](../features/groups/invite-eligibility-verification-2026-11-02.json)의 1817PASS는 당시 격리 검증 이력으로 보존하며 이번 로컬17PASS와 반복 합산하지 않는다. 개발은 로컬이 기본이고 AWS 운영은 기존v0.1.1이다. 운영 반영 여부·시점은 개발자가 정하며 승인 전 운영 통합/태그·배포를 진행하지 않는다. [상시 기준](../engineering/development/workflow.md#local-dev-and-production)을 따른다. 이번 로컬 반영에 운영 배포·Actions·dev/main 병합·Issue종료는 없다.
-
-개발/운영 기준 문서와 이번 로컬 반영·협업 결과는 사용자 지시대로 현재 feat/group-invite-eligibility에서 같은 구간 마감 기록으로 묶어 보존한다. 별도 문서 브랜치를 만들지 않고 승인된 기능 병합에 함께 포함한다.
+현재 요청된 추가 Backend 작업·정상시험 반복은 없다. 실제 차이나 개발자의 추가 지시가 있을 때 해당 범위만 진행한다. **운영 배포와 네이티브 APK 게시 시점은 각각 개발자가 명시 지시한다.** 개별 수정·테스트 통과·commit/push를 배포 승인으로 해석하지 않으며 dev/main 통합·태그·운영 반영·Issue 종료도 자동 진행하지 않는다. 현재 feat/group-invite-eligibility와 AWS 기존v0.1.1을 유지한다. [개발/운영 기준](../engineering/development/workflow.md#local-dev-and-production)을 따른다.
 
 ## 구현 완료 — 변경 규모별 배포 검증·통합 대기 (2026-11-02)
 
