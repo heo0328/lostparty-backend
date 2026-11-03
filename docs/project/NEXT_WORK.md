@@ -1,8 +1,12 @@
 # 다음 실행
 
-## 현재 실행 — 승인된 그룹 초대 수정 운영 반영 v0.1.2
+## 완료 — 그룹 초대 수정 운영 반영 v0.1.2
 
-2026-11-03 사용자가 현재 main b649ccf의 게시와 이미 통과한 검증의 이번 배포 한정 재사용을 승인했다. chore/release-group-invite에서 VERSION0.1.2·고정 run41417066498/sourcefdd51c8의 검증 출처 대조를 준비한다. 앱/DB/의존성/계약은 승인 main과 동일하며 새 소스의 차이는 릴리즈 준비 제어·문서다. 로컬 스크립트59PASS, 앱 회귀/계약 재실행 없음이다. 다음은 실제 artifact/소스 동일성 대조→dev/main 통합→v0.1.2 태그1회→이미지 게시/API 교체→공개 health·복귀 결과 확인이다. DB/설정/키·네이티브 APK·Issue종료는 이번 승인 범위에 포함하지 않는다. [한정 운영 기준](../engineering/operations/backend-release.md)을 따른다.
+사용자가 승인한 main b649ccf의 앱 코드를 PR40·source2c6070c로 v0.1.2에 게시하고 실제 운영 API에 반영했다. [배포 집계](../engineering/operations/records/backend-v0.1.2-deployment.json)·[전체9번째 Backend 운영 결과](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6599670183)를 따른다. 운영은 image7c8b8db9·DB0035, 한국2026-11-03 18:07:40 API 시작/18:07:53 반영 완료다. Actions41608259484·production Deployment7514620773 success, 공개health200/DBok·카탈로그200·미인증me401을 확인했다.
+
+이번에 한정 승인한 검증 재사용으로 기존 run41417066498 전체1817PASS를 source/조상 관계·변경 범위·artifact hash와 대조했다. 신규 앱 테스트/계약/교체복귀 시험0, 새 제어 스크립트59PASS·schema2 checks reused·원본 검증 JSON 보존이다. 태그 실행부터 서버 반영까지 약1분51초였다. DB/Caddy·운영환경/mount/보호파일 보존·schema 호환/health를 기존 제어기로 확인하고 API만 교체했으며 migration·키/회원 자료 변경·롤백은 없었다. 실제 운영 사용자 인수나 네이티브 APK 게시로 확대하지 않는다.
+
+다음은 추가 지시 대기다. 기본 개발은 로컬 dev이며 다음 운영 반영/APK 게시도 개발자가 지시할 때만 진행한다. reuse는 v0.1.2만 허용하므로 다음 버전에 자동 적용하지 않고 selected/full을 정한다. checkout dev, 완료한 chore/release-group-invite는 로컬/원격 정리·미완료 activity-selection은 보존한다. 이 후행 결과 기록까지 main/dev를 동일 커밋으로 최신화하되 v0.1.2 태그·실행 source2c6070c는 보존한다.
 
 2026-11-03 사용자 승인 [PR39](https://github.com/heo0328/lostparty-backend/pull/39)·병합323b665로 그룹 초대·상속된 검증 범위 개선과 인수 문서를 dev에 통합했다. checkout dev, 완료한 feat/group-invite-eligibility·chore/release-validation은 로컬/원격 정리했고 미완료 feat/activity-selection은 보존한다. 이 후행 마감 기록까지 포함한 최종 dev 커밋으로 main도 fast-forward 동기화한다. 다음 기능은 개발자 지시에 따라 최신 dev에서 목적 브랜치로 시작한다. 운영 태그·배포·서버/DB·Issue 종료는 이번 Git 통합 범위에 포함하지 않는다. [통합 이력](DEV_LOG.md#invite-eligibility-git-integration)을 따른다.
 
@@ -10,13 +14,13 @@
 
 [전체8번째 Flutter 사용자 로컬 변경 구간 전부 통과](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6576244724)를 확인했다. 이번 초대 검색의 네이티브 소비·자동검증·Backend 로컬 반영·사용자 변경 범위 확인까지 완료이며, 이전 실패 검색/화면 재확인 대기를 해소한다. 앱 전체·AWS 운영 인수로 확대하지 않는다. [로컬 반영 집계](../features/groups/invite-eligibility-local-rollout-2026-11-02.json)·[완료 이력](DEV_LOG.md#invite-eligibility-local-acceptance)을 따른다.
 
-현재 요청된 추가 Backend 작업·정상시험 반복은 없다. 실제 차이나 개발자의 추가 지시가 있을 때 해당 범위만 진행한다. **운영 배포와 네이티브 APK 게시 시점은 각각 개발자가 명시 지시한다.** 개별 수정·테스트 통과·commit/push를 배포 승인으로 해석하지 않으며 dev/main 통합·태그·운영 반영·Issue 종료도 자동 진행하지 않는다. Git 통합은 위 사용자 승인으로 완료했고 AWS 기존v0.1.1은 유지한다. [개발/운영 기준](../engineering/development/workflow.md#local-dev-and-production)을 따른다.
+현재 요청된 추가 Backend 작업·정상시험 반복은 없다. 실제 차이나 개발자의 추가 지시가 있을 때 해당 범위만 진행한다. **운영 배포와 네이티브 APK 게시 시점은 각각 개발자가 명시 지시한다.** 개별 수정·테스트 통과·commit/push를 배포 승인으로 해석하지 않으며 dev/main 통합·태그·운영 반영·Issue 종료도 자동 진행하지 않는다. Git 통합과 승인된 AWS v0.1.2 반영은 위 최신 기록대로 완료했고 추가 배포는 별도 지시 대상이다. [개발/운영 기준](../engineering/development/workflow.md#local-dev-and-production)을 따른다.
 
 ## 완료 — 변경 규모별 배포 검증 Git 통합
 
 selected/full·계획 검사·불변 validation.json 개선은 그룹 초대 브랜치에 상속된 이력을 포함해 PR39로 dev에 통합했다. [운영 기준](../engineering/operations/backend-release.md)·[검증 집계](../engineering/operations/records/backend-validation-scope-verification.json)·[Issue34 전체10번째 결과](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6572819899)를 따른다. 당시 수동 Actions41410922327/sourcefbb9bc7 전체1811PASS·scripts52PASS·artifact 대조·publish/deploy skip과 로컬 selected 실DB 미실행 경계는 이력으로 보존한다.
 
-현재0.1.1 계획을 새 운영 태그에 재사용하지 않는다. 다음 운영 릴리즈는 개발자가 구간·시점을 지시할 때 새 VERSION/계획과 태그를 준비한다. 별도 요청 전 GitHub Actions·운영 반영은 실행하지 않는다. AWS 운영v0.1.1/source77c9de2·DB0035는 이번 Git 통합으로 변경하지 않았다.
+현재0.1.1 계획을 새 운영 태그에 재사용하지 않는다. 다음 운영 릴리즈는 개발자가 구간·시점을 지시할 때 새 VERSION/계획과 태그를 준비한다. 이번 승인 v0.1.2의 한정 검증 재사용/운영 반영은 위 최신 기록을 따른다. 이후 별도 요청 전 GitHub Actions·운영 반영을 실행하지 않는다. 이전 Git 통합 당시 운영v0.1.1 보존 사실은 당시 이력이다.
 
 ## 완료 — Backend v0.1.1 첫 자동 배포 (2026-11-02)
 

@@ -6,7 +6,7 @@
 
 ## 현재 적용 상태와 변경 이력
 
-- 실제 운영은 v0.1.1/source77c9de2/image259e8234·DB0035다. UTC2026-11-01T16:30:33Z 첫 자동 반영을 완료했다. [배포 집계](records/backend-v0.1.1-deployment.json)·[전체9번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6560737194)를 따른다.
+- 실제 운영 최신은 v0.1.2/source2c6070c/image7c8b8db9·DB0035다. 사용자 승인 이번 한정 재사용·Actions41608259484 success로 한국2026-11-03 18:07:53 반영 완료, [최신 배포 집계](records/backend-v0.1.2-deployment.json)를 따른다. v0.1.1/source77c9de2/image259e8234는 UTC2026-11-01T16:30:33Z 첫 자동 반영 당시 이력이다. [배포 집계](records/backend-v0.1.1-deployment.json)·[전체9번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6560737194)를 따른다.
 - 이번 개선은 작업 브랜치의 selected/full 검증·validation.json 기록이다. scripts52PASS·수동 전체1811PASS/검증artifact 대조를 완료했다([검증 집계](records/backend-validation-scope-verification.json)). 로컬 selected 실DB 실행은 엔진 불가로 미완료이며 선택분기/실패 차단은 단위 검증했다. 통합/수동 검증 상태는 [NEXT_WORK](../../project/NEXT_WORK.md)를 따른다. 원격 코드 게시·dev/main 통합·새 태그 배포는 구분한다. 이 문서 수정만으로 운영에 반영되지 않는다.
 - 과거 OIDC 제한/전용SSH 전환·초기 시험은 [준비 집계](records/backend-release-preparation.json), v0.1.0 실패/태그 충돌은 [첫 태그 시험](records/backend-first-tag-trial.json)에 보존한다. 예전 준비/미실행 상태를 현재 상태로 해석하지 않는다.
 

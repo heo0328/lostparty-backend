@@ -1,5 +1,15 @@
 # 영구 개발 이력
 
+<a id="backend-v012-deployment"></a>
+
+## 2026-11-03 — 그룹 초대 수정 v0.1.2 운영 반영 완료
+
+- 사용자 선택으로 승인 main b649ccf의 앱/DB/의존성/계약을 보존하고 이번 v0.1.2에만 기존 검증을 재사용했다. 새 로컬 scripts59PASS·실제 prior artifact/byte hash·성공 run/전체98파일·소스 동일성 대조 PASS다. CLI OAuth에 workflow scope가 없어 최초 push가 거절됐고, 기존 권한의 GitHub 연결 도구로 workflow 파일을 게시한 de804d4와 준비361a857을 merge e962acd로 모았다. 내용 동일성 확인 후 게시했으며 공유 이력을 재작성하지 않았다.
+- [PR40](https://github.com/heo0328/lostparty-backend/pull/40)·병합2c6070c45f0a0a0beb479fb52cfcab608feff46c를 dev/main 동일 커밋으로 맞추고 v0.1.2 태그를1회 push했다. [Actions41608259484 attempt1](https://github.com/heo0328/lostparty-backend/actions/runs/41608259484/attempts/1) verify/단일 provenance job/validation/publish/deploy 모두success다. 앱 회귀·계약·Docker 교체 시험 재실행0, scripts59PASS(러너0.356초), schema2의 executed_tests=[]·checks reused·원본 검증 JSON을 Release에 보존했다. 원래1817PASS를 신규 실행에 합산하지 않았다.
+- 실제 image7c8b8db92bf8d11da696ab08d2570927720e71242c38c13cf92827a848da1756·DB0035, API 시작09:07:40.851725944Z·제어기 완료09:07:53.333570Z(한국18:07)·production Deployment7514620773 success다. 태그 실행09:06:02Z→서버 완료 약1분51초, rollback not_needed다. 기존 제어기의 image/source/version·DB schema·DB/Caddy identity·운영 env/mount·보호파일(환경/키) 보존과 health 점검을 유지했다. migration·실회원/자료초기화·키 변경은 없다.
+- [Release v0.1.2](https://github.com/heo0328/lostparty-backend/releases/tag/v0.1.2)의 release.json/validation.json을 내려 source/image/계약 SHA·고정 prior 검증/신규0을 대조했다. 공개 HTTPS health200/status·database ok, 카탈로그200, 미인증me401을 독립 확인했다. [고정 배포 집계](../engineering/operations/records/backend-v0.1.2-deployment.json)와 [전체9번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6599670183)에 인계했고 실제 전체9댓글 순서를 확인했다. 추가 정상시험/운영회원 추가를 요청하지 않았다. 실제 운영 사용자 인수와 APK 게시·Issue 종료는 별도다.
+- chore/release-group-invite는 dev/main 포함·원격 게시 확인 후 로컬/원격에서 정리했다. checkout dev·미완료 activity-selection 보존이며 후행 결과 문서까지 dev/main 동일 커밋으로 모은다. 태그와 실제 운영 source2c6070c는 문서 커밋으로 옮기지 않는다. 기본 개발은 로컬 dev이고 이후 배포는 개발자 지시 대상이다. 이번 예외는 v0.1.2에만 한정되며 다음 버전은 selected/full을 정한다.
+
 ## 2026-11-03 — 그룹 초대 v0.1.2 운영 반영·기존 검증 재사용 승인
 
 - 사용자가 현재 main b649ccf의 그룹 초대 수정 게시를 요청하고 장시간 중복 테스트를 원하지 않는다고 명시했다. 현재 main과 전체1817PASS sourcefdd51c8의 실행/DB/의존성/테스트/배포 스크립트 동일성(차이는 문서)을 확인했다. 현재 자동화의 일반 full 재실행 대신 이번 배포 범위만 재사용하도록 제시했고 사용자가 승인했다. 미래 일반 재사용 기능으로 확대하지 않는다.

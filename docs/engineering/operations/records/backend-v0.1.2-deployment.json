@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "date_kst": "2026-11-03",
+  "version": "0.1.2",
+  "approved_application_source": "b649ccf5bd1a03f2392a27fbda7860eb058bdd92",
+  "release_source": "2c6070c45f0a0a0beb479fb52cfcab608feff46c",
+  "integration_pr": 40,
+  "tag": "v0.1.2",
+  "tag_push_count": 1,
+  "release_url": "https://github.com/heo0328/lostparty-backend/releases/tag/v0.1.2",
+  "run_url": "https://github.com/heo0328/lostparty-backend/actions/runs/41608259484/attempts/1",
+  "production_deployment_id": 7514620773,
+  "production_deployment_state": "success",
+  "tag_run_created_at_utc": "2026-11-03T09:06:02Z",
+  "tag_start_to_server_finish_seconds": 111.334,
+  "result": {
+    "api_started_at_utc": "2026-11-03T09:07:40.851725944Z",
+    "attempt": "41608259484-1",
+    "configuration_revision": "lightsail-release-azp-20261101",
+    "contract_sha256": {
+      "openapi.yaml": "dbcb0a0687ca9db7a9d4ebf30b9bc5dd10b25381c7d4e195c3d029c8c2ea57ca",
+      "two-cycle.openapi.yaml": "be45495c25806489071a4466309b46c1d190805ff1dfd245bbb07ce94949fe39"
+    },
+    "db_revision": "0035_cycle_group_policy",
+    "finished_at_utc": "2026-11-03T09:07:53.333570Z",
+    "image": "ghcr.io/heo0328/lostparty-backend@sha256:7c8b8db92bf8d11da696ab08d2570927720e71242c38c13cf92827a848da1756",
+    "request_sha256": "3cac93de51b336c70d22d27c7f591eb6019be4c7388d7bbc49374265b3496e62",
+    "rollback": "not_needed",
+    "run_url": "https://github.com/heo0328/lostparty-backend/actions/runs/41608259484/attempts/1",
+    "source": "2c6070c45f0a0a0beb479fb52cfcab608feff46c",
+    "started_at_utc": "2026-11-03T09:07:28.504639Z",
+    "status": "success",
+    "tag": "v0.1.2",
+    "user_acceptance": "not_checked"
+  },
+  "validation": {
+    "mode": "reuse",
+    "new_application_tests_executed": 0,
+    "new_application_contract_tests_executed": 0,
+    "new_docker_replace_rollback_tests_executed": 0,
+    "controller_unit_tests_passed": 59,
+    "prior_run_id": 41417066498,
+    "prior_attempt": 1,
+    "prior_source": "fdd51c8e9a4d9a5eda8c5f175485965a013ee99a",
+    "prior_test_files": 98,
+    "prior_tests_passed": 1817,
+    "prior_passes_not_added_to_new_tests": true,
+    "local_feature_tests_previously_passed": 17,
+    "native_local_user_acceptance_previously_reported": true,
+    "published_validation_schema": 2,
+    "published_validation_record_verified": true,
+    "approved_application_payload_unchanged": true,
+    "expiry_source_repository_artifact_and_byte_hash_verified": true
+  },
+  "preservation": {
+    "checked_by_server_controller": true,
+    "db_and_caddy_identity": true,
+    "operating_environment_mounts_and_protected_files": true,
+    "db_revision": "0035_cycle_group_policy",
+    "migration_executed": false,
+    "manual_member_or_data_changes": false,
+    "local_dev_environment_changed": false
+  },
+  "independent_public_checks": [
+    {
+      "path": "/health",
+      "status": 200,
+      "database": "ok"
+    },
+    {
+      "path": "/v1/raid-catalog",
+      "status": 200
+    },
+    {
+      "path": "/v1/me",
+      "status": 401
+    }
+  ],
+  "result_comment": "https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6599670183",
+  "native_apk_published": false,
+  "issue_closed": false,
+  "production_user_acceptance": "not_checked",
+  "next_release_reuse_not_enabled": true
+}
