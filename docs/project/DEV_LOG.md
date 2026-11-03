@@ -1,5 +1,15 @@
 # 영구 개발 이력
 
+<a id="startup-batches-dev-integration"></a>
+
+## 2026-11-03 — 초기 갱신 일괄 처리 dev 통합·참가 유지 수정 분기
+
+- 사용자 지시에 따라 원격 fetch 후 dev/main515a6c9·기능 head82eafc5의 일치와 작업 폴더 clean/단일 worktree를 확인했다. [PR43](https://github.com/heo0328/lostparty-backend/pull/43)을 dev 대상으로 생성하고 고정 head82eafc5·MERGEABLE/추가 필수 체크 없음 확인 후 merge 방식으로 통합했다. 병합 SHA `68d26242d46265b0fcc8418b9d23b70270317c37`, 로컬 dev는 origin/dev로 fast-forward했다. squash/rebase/force push 없이 이력을 보존했다.
+- 원격 dev68d2624와 기능82eafc5를 재조회하고 dev 포함·미커밋/다른 worktree 미사용을 확인한 뒤 완료 feat/startup-batch-refresh를 로컬/원격 삭제했다. 미완료 feat/activity-selection89a3248은 보존한다. 통합 기록을 포함한 최신 dev에서 fix/raid-participation-continuity를 분기·원격 게시하여 Issue42 작업 위치로 사용한다.
+- Issue42 본문/댓글0개 확인: 활동 선택 해제 후 기존 레이드 참가 유지·신규 선택 제외·review 상태 안전 복구 요청이다. 다음은 호출 경로 조사와 검증 분리/회복 설계이며 새 구현·실자료 복구는 아직 수행하지 않았다. 요청 본문의 실자료 쓰기/운영 배포 미승인 경계를 유지한다.
+- 이번은 기존 검증된 구간의 Git 통합/분기·문서 기록이다. 기존 고유144PASS·두 OpenAPI 전체 일치·사용자 호출 축소 확인을 재사용하며 서버/DB·기능 시험을 재실행하지 않는다. 문서 링크/절·JSON/동결 자료·diff 검증과 dev/신규 브랜치 원격 SHA 대조로 마감한다. main515a6c9·로컬 실행 image8ca35379/DB0035·AWS v0.1.2는 변경하지 않는다. 태그·배포·자료 초기화·Issue 종료 없음.
+
+
 <a id="startup-batches-backend-closeout"></a>
 
 ## 2026-11-03 — Issue41 Backend 반복 호출 축소 성과 확인·문서 구간 마감

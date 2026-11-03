@@ -1,8 +1,10 @@
 # 다음 실행
 
-## 다음 — Issue42 요청 확인
+## 현재 — Issue42 대응 브랜치 준비
 
-사용자 지시에 따라 아래 Issue41 Backend 구간의 문서 최신화·commit/push·원격 확인을 마친 뒤 [Issue42](https://github.com/heo0328/lostparty-backend/issues/42)의 본문·최신 댓글을 확인한다. 요구 확인 전 새 구현·계약·브랜치 분기·merge·배포를 진행하지 않는다.
+사용자 승인으로 Issue41의 `feat/startup-batch-refresh`를 [PR43](https://github.com/heo0328/lostparty-backend/pull/43)·병합 `68d26242d46265b0fcc8418b9d23b70270317c37`로 dev에 통합했다. 통합 기록을 포함한 최신 dev에서 `fix/raid-participation-continuity`를 분기·게시하여 다음 작업 위치로 사용한다. 완료한 startup-batch 브랜치는 dev 포함·원격 게시 확인 후 로컬/원격 정리했으며 미완료 `feat/activity-selection`은 보존한다. main은 이번 승인 범위에 없어 기존515a6c9를 유지한다.
+
+[Issue42](https://github.com/heo0328/lostparty-backend/issues/42) 본문·댓글0개를 확인했다. 다음은 활동 선택 해제 후 기존 참가 유지와 신규 선택 검증의 분리, 이미 review 상태인 주차/세대의 안전한 회복 경계를 조사·설계하는 것이다. 기존 참가자 상세/일정/관리/완료/탈퇴 경로와 신규 생성/신청/승인/교체 경로를 구분하고 소유·수명·권한·점유/CAS를 보존한다. 구현·검증·로컬 반영은 후속이며 실자료 복구 실행은 별도 승인 사항이다. 운영 배포·태그·자료 초기화·Issue 종료는 하지 않는다. [Git 통합 이력](DEV_LOG.md#startup-batches-dev-integration) 기준이다.
 
 ## 완료 — 초기 자동 갱신 Backend 반복 호출 축소 / Issue41
 

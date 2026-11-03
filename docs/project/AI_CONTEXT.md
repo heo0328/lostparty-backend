@@ -1,5 +1,7 @@
 # LostParty Backend 기능 지도
 
+Git/다음 작업(2026-11-03): 사용자 승인 [PR43](https://github.com/heo0328/lostparty-backend/pull/43)·68d2624로 초기 갱신 일괄 처리를 dev 통합했다. 통합 기록을 포함한 최신 dev에서 `fix/raid-participation-continuity`를 분기·게시해 Issue42 대응 위치로 사용한다. 완료 startup-batch 로컬/원격 정리·미완료 activity-selection 보존, main515a6c9/실제 로컬·운영은 보존. [NEXT_WORK](NEXT_WORK.md)·[통합 이력](DEV_LOG.md#startup-batches-dev-integration) 기준이며 Issue42 구현/실자료 복구는 아직 수행하지 않았다.
+
 초기 갱신 일괄 처리(#41): 사용자 확인으로 Backend 반복 호출 축소 구간 완료. 업무b1f11bb 구현·검증·원격 게시·로컬 반영과 Flutter 앱 연결/양성HTTP 보고를 기준으로 조회1회·저장1회의 성과를 확인했다. [마감 결정](DEV_LOG.md#startup-batches-backend-closeout)·[계약](../features/rosters/bootstrap/startup-batches.md) 기준이다. 네이티브 LostArk 동시 조회 조정은 후속이며 전체 앱 시작시간 개선·최적 동시성·전체 기기 인수로 확대하지 않는다. 다음은 사용자 지정 Issue42 요구 확인([NEXT_WORK](NEXT_WORK.md)). Flutter 게시/병합 보류와 운영 v0.1.2/새 API 미배포 상태를 유지한다.
 
 운영 최신(2026-11-03): 사용자 승인 PR40·source2c6070c/v0.1.2·Actions41608259484·production Deployment7514620773 success로 그룹 초대 수정의 AWS 반영을 완료했다. 실제 image7c8b8db9·DB0035·한국18:07:40 API 시작, 18:07:53 완료. 앱 코드는 승인 main b649ccf/검증 fdd51c8과 같고 이번 한정 재사용으로 앱 테스트 재실행0·새 제어 scripts59PASS·원본 검증 보존, DB/Caddy·환경/키 보존·공개 health/조회/인증거절을 확인했다. [배포 집계](../engineering/operations/records/backend-v0.1.2-deployment.json)·[전체9번째 결과](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6599670183)·NEXT_WORK 기준이다. APK 게시·전체 운영 사용자 인수·Issue종료는 별도다. 아래 v0.1.1 운영 문장은 이전 시점 이력이다.
