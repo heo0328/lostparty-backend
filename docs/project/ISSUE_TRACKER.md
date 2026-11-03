@@ -1,6 +1,6 @@
 # 이슈 주제별 추적표
 
-현재 #41: 초기 자동 갱신 일괄 조회/저장 구현·관련 로컬 검증·실제 dev API 반영 완료, 구현 b1f11bb 원격 게시·[전체3번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6602009469) 완료 후 Flutter 연결·사용자 로컬 인수 대기. [계약](../features/rosters/bootstrap/startup-batches.md)·[전체2번째 Backend 계약](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6601566667)·[NEXT_WORK](NEXT_WORK.md) 기준. 운영 배포·merge·Issue 종료 없음.
+#41 Backend 구간 완료: 사용자가 반복 호출을 일괄 GET1/POST1로 줄인 성과를 확인했다. [Flutter 전체5번째 실기기 보고](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6603203545)·[마감 결정](DEV_LOG.md#startup-batches-backend-closeout) 기준이며 네이티브 LostArk 동시 조회 조정은 후속이다. 전체 앱 시작시간 개선·기기 전체 인수·원격 Flutter 게시와 구분, Flutter 게시/병합 보류·운영 미배포·Issue OPEN 유지. 다음은 문서 게시 후 사용자 지정 [Issue42](https://github.com/heo0328/lostparty-backend/issues/42) 요구 확인([NEXT_WORK](NEXT_WORK.md)).
 
 | 현재 추가 주제 | 상태·다음 담당·완료 조건 |
 |---|---|

@@ -1,10 +1,16 @@
 # 다음 실행
 
-## 현재 — 초기 자동 갱신 일괄 처리 / Issue41
+## 다음 — Issue42 요청 확인
+
+사용자 지시에 따라 아래 Issue41 Backend 구간의 문서 최신화·commit/push·원격 확인을 마친 뒤 [Issue42](https://github.com/heo0328/lostparty-backend/issues/42)의 본문·최신 댓글을 확인한다. 요구 확인 전 새 구현·계약·브랜치 분기·merge·배포를 진행하지 않는다.
+
+## 완료 — 초기 자동 갱신 Backend 반복 호출 축소 / Issue41
 
 `feat/startup-batch-refresh`에서 [승인 계약](../features/rosters/bootstrap/startup-batches.md)·일괄 GET/POST를 구현했다. 신규42·관련 기존102의 고유144PASS, 기본/two-cycle 전체 계약 일치, 로컬 dev API 갱신과 Windows8000 health200/새 경로 미인증401을 확인했다. DB0035·기존 DB/키/자료 보존. [검증 집계](../features/rosters/bootstrap/startup-batches-verification.json)·[결과 이력](DEV_LOG.md#startup-batches) 기준이다.
 
-구현 `b1f11bb5011056ce5dd655efe7c8efe2765960e3` commit/push·원격 SHA 일치 확인 후 [전체3번째 Backend 구현·로컬 인계](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6602009469) 완료. 다음 담당은 Flutter: DTO/원명령/일괄 전송·복구/최종bootstrap 연결 결과 회신, 이후 사용자 로컬 실기기 인수다. Backend는 구체적인 연동 차이에 대응한다. Flutter commit/push/merge 보류는 해당 사용자 결정 사항이다. 운영 배포·태그·merge·APK·자료 초기화·Issue 종료 없음. 아래 운영 완료는 이전 v0.1.2이며 이번 API의 운영 지원을 뜻하지 않는다.
+구현 `b1f11bb5011056ce5dd655efe7c8efe2765960e3` 원격 게시·[전체3번째 Backend 구현 인계](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6602009469) 완료. [전체4번째 Flutter 구현·자동검증](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6603057228)과 [전체5번째 Flutter 로컬 실기기 첫 측정](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6603203545)을 수신했다. 앱 연결/인증된 양성 batch HTTP와8개 fetched/applied는 Flutter가 사용자 로그로 관측한 근거이며 Backend 독립 재현·전체8항목 DB 저장 확인과 구분한다. 상세 결과는 [DEV_LOG](DEV_LOG.md#startup-batches-native-feedback) 기준이다.
+
+사용자는 현재 Backend의 반복 호출을 일괄 조회1회·저장1회로 줄인 성과를 확인하고 이 작업 구간을 문서 마감한 뒤 Issue42로 이동하도록 지시했다. **Backend 구간은 완료이며 네이티브 LostArk 동시 조회 조정은 후속 작업**이다. 2/5 비교·실패 실기기 인수·8항목 저장 내용 독립 DB 확인의 미실행 기록은 남기되 이번 Backend 구간을 붙잡는 대기로 두거나 추가 시험을 자동 요청하지 않는다. 전체 시작시간 개선·최적 동시성·원격 Flutter 코드 인계는 확정하지 않는다. Flutter 미커밋/commit·push·merge 보류는 별도 사용자 결정 사항이다. 운영 배포·태그·merge·APK·자료 초기화·Issue 종료 없음. 아래 운영 완료는 이전 v0.1.2이며 이번 API의 운영 지원을 뜻하지 않는다.
 
 ## 완료 — 그룹 초대 수정 운영 반영 v0.1.2
 

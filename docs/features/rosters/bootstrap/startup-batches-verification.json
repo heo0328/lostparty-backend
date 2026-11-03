@@ -68,5 +68,26 @@
     "url": "https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6602009469",
     "next_owner": "Flutter",
     "waiting": "Flutter app wiring, then user local device acceptance"
+  },
+  "status_after_user_confirmation": {
+    "backend_work_segment": "complete; repeated Backend calls reduced to one profile GET and one role-summary POST",
+    "evidence": "https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6603203545",
+    "source": "Flutter user-run local Android debug report and developer confirmation; not independent Backend device reproduction",
+    "observed_calls": {
+      "previous_personal": 24,
+      "previous_role_build": 8,
+      "profile_batch": 1,
+      "role_batch": 1
+    },
+    "scope_exclusions": [
+      "login / initial bootstrap / account preparation",
+      "LostArk direct calls",
+      "final bootstrap"
+    ],
+    "native_followup": "LostArk concurrent reads adjustment; not blocking this Backend segment",
+    "overall_app_startup_improvement_confirmed": false,
+    "next_issue": 42,
+    "original_handoff_unexecuted_note": "unexecuted and handoff above describe the original Backend handoff; latest app wiring and positive HTTP reported in Flutter comment5",
+    "production_changed": false
   }
 }

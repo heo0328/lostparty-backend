@@ -1,5 +1,14 @@
 # 영구 개발 이력
 
+<a id="startup-batches-backend-closeout"></a>
+
+## 2026-11-03 — Issue41 Backend 반복 호출 축소 성과 확인·문서 구간 마감
+
+- 사용자 확인: 여러 번 호출하던 Backend 준비 조회/역할 요약 저장을 일괄 GET1회·POST1회로 줄인 성과가 확인됐다. 기존 구현·자동검증·실제 로컬 반영과 [Flutter 전체5번째 실기기 보고](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6603203545)의 personal24/role_build8→profile_batch1/role_batch1·양성HTTP 근거를 기준으로 Backend 구간을 마감한다. 32→2는 이 두 대상 요청 범위이며 로그인/초기bootstrap/원정대 준비/LostArk/최종bootstrap을 포함한 앱 전체 요청 수가 아니다.
+- 네이티브 LostArk 동시 조회 조정은 사용자가 예정한 후속 작업이다. 2/5 비교·실패 실기기 인수·8항목 DB 독립 확인은 미실행 기록으로 보존하되 완료된 Backend 구간의 필수 대기로 확대하지 않는다. 단일 실행의 캐릭터 처리 단축과 전체 시작시간 증가를 구분하며 전체 성능 개선·최적 동시성·전체 기기 인수 완료를 선언하지 않는다. Flutter 미커밋/게시·병합 보류는 별도 사용자 결정이다.
+- 이전 미커밋 Flutter 수신 기록을 포함해 NEXT_WORK/AI_CONTEXT/Issue 추적표·기능 계약/검증 집계의 최신 상태를 한 구간으로 모은다. 기본 업무 소스b1f11bb·로컬 실행 image8ca35379/DB0035는 보존한다. 이번은 문서 수정이므로 서버/DB/회귀·성능 시험을 재실행하지 않고 문서 링크/절·JSON·동결 자료·diff를 검사한다.
+- 현재 feat/startup-batch-refresh에 문서 구간 commit/push·원격 SHA 일치를 확인한 뒤 다음 사용자 지정 Issue42 본문/최신 댓글을 확인한다. 새 구현/계약 변경·브랜치 전환·dev/main 병합·운영 배포/태그·자료 초기화·Issue 종료는 이 마감 범위에 포함하지 않는다.
+
 <a id="startup-batches"></a>
 
 ## 2026-11-03 — Issue41 초기 갱신 일괄 조회·저장
@@ -10,6 +19,16 @@
 - 기본125경로142operation/two-cycle187경로208operation 전체 생성 계약 일치 PASS. 1/9/50개 GET SELECT는 인증 포함13/13/13으로 일정했다. 최종 합성9개(단건 dealer/일괄 support) 비교는18회0.9966초8271바이트→2회0.2366초13900바이트. TestClient/격리 DB 측정이며 최종bootstrap·LostArk/실제 앱 전체 시간은 미포함, 실기기 성능 인수로 확대하지 않는다. [검증 집계](../features/rosters/bootstrap/startup-batches-verification.json)에 조건·미실행을 보존했다.
 - 로컬 API만 compose two-cycle로 build/recreate, 실제 image8ca35379 healthy·DB0035. 기존 DB 컨테이너 식별자 보존, migration/키/회원 자료 변경 없음. Windows127.0.0.1:8000 health200/databaseok·새GET/POST 미인증401, 실행 app238파일과 작업 소스의 hash 전체 일치·실행 two-cycle OpenAPI 전체 일치 PASS. 실제 회원의 인증 HTTP/Flutter 연결·기기 결과는 미실행이며 격리 양성 HTTP와 구분한다.
 - 구현 `b1f11bb5011056ce5dd655efe7c8efe2765960e3` commit/push 후 원격 동일 SHA를 확인하고 [전체3번째 Backend 구현·로컬 인계](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6602009469)를 게시·실제 순번3 확인, Issue 본문 상단도 다음 담당/미완료 상태로 갱신했다. Git HTTPS helper 부재로 첫 push가 실패했으나 기존 로그인된 gh를 해당 명령의 credential helper로 사용해 해결했으며 토큰 출력·전역 설정 변경·이력 재작성은 없었다. 문서 마감 커밋은 이 고정 업무 구현과 구분한다. 다음 담당은 Flutter 연결/결과 회신 및 사용자 로컬 실기기 인수, Backend는 연동 차이 대응이다. Flutter commit/push/merge 보류는 별도 사용자 결정이다. dev/main 통합·운영 배포/태그·APK 게시·자료 초기화·Issue 종료는 수행하지 않는다.
+
+<a id="startup-batches-native-feedback"></a>
+
+## 2026-11-03 — Issue41 Flutter 구현·첫 로컬 실기기 측정 회신 확인
+
+- 실제 전체 댓글 순서로 [4번째 Flutter 구현·자동 검증](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6603057228)·[5번째 Flutter 실기기 첫 측정](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6603203545)을 확인했다. 고정 Backend b1f11bb 계약 수용, 제품/UI 변경 없이 일반 runtime/source/runner의 일괄 GET→LostArk 최대5/유한 큐·직렬 분석/저장→원명령 일괄 POST→최종bootstrap1회를 연결했다는 보고다. 원키/본문·새 초안·반대 역할·회원/환경/키 가드 및 수동 단건 흐름 유지다.
+- Flutter 자체 결과: test2811PASS/analyze문제0/Dart32파일 포맷 변경 없음. runtime/VM9캐릭터의 GET1/POST1/LostArk9/후속bootstrap1, 응답 순서·누락·부분 실패·크기 분할·단건/일괄 동시·응답 유실 후 파일DB 재시작·원명령 복구·24시간 경계·늦은ACK/새초안·로컬ACK저장 실패 복구를 보고했다. Backend 독립 재현이나 기존 Backend144PASS와 합산하지 않는다. Flutter feature/startup-performance-diagnostics는 미커밋이며 사용자 결정 전 commit/push/merge 보류, 원격 코드 인계는 미완료다.
+- 사용자 로컬 Backend+Android debug5동시 첫 로그:8개 fetched/applied, max_reads5/max_queued3, GET1 HTTP200/92ms·POST1 HTTP200/237ms, runner/finalModel/finalFrame 정상 종결 보고다. personal24/role_build8 요청이 profile_batch1/role_batch1로 줄었다. 이 근거로 앱 연결·인증된 로컬 양성 HTTP 관측 상태를 갱신하되 Backend 직접 관측/독립 DB 확인으로 표시하지 않는다.
+- 단일 실행의8캐릭터 준비 이후7.34→5.75초(약22%감소), 준비 포함8.29→7.78초. 앱 시작~최종프레임은12.92→13.71초로 증가했다. 토큰 갱신 추가·인증복원0.72→1.91초·준비0.94→2.03초·LostArk 한 건3.51초가 함께 보고돼 전체 시작시간 개선이나 동시성5의 최적성을 확정하지 않는다.
+- 전체8항목 서버 저장 내용의 독립 DB 확인·2/5 비교·실패 실기기 인수는 미실행. 추가 Backend 수정/반복 검증 요청이 없어 서버·DB 조회/시험을 확대하거나 중복 확인 댓글을 작성하지 않았다. 현재 목적 브랜치에 수신/상태 문서만 기록하며 수신마다 별도 commit/push하지 않는다. 다음 사용자/Flutter 인수·측정 판단, Backend는 구체적인 연동 차이 대응. 코드·실행 서버·운영·태그·merge·자료·Issue 상태는 변경하지 않았다.
 
 <a id="backend-v012-deployment"></a>
 

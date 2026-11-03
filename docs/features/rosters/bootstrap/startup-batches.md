@@ -106,3 +106,9 @@ Flutter는 실제 전송할 JSON의 UTF-8 크기와 항목 수로 분할한다. 
 구현 `b1f11bb5011056ce5dd655efe7c8efe2765960e3` 원격 게시·로컬 반영을 [전체3번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6602009469)에서 확인한다. 문서 후행 마감 SHA와 실행 업무 소스 SHA를 구분한다.
 
 기본/two-cycle OpenAPI에 동일한 추가 계약을 제공한다. migration·새 provider 호출·새 DB표는 없다. Backend 고정 SHA/실제 로컬 반영을 확인한 뒤 Flutter가 DTO·durable 원명령·유한 큐·일괄 전송/복구·최종 bootstrap을 연결한다. Flutter의 기존 commit/push/merge 보류는 별도 사용자 결정 사항이다. 운영 배포·태그·merge·APK 게시·자료 초기화·Issue 종료는 포함하지 않는다.
+
+## Backend 작업 구간 마감
+
+사용자는 반복 Backend 호출을 준비 조회1회·일괄 저장1회로 줄인 성과를 확인하고 이 구간을 마감했다. [Flutter 전체5번째 로컬 실기기 보고](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6603203545)의 personal24/role_build8→profile_batch1/role_batch1·양성 HTTP를 근거로 한다. 전체 앱 호출 수·전체 시작시간 개선을 뜻하지 않는다. [마감 결정](../../../project/DEV_LOG.md#startup-batches-backend-closeout)을 따른다.
+
+네이티브 LostArk 동시 조회 조정은 후속으로 진행하며, 추가 비교/미실행 검증을 현재 Backend 구간의 완료 조건으로 확대하지 않는다. Flutter 코드 게시/병합·전체 기기 인수·운영 반영·Issue 종료는 별도 상태다. 다음 사용자 지정 작업은 Issue42 요구 확인이다.
