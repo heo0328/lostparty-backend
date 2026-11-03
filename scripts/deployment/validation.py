@@ -24,6 +24,19 @@ REUSE = {
     'artifact_id': 13130595536,
     'record_sha256': '81c2a4302cf43a6390022a78b36f8c8be2ae915f7438c1c254be0ca9116f8fba',
 }
+# Explicit developer-approved local evidence, for this release only. No claim of
+# a full CI run on the new source; original scoped results remain distinguishable.
+LOCAL_REUSE = {
+    'version': '2.0.0',
+    'approved_source': 'aa23939c9e66332dd40ff39a025f2480178191a3',
+    'source': '0207d0f6b9ef8734e67bbbdc0701ce75fbdc9c8c',
+    'records': {
+        'docs/features/rosters/bootstrap/startup-batches-verification.json':
+            'b312668d7c466701dc8d503fece1798c0d10c33d287a848d76e6401af2747fae',
+        'docs/features/recruitment/membership-actions/activity-continuity-verification.json':
+            'e455b708c924f72f1acc6c6f5044325491f7cd60c39d0479c4cdcd96cfca000f',
+    },
+}
 RELEASE_PREPARATION = {
     'VERSION', PLAN, '.github/workflows/backend-release.yml',
     'scripts/deployment/validation.py', 'scripts/tests/test_release_validation.py',
@@ -41,7 +54,37 @@ def check_reuse_changes(validated_changes, preparation_changes):
         raise ValueError('release preparation changes executable source')
 
 
-def verify_reuse_proof(proof):
+def verify_local_proof(proof):
+    expected = {k: v for k, v in LOCAL_REUSE.items() if k != 'version'}
+    if not isinstance(proof, dict) or set(proof) != set(expected) | {'record_json'}:
+        raise ValueError('invalid local provenance')
+    if any(proof[k] != v for k, v in expected.items()):
+        raise ValueError('local provenance differs from approved release')
+    raw = proof['record_json']
+    if not isinstance(raw, dict) or set(raw) != set(LOCAL_REUSE['records']):
+        raise ValueError('local evidence missing')
+    for path, digest in LOCAL_REUSE['records'].items():
+        if not isinstance(raw[path], str) or checksum(raw[path].encode()) != digest:
+            raise ValueError('local evidence bytes changed')
+        json.loads(raw[path])
+    return proof
+
+
+def local_reuse_evidence():
+    for base, head in ((LOCAL_REUSE['source'], LOCAL_REUSE['approved_source']),
+                       (LOCAL_REUSE['approved_source'], 'HEAD')):
+        if subprocess.call(['git', 'merge-base', '--is-ancestor', base, head]):
+            raise ValueError('local validation ancestry changed')
+    check_reuse_changes(
+        git('diff', '--name-only', '--no-renames', LOCAL_REUSE['source'], LOCAL_REUSE['approved_source']).splitlines(),
+        git('diff', '--name-only', '--no-renames', LOCAL_REUSE['approved_source'], 'HEAD').splitlines())
+    return verify_local_proof({k: v for k, v in LOCAL_REUSE.items() if k != 'version'} |
+                              {'record_json': {p: (ROOT / p).read_text() for p in LOCAL_REUSE['records']}})
+
+
+def verify_reuse_proof(proof, version=None):
+    if version == LOCAL_REUSE['version']:
+        return verify_local_proof(proof)
     expected = {k: v for k, v in REUSE.items() if k != 'version'}
     if not isinstance(proof, dict) or set(proof) != set(expected) | {'record_json'}:
         raise ValueError('invalid reuse provenance')
@@ -62,6 +105,8 @@ def verify_reuse_proof(proof):
 
 
 def reuse_evidence(plan):
+    if plan['mode'] == 'reuse' and plan['version'] == LOCAL_REUSE['version']:
+        return local_reuse_evidence()
     if plan['mode'] != 'reuse' or plan['version'] != REUSE['version']:
         raise ValueError('reuse is limited to the approved release version')
     for base, head in ((REUSE['source'], REUSE['approved_source']), (REUSE['approved_source'], 'HEAD')):
@@ -98,7 +143,8 @@ def check_results(plan):
     reuse = plan['mode'] == 'reuse'
     return {'source': 'success', 'static': 'success', 'contracts': 'reused' if reuse else 'success',
             'regression': 'reused' if reuse else 'success',
-            'docker_replace_rollback': 'reused' if reuse else 'success' if plan['mode'] == 'full' else 'skipped'}
+            'docker_replace_rollback': ('skipped' if plan['version'] == LOCAL_REUSE['version'] else 'reused')
+            if reuse else 'success' if plan['mode'] == 'full' else 'skipped'}
 
 
 def git(*args):
@@ -124,7 +170,7 @@ def load_plan(root=ROOT):
         raise ValueError('invalid validation plan fields')
     if plan['version'] != version or plan['mode'] not in ('selected', 'full', 'reuse'):
         raise ValueError('validation plan version or mode mismatch')
-    if plan['mode'] == 'reuse' and version != REUSE['version']:
+    if plan['mode'] == 'reuse' and version not in (REUSE['version'], LOCAL_REUSE['version']):
         raise ValueError('reuse is not enabled for this version')
     require(plan['baseline_tag'], TAG)
     for key in ('change', 'impact', 'reason'):
@@ -202,7 +248,7 @@ def verify_record(data, plan, source):
     reuse = plan['mode'] == 'reuse'
     if reuse:
         expected.add('reused_validation')
-        if plan['version'] != REUSE['version']:
+        if plan['version'] not in (REUSE['version'], LOCAL_REUSE['version']):
             raise ValueError('reuse is not enabled for this version')
     if not isinstance(data, dict) or set(data) != expected or data['schema'] != (2 if reuse else 1):
         raise ValueError('invalid validation record')
@@ -214,7 +260,7 @@ def verify_record(data, plan, source):
         raise ValueError('successful matching validation required')
     require(data['run_url'], r'https://github\.com/heo0328/lostparty-backend/actions/runs/[0-9]+/attempts/[0-9]+')
     if reuse:
-        verify_reuse_proof(data['reused_validation'])
+        verify_reuse_proof(data['reused_validation'], plan['version'])
     return data
 
 
@@ -241,7 +287,8 @@ def main():
                 raise ValueError('reuse has one provenance check, no test shards')
             proof = reuse_evidence(plan)
             print(json.dumps({'mode': 'reuse', 'new_tests_executed': 0,
-                              'validated_source': proof['source'], 'prior_run': proof['run_id']}))
+                              'validated_source': proof['source'], 'prior_run': proof.get('run_id'),
+                              'local_records': list(proof.get('records', {}))}))
             return 0
         if plan['mode'] == 'full':
             from regression import shard

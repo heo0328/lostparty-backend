@@ -1,5 +1,9 @@
 # 다음 실행
 
+## 진행 — Backend v2.0.0 운영 반영
+
+개발자 명시 승인으로 현재 main aa23939의 이슈41/42를 운영 반영한다. 이번 한정 로컬 검증 재사용도 승인됐다. 목적 브랜치 chore/release-backend-v2에서 VERSION·계획·출처 고정·제어 검사 후 dev/main 통합·태그·기존 자동 배포를 수행한다. DB/설정 변경·기존 review 복구 없음. Native는 Issue34 전체11번째 회신에서 APK 공개 전 운영 지원 확인 대기다. 완료 시 실제 소스/이미지/서버 결과를 같은 이슈에 회신한다.
+
 ## 완료 — Backend dev/main 통합·Issue41/42 종료 / 다음 개발자 지시 대기
 
 사용자 승인으로 최신 인수 기록9d0a7b7을 [PR44](https://github.com/heo0328/lostparty-backend/pull/44)·병합4231a58에 dev 통합하고 main도 fast-forward·원격 동일 SHA를 확인했다. [Issue41 전체15번째 Backend 완료 결과](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6609216803)·[Issue42 전체9번째 Backend 완료 결과](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6609226056) 회신 후 두 이슈를 completed로 종료했다. 후행 종료 기록까지 dev/main 같은 최종 커밋으로 보존한다. [최종 이력](DEV_LOG.md#issues-41-42-integration-closeout) 기준이다.
