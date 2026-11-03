@@ -1,11 +1,13 @@
 """Test selection, publication gates and immutable evidence; no production access."""
 import copy
+import io
 import json
 import os
 import subprocess
 import sys
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 from unittest.mock import patch
 
@@ -137,6 +139,124 @@ class ValidationTests(unittest.TestCase):
         self.assertIn('shard: ${{ fromJSON(needs.verify.outputs.shards) }}', workflow)
         self.assertIn('name: ${{ needs.validation.outputs.artifact }}', workflow)
         self.assertNotIn('overwrite: true', workflow)
+
+    def reuse_proof(self):
+        prior = {'schema': 1, 'version': '0.1.1', 'mode': 'full',
+                 'source': validation.REUSE['source'], 'result': 'success',
+                 'checks': dict.fromkeys(('source', 'static', 'contracts', 'regression', 'docker_replace_rollback'), 'success'),
+                 'run_url': f"https://github.com/{validation.REPOSITORY}/actions/runs/41417066498/attempts/1",
+                 'executed_tests': ['tests/test_a.py', 'tests/test_b.py']}
+        raw = json.dumps(prior)
+        proof = {k: v for k, v in validation.REUSE.items() if k != 'version'}
+        proof.update(record_json=raw, record_sha256=validation.checksum(raw.encode()))
+        self.enterContext(patch.dict(validation.REUSE, {'record_sha256': proof['record_sha256']}))
+        self.enterContext(patch('validation.all_tests', return_value=prior['executed_tests']))
+        return proof
+
+    def test_reuse_version_and_empty_new_test_list_are_required(self):
+        plan = {**self.plan, 'mode': 'reuse', 'tests': []}
+        self.assertEqual(self.load(plan)['mode'], 'reuse')
+        with self.assertRaises(ValueError):
+            self.load({**plan, 'tests': ['tests/test_a.py']})
+        (self.root / 'VERSION').write_text('0.1.3\n')
+        with self.assertRaises(ValueError):
+            self.load({**plan, 'version': '0.1.3'})
+
+    def test_reuse_rejects_executable_changes_in_either_source_comparison(self):
+        validation.check_reuse_changes(['docs/project/DEV_LOG.md', 'AGENTS.md'],
+                                       list(validation.RELEASE_PREPARATION))
+        for path in ['app/groups/admissions.py', 'alembic/change.py', 'requirements.txt',
+                     'Dockerfile', 'compose.lightsail.yaml', '.dockerignore', 'tests/test_a.py',
+                     'scripts/deployment/server.py', 'docs/tools/change.py']:
+            with self.subTest(path=path):
+                with self.assertRaises(ValueError):
+                    validation.check_reuse_changes([path], [])
+                with self.assertRaises(ValueError):
+                    validation.check_reuse_changes([], [path])
+
+    def test_reuse_proof_binds_bytes_identity_and_original_full_success(self):
+        proof = self.reuse_proof()
+        validation.verify_reuse_proof(proof)
+        for key, value in [('source', 'b' * 40), ('approved_source', 'c' * 40),
+                           ('artifact_id', 1), ('record_json', proof['record_json'] + ' ')]:
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                validation.verify_reuse_proof({**proof, key: value})
+        for key, value in [('result', 'failure'), ('mode', 'selected'), ('executed_tests', [])]:
+            bad = json.loads(proof['record_json']); bad[key] = value
+            raw = json.dumps(bad); checksum = validation.checksum(raw.encode())
+            with patch.dict(validation.REUSE, {'record_sha256': checksum}), self.assertRaises(ValueError):
+                validation.verify_reuse_proof({**proof, 'record_json': raw, 'record_sha256': checksum})
+
+    def test_reuse_fetch_requires_successful_run_and_unexpired_bound_artifact(self):
+        proof = self.reuse_proof()
+        plan = self.load({**self.plan, 'mode': 'reuse', 'tests': []})
+        run = {'status': 'completed', 'conclusion': 'success', 'head_sha': validation.REUSE['source'],
+               'repository': {'full_name': validation.REPOSITORY}, 'path': '.github/workflows/backend-release.yml'}
+        artifact = {'expired': False, 'name': 'validation-41417066498-1',
+                    'workflow_run': {'id': 41417066498, 'head_sha': validation.REUSE['source']}}
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, 'w') as archive:
+            archive.writestr('validation.json', proof['record_json'])
+        with patch('validation.git', side_effect=['docs/project/DEV_LOG.md', 'VERSION']), \
+                patch('validation.subprocess.call', return_value=0), \
+                patch('release.api', side_effect=[run, artifact]), \
+                patch('validation.subprocess.check_output', return_value=buffer.getvalue()):
+            self.assertEqual(validation.reuse_evidence(plan), proof)
+        for bad in (None, {**run, 'conclusion': 'failure'}, {**run, 'head_sha': 'b' * 40}):
+            with patch('validation.git', return_value=''), patch('validation.subprocess.call', return_value=0), \
+                    patch('release.api', return_value=bad), self.assertRaises(ValueError):
+                validation.reuse_evidence(plan)
+        with patch('validation.git', return_value=''), patch('validation.subprocess.call', return_value=0), \
+                patch('release.api', side_effect=[run, {**artifact, 'expired': True}]), \
+                patch('validation.subprocess.check_output') as download, self.assertRaises(ValueError):
+            validation.reuse_evidence(plan)
+        download.assert_not_called()
+        with patch('validation.subprocess.call', return_value=1), patch('release.api') as api, self.assertRaises(ValueError):
+            validation.reuse_evidence(plan)
+        api.assert_not_called()
+
+    def test_reuse_record_is_explicit_and_prior_evidence_survives_offline(self):
+        proof = self.reuse_proof()
+        plan = self.load({**self.plan, 'mode': 'reuse', 'tests': []})
+        with patch.dict(os.environ, {'GITHUB_RUN_ID': '456', 'GITHUB_RUN_ATTEMPT': '1'}), \
+                patch('validation.git', return_value='d' * 40), \
+                patch('validation.reuse_evidence', return_value=proof):
+            data = validation.record(plan, 'success', 'success')
+        self.assertEqual(data['schema'], 2)
+        self.assertEqual(data['executed_tests'], [])
+        self.assertEqual(data['checks']['regression'], 'reused')
+        with patch('release.api') as api:
+            validation.verify_record(data, plan, 'd' * 40)
+        api.assert_not_called()
+        for changes in ({'schema': 1}, {'source': 'a' * 40}, {'reused_validation': {}},
+                        {'checks': {**data['checks'], 'regression': 'success'}}):
+            with self.assertRaises(ValueError):
+                validation.verify_record({**data, **changes}, plan, 'd' * 40)
+
+    def test_reuse_regression_checks_provenance_without_running_pytest(self):
+        proof = self.reuse_proof()
+        plan = self.load({**self.plan, 'mode': 'reuse', 'tests': []})
+        with patch('validation.load_plan', return_value=plan), \
+                patch.object(sys, 'argv', ['validation.py', 'regress']), \
+                patch('validation.reuse_evidence', return_value=proof), \
+                patch('validation.subprocess.call') as call:
+            self.assertEqual(validation.main(), 0)
+        call.assert_not_called()
+        workflow = (validation.ROOT / '.github/workflows/backend-release.yml').read_text()
+        self.assertIn("if: steps.plan.outputs.mode != 'reuse'", workflow)
+        self.assertIn('actions: read', workflow)
+
+    def test_reuse_prepare_schedules_one_provenance_job(self):
+        proof = self.reuse_proof()
+        plan = self.load({**self.plan, 'mode': 'reuse', 'tests': []})
+        output = self.root / 'output'
+        with patch('validation.load_plan', return_value=plan), \
+                patch.object(sys, 'argv', ['validation.py', 'prepare']), \
+                patch.dict(os.environ, {'GITHUB_OUTPUT': str(output)}), \
+                patch('validation.validate_baseline'), \
+                patch('validation.reuse_evidence', return_value=proof):
+            self.assertEqual(validation.main(), 0)
+        self.assertEqual(output.read_text(), 'mode=reuse\nshards=[0]\n')
 
 
 if __name__ == '__main__':

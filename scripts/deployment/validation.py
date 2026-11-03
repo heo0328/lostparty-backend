@@ -1,17 +1,104 @@
 #!/usr/bin/env python3
 """Release-scoped test selection. Never changes production or accepts shell commands."""
 import argparse
+import io
 import json
 import os
 import re
 import subprocess
 import sys
+import zipfile
 from pathlib import Path
 
 from common import REPOSITORY, TAG, checksum, require, utc
 
 ROOT = Path(__file__).resolve().parents[2]
 PLAN = 'release-validation.json'
+# One approved release only. This is not a general skip-tests switch.
+REUSE = {
+    'version': '0.1.2',
+    'approved_source': 'b649ccf5bd1a03f2392a27fbda7860eb058bdd92',
+    'source': 'fdd51c8e9a4d9a5eda8c5f175485965a013ee99a',
+    'run_id': 41417066498,
+    'attempt': 1,
+    'artifact_id': 13130595536,
+    'record_sha256': '81c2a4302cf43a6390022a78b36f8c8be2ae915f7438c1c254be0ca9116f8fba',
+}
+RELEASE_PREPARATION = {
+    'VERSION', PLAN, '.github/workflows/backend-release.yml',
+    'scripts/deployment/validation.py', 'scripts/tests/test_release_validation.py',
+}
+
+
+def documentation(path):
+    return path == 'AGENTS.md' or (path.startswith('docs/') and Path(path).suffix in ('.md', '.json'))
+
+
+def check_reuse_changes(validated_changes, preparation_changes):
+    if any(not documentation(p) for p in validated_changes):
+        raise ValueError('approved source differs from tested executable source')
+    if any(not documentation(p) and p not in RELEASE_PREPARATION for p in preparation_changes):
+        raise ValueError('release preparation changes executable source')
+
+
+def verify_reuse_proof(proof):
+    expected = {k: v for k, v in REUSE.items() if k != 'version'}
+    if not isinstance(proof, dict) or set(proof) != set(expected) | {'record_json'}:
+        raise ValueError('invalid reuse provenance')
+    if any(proof[k] != v for k, v in expected.items()):
+        raise ValueError('reuse provenance does not match approved release')
+    raw = proof['record_json']
+    if not isinstance(raw, str) or len(raw.encode()) > 262144 or checksum(raw.encode()) != REUSE['record_sha256']:
+        raise ValueError('prior validation bytes changed')
+    data = json.loads(raw)
+    checks = dict.fromkeys(('source', 'static', 'contracts', 'regression', 'docker_replace_rollback'), 'success')
+    url = f"https://github.com/{REPOSITORY}/actions/runs/{REUSE['run_id']}/attempts/{REUSE['attempt']}"
+    if (data.get('schema') != 1 or data.get('version') != '0.1.1' or data.get('mode') != 'full'
+            or data.get('source') != REUSE['source'] or data.get('result') != 'success'
+            or data.get('checks') != checks or data.get('run_url') != url
+            or data.get('executed_tests') != all_tests()):
+        raise ValueError('prior full validation does not cover this source')
+    return proof
+
+
+def reuse_evidence(plan):
+    if plan['mode'] != 'reuse' or plan['version'] != REUSE['version']:
+        raise ValueError('reuse is limited to the approved release version')
+    for base, head in ((REUSE['source'], REUSE['approved_source']), (REUSE['approved_source'], 'HEAD')):
+        if subprocess.call(['git', 'merge-base', '--is-ancestor', base, head]):
+            raise ValueError('approved validation ancestry changed')
+    check_reuse_changes(
+        git('diff', '--name-only', '--no-renames', REUSE['source'], REUSE['approved_source']).splitlines(),
+        git('diff', '--name-only', '--no-renames', REUSE['approved_source'], 'HEAD').splitlines())
+    from release import api
+    run = api(f"/actions/runs/{REUSE['run_id']}/attempts/{REUSE['attempt']}")
+    if (not run or run.get('status') != 'completed' or run.get('conclusion') != 'success'
+            or run.get('head_sha') != REUSE['source']
+            or run.get('repository', {}).get('full_name') != REPOSITORY
+            or run.get('path') != '.github/workflows/backend-release.yml'):
+        raise ValueError('approved GitHub run is not successful')
+    artifact = api(f"/actions/artifacts/{REUSE['artifact_id']}")
+    if (not artifact or artifact.get('expired')
+            or artifact.get('name') != f"validation-{REUSE['run_id']}-{REUSE['attempt']}"
+            or artifact.get('workflow_run', {}).get('id') != REUSE['run_id']
+            or artifact.get('workflow_run', {}).get('head_sha') != REUSE['source']):
+        raise ValueError('approved artifact unavailable')
+    archive = subprocess.check_output(['gh', 'api',
+        f"repos/{REPOSITORY}/actions/artifacts/{REUSE['artifact_id']}/zip"])
+    if len(archive) > 1048576:
+        raise ValueError('unexpected artifact size')
+    with zipfile.ZipFile(io.BytesIO(archive)) as z:
+        if z.namelist() != ['validation.json'] or z.getinfo('validation.json').file_size > 262144:
+            raise ValueError('unexpected artifact contents')
+        raw = z.read('validation.json').decode()
+    return verify_reuse_proof({k: v for k, v in REUSE.items() if k != 'version'} | {'record_json': raw})
+
+
+def check_results(plan):
+    reuse = plan['mode'] == 'reuse'
+    return {'source': 'success', 'static': 'success', 'contracts': 'reused' if reuse else 'success',
+            'regression': 'reused' if reuse else 'success',
+            'docker_replace_rollback': 'reused' if reuse else 'success' if plan['mode'] == 'full' else 'skipped'}
 
 
 def git(*args):
@@ -35,8 +122,10 @@ def load_plan(root=ROOT):
     if not isinstance(plan, dict) or set(plan) != {
             'version', 'mode', 'baseline_tag', 'change', 'impact', 'reason', 'tests'}:
         raise ValueError('invalid validation plan fields')
-    if plan['version'] != version or plan['mode'] not in ('selected', 'full'):
+    if plan['version'] != version or plan['mode'] not in ('selected', 'full', 'reuse'):
         raise ValueError('validation plan version or mode mismatch')
+    if plan['mode'] == 'reuse' and version != REUSE['version']:
+        raise ValueError('reuse is not enabled for this version')
     require(plan['baseline_tag'], TAG)
     for key in ('change', 'impact', 'reason'):
         if not isinstance(plan[key], str) or not plan[key].strip() or len(plan[key]) > 2000:
@@ -46,7 +135,7 @@ def load_plan(root=ROOT):
         raise ValueError('test file list required')
     if len(tests) != len(set(tests)) or any(t not in all_tests(root) or (root / t).is_symlink() for t in tests):
         raise ValueError('only existing exact test files are allowed')
-    if (plan['mode'] == 'selected' and not tests) or (plan['mode'] == 'full' and tests):
+    if (plan['mode'] == 'selected' and not tests) or (plan['mode'] in ('full', 'reuse') and tests):
         raise ValueError('selected needs tests; full uses all tests')
     return {**plan, 'plan_sha256': checksum(raw)}
 
@@ -79,6 +168,8 @@ def validate_baseline(plan):
 
 
 def selected_tests(plan):
+    if plan['mode'] == 'reuse':
+        return []  # Do not label the prior run's tests as newly executed.
     return plan['tests'] if plan['mode'] == 'selected' else all_tests()
 
 
@@ -91,31 +182,39 @@ def record(plan, verify, regression):
         raise ValueError('chosen validation jobs must succeed')
     run_id = require(os.environ['GITHUB_RUN_ID'], r'[0-9]+')
     attempt = require(os.environ['GITHUB_RUN_ATTEMPT'], r'[0-9]+')
-    return {'schema': 1, 'source': git('rev-parse', 'HEAD'),
+    proof = reuse_evidence(plan) if plan['mode'] == 'reuse' else None
+    data = {'schema': 2 if proof else 1, 'source': git('rev-parse', 'HEAD'),
             'version': plan['version'], 'mode': plan['mode'],
             'baseline_tag': plan['baseline_tag'], 'plan_sha256': plan['plan_sha256'],
             'change': plan['change'], 'impact': plan['impact'], 'reason': plan['reason'],
             'executed_tests': selected_tests(plan),
-            'checks': {'source': 'success', 'static': 'success', 'contracts': 'success',
-                       'regression': 'success',
-                       'docker_replace_rollback': 'success' if plan['mode'] == 'full' else 'skipped'},
+            'checks': check_results(plan),
             'result': 'success', 'finished_at_utc': utc(),
             'run_url': f'https://github.com/{REPOSITORY}/actions/runs/{run_id}/attempts/{attempt}'}
+    if proof:
+        data['reused_validation'] = proof
+    return data
 
 
 def verify_record(data, plan, source):
     expected = {'schema', 'source', 'version', 'mode', 'baseline_tag', 'plan_sha256',
                 'change', 'impact', 'reason', 'executed_tests', 'checks', 'result', 'finished_at_utc', 'run_url'}
-    if not isinstance(data, dict) or set(data) != expected or data['schema'] != 1:
+    reuse = plan['mode'] == 'reuse'
+    if reuse:
+        expected.add('reused_validation')
+        if plan['version'] != REUSE['version']:
+            raise ValueError('reuse is not enabled for this version')
+    if not isinstance(data, dict) or set(data) != expected or data['schema'] != (2 if reuse else 1):
         raise ValueError('invalid validation record')
     for key in ('version', 'mode', 'baseline_tag', 'plan_sha256', 'change', 'impact', 'reason'):
         if data[key] != plan[key]:
             raise ValueError('validation plan evidence mismatch')
-    checks = {'source': 'success', 'static': 'success', 'contracts': 'success', 'regression': 'success',
-              'docker_replace_rollback': 'success' if plan['mode'] == 'full' else 'skipped'}
+    checks = check_results(plan)
     if data['source'] != source or data['executed_tests'] != selected_tests(plan) or data['checks'] != checks or data['result'] != 'success':
         raise ValueError('successful matching validation required')
     require(data['run_url'], r'https://github\.com/heo0328/lostparty-backend/actions/runs/[0-9]+/attempts/[0-9]+')
+    if reuse:
+        verify_reuse_proof(data['reused_validation'])
     return data
 
 
@@ -128,13 +227,22 @@ def main():
     plan = load_plan()
     if args.action == 'prepare':
         validate_baseline(plan)
+        if plan['mode'] == 'reuse':
+            reuse_evidence(plan)
         output = os.environ.get('GITHUB_OUTPUT')
         if output:
             with open(output, 'a') as stream:
                 stream.write('mode=' + plan['mode'] + '\n')
-                stream.write('shards=' + ('[0]' if plan['mode'] == 'selected' else '[0,1,2,3,4,5,6,7]') + '\n')
+                stream.write('shards=' + ('[0]' if plan['mode'] in ('selected', 'reuse') else '[0,1,2,3,4,5,6,7]') + '\n')
         print(json.dumps({'mode': plan['mode'], 'tests': selected_tests(plan)}))
     elif args.action == 'regress':
+        if plan['mode'] == 'reuse':
+            if args.index != 0:
+                raise ValueError('reuse has one provenance check, no test shards')
+            proof = reuse_evidence(plan)
+            print(json.dumps({'mode': 'reuse', 'new_tests_executed': 0,
+                              'validated_source': proof['source'], 'prior_run': proof['run_id']}))
+            return 0
         if plan['mode'] == 'full':
             from regression import shard
             tests = shard(args.index, 8)

@@ -1,5 +1,11 @@
 # 영구 개발 이력
 
+## 2026-11-03 — 그룹 초대 v0.1.2 운영 반영·기존 검증 재사용 승인
+
+- 사용자가 현재 main b649ccf의 그룹 초대 수정 게시를 요청하고 장시간 중복 테스트를 원하지 않는다고 명시했다. 현재 main과 전체1817PASS sourcefdd51c8의 실행/DB/의존성/테스트/배포 스크립트 동일성(차이는 문서)을 확인했다. 현재 자동화의 일반 full 재실행 대신 이번 배포 범위만 재사용하도록 제시했고 사용자가 승인했다. 미래 일반 재사용 기능으로 확대하지 않는다.
+- chore/release-group-invite에서 VERSION0.1.2·mode reuse를 준비했다. prior run/attempt·승인 main/검증 source·artifact ID·원본 바이트 hash·원 테스트 목록을 고정하고 GitHub 성공/귀속/만료·조상 관계·변경 허용 경로를 검사한다. schema2 기록은 신규 테스트0, 회귀/계약/Docker 교체 checks reused와 원본 증거를 함께 보존한다. 일반 selected/full·서버 제어 계약은 유지한다.
+- 추가 제어의 소스 변경/위조·실패/만료/해시 변조 거절·버전 제한·단일 provenance job·앱 테스트 미호출 검사를 포함한 scripts59PASS(약0.2초)를 확인했다. 앱 전체 회귀·기존 계약 테스트는 재실행하지 않았다. 실제 배포 결과는 후속 기록으로 구분하고, 이 준비 기록만으로 운영 반영 완료로 표시하지 않는다.
+
 <a id="invite-eligibility-git-integration"></a>
 
 ## 2026-11-03 — 그룹 초대·검증 범위 개선 dev 통합 및 main 동기화
