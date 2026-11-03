@@ -1,0 +1,113 @@
+{
+  "date": "2026-11-02",
+  "issue": 38,
+  "branch": "feat/group-invite-eligibility",
+  "implementation_source": "fdd51c8e9a4d9a5eda8c5f175485965a013ee99a",
+  "implementation_pushed": true,
+  "result_comment": "https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6573802290",
+  "workflow": {
+    "run_id": 41417066498,
+    "attempt": 1,
+    "url": "https://github.com/heo0328/lostparty-backend/actions/runs/41417066498/attempts/1",
+    "event": "workflow_dispatch",
+    "conclusion": "success",
+    "mode": "full",
+    "baseline_tag": "v0.1.1",
+    "test_files": 98,
+    "passed": 1817,
+    "failed": 0,
+    "new_direct_tests": 6,
+    "new_tests_included_in_total": true,
+    "subtests_passed": 2,
+    "shards": [
+      {
+        "index": 0,
+        "passed": 204
+      },
+      {
+        "index": 1,
+        "passed": 274
+      },
+      {
+        "index": 2,
+        "passed": 227
+      },
+      {
+        "index": 3,
+        "passed": 234
+      },
+      {
+        "index": 4,
+        "passed": 238
+      },
+      {
+        "index": 5,
+        "passed": 212
+      },
+      {
+        "index": 6,
+        "passed": 218
+      },
+      {
+        "index": 7,
+        "passed": 210
+      }
+    ],
+    "scripts_tests": 52,
+    "contracts": {
+      "default": {
+        "paths": 123,
+        "operations": 140,
+        "whole_object": "equal"
+      },
+      "two_cycle": {
+        "paths": 185,
+        "operations": 206,
+        "whole_object": "equal"
+      }
+    },
+    "docker_replace_rollback": "success",
+    "image_build": "success",
+    "publish": "skipped",
+    "deploy": "skipped"
+  },
+  "artifact": {
+    "id": 13130595536,
+    "name": "validation-41417066498-1",
+    "source_plan_test_list_and_checks_verified": true,
+    "validation_json_sha256": "81c2a4302cf43a6390022a78b36f8c8be2ae915f7438c1c254be0ca9116f8fba",
+    "plan_sha256": "3940bd89afcbf6f768b1fcbed46c6ddc50de18fdbe48a0fb80758be8e08b560e"
+  },
+  "checks": [
+    "current owner self/member/other group/ended membership on 0034 and 0035",
+    "non-representative and non-activity characters; self precedence",
+    "legacy DTO preservation; strict required eligibility enum; private identity exclusion",
+    "trim/ASCII exact lookup, ordering, 50 limit, invalid and duplicate queries",
+    "old-schema 503 and unusable candidate exclusion for all profiles",
+    "GET READ ONLY and no provider/key access; at most one additional membership query",
+    "self 409 after authority/revision checks; no relation/subject/membership side effects",
+    "post-search membership/ownership change rejection; successful original response replay",
+    "full existing admission/concurrency/atomicity regression"
+  ],
+  "warnings": [
+    "Starlette/AnyIO BlockingPortal deprecation",
+    "existing raid_rooms/cycle_commands.py NULL-primary-key SAWarning in unrelated tests"
+  ],
+  "local": {
+    "static": "pass",
+    "scripts_tests": 52,
+    "isolated_postgresql": "not_run: Docker Desktop Linux engine unavailable",
+    "generated_openapi": "not_run locally; GitHub runner whole-object checks passed"
+  },
+  "runtime": {
+    "production_changed": false,
+    "migration": false,
+    "environment_keys_or_existing_data_changed": false,
+    "new_native_profile_acceptance": "pending",
+    "issue_closed": false
+  },
+  "next": {
+    "backend_user": "separate integration/version/runtime rollout authorization; report fixed running source",
+    "flutter": "prepare strict profile/409 handling; retain group-display-1 until runtime support is confirmed"
+  }
+}

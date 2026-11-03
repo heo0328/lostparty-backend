@@ -130,7 +130,7 @@ def candidates(principal, gid, name, reader_profile=None):
         groups.member(db, uid, groups.group(db, gid))
         if reader_profile is not None:
             from app.groups import display, features
-            if reader_profile != display.PROFILE:
+            if reader_profile not in (display.PROFILE, 'group-invite-eligibility-1'):
                 fail('INVALID_REQUEST', 400)
             features.ready(db)
         check(('group-invite-search', str(uid)), 30)
@@ -153,8 +153,16 @@ def candidates(principal, gid, name, reader_profile=None):
                               combat_power=decimal_string(c.summary.get('combat_power'))))
         if reader_profile is not None:
             specs = display.character_specs(db, selected)
+            eligibility = reader_profile == 'group-invite-eligibility-1'
+            owners = {owner for owner, _, _ in selected}
+            members = set(db.scalars(select(GroupMembership.user_id).where(
+                GroupMembership.group_id == gid, GroupMembership.ended_at.is_(None),
+                GroupMembership.user_id.in_(owners)))) if eligibility and owners else set()
             for item, (owner, _, char) in zip(items, selected):
                 item['character_spec'] = specs[(owner, char.id)]
+                if eligibility:
+                    item['invitation_eligibility'] = ('self' if owner == uid else
+                                                      'already_member' if owner in members else 'eligible')
             return display.bounded(dict(profile=reader_profile, evaluated_at=now(db), items=items))
         return dict(items=items)
 
@@ -171,6 +179,8 @@ def new_request(principal, gid, key, command, kind):
                     character.lifecycle_revision != data['expected_target_lifecycle_revision']):
                 fail('REVISION_CONFLICT')
             target = account.owner_id
+            if target == uid:
+                fail('SELF_INVITATION')
             selection = None
         else:
             group_cas(group, data)

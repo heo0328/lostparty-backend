@@ -10210,7 +10210,10 @@
             "schema": {
               "anyOf": [
                 {
-                  "const": "group-display-1",
+                  "enum": [
+                    "group-display-1",
+                    "group-invite-eligibility-1"
+                  ],
                   "type": "string"
                 },
                 {
@@ -10228,6 +10231,9 @@
               "application/json": {
                 "schema": {
                   "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/EligibleInviteCandidates"
+                    },
                     {
                       "$ref": "#/components/schemas/DisplayInviteCandidates"
                     },
@@ -10604,7 +10610,8 @@
               }
             }
           }
-        }
+        },
+        "description": "After current authority and target revision checks, self invitation returns 409 SELF_INVITATION; another current group member returns 409 ALREADY_GROUP_MEMBER."
       }
     },
     "/v1/groups/{group_id}/applications": {
@@ -83990,6 +83997,104 @@
           "joined_at"
         ],
         "title": "Participation"
+      },
+      "EligibleInviteCandidate": {
+        "properties": {
+          "target_character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Target Character Id"
+          },
+          "display": {
+            "$ref": "#/components/schemas/CharacterDisplay"
+          },
+          "ownership_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Ownership Revision"
+          },
+          "lifecycle_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Lifecycle Revision"
+          },
+          "item_level": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Level"
+          },
+          "combat_power": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Combat Power"
+          },
+          "character_spec": {
+            "$ref": "#/components/schemas/CharacterSpec"
+          },
+          "invitation_eligibility": {
+            "type": "string",
+            "enum": [
+              "eligible",
+              "self",
+              "already_member"
+            ],
+            "title": "Invitation Eligibility"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "target_character_id",
+          "display",
+          "ownership_revision",
+          "lifecycle_revision",
+          "item_level",
+          "combat_power",
+          "character_spec",
+          "invitation_eligibility"
+        ],
+        "title": "EligibleInviteCandidate"
+      },
+      "EligibleInviteCandidates": {
+        "properties": {
+          "profile": {
+            "type": "string",
+            "const": "group-invite-eligibility-1",
+            "title": "Profile"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/EligibleInviteCandidate"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "profile",
+          "evaluated_at",
+          "items"
+        ],
+        "title": "EligibleInviteCandidates"
       }
     },
     "securitySchemes": {

@@ -55,6 +55,15 @@ def existing(tag, source):
     m = validate_manifest(json.loads(Path('dist/release.json').read_text()))
     if m['tag'] != tag or m['source'] != source or checksum(Path('dist/compose.lightsail.yaml').read_bytes()) != m['compose_sha256']:
         raise ValueError('immutable release conflict')
+    # New releases carry immutable validation evidence. Legacy releases stay readable.
+    evidence = [a for a in release.get('assets', []) if a['name'] == 'validation.json']
+    if Path('release-validation.json').exists() and not evidence:
+        raise ValueError('validation evidence missing from planned release')
+    if evidence:
+        from validation import load_plan, verify_record
+        run(['gh', 'release', 'download', tag, '--repo', REPOSITORY, '--pattern', 'validation.json',
+             '--dir', 'dist/existing-validation'])
+        verify_record(json.loads(Path('dist/existing-validation/validation.json').read_text()), load_plan(), source)
     return m
 
 
@@ -111,6 +120,11 @@ def main():
     validate_source(tag, source, Path('VERSION').read_text(), main_ref, dev_ref, ancestor)
     if args.action == 'validate':
         print('Release source validated'); return
+    from validation import load_plan, verify_record
+    evidence = verify_record(json.loads(Path('dist/validation.json').read_text()), load_plan(), source)
+    # Publication requires evidence from this run, not a former successful CI run.
+    if evidence['run_url'].split('/attempts/')[0] != 'https://github.com/' + REPOSITORY + '/actions/runs/' + os.environ['GITHUB_RUN_ID']:
+        raise ValueError('validation evidence from another run')
     reference = IMAGE + ':sha-' + source
     version_ref = IMAGE + ':' + tag
     # Reuse an image after an interrupted publication; never rebuild the same source tag.
@@ -153,11 +167,11 @@ def main():
                            'compose_sha256': checksum(compose), 'built_at_utc': labels['org.opencontainers.image.created']})
     Path('dist/release.json').write_text(json.dumps(m, indent=2) + '\n')
     Path('dist/compose.lightsail.yaml').write_bytes(compose)
-    Path('dist/notes.md').write_text(f"Source: `{source}`\n\nImage: `{image}`\n\nDB: `{revision}`\n\nAPI contracts: https://github.com/{REPOSITORY}/tree/{source}/openapi\n\nImage publication is separate from production deployment and user acceptance. See the production Deployment/Actions result.\n")
+    Path('dist/notes.md').write_text(f"Source: `{source}`\n\nImage: `{image}`\n\nDB: `{revision}`\n\nValidation: `{evidence['mode']}` ({len(evidence['executed_tests'])} test files), {evidence['run_url']}; immutable evidence: validation.json\n\nAPI contracts: https://github.com/{REPOSITORY}/tree/{source}/openapi\n\nImage publication is separate from production deployment and user acceptance. See the production Deployment/Actions result.\n")
     # Create draft first. A crash with partial assets stays visibly incomplete and fails closed.
     run(['gh', 'release', 'create', tag, '--repo', REPOSITORY, '--verify-tag', '--draft',
          '--title', 'Backend ' + tag, '--notes-file', 'dist/notes.md',
-         'dist/release.json', 'dist/compose.lightsail.yaml'])
+         'dist/release.json', 'dist/compose.lightsail.yaml', 'dist/validation.json'])
     run(['gh', 'release', 'edit', tag, '--repo', REPOSITORY, '--draft=false'])
     print('Published ' + tag)
 

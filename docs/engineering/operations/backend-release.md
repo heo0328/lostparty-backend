@@ -1,69 +1,108 @@
 # Backend 태그 기반 Lightsail 배포
 
-작업 목적은 승인된 고정 릴리즈와 실제 운영 반영을 연결하는 것이다. [Issue34](https://github.com/heo0328/lostparty-backend/issues/34)에서 Native와 합의한 독립 버전·4단계 추적을 따른다. 구현 브랜치는 `chore/release-management`이며 첫 버전은 `VERSION`의 `0.1.0`이다. OpenAPI의 버전과 별도다. 기존 APK release Google 로그인 사용자 인수는 보존하며 다시 요구하지 않는다.
+이 문서는 자동 배포의 현재 운영 기준 원본이다. Backend 버전은 `VERSION`, 태그는 `vMAJOR.MINOR.PATCH`이며 Native·OpenAPI 버전과 독립적이다. 목적 브랜치 → dev → main 통합을 유지한다. 사용자가 승인한 태그 push가 운영 배포 승인이다. 별도 간소 배포 시스템은 두지 않고 동일 배포에서 검증 범위만 바꾼다.
 
-## 현재 적용 상태
+**개발·검증은 로컬 dev가 기본이며 운영 반영 여부·시점은 개발자가 지시한다.** 아래 절차는 운영 반영을 준비하거나 승인된 배포를 수행할 때 적용하며, 기능 수정 요청마다 실행하지 않는다. 로컬 실행 중단을 이유로 수동 배포 워크플로의 검증 경로로 임의 대체하지 않는다. Backend의 반영 시점 제안·대안 판단은 [로컬 개발과 운영 반영](../development/workflow.md#local-dev-and-production)을 따른다. 네이티브 debug는 로컬, release는 AWS를 대상으로 하며 앱 연결과 서버 반영 완료를 구분한다.
 
-v0.1.1/source77c9de2/image259e8234를 2026-11-01T16:30:33Z에 자동 반영했다. [배포 집계](records/backend-v0.1.1-deployment.json)·[Actions attempt2](https://github.com/heo0328/lostparty-backend/actions/runs/41323830955/attempts/2) 기준으로 전체1811PASS/이미지·Release/실제 서버health 성공이다. v0.1.0은 소스검증 실패 태그로 보존했다. 아래 일회 준비 설명과 초기 시험 수치는 당시 이력이며 현재 상태는 이 집계를 따른다.
+## 현재 적용 상태와 변경 이력
 
-## 실행 경계
+- 실제 운영은 v0.1.1/source77c9de2/image259e8234·DB0035다. UTC2026-11-01T16:30:33Z 첫 자동 반영을 완료했다. [배포 집계](records/backend-v0.1.1-deployment.json)·[전체9번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6560737194)를 따른다.
+- 이번 개선은 작업 브랜치의 selected/full 검증·validation.json 기록이다. scripts52PASS·수동 전체1811PASS/검증artifact 대조를 완료했다([검증 집계](records/backend-validation-scope-verification.json)). 로컬 selected 실DB 실행은 엔진 불가로 미완료이며 선택분기/실패 차단은 단위 검증했다. 통합/수동 검증 상태는 [NEXT_WORK](../../project/NEXT_WORK.md)를 따른다. 원격 코드 게시·dev/main 통합·새 태그 배포는 구분한다. 이 문서 수정만으로 운영에 반영되지 않는다.
+- 과거 OIDC 제한/전용SSH 전환·초기 시험은 [준비 집계](records/backend-release-preparation.json), v0.1.0 실패/태그 충돌은 [첫 태그 시험](records/backend-first-tag-trial.json)에 보존한다. 예전 준비/미실행 상태를 현재 상태로 해석하지 않는다.
 
-목적 브랜치→dev→main 통합과 완료 브랜치 정리를 유지하고 release 브랜치는 추가하지 않는다. 사용자가 승인한 `vMAJOR.MINOR.PATCH` 태그 push가 운영 배포 승인이다. 태그와 VERSION 일치·main/dev 동일 SHA·태그 소스의 main 포함을 **최초 산출물 게시 전** 검사한다. 뒤에 main/dev가 전진해도 게시된 Release 재실행은 원래 태그/source/digest를 재사용한다. GitHub의 태그 update/deletion 규칙이 공개 태그 이동/삭제를 막는다.
+## 사용자가 할 일
 
-`.github/workflows/backend-release.yml`의 실행은 다음과 같다.
+| 변경 | 요청 예시 | Backend 담당의 대응 |
+|---|---|---|
+| 문서·주석만 수정 | “문서 수정까지 정리해주세요.” | 문서 검사·통합. 서버 배포 태그 불필요 |
+| 특정 API의 작은 수정·독립 기능 추가 | “관련 검증으로 배포 준비해주세요.” | 누적 변경 영향 검토·관련 테스트 선택·버전/검증 계획 준비 |
+| 인증·권한·공통 구조 변경 | “전체 검증으로 배포 준비해주세요.” | 전체 회귀·호환성 검토·버전/검증 계획 준비 |
+| DB·운영 구성 변경 | “운영 반영 계획부터 검토해주세요.” | 백업·복구/수동 적용 계획과 영향 제시. 별도 승인 전 변경 금지 |
 
-1. 정적·스크립트 테스트, 격리 Docker 교체/복귀, 두 계약 전체 비교, 전체 격리 pytest gate를 8개 비중복 파일 그룹으로 병렬 실행한다. 운영 DB나 비밀을 사용하지 않는다.
-2. Linux amd64 이미지를 GitHub 표준 runner에서 빌드하고 `ghcr.io/heo0328/lostparty-backend:sha-<source>`와 `:<tag>`로 게시한다. 소스·버전 태그는 기존 digest와 다르면 덮어쓰지 않는다. 조회 실패를 이미지 없음으로 취급하지 않는다. 중간 실패 후 같은 SHA 이미지는 재빌드하지 않는다.
-3. GitHub Release의 `release.json`과 `compose.lightsail.yaml`을 고정한다. draft로 생성/첨부 후 게시한다. 불완전 draft는 자동 덮어쓰기하지 않으며 운영자가 원인/게시 복구를 검토한다. 코드 수정은 새 버전이다.
-4. production 환경 작업에서 배포 전용 SSH 계정/키와 API로 확인해 고정한 호스트키로 접속한다. 서버의 AWS CLI·GitHub runner나 AWS access key는 필요하지 않다. 개인키는 GitHub production Secret에 보관한다. GitHub 환경 Deployment 상태와 Actions summary에 실제 결과를 남긴다.
-5. 서버는 digest 이미지를 pull한 뒤 API만 교체한다. DB/Caddy/네트워크/볼륨·API 환경/명령/mount 등 image/build 외 Compose 변경은 사전 거절한다. DB revision 불일치도 교체 전에 거절하며 `alembic upgrade/downgrade`는 호출하지 않는다.
+1. 기능 수정을 요청하면 Backend 담당이 목적 브랜치에서 구현하고 로컬 dev 환경에서 변경에 필요한 개발 검증을 수행한다. 새 테스트는 재발 방지·복잡한 동작 확인이 필요한 경우에 추가하며 단순 수정마다 의무적으로 만들지 않는다. 이 단계만으로 버전·태그·배포 워크플로 실행을 시작하지 않는다.
+2. 배포 준비 시 담당이 **변경 내용 / 검증 모드·실행 검사 / 버전 / DB·설정 변경 여부**를 짧게 보고한다. 사용자가 테스트 파일이나 설정을 직접 작성할 필요는 없다.
+3. 사용자가 통합·해당 버전 배포를 승인하면 목적 브랜치→dev→main으로 통합하고 같은 main/dev 기준에서 승인 태그를 게시한다. commit/push의 상시 승인은 merge·태그·배포의 상시 승인이 아니다.
+4. 자동화가 선택된 검증·이미지 게시·서버 반영·결과 기록을 수행한다. 담당은 실행 결과와 실제 서버 결과를 구분해 보고한다.
 
-수동 workflow_dispatch는 검증과 이미지 **로컬 빌드까지만** 실행한다. GHCR/Release 게시·운영 SSH 접속/반영은 하지 않는다. 추가 merge·태그·Release 발행은 사전 준비만으로 승인됐다고 해석하지 않는다.
+개발에서 이미 검증했더라도 이번 구현은 태그에서 선택 검증을 한 번 수행한다. 과거 CI 결과 재사용·파일별 테스트 자동 선택은 포함하지 않는다. patch 버전·변경 줄 수·API 추가라는 이유만으로 관련 검증을 선택하지 않는다. 권한이나 공통 영향이 있으면 전체 검증이다.
 
-## 일회 준비와 현재 활성화 상태
+## 검증 계획 작성
 
-GitHub production 환경은 reviewer/wait 없이 `v*` **태그만** 허용한다. 환경 Secret은 `LIGHTSAIL_DEPLOY_SSH_KEY`, 변수는 `LIGHTSAIL_SSH_KNOWN_HOSTS`다. 서버 주소/계정은 `54.253.176.103` / `lostparty-deploy`로 고정한다. GitHub 환경/태그 정책 입력 JSON은 `scripts/deployment/`에 보관한다. 미사용 AWS_DEPLOY_ROLE_ARN 변수와 workflow의 id-token 권한은 제거했다. 기존 SSH 방화벽은 변경하지 않는다.
+루트 `release-validation.json`을 태그 소스와 함께 고정한다. 파일이 **없으면 full**, 있지만 잘못됐으면 게시 전에 중단한다. 담당은 VERSION을 바꿀 때 계획의 version도 함께 바꾼다. 현재 파일은 자동화 개선의 배포 없는 full 검증용이며 VERSION0.1.1을 재사용해 운영 태그를 만들면 안 된다. 다음 승인 릴리즈에서 새 버전을 정한다.
 
-**인증 방식 변경 근거:** 초기 확정안은 OIDC였지만 실제 IAM 호출은 조직 SCP explicit deny로 거절됐다. 공식 [새 AWS 가입 방식의 관리 정책](https://docs.aws.amazon.com/accounts/latest/reference/scps-and-rcps-for-projects.html)은 iam:*Provider*를 제한한다. [고급 기능 활성화](https://docs.aws.amazon.com/accounts/latest/reference/activate-advanced-features.html)는 계정 업그레이드가 필요하므로 현재 Free plan 유지와 맞지 않는다. 사용자에게 원인을 설명하고 **전용 SSH 키 방식으로 변경하는 명시 승인을 받았다.** 별도 관리자를 찾는 방식으로 해결된다고 안내한 초기 추정은 정정했다. OIDC 역할/provider는 생성하지 않았고 계정 업그레이드·정책 우회도 하지 않았다.
+관련 검증 작성 예시(예시 값이며 실제 선택은 변경 영향에 따라 결정):
 
-배포 전용 계정은 암호가 잠겨 있고, root 소유 authorized_keys의 `restrict`·강제 명령으로 셸/PTY/에이전트·TCP 포워딩을 허용하지 않는다. 강제 명령은 `submit`, `preflight`, `status <run>-<attempt>`만 받고 제한된 sudo 명령으로 root 소유 배포 도구를 호출한다. 사용자 홈/키 파일을 root 소유로 두어 배포 키로 허용 명령을 바꿀 수 없다. 개인키는 Git에 넣지 않으며 production Secret에 암호화 저장했다. GitHub Secret에 OpenSSH 개인키를 등록할 때 끝 LF를 보존한다. 일반 `gh secret set < key`는 끝 CR/LF를 제거하므로 사용하지 않는다. 검증된 등록 방식은 Python에서 개인키 문자열을 JSON 인용한 dotenv 항목으로 만들어 `gh secret set --env production --env-file -`의 stdin으로 전달하는 것이다. 키 원문/환경파일은 출력·커밋하지 않고 마지막 LF가 있는 파일로 `ssh-keygen -y` 및 제한 preflight를 확인한다.
+```json
+{
+  "version": "0.1.2",
+  "mode": "selected",
+  "baseline_tag": "v0.1.1",
+  "change": "특정 레이드 공개 조회의 제한된 오류 수정",
+  "impact": "공개 조회 한 기능. 인증·모델·DB·공통 코드 변경 없음",
+  "reason": "해당 기능과 직접 연결된 기존 테스트로 검증 가능",
+  "tests": ["tests/test_raid_catalog.py"]
+}
+```
 
-key rotation은 새 키 준비→전용 명령 검증→Secret 교체→이전 키 폐기의 별도 승인된 운영 작업으로 진행한다. 운영 env/인증 키/DB는 이 SSH 키와 다르다.
+예시의 테스트 파일은 실제 존재 여부와 해당 작업의 연관성을 확인해 선택한다. full은 같은 필드에서 mode를 `full`, tests를 `[]`로 지정한다. change/impact/reason은 비밀·회원정보 없는 설명만 넣는다.
 
-`bootstrap_server.py`는 관리자 SSH에서 검토한 코드·public key·기존 설치본 expected hash를 stdin JSON으로 받아 root 도구와 전용 계정/최소 sudoers를 준비한다. 개인키를 서버에 보내지 않는다. 기존 계정/authorized_keys/sudo 정책이 다르면 덮어쓰지 않는다. 실제 키로 preflight 성공·일반 명령/포워딩 거절을 확인했고, 키와 임시 관리자 인증의 로컬 복사본은 작업 종료 시 제거한다.
+- tests는 저장소 tests 아래 실제 `test_*.py` 파일 경로만 허용한다. selected는 최소 하나, full은 빈 배열이다. pytest 옵션·노드·명령·와일드카드·중복·심볼릭 링크는 거절한다.
+- baseline_tag는 **이전 운영 릴리즈**다. 게시된 정식 GitHub Release이며 현재 소스의 조상인지 자동 확인한다. 담당은 최신 성공 production Deployment/source와 직접 대조해 현재 운영 이후 누적 변경 전체를 검토한다. 단지 직전 Git 태그나 직전 작업 커밋을 기준으로 좁히지 않는다. 자동화가 최신 운영 태그를 자동 추론하는 기능은 이번 범위에 없다.
+- 알 수 없는 영향·다수 기능에 걸친 리팩토링이면 full이다. 파일이 없는 기본 full은 baseline이 없는 보수적 실행으로 기록한다.
 
-GHCR 신규 package는 기본 private일 수 있다. 최초 게시 후 소유자가 package 설정에서 이 package를 public으로 전환해야 한다. workflow는 **익명 digest 조회가 성공하기 전에는 Release 완료/운영 배포로 넘어가지 않는다.** 첫 게시가 이 지점에서 멈추면 public 전환 후 같은 run을 재실행해 기존 소스 이미지를 재사용한다. 현재 v0.1.1 이미지는 익명 digest 접근 확인을 완료했다. 최초 준비 당시에는 public 전환과 첫 태그가 미확인이었다. 이미지는 공개 소스/런타임만 포함하며 `.env`·인증 키·백업/개인정보를 넣지 않는다. GHCR/Actions 요금과 공개 여부가 바뀌면 운영자가 다시 검토하며 유료 runner·AWS ECR/S3 등은 추가하지 않는다.
+### 전체 검증 필수 범위
 
-서버에는 root 소유 `/usr/local/lib/lostparty-deploy/{server.py,common.py}`와 비공개 `/var/lib/lostparty-deploy`를 준비했다. bootstrap은 현재 API image ID·실행 source·DB revision과 root만 읽는 해석된 Compose를 동결해 초기 복귀 기준으로 보존한다. 운영 checkout과 `.env.lightsail`·4종 키·DB/Caddy·서비스 시작 시각을 바꾸지 않았다. 설치 스크립트 자체의 변경은 별도 검증/승인된 준비 작업으로 반영하며 일반 릴리즈가 임의로 교체하지 않는다.
+자동 방어 경로: `app/auth/`, `app/core/`, `app/main.py`, `alembic/`, `.github/`, `scripts/`, ORM의 `*models.py`, 이름에 permission/authorization/transaction/policy가 있는 app 파일, Dockerfile/Compose/requirements 계열, Python 빌드·pytest 설정과 conftest, `.dockerignore`다. 비교 기준 이후 이 파일이 추가·수정·삭제·이름 변경되면 selected를 거절한다.
 
-## 서버 결과·복귀·재실행
+이는 영향 자동 판정의 완성이 아니다. 다른 경로에 구현된 권한·공통 트랜잭션·여러 기능 리팩토링도 담당이 full로 분류해야 한다. 차단을 피하려고 비교 기준이나 파일 위치를 바꾸지 않는다.
 
-서버 단일 flock과 GitHub `concurrency`의 `cancel-in-progress: false, queue: max`로 배포를 직렬화한다. queue 한도는 GitHub 정책을 따르며 한도 초과는 무조건 배포 성공으로 취급하지 않는다. 서버 systemd transient unit은 SSH/runner 연결과 독립 실행한다. 현재·직전 정상 이미지와 릴리즈 파일은 보존하고 전체 Docker prune/volume 삭제를 실행하지 않는다. 더 오래된 로컬 이미지도 자동 삭제하지 않으며 디스크 3GiB 미만이면 중단해 운영자가 배포 전용 자료 정리를 검토한다.
+## 자동 실행과 기록
 
-각 요청은 GitHub run ID/attempt로 구분한다. 같은 attempt에 다른 입력은 거절하고 완료 결과는 다시 실행하지 않는다. 이전 in-progress journal이 프로세스/호스트 중단으로 남았으면 기존 정상 API를 복구하고 이전 시도를 실패로 종료한 뒤 새 시도를 검증한다. 이전보다 낮은 version의 신규 배포는 거절한다. 자동 복귀는 journal에 보존한 이전 image/Compose로만 수행한다.
+| 과정 | selected | full |
+|---|---|---|
+| 태그·VERSION·main/dev·소스 확인 | 실행 | 실행 |
+| 의존성/문서/배포 스크립트 단위 검사 | 실행 | 실행 |
+| 두 OpenAPI 전체 계약 비교 | 실행 | 실행 |
+| 애플리케이션 회귀 | 지정한 파일, 1개 격리 작업 | 전체 파일, 8개 비중복 그룹 |
+| 배포 제어 Docker 교체·복귀 시험 | 생략 | 실행 |
+| 이미지 빌드·게시 | 실행 | 실행 |
+| 서버 사전 확인·API 교체·health·복귀 | 실행 | 실행 |
 
-교체 시작 전 이전 정상 정보를 기록하고 API만 `up --no-deps --no-build --pull never --force-recreate --wait`한다. 120초 내 healthy와 공개 HTTPS `/health` 200/database ok, 공개 raid-catalog 200, 미인증 `/v1/me` 401을 확인한다. API 환경/mount·비밀 파일 bytes/소유/권한과 DB/Caddy container ID/start/mount도 비교한다. 실패하면 이전 API로 복귀하고 같은 health를 확인한다. 복귀 성공도 릴리즈 실패다. DB downgrade/자료 복구는 수행하지 않는다.
+`.github/workflows/backend-release.yml`은 선택한 검증 작업이 실제 success인지 별도 gate에서 확인한다. 실패·취소·예상 밖 skip을 성공으로 취급하지 않는다. 수동 workflow_dispatch는 동일 계획으로 검증·로컬 이미지 빌드·검증 artifact까지만 수행하며 GHCR/Release 게시·운영 SSH에 접근하지 않는다.
 
-서버 확인 명령:
+성공 검증은 `validation-<run>-<attempt>` artifact의 validation.json으로 30일 보관한다. 게시 작업이 해당 artifact를 받아 소스 SHA·계획 해시·모드·테스트 목록·결과·동일 run 여부를 확인하고 GitHub Release에 **validation.json**을 추가한다. 기본 release.json·Compose·서버 입력 계약은 유지한다.
+
+validation.json에는 대상 버전/소스 SHA, 계획 파일 SHA256(없으면 null), 모드, 비교 기준, 선택 이유, 실행 테스트 파일 전체, 검사별 성공/생략, UTC·Actions 링크를 남긴다. 실제 테스트 개수는 로그에서 확인하며 단순 파일 목록을 테스트 개수로 부르지 않는다. 소스 통합 / 산출물 게시 / 실제 서버 반영 / 사용자 인수는 계속 구분한다.
+
+## 불변 산출물과 실패 대응
+
+- 태그·VERSION 일치, 최초 게시 시 main/dev 동일 SHA·태그 소스의 main 포함을 확인한다. checkout의 로컬 태그 변형과 충돌하지 않도록 브랜치 갱신은 --no-tags/명시 refspec을 사용한다.
+- GitHub 표준 Linux runner에서 linux/amd64 이미지를 빌드한다. GHCR 버전·소스 태그를 덮어쓰지 않고 실제 배포는 digest로 고정한다. 최초 private package는 public/익명 digest 조회를 확인하기 전 배포하지 않는다. 현재 v0.1.1은 익명 조회 확인 완료다.
+- 기존 Release 재실행은 원래 이미지·release.json·Compose·validation.json을 재사용한다. 검증 기록을 덮어쓰거나 소급 추가하지 않는다. 이전 검증 기록이 없는 옛 소스의 Release는 읽을 수 있지만 계획 파일이 있는 새 소스의 Release에서 증거가 누락되면 중단한다.
+- 코드 수정은 새 VERSION/태그다. 전송·인증/설정 문제는 원인 확인과 수정 후 승인된 같은 태그/이미지를 재실행할 수 있다. 무작정 전체 workflow를 반복하지 않고 실패 작업만 재실행한다. artifact가 만료돼 게시 증거를 읽을 수 없으면 동일 run에서 검증 gate를 다시 수행해야 하며 증거 없이 우회하지 않는다.
+- draft 생성·첨부 후 게시한다. 불완전 draft는 자동 덮어쓰기하지 않고 수동 조사한다. 태그 수정/삭제 방지와 production의 v*태그 제한을 유지한다.
+
+## 서버 보호와 별도 운영 작업
+
+전용 SSH·고정 호스트키 검증·강제 명령 계정을 유지한다. Free plan 계정의 OIDC provider 제한으로 사용자 승인 후 전용키를 채택했으며 AWS CLI·GitHub runner를 서버에 설치하지 않는다. production Secret `LIGHTSAIL_DEPLOY_SSH_KEY`, 변수 `LIGHTSAIL_SSH_KNOWN_HOSTS`, 계정 lostparty-deploy/54.253.176.103을 사용한다. 포트 추가 개방·유료 리소스는 추가하지 않는다.
+
+배포 키는 root 소유 authorized_keys의 restrict/강제 명령과 최소 sudo로 submit/preflight/status만 허용한다. 셸·PTY·포워딩은 차단한다. 개인키 등록 시 마지막 LF를 보존한다. 일반 `gh secret set < key`는 끝 CR/LF를 제거하므로 사용하지 않는다. Python에서 개인키 문자열을 JSON 인용한 dotenv 항목으로 만들어 `gh secret set --env production --env-file -`의 stdin으로 전달하고, 제한 preflight를 확인한다. rotation은 새 제한키 추가→접속 확인→Secret 갱신→이전 키 폐기 순서이며 개인키·임시 관리자 인증 복사본은 삭제한다.
+
+서버는 `/home/ubuntu/lostparty-backend`의 env·키를 유지하고 root `/var/lib/lostparty-deploy/current.json`이 가리키는 구성을 사용한다. DB/Caddy/네트워크/볼륨·API 운영환경/명령/mount 변경은 사전 중단한다. 후보 Alembic head와 실제 DB revision 불일치도 API 교체 전에 중단한다. 자동 migration/downgrade는 없다. 전체 테스트 통과가 이 차단을 해제하지 않는다.
+
+이미지 source/버전/amd64·여유디스크3GiB·기존 서비스 상태를 확인하고 pull 후 API만 --no-deps/--no-build/--pull never로 교체한다. 120초 안에 healthy·공개 HTTPS /health200(database ok)·raid-catalog200·미인증 /v1/me401을 확인한다. DB/Caddy ID/시작시각과 env/키/mount 보존을 비교한다. 실패하면 직전 이미지/구성으로 복귀하고 같은 점검을 수행하되 해당 배포는 실패로 기록한다.
+
+GitHub 동시 배포는 취소하지 않고 직렬화한다. 서버 flock/systemd/journal은 SSH 중단과 독립 실행하며 재실행은 저장 결과부터 확인한다. 같은 attempt 입력 변경·이전보다 낮은 버전은 거절한다. 현재·직전 정상 이미지를 보존하고 전체 Docker prune/volume 삭제는 하지 않는다.
+
+운영 환경 변경·DB 변경은 백업/복구와 영향에 대한 별도 승인 후 수행하고 baseline을 재정렬한다. 외부 DB/키 백업은 현재 미구성이며 이번 검증 개선으로 완료 처리하지 않는다. 이전 release Google 로그인 인수는 보존하고 실사용 토큰/회원 쓰기로 자동 점검하지 않는다.
+
+## 운영 확인과 검증 근거
+
+서버 상태·최근 로그·API만 재시작은 [짧은 운영 안내](lightsail-quick-ops.md)를 따른다. 배포 결과는 다음처럼 비밀 없는 status로 확인한다.
 
 ```bash
 sudo python3 /usr/local/lib/lostparty-deploy/server.py status RUN_ID-ATTEMPT
 sudo systemctl status lostparty-deploy-RUN_ID-ATTEMPT
 ```
 
-status는 비밀 없는 결과만 출력한다. `current.json`·동결 Compose·전체 inspect/env는 출력/게시하지 않는다. 설정·키 변경은 기존 별도 승인 절차로 진행하고, 운영 기준과 configuration revision을 함께 갱신한 후 배포 baseline 재정렬이 필요하다. 일반 코드 배포가 환경파일/Google 허용 목록을 덮어쓰지 않는다.
-
-배포 manifest는 tag/source/image digest·DB revision·두 고정 OpenAPI SHA256·Compose SHA256·빌드 UTC를 포함한다. 서버 journal은 configuration revision, 실제 API 시작/완료 UTC, 검증 결과·복귀·previous good·run 링크를 추가한다. `.env` hash나 비밀 원문은 공개하지 않는다. 사용자 인수는 자동 health와 분리한다. API 동작·공개 버전 endpoint는 추가하지 않는다.
-
-## 검증과 다음 실행
-
-구현/실제 준비·검증 진행 상태는 [준비 집계](records/backend-release-preparation.json)를 따른다.
-
-- 제어 단위 시험: 태그/버전, DB·구성 불일치, 이미지 실패, unhealthy/복귀 실패, 낮은 버전, 중단 journal 복구, 중복·다른 attempt, OS flock 배제, 비밀 값 제외.
-- `python3 scripts/deployment/docker_smoke.py`: UUID 로컬 Docker 환경에서 실제 API 교체·unhealthy 복귀·DB/Caddy 보존. 애플리케이션 DB/공개 HTTPS·실 Google 인수는 이 시험에 포함하지 않는다.
-- `python3 scripts/verify_isolated.py static`, `contracts`, `all`: 별도 프로젝트/tmpfs PostgreSQL만 사용한다. 기존 0023 메타데이터 비교 테스트가 0031에서 대체된 unique constraint를 누락한 문제는 복사한 테스트 metadata에만 원래 제약을 복원했다. 해당0023cohort를타임스탬프검사와공유하고옛경로수·지원불가합성직업/완료보관기대를현재계약에맞췄다. 운영 모델/migration은 변경하지 않았다.
-- actionlint1.7.12는 새 queue 필드를 아직 인식하지 못하므로 해당 진단 하나만 제외하고 나머지 검사를 실행했다. queue:max는 [공식 workflow 문법](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax)에 대조했다.
-
-최초전체8그룹은1805PASS/6옛검사FAIL, 보정후대상11경계PASS다. 수정후전체8그룹재실행을완료한것은아니며첫수동GitHubworkflow의전체green으로확인한다. scripts37PASS에는배포제어25개가포함된다.
-
-다음 순서: 검증된 작업 구간 dev/main 통합 승인 → 수동 workflow 검증 → 사용자 승인 첫 v0.1.0 태그 → 최초 GHCR public 접근 확인/필요시 같은 run 재실행 → 실제 GitHub Secret/자동 배포 결과 확인. 현재 실제 운영은 v0.1.1/source77c9de2/image259e8234·DB0035이며 후행 문서 통합 commit과 다르다. 위 초기 준비 순서는 완료했고 다음 릴리즈부터 새 VERSION/승인 태그로 실행한다. 외부 백업 미구성은 별도 미완료이고 migration 자동화의 선행 해결이 필요하다.
+current.json·동결 Compose·전체 env/inspect·키 원문은 출력하지 않는다. 검증 개선의 테스트·수동 실행 결과는 NEXT_WORK/DEV_LOG와 Issue34에 연결하고, 도입 후 새 운영 태그 시험은 별도 사용자 승인으로 수행한다.

@@ -34,13 +34,14 @@ State = Literal['pending', 'all']
 View = Literal['received_invitations', 'sent_applications', 'sent_invitations']
 
 
-@router.get('/groups/{group_id}/invite-candidates', response_model=ds.DisplayInviteCandidates | s.InviteCandidates, responses=errors)
+@router.get('/groups/{group_id}/invite-candidates', response_model=ds.EligibleInviteCandidates | ds.DisplayInviteCandidates | s.InviteCandidates, responses=errors)
 def candidates(group_id: UUID, character_name: Name, principal: Principal,
-               reader_profile: Literal['group-display-1'] | None = None):
+               reader_profile: Literal['group-display-1', 'group-invite-eligibility-1'] | None = None):
     return admissions.candidates(principal, group_id, character_name, reader_profile)
 
 
-@router.post('/groups/{group_id}/invitations', status_code=201, response_model=s.GroupRelation, responses=errors)
+@router.post('/groups/{group_id}/invitations', status_code=201, response_model=s.GroupRelation, responses=errors,
+             description='After current authority and target revision checks, self invitation returns 409 SELF_INVITATION; another current group member returns 409 ALREADY_GROUP_MEMBER.')
 def invite(group_id: UUID, data: s.InviteIn, principal: Principal, key: Key):
     return admissions.new_request(principal, group_id, key, data, 'invitation')[1]
 

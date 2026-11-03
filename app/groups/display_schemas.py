@@ -132,3 +132,13 @@ class DisplayInviteCandidates(DTO):
     profile: Literal['group-display-1']
     evaluated_at: datetime
     items: list[DisplayInviteCandidate]
+
+
+class EligibleInviteCandidate(DisplayInviteCandidate):
+    invitation_eligibility: Literal['eligible', 'self', 'already_member']
+
+
+class EligibleInviteCandidates(DTO):
+    profile: Literal['group-invite-eligibility-1']
+    evaluated_at: datetime
+    items: list[EligibleInviteCandidate]

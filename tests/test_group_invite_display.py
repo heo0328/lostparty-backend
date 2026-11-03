@@ -26,7 +26,7 @@ def rename(w,index,name):
 
 def candidates(client,a,gid,name,profile=True):
     params=dict(character_name=name)
-    if profile:params['reader_profile']='group-display-1'
+    if profile:params['reader_profile']='group-display-1' if profile is True else profile
     response=client.get(f'/v1/groups/{gid}/invite-candidates',headers=a['headers'],params=params)
     assert response.status_code==200,response.text
     assert response.headers['Cache-Control']=='no-store'
@@ -65,7 +65,7 @@ def test_both_profiles_exclude_ineligible_targets(group_features,client,invalid)
         elif invalid=='owner_lost':account.owner_id=None
         elif invalid=='missing_claim':db.delete(db.get(NameClaim,(c.server_name,c.character_name)))
         else:c.lifecycle_state='retired'
-    for profile in (False,True):assert candidates(client,a,gid,name.lower(),profile)['items']==[]
+    for profile in (False,True,'group-invite-eligibility-1'):assert candidates(client,a,gid,name.lower(),profile)['items']==[]
 
 
 def test_unselected_activity_role_success_current_error_and_read_only(group_features,client,monkeypatch):
@@ -115,6 +115,7 @@ def test_old_schema_default_lookup_and_explicit_profile_gate(client,worlds,monke
             patch.setattr(database,'engine',lambda:target)
             a,b=worlds('invite-old-a'),worlds('invite-old-b');gid=group(client,a);name=rename(b,0,'OldHero')
             assert candidates(client,a,gid,name.lower(),False)['items'][0]['target_character_id']==b['ids'][0]
-            response=client.get(f'/v1/groups/{gid}/invite-candidates',headers=a['headers'],params=dict(character_name=name,reader_profile='group-display-1'))
-            assert response.status_code==503 and response.json()['error']['code']=='GROUP_FEATURE_NOT_READY'
+            for profile in ('group-display-1','group-invite-eligibility-1'):
+                response=client.get(f'/v1/groups/{gid}/invite-candidates',headers=a['headers'],params=dict(character_name=name,reader_profile=profile))
+                assert response.status_code==503 and response.json()['error']['code']=='GROUP_FEATURE_NOT_READY'
             assert client.get(f'/v1/groups/{gid}/invite-candidates',headers=a['headers'],params=dict(character_name=name,reader_profile='other')).status_code==400

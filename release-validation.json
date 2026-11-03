@@ -1,0 +1,9 @@
+{
+  "version": "0.1.1",
+  "mode": "full",
+  "baseline_tag": "v0.1.1",
+  "change": "Issue38 초대 검색 본인·기존 그룹원 판정과 SELF_INVITATION",
+  "impact": "그룹 초대 후보 opt-in DTO/조회·초대 POST 오류 및 두 OpenAPI; migration 없음",
+  "reason": "새 기능 검증. 기준 v0.1.1 이후 상속된 scripts/워크플로 보호경로 변경 때문에 full 유지; 수동 검증만 실행하며 게시/배포 없음",
+  "tests": []
+}
