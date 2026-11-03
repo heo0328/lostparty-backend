@@ -1,10 +1,12 @@
 # 다음 실행
 
-## 현재 — 사용자 승인 Backend 통합·Issue41/42 종료 마감
+## 완료 — Backend dev/main 통합·Issue41/42 종료 / 다음 개발자 지시 대기
 
-사용자가 Backend 문서 최신화·dev 통합·main 동일 시점 정렬·완료 결과 회신 후 Issue41/42 종료를 명시 승인했다. 현재 목적 브랜치의 인수/원격 인계 기록을 묶어 게시한 뒤 PR로 dev에 통합하고 main도 fast-forward한다. 양쪽 원격 일치를 확인한 다음 이슈별 결과를 회신하고 completed로 종료한다. [판단 근거](DEV_LOG.md#issues-41-42-close-check)를 재사용하며 기능 코드는 추가 변경하지 않는다.
+사용자 승인으로 최신 인수 기록9d0a7b7을 [PR44](https://github.com/heo0328/lostparty-backend/pull/44)·병합4231a58에 dev 통합하고 main도 fast-forward·원격 동일 SHA를 확인했다. [Issue41 전체15번째 Backend 완료 결과](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6609216803)·[Issue42 전체9번째 Backend 완료 결과](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6609226056) 회신 후 두 이슈를 completed로 종료했다. 후행 종료 기록까지 dev/main 같은 최종 커밋으로 보존한다. [최종 이력](DEV_LOG.md#issues-41-42-integration-closeout) 기준이다.
 
-Issue41은 PR43으로 dev에 포함되어 있고 이번 통합 대상은 Issue42 예방 수정과 두 기능의 최신 완료 기록이다. 기존 미완료 feat/activity-selection은 보존하며 완료 fix/raid-participation-continuity는 dev 포함·원격 게시 확인 후 정리한다. 이 Git 통합/Issue 종료는 운영 반영 승인이 아니며 AWS/로컬 실행 API·DB·키·태그·APK는 변경하지 않는다.
+현재 checkout dev. 완료 fix/raid-participation-continuity는 dev 포함·원격 게시·미커밋 없음 확인 후 로컬/원격 정리했고 미완료 feat/activity-selection은 보존한다. 두 이슈의 개발·로컬 인수·양측 게시·Backend Git 정리 대기는 모두 해소됐다. 추가 수정/시험 요청은 없으며 다음 개발자 지시 또는 구체 차이에 대응한다.
+
+AWS 운영v0.1.2와 로컬 실행 imagebe56f76c/DB0035는 Git 통합으로 교체하지 않았다. 운영 배포·태그·APK·DB/키/자료 변경은 없다. 운영 테스터 전 게시 시점은 개발자 별도 지시이며 기존 운영 추적은 [Issue34](https://github.com/heo0328/lostparty-backend/issues/34)·배포 기록을 따른다. 기존 dev review 복구는 제외된 최종 범위이며 후속 필수 과제가 아니다.
 
 ## 완료 — Issue42 예방 수정·사용자 로컬 변경 구간 인수
 
@@ -12,7 +14,7 @@ Issue41은 PR43으로 dev에 포함되어 있고 이번 통합 대상은 Issue42
 
 추가 Backend 수정/재시험 요청은 없고 구체 차이 또는 다음 개발자 지시 대기다. [Issue41 전체14번째 Flutter 원격 인계](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6608982829)·[Issue42 전체8번째](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6608986700)로 Flutter dev/main 원격 게시·통합 대기는 해소됐다. 실제 두 원격 head가 `11e9c847900441417c373452fa6fce8dfcf743db`임을 읽기 전용으로 대조했다. 전체2817PASS/analyze0은 Flutter 자체 결과이며 기존 부분집합 시험과 합산하지 않는다. Issue41은 [전체12번째 사용자 선택](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6608556182)으로 LostArk 기본 동시2를 확정했고 구현/기기 비교·원격 인계까지 완료했다. 추가 Backend 요청이나 반복 시험은 없다. 기존 dev review 복구는 사용자 최종 범위에서 제외했고 후속 필수 과제로 남기지 않는다.
 
-운영 테스터 전 예방 수정의 배포는 개발자의 별도 지시 대상이다. 이전 회신 확인에서는 Git/Issue 상태를 변경하지 않았으며 현재는 위 사용자 승인에 따라 Git 통합·Issue 종료를 진행한다. 운영 배포/태그/APK/자료 초기화·복구는 하지 않는다. [동작 계약](../features/recruitment/membership-actions/activity-participation-continuity.md)·[기존 Backend 검증](../features/recruitment/membership-actions/activity-continuity-verification.json) 기준이다.
+운영 테스터 전 예방 수정의 배포는 개발자의 별도 지시 대상이다. 사용자 승인 Git 통합·Issue 종료는 위 최신 기록대로 완료했다. 운영 배포/태그/APK/자료 초기화·복구는 하지 않는다. [동작 계약](../features/recruitment/membership-actions/activity-participation-continuity.md)·[기존 Backend 검증](../features/recruitment/membership-actions/activity-continuity-verification.json) 기준이다.
 
 ## 완료 — 초기 자동 갱신 Backend 반복 호출 축소 / Issue41
 
@@ -20,7 +22,7 @@ Issue41은 PR43으로 dev에 포함되어 있고 이번 통합 대상은 Issue42
 
 구현 `b1f11bb5011056ce5dd655efe7c8efe2765960e3` 원격 게시·[전체3번째 Backend 구현 인계](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6602009469) 완료. [전체4번째 Flutter 구현·자동검증](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6603057228)과 [전체5번째 Flutter 로컬 실기기 첫 측정](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6603203545)을 수신했다. 앱 연결/인증된 양성 batch HTTP와8개 fetched/applied는 Flutter가 사용자 로그로 관측한 근거이며 Backend 독립 재현·전체8항목 DB 저장 확인과 구분한다. 상세 결과는 [DEV_LOG](DEV_LOG.md#startup-batches-native-feedback) 기준이다.
 
-사용자는 현재 Backend의 반복 호출을 일괄 조회1회·저장1회로 줄인 성과를 확인하고 이 작업 구간을 문서 마감한 뒤 Issue42로 이동하도록 지시했다. **Backend 구간은 완료이며 네이티브 LostArk 동시 조회 조정도 사용자 기본2 선택·실기기 비교·원격 게시로 마감됐다.** 2/5 비교·실패 실기기 인수·8항목 저장 내용 독립 DB 확인의 미실행 기록은 남기되 이번 Backend 구간을 붙잡는 대기로 두거나 추가 시험을 자동 요청하지 않는다. 전체 시작시간 개선·최적 동시성·원격 Flutter 코드 인계는 확정하지 않는다. Flutter dev/main 원격11e9c847 통합·게시 대기는 해소됐다. 당시 보류 기록과 구분한다. 운영 배포·태그·merge·APK·자료 초기화·Issue 종료 없음. 아래 운영 완료는 이전 v0.1.2이며 이번 API의 운영 지원을 뜻하지 않는다.
+사용자는 현재 Backend의 반복 호출을 일괄 조회1회·저장1회로 줄인 성과를 확인하고 이 작업 구간을 문서 마감한 뒤 Issue42로 이동하도록 지시했다. **Backend 구간은 완료이며 네이티브 LostArk 동시 조회 조정도 사용자 기본2 선택·실기기 비교·원격 게시로 마감됐다.** 2/5 비교·실패 실기기 인수·8항목 저장 내용 독립 DB 확인의 미실행 기록은 남기되 이번 Backend 구간을 붙잡는 대기로 두거나 추가 시험을 자동 요청하지 않는다. 전체 시작시간 개선·최적 동시성·원격 Flutter 코드 인계는 확정하지 않는다. Flutter dev/main 원격11e9c847 통합·게시 대기는 해소됐다. 당시 보류 기록과 구분한다. Backend dev/main 통합·Issue 종료는 위 최신 기록대로 완료했으며 운영 배포·태그·APK·자료 초기화는 없다. 아래 운영 완료는 이전 v0.1.2이며 이번 API의 운영 지원을 뜻하지 않는다.
 
 ## 완료 — 그룹 초대 수정 운영 반영 v0.1.2
 

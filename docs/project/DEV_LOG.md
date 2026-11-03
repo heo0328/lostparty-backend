@@ -1,5 +1,16 @@
 # 영구 개발 이력
 
+<a id="issues-41-42-integration-closeout"></a>
+
+## 2026-11-04 — Backend dev/main 동기화·Issue41/42 완료 회신 및 종료
+
+- 사용자가 문서 최신화·dev 병합·main 같은 시점 정렬 후 결과 회신/Issue 종료를 명시 승인했다. 원격 fetch 후 dev7d4bfbc/main515a6c9/작업e6c69cb 일치·단일 worktree를 확인하고, 기존 미커밋 인수/완료 판단 기록을 보존해9d0a7b7로 목적 브랜치 commit/push했다.
+- [PR44](https://github.com/heo0328/lostparty-backend/pull/44)을 dev 대상으로 생성, MERGEABLE·추가 필수 체크 없음·고정 head9d0a7b7 확인 후 merge 방식으로 병합했다. 통합 SHA4231a58d5a293298f7403cbea6c90d47bde471a9, 로컬 dev는 원격 병합으로 fast-forward, main도 같은 지점으로 fast-forward push 후 로컬/원격 네 ref 일치를 확인했다. Issue41의 PR43 통합도 main에 함께 포함됐다. squash/rebase/force push 없음.
+- 병합 전후 app/tests/alembic/Dockerfile/OpenAPI/의존성 동일성을 확인해 기존 Backend144/57 및 Flutter 최종2817·사용자 변경 구간 인수 근거를 재사용했다. 이번은 Git/문서/협업 마감으로 기능·기기시험이나 서버/DB를 재실행하지 않고 문서 링크/절·JSON·동결 자료·diff를 확인했다.
+- dev 포함·원격 게시/작업 head9d0a7b7·미커밋/다른 worktree 미사용 확인 후 완료 fix/raid-participation-continuity를 로컬/원격 삭제했다. 미완료 feat/activity-selection89a3248은 보존, checkout dev다.
+- [Issue41 전체15번째 Backend 완료 결과](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6609216803)와 [Issue42 전체9번째 Backend 완료 결과](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6609226056)를 각각 게시하고 실제 전체 댓글 순번을 확인했다. 그 후 사용자 지시로 두 Issue를 state=closed/state_reason=completed로 변경했고 본문 상단에 최종 범위/완료 근거/운영 별도 경계를 유지했다. #42 기존 dev 방 복구 제외와 #41 기본동시2 선택은 보존했다.
+- 후행 종료 결과 기록까지 dev/main 같은 최종 커밋으로 게시한다. 업무 통합4231a58과 이 후행 문서 커밋, 실제 로컬 업무0207d0f/imagebe56f76c·DB0035 및 AWSv0.1.2는 구분한다. 추가 Backend 작업/반복 시험 요청 없이 다음 개발자 지시 대기다. 운영 배포·태그·APK·migration·DB/키/자료 복구·초기화는 수행하지 않았다. 운영 테스터 전 반영은 별도 지시 대상이다.
+
 <a id="issues-41-42-close-check"></a>
 
 ## 2026-11-04 — Issue41/42 클로즈 가능 여부·Flutter 원격 인계 확인

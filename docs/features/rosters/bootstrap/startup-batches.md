@@ -112,3 +112,5 @@ Flutter는 실제 전송할 JSON의 UTF-8 크기와 항목 수로 분할한다. 
 사용자는 반복 Backend 호출을 준비 조회1회·일괄 저장1회로 줄인 성과를 확인하고 이 구간을 마감했다. [Flutter 전체5번째 로컬 실기기 보고](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6603203545)의 personal24/role_build8→profile_batch1/role_batch1·양성 HTTP를 근거로 한다. 전체 앱 호출 수·전체 시작시간 개선을 뜻하지 않는다. [마감 결정](../../../project/DEV_LOG.md#startup-batches-backend-closeout)을 따른다.
 
 네이티브 LostArk 동시 조회 조정은 후속으로 진행하며, 추가 비교/미실행 검증을 현재 Backend 구간의 완료 조건으로 확대하지 않는다. Flutter 코드 게시/병합·전체 기기 인수·운영 반영·Issue 종료는 별도 상태다. 다음 사용자 지정 작업은 Issue42 요구 확인이다.
+
+최종 개발/로컬 인수 종료(2026-11-04): 사용자 기본 동시2 선택·Flutter 원격11e9c847 인계 후 사용자 승인 PR44/통합4231a58로 Backend dev/main을 맞추고 [전체15번째 Backend 완료 결과](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6609216803) 회신 후 Issue41을 completed 종료했다. [통합/종료 이력](../../../project/DEV_LOG.md#issues-41-42-integration-closeout)을 따르며 초기 구현 단계의 Git/Issue 제외 설명과 구분한다. 운영 배포·태그·APK·자료 변경은 하지 않았다.
