@@ -1,5 +1,7 @@
 # 이슈 주제별 추적표
 
+#41 Backend 구간 완료: 사용자가 반복 호출을 일괄 GET1/POST1로 줄인 성과를 확인했다. [Flutter 전체5번째 실기기 보고](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6603203545)·[마감 결정](DEV_LOG.md#startup-batches-backend-closeout) 기준이며 네이티브 LostArk 동시 조회 조정은 후속이다. 전체 앱 시작시간 개선·기기 전체 인수·원격 Flutter 게시와 구분, Flutter 게시/병합 보류·운영 미배포·Issue OPEN 유지. 다음은 문서 게시 후 사용자 지정 [Issue42](https://github.com/heo0328/lostparty-backend/issues/42) 요구 확인([NEXT_WORK](NEXT_WORK.md)).
+
 | 현재 추가 주제 | 상태·다음 담당·완료 조건 |
 |---|---|
 | [#38 초대 검색 본인·기존 그룹원 판정](https://github.com/heo0328/lostparty-backend/issues/38) | 로컬17PASS·Flutter 소비/41PASS·사용자 변경 구간 통과 후 개발자 승인 PR40/source2c6070c/v0.1.2·image7c8b8db9·DB0035 운영 반영 완료. [전체9번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6599670183)·[배포 집계](../engineering/operations/records/backend-v0.1.2-deployment.json). 기존1817PASS 한정 재사용·신규 앱시험0/scripts59PASS, 공개health·조회·인증거절 확인. 운영 사용자 전체 인수/APK게시·Issue종료는 별도이며 추가 요청·반복시험 없이 지시 대기, Issue OPEN 유지. |

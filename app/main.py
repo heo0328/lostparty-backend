@@ -12,6 +12,7 @@ from app.auth.cleanup import run
 from app.game_accounts.router import router as game_router
 from app.game_accounts.lifecycle_router import router as lifecycle_router
 from app.game_accounts.profile_router import router as profile_router, preferences_router, presentation_router
+from app.game_accounts.batch_router import router as batch_router
 from app.core.errors import register
 from app.core.game_policy import DEFAULT_MIN_ITEM_LEVEL
 from app.member_settings.router import router as settings_router
@@ -60,6 +61,7 @@ app.include_router(router)
 app.include_router(game_router)
 app.include_router(lifecycle_router)
 app.include_router(profile_router)
+app.include_router(batch_router)
 app.include_router(preferences_router)
 app.include_router(presentation_router)
 app.include_router(settings_router)
@@ -261,6 +263,19 @@ def _decorate_openapi(schema):
                    'IDEMPOTENCY_CONFLICT': 409, 'IDEMPOTENCY_EXPIRED': 409, 'REQUEST_IN_PROGRESS': 409,
                    'REQUEST_TOO_LARGE': 413, 'SERVICE_UNAVAILABLE': 503},
         'deployment': '0008 additive migration and isolated tests only; real DB/API transition requires separate approval',
+    }
+    schema['x-character-profile-policy']['startup_batches'] = {
+        'get': '/v2/me/characters/personal-profiles; repeated distinct character_id 1..50; read-only snapshot',
+        'post': '/v2/me/role-summary-batches; items 1..50; independent single-service transactions',
+        'limits': {'envelope_utf8_bytes': 524288, 'command_body_compact_utf8_bytes': 32768},
+        'command_bytes': 'input RoleSummaryIn fields only, ensure_ascii=false, compact JSON; before timestamp normalization',
+        'preflight': 'duplicate JSON keys, command_id, (character_id,role), invalid DTO rejected before writes',
+        'results': 'outer 200; exactly one result per input; correlate character_id+role+command_id; nullable result/error',
+        'interrupt': 'preserve previous results; stop on DB/auth failure; remaining 503 BATCH_NOT_PROCESSED; commit may be unknown on SERVICE_UNAVAILABLE',
+        'budget': '20s checked between items, no forced transaction cancellation; client response timeout 60s recommended',
+        'idempotency': 'same role-summary actor/key/body as single PUT, UUID4 command_id, no outer key; historical ACK',
+        'authority': 'single-command guards; no activity-selection prerequisite; final current state from account-bootstrap',
+        'errors': {'INVALID_ROLE': 400, 'BATCH_NOT_PROCESSED': 503, 'PERSONAL_PROFILES_DATA_UNAVAILABLE': 503},
     }
     schema['x-character-profile-policy']['personal_preferences'] = {
         'get': 'personal-profile.preferences now reads persisted member/character/ownership-lifetime values; P1 virtual const schema replaced',
