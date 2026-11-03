@@ -9,6 +9,12 @@
 - Issue34 전체11번째 Native 준비/운영 지원 대기 회신을 확인했다. Native v2.0.0은 아직 공개 Release가 아니라 준비 브랜치 4d208229이며, Backend 실제 반영 결과 인계 후 APK 게시를 진행한다. 이슈41/42는 이미 완료 종료됐으며 이번에 재개하지 않는다.
 - 릴리즈 제어 포함 scripts61PASS(신규2·기존59), 의존성 잠금·문서/동결 자료·diff PASS. 로컬 런타임에서 두 전체 생성 계약 대조 PASS, 신규 앱/DB 회귀 실행0.
 - 제어기에 v2.0.0·검증/승인 source·두 로컬 원본 기록 해시를 고정하고 증거 변경·실행 소스 변경·조상 관계 차이를 거절한다. 기존 v0.1.2 경로는 보존하고 후속 버전 상시 생략 기능은 추가하지 않는다. DB0035·환경/키/기존 review 자료 변경은 포함하지 않는다.
+- [PR45](https://github.com/heo0328/lostparty-backend/pull/45) headcd8239d를 dev에 merge하고 main도 같은 source51b1cb3362c11f899bbbbcd4fb767c68b1c697d5로 fast-forward했다. 태그v2.0.0을1회 게시, [Actions41674801953 attempt1](https://github.com/heo0328/lostparty-backend/actions/runs/41674801953/attempts/1) 전체 단계와 production Deployment7524537038 success를 확인했다. 공개 Release의 release.json/validation.json을 내려받아 source/DB0035/schema2·원본 증거 해시·검사 구분을 대조했다.
+- 실제 운영 imagef33f4c6c·source51b1cb3·DB0035, 한국2026-11-04 01:31:47 API 시작/01:31:59 반영 완료다. 태그 실행부터 서버 완료 약121.5초. 기존 제어기에서 API만 교체·DB/Caddy identity·mount/운영환경/키 보존 확인, rollback 불필요다. migration·기존 review 복구·자료 수동 변경·로컬 dev 교체는 없다.
+- 독립 공개 health200(database ok)·카탈로그200·me401·신규 두 batch 경로 미인증401 PASS. 운영 실회원 쓰기·새 APK 기기 전체 인수는 하지 않았다. [배포 집계](../engineering/operations/records/backend-v2.0.0-deployment.json)에 고정 source/image·서버 결과·재사용/신규 검사·보존·미실행 경계를 기록했다.
+- 작업 중 도착한 Issue34 전체12번째 Native 배포중/실제완료 대기 회신까지 확인하고, [전체13번째 Backend 운영 완료](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6609667274)로 #41 bulk GET/POST 및 #42 예방 수정의 실제 운영 지원과 보존/검증 결과를 인계했다. 다음 Native v2.0.0 태그/서명CI/APK 게시이며 이미 완료된 정상 기기시험을 반복 요청하지 않았다. #41/#42 완료 종료 유지, #34는 종료하지 않는다.
+- 후행 배포 기록은 실제 태그 source와 구분해 같은 릴리즈 목적 브랜치에 모으고 dev/main 동일 시점으로 게시한다. 통합 완료 릴리즈 브랜치는 정리하고 미완료 activity-selection은 보존한다. 아래 내용은 이전 작업 이력이다.
+
 
 <a id="issues-41-42-integration-closeout"></a>
 

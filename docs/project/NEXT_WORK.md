@@ -1,8 +1,12 @@
 # 다음 실행
 
-## 진행 — Backend v2.0.0 운영 반영
+## 완료 — Backend v2.0.0 운영 반영 / 다음 Native APK 게시
 
-개발자 명시 승인으로 현재 main aa23939의 이슈41/42를 운영 반영한다. 이번 한정 로컬 검증 재사용도 승인됐다. 목적 브랜치 chore/release-backend-v2에서 VERSION·계획·출처 고정·제어 검사 후 dev/main 통합·태그·기존 자동 배포를 수행한다. DB/설정 변경·기존 review 복구 없음. Native는 Issue34 전체11번째 회신에서 APK 공개 전 운영 지원 확인 대기다. 완료 시 실제 소스/이미지/서버 결과를 같은 이슈에 회신한다.
+개발자 승인 PR45·source51b1cb3·v2.0.0 태그1회 게시, Actions41674801953/production Deployment7524537038 success로 한국2026-11-04 01:31:59 운영 반영 완료다. AWS imagef33f4c6c·DB0035에서 이슈41 일괄 GET/POST와 이슈42 참가 유지 예방 수정을 지원한다. [배포 집계](../engineering/operations/records/backend-v2.0.0-deployment.json)·[이력](DEV_LOG.md#backend-v2-release) 기준이다.
+
+이번 한정 로컬 검증 기록/소스 일치를 재사용했고 신규 앱 회귀0·scripts61PASS, 두 로컬 전체 생성 계약/게시 증거 대조·독립 공개 최소 점검을 완료했다. DB/Caddy·환경/키 보존, migration·기존 review 복구·로컬 dev 교체·롤백 없음. 운영 실회원 쓰기/새 APK 실기기 전수 인수와 구분한다.
+
+[Issue34 전체13번째 Backend 운영 완료](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6609667274)로 전체11/12번째 Native의 운영 지원 확인 대기를 해소했다. 다음 담당 Native는 기존 승인 범위의 v2.0.0 태그/서명 CI/APK 게시를 진행한다. Backend 추가 기능/정상시험 반복 요청은 없고 다음 개발자 지시 또는 구체 장애에 대응한다. 이슈41/42 완료 종료는 유지하며 운영 추적 #34는 종료하지 않았다. 후행 완료 기록도 dev/main 같은 기준으로 모으며 아래 운영 미반영/진행 문장은 이전 이력이다.
 
 ## 완료 — Backend dev/main 통합·Issue41/42 종료 / 다음 개발자 지시 대기
 

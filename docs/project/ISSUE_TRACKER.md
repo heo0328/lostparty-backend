@@ -4,15 +4,15 @@
 
 | 종료 주제 | 완료 근거·별도 경계 |
 |---|---|
-| [#41 초기 자동 갱신 일괄 처리](https://github.com/heo0328/lostparty-backend/issues/41) | 일괄 API·Backend144PASS·로컬 지원·사용자 반복 호출 축소 확인·Flutter 기본동시2/기기 비교·원격11e9c847 인계 완료. 운영 게시·추가 최적화는 별도. |
-| [#42 활동 해제 후 기존 참가 유지](https://github.com/heo0328/lostparty-backend/issues/42) | 예방 수정·Backend57PASS·로컬 지원·Flutter 보완/사용자 변경 구간 통과·원격 인계 완료. 기존 dev review 복구는 최종 범위에서 제외, 전수 조합 인수/운영 완료로 확대하지 않음. |
+| [#41 초기 자동 갱신 일괄 처리](https://github.com/heo0328/lostparty-backend/issues/41) | 일괄 API·Backend144PASS·로컬 지원·사용자 반복 호출 축소 확인·Flutter 기본동시2/기기 비교·원격11e9c847 인계 완료. 개발자 승인 운영v2.0.0 반영 완료, 추가 최적화는 별도. |
+| [#42 활동 해제 후 기존 참가 유지](https://github.com/heo0328/lostparty-backend/issues/42) | 예방 수정·Backend57PASS·로컬 지원·Flutter 보완/사용자 변경 구간 통과·원격 인계 완료. 기존 dev review 복구는 최종 범위에서 제외, 개발자 승인 운영v2.0.0 예방 수정 반영 완료. 전수 조합 인수는 별도. |
 
-AWSv0.1.2·로컬 imagebe56f76c/DB0035 실행은 보존했다. 이번 종료가 운영 배포·태그·APK·DB/키/자료 변경의 승인은 아니며 이후 운영 반영은 개발자 별도 지시/Issue34 추적이다.
+종료 당시 AWSv0.1.2 보존 기록은 이후 개발자 명시 승인 v2.0.0 반영으로 갱신됐다. 현재 운영 imagef33f4c6c·로컬 imagebe56f76c/DB0035다. 이슈 종료 자체를 배포 승인으로 해석하지 않으며 실제 반영은 아래 Issue34·배포 집계를 따른다.
 
 | 현재 추가 주제 | 상태·다음 담당·완료 조건 |
 |---|---|
 | [#38 초대 검색 본인·기존 그룹원 판정](https://github.com/heo0328/lostparty-backend/issues/38) | 로컬17PASS·Flutter 소비/41PASS·사용자 변경 구간 통과 후 개발자 승인 PR40/source2c6070c/v0.1.2·image7c8b8db9·DB0035 운영 반영 완료. [전체9번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6599670183)·[배포 집계](../engineering/operations/records/backend-v0.1.2-deployment.json). 기존1817PASS 한정 재사용·신규 앱시험0/scripts59PASS, 공개health·조회·인증거절 확인. 운영 사용자 전체 인수/APK게시·Issue종료는 별도이며 추가 요청·반복시험 없이 지시 대기, Issue OPEN 유지. |
-| [#34 Native 태그·Release APK/Backend 반영 추적](https://github.com/heo0328/lostparty-backend/issues/34) | 최신 운영v0.1.2/source2c6070c·사용자 승인 한정 검증 재사용/앱시험0·배포success, [집계](../engineering/operations/records/backend-v0.1.2-deployment.json). 아래v0.1.1은 첫 자동배포 이력이다. 검증 개선 selected/full 구현/수동1811PASS·scripts52PASS·게시/배포skip, [전체10번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6572819899)·사용자 승인 [PR39 dev통합](https://github.com/heo0328/lostparty-backend/pull/39) 완료. 별도 운영태그는 미발행. 기존 Backend v0.1.1 첫 자동 배포 완료: PR36/source77c9de2, Actions41323830955 attempt2 success·전체1811PASS·GHCR/Release·실제 API 교체/health 확인. [배포집계](../engineering/operations/records/backend-v0.1.1-deployment.json)·[전체9번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6560737194). v0.1.0 실패/원인수정과 SSH Secret 개행 보완은 기록에 보존. 기존 release Google 로그인 인수 유지·전체 앱 호환/기기 인수는 별도, 외부백업 미구성. 다음 사용자 향후 VERSION/새 태그 승인, Native 추가 요청 없음. Issue OPEN 유지. |
+| [#34 Native 태그·Release APK/Backend 반영 추적](https://github.com/heo0328/lostparty-backend/issues/34) | 사용자 승인 Backend v2.0.0/source51b1cb3·imagef33f4c6c·DB0035, Actions41674801953/Deployment7524537038 success. [집계](../engineering/operations/records/backend-v2.0.0-deployment.json)·[전체13번째 Backend 운영 완료](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6609667274)로 #41/#42 운영 지원 확인 대기 해소. 이번 한정 로컬 검증 재사용·앱 회귀0/scripts61PASS·최소 공개 점검/DB·키 보존 확인. 다음 Native v2.0.0 태그/서명CI/APK 게시, 운영 실회원/새 APK 전체 인수·외부백업 후속은 별도. Issue OPEN 유지. |
 
 **현재 Git 통합 완료:** [재신청 수정 브랜치 통합 기록](../features/recruitment/reapplication-integration-2026-10-27.md)·[PR28](https://github.com/heo0328/lostparty-backend/pull/28)/병합41a47ed의 dev 원격 반영과 완료 브랜치 로컬/원격 정리를 확인했다. 2026-10-28 main/dev를1b6f57b로동기화·원격확인후동일지점에서feat/group-management분기·checkout. 미완료 활동 선택 브랜치와 실행 API·DB는 보존. 최신 실행/다음 작업은 NEXT_WORK이며 아래 종료 전 검토 문장은 당시 이력이다.
 

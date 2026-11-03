@@ -1,8 +1,10 @@
 # LostParty Backend 기능 지도
 
-## 운영 반영 진행(2026-11-04)
+## 운영 최신(2026-11-04) — Backend v2.0.0
 
-개발자 승인 Backend v2.0.0 준비: 승인 main aa23939·검증 소스0207d0f, 이번 한정 로컬 검증 기록 재사용. 아직 운영은 v0.1.2이며 새 태그/운영 반영 결과 확인 전 지원 완료로 안내하지 않는다. [운영 기준](../engineering/operations/backend-release.md)·[다음 실행](NEXT_WORK.md) 기준. 아래 내용은 이전 상태 이력이다.
+개발자 승인 PR45/source51b1cb3·태그v2.0.0·Actions41674801953·production Deployment7524537038 success. 실제 AWS imagef33f4c6c·DB0035, 한국01:31:59 반영 완료로 이슈41 일괄 API·이슈42 기존 참가 유지 예방 수정을 지원한다. 이번 한정 로컬 scoped 검증 재사용·신규 앱 회귀0·scripts61PASS·최소 운영 점검 완료, DB/Caddy·환경/키 보존·migration/기존 review 복구 없음. [배포 집계](../engineering/operations/records/backend-v2.0.0-deployment.json)·[운영 기준](../engineering/operations/backend-release.md) 기준이다.
+
+[Issue34 전체13번째 Backend](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6609667274)로 Native 운영 지원 대기를 해소했다. 다음 Native v2.0.0 태그/서명CI/APK 게시, Backend 다음 개발자 지시 대기다. 로컬 dev imagebe56f76c/DB0035 보존, 운영 실회원/새 APK 전체 기기 인수는 별도다. 이슈41/42 완료 종료 유지. 아래 운영v0.1.2/배포 대기·미반영은 이전 상태 이력이다.
 
 Git/종료 최신(2026-11-04): 사용자 승인 [PR44](https://github.com/heo0328/lostparty-backend/pull/44)·통합4231a58에 최신 인수 기록을 포함하고 Backend dev/main을 동일 시점으로 맞췄다. [Issue41 전체15번째](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6609216803)·[Issue42 전체9번째](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6609226056) Backend 완료 회신 후 둘 다 completed 종료, 후행 결과 기록까지 dev/main 같은 기준으로 게시한다. checkout dev·완료 참가유지 작업 브랜치 로컬/원격 정리·미완료 activity-selection 보존. [NEXT_WORK](NEXT_WORK.md)·[최종 이력](DEV_LOG.md#issues-41-42-integration-closeout) 기준이며 추가 개발/시험 요청 없이 다음 지시 대기다.
 
