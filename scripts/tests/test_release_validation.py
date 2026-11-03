@@ -259,5 +259,48 @@ class ValidationTests(unittest.TestCase):
         self.assertEqual(output.read_text(), 'mode=reuse\nshards=[0]\n')
 
 
+class LocalReuseTests(unittest.TestCase):
+    def proof(self):
+        return {k: v for k, v in validation.LOCAL_REUSE.items() if k != 'version'} | {
+            'record_json': {p: (validation.ROOT / p).read_text() for p in validation.LOCAL_REUSE['records']}}
+
+    def test_pinned_local_records_and_ancestry_are_required(self):
+        proof = self.proof()
+        self.assertEqual(validation.verify_reuse_proof(proof, '2.0.0'), proof)
+        for key, value in [('source', 'a' * 40), ('approved_source', 'b' * 40),
+                           ('records', {}), ('record_json', {})]:
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                validation.verify_reuse_proof({**proof, key: value}, '2.0.0')
+        bad = copy.deepcopy(proof)
+        path = next(iter(bad['record_json']))
+        bad['record_json'][path] += ' '
+        with self.assertRaises(ValueError):
+            validation.verify_local_proof(bad)
+        with patch('validation.subprocess.call', return_value=1), self.assertRaises(ValueError):
+            validation.local_reuse_evidence()
+        with patch('validation.subprocess.call', return_value=0), \
+                patch('validation.git', side_effect=['app/main.py', 'VERSION']), self.assertRaises(ValueError):
+            validation.local_reuse_evidence()
+
+    def test_local_release_records_scoped_reuse_without_claiming_full_tests(self):
+        plan = validation.load_plan()
+        self.assertEqual(plan['version'], '2.0.0')
+        with patch.dict(os.environ, {'GITHUB_RUN_ID': '123', 'GITHUB_RUN_ATTEMPT': '1'}), \
+                patch('validation.git', return_value='a' * 40), \
+                patch('validation.reuse_evidence', return_value=self.proof()):
+            evidence = validation.record(plan, 'success', 'success')
+        self.assertEqual(evidence['executed_tests'], [])
+        self.assertEqual(evidence['checks']['regression'], 'reused')
+        self.assertEqual(evidence['checks']['docker_replace_rollback'], 'skipped')
+        validation.verify_record(evidence, plan, 'a' * 40)
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'tests').mkdir()
+            (root / 'VERSION').write_text('2.0.1')
+            (root / validation.PLAN).write_text(json.dumps({k: v for k, v in plan.items() if k != 'plan_sha256'} | {'version': '2.0.1'}))
+            with self.assertRaises(ValueError):
+                validation.load_plan(root)
+
+
 if __name__ == '__main__':
     unittest.main()

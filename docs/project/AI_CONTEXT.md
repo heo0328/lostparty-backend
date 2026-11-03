@@ -1,5 +1,9 @@
 # LostParty Backend 기능 지도
 
+## 운영 반영 진행(2026-11-04)
+
+개발자 승인 Backend v2.0.0 준비: 승인 main aa23939·검증 소스0207d0f, 이번 한정 로컬 검증 기록 재사용. 아직 운영은 v0.1.2이며 새 태그/운영 반영 결과 확인 전 지원 완료로 안내하지 않는다. [운영 기준](../engineering/operations/backend-release.md)·[다음 실행](NEXT_WORK.md) 기준. 아래 내용은 이전 상태 이력이다.
+
 Git/종료 최신(2026-11-04): 사용자 승인 [PR44](https://github.com/heo0328/lostparty-backend/pull/44)·통합4231a58에 최신 인수 기록을 포함하고 Backend dev/main을 동일 시점으로 맞췄다. [Issue41 전체15번째](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6609216803)·[Issue42 전체9번째](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6609226056) Backend 완료 회신 후 둘 다 completed 종료, 후행 결과 기록까지 dev/main 같은 기준으로 게시한다. checkout dev·완료 참가유지 작업 브랜치 로컬/원격 정리·미완료 activity-selection 보존. [NEXT_WORK](NEXT_WORK.md)·[최종 이력](DEV_LOG.md#issues-41-42-integration-closeout) 기준이며 추가 개발/시험 요청 없이 다음 지시 대기다.
 
 기능 완료: #41 일괄 GET/POST와 사용자 기본 LostArk 동시2 선택·기기 측정, #42 활동 해제 후 기존 참가 유지/신규 선택 제외의 사용자 로컬 변경 구간 인수가 완료됐다. Flutter dev/main 원격11e9c847·전체2817PASS/analyze0 자체보고와 Backend 각144/57·실기기 보고를 구분하며 합산/전수 인수로 확대하지 않는다. 기존 dev review 복구는 사용자 결정으로 제외했고 후속 필수가 아니다. [일괄 계약](../features/rosters/bootstrap/startup-batches.md)·[기존 참가 계약](../features/recruitment/membership-actions/activity-participation-continuity.md) 기준이다.
