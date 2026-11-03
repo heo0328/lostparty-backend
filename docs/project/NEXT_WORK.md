@@ -1,18 +1,18 @@
 # 다음 실행
 
-2026-11-03 사용자 지시로 현재 미커밋 인수 문서를 목적 브랜치에 커밋하고 그룹 초대·상속된 검증 범위 개선 이력을 dev에 통합한 뒤 main을 같은 커밋으로 동기화한다. 이 Git 통합 승인은 운영 태그·배포·서버 교체·Issue 종료 승인이 아니다. 실제 통합 결과는 DEV_LOG의 후행 기록을 따른다.
+2026-11-03 사용자 승인 [PR39](https://github.com/heo0328/lostparty-backend/pull/39)·병합323b665로 그룹 초대·상속된 검증 범위 개선과 인수 문서를 dev에 통합했다. checkout dev, 완료한 feat/group-invite-eligibility·chore/release-validation은 로컬/원격 정리했고 미완료 feat/activity-selection은 보존한다. 이 후행 마감 기록까지 포함한 최종 dev 커밋으로 main도 fast-forward 동기화한다. 다음 기능은 개발자 지시에 따라 최신 dev에서 목적 브랜치로 시작한다. 운영 태그·배포·서버/DB·Issue 종료는 이번 Git 통합 범위에 포함하지 않는다. [통합 이력](DEV_LOG.md#invite-eligibility-git-integration)을 따른다.
 
 ## 완료·다음 지시 대기 — 이슈38 초대 검색 변경 구간
 
 [전체8번째 Flutter 사용자 로컬 변경 구간 전부 통과](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6576244724)를 확인했다. 이번 초대 검색의 네이티브 소비·자동검증·Backend 로컬 반영·사용자 변경 범위 확인까지 완료이며, 이전 실패 검색/화면 재확인 대기를 해소한다. 앱 전체·AWS 운영 인수로 확대하지 않는다. [로컬 반영 집계](../features/groups/invite-eligibility-local-rollout-2026-11-02.json)·[완료 이력](DEV_LOG.md#invite-eligibility-local-acceptance)을 따른다.
 
-현재 요청된 추가 Backend 작업·정상시험 반복은 없다. 실제 차이나 개발자의 추가 지시가 있을 때 해당 범위만 진행한다. **운영 배포와 네이티브 APK 게시 시점은 각각 개발자가 명시 지시한다.** 개별 수정·테스트 통과·commit/push를 배포 승인으로 해석하지 않으며 dev/main 통합·태그·운영 반영·Issue 종료도 자동 진행하지 않는다. 현재 feat/group-invite-eligibility와 AWS 기존v0.1.1을 유지한다. [개발/운영 기준](../engineering/development/workflow.md#local-dev-and-production)을 따른다.
+현재 요청된 추가 Backend 작업·정상시험 반복은 없다. 실제 차이나 개발자의 추가 지시가 있을 때 해당 범위만 진행한다. **운영 배포와 네이티브 APK 게시 시점은 각각 개발자가 명시 지시한다.** 개별 수정·테스트 통과·commit/push를 배포 승인으로 해석하지 않으며 dev/main 통합·태그·운영 반영·Issue 종료도 자동 진행하지 않는다. Git 통합은 위 사용자 승인으로 완료했고 AWS 기존v0.1.1은 유지한다. [개발/운영 기준](../engineering/development/workflow.md#local-dev-and-production)을 따른다.
 
-## 구현 완료 — 변경 규모별 배포 검증·통합 대기 (2026-11-02)
+## 완료 — 변경 규모별 배포 검증 Git 통합
 
-chore/release-validation에 selected/full·계획 검사·불변 validation.json을 구현/게시했다. [운영 기준](../engineering/operations/backend-release.md)이 단일 원본이며 [검증 집계](../engineering/operations/records/backend-validation-scope-verification.json)를 따른다. 수동 Actions41410922327/sourcefbb9bc7: 정적·Docker교체/복귀·계약·이미지빌드·전체8그룹1811PASS·검증artifact 생성/내용대조 성공, publish/deploy는 skip이다. scripts52PASS에는 선택 실행/실패전파·잘못된 계획/보호경로/증거 불일치 차단이 포함된다. 로컬 Docker 엔진 불가로 별도 selected 실DB 실행은 미완료이며 GitHub full에서는 전체 파일을 검증했다.
+selected/full·계획 검사·불변 validation.json 개선은 그룹 초대 브랜치에 상속된 이력을 포함해 PR39로 dev에 통합했다. [운영 기준](../engineering/operations/backend-release.md)·[검증 집계](../engineering/operations/records/backend-validation-scope-verification.json)·[Issue34 전체10번째 결과](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6572819899)를 따른다. 당시 수동 Actions41410922327/sourcefbb9bc7 전체1811PASS·scripts52PASS·artifact 대조·publish/deploy skip과 로컬 selected 실DB 미실행 경계는 이력으로 보존한다.
 
-[Issue34 전체10번째 Backend · 검증 개선 결과](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6572819899)로 인계했다. 다음은 사용자 통합 승인 후 dev/main 반영이다. 새 운영 태그는 별도 승인하며 VERSION/계획 version을 함께 새 버전으로 바꾼다. 현재0.1.1 계획은 배포 없는 full 검증용이고 기존 태그를 재사용하지 않는다. 실제 운영은 기존v0.1.1/source77c9de2/image259e8234·DB0035이며 서버/env/키 변경 없다. 이후 작은 변경은 “관련 검증으로 배포 준비”, 공통 구조 변경은 “전체 검증으로 배포 준비”, DB/운영 구성 변경은 별도 운영 계획부터 요청하면 된다. CI결과 재사용/자동 테스트 선택은 이번 범위 밖이다.
+현재0.1.1 계획을 새 운영 태그에 재사용하지 않는다. 다음 운영 릴리즈는 개발자가 구간·시점을 지시할 때 새 VERSION/계획과 태그를 준비한다. 별도 요청 전 GitHub Actions·운영 반영은 실행하지 않는다. AWS 운영v0.1.1/source77c9de2·DB0035는 이번 Git 통합으로 변경하지 않았다.
 
 ## 완료 — Backend v0.1.1 첫 자동 배포 (2026-11-02)
 

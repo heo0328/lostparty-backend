@@ -1,5 +1,15 @@
 # 영구 개발 이력
 
+<a id="invite-eligibility-git-integration"></a>
+
+## 2026-11-03 — 그룹 초대·검증 범위 개선 dev 통합 및 main 동기화
+
+- 사용자가 현재 미커밋 문서 commit·dev 병합·main 동일 시점 최신화를 명시 승인했다. 미커밋은 인수 결과를 정리한 NEXT_WORK/AI_CONTEXT/DEV_LOG/ISSUE_TRACKER 4개였고 기존 변경을 보존해 목적 브랜치에서 acd18c3으로 commit/push했다. Git fetch 후 dev/main 모두 원격3307de2와 일치했고 충돌·다른 worktree는 없었다.
+- 기존 feat/group-invite-eligibility에는 chore/release-validation의 선행 selected/full 개선도 상속돼 있었다. 전체7커밋의 범위를 PR 설명에 명시하고 [PR39](https://github.com/heo0328/lostparty-backend/pull/39)를 expected head acd18c34650cb451da77f187d1902df3f1b72142·merge 방식으로 병합했다. 병합 SHA는323b665ccba7eab8e630ced787d6a69bc2bdd604이며 로컬 dev도 원격 병합으로 fast-forward했다. squash/rebase/force push는 없었다.
+- dev 포함·원격 게시·worktree 상태 확인 후 완료한 feat/group-invite-eligibility와 chore/release-validation을 로컬/원격에서 정리했다. 미완료 feat/activity-selection/89a3248은 보존했다. main은 이 마감 기록을 포함한 최종 dev로 fast-forward하고 로컬/원격 네 ref의 동일 SHA를 확인하는 것으로 종료한다.
+- 검증은 미커밋 문서와 통합 기록의 링크/절·JSON·경로·diff 검사다. 업무 구현·계약·기존 시험 소스는 이번에 수정하지 않았다. 기존 로컬17PASS·실행 계약 일치·사용자 변경 범위 인수와 두 수동 CI 근거는 각 당시 기록을 재사용하고 서버·DB·전체 테스트를 반복 실행하지 않았다.
+- 워크플로 시작 조건은 v* 태그 push/수동 dispatch이며 일반 branch push·main 동기화로 배포를 실행하지 않는다. 이번에 VERSION·태그·Actions·AWS/로컬 API/DB·키·운영 자료·APK/Release·Issue 상태는 변경하지 않았다. 운영 반영은 개발자 별도 지시 대상이고 기존 로컬 실행737e14d/image1333c99d·AWS 운영v0.1.1/source77c9de2는 Git 통합과 구분한다.
+
 <a id="invite-eligibility-local-acceptance"></a>
 
 ## 2026-11-02 — 이슈38 사용자 로컬 변경 구간 인수 완료
