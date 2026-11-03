@@ -44,4 +44,4 @@
 
 합성 검증·실제 로컬 API 예방 수정 반영·기존 자료 복구·Flutter 연결·실기기 인수·운영은 각각 구분한다. 이번 작업은 merge·태그·운영 배포·자료 초기화·Issue 종료를 포함하지 않는다.
 
-구현 `0207d0f6b9ef8734e67bbbdc0701ce75fbdc9c8c` 원격 게시·실제 로컬 반영 및 미실행 범위는 [전체3번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6605617996)·[검증 집계](activity-continuity-verification.json)를 따른다. 다음은 Flutter/사용자 변경 범위 확인이며 운영 인수와 구분한다.
+구현 `0207d0f6b9ef8734e67bbbdc0701ce75fbdc9c8c` 원격 게시·실제 로컬 반영 및 미실행 범위는 [전체3번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6605617996)·[검증 집계](activity-continuity-verification.json)를 따른다. [전체6번째 Flutter 보고](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6607158974)로 사용자 로컬 변경 구간 인수는 완료했다. [인수 근거/제한](../../../project/DEV_LOG.md#activity-continuity-local-acceptance)을 따르며 운영 인수·모든 C/N/역할 조합 전수 인수와 구분한다.

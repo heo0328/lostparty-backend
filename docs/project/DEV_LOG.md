@@ -1,5 +1,26 @@
 # 영구 개발 이력
 
+<a id="issues-41-42-close-check"></a>
+
+## 2026-11-04 — Issue41/42 클로즈 가능 여부·Flutter 원격 인계 확인
+
+- 두 Issue 본문/최신 전체 댓글을 재조회했다. Issue41 전체13번째·Issue42 전체7번째의 원격 push 승인 대기는 [41 전체14번째 Flutter 원격 인계](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6608982829)·[42 전체8번째](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6608986700)로 해소됐다. Flutter 원격 dev/main SHA를 읽기 전용으로 직접 대조해 양쪽 `11e9c847900441417c373452fa6fce8dfcf743db` 일치를 확인했다. 로컬 Flutter 소스는 읽거나 수정하지 않았다.
+- Flutter 최종 전체2817PASS/analyze0·변경36Dart 포맷0변경과 기존 사용자 인수는 해당 측 보고다. Backend 독립 시험이나 이전2811/관련321/직접77 등 부분집합과 합산하지 않는다. 코드 기준 성능95befe12·활동선택거절7ac83c30과 통합/최종 문서11e9c847의 의미를 구분한다.
+- Issue41은 Backend 일괄 API/검증144·로컬 지원·반복 호출 축소 사용자 확인, Flutter 연결/실기기 비교·[전체12번째 기본동시2 선택 확정](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6608556182)·원격 게시까지 완료했다. 동시2가 제공자의 최적값/제한임을 주장하지 않는다. Issue42는 예방 수정/Backend57·로컬 지원·Flutter 보완·전체6번째 사용자 변경 구간 인수·원격 게시 완료이며 기존 dev review 복구는 사용자 최종 범위에서 제외됐다. 추가 Backend 변경/재시험 요청은 없다.
+- 따라서 두 이슈 모두 **개발·로컬 인수 완료 기준으로 클로즈 가능**으로 판단한다. AWS/APK/운영 테스터 인수는 이슈 구현 완료 조건에 포함되지 않으며 별도 개발자 지시 대상이다. 이번은 가능 여부 확인 요청이므로 실제 Issue 종료/댓글 게시·merge·배포를 하지 않았다.
+- Backend 원격 dev7d4bfbc/main515a6c9/작업 e6c69cb를 읽기 전용 대조했다. Issue41은 dev에 포함되고 Issue42 업무0207d0f는 아직 dev에 포함되지 않는다. 현재 인수/상태 문서는 미커밋이다. 남은 기록 commit/push·dev 통합은 NEXT_WORK에 별도 Git 작업으로 추적하며 기능 미완료나 배포 대기와 혼동하지 않는다. 기존 사용자 변경을 보존하고 Git ref·서버/DB·운영은 변경하지 않았다.
+
+<a id="activity-continuity-local-acceptance"></a>
+
+## 2026-11-04 — Issue42 Flutter 보완·사용자 로컬 변경 구간 인수 확인
+
+- 본문과 전체6댓글을 조회해 [4번째 Flutter 인계 확인](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6605718383), [5번째 Flutter 네이티브 보완·자동검증](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6606255488), [6번째 Flutter 사용자 로컬 실기기 인수 통과](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6607158974)를 확인했다. 전체 댓글 순번이며 Backend 작업 단계 번호와 구분한다.
+- Flutter는 Backend0207d0f·최종 예방 범위/기존 dev 복구 제외를 수용했다. 신규 후보의 활동 집합 필터·기존 상세의 서버 projection/content·설정 저장 후 invalidateReads/confirmedRoster 복원 경로를 유지하며 추가 API/DTO/스키마·화면·주기조회는 없다는 보고다.
+- Native 보완은 ACTIVITY_SELECTION_REQUIRED 안내와 정확한 HTTP409+code를 확정 no-effect 거절로 분류하여 영속 rejected 저장/복원/release·선택 재조회/초기화로 대기를 해제하는 것이다. 같은code의503은 미확정 원키/본문을 유지하며 신규 자동POST·성공명령 재실행·권한 우회는 없다는 보고다. 관련10파일321PASS(신규5 포함), 직접77은 부분집합으로 미합산, Dart4파일 분석0/포맷/diff 검토를 보고했다. Backend 독립 재현이나 Backend57PASS와 합산하지 않는다.
+- 최신 전체6번째는 사용자가 변경 구간 전체 통과를 보고한 근거다. 활동 해제 후 기존 방 데이터 보존·정상 이용, 신규 생성/교체 후보 제외, 다른 활동 캐릭터로 참가 변경 성공·해제 캐릭터 재노출 없음, 그룹원 활동 캐릭터 목록 제외를 확인했다. 변경 구간 인수 대기를 해소하되 모든 C/N·공대장/공대원·타 계정 전체 기능 전수 인수로 확대하지 않는다.
+- Flutter feature/startup-performance-diagnostics는 미커밋/미push, commit/push/merge는 사용자 결정 대기다. 보류한 로딩2/5 비교 재개 가능 상태라는 보고를 기록하되 Backend가 착수·시험 요청을 확대하지 않는다. 추가 Backend 수정/재시험 요청 없음, 다음 개발자 지시 또는 구체 차이 대응이다. 기존 dev review 복구는 제외한 최종 범위를 유지한다.
+- 현재 목적 브랜치에 수신/인수 상태 문서만 갱신하고 수신마다 별도 commit/push하지 않는다. 기능 코드·서버/DB·운영·태그·merge·APK·자료·Issue 상태 변경 및 중복 확인 댓글/기능시험은 없다. 문서 링크/절·JSON·동결 자료·diff 검증으로 확인한다.
+
 <a id="activity-continuity"></a>
 
 ## 2026-11-03 — Issue42 사용자 최종 범위: 예방 수정, 기존 dev 방 복구 제외
