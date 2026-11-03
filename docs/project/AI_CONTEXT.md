@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-Issue42 현재: 사용자 최종 결정으로 예방 수정만 마감하며 이미 막힌 기존 dev 방 복구는 제외한다. 복구 CLI/사전 판정/감사 DB 확장·migration 없음, 기존 review 자동 복구 없음. fix/raid-participation-continuity에서 기존 참가 증명/신규 활동 선택 검증을 분리했고 관련 고유57PASS·계약 일치·로컬 API imagebe56f76c/DB0035 반영 완료, 원격 게시/인계 마감 중이다. [NEXT_WORK](NEXT_WORK.md)·[최종 결정](DEV_LOG.md#activity-continuity)·[동작 계약](../features/recruitment/membership-actions/activity-participation-continuity.md) 기준. 운영 테스터 전 배포 시점은 개발자 별도 지시다.
+Issue42 현재: 사용자 최종 결정으로 예방 수정만 마감하며 이미 막힌 기존 dev 방 복구는 제외한다. 복구 CLI/사전 판정/감사 DB 확장·migration 없음, 기존 review 자동 복구 없음. fix/raid-participation-continuity에서 기존 참가 증명/신규 활동 선택 검증을 분리했고 관련 고유57PASS·계약 일치·로컬 API imagebe56f76c/DB0035 반영 완료, 업무0207d0f 원격 게시·[전체3번째 인계](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6605617996) 완료, Flutter 변경 확인/사용자 로컬 인수 대기다. [NEXT_WORK](NEXT_WORK.md)·[최종 결정](DEV_LOG.md#activity-continuity)·[동작 계약](../features/recruitment/membership-actions/activity-participation-continuity.md) 기준. 운영 테스터 전 배포 시점은 개발자 별도 지시다.
 
 Git/다음 작업(2026-11-03): 사용자 승인 [PR43](https://github.com/heo0328/lostparty-backend/pull/43)·68d2624로 초기 갱신 일괄 처리를 dev 통합했다. 통합 기록을 포함한 최신 dev에서 `fix/raid-participation-continuity`를 분기·게시해 Issue42 대응 위치로 사용한다. 완료 startup-batch 로컬/원격 정리·미완료 activity-selection 보존, main515a6c9/실제 로컬·운영은 보존. [NEXT_WORK](NEXT_WORK.md)·[통합 이력](DEV_LOG.md#startup-batches-dev-integration) 기준이며 Issue42 구현/실자료 복구는 아직 수행하지 않았다.
 

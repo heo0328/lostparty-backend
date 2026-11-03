@@ -10,7 +10,7 @@
 - 최종 격리 예방21PASS(192.99초), 관련 기존36PASS로 고유57개를 확인했다. 앞선38PASS 묶음에 신규2개가 포함됐으므로 중복 합산하지 않는다. 기존 C/N·8명 방·A→B/반대T 보존·신규 생성/신청/승인 거절·선행 context 최종검증·소유/등록/퇴역/정지/수명·위조 방어·일정 확인/완료·탈퇴 및 기존 review 비자동복구를 포함한다. 그룹 신규 가입·일정·관리/편성·승계·완료·멱등 관련 회귀를 확인했고 기존 Starlette 경고는 기능 실패와 구분한다.
 - 기본125경로142operation/two-cycle187경로208operation 전체 생성 계약 일치 PASS, 기존 paths/components 동일/정책 설명만 추가다. [검증 집계](../features/recruitment/membership-actions/activity-continuity-verification.json)에 중첩·미실행과 로컬 실행 경계를 기록했다.
 - 로컬 API만 --no-deps/--no-build/--pull never로 교체, imagebe56f76c healthy·DB0035·기존 DB 컨테이너 ID 동일. 실제 app239파일 hash가 작업 소스와 같고 실행 two-cycle 계약 전체 일치, Windows127.0.0.1:8000 health200/databaseok 확인. 복구 모듈/CLI 없음, migration/키/자료 초기화·실자료 복구·운영 변경 없음. 실행 dev의 실제 회원 인증/변경 기기 인수는 아직 미실행이며 격리 양성 시험과 구분한다.
-- 다음은 이 작업 구간 commit/push·원격 SHA 확인 후 같은 Issue에 예방 수정/제외 범위·고정 SHA·로컬 준비를 인계한다. 아래 감사 제약/결정 대기는 당시 진행 이력이며 현재는 예방 수정만 진행하는 결정으로 해소됐다. 운영/merge/태그/Issue 종료 없음.
+- 업무 `0207d0f6b9ef8734e67bbbdc0701ce75fbdc9c8c` commit/push 후 원격 동일 SHA 확인·[전체3번째 Backend 예방 수정/로컬 인계](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6605617996) 게시·실제 전체3댓글 순번 확인, Issue 본문에 최종 예방 범위/복구 제외/다음 담당을 정리했다. 다음 Flutter 변경 연결·사용자 로컬 변경 범위 확인/같은 Issue 결과 회신, Backend는 구체 차이 대응이다. 후행 문서 SHA와 실행 업무 SHA는 구분한다. 아래 감사 제약/결정 대기는 당시 진행 이력이며 현재는 예방 수정만 진행하는 결정으로 해소됐다. 운영/merge/태그/Issue 종료 없음.
 
 ## 2026-11-03 — Issue42 구현 중 예방 검증·복구 감사 제약 확인
 

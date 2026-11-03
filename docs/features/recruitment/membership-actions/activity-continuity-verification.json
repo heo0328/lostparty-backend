@@ -48,5 +48,14 @@
   "migration_executed": false,
   "existing_room_repaired": false,
   "merge_performed": false,
-  "tag_created": false
+  "tag_created": false,
+  "implementation_commit": "0207d0f6b9ef8734e67bbbdc0701ce75fbdc9c8c",
+  "remote_source_verified": true,
+  "handoff": {
+    "comment_order": 3,
+    "side": "Backend",
+    "stage": "prevention implementation/local readiness",
+    "url": "https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6605617996",
+    "next_owner": "Flutter / user local changed-scope acceptance"
+  }
 }

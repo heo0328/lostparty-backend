@@ -43,3 +43,5 @@
 격리 PostgreSQL의 합성 자료로 참가 유지·신규 거절·권한/소유/수명/위조 방어·Snapshot/원장 보존과 관련 회귀를 확인한다. 현재 주차 종료를 넘던 공통 fixture의 +8시간 일정은 합성 간격만 남은 주차 안에 배치하도록 보완했다. 활동 해제를 부적격으로 보던 기존 회귀3개는 퇴역 거절 검증으로 유지하고 활동 해제 정상 흐름은 별도 검증한다.
 
 합성 검증·실제 로컬 API 예방 수정 반영·기존 자료 복구·Flutter 연결·실기기 인수·운영은 각각 구분한다. 이번 작업은 merge·태그·운영 배포·자료 초기화·Issue 종료를 포함하지 않는다.
+
+구현 `0207d0f6b9ef8734e67bbbdc0701ce75fbdc9c8c` 원격 게시·실제 로컬 반영 및 미실행 범위는 [전체3번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6605617996)·[검증 집계](activity-continuity-verification.json)를 따른다. 다음은 Flutter/사용자 변경 범위 확인이며 운영 인수와 구분한다.

@@ -1,10 +1,10 @@
 # 다음 실행
 
-## 현재 — Issue42 예방 수정 마감
+## 현재 — Issue42 예방 수정 완료 / Flutter 로컬 변경 확인 대기
 
 사용자 최종 결정으로 기존에 이미 막힌 dev 방은 대응하지 않으며 예방 수정만 마감한다. 복구 CLI·읽기 전용 복구 판정·감사 DB 확장은 제거했고 후속 필수 과제로 남기지 않는다. [전체2번째 Backend 범위 확정](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6605446700)·[동작 계약](../features/recruitment/membership-actions/activity-participation-continuity.md)·[최종 결정](DEV_LOG.md#activity-continuity) 기준이다.
 
-현재 fix/raid-participation-continuity의 예방 수정은 격리 신규21/관련 기존36 고유57PASS·기본/two-cycle 계약 전체 일치·로컬 API imagebe56f76c/DB0035 반영까지 완료했다. [검증 집계](../features/recruitment/membership-actions/activity-continuity-verification.json)를 기준으로 작업 구간 commit/push·고정 SHA 인계 후 Flutter 변경 연결/사용자 로컬 확인으로 이어간다. 기존 참가 유지와 신규 활동 선택 검증을 분리하되 소유/등록/생명주기/회원/권한/한도/그룹/점유/CAS와 기존 JSON 계약·원 ACK를 보존한다. 기존 dev review는 자동으로 정상화하지 않는다.
+현재 fix/raid-participation-continuity의 예방 수정은 격리 신규21/관련 기존36 고유57PASS·기본/two-cycle 계약 전체 일치·로컬 API imagebe56f76c/DB0035 반영까지 완료했다. [검증 집계](../features/recruitment/membership-actions/activity-continuity-verification.json)를 기준으로 구현 `0207d0f6b9ef8734e67bbbdc0701ce75fbdc9c8c` commit/push·원격 SHA 일치 확인 후 [전체3번째 Backend 예방 수정·로컬 인계](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6605617996) 완료. 다음은 Flutter 후보/갱신 연결 차이 확인과 정상 상태 C/N 참가에서 활동 해제 후 기존 기능 유지·신규 선택 제외·A→B 교체 경계의 사용자 로컬 확인/같은 Issue 결과 회신이다. 이미 막힌 과거 dev 방의 정상화나 전체 정상흐름 재시험은 요청하지 않는다. Backend는 구체적 차이에 대응한다. 기존 참가 유지와 신규 활동 선택 검증을 분리하되 소유/등록/생명주기/회원/권한/한도/그룹/점유/CAS와 기존 JSON 계약·원 ACK를 보존한다. 기존 dev review는 자동으로 정상화하지 않는다.
 
 운영 테스터 모집 전 예방 수정의 운영 반영은 개발자의 별도 지시 대상이다. 이번에 운영 배포·merge·태그·자료 초기화/복구·Issue 종료는 하지 않는다. Flutter 게시/병합 보류는 별도 사용자 결정 사항이다.
 
