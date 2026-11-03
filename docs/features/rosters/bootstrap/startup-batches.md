@@ -103,4 +103,6 @@ Flutter는 실제 전송할 JSON의 UTF-8 크기와 항목 수로 분할한다. 
 
 ## 인계 경계
 
+구현 `b1f11bb5011056ce5dd655efe7c8efe2765960e3` 원격 게시·로컬 반영을 [전체3번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6602009469)에서 확인한다. 문서 후행 마감 SHA와 실행 업무 소스 SHA를 구분한다.
+
 기본/two-cycle OpenAPI에 동일한 추가 계약을 제공한다. migration·새 provider 호출·새 DB표는 없다. Backend 고정 SHA/실제 로컬 반영을 확인한 뒤 Flutter가 DTO·durable 원명령·유한 큐·일괄 전송/복구·최종 bootstrap을 연결한다. Flutter의 기존 commit/push/merge 보류는 별도 사용자 결정 사항이다. 운영 배포·태그·merge·APK 게시·자료 초기화·Issue 종료는 포함하지 않는다.

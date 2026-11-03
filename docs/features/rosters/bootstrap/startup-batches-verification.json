@@ -58,5 +58,15 @@
   ],
   "production_changed": false,
   "merge_performed": false,
-  "migrations_performed": false
+  "migrations_performed": false,
+  "implementation_commit": "b1f11bb5011056ce5dd655efe7c8efe2765960e3",
+  "remote_implementation_verified": true,
+  "handoff": {
+    "comment_order": 3,
+    "side": "Backend",
+    "stage": "implementation and local readiness handoff",
+    "url": "https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6602009469",
+    "next_owner": "Flutter",
+    "waiting": "Flutter app wiring, then user local device acceptance"
+  }
 }

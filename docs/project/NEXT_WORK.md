@@ -4,7 +4,7 @@
 
 `feat/startup-batch-refresh`에서 [승인 계약](../features/rosters/bootstrap/startup-batches.md)·일괄 GET/POST를 구현했다. 신규42·관련 기존102의 고유144PASS, 기본/two-cycle 전체 계약 일치, 로컬 dev API 갱신과 Windows8000 health200/새 경로 미인증401을 확인했다. DB0035·기존 DB/키/자료 보존. [검증 집계](../features/rosters/bootstrap/startup-batches-verification.json)·[결과 이력](DEV_LOG.md#startup-batches) 기준이다.
 
-다음 Backend: 이 작업 구간 commit/push·원격 확인 후 [Issue41](https://github.com/heo0328/lostparty-backend/issues/41)에 고정 SHA와 실제 로컬 반영 상태를 인계한다. 이후 Flutter DTO/원명령/일괄 전송·복구/최종bootstrap 연결 및 사용자 로컬 실기기 인수다. Flutter commit/push/merge 보류는 해당 사용자 결정 사항이다. 운영 배포·태그·merge·APK·자료 초기화·Issue 종료 없음. 아래 운영 완료는 이전 v0.1.2이며 이번 API의 운영 지원을 뜻하지 않는다.
+구현 `b1f11bb5011056ce5dd655efe7c8efe2765960e3` commit/push·원격 SHA 일치 확인 후 [전체3번째 Backend 구현·로컬 인계](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6602009469) 완료. 다음 담당은 Flutter: DTO/원명령/일괄 전송·복구/최종bootstrap 연결 결과 회신, 이후 사용자 로컬 실기기 인수다. Backend는 구체적인 연동 차이에 대응한다. Flutter commit/push/merge 보류는 해당 사용자 결정 사항이다. 운영 배포·태그·merge·APK·자료 초기화·Issue 종료 없음. 아래 운영 완료는 이전 v0.1.2이며 이번 API의 운영 지원을 뜻하지 않는다.
 
 ## 완료 — 그룹 초대 수정 운영 반영 v0.1.2
 

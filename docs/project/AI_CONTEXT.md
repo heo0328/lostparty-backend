@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-초기 갱신 일괄 처리(2026-11-03, #41): feat/startup-batch-refresh에 추가 GET/POST 구현·관련 검증·로컬 dev API 반영 완료, 원격 게시/고정 SHA 인계 후 Flutter 연결 대기. [계약](../features/rosters/bootstrap/startup-batches.md)·[NEXT_WORK](NEXT_WORK.md)·[결과](DEV_LOG.md#startup-batches) 기준. 활동 선택 제한 추가 없음, 단건 멱등 영역 공유. 운영은 기존 v0.1.2이며 새 API 운영 배포/merge/기기 인수 완료가 아니다.
+초기 갱신 일괄 처리(2026-11-03, #41): feat/startup-batch-refresh에 추가 GET/POST 구현·관련 검증·로컬 dev API 반영 완료, 구현 b1f11bb 원격 게시·[전체3번째 인계](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6602009469) 완료, Flutter 연결·사용자 로컬 인수 대기. [계약](../features/rosters/bootstrap/startup-batches.md)·[NEXT_WORK](NEXT_WORK.md)·[결과](DEV_LOG.md#startup-batches) 기준. 활동 선택 제한 추가 없음, 단건 멱등 영역 공유. 운영은 기존 v0.1.2이며 새 API 운영 배포/merge/기기 인수 완료가 아니다.
 
 운영 최신(2026-11-03): 사용자 승인 PR40·source2c6070c/v0.1.2·Actions41608259484·production Deployment7514620773 success로 그룹 초대 수정의 AWS 반영을 완료했다. 실제 image7c8b8db9·DB0035·한국18:07:40 API 시작, 18:07:53 완료. 앱 코드는 승인 main b649ccf/검증 fdd51c8과 같고 이번 한정 재사용으로 앱 테스트 재실행0·새 제어 scripts59PASS·원본 검증 보존, DB/Caddy·환경/키 보존·공개 health/조회/인증거절을 확인했다. [배포 집계](../engineering/operations/records/backend-v0.1.2-deployment.json)·[전체9번째 결과](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6599670183)·NEXT_WORK 기준이다. APK 게시·전체 운영 사용자 인수·Issue종료는 별도다. 아래 v0.1.1 운영 문장은 이전 시점 이력이다.
 

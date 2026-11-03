@@ -1,6 +1,6 @@
 # 이슈 주제별 추적표
 
-현재 #41: 초기 자동 갱신 일괄 조회/저장 구현·관련 로컬 검증·실제 dev API 반영 완료, Backend 게시/인계 후 Flutter 연결·사용자 로컬 인수 대기. [계약](../features/rosters/bootstrap/startup-batches.md)·[전체2번째 Backend 계약](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6601566667)·[NEXT_WORK](NEXT_WORK.md) 기준. 운영 배포·merge·Issue 종료 없음.
+현재 #41: 초기 자동 갱신 일괄 조회/저장 구현·관련 로컬 검증·실제 dev API 반영 완료, 구현 b1f11bb 원격 게시·[전체3번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6602009469) 완료 후 Flutter 연결·사용자 로컬 인수 대기. [계약](../features/rosters/bootstrap/startup-batches.md)·[전체2번째 Backend 계약](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6601566667)·[NEXT_WORK](NEXT_WORK.md) 기준. 운영 배포·merge·Issue 종료 없음.
 
 | 현재 추가 주제 | 상태·다음 담당·완료 조건 |
 |---|---|
