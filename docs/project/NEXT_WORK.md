@@ -1,5 +1,13 @@
 # 다음 실행
 
+<a id="runtime-consolidation-followup"></a>
+
+## 후속 선택 — Backend 실행 구성 단일화(구현 미착수)
+
+2026-11-06 조사·후속 등록 완료. 다음 담당 Backend이며 개발자가 이 구간을 선택할 때 [개선 대장](backend-improvement-plan.md#runtime-consolidation)·[조사 보고서](../engineering/development/runtime-consolidation-review.md)의 선행 확인/수정안·검증 조건으로 이어간다. 최신 기본 실행 통일과 기존0023 회귀용 실행 분리를 권장하며, 기존 API/원 ACK·이력/DB 보존은 별도 책임이다. 즉시 구현·서버 재기동·migration·운영 반영 대기로 지정하지 않는다. [수행 이력](DEV_LOG.md#runtime-consolidation-review).
+
+현재 문서 작업 checkout은 `chore/backend-runtime-consolidation`, 시작 기준은 dev/main 원격 `f211342`다. 아래 checkout·로컬 실행 이미지·APK 게시 대기는 각 기록 당시 상태다. 이번 사용자 로컬 기동 결과와 이후 Native 게시 회신의 구분은 조사 보고서를 따른다.
+
 ## 완료 — Backend v2.0.0 운영 반영 / 다음 Native APK 게시
 
 개발자 승인 PR45·source51b1cb3·v2.0.0 태그1회 게시, Actions41674801953/production Deployment7524537038 success로 한국2026-11-04 01:31:59 운영 반영 완료다. AWS imagef33f4c6c·DB0035에서 이슈41 일괄 GET/POST와 이슈42 참가 유지 예방 수정을 지원한다. [배포 집계](../engineering/operations/records/backend-v2.0.0-deployment.json)·[이력](DEV_LOG.md#backend-v2-release) 기준이다.

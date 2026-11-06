@@ -2,6 +2,16 @@
 
 2026-10-30 작성. 상세 관찰·근거·대안·규모·위험·확신의 원본은 [종합 진단](../engineering/development/pre-beta-diagnosis-2026-10-30.md)이다. 이 파일은 범분야 개선의 실행 순서·상태·완료 조건만 관리한다. 현재 실행은 [NEXT_WORK](NEXT_WORK.md), 결과 이력은 [DEV_LOG](DEV_LOG.md), 공식 협업은 [Issue 추적표](ISSUE_TRACKER.md)로 연결한다.
 
+<a id="runtime-consolidation"></a>
+
+## 독립 후속 — Backend 실행 구성 단일화
+
+- **상태:** 2026-11-06 조사 완료 / 단일화 구현 미착수. 기존 F01~F10 번호·완료 판단은 변경하지 않는다.
+- **담당:** Backend. 다음은 개발자가 이 구간을 선택할 때 [조사 보고서](../engineering/development/runtime-consolidation-review.md)의 선행 확인과 A 수정안에 따라 구현 범위·검증을 확정한다. 즉시 착수·운영 반영 지시가 아니다.
+- **필요성·방향:** 최신 two-cycle은 개발·운영 기준이나 기본 Docker 실행은0023 앱이다. 새 로컬DB 준비 누락과 기본 실행의 혼동을 줄이기 위해 최신 실행을 기본으로 통일하고 기존 실행은 우선 명시적인 회귀 시험용으로 분리하는 안을 검토한다. 기존 fixture/계약/복원 도구 의존 때문에 과거 코드 전체 삭제는 확정하지 않는다.
+- **완료 조건:** 기본 실행·검증·안내가 최신 기준으로 일치하고 필요한 API/원 ACK·이력/DB 호환성 및 worker 분리를 보존한다. 과거 실행의 잔여 사용처·유지 이유·제거 조건을 명시한다. 조사 완료와 구현·로컬 실행·운영 반영은 구분한다.
+- **근거:** [상세 조사·비교·수정 순서·검증 시나리오](../engineering/development/runtime-consolidation-review.md), [수행 이력](DEV_LOG.md#runtime-consolidation-review). F03 로그 보완·F10 환경 안내와 겹치는 범위만 조정하며 기존 개선을 일괄 착수하지 않는다.
+
 ## 현재 완료와 승인 경계
 
 - **완료:** 진단 조사와 후속 문서화. #29 문서 운영 합의·양측 최소 반영·대조 완료. Backend 원본 `c1fa205`, Flutter 참조 `4bdec0e`, [전체5번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6520322169). 사용자도 네이티브 최종 확인 완료를 알렸다. 재회신/재인수 대기 없음, Issue 종료는 별도다.

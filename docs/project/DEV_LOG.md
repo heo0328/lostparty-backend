@@ -1,5 +1,19 @@
 # 영구 개발 이력
 
+<a id="runtime-consolidation-review"></a>
+
+## 2026-11-06 — Backend 실행 구성 관계 조사·후속 등록
+
+- 사용자 승인 범위는 조사 보고서·후속 대장/다음 실행 연결·기록 검증과 구간 마감 commit/push다. 단일화 코드 구현·Compose/Dockerfile/OpenAPI/시험/DB/환경 수정·기동/운영 접속·migration·Issue 게시·PR/merge/배포는 제외했다. AI_CONTEXT 기능 상태는 변경하지 않았다.
+- 원격 heads 읽기에서 main/dev `f211342dd6f7df24971582bd36604402f05bbf1b` 일치·기존 작업 브랜치 없음·작업 트리 clean을 확인하고 origin/dev에서 `chore/backend-runtime-consolidation`으로 분기했다. 브랜치 생성은 Git 메타데이터 쓰기 권한으로 수행했다. 사용자 비공개 설정/키는 읽거나 변경하지 않았다.
+- [보고서](../engineering/development/runtime-consolidation-review.md)에 분리 배경·현재 사용처·기능/계약 비교·권장 수정안/순서·호환성/복귀 경계·향후 검증을 기록했다. 8085e90의 전환 준비→3c26cdb의 실제 개발 전환→운영 factory/0035 기록을 대조했다. Issue13 본문/194댓글·Issue34 본문/14댓글을 읽기 조회했다. 기존 실행을 기본으로 계속 남길 확정 기한은 확인하지 못했으며 실제0023 fixture·두 계약·복원 도구 의존은 확인했다.
+- 계약 JSON 정적 비교: 기본125경로/142동작·최신187경로/208동작, 기본 method/path 누락0·추가66. 공통 operation 객체128동일/14상이이나 components 참조가 달라 전체 wire/업무 동등성으로 선언하지 않았다. 공유 기능과 v1 C투영/신규 위험쓰기 제한·원 ACK 우선/worker 교체를 구분했다. 최신 실행을 기본으로 통일하고 과거 실행은 회귀용으로 먼저 분리하는 제안이며 삭제/실행 완료가 아니다.
+- 사용자 제공 로컬 결과: public 테이블0·alembic_version 없음, 이후 two-cycle 이미지/factory·API/DB healthy·health ok다. 조사자의 직접 DB 재현/최종revision 조회·실회원 인수와 구분했다. 정확한 예외 stack 없이 당시DB가0035였다고 가정하지 않았다. 기본0023 앱/최신DB 불일치는 별도 잠재 실패 조건이다.
+- [개선 대장](backend-improvement-plan.md#runtime-consolidation)에 기존 번호를 유지한 독립 후속을 추가하고 [NEXT_WORK](NEXT_WORK.md#runtime-consolidation-followup)에 선택 항목만 연결했다. Backend 다음 담당·구현 미착수·개발자 구간 선택 조건과 완료 기준을 명시했다. 기능 후속/기존500 추적중단/데이터 보존 결정을 재개하거나 변경하지 않았다.
+- 문서 검사 PASS: Markdown254개·상대링크/앵커2755개·원본171개/주요제목1302개·보관본문128개·동결JSON20개·API 분류208동작·JSON/Python경로/Docker 참조 정합성을 확인했다. `git diff --check` PASS, 변경은 보고서와 프로젝트 기록의 Markdown4개뿐이다. 기능 테스트·Docker/DB·실제 서버/provider·기기·운영 점검은 실행하지 않았다. 과거 검증과 사용자 실행 결과를 신규 자동시험 통과로 합산하지 않는다.
+- 이 문서4개를 한 조사 마감 구간으로 commit/push하고 원격 SHA를 확인한다. 현재 작업 브랜치는 dev/main 미통합이며 단일화 구현은 후속 선택으로 남긴다. PR·병합·배포·Issue 게시/종료는 진행하지 않는다.
+
+
 <a id="backend-v2-release"></a>
 
 ## 2026-11-04 — Backend v2.0.0 승인·이번 한정 로컬 검증 재사용
