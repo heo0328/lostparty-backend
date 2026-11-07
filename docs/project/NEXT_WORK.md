@@ -1,17 +1,19 @@
 # 다음 실행
 
+2026-11-07 게시 권한 변경: 통상 작업은 로컬에 누적하고 commit/push/merge는 사용자 직접 지시로 수행한다. 기존 마감·인계 상시 승인은 철회하며 제한된 예외는 [작업과 Git](../engineering/development/workflow.md#section-2)을 따른다. 이번 지침 변경은 이후 사용자의 명시적인 dev/main 통합·push 지시 범위에 포함한다.
+
 <a id="recovery-backup-closeout"></a>
 
 ## 복구·백업 기록 마감 — 다음 개발자 작업 선택
 
 2026-11-07 로컬 개발 환경·앱 Google 로그인과 Git push 복구, 운영 온라인 기준본의 생성·사용자 내장 SSD 저장·읽기/내용 비교를 완료했다. 로컬 DB dump는 사용자 지시로 제외, 실제 서비스 복원·정기 백업 자동화는 미실행이며 외장 매체 사본은 미확인이다. [백업 원장과 안내 시점](../engineering/operations/backup-and-recovery.md)·[검증/오류 이력](DEV_LOG.md#development-recovery-20261107)·[집계](../engineering/operations/records/backup-recovery-2026-11-07.json) 기준이다. 이전 운영 백업 보류는 사용자 후속 승인으로 이번 수동 기준본에 한해 해제됐다.
 
-- 다음 Backend: 개발자 작업 선택/구체 장애에 대응. 이번 문서 구간은 commit/push·Issue46 결과 인계로 마감한다. 백업 자료를 다시 만들거나 Native 정상 로그인/같은 기준 재수용을 반복 요청하지 않는다. Issue46은 OPEN 유지하고 종료/PR/merge/추가 배포는 별도다.
+- 다음 Backend: 개발자 작업 선택/구체 장애에 대응. 복구 문서 구간은 c62f2a7 게시와 Issue46 전체6번째 Backend 회신으로 마감했다. 백업 자료를 다시 만들거나 Native 정상 로그인/같은 기준 재수용을 반복 요청하지 않는다. Issue46은 OPEN 유지한다. 사용자가 후속 지시한 dev/main 통합에 문서를 포함하며 Issue 종료·추가 배포는 포함하지 않는다.
 - 다음 사용자: 현재 PC 백업 파일 보관 유지, 원하는 때 외장 매체에 복사. 자동 배포 개인키 원본은 분실로 확정했으므로 다시 보유 여부를 묻지 않는다. 정상인 배포 Secret은 유지한다.
 - 선택 후속: 대표 회귀 묶음의 ACCESS_INVALID 준비 오류1/CLIENT_UPGRADE_REQUIRED 실패1은 두 사례만 재실행 시2PASS였으나 최초 원인은 미확정. 사용자 선택 시 표적 조사하며 환경 복구/백업 마감의 전체 미완료로 확대하지 않는다. 세션 갱신·실제 복원/복구시간·정기 자동화는 이번 신규 완료 근거가 없다.
 - 실행 구성 단일화는 아래 독립 후속 그대로 구현 미착수. 서울 리전 이전·Native 새 release 서명 적용도 이번 범위 밖이다.
 
-현재 checkout은 `chore/development-recovery`다. 기존 실행 구성 조사2dd3a06이 원격 게시·미커밋 없음인 상태에서 그 기록을 보존해 분기했다. dev/main은f211342·두 목적 브랜치 모두 미통합으로 유지한다. 아래 checkout은 각 기록 당시 상태다. Native v2.0.0 APK 게시는 [Issue34 전체14번째 Native](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6609824463)로 완료 보고를 확인했으며 아래 APK 게시 대기는 현재 대기가 아니다.
+사용자의 2026-11-07 명시 지시로 실행 구성 조사2dd3a06·복구/백업 기록c62f2a7·게시 권한 변경을 dev에 통합하고 main도 같은 커밋으로 동기화하는 구간이다. 완료 checkout은 dev로 두며 통합·원격 게시 확인 후 두 문서 작업 브랜치를 정리한다. 실제 Git 결과는 최종 보고로 확인한다. 아래 checkout은 각 기록 당시 상태다. Native v2.0.0 APK 게시는 [Issue34 전체14번째 Native](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6609824463)로 완료 보고를 확인했으며 아래 APK 게시 대기는 현재 대기가 아니다.
 
 <a id="runtime-consolidation-followup"></a>
 
