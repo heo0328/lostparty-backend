@@ -1,5 +1,35 @@
 # 영구 개발 이력
 
+<a id="development-recovery-20261107"></a>
+
+## 2026-11-07 — 로컬 환경 복구·검증·백업 기록 마감
+
+- 사용자 지시는 순차 점검, 설치/권한 부족 시 우회하지 않고 필요한 사용자 실행 요청이다. 초기 확인은 읽기 전용으로 수행했고 이후 로컬 키/허용 목록 복구, 운영 SSH 공개키 추가와 온라인 백업은 각각 사용자 승인을 받아 진행했다. 코드·API 계약 수정·DB 초기화/기존자료 복원·운영 재배포·키 교체는 하지 않았다.
+- 로컬 초기DB의 public 테이블0/alembic_version 없음은 사용자 실행 결과다. 안내에 따라 스키마를 준비한 뒤 실제 컨테이너에서 two-cycle/0035·API/DB healthy를 확인했다. 원본 예외 stack이 없으므로 당시DB가0035인데 기본앱을 사용했다고 단정하지 않는다. 기본0023 실행/최신DB의 잠재 불일치는 [별도 조사](../engineering/development/runtime-consolidation-review.md)에 보존하며 구현하지 않았다.
+- 실제 API의 키4개 부재·configured_keys 실패를 확인했다. 로컬 회원/세션/저장 게임키0개를 읽기 집계한 뒤 백업 없음과 사용자 승인을 확인했다. 임시 컨테이너 키 생성이 read-only로 실패하자 우회 변경하지 않고 사용자에게 키 생성 전용 mount 명령을 안내했고 사용자 실행 후 API에서4개 읽기/유효성을 확인했다. 운영 키를 가져오거나 기존 키를 덮어쓰지 않았다.
+- 초기 앱 재시도에서는 challenge201만 도착하고 회원/세션0개였다. Native가 새PC debug 서명을 Android OAuth에 등록한 뒤 지정 request_id의 최종POST401/GOOGLE_PROOF_INVALID·azp_allowlist를 확인했다. 사용자가 확인한 정확한 새 Android ID를 기존 허용값에 합쳐 로컬 `.env`에 반영·기존 이미지로 API만 재생성했다. Web audience·원본키 내용/권한·DB컨테이너/0035 보존·health 확인 후 사용자의 앱 로그인 성공 및 서버POST200을 확인했다. 실사용 credential은 게시하지 않았다. refresh/재실행 세션 인수는 미확인이다.
+- GitHub CLI는 사용자 터미널에서 정상인증이었으며 도구 환경의 네트워크 제한을 토큰 오류로 오인한 설명을 정정했다. 사용자 Git 작성자 설정 후 API조회로 저장소push 권한 확인, 기존 조사2dd3a065c6b1b2ec71527de9d0ae247706310869를 목적브랜치에push·원격SHA대조했다. VS Code의 우발적 `.vscode/settings.json`은 사용자 변경으로 보존하고 이번 커밋에서 제외한다.
+- 복구 환경 검증: 의존성/문서·보관 자료·실행기/배포 제어의 호스트단위61PASS, 신규 시험이미지의 해시 설치/pip check와43패키지 잠금 일치, 두 생성 OpenAPI 전체 일치(기본125경로/142동작, 최신187/208). 실제 개발 API runtime31 잠금·two-cycle 생성계약 전체 비교도PASS다. Docker build캐시/시험이미지 보존은 가능하나 개발API/DB는 교체하지 않았다.
+- 대표 회귀는 tests/test_auth.py·test_game_accounts.py·test_groups_http.py·test_startup_batches.py·test_activity_participation_continuity.py·test_cycle_group_policy.py의192사례를 별도tmpfs PostgreSQL에서 실행했다. **190PASS/1FAIL/1ERROR·543.99초·exit1**이다. startup_batches의 test_global_preflight_no_writes[bad_role_type]는 owned 준비 중ACCESS_INVALID, cycle_group_policy의 test_all_detail_profiles_share_target_badges_and_legacy_c_projection는CLIENT_UPGRADE_REQUIRED였다. 두 노드만 새 격리DB에서 재실행해 **2PASS/24.36초·exit0**. 최초 원인은 미확정이며 전체192PASS·제품수정완료로 바꾸지 않는다. 기존 Starlette/AnyIO deprecation 및 NULL PK 경고도 남는다. 설치/권한 누락으로 확정하지 않았고 코드/fixture를 수정하지 않았다.
+- 로컬 배포 제어 Docker smoke는 별도UUID환경의 정상API교체·비정상API복귀·untagged이미지ID복귀·시험DB/Caddy보존PASS다. 실제업무DB 검증과 구분한다. 시험용 컨테이너/네트워크 정리와 개발API/DB healthy를 확인했다. GH Actions 활성화·production Secret/변수 존재·v*배포제한/태그보호, 기존v2.0.0 Actions41674801953의verify/regression/validation/publish/deploy success 및 Release산출물·서버status의source51b1cb3/imagef33f4c6c/DB0035 일치를 읽기로 대조했다. 새CI·태그·운영배포·검증상시생략은 실행하지 않았다. 현재reuse계획은 과거v2.0.0 한정승인이며 다음버전에 자동적용하지 않는다.
+- 실제 앱 운영 정상은 사용자 보고다. Backend공개HTTPS health200/DBok·사용자브라우저SSH의API/DB healthy/Caddy실행·컨테이너restart0·Docker active/enabled·unless-stopped 및 디스크9%/가용메모리약1.1GiB를 대조했다. 실제재부팅/전체기기인수나 실시간부하SLO검증으로 확대하지 않는다.
+- 사용자 범위는 파일경로/복사방법과 운영중백업 가능여부·시점이었다. 기존 장기암호화/저장소/정기자동화 협의를 선행조건으로 붙인 것을 정정했다. 사용자 기존 키/파일 보관 보고와 로컬DB 제외 결정을 기록하고, 분실한 자동배포SSH개인키 원본의 보유여부를 반복 질문하지 않는다. 운영백업보류는 아래사용자후속승인으로 이번수동기준본범위에서 해제됐다.
+- 기록 구간은 원격 main/dev f211342·기존조사브랜치2dd3a06/clean을확인한뒤, 기존최신조사를보존한HEAD에서 `chore/development-recovery`로분기했다. 기존조사·복구기록을한기준에서검토할수있게하고 main/dev/이전작업브랜치·사용자미추적VS Code설정은보존한다. PR·merge·이력재작성·완료브랜치삭제는이번범위가아니다.
+- [백업 원장/안내 기준](../engineering/operations/backup-and-recovery.md)·[비민감 집계](../engineering/operations/records/backup-recovery-2026-11-07.json)를 추가하고 AGENTS/환경/운영안내·기능지도·다음실행·개선대장·Issue추적에 연결했다. 원본은 한 곳으로 유지하며 현재 운영 외부백업 미구성·Native APK 게시대기 문구는 최신 상태와 과거 시점을 구분했다. 사용자 고정자료 보관·PC 사본 검증·미실행 실제복원·미확인 외장사본을 섞지 않는다.
+- 이번 기록은 문서 검사 PASS(255개 Markdown·상대 링크/앵커2781개·208개 API 동작 분류·보관 원문 보존), git diff --check PASS를 확인했다. 비민감 집계는 실제 실행 요약과 대조했고 코드/비밀자료/사용자 VS Code 설정은 커밋 대상에서 제외했다. 목적 브랜치의 한 구간으로 commit/push하고 Issue46에 고정 커밋 링크를 인계한다. 문서만 변경하므로 기능/DB/운영 시험을 다시 실행하지 않는다.
+
+<a id="backup-baseline-20261107"></a>
+
+## 2026-11-07 — 운영 온라인 기준본·PC 사본 생성과 확인
+
+- [Issue46 본문](https://github.com/heo0328/lostparty-backend/issues/46)·[전체2번째Native시기안](https://github.com/heo0328/lostparty-backend/issues/46#issuecomment-6705346619)·[전체4번째Native범위정정](https://github.com/heo0328/lostparty-backend/issues/46#issuecomment-6705693077)을확인했다. 사용자가 직접 파일을 보관하고 비밀번호는 기존방식으로관리하며 운영상태보존백업을명시지시했다. 보관위치·기본키경로확인 외 불필요한 정책결정·새도구/유료서비스 도입은 하지 않았다.
+- 키원문없이파일명/권한만확인했다. Windows드라이브의관리자키0777로SSH가거부돼 사용자에게WSL접속용600사본준비를요청했다. 이후publickey거부에서다운로드RSA와등록ED25519지문차이를확인했다. 사용자승인으로브라우저SSH에서RSA공개키만추가하고기존키는보존했다. GitHubproduction공개known_hosts기준엄격호스트검증으로새SSH/sudo성공을확인했다. SSH인증을우회하거나현재배포계정의Secret을회수/회전하지않았다.
+- 한국20:50경 v2.0.0/source51b1cb3/imagef33f4c6c/DB0035의새기준본을생성했다. 서비스health·키읽기전용mount·실행source/baseline·DB약14MiB·디스크여유약52GiB를확인했다. 기존배포lock에공유잠금을걸어동시배포와겹치지않게하고pg_dump -Fc/lock-wait5s로온라인dump를만들었다. 경고0·목차842개항목/필수테이블과PGDMP헤더를확인했다. 읽기/CPU/디스크부하가0이었다고주장하지않는다.
+- DBdump+현재운영.env/기존키4개+배포상태·동결구성·복구/접속도구를새비공개tar33멤버로묶었다. archive614,400bytes·SHA256는집계에보존했다. 서버원본과사용자지정내장SSD폴더로SSH전송한사본의전체SHA256/멤버내용이일치했다. 대응checksum/README도함께저장했다. 개인보관경로·키/비밀번호·DB원문·백업파일은Git/댓글/로그에올리지않았다. 파일자체암호화는하지않았다.
+- API/DB/Caddy ID·시작시각/restart횟수·이미지/mount, 원본파일내용/권한·schema보존과전송후HTTPShealth200/DBok를확인했다. 실제서비스복원·DBrestore·스키마/업무자료변경·migration·키교체·재시작·배포는없다. Caddy인증서볼륨·Docker이미지파일·분실배포개인키는미포함이며완전한VM이미지로표시하지않는다.
+- [전체5번째Backend결과](https://github.com/heo0328/lostparty-backend/issues/46#issuecomment-6706589300)로실제저장/검증/미실행을회신했다. 현재PC는개발용내장SSD이며외장복사미확인, 로컬고정자료는사용자보고·로컬DBdump는제외, 정기자동화·실제복원은별도후속이다. 백업주기/복원리허설을개발재개선행조건으로추가하지않으며IssueOPEN유지·종료는별도다.
+
+
 <a id="runtime-consolidation-review"></a>
 
 ## 2026-11-06 — Backend 실행 구성 관계 조사·후속 등록

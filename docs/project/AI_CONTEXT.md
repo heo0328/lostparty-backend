@@ -1,5 +1,9 @@
 # LostParty Backend 기능 지도
 
+## 환경·보관 최신(2026-11-07)
+
+로컬 two-cycle/DB0035·인증키/Google 로그인·Git/Docker 복구를 확인했다. 운영v2.0.0의 DB·설정·기존 키/복구 구성 기준본과 서버 밖 사용자 PC 사본을 확보하고 읽기·내용 일치를 검증했다. 실제 복원·정기 자동화는 미실행, 외장 매체 복사는 미확인이다. [원장/안내 기준](../engineering/operations/backup-and-recovery.md)·[DEV_LOG](DEV_LOG.md#development-recovery-20261107)·[NEXT_WORK](NEXT_WORK.md)를 따른다. 기능 계약·운영 앱/DB 버전은 변경하지 않았으며 아래 이전 checkout/로컬 실행·외부 백업 미구성·Native APK 대기는 당시 이력이다.
+
 ## 운영 최신(2026-11-04) — Backend v2.0.0
 
 개발자 승인 PR45/source51b1cb3·태그v2.0.0·Actions41674801953·production Deployment7524537038 success. 실제 AWS imagef33f4c6c·DB0035, 한국01:31:59 반영 완료로 이슈41 일괄 API·이슈42 기존 참가 유지 예방 수정을 지원한다. 이번 한정 로컬 scoped 검증 재사용·신규 앱 회귀0·scripts61PASS·최소 운영 점검 완료, DB/Caddy·환경/키 보존·migration/기존 review 복구 없음. [배포 집계](../engineering/operations/records/backend-v2.0.0-deployment.json)·[운영 기준](../engineering/operations/backend-release.md) 기준이다.

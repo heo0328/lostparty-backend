@@ -1,5 +1,11 @@
 # 개발 환경·실행 구성·검증 안내
 
+## 2026-11-07 복구 확인
+
+현재 로컬은 `compose.yaml` + `compose.two-cycle.yaml`·DB `0035_cycle_group_policy`로 기동하며, 복구한 키4개와 현재 debug Android OAuth 허용값으로 실제 앱 Google 로그인을 확인했다. Git 작성자·GitHub 인증/쓰기·Docker 연결도 확인했고, 의존성은 API 이미지에서 runtime31개/시험 이미지에서 전체43개 잠금 일치를 확인했다. 호스트 Python에 같은 패키지를 전역 설치할 필요는 없다. Python/Pylance/디버거 확장은 설치돼 있지만 로컬 `.venv`와 호스트 프로젝트 패키지는 없어 에디터 직접 분석/디버깅 구성은 선택 후속이다.
+
+빈 로컬DB의 테이블 준비와 기존DB 재기동은 구분한다. 기본0023 실행과 최신 구성의 단일화는 [별도 조사](runtime-consolidation-review.md)만 완료했고 코드는 변경하지 않았다. [백업 파일/보관 상태](../operations/backup-and-recovery.md)·[자동 검증의 결과와 한계](../../project/DEV_LOG.md#development-recovery-20261107)를 따른다. 아래0032 실행 수치·예전환경은 당시 이력이며 현재 복구 상태를 덮어쓰지 않는다.
+
 ## 환경 분리 기준
 
 개발·검증은 로컬 dev가 기본이고 운영 반영은 개발자 지시에 따릅니다. [로컬 개발과 운영 반영](workflow.md#local-dev-and-production)을 판단 기준으로 사용합니다. 로컬 실행 중단은 먼저 기동으로 해결하며 원격 CI로 임의 대체하지 않습니다.
@@ -25,7 +31,7 @@ Python3.12·FastAPI/Uvicorn·SQLAlchemy·Alembic·PostgreSQL17/psycopg를 Docker
 
 ## 현재 실행 구성
 
-현재 개발 API는 `compose.yaml`에 `compose.two-cycle.yaml`을 덮어써 `app.main:create_two_cycle_app --factory`를 선택한다. 기본 Dockerfile의 `app.main:app`는 기존 앱이며 현재 개발 DB에 기본 Compose 단독으로 혼용하지 않는다. `two-cycle`은 실행 구성 이름, `0032_beta_recruitment`는 현재 DB구조 이행 식별자다.
+현재 개발 API는 `compose.yaml`에 `compose.two-cycle.yaml`을 덮어써 `app.main:create_two_cycle_app --factory`를 선택한다. 기본 Dockerfile의 `app.main:app`는 기존 앱이며 현재 개발 DB에 기본 Compose 단독으로 혼용하지 않는다. `two-cycle`은 실행 구성 이름, `0035_cycle_group_policy`는 현재 확인한 DB구조 이행 식별자다. 아래0032 수치는 이전 반영 이력이다.
 
 현재 실제 개발 서버는178경로/199 operation·DB0032이며 [명시 출발 정수분 개발 반영](../operations/explicit-minute-rollout.md)의 source420e057/이미지cd581ac0를 사용한다. join후보/활성방한도/조율선택조회와검색정수분범위를지원한다. 베타명시출발은정수분이며기본/자동/개인표/진행시간은5분유지한다. 고정runtime31개·JSON로깅·API/DB10m×5와 기존DB컨테이너/볼륨·설정/키를 유지하고 읽기전용검색·실제HTTP9/두계약/worker를 확인했다. 문자hangul-printable-ascii-1·종료관계목록보완이실행중이다. DB32에 구이미지366e868a만 재적용하지 않는다. 아이템레벨 보완 인수는 수용됐고 전체 모집·실회원/기기 인수는 미완료다. 상세 전환 근거는 [운영 기록](../operations/README.md)을 따른다.
 

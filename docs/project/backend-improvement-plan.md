@@ -14,6 +14,8 @@
 
 ## 현재 완료와 승인 경계
 
+- **F04 수동 백업 기준본 보완(2026-11-07):** 사용자 승인 온라인 dump/환경·기존 키/복구 구성과 서버 밖 PC 사본의 읽기·내용 일치를 확인했다. [원장](../engineering/operations/backup-and-recovery.md)·[집계](../engineering/operations/records/backup-recovery-2026-11-07.json) 기준이다. 정기 자동화·실제 서비스 복원/복구시간·실패 알림은 여전히 미구성/미검증으로 F04 전체 완료가 아니다. 아래 F04 미착수/외부 사본 없음은 각 작성 시점의 근거로 보존한다. 자동화·주기 협의를 현재 파일 안내나 개발 재개의 선행 조건으로 만들지 않는다.
+
 - **완료:** 진단 조사와 후속 문서화. #29 문서 운영 합의·양측 최소 반영·대조 완료. Backend 원본 `c1fa205`, Flutter 참조 `4bdec0e`, [전체5번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/29#issuecomment-6520322169). 사용자도 네이티브 최종 확인 완료를 알렸다. 재회신/재인수 대기 없음, Issue 종료는 별도다.
 - **최신 통합:** 진단·인계 문서 `48bf88c` 게시 후 사용자 승인으로 [PR30](https://github.com/heo0328/lostparty-backend/pull/30)·병합 `fc6c06a`를 dev/main에 원격 반영했다. 그룹 브랜치는 로컬·원격 정리, 통합 기록까지 main/dev `ccd1cc8`에 동기화했다. 개선 인계는 `fix/backend-beta-readiness`의818a7ec에 게시했으며 현재 checkout은 `feat/raid-group-policy`다. 미완료 활동 선택 브랜치는 보존한다. 그룹 통합 당시 코드/API/서버/DB 추가 변경은 없었다.
 - **F01 구현·격리 검증 완료:** 미처리 조건과 삭제 시각/ID 순서를 추가했다. 두 DB 단계 신규10개 포함 선택67PASS·두 전체 계약 일치이며 [상세 결과](DEV_LOG.md#f01-registration-cleanup)를 따른다. 이번0035 개발 이미지에 코드 포함·실제 미처리0/수동정리 없음·PR31 Git 통합 완료다([반영](../engineering/operations/cycle-group-policy-rollout.md)).

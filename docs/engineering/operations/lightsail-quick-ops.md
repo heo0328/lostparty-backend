@@ -63,7 +63,13 @@ sudo docker inspect --format '{{.Name}} restart={{.HostConfig.RestartPolicy.Name
 
 ## 서버 외부 DB 백업 상태
 
-**미구성/전송 완료 미확인.** 현재 확인한 것은 서버 내부 `backups/`의 DB 덤프2개(초기배포·수동인증 전, 모두0600)와 설정 변경 전 환경 백업1개다. 초기 덤프의 격리 복원 기록은 있지만, 최신 수동인증 이후 상태를 담은 백업은 이번에 만들지 않았다.
+### 2026-11-07 최신 — 수동 기준본·사용자 PC 사본 확보
+
+사용자 승인으로 v2.0.0/source51b1cb3·DB0035의 온라인 dump, 현재 운영 환경/키4개와 복구 구성을 묶어 서버 private backups와 사용자 내장 SSD 폴더에 저장했다. dump 목차·아카이브33개 멤버·서버/PC SHA-256 일치와 원본 키/설정·API/DB/Caddy 보존·HTTPS health를 확인했다. 서비스 재시작·재배포·migration·키 교체는 없다. 파일 자체는 암호화하지 않은 사용자 직접 보관용 사본이다. 실제 서비스 복원 시험·정기 자동화는 미실행, 외장 매체 복사는 미확인이다. [백업 원장](backup-and-recovery.md)·[집계](records/backup-recovery-2026-11-07.json)·[수행 결과](https://github.com/heo0328/lostparty-backend/issues/46#issuecomment-6706589300)를 따른다.
+
+### 2026-11-01 당시 점검 — 외부 백업 미구성
+
+**당시 미구성/전송 완료 미확인.** 당시 확인한 것은 서버 내부 `backups/`의 DB 덤프2개(초기배포·수동인증 전, 모두0600)와 설정 변경 전 환경 백업1개다. 초기 덤프의 격리 복원 기록은 있지만, 최신 수동인증 이후 상태를 담은 백업은 이번에 만들지 않았다.
 
 ubuntu/root crontab 없음, `/etc/cron*`·사용자/시스템 custom systemd 설정에서 DB 백업/외부 전송 작업이 확인되지 않았다. `dpkg-db-backup.timer`는 Ubuntu 패키지관리 DB용이며 LostParty PostgreSQL 백업이 아니다. 이전 배포 기록에도 외부 복사·암호화된 키 포함 복구 완료 근거가 없다. 사용자가 별도로 수행한 외부 수동 복사 여부까지 확인한 것은 아니다.
 

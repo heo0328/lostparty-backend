@@ -1,5 +1,9 @@
 # 이슈 주제별 추적표
 
+## 백업 주제 최신 — 2026-11-07
+
+[#46 백업 조사·사용자 보관 안내](https://github.com/heo0328/lostparty-backend/issues/46)는 [전체4번째 Native 범위 정정](https://github.com/heo0328/lostparty-backend/issues/46#issuecomment-6705693077)과 사용자 후속 실행 승인에 따라 [전체5번째 Backend 운영 기준본/PC 보관 결과](https://github.com/heo0328/lostparty-backend/issues/46#issuecomment-6706589300)까지 회신했다. [백업 원장·안내 시점](../engineering/operations/backup-and-recovery.md)·[집계](../engineering/operations/records/backup-recovery-2026-11-07.json)에 현재 상태를 기록한다. 로컬 고정자료는 사용자 보관 보고, 로컬 DB는 제외, 운영 기준본은 생성/PC 전송/무결성 확인 완료다. 실제 복원·정기 자동화·외장 매체 보관은 완료로 표시하지 않는다. 다음 Backend 문서 구간 게시/결과 인계·사용자 파일 보관이며 추가 Native 기능/반복 시험 대기는 없다. Issue OPEN·종료는 별도다.
+
 최신 종료(2026-11-04): 사용자 승인 [PR44](https://github.com/heo0328/lostparty-backend/pull/44)·Backend 통합4231a58/후행 마감 기록까지 dev/main 동일 시점 게시, 완료 브랜치 정리·미완료 activity-selection 보존. [Issue41 전체15번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/41#issuecomment-6609216803)·[Issue42 전체9번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/42#issuecomment-6609226056) 회신 후 둘 다 completed CLOSED. 개발·사용자 로컬 인수·양측 원격 인계/Backend Git 정리 완료, 추가 요청 없음. [NEXT_WORK](NEXT_WORK.md)·[최종 이력](DEV_LOG.md#issues-41-42-integration-closeout) 기준이다.
 
 | 종료 주제 | 완료 근거·별도 경계 |
