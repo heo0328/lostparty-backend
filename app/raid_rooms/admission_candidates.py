@@ -38,9 +38,8 @@ def replacement(db, uid, target):
     cm = life.actual_member(db,target,uid,states=('participating',))
     if cm is None:
         fail('WEEKLY_PARTICIPANT_REQUIRED',403)
-    owned = life.assignments(db,target,cm)
-    if not owned or any(a.state != 'active' for a in owned):
-        fail('ROUND_NOT_ACTIVE')
+    from app.raid_rooms import roster_participation
+    owned = roster_participation.replacement(db,target,cm)
     owned.sort(key=lambda a: str(a.item_id))
     return cm, owned
 
@@ -68,6 +67,8 @@ def get(principal, rid, key, intent, limit=50, cursor=None):
             fail('ADMISSION_MODE_CHANGED')
         cm, owned = replacement(db,uid,target) if intent == 'change_character' else (None,[])
         actor = actor_value(cm,owned)
+        from app.raid_rooms import roster_participation
+        participation = roster_participation.member(db,target,cm) if cm and roster_participation.enabled() else None
         rows = source(db,uid)
         bundle = eligibility.load(db,uid,target,[c.id for _,_,_,c,_ in rows],owned=owned)
         eligible = []; exclusions = Counter(); source_facts = []
@@ -93,8 +94,8 @@ def get(principal, rid, key, intent, limit=50, cursor=None):
         current_scope = scope(stamp,key,target)
         stable_scope = {k:v for k,v in current_scope.items() if k!='server_now'}
         token = mac(['snapshot',uid,principal[1].id,room.id,intent,stable_scope,actor,eligibility.facts(room),
-            source_facts,eligibility.evidence(bundle),eligibility.POLICY])
-        binding = mac(['cursor',uid,principal[1].id,room.id,key,intent,eligibility.POLICY])
+            source_facts,eligibility.evidence(bundle),eligibility.POLICY,participation,roster_participation.marker()])
+        binding = mac(['cursor',uid,principal[1].id,room.id,key,intent,eligibility.POLICY,roster_participation.marker()])
         if beta_profile.enabled():
             token=mac([beta_profile.PROFILE,token])
             binding=mac([beta_profile.PROFILE,binding])
@@ -109,4 +110,5 @@ def get(principal, rid, key, intent, limit=50, cursor=None):
             next_cursor=cursor_encode(dict(scope=binding,revision=token,offset=following)) if following<len(eligible) else None))).model_dump(mode='json')
         if len(json.dumps(result,ensure_ascii=False,separators=(',',':')).encode()) > MAX_RESPONSE_BYTES:
             fail('RESPONSE_TOO_LARGE',413)
-        return result
+        from app.raid_rooms import roster_api
+        return roster_api.publish(db,uid,stamp,result,'candidates')

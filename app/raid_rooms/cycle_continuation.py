@@ -49,7 +49,7 @@ def prepare(db,uid,rid,key,action,cid,role,stamp,*,include_session_display=False
         data["session_display"]=(display.none(uid,row,"continue-decline") if action=="decline" else
             display.existing(db,uid,row,stamp,"continue-join"))
     extra=dict(**display.marker(include_session_display),cid=str(selected.character_id) if selected else None,role=selected.selected_role if selected else None,
-        source_character=str(owned[0].character_id))
+        source_character=str(selected.character_id if selected is not None else next((a for a in owned if a.state=='active'),owned[-1]).character_id))
     hidden=[source_proof,room.revision,room.scope,selection_context.group_stamp(db,room.group_id,retained=True),
         row.settings_snapshot,commands.leadership(db,row),choices,comparison['power_revision'] if comparison else None]
     result,binding=life.sign(uid,rid,key,'continue-'+action,jsonable_encoder(data),hidden,stamp,row=row,extra=extra,db=db)

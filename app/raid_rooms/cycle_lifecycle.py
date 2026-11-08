@@ -30,7 +30,10 @@ def target_row(db,uid,rid,key,stamp,*,next_only=False,authorize_target=True):
     if next_only and value.phase!='future':fail('TARGET_CYCLE_NOT_FUTURE')
     if room.ended_at is not None:fail('ROOM_NOT_ACTIVE')
     if row is not None:admission.capacity(row)
-    return group_policy.project(db,room,row,uid if authorize_target else None) if row else room,row,value
+    view=group_policy.project(db,room,row,uid if authorize_target else None) if row else room
+    from app.raid_rooms import roster_participation
+    roster_participation.require_client(db,row)
+    return view,row,value
 
 
 def actual_member(db,row,uid,*,states=VALID_STATES):
@@ -56,11 +59,11 @@ def qualify(db,room,row,cm):
     owned=assignments(db,row,cm)
     if {a.item_id for a in owned}!={i.id for i,r in admission.rounds(db,row)} or not owned:
         fail('ROOM_REVIEW_REQUIRED')
-    if len({(a.character_id,a.selected_role) for a in owned})!=1:fail('ROOM_REVIEW_REQUIRED')
+    active=[a for a in owned if a.state=='active']
+    selected_rows=active or owned[-1:]
+    if len({(a.character_id,a.selected_role) for a in selected_rows})!=1:fail('ROOM_REVIEW_REQUIRED')
     from app.raid_rooms import existing_participation
     selected=existing_participation.selection(db,room,row,cm)
-    if any((a.ownership_revision,a.lifecycle_revision)!=(selected.expected_ownership_revision,selected.expected_lifecycle_revision)
-            for a in owned):fail('OWNERSHIP_REQUIRED',403)
     admission.core._limits(db,cm.user_id,selected,False)
     admission.core._group(db,room,cm.user_id,existing=True)
     admission.core._room_restrictions(db,room)
@@ -68,10 +71,12 @@ def qualify(db,room,row,cm):
     power=admission.core.power_comparison(db,cm.user_id,selected,minimum)
     if power['state'] in ('below','missing'):fail('COMBAT_POWER_REQUIRED')
     ledgers=[]
-    character=admission.core.identity.owned_selection_character(db,cm.user_id,selected.model_dump(mode='json'))
+    character=existing_participation.character(db,cm.user_id,selected,selected_rows)
     try:level=Decimal(str(character.summary.get('item_level')))
     except (ValueError,InvalidOperation):level=None
     for item,rd in admission.rounds(db,row):
+        a=next(a for a in owned if a.item_id==item.id)
+        if a.state!='active':continue
         try:difficulty=raids.difficulty(item.raid_id,rd.difficulty_id,rd.catalog_version)
         except raids.CatalogSelectionError as error:fail(error.code)
         if not raids.meets_item_level(level,difficulty):fail('RAID_ITEM_LEVEL_REQUIRED')
@@ -123,7 +128,7 @@ def candidates(db,room,row,actor):
             if not owned or cm.joined_order is None:continue
             candidate_after=dict(scope=current.scope if same else 'public',group_id=current.group_id if same else None)
             result.append(dict(cycle_member_id=cm.id,revision=cm.revision,joined_order=str(cm.joined_order),
-                character_id=owned[0].character_id,character_name=owned[0].display.get('character_name'),
+                character_id=next((a for a in owned if a.state=='active'),owned[-1]).character_id,character_name=next((a for a in owned if a.state=='active'),owned[-1]).display.get('character_name'),
                 permission=permission(reason),group_policy_effect=group_policy.effect(db,row,candidate_after)))
         return result,proof
     result=[];proof=[]
@@ -135,7 +140,7 @@ def candidates(db,room,row,actor):
         reason=None;qualification=None
         try:_,qualification=qualify(db,room,row,cm)
         except GameError as error:reason=error.code
-        first=owned[0]
+        first=next((a for a in owned if a.state=='active'),owned[-1])
         result.append(dict(cycle_member_id=cm.id,revision=cm.revision,joined_order=str(cm.joined_order),
             character_id=first.character_id,character_name=first.display.get('character_name'),permission=permission(reason)))
         proof.append([cm.id,cm.revision,cm.state,qualification,reason])
@@ -158,6 +163,8 @@ def sign(uid,rid,key,command,data,hidden,stamp,*,row=None,extra=None,db=None):
     token=dict(actor=str(uid),room=str(rid),target=key,command=command,expires=expires.isoformat(),digest=binding)
     if db is not None:token.update(group_policy.marker(db))
     token.update(extra or {})
+    from app.raid_rooms import roster_participation
+    token.update(roster_participation.marker())
     token.update(beta_profile.marker())
     data.update(context_token=opaque.seal(token),issued_at=stamp,expires_at=expires)
     return envelope,binding
@@ -167,6 +174,8 @@ def verify_token(uid,rid,body,command,stamp):
     if body['expected_cycle_key']!=raids.cycle(stamp).cycle_key:fail('CYCLE_CHANGED')
     token=opaque.unseal(body['context_token'])
     beta_profile.check_marker(token)
+    from app.raid_rooms import roster_participation
+    roster_participation.check_marker(token)
     if (token.get('actor')!=str(uid) or token.get('room')!=str(rid) or token.get('target')!=body['target_cycle_key']
             or token.get('command')!=command):fail('TARGET_SCOPE_MISMATCH',400)
     if stamp>=datetime.fromisoformat(token['expires']):fail('COMMAND_CONTEXT_EXPIRED')

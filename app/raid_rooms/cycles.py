@@ -230,6 +230,14 @@ lease store; do not introduce a second dedup namespace or in-memory cache.
             from app.raid_rooms import cycle_group_policy
             cycle_group_policy.require_client(db,operation,ticket=ticket)
             beta_schedule.require_client(db,rid,operation,payload)
+            from app.raid_rooms import roster_participation
+            if roster_participation.enabled():
+                from app.game_accounts import roster_presence
+                if not roster_presence.enabled(db):fail('RECRUITMENT_COMMAND_NOT_READY',503)
+            target_key=payload.get('body',payload).get('target_cycle_key')
+            if rid is not None and target_key:
+                target_row=db.scalar(select(RoomCycle).where(RoomCycle.room_id==rid,RoomCycle.cycle_key==date.fromisoformat(target_key)))
+                roster_participation.require_client(db,target_row)
             from app.raid_rooms import active_usage
             usage_before=active_usage.capture(db,uid,rid,payload)
             outcome = run(db, uid, stamp)

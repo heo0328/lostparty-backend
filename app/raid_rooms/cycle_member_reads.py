@@ -105,6 +105,8 @@ def detail(principal,rid,key,*,read_snapshot=None,reader_profile=None):
     if reader_profile is not None and reader_profile != application_display.PROFILE:fail('INVALID_REQUEST',400)
     with (nullcontext(read_snapshot) if read_snapshot is not None else base.snapshot(principal)) as (db,uid,stamp):
         room,row=read_target(db,uid,rid,key,stamp)
+        from app.raid_rooms import roster_participation
+        roster_participation.require_client(db,row)
         if archive.is_archived(db,rid):base.member(db,uid,room)
         mine=db.scalar(select(Member).where(Member.room_id==rid,Member.user_id==uid,Member.ended_at.is_(None)))
         values=[]
@@ -113,15 +115,14 @@ def detail(principal,rid,key,*,read_snapshot=None,reader_profile=None):
                 .order_by(CycleMember.joined_order,CycleMember.id)):
             member=db.get(Member,actual.membership_id)
             owned=assignments(db,row,member.id)
-            recent=owned[-1][0] if owned else None
+            active=[a for a,_ in owned if a.state=='active']
+            recent=active[-1] if active else None
             comparison=None;reason=None;build=None
             if recent and mine is not None:
                 try:
                     if db.get(User,actual.user_id).status!='active':fail('ROOM_TARGET_UNAVAILABLE')
                     from app.raid_rooms import existing_participation
                     selected=existing_participation.selection(db,room,row,actual)
-                    if (selected.expected_ownership_revision,selected.expected_lifecycle_revision)!=(recent.ownership_revision,recent.lifecycle_revision):
-                        fail('OWNERSHIP_REQUIRED',403)
                     minimum=row.settings_snapshot['combat_requirement']['dealer_min' if recent.selected_role=='dealer' else 'support_min']
                     comparison=admission.core.power_comparison(db,actual.user_id,selected,minimum)
                 except GameError as error:reason=error.code
@@ -144,7 +145,9 @@ def detail(principal,rid,key,*,read_snapshot=None,reader_profile=None):
             result['data']['my_application']=application_display.own_application(db,uid,room,row,stamp)
         model=application_display_schemas.ApplicationDisplayDetailResponse if reader_profile is not None else wire.OutputContract3GetV2RaidRoomsRoomIdDetail
         result=beta_output.render(db,uid,stamp,model,result)
-        return application_display.bounded(result) if reader_profile is not None else result
+        result=application_display.bounded(result) if reader_profile is not None else result
+        from app.raid_rooms import roster_api
+        return roster_api.publish(db,uid,stamp,result,'detail')
 
 
 def schedule_fields(db,room,row,mine,stamp,include_resume_display=False):
@@ -212,7 +215,9 @@ def schedule_fields(db,room,row,mine,stamp,include_resume_display=False):
 
 def plan(principal,rid,key,include_resume_display=False,*,read_snapshot=None):
     with (nullcontext(read_snapshot) if read_snapshot is not None else base.snapshot(principal)) as (db,uid,stamp):
-        room,row=read_target(db,uid,rid,key,stamp);mine=base.member(db,uid,room)
+        room,row=read_target(db,uid,rid,key,stamp)
+        from app.raid_rooms import roster_participation
+        roster_participation.require_client(db,row);mine=base.member(db,uid,room)
         if own_cycle_member(db,row,mine) is None:fail('WEEKLY_PARTICIPANT_REQUIRED',403)
         items=[dict(item_id=i.id,revision=i.revision,raid_id=i.raid_id,difficulty_id=r.difficulty_id,
             catalog_version=r.catalog_version,game_party_size=r.game_party_size,round_id=r.id,round_revision=r.revision,round_state=r.state)
@@ -251,5 +256,9 @@ def plan(principal,rid,key,include_resume_display=False,*,read_snapshot=None):
         if archive.is_archived(db,rid):archive.permissions(result['data']['permissions'])
         if include_resume_display:
             from app.raid_rooms import resume_review, resume_review_schemas
-            return resume_review.output(resume_review_schemas.ResumePlanContext,result,snapshot=(db,uid,stamp))
-        return beta_output.render(db,uid,stamp,wire.OutputContract3GetV2MeRaidRoomsRoomIdPlan,jsonable_encoder(result))
+            result=resume_review.output(resume_review_schemas.ResumePlanContext,result,snapshot=(db,uid,stamp))
+            from app.raid_rooms import roster_api
+            return roster_api.publish(db,uid,stamp,result,'plan')
+        result=beta_output.render(db,uid,stamp,wire.OutputContract3GetV2MeRaidRoomsRoomIdPlan,jsonable_encoder(result))
+        from app.raid_rooms import roster_api
+        return roster_api.publish(db,uid,stamp,result,'plan')

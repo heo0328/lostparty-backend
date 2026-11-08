@@ -19,7 +19,7 @@ from app.raid_rooms.member_reads import paginate
 
 
 def ready(db):
-    if list(db.scalars(text('SELECT version_num FROM public.alembic_version'))) not in (['0027_cycle_consents'],['0028_cycle_planning'],['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history'],['0034_group_features'],['0035_cycle_group_policy']):
+    if list(db.scalars(text('SELECT version_num FROM public.alembic_version'))) not in (['0027_cycle_consents'],['0028_cycle_planning'],['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history'],['0034_group_features'],['0035_cycle_group_policy'],['0036_roster_presence']):
         fail('RECRUITMENT_COMMAND_NOT_READY',503)
 
 
@@ -198,7 +198,7 @@ def time_context(principal,rid,key,target_session_id=None):
                 if intervals and start<=intervals[-1]['ends_at']:intervals[-1]['ends_at']=max(end,intervals[-1]['ends_at'])
                 else:intervals.append(dict(starts_at=start,ends_at=end))
             owned=life.assignments(db,row,m)
-            members.append(dict(membership_id=m.membership_id,cycle_member_id=m.id,display=owned[0].display if owned else None,
+            members.append(dict(membership_id=m.membership_id,cycle_member_id=m.id,display=next((a.display for a in owned if a.state=='active'),None),
                 submission=submission_view(db,row,m),anonymous_busy=dict(state='ready',
                     revision=1+sum(r.schedule_revision+1+int(r.released_at is not None) for r in reservations),intervals=intervals)))
         return beta_output.render(db,uid,stamp,wire.OutputContract3GetV2MeRaidRoomsRoomIdScheduleContext,dict(scope=scope(stamp,key,row),

@@ -29,7 +29,10 @@ def resolve(db, uid, rid, key, stamp, *, write=False):
     admission.capacity(row)
     if row.state!='open':fail('ROOM_REVIEW_REQUIRED' if row.state=='review_required' else 'ROUND_NOT_ACTIVE')
     if room.ended_at is not None:fail('ROOM_NOT_ACTIVE')
-    return group_policy.project(db,room,row,uid),row
+    view=group_policy.project(db,room,row,uid)
+    from app.raid_rooms import roster_participation
+    roster_participation.require_client(db,row)
+    return view,row
 
 
 def leadership(db,row):
@@ -66,9 +69,10 @@ def cas(db, row, body, stamp, *, leader=False):
         fail('LEADERSHIP_CHANGED')
 
 
-def target_items(db,uid,row,selection):
+def target_items(db,uid,row,selection,*,item_ids=None):
     result=[]
     for item,rd in admission.rounds(db,row):
+        if item_ids is not None and item.id not in item_ids:continue
         state=db.get(WeeklyState,(uid,selection.character_id,item.raid_id,row.cycle_key))
         result.append(Target(item_id=item.id,round_id=rd.id,party_no=1,
             expected_round_revision=rd.revision,expected_weekly_revision=state.revision if state else 1))

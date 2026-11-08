@@ -1,5 +1,5 @@
 """V2 read-only current-state/history projections. No provider or DB writes."""
-from sqlalchemy import select
+from sqlalchemy import select, text
 from app.core.database import session
 from app.game_accounts.models import Character, CharacterRetirement, CharacterHistoryHead
 from app.game_accounts import service, lifecycle
@@ -7,14 +7,15 @@ from app.game_accounts.power_service import overlay
 from app.game_accounts.support import authorize, cursor_encode, cursor_decode
 
 
-def characters(principal, rid, limit, cursor):
+def characters(principal, rid, limit, cursor, include_roster_presence=False):
     with session() as db, db.begin():
         db.connection(execution_options={'isolation_level': 'REPEATABLE READ'})
+        db.execute(text('SET TRANSACTION READ ONLY'))
         uid=authorize(db,principal)
         registration=service.reg(db,uid,rid)
         account,state=service.ownership(db,uid,registration)
         settings=service.settings_out(db,uid,registration)
-        scope=f'lifecycle-characters:{uid}:{rid}'
+        scope=f'lifecycle-characters:{uid}:{rid}' + (':presence-1' if include_roster_presence else '')
         revision=lifecycle.digest((lifecycle.registration_stamp(db,registration),settings['settings_version']))
         offset=cursor_decode(cursor,scope,revision) if cursor else 0
         items=[]
@@ -26,12 +27,17 @@ def characters(principal, rid, limit, cursor):
         else:
             items = [preview_item(db, uid, registration, row) for row in registration.preview]
         following=offset+limit
-        return dict(registration_id=registration.id,game_account_id=account.id if account else None,
+        result = dict(registration_id=registration.id,game_account_id=account.id if account else None,
             is_main=registration.is_main,registration_version=registration.version,ownership_status=state,
             ownership_revision=account.ownership_revision if account else None,
             roster_revision=account.roster_revision if account else registration.version,settings=settings,
             items=items[offset:following],next_cursor=cursor_encode(dict(scope=scope,revision=revision,offset=following)) if following<len(items) else None,
             server_fetched_at=registration.fetched_at)
+        if include_roster_presence:
+            from app.core.database import now
+            from app.game_accounts import presence_reads
+            presence_reads.attach(db,uid,now(db),[result])
+        return result
 
 
 def current_item(db, uid, registration, character, *, candidates=None, at=None):

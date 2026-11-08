@@ -57,7 +57,12 @@ class Bundle:
 def load(db, uid, target, character_ids, *, owned=()):
     from app.raid_rooms import cycle_admission
     pairs = cycle_admission.rounds(db, target)
+    from app.raid_rooms import roster_participation
+    if owned and roster_participation.enabled():
+        active_items={a.item_id for a in owned}
+        pairs=[(i,r) for i,r in pairs if i.id in active_items]
     item_ids = set(db.scalars(select(Item.id).where(Item.room_id==target.room_id)))
+    if owned and roster_participation.enabled():item_ids={a.item_id for a in owned}
     if not pairs or len(pairs)!=len(item_ids) or {i.id for i,_ in pairs}!=item_ids:
         fail('ROOM_ITEMS_CHANGED')
     for item, rd in pairs:
@@ -155,7 +160,7 @@ def evaluate(bundle, character, ownership, role, *, pinned=None):
         if lease is not None and not own:
             return reject('WEEKLY_ALREADY_PARTICIPATING')
     size = bundle.target.settings_snapshot['app_capacity']
-    if size != (bundle.pairs[0][1].game_party_size if len(bundle.pairs) == 1 else 4):
+    if size != (bundle.pairs[0][1].game_party_size if len(bundle.pairs) == 1 and len(bundle.target.settings_snapshot['items']) == 1 else 4):
         return reject('ROOM_COMPOSITION_CONFLICT')
     if not owned and len({a.membership_id for a in bundle.assignments}) >= size:
         return reject('ROOM_FULL')
@@ -187,7 +192,8 @@ def evaluate(bundle, character, ownership, role, *, pinned=None):
 def single(db, uid, room, target, selection, *, replacing=None, pinned=None):
     from app.raid_rooms import cycle_lifecycle
     character = core.identity.selected_character(db, uid, selection.model_dump(mode='json'))
-    owned = cycle_lifecycle.assignments(db, target, replacing) if replacing is not None else ()
+    from app.raid_rooms import roster_participation
+    owned = roster_participation.replacement(db, target, replacing) if replacing is not None else ()
     bundle = load(db, uid, target, [character.id], owned=owned)
     result = evaluate(bundle, character, selection.expected_ownership_revision, selection.selected_role, pinned=pinned)
     from app.game_accounts.lifecycle import digest

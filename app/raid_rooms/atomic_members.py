@@ -136,8 +136,8 @@ def removal_target(db,room,row,uid,cm,stamp):
     leadership=commands.leadership(db,row)
     data=dict(target_cycle_key=row.cycle_key,room_cycle_id=row.id,target_generation=row.generation,target_revision=row.revision,
         actor_cycle_member_id=actor.id,actor_cycle_member_revision=actor.revision,target_cycle_member_id=cm.id,
-        target_cycle_member_revision=cm.revision,character_id=owned[0].character_id,
-        character_name=owned[0].display.get('character_name'),leadership=leadership)
+        target_cycle_member_revision=cm.revision,character_id=next((a for a in owned if a.state=='active'),owned[-1]).character_id,
+        character_name=next((a for a in owned if a.state=='active'),owned[-1]).display.get('character_name'),leadership=leadership)
     reason=None;proof=None;values=None
     try:
         if actor.id!=leadership['leader_cycle_member_id']:fail('TARGET_LEADER_REQUIRED',403)

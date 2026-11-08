@@ -15,10 +15,10 @@ def prepare(db,uid,rid,key,cid,role,stamp,*,include_session_display=False):
     room,row=commands.resolve(db,uid,rid,key,stamp)
     cm=life.actual_member(db,row,uid,states=('participating',))
     if cm is None:fail('WEEKLY_PARTICIPANT_REQUIRED',403)
-    owned=life.assignments(db,row,cm)
-    if not owned or any(a.state!='active' for a in owned):fail('ROUND_NOT_ACTIVE')
+    from app.raid_rooms import roster_participation
+    owned=roster_participation.replacement(db,row,cm)
     selection=life.selection_context.selection(db,uid,cid,role)
-    targets=commands.target_items(db,uid,row,selection)
+    targets=commands.target_items(db,uid,row,selection, item_ids={a.item_id for a in owned} if roster_participation.enabled() else None)
     by_item={a.item_id:a for a in owned}
     if set(by_item)!={t.item_id for t in targets}:fail('TARGET_BUNDLE_INCOMPLETE')
     for t in targets:t.party_no=by_item[t.item_id].party_no
@@ -37,6 +37,7 @@ def prepare(db,uid,rid,key,cid,role,stamp,*,include_session_display=False):
     hidden=[room.revision,room.scope,life.selection_context.group_stamp(db,room.group_id,retained=True),cm.id,cm.revision,
         [[a.id,a.revision,a.character_id,a.selected_role,a.party_no,a.slot_no] for a in owned],
         row.settings_snapshot,selection,targets,power['power_revision'],choices,evaluation['evidence']]
+    if roster_participation.enabled():hidden.extend([roster_participation.marker(),roster_participation.member(db,row,cm)])
     metadata=display.existing(db,uid,row,stamp,"character",choices) if include_session_display else None
     if include_session_display:hidden.append(metadata)
     snapshot=digest(jsonable_encoder(hidden))
@@ -56,7 +57,9 @@ def prepare(db,uid,rid,key,cid,role,stamp,*,include_session_display=False):
 def get(principal,rid,key,cid,role,include_session_display=False):
     with commands.base.snapshot(principal) as (db,uid,stamp):
         value,*_=prepare(db,uid,rid,key,cid,role,stamp,include_session_display=include_session_display)
-        return display.output(display_schemas.AdmissionDisplayContext,value,include_session_display,snapshot=(db,uid,stamp))
+        result=display.output(display_schemas.AdmissionDisplayContext,value,include_session_display,snapshot=(db,uid,stamp))
+        from app.raid_rooms import roster_api
+        return roster_api.publish(db,uid,stamp,result,'preview')
 
 
 def execute(principal,rid,command,data):
@@ -80,6 +83,8 @@ def execute(principal,rid,command,data):
         member,_,_=admission.admit_bundle(db,uid,room,row,Selection.model_validate(body['selection']),
             [Target.model_validate(v) for v in body['target_items']],command,stamp,replacing=cm,unified=True)
         schedule.enrol(db,row,member,data.target_session_ids,stamp,copy=False)
+        from app.raid_rooms import roster_participation
+        if roster_participation.enabled() and roster_participation.split(db,row,cm)[1]:roster_participation.activate(db,row,stamp)
         cm.revision+=1;life.event(db,row,cm,command,'character_changed',stamp,evidence)
         row.revision+=1;row.members_revision+=1;row.plan_revision+=1
         cycles.touch_directory(db,row.cycle_key);db.flush()

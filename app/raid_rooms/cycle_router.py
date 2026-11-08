@@ -1,11 +1,7 @@
 from app.raid_rooms.cycle_group_context_schemas import TitleContext
 from app.raid_rooms import cycle_group_schemas as group_schemas
 from app.raid_rooms import cycle_group_policy as group_policy
-"""Candidate write router. Intentionally absent from main until W4 cutover.
-
-Only isolated tests mount this router against the shadow schema. Publishing
-these paths in the runtime OpenAPI would falsely claim mixed-worker readiness.
-"""
+"""Two-cycle routes with explicit request profiles and unchanged default DTOs."""
 from app.raid_rooms import beta_profile,beta_schemas
 import json
 from typing import Annotated, Literal
@@ -61,8 +57,15 @@ class CycleRoute(AvailabilityRoute):
                     from app.core.database import session
                     with session() as db:
                         if not group_policy.enabled(db):fail('GROUP_FEATURE_NOT_READY',503)
-                with group_policy.using(group_version==group_policy.VERSION), beta_profile.request_scope(dict(request.query_params) if profile else None):
-                    return await parent(request)
+                from app.raid_rooms import roster_participation
+                with group_policy.using(group_version==group_policy.VERSION), beta_profile.request_scope(dict(request.query_params) if profile else None), roster_participation.using(request.query_params) as participation:
+                    result=await parent(request)
+                    if request.method=='GET' and result.status_code==200 and participation['metadata']:
+                        body=json.loads(result.body)
+                        body.update(participation['metadata'])
+                        if len(json.dumps(body,ensure_ascii=False).encode())>1024*1024:fail('RESPONSE_TOO_LARGE',413)
+                        return JSONResponse(body,status_code=200,headers={k:v for k,v in result.headers.items() if k!='content-length'})
+                    return result
             except (AuthError,RequestValidationError,SQLAlchemyError) as error:
                 code=('SERVICE_UNAVAILABLE' if isinstance(error,SQLAlchemyError) else
                       getattr(error,'code','INVALID_REQUEST'))
@@ -74,7 +77,9 @@ class CycleRoute(AvailabilityRoute):
         return bounded
 
     def allowed_query(self,request):
-        fields=self.legacy_allowed_query(request)|{'contract_profile','group_policy_version'}
+        fields=self.legacy_allowed_query(request)|{'contract_profile','group_policy_version','participation_profile'}
+        if request.method=='GET' and request.url.path.endswith(('/raid-room-memberships','/detail','/plan')):
+            fields|={'include_character_issues'}
         if beta_profile.enabled():
             if request.method=='GET' and request.url.path.endswith(('/raid-room-creation-context','/opening-context')):
                 fields|={'base_starts_at','early_coordination_enabled','early_additional_members'}
@@ -548,3 +553,9 @@ for _route in router.routes:
             _parameters.append(dict(name=_key,**{'in':'query'},required=False,
                 content={'application/json':{'schema':json.loads(json.dumps(beta_schemas.BetaSearchRequest.model_json_schema()['properties'][_key]).replace('#/$defs/','#/components/schemas/'))}}))
     _route.openapi_extra={'parameters':_parameters,'x-beta-contract-profile':beta_profile.PROFILE}
+
+
+@router.get('/me/raid-room-character-issues',responses=errors)
+def character_issue_summary(principal:Principal):
+    from app.raid_rooms import character_issues
+    return character_issues.summary(principal)

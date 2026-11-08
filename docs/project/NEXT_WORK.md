@@ -1,5 +1,35 @@
 # 다음 실행
 
+## 현재 — Issue17 로컬 개발서버 반영·실행 지원 완료
+
+[전체17번째 Native 인계 접수](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721152982)를 확인했고 사용자 승인으로 [전체18번째 Backend 로컬 반영·실행 지원](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721249386)을 인계했다. 실제 로컬 API image4ac36fdb·DB0036_roster_presence·기존 app 소스247파일 일치, 두 OpenAPI 전체 비교/기존114업무표99행·sequence·키4개 보존·API/DB healthy 확인. [로컬 집계](../engineering/operations/records/roster-participation-local-rollout.json)를 따른다. 로컬 신계약 미지원 대기는 해소했고 Native 신규 DTO/실제 연결·기기 인수는 별도다. 사용자가 문서 최신화 후 commit/push를 지시했다. 게시 결과/고정 구현 SHA는 DEV_LOG 후행 기록을 따르며 운영 미반영·Penpot/화면·기기 보류를 유지한다.
+
+- 다음 Native는 실제 연결 작업이 허용된 범위에서 debug의 기존 로컬 대상을 사용하고 전체16번째 실행 OpenAPI/원응답에 맞춰 query/DTO·union/metadata를 연결한다. 원격 구현/계약은 이번 승인 게시의 고정 SHA를 기준으로 소비한다. Git 게시 결과는 DEV_LOG 후행 기록을 따른다. 현재 화면/Penpot·기기 재개 요청은 없고 별도 지시 전 보류한다.
+- 현재 로컬 실자료에는 실제 참가 방이0개다. 유효 세션1계정의 본인요약/bootstrap/characters·C/N 목록 READ ONLY 확인과 listener health/인증 거절은 실제 실행 근거다. 방 상세·부분 교체/원ACK·동시성은 격리 PostgreSQL/TestClient 자동검증이며 실회원/기기 통과로 합치지 않는다.
+- 이번 commit/push는 사용자 승인 범위이며 merge·운영 배포·자료 복구·Issue 종료는 별도 지시다.0036은 전진 migration이며 DB0035 전용 옛API만 다시 시작하지 않는다. 추가 계약 차이가 오면 해당 차이만 같은 Issue에서 확인한다.
+- 로컬 DB dump 제외 결정 유지. 기존 키/.env 보관본은 변경 없어 재사용한다. ignored backups/roster-local-20261108의 접근제한 감사 자료는 DB백업이 아니다. 실제 반영 전후 기존 자료·DB컨테이너/볼륨·환경/키·Compose·보안을 보존했다.
+
+## Issue34·38·46 완료 종료 — 2026-11-08
+
+Native의 본문 최신화와 [#34 전체15번째](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6718443740)·[#38 전체10번째](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6718445004)·[#46 전체7번째](https://github.com/heo0328/lostparty-backend/issues/46#issuecomment-6718450091) 회신을 Backend에서 확인했다. 세 원요청 구간 모두 완료·종료 가능이며 추가 Backend 구현/회신 요청·Native 재수용 대기는 없다. 변화 없는 수용 댓글은 추가하지 않는다. 후속 사용자 명시 지시에 따라 세 Issue를 모두 CLOSED/completed로 종료하고 반환 상태를 확인했다. 본문 상단에 Backend 최종 종료 기록을 추가했으며 새 댓글은 작성하지 않았다.
+
+- #34: Backend v2.0.0 운영 반영·Native 서명 APK 게시 완료. 과거 통합/APK 게시 대기는 해소됐다. 새 APK 운영 전체 인수·다음 서명 전환은 별도 후속이며 완료로 확대하지 않는다.
+- #38: 양측 구현·자동검증·사용자 로컬 변경 구간 인수·운영 반영·후속 APK 게시 근거 확인. 추가 수정/시험 대기 없음.
+- #46: 합의한 조사·수동 백업·PC 보관 확인·문서 게시 완료. 외장 사본 미확인·실제 복원/정기 자동화 미실행은 보존하며 개발 재개/이번 종료의 선행 조건으로 추가하지 않는다. Native 로컬 문서는 미커밋·미push이며 원격 게시 완료로 표시하지 않는다.
+
+종료 전 세 Issue의 최신 본문/전체 댓글을 재확인했고 완료 근거와 별도 후속을 보존해 completed 종료했다. 새 배포·자료/키 변경·commit/push는 포함하지 않는다. 아래 OPEN 유지·다음 APK 게시·이전 checkout은 당시 기록이며 현재 대기는 이 절을 따른다.
+
+## 남은 Issue 권장 처리 순서
+
+다음은 사용자에게 제시한 권장 순서이며 세부 정책/계약 확정이나 새 기능 구현 착수를 뜻하지 않는다. 열린 작업은 #17·#15·#18·#19이며 기능 구현 때 최신 Issue/코드/계약을 재대조한다.
+
+1. **#17 캐릭터 생명주기:** Backend가 외부 API 증거와 현재 차단/이력 구현의 공백부터 정리하고 소멸·재등장·이름 재사용 기준을 Native와 합의한다. 확보 불가능한 증거는 보류 기준으로 명시한다.
+2. **#15 소유권 분쟁 후처리:** #17에서 확인한 자격 상실/보존 경계를 참고해 영향 원정대만 처리하는 그룹·레이드 정책을 사용자와 결정하고 Native 회복 동선→계약→구현·검증으로 진행한다. #17 전체 완료가 강제 선행 조건은 아니며 정책 검토는 독립 진행 가능하다.
+3. **#18 활동 자동 추가·명시 제외 보존:** 앞선 소유/생명주기 기준과 충돌하지 않게 신규 발견·첫 기준 도달·직접 제외/재등록·동시 명령을 확정하고 최소 영속 모델·API와 Native 연결을 구현한다.
+4. **#19 주간 통계:** 앞 단계의 관계/상태 전환을 반영해 통계 귀속·분모·권한을 확정하고 원천 보존→마감/재처리→집계/조회 순으로 구현한다. 과거 원천 미확보 주차는 0으로 합성하지 않는다.
+
+각 구간은 합의→Backend 구현/격리·계약 검증→로컬 dev 반영→필요한 Native 연결·사용자 변경 범위 확인→완료 기록으로 마감한다. 배포·자료 삭제·commit/push는 별도 지시 기준을 유지한다.
+
 2026-11-07 게시 권한 변경: 통상 작업은 로컬에 누적하고 commit/push/merge는 사용자 직접 지시로 수행한다. 기존 마감·인계 상시 승인은 철회하며 제한된 예외는 [작업과 Git](../engineering/development/workflow.md#section-2)을 따른다. 이번 지침 변경은 이후 사용자의 명시적인 dev/main 통합·push 지시 범위에 포함한다.
 
 <a id="recovery-backup-closeout"></a>

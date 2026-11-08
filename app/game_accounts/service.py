@@ -434,6 +434,8 @@ def reconcile(db, a, obs, *, fresh=False, owned=False):
         if c:
             claim=db.get(NameClaim,k)
             if not claim or claim.character_id!=c.id: fail('IDENTITY_CONFLICT')
+            previous_revision=c.lifecycle_revision
+            was_usable=lifecycle.usable(db,c)
             if not lifecycle.usable(db,c):
                 if not owned and (not obs.binding or str(c.id) not in obs.binding.continuity_ids):
                     suspects+=1
@@ -444,6 +446,9 @@ def reconcile(db, a, obs, *, fresh=False, owned=False):
             else: summary['combat_power']=c.summary.get('combat_power')
             c.summary,c.status,c.lifecycle_state=summary,'confirmed','active'
             c.fetched_at,c.confirmed_at=obs.fetched_at,obs.fetched_at
+            if owned:
+                from app.game_accounts import roster_presence
+                roster_presence.record(db,a,c,previous_revision,False,'present',obs.fetched_at)
         else:
             if db.get(NameClaim,k): fail('IDENTITY_CONFLICT')
             c=Character(account_id=a.id,server_name=k[0],character_name=k[1],summary=row,
@@ -451,11 +456,19 @@ def reconcile(db, a, obs, *, fresh=False, owned=False):
                         power_fetched_at=obs.fetched_at if row.get('combat_power') is not None else None)
             db.add(c); db.flush()
             db.add(NameClaim(server_name=k[0],character_name=k[1],character_id=c.id))
+            if owned:
+                from app.game_accounts import roster_presence
+                roster_presence.record(db,a,c,c.lifecycle_revision,False,'present',obs.fetched_at)
             additions+=1
     for c in existing.values():
         # Absence is suspect only. No live retirement/claim release path here.
+        previous_revision=c.lifecycle_revision
+        was_usable=lifecycle.usable(db,c)
         if c.status=='confirmed' and c.lifecycle_state=='active': c.lifecycle_revision+=1
         c.status,c.lifecycle_state,c.fetched_at='suspect','suspect',obs.fetched_at
+        if owned:
+            from app.game_accounts import roster_presence
+            roster_presence.record(db,a,c,previous_revision,was_usable,'missing',obs.fetched_at)
         suspects+=1
     a.roster_revision+=1
     db.flush()
@@ -538,6 +551,9 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
                 r.lookup_name = obs.owned_observation.target[1]
             r.preview,r.fetched_at=obs.roster,obs.fetched_at
             r.version+=1
+            if a and state=='owned':
+                from app.raid_rooms import roster_recovery
+                roster_recovery.recover(db,a.id,current)
             return 200,dict(registration=reg_out(db,uid,r),added_count=added,suspect_count=suspects,requires_refresh=bool(suspects))
         if state!='owned':
             fail('OWNERSHIP_REQUIRED',403)

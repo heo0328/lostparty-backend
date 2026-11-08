@@ -48,7 +48,7 @@ def card(db,room,row,uid,stamp,loaded=None):
     settings=row.settings_snapshot
     leader=loaded['leadership'] if loaded is not None else commands.leadership(db,row)
     leader_assignment=db.scalar(select(Assignment).join(CycleAssignment,CycleAssignment.assignment_id==Assignment.id).where(
-        CycleAssignment.cycle_member_id==leader['leader_cycle_member_id']).order_by(Assignment.id).limit(1)) if loaded is None else None
+        CycleAssignment.cycle_member_id==leader['leader_cycle_member_id']).order_by((Assignment.state=='active').desc(),Assignment.id).limit(1)) if loaded is None else None
     groups=loaded['groups'] if loaded is not None else schedule.groups(db,row)
     starts=loaded['starts'] if loaded is not None else [s.starts_at for s in schedule.sessions(db,row) if s.state=='confirmed']
     items=loaded['items'] if loaded is not None else [dict(item_id=i.id,raid_id=i.raid_id,difficulty_id=r.difficulty_id,game_party_size=r.game_party_size,round_id=r.id)

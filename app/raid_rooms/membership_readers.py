@@ -149,6 +149,8 @@ def get(principal,rid,key,kind,*,membership_id=None,cycle_member_id=None,include
             cm=db.scalar(select(CycleMember).where(CycleMember.cycle_id==row.id,CycleMember.membership_id==member.id,
                 CycleMember.generation==row.generation).order_by(CycleMember.joined_order.desc().nullslast(),CycleMember.id.desc())) if row else None
         value,historical=projection(db,uid,room,row,member,cm,stamp,anchored=membership_id is not None)
+        from app.raid_rooms import roster_participation
+        if not historical:roster_participation.require_client(db,row)
         value['target']['target_cycle_key']=key
         if historical and include_resume_display:fail('INVALID_REQUEST',400)
         if kind=='plan' and not value['permissions']['view_plan']['allowed']:fail(value['permissions']['view_plan']['reason'],403)
@@ -162,7 +164,9 @@ def get(principal,rid,key,kind,*,membership_id=None,cycle_member_id=None,include
         value['access']=dict(state='allowed',basis='historical_membership' if historical and member.ended_at else 'target_record' if historical else 'current_membership',
             read_only=historical,evaluated_at=stamp)
         model=wire.DetailProfile if kind=='detail' else wire.PlanProfile
-        return actions.bounded(model,dict(scope=scope(stamp,key,kind),data=value),snapshot=(db,uid,stamp))
+        result=actions.bounded(model,dict(scope=scope(stamp,key,kind),data=value),snapshot=(db,uid,stamp))
+        from app.raid_rooms import roster_api
+        return roster_api.publish(db,uid,stamp,result,kind)
 
 
 def legacy_membership(db,uid,room,row,member,cm,key,stamp):
@@ -197,6 +201,8 @@ def memberships(principal,key,state='current',limit=20,cursor=None,include_group
         binding=['membership-actions-1',str(uid),str(principal[1].id),key,state,limit]
         epoch=digest([revision,actions.cycles.directory_revision(db,target.key),target.current.isoformat()])
         binding,epoch=group_list_display.bind(db,binding,epoch,include_group_state,target.key)
+        from app.raid_rooms import roster_api
+        binding,epoch=roster_api.bind_page(db,uid,stamp,binding,epoch)
         offset=cursor_decode(cursor,binding,epoch) if cursor else 0
         values=list(db.execute(query.order_by(Member.joined_at.desc(),Member.id.desc(),CycleMember.generation.desc().nullslast(),CycleMember.id.desc()).offset(offset).limit(limit+1)))
         token=cursor_encode(dict(scope=binding,revision=epoch,offset=offset+limit)) if len(values)>limit else None
@@ -205,7 +211,11 @@ def memberships(principal,key,state='current',limit=20,cursor=None,include_group
             value,historical=projection(db,uid,room,row,member,cm,stamp)
             value['target']['target_cycle_key']=key
             value['content']=None if historical else legacy_membership(db,uid,room,row,member,cm,key,stamp)
+            from app.raid_rooms import roster_api
+            if not historical:roster_api.legacy_restriction(db,row,value,profile=True)
             items.append(value)
         result=actions.bounded(wire.MembershipPage,dict(scope=scope(stamp,key,'memberships'),data=dict(
             items=items,membership_head=revision,next_cursor=token,evaluated_at=stamp)),snapshot=(db,uid,stamp))
-        return group_list_display.attach(db,result,[room.id for _,room,_,_ in values[:limit]],include_group_state)
+        result=group_list_display.attach(db,result,[room.id for _,room,_,_ in values[:limit]],include_group_state)
+        from app.raid_rooms import roster_api
+        return roster_api.publish(db,uid,stamp,result,'memberships')

@@ -1248,6 +1248,12 @@
       "path": "/v2/me/role-summary-batches",
       "operation_id": "put_v2_me_role_summary_batches_post",
       "topic": "rosters/bootstrap"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/raid-room-character-issues",
+      "operation_id": "character_issue_summary_v2_me_raid_room_character_issues_get",
+      "topic": "rosters/lifecycle"
     }
   ]
 }

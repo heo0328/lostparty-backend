@@ -356,6 +356,14 @@ def _decorate_openapi(schema):
         'retained': 'activity deselection alone does not invalidate existing participation, display/build, scheduling or authority',
         'new_selection': 'activity required for creation/application/join/approval/replacement target/new-week issuance',
         'other_guards': 'ownership/registration/lifecycle/revisions/member/group/limits/power/item-level/occupancy unchanged',
+        'owned_roster_gap': {
+            'required_schema': '0036_roster_presence',
+            'evidence': 'validated owned-roster missing/reappearance revision chain only; never deletion or rename proof',
+            'retained': 'exact existing actual-target seat, owner, registration and name claim remain required; original assignment evidence unchanged',
+            'new_selection': 'missing characters remain unusable for new admission, opening and replacement targets',
+            'review_recovery': 'explicit roster refresh may recover only unchanged assignments with proven observation-only review; preserve original review evidence',
+            'readers': 'public character-issue query contract pending Native review; no new path enabled',
+        },
         'existing_review': 'developer excluded existing dev review recovery; no repair CLI or automatic GET/worker repair',
         'compatibility': 'no new API/DTO/reader profile/DDL; original key/body/ACK preserved',
     }
@@ -372,6 +380,8 @@ def _decorate_openapi(schema):
         'search':'visibility and raid/difficulty/group OR/member AND/within-member character OR, then exact remaining slots OR, member_count ascending/descending (default descending), created_at DESC/id DESC ties, then pagination; cursor binds full normalized conditions and directory/cycle/group generations',
         'bounds':{'request_bytes':32768,'page_max':50,'cursor_max':2048,'candidate_ticks_max':2016},
     }
+    from app.raid_rooms import roster_openapi
+    roster_openapi.decorate(schema)
     schema['x-group-features'] = dict(required_schema='0034_group_features', display_profile='group-display-1', management_profile='group-management-1', group_link_query='include_group_state=true', raid_authority='existing actual-target raid leader; group role grants no raid command', legacy_default_shape='preserved', reads='stored current group-scoped data only; no provider or read-side writes')
     return schema
 def openapi():return _decorate_openapi(_original_openapi())
@@ -482,6 +492,7 @@ def create_two_cycle_app():
             required_schema='0032_beta_recruitment',default_reader='legacy shape preserved',
             promises='atomic participant/personal-copy/base reservation; earlier-only automatic confirmation; deadline fallback',
             presets='/v2/me/application-message-presets',compatibility='original ACK before unsafe new-write guard; no automatic legacy conversion')
-        return value
+        from app.raid_rooms import roster_openapi
+        return roster_openapi.decorate(value,two_cycle=True)
     result.openapi=schema
     return result

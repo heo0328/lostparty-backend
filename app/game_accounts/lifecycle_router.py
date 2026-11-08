@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Literal
 from uuid import UUID
 from fastapi import APIRouter, Depends, Query, Request
 from app.game_accounts.router import Principal, common
@@ -7,7 +7,7 @@ from app.game_accounts.support import fail
 
 
 async def strict_read(request: Request):
-    if set(request.query_params)-{'limit','cursor'} or any(len(request.query_params.getlist(k))!=1 for k in request.query_params):
+    if set(request.query_params)-({'limit','cursor','include_roster_presence'} if request.url.path.endswith('/characters') else {'limit','cursor'}) or any(len(request.query_params.getlist(k))!=1 for k in request.query_params):
         fail('INVALID_REQUEST',400)
     if await request.body():
         fail('INVALID_REQUEST',400)
@@ -19,8 +19,13 @@ Cursor=Annotated[str|None,Query(max_length=2048)]
 
 
 @router.get('/game-accounts/{registration_id}/characters',response_model=s.LifecycleCharactersOut,responses=common)
-def characters(registration_id: UUID,principal: Principal,limit: Limit=50,cursor: Cursor=None):
-    return lifecycle_reads.characters(principal,registration_id,limit,cursor)
+def characters(registration_id: UUID,principal: Principal,limit: Limit=50,cursor: Cursor=None,include_roster_presence:Literal['true','false']='false'):
+    value=lifecycle_reads.characters(principal,registration_id,limit,cursor,include_roster_presence=='true')
+    if include_roster_presence=='true':
+        from fastapi.responses import JSONResponse
+        from fastapi.encoders import jsonable_encoder
+        return JSONResponse(jsonable_encoder(value))
+    return value
 
 
 @router.get('/character-retirements',response_model=s.RetirementPage,responses=common)

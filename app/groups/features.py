@@ -7,7 +7,7 @@ HEAD = '0034_group_features'
 
 
 def enabled(db):
-    return list(db.scalars(text('SELECT version_num FROM public.alembic_version'))) in ([HEAD], ['0035_cycle_group_policy'])
+    return list(db.scalars(text('SELECT version_num FROM public.alembic_version'))) in ([HEAD], ['0035_cycle_group_policy'],['0036_roster_presence'])
 
 
 def ready(db):

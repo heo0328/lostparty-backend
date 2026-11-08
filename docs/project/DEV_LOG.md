@@ -1,5 +1,107 @@
 # 영구 개발 이력
 
+## 2026-11-08 Issue17 로컬 반영 문서 최신화·게시 준비
+
+사용자가 개발 반영까지 문서를 최신화한 뒤 commit/push를 명시 지시했다. feat/character-lifecycle에서 코드·계약·격리 검증·로컬0036 반영 기록과 앞서 같은 작업트리에 보존한 이슈34/38/46 마감 기록을 함께 게시한다. README/구현 문서/현재 작업 색인의 오래된 내부만 구현·로컬 미반영 설명을 현재 상태로 정리하고, 당시 검토 후보/실행별 실패·미실행 이력은 보존했다. 실제 앱 소스/API/DB/키를 바꾸지 않는 문서 정리여서 통과한 서버 검증을 반복하지 않는다. Git 게시 결과는 커밋 생성·원격 확인 후 후행 기록한다. merge/운영배포·Native 화면/Penpot·기기/Issue종료는 이번 게시에 포함하지 않는다.
+
+
+## 2026-11-08 Issue17 사용자 승인 로컬0036 반영
+
+[전체17번째 Native 인계 접수](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721152982)를 확인했고 사용자 승인으로 [전체18번째 Backend 로컬 반영·실행 지원](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721249386)을 인계했다. 실제 로컬 API image4ac36fdb·DB0036_roster_presence·기존 app 소스247파일 일치, 두 OpenAPI 전체 비교/기존114업무표99행·sequence·키4개 보존·API/DB healthy 확인. [로컬 집계](../engineering/operations/records/roster-participation-local-rollout.json)를 따른다. 로컬 신계약 미지원 대기는 해소했고 Native 신규 DTO/실제 연결·기기 인수는 별도다. 소스 미커밋·미push·운영 미반영·Penpot/화면·기기 보류 유지.
+
+Native17에 추가 문제/정책 변경 요청이 없어 사용자 조건부 로컬 반영을 실행했다. 후보 build/두 전체 계약 확인→API/worker 정지→READ ONLY 기준→0036 1회 migration→새 빈 원장3개·기존114업무표99행/열/sequence·키4개 불변→API만 재생성·healthy→실행 계약/소스·읽기/loopback 확인 순서다. 실제 API 시작2026-11-08T11:59:55.111135122Z, image4ac36fdb5c46c5a99acc6c00736ecb1723120a5b6d7e15511e60d4203c5d6da1. 현재 소스247파일 바이트 일치·집합hash7762452f08f0e401c913a023a5e169435e19aa9c676fc6726e58a18bdf0e08d0이며 Git SHA와 구분한다.
+
+환경 배열 순서 차이를 mapping동일로 확인했고 키mount Source의 Linux→같은 Ubuntu-24.04 WSL UNC 별칭도 정규 경로·목적지/readonly/내용 대조로 동일 원본임을 확인했다. 초기 감사 비교기 단순 문자열 불일치는 환경/키 변경이 아니다. 기존 DB컨테이너17e548329a69·이미지/볼륨/설정·키/.env/Compose·API명령/보안/포트 유지. runtime READ ONLY(SET/SELECT/SHOW 제한) 유효 세션1계정의 요약1/bootstrap1/characters1/CN목록2, 실제 방0으로 방 상세/명령 실자료 시험은 미실행. 실제 loopback health200·공개/v1/raid-cycle200·보호된 신경고/잘못된Bearer/bootstrap401/no-store. 잘못 탐색한/v2/raid-cycle404를 올바른 기존 경로로 정정했다. 로그인/토큰발급/provider/회원 쓰기 없이 확인, 기동JSON87건 ERROR0. 기동/읽기 후에도 모든기존 업무자료·키불변 재확인.
+
+로컬dump 제외 유지·기존보관키 재사용, private ignored 감사/inspect원문은 게시하지 않는다.0036은 전진만 허용·옛0035 API단독복귀 금지. 미커밋/미push·운영미반영·Native새연결/기기미인수·화면/Penpot보류·Issue OPEN 유지. 다음 Native실제연결/사용자게시·화면 재개 등 별도지시이며 반복기기시험을 요청하지 않았다.
+
+
+## 2026-11-08 Issue17 공개 Backend 구현·격리 검증 인계
+
+[전체16번째 Backend 구현·격리 검증 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721042421) 완료. 공개 경고/presence·부분 완료 M/P 교체·세대 capability/원ACK·공통 참가 해석을 로컬에 구현했다. 최종 공개 계약7PASS·주차별 권한 보강1PASS(중복)·두 OpenAPI 전체 비교 PASS, 이전 회귀/실패 수정은 [실행별 집계](../features/rosters/lifecycle/roster-participation-verification.json)를 따른다. [구현/후보 차이](../features/rosters/lifecycle/roster-participation-implementation.md) 기준이며 실제 dev/운영 서버·DB0036·Native 새 연결/기기는 미반영/미인수다. 소스는 feat/character-lifecycle의 미커밋·미push다.
+
+사용자 작업 진행 후 사용 한도 중단 구간 재개 지시를 받아 기존 변경을 보존해 완료했다. 관찰 정상 근거·bootstrap/characters 배치 projection, 주차별 경고·최상위 metadata/엄격 base DTO, M/P exact linkage와 candidate-independent actor binding·opaque 표식/서명·원ACK 우선, 현재 카드/worker/후속 자격·부분 교체·불변 capability를 연결했다. 실제 DB에는 적용하지 않았다.
+
+최종 공개 파일7PASS(lostparty-check-1a1cb1604524,132.14초)·주차 권한 보강1PASS(030c88c74b31,30.27초)는 중복/고유 수를 합산하지 않는다. 기본125/142·two-cycle188/209 전체 객체 일치는 c689caba5a34 PASS다. 이전57/1·45/1·47/1은 실제 실패를 보존하며 정수/fixture·상세 room위치·부분 묶음 정원·두 완료 순서 시험 준비를 수정했고 해당 경계와 최종7건이 통과했다. 관련 회귀/모든 실행은 집계 참조, 전체 repo/실서버/provider·Native/기기·성능 인수는 아니다. 기존 Starlette 경고1건 유지. 문서/의존성·구문/diff 검증 PASS, 검증용 UUID 컨테이너/네트워크 정리 확인.
+
+Native에 후보 대비 V1용 오확장10개 제외·기존 actor 없는 apply/join metadata 합성 없음·원ACK/기록 보존과 실제 실행 계약의 해시·미게시/미반영을 알렸다. 선택한 제품 정책 변경은 없으며 구체 소비 차이는 같은 Issue로 협의한다. 반복 후보 수용/화면/Penpot·실서버/기기 시험은 요청하지 않았다. HEAD3e3ddc1은 base이고 새 구현 SHA가 아니다. 미커밋/미push·실DB0036 미적용·운영 미배포·Issue OPEN 유지.
+
+
+## 2026-11-08 Issue17 Native15 고정 후보 소비 수용
+
+[전체15번째 Native 고정 후보 소비 대조 수용](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6720431541)을 확인했다. 실패했던 상세/preview 두 경로는 이번2PASS, 이전5PASS는 재사용한다. 추가 후보 수정·사용자 정책 협의 요청은 없으며 Native 최종 소비 대조 대기를 해소했다. 다음 담당 Backend: 합의 후보와 실행 소스 차이를 기준으로 공개 계약·presence/경고·M/P 공통 해석·capability/원ACK 구현 및 격리 검증. [계약 기준](../features/rosters/lifecycle/roster-participation-contract-candidate.md)의 소비 수용은 신규 DTO/실HTTP·서명/CAS·동시성/기기 인수가 아니다. 미커밋·미push·실DB0036 미적용·화면/Penpot·기기 보류 유지.
+
+Native 자체보고: 기존 ignored 임시 시험에서 제공된 수정 파일 그대로 metadata 추출 후 detail의 BetaResponse/MembershipReadView→parseCycleDetail/CycleRoomCard, preview의 BetaResponse→CycleAdmissionPreview/CycleSessionDisplay.bind 이번2PASS. 이전5PASS는 재실행 없이 재사용했다. Backend는 Native 소스/기기를 읽거나 시험하지 않았다. Native 후보 파일 해시는 게시값과 일치 확인 보고이며 Backend 후보 파일/해시는 이번에 수정하지 않았다. 새 구현 요청/결과가 없는 반복 수용 댓글은 추가하지 않고 Issue 상단과 현재 작업 기록의 담당·대기를 정리했다. 이번은 회신 확인·문서 최신화이며 기능 구현/서버·DB/환경/키 변경·commit/push/merge·배포·Issue 종료는 없다.
+
+
+## 2026-11-08 Issue17 Native13 파서 잔여2건 대응
+
+[전체13번째 Native 파서7건 결과](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6720331248)의5PASS/2FAIL을 접수하고 [전체14번째 Backend 잔여2건 수정](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6720385381)으로 회신했다. 다음 Native는 실패한 상세 카드/preview 일정 표시 두 경로와 직접 영향만 재확인한다. [후보/예시](../features/rosters/lifecycle/roster-participation-contract-candidate.md)의 Backend schema855·정상12·schema 거절3·의미 거절14 PASS이며 Native 최종 수용/신규HTTP/서명·CAS는 미완료다. 미커밋·미push·실DB0036 미적용·화면/Penpot·기기 보류 유지.
+
+Native가 ignored 임시 시험으로 기존 파서를 실행한7건 중5PASS/2FAIL을 자체보고했다. Backend는 Native 소스를 읽지 않고 기존 서버 cycle_character.prepare→session_display.existing과 카탈로그를 대조했다. serca/normal·horizon_cathedral/stage1(4인)로 예시를 수정하고 admission include_session_display=true·existing/select_session_ids·같은 plan/actualT/세대·sessions/choices 집합을 고정했다. OpenAPI 해시 유지, examples 새 해시bd1d31bbcd8eb2113c1fc6b2eeb70251a3db923a9e0913dc83db69d6e6fb8955. DB/네트워크 없는 기존 테스트 이미지에서 schema855·정상12·schema 거절3·의미 거절14 PASS(카탈로그/식별자·none 의미·plan 불일치4추가). Native 통과5건·기존 내부23PASS와 합산하지 않는다. Native에는 실패2건/직접 영향만 요청했다. 서버/실DB/실행 계약·commit/push/merge·배포/종료 변경은 없다.
+
+
+## 2026-11-08 Issue17 Native11 정합성 보완 대응
+
+[전체11번째 Native 예시 정합성 보완](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6720198723)을 수신하고 [전체12번째 Backend 수정본·검증](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6720284102)으로 회신했다. 설계 방향은 수용 유지·최종 계약 수용은 보류다. 다음 Native는 수정 예시의 strict 소비/관계 규칙을 대조한다. [검토 후보](../features/rosters/lifecycle/roster-participation-contract-candidate.md)는 schema855·정상12·schema 거절3·의미 거절10 PASS이며 Native 파서/HTTP/서명/CAS는 미실행이다. 미커밋·미push·실DB0036 미적용·화면/Penpot·기기 보류를 유지한다.
+
+이전 최소 schema 생성값으로 구성한 완전 응답은 정수 1.0/0.0, 안팎 방/세대/역할·읽기 권한, 완료P를 가리키는 경고, preview 만료/권한/주차 불일치가 있었다. schema PASS를 의미 검증 근거로 사용할 수 없음을 명시하고 정수 생성·기존 serializer 구조 기반 명시 fixture·추가 의미 검사/10거절 예시로 보완했다. OpenAPI 해시8318d0bf5287b41bc9e93f139695550f81dcfe10f65ac11868b47fa162453fc0은 유지, examples 새 해시ae6253b72a473975f30f716ba9801793e48a1442204abd748722d8fb699460c4다. 추가 의미 거절10개는 schema를 통과하지만 관계 검증은 거절해야 함을 확인했다. DB/네트워크 없는 기존 테스트 이미지 검증 최종 PASS, 문서 검사/diff PASS. 검증기 불투명 문자열 revision 오분류·카드 item DTO/ACK 필드 오류를 중간 검사에서 수정했다. Native 소스는 읽지 않았고 Native 실제 파서·HTTP/서명/CAS는 미실행이다. 기존 내부23PASS와 합산하지 않는다. 앱/실행 계약·DB/환경/키 변경·commit/push/merge·배포·종료 없음.
+
+
+## 2026-11-08 Issue17 Native9 수신·공개 계약 후보 인계
+
+[전체9번째 Native 방향 수용·최종3항목](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6720005902)을 확인하고 [전체10번째 Backend 고정 후보·JSON 예시](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6720172136)로 회신했다. 다음 Native는 strict 소비를 최종 대조한다. [검토 후보](../features/rosters/lifecycle/roster-participation-contract-candidate.md)는 로컬 미커밋·미push이며 공개 API 구현/인수 완료가 아니다. schema855·정상12/거절3예시 PASS, 실제 HTTP·서명/CAS 시험은 미실행이다. Penpot·화면/기기 보류·실DB0036 미적용을 유지한다.
+
+기존 실행 OpenAPI/앱 소스는 이번 회신에서 변경하지 않았다. 별도 전체 OpenAPI 후보·12합성 예시·생성/검증기와 서버 계약 설명을 추가했다. 동일 생성 결과 SHA256은 OpenAPI `8318d0bf5287b41bc9e93f139695550f81dcfe10f65ac11868b47fa162453fc0`, 예시 `a6f69b3ecf99982dceaac5a647be24d7739a4e3048248c7b33158fe4270a531f`다. 기존 테스트 이미지에서 네트워크/DB 없이 schema855·정상12·거절3·집합/목록/동일 scope/mapping 검사 PASS. 기존 내부23PASS와 합산하지 않는다. 원격 소스 게시 없이 Issue에 새 schema·mapping·핵심 완전 JSON을 실어 소비 대조가 가능하도록 했다.
+
+댓글 connector가 PR 전용 인자를 요구해 자동 승인이 거절됐다. Issue 전용 읽기로 실제 OPEN/9댓글 대상을 확인한 뒤 명시적인 gh issue comment가 승인·성공해 전체10번째 링크를 반환했다. commit/push/merge·migration·서버 변경·기기 시험·Issue 종료는 없다.
+
+
+## 2026-11-08 — Native 주도 확정·Issue17 서버 계약4항목 및 구버전 정책 회신
+
+- 사용자 지시로 기획·UX·화면·Penpot의 진행 주체를 Native로 명시했다. Backend는 서버 계약·권한·자료·검증만 판단하고 관련 협의를 Issue로 넘긴다. Native 로컬 소스는 읽지 않았으며 Native7의 양측 코드 대조는 Native 자체보고로 구분한다.
+- [전체7번째 Native 사용자 범위·4항목 요청](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6719797227)을 확인했다. 하단/현황 주차는 본인, 상세 각 주차 버튼은 그 주차 전체 참가자의 문제이며 두 주차 권한을 독립 검사한다. 기존 본인만 방 주차 경고 초안을 이 확정으로 대체했다.
+- 부분 완료 후 교체로 단일 캐릭터 계약을 구버전이 안전하게 해석할 수 없는 점을 사용자에게 대안/추천과 함께 질문했다. 사용자는 ‘영향 방·실제 주차만 업데이트 필요로 제한’을 직접 선택했다. 전체 서비스/다른 방·주차를 일괄 차단하는 정책으로 확대하지 않는다.
+- [전체8번째 Backend 서버4항목 회신](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6719925630)에 정확한 경고 필드/ready·권한없음 필수null/미조회 구분·예시, 기존 옵션 조합·새 능력 표식·원ACK 우선/구버전 영향 범위, M(active)/P(보존 이력)의 정확 집합과 공통 참가/일정/주차/후속 명령, 관찰 상태 opt-in·원본/캐시 보존·provider POST/서버 GET 구분·반영/늦은 응답, 양측 검증 책임을 제안했다. 이들은 Native 마지막 대조 전 계약 제안이며 공개 API/코드에 반영하지 않았다.
+- 다음 Native 기술 수용/차이 회신 후 Backend 합의 계약 구현·검증이다. 이번에는 문서/Issue만 수정했으며 기존 미커밋 코드·23PASS를 보존한다. 기능 시험/서버/DB/키·공개 OpenAPI·commit/push/merge·배포·Issue 종료는 없다. 문서/상대링크·diff 검사를 수행한다.
+
+## 2026-11-08 — Issue17 Native 실제 UX5항목 수신·Backend 계약 보완안 회신
+
+- [전체5번째 Native 실제 앱 대조·사용자 확인](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6719423066)을 본문 제외 실제 전체 순번으로 확인했다. 첫 탭/기존 사용량·두 주차 버튼 발견성·기존 변경 버튼 재사용·활동 선택 저장 뒤 원래 방/실제 주차/교체 문맥 복귀·영향 범위 조회의5항목을 수용했다. 안내 중복 변경 버튼 초안은 철회하고 최종 문구/정확한 배치는 미확정으로 보존했다.
+- 현재 내부 summary가 주차별 bool/개별 방 양주차 요약을 제공하지 않음과 교체가 전체 active 묶음 전제임을 코드에서 재확인했다. [전체6번째 Backend 수신·반환안](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6719508031)을 게시하고 실제 댓글 전체6개/작성 측/단계를 재조회했으며 Issue 본문도 최신화했다.
+- 전역 요약에 두 실제 주차별 최소 상태, detail/plan opt-in에 해당 방 본인 두 주차 요약, 타인 카드는 선택 실제 주차 참가권한 안으로 제한하는 안을 제안했다. 주차 버튼이 본인 문제만인지 타인도 포함하는지는 Native가 사용자 확인 범위를 대조해 회신하도록 명시했고 임의 확정하지 않았다. 일부 완료 이력 보존/active 대상 교체·후보/복수 방·원ACK/조회 실패·복귀 문맥 상세도 잔여다.
+- NEXT_WORK·설계·추적표·AI_CONTEXT를 현재 단계로 정정했다. Native의 로컬 main 문서 미커밋·미push 자체보고와 Backend 내부23PASS를 구분한다. 이번에는 제품코드/계약·DB/서버/키 변경·테스트 재실행·commit/push/merge·배포·Issue 종료는 없다. Penpot/Native 화면·기기 시험 보류는 유지한다.
+
+## 2026-11-08 — 사용자 정정: Native 실제 UX 재기획·사용자 확인 인계
+
+- 사용자는 Backend 대화에서 진행한 UX 협의를 Native에서도 실제 앱 기준으로 다시 기획·설계·검토하고 사용자와 함께 확인하도록 명시 지시했다. 기존 코드·검증을 취소/삭제하지 않고 보존하되 화면 배치/문구·전체 UX 확정이나 앱 인수 완료로 취급하지 않는다.
+- #17 본문과 전체3개 댓글을 재조회한 뒤 [전체4번째 Backend 협의 전체·Native 재기획 요청](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6718999630)을 게시했고 실제 댓글 순번/작성 측/단계를 다시 조회해 확인했다. 본문 상단도 현재 우선 담당·기획 검토 단계로 갱신했다. 기존 원문·댓글·구현 근거는 보존했다.
+- 사용자와 선택한 누락 판정/일반 목록 숨김·본인 탭/문제 방/카드 경고·안내 위치/문구 초안·공개 주차/대상·방 안 갱신·수동 교체·일정/공대장/완료 유지·#18 순서·재조회/웹소켓 후속·기존 검토 방 근거를 표로 전달했다. Native는 실제 초기 수집/화면·주차·상세/plan·캐시·활동 선택 복귀와 전체 실패/복수 대상 흐름을 대조해 유지/보완/사용자 결정 필요를 설명하고 사용자 확인 결과를 같은 Issue에 회신해야 한다. 기존 내부 코드에 UX를 억지로 맞추도록 요구하지 않는다.
+- Penpot 연결/시안/검토 요청·Native 화면 구현·기기 시험은 계속 별도 지시 전 보류다. 이번 요청은 실제 앱 조사와 문서/동선 중심 기획·사용자 검토이며 API DTO 접수만으로 완료하지 않는다. Backend는 회신 후 계약/코드 차이를 보완한다.
+- 설계·NEXT_WORK·ISSUE_TRACKER·AI_CONTEXT에 최신 선행 검토를 반영했다. 제품코드/계약/DB/서버 변경·테스트 재실행·commit/push·배포·Issue 종료는 없다. 기존 미커밋 소스/문서는 feat/character-lifecycle에 보존한다.
+
+## 2026-11-08 — Issue17 정책 확정·Backend 내부 구현/격리 검증
+
+- 사용자 확정: 정상 원정대 누락 즉시 경고·삭제/개명 단정 없음·기존 자리/일정/공대장·완료 유지·본인 갱신/명시 교체·같은 UUID 복구 시 해제·현재주/다음주 미완료 참가·해당 실제 주차 참가자에게만 공개. #18 자동 활동 추가는 이후, 소유권 이전은 #15다. Penpot/Native 화면 작업은 별도 지시까지 보류했다.
+- `feat/character-lifecycle`로 분기하며 기존 종료 기록의 미커밋 변경을 보존했다. [설계·구현/소비 계약 구분](../features/rosters/lifecycle/roster-participation-issues.md)을 작성하고 [#17 전체2번째 Backend 정책/계약 검토](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6718820434)를 게시했다. 다음 Native는 계약 검토이며 화면 구현·기기 시험 요청이 아니다.
+- 새0036 관찰/복구 불변 원장·정상 소유 목록 누락/재등장 기록·기존 참가의 검증된 revision 연속성 예외·명시 갱신에서 원인 확인된 검토 방 복구·경고 집계/주차 참가자 공개의 내부 조회를 구현했다. 기존 ID·claim·설정/assignment Snapshot·오류 증거를 보존한다. 새 schema 호환 revision을 기존 기능 목록에 추가했다. 기존 계약의 참가 유지 설명만 두 OpenAPI와 함께 수정했고 새 공개 경로/DTO는 추가하지 않았다.
+- [검증 집계](../features/rosters/lifecycle/roster-participation-verification.json): 최초48PASS/1FAIL(UUID·문자열 기대값 오류), 수정 후20PASS. 추가 권한 시험은1PASS/1FAIL(미확정 일정에 확정 명령을 보내 정당 거절); 정상 확정 일정 준비 후6PASS, 별도 검토 참가자 방어1PASS. 최종 관련 고유23PASS(20+6+1 중4개 중복). 실행별 스냅샷 차이와 기존 경고를 보존하며 전체 회귀/실회원/실제 provider/기기 인수로 확대하지 않는다. 두 전체 생성 계약125/142·187/208 PASS, 문서/구문·diff PASS.
+- Docker 엔진 중지를 확인한 뒤 실제 사용자 설치 경로의 Docker Desktop을 기동했다. 격리 테스트 외 기존 개발 DB/키/서버 소스를 변경하지 않았고 임시 컨테이너/네트워크 정리·기존 dev API/DB healthy를 읽기 확인했다. 실제 DB0036 적용·운영/로컬 코드 반영·실자료 복구·Native 화면/Penpot·commit/push/merge·Issue 종료는 없다.
+- [#17 전체3번째 Backend 내부 구현/검증 결과](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6718982612)를 회신하고 Issue 본문 상단을 현재 상태로 갱신했다. 댓글 전체3개를 실제 조회해 순번·작성 측·단계를 확인했다. 다음은 Native 계약 회신 대조 후 경고 API/DTO·일부 완료 후 교체를 마무리하는 것이다. 현재 새 경고 API는 공개 미연결, 부분 완료 후 교체는 미구현이며 Backend 전체 완료로 표시하지 않는다. 소스는 로컬 미커밋·미push다. 백업 원장의 기존 키·환경 보관을 재사용하며 실제 DB 반영 전 대상/보관·migration 계획을 별도 확인한다.
+
+## 2026-11-08 — 사용자 승인 Issue34·38·46 완료 종료
+
+- 사용자 명시 지시로 세 Issue 최신 본문·전체 댓글(34:15개, 38:10개, 46:7개)을 재확인하고 본문 상단에 Backend 완료 종료를 기록한 뒤 CLOSED/completed 반환 상태를 확인했다. 완료 근거·별도 후속·과거 원문은 보존하고 새 반복 댓글은 작성하지 않았다.
+- NEXT_WORK·ISSUE_TRACKER·AI_CONTEXT에 종료 결과를 반영했다. 남은 작업의 권장 순서는 #17 생명주기 증거/계약→#15 소유권 이전 후처리→#18 활동 자동 추가/명시 제외→#19 통계다. 강제 전체 선행 관계로 간주하지 않으며 독립 정책 검토는 진행할 수 있다.
+- 문서 기록은 기존 chore/issue-closeout-review에서 이어가며 미커밋·미push다. 제품코드/계약/서버/DB/키 변경·신규 시험·배포는 없다.
+
+## 2026-11-08 — Issue34·38·46 Native 최신화 수신·종료 가능 여부 확인
+
+- 작업 구간: 완료 Issue 종료 검토 / 작업 내용: 세 Issue 본문·전체 댓글 조회, Native 최신화와 기존 완료 근거 대조·Backend 현재 대기 정정 / 브랜치·checkout: `chore/issue-closeout-review`.
+- Native [#34 전체15번째](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6718443740)·[#38 전체10번째](https://github.com/heo0328/lostparty-backend/issues/38#issuecomment-6718445004)·[#46 전체7번째](https://github.com/heo0328/lostparty-backend/issues/46#issuecomment-6718450091)는 원요청 완료·종료 가능 판단이며 추가 구현/재시험/배포/자료·키 변경 요청이 없다. Backend에서 답해야 할 새 질문이나 다시 기다릴 회신이 없어 반복 수용 댓글은 게시하지 않았다.
+- #34 운영/서명 APK 게시, #38 사용자 변경 구간 인수/운영 및 후속 게시, #46 사용자 범위 정정 후 합의한 수동 백업/문서 완료를 확인했다. Native 로컬 문서 미커밋·미push는 원격 완료로 표시하지 않는다. 운영 전체 기기 인수·다음 서명 전환·외장 복사 미확인·실제 복원/정기 자동화는 별도 후속으로 보존한다.
+- 세 Issue는 현재 OPEN이다. 사용자 지시는 종료 가능 여부 확인이며 실제 종료는 실행하지 않았다. 다음 담당 사용자(종료 지시), Backend(지시 시 최신 상태 재확인·완료 종료 및 기록 갱신). NEXT_WORK·ISSUE_TRACKER에 동일 판단의 기준을 연결했다. 코드/계약/서버/DB 변경·테스트 재실행·commit/push 없음.
+
 ## 2026-11-07 — 사용자 지시에 따른 dev/main 통합
 
 - 사용자가 현재 브랜치의 dev 병합·push와 main 동일 시점 동기화를 명시 지시했다. 원격 dev/main f211342·조사2dd3a06·복구c62f2a7 및 로컬 게시 권한 변경을 확인했다. 조사·복구 문서와 지침 변경을 한 기준에 모으며 기존 공유 이력은 재작성하지 않는다.

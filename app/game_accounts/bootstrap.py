@@ -143,7 +143,7 @@ def snapshot(db, uid, stamp):
         weekly_states=dict(current_cycle=cycle, cycle_key=cycle.cycle_key, catalog_version=catalog.catalog_version, entries=entries))
 
 
-def get(principal):
+def get(principal, include_roster_presence=False):
     with session() as db, db.begin():
         db.connection(execution_options={'isolation_level': 'REPEATABLE READ'})
         db.execute(text('SET TRANSACTION READ ONLY'))
@@ -153,7 +153,15 @@ def get(principal):
             result = AccountBootstrap.model_validate(snapshot(db, uid, stamp))
         except ValidationError:
             fail('BOOTSTRAP_DATA_UNAVAILABLE', 503)
-        payload = result.model_dump_json().encode('utf-8')
+        if include_roster_presence:
+            import json
+            from fastapi.encoders import jsonable_encoder
+            from app.game_accounts import presence_reads
+            value=result.model_dump(mode='python')
+            presence_reads.attach(db,uid,stamp,[r['characters'] for r in value['registrations']])
+            payload=json.dumps(jsonable_encoder(value),ensure_ascii=False,separators=(',',':')).encode('utf-8')
+        else:
+            payload = result.model_dump_json().encode('utf-8')
         if len(payload) > MAX_BYTES:
             fail('BOOTSTRAP_RESPONSE_TOO_LARGE')
         return payload

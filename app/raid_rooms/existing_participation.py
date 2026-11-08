@@ -1,6 +1,8 @@
 """Server-proven current generation identity, never a client eligibility flag."""
 from app.auth.models import User
 from app.game_accounts.support import fail
+from app.game_accounts import roster_presence
+from app.game_accounts.models import Account, Character, NameClaim, Registration
 from app.groups.admission_core import owned_selection_character
 from app.raid_rooms import admission_context
 from app.raid_rooms.cycle_models import RoomCycle, CycleMember, CycleAssignment, CycleGeneration
@@ -30,7 +32,9 @@ def selection(db, room, row, cm):
     if user is None or user.status != 'active':
         fail('ROOM_TARGET_UNAVAILABLE')
     owned = assignments(db, current, actual)
-    if not owned or len({(a.character_id,a.selected_role) for a in owned}) != 1:
+    active = [a for a in owned if a.state == 'active']
+    chosen_rows = active or owned[-1:]
+    if not chosen_rows or len({(a.character_id,a.selected_role) for a in chosen_rows}) != 1:
         fail('ROOM_REVIEW_REQUIRED')
     for a in owned:
         link = db.get(CycleAssignment, a.id)
@@ -40,9 +44,32 @@ def selection(db, room, row, cm):
                 or (a.room_id,a.membership_id,a.user_id) != (room.id,member.id,actual.user_id)
                 or a.state not in ('active','completed','stopped_incomplete')):
             fail('SOURCE_PARTICIPATION_REQUIRED', 403)
-    chosen = admission_context._selection_snapshot(db,actual.user_id,owned[0].character_id,owned[0].selected_role)
-    owned_selection_character(db,actual.user_id,chosen.model_dump(mode='json'))
-    if any((a.ownership_revision,a.lifecycle_revision) !=
-            (chosen.expected_ownership_revision,chosen.expected_lifecycle_revision) for a in owned):
-        fail('OWNERSHIP_REQUIRED', 403)
+    chosen = admission_context._selection_snapshot(db,actual.user_id,chosen_rows[0].character_id,chosen_rows[0].selected_role)
+    character(db, actual.user_id, chosen, chosen_rows)
     return chosen
+
+
+def character(db, uid, chosen, owned):
+    """Current identity, or an exact observation-only revision chain for this seat."""
+    value = db.get(Character, chosen.character_id)
+    account = db.get(Account, value.account_id) if value else None
+    claim = db.get(NameClaim, (value.server_name, value.character_name)) if value else None
+    registration = db.get(Registration, chosen.registration_id)
+    retained = bool(value and account and registration
+        and registration.user_id == uid and registration.account_id == account.id
+        and registration.deleted_at is None and account.owner_id == uid
+        and account.verified_at is not None and claim and claim.character_id == value.id
+        and registration.version == chosen.expected_registration_version
+        and account.ownership_revision == chosen.expected_ownership_revision
+        and account.roster_revision == chosen.expected_roster_revision
+        and value.lifecycle_revision == chosen.expected_lifecycle_revision
+        and all(a.character_id == value.id and a.user_id == uid
+                and a.ownership_revision == account.ownership_revision
+                and roster_presence.retained_revision(db, account, value, a.lifecycle_revision) for a in owned))
+    if retained:
+        return value
+    value = owned_selection_character(db, uid, chosen.model_dump(mode='json'))
+    if any((a.ownership_revision, a.lifecycle_revision) !=
+            (chosen.expected_ownership_revision, chosen.expected_lifecycle_revision) for a in owned):
+        fail('OWNERSHIP_REQUIRED', 403)
+    return value

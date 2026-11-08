@@ -87,6 +87,8 @@ def context(db,uid,rid,kind,stamp,target_group_id=None):
         effect=(kind=='edit_common_settings' and row.generation is not None) or (row.state in ('open','review_required') and (kind=='end' or mine is not None)) or bool(active)
         if kind=='end' and (any(m.membership_id!=actor.id for m in actual) or any(a.user_id!=uid and a.state=='active' for a in all_assignments)):reason=reason or 'ROOM_LAST_MEMBER_REQUIRED'
         if not effect:continue
+        from app.raid_rooms import roster_participation
+        if roster_participation.required(db,row) and not roster_participation.enabled():reason=reason or 'CLIENT_UPGRADE_REQUIRED'
         if any(m.state=='review_required' and (kind=='end' or m.membership_id==actor.id) for m in actual):reason=reason or 'ROOM_REVIEW_REQUIRED'
         if row.generation is None or row.state=='review_required':reason=reason or 'ROOM_REVIEW_REQUIRED';continue
         lead=commands.leadership(db,row)
@@ -147,6 +149,8 @@ def execute(principal,rid,key,data,kind):
         if selected is not None and (kind!='edit_common_settings' or data.group_id!=selected or data.scope!='group'):
             fail('TARGET_SCOPE_MISMATCH',400)
         result,binding,room,actor,effects=context(db,uid,rid,kind,stamp,selected)
+        from app.raid_rooms import roster_participation
+        for affected_row,_,_ in effects:roster_participation.require_client(db,affected_row)
         target_proof=group_connection.evaluate(db,uid,selected)[1] if selected is not None else None
         if body['expected_room_revision']!=room.revision or body.get('expected_persistent_membership_revision',actor.revision)!=actor.revision:fail('REVISION_CONFLICT')
         life.require_match(token,binding)

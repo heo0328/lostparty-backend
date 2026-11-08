@@ -34,7 +34,7 @@ def bounded(model,value, *, snapshot=None):
 
 
 def ready(db):
-    if list(db.scalars(text('SELECT version_num FROM alembic_version'))) not in (['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history'],['0034_group_features'],['0035_cycle_group_policy']):
+    if list(db.scalars(text('SELECT version_num FROM alembic_version'))) not in (['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history'],['0034_group_features'],['0035_cycle_group_policy'],['0036_roster_presence']):
         fail('RECRUITMENT_COMMAND_NOT_READY',503)
 
 
@@ -219,6 +219,8 @@ def prepare(db,uid,rid,key,stamp,*,only=None):
                     action=='dissolve_led_targets' and gen is not None and mine is not None and gen.leader_cycle_member_id==mine.id and row.state in ('open','review_required') or
                     action=='recover_leadership' and row.cycle_key.isoformat()==key and mine is not None)
                 if relevant:
+                    from app.raid_rooms import roster_participation
+                    roster_participation.require_client(db,row)
                     value,proof,reasons=plan_target(db,room,row,actor,action,stamp)
                     targets.append(value);hidden.append(proof);remaining[row.id]=reasons
             if not targets and action!='leave_all':
@@ -287,7 +289,9 @@ def execute(principal,rid,command,data):
         option=value['data']['options'][action]
         if not option['permission']['allowed']:fail(option['permission']['reason'])
         life.require_match(token,bindings[action]);impact=option['impact'];guards=[];effects=[];evidence=[]
+        from app.raid_rooms import roster_participation
         for target in impact['targets']:
+            roster_participation.require_client(db,db.get(RoomCycle,target['room_cycle_id']))
             row=db.get(RoomCycle,target['room_cycle_id']);gen=db.get(CycleGeneration,(row.id,row.generation))
             guards.append(graph.final_deadlines(db,row,[],stamp,join=False))
             for effect in target['affected_members']:

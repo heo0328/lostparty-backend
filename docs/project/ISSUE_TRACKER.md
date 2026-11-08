@@ -1,5 +1,18 @@
 # 이슈 주제별 추적표
 
+
+[전체17번째 Native 인계 접수](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721152982)를 확인했고 사용자 승인으로 [전체18번째 Backend 로컬 반영·실행 지원](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721249386)을 인계했다. 실제 로컬 API image4ac36fdb·DB0036_roster_presence·기존 app 소스247파일 일치, 두 OpenAPI 전체 비교/기존114업무표99행·sequence·키4개 보존·API/DB healthy 확인. [로컬 집계](../engineering/operations/records/roster-participation-local-rollout.json)를 따른다. 로컬 신계약 미지원 대기는 해소했고 Native 신규 DTO/실제 연결·기기 인수는 별도다. 사용자가 문서 최신화 후 commit/push를 지시했다. 게시 결과/고정 구현 SHA는 DEV_LOG 후행 기록을 따르며 운영 미반영·Penpot/화면·기기 보류를 유지한다.
+
+## Issue17 최신 — 2026-11-08
+
+[전체7번째 Native 사용자 범위·4항목 요청](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6719797227) 수신·[전체8번째 Backend 서버 계약 회신](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6719925630) 게시. Native가 기획/UX/Penpot·화면 주도, Backend는 서버 계약/권한/자료/검증만 판단한다. 사용자는 구버전의 부분 완료 구조 영향 방·실제 주차만 업데이트 필요로 제한하는 안을 선택했다. 다음 Native는 wire/능력 표식·옵션·M/P 교체의 소비 대조, Backend는 합의 후 공개 API·관찰 상태·공통 참가/부분 완료 교체/후속 명령을 보완한다. Issue OPEN·미커밋/미push·실DB0036 미적용. 현재 화면/Penpot·기기는 별도 지시 전 보류한다. [설계](../features/rosters/lifecycle/roster-participation-issues.md)·[NEXT_WORK](NEXT_WORK.md).
+
+## 최신 완료 종료 — 2026-11-08
+
+사용자 명시 지시로 [#34](https://github.com/heo0328/lostparty-backend/issues/34)·[#38](https://github.com/heo0328/lostparty-backend/issues/38)·[#46](https://github.com/heo0328/lostparty-backend/issues/46)을 CLOSED/completed로 종료했다. Native 최신 댓글(각 전체15·10·7번째)을 재확인했고 본문 상단에 Backend 최종 상태를 추가했다. 새 댓글·추가 시험/배포는 없다. 미확인·미실행 후속은 보존하며 완료 범위를 확대하지 않는다.
+
+현재 완료 범위·회신 링크·남은 #17→#15→#18→#19의 권장 처리 순서는 [NEXT_WORK](NEXT_WORK.md), 확인/종료 이력은 [DEV_LOG](DEV_LOG.md)를 따른다. 아래 OPEN·통합/APK 게시 대기는 당시 기록이다.
+
 ## 백업 주제 최신 — 2026-11-07
 
 [#46 백업 조사·사용자 보관 안내](https://github.com/heo0328/lostparty-backend/issues/46)는 [전체4번째 Native 범위 정정](https://github.com/heo0328/lostparty-backend/issues/46#issuecomment-6705693077)과 사용자 후속 실행 승인에 따라 [전체5번째 Backend 운영 기준본/PC 보관 결과](https://github.com/heo0328/lostparty-backend/issues/46#issuecomment-6706589300)까지 회신했다. [백업 원장·안내 시점](../engineering/operations/backup-and-recovery.md)·[집계](../engineering/operations/records/backup-recovery-2026-11-07.json)에 현재 상태를 기록한다. 로컬 고정자료는 사용자 보관 보고, 로컬 DB는 제외, 운영 기준본은 생성/PC 전송/무결성 확인 완료다. 실제 복원·정기 자동화·외장 매체 보관은 완료로 표시하지 않는다. 다음 Backend 문서 구간 게시/결과 인계·사용자 파일 보관이며 추가 Native 기능/반복 시험 대기는 없다. Issue OPEN·종료는 별도다.

@@ -22,6 +22,8 @@ MAX_TOKEN_BYTES=4096
 
 
 def seal(value):
+    from app.raid_rooms import roster_participation
+    value=dict(value,**roster_participation.marker())
     kid=settings.recovery_kid
     key=hmac.new(settings.recovery_key(),b'recruitment-command-aead-v1',hashlib.sha256).digest()
     nonce=os.urandom(12);aad=('rc1.'+kid).encode()
@@ -35,7 +37,10 @@ def unseal(value):
         if version!='rc1':raise ValueError()
         key=hmac.new(settings.recovery_key(kid),b'recruitment-command-aead-v1',hashlib.sha256).digest()
         raw=base64.b64decode(encoded+'='*((-len(encoded))%4),altchars=b'-_',validate=True)
-        return json.loads(AESGCM(key).decrypt(raw[:12],raw[12:],(version+'.'+kid).encode()))
+        token=json.loads(AESGCM(key).decrypt(raw[:12],raw[12:],(version+'.'+kid).encode()))
+        from app.raid_rooms import roster_participation
+        roster_participation.check_marker(token)
+        return token
     except (ValueError,TypeError,KeyError,InvalidTag,OSError,UnicodeDecodeError):fail('CONTEXT_INVALID',400)
 
 

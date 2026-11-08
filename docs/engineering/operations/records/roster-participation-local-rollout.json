@@ -1,0 +1,100 @@
+{
+  "date": "2026-11-08",
+  "branch": "feat/character-lifecycle",
+  "base_head": "3e3ddc1",
+  "source_status": "uncommitted/unpushed working source; image app bytes verified",
+  "authorization": "User: check Native reply and, absent problems, apply local development server first",
+  "native_comment": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721152982",
+  "runtime": {
+    "api_image": "sha256:4ac36fdb5c46c5a99acc6c00736ecb1723120a5b6d7e15511e60d4203c5d6da1",
+    "api_started_at": "2026-11-08T11:59:55.111135122Z",
+    "api_health": "healthy",
+    "db_health": "healthy",
+    "db_container_preserved": true,
+    "db_volume_preserved": true,
+    "api_config_env_command_security_ports_key_mounts_preserved": true,
+    "key_mount_source_note": "same local .secrets directory; Docker CLI rendered Linux path as WSL UNC alias",
+    "config_files_preserved": true,
+    "running_source_files": 247,
+    "running_source_sha256": "7762452f08f0e401c913a023a5e169435e19aa9c676fc6726e58a18bdf0e08d0",
+    "startup_json_entries": 87,
+    "startup_errors": 0
+  },
+  "migration": {
+    "before": "0035_cycle_group_policy",
+    "after": "0036_roster_presence",
+    "applied_once": true,
+    "new_empty_tables": [
+      "character_roster_transitions",
+      "roster_participation_recoveries",
+      "roster_participation_capabilities"
+    ],
+    "existing_business_tables_preserved": 114,
+    "existing_business_rows_preserved": 99,
+    "sequences_and_key_contents_preserved": true,
+    "scope": "additive tables only; no backfill/deletion/recovery"
+  },
+  "contracts": {
+    "legacy": {
+      "paths": 125,
+      "operations": 142,
+      "full_object_match": true
+    },
+    "two_cycle": {
+      "paths": 188,
+      "operations": 209,
+      "full_object_match": true
+    }
+  },
+  "runtime_reads": {
+    "principals": 1,
+    "counts": {
+      "own_summary": 1,
+      "bootstrap_presence": 1,
+      "characters_presence": 1,
+      "memberships_both_profiles": 2
+    },
+    "sql_guard": "SET/SELECT/SHOW only",
+    "writes": false,
+    "provider_calls": false,
+    "actual_participation_rooms": 0,
+    "room_details_real_data": "not exercised; none exist locally; isolated tests remain separate"
+  },
+  "listener": {
+    "health": 200,
+    "public_v1_raid_cycle": 200,
+    "protected_summary_absent_or_invalid_bearer": 401,
+    "bootstrap_without_auth": 401,
+    "no_store": true,
+    "wrong_path_probe": "/v2/raid-cycle returned404; corrected to existing /v1/raid-cycle200"
+  },
+  "preservation": {
+    "existing_business_tables_before_after_runtime": true,
+    "db_container_and_volume": true,
+    "config_files": true,
+    "environment_values": true,
+    "key_contents": true,
+    "api_readonly_mount_and_security": true,
+    "inspection_notes": [
+      "Environment sequence differed; same key/value mapping verified",
+      "Docker mount source Linux path rendered as same Ubuntu-24.04 WSL UNC alias; destination/readonly/content unchanged"
+    ]
+  },
+  "backup": {
+    "local_db_dump": "excluded per prior user instruction; no new local DB dump",
+    "existing_keys_and_environment_backup": "unchanged copies remain applicable; no key generation",
+    "private_audit": "ignored backups/roster-local-20261108; access-limited hashes/config comparison; not a DB backup"
+  },
+  "not_done": [
+    "commit/push/merge",
+    "production changes",
+    "Native new DTO integration/screens/Penpot/device acceptance",
+    "real provider/game/user mutation",
+    "historical real-data repair",
+    "full live API command testing",
+    "Issue closure",
+    "production migration/source rollout remains unapproved"
+  ],
+  "rollback": "DB0036 evidence is forward-only; do not restart old DB0035-only API against0036; preserve data and use forward repair if needed",
+  "local_rollout_handoff": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721249386"
+}

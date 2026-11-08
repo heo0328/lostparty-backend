@@ -2,6 +2,8 @@ import app.lostark_keys.models
 from alembic import context
 from app.auth.models import Base
 import app.game_accounts.models
+import app.game_accounts.roster_presence
+import app.raid_rooms.roster_participation
 import app.member_settings.models
 import app.raid_weekly.models
 import app.raid_rooms.models

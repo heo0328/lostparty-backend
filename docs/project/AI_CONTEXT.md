@@ -1,5 +1,16 @@
 # LostParty Backend 기능 지도
 
+
+[전체17번째 Native 인계 접수](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721152982)를 확인했고 사용자 승인으로 [전체18번째 Backend 로컬 반영·실행 지원](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721249386)을 인계했다. 실제 로컬 API image4ac36fdb·DB0036_roster_presence·기존 app 소스247파일 일치, 두 OpenAPI 전체 비교/기존114업무표99행·sequence·키4개 보존·API/DB healthy 확인. [로컬 집계](../engineering/operations/records/roster-participation-local-rollout.json)를 따른다. 로컬 신계약 미지원 대기는 해소했고 Native 신규 DTO/실제 연결·기기 인수는 별도다. 사용자가 문서 최신화 후 commit/push를 지시했다. 게시 결과/고정 구현 SHA는 DEV_LOG 후행 기록을 따르며 운영 미반영·Penpot/화면·기기 보류를 유지한다.
+
+## Issue17 Backend 작업(2026-11-08)
+
+Native가 기획·UX·화면·Penpot을 주도하고 Backend는 서버 계약/권한/자료/검증만 판단해 Issue로 협의한다. 기존 내부 기반에 공개 경고/presence·부분 완료 교체/세대 capability를 추가 구현하고 안내 범위 격리 검증을 완료했다. 실제 로컬 서버/DB0036 반영은 전체18번째로 완료했고 운영·Native 신규 연결/인수는 미완료다. Native 전체7번째에 상세 주차 버튼의 해당 주차 전체 참가자 문제 표시가 확정됐고 Backend 전체8번째에 서버4항목/구버전 영향 방·주차 제한(사용자 직접 선택)을 회신했다. Native 후보 소비 대조는 전체15번째로 수용됐고 Backend 로컬 구현/격리 검증은 전체16번째로 인계했다. 로컬 실제 지원은 전체18번째로 확인됐고 Native 신규 연결/기기는 별도 인수다. 게시·운영은 사용자 별도 지시 기준이다. [현재 설계/협의](../features/rosters/lifecycle/roster-participation-issues.md)·[NEXT_WORK](NEXT_WORK.md) 기준이며 현재 Penpot·Native 화면/기기는 보류다.
+
+## Issue 마감 최신(2026-11-08)
+
+사용자 지시로 #34 릴리즈 운영·#38 초대 검색·#46 합의한 복구/백업 요청을 CLOSED/completed로 종료했다. 미확인 운영 전체 인수·다음 서명 전환·외장 사본/실제 복원·정기 자동화는 별도 후속으로 보존한다. 남은 #15·#17·#18·#19의 상태와 권장 순서는 [NEXT_WORK](NEXT_WORK.md)·[추적표](ISSUE_TRACKER.md)를 따른다. 아래 OPEN·게시 대기는 당시 기록이다.
+
 ## 환경·보관 최신(2026-11-07)
 
 로컬 two-cycle/DB0035·인증키/Google 로그인·Git/Docker 복구를 확인했다. 운영v2.0.0의 DB·설정·기존 키/복구 구성 기준본과 서버 밖 사용자 PC 사본을 확보하고 읽기·내용 일치를 검증했다. 실제 복원·정기 자동화는 미실행, 외장 매체 복사는 미확인이다. [원장/안내 기준](../engineering/operations/backup-and-recovery.md)·[DEV_LOG](DEV_LOG.md#development-recovery-20261107)·[NEXT_WORK](NEXT_WORK.md)를 따른다. 기능 계약·운영 앱/DB 버전은 변경하지 않았으며 아래 이전 checkout/로컬 실행·외부 백업 미구성·Native APK 대기는 당시 이력이다.

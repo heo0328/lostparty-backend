@@ -88,6 +88,11 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
     pairs = rounds(db, target)
     choices = {t.item_id: t for t in targets}
     all_items = set(db.scalars(select(Item.id).where(Item.room_id == room.id)))
+    from app.raid_rooms import roster_participation
+    if replacing is not None and roster_participation.enabled():
+        active=roster_participation.replacement(db,target,replacing)
+        all_items={a.item_id for a in active}
+        pairs=[(i,r) for i,r in pairs if i.id in all_items]
     if resuming is not None:
         if (member is None or resuming.membership_id!=member.id or resuming.cycle_id!=target.id
                 or resuming.generation!=target.generation or resuming.state!='stopped'):fail('TARGET_CONTEXT_STALE')
@@ -202,6 +207,7 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
             assignment_id=assignment.id, joined_at=stamp))
         assignments.append(assignment)
     db.flush()
+    if replacing is not None:return member, assignments, power
     if resuming is None:cycles.record_bundle_join(db, target.id, member.id, command_id, stamp)
     else:
         from app.raid_rooms.cycle_models import CycleAssignment

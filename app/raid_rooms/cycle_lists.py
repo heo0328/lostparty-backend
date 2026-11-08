@@ -80,6 +80,8 @@ def memberships(principal,key,state='current',limit=20,cursor=None,include_group
         binding=['cycle-memberships',str(uid),str(principal[1].id),key,state,limit]
         epoch=digest([revision,cycles.directory_revision(db,target.key),target.current.isoformat()])
         binding,epoch=group_list_display.bind(db,binding,epoch,include_group_state,target.key)
+        from app.raid_rooms import roster_api
+        binding,epoch=roster_api.bind_page(db,uid,stamp,binding,epoch)
         offset=cursor_decode(cursor,binding,epoch) if cursor else 0
         rows=list(db.execute(query.order_by(Member.joined_at.desc(),Member.id.desc()).offset(offset).limit(limit+1)))
         token=cursor_encode(dict(scope=binding,revision=epoch,offset=offset+limit)) if len(rows)>limit else None
@@ -106,9 +108,14 @@ def memberships(principal,key,state='current',limit=20,cursor=None,include_group
                 target_participation_state=('cancelled' if actual.state=='removed' else actual.state) if actual else 'review_required' if row and not ready else 'not_selected',
                 target_cycle_key=key,room_cycle_id=row.id if row else None,target_generation=row.generation if row else None,
                 target_revision=row.revision if row else None))
+        from app.raid_rooms import roster_api
+        for item in items:
+            row=db.get(RoomCycle,item['room_cycle_id']) if item['room_cycle_id'] else None
+            if item['state']=='current':roster_api.legacy_restriction(db,row,item,profile=False)
         result=beta_output.render(db,uid,stamp,wire.OutputContract3GetV2MeRaidRoomMemberships,dict(scope=scope(stamp,key),
             data=dict(items=items,membership_head=revision,next_cursor=token,evaluated_at=stamp)))
-        return group_list_display.attach(db,result,[room.id for _,room in rows[:limit]],include_group_state)
+        result=group_list_display.attach(db,result,[room.id for _,room in rows[:limit]],include_group_state)
+        return roster_api.publish(db,uid,stamp,result,'memberships')
 
 
 def projections(principal,gid,rids,key,token=None,gids=None):
@@ -130,7 +137,7 @@ def projections(principal,gid,rids,key,token=None,gids=None):
             for actual in actuals:
                 assignments=members.assignments(db,row,actual.membership_id)
                 if not assignments:continue
-                assignment=assignments[-1][0]
+                assignment=next((a for a,_ in assignments if a.state=='active'),assignments[-1][0])
                 group_member=db.scalar(select(GroupMembership).where(GroupMembership.group_id==gid,
                     GroupMembership.user_id==actual.user_id,GroupMembership.ended_at.is_(None)))
                 result.append(dict(raid_membership_id=actual.membership_id,
