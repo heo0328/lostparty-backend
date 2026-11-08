@@ -52,16 +52,23 @@ def prepare(db,uid,rid,key,intent,cid,role,stamp,*,seed=None,include_session_dis
     if cid is not None:
         try:selected=selection_context.selection(db,uid,cid,role)
         except GameError as error:reason=reason or error.code;selected=None
-    if selected is None and cid is None:
-        cid,role=owned[0].character_id,owned[0].selected_role
-    else:cid,role=(selected.character_id,selected.selected_role) if selected else (cid,role)
     already=row is not None and row.state=='open'
+    if already and selected is None and cid is None:
+        # An existing N seat supplies its own active choice for an opening
+        # noop. C's completed history never substitutes for this target.
+        target_member=life.actual_member(db,row,uid)
+        if target_member is not None:
+            from app.raid_rooms import existing_participation
+            try:selected=existing_participation.selection(db,room,row,target_member)
+            except GameError as error:reason=reason or error.code
     if already and group_policy.enabled(db):group_policy.authorize(db,room,row,uid)
     if row is not None and not already:
         generation=db.get(CycleGeneration,(row.id,row.generation))
         if generation.state!='cancelled':reason=reason or 'TARGET_CYCLE_CLOSED'
         elif intent!='reopen':reason=reason or 'TARGET_REOPEN_REQUIRED'
     elif intent=='reopen':reason=reason or 'TARGET_CONTEXT_STALE'
+    if not already and selected is None:
+        reason=reason or 'CHARACTER_SELECTION_REQUIRED'
     rid_cycle=row.id if row else uuid.UUID(seed) if seed else uuid.uuid4()
     gen=row.generation if already else row.generation+1 if row else 1
     epoch=row.revision if already else row.revision+1 if row else 1
@@ -133,7 +140,8 @@ def prepare(db,uid,rid,key,intent,cid,role,stamp,*,seed=None,include_session_dis
             capacity=settings['app_capacity'],duration=sum(v['duration_minutes'] for v in settings['items']),stamp=stamp)
         data['beta_schedule_config']=setting.model_dump(mode='json')
     value,binding=life.sign(uid,rid,key,'opening',jsonable_encoder(data),hidden,stamp,row=row,db=db,
-        extra=dict(**display.marker(include_session_display),seed=str(rid_cycle),intent=intent,cid=str(cid),role=role))
+        extra=dict(**display.marker(include_session_display),seed=str(rid_cycle),intent=intent,
+            cid=str(cid) if cid else None,role=role))
     return value,binding,room,row,source,settings,inputs
 
 
@@ -149,7 +157,7 @@ def execute(principal,rid,command,data):
         token=life.verify_token(uid,rid,body,'opening',stamp)
         if body['intent']!=token['intent']:fail('TARGET_SCOPE_MISMATCH',400)
         result,binding,room,row,source,settings,inputs=prepare(db,uid,rid,body['target_cycle_key'],token['intent'],
-            uuid.UUID(token['cid']),token['role'],stamp,seed=token['seed'],include_session_display=display.enabled(token),beta_config=body.get('beta_schedule'))
+            uuid.UUID(token['cid']) if token['cid'] else None,token['role'],stamp,seed=token['seed'],include_session_display=display.enabled(token),beta_config=body.get('beta_schedule'))
         expected=row.revision if row else None
         if body['expected_target_revision']!=expected:fail('TARGET_CONTEXT_STALE')
         life.require_match(token,binding)

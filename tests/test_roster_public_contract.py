@@ -38,13 +38,14 @@ def valid(name,value):
         format_checker=FormatChecker()).validate(jsonable_encoder(value))
 
 
-def bundle(w):
+def bundle(w, *, continuation=True):
     from app.raid_rooms import beta_profile,beta_schedule,beta_schemas
     with session() as db:base=beta_schedule.time_policy.ceil_tick(now(db)+timedelta(hours=2))
-    params=dict(base_starts_at=base.isoformat(),early_coordination_enabled='false',
-        next_base_starts_at=(base+timedelta(days=7)).isoformat(),next_early_coordination_enabled='false')
+    params=dict(base_starts_at=base.isoformat(),early_coordination_enabled='false')
+    if continuation:
+        params.update(next_base_starts_at=(base+timedelta(days=7)).isoformat(),next_early_coordination_enabled='false')
     with beta_profile.using(params):
-        ctx=preflight(w,continuation=True,bundle=True)
+        ctx=preflight(w,continuation=continuation,bundle=True)
         body=request(ctx).model_dump(mode='json')
         body.pop('schedule_groups');body['beta_schedule_targets']=ctx['data']['beta_schedule_targets']
         ack=creation.create(actor(w['uid']),uuid.uuid4(),beta_schemas.BetaCreateRequest.model_validate(body))[1]['data']

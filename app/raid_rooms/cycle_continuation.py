@@ -25,6 +25,8 @@ def prepare(db,uid,rid,key,action,cid,role,stamp,*,include_session_display=False
     elif cid is not None:
         try:selected=selection_context.selection(db,uid,cid,role)
         except GameError as error:reason=reason or error.code;selected=None
+    if action=='join' and selected is None:
+        reason=reason or 'CHARACTER_SELECTION_REQUIRED'
     if action=='join' and selected is not None:
         minimum=row.settings_snapshot['combat_requirement']['dealer_min' if selected.selected_role=='dealer' else 'support_min']
         comparison=admission.core.power_comparison(db,uid,selected,minimum)

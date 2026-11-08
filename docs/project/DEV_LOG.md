@@ -1,5 +1,38 @@
 # 영구 개발 이력
 
+## 2026-11-08 Issue17 Native24 수용·보완 API 실제 로컬 반영
+
+공식 [전체25번째 Backend 실제 반영 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722917497)를 게시하고 Issue 본문 상단을 현재 실행/다음 Native/미게시 소스로 갱신했다.
+
+[전체24번째 Native](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722805010)는 두 잔여 보완/계약 소비 방향을 수용하고 추가 제품 결정·질문/수정 요청 없음·실행 지원 분리를 회신했다. 사용자 지시로 폴더 분류/파일 이동을 제외하고 로컬 API만 교체했다. 기존 검증 manifest와 현재소스가 같고 이전실행과 앱5파일만 다름을 확인했다. 후보의247파일·두 생성계약 일치·효과적 환경/명령 보존 확인 뒤 image4ac36fdb→ce59926c, 한국23:43:37 시작·API/DB healthy다.
+
+실제 실행247파일과 후보/작업소스 일치, 기본125/142·two-cycle188/209 전체계약 일치, listener health/공개주차200·신경고/신규context 미인증401와 no-store, 시작JSON56/ERROR0을 확인했다. READ ONLY 전후117업무표99행/열·sequence·키4개·환경/보안/포트·DB컨테이너/시작/볼륨 동일이며 DB0036 그대로다. migration·실자료 쓰기/DBdump/키생성·Native/기기·운영 변경 없음. 실자료 방0으로 실제 업무명령 인수는 미실행이며 격리 근거를 재사용한다. 기존 환경/키 보관본과 로컬 dump 제외 결정을 유지했다.
+
+[반영 집계](../engineering/operations/records/roster-participation-followup-local-rollout.json)·ignored private backups/roster-followup-local-20261108의 제한권한 감사 원본은 구분한다. 비공개 자료는 dump/복원 근거가 아니다. 보완은 feat/character-lifecycle의 미커밋·미push로 실행 중이며 새 원격 구현 SHA가 없다. 다음 Native는 사용자 범위의 기능 구현/실연결·기기, Backend는 구체 차이에 대응한다. 폴더 이동/분류·commit/push/merge·운영/APK 게시·자료 복구/삭제·Issue 종료 없음.
+
+## 2026-11-08 Issue17 잔여2항목 로컬 보완·검증 완료
+
+공식 결과는 [전체23번째 Backend](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722487011)로 게시하고 전체22번째 Native 요청에 대응했다. 본문 상단도 로컬 보완 완료/미게시·미반영/다음 Native 소비 대조로 갱신했다.
+
+Native 전체22번째 선처리 요청과 사용자 진행 지시로 source의 완료P fallback 및 혼합 M/P 후속 명령 근거를 보완했다. 사용자는 오류 질문의 대상이 이미 N까지 참가한 캐릭터 소실인지 확인했고, Backend가 신규 N 참가/개설만의 미선택 경계임을 설명한 뒤 해당 범위 진행을 직접 승인했다. selection=null·permission false·CHARACTER_SELECTION_REQUIRED와 유효 명시 선택의 현재 자격 검사, 기존 N 자리/기록/누락 경고와 수동 교체 보존을 확정했다.
+
+active0의 현재 선택은 None이면서 기존 관리 권한을 유지하며, prepare/최종 명령의 미선택409·명시 선택·활동 자격 상실/이전 context stale/복구·원ACK, 신규 개설/참가/재개설·기존 N 누락 후 noop을 확인했다. 혼합 M/P 실제 일정 제출/확인·탈퇴/자동 승계·후계자 자격·다음주 신규 참가와 cleanup 뒤 강제 오류 rollback도 직접 검증했다. 기존36사례 실행35PASS/시험 미정의변수1FAIL(685.15초)은 보존하고 수정1PASS로 해소했다. 초기 HTTP fixture/본문 형식 오류2FAIL도 입력만 보완했으며 최종 영향5PASS(92.78초)·재개설1PASS(34.51초), 새 직접9사례의 구간별 근거를 보존하고 중복 수를 합산하지 않는다.
+
+최종39887287d214의 기본125/142·two-cycle188/209 전체 생성 객체 일치. 기본 OpenAPI 바이트/모든 path·component를 보존했고 two-cycle 의미 주석만 추가했다. [보완 원본](../features/rosters/lifecycle/roster-participation-followup.md)·[실행별 집계/소스 SHA](../features/rosters/lifecycle/roster-participation-verification.json) 기준이다. 앱5파일·시험/계약/문서 변경은 로컬 미커밋·미push, 실제 dev image4ac36fdb/DB0036은 기존 게시 구현4c37c2b 그대로다. 새 migration·DB/볼륨·키·운영/Native 소스/기기 조작·commit/push/merge/배포·Issue 종료 없음. Native는 오류 소비/기존 흐름 차이만 대조하며 새 실행 연결/기기 인수는 완료로 표시하지 않는다.
+
+## 2026-11-08 Issue17 Native 선처리 요청 수신
+
+[전체22번째 Native — 구현 착수 전 잔여2항목 선처리](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721977533)를 확인했다. Backend의 active0 완료P 기본선택 제거 및 혼합M/P 후속 명령 검증 결과 대조 전까지 Native 기능 구현을 시작하지 않는 순서다. 명시 선택 없는 prepare/후속 명령과 명시 유효 선택 정상 경계, 일정/탈퇴/승계/신규발급·완료이력 보존을 직접 확인해야 한다. DTO/nullable/오류·source/prepare 소비 차이는 실제 응답/OpenAPI 범위로, 변경 없으면 그대로라고 회신한다. 소스 식별/게시·개발서버 실행/DB 지원·Native 인수를 분리한다. Native는 Penpot 선확인 없이 기능 개발 후 사용자 기기로 화면을 확인하는 결정을 보고했다. 이번은 수신 확인·다음 작업 기록만이며 코드/서버 변경·시험·commit/push는 하지 않았다. 요청에 대한 결과 회신은 실제 보완·검증 후 같은 Issue에 작성하며 수신 사실만 반복하는 댓글은 추가하지 않는다.
+
+## 2026-11-08 Issue17 Native 대기 외 Backend 잔여 감사
+
+[전체20번째 Native](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721323343)는 추가 Backend 요청 없이 Native 구현 설계를 정리했다. 그러나 사용자 잔여 감사에서 [전체21번째 Backend 공백 확인](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721435909)을 회신했다. active0/현재 선택null인데 공통 source가 옛 완료P 캐릭터를 다음주 기본 선택으로 반환하는 경계를 격리 재현했다. 혼합 M/P 이후 일정·실제 탈퇴/승계·신규 주차 명령 회귀도 보강 대상이다. **현재는 Native 대기만 남은 상태가 아니다.** [감사 기록](../features/rosters/lifecycle/roster-participation-backend-audit.md)에 따라 다음 Backend 보완/직접 검증을 진행하며, 기존 게시·로컬0036 지원 근거는 유지한다.
+
+진단: 두 항목의 index1 완료→index0 active를 새 캐릭터로 교체→index0 완료 뒤 projection active=[]/current_character=null이지만 life.source(validate=True).selected는 옛 캐릭터다. existing_participation/cycle_lifecycle의 active-or-last-history fallback과 opening/continuation의 기본 source 연결을 확인했다. 5cff42a6ffd3 격리진단1건/34.70초의 관찰 assertion통과는 원치않는동작 재현이며 정상회귀로합산하지 않는다. 다음주 실제신규POST·자격우회를 확인한 것은 아니고 명시선택의 현재신규검사는남아있다. 현재공개시험은혼합교체후qualify/worker/추가완료·기록/ACK/메뉴까지만이며 누락참가자일정/탈퇴시험과 혼합M/P의실제일정/탈퇴/승계/신규주차시험은동일근거가아니다.
+
+앞선 Backend 추가대기없음 판단을정정하고 동일Issue에잔여를회신했다. 임시진단fixture는제거·상세재현과미확인한계는감사문서보존. Native로컬소스/실제devDB·서버/키·기기변경없음, commit/push/merge·배포·Issue종료없음. 문서/집계만로컬미커밋이며다음보완작업은기존목적브랜치에서이어간다. 완전소멸/퇴역·대표404대체/소유권이전 등원이관후속과이번누락관찰범위를혼동하지않는다.
+
+
 ## 2026-11-08 Issue17 구현·문서 원격 게시 완료
 
 사용자 명시 승인으로 구현·실행 계약·검증·로컬 반영 기록을 `4c37c2bebbb9eb8950770a240b6e20b7b468399c`에 커밋하고 origin/feat/character-lifecycle에 push·원격SHA 일치를 확인했다. [전체19번째 Backend 원격 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721299358) 기준이며 원격 소스 미게시 대기는 해소됐다. 같은 브랜치의 후행 문서 커밋은 이 게시 결과만 기록하며 실행 app/API/DB를 바꾸지 않는다.

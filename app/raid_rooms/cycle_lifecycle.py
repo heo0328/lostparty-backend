@@ -60,13 +60,17 @@ def qualify(db,room,row,cm):
     if {a.item_id for a in owned}!={i.id for i,r in admission.rounds(db,row)} or not owned:
         fail('ROOM_REVIEW_REQUIRED')
     active=[a for a in owned if a.state=='active']
-    selected_rows=active or owned[-1:]
-    if len({(a.character_id,a.selected_role) for a in selected_rows})!=1:fail('ROOM_REVIEW_REQUIRED')
+    selected_rows=active
+    if active and len({(a.character_id,a.selected_role) for a in active})!=1:fail('ROOM_REVIEW_REQUIRED')
     from app.raid_rooms import existing_participation
     selected=existing_participation.selection(db,room,row,cm)
-    admission.core._limits(db,cm.user_id,selected,False)
     admission.core._group(db,room,cm.user_id,existing=True)
     admission.core._room_restrictions(db,room)
+    if selected is None:
+        # Keep historical authority without reading a former character as a
+        # live qualification. Bind every retained assignment to the context.
+        return None,[None,[[str(a.id),a.revision,a.state] for a in owned]]
+    admission.core._limits(db,cm.user_id,selected,False)
     minimum=row.settings_snapshot['combat_requirement']['dealer_min' if selected.selected_role=='dealer' else 'support_min']
     power=admission.core.power_comparison(db,cm.user_id,selected,minimum)
     if power['state'] in ('below','missing'):fail('COMBAT_POWER_REQUIRED')

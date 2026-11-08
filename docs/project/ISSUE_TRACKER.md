@@ -1,5 +1,20 @@
 # 이슈 주제별 추적표
 
+Issue17 [전체25번째 Backend 실제 로컬 보완 반영](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722917497) 인계 완료. Native24 소비 수용·실행 지원 대기 해소, 다음 Native 기능 구현/연결이며 소스 미커밋·미push와 폴더 이동 보류를 유지한다.
+
+Issue17 최신: [Native 전체24번째](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722805010)에서 잔여2항목/계약 소비 수용·추가 Backend 요청 없음을 확인했다. 사용자 지시로 실제 dev API imagece59926c·DB0036에 보완을 반영하고247파일/두 계약·자료/키 보존·healthy를 검증했다. 보완 소스는 여전히 미커밋·미push, Native 신규 연결/기기·운영은 별도다. [로컬 반영 집계](../engineering/operations/records/roster-participation-followup-local-rollout.json)·[다음 실행](NEXT_WORK.md) 기준이며 폴더 분류/파일 이동은 사용자 지시로 보류한다. 아래 미반영/소비 대기·이전 실행 이미지는 당시 기록이다.
+
+Issue17 [전체23번째 Backend 보완·검증 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722487011) 게시 완료. 다음은 Native 소비 대조이며 보완 소스의 commit/push·실제 dev 반영은 미실행이다.
+
+Issue17 잔여2항목 Backend 로컬 보완·해당 검증 완료. 사용자 확정 범위의 신규 N 미선택 reason과 명시 선택·기존 참가 보존을 인계하며 다음은 Native 소비 대조다. 새 보완은 미커밋·미push·실제 dev 미반영, 기존 게시 구현4c37c2b·image4ac36fdb/DB0036을 유지한다. [보완/실제 응답 발췌](../features/rosters/lifecycle/roster-participation-followup.md)·[다음 실행](NEXT_WORK.md) 기준이며 아래 감사/진행 중/사용자 답변 대기는 당시 기록이다.
+
+
+
+[전체20번째 Native](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721323343)는 추가 Backend 요청 없이 Native 구현 설계를 정리했다. 그러나 사용자 잔여 감사에서 [전체21번째 Backend 공백 확인](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721435909)을 회신했다. active0/현재 선택null인데 공통 source가 옛 완료P 캐릭터를 다음주 기본 선택으로 반환하는 경계를 격리 재현했다. 혼합 M/P 이후 일정·실제 탈퇴/승계·신규 주차 명령 회귀도 보강 대상이다. **현재는 Native 대기만 남은 상태가 아니다.** [감사 기록](../features/rosters/lifecycle/roster-participation-backend-audit.md)에 따라 다음 Backend 보완/직접 검증을 진행하며, 기존 게시·로컬0036 지원 근거는 유지한다.
+
+아래 구현 완료/Native 대기만 표기는 이번 감사 이전의 범위 판단이다. 게시/로컬 반영 사실은 유지하되 전체 후속 경계 완료로 해석하지 않는다.
+
+
 
 [전체17번째 Native 인계 접수](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721152982)를 확인했고 사용자 승인으로 [전체18번째 Backend 로컬 반영·실행 지원](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721249386)을 인계했다. 실제 로컬 API image4ac36fdb·DB0036_roster_presence·기존 app 소스247파일 일치, 두 OpenAPI 전체 비교/기존114업무표99행·sequence·키4개 보존·API/DB healthy 확인. [로컬 집계](../engineering/operations/records/roster-participation-local-rollout.json)를 따른다. 로컬 신계약 미지원 대기는 해소했고 Native 신규 DTO/실제 연결·기기 인수는 별도다. 사용자 명시 승인으로 구현·실행 계약·검증·로컬 반영 기록을 `4c37c2bebbb9eb8950770a240b6e20b7b468399c`에 커밋하고 origin/feat/character-lifecycle에 push·원격SHA 일치를 확인했다. [전체19번째 Backend 원격 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721299358) 기준이며 원격 소스 미게시 대기는 해소됐다. 같은 브랜치의 후행 문서 커밋은 이 게시 결과만 기록하며 실행 app/API/DB를 바꾸지 않는다. 운영 미반영·Penpot/화면·기기 보류 유지.
 

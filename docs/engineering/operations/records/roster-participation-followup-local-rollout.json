@@ -1,0 +1,89 @@
+{
+  "date": "2026-11-08",
+  "branch": "feat/character-lifecycle",
+  "base_head": "7aea6b703c9181db7d8a27c3bf455b2253ef3e25",
+  "source_status": "follow-up uncommitted/unpushed; verified current workspace matches running image",
+  "native_comment": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722805010",
+  "api_image_before": "sha256:4ac36fdb5c46c5a99acc6c00736ecb1723120a5b6d7e15511e60d4203c5d6da1",
+  "api_image_after": "sha256:ce59926c2eb63752a0bc69add54ee9239d6d017deff6cf1acaf493d322d9582c",
+  "api_started_at": "2026-11-08T14:43:37.088074142Z",
+  "api_started_at_kst": "2026-11-08T23:43:37.088074+09:00",
+  "db_revision": [
+    "0036_roster_presence"
+  ],
+  "migration_performed": false,
+  "app_files_match": 247,
+  "running_source_sha256": "4379fa9eca4e5d351cf44a9a9ff13e8ca41e1cf793e34af118df4897cca0cbb0",
+  "business_tables_preserved": 117,
+  "business_rows_preserved": 99,
+  "sequences_preserved": true,
+  "keys_preserved": 4,
+  "environment_config_and_mounts_preserved": true,
+  "db_container_and_volume_preserved": true,
+  "api_health": "healthy",
+  "db_health": "healthy",
+  "candidate_and_running_full_contracts_match": true,
+  "listener_checks": [
+    {
+      "path": "/health",
+      "status": 200,
+      "cache_control": null
+    },
+    {
+      "path": "/v1/raid-cycle",
+      "status": 200,
+      "cache_control": "no-store"
+    },
+    {
+      "path": "/v2/me/raid-room-character-issues?contract_profile=beta-recruitment-1&group_policy_version=cycle-group-policy-1",
+      "status": 401,
+      "cache_control": "no-store"
+    },
+    {
+      "path": "/v2/me/raid-room-character-issues?contract_profile=beta-recruitment-1&group_policy_version=cycle-group-policy-1",
+      "status": 401,
+      "cache_control": "no-store"
+    },
+    {
+      "path": "/v2/me/raid-rooms/00000000-0000-4000-8000-000000000001/opening-context?target_cycle_key=2026-11-11&intent=open",
+      "status": 401,
+      "cache_control": "no-store"
+    },
+    {
+      "path": "/v2/me/raid-rooms/00000000-0000-4000-8000-000000000001/continuation-context?target_cycle_key=2026-11-11",
+      "status": 401,
+      "cache_control": "no-store"
+    }
+  ],
+  "startup_json_entries": 56,
+  "startup_errors": 0,
+  "actual_business_commands_exercised": false,
+  "read_only_db_audit": true,
+  "private_audit": "ignored backups/roster-followup-local-20261108; not a DB backup",
+  "local_db_dump": "excluded per existing user decision",
+  "commit_push_merge": false,
+  "production_changed": false,
+  "folder_moves_or_reclassification": false,
+  "authorization": "User: check Native reply and apply local development server if no Backend changes remain; no folder classification/moves",
+  "native_acceptance": "Native comment24 accepted both follow-up items and consumption direction; no further product/contract requests",
+  "actual_read_or_write_scope": "READ ONLY table/sequence/schema fingerprints and loopback listener checks only; no real-user business command/provider/device execution",
+  "new_behavior_evidence": "existing isolated PostgreSQL/TestClient evidence reused; no real business-command repeat against local data",
+  "source_manifest_reference": "docs/features/rosters/lifecycle/roster-participation-verification.json#followup_commands.source_manifest",
+  "contracts": {
+    "legacy": {
+      "paths": 125,
+      "operations": 142,
+      "sha256": "18491bc066d08a578aa9228cd0da85eee508288c28d14d563d788e73e324c3dd",
+      "full_object_match": true
+    },
+    "two_cycle": {
+      "paths": 188,
+      "operations": 209,
+      "sha256": "2aeca907115ffc768cad723d227f0c2339b042f56f46ffed251c1037d235b6c4",
+      "full_object_match": true
+    }
+  },
+  "handoff": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722917497",
+  "handoff_comment_order": 25,
+  "next_owner": "Native implementation/connection within user instruction; Backend responds to concrete differences"
+}

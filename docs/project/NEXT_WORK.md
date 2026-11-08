@@ -1,13 +1,16 @@
 # 다음 실행
 
-## 현재 — Issue17 로컬 개발서버 반영·실행 지원 완료
+Issue17 [전체25번째 Backend 실제 로컬 보완 반영](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722917497) 인계 완료. Native24 소비 수용·실행 지원 대기 해소, 다음 Native 기능 구현/연결이며 소스 미커밋·미push와 폴더 이동 보류를 유지한다.
 
-[전체17번째 Native 인계 접수](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721152982)를 확인했고 사용자 승인으로 [전체18번째 Backend 로컬 반영·실행 지원](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721249386)을 인계했다. 실제 로컬 API image4ac36fdb·DB0036_roster_presence·기존 app 소스247파일 일치, 두 OpenAPI 전체 비교/기존114업무표99행·sequence·키4개 보존·API/DB healthy 확인. [로컬 집계](../engineering/operations/records/roster-participation-local-rollout.json)를 따른다. 로컬 신계약 미지원 대기는 해소했고 Native 신규 DTO/실제 연결·기기 인수는 별도다. 사용자 명시 승인으로 구현·실행 계약·검증·로컬 반영 기록을 `4c37c2bebbb9eb8950770a240b6e20b7b468399c`에 커밋하고 origin/feat/character-lifecycle에 push·원격SHA 일치를 확인했다. [전체19번째 Backend 원격 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721299358) 기준이며 원격 소스 미게시 대기는 해소됐다. 같은 브랜치의 후행 문서 커밋은 이 게시 결과만 기록하며 실행 app/API/DB를 바꾸지 않는다. 운영 미반영·Penpot/화면·기기 보류는 유지한다.
+## 현재 — Issue17 Native 소비 수용·로컬 개발서버 보완 반영 완료
 
-- 다음 Native는 실제 연결 작업이 허용된 범위에서 debug의 기존 로컬 대상을 사용하고 전체16번째 실행 OpenAPI/원응답에 맞춰 query/DTO·union/metadata를 연결한다. 원격 구현/계약은 `4c37c2bebbb9eb8950770a240b6e20b7b468399c`를 기준으로 소비한다. 소스 미게시 대기는 해소했고 고정 링크는 전체19번째 인계를 따른다. 현재 화면/Penpot·기기 재개 요청은 없고 별도 지시 전 보류한다.
-- 현재 로컬 실자료에는 실제 참가 방이0개다. 유효 세션1계정의 본인요약/bootstrap/characters·C/N 목록 READ ONLY 확인과 listener health/인증 거절은 실제 실행 근거다. 방 상세·부분 교체/원ACK·동시성은 격리 PostgreSQL/TestClient 자동검증이며 실회원/기기 통과로 합치지 않는다.
-- 이번 commit/push는 사용자 승인 범위이며 merge·운영 배포·자료 복구·Issue 종료는 별도 지시다.0036은 전진 migration이며 DB0035 전용 옛API만 다시 시작하지 않는다. 추가 계약 차이가 오면 해당 차이만 같은 Issue에서 확인한다.
-- 로컬 DB dump 제외 결정 유지. 기존 키/.env 보관본은 변경 없어 재사용한다. ignored backups/roster-local-20261108의 접근제한 감사 자료는 DB백업이 아니다. 실제 반영 전후 기존 자료·DB컨테이너/볼륨·환경/키·Compose·보안을 보존했다.
+[전체24번째 Native 보완/소비 대조 수용](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722805010)에서 추가 제품 결정·계약 질문/Backend 수정 요청이 없음을 확인했다. 사용자 조건부 로컬 반영 지시로 API만 새 imagece59926c로 교체했고 한국2026-11-08 23:43:37 시작·DB0036 유지다. [반영 집계](../engineering/operations/records/roster-participation-followup-local-rollout.json)·[보완 계약/검증](../features/rosters/lifecycle/roster-participation-followup.md)을 따른다.
+
+- 현재 지원: active0 완료P 신규 선택 제거·CHARACTER_SELECTION_REQUIRED, 명시 선택의 현재 자격/CAS·원ACK, 혼합M/P 후속 경계 보완이 실제 로컬 소스에 있다. 실행247파일/후보·작업소스 바이트 일치, 두 전체 생성 계약 일치·healthy·실제 listener200/보호된 신규 context401 확인. 실자료 방0으로 신규 참가/교체 쓰기는 실제 dev에서 실행하지 않았고 기존 격리 근거와 구분한다.
+- 보존: DB0036 그대로,117업무표99행/열·sequence·키4개·환경/보안/포트·DB컨테이너/볼륨 동일. migration·DBdump/자료복구·키생성 없음. 기존 유효 환경/키 보관본을 재사용하고 로컬 dump 제외 결정을 유지했다.
+- 다음 Native: 기존 debug 로컬 대상에서 지원되는 계약으로 사용자 지시 범위의 기능 연결/구현을 진행하고 구체 차이가 있으면 같은 Issue에 회신한다. 이미 수용한 계약/격리 시험의 반복 수용·기기 재시험을 요구하지 않는다. Native 신규 DTO/실연결/기기는 미완료이며 Native가 주도한다.
+- 다음 Backend: 구체 차이/추가 요청에 대응. checkout feat/character-lifecycle·HEAD7aea6b7, 보완은 미커밋·미push지만 실제 dev에 반영됐다. 원격 구현은 이전4c37c2b이므로 새 원격 SHA가 있다고 안내하지 않는다. commit/push/merge·운영 배포·자료 변경·Issue 종료는 별도 사용자 지시다.
+- **사용자 지시: 폴더 분류·파일 위치 이동은 하지 않는다.** 해당 작업에 착수/구조 지침 변경을 하지 않았고 이번 API 반영에도 포함하지 않았다. Penpot 선확인 제외→Native 기능 개발 후 사용자 기기 확인 순서 보고를 유지한다.
 
 ## Issue34·38·46 완료 종료 — 2026-11-08
 

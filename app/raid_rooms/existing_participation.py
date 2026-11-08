@@ -10,6 +10,7 @@ from app.raid_rooms.integrated_models import RecruitmentMembership as Member
 
 
 def selection(db, room, row, cm):
+    """Prove this generation's seat; return its active choice, or None for history."""
     from app.raid_rooms.cycle_lifecycle import assignments
     current = db.get(RoomCycle, row.id)
     actual = db.get(CycleMember, cm.id)
@@ -33,8 +34,7 @@ def selection(db, room, row, cm):
         fail('ROOM_TARGET_UNAVAILABLE')
     owned = assignments(db, current, actual)
     active = [a for a in owned if a.state == 'active']
-    chosen_rows = active or owned[-1:]
-    if not chosen_rows or len({(a.character_id,a.selected_role) for a in chosen_rows}) != 1:
+    if not owned or (active and len({(a.character_id,a.selected_role) for a in active}) != 1):
         fail('ROOM_REVIEW_REQUIRED')
     for a in owned:
         link = db.get(CycleAssignment, a.id)
@@ -44,6 +44,10 @@ def selection(db, room, row, cm):
                 or (a.room_id,a.membership_id,a.user_id) != (room.id,member.id,actual.user_id)
                 or a.state not in ('active','completed','stopped_incomplete')):
             fail('SOURCE_PARTICIPATION_REQUIRED', 403)
+    # History proves this membership, never a current character selection.
+    if not active:
+        return None
+    chosen_rows = active
     chosen = admission_context._selection_snapshot(db,actual.user_id,chosen_rows[0].character_id,chosen_rows[0].selected_role)
     character(db, actual.user_id, chosen, chosen_rows)
     return chosen

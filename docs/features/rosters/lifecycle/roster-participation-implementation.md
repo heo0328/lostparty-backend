@@ -1,5 +1,13 @@
 # Issue17 공개 계약과 부분 완료 교체 구현
 
+현재 실행 최신: [Native 전체24번째 보완 수용](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722805010) 확인 후 사용자 지시로 로컬 API imagece59926c·DB0036에 보완을 반영했다. 실행247파일과 검증 소스/두 전체 계약 일치·DB117업무표99행/sequence·키/환경/포트/볼륨 보존·healthy를 확인했다. [실제 반영 집계](../../../engineering/operations/records/roster-participation-followup-local-rollout.json)가 현재 기준이며 아래 미반영·소비 대기는 당시 이력이다. 보완은 미커밋·미push이고 Native 신규 연결/기기·운영은 별도다. 폴더 분류/파일 이동은 하지 않았다.
+
+현재 후속 완료: 사용자 확정 범위에 따라 active0의 완료P 자동 선택을 제거하고 기존 참가/관리 권한을 유지했다. 신규 개설·다음주 참가·재개설의 미선택 permission/409, 명시 선택 자격·stale/원ACK, 혼합 M/P 일정/실제 탈퇴·승계/rollback과 기존 N 누락 자리/noop 보존을 격리 검증했다. [잔여2항목 보완·인계](roster-participation-followup.md)·[검증 집계](roster-participation-verification.json)가 현재 기준이다. 보완은 미커밋·미push·실제 dev 미반영이며 기존 image4ac36fdb/DB0036은 유지한다. 아래 감사/진행 중·확인 대기는 당시 기록이다.
+
+
+현재 감사 정정: [전체21번째 Backend](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721435909)에서 active0 이후 완료P의 다음주 source 자동 선택을 격리 재현했다. [Backend 잔여 감사](roster-participation-backend-audit.md) 기준 공통 source 경계 보완·혼합 M/P 후속 명령 직접 검증이 남아 있다. 기존 공개7PASS/게시·로컬0036 지원은 유지하나 **전체 Backend 후속까지 완료/Native 대기만 남음으로 표시하지 않는다.** 이번은 문서/감사이며 배포 소스/DB는 미변경이다.
+
+
 최신: 사용자 승인 [전체18번째 로컬 반영](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721249386)으로 실제 개발 API·DB0036 지원을 완료했다. [반영/보존·실행 확인](../../../engineering/operations/records/roster-participation-local-rollout.json)을 따른다. 기존114업무표99행/sequence/키 보존·실행 소스/두 계약 일치·healthy, Native 새 연결/기기·운영은 미완료다. 실행별 검증·당시 미반영 경과는 집계/DEV_LOG에 보존하며 현재 상태는 이 문서를 따른다.
 
 

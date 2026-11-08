@@ -59,4 +59,10 @@ def decorate(api, *, two_cycle=False):
     api['x-roster-participation']=dict(required_schema='0036_roster_presence',participation_profile='remaining-active-1',
         default_shape='preserved',capability='affected room/actual week/generation only; original ACK first',
         history='preserved assignments never replaced; current character derives only from active assignments')
+    api['x-roster-participation']['next_cycle_selection']=dict(
+        scope='new participation/opening after source active assignments become empty; existing target participation preserved',
+        unselected=dict(selection=None,permission=dict(allowed=False,reason='CHARACTER_SELECTION_REQUIRED',next_change_at=None)),
+        command_status=409,
+        recovery='Explicit character_id and selected_role; current ownership/activity/eligibility required; completed history is not a default selection',
+        schema='Existing nullable context selection and permission.reason string; command selection remains required; original ACK replay preserved; malformed/null command selection remains 400 INVALID_REQUEST')
     return api
