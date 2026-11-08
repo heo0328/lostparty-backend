@@ -2,7 +2,7 @@
   "date": "2026-11-08",
   "branch": "feat/character-lifecycle",
   "base_head": "3e3ddc1",
-  "source_status": "uncommitted/unpushed working source; image app bytes verified",
+  "source_status": "implementation commit 4c37c2bebbb9eb8950770a240b6e20b7b468399c pushed to origin/feat/character-lifecycle; historical run/rollout source-status fields retain their time-of-execution meaning",
   "authorization": "User: check Native reply and, absent problems, apply local development server first",
   "native_comment": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721152982",
   "runtime": {
@@ -86,15 +86,24 @@
     "private_audit": "ignored backups/roster-local-20261108; access-limited hashes/config comparison; not a DB backup"
   },
   "not_done": [
-    "commit/push/merge",
     "production changes",
     "Native new DTO integration/screens/Penpot/device acceptance",
     "real provider/game/user mutation",
     "historical real-data repair",
     "full live API command testing",
     "Issue closure",
-    "production migration/source rollout remains unapproved"
+    "production migration/source rollout remains unapproved",
+    "main/dev merge remains separate user instruction"
   ],
   "rollback": "DB0036 evidence is forward-only; do not restart old DB0035-only API against0036; preserve data and use forward repair if needed",
-  "local_rollout_handoff": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721249386"
+  "local_rollout_handoff": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721249386",
+  "publication": {
+    "implementation_commit": "4c37c2bebbb9eb8950770a240b6e20b7b468399c",
+    "branch": "feat/character-lifecycle",
+    "origin_push": "verified",
+    "remote_sha_match": true,
+    "handoff": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721299358",
+    "app_source_matches_running_image": true,
+    "documentation_followup": "same branch; no application/server/database changes"
+  }
 }

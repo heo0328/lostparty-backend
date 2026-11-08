@@ -3,7 +3,7 @@
 최신: 사용자 승인 [전체18번째 로컬 반영](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721249386)으로 실제 개발 API·DB0036 지원을 완료했다. [반영/보존·실행 확인](../../../engineering/operations/records/roster-participation-local-rollout.json)을 따른다. 기존114업무표99행/sequence/키 보존·실행 소스/두 계약 일치·healthy, Native 새 연결/기기·운영은 미완료다. 실행별 검증·당시 미반영 경과는 집계/DEV_LOG에 보존하며 현재 상태는 이 문서를 따른다.
 
 
-2026-11-08 / `feat/character-lifecycle` / 사용자 지시에 따라 구현·검증·로컬 반영 문서를 최신화하고 같은 목적 브랜치에 게시한다. Git 게시 결과·고정 구현 SHA는 [DEV_LOG](../../../project/DEV_LOG.md)의 후행 게시 기록을 따른다. [Native 전체15번째 후보 소비 수용](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6720431541) 뒤 사용자 진행·중단 구간 재개 지시에 따른 Backend 구현이다. 실행 계약은 [기본](../../../../openapi/openapi.yaml)·[two-cycle](../../../../openapi/two-cycle.openapi.yaml), 검토 당시 고정 입력은 [후보](roster-participation-contract-candidate.md)다. **실제 로컬 API·DB0036 반영 완료, 운영 서버·DB는 미변경**이다.
+2026-11-08 / `feat/character-lifecycle` / 구현 commit `4c37c2bebbb9eb8950770a240b6e20b7b468399c`·origin push/원격 일치 확인. [전체19번째 원격 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721299358)·[DEV_LOG](../../../project/DEV_LOG.md)의 후행 게시 기록을 따른다. 현재 실행 앱 소스247파일은 이 구현 커밋과 일치한다. [Native 전체15번째 후보 소비 수용](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6720431541) 뒤 사용자 진행·중단 구간 재개 지시에 따른 Backend 구현이다. 실행 계약은 [기본](../../../../openapi/openapi.yaml)·[two-cycle](../../../../openapi/two-cycle.openapi.yaml), 검토 당시 고정 입력은 [후보](roster-participation-contract-candidate.md)다. **실제 로컬 API·DB0036 반영 완료, 운영 서버·DB는 미변경**이다.
 
 ## 구현한 동작
 
@@ -33,7 +33,7 @@
 
 로컬 schema0035→0036 반영 전 대상·복구/백업 범위를 확인했고, 새 원장3개 추가·기존 업무자료/키 보존과 새 API 지원을 검증했다. 로컬 DB dump 제외 결정과 기존 보관 키/환경 재사용은 유지했다. 다음 운영 반영은 별도 승인·대상/복구/백업 확인이 필요하다. [백업 기준](../../../engineering/operations/backup-and-recovery.md)을 따른다.
 
-Native 연결 기준은 실제 공개 계약/지원 조합·서버 지원 상태다. dev 서버는 신계약을 지원하며 원격 구현 SHA는 이번 사용자 승인 게시 결과를 따른다. 새 화면/Penpot·기기 재개/시험은 요청하지 않는다. 이번 commit/push는 사용자 지시 범위이며 merge·운영 배포·자료 복구·Issue 종료는 별도다. Penpot·Native 화면 구현/기기 보류도 유지한다.
+Native 연결 기준은 실제 공개 계약/지원 조합·서버 지원 상태다. dev 서버는 신계약을 지원하며 원격 구현 SHA는 `4c37c2bebbb9eb8950770a240b6e20b7b468399c`이며 게시 완료다. 새 화면/Penpot·기기 재개/시험은 요청하지 않는다. 이번 commit/push는 사용자 지시 범위이며 merge·운영 배포·자료 복구·Issue 종료는 별도다. Penpot·Native 화면 구현/기기 보류도 유지한다.
 
 
 공식 인계는 [#17 전체16번째 Backend 구현·검증](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721042421)이다. 최종 공개7PASS·주차 권한 보강1PASS(기존 시험 확장)·두 OpenAPI 전체 객체 일치 PASS이며, 앞선 관련 회귀와 실패 수정은 실행별 집계에 그대로 보존한다. 전체18번째로 실제 로컬 지원을 인계했고, 게시도 후속 사용자 지시 범위에 포함됐다. Native 신규 연결/기기 인수와 운영은 별도다.

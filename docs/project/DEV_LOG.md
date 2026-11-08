@@ -1,5 +1,12 @@
 # 영구 개발 이력
 
+## 2026-11-08 Issue17 구현·문서 원격 게시 완료
+
+사용자 명시 승인으로 구현·실행 계약·검증·로컬 반영 기록을 `4c37c2bebbb9eb8950770a240b6e20b7b468399c`에 커밋하고 origin/feat/character-lifecycle에 push·원격SHA 일치를 확인했다. [전체19번째 Backend 원격 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721299358) 기준이며 원격 소스 미게시 대기는 해소됐다. 같은 브랜치의 후행 문서 커밋은 이 게시 결과만 기록하며 실행 app/API/DB를 바꾸지 않는다.
+
+66파일의 구현/계약·격리시험·현재문서/이전결정·로컬반영집계를 함께 게시했다. git fetch에서 예상하지 못한 원격변경 없음 확인, origin 새 목적브랜치 게시·git ls-remote에서 구현SHA 일치 확인. 게시한 app247파일 내용hash 집합과 실제로컬실행 source7762452f…의 일치도 확인했다. 미커밋 원격소스 대기는 해소됐다. 현재 dev/main은 기존3e3ddc1로 유지·feature는 미병합이며 삭제하지 않는다. 원격공유이력 재작성/force push·PR/merge·태그/운영배포·서버교체/DBmigration 반복은 없다. 문서/링크258파일·API209분류·diff PASS, staged범위에 ignored backup/.env/.secrets·private-key/GitHubcredential패턴 없음 확인. 기존 서버/기능 검증 근거를 재사용하고 문서게시 때문에 새 서버/기기시험을 요청하지 않았다.
+
+
 ## 2026-11-08 Issue17 로컬 반영 문서 최신화·게시 준비
 
 사용자가 개발 반영까지 문서를 최신화한 뒤 commit/push를 명시 지시했다. feat/character-lifecycle에서 코드·계약·격리 검증·로컬0036 반영 기록과 앞서 같은 작업트리에 보존한 이슈34/38/46 마감 기록을 함께 게시한다. README/구현 문서/현재 작업 색인의 오래된 내부만 구현·로컬 미반영 설명을 현재 상태로 정리하고, 당시 검토 후보/실행별 실패·미실행 이력은 보존했다. 실제 앱 소스/API/DB/키를 바꾸지 않는 문서 정리여서 통과한 서버 검증을 반복하지 않는다. Git 게시 결과는 커밋 생성·원격 확인 후 후행 기록한다. merge/운영배포·Native 화면/Penpot·기기/Issue종료는 이번 게시에 포함하지 않는다.

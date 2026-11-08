@@ -1,6 +1,6 @@
 # 원정대 목록 누락과 기존 레이드 참가 유지 — Issue17
 
-최신: [전체18번째 Backend 로컬 반영](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721249386)으로 실제 개발 API·DB0036 지원과 기존 자료 보존/실행 확인을 완료했다. [로컬 집계](../../../engineering/operations/records/roster-participation-local-rollout.json)·[구현 기록](roster-participation-implementation.md)을 따른다. 미커밋·미push·운영 미반영·Native 신규 연결/기기는 미완료, 화면/Penpot·기기는 보류다. **아래 미구현/실서버 미반영 문장은 당시 이력이다.**
+최신: [전체19번째 Backend 게시 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721299358)로 구현 `4c37c2bebbb9eb8950770a240b6e20b7b468399c`·origin push/원격 일치를 확인했다. [전체18번째 로컬0036 반영](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721249386)과 실행 소스247파일이 일치한다. [구현](roster-participation-implementation.md)·[로컬집계](../../../engineering/operations/records/roster-participation-local-rollout.json) 기준이며 운영/Native 신규 연결·기기는 미완료, 화면/Penpot·기기는 보류다. **아래 미구현/미게시/미반영 문장은 당시 이력이다.**
 
 
 2026-11-08 / Backend / [Issue17](https://github.com/heo0328/lostparty-backend/issues/17). 사용자 확정 정책과 현재 구현·협업 경계를 관리한다. 원정대 소멸·개명 확정 계약과 혼동하지 않는다.
