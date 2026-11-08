@@ -2,7 +2,7 @@
   "date": "2026-11-08",
   "issue": 17,
   "branch": "feat/character-lifecycle",
-  "source_status": "Published base implementation4c37c2b/documentation7aea6b7 retained; follow-up source and records are local uncommitted/unpushed",
+  "source_status": "Base4c37c2b retained; follow-up implementation caffaf3405a53be941250132a2b50779943b15f6 committed and pushed to origin/feat/character-lifecycle; historical run fields retain execution-time status",
   "scope": "Owned-roster observation, public presence/warning contracts, exact active/preserved replacement, capability/ACK and common participation interpretation; local uncommitted implementation",
   "runs": [
     {
@@ -233,7 +233,7 @@
     "backend_executed_native_parser": false
   },
   "current_outcome": {
-    "backend_local_implementation": "Two audited follow-up gaps corrected, Native consumption accepted and local API imagece59926c/DB0036 verified; source uncommitted/unpushed",
+    "backend_local_implementation": "Two audited follow-up gaps corrected, Native consumption accepted, local API imagece59926c/DB0036 verified, implementation caffaf3405a53be941250132a2b50779943b15f6 published",
     "final_public_http_and_transaction_tests": "7 PASS",
     "unresolved_test_failures": 0,
     "full_repository_regression_executed": false,
@@ -274,7 +274,7 @@
     "status": "Backend follow-up complete; Native comment24 consumption accepted; actual local API imagece59926c/DB0036 supported; source still uncommitted/unpushed",
     "branch": "feat/character-lifecycle",
     "base_commit": "7aea6b703c9181db7d8a27c3bf455b2253ef3e25",
-    "source_status": "follow-up source uncommitted/unpushed; five modified app files included in actual local API imagece59926c; exact workspace/runtime match verified",
+    "source_status": "Published implementation caffaf3405a53be941250132a2b50779943b15f6 verified on origin; app247files match running local imagece59926c/DB0036",
     "changes": [
       "Active-only current character with exact persisted participation proof; historical management authority retained at active0",
       "Opening/reopening/continuation unselected context permission CHARACTER_SELECTION_REQUIRED; schema-valid command with unselected context rejected409",
@@ -343,9 +343,9 @@
       }
     ],
     "remaining": [
-      "User-directed commit/push/merge remain separate",
       "Native feature implementation/actual connection/device acceptance remain separate",
-      "Production unchanged; folder classification and file moves explicitly held"
+      "main/dev merge and production unchanged; separate user instruction",
+      "Folder classification and file moves explicitly held"
     ],
     "local_development_rollout_performed": true,
     "production_changed": false,
@@ -369,6 +369,15 @@
     "next_owner": "Native feature implementation/connection within user instruction; Backend handles concrete differences",
     "native_acceptance": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722805010",
     "local_rollout_record": "docs/engineering/operations/records/roster-participation-followup-local-rollout.json",
-    "local_rollout_handoff": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722917497"
+    "local_rollout_handoff": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722917497",
+    "publication": {
+      "implementation_commit": "caffaf3405a53be941250132a2b50779943b15f6",
+      "branch": "feat/character-lifecycle",
+      "origin_push": "verified",
+      "remote_sha_match": true,
+      "handoff": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722956197",
+      "app_source_matches_running_image": true,
+      "documentation_followup": "same branch; publication-result records only; no application/server/database changes"
+    }
   }
 }

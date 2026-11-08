@@ -1,5 +1,7 @@
 # 원정대 목록 누락과 기존 레이드 참가 유지 — Issue17
 
+게시 최신: 사용자 지시로 구현 `caffaf3405a53be941250132a2b50779943b15f6`를 origin/feat/character-lifecycle에 push·원격 SHA 일치를 확인했다. [전체27번째 고정 구현 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722956197)·[DEV_LOG](../../../project/DEV_LOG.md) 기준이며 앱247파일은 실제 dev imagece59926c/DB0036과 일치한다. 아래 미커밋·미push/게시 대기는 당시 기록이다. 새 서버/DB 변경·폴더 이동/분류·merge/운영 배포는 하지 않았다.
+
 현재 실행 최신: [Native 전체24번째 보완 수용](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722805010) 확인 후 사용자 지시로 로컬 API imagece59926c·DB0036에 보완을 반영했다. 실행247파일과 검증 소스/두 전체 계약 일치·DB117업무표99행/sequence·키/환경/포트/볼륨 보존·healthy를 확인했다. [실제 반영 집계](../../../engineering/operations/records/roster-participation-followup-local-rollout.json)가 현재 기준이며 아래 미반영·소비 대기는 당시 이력이다. 보완은 미커밋·미push이고 Native 신규 연결/기기·운영은 별도다. 폴더 분류/파일 이동은 하지 않았다.
 
 현재 후속 완료: 사용자 확정 범위에 따라 active0의 완료P 자동 선택을 제거하고 기존 참가/관리 권한을 유지했다. 신규 개설·다음주 참가·재개설의 미선택 permission/409, 명시 선택 자격·stale/원ACK, 혼합 M/P 일정/실제 탈퇴·승계/rollback과 기존 N 누락 자리/noop 보존을 격리 검증했다. [잔여2항목 보완·인계](roster-participation-followup.md)·[검증 집계](roster-participation-verification.json)가 현재 기준이다. 보완은 미커밋·미push·실제 dev 미반영이며 기존 image4ac36fdb/DB0036은 유지한다. 아래 감사/진행 중·확인 대기는 당시 기록이다.

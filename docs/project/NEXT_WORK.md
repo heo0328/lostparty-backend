@@ -1,5 +1,7 @@
 # 다음 실행
 
+Issue17 게시 최신: 사용자 지시로 보완 구현 `caffaf3405a53be941250132a2b50779943b15f6`를 origin/feat/character-lifecycle에 push하고 원격 SHA 일치를 확인했다. [전체27번째 Backend 고정 구현 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722956197) 기준이다. 커밋의 앱247파일은 실제 dev imagece59926c/DB0036과 일치하며 새 서버 반영은 없다. Native26 실행 지원 접수·추가 요청 없음, 다음 Native 기능 구현/연결이다. 아래 미커밋·미push/원격 기준 없음은 당시 기록이며 폴더 이동 보류·미병합/운영 미반영을 유지한다.
+
 Issue17 [전체25번째 Backend 실제 로컬 보완 반영](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722917497) 인계 완료. Native24 소비 수용·실행 지원 대기 해소, 다음 Native 기능 구현/연결이며 소스 미커밋·미push와 폴더 이동 보류를 유지한다.
 
 ## 현재 — Issue17 Native 소비 수용·로컬 개발서버 보완 반영 완료
@@ -9,7 +11,7 @@ Issue17 [전체25번째 Backend 실제 로컬 보완 반영](https://github.com/
 - 현재 지원: active0 완료P 신규 선택 제거·CHARACTER_SELECTION_REQUIRED, 명시 선택의 현재 자격/CAS·원ACK, 혼합M/P 후속 경계 보완이 실제 로컬 소스에 있다. 실행247파일/후보·작업소스 바이트 일치, 두 전체 생성 계약 일치·healthy·실제 listener200/보호된 신규 context401 확인. 실자료 방0으로 신규 참가/교체 쓰기는 실제 dev에서 실행하지 않았고 기존 격리 근거와 구분한다.
 - 보존: DB0036 그대로,117업무표99행/열·sequence·키4개·환경/보안/포트·DB컨테이너/볼륨 동일. migration·DBdump/자료복구·키생성 없음. 기존 유효 환경/키 보관본을 재사용하고 로컬 dump 제외 결정을 유지했다.
 - 다음 Native: 기존 debug 로컬 대상에서 지원되는 계약으로 사용자 지시 범위의 기능 연결/구현을 진행하고 구체 차이가 있으면 같은 Issue에 회신한다. 이미 수용한 계약/격리 시험의 반복 수용·기기 재시험을 요구하지 않는다. Native 신규 DTO/실연결/기기는 미완료이며 Native가 주도한다.
-- 다음 Backend: 구체 차이/추가 요청에 대응. checkout feat/character-lifecycle·HEAD7aea6b7, 보완은 미커밋·미push지만 실제 dev에 반영됐다. 원격 구현은 이전4c37c2b이므로 새 원격 SHA가 있다고 안내하지 않는다. commit/push/merge·운영 배포·자료 변경·Issue 종료는 별도 사용자 지시다.
+- 다음 Backend: 구체 차이/추가 요청에 대응. checkout feat/character-lifecycle, 보완 구현caffaf3을 원격 게시했고 실제 dev imagece59926c와 앱 소스가 같다. 같은 브랜치의 후행 문서는 게시 결과만 기록한다. commit/push/merge·운영 배포·자료 변경·Issue 종료는 별도 사용자 지시다.
 - **사용자 지시: 폴더 분류·파일 위치 이동은 하지 않는다.** 해당 작업에 착수/구조 지침 변경을 하지 않았고 이번 API 반영에도 포함하지 않았다. Penpot 선확인 제외→Native 기능 개발 후 사용자 기기 확인 순서 보고를 유지한다.
 
 ## Issue34·38·46 완료 종료 — 2026-11-08

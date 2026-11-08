@@ -2,7 +2,7 @@
   "date": "2026-11-08",
   "branch": "feat/character-lifecycle",
   "base_head": "7aea6b703c9181db7d8a27c3bf455b2253ef3e25",
-  "source_status": "follow-up uncommitted/unpushed; verified current workspace matches running image",
+  "source_status": "Rollout used uncommitted source; subsequently published as caffaf3405a53be941250132a2b50779943b15f6 on origin/feat/character-lifecycle; app247files equal verified local runtime",
   "native_comment": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722805010",
   "api_image_before": "sha256:4ac36fdb5c46c5a99acc6c00736ecb1723120a5b6d7e15511e60d4203c5d6da1",
   "api_image_after": "sha256:ce59926c2eb63752a0bc69add54ee9239d6d017deff6cf1acaf493d322d9582c",
@@ -85,5 +85,15 @@
   },
   "handoff": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722917497",
   "handoff_comment_order": 25,
-  "next_owner": "Native implementation/connection within user instruction; Backend responds to concrete differences"
+  "next_owner": "Native implementation/connection within user instruction; Backend responds to concrete differences",
+  "publication": {
+    "implementation_commit": "caffaf3405a53be941250132a2b50779943b15f6",
+    "branch": "feat/character-lifecycle",
+    "origin_push": "verified",
+    "remote_sha_match": true,
+    "handoff": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722956197",
+    "app_source_matches_running_image": true,
+    "documentation_followup": "same branch; publication-result records only; no application/server/database changes"
+  },
+  "execution_status_scope": "commit_push_merge=false describes rollout time; subsequent publication is recorded separately above; merge was not performed"
 }

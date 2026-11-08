@@ -1,5 +1,7 @@
 # 이슈 주제별 추적표
 
+Issue17 게시 최신: 사용자 지시로 보완 구현 `caffaf3405a53be941250132a2b50779943b15f6`를 origin/feat/character-lifecycle에 push하고 원격 SHA 일치를 확인했다. [전체27번째 Backend 고정 구현 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722956197) 기준이다. 커밋의 앱247파일은 실제 dev imagece59926c/DB0036과 일치하며 새 서버 반영은 없다. Native26 실행 지원 접수·추가 요청 없음, 다음 Native 기능 구현/연결이다. 아래 미커밋·미push/원격 기준 없음은 당시 기록이며 폴더 이동 보류·미병합/운영 미반영을 유지한다.
+
 Issue17 [전체25번째 Backend 실제 로컬 보완 반영](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722917497) 인계 완료. Native24 소비 수용·실행 지원 대기 해소, 다음 Native 기능 구현/연결이며 소스 미커밋·미push와 폴더 이동 보류를 유지한다.
 
 Issue17 최신: [Native 전체24번째](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722805010)에서 잔여2항목/계약 소비 수용·추가 Backend 요청 없음을 확인했다. 사용자 지시로 실제 dev API imagece59926c·DB0036에 보완을 반영하고247파일/두 계약·자료/키 보존·healthy를 검증했다. 보완 소스는 여전히 미커밋·미push, Native 신규 연결/기기·운영은 별도다. [로컬 반영 집계](../engineering/operations/records/roster-participation-followup-local-rollout.json)·[다음 실행](NEXT_WORK.md) 기준이며 폴더 분류/파일 이동은 사용자 지시로 보류한다. 아래 미반영/소비 대기·이전 실행 이미지는 당시 기록이다.

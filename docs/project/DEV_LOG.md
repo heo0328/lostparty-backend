@@ -1,5 +1,13 @@
 # 영구 개발 이력
 
+## 2026-11-08 Issue17 보완 구현·검증·로컬 반영 기록 commit/push 완료
+
+사용자 직접 지시로 소스5파일·two-cycle 계약 의미 주석·시험/감사/실제 dev 반영 기록18파일을 같은 목적 브랜치 feat/character-lifecycle에서 `caffaf3405a53be941250132a2b50779943b15f6`로 커밋하고 origin에 push했다. 사전 fetch에서 예상하지 못한 원격변경 없이0/0, 사후 ls-remote에서 구현 SHA 일치를 확인했다. 커밋 앱247파일의 byte hash집합은 실제 imagece59926c/DB0036의 검증 실행과 일치한다. 현재 문서는 게시 결과만 후행 기록하며 앱 소스를 변경하지 않는다.
+
+[Native 전체26번째 실행 지원 접수](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722932504)의 선행 대기 해소·추가 Backend 요청 없음도 확인하고 [전체27번째 Backend 고정 구현 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722956197)로 새 SHA·고정 계약/검증·실제반영 링크를 게시했다. 수용/기기·격리 시험을 반복 요청하지 않는다. 문서/링크·diff 검증과 staged18파일에 환경/키/ignored 감사경로·개인키/GitHubtoken signature 없음 확인. 기존 기능/실제 반영 근거를 재사용했고 Git 게시 때문에 서버/DB를 다시 반영하지 않았다.
+
+current feature는 미병합 상태로 보존한다. main/dev 통합·PR/merge·운영/APK 배포·폴더 분류/파일 이동·자료 복구/삭제·Issue 종료는 수행하지 않았다. 다음은 Native 사용자 범위의 기능 구현/연결·기기이며 Backend는 구체 차이에 대응한다. 아래 미커밋·미push 문장은 각 실행 당시 기록이다.
+
 ## 2026-11-08 Issue17 Native24 수용·보완 API 실제 로컬 반영
 
 공식 [전체25번째 Backend 실제 반영 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722917497)를 게시하고 Issue 본문 상단을 현재 실행/다음 Native/미게시 소스로 갱신했다.
