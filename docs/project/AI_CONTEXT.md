@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-2차 구조 정리 완료(2026-11-09): 사용자 지시로1차 개발 현황/정리를34a2a47에 로컬 커밋(push 없음)한 뒤 [2차 계획](../engineering/development/source-layout-phase2-plan.md)을 실행했다. 두 기능 루트에는 init만 두고 HTTP·DTO·ORM·계약과 혼합 업무를 하위 모듈로 분리했다. 두 전체 계약·DDL·수집을 보존했으며 전체 격리 회귀의 최종 고유1921PASS/기존2FAIL·신규 미해결0이다. [검증 기록](../engineering/development/folder-layout-phase2-verification.json)·[다음 실행](NEXT_WORK.md)을 따른다. 2차는 미커밋·미push·실제 dev/운영 미반영이며 Native/기기를 변경하지 않았다.
+폴더 정리·게시 완료(2026-11-09): 사용자 지시로1차34a2a47과 2차 구조 구현/문서6a87e143e651bd9fc51129f969bfd9ced314a5a1을 같은 `feat/character-lifecycle`에서 커밋·push하고 원격 SHA 일치를 확인했다. 게시 상태는 같은 브랜치의 후행 문서 커밋으로 기록한다. [분류·파일 찾기](../engineering/development/source-layout.md#현재-파일을-찾는-순서)·[2차 대응표](../engineering/development/folder-layout-phase2-map.json)·[검증 기록](../engineering/development/folder-layout-phase2-verification.json)을 따른다. 두 계약·DDL·수집을 보존했고 전체 격리 회귀는 최종 고유1921PASS/기존2FAIL·신규 미해결0이다. 게시 전 EOF 서식39개 정리는 AST 동일·최종 후보439파일 바이트 일치로 확인했다. 실제 dev/운영·Native/기기는 미반영이며 [다음 실행](NEXT_WORK.md)을 따른다.
 
 1차 구조 작업 당시 결과(2026-11-09, 후속34a2a47 커밋 전 기록): 같은 feat/character-lifecycle에서 앱 업무95파일·테스트103파일을 기능별로 이동하고 참조/시험 발견을 수정했다. 공개 DTO/라우터·OpenAPI 자원·ORM 모델 경로는 유지하며 외부 계약/업무 로직을 보존했다. 전체1916사례 대조의 최종고유1914PASS·이동 전에도 재현된 기존 기대 불일치2FAIL을 구분한다. [분류 기준](../engineering/development/source-layout.md)·[검증 집계](../engineering/development/folder-layout-verification.json)·[다음 실행](NEXT_WORK.md)을 따른다. 미커밋·미push·실제 dev 미반영이며 기존 imagece59926c/DB0036과 새 파일 경로는 다르다. 아래 폴더 보류·실행파일 일치는 각 이전 구간 기준이다.
 

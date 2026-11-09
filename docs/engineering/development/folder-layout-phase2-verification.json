@@ -3,7 +3,7 @@
   "date": "2026-11-09",
   "branch": "feat/character-lifecycle",
   "baseline_commit": "34a2a4789c62e4beb7dccaef033e655341acb548",
-  "status": "complete with two preexisting expectation failures; phase2 uncommitted/unpushed; dev/production not deployed",
+  "status": "complete with two preexisting expectation failures; implementation and documentation committed/pushed; dev/production not deployed",
   "mapping": {
     "python_sources": 79,
     "moved": 62,
@@ -330,15 +330,6 @@
     "dev_api_db_not_modified": true,
     "migration_history_unchanged": true
   },
-  "not_performed": [
-    "push",
-    "merge",
-    "phase2 commit",
-    "development server rollout",
-    "production deployment",
-    "native/device verification",
-    "data/environment/key changes"
-  ],
   "baseline_source_image_matches_commit": {
     "files": 413,
     "bytes_equal": true
@@ -395,5 +386,31 @@
       "tests/auth/test_auth.py::test_model_migration_consistency",
       "tests/raid_rooms/outcomes/test_record_timestamps.py::test_all_application_tables_have_database_clocks"
     ]
+  },
+  "not_performed_at_regression_completion": [
+    "push",
+    "merge",
+    "phase2 commit",
+    "development server rollout",
+    "production deployment",
+    "native/device verification",
+    "data/environment/key changes"
+  ],
+  "not_performed": [
+    "merge",
+    "development server rollout",
+    "production deployment",
+    "native/device verification",
+    "data/environment/key changes"
+  ],
+  "publication": {
+    "branch": "feat/character-lifecycle",
+    "phase1_commit": "34a2a4789c62e4beb7dccaef033e655341acb548",
+    "implementation_commit": "6a87e143e651bd9fc51129f969bfd9ced314a5a1",
+    "implementation_pushed": true,
+    "remote_sha_verified": "6a87e143e651bd9fc51129f969bfd9ced314a5a1",
+    "publication_record": "subsequent documentation commit on the same branch; see branch HEAD",
+    "server_rollout": false,
+    "force_push_or_shared_history_rewrite": false
   }
 }

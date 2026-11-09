@@ -1,13 +1,14 @@
 # 다음 실행
 
-## 현재 — 1차 로컬 커밋·2차 폴더 정리 완료 / 2차 미커밋·미반영
+## 현재 — 1·2차 폴더 정리·문서 게시 완료 / 서버 미반영
 
-사용자 지시로 개발 현황·1차 정리·2차 계획을 `34a2a4789c62e4beb7dccaef033e655341acb548`에 커밋했다. 같은 `feat/character-lifecycle`에서 [2차 계획](../engineering/development/source-layout-phase2-plan.md)을 실행해 Python77개 이동/분리·init2개 유지·JSON1개 이동을 완료했다. 두 기능 루트에는 init만 남기고 HTTP·DTO·ORM·계약과 실제 업무 책임을 분리했다. [대응표](../engineering/development/folder-layout-phase2-map.json)·[최종 검증](../engineering/development/folder-layout-phase2-verification.json)을 따른다.
+사용자 지시로 개발 현황·1차 정리·2차 계획을 `34a2a4789c62e4beb7dccaef033e655341acb548`에 커밋했고, 후속 게시 승인으로 2차 정리·탐색 안내를 `6a87e143e651bd9fc51129f969bfd9ced314a5a1`에 커밋해 두 커밋을 `origin/feat/character-lifecycle`에 push했다. 구조 구현6a87e14의 원격 SHA 일치를 확인했으며 게시 상태 기록은 같은 브랜치의 후행 문서 커밋으로 남긴다. 같은 `feat/character-lifecycle`에서 [2차 계획](../engineering/development/source-layout-phase2-plan.md)을 실행해 Python77개 이동/분리·init2개 유지·JSON1개 이동을 완료했다. 두 기능 루트에는 init만 남기고 HTTP·DTO·ORM·계약과 실제 업무 책임을 분리했다. [대응표](../engineering/development/folder-layout-phase2-map.json)·[최종 검증](../engineering/development/folder-layout-phase2-verification.json)을 따른다.
 
 - 완료: 앱 Python282개 import, 두 전체 OpenAPI·독립 draft2개·전 패키지 ORM117테이블 DDL/인덱스 동일, 기존1916개+새7개=1923개 수집. 기존3682개 함수/클래스 정의 누락0·경로 정규화 후 기존 변경은 main의 계약 ID 보존 호출1개다. 최종 이미지의 앱/시험/도구439파일은 현재소스와 바이트 일치한다.
 - 전체1923개를8개 독립 tmpfs PostgreSQL로 검증했다. 최초1919PASS/4FAIL 중 정리로 생긴 메타데이터 도우미의 모델 참조 문제2사례를 고치고 각각1PASS(4.03s/3.00s)로 확인했다. 최종 고유1921PASS·이동 전에도 확인된 기존 기대 불일치2FAIL이다. 재실행을 중복 합산하지 않고 신규 미해결 실패0이며 전체 통과로 표시하지 않는다. 모든 시험 컨테이너/네트워크 cleanup0을 확인했다.
 - 기존 후속: 그룹 활동 해제 뒤 기존 참가 거절 기대와 stopped 상태 뒤 미선택 N 개설 허용 기대2개다. 업무 정책/기대값을 정리 작업에서 바꾸지 않았다. 도구63PASS·계약 보존 단위7PASS(업무 수집에도 포함)·문서/동결/경로/diff 검사를 통과했다.
-- 다음 Backend: 사용자 다음 지시/구체 차이에 대응한다. 1차 커밋34a2a47은 로컬에만 있으며 push하지 않았다. **2차 변경은 미커밋·미push·실제 dev/운영 미반영**이다. 초기 커밋 지시로2차 결과까지 자동 커밋하지 않는다. commit/push/merge·서버 반영은 별도 지시이며 개발 API imagece59926c/DB0036·키/환경·Native 소스/기기는 변경하지 않았다. 아래 미커밋/이전 경로·Native 대기는 각 당시 기록이다.
+- 게시 전 새 파일/이동 파일 끝 빈 줄39개를 제거했다. AST 동일·회귀 이미지 대비 차이 재검토와 최종 후보439파일/소스 바이트 일치를 확인했다. 전체 업무 회귀는 기존1921PASS/기존2FAIL 근거를 재사용하며 도구63PASS·계약 보존7PASS·문서/동결/diff를 확인했다. 코드 위치는 [현재 파일 찾기](../engineering/development/source-layout.md#현재-파일을-찾는-순서)와 모집 README를 사용한다.
+- 다음 Backend: 사용자 다음 지시/구체 차이에 대응한다. 1·2차와 후속 문서는 같은 목적 브랜치에 게시했으며 이번 사용자 지시를 후속 작업의 상시 게시 승인으로 확대하지 않는다. **실제 dev/운영 미반영**이며 merge·서버 반영은 별도 지시다. 개발 API imagece59926c/DB0036·키/환경·Native 소스/기기는 변경하지 않았다. 아래 미커밋/미push·이전 경로·Native 대기는 각 당시 기록이다.
 
 ## 1차 정리 결과 — 34a2a47 커밋 전 기록
 
