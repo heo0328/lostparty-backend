@@ -1,5 +1,7 @@
 # 개발 서버 전환·백업·복구 기록
 
+2026-11-09 최신 로컬 실행: [완료 프로필 보정·게시/반영](../../features/recruitment/completion-and-records/completion-profile-contract-fix.md)·[집계](records/completion-profile-contract-verification.json). source16c9cd4/API image101cd82d·DB0036, 앱285파일/282모듈·새 two-cycle 계약864de38b 일치다. 117표355행·구조/sequence·키4개/환경·DB볼륨 보존과 healthy/listener7개/로그오류0을 확인했다. Native 새 계약 연결/기기 인수는 별도이며 운영은 변경하지 않았다. 아래 실행은 각 당시 기록이다.
+
 2026-11-09 최신 로컬 실행: [구조 정리 반영](source-layout-local-rollout.md)·[집계](records/source-layout-local-rollout.json). 게시 소스ccf091d·API image2f86172d/DB0036, 앱285파일/282모듈·두 전체 계약 일치·117표357행/구조/sequence·키4개/환경/DB볼륨 보존·API/DB healthy다. 실제 회원 쓰기·기기 인수·완료 profile 선언 오류 수정은 미완료이며 운영은 변경하지 않았다. 아래 이전 최신 실행/미반영 문장은 각 당시 기록이다.
 
 

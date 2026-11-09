@@ -2,7 +2,7 @@
   "issue": 17,
   "date": "2026-11-09",
   "branch": "feat/character-lifecycle",
-  "status": "verified-awaiting-publication-and-local-apply",
+  "status": "backend-published-local-applied-handoff-complete-native-pending",
   "contract": {
     "supported_operations": 65,
     "added_query_operations": [
@@ -49,8 +49,8 @@
     ],
     "two_cycle_sha256": "864de38b53ec23a305074bb3844a7a603ba1f992815427fdba3e6931793119b6"
   },
-  "published": false,
-  "local_applied": false,
+  "published": true,
+  "local_applied": true,
   "native_device_verified": false,
   "production_changed": false,
   "tests": {
@@ -100,5 +100,55 @@
     "only_ten_optional_query_additions": true,
     "default_bytes_unchanged": true,
     "other_entire_objects_unchanged": true
+  },
+  "source_commit": "16c9cd4b9016a881bbb26c8438f3347049603902",
+  "remote_source_sha_verified": true,
+  "local_rollout": {
+    "status": "applied",
+    "source_commit": "16c9cd4b9016a881bbb26c8438f3347049603902",
+    "image": "sha256:101cd82d630f3897707f411ba6ee444101016bf715c2b975f2db9323c1dabf6f",
+    "previous_image": "sha256:2f86172d390ee70b29ba9617efc7f476c965b425627f6d3d0b21150b2038a763",
+    "started_at_utc": "2026-11-09T08:03:27.543333375Z",
+    "preserved_checks": [
+      "api_config_hash",
+      "keys",
+      "host_env_hash",
+      "db_id",
+      "db_started_at",
+      "db_image",
+      "db_config_hash",
+      "database"
+    ],
+    "preserved": true,
+    "revision": [
+      "0036_roster_presence"
+    ],
+    "tables": 117,
+    "rows": 355,
+    "key_files": 4,
+    "files": 285,
+    "modules": 282,
+    "complete_contracts_equal": true,
+    "http_checks": 7,
+    "log_events": 17,
+    "log_errors": 0,
+    "rollback_used": false,
+    "migration_executed": false,
+    "database_dump_executed": false,
+    "production_changed": false
+  },
+  "issue_handoff": {
+    "ordinal": 36,
+    "side": "Backend",
+    "stage": "completion-profile-contract-fix-local-rollout-handoff",
+    "url": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6735265341",
+    "body_verified": true,
+    "next_owner": "Native",
+    "native_contract_integration": "pending",
+    "user_device_acceptance": "not-executed"
+  },
+  "interruption": {
+    "issue_post_attempt": "previous usage limit stopped automatic approval review; action not executed",
+    "resumed": "same prepared handoff posted once after user resume; 36 comments verified; no duplicate"
   }
 }

@@ -6,7 +6,7 @@
 
 ## 현재 동작
 
-2026-11-09 [완료 프로필 계약 보정·검증/인계](completion-profile-contract-fix.md)를 진행한다. 다음 조사 문서는 수정 전 원인 근거다.
+2026-11-09 [완료 프로필 계약 보정·검증/인계](completion-profile-contract-fix.md)를 완료했다. 구현16c9cd4 게시·로컬API101cd82d 반영·Issue17 전체36번째 Backend 인계 완료이며 다음은 Native 계약 연결/사용자 기기 확인이다. 다음 조사 문서는 수정 전 원인 근거다.
 
 2026-11-09 완료 차단 제보 조사: [Issue17 profile 선언·실제 HTTP 불일치/오류 분류](completion-context-profile-audit.md). 기존 동작과 계약의 누락을 재현한 결과이며, 수정·새 계약·기기 성공은 미완료다.
 
