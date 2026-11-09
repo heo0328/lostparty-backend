@@ -1,6 +1,33 @@
 # 다음 실행
 
-## 현재 — 1·2차 폴더 정리·문서 게시 완료 / 서버 미반영
+## 현재 — Backend 완료 프로필 보정 검증 완료 / 게시·로컬 반영 준비
+
+사용자 승인 범위의 [완료 프로필 계약 보정](../features/recruitment/completion-and-records/completion-profile-contract-fix.md)을 구현·검증했다. 실제 지원65동작과 선언을 일치시키고 선택 query 누락10개만 보완했다. 새 two-cycle SHA256은864de38b…이며 기본 계약/DTO·본문/권한·토큰·DB 동작은 유지한다. 영향 회귀 최종 고유114PASS·도구63PASS, 신규 미해결0이다. 과거 전체1921PASS/기존2FAIL과 합산하지 않는다. 현재 feat/character-lifecycle에서 게시·로컬 API 교체·Issue 인계를 이어간다. Native 전체35번째 오류 안내 결과는 유지하며 새 조회·새 명령의 profile 연결·자동검증과 사용자 기기 확인은 다음 Native 구간이다. 저장 pending/원query·키·본문·snapshot·ACK는 바꾸지 않는다.
+
+다음 Backend는 승인된 관련 commit/push→고정 SHA 확인→후보 검증/로컬 API만 교체→자료·환경 보존/실행 계약 확인→Issue17 인계다. 운영/APK 배포·merge·Issue 종료는 포함하지 않는다. 아래 상태는 각 직전 구간 기록이다.
+
+## 직전 — Native 오류 안내 완료 / Backend 보정 계약 대기
+
+사용자 지시로 현재 게시 소스ccf091d의 구조 정리를 실제 로컬 API image2f86172d에 반영하고 [전체34번째 Backend](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6733877672)로 인계했다. [반영 기록](../engineering/operations/source-layout-local-rollout.md)·[집계](../engineering/operations/records/source-layout-local-rollout.json)를 따른다. 같은 feat/character-lifecycle 유지, 이번 변경은 반영/조사 문서만 미커밋·미push이며 새로운 구현 SHA는 없다.
+
+- 확인: 실제 앱285파일·Python282모듈·두 전체 계약이 후보/현재소스/게시ccf091d와 같다. DB0036·117표357행의 전체 행 hash/구조/sequence·키4개 내용/권한·환경/보안/포트·DB컨테이너/볼륨을 보존했다. API/DB healthy, 실제listener200/401/404·no-store, 새 실행 로그 오류0이다. DB migration·새 키/환경·dump/실자료 쓰기·Native 기기는 변경하지 않았다.
+- 완료 프로필 불일치는 아직 수정 전이고 계약 hash2aeca907도 같다. 구조 기동 성공을 완료 버그 해소로 표시하지 않는다. 기존 전체1921PASS/기존2FAIL과 조사8PASS는 각 해당 범위로 재사용했으며 반복 전체 회귀·실회원 완료/교체/기기 성공으로 확대하지 않는다.
+- [전체35번째 Native 결과](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6733937729): 기존 code/status/request_id 보존·안전한 오류정보 펼침/복사, 완료 ACK/성공 이벤트와 후속 GET 실패 분리·조회만 복구를 일반 앱에 연결했다. Native 자체 전체2832PASS/68s·analyze0, 신규6개 포함이다. 기준7a165ac1 위 변경은 미커밋·미push이고 실제 회원 명령/기기 인수는 미실행이다. 현재 query/schema를 추측 변경하지 않고 Backend의 새 계약/hash·동작 목록/HTTP 검증·개발 적용 결과를 기다린다. 같은 Native 안내/시험 수용을 다시 요청하지 않는다.
+- Native 전체32번째에서 기존 코드/status/request_id 분류 방향을 수용했고, [전체33번째 사용자 승인 구현·Backend 요청](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6733769180)을 접수했다. 실제 제보 request_id/profile의 상관은 아직 확인되지 않았으며 보정 착수의 선행 기기 자료 요청으로 확대하지 않는다.
+- 다음 Backend: 요청된 완료 POST2개의 participation_profile 선언을 실제 허용/검증과 일치시키고 추가8동작을 토큰/CAS/능력표식별 대조·보정한다. 계약 기반 query→실제 HTTP 연결 회귀, 새 OpenAPI hash/고정 소스·변경 동작·개발 반영 결과를 인계한다. 새 wire code/필드 추가·권한 완화·원query/키/본문/ACK 변경·자동 새 명령은 범위 밖이다. Native는 기존 오류 안내를 구현하고 이후 새 계약을 소비한다. 이번 사용자 지시는 현재 소스 로컬 반영으로 마쳤으며 계약 수정·추가 Git 게시·운영 배포·Issue 종료를 완료한 것은 아니다.
+
+
+## 직전 조사 — Issue17 기기 완료 차단 / 계약 보완·기기 재확인 미완료
+
+[전체30번째 Native 제보](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6732895692)에 [전체31번째 Backend 조사·오류 분류](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6733182655)로 회신했다. [조사 원본](../features/recruitment/completion-and-records/completion-context-profile-audit.md)을 따른다. 완료 context GET에는 participation_profile이 선언돼 있으나 공대/개인 완료 POST에는 누락돼 계약 기반 자동 query에서1/0 조합이 발생한다. 서버는 두 POST 모두 profile을 실제 허용하고 토큰/요청 일치를 검사한다.
+
+- 확인: 실제 dev imagece59926c/DB0036의 같은 계약 누락·완료400/CONTEXT_INVALID3건을 읽기 전용으로 확인했다. 실제 사용자 요청의 내부 분기는 로그상 미확정이다. 격리 DB/실제 HTTP에서 두 완료 경로×4조합8PASS/111.54s, 불일치 거절 시 업무 표 hash 보존·합성 통제 재시도/원ACK를 확인했다. 이는 버그 경로 진단이며 수정 완료가 아니다.
+- 추가: 같은 CycleRoute의 선언 누락은 완료2개 포함10동작이다. 다른8개는 단순 조회·CAS 명령·양쪽 선언이 빠진 완료 정정을 구분해 검토한다. 현재 외부 오류 코드/필드 추가보다 기존 code/status/request_id 활용을 권장하며 details.reason 임의 확장은 금지한다.
+- 다음 Native: 기존 오류 분류·결과불명/원pending 보존·향후 계약 소비 범위와 제보 request_id/profile 유무 상관 여부를 필요한 차이만 확인한다. Native의 전체29번째 구현7a165ac1 게시·전체2826PASS는 확인했으나 이번 기기 오류 해소 근거는 아니다.
+- 다음 Backend: 완료2경로 선언/실제 지원 불일치를 보완하고 추가8동작·계약 기반 GET/POST 연결 회귀를 수정 범위로 제안했다. 사용자 구현 지시/소비 범위 협의 후 진행하며 지금은 조사·회신이다. 새 오류 계약/정책은 임의 확정하지 않는다. 앱/실행 OpenAPI·서버/DB·실자료·키/환경·Native 코드는 변경하지 않았고 이번 문서는 미커밋·미push다. 직전 정리의 게시 승인을 새 작업의 자동 게시 승인으로 적용하지 않는다.
+
+
+## 완료 — 1·2차 폴더 정리·문서 게시 / 서버 미반영
 
 사용자 지시로 개발 현황·1차 정리·2차 계획을 `34a2a4789c62e4beb7dccaef033e655341acb548`에 커밋했고, 후속 게시 승인으로 2차 정리·탐색 안내를 `6a87e143e651bd9fc51129f969bfd9ced314a5a1`에 커밋해 두 커밋을 `origin/feat/character-lifecycle`에 push했다. 구조 구현6a87e14의 원격 SHA 일치를 확인했으며 게시 상태 기록은 같은 브랜치의 후행 문서 커밋으로 남긴다. 같은 `feat/character-lifecycle`에서 [2차 계획](../engineering/development/source-layout-phase2-plan.md)을 실행해 Python77개 이동/분리·init2개 유지·JSON1개 이동을 완료했다. 두 기능 루트에는 init만 남기고 HTTP·DTO·ORM·계약과 실제 업무 책임을 분리했다. [대응표](../engineering/development/folder-layout-phase2-map.json)·[최종 검증](../engineering/development/folder-layout-phase2-verification.json)을 따른다.
 

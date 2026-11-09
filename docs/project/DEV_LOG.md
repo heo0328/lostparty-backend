@@ -1,5 +1,37 @@
 # 영구 개발 이력
 
+## 2026-11-09 Issue17 완료 프로필 선언 보정·격리 검증 완료
+
+사용자 승인 범위의 [완료 프로필 계약 보정](../features/recruitment/completion-and-records/completion-profile-contract-fix.md)을 구현·검증했다. 실제 지원65동작과 선언을 일치시키고 선택 query 누락10개만 보완했다. 새 two-cycle SHA256은864de38b…이며 기본 계약/DTO·본문/권한·토큰·DB 동작은 유지한다. 영향 회귀 최종 고유114PASS·도구63PASS, 신규 미해결0이다. 과거 전체1921PASS/기존2FAIL과 합산하지 않는다. 현재 feat/character-lifecycle에서 게시·로컬 API 교체·Issue 인계를 이어간다. Native 전체35번째 오류 안내 결과는 유지하며 새 조회·새 명령의 profile 연결·자동검증과 사용자 기기 확인은 다음 Native 구간이다. 저장 pending/원query·키·본문·snapshot·ACK는 바꾸지 않는다.
+
+신규17개는 초기 middleware/동결 계약 도우미 준비 문제를 수정한 뒤 완주16PASS/1FAIL(209.47s), 혼합 POST의 기존 토큰 선검증 기대값을 바로잡고 해당1PASS(21.17s)로 최종 고유17PASS다. 기존 참가/beta42PASS(484.11s), 완료/정정/일정55PASS(720.18s), 도구63PASS(0.613s), 의존성 runtime31/test43·문서/동결 검사 통과다. 새 런타임 제한을 추가/완화하지 않았다. 모든 격리 DB 프로젝트는 cleanup exit0이며 실제 개발 DB를 시험 자료로 사용하지 않았다. 현재 후보285파일/282모듈·두 계약이 현재소스와 같고 실제 로컬 교체/게시 인계는 다음 실행이다. [집계](../engineering/operations/records/completion-profile-contract-verification.json)를 따른다.
+
+## 2026-11-09 Issue17 Native 오류 안내 구현 결과 수신
+
+[전체35번째 Native](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6733937729)를 실제 전체 댓글35개 조회로 확인했다. code/status/request_id의 실제 sender→controller 전달과 안전한 진단정보 펼침/복사, 회원/환경/오류 전환 정리, 완료 ACK/성공 이벤트와 후속 GET 실패 분리·조회만 복구를 일반 앱에 연결했다고 보고했다. 최종 전체Flutter2832PASS/68초·analyze0·변경Dart11파일포맷/diff 통과는 Native 자체 결과다. 중간2831PASS/1FAIL과 직접69/105PASS는 최종 수에 합산하지 않는다.
+
+기준7a165ac1 위 변경은 미커밋·미push, 실제 회원 완료/기기 화면·복사는 미확인이다. 현재 계약/query를 임의로 변경하지 않았고 Backend의 완료2경로/추가8동작 대조·보정·새 계약/hash·실제HTTP 연결 검증·개발 반영 인계가 다음 선행 조건임을 확인했다. 구조 배포2f86172d/DB0036을 완료 오류 해결로 간주하지 않는다. 현재 상태 문서에 반영했으며 변화 없는 접수 댓글·같은 Native 시험 반복 요청은 작성하지 않았다. 이번은 회신 확인/문서만이고 Backend 코드/OpenAPI·서버/DB 변경·commit/push·기기 시험은 없다.
+
+## 2026-11-09 최신 구조 소스 실제 로컬 API 반영 완료
+
+사용자 지시로 같은 feat/character-lifecycle의 게시ccf091d를 실제 로컬 API imagece59926c→2f86172d390ee70b29ba9617efc7f476c965b425627f6d3d0b21150b2038a763에 반영했다. [반영 기록](../engineering/operations/source-layout-local-rollout.md)·[비민감 집계](../engineering/operations/records/source-layout-local-rollout.json)·[전체34번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6733877672)를 남겼다. Native32 오류 분류 수용·33 사용자 승인 구현/Backend 보정 요청도 접수했다. 이번은 현재 구조 실행 기준을 맞춘 것으로 해당 계약 오류는 수정하지 않았다.
+
+직전 서비스의 Windows/WSL Compose 경로 표기가 Linux Path와 달라 사전 검사에서 걸린 것을 표기 정규화로 확인했다. 기존 두 Compose 입력과 환경/command가 같고 docker/docker.exe가 같은 로컬 엔진임을 확인해 기존 docker.exe Compose 방식으로 API만 재생성했다. DB 서비스는 중단/재생성하지 않았다. 후보에서 전체모듈282/import·앱285파일/두 계약, 실제 반영 후 후보/소스/게시SHA/계약 동일을 확인했다.
+
+read-only DB snapshot의117업무표357행 전체 hash·DB0036·컬럼/제약/index/sequence, 키4개 내용/권한/소유자·호스트.env·환경/포트/보안/mount·DB ID/image/start/볼륨이 같다. 새키/접속설정·migration·dump/실자료복구·자료삭제 없이 기존 유효 보관본과 로컬 DBdump 제외 결정을 재사용했다. 실제localhost health/주차200·경고GET/두완료POST의무인증401/ACCESS_INVALID/no-store·문서404, 새 실행 로그48이벤트 오류0·healthy를 확인했다. 실제 회원 완료/교체 쓰기와 기기 인수·장시간 성능은 실행하지 않았다.
+
+실행 계약은 기존 two-cycle SHA2aeca907이며 완료 profile 선언 누락은 그대로다. 기존 격리 전체1921PASS/기존2FAIL·조사8PASS는 각 근거대로 재사용했으며 오류 해결/새 자동회귀 통과로 포장하지 않는다. 다음 Backend는 Native33의 완료2+추가8동작 계약 보정·실제query연결회귀·새hash 인계, Native는 기존오류안내와후속소비다. 이번 반영/조사 문서는 미커밋·미push이며 코드/계약 신규변경·추가commit/push/merge·운영/APK배포·기기조작·Issue종료는 없다. 본문 상단에 실제 반영과 미해결 구분·다음 담당을 갱신했다.
+
+## 2026-11-09 Issue17 기기 완료 CONTEXT_INVALID 조사·오류 분류 회신
+
+[Native 전체30번째](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6732895692)를 확인하고 [Backend 전체31번째](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6733182655)에 원인 경로·실제/선언 지원 차이·HTTP/code/미반영/결과불명·권장 행동을 회신했다. 같은 Issue 본문 상단에 조사/미수정·다음 담당 상태도 반영했다. [조사 원본](../features/recruitment/completion-and-records/completion-context-profile-audit.md)에 근거와 초기 준비 오류·한계를 보존한다.
+
+현재ccf091d 코드와 실제 dev imagece59926c/DB0036의 GET command-context profile 있음/두 완료 POST profile 선언 없음·실제 허용과 토큰 검사 불일치를 확인했다. live 로그의 완료400/CONTEXT_INVALID3건은 안전한 request_id/status/code만 확인했으며 내부 분기·제보 기기 상관은 미확정이다. 완료2개 포함CycleRoute10동작의 선언 누락을 확인했지만 다른8개 모두가 같은 토큰 오류라고 단정하지 않았다.
+
+처음 같은 캐릭터로 여러 방을 준비하다 기존 WEEKLY_ALREADY_PARTICIPATING 가드로2FAIL/34.73s(a8f6647ddf)를 기록했다. 각 profile 조합을 독립 fixture로 바꿔4c6260449d에서 공대/개인×4조합8PASS/111.54s(전체118.0s)를 확인했고 두 프로젝트 cleanup0이다. 불일치400 후 업무 표 hash 불변·합성 통제 재시도와원ACK를 확인했지만 실제 pending query 수정 인계가 아니다. 앱·저장소 시험 코드는 수정하지 않고 임시 조사 이미지에서 수행했다. 버그 경로를 확인한 진단 통과를 기능 해결/전체 회귀/기기 성공으로 표시하지 않는다.
+
+새 오류 code/필드 없이 기존 코드와status/request_id 활용을 우선 권장하고 strict ErrorDetails의reason 추가는 하지 않았다. 선택적인 별도 profile mismatch코드/진단 로그·수정 범위는 미합의·미구현이다. 기능 코드/OpenAPI·서버/DB·실자료·키/환경·Native 로컬/원격 소스 수정·commit/push/merge·배포·Issue 종료는 없고 이번 문서는 미커밋·미push다. 과거 Native 전체29번째의7a165ac1 원격 게시/기기 자료 후속도 확인했다. 다음은 Native 소비/최소 상관 검토와 사용자 구현 범위 지시 후 Backend 보완이다.
+
 ## 2026-11-09 1·2차 폴더 정리·문서 commit/push 완료
 
 사용자 직접 게시 지시로1차34a2a47과 2차 구현·문서6a87e143e651bd9fc51129f969bfd9ced314a5a1을 `origin/feat/character-lifecycle`에 정상 push하고 원격 SHA 일치를 확인했다. 게시 전 스테이징 검사에서 파일 끝 빈 줄 경고를 확인해 새/이동 파일39개의 EOF만 정리했다. 아직 게시되지 않은 이번 새 로컬 커밋만 보완했으며 공유 이력 재작성·force push는 하지 않았다. 게시 시점에 원격 신규 변경은 없었다.

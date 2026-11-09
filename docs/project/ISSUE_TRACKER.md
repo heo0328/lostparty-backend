@@ -1,5 +1,15 @@
 # 이슈 주제별 추적표
 
+Issue17 현재 — Backend 계약 보정 검증 완료 / 게시·로컬 반영 준비. 사용자 승인 범위의 [완료 프로필 계약 보정](../features/recruitment/completion-and-records/completion-profile-contract-fix.md)을 구현·검증했다. 실제 지원65동작과 선언을 일치시키고 선택 query 누락10개만 보완했다. 새 two-cycle SHA256은864de38b…이며 기본 계약/DTO·본문/권한·토큰·DB 동작은 유지한다. 영향 회귀 최종 고유114PASS·도구63PASS, 신규 미해결0이다. 과거 전체1921PASS/기존2FAIL과 합산하지 않는다. 현재 feat/character-lifecycle에서 게시·로컬 API 교체·Issue 인계를 이어간다. Native 전체35번째 오류 안내 결과는 유지하며 새 조회·새 명령의 profile 연결·자동검증과 사용자 기기 확인은 다음 Native 구간이다. 저장 pending/원query·키·본문·snapshot·ACK는 바꾸지 않는다.
+
+아래 이전 상태·미커밋·기존 계약 표기는 당시 기록이다.
+
+Issue17 최신 수신: [Native 전체35번째](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6733937729)가 오류 안내/진단정보 보존·완료 성공/조회 오류 분리 구현과 자체2832PASS/analyze0을 보고했다. 미커밋·미push·기기 미확인이며 완료 차단 해결은 아니다. 현재 다음 담당 Backend는 전체33번째 요청에 따른 완료2/추가8동작 계약 대조/보정·새 hash/HTTP 검증·개발 적용 인계다. Native는 보정 계약 소비 대기이며 반복 안내 시험을 요구하지 않는다. [NEXT_WORK](NEXT_WORK.md)를 따른다.
+
+Issue17 현재: [Native 전체32번째](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6733447639)의 오류 분류 수용과 [전체33번째 사용자 승인 Backend 계약 보정 요청](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6733769180)을 접수했다. 사용자 별도 로컬 업데이트 지시로 [Backend 전체34번째 반영](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6733877672)에서 구조 소스ccf091d/API2f86172d·DB0036 보존/실행 일치를 확인했다. 완료 profile 오류 수정·새 계약·기기 해소는 미완료다. 다음 Backend는 완료2/추가8동작 보정·계약 연결 검증과 새hash 인계이며 Native는 오류 안내/후속 계약 소비다. [현재 실행](NEXT_WORK.md)·[반영 기록](../engineering/operations/source-layout-local-rollout.md)을 따른다. 아래 미반영/조사 단계 문장은 당시 기록이다.
+
+Issue17 현재: [Native 전체30번째 완료 차단 제보](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6732895692)에 [Backend 전체31번째 조사·오류 분류](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6733182655)를 회신했다. 완료 profile 선언 누락 경로8PASS 재현이며 기능 수정은 아니다. 다음 Backend는 계약/연결 회귀 보완 범위, Native는 오류 분류·최소 요청 상관/향후 소비 검토다. [조사 원본](../features/recruitment/completion-and-records/completion-context-profile-audit.md)·[현재 실행](NEXT_WORK.md)을 따른다. OPEN 유지, 실제 서버/DB·코드/계약·기기 해소 미완료다. Native 전체29번째의 구현7a165ac1 게시도 확인했으며 아래 추가 Backend 요청 없음·Native 미게시 문장은 각 당시 상태다.
+
 Issue17 게시 최신: 사용자 지시로 보완 구현 `caffaf3405a53be941250132a2b50779943b15f6`를 origin/feat/character-lifecycle에 push하고 원격 SHA 일치를 확인했다. [전체27번째 Backend 고정 구현 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722956197) 기준이다. 커밋의 앱247파일은 실제 dev imagece59926c/DB0036과 일치하며 새 서버 반영은 없다. Native26 실행 지원 접수·추가 요청 없음, 다음 Native 기능 구현/연결이다. 아래 미커밋·미push/원격 기준 없음은 당시 기록이며 폴더 이동 보류·미병합/운영 미반영을 유지한다.
 
 Issue17 [전체25번째 Backend 실제 로컬 보완 반영](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722917497) 인계 완료. Native24 소비 수용·실행 지원 대기 해소, 다음 Native 기능 구현/연결이며 소스 미커밋·미push와 폴더 이동 보류를 유지한다.

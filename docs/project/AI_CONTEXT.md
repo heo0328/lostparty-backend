@@ -1,5 +1,15 @@
 # LostParty Backend 기능 지도
 
+Issue17 현재 — Backend 계약 보정 검증 완료 / 게시·로컬 반영 준비. 사용자 승인 범위의 [완료 프로필 계약 보정](../features/recruitment/completion-and-records/completion-profile-contract-fix.md)을 구현·검증했다. 실제 지원65동작과 선언을 일치시키고 선택 query 누락10개만 보완했다. 새 two-cycle SHA256은864de38b…이며 기본 계약/DTO·본문/권한·토큰·DB 동작은 유지한다. 영향 회귀 최종 고유114PASS·도구63PASS, 신규 미해결0이다. 과거 전체1921PASS/기존2FAIL과 합산하지 않는다. 현재 feat/character-lifecycle에서 게시·로컬 API 교체·Issue 인계를 이어간다. Native 전체35번째 오류 안내 결과는 유지하며 새 조회·새 명령의 profile 연결·자동검증과 사용자 기기 확인은 다음 Native 구간이다. 저장 pending/원query·키·본문·snapshot·ACK는 바꾸지 않는다.
+
+아래 이전 상태·미커밋·기존 계약 표기는 당시 기록이다.
+
+Issue17 Native 안내 파트 완료 수신(2026-11-09): [전체35번째 Native](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6733937729)에서 기존 오류 코드/status/request_id 보존·완료 성공/후속조회 실패 분리를 일반 앱에 구현하고 자체2832PASS/analyze0을 보고했다. 변경은 미커밋·미push·실기기 미확인이다. 다음 선행 조건은 Backend 완료2+추가8동작의 계약 보정·query→실제HTTP 검증·고정 계약/hash와 개발 적용 인계다. 현재 로컬API2f86172d는 구조 반영만 됐고 완료 profile 오류는 미수정이다. [현재 실행](NEXT_WORK.md)을 따른다.
+
+현재 로컬 반영(2026-11-09): 사용자 지시로 게시ccf091d 구조를 실제 API image2f86172d/DB0036에 반영했다. 앱285파일·282모듈/두 계약·117표357행/sequence·키/환경/DB볼륨 보존·healthy를 확인했다. [반영 집계](../engineering/operations/records/source-layout-local-rollout.json)·[Backend 전체34번째](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6733877672)·[NEXT_WORK](NEXT_WORK.md)를 따른다. 완료 profile 선언 오류는 아직 그대로다. Native 전체32번째 오류 분류 수용 및 전체33번째 사용자 승인 계약 보정 요청을 접수했으며 다음 Backend는 완료2+추가8동작·계약 연결 회귀/새hash 인계다. 이번은 미커밋 문서·로컬 반영이며 신규 코드/계약·운영·기기 인수는 아니다. 아래 미반영/조사만 상태는 각 이전 기록이다.
+
+Issue17 완료 차단 조사(2026-11-09): Native 전체30번째에 [Backend 전체31번째 조사 회신](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6733182655)을 게시했다. 완료 GET/POST의 profile 선언 불일치 경로8PASS 재현, 실제 완료400로그 확인·내부 분기 미확정이다. [조사/오류 분류](../features/recruitment/completion-and-records/completion-context-profile-audit.md)와 [NEXT_WORK](NEXT_WORK.md)를 따른다. 기능 수정·새 계약·기기 해소는 미완료이며 이번은 미커밋 문서/조사다. 과거 전체29번째의 Native7a165ac1 원격 게시를 확인했고 아래 Native 미게시/추가 요청 없음은 각 이전 기록이다.
+
 폴더 정리·게시 완료(2026-11-09): 사용자 지시로1차34a2a47과 2차 구조 구현/문서6a87e143e651bd9fc51129f969bfd9ced314a5a1을 같은 `feat/character-lifecycle`에서 커밋·push하고 원격 SHA 일치를 확인했다. 게시 상태는 같은 브랜치의 후행 문서 커밋으로 기록한다. [분류·파일 찾기](../engineering/development/source-layout.md#현재-파일을-찾는-순서)·[2차 대응표](../engineering/development/folder-layout-phase2-map.json)·[검증 기록](../engineering/development/folder-layout-phase2-verification.json)을 따른다. 두 계약·DDL·수집을 보존했고 전체 격리 회귀는 최종 고유1921PASS/기존2FAIL·신규 미해결0이다. 게시 전 EOF 서식39개 정리는 AST 동일·최종 후보439파일 바이트 일치로 확인했다. 실제 dev/운영·Native/기기는 미반영이며 [다음 실행](NEXT_WORK.md)을 따른다.
 
 1차 구조 작업 당시 결과(2026-11-09, 후속34a2a47 커밋 전 기록): 같은 feat/character-lifecycle에서 앱 업무95파일·테스트103파일을 기능별로 이동하고 참조/시험 발견을 수정했다. 공개 DTO/라우터·OpenAPI 자원·ORM 모델 경로는 유지하며 외부 계약/업무 로직을 보존했다. 전체1916사례 대조의 최종고유1914PASS·이동 전에도 재현된 기존 기대 불일치2FAIL을 구분한다. [분류 기준](../engineering/development/source-layout.md)·[검증 집계](../engineering/development/folder-layout-verification.json)·[다음 실행](NEXT_WORK.md)을 따른다. 미커밋·미push·실제 dev 미반영이며 기존 imagece59926c/DB0036과 새 파일 경로는 다르다. 아래 폴더 보류·실행파일 일치는 각 이전 구간 기준이다.

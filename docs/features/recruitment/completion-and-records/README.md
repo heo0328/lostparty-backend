@@ -6,6 +6,10 @@
 
 ## 현재 동작
 
+2026-11-09 [완료 프로필 계약 보정·검증/인계](completion-profile-contract-fix.md)를 진행한다. 다음 조사 문서는 수정 전 원인 근거다.
+
+2026-11-09 완료 차단 제보 조사: [Issue17 profile 선언·실제 HTTP 불일치/오류 분류](completion-context-profile-audit.md). 기존 동작과 계약의 누락을 재현한 결과이며, 수정·새 계약·기기 성공은 미완료다.
+
 선택 실제T의 command-context는 현재 권한·Round/Assignment·원장·예약·시각과 영향의 snapshot을 제공한다. 현재주와 수요일10시 이후 조건을 확인하며, 개인 완료는 본인 item, 전체 완료는 실제 해당T 공대장과 명령 범위를 검사한다. 다른 item/T의 완료와 자료를 보존한다.
 
 본인 완료 정정은 별도 completion-correction-context와 POST를 사용한다. 실제 manual/party 근거·ownership·원장/대상 revision·source digest·서명 context를 확인하고 정정 감사·투영·원ACK를 원자적으로 저장한다. 다른 완료·과거 Assignment·참가·예약을 되살리지 않는다. 원pending의 실제T/C와 원ACK의 당시 시각을 대조하며 현재C를 덮어쓰지 않는다.

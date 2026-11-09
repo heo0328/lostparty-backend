@@ -37830,6 +37830,18 @@
               ]
             },
             "description": "Required for new writes on DB0035; omitted legacy writes only recover original stored ACKs."
+          },
+          {
+            "name": "participation_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "remaining-active-1"
+              ]
+            },
+            "description": "Explicit opt-in; omitted preserves default response."
           }
         ],
         "responses": {
@@ -38073,6 +38085,18 @@
               ]
             },
             "description": "Required for new writes on DB0035; omitted legacy writes only recover original stored ACKs."
+          },
+          {
+            "name": "participation_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "remaining-active-1"
+              ]
+            },
+            "description": "Explicit opt-in; omitted preserves default response."
           }
         ],
         "requestBody": {
@@ -38598,6 +38622,18 @@
               ]
             },
             "description": "Required for new writes on DB0035; omitted legacy writes only recover original stored ACKs."
+          },
+          {
+            "name": "participation_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "remaining-active-1"
+              ]
+            },
+            "description": "Explicit opt-in; omitted preserves default response."
           }
         ],
         "responses": {
@@ -38841,6 +38877,18 @@
               ]
             },
             "description": "Required for new writes on DB0035; omitted legacy writes only recover original stored ACKs."
+          },
+          {
+            "name": "participation_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "remaining-active-1"
+              ]
+            },
+            "description": "Explicit opt-in; omitted preserves default response."
           }
         ],
         "requestBody": {
@@ -39359,6 +39407,18 @@
               ]
             },
             "description": "Required for new writes on DB0035; omitted legacy writes only recover original stored ACKs."
+          },
+          {
+            "name": "participation_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "remaining-active-1"
+              ]
+            },
+            "description": "Explicit opt-in; omitted preserves default response."
           }
         ],
         "requestBody": {
@@ -40188,6 +40248,18 @@
               ]
             },
             "description": "Required for new writes on DB0035; omitted legacy writes only recover original stored ACKs."
+          },
+          {
+            "name": "participation_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "remaining-active-1"
+              ]
+            },
+            "description": "Explicit opt-in; omitted preserves default response."
           }
         ],
         "requestBody": {
@@ -40441,6 +40513,18 @@
               ]
             },
             "description": "Required for new writes on DB0035; omitted legacy writes only recover original stored ACKs."
+          },
+          {
+            "name": "participation_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "remaining-active-1"
+              ]
+            },
+            "description": "Explicit opt-in; omitted preserves default response."
           }
         ],
         "requestBody": {
@@ -40997,6 +41081,18 @@
               ]
             },
             "description": "Required for new writes on DB0035; omitted legacy writes only recover original stored ACKs."
+          },
+          {
+            "name": "participation_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "remaining-active-1"
+              ]
+            },
+            "description": "Explicit opt-in; omitted preserves default response."
           }
         ],
         "requestBody": {
@@ -43651,6 +43747,18 @@
               ]
             },
             "description": "Required for new writes on DB0035; omitted legacy writes only recover original stored ACKs."
+          },
+          {
+            "name": "participation_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "remaining-active-1"
+              ]
+            },
+            "description": "Explicit opt-in; omitted preserves default response."
           }
         ],
         "responses": {
@@ -43903,6 +44011,18 @@
               ]
             },
             "description": "Required for new writes on DB0035; omitted legacy writes only recover original stored ACKs."
+          },
+          {
+            "name": "participation_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "remaining-active-1"
+              ]
+            },
+            "description": "Explicit opt-in; omitted preserves default response."
           }
         ],
         "requestBody": {

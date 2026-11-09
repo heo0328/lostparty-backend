@@ -1,0 +1,104 @@
+{
+  "issue": 17,
+  "date": "2026-11-09",
+  "branch": "feat/character-lifecycle",
+  "status": "verified-awaiting-publication-and-local-apply",
+  "contract": {
+    "supported_operations": 65,
+    "added_query_operations": [
+      [
+        "get",
+        "/v2/me/characters/{character_id}/raid-weekly-states/{raid_id}/completion-correction-context"
+      ],
+      [
+        "get",
+        "/v2/me/raid-schedule-overlaps"
+      ],
+      [
+        "get",
+        "/v2/raid-schedule-groups/{group_id}/candidates"
+      ],
+      [
+        "post",
+        "/v2/me/characters/{character_id}/raid-weekly-states/{raid_id}/completion-corrections"
+      ],
+      [
+        "post",
+        "/v2/raid-rounds/{round_id}/completion"
+      ],
+      [
+        "post",
+        "/v2/raid-rounds/{round_id}/personal-completion"
+      ],
+      [
+        "post",
+        "/v2/raid-schedule-groups/{group_id}/selections"
+      ],
+      [
+        "post",
+        "/v2/raid-schedule-proposals/{proposal_id}/responses"
+      ],
+      [
+        "post",
+        "/v2/raid-sessions/{session_id}/participation-confirmations"
+      ],
+      [
+        "put",
+        "/v2/me/characters/{character_id}/raid-weekly-states/{raid_id}/manual-completion"
+      ]
+    ],
+    "two_cycle_sha256": "864de38b53ec23a305074bb3844a7a603ba1f992815427fdba3e6931793119b6"
+  },
+  "published": false,
+  "local_applied": false,
+  "native_device_verified": false,
+  "production_changed": false,
+  "tests": {
+    "new_profile_http": {
+      "unique_cases": 17,
+      "first_complete_run": {
+        "passed": 16,
+        "failed": 1,
+        "seconds": 209.47
+      },
+      "failure": "test expectation: command token/profile validation precedes capability check; runtime unchanged",
+      "corrected_recheck": {
+        "passed": 1,
+        "seconds": 21.17
+      },
+      "final_unique_passed": 17
+    },
+    "participation_beta_regression": {
+      "passed": 42,
+      "seconds": 484.11
+    },
+    "outcome_correction_schedule_regression": {
+      "passed": 55,
+      "seconds": 720.18
+    },
+    "tools": {
+      "passed": 63,
+      "seconds": 0.613
+    },
+    "historical_full_suite": {
+      "passed": 1921,
+      "known_failures": 2,
+      "rerun_this_work": false,
+      "not_added_to_current_count": true
+    },
+    "current_unique_passed": 114,
+    "current_unique_failures": 0,
+    "isolated_projects_cleaned": true
+  },
+  "candidate": {
+    "image": "sha256:101cd82d630f3897707f411ba6ee444101016bf715c2b975f2db9323c1dabf6f",
+    "app_files": 285,
+    "imported_modules": 282,
+    "complete_contracts_match": true
+  },
+  "contract_delta": {
+    "only_ten_optional_query_additions": true,
+    "default_bytes_unchanged": true,
+    "other_entire_objects_unchanged": true
+  }
+}

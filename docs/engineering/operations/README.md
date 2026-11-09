@@ -1,5 +1,8 @@
 # 개발 서버 전환·백업·복구 기록
 
+2026-11-09 최신 로컬 실행: [구조 정리 반영](source-layout-local-rollout.md)·[집계](records/source-layout-local-rollout.json). 게시 소스ccf091d·API image2f86172d/DB0036, 앱285파일/282모듈·두 전체 계약 일치·117표357행/구조/sequence·키4개/환경/DB볼륨 보존·API/DB healthy다. 실제 회원 쓰기·기기 인수·완료 profile 선언 오류 수정은 미완료이며 운영은 변경하지 않았다. 아래 이전 최신 실행/미반영 문장은 각 당시 기록이다.
+
+
 ## 2026-11-07 최신 — 환경 복구·운영 기준본 보관
 
 [백업 원장·사용자 안내 시점](backup-and-recovery.md)과 [실행 집계](records/backup-recovery-2026-11-07.json)가 현재 기준이다. 로컬 two-cycle/DB0035·Google 로그인 복구, 운영v2.0.0의 온라인 dump/설정/기존 키·복구 구성과 서버 밖 PC 사본의 읽기·해시 일치를 확인했다. 실제 서비스 복원·정기 자동화·외장 매체 보관은 미확인/미실행이다. [복구·검증 이력](../../project/DEV_LOG.md#development-recovery-20261107)을 따른다. 아래 실행 소스/경로 수·DB 단계는 각 전환 당시 이력이다.

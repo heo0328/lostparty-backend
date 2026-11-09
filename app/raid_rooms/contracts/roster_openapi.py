@@ -4,6 +4,77 @@ import json
 from pathlib import Path
 
 
+# Reviewed method/template pairs. Keep query opt-in separate from read metadata.
+# Runtime/query parity is checked for every route; subclasses with no opt-in stay out.
+PARTICIPATION_OPERATIONS = frozenset({
+    ('get', '/v2/groups/{group_id}/raid-room-character-candidates'),
+    ('get', '/v2/groups/{group_id}/raid-room-member-projections'),
+    ('get', '/v2/me/characters/{character_id}/raid-weekly-states/{raid_id}/completion-correction-context'),
+    ('get', '/v2/me/raid-room-applications'),
+    ('get', '/v2/me/raid-room-character-issues'),
+    ('get', '/v2/me/raid-room-creation-context'),
+    ('get', '/v2/me/raid-room-filter-context'),
+    ('get', '/v2/me/raid-room-memberships'),
+    ('get', '/v2/me/raid-rooms/{room_id}/availability-submission'),
+    ('get', '/v2/me/raid-rooms/{room_id}/common-context'),
+    ('get', '/v2/me/raid-rooms/{room_id}/continuation-choices'),
+    ('get', '/v2/me/raid-rooms/{room_id}/continuation-context'),
+    ('get', '/v2/me/raid-rooms/{room_id}/leadership-transfer-context'),
+    ('get', '/v2/me/raid-rooms/{room_id}/opening-context'),
+    ('get', '/v2/me/raid-rooms/{room_id}/participation-cancellation-context'),
+    ('get', '/v2/me/raid-rooms/{room_id}/plan'),
+    ('get', '/v2/me/raid-rooms/{room_id}/schedule-context'),
+    ('get', '/v2/me/raid-rooms/{room_id}/settings'),
+    ('get', '/v2/me/raid-schedule-overlaps'),
+    ('get', '/v2/raid-room-applications/{application_id}'),
+    ('get', '/v2/raid-rooms'),
+    ('get', '/v2/raid-rooms/{room_id}'),
+    ('get', '/v2/raid-rooms/{room_id}/admission-character-candidates'),
+    ('get', '/v2/raid-rooms/{room_id}/admission-context'),
+    ('get', '/v2/raid-rooms/{room_id}/applications'),
+    ('get', '/v2/raid-rooms/{room_id}/command-context'),
+    ('get', '/v2/raid-rooms/{room_id}/detail'),
+    ('get', '/v2/raid-rooms/{room_id}/member-removal-context'),
+    ('get', '/v2/raid-rooms/{room_id}/membership-action-context'),
+    ('get', '/v2/raid-rooms/{room_id}/personal-completion-departure-context'),
+    ('get', '/v2/raid-schedule-groups/{group_id}/candidates'),
+    ('post', '/v2/me/characters/{character_id}/raid-weekly-states/{raid_id}/completion-corrections'),
+    ('post', '/v2/raid-room-applications/{application_id}/approve'),
+    ('post', '/v2/raid-room-applications/{application_id}/reject'),
+    ('post', '/v2/raid-room-applications/{application_id}/withdraw'),
+    ('post', '/v2/raid-rooms'),
+    ('post', '/v2/raid-rooms/search'),
+    ('post', '/v2/raid-rooms/{room_id}/applications'),
+    ('post', '/v2/raid-rooms/{room_id}/character-changes'),
+    ('post', '/v2/raid-rooms/{room_id}/continuation-declines'),
+    ('post', '/v2/raid-rooms/{room_id}/continuation-participations'),
+    ('post', '/v2/raid-rooms/{room_id}/end'),
+    ('post', '/v2/raid-rooms/{room_id}/join'),
+    ('post', '/v2/raid-rooms/{room_id}/leadership-transfers'),
+    ('post', '/v2/raid-rooms/{room_id}/leave'),
+    ('post', '/v2/raid-rooms/{room_id}/member-removals'),
+    ('post', '/v2/raid-rooms/{room_id}/membership-actions'),
+    ('post', '/v2/raid-rooms/{room_id}/participation-cancellations'),
+    ('post', '/v2/raid-rooms/{room_id}/personal-completion-departures'),
+    ('post', '/v2/raid-rooms/{room_id}/recruitment-openings'),
+    ('post', '/v2/raid-rooms/{room_id}/removals'),
+    ('post', '/v2/raid-rooms/{room_id}/schedule-proposals'),
+    ('post', '/v2/raid-rooms/{room_id}/weekly-incomplete-closures'),
+    ('post', '/v2/raid-rooms/{room_id}/weekly-resume-proposals'),
+    ('post', '/v2/raid-rounds/{round_id}/completion'),
+    ('post', '/v2/raid-rounds/{round_id}/personal-completion'),
+    ('post', '/v2/raid-schedule-groups/{group_id}/selections'),
+    ('post', '/v2/raid-schedule-proposals/{proposal_id}/responses'),
+    ('post', '/v2/raid-sessions/{session_id}/participation-confirmations'),
+    ('put', '/v2/me/characters/{character_id}/raid-weekly-states/{raid_id}/manual-completion'),
+    ('put', '/v2/me/raid-rooms/{room_id}/availability-submission'),
+    ('put', '/v2/raid-rooms/{room_id}/common-settings'),
+    ('put', '/v2/raid-rooms/{room_id}/formation'),
+    ('put', '/v2/raid-rooms/{room_id}/schedule-groups'),
+    ('put', '/v2/raid-rooms/{room_id}/settings'),
+})
+
+
 def decorate(api, *, two_cycle=False):
     schemas=api['components']['schemas']
     definitions=json.loads(Path(__file__).with_name('roster_metadata.schema.json').read_text())
@@ -33,10 +104,10 @@ def decorate(api, *, two_cycle=False):
             op=api['paths'][path]['get'];parameter(op,'include_roster_presence',['true','false'])
             op['responses']['200']['content']['application/json']['schema']={'anyOf':[ref(base),ref(new)]}
         return api
+    for method,path in PARTICIPATION_OPERATIONS:
+        parameter(api['paths'][path][method],'participation_profile',['remaining-active-1'])
     for path,item in api['paths'].items():
         if not path.startswith('/v2/') or not ('raid-rooms' in path or 'raid-room-' in path):continue
-        for method,op in item.items():
-            if method in ('get','post','put','delete','patch'):parameter(op,'participation_profile',['remaining-active-1'])
         op=item.get('get')
         if not op:continue
         warn=path.endswith(('/raid-room-memberships','/detail','/plan'))

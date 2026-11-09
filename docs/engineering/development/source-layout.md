@@ -11,6 +11,8 @@
 
 ## 2차 정리 — 정의·HTTP·ORM·계약 자원
 
+후속 사용자 지시로 실제 로컬 API에도 현재 구조를 반영했다. [실제 반영 기록](../operations/source-layout-local-rollout.md)을 따르며 운영·Native 기기 인수와 완료 profile 오류 수정은 별도다.
+
 2026-11-09 사용자 지시로 1차 개발 현황/정리를 `34a2a47`에 로컬 커밋한 뒤 [2차 계획](source-layout-phase2-plan.md)을 실행했다. 대상 두 기능의 루트에는 `__init__.py`만 두고 HTTP 경계는 `api/`, 입출력/검증/동적 DTO 생성은 `schemas/`, ORM 정의는 `models/`, OpenAPI 조립과 JSON 자원은 `contracts/`로 분류한다. 게임 계정의 공유 권한/잠금/멱등 처리만 `common/support.py`에 둔다. 작은 다른 기능·프로젝트 진입점·DB migration 이력은 이동하지 않는다. 전체 회귀는 최종 고유1921PASS/기존2FAIL·신규 미해결0으로 완료했다. 실제 상태는 [다음 실행](../../project/NEXT_WORK.md)을 따른다.
 
 파일명·함수·클래스 이름은 유지한다. `models/models.py`·`schemas/schemas.py`는 의도한 배치이며 이번에 이름을 다시 정리하지 않는다. 혼합 모듈15개는 DTO/ORM/HTTP/업무 책임별로 나누고 요청 ContextVar와 ORM 클래스는 각각 한 정식 모듈에서만 생성한다. DTO validator/타입 생성 함수는 DTO와 함께 두며 worker·트랜잭션 책임은 유지한다. 비어 있는 기존 경로 호환 파일/루트 재수출·새 서비스 계층은 만들지 않는다.
