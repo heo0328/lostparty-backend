@@ -2,12 +2,24 @@
 import uuid
 from dataclasses import replace
 import pytest
-from sqlalchemy import select,func
+from sqlalchemy import select
+from sqlalchemy import func
 from app.core.database import session
 from app.game_accounts.rosters import observations
 from app.game_accounts.verification import verification_context
-from app.game_accounts.models import Account,Character,Audit,Verification,Registration
-from tests.game_accounts.test_game_accounts import world, register, start, verify, change, BASE, VERIFY, another_user
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Audit
+from app.game_accounts.models.models import Verification
+from app.game_accounts.models.models import Registration
+from tests.game_accounts.test_game_accounts import world
+from tests.game_accounts.test_game_accounts import register
+from tests.game_accounts.test_game_accounts import start
+from tests.game_accounts.test_game_accounts import verify
+from tests.game_accounts.test_game_accounts import change
+from tests.game_accounts.test_game_accounts import BASE
+from tests.game_accounts.test_game_accounts import VERIFY
+from tests.game_accounts.test_game_accounts import another_user
 
 
 def assert_unverified(registration_id):

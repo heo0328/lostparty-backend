@@ -1,14 +1,24 @@
 from typing import Annotated
 from uuid import UUID
 from typing import Literal
-from fastapi import APIRouter, Depends, Query, Request
-from app.game_accounts.router import Principal, Key
-from app.game_accounts.schemas import GameErrorOut
-from app.game_accounts.support import fail
-from app.groups import schemas, http_service, management, display
+from fastapi import APIRouter
+from fastapi import Depends
+from fastapi import Query
+from fastapi import Request
+from app.game_accounts.api.router import Principal
+from app.game_accounts.api.router import Key
+from app.game_accounts.schemas.schemas import GameErrorOut
+from app.game_accounts.common.support import fail
+from app.groups import schemas
+from app.groups import http_service
+from app.groups import management
+from app.groups import display
 from app.groups import display_schemas as ds
-from app.groups import extended_management, raid_state, management_schemas as ms
-from app.member_limits import schemas as limit_schemas, service as limits
+from app.groups import extended_management
+from app.groups import raid_state
+from app.groups import management_schemas as ms
+from app.member_limits import schemas as limit_schemas
+from app.member_limits import service as limits
 
 
 async def strict_input(request: Request):

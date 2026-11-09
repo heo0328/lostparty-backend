@@ -4,18 +4,27 @@ from time import monotonic
 
 from fastapi.encoders import jsonable_encoder
 from pydantic import ValidationError
-from sqlalchemy import select, text
+from sqlalchemy import select
+from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.core.database import session, now
+from app.core.database import session
+from app.core.database import now
 from app.core.errors import AuthError
-from app.core.observability import emit, category
+from app.core.observability import emit
+from app.core.observability import category
 from app.game_accounts.character_profiles import profiles
-from app.game_accounts.rosters.bootstrap import StoredRows, current_personal_rows
-from app.game_accounts.models import (Account, Character, Registration, NameClaim,
-                                     CharacterRoleSummary, CharacterPersonalPreferences)
-from app.game_accounts.profile_schemas import PersonalProfileOut, RoleSummaryIn
-from app.game_accounts.support import fail
+from app.game_accounts.rosters.bootstrap import StoredRows
+from app.game_accounts.rosters.bootstrap import current_personal_rows
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.models.models import CharacterRoleSummary
+from app.game_accounts.models.models import CharacterPersonalPreferences
+from app.game_accounts.schemas.profile_schemas import PersonalProfileOut
+from app.game_accounts.schemas.profile_schemas import RoleSummaryIn
+from app.game_accounts.common.support import fail
 
 BUDGET_SECONDS = 20
 

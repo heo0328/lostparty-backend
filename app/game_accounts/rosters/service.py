@@ -2,24 +2,48 @@ import uuid
 import time
 from contextlib import nullcontext
 from datetime import timedelta
-from sqlalchemy import select, delete
-from app.core.database import session, now
+from sqlalchemy import select
+from sqlalchemy import delete
+from app.core.database import session
+from app.core.database import now
 from app.game_accounts.rosters import observations
 from app.game_accounts.provider_io import provider_diagnostics
 from app.game_accounts.verification import ownership_policy
 from app.lostark_keys import service as credentials
 from app.lostark_keys import rate_limits
-from app.game_accounts.models import ScopedRosterCache as MemberPreview, ScopedRosterLease as MemberFetch
+from app.game_accounts.models.models import ScopedRosterCache as MemberPreview
+from app.game_accounts.models.models import ScopedRosterLease as MemberFetch
 from app.game_accounts.rosters import lifecycle
 from app.game_accounts.character_profiles import activity_policy
-from app.game_accounts.verification import verification_context, verification_history, equipment_proof
+from app.game_accounts.verification import verification_context
+from app.game_accounts.verification import verification_history
+from app.game_accounts.verification import equipment_proof
 from app.game_accounts.rosters import owned_refresh
 from app.game_accounts.verification import verification_targets
-from app.game_accounts.models import (Account, Registration, Character, Configuration, Activity,
-                                     Verification, Audit, PreviewCache, FetchLease, NameClaim)
-from app.game_accounts.support import authorize, fail, quota, reserve, commit_result, release, cursor_encode, cursor_decode, GameError
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Configuration
+from app.game_accounts.models.models import Activity
+from app.game_accounts.models.models import Verification
+from app.game_accounts.models.models import Audit
+from app.game_accounts.models.models import PreviewCache
+from app.game_accounts.models.models import FetchLease
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.common.support import authorize
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import quota
+from app.game_accounts.common.support import reserve
+from app.game_accounts.common.support import commit_result
+from app.game_accounts.common.support import release
+from app.game_accounts.common.support import cursor_encode
+from app.game_accounts.common.support import cursor_decode
+from app.game_accounts.common.support import GameError
 from app.game_accounts.provider_io.provider import ProviderUnavailable
-from app.game_accounts.verification.equipment import EquipmentItem, required_slots, compare_equipment, EquipmentIncomplete
+from app.game_accounts.verification.equipment import EquipmentItem
+from app.game_accounts.verification.equipment import required_slots
+from app.game_accounts.verification.equipment import compare_equipment
+from app.game_accounts.verification.equipment import EquipmentIncomplete
 
 
 def lookup(principal, snapshot, name, proof=False, cached=False, *, context='direct', guard=None, on_roster=None):
@@ -42,7 +66,7 @@ def lookup(principal, snapshot, name, proof=False, cached=False, *, context='dir
             if c and now(db) < c.fetched_at + timedelta(minutes=30):
                 return observations.Observation(c.roster, c.fetched_at)
         if not proof:
-            from app.game_accounts.support import lock
+            from app.game_accounts.common.support import lock
             lock(db, scope)
             lease = db.get(MemberFetch, identity)
             current = now(db)
@@ -93,7 +117,7 @@ def lookup(principal, snapshot, name, proof=False, cached=False, *, context='dir
             credentials.check(db, principal, snapshot)
             check_context(db)
             if not proof:
-                from app.game_accounts.support import lock
+                from app.game_accounts.common.support import lock
                 lock(db, scope)
                 lease = db.get(MemberFetch, identity)
                 if lease.generation != generation or now(db) >= lease.expires_at:
@@ -109,7 +133,7 @@ def lookup(principal, snapshot, name, proof=False, cached=False, *, context='dir
     except Exception as error:
         if not proof:
             with session() as db, db.begin():
-                from app.game_accounts.support import lock
+                from app.game_accounts.common.support import lock
                 lock(db, scope)
                 lease = db.get(MemberFetch, identity)
                 if lease and lease.generation == generation:
@@ -453,7 +477,7 @@ def reconcile(db, a, obs, *, fresh=False, owned=False):
             c.summary,c.status,c.lifecycle_state=summary,'confirmed','active'
             c.fetched_at,c.confirmed_at=obs.fetched_at,obs.fetched_at
             if owned:
-                from app.game_accounts import roster_presence
+                from app.game_accounts.rosters import roster_presence
                 roster_presence.record(db,a,c,previous_revision,False,'present',obs.fetched_at)
         else:
             if db.get(NameClaim,k): fail('IDENTITY_CONFLICT')
@@ -463,7 +487,7 @@ def reconcile(db, a, obs, *, fresh=False, owned=False):
             db.add(c); db.flush()
             db.add(NameClaim(server_name=k[0],character_name=k[1],character_id=c.id))
             if owned:
-                from app.game_accounts import roster_presence
+                from app.game_accounts.rosters import roster_presence
                 roster_presence.record(db,a,c,c.lifecycle_revision,False,'present',obs.fetched_at)
             additions+=1
     for c in existing.values():
@@ -473,7 +497,7 @@ def reconcile(db, a, obs, *, fresh=False, owned=False):
         if c.status=='confirmed' and c.lifecycle_state=='active': c.lifecycle_revision+=1
         c.status,c.lifecycle_state,c.fetched_at='suspect','suspect',obs.fetched_at
         if owned:
-            from app.game_accounts import roster_presence
+            from app.game_accounts.rosters import roster_presence
             roster_presence.record(db,a,c,previous_revision,was_usable,'missing',obs.fetched_at)
         suspects+=1
     a.roster_revision+=1

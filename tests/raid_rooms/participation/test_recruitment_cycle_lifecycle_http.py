@@ -1,10 +1,25 @@
 import uuid
 from sqlalchemy import inspect
-from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import lifecycle, candidate, ready, sources, imported, people, worlds, create_room, opening_body, continue_body, cancel_body, scoped, next_key, add_member, actor
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import lifecycle
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import candidate
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import ready
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import sources
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import imported
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import people
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import worlds
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import create_room
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import opening_body
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import continue_body
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import cancel_body
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import scoped
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import next_key
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import add_member
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import actor
 from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import change_body
-from tests.raid_rooms.admissions.test_recruitment_cycle_http import client, validate
+from tests.raid_rooms.admissions.test_recruitment_cycle_http import client
+from tests.raid_rooms.admissions.test_recruitment_cycle_http import validate
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
-from app.raid_rooms import cycle_wire as wire
+from app.raid_rooms.schemas import cycle_wire as wire
 
 
 def post(http,path,body,spec):
@@ -76,10 +91,10 @@ def test_w3_contexts_readonly_and_strict_query_body(lifecycle):
 def test_http_same_character_role_change_keeps_exact_weekly_lease(lifecycle):
     from app.core.database import session
     from sqlalchemy import select
-    from app.raid_rooms.weekly_links import WeeklyOccupancy
+    from app.raid_rooms.models.weekly_links import WeeklyOccupancy
     _,a,b=lifecycle
     # A support role switch requires a real dual-role class under admission-eligibility-2.
-    from app.game_accounts.models import Character
+    from app.game_accounts.models.models import Character
     with session() as db,db.begin():
         character=db.get(Character,uuid.UUID(a['ids'][0]))
         character.summary={**character.summary,'class_name':'바드'}

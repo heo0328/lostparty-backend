@@ -1,21 +1,37 @@
 """G2 requests, current roles and atomic membership admission. No provider I/O."""
 import uuid
 from datetime import timedelta
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal
+from decimal import InvalidOperation
 from fastapi.encoders import jsonable_encoder
-from sqlalchemy import select, func, text
+from sqlalchemy import select
+from sqlalchemy import func
+from sqlalchemy import text
 from app.auth.models import User
-from app.core.database import session, now
+from app.core.database import session
+from app.core.database import now
 from app.core.rate_limit import check
 from app.game_accounts.rosters import lifecycle
 from app.game_accounts.verification import verification_context
-from app.game_accounts.models import Account, Character, Registration
-from app.game_accounts.support import authorize, fail, reserve, release, commit_result, cursor_encode, cursor_decode
-from app.groups import service as groups, http_service
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Registration
+from app.game_accounts.common.support import authorize
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import reserve
+from app.game_accounts.common.support import release
+from app.game_accounts.common.support import commit_result
+from app.game_accounts.common.support import cursor_encode
+from app.game_accounts.common.support import cursor_decode
+from app.groups import service as groups
+from app.groups import http_service
 from app.groups import admission_core as core
-from app.groups.models import Group, GroupMembership
-from app.groups.admission_models import GroupJoinSubject, GroupJoinRelation
-from app.member_limits.models import MemberUsageLimits, MemberUsageHead
+from app.groups.models import Group
+from app.groups.models import GroupMembership
+from app.groups.admission_models import GroupJoinSubject
+from app.groups.admission_models import GroupJoinRelation
+from app.member_limits.models import MemberUsageLimits
+from app.member_limits.models import MemberUsageHead
 
 
 def execute(principal, operation, key, payload, run, replay_check):
@@ -130,7 +146,8 @@ def candidates(principal, gid, name, reader_profile=None):
         uid = authorize(db, principal)
         groups.member(db, uid, groups.group(db, gid))
         if reader_profile is not None:
-            from app.groups import display, features
+            from app.groups import display
+            from app.groups import features
             if reader_profile not in (display.PROFILE, 'group-invite-eligibility-1'):
                 fail('INVALID_REQUEST', 400)
             features.ready(db)
@@ -144,7 +161,7 @@ def candidates(principal, gid, name, reader_profile=None):
             try:
                 c, account = invitation_target(db, cid)
             except Exception as error:
-                from app.game_accounts.support import GameError
+                from app.game_accounts.common.support import GameError
                 if isinstance(error, GameError) and error.code == 'GROUP_TARGET_UNAVAILABLE':
                     continue
                 raise

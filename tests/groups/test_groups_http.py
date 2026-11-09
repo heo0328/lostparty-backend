@@ -5,14 +5,26 @@ from datetime import timedelta
 
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import delete, func, select
-from app.auth.models import User, Session
-from app.core.database import session, now
-from app.game_accounts.models import Activity, Character, Configuration, NameClaim
-from app.groups.models import Group, GroupMembership, GroupDirectoryHead
-from app.member_limits.models import MemberUsageLimits, MemberUsageHead, MemberUsageLimitAudit
+from sqlalchemy import delete
+from sqlalchemy import func
+from sqlalchemy import select
+from app.auth.models import User
+from app.auth.models import Session
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.models.models import Activity
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Configuration
+from app.game_accounts.models.models import NameClaim
+from app.groups.models import Group
+from app.groups.models import GroupMembership
+from app.groups.models import GroupDirectoryHead
+from app.member_limits.models import MemberUsageLimits
+from app.member_limits.models import MemberUsageHead
+from app.member_limits.models import MemberUsageLimitAudit
 from app.member_limits.service import Limits
-from tests.game_accounts.test_representative import selection, error
+from tests.game_accounts.test_representative import selection
+from tests.game_accounts.test_representative import error
 from tests.groups.test_group_foundation import second_actor
 from tests.member_limits.test_member_limits import change
 

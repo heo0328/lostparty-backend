@@ -3,21 +3,30 @@ import uuid
 from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 from itertools import product
-from threading import Event, Lock
+from threading import Event
+from threading import Lock
 from time import monotonic
 
 import pytest
-from sqlalchemy import event, inspect, select, text
+from sqlalchemy import event
+from sqlalchemy import inspect
+from sqlalchemy import select
+from sqlalchemy import text
 
 from app.auth.models import User
 from app.core import database
-from app.core.database import session, now
+from app.core.database import session
+from app.core.database import now
 from app.game_accounts.rosters import cleanup
-from app.game_accounts.models import (
-    Account, Activity, Audit, Character, Configuration, Registration,
-    VerificationExecution,
-)
-from tests.raid_rooms.common.test_raid_room_migrations import isolated_app_database, table_digests
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Activity
+from app.game_accounts.models.models import Audit
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Configuration
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import VerificationExecution
+from tests.raid_rooms.common.test_raid_room_migrations import isolated_app_database
+from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
 MASK = {'preview': [], 'lookup_name': '[deleted]', 'label': '[deleted]'}
 

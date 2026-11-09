@@ -1,19 +1,24 @@
 """Owner-only revision-bound correction, including past weeks and inactive records."""
 import uuid
-from datetime import datetime, timedelta
-from sqlalchemy import select, text
+from datetime import datetime
+from datetime import timedelta
+from sqlalchemy import select
+from sqlalchemy import text
 from fastapi.encoders import jsonable_encoder
 from app.core.database import session
-from app.game_accounts.models import Account, Character, Registration
-from app.game_accounts.support import fail
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Registration
+from app.game_accounts.common.support import fail
 from app.game_accounts.rosters.lifecycle import digest
 from app.raid_weekly.models import WeeklyState
 from app.raid_weekly.service import parse_cycle
-from app.raid_rooms.common import cycles, command_context as opaque
+from app.raid_rooms.common import cycles
+from app.raid_rooms.common import command_context as opaque
 from app.raid_rooms.admissions import admission_service as base
 from app.raid_rooms.admissions.cycle_creation import permission
-from app.raid_rooms.completion_correction_models import CompletionCorrection
-from app.raid_rooms import completion_correction_schemas as schema
+from app.raid_rooms.models.completion_correction_models import CompletionCorrection
+from app.raid_rooms.schemas import completion_correction_schemas as schema
 from app.raids import service as raids
 
 

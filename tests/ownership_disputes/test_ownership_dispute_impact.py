@@ -4,11 +4,18 @@ import subprocess
 import uuid
 import pytest
 from sqlalchemy import select
-from app.core.database import session,now
-from app.game_accounts.models import Account,Registration,Configuration
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import Configuration
 from app.game_accounts.rosters.service import ownership
 from app.groups.models import GroupMembership
-from tests.groups.test_group_display import group_features, worlds, add, get, PROFILE
+from tests.groups.test_group_display import group_features
+from tests.groups.test_group_display import worlds
+from tests.groups.test_group_display import add
+from tests.groups.test_group_display import get
+from tests.groups.test_group_display import PROFILE
 
 
 @pytest.mark.parametrize('head',['0034_group_features','0035_cycle_group_policy'])

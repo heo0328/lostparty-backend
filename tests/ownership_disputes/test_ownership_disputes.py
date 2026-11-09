@@ -4,14 +4,30 @@ from datetime import timedelta
 from concurrent.futures import ThreadPoolExecutor
 from threading import Event
 import pytest
-from sqlalchemy import select,func,text
-from app.core.database import session,now
-from app.game_accounts.models import Account,Registration,Character,Configuration,Audit
-from app.ownership_disputes.models import Proof,Dispute,AccountHead,Event as DisputeEvent
-from app.ownership_disputes import commands,core,worker
+from sqlalchemy import select
+from sqlalchemy import func
+from sqlalchemy import text
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Configuration
+from app.game_accounts.models.models import Audit
+from app.ownership_disputes.models import Proof
+from app.ownership_disputes.models import Dispute
+from app.ownership_disputes.models import AccountHead
+from app.ownership_disputes.models import Event as DisputeEvent
+from app.ownership_disputes import commands
+from app.ownership_disputes import core
+from app.ownership_disputes import worker
 from app.game_accounts.rosters import observations
-from app.game_accounts.support import GameError
-from tests.game_accounts.test_game_accounts import world, another_user, change, BASE, PrivateHeaders
+from app.game_accounts.common.support import GameError
+from tests.game_accounts.test_game_accounts import world
+from tests.game_accounts.test_game_accounts import another_user
+from tests.game_accounts.test_game_accounts import change
+from tests.game_accounts.test_game_accounts import BASE
+from tests.game_accounts.test_game_accounts import PrivateHeaders
 from tests.game_accounts.test_live_equipment_proof import live
 
 VERIFY='/v2/me/game-account-verifications'
@@ -306,9 +322,12 @@ def test_deleted_source_registration_is_reviewed_not_resurrected(client,environm
 
 
 def test_transfer_preserves_old_private_data_and_group_membership_without_inheritance(client,environment):
-    from app.game_accounts.models import CharacterRoleSummary,CharacterPersonalPreferences
-    from app.groups.models import Group,GroupMembership
-    from tests.game_accounts.test_game_accounts import page, save_data
+    from app.game_accounts.models.models import CharacterRoleSummary
+    from app.game_accounts.models.models import CharacterPersonalPreferences
+    from app.groups.models import Group
+    from app.groups.models import GroupMembership
+    from tests.game_accounts.test_game_accounts import page
+    from tests.game_accounts.test_game_accounts import save_data
     users,state=environment;claim_owner(client,environment)
     r=client.get(BASE,headers=users[0]).json()['items'][0]
     original=page(client,users[0],r['registration_id']);save=save_data(original)

@@ -1,9 +1,18 @@
 """Member-owned analysis storage, independent of provider power/activity."""
 from sqlalchemy import select
-from app.core.database import session, now
-from app.game_accounts.models import (Account, Character, Registration, NameClaim, CharacterRoleSummary,
-                                     CharacterPersonalPreferences)
-from app.game_accounts.support import authorize, fail, reserve, commit_result, release
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.models.models import CharacterRoleSummary
+from app.game_accounts.models.models import CharacterPersonalPreferences
+from app.game_accounts.common.support import authorize
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import reserve
+from app.game_accounts.common.support import commit_result
+from app.game_accounts.common.support import release
 
 
 def owned_character(db, uid, cid, *, write=False):
@@ -88,7 +97,7 @@ def put(principal, cid, role, key, data):
                 row.version += 1
                 row.saved_at = now(db)
             db.flush()
-            from app.game_accounts.power_success import capture
+            from app.game_accounts.power.power_success import capture
             capture(db, row)
             db.flush()
             result = dict(character_id=cid, role=role, ownership_revision=account.ownership_revision,

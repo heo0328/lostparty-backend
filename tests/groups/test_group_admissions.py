@@ -5,18 +5,31 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import func, select, text
+from sqlalchemy import func
+from sqlalchemy import select
+from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
-from app.core.database import session, now
+from app.core.database import session
+from app.core.database import now
 from app.auth import service as auth
-from app.game_accounts.models import Activity, Character, RequestResult, NameClaim, Account, Registration, Configuration
-from app.groups.models import Group, GroupMembership
-from app.groups.admission_models import GroupJoinRelation, GroupJoinSubject, GroupJoinCode
+from app.game_accounts.models.models import Activity
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import RequestResult
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import Configuration
+from app.groups.models import Group
+from app.groups.models import GroupMembership
+from app.groups.admission_models import GroupJoinRelation
+from app.groups.admission_models import GroupJoinSubject
+from app.groups.admission_models import GroupJoinCode
 from app.groups import admissions
 from app.member_limits.service import Limits
 from tests.game_accounts.test_representative import error
 from tests.game_accounts.test_game_accounts import PrivateHeaders
-from tests.groups.test_groups_http import create, limits
+from tests.groups.test_groups_http import create
+from tests.groups.test_groups_http import limits
 from tests.member_limits.test_member_limits import change
 
 

@@ -3,13 +3,30 @@ import json
 import uuid
 from urllib.parse import unquote
 import pytest
-from sqlalchemy import select, func, delete
-from app.core.database import session, now
+from sqlalchemy import select
+from sqlalchemy import func
+from sqlalchemy import delete
+from app.core.database import session
+from app.core.database import now
 from app.game_accounts.rosters import observations
 from app.game_accounts.provider_io import provider
 from app.game_accounts.rosters import lifecycle
-from app.game_accounts.models import Account, Character, Registration, NameClaim, Configuration, Audit, LimitEvent, CharacterRetirement, CharacterRoleSummary
-from tests.game_accounts.test_game_accounts import world, register, verify, page, change, save_data, BASE
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.models.models import Configuration
+from app.game_accounts.models.models import Audit
+from app.game_accounts.models.models import LimitEvent
+from app.game_accounts.models.models import CharacterRetirement
+from app.game_accounts.models.models import CharacterRoleSummary
+from tests.game_accounts.test_game_accounts import world
+from tests.game_accounts.test_game_accounts import register
+from tests.game_accounts.test_game_accounts import verify
+from tests.game_accounts.test_game_accounts import page
+from tests.game_accounts.test_game_accounts import change
+from tests.game_accounts.test_game_accounts import save_data
+from tests.game_accounts.test_game_accounts import BASE
 from tests.game_accounts.test_game_account_primitives import transport
 
 LIVE_FETCH = observations.fetch
@@ -102,7 +119,7 @@ def test_explicit_404_recovers_lookup_but_preserves_verification_and_owner(clien
         assert saved.lookup_name == 'a1'
         a = db.get(Account,saved.account_id)
         assert (a.owner_id,a.verified_at) == (owner,verified_at)
-        from app.game_accounts.models import Verification
+        from app.game_accounts.models.models import Verification
         assert db.scalar(select(Verification.lookup_name)) == 'a0'
     assert names(client,h,r)['a0']['roster_status'] == 'suspect'
     clear_quota(); wire['calls'].clear()

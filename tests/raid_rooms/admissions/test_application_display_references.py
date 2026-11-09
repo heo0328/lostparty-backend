@@ -9,10 +9,20 @@ from pathlib import Path
 import pytest
 from sqlalchemy import inspect
 
-from app.core.database import session, now
-from app.raid_rooms.cycle_application_models import CycleApplication
+from app.core.database import session
+from app.core.database import now
+from app.raid_rooms.models.cycle_application_models import CycleApplication
 from tests.raid_rooms.admissions.test_application_display import client
-from tests.raid_rooms.admissions.test_application_composition import current, candidate, ready, sources, imported, people, worlds, room, apply, approve
+from tests.raid_rooms.admissions.test_application_composition import current
+from tests.raid_rooms.admissions.test_application_composition import candidate
+from tests.raid_rooms.admissions.test_application_composition import ready
+from tests.raid_rooms.admissions.test_application_composition import sources
+from tests.raid_rooms.admissions.test_application_composition import imported
+from tests.raid_rooms.admissions.test_application_composition import people
+from tests.raid_rooms.admissions.test_application_composition import worlds
+from tests.raid_rooms.admissions.test_application_composition import room
+from tests.raid_rooms.admissions.test_application_composition import apply
+from tests.raid_rooms.admissions.test_application_composition import approve
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
 CHECKS = runpy.run_path('docs/features/recruitment/participation/tools/validate-application-display.py')

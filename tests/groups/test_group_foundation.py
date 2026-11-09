@@ -5,17 +5,27 @@ from datetime import timedelta
 
 import pytest
 from pydantic import ValidationError
-from sqlalchemy import func, select
+from sqlalchemy import func
+from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 
-from app.auth.models import Session, User
-from app.core.database import session, now
+from app.auth.models import Session
+from app.auth.models import User
+from app.core.database import session
+from app.core.database import now
 from app.core.errors import AuthError
-from app.game_accounts.models import Account, Character, Configuration, NameClaim
-from app.game_accounts.support import GameError, fail
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Configuration
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.common.support import GameError
+from app.game_accounts.common.support import fail
 from app.groups import service
-from app.groups.commands import CreateGroup, RenameGroup
-from app.groups.models import Group, GroupMembership, GroupDirectoryHead
+from app.groups.commands import CreateGroup
+from app.groups.commands import RenameGroup
+from app.groups.models import Group
+from app.groups.models import GroupMembership
+from app.groups.models import GroupDirectoryHead
 from tests.game_accounts.test_representative import selection
 
 

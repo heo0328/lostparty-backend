@@ -4,14 +4,28 @@ import uuid
 from dataclasses import replace
 from datetime import timedelta
 import pytest
-from sqlalchemy import select, func
-from app.core.database import session, now
+from sqlalchemy import select
+from sqlalchemy import func
+from app.core.database import session
+from app.core.database import now
 from app.game_accounts.rosters import observations
 from app.game_accounts.provider_io import provider
 from app.game_accounts.rosters import service
-from app.game_accounts.models import Account, Character, Audit, Verification, Registration, Configuration, VerificationExecution
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Audit
+from app.game_accounts.models.models import Verification
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import Configuration
+from app.game_accounts.models.models import VerificationExecution
 from app.game_accounts.verification.equipment import SLOTS
-from tests.game_accounts.test_game_accounts import world, register, start, change, VERIFY, BASE, another_user
+from tests.game_accounts.test_game_accounts import world
+from tests.game_accounts.test_game_accounts import register
+from tests.game_accounts.test_game_accounts import start
+from tests.game_accounts.test_game_accounts import change
+from tests.game_accounts.test_game_accounts import VERIFY
+from tests.game_accounts.test_game_accounts import BASE
+from tests.game_accounts.test_game_accounts import another_user
 from tests.game_accounts.test_game_account_primitives import transport
 
 LIVE_FETCH = observations.fetch
@@ -194,7 +208,8 @@ def test_http_success_flags_are_not_accepted_as_evidence(client, live):
 
 def test_late_confirmation_does_not_expire_already_verified_challenge(client, live, monkeypatch):
     from concurrent.futures import ThreadPoolExecutor
-    from threading import Event, Lock
+    from threading import Event
+    from threading import Lock
     h, state = live
     v = start(client, h)
     state['removed'] = v['required_slots']
@@ -216,7 +231,7 @@ def test_late_confirmation_does_not_expire_already_verified_challenge(client, li
         try:
             assert entered.wait(5)
             # Different explicit confirm commands still obey the 5 second quota.
-            from app.game_accounts.models import LimitEvent
+            from app.game_accounts.models.models import LimitEvent
             from sqlalchemy import delete
             with session() as db, db.begin():
                 db.execute(delete(LimitEvent).where(LimitEvent.scope == 'confirm:'+v['challenge_id']))

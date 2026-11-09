@@ -1,21 +1,41 @@
 """Personal departure reentry: synthetic C/N actors, isolated PostgreSQL only."""
 import uuid
-import os,subprocess
+import os
+import subprocess
 from datetime import date
 from copy import deepcopy
 import pytest
 from sqlalchemy import select
 from app.core.database import session
-from app.game_accounts.models import Character
+from app.game_accounts.models.models import Character
 from app.raid_rooms.common import beta_profile
-from app.raid_rooms.admissions import cycle_commands as commands, admission_candidates
-from app.raid_rooms.participation import atomic_members, cycle_management, membership_readers, cycle_lifecycle as life
-from app.raid_rooms.cycle_models import RoomCycle,CycleMember,CycleAssignment
-from app.raid_rooms.integrated_models import RecruitmentAssignment as Assignment
-from tests.raid_rooms.admissions.test_beta_recruitment import beta, current, candidate, ready, sources, imported, people, worlds, create_beta, beta_join, actor
-from tests.raid_rooms.admissions.test_recruitment_cycle_commands import context, admission_request, decision
+from app.raid_rooms.admissions import cycle_commands as commands
+from app.raid_rooms.admissions import admission_candidates
+from app.raid_rooms.participation import atomic_members
+from app.raid_rooms.participation import cycle_management
+from app.raid_rooms.participation import membership_readers
+from app.raid_rooms.participation import cycle_lifecycle as life
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import CycleMember
+from app.raid_rooms.models.cycle_models import CycleAssignment
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from tests.raid_rooms.admissions.test_beta_recruitment import beta
+from tests.raid_rooms.admissions.test_beta_recruitment import current
+from tests.raid_rooms.admissions.test_beta_recruitment import candidate
+from tests.raid_rooms.admissions.test_beta_recruitment import ready
+from tests.raid_rooms.admissions.test_beta_recruitment import sources
+from tests.raid_rooms.admissions.test_beta_recruitment import imported
+from tests.raid_rooms.admissions.test_beta_recruitment import people
+from tests.raid_rooms.admissions.test_beta_recruitment import worlds
+from tests.raid_rooms.admissions.test_beta_recruitment import create_beta
+from tests.raid_rooms.admissions.test_beta_recruitment import beta_join
+from tests.raid_rooms.admissions.test_beta_recruitment import actor
+from tests.raid_rooms.admissions.test_recruitment_cycle_commands import context
+from tests.raid_rooms.admissions.test_recruitment_cycle_commands import admission_request
+from tests.raid_rooms.admissions.test_recruitment_cycle_commands import decision
 from tests.raid_rooms.participation.test_recruitment_cycle_management import settings
-from tests.raid_rooms.participation.test_atomic_members import departure, depart_body
+from tests.raid_rooms.participation.test_atomic_members import departure
+from tests.raid_rooms.participation.test_atomic_members import depart_body
 from tests.raid_rooms.schedules.test_recruitment_cycle_times import fingerprints
 
 
@@ -100,7 +120,7 @@ def protected(engine,old_cm,rid,n):
 
 
 def test_direct_rejoin_fresh_identity_old_rows_opposite_and_ack(reapplication_ready):
-    from app.raid_rooms.source_models import TimeReservation
+    from app.raid_rooms.models.source_models import TimeReservation
     from app.raid_rooms.reads import cycle_member_reads
     engine,a,b,alt,rid,c,n,old_cm,old=setup_reentry(reapplication_ready,'direct_join')
     before=protected(engine,old_cm,rid,n)
@@ -154,9 +174,9 @@ def test_reentry_keeps_eligibility_guards(reapplication_ready,change,reason):
 
 
 def test_pending_rechecks_and_failed_approval_preserves_history(reapplication_ready):
-    from app.raid_rooms.cycle_application_models import CycleApplication
+    from app.raid_rooms.models.cycle_application_models import CycleApplication
     from tests.raid_rooms.admissions.test_application_composition import occupancy
-    from app.game_accounts.support import GameError
+    from app.game_accounts.common.support import GameError
     engine,a,b,alt,rid,c,n,old_cm,old=setup_reentry(reapplication_ready)
     before=protected(engine,old_cm,rid,n)
     with beta_profile.using():
@@ -188,7 +208,7 @@ def test_reentry_install_failure_rolls_back(reapplication_ready,monkeypatch):
 
 def test_concurrent_reentry_one_writer(reapplication_ready):
     from concurrent.futures import ThreadPoolExecutor
-    from app.game_accounts.support import GameError
+    from app.game_accounts.common.support import GameError
     engine,a,b,alt,rid,c,n,old_cm,old=setup_reentry(reapplication_ready,'direct_join')
     with beta_profile.using():data=admission_request(context(alt,rid,c))
     def join(_):
@@ -203,12 +223,13 @@ def test_concurrent_reentry_one_writer(reapplication_ready):
 
 
 def test_populated_0032_upgrade_old_event_fallback_and_schema_guards(beta,monkeypatch):
-    from sqlalchemy import inspect,text
+    from sqlalchemy import inspect
+    from sqlalchemy import text
     from tests.raid_rooms.common.test_raid_room_migrations import table_digests
     from app.raid_rooms.common import readiness
     from app.raid_rooms.schedules import beta_schedule
     from app.raid_rooms.common import cycle_worker
-    from app.game_accounts.support import GameError
+    from app.game_accounts.common.support import GameError
     # Simulate the original writer's old event shape, before insertion; immutable stored events are never rewritten.
     original=life.event
     def old_event(db,row,cm,command,action,stamp,evidence):
@@ -262,12 +283,12 @@ def test_reentry_http_candidates_context_join_and_historical_reader(reapplicatio
 @pytest.mark.parametrize('damage',['missing_binding','missing_event','generation'])
 def test_incomplete_termination_evidence_never_authorizes_reentry(reapplication_ready,damage,monkeypatch):
     from app.raid_rooms.admissions import admission_history
-    from app.game_accounts.support import GameError
+    from app.game_accounts.common.support import GameError
     engine,a,b,alt,rid,c,n,old_cm,old=setup_reentry(reapplication_ready,'direct_join')
     # Simulate incomplete returned evidence at the read boundary, without bypassing immutable DB guards.
     with session() as db:
         row=db.scalar(select(RoomCycle).where(RoomCycle.room_id==rid,RoomCycle.cycle_key==date.fromisoformat(c)))
-        from app.raid_rooms.integrated_models import RecruitmentMembership as Member
+        from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
         member=db.get(Member,uuid.UUID(old['locator']['membership_id']))
         original=db.scalars;scalar=db.scalar
         def scalars(query,*args,**kwargs):

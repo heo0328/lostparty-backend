@@ -1,14 +1,18 @@
 """Read-only eligibility shared by application/change commands and batch reads."""
 from dataclasses import dataclass
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal
+from decimal import InvalidOperation
 import re
 from sqlalchemy import select
-from app.game_accounts.models import CharacterRoleSummary
-from app.game_accounts.power_success import RolePowerSuccess
-from app.game_accounts.support import fail, GameError
+from app.game_accounts.models.models import CharacterRoleSummary
+from app.game_accounts.models.power_success import RolePowerSuccess
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import GameError
 from app.raid_rooms.participation import participation_core as core
-from app.raid_rooms.integrated_models import RecruitmentAssignment as Assignment, RecruitmentRound as Round, RecruitmentItem as Item
-from app.raid_rooms.weekly_links import WeeklyOccupancy
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from app.raid_rooms.models.integrated_models import RecruitmentRound as Round
+from app.raid_rooms.models.integrated_models import RecruitmentItem as Item
+from app.raid_rooms.models.weekly_links import WeeklyOccupancy
 from app.raid_weekly.models import WeeklyState
 
 POLICY = 'admission-eligibility-2'
@@ -57,7 +61,7 @@ class Bundle:
 def load(db, uid, target, character_ids, *, owned=()):
     from app.raid_rooms.admissions import cycle_admission
     pairs = cycle_admission.rounds(db, target)
-    from app.raid_rooms import roster_participation
+    from app.raid_rooms.participation import roster_participation
     if owned and roster_participation.enabled():
         active_items={a.item_id for a in owned}
         pairs=[(i,r) for i,r in pairs if i.id in active_items]
@@ -192,7 +196,7 @@ def evaluate(bundle, character, ownership, role, *, pinned=None):
 def single(db, uid, room, target, selection, *, replacing=None, pinned=None):
     from app.raid_rooms.participation import cycle_lifecycle
     character = core.identity.selected_character(db, uid, selection.model_dump(mode='json'))
-    from app.raid_rooms import roster_participation
+    from app.raid_rooms.participation import roster_participation
     owned = roster_participation.replacement(db, target, replacing) if replacing is not None else ()
     bundle = load(db, uid, target, [character.id], owned=owned)
     result = evaluate(bundle, character, selection.expected_ownership_revision, selection.selected_role, pinned=pinned)

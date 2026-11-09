@@ -1,22 +1,38 @@
-import uuid,json
+import uuid
+import json
 from datetime import timedelta
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from sqlalchemy import select,func
+from sqlalchemy import select
+from sqlalchemy import func
 from sqlalchemy.exc import SQLAlchemyError
 from app.core.database import session
 from app.core.errors import register
-from app.raid_rooms.admission_router import router as admissions
-from app.raid_rooms.schedule_router import router as schedules
-from app.raid_rooms.continuation_router import router as continuation
-from app.raid_rooms.completion_router import router
+from app.raid_rooms.api.admission_router import router as admissions
+from app.raid_rooms.api.schedule_router import router as schedules
+from app.raid_rooms.api.continuation_router import router as continuation
+from app.raid_rooms.api.completion_router import router
 from app.raid_rooms.admissions import admission_service
-from app.raid_rooms.integrated_models import RecruitmentAssignment as Assignment,RecruitmentMembership as Member,RecruitmentRound as Round
-from app.raid_rooms.source_models import TimeReservation as Reservation,ContinuationChoice as Choice
-from app.raid_rooms.weekly_links import WeeklyOccupancy
-from tests.raid_rooms.admissions.test_recruitment_admission import ready, sources, imported, people, worlds, creation, create_body, post, create, admission
-from tests.raid_rooms.schedules.test_recruitment_scheduling import plan, future, group_at
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
+from app.raid_rooms.models.integrated_models import RecruitmentRound as Round
+from app.raid_rooms.models.source_models import TimeReservation as Reservation
+from app.raid_rooms.models.source_models import ContinuationChoice as Choice
+from app.raid_rooms.models.weekly_links import WeeklyOccupancy
+from tests.raid_rooms.admissions.test_recruitment_admission import ready
+from tests.raid_rooms.admissions.test_recruitment_admission import sources
+from tests.raid_rooms.admissions.test_recruitment_admission import imported
+from tests.raid_rooms.admissions.test_recruitment_admission import people
+from tests.raid_rooms.admissions.test_recruitment_admission import worlds
+from tests.raid_rooms.admissions.test_recruitment_admission import creation
+from tests.raid_rooms.admissions.test_recruitment_admission import create_body
+from tests.raid_rooms.admissions.test_recruitment_admission import post
+from tests.raid_rooms.admissions.test_recruitment_admission import create
+from tests.raid_rooms.admissions.test_recruitment_admission import admission
+from tests.raid_rooms.schedules.test_recruitment_scheduling import plan
+from tests.raid_rooms.schedules.test_recruitment_scheduling import future
+from tests.raid_rooms.schedules.test_recruitment_scheduling import group_at
 from tests.raid_rooms.common.test_raid_room_http import err
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
@@ -117,7 +133,7 @@ def test_weekly_resume_needs_explicit_n1_vote_and_keeps_stopped_generation(ready
     out=post(http,a,f'raid-rooms/{rid}/weekly-incomplete-closures',dict(expected_cycle_key=c['cycle_key'],context_token=c['context_token']))
     assert out.status_code==200,out.text
     p=plan(http,a,rid)
-    from app.raid_rooms.integrated_models import RecruitmentRoom
+    from app.raid_rooms.models.integrated_models import RecruitmentRoom
     with session() as db:room_revision=db.get(RecruitmentRoom,uuid.UUID(rid)).revision
     body=dict(expected_cycle_key=p['cycle_key'],expected_room_revision=room_revision,expected_members_revision=p['members_revision'],expected_plan_revision=p['revision'],expected_membership_revision=p['my_membership']['revision'])
     out=post(http,a,f'raid-rooms/{rid}/weekly-resume-proposals',dict(body,schedule_groups=None))
@@ -136,7 +152,7 @@ def test_weekly_resume_needs_explicit_n1_vote_and_keeps_stopped_generation(ready
 
 
 def test_nonleader_cannot_end_room_and_completed_segment_survives_remaining_proposal(ready,http):
-    from app.raid_rooms.integrated_models import RecruitmentRoom
+    from app.raid_rooms.models.integrated_models import RecruitmentRoom
     target,a,b,_=ready;rid=bundle(http,a)
     assert post(http,b,f'raid-rooms/{rid}/join',admission(http,b,rid)).status_code==200
     p=plan(http,b,rid)
@@ -158,7 +174,9 @@ def test_nonleader_cannot_end_room_and_completed_segment_survives_remaining_prop
 
 
 def test_command_context_has_bounded_opaque_payload_and_exact_lifetime(ready,http):
-    from app.raid_rooms.common.command_context import unseal, LIFETIME_SECONDS, MAX_TOKEN_BYTES
+    from app.raid_rooms.common.command_context import unseal
+    from app.raid_rooms.common.command_context import LIFETIME_SECONDS
+    from app.raid_rooms.common.command_context import MAX_TOKEN_BYTES
     from datetime import datetime
     target,a,b,_=ready;rid=bundle(http,a)
     c=context(http,a,rid,'close_weekly');token=c['context_token'];payload=unseal(token)

@@ -4,20 +4,42 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 import pytest
 from pydantic import ValidationError
-from sqlalchemy import select, func, text, event
+from sqlalchemy import select
+from sqlalchemy import func
+from sqlalchemy import text
+from sqlalchemy import event
 from sqlalchemy.exc import IntegrityError
 from app.auth.models import User
-from app.core.database import session, now, engine
+from app.core.database import session
+from app.core.database import now
+from app.core.database import engine
 from app.core.errors import AuthError
-from app.game_accounts.models import Character, Account, RequestResult, CharacterRoleSummary
-from app.game_accounts.support import fail
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import RequestResult
+from app.game_accounts.models.models import CharacterRoleSummary
+from app.game_accounts.common.support import fail
 from app.groups import admission_core
-from app.raid_rooms.common import core, service
-from app.raid_rooms.models import Room, Round, Membership, Application, DirectoryHead, MemberHead
-from app.raid_rooms.commands import Create, Schedule, Selection, Admission, Decision, Withdraw, MembershipCAS, Transfer
+from app.raid_rooms.common import core
+from app.raid_rooms.common import service
+from app.raid_rooms.models.models import Room
+from app.raid_rooms.models.models import Round
+from app.raid_rooms.models.models import Membership
+from app.raid_rooms.models.models import Application
+from app.raid_rooms.models.models import DirectoryHead
+from app.raid_rooms.models.models import MemberHead
+from app.raid_rooms.schemas.commands import Create
+from app.raid_rooms.schemas.commands import Schedule
+from app.raid_rooms.schemas.commands import Selection
+from app.raid_rooms.schemas.commands import Admission
+from app.raid_rooms.schemas.commands import Decision
+from app.raid_rooms.schemas.commands import Withdraw
+from app.raid_rooms.schemas.commands import MembershipCAS
+from app.raid_rooms.schemas.commands import Transfer
 from app.raid_weekly.models import WeeklyState
 from app.raids import service as raids
-from app.member_limits.models import MemberUsageLimits, MemberUsageHead
+from app.member_limits.models import MemberUsageLimits
+from app.member_limits.models import MemberUsageHead
 from app.member_limits.service import Limits
 from tests.groups.test_group_admissions import worlds
 from tests.groups.test_group_foundation import actor
@@ -425,11 +447,13 @@ def test_api_contract_not_extended_by_internal_models():
     from pathlib import Path
     from app.main import app
     assert app.openapi()==json.loads(Path('openapi/openapi.yaml').read_text())
-    assert all(getattr(route.endpoint,'__module__','')!='app.raid_rooms.router' for route in app.routes)
+    assert all(getattr(route.endpoint,'__module__','')!='app.raid_rooms.api.router' for route in app.routes)
 
 
 def test_limit_causes_do_not_spread_to_unrelated_rooms(people,client):
-    from tests.groups.test_group_admissions import group as make_group, apply as group_apply, action as group_action
+    from tests.groups.test_group_admissions import group as make_group
+    from tests.groups.test_group_admissions import apply as group_apply
+    from tests.groups.test_group_admissions import action as group_action
     a,b=people('a'),people('b')
     gid=uuid.UUID(make_group(client,a))
     pending=group_apply(client,b,str(gid)).json()['relation_id']

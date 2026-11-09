@@ -2,11 +2,17 @@
 import uuid
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
-from app.core.database import session, now
+from app.core.database import session
+from app.core.database import now
 from app.core.errors import AuthError
 from app.game_accounts.verification import verification_context
-from app.game_accounts.models import VerificationExecution, Verification, Registration, NameClaim, Character, Account
-from app.game_accounts.support import authorize
+from app.game_accounts.models.models import VerificationExecution
+from app.game_accounts.models.models import Verification
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Account
+from app.game_accounts.common.support import authorize
 
 OPERATIONS = frozenset(('start', 'confirm', 'cancel'))
 

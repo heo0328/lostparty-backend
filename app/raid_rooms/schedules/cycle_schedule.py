@@ -5,16 +5,27 @@ worker transitions belong to W4. Copying an N graph never creates consent.
 """
 from app.raid_rooms.schedules import beta_schedule
 import uuid
-from datetime import date,datetime,time,timedelta,timezone
-from sqlalchemy import select,func,text
-from app.game_accounts.support import fail
+from datetime import date
+from datetime import datetime
+from datetime import time
+from datetime import timedelta
+from datetime import timezone
+from sqlalchemy import select
+from sqlalchemy import func
+from sqlalchemy import text
+from app.game_accounts.common.support import fail
 from app.raid_rooms.schedules import scheduling as graph
 from app.raid_rooms.admissions import cycle_admission as admission
-from app.raid_rooms.cycle_application_models import CycleSession, CycleSessionSegment
-from app.raid_rooms.integrated_models import RecruitmentSession as Session, RecruitmentSegment as Segment
-from app.raid_rooms.source_models import (ScheduleGroup, ScheduleAlternative, SessionBinding,
-    SegmentDurationEvidence,SessionParticipation)
-from app.raid_rooms.schedule_heads import ScheduleHead
+from app.raid_rooms.models.cycle_application_models import CycleSession
+from app.raid_rooms.models.cycle_application_models import CycleSessionSegment
+from app.raid_rooms.models.integrated_models import RecruitmentSession as Session
+from app.raid_rooms.models.integrated_models import RecruitmentSegment as Segment
+from app.raid_rooms.models.source_models import ScheduleGroup
+from app.raid_rooms.models.source_models import ScheduleAlternative
+from app.raid_rooms.models.source_models import SessionBinding
+from app.raid_rooms.models.source_models import SegmentDurationEvidence
+from app.raid_rooms.models.source_models import SessionParticipation
+from app.raid_rooms.models.schedule_heads import ScheduleHead
 
 
 def planning_enabled(db):
@@ -25,7 +36,7 @@ def groups(db,target):
     query=select(ScheduleGroup).join(ScheduleHead,ScheduleHead.group_id==ScheduleGroup.id).where(ScheduleHead.active.is_(True))
     if target.generation==1:
         return list(db.scalars(query.where(ScheduleGroup.room_id==target.room_id,ScheduleGroup.cycle_key==target.cycle_key)))
-    from app.raid_rooms.cycle_lifecycle_models import CycleScheduleGroup
+    from app.raid_rooms.models.cycle_lifecycle_models import CycleScheduleGroup
     return list(db.scalars(query.join(CycleScheduleGroup,CycleScheduleGroup.group_id==ScheduleGroup.id).where(
         CycleScheduleGroup.cycle_id==target.id,CycleScheduleGroup.generation==target.generation)))
 
@@ -34,7 +45,7 @@ def alternatives(db,group):
     if group.day_scope=='any_current_cycle':return []
     query=select(ScheduleAlternative).where(ScheduleAlternative.group_id==group.id)
     if planning_enabled(db):
-        from app.raid_rooms.cycle_planning_models import CycleAlternative
+        from app.raid_rooms.models.cycle_planning_models import CycleAlternative
         edition=db.scalar(select(func.max(CycleAlternative.edition)).where(CycleAlternative.group_id==group.id))
         if edition is not None:query=query.join(CycleAlternative,CycleAlternative.alternative_id==ScheduleAlternative.id).where(CycleAlternative.edition==edition)
     return list(db.scalars(query.order_by(ScheduleAlternative.id)))
@@ -42,7 +53,7 @@ def alternatives(db,group):
 
 def alternative_key(db,alternative):
     if planning_enabled(db):
-        from app.raid_rooms.cycle_planning_models import CycleAlternative
+        from app.raid_rooms.models.cycle_planning_models import CycleAlternative
         link=db.get(CycleAlternative,alternative.id)
         if link:return link.client_key
     return alternative.client_key
@@ -147,7 +158,7 @@ def install(db, room, target, inputs, member, stamp, *, copied=False):
         db.flush()
         db.add(ScheduleHead(group_id=group.id, client_key=value.client_group_key, active=True))
         if target.generation>1:
-            from app.raid_rooms.cycle_lifecycle_models import CycleScheduleGroup
+            from app.raid_rooms.models.cycle_lifecycle_models import CycleScheduleGroup
             db.add(CycleScheduleGroup(group_id=group.id,room_id=room.id,cycle_id=target.id,generation=target.generation))
         for choice in value.alternatives:
             if choice.existing_session_id is not None or choice.expected_session_revision is not None:

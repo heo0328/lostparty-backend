@@ -1,13 +1,24 @@
 """Future intent does not consume present raid ledger or time resources."""
 import uuid
-from datetime import date,timedelta
-from sqlalchemy import select,func
+from datetime import date
+from datetime import timedelta
+from sqlalchemy import select
+from sqlalchemy import func
 from app.core.database import session
-from app.raid_rooms.integrated_models import RecruitmentRoom as Room,RecruitmentAssignment as Assignment
-from app.raid_rooms.source_models import ContinuationChoice as Choice,OpeningEvent,RoomSettings
-from app.raid_rooms.weekly_links import WeeklyOccupancy
-from tests.raid_rooms.outcomes.test_recruitment_completion import http, bundle
-from tests.raid_rooms.admissions.test_recruitment_admission import ready, sources, imported, people, worlds, post
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from app.raid_rooms.models.source_models import ContinuationChoice as Choice
+from app.raid_rooms.models.source_models import OpeningEvent
+from app.raid_rooms.models.source_models import RoomSettings
+from app.raid_rooms.models.weekly_links import WeeklyOccupancy
+from tests.raid_rooms.outcomes.test_recruitment_completion import http
+from tests.raid_rooms.outcomes.test_recruitment_completion import bundle
+from tests.raid_rooms.admissions.test_recruitment_admission import ready
+from tests.raid_rooms.admissions.test_recruitment_admission import sources
+from tests.raid_rooms.admissions.test_recruitment_admission import imported
+from tests.raid_rooms.admissions.test_recruitment_admission import people
+from tests.raid_rooms.admissions.test_recruitment_admission import worlds
+from tests.raid_rooms.admissions.test_recruitment_admission import post
 from tests.raid_rooms.schedules.test_recruitment_scheduling import plan
 from tests.raid_rooms.common.test_raid_room_http import err
 
@@ -53,12 +64,13 @@ def test_opening_same_cycle_noop_preserves_authority_floor(ready,http):
 
 
 def test_late_automatic_opening_uses_boundary_authority_not_worker_clock(ready,http,monkeypatch):
-    from app.raid_rooms import continuation
+    from app.raid_rooms.admissions import continuation
     from app.raid_rooms.schedules import scheduling
     from app.raid_rooms.participation import participation_core
     from app.raids import service as raids
-    from app.raid_rooms.integrated_models import RecruitmentRound as Round
-    from datetime import datetime,timezone
+    from app.raid_rooms.models.integrated_models import RecruitmentRound as Round
+    from datetime import datetime
+    from datetime import timezone
     target,a,b,_=ready;rid=bundle(http,a);p=plan(http,a,rid);c=choices(http,a,rid)
     with session() as db,db.begin():
         room=db.get(Room,uuid.UUID(rid));settings=db.get(RoomSettings,room.id);settings.auto_open_enabled=True
@@ -82,11 +94,12 @@ def test_late_automatic_opening_uses_boundary_authority_not_worker_clock(ready,h
 
 
 def test_blocked_auto_open_retry_keeps_original_boundary_floor(ready,http,monkeypatch):
-    from app.raid_rooms import continuation
+    from app.raid_rooms.admissions import continuation
     from app.raid_rooms.schedules import scheduling
     from app.raid_rooms.participation import participation_core
     from app.raids import service as raids
-    from datetime import datetime,timezone
+    from datetime import datetime
+    from datetime import timezone
     target,a,b,_=ready;rid=bundle(http,a);p=plan(http,a,rid);next_cycle=date.fromisoformat(p['cycle_key'])+timedelta(days=7)
     with session() as db,db.begin():
         value=db.get(RoomSettings,uuid.UUID(rid));value.auto_open_enabled=True;value.auto_open_effective_cycle=next_cycle

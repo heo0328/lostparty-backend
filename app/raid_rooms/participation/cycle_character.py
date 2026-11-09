@@ -1,26 +1,30 @@
 """Replace an unfinished target bundle; old character usability is not a gate."""
 from app.raid_rooms.common import beta_profile
 from fastapi.encoders import jsonable_encoder
-from app.game_accounts.support import fail,GameError
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import GameError
 from app.game_accounts.rosters.lifecycle import digest
-from app.raid_rooms.participation import cycle_lifecycle as life, cycle_leadership as leadership
+from app.raid_rooms.participation import cycle_lifecycle as life
+from app.raid_rooms.participation import cycle_leadership as leadership
 from app.raid_rooms.admissions import cycle_commands as commands
 from app.raid_rooms.admissions import cycle_admission as admission
 from app.raid_rooms.schedules import cycle_schedule as schedule
-from app.raid_rooms import cycle_wire as wire
+from app.raid_rooms.schemas import cycle_wire as wire
 from app.raid_rooms.common import cycles
-from app.raid_rooms.admissions.cycle_creation import permission, scope
-from app.raid_rooms.participation_commands import Selection,Target
+from app.raid_rooms.admissions.cycle_creation import permission
+from app.raid_rooms.admissions.cycle_creation import scope
+from app.raid_rooms.schemas.participation_commands import Selection
+from app.raid_rooms.schemas.participation_commands import Target
 
 from app.raid_rooms.schedules import session_display as display
-from app.raid_rooms import session_display_schemas as display_schemas
+from app.raid_rooms.schemas import session_display_schemas as display_schemas
 
 
 def prepare(db,uid,rid,key,cid,role,stamp,*,include_session_display=False):
     room,row=commands.resolve(db,uid,rid,key,stamp)
     cm=life.actual_member(db,row,uid,states=('participating',))
     if cm is None:fail('WEEKLY_PARTICIPANT_REQUIRED',403)
-    from app.raid_rooms import roster_participation
+    from app.raid_rooms.participation import roster_participation
     owned=roster_participation.replacement(db,row,cm)
     selection=life.selection_context.selection(db,uid,cid,role)
     targets=commands.target_items(db,uid,row,selection, item_ids={a.item_id for a in owned} if roster_participation.enabled() else None)
@@ -63,7 +67,7 @@ def get(principal,rid,key,cid,role,include_session_display=False):
     with commands.base.snapshot(principal) as (db,uid,stamp):
         value,*_=prepare(db,uid,rid,key,cid,role,stamp,include_session_display=include_session_display)
         result=display.output(display_schemas.AdmissionDisplayContext,value,include_session_display,snapshot=(db,uid,stamp))
-        from app.raid_rooms import roster_api
+        from app.raid_rooms.api import roster_api
         return roster_api.publish(db,uid,stamp,result,'preview')
 
 
@@ -88,7 +92,7 @@ def execute(principal,rid,command,data):
         member,_,_=admission.admit_bundle(db,uid,room,row,Selection.model_validate(body['selection']),
             [Target.model_validate(v) for v in body['target_items']],command,stamp,replacing=cm,unified=True)
         schedule.enrol(db,row,member,data.target_session_ids,stamp,copy=False)
-        from app.raid_rooms import roster_participation
+        from app.raid_rooms.participation import roster_participation
         if roster_participation.enabled() and roster_participation.split(db,row,cm)[1]:roster_participation.activate(db,row,stamp)
         cm.revision+=1;life.event(db,row,cm,command,'character_changed',stamp,evidence)
         row.revision+=1;row.members_revision+=1;row.plan_revision+=1

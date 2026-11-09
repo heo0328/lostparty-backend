@@ -3,18 +3,48 @@
 Optional W5_REPORT_DIR must be a /tmp directory inside the disposable runner.
 Reports contain aggregate SQL/row/byte/timing/plan metrics, no parameters/data.
 """
-import json, math, os, statistics, time, uuid, threading
+import json
+import math
+import os
+import statistics
+import time
+import uuid
+import threading
 from contextlib import contextmanager
 from pathlib import Path
-from datetime import date, timedelta
+from datetime import date
+from datetime import timedelta
 import pytest
 from fastapi.encoders import jsonable_encoder
-from sqlalchemy import event, select, inspect, text
-from app.core.database import session, now
-from app.raid_rooms.reads import cycle_card_batch as batch, cycle_queries as directory
-from app.raid_rooms.cycle_models import RoomCycle
-from app.raid_rooms.integrated_models import RecruitmentRoom as Room
-from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import outcomes, planning, consent, lifecycle, candidate, ready, sources, imported, people, worlds, scheduled, create_room, actor, add_member, cancel_member, preflight, request, creation, cycles
+from sqlalchemy import event
+from sqlalchemy import select
+from sqlalchemy import inspect
+from sqlalchemy import text
+from app.core.database import session
+from app.core.database import now
+from app.raid_rooms.reads import cycle_card_batch as batch
+from app.raid_rooms.reads import cycle_queries as directory
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import outcomes
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import planning
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import consent
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import lifecycle
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import candidate
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import ready
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import sources
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import imported
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import people
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import worlds
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import scheduled
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import create_room
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import actor
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import add_member
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import cancel_member
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import preflight
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import request
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import creation
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import cycles
 from tests.raid_rooms.reads.test_recruitment_cycle_queries import search_request
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
@@ -70,7 +100,8 @@ def report(name,value):
 
 
 def test_directory_50_cards_batch_equivalence_group_pages_and_measurements(outcomes,people,monkeypatch):
-    from app.groups.models import Group,GroupMembership
+    from app.groups.models import Group
+    from app.groups.models import GroupMembership
     from tests.groups.test_group_foundation import create as group_create
     engine,a,b=outcomes
     gid=uuid.UUID(group_create(a)[1]['group']['group_id'])
@@ -153,7 +184,8 @@ def test_card_batch_same_snapshot_bundle_sessions_generations_and_member_isolati
     report('bundle_sessions',dict(items=2,sessions=2,before=old_stats,after=new_stats))
     # Cancel/reopen N produces generation 2 with different actual group links.
     cancel_member(b,rid,n);cancel_member(a,rid,n)
-    from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import opening, opening_body
+    from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import opening
+    from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import opening_body
     ctx=opening.get(actor(a['uid']),rid,n,'reopen',uuid.UUID(a['ids'][0]),'dealer')
     opening.execute(actor(a['uid']),rid,uuid.uuid4(),opening_body(ctx,'reopen'))
     with session() as db,db.begin():
@@ -167,9 +199,10 @@ def test_card_batch_same_snapshot_bundle_sessions_generations_and_member_isolati
 
 
 def test_summary_50_characters_500_entries_same_rows_measurements(outcomes,monkeypatch):
-    from app.game_accounts.models import Character,NameClaim
+    from app.game_accounts.models.models import Character
+    from app.game_accounts.models.models import NameClaim
     from app.raid_rooms.outcomes import weekly_summary as summary
-    from app.raid_rooms import weekly_summary_schemas as weekly_schemas
+    from app.raid_rooms.schemas import weekly_summary_schemas as weekly_schemas
     engine,a,b=outcomes;created=create_room(a);c,n=[r['target_cycle_key'] for r in created['created_cycles']]
     with session() as db,db.begin():
         stamp=now(db)
@@ -194,10 +227,12 @@ def test_summary_50_characters_500_entries_same_rows_measurements(outcomes,monke
 
 
 def test_directory_eight_actual_participants_count_and_permissions(outcomes,people,monkeypatch):
-    from app.raid_rooms import cycle_wire as wire
+    from app.raid_rooms.schemas import cycle_wire as wire
     from app.raid_rooms.admissions import cycle_admission
     from app.raids import service as raids
-    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import context, admission_request, commands
+    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import context
+    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import admission_request
+    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import commands
     engine,a,b=outcomes
     raid=next(r for r in raids.catalog().raids if r.raid_id=='kazeros_act4')
     with session() as db:key=raids.cycle(now(db)).cycle_key
@@ -229,7 +264,9 @@ def test_directory_eight_actual_participants_count_and_permissions(outcomes,peop
 
 
 def test_batch_rows_do_not_grow_with_resumed_leader_assignment_history(outcomes):
-    from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import complete, propose_resume, vote
+    from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import complete
+    from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import propose_resume
+    from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import vote
     engine,a,b=outcomes;rid,c,n=scheduled(a);rows=[]
     for _ in range(3):
         complete(a,rid,c,'close_weekly');pid=propose_resume(a,rid,c);vote(a,rid,c,pid)

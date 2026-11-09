@@ -1,20 +1,47 @@
 import importlib.util
 import uuid
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime, timezone
+from datetime import datetime
+from datetime import timezone
 from threading import Event
 
 import pytest
-from sqlalchemy import select, func, text
+from sqlalchemy import select
+from sqlalchemy import func
+from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
-from app.core.database import session, now, engine
-from app.game_accounts.rosters import lifecycle, service, observations
+from app.core.database import session
+from app.core.database import now
+from app.core.database import engine
+from app.game_accounts.rosters import lifecycle
+from app.game_accounts.rosters import service
+from app.game_accounts.rosters import observations
 from app.game_accounts.power import power_service
-from app.game_accounts.models import (Account, Character, NameClaim, CharacterRetirement, CharacterHistoryHead,
-                                     ScopedPowerCache, Registration, Configuration, Activity, LimitEvent)
-from app.game_accounts.support import GameError, lock
-from tests.game_accounts.test_game_accounts import world, register, verify, page, change, save_data, BASE, VERIFY, start, another_user
-from tests.game_accounts.test_combat_power import body as power_body, endpoint, seed_provider
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.models.models import CharacterRetirement
+from app.game_accounts.models.models import CharacterHistoryHead
+from app.game_accounts.models.models import ScopedPowerCache
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import Configuration
+from app.game_accounts.models.models import Activity
+from app.game_accounts.models.models import LimitEvent
+from app.game_accounts.common.support import GameError
+from app.game_accounts.common.support import lock
+from tests.game_accounts.test_game_accounts import world
+from tests.game_accounts.test_game_accounts import register
+from tests.game_accounts.test_game_accounts import verify
+from tests.game_accounts.test_game_accounts import page
+from tests.game_accounts.test_game_accounts import change
+from tests.game_accounts.test_game_accounts import save_data
+from tests.game_accounts.test_game_accounts import BASE
+from tests.game_accounts.test_game_accounts import VERIFY
+from tests.game_accounts.test_game_accounts import start
+from tests.game_accounts.test_game_accounts import another_user
+from tests.game_accounts.test_combat_power import body as power_body
+from tests.game_accounts.test_combat_power import endpoint
+from tests.game_accounts.test_combat_power import seed_provider
 
 
 def owned(client,world):
@@ -214,7 +241,7 @@ def test_challenge_old_generation_or_key_cannot_confirm(client,world,login,monke
 
 
 def test_old_name_cache_not_imported_into_new_scope(client,world,monkeypatch):
-    from app.game_accounts.models import PowerCache as LegacyPower
+    from app.game_accounts.models.models import PowerCache as LegacyPower
     h,state=world;r=register(client,h)
     with session() as db,db.begin():
         uid=db.scalar(select(Registration.user_id))

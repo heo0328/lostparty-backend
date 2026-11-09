@@ -1,9 +1,9 @@
 """Legacy intent projection never manufactures a cycle or a participation."""
 from app.raid_rooms.admissions import cycle_commands as commands
 from app.raid_rooms.common import cycles
-from app.raid_rooms import cycle_wire as wire
+from app.raid_rooms.schemas import cycle_wire as wire
 from app.raid_rooms.outcomes import cycle_outcomes as outcomes
-from app.raid_rooms import continuation
+from app.raid_rooms.admissions import continuation
 from app.raid_rooms.admissions.cycle_creation import scope
 
 

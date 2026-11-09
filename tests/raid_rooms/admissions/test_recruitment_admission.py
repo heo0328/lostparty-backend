@@ -5,18 +5,29 @@ from concurrent.futures import ThreadPoolExecutor
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from sqlalchemy import text,select,func,event
+from sqlalchemy import text
+from sqlalchemy import select
+from sqlalchemy import func
+from sqlalchemy import event
 from app.core.database import session
 from app.core.errors import register
 from app.raid_rooms.admissions import admission_service as service
-from app.raid_rooms.admission_router import router
-from app.raid_rooms.integrated_models import RecruitmentMembership as Member,RecruitmentAssignment as Assignment,RecruitmentRoom as Room
-from app.raid_rooms.source_models import RecruitmentApplication as Application,RoomSettings
-from app.raid_rooms.weekly_links import WeeklyOccupancy
+from app.raid_rooms.api.admission_router import router
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from app.raid_rooms.models.source_models import RecruitmentApplication as Application
+from app.raid_rooms.models.source_models import RoomSettings
+from app.raid_rooms.models.weekly_links import WeeklyOccupancy
 from app.groups.models import GroupMembership
 from app.core.database import now
 from app.member_limits.models import MemberUsageLimits
-from tests.raid_rooms.participation.test_recruitment_participation import ready, sources, imported, people, worlds, write_power
+from tests.raid_rooms.participation.test_recruitment_participation import ready
+from tests.raid_rooms.participation.test_recruitment_participation import sources
+from tests.raid_rooms.participation.test_recruitment_participation import imported
+from tests.raid_rooms.participation.test_recruitment_participation import people
+from tests.raid_rooms.participation.test_recruitment_participation import worlds
+from tests.raid_rooms.participation.test_recruitment_participation import write_power
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 from tests.raid_rooms.common.test_raid_room_http import err
 
@@ -228,7 +239,7 @@ def test_all_reads_no_writes_and_scheduling_gate_is_atomic(ready,http):
 def test_draft_and_original_openapi_contracts(http):
     from pathlib import Path
     from app.main import app
-    from app.raid_rooms.admission_contract import draft_openapi
+    from app.raid_rooms.contracts.admission_contract import draft_openapi
     draft=draft_openapi()
     assert draft==json.loads(Path('openapi/recruitment-admission.draft.json').read_text())
     assert set(draft['paths'])==set(http.app.openapi()['paths'])

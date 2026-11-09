@@ -2,18 +2,43 @@ import json
 import time
 import uuid
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime, timezone, date, timedelta
+from datetime import datetime
+from datetime import timezone
+from datetime import date
+from datetime import timedelta
 from threading import Event
 
 import pytest
-from sqlalchemy import select, text, event, insert, delete, inspect
+from sqlalchemy import select
+from sqlalchemy import text
+from sqlalchemy import event
+from sqlalchemy import insert
+from sqlalchemy import delete
+from sqlalchemy import inspect
 
-from app.core.database import session, engine, now
+from app.core.database import session
+from app.core.database import engine
+from app.core.database import now
 from app.game_accounts.rosters import bootstrap
-from app.game_accounts.models import (Account, Registration, Character, Configuration, Activity, NameClaim,
-    CharacterPersonalPreferences, CharacterRoleSummary, AccountCharacterPresentation, ScopedPowerCache)
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Configuration
+from app.game_accounts.models.models import Activity
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.models.models import CharacterPersonalPreferences
+from app.game_accounts.models.models import CharacterRoleSummary
+from app.game_accounts.models.models import AccountCharacterPresentation
+from app.game_accounts.models.models import ScopedPowerCache
 from app.raid_weekly.models import WeeklyState
-from tests.game_accounts.test_game_accounts import world, register, verify, page, save_data, change, BASE, another_user
+from tests.game_accounts.test_game_accounts import world
+from tests.game_accounts.test_game_accounts import register
+from tests.game_accounts.test_game_accounts import verify
+from tests.game_accounts.test_game_accounts import page
+from tests.game_accounts.test_game_accounts import save_data
+from tests.game_accounts.test_game_accounts import change
+from tests.game_accounts.test_game_accounts import BASE
+from tests.game_accounts.test_game_accounts import another_user
 from tests.game_accounts.test_role_summaries import put as put_role
 
 URL = '/v2/me/account-bootstrap'
@@ -55,7 +80,8 @@ def test_empty_strict_auth_and_no_implicit_rows(client, login):
 
 @pytest.mark.parametrize('kind,status', [('disabled', 403), ('revoked', 401)])
 def test_current_auth_state_blocks_bootstrap(client, login, kind, status):
-    from app.auth.models import User, Session
+    from app.auth.models import User
+    from app.auth.models import Session
     auth, _ = login(); h = {'Authorization':'Bearer '+auth['access_token']}
     with session() as db, db.begin():
         if kind == 'disabled':

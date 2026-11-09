@@ -2,13 +2,25 @@
 import uuid
 
 import pytest
-from sqlalchemy import select, func
+from sqlalchemy import select
+from sqlalchemy import func
 
 from app.core.database import session
-from app.raid_rooms.common import runtime, usage
-from app.raid_rooms.models import Room, Application
-from tests.raid_rooms.common.test_raid_room_foundation import people, worlds
-from tests.raid_rooms.common.test_raid_room_http import http, post, err, create, create_body, detail, context, membership, decision
+from app.raid_rooms.common import runtime
+from app.raid_rooms.common import usage
+from app.raid_rooms.models.models import Room
+from app.raid_rooms.models.models import Application
+from tests.raid_rooms.common.test_raid_room_foundation import people
+from tests.raid_rooms.common.test_raid_room_foundation import worlds
+from tests.raid_rooms.common.test_raid_room_http import http
+from tests.raid_rooms.common.test_raid_room_http import post
+from tests.raid_rooms.common.test_raid_room_http import err
+from tests.raid_rooms.common.test_raid_room_http import create
+from tests.raid_rooms.common.test_raid_room_http import create_body
+from tests.raid_rooms.common.test_raid_room_http import detail
+from tests.raid_rooms.common.test_raid_room_http import context
+from tests.raid_rooms.common.test_raid_room_http import membership
+from tests.raid_rooms.common.test_raid_room_http import decision
 
 
 @pytest.mark.parametrize('setting', [None, 'false', '0', 'invalid-test-config'])
@@ -104,4 +116,4 @@ def test_pause_does_not_change_candidate_contract_or_expose_main_routes(http, mo
     http.app.openapi_schema = None
     assert http.app.openapi() == before
     from app.main import app
-    assert all(getattr(route.endpoint,'__module__','')!='app.raid_rooms.router' for route in app.routes)
+    assert all(getattr(route.endpoint,'__module__','')!='app.raid_rooms.api.router' for route in app.routes)

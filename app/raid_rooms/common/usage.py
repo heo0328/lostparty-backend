@@ -1,6 +1,8 @@
 """Shared room usage source; explicit callers opt in before public activation."""
-from sqlalchemy import select, func
-from app.raid_rooms.models import Membership, Room
+from sqlalchemy import select
+from sqlalchemy import func
+from app.raid_rooms.models.models import Membership
+from app.raid_rooms.models.models import Room
 
 
 def count(db, uid):

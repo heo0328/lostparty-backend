@@ -6,11 +6,19 @@ unconfirmed automatic plan; confirmed schedules and proposals are untouched.
 """
 from copy import deepcopy
 from sqlalchemy import select
-from app.core.database import session, now
-from app.game_accounts.models import Account, Registration
-from app.game_accounts.support import authorize, fail, reserve, commit_result, release
-from app.raid_rooms.integrated_models import RecruitmentRoom, RecruitmentMembership
-from app.raid_rooms.source_models import PersonalAvailability, AvailabilitySubmission
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Registration
+from app.game_accounts.common.support import authorize
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import reserve
+from app.game_accounts.common.support import commit_result
+from app.game_accounts.common.support import release
+from app.raid_rooms.models.integrated_models import RecruitmentRoom
+from app.raid_rooms.models.integrated_models import RecruitmentMembership
+from app.raid_rooms.models.source_models import PersonalAvailability
+from app.raid_rooms.models.source_models import AvailabilitySubmission
 
 
 def normalize(intervals):
@@ -153,7 +161,8 @@ def put(principal, key, data, rid=None):
                 result = submission_output(member, row)
             db.flush()
             if rid is not None:
-                from app.raid_rooms.schedules.scheduling import evaluate_initial, ScheduleGroup
+                from app.raid_rooms.schedules.scheduling import evaluate_initial
+                from app.raid_rooms.schedules.scheduling import ScheduleGroup
                 if db.scalar(select(ScheduleGroup.id).where(ScheduleGroup.room_id==rid).limit(1)) is not None:
                     evaluate_initial(db,db.get(RecruitmentRoom,rid),stamp)
             value=commit_result(db, ticket, 200, result)

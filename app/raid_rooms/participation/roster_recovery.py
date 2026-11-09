@@ -3,17 +3,25 @@
 Never called by GET/worker. The original immutable review evidence is retained.
 Unclassified, mixed-cause, changed-assignment and ownership failures stay blocked.
 """
-from datetime import date, timedelta
+import app.game_accounts.models.roster_presence as roster_presence_models
+from datetime import date
+from datetime import timedelta
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
-from app.game_accounts import roster_presence
-from app.game_accounts.models import Character, Account
-from app.game_accounts.support import GameError
+from app.game_accounts.rosters import roster_presence
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Account
+from app.game_accounts.common.support import GameError
 from app.raid_rooms.participation import cycle_lifecycle as life
 from app.raid_rooms.schedules import cycle_planning as plan
-from app.raid_rooms.cycle_models import RoomCycle, CycleGeneration, CycleMember, CycleAssignment, LegacyCycleEvidence
-from app.raid_rooms.integrated_models import RecruitmentRoom as Room, RecruitmentAssignment as Assignment
-from app.raid_rooms.membership_action_models import LeadershipRecovery
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import CycleGeneration
+from app.raid_rooms.models.cycle_models import CycleMember
+from app.raid_rooms.models.cycle_models import CycleAssignment
+from app.raid_rooms.models.cycle_models import LegacyCycleEvidence
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from app.raid_rooms.models.membership_action_models import LeadershipRecovery
 from app.raids.service import cycle
 
 
@@ -73,7 +81,7 @@ def recover(db, account_id, stamp):
                 life.qualify(db, room, row, cm)
         except GameError:
             continue
-        db.add(roster_presence.RosterRoomRecovery(cycle_id=row.id, generation=row.generation,
+        db.add(roster_presence_models.RosterRoomRecovery(cycle_id=row.id, generation=row.generation,
             evidence=dict(reason='roster_observation_only', original=[
                 dict(source_kind=e.source_kind, source_id=str(e.source_id), reason=e.reason) for e in evidence]),
             observed_at=stamp))

@@ -2,30 +2,51 @@
 import json
 import uuid
 from copy import deepcopy
-from datetime import date, timedelta
+from datetime import date
+from datetime import timedelta
 from pathlib import Path
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from fastapi.encoders import jsonable_encoder
-from jsonschema import Draft202012Validator, FormatChecker
-from sqlalchemy import select, inspect
-from app.core.database import session, now
+from jsonschema import Draft202012Validator
+from jsonschema import FormatChecker
+from sqlalchemy import select
+from sqlalchemy import inspect
+from app.core.database import session
+from app.core.database import now
 from app.core.errors import register
 from app.auth.router import authenticated
-from app.raid_rooms import roster_participation as rp
+from app.raid_rooms.participation import roster_participation as rp
 from app.raid_rooms.participation import cycle_character
 from app.raid_rooms.reads import cycle_member_reads
 from app.raid_rooms.outcomes import cycle_outcomes
-from app.raid_rooms import cycle_schemas
+from app.raid_rooms.schemas import cycle_schemas
 from app.raid_rooms.common import cycle_worker
-from app.raid_rooms.participation import cycle_lifecycle, character_issues
-from app.raid_rooms.cycle_models import RoomCycle
-from app.raid_rooms.integrated_models import RecruitmentAssignment as Assignment
-from app.game_accounts.rosters import bootstrap, lifecycle_reads
-from app.game_accounts.support import GameError
-from tests.raid_rooms.participation.test_roster_participation_issues import presence_db, policy_db, group_beta, beta, current, candidate, ready, sources, imported, people, worlds, observe, joined, qualified
-from tests.raid_rooms.admissions.test_recruitment_cycle_creation import preflight, request, creation
+from app.raid_rooms.participation import cycle_lifecycle
+from app.raid_rooms.participation import character_issues
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from app.game_accounts.rosters import bootstrap
+from app.game_accounts.rosters import lifecycle_reads
+from app.game_accounts.common.support import GameError
+from tests.raid_rooms.participation.test_roster_participation_issues import presence_db
+from tests.raid_rooms.participation.test_roster_participation_issues import policy_db
+from tests.raid_rooms.participation.test_roster_participation_issues import group_beta
+from tests.raid_rooms.participation.test_roster_participation_issues import beta
+from tests.raid_rooms.participation.test_roster_participation_issues import current
+from tests.raid_rooms.participation.test_roster_participation_issues import candidate
+from tests.raid_rooms.participation.test_roster_participation_issues import ready
+from tests.raid_rooms.participation.test_roster_participation_issues import sources
+from tests.raid_rooms.participation.test_roster_participation_issues import imported
+from tests.raid_rooms.participation.test_roster_participation_issues import people
+from tests.raid_rooms.participation.test_roster_participation_issues import worlds
+from tests.raid_rooms.participation.test_roster_participation_issues import observe
+from tests.raid_rooms.participation.test_roster_participation_issues import joined
+from tests.raid_rooms.participation.test_roster_participation_issues import qualified
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import preflight
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import request
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import creation
 from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import change_body
 from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import complete
 from tests.raid_rooms.admissions.test_recruitment_cycle_http import client
@@ -34,7 +55,7 @@ from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
 Q=dict(contract_profile='beta-recruitment-1',group_policy_version='cycle-group-policy-1')
 P=dict(participation_profile=rp.PROFILE)
-SCHEMAS=json.loads(Path('app/raid_rooms/roster_metadata.schema.json').read_text())
+SCHEMAS=json.loads(Path('app/raid_rooms/contracts/roster_metadata.schema.json').read_text())
 
 
 def valid(name,value):
@@ -45,7 +66,7 @@ def valid(name,value):
 def bundle(w, *, continuation=True):
     from app.raid_rooms.common import beta_profile
     from app.raid_rooms.schedules import beta_schedule
-    from app.raid_rooms import beta_schemas
+    from app.raid_rooms.schemas import beta_schemas
     with session() as db:base=beta_schedule.time_policy.ceil_tick(now(db)+timedelta(hours=2))
     params=dict(base_starts_at=base.isoformat(),early_coordination_enabled='false')
     if continuation:
@@ -236,7 +257,8 @@ def test_partial_change_stale_or_tampered_bundle_is_atomic(presence_db,monkeypat
 def test_completion_and_change_compete_without_partial_success(presence_db):
     from contextvars import copy_context
     from concurrent.futures import ThreadPoolExecutor
-    from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import context, outcome_body
+    from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import context
+    from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import outcome_body
     _,a,b=presence_db
     rid,c,n=bundle(a);complete(a,rid,c,index=0)
     with rp.using(P):

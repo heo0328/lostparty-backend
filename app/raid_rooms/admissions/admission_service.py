@@ -3,18 +3,35 @@ import uuid
 from datetime import timedelta
 from contextlib import contextmanager
 from fastapi.encoders import jsonable_encoder
-from sqlalchemy import select, text
-from app.core.database import session, now
-from app.game_accounts.support import authorize,fail,reserve,release,commit_result,GameError
+from sqlalchemy import select
+from sqlalchemy import text
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.common.support import authorize
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import reserve
+from app.game_accounts.common.support import release
+from app.game_accounts.common.support import commit_result
+from app.game_accounts.common.support import GameError
 from app.groups.admission_core import display
-from app.groups.models import Group, GroupMembership
+from app.groups.models import Group
+from app.groups.models import GroupMembership
 from app.raid_rooms.admissions import admission_context as context
 from app.raid_rooms.participation import participation_core as core
-from app.raid_rooms import admission_schemas as s
-from app.raid_rooms.participation_commands import Selection, Target
-from app.raid_rooms.integrated_models import (RecruitmentRoom as Room,RecruitmentItem as Item,
-    RecruitmentRound as Round,RecruitmentMembership as Member,RecruitmentAssignment as Assignment,RecruitmentSession as Session)
-from app.raid_rooms.source_models import RoomSettings, ItemSettings, RecruitmentApplication as Application, OpeningEvent, ScheduleGroup
+from app.raid_rooms.schemas import admission_schemas as s
+from app.raid_rooms.schemas.participation_commands import Selection
+from app.raid_rooms.schemas.participation_commands import Target
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from app.raid_rooms.models.integrated_models import RecruitmentItem as Item
+from app.raid_rooms.models.integrated_models import RecruitmentRound as Round
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from app.raid_rooms.models.integrated_models import RecruitmentSession as Session
+from app.raid_rooms.models.source_models import RoomSettings
+from app.raid_rooms.models.source_models import ItemSettings
+from app.raid_rooms.models.source_models import RecruitmentApplication as Application
+from app.raid_rooms.models.source_models import OpeningEvent
+from app.raid_rooms.models.source_models import ScheduleGroup
 from app.raids import service as raids
 
 DURATION_POLICY='difficulty-duration-v1'
@@ -156,7 +173,8 @@ def create(principal,key,data):
 def admit(principal,rid,key,data,*,applying=False):
     def run(db,uid,stamp):
         row=room(db,uid,rid);unscheduled(db,row);cas(row,data)
-        from app.raid_rooms.schedules import scheduling, proposals
+        from app.raid_rooms.schedules import scheduling
+        from app.raid_rooms.schedules import proposals
         scheduling.deadlines(db,row,data.target_session_ids,stamp)
         existing_deadlines=[s.starts_at-timedelta(minutes=30) for s in scheduling.sessions(db,rid)
             if s.state=='confirmed' and (db.get(scheduling.SessionBinding,s.id).required or s.id in data.target_session_ids)]
@@ -213,7 +231,8 @@ def approve(principal,aid,key,data):
         if app.revision!=data.expected_application_revision:fail('REVISION_CONFLICT')
         if app.state!='pending' or stamp>=app.expires_at:fail('APPLICATION_NOT_PENDING')
         require_origin(app)
-        from app.raid_rooms.schedules import scheduling, proposals
+        from app.raid_rooms.schedules import scheduling
+        from app.raid_rooms.schedules import proposals
         selected=[uuid.UUID(i) for i in app.build.get('target_session_ids',[])]
         scheduling.deadlines(db,row,selected,stamp)
         existing_deadlines=[s.starts_at-timedelta(minutes=30) for s in scheduling.sessions(db,row.id)

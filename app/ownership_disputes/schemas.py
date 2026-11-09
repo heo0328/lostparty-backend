@@ -1,8 +1,14 @@
 from datetime import datetime
-from typing import Annotated, Literal
+from typing import Annotated
+from typing import Literal
 from uuid import UUID
-from pydantic import Field, model_validator, ConfigDict
-from app.game_accounts.schemas import DTO, Name, Version, PreviewOut
+from pydantic import Field
+from pydantic import model_validator
+from pydantic import ConfigDict
+from app.game_accounts.schemas.schemas import DTO
+from app.game_accounts.schemas.schemas import Name
+from app.game_accounts.schemas.schemas import Version
+from app.game_accounts.schemas.schemas import PreviewOut
 
 
 class Target(DTO):

@@ -6,16 +6,27 @@ from datetime import timedelta
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from sqlalchemy import event, select, func
+from sqlalchemy import event
+from sqlalchemy import select
+from sqlalchemy import func
 from sqlalchemy.exc import OperationalError
-from app.core.database import session, engine, now
+from app.core.database import session
+from app.core.database import engine
+from app.core.database import now
 from app.core.errors import register
-from app.raid_rooms.common import service, core
+from app.raid_rooms.common import service
+from app.raid_rooms.common import core
 from app.raid_rooms.reads import queries
-from app.raid_rooms.router import router
-from app.raid_rooms.models import Room, Membership, Application
-from app.game_accounts.models import RequestResult, Character
-from tests.raid_rooms.common.test_raid_room_foundation import people, worlds, create_command, selection
+from app.raid_rooms.api.router import router
+from app.raid_rooms.models.models import Room
+from app.raid_rooms.models.models import Membership
+from app.raid_rooms.models.models import Application
+from app.game_accounts.models.models import RequestResult
+from app.game_accounts.models.models import Character
+from tests.raid_rooms.common.test_raid_room_foundation import people
+from tests.raid_rooms.common.test_raid_room_foundation import worlds
+from tests.raid_rooms.common.test_raid_room_foundation import create_command
+from tests.raid_rooms.common.test_raid_room_foundation import selection
 from tests.member_limits.test_member_limits import change
 from app.member_limits.service import Limits
 
@@ -251,8 +262,8 @@ def test_private_reads_and_context_do_not_write_or_expose_selection(http, people
 
 def test_in_progress_and_ack_failure_rollback_are_http_errors(http, people, monkeypatch):
     a=people('a'); body=create_body(a); key=uuid.uuid4()
-    from app.game_accounts.support import reserve
-    from app.raid_rooms.http_schemas import RoomCreateIn
+    from app.game_accounts.common.support import reserve
+    from app.raid_rooms.schemas.http_schemas import RoomCreateIn
     from tests.groups.test_group_foundation import actor
     from fastapi.encoders import jsonable_encoder
     reserve(actor(a['uid']),'room-core-create',key,jsonable_encoder(RoomCreateIn.model_validate(body)))
@@ -281,7 +292,7 @@ def test_candidate_paths_and_dtos_do_not_activate_production_api(http):
     from app.main import app
     baseline=json.loads(open('openapi/openapi.yaml').read())
     assert app.openapi()==baseline
-    assert all(getattr(route.endpoint,'__module__','')!='app.raid_rooms.router' for route in app.routes)
+    assert all(getattr(route.endpoint,'__module__','')!='app.raid_rooms.api.router' for route in app.routes)
     schema=http.app.openapi()
     assert sum(len([v for v in ops if v in ('get','post')]) for ops in schema['paths'].values())==18
     models=schema['components']['schemas']
@@ -322,7 +333,7 @@ def test_response_loss_after_commit_recovers_original_ack_with_same_key(http, pe
     monkeypatch.setattr(service,'create',drop)
     err(post(http,a,'raid-rooms',body,key),503,'SERVICE_UNAVAILABLE')
     replay=post(http,a,'raid-rooms',body,key)
-    from app.raid_rooms.http_schemas import RoomCommandAck
+    from app.raid_rooms.schemas.http_schemas import RoomCommandAck
     assert replay.status_code==201
     assert replay.json()==RoomCommandAck.model_validate(lost[0][1]).model_dump(mode='json')
     rid=replay.json()['room_id']

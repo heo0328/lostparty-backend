@@ -1,7 +1,7 @@
 """Shared memo/preset wire policy. Raw values remain intact for idempotency."""
 import string
 import unicodedata
-from app.game_accounts.support import fail
+from app.game_accounts.common.support import fail
 
 PUNCTUATION = frozenset(string.punctuation)
 TEXT_POLICY = 'hangul-printable-ascii-1'

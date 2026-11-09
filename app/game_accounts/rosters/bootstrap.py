@@ -3,16 +3,33 @@ from collections import defaultdict
 from datetime import date
 
 from pydantic import ValidationError
-from sqlalchemy import select, text, func
+from sqlalchemy import select
+from sqlalchemy import text
+from sqlalchemy import func
 from sqlalchemy.dialects.postgresql import distinct_on
 
-from app.core.database import session, now
-from app.game_accounts.rosters import service, lifecycle, lifecycle_reads
-from app.game_accounts.character_profiles import profiles, presentation, representative, activity_policy
-from app.game_accounts.models import (Registration, Account, Character, Configuration, Activity, NameClaim,
-    CharacterRoleSummary, CharacterPersonalPreferences, AccountCharacterPresentation, ScopedPowerCache)
-from app.game_accounts.bootstrap_schemas import AccountBootstrap
-from app.game_accounts.support import authorize, fail
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.rosters import service
+from app.game_accounts.rosters import lifecycle
+from app.game_accounts.rosters import lifecycle_reads
+from app.game_accounts.character_profiles import profiles
+from app.game_accounts.character_profiles import presentation
+from app.game_accounts.character_profiles import representative
+from app.game_accounts.character_profiles import activity_policy
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Configuration
+from app.game_accounts.models.models import Activity
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.models.models import CharacterRoleSummary
+from app.game_accounts.models.models import CharacterPersonalPreferences
+from app.game_accounts.models.models import AccountCharacterPresentation
+from app.game_accounts.models.models import ScopedPowerCache
+from app.game_accounts.schemas.bootstrap_schemas import AccountBootstrap
+from app.game_accounts.common.support import authorize
+from app.game_accounts.common.support import fail
 from app.raid_weekly.models import WeeklyState
 from app.raid_weekly import service as weekly
 from app.raids import service as raids

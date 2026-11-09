@@ -1,18 +1,30 @@
 """Display-only power observations. Workers never write business data or grant ownership."""
 import time
-from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
+from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import wait
+from concurrent.futures import FIRST_COMPLETED
 from datetime import timedelta
 
-from sqlalchemy import select, text
-from app.core.database import session, now
-from app.game_accounts.models import Character, ScopedPowerCache as PowerCache
+from sqlalchemy import select
+from sqlalchemy import text
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import ScopedPowerCache as PowerCache
 from app.game_accounts.rosters import lifecycle
-from app.game_accounts.power.combat_power import default_collection_target, parse_profile_power
-from app.game_accounts.provider_io.provider import LostArkProvider, ProviderUnavailable
+from app.game_accounts.power.combat_power import default_collection_target
+from app.game_accounts.power.combat_power import parse_profile_power
+from app.game_accounts.provider_io.provider import LostArkProvider
+from app.game_accounts.provider_io.provider import ProviderUnavailable
 from app.lostark_keys import service as credentials
 from app.lostark_keys import rate_limits
-from app.game_accounts.support import (authorize, lock, fail, reserve,
-                                       commit_result, release, GameError)
+from app.game_accounts.common.support import authorize
+from app.game_accounts.common.support import lock
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import reserve
+from app.game_accounts.common.support import commit_result
+from app.game_accounts.common.support import release
+from app.game_accounts.common.support import GameError
 
 TTL = timedelta(minutes=30)
 BUDGET_SECONDS = 20
@@ -26,7 +38,8 @@ def scoped(db):
 
 
 def current_roster(db, uid, rid):
-    from app.game_accounts.rosters.service import reg, ownership
+    from app.game_accounts.rosters.service import reg
+    from app.game_accounts.rosters.service import ownership
     r = reg(db, uid, rid)
     account, state = ownership(db, uid, r)
     if state != 'owned':

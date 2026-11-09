@@ -1,29 +1,53 @@
 """Agreed beta operations against disposable PostgreSQL; no development data."""
+import app.raid_rooms.schemas.application_presets as application_presets_types
+import app.raid_rooms.admissions.application_presets as application_presets_service
 import json
 import os
 from pathlib import Path
 import subprocess
 import uuid
-from datetime import date,datetime,timedelta,timezone
+from datetime import date
+from datetime import datetime
+from datetime import timedelta
+from datetime import timezone
 from concurrent.futures import ThreadPoolExecutor
 import pytest
-from sqlalchemy import select,func,inspect
-from app.core.database import session,now
-from app.game_accounts.support import GameError
-from app.raid_rooms.common import beta_profile, beta_text
-from app.raid_rooms import beta_schemas
+from sqlalchemy import select
+from sqlalchemy import func
+from sqlalchemy import inspect
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.common.support import GameError
+from app.raid_rooms.common import beta_profile
+from app.raid_rooms.common import beta_text
+from app.raid_rooms.schemas import beta_schemas
 from app.raid_rooms.schedules import beta_schedule
-from app.raid_rooms.admissions import cycle_creation, cycle_commands
+from app.raid_rooms.admissions import cycle_creation
+from app.raid_rooms.admissions import cycle_commands
 from app.raid_rooms.reads import cycle_member_reads
-from app.raid_rooms.beta_models import BetaSchedule,ApplicationMessagePresets,BetaAvailabilityCopy,BetaApplicationMemo
-from app.raid_rooms.cycle_models import RoomCycle,CycleMember,CycleSubmission
-from app.raid_rooms.source_models import TimeReservation,PersonalAvailability
-from app.raid_rooms.integrated_models import RecruitmentRoom
-from app.raid_rooms import application_presets
+from app.raid_rooms.models.beta_models import BetaSchedule
+from app.raid_rooms.models.beta_models import ApplicationMessagePresets
+from app.raid_rooms.models.beta_models import BetaAvailabilityCopy
+from app.raid_rooms.models.beta_models import BetaApplicationMemo
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import CycleMember
+from app.raid_rooms.models.cycle_models import CycleSubmission
+from app.raid_rooms.models.source_models import TimeReservation
+from app.raid_rooms.models.source_models import PersonalAvailability
+from app.raid_rooms.models.integrated_models import RecruitmentRoom
+from app.raid_rooms.api import application_presets
 from app.raids import service as raids
-from tests.raid_rooms.admissions.test_application_composition import current, candidate, ready, sources, imported, people, worlds
-from tests.raid_rooms.admissions.test_recruitment_cycle_creation import preflight, request
-from tests.raid_rooms.admissions.test_recruitment_cycle_commands import context, admission_request
+from tests.raid_rooms.admissions.test_application_composition import current
+from tests.raid_rooms.admissions.test_application_composition import candidate
+from tests.raid_rooms.admissions.test_application_composition import ready
+from tests.raid_rooms.admissions.test_application_composition import sources
+from tests.raid_rooms.admissions.test_application_composition import imported
+from tests.raid_rooms.admissions.test_application_composition import people
+from tests.raid_rooms.admissions.test_application_composition import worlds
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import preflight
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import request
+from tests.raid_rooms.admissions.test_recruitment_cycle_commands import context
+from tests.raid_rooms.admissions.test_recruitment_cycle_commands import admission_request
 from tests.raid_rooms.admissions.test_recruitment_cycle_http import client
 from tests.groups.test_group_foundation import actor
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
@@ -73,7 +97,8 @@ def beta_join(w,rid,key):
 
 
 def test_shared_character_vectors():
-    from pydantic import TypeAdapter, ValidationError
+    from pydantic import TypeAdapter
+    from pydantic import ValidationError
     from jsonschema import Draft202012Validator
     stored=TypeAdapter(beta_schemas.MemoStored)
     schema=json.loads(Path('docs/features/recruitment/weekly-cycles/proposals/beta-recruitment-v1.schema.json').read_text())['$defs']['MemoStored']
@@ -149,19 +174,19 @@ def test_base_fallback_and_delayed_review_read_has_no_effect(beta):
 def test_presets_cas_raw_replay_account_isolation_and_no_get_write(beta):
     engine,a,b=beta
     before=table_digests(engine,set(inspect(engine).get_table_names()))
-    assert application_presets.get(actor(a['uid']))==dict(version=1,items=[],saved_at=None)
+    assert application_presets_service.get(actor(a['uid']))==dict(version=1,items=[],saved_at=None)
     assert table_digests(engine,set(before))==before
     raw=dict(expected_version=1,items=[dict(id=str(uuid.uuid4()),text='  가  ')])
-    data=application_presets.PresetPut.model_validate(raw);key=uuid.uuid4()
-    result=application_presets.put(actor(a['uid']),key,data)
+    data=application_presets_types.PresetPut.model_validate(raw);key=uuid.uuid4()
+    result=application_presets_service.put(actor(a['uid']),key,data)
     assert result[1]['version']==2 and result[1]['items'][0]['text']=='가'
-    assert application_presets.put(actor(a['uid']),key,data)==result
+    assert application_presets_service.put(actor(a['uid']),key,data)==result
     changed={**raw,'items':[dict(raw['items'][0],text='가')]}
     with pytest.raises(GameError,match='IDEMPOTENCY_CONFLICT'):
-        application_presets.put(actor(a['uid']),key,application_presets.PresetPut.model_validate(changed))
+        application_presets_service.put(actor(a['uid']),key,application_presets_types.PresetPut.model_validate(changed))
     with pytest.raises(GameError,match='REVISION_CONFLICT'):
-        application_presets.put(actor(a['uid']),uuid.uuid4(),data)
-    assert application_presets.get(actor(b['uid']))['items']==[]
+        application_presets_service.put(actor(a['uid']),uuid.uuid4(),data)
+    assert application_presets_service.get(actor(b['uid']))['items']==[]
     assert data.items[0].text=='  가  '
 
 
@@ -190,7 +215,7 @@ def test_real_http_profile_creation_presets_and_closed_queries(beta):
 
 def test_application_memo_snapshot_pending_no_copy_approval_atomic(beta):
     from tests.raid_rooms.admissions.test_recruitment_cycle_commands import decision
-    from app.raid_rooms.cycle_application_models import CycleApplication
+    from app.raid_rooms.models.cycle_application_models import CycleApplication
     _,a,b=beta;rid,key,base,_,_=create_beta(a,mode='leader_only')
     with beta_profile.using():
         ctx=context(b,rid,key,'apply')
@@ -296,7 +321,7 @@ def test_independent_due_commits_when_stale_join_rejected(beta,monkeypatch):
 
 def test_unconfirmed_and_needs_review_use_existing_proposal_quorum(beta):
     from app.raid_rooms.schedules import cycle_schedule_service
-    from app.raid_rooms import cycle_schemas
+    from app.raid_rooms.schemas import cycle_schemas
     from tests.raid_rooms.schedules.test_recruitment_cycle_planning import response
     _,a,b=beta;rid,key,base,_,_=create_beta(a)
     with session() as db,db.begin():
@@ -320,7 +345,8 @@ def test_unconfirmed_and_needs_review_use_existing_proposal_quorum(beta):
 
 
 def validate_beta_wire(path,method,status,value):
-    from jsonschema import Draft202012Validator,FormatChecker
+    from jsonschema import Draft202012Validator
+    from jsonschema import FormatChecker
     bundle=json.loads(Path('docs/features/recruitment/weekly-cycles/proposals/beta-recruitment-v2.wire.json').read_text())
     operation=next(o for o in bundle['operations'] if o['path']==path and o['method']==method)
     schema=operation['responses'][str(status)]['content']['application/json']['schema']
@@ -370,7 +396,7 @@ def test_http_raw_presence_idempotency_and_profile_input_rejection(beta):
 
 def test_explicit_next_opening_has_its_own_base_and_identity(beta):
     from app.raid_rooms.admissions import cycle_opening
-    from app.raid_rooms import cycle_schemas
+    from app.raid_rooms.schemas import cycle_schemas
     _,a,b=beta;rid,key,base,_,_=create_beta(a)
     next_key=(datetime.fromisoformat(key)+timedelta(days=7)).date().isoformat()
     next_base=base+timedelta(days=7,hours=1)
@@ -411,13 +437,13 @@ def test_safe_legacy_leave_cleans_promise_and_record_stays_private(beta):
 def test_preset_concurrent_versions_only_one_writer_wins(beta):
     _,a,b=beta
     def write(text):
-        data=application_presets.PresetPut.model_validate(dict(expected_version=1,items=[dict(id=str(uuid.uuid4()),text=text)]))
-        try:return application_presets.put(actor(a['uid']),uuid.uuid4(),data)[0]
+        data=application_presets_types.PresetPut.model_validate(dict(expected_version=1,items=[dict(id=str(uuid.uuid4()),text=text)]))
+        try:return application_presets_service.put(actor(a['uid']),uuid.uuid4(),data)[0]
         except GameError as error:return error.code
     with ThreadPoolExecutor(max_workers=2) as pool:
         results=list(pool.map(write,['첫 문구','둘째 문구']))
     assert sorted(map(str,results))==sorted(['200','REVISION_CONFLICT'])
-    assert application_presets.get(actor(a['uid']))['version']==2
+    assert application_presets_service.get(actor(a['uid']))['version']==2
 
 
 def test_rolled_back_identity_number_is_not_reused(beta,monkeypatch):
@@ -439,7 +465,7 @@ def test_rolled_back_identity_number_is_not_reused(beta,monkeypatch):
 
 def test_existing_member_next_participation_copies_current_table_atomically(beta):
     from app.raid_rooms.admissions import cycle_continuation
-    from app.raid_rooms import cycle_schemas
+    from app.raid_rooms.schemas import cycle_schemas
     _,a,b=beta;rid,key,base,_,_=create_beta(a,combined=True);beta_join(b,rid,key)
     next_key=(datetime.fromisoformat(key)+timedelta(days=7)).date().isoformat()
     with beta_profile.using():
@@ -544,7 +570,7 @@ def test_explicit_beta_copy_increments_same_personal_version_and_replays_once(be
         initial=cycle_times.get_submission(actor(a['uid']),rid,key)
         assert initial['data']['revision']==1
         assert initial['data']['availability_copy']['state']=='unset'
-        from app.raid_rooms import cycle_wire as wire
+        from app.raid_rooms.schemas import cycle_wire as wire
         # Use the same existing explicit submission request as native clients.
         value=initial['data'];scope=initial['scope']
         request=wire.InputContract3PutV2MeRaidRoomsRoomIdAvailabilitySubmission.model_validate(dict(

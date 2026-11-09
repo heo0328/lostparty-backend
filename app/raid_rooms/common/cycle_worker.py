@@ -1,15 +1,24 @@
 """06:00 rollover closes expired actual targets; it never opens or enrols N."""
 import uuid
 from sqlalchemy import select
-from app.core.database import session,now
-from app.game_accounts.support import lock,fail,GameError
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.common.support import lock
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import GameError
 from app.raid_rooms.common import cycles
-from app.raid_rooms.participation import cycle_lifecycle as life, cycle_leadership as leadership
+from app.raid_rooms.participation import cycle_lifecycle as life
+from app.raid_rooms.participation import cycle_leadership as leadership
 from app.raid_rooms.outcomes import cycle_outcomes as outcomes
-from app.raid_rooms.schedules import cycle_planning as plan, cycle_schedule as graph
-from app.raid_rooms.cycle_models import RoomCycle,CycleMember,CycleGeneration,LegacyCycleEvidence,CycleSubmission
-from app.raid_rooms.cycle_application_models import CycleApplication
-from app.raid_rooms.integrated_models import RecruitmentRoom as Room
+from app.raid_rooms.schedules import cycle_planning as plan
+from app.raid_rooms.schedules import cycle_schedule as graph
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import CycleMember
+from app.raid_rooms.models.cycle_models import CycleGeneration
+from app.raid_rooms.models.cycle_models import LegacyCycleEvidence
+from app.raid_rooms.models.cycle_models import CycleSubmission
+from app.raid_rooms.models.cycle_application_models import CycleApplication
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
 
 
 def process_room(rid):
@@ -25,7 +34,7 @@ def process_room(rid):
             if row.state=='review_required':
                 from sqlalchemy import text
                 if list(db.scalars(text('SELECT version_num FROM alembic_version')))not in (['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history'],['0034_group_features'],['0035_cycle_group_policy'],['0036_roster_presence']):continue
-                from app.raid_rooms.membership_action_models import LeadershipRecovery
+                from app.raid_rooms.models.membership_action_models import LeadershipRecovery
                 recovery=db.get(LeadershipRecovery,(row.id,row.generation))
                 if recovery is None:continue
             if row.cycle_key==current:

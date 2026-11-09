@@ -2,27 +2,46 @@
 import os
 import subprocess
 import uuid
-from datetime import date, timedelta, timezone
+from datetime import date
+from datetime import timedelta
+from datetime import timezone
 import pytest
-from sqlalchemy import select, delete
-from app.core.database import session, now
-from app.groups import management, raid_state
-from app.groups.models import Group, GroupMembership
-from app.game_accounts.models import Activity
-from app.game_accounts.support import GameError
+from sqlalchemy import select
+from sqlalchemy import delete
+from app.core.database import session
+from app.core.database import now
+from app.groups import management
+from app.groups import raid_state
+from app.groups.models import Group
+from app.groups.models import GroupMembership
+from app.game_accounts.models.models import Activity
+from app.game_accounts.common.support import GameError
 from app.raid_rooms.common import beta_profile
 from app.raid_rooms.schedules import beta_schedule
-from app.raid_rooms import beta_schemas
-from app.raid_rooms.admissions import cycle_creation, cycle_commands
+from app.raid_rooms.schemas import beta_schemas
+from app.raid_rooms.admissions import cycle_creation
+from app.raid_rooms.admissions import cycle_commands
 from app.raid_rooms.reads import cycle_member_reads
-from app.raid_rooms.participation import cycle_common, cycle_lifecycle
-from app.raid_rooms.cycle_models import RoomCycle
+from app.raid_rooms.participation import cycle_common
+from app.raid_rooms.participation import cycle_lifecycle
+from app.raid_rooms.models.cycle_models import RoomCycle
 from app.raids import service as raids
-from tests.raid_rooms.admissions.test_beta_recruitment import beta, current, candidate, ready, sources, imported, people, worlds, beta_join
-from tests.raid_rooms.admissions.test_recruitment_cycle_creation import preflight, request
-from tests.raid_rooms.admissions.test_recruitment_cycle_commands import context, admission_request
+from tests.raid_rooms.admissions.test_beta_recruitment import beta
+from tests.raid_rooms.admissions.test_beta_recruitment import current
+from tests.raid_rooms.admissions.test_beta_recruitment import candidate
+from tests.raid_rooms.admissions.test_beta_recruitment import ready
+from tests.raid_rooms.admissions.test_beta_recruitment import sources
+from tests.raid_rooms.admissions.test_beta_recruitment import imported
+from tests.raid_rooms.admissions.test_beta_recruitment import people
+from tests.raid_rooms.admissions.test_beta_recruitment import worlds
+from tests.raid_rooms.admissions.test_beta_recruitment import beta_join
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import preflight
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import request
+from tests.raid_rooms.admissions.test_recruitment_cycle_commands import context
+from tests.raid_rooms.admissions.test_recruitment_cycle_commands import admission_request
 from tests.groups.test_group_admissions import group
-from tests.groups.test_group_display import get, add
+from tests.groups.test_group_display import get
+from tests.groups.test_group_display import add
 from tests.groups.test_group_management import command
 from tests.groups.test_group_foundation import actor
 
@@ -142,7 +161,7 @@ def test_same_room_blocker_set_includes_cn_and_unknown_never_zero(group_beta,cli
     with session() as db,db.begin():db.get(cycle_creation.Room,rid).migration_state='legacy_review_required'
     page=raid_state.listing(actor(a['uid']),uuid.UUID(gid),20,None)
     assert page['state']=='unavailable' and page['blocking_room_count'] is None and len(page['items'])==1
-    from app.raid_rooms.cycle_models import CycleGeneration
+    from app.raid_rooms.models.cycle_models import CycleGeneration
     with session() as db,db.begin():
         db.get(cycle_creation.Room,rid).migration_state='ready'
         row=db.scalar(select(RoomCycle).where(RoomCycle.room_id==rid).order_by(RoomCycle.cycle_key))

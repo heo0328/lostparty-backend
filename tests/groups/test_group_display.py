@@ -2,16 +2,33 @@
 import uuid
 from datetime import timedelta
 import pytest
-from sqlalchemy import select, inspect, event, text
+from sqlalchemy import select
+from sqlalchemy import inspect
+from sqlalchemy import event
+from sqlalchemy import text
 from app.core import database
-from app.core.database import session, now
-from app.game_accounts.models import Character, Activity, CharacterRoleSummary, Account
-from app.game_accounts.power_success import capture
-from app.groups.feature_models import GroupActivityHead, SubjectCharacterReference
-from app.groups.admission_models import GroupJoinRelation, GroupJoinSubject
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Activity
+from app.game_accounts.models.models import CharacterRoleSummary
+from app.game_accounts.models.models import Account
+from app.game_accounts.power.power_success import capture
+from app.groups.feature_models import GroupActivityHead
+from app.groups.feature_models import SubjectCharacterReference
+from app.groups.admission_models import GroupJoinRelation
+from app.groups.admission_models import GroupJoinSubject
 from app.groups.models import GroupMembership
-from tests.groups.test_group_admissions import worlds, group, apply, action, invite, accept, post, own_selection
-from tests.raid_rooms.common.test_raid_room_migrations import isolated_app_database, table_digests
+from tests.groups.test_group_admissions import worlds
+from tests.groups.test_group_admissions import group
+from tests.groups.test_group_admissions import apply
+from tests.groups.test_group_admissions import action
+from tests.groups.test_group_admissions import invite
+from tests.groups.test_group_admissions import accept
+from tests.groups.test_group_admissions import post
+from tests.groups.test_group_admissions import own_selection
+from tests.raid_rooms.common.test_raid_room_migrations import isolated_app_database
+from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 from tests.groups.test_group_foundation import actor
 from tests.game_accounts.test_role_summaries import summary
 
@@ -167,7 +184,7 @@ def test_activity_matches_existing_search_candidates_and_membership_refresh(grou
     fresh=search.get_context(actor(a['uid']),[group_id])
     assert fresh['filter_context_token'] != ctx['filter_context_token']
     assert client.get(f'/v1/groups/{gid}/members/{mid}/activity-characters',headers=a['headers']).status_code==404
-    from app.game_accounts.support import GameError
+    from app.game_accounts.common.support import GameError
     with pytest.raises(GameError) as exc:
         character_candidates.get(actor(a['uid']),group_id,ctx['filter_context_token'])
     assert exc.value.code=='FILTER_CONTEXT_STALE'

@@ -1,7 +1,8 @@
 """Durable authority lives in opening rows, never in process wake-up time."""
-import os,asyncio
+import os
+import asyncio
 from app.core.observability import run_job
-from app.raid_rooms.continuation import process_due
+from app.raid_rooms.admissions.continuation import process_due
 
 
 async def run(processor=process_due):

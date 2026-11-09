@@ -1,12 +1,25 @@
 """W5 non-empty legacy upgrade through 0029; all data is disposable."""
-import os,subprocess
-from sqlalchemy import inspect,select,text
+import os
+import subprocess
+from sqlalchemy import inspect
+from sqlalchemy import select
+from sqlalchemy import text
 from app.core.database import session
-from app.raid_rooms.common import readiness, cycle_worker
+from app.raid_rooms.common import readiness
+from app.raid_rooms.common import cycle_worker
 from app.raid_rooms.admissions import admission_service
-from app.raid_rooms.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import RoomCycle
 from tests.raid_rooms.common.test_recruitment_cycles import migrated
-from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import outcomes, planning, consent, lifecycle, candidate, ready, sources, imported, people, worlds
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import outcomes
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import planning
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import consent
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import lifecycle
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import candidate
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import ready
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import sources
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import imported
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import people
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import worlds
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 from tests.groups.test_group_foundation import actor
 
@@ -36,12 +49,14 @@ def test_nonempty_legacy_upgrade_full_chain_preserves_all_columns_ack_and_review
 
 
 def test_prepared_app_real_jwt_create_join_read_and_member_isolation(outcomes):
-    import json,uuid
+    import json
+    import uuid
     from fastapi.testclient import TestClient
     from app.main import create_two_cycle_app
     from app.auth.models import User
     from tests.raid_rooms.admissions.test_recruitment_cycle_http import validate
-    from tests.raid_rooms.admissions.test_recruitment_cycle_creation import preflight, request
+    from tests.raid_rooms.admissions.test_recruitment_cycle_creation import preflight
+    from tests.raid_rooms.admissions.test_recruitment_cycle_creation import request
     from tests.raid_rooms.admissions.test_recruitment_cycle_commands import admission_request
     engine,a,b=outcomes
     ctx=preflight(a,continuation=True,bundle=True)

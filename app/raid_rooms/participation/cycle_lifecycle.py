@@ -3,22 +3,34 @@ from app.raid_rooms.group_links import cycle_group_policy as group_policy
 from app.raid_rooms.common import beta_profile
 from app.raid_rooms.schedules import beta_schedule
 import uuid
-from decimal import Decimal,InvalidOperation
-from datetime import datetime,timedelta
+from decimal import Decimal
+from decimal import InvalidOperation
+from datetime import datetime
+from datetime import timedelta
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
 from app.auth.models import User
-from app.game_accounts.support import fail,GameError
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import GameError
 from app.game_accounts.rosters.lifecycle import digest
 from app.raid_rooms.common import cycles
-from app.raid_rooms.admissions import cycle_commands as commands, cycle_admission as admission, admission_context as selection_context
+from app.raid_rooms.admissions import cycle_commands as commands
+from app.raid_rooms.admissions import cycle_admission as admission
+from app.raid_rooms.admissions import admission_context as selection_context
 from app.raid_rooms.common import command_context as opaque
-from app.raid_rooms import cycle_wire as wire
-from app.raid_rooms.admissions.cycle_creation import scope, permission
-from app.raid_rooms.cycle_models import RoomCycle,CycleMember,CycleGeneration,CycleAssignment,CycleRound,ParticipationEvent
-from app.raid_rooms.cycle_lifecycle_models import CycleDecision
-from app.raid_rooms.integrated_models import RecruitmentMembership as Member,RecruitmentAssignment as Assignment
-from app.raid_rooms.weekly_links import WeeklyOccupancy
+from app.raid_rooms.schemas import cycle_wire as wire
+from app.raid_rooms.admissions.cycle_creation import scope
+from app.raid_rooms.admissions.cycle_creation import permission
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import CycleMember
+from app.raid_rooms.models.cycle_models import CycleGeneration
+from app.raid_rooms.models.cycle_models import CycleAssignment
+from app.raid_rooms.models.cycle_models import CycleRound
+from app.raid_rooms.models.cycle_models import ParticipationEvent
+from app.raid_rooms.models.cycle_lifecycle_models import CycleDecision
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from app.raid_rooms.models.weekly_links import WeeklyOccupancy
 from app.raid_weekly.models import WeeklyState
 from app.raids import service as raids
 
@@ -34,7 +46,7 @@ def target_row(db,uid,rid,key,stamp,*,next_only=False,authorize_target=True):
     if room.ended_at is not None:fail('ROOM_NOT_ACTIVE')
     if row is not None:admission.capacity(row)
     view=group_policy.project(db,room,row,uid if authorize_target else None) if row else room
-    from app.raid_rooms import roster_participation
+    from app.raid_rooms.participation import roster_participation
     roster_participation.require_client(db,row)
     return view,row,value
 
@@ -170,7 +182,7 @@ def sign(uid,rid,key,command,data,hidden,stamp,*,row=None,extra=None,db=None):
     token=dict(actor=str(uid),room=str(rid),target=key,command=command,expires=expires.isoformat(),digest=binding)
     if db is not None:token.update(group_policy.marker(db))
     token.update(extra or {})
-    from app.raid_rooms import roster_participation
+    from app.raid_rooms.participation import roster_participation
     token.update(roster_participation.marker())
     token.update(beta_profile.marker())
     data.update(context_token=opaque.seal(token),issued_at=stamp,expires_at=expires)
@@ -181,7 +193,7 @@ def verify_token(uid,rid,body,command,stamp):
     if body['expected_cycle_key']!=raids.cycle(stamp).cycle_key:fail('CYCLE_CHANGED')
     token=opaque.unseal(body['context_token'])
     beta_profile.check_marker(token)
-    from app.raid_rooms import roster_participation
+    from app.raid_rooms.participation import roster_participation
     roster_participation.check_marker(token)
     if (token.get('actor')!=str(uid) or token.get('room')!=str(rid) or token.get('target')!=body['target_cycle_key']
             or token.get('command')!=command):fail('TARGET_SCOPE_MISMATCH',400)

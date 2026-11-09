@@ -1,11 +1,23 @@
 """Manual activity eligibility independent of initial defaults and raid levels."""
 import uuid
 import pytest
-from sqlalchemy import select,func
+from sqlalchemy import select
+from sqlalchemy import func
 from app.core.database import session
-from app.game_accounts.models import Character,Configuration,Activity
-from tests.game_accounts.test_game_accounts import world, register, verify, change, page, save_data, BASE
-from tests.game_accounts.test_representative import selection, get, put, body as representative_body
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Configuration
+from app.game_accounts.models.models import Activity
+from tests.game_accounts.test_game_accounts import world
+from tests.game_accounts.test_game_accounts import register
+from tests.game_accounts.test_game_accounts import verify
+from tests.game_accounts.test_game_accounts import change
+from tests.game_accounts.test_game_accounts import page
+from tests.game_accounts.test_game_accounts import save_data
+from tests.game_accounts.test_game_accounts import BASE
+from tests.game_accounts.test_representative import selection
+from tests.game_accounts.test_representative import get
+from tests.game_accounts.test_representative import put
+from tests.game_accounts.test_representative import body as representative_body
 
 
 def set_level(character_id,level):
@@ -119,7 +131,7 @@ def test_old_level_reconfiguration_requires_explicit_save_to_normalize(client,se
 
 @pytest.mark.parametrize('state',['suspect','retired','claim_missing'])
 def test_low_level_never_bypasses_identity_and_lifecycle_rollback(client,selection,state):
-    from app.game_accounts.models import NameClaim
+    from app.game_accounts.models.models import NameClaim
     w=selection;target=w['ids'][1];set_level(target,'1699')
     with session() as db,db.begin():
         character=db.get(Character,uuid.UUID(target))
@@ -143,7 +155,8 @@ def test_manual_low_level_does_not_relax_power_or_raid_entry():
     from decimal import Decimal
     from app.core.game_policy import DEFAULT_MIN_ITEM_LEVEL
     from app.game_accounts.power.combat_power import default_collection_target
-    from app.raids.service import difficulty,meets_item_level
+    from app.raids.service import difficulty
+    from app.raids.service import meets_item_level
     assert DEFAULT_MIN_ITEM_LEVEL==Decimal('1700')
     assert not default_collection_target('1699.99')
     assert default_collection_target('1700')

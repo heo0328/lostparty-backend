@@ -1,16 +1,50 @@
 """Ordinary departure/dissolution and profile boundaries on disposable PostgreSQL."""
-import os, subprocess, uuid
+import os
+import subprocess
+import uuid
 from concurrent.futures import ThreadPoolExecutor
-from datetime import timedelta,date
+from datetime import timedelta
+from datetime import date
 import pytest
-from sqlalchemy import select, inspect, func, text
-from app.core.database import session, now
-from app.raid_rooms.participation import membership_actions as service, membership_readers as readers
-from app.raid_rooms import membership_action_schemas as schema
-from app.raid_rooms.membership_action_models import LeadershipRecovery, MembershipActionAudit
-from app.game_accounts.models import Character
+from sqlalchemy import select
+from sqlalchemy import inspect
+from sqlalchemy import func
+from sqlalchemy import text
+from app.core.database import session
+from app.core.database import now
+from app.raid_rooms.participation import membership_actions as service
+from app.raid_rooms.participation import membership_readers as readers
+from app.raid_rooms.schemas import membership_action_schemas as schema
+from app.raid_rooms.models.membership_action_models import LeadershipRecovery
+from app.raid_rooms.models.membership_action_models import MembershipActionAudit
+from app.game_accounts.models.models import Character
 from tests.raid_rooms.outcomes.test_completion_corrections import corrected
-from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import outcomes, planning, consent, lifecycle, candidate, ready, sources, imported, people, worlds, scheduled, plan, actor, add_member, complete, fingerprints, denied, commands, cycles, life, graph, RoomCycle, CycleMember, CycleGeneration, Assignment, cancel_member
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import outcomes
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import planning
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import consent
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import lifecycle
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import candidate
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import ready
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import sources
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import imported
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import people
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import worlds
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import scheduled
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import plan
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import actor
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import add_member
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import complete
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import fingerprints
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import denied
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import commands
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import cycles
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import life
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import graph
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import RoomCycle
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import CycleMember
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import CycleGeneration
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import Assignment
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import cancel_member
 from tests.raid_rooms.schedules.test_recruitment_cycle_times_http import client
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
@@ -31,8 +65,10 @@ def membership_ready(corrected):
 def validate_contract(name,value):
     import json
     from pathlib import Path
-    from jsonschema import Draft202012Validator, FormatChecker
-    from referencing import Registry, Resource
+    from jsonschema import Draft202012Validator
+    from jsonschema import FormatChecker
+    from referencing import Registry
+    from referencing import Resource
     contract=json.loads(Path('docs/features/recruitment/membership-actions/examples/membership-actions.schema.json').read_text())
     legacy_schema=json.loads(Path('openapi/two-cycle.openapi.yaml').read_text())
     legacy_schema['$schema']='https://json-schema.org/draft/2020-12/schema'
@@ -180,7 +216,7 @@ def test_context_stale_all_or_nothing_and_duplicate_command(membership_ready,peo
     assert fingerprints(engine)==before
     m=menu(a,rid,c);request=body(m,'leave_all');command=uuid.uuid4()
     def attempt(_):
-        from app.game_accounts.support import GameError
+        from app.game_accounts.common.support import GameError
         try:return service.execute(actor(a['uid']),rid,command,request)
         except GameError as error:
             assert error.code=='REQUEST_IN_PROGRESS';return None
@@ -280,7 +316,8 @@ def test_expiry_current_cycle_scope_and_tampered_body_no_write(membership_ready,
 def test_runtime_schema_uses_closed_models_and_preserves_base_contract(membership_ready):
     import json
     from pathlib import Path
-    from app.main import app,create_two_cycle_app
+    from app.main import app
+    from app.main import create_two_cycle_app
     original=json.loads(Path('openapi/openapi.yaml').read_text())
     assert app.openapi()==original
     runtime=create_two_cycle_app().openapi()
@@ -293,9 +330,10 @@ def test_runtime_schema_uses_closed_models_and_preserves_base_contract(membershi
 def test_eight_members_both_targets_dissolve_with_exact_cleanup(membership_ready,people):
     engine,a,b=membership_ready
     from app.raid_rooms.admissions import cycle_creation as creation
-    from app.raid_rooms import cycle_wire
+    from app.raid_rooms.schemas import cycle_wire
     from tests.raid_rooms.admissions.test_recruitment_cycle_creation import request
-    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import context, admission_request
+    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import context
+    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import admission_request
     raid=next(r for r in life.raids.catalog().raids if r.raid_id=='kazeros_act4')
     with session() as db:key=life.raids.cycle(now(db)).cycle_key
     ctx=creation.get(actor(a['uid']),uuid.UUID(a['ids'][0]),'dealer',[
@@ -317,11 +355,14 @@ def test_eight_members_both_targets_dissolve_with_exact_cleanup(membership_ready
 
 def test_historical_group_departure_rejoin_identity_and_readonly(membership_ready):
     engine,a,b=membership_ready
-    from app.groups.models import Group,GroupMembership
+    from app.groups.models import Group
+    from app.groups.models import GroupMembership
     from tests.groups.test_group_foundation import create as group_create
-    from tests.raid_rooms.admissions.test_recruitment_cycle_creation import preflight, request
+    from tests.raid_rooms.admissions.test_recruitment_cycle_creation import preflight
+    from tests.raid_rooms.admissions.test_recruitment_cycle_creation import request
     from app.raid_rooms.admissions import cycle_creation as creation
-    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import context, admission_request
+    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import context
+    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import admission_request
     gid=uuid.UUID(group_create(a)[1]['group']['group_id']);gmid=uuid.uuid4()
     with session() as db,db.begin():
         db.add(GroupMembership(id=gmid,group_id=gid,user_id=b['uid'],character_id=uuid.UUID(b['ids'][0]),display=None,revision=1,joined_at=now(db)))
@@ -410,7 +451,10 @@ def test_review_pending_expiry_does_not_assign_leader(membership_ready,monkeypat
 def test_existing_atomic_commands_keep_wire_and_replay_on0031(membership_ready):
     engine,a,b=membership_ready;rid,c,n=scheduled(a);add_member(b,rid,c);add_member(b,rid,n)
     from app.raid_rooms.participation import atomic_members
-    from tests.raid_rooms.participation.test_atomic_members import removal, removal_body, departure, depart_body
+    from tests.raid_rooms.participation.test_atomic_members import removal
+    from tests.raid_rooms.participation.test_atomic_members import removal_body
+    from tests.raid_rooms.participation.test_atomic_members import departure
+    from tests.raid_rooms.participation.test_atomic_members import depart_body
     value=removal(a,b,rid,n);old_removal=atomic_members.execute(actor(a['uid']),rid,uuid.uuid4(),removal_body(value))
     assert old_removal[1]['data']['action']=='member_removal'
     value=departure(a,rid,c);request=depart_body(value);command=uuid.uuid4()
@@ -426,7 +470,7 @@ def test_actual_bearer_auth_foreign_actor_revoked_ack_and_request_limit(membersh
     from fastapi.testclient import TestClient
     from app.core.errors import register
     from app.main import no_store
-    from app.raid_rooms.cycle_router import router
+    from app.raid_rooms.api.cycle_router import router
     from app.auth.models import Session
     engine,a,b=membership_ready;rid,c,n=scheduled(a)
     app=FastAPI();register(app);app.include_router(router);app.middleware('http')(no_store)

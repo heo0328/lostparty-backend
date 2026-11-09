@@ -8,12 +8,20 @@ import json
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
 from app.core.config import settings
-from app.game_accounts.models import Account, Registration, Configuration, Activity, Character, NameClaim
-from app.game_accounts.support import fail, cursor_decode, cursor_encode
-from app.raid_rooms.admissions import admission_eligibility as eligibility, cycle_commands as commands
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import Configuration
+from app.game_accounts.models.models import Activity
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import cursor_decode
+from app.game_accounts.common.support import cursor_encode
+from app.raid_rooms.admissions import admission_eligibility as eligibility
+from app.raid_rooms.admissions import cycle_commands as commands
 from app.raid_rooms.participation import cycle_lifecycle as life
 from app.raid_rooms.admissions.cycle_creation import scope
-from app.raid_rooms.admission_candidate_schemas import AdmissionCandidatePage
+from app.raid_rooms.schemas.admission_candidate_schemas import AdmissionCandidatePage
 
 MAX_RESPONSE_BYTES = 1024 * 1024
 
@@ -39,7 +47,7 @@ def replacement(db, uid, target):
     cm = life.actual_member(db,target,uid,states=('participating',))
     if cm is None:
         fail('WEEKLY_PARTICIPANT_REQUIRED',403)
-    from app.raid_rooms import roster_participation
+    from app.raid_rooms.participation import roster_participation
     owned = roster_participation.replacement(db,target,cm)
     owned.sort(key=lambda a: str(a.item_id))
     return cm, owned
@@ -68,7 +76,7 @@ def get(principal, rid, key, intent, limit=50, cursor=None):
             fail('ADMISSION_MODE_CHANGED')
         cm, owned = replacement(db,uid,target) if intent == 'change_character' else (None,[])
         actor = actor_value(cm,owned)
-        from app.raid_rooms import roster_participation
+        from app.raid_rooms.participation import roster_participation
         participation = roster_participation.member(db,target,cm) if cm and roster_participation.enabled() else None
         rows = source(db,uid)
         bundle = eligibility.load(db,uid,target,[c.id for _,_,_,c,_ in rows],owned=owned)
@@ -111,5 +119,5 @@ def get(principal, rid, key, intent, limit=50, cursor=None):
             next_cursor=cursor_encode(dict(scope=binding,revision=token,offset=following)) if following<len(eligible) else None))).model_dump(mode='json')
         if len(json.dumps(result,ensure_ascii=False,separators=(',',':')).encode()) > MAX_RESPONSE_BYTES:
             fail('RESPONSE_TOO_LARGE',413)
-        from app.raid_rooms import roster_api
+        from app.raid_rooms.api import roster_api
         return roster_api.publish(db,uid,stamp,result,'candidates')

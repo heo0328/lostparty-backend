@@ -4,9 +4,17 @@ This is not a migration runner or a substitute for migration regression tests.
 No production lifespan calls this module before activation is agreed.
 """
 import re
-from sqlalchemy import inspect, text, UniqueConstraint, CheckConstraint
-from app.game_accounts.support import fail
-from app.raid_rooms.models import Room, Round, Membership, Application, DirectoryHead, MemberHead
+from sqlalchemy import inspect
+from sqlalchemy import text
+from sqlalchemy import UniqueConstraint
+from sqlalchemy import CheckConstraint
+from app.game_accounts.common.support import fail
+from app.raid_rooms.models.models import Room
+from app.raid_rooms.models.models import Round
+from app.raid_rooms.models.models import Membership
+from app.raid_rooms.models.models import Application
+from app.raid_rooms.models.models import DirectoryHead
+from app.raid_rooms.models.models import MemberHead
 
 REVISION = '0018_room_application_build'
 # Known additive source revisions; legacy F2 schema/semantics stay intact.
@@ -37,59 +45,64 @@ def require_ready(db, *, integrated=False):
     models = MODELS
     if integrated:
         require(versions[0] in SUPPORTED_REVISIONS[1:])
-        from app.raid_rooms.integrated_models import (
-            RecruitmentRoom, RecruitmentItem, RecruitmentRound, RecruitmentMembership,
-            RecruitmentAssignment, RecruitmentSession, RecruitmentSegment,
-        )
+        from app.raid_rooms.models.integrated_models import RecruitmentRoom
+        from app.raid_rooms.models.integrated_models import RecruitmentItem
+        from app.raid_rooms.models.integrated_models import RecruitmentRound
+        from app.raid_rooms.models.integrated_models import RecruitmentMembership
+        from app.raid_rooms.models.integrated_models import RecruitmentAssignment
+        from app.raid_rooms.models.integrated_models import RecruitmentSession
+        from app.raid_rooms.models.integrated_models import RecruitmentSegment
         models += (RecruitmentRoom, RecruitmentItem, RecruitmentRound, RecruitmentMembership,
                    RecruitmentAssignment, RecruitmentSession, RecruitmentSegment)
         if versions[0] in SUPPORTED_REVISIONS[2:]:
-            from app.raid_rooms.source_models import SOURCE_MODELS
-            from app.game_accounts.power_success import RolePowerSuccess
+            from app.raid_rooms.models.source_models import SOURCE_MODELS
+            from app.game_accounts.models.power_success import RolePowerSuccess
             models += SOURCE_MODELS + (RolePowerSuccess,)
         if versions[0] in SUPPORTED_REVISIONS[3:]:
-            from app.raid_rooms.weekly_links import WeeklyOccupancy
+            from app.raid_rooms.models.weekly_links import WeeklyOccupancy
             models += (WeeklyOccupancy,)
         if versions[0] in SUPPORTED_REVISIONS[4:]:
-            from app.raid_rooms.schedule_heads import ScheduleHead
+            from app.raid_rooms.models.schedule_heads import ScheduleHead
             models += (ScheduleHead,)
         if versions[0] in SUPPORTED_REVISIONS[5:]:
-            from app.raid_rooms.resume_models import ResumeProposal
+            from app.raid_rooms.models.resume_models import ResumeProposal
             models += (ResumeProposal,)
         if versions[0] in SUPPORTED_REVISIONS[6:]:
-            from app.raid_rooms.cycle_models import CYCLE_MODELS
+            from app.raid_rooms.models.cycle_models import CYCLE_MODELS
             models += CYCLE_MODELS
         if versions[0] in SUPPORTED_REVISIONS[7:]:
-            from app.raid_rooms.cycle_application_models import CYCLE_ADMISSION_MODELS
+            from app.raid_rooms.models.cycle_application_models import CYCLE_ADMISSION_MODELS
             models += CYCLE_ADMISSION_MODELS
         if versions[0] in SUPPORTED_REVISIONS[8:]:
-            from app.raid_rooms.cycle_lifecycle_models import CYCLE_LIFECYCLE_MODELS
+            from app.raid_rooms.models.cycle_lifecycle_models import CYCLE_LIFECYCLE_MODELS
             models += CYCLE_LIFECYCLE_MODELS
         if versions[0] in SUPPORTED_REVISIONS[9:]:
-            from app.raid_rooms.cycle_consent_models import CYCLE_CONSENT_MODELS
+            from app.raid_rooms.models.cycle_consent_models import CYCLE_CONSENT_MODELS
             models += CYCLE_CONSENT_MODELS
         if versions[0] in SUPPORTED_REVISIONS[10:]:
-            from app.raid_rooms.cycle_planning_models import CYCLE_PLANNING_MODELS
+            from app.raid_rooms.models.cycle_planning_models import CYCLE_PLANNING_MODELS
             models += CYCLE_PLANNING_MODELS
     if integrated and versions[0] in ('0029_cycle_outcomes','0030_completion_corrections','0031_membership_actions','0032_beta_recruitment','0033_reapplication_history','0034_group_features','0035_cycle_group_policy','0036_roster_presence'):
-        from app.raid_rooms.cycle_outcome_models import CYCLE_OUTCOME_MODELS
+        from app.raid_rooms.models.cycle_outcome_models import CYCLE_OUTCOME_MODELS
         models += CYCLE_OUTCOME_MODELS
     if integrated and versions[0] in ('0030_completion_corrections','0031_membership_actions','0032_beta_recruitment','0033_reapplication_history','0034_group_features','0035_cycle_group_policy','0036_roster_presence'):
-        from app.raid_rooms.completion_correction_models import CompletionCorrection
+        from app.raid_rooms.models.completion_correction_models import CompletionCorrection
         models += (CompletionCorrection,)
     if integrated and versions[0] in ('0031_membership_actions','0032_beta_recruitment','0033_reapplication_history','0034_group_features','0035_cycle_group_policy','0036_roster_presence'):
-        from app.raid_rooms.membership_action_models import LeadershipRecovery, MembershipActionAudit
+        from app.raid_rooms.models.membership_action_models import LeadershipRecovery
+        from app.raid_rooms.models.membership_action_models import MembershipActionAudit
         models += (LeadershipRecovery, MembershipActionAudit)
     if integrated and versions[0] in ('0032_beta_recruitment','0033_reapplication_history','0034_group_features','0035_cycle_group_policy','0036_roster_presence'):
-        from app.raid_rooms.beta_models import BETA_MODELS
+        from app.raid_rooms.models.beta_models import BETA_MODELS
         models += BETA_MODELS
         require(db.scalar(text("SELECT has_sequence_privilege(current_user, 'public.recruitment_beta_number_seq', 'USAGE')")))
     if integrated and versions[0] in ('0035_cycle_group_policy','0036_roster_presence'):
-        from app.raid_rooms.cycle_group_models import CycleGroupPolicy
+        from app.raid_rooms.models.cycle_group_models import CycleGroupPolicy
         models += (CycleGroupPolicy,)
         require(db.scalar(text("SELECT has_function_privilege(current_user, 'public.cycle_group_policy_cutover_at()', 'EXECUTE')")))
     if integrated and versions[0] == '0036_roster_presence':
-        from app.game_accounts.roster_presence import RosterTransition, RosterRoomRecovery
+        from app.game_accounts.models.roster_presence import RosterTransition
+        from app.game_accounts.models.roster_presence import RosterRoomRecovery
         models += (RosterTransition, RosterRoomRecovery)
     for model in models:
         table = model.__table__
@@ -185,7 +198,7 @@ def require_ready(db, *, integrated=False):
             tgrelid IN ('recruitment_reservations'::regclass,'recruitment_cycle_consents'::regclass)""")))
         require({'reservation_history_before_write','cycle_consent_immutable'}<=guards)
     if versions[0] in SUPPORTED_REVISIONS[10:]:
-        from app.raid_rooms.cycle_planning_models import CYCLE_PLANNING_MODELS
+        from app.raid_rooms.models.cycle_planning_models import CYCLE_PLANNING_MODELS
         guarded=set(db.scalars(text("""SELECT c.relname FROM pg_trigger t
             JOIN pg_class c ON c.oid=t.tgrelid JOIN pg_namespace n ON n.oid=c.relnamespace
             JOIN pg_proc f ON f.oid=t.tgfoid JOIN pg_namespace fn ON fn.oid=f.pronamespace
@@ -198,7 +211,7 @@ def require_ready(db, *, integrated=False):
             JOIN pg_namespace n ON n.oid=c.relnamespace JOIN pg_proc f ON f.oid=t.tgfoid
             WHERE n.nspname='public' AND NOT t.tgisinternal AND t.tgenabled IN ('O','A')
             AND t.tgname='cycle_outcome_immutable' AND (t.tgtype & 27)=27 AND f.proname='protect_cycle_decision'""")))
-        from app.raid_rooms.cycle_outcome_models import CYCLE_OUTCOME_MODELS
+        from app.raid_rooms.models.cycle_outcome_models import CYCLE_OUTCOME_MODELS
         require({m.__tablename__ for m in CYCLE_OUTCOME_MODELS}<=guarded)
     if versions[0] in ('0030_completion_corrections','0031_membership_actions','0032_beta_recruitment','0033_reapplication_history','0034_group_features','0035_cycle_group_policy','0036_roster_presence'):
         require(db.scalar(text("SELECT count(*) FROM pg_trigger t JOIN pg_proc f ON f.oid=t.tgfoid WHERE t.tgrelid='raid_completion_corrections'::regclass AND NOT t.tgisinternal AND t.tgenabled IN ('O','A') AND t.tgname='completion_correction_immutable' AND (t.tgtype & 27)=27 AND f.proname='protect_cycle_decision'"))==1)

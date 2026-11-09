@@ -3,11 +3,16 @@ from contextlib import contextmanager
 from contextvars import ContextVar
 from datetime import timedelta
 from types import SimpleNamespace
-from sqlalchemy import select, text, or_, and_
+from sqlalchemy import select
+from sqlalchemy import text
+from sqlalchemy import or_
+from sqlalchemy import and_
 from fastapi.encoders import jsonable_encoder
-from app.game_accounts.support import fail, GameError
-from app.groups.models import Group, GroupMembership
-from app.raid_rooms.cycle_group_models import CycleGroupPolicy as Policy
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import GameError
+from app.groups.models import Group
+from app.groups.models import GroupMembership
+from app.raid_rooms.models.cycle_group_models import CycleGroupPolicy as Policy
 
 VERSION = 'cycle-group-policy-1'
 _client = ContextVar('cycle_group_policy_client', default=False)
@@ -37,7 +42,7 @@ def require_client(db, operation, payload=None, ticket=None):
     if enabled(db) and not _client.get():
         fail('CLIENT_UPGRADE_REQUIRED')
     if enabled(db) and ticket is not None:
-        from app.game_accounts.models import RequestResult
+        from app.game_accounts.models.models import RequestResult
         request=db.get(RequestResult,ticket[0])
         cutover=db.scalar(text('SELECT public.cycle_group_policy_cutover_at()'))
         if request is None or request.record_created_at is None or request.record_created_at < cutover:
@@ -94,8 +99,8 @@ def project(db, room, row, uid=None):
 
 
 def authorize(db, room, row, uid):
-    from app.raid_rooms.cycle_models import CycleMember
-    from app.raid_rooms.integrated_models import RecruitmentMembership as Member
+    from app.raid_rooms.models.cycle_models import CycleMember
+    from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
     # Exact target history/participation is retained; a different T is no grant.
     own = db.scalar(select(CycleMember.id).join(Member,Member.id==CycleMember.membership_id).where(CycleMember.cycle_id == row.id,
         CycleMember.generation == row.generation, CycleMember.user_id == uid,Member.ended_at.is_(None),
@@ -105,8 +110,8 @@ def authorize(db, room, row, uid):
 
 
 def visible(uid, row):
-    from app.raid_rooms.cycle_models import CycleMember
-    from app.raid_rooms.integrated_models import RecruitmentMembership as Member
+    from app.raid_rooms.models.cycle_models import CycleMember
+    from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
     joined = select(Policy.cycle_id).where(Policy.cycle_id == row.id,
         Policy.generation == row.generation, Policy.scope == 'public').correlate(row).exists()
     if uid is None:
@@ -212,7 +217,7 @@ def qualify_editor(db, uid, room, row):
 def settings_context(db, uid, room, row, gid, stamp):
     from app.raid_rooms.admissions import cycle_commands as commands
     from app.raid_rooms.participation import cycle_lifecycle as life
-    from app.raid_rooms import group_connection
+    from app.raid_rooms.group_links import group_connection
     from app.raid_rooms.common.command_context import seal
     from app.game_accounts.rosters.lifecycle import digest
     actor_proof=qualify_editor(db,uid,room,row)
@@ -255,7 +260,7 @@ def verify_settings(db,uid,room,row,body,stamp):
 def enrich(db, result):
     if not enabled(db):return result
     from uuid import UUID
-    from app.raid_rooms.cycle_models import RoomCycle
+    from app.raid_rooms.models.cycle_models import RoomCycle
     result=dict(result,group_policy_version=VERSION)
     scope=result.get('scope',{})
     target=result.get('data',{}).get('target',{})

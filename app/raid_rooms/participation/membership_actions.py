@@ -5,23 +5,32 @@ Legacy cancel/end/leave and #22/#23 keep their original transports and effects.
 A failed successor qualification never vetoes a proven actor departure.
 """
 import uuid
-from datetime import datetime, timedelta
+from datetime import datetime
+from datetime import timedelta
 from types import SimpleNamespace
-from sqlalchemy import select, text
-from app.game_accounts.support import fail, GameError
+from sqlalchemy import select
+from sqlalchemy import text
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import GameError
 from app.game_accounts.rosters.lifecycle import digest
 from app.raid_rooms.common import cycles
 from app.raid_rooms.participation import cycle_lifecycle as life
 from app.raid_rooms.admissions import cycle_commands as commands
 from app.raid_rooms.participation import cycle_leadership as leaders
-from app.raid_rooms.schedules import cycle_planning as planning, cycle_schedule as graph
+from app.raid_rooms.schedules import cycle_planning as planning
+from app.raid_rooms.schedules import cycle_schedule as graph
 from app.raid_rooms.participation import atomic_members as atomic
-from app.raid_rooms import membership_action_schemas as wire
+from app.raid_rooms.schemas import membership_action_schemas as wire
 from app.raid_rooms.admissions.cycle_creation import permission
-from app.raid_rooms.cycle_models import RoomCycle, CycleGeneration, CycleMember, CycleSubmission
-from app.raid_rooms.cycle_application_models import CycleApplication
-from app.raid_rooms.membership_action_models import LeadershipRecovery, MembershipActionAudit
-from app.raid_rooms.common.command_context import seal, unseal
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import CycleGeneration
+from app.raid_rooms.models.cycle_models import CycleMember
+from app.raid_rooms.models.cycle_models import CycleSubmission
+from app.raid_rooms.models.cycle_application_models import CycleApplication
+from app.raid_rooms.models.membership_action_models import LeadershipRecovery
+from app.raid_rooms.models.membership_action_models import MembershipActionAudit
+from app.raid_rooms.common.command_context import seal
+from app.raid_rooms.common.command_context import unseal
 
 POLICY = 'membership-actions-1'
 ACTIONS = ('leave_target','leave_all','dissolve_led_targets','recover_leadership')
@@ -223,7 +232,7 @@ def prepare(db,uid,rid,key,stamp,*,only=None):
                     action=='dissolve_led_targets' and gen is not None and mine is not None and gen.leader_cycle_member_id==mine.id and row.state in ('open','review_required') or
                     action=='recover_leadership' and row.cycle_key.isoformat()==key and mine is not None)
                 if relevant:
-                    from app.raid_rooms import roster_participation
+                    from app.raid_rooms.participation import roster_participation
                     roster_participation.require_client(db,row)
                     value,proof,reasons=plan_target(db,room,row,actor,action,stamp)
                     targets.append(value);hidden.append(proof);remaining[row.id]=reasons
@@ -268,7 +277,7 @@ def get(principal,rid,key):
 
 def cleanup(db,row,cm,state,command,stamp):
     owned=life.assignments(db,row,cm)
-    from app.raid_rooms.integrated_models import RecruitmentSegment as Segment
+    from app.raid_rooms.models.integrated_models import RecruitmentSegment as Segment
     parts=leaders.own_parts(db,row,cm)
     segments=list(db.scalars(select(Segment).where(Segment.session_id.in_([p.session_id for p in parts]),Segment.round_id.in_([a.round_id for a in owned])).order_by(Segment.session_id,Segment.ordinal)))
     evidence=dict(membership_action=True,record_schedule_segments=[dict(segment_id=s.id,round_id=s.round_id,session_id=s.session_id,starts_at=s.starts_at,ends_at=s.ends_at,state='released') for s in segments],
@@ -293,7 +302,7 @@ def execute(principal,rid,command,data):
         option=value['data']['options'][action]
         if not option['permission']['allowed']:fail(option['permission']['reason'])
         life.require_match(token,bindings[action]);impact=option['impact'];guards=[];effects=[];evidence=[]
-        from app.raid_rooms import roster_participation
+        from app.raid_rooms.participation import roster_participation
         for target in impact['targets']:
             roster_participation.require_client(db,db.get(RoomCycle,target['room_cycle_id']))
             row=db.get(RoomCycle,target['room_cycle_id']);gen=db.get(CycleGeneration,(row.id,row.generation))

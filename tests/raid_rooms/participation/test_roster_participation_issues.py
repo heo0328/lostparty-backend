@@ -1,24 +1,43 @@
 """#17 observation/seat boundaries under disposable restricted PostgreSQL."""
+import app.game_accounts.models.roster_presence as roster_presence_models
 import os
 import subprocess
 import uuid
-from datetime import date, timedelta
+from datetime import date
+from datetime import timedelta
 from types import SimpleNamespace
 import pytest
-from sqlalchemy import select, inspect, func
-from app.core.database import session, now
+from sqlalchemy import select
+from sqlalchemy import inspect
+from sqlalchemy import func
+from app.core.database import session
+from app.core.database import now
 from app.game_accounts.rosters import service
-from app.game_accounts import roster_presence
-from app.game_accounts.models import Character, Account, NameClaim, Registration
-from app.game_accounts.support import GameError, lock
+from app.game_accounts.rosters import roster_presence
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.models.models import Registration
+from app.game_accounts.common.support import GameError
+from app.game_accounts.common.support import lock
 from app.raid_rooms.participation import character_issues
 from app.raid_rooms.common import cycle_worker
 from app.raid_rooms.reads import cycle_member_reads
 from app.raid_rooms.participation import cycle_lifecycle as life
-from app.raid_rooms.cycle_models import RoomCycle
-from app.raid_rooms.integrated_models import RecruitmentRoom as Room
-from tests.raid_rooms.group_links.test_cycle_group_policy import policy_db, group_beta, beta, current, candidate, ready, sources, imported, people, worlds
-from tests.raid_rooms.admissions.test_beta_recruitment import create_beta, beta_join
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from tests.raid_rooms.group_links.test_cycle_group_policy import policy_db
+from tests.raid_rooms.group_links.test_cycle_group_policy import group_beta
+from tests.raid_rooms.group_links.test_cycle_group_policy import beta
+from tests.raid_rooms.group_links.test_cycle_group_policy import current
+from tests.raid_rooms.group_links.test_cycle_group_policy import candidate
+from tests.raid_rooms.group_links.test_cycle_group_policy import ready
+from tests.raid_rooms.group_links.test_cycle_group_policy import sources
+from tests.raid_rooms.group_links.test_cycle_group_policy import imported
+from tests.raid_rooms.group_links.test_cycle_group_policy import people
+from tests.raid_rooms.group_links.test_cycle_group_policy import worlds
+from tests.raid_rooms.admissions.test_beta_recruitment import create_beta
+from tests.raid_rooms.admissions.test_beta_recruitment import beta_join
 from tests.groups.test_group_foundation import actor
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
@@ -130,15 +149,15 @@ def test_observation_rollback_and_repetition_do_not_forge_proof(presence_db):
     _, a, b = presence_db
     with pytest.raises(RuntimeError): observe(b, rollback=True)
     with session() as db:
-        assert db.scalar(select(func.count()).select_from(roster_presence.RosterTransition)) == 0
+        assert db.scalar(select(func.count()).select_from(roster_presence_models.RosterTransition)) == 0
     observe(b); observe(b)
     with session() as db:
-        assert db.scalar(select(func.count()).select_from(roster_presence.RosterTransition).where(
-            roster_presence.RosterTransition.state=='missing')) == 1
-        before=db.scalar(select(func.count()).select_from(roster_presence.RosterTransition))
+        assert db.scalar(select(func.count()).select_from(roster_presence_models.RosterTransition).where(
+            roster_presence_models.RosterTransition.state=='missing')) == 1
+        before=db.scalar(select(func.count()).select_from(roster_presence_models.RosterTransition))
     observe(b)
     with session() as db:
-        assert db.scalar(select(func.count()).select_from(roster_presence.RosterTransition)) == before
+        assert db.scalar(select(func.count()).select_from(roster_presence_models.RosterTransition)) == before
 
 
 def test_unknown_legacy_suspect_never_becomes_retained_authority(presence_db):
@@ -156,7 +175,8 @@ def test_unknown_legacy_suspect_never_becomes_retained_authority(presence_db):
 def test_only_proven_review_cause_can_recover(presence_db, cause):
     from fastapi.encoders import jsonable_encoder
     from app.raid_rooms.participation import roster_recovery
-    from app.raid_rooms.cycle_models import CycleGeneration, LegacyCycleEvidence
+    from app.raid_rooms.models.cycle_models import CycleGeneration
+    from app.raid_rooms.models.cycle_models import LegacyCycleEvidence
     _, a, b = presence_db
     rid, c, _ = joined(a, b)
     observe(b)
@@ -207,9 +227,12 @@ def test_completion_and_departure_clear_only_unfinished_warnings(presence_db):
 
 
 def test_missing_participants_keep_schedule_and_leader_actions(presence_db):
-    from app.raid_rooms.participation import cycle_management, cycle_leadership
+    from app.raid_rooms.participation import cycle_management
+    from app.raid_rooms.participation import cycle_leadership
     from app.raid_rooms.schedules import beta_schedule
-    from tests.raid_rooms.schedules.test_recruitment_cycle_times import confirm, save_personal, submit
+    from tests.raid_rooms.schedules.test_recruitment_cycle_times import confirm
+    from tests.raid_rooms.schedules.test_recruitment_cycle_times import save_personal
+    from tests.raid_rooms.schedules.test_recruitment_cycle_times import submit
     _, a, b = presence_db
     rid, c, n = joined(a, b)
     # A confirmation command requires an actually confirmed schedule. Advance

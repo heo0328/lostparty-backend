@@ -1,10 +1,12 @@
 """Batch owned observation projections shared by bootstrap and paged reads."""
+import app.game_accounts.models.roster_presence as roster_presence_models
 from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import distinct_on
-from app.game_accounts import roster_presence
-from app.game_accounts.models import Account, Character
+from app.game_accounts.rosters import roster_presence
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
 from app.game_accounts.rosters.lifecycle import digest
-from app.game_accounts.support import fail
+from app.game_accounts.common.support import fail
 from fastapi.encoders import jsonable_encoder
 
 
@@ -14,11 +16,11 @@ def attach(db, uid, stamp, pages):
     aids = {p['game_account_id'] for p in pages if p['ownership_status'] == 'owned'}
     accounts = {a.id:a for a in db.scalars(select(Account).where(Account.id.in_(aids), Account.owner_id==uid))} if aids else {}
     chars = list(db.scalars(select(Character).where(Character.account_id.in_(accounts), Character.lifecycle_state!='retired').order_by(Character.id))) if accounts else []
-    observations = list(db.scalars(select(roster_presence.RosterTransition).where(
-        roster_presence.RosterTransition.account_id.in_(accounts), roster_presence.RosterTransition.owner_id==uid,
-        roster_presence.RosterTransition.character_id.in_([c.id for c in chars]))
-        .ext(distinct_on(roster_presence.RosterTransition.character_id,roster_presence.RosterTransition.ownership_revision))
-        .order_by(roster_presence.RosterTransition.character_id,roster_presence.RosterTransition.ownership_revision,roster_presence.RosterTransition.to_revision.desc()))) if accounts else []
+    observations = list(db.scalars(select(roster_presence_models.RosterTransition).where(
+        roster_presence_models.RosterTransition.account_id.in_(accounts), roster_presence_models.RosterTransition.owner_id==uid,
+        roster_presence_models.RosterTransition.character_id.in_([c.id for c in chars]))
+        .ext(distinct_on(roster_presence_models.RosterTransition.character_id,roster_presence_models.RosterTransition.ownership_revision))
+        .order_by(roster_presence_models.RosterTransition.character_id,roster_presence_models.RosterTransition.ownership_revision,roster_presence_models.RosterTransition.to_revision.desc()))) if accounts else []
     latest = {(o.character_id,o.ownership_revision):o for o in observations}
     by_account = {}
     for c in chars:

@@ -5,22 +5,40 @@ import uuid
 from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 import pytest
-from sqlalchemy import select, text, inspect, func
+from sqlalchemy import select
+from sqlalchemy import text
+from sqlalchemy import inspect
+from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
-from app.core.database import session, now
-from app.game_accounts.support import authorize, GameError
-from app.game_accounts.models import CharacterRoleSummary, Character, Account
-from app.game_accounts.power_success import capture
-from app.member_limits.models import MemberUsageHead, MemberUsageLimits
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.common.support import authorize
+from app.game_accounts.common.support import GameError
+from app.game_accounts.models.models import CharacterRoleSummary
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Account
+from app.game_accounts.power.power_success import capture
+from app.member_limits.models import MemberUsageHead
+from app.member_limits.models import MemberUsageLimits
 from app.raid_rooms.participation import participation_core as core
 from app.raid_rooms.common import readiness
-from app.raid_rooms.participation_commands import Selection, Target
-from app.raid_rooms.integrated_models import RecruitmentRoom as Room, RecruitmentMembership as Member, RecruitmentItem as Item, RecruitmentRound as Round, RecruitmentAssignment as Assignment
-from app.raid_rooms.source_models import RoomSettings, SessionParticipation, TimeReservation
-from app.raid_rooms.weekly_links import WeeklyOccupancy
+from app.raid_rooms.schemas.participation_commands import Selection
+from app.raid_rooms.schemas.participation_commands import Target
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
+from app.raid_rooms.models.integrated_models import RecruitmentItem as Item
+from app.raid_rooms.models.integrated_models import RecruitmentRound as Round
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from app.raid_rooms.models.source_models import RoomSettings
+from app.raid_rooms.models.source_models import SessionParticipation
+from app.raid_rooms.models.source_models import TimeReservation
+from app.raid_rooms.models.weekly_links import WeeklyOccupancy
 from app.raid_weekly.models import WeeklyState
 from app.raids import service as raids
-from tests.raid_rooms.common.test_recruitment_sources import sources, imported, people, worlds
+from tests.raid_rooms.common.test_recruitment_sources import sources
+from tests.raid_rooms.common.test_recruitment_sources import imported
+from tests.raid_rooms.common.test_recruitment_sources import people
+from tests.raid_rooms.common.test_recruitment_sources import worlds
 from tests.groups.test_group_foundation import actor
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 from tests.game_accounts.test_role_summaries import summary

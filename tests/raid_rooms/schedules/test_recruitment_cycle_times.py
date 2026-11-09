@@ -1,22 +1,51 @@
 """W4-A1 target submissions/consent; restricted synthetic PostgreSQL only."""
-import os,subprocess,uuid
+import os
+import subprocess
+import uuid
 from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 import pytest
-from sqlalchemy import inspect,select,func,text
+from sqlalchemy import inspect
+from sqlalchemy import select
+from sqlalchemy import func
+from sqlalchemy import text
 from sqlalchemy.exc import DBAPIError
-from app.core.database import session,now
-from app.game_accounts.support import GameError
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.common.support import GameError
 from app.raid_rooms.schedules import cycle_times as times
-from app.raid_rooms import cycle_wire as wire, cycle_schemas as inputs
+from app.raid_rooms.schemas import cycle_wire as wire
+from app.raid_rooms.schemas import cycle_schemas as inputs
 from app.raid_rooms.schedules import cycle_schedule as schedule
 from app.raid_rooms.reads import cycle_member_reads as reads
 from app.raid_rooms.common import readiness
 from app.raid_rooms.schedules import availability
-from app.raid_rooms.cycle_models import RoomCycle,CycleMember,CycleSubmission
-from app.raid_rooms.cycle_consent_models import CycleConsent
-from app.raid_rooms.source_models import TimeReservation as Reservation,SessionParticipation as Participation,PersonalAvailability
-from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import lifecycle, candidate, ready, sources, imported, people, worlds, preflight, request, creation, commands, cycles, actor, denied, next_key, add_member, cancel_member, change_body, character
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import CycleMember
+from app.raid_rooms.models.cycle_models import CycleSubmission
+from app.raid_rooms.models.cycle_consent_models import CycleConsent
+from app.raid_rooms.models.source_models import TimeReservation as Reservation
+from app.raid_rooms.models.source_models import SessionParticipation as Participation
+from app.raid_rooms.models.source_models import PersonalAvailability
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import lifecycle
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import candidate
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import ready
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import sources
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import imported
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import people
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import worlds
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import preflight
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import request
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import creation
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import commands
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import cycles
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import actor
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import denied
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import next_key
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import add_member
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import cancel_member
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import change_body
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import character
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
 
@@ -309,7 +338,7 @@ def test_overlapping_sessions_warn_without_veto_and_cursor_is_target_bound(conse
 
 
 def test_invalid_current_character_blocks_confirmation_but_not_cancellation(consent):
-    from app.game_accounts.models import Character
+    from app.game_accounts.models.models import Character
     engine,a,b=consent;rid,c,n=scheduled(a);sid,body=confirmation(a,rid,n)
     with session() as db,db.begin():db.get(Character,uuid.UUID(a['ids'][0])).lifecycle_state='retired'
     initial=plan(a,rid,n)['data']['my_participations'][0]

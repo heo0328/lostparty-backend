@@ -6,10 +6,18 @@ from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from app.core.database import session
 from app.core.errors import register
-from app.raid_rooms.admission_router import router as admission_router
-from app.raid_rooms.management_router import router
-from app.raid_rooms.integrated_models import RecruitmentAssignment as Assignment,RecruitmentRoom as Room
-from tests.raid_rooms.admissions.test_recruitment_admission import ready, sources, imported, people, worlds, post, create, admission
+from app.raid_rooms.api.admission_router import router as admission_router
+from app.raid_rooms.api.management_router import router
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from tests.raid_rooms.admissions.test_recruitment_admission import ready
+from tests.raid_rooms.admissions.test_recruitment_admission import sources
+from tests.raid_rooms.admissions.test_recruitment_admission import imported
+from tests.raid_rooms.admissions.test_recruitment_admission import people
+from tests.raid_rooms.admissions.test_recruitment_admission import worlds
+from tests.raid_rooms.admissions.test_recruitment_admission import post
+from tests.raid_rooms.admissions.test_recruitment_admission import create
+from tests.raid_rooms.admissions.test_recruitment_admission import admission
 from tests.raid_rooms.schedules.test_recruitment_scheduling import plan
 from tests.raid_rooms.common.test_raid_room_http import err
 
@@ -57,7 +65,7 @@ def test_character_change_replaces_exact_weekly_link_and_preserves_completed_his
     c=response.json();data=dict(expected_cycle_key=c['expected_cycle_key'],expected_room_revision=c['room_revision'],expected_members_revision=c['members_revision'],expected_plan_revision=c['plan_revision'],expected_policy_snapshot=c['policy_snapshot'],expected_catalog_version=c['catalog_version'],selection=c['selection'],selection_context=dict(context_token=c['context_token']),target_items=c['targets'],target_session_ids=[],expected_membership_revision=p['my_membership']['revision'],assignments=[dict(assignment_id=v['assignment_id'],expected_revision=v['revision']) for v in p['my_assignments']],choices=[])
     response=post(http,a,f'raid-rooms/{rid}/character-changes',data)
     assert response.status_code==200,response.text
-    from app.raid_rooms.weekly_links import WeeklyOccupancy
+    from app.raid_rooms.models.weekly_links import WeeklyOccupancy
     with session() as db:
         arow=db.scalar(select(Assignment).where(Assignment.room_id==uuid.UUID(rid)))
         assert str(arow.character_id)==a['ids'][1] and arow.state=='active'

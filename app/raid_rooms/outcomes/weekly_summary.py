@@ -5,18 +5,30 @@ these reads, and is never created or promoted as a side effect. No provider,
 bootstrap, key access, session reservation or command/dedup writes occur here.
 """
 from collections import defaultdict
-from datetime import datetime, time, timedelta
-from sqlalchemy import select, and_, or_,text
+from datetime import datetime
+from datetime import time
+from datetime import timedelta
+from sqlalchemy import select
+from sqlalchemy import and_
+from sqlalchemy import or_
+from sqlalchemy import text
 import uuid
-from app.game_accounts.models import Account, Character, Registration, NameClaim
-from app.game_accounts.support import fail
-from app.groups.models import Group, GroupMembership
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.common.support import fail
+from app.groups.models import Group
+from app.groups.models import GroupMembership
 from app.raid_rooms.common import cycles
 from app.raid_rooms.reads.queries import snapshot
-from app.raid_rooms.integrated_models import (RecruitmentRoom as Room, RecruitmentMembership as Member,
-    RecruitmentItem as Item, RecruitmentRound as Round, RecruitmentAssignment as Assignment)
-from app.raid_rooms.source_models import ContinuationChoice
-from app.raid_rooms.weekly_links import WeeklyOccupancy
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
+from app.raid_rooms.models.integrated_models import RecruitmentItem as Item
+from app.raid_rooms.models.integrated_models import RecruitmentRound as Round
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from app.raid_rooms.models.source_models import ContinuationChoice
+from app.raid_rooms.models.weekly_links import WeeklyOccupancy
 from app.raid_weekly.models import WeeklyState
 from app.raids import service as raids
 
@@ -120,8 +132,11 @@ def participation(state, lease, candidates, by_id, account, character, visible_g
 def cycle_evidence(db,uid,ids,keys):
     revision=list(db.scalars(text('SELECT version_num FROM public.alembic_version')))
     if revision not in (['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history'],['0034_group_features'],['0035_cycle_group_policy'],['0036_roster_presence']):return None,set()
-    from app.raid_rooms.cycle_models import CycleAssignment,CycleMember,RoomCycle,CycleRound
-    from app.raid_rooms.cycle_lifecycle_models import CycleDecision
+    from app.raid_rooms.models.cycle_models import CycleAssignment
+    from app.raid_rooms.models.cycle_models import CycleMember
+    from app.raid_rooms.models.cycle_models import RoomCycle
+    from app.raid_rooms.models.cycle_models import CycleRound
+    from app.raid_rooms.models.cycle_lifecycle_models import CycleDecision
     query=select(Assignment,Item,RoomCycle,CycleMember,CycleRound).join(CycleAssignment,CycleAssignment.assignment_id==Assignment.id).join(
         RoomCycle,RoomCycle.id==CycleAssignment.cycle_id).join(CycleMember,CycleMember.id==CycleAssignment.cycle_member_id).join(
         CycleRound,CycleRound.round_id==Assignment.round_id).join(Item,Item.id==Assignment.item_id).join(Member,Member.id==Assignment.membership_id).where(

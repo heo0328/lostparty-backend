@@ -1,6 +1,6 @@
 """Explicit schema boundary and provenance writes; no inferred legacy references."""
 from sqlalchemy import text
-from app.game_accounts.support import fail
+from app.game_accounts.common.support import fail
 from app.groups.feature_models import SubjectCharacterReference
 
 HEAD = '0034_group_features'

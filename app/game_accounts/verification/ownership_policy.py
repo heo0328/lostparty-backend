@@ -1,8 +1,11 @@
 """Current-owner decisions; never transfer authority from a name alone."""
 from sqlalchemy import select
 from app.game_accounts.rosters import lifecycle
-from app.game_accounts.models import Account, Registration, Character, NameClaim
-from app.game_accounts.support import fail
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.common.support import fail
 
 
 def owned(account, uid):

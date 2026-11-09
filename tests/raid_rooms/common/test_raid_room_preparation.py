@@ -2,18 +2,42 @@
 import uuid
 from datetime import timedelta
 import pytest
-from sqlalchemy import event, select, text, func
+from sqlalchemy import event
+from sqlalchemy import select
+from sqlalchemy import text
+from sqlalchemy import func
 from sqlalchemy.exc import OperationalError
-from app.core.database import session, engine, now
-from app.game_accounts.support import fail
+from app.core.database import session
+from app.core.database import engine
+from app.core.database import now
+from app.game_accounts.common.support import fail
 from app.member_limits import service as limits
 from app.member_limits.models import MemberUsageHead
-from app.raid_rooms.common import core, service, usage, runtime, readiness, policies
-from app.raid_rooms.models import Room, Round, Membership, Application, DirectoryHead
-from app.raid_rooms.commands import Withdraw
-from tests.raid_rooms.common.test_raid_room_foundation import people, worlds, create, create_command, selection, join, admission, recover, decision, denied
+from app.raid_rooms.common import core
+from app.raid_rooms.common import service
+from app.raid_rooms.common import usage
+from app.raid_rooms.common import runtime
+from app.raid_rooms.common import readiness
+from app.raid_rooms.common import policies
+from app.raid_rooms.models.models import Room
+from app.raid_rooms.models.models import Round
+from app.raid_rooms.models.models import Membership
+from app.raid_rooms.models.models import Application
+from app.raid_rooms.models.models import DirectoryHead
+from app.raid_rooms.schemas.commands import Withdraw
+from tests.raid_rooms.common.test_raid_room_foundation import people
+from tests.raid_rooms.common.test_raid_room_foundation import worlds
+from tests.raid_rooms.common.test_raid_room_foundation import create
+from tests.raid_rooms.common.test_raid_room_foundation import create_command
+from tests.raid_rooms.common.test_raid_room_foundation import selection
+from tests.raid_rooms.common.test_raid_room_foundation import join
+from tests.raid_rooms.common.test_raid_room_foundation import admission
+from tests.raid_rooms.common.test_raid_room_foundation import recover
+from tests.raid_rooms.common.test_raid_room_foundation import decision
+from tests.raid_rooms.common.test_raid_room_foundation import denied
 from tests.groups.test_group_foundation import actor
-from tests.member_limits.test_member_limits import change, rows
+from tests.member_limits.test_member_limits import change
+from tests.member_limits.test_member_limits import rows
 
 
 def snapshot(w):
@@ -191,4 +215,4 @@ def test_preparation_does_not_install_routes_or_change_openapi():
     import json
     from app.main import app
     assert app.openapi()==json.loads(open('openapi/openapi.yaml').read())
-    assert all(getattr(route.endpoint,'__module__','')!='app.raid_rooms.router' for route in app.routes)
+    assert all(getattr(route.endpoint,'__module__','')!='app.raid_rooms.api.router' for route in app.routes)

@@ -4,17 +4,32 @@ import subprocess
 import uuid
 from datetime import timedelta
 import pytest
-from sqlalchemy import inspect, select, text
+from sqlalchemy import inspect
+from sqlalchemy import select
+from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
-from app.core.database import session, now
-from app.game_accounts.models import CharacterRoleSummary
-from app.game_accounts.power_success import RolePowerSuccess
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.models.models import CharacterRoleSummary
+from app.game_accounts.models.power_success import RolePowerSuccess
 from app.raid_rooms.common import readiness
-from app.raid_rooms.integrated_models import RecruitmentMembership, RecruitmentRound, RecruitmentAssignment, RecruitmentSegment
-from app.raid_rooms.source_models import (SOURCE_MODELS, RoomSettings, ScheduleGroup, PersonalAvailability,
-    SessionParticipation, TimeReservation, ContinuationChoice, OpeningEvent, RecruitmentApplication)
-from app.raid_rooms.models import Application
-from tests.raid_rooms.common.test_integrated_recruitment_storage import imported, people, worlds
+from app.raid_rooms.models.integrated_models import RecruitmentMembership
+from app.raid_rooms.models.integrated_models import RecruitmentRound
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment
+from app.raid_rooms.models.integrated_models import RecruitmentSegment
+from app.raid_rooms.models.source_models import SOURCE_MODELS
+from app.raid_rooms.models.source_models import RoomSettings
+from app.raid_rooms.models.source_models import ScheduleGroup
+from app.raid_rooms.models.source_models import PersonalAvailability
+from app.raid_rooms.models.source_models import SessionParticipation
+from app.raid_rooms.models.source_models import TimeReservation
+from app.raid_rooms.models.source_models import ContinuationChoice
+from app.raid_rooms.models.source_models import OpeningEvent
+from app.raid_rooms.models.source_models import RecruitmentApplication
+from app.raid_rooms.models.models import Application
+from tests.raid_rooms.common.test_integrated_recruitment_storage import imported
+from tests.raid_rooms.common.test_integrated_recruitment_storage import people
+from tests.raid_rooms.common.test_integrated_recruitment_storage import worlds
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 from tests.raid_rooms.common.test_raid_room_foundation import selection
 from tests.game_accounts.test_role_summaries import summary
@@ -174,7 +189,7 @@ def test_authoritative_opening_floor_is_immutable_after_delayed_processing(sourc
 
 
 def test_readiness_rejects_success_fk_that_would_block_existing_retirement(sources):
-    from app.game_accounts.support import GameError
+    from app.game_accounts.common.support import GameError
     target,*_=sources
     with session() as db,db.begin():
         fk=inspect(db.connection()).get_foreign_keys('character_role_power_successes')[0]
@@ -193,8 +208,9 @@ def test_readiness_rejects_success_fk_that_would_block_existing_retirement(sourc
 
 
 def test_applied_duration_evidence_does_not_follow_later_item_settings(sources):
-    from app.raid_rooms.source_models import ItemSettings, SegmentDurationEvidence
-    from app.raid_rooms.integrated_models import RecruitmentSession
+    from app.raid_rooms.models.source_models import ItemSettings
+    from app.raid_rooms.models.source_models import SegmentDurationEvidence
+    from app.raid_rooms.models.integrated_models import RecruitmentSession
     target,rid,*_=sources
     with session() as db,db.begin():
         rd=db.scalar(select(RecruitmentRound).where(RecruitmentRound.room_id==rid));stamp=now(db)

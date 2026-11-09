@@ -4,9 +4,18 @@ from sqlalchemy import select
 import pytest
 from app.core.database import session
 from app.game_accounts.verification import verification_context
-from app.game_accounts.models import Registration, Verification, VerificationExecution
-from tests.game_accounts.test_game_accounts import world, register, start, change, BASE, VERIFY
-from tests.game_accounts.test_live_equipment_proof import live, confirm, assert_no_ownership
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import Verification
+from app.game_accounts.models.models import VerificationExecution
+from tests.game_accounts.test_game_accounts import world
+from tests.game_accounts.test_game_accounts import register
+from tests.game_accounts.test_game_accounts import start
+from tests.game_accounts.test_game_accounts import change
+from tests.game_accounts.test_game_accounts import BASE
+from tests.game_accounts.test_game_accounts import VERIFY
+from tests.game_accounts.test_live_equipment_proof import live
+from tests.game_accounts.test_live_equipment_proof import confirm
+from tests.game_accounts.test_live_equipment_proof import assert_no_ownership
 
 
 @pytest.mark.parametrize('name', ['mixedhero', 'MIXEDHERO', 'MiXeDhErO'])

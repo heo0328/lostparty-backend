@@ -5,10 +5,15 @@ from concurrent.futures import ThreadPoolExecutor
 from sqlalchemy import select
 from app.core.database import session
 from app.game_accounts.character_profiles import profiles
-from app.game_accounts.models import Account, Character
-from app.game_accounts.power_success import RolePowerSuccess
-from app.game_accounts.support import GameError
-from tests.game_accounts.test_role_summaries import owned, world, put, get, data
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.power_success import RolePowerSuccess
+from app.game_accounts.common.support import GameError
+from tests.game_accounts.test_role_summaries import owned
+from tests.game_accounts.test_role_summaries import world
+from tests.game_accounts.test_role_summaries import put
+from tests.game_accounts.test_role_summaries import get
+from tests.game_accounts.test_role_summaries import data
 
 
 def success(cid, role='dealer', ownership=1):
@@ -115,7 +120,7 @@ def test_role_and_owner_generations_do_not_borrow_values(client,owned):
 def test_retirement_cleanup_and_rollback_are_targeted(client,owned):
     from sqlalchemy import func
     from app.game_accounts.rosters import lifecycle
-    from app.game_accounts.support import lock
+    from app.game_accounts.common.support import lock
     from tests.game_accounts.test_game_accounts import page
     import pytest
     h,r,cid=owned

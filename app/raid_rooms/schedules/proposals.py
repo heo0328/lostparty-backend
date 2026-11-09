@@ -1,14 +1,22 @@
 """Per-session quorum; immutable proposal content and exact schedule generations."""
 import uuid
-from datetime import datetime,timedelta
+from datetime import datetime
+from datetime import timedelta
 from sqlalchemy import select
 from fastapi.encoders import jsonable_encoder
-from app.game_accounts.support import fail,GameError
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import GameError
 from app.raids import service as raids
 from app.raid_rooms.schedules import scheduling as graph
 from app.raid_rooms.common import time_policy as policy
-from app.raid_rooms.integrated_models import RecruitmentSession as Session,RecruitmentMembership as Member,RecruitmentSegment as Segment
-from app.raid_rooms.source_models import ScheduleProposal as Proposal,ProposalTarget,ProposalResponse,SessionParticipation as Participation,SegmentDurationEvidence
+from app.raid_rooms.models.integrated_models import RecruitmentSession as Session
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
+from app.raid_rooms.models.integrated_models import RecruitmentSegment as Segment
+from app.raid_rooms.models.source_models import ScheduleProposal as Proposal
+from app.raid_rooms.models.source_models import ProposalTarget
+from app.raid_rooms.models.source_models import ProposalResponse
+from app.raid_rooms.models.source_models import SessionParticipation as Participation
+from app.raid_rooms.models.source_models import SegmentDurationEvidence
 
 
 def eligible(db,session):
@@ -120,8 +128,8 @@ def reevaluate(db,room,stamp):
             # An obsolete proposal must not veto an independent membership
             # change. The nested attempt leaves every schedule unchanged.
             proposal.state='obsolete';proposal.revision+=1
-    from app.raid_rooms.resume_models import ResumeProposal
-    from app.raid_rooms.resume import evaluate as evaluate_resume
+    from app.raid_rooms.models.resume_models import ResumeProposal
+    from app.raid_rooms.outcomes.resume import evaluate as evaluate_resume
     for proposal in db.scalars(select(ResumeProposal).where(ResumeProposal.room_id==room.id,ResumeProposal.state=='pending').order_by(ResumeProposal.created_at,ResumeProposal.id)):
         try:
             with db.begin_nested():evaluate_resume(db,room,proposal,stamp)

@@ -1,19 +1,31 @@
 """Opaque AEAD completion/closure snapshots; no other member ledger CAS on wire."""
-import os,json,base64,hashlib,hmac,uuid
-from datetime import datetime,timedelta,date
+import os
+import json
+import base64
+import hashlib
+import hmac
+import uuid
+from datetime import datetime
+from datetime import timedelta
+from datetime import date
 from sqlalchemy import select
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from cryptography.exceptions import InvalidTag
 from fastapi.encoders import jsonable_encoder
 from app.core.config import settings
-from app.game_accounts.support import fail
+from app.game_accounts.common.support import fail
 from app.game_accounts.rosters.lifecycle import digest
 from app.raid_rooms.admissions import admission_service as base
 from app.raid_rooms.schedules import scheduling as graph
-from app.raid_rooms.integrated_models import RecruitmentAssignment as Assignment,RecruitmentRound as Round,RecruitmentItem as Item
-from app.raid_rooms.source_models import RoomSettings,ContinuationChoice as Choice,TimeReservation as Reservation,SegmentDurationEvidence
-from app.raid_rooms.integrated_models import RecruitmentSegment as Segment
-from app.raid_rooms.weekly_links import WeeklyOccupancy
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from app.raid_rooms.models.integrated_models import RecruitmentRound as Round
+from app.raid_rooms.models.integrated_models import RecruitmentItem as Item
+from app.raid_rooms.models.source_models import RoomSettings
+from app.raid_rooms.models.source_models import ContinuationChoice as Choice
+from app.raid_rooms.models.source_models import TimeReservation as Reservation
+from app.raid_rooms.models.source_models import SegmentDurationEvidence
+from app.raid_rooms.models.integrated_models import RecruitmentSegment as Segment
+from app.raid_rooms.models.weekly_links import WeeklyOccupancy
 from app.raid_weekly.models import WeeklyState
 
 # Four existing 30-second command leases provide a bounded user-confirmation
@@ -23,7 +35,7 @@ MAX_TOKEN_BYTES=4096
 
 
 def seal(value):
-    from app.raid_rooms import roster_participation
+    from app.raid_rooms.participation import roster_participation
     value=dict(value,**roster_participation.marker())
     kid=settings.recovery_kid
     key=hmac.new(settings.recovery_key(),b'recruitment-command-aead-v1',hashlib.sha256).digest()
@@ -39,7 +51,7 @@ def unseal(value):
         key=hmac.new(settings.recovery_key(kid),b'recruitment-command-aead-v1',hashlib.sha256).digest()
         raw=base64.b64decode(encoded+'='*((-len(encoded))%4),altchars=b'-_',validate=True)
         token=json.loads(AESGCM(key).decrypt(raw[:12],raw[12:],(version+'.'+kid).encode()))
-        from app.raid_rooms import roster_participation
+        from app.raid_rooms.participation import roster_participation
         roster_participation.check_marker(token)
         return token
     except (ValueError,TypeError,KeyError,InvalidTag,OSError,UnicodeDecodeError):fail('CONTEXT_INVALID',400)

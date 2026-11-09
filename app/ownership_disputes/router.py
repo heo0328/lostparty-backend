@@ -1,12 +1,20 @@
-from typing import Annotated,Literal
+from typing import Annotated
+from typing import Literal
 from uuid import UUID
-from fastapi import APIRouter,Depends,Request,Query
+from fastapi import APIRouter
+from fastapi import Depends
+from fastapi import Request
+from fastapi import Query
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
-from app.game_accounts.router import Principal,Key,common
-from app.game_accounts.schemas import PreviewIn
-from app.game_accounts.support import fail
-from app.ownership_disputes import schemas as s,commands,reads
+from app.game_accounts.api.router import Principal
+from app.game_accounts.api.router import Key
+from app.game_accounts.api.router import common
+from app.game_accounts.schemas.schemas import PreviewIn
+from app.game_accounts.common.support import fail
+from app.ownership_disputes import schemas as s
+from app.ownership_disputes import commands
+from app.ownership_disputes import reads
 
 
 async def strict_input(request:Request):

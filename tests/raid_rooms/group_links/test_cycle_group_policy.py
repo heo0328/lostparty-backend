@@ -2,28 +2,50 @@
 import os
 import subprocess
 import uuid
-from datetime import date, datetime, time, timedelta, timezone
+from datetime import date
+from datetime import datetime
+from datetime import time
+from datetime import timedelta
+from datetime import timezone
 from concurrent.futures import ThreadPoolExecutor
 import pytest
-from sqlalchemy import select, inspect
-from app.core.database import session, now
+from sqlalchemy import select
+from sqlalchemy import inspect
+from app.core.database import session
+from app.core.database import now
 from app.raids.service import KST
-from app.game_accounts.support import GameError
+from app.game_accounts.common.support import GameError
 from app.raid_rooms.group_links import cycle_group_policy as policy
 from app.raid_rooms.participation import cycle_management
-from app.raid_rooms import cycle_schemas
+from app.raid_rooms.schemas import cycle_schemas
 from app.raid_rooms.participation import cycle_leadership
-from app.raid_rooms.reads import cycle_queries, cycle_member_reads
+from app.raid_rooms.reads import cycle_queries
+from app.raid_rooms.reads import cycle_member_reads
 from app.raid_rooms.common import beta_profile
 from app.raid_rooms.participation import membership_actions
-from app.raid_rooms import membership_action_schemas
-from app.raid_rooms.cycle_models import RoomCycle, CycleMember, CycleGeneration
-from app.raid_rooms.cycle_group_models import CycleGroupPolicy
-from app.raid_rooms.integrated_models import RecruitmentRoom as Room
-from tests.groups.test_group_raid_lifecycle import group_beta, beta, current, candidate, ready, sources, imported, people, worlds, create_group_room, group, add
-from tests.raid_rooms.admissions.test_beta_recruitment import create_beta, beta_join
+from app.raid_rooms.schemas import membership_action_schemas
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import CycleMember
+from app.raid_rooms.models.cycle_models import CycleGeneration
+from app.raid_rooms.models.cycle_group_models import CycleGroupPolicy
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from tests.groups.test_group_raid_lifecycle import group_beta
+from tests.groups.test_group_raid_lifecycle import beta
+from tests.groups.test_group_raid_lifecycle import current
+from tests.groups.test_group_raid_lifecycle import candidate
+from tests.groups.test_group_raid_lifecycle import ready
+from tests.groups.test_group_raid_lifecycle import sources
+from tests.groups.test_group_raid_lifecycle import imported
+from tests.groups.test_group_raid_lifecycle import people
+from tests.groups.test_group_raid_lifecycle import worlds
+from tests.groups.test_group_raid_lifecycle import create_group_room
+from tests.groups.test_group_raid_lifecycle import group
+from tests.groups.test_group_raid_lifecycle import add
+from tests.raid_rooms.admissions.test_beta_recruitment import create_beta
+from tests.raid_rooms.admissions.test_beta_recruitment import beta_join
 from tests.groups.test_group_foundation import actor
-from tests.raid_rooms.participation.test_recruitment_cycle_management import settings, transfer_body
+from tests.raid_rooms.participation.test_recruitment_cycle_management import settings
+from tests.raid_rooms.participation.test_recruitment_cycle_management import transfer_body
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
 
@@ -210,7 +232,7 @@ def test_cn_different_leaders_change_without_g1_and_title_remains_common(policy_
     rid,c,_,_,_=create_beta(a,combined=True)
     from datetime import timedelta
     from app.raid_rooms.participation import cycle_common
-    from app.raid_rooms.cycle_group_schemas import TitleCommand
+    from app.raid_rooms.schemas.cycle_group_schemas import TitleCommand
     n=(date.fromisoformat(c)+timedelta(days=7)).isoformat();beta_join(b,rid,n)
     cycle_leadership.transfer(actor(a['uid']),rid,uuid.uuid4(),transfer_body(a,rid,n,b))
     change(b,rid,n,gid)
@@ -229,7 +251,8 @@ def test_opening_inherits_source_normalizes_nonmember_and_existing_n_unchanged(p
     engine,a,b=policy_db;gid=group(client,b);add(client,b,a,gid);rid,c,_,_,_=create_beta(a)
     from datetime import timedelta
     from app.raid_rooms.admissions import cycle_opening
-    from app.raid_rooms import beta_schemas, cycle_wire
+    from app.raid_rooms.schemas import beta_schemas
+    from app.raid_rooms.schemas import cycle_wire
     n=(date.fromisoformat(c)+timedelta(days=7)).isoformat()
     beta_join(b,rid,c);change(a,rid,c,gid)
     # Leader leaves the group without changing the raid. Reopening derives public explicitly.
@@ -278,11 +301,14 @@ def test_concurrent_changes_one_commit_and_context_recheck_after_membership_chan
 
 def test_eight_participants_group_priority_then_external_and_last_member_close(policy_db,client,people):
     engine,a,b=policy_db;gid=group(client,a)
-    from app.raid_rooms.admissions import cycle_creation, cycle_commands
-    from app.raid_rooms import cycle_wire, beta_schemas
+    from app.raid_rooms.admissions import cycle_creation
+    from app.raid_rooms.admissions import cycle_commands
+    from app.raid_rooms.schemas import cycle_wire
+    from app.raid_rooms.schemas import beta_schemas
     from app.raid_rooms.schedules import beta_schedule
     from tests.raid_rooms.admissions.test_recruitment_cycle_creation import request
-    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import context, admission_request
+    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import context
+    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import admission_request
     from app.raids import service as raids
     with session() as db:
         stamp=now(db);c=raids.cycle(stamp).cycle_key
@@ -338,12 +364,14 @@ def test_http_settings_confirmation_marker_and_original_ack(policy_db,client):
 def test_public_pending_preserved_but_approval_uses_current_group(policy_db,client):
     engine,a,b=policy_db;gid=group(client,a);rid,c,_,_,_=create_beta(a,mode='leader_only')
     from app.raid_rooms.admissions import cycle_commands as commands
-    from app.raid_rooms import beta_schemas
-    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import context, admission_request, decision
+    from app.raid_rooms.schemas import beta_schemas
+    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import context
+    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import admission_request
+    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import decision
     pending=commands.admit(actor(b['uid']),rid,uuid.uuid4(),beta_schemas.BetaApplyRequest.model_validate(
         admission_request(context(b,rid,c,intent='apply')).model_dump(mode='json')),applying=True)[1]
     aid=uuid.UUID(pending['data']['application_id'])
-    from app.raid_rooms.cycle_application_models import CycleApplication
+    from app.raid_rooms.models.cycle_application_models import CycleApplication
     before=table_digests(engine,{'recruitment_cycle_applications'})
     change(a,rid,c,gid)
     assert table_digests(engine,{'recruitment_cycle_applications'})==before
@@ -360,7 +388,7 @@ def test_public_pending_preserved_but_approval_uses_current_group(policy_db,clie
 def test_pre_upgrade_ack_replay_and_old_context_cannot_execute_after_migration(group_beta):
     engine,a,b=group_beta
     from app.raid_rooms.admissions import cycle_creation
-    from app.raid_rooms import beta_schemas
+    from app.raid_rooms.schemas import beta_schemas
     rid,c,_,raw,command=create_beta(a)
     old=beta_schemas.BetaCreateRequest.model_validate(raw)
     with beta_profile.using():original=cycle_creation.create(actor(a['uid']),command,old)
@@ -405,7 +433,7 @@ def test_leave_all_second_target_failure_rolls_back_everything(policy_db,client,
 
 def test_unavailable_successor_preserves_recovery_boundary(policy_db,client):
     engine,a,b=policy_db;gid=group(client,a);rid,c,_,_,_=create_beta(a);beta_join(b,rid,c);change(a,rid,c,gid)
-    from app.game_accounts.models import Character
+    from app.game_accounts.models.models import Character
     with session() as db,db.begin():db.get(Character,uuid.UUID(b['ids'][0])).lifecycle_state='retired'
     ctx,body=action(a,rid,c,'leave_target')
     result=membership_actions.execute(actor(a['uid']),rid,uuid.uuid4(),body)[1]
@@ -424,7 +452,7 @@ def test_n_cancel_reopen_keeps_policy_history_and_current_target(policy_db,clien
     n=(date.fromisoformat(c)+timedelta(days=7)).isoformat()
     change(a,rid,c,gid);change(a,rid,n,gid)
     from app.raid_rooms.admissions import cycle_opening
-    from app.raid_rooms import beta_schemas
+    from app.raid_rooms.schemas import beta_schemas
     from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import cancel_body
     cycle_leadership.cancel(actor(a['uid']),rid,uuid.uuid4(),cancel_body(cycle_leadership.get_cancel(actor(a['uid']),rid,n)))
     with session() as db:
@@ -510,7 +538,7 @@ def test_all_detail_profiles_share_target_badges_and_legacy_c_projection(policy_
     rid,c,_,_,_=create_beta(a,combined=True);n=(date.fromisoformat(c)+timedelta(days=7)).isoformat()
     for key in (c,n):beta_join(b,rid,key)
     change(a,rid,c,ga);change(a,rid,n,gb)
-    from app.raid_rooms import group_link_display
+    from app.raid_rooms.group_links import group_link_display
     from app.raid_rooms.participation import membership_readers
     for key,gid,expected in ((c,ga,False),(n,gb,True)):
         for viewer in (a,b):

@@ -1,12 +1,17 @@
 """Authenticated schedule commands; original ACK and transaction are shared with R2."""
 from sqlalchemy import select
 from app.core.database import now
-from app.game_accounts.support import fail
+from app.game_accounts.common.support import fail
 from app.raids import service as raids
 from app.raid_rooms.admissions import admission_service as base
-from app.raid_rooms.schedules import scheduling as graph, proposals
-from app.raid_rooms.integrated_models import RecruitmentRoom as Room,RecruitmentSession as Session
-from app.raid_rooms.source_models import ScheduleGroup,ScheduleAlternative,SessionParticipation as Participation,ScheduleProposal as Proposal
+from app.raid_rooms.schedules import scheduling as graph
+from app.raid_rooms.schedules import proposals
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from app.raid_rooms.models.integrated_models import RecruitmentSession as Session
+from app.raid_rooms.models.source_models import ScheduleGroup
+from app.raid_rooms.models.source_models import ScheduleAlternative
+from app.raid_rooms.models.source_models import SessionParticipation as Participation
+from app.raid_rooms.models.source_models import ScheduleProposal as Proposal
 
 
 def current(room,data,stamp):
@@ -84,8 +89,8 @@ def respond(principal,pid,key,data):
     def run(db,uid,stamp):
         value=db.get(Proposal,pid)
         if value is None:
-            from app.raid_rooms.resume_models import ResumeProposal
-            from app.raid_rooms import resume
+            from app.raid_rooms.models.resume_models import ResumeProposal
+            from app.raid_rooms.outcomes import resume
             value=db.get(ResumeProposal,pid)
             if value is None:fail('PROPOSAL_NOT_FOUND',404)
             room=base.room(db,uid,value.room_id);actor=base.member(db,uid,room);base.unscheduled(db,room);current(room,data,stamp)

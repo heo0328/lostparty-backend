@@ -1,19 +1,36 @@
 """Explicit opt-in readers; historical anchors never become current authority."""
 from datetime import date
 from contextlib import nullcontext
-from sqlalchemy import select, or_, and_
-from app.game_accounts.support import fail, GameError, cursor_encode, cursor_decode
+from sqlalchemy import select
+from sqlalchemy import or_
+from sqlalchemy import and_
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import GameError
+from app.game_accounts.common.support import cursor_encode
+from app.game_accounts.common.support import cursor_decode
 from app.game_accounts.rosters.lifecycle import digest
 from app.raid_rooms.participation import membership_actions as actions
-from app.raid_rooms import membership_action_schemas as wire
-from app.raid_rooms.reads import cycle_member_reads as legacy, cycle_queries as directory, cycle_lists
+from app.raid_rooms.schemas import membership_action_schemas as wire
+from app.raid_rooms.reads import cycle_member_reads as legacy
+from app.raid_rooms.reads import cycle_queries as directory
+from app.raid_rooms.reads import cycle_lists
 from app.raid_rooms.outcomes import completed_room_lifecycle as archive
-from app.raid_rooms.cycle_models import RoomCycle, CycleGeneration, CycleMember, CycleAssignment
-from app.raid_rooms.cycle_application_models import CycleSession
-from app.raid_rooms.integrated_models import RecruitmentRoom as Room, RecruitmentMembership as Member, RecruitmentAssignment as Assignment, RecruitmentRound as Round, RecruitmentItem as Item, RecruitmentSegment as Segment, RecruitmentSession as Session
-from app.raid_rooms.source_models import SessionParticipation as Participation,TimeReservation
-from app.raid_rooms.models import MemberHead
-from app.raid_rooms.membership_action_models import LeadershipRecovery
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import CycleGeneration
+from app.raid_rooms.models.cycle_models import CycleMember
+from app.raid_rooms.models.cycle_models import CycleAssignment
+from app.raid_rooms.models.cycle_application_models import CycleSession
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from app.raid_rooms.models.integrated_models import RecruitmentRound as Round
+from app.raid_rooms.models.integrated_models import RecruitmentItem as Item
+from app.raid_rooms.models.integrated_models import RecruitmentSegment as Segment
+from app.raid_rooms.models.integrated_models import RecruitmentSession as Session
+from app.raid_rooms.models.source_models import SessionParticipation as Participation
+from app.raid_rooms.models.source_models import TimeReservation
+from app.raid_rooms.models.models import MemberHead
+from app.raid_rooms.models.membership_action_models import LeadershipRecovery
 from app.raid_rooms.admissions.cycle_creation import permission
 from app.raid_weekly.service import parse_cycle
 
@@ -56,7 +73,7 @@ def record(db,row,cm):
         CycleSession.generation==cm.generation,Segment.round_id.in_(rounds)).order_by(Segment.session_id,Segment.ordinal)):
         segments.append(dict(segment_id=seg.id,round_id=seg.round_id,session_id=seg.session_id,
             starts_at=seg.starts_at,ends_at=seg.ends_at,state='released' if part.state!='active' or sess.state=='cancelled' else 'planned'))
-    from app.raid_rooms.cycle_models import ParticipationEvent
+    from app.raid_rooms.models.cycle_models import ParticipationEvent
     ended=db.scalar(select(ParticipationEvent).where(ParticipationEvent.cycle_member_id==cm.id,ParticipationEvent.action.in_(('cancelled','removed'))).order_by(ParticipationEvent.member_revision.desc()).limit(1))
     if ended is not None and 'record_schedule_segments' in ended.evidence:
         segments=ended.evidence['record_schedule_segments']
@@ -150,7 +167,7 @@ def get(principal,rid,key,kind,*,membership_id=None,cycle_member_id=None,include
             cm=db.scalar(select(CycleMember).where(CycleMember.cycle_id==row.id,CycleMember.membership_id==member.id,
                 CycleMember.generation==row.generation).order_by(CycleMember.joined_order.desc().nullslast(),CycleMember.id.desc())) if row else None
         value,historical=projection(db,uid,room,row,member,cm,stamp,anchored=membership_id is not None)
-        from app.raid_rooms import roster_participation
+        from app.raid_rooms.participation import roster_participation
         if not historical:roster_participation.require_client(db,row)
         value['target']['target_cycle_key']=key
         if historical and include_resume_display:fail('INVALID_REQUEST',400)
@@ -166,7 +183,7 @@ def get(principal,rid,key,kind,*,membership_id=None,cycle_member_id=None,include
             read_only=historical,evaluated_at=stamp)
         model=wire.DetailProfile if kind=='detail' else wire.PlanProfile
         result=actions.bounded(model,dict(scope=scope(stamp,key,kind),data=value),snapshot=(db,uid,stamp))
-        from app.raid_rooms import roster_api
+        from app.raid_rooms.api import roster_api
         return roster_api.publish(db,uid,stamp,result,kind)
 
 
@@ -202,7 +219,7 @@ def memberships(principal,key,state='current',limit=20,cursor=None,include_group
         binding=['membership-actions-1',str(uid),str(principal[1].id),key,state,limit]
         epoch=digest([revision,actions.cycles.directory_revision(db,target.key),target.current.isoformat()])
         binding,epoch=group_list_display.bind(db,binding,epoch,include_group_state,target.key)
-        from app.raid_rooms import roster_api
+        from app.raid_rooms.api import roster_api
         binding,epoch=roster_api.bind_page(db,uid,stamp,binding,epoch)
         offset=cursor_decode(cursor,binding,epoch) if cursor else 0
         values=list(db.execute(query.order_by(Member.joined_at.desc(),Member.id.desc(),CycleMember.generation.desc().nullslast(),CycleMember.id.desc()).offset(offset).limit(limit+1)))
@@ -212,11 +229,11 @@ def memberships(principal,key,state='current',limit=20,cursor=None,include_group
             value,historical=projection(db,uid,room,row,member,cm,stamp)
             value['target']['target_cycle_key']=key
             value['content']=None if historical else legacy_membership(db,uid,room,row,member,cm,key,stamp)
-            from app.raid_rooms import roster_api
+            from app.raid_rooms.api import roster_api
             if not historical:roster_api.legacy_restriction(db,row,value,profile=True)
             items.append(value)
         result=actions.bounded(wire.MembershipPage,dict(scope=scope(stamp,key,'memberships'),data=dict(
             items=items,membership_head=revision,next_cursor=token,evaluated_at=stamp)),snapshot=(db,uid,stamp))
         result=group_list_display.attach(db,result,[room.id for _,room,_,_ in values[:limit]],include_group_state)
-        from app.raid_rooms import roster_api
+        from app.raid_rooms.api import roster_api
         return roster_api.publish(db,uid,stamp,result,'memberships')

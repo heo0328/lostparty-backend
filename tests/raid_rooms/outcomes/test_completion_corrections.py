@@ -1,19 +1,52 @@
 """Personal correction and service archive against disposable restricted PostgreSQL."""
-import os, subprocess, uuid
+import os
+import subprocess
+import uuid
 from datetime import timedelta
 from concurrent.futures import ThreadPoolExecutor
 import pytest
-from sqlalchemy import select, text, inspect, func
+from sqlalchemy import select
+from sqlalchemy import text
+from sqlalchemy import inspect
+from sqlalchemy import func
 from sqlalchemy.exc import DBAPIError
-from app.core.database import session, now
+from app.core.database import session
+from app.core.database import now
 from app.raid_rooms.outcomes import completion_correction as service
-from app.raid_rooms import completion_correction_schemas as schema
+from app.raid_rooms.schemas import completion_correction_schemas as schema
 from app.raid_rooms.outcomes import completed_room_lifecycle as archive
-from app.raid_rooms.reads import cycle_lists as lists, cycle_queries as directory
-from app.raid_rooms.completion_correction_models import CompletionCorrection
+from app.raid_rooms.reads import cycle_lists as lists
+from app.raid_rooms.reads import cycle_queries as directory
+from app.raid_rooms.models.completion_correction_models import CompletionCorrection
 from app.raid_weekly.models import WeeklyState
-from app.game_accounts.models import Character, Account
-from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import outcomes, planning, consent, lifecycle, candidate, ready, sources, imported, people, worlds, scheduled, plan, actor, complete, add_member, fingerprints, denied, cycles, life, graph, commands, RoomCycle, CycleMember, CycleGeneration, Assignment, cancel_member
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Account
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import outcomes
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import planning
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import consent
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import lifecycle
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import candidate
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import ready
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import sources
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import imported
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import people
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import worlds
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import scheduled
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import plan
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import actor
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import complete
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import add_member
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import fingerprints
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import denied
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import cycles
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import life
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import graph
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import commands
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import RoomCycle
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import CycleMember
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import CycleGeneration
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import Assignment
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import cancel_member
 from tests.raid_rooms.schedules.test_recruitment_cycle_times_http import client
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
@@ -159,7 +192,7 @@ def test_same_command_concurrent_once_and_other_member_preserved(corrected):
     engine,a,b=corrected;rid,c,n=scheduled(a);add_member(b,rid,c);complete(a,rid,c,'complete_item')
     cid,raid=target(a,rid,c);body=request(a,cid,raid,c);command=uuid.uuid4()
     def call(_):
-        from app.game_accounts.support import GameError
+        from app.game_accounts.common.support import GameError
         try:return service.execute(actor(a['uid']),cid,raid,command,body)
         except GameError as e:
             assert e.code=='REQUEST_IN_PROGRESS'
@@ -257,7 +290,7 @@ def test_actual_synthetic_bearer_revoked_session_no_store_and_request_limit(corr
     from fastapi.testclient import TestClient
     from app.core.errors import register
     from app.main import no_store
-    from app.raid_rooms.cycle_router import router
+    from app.raid_rooms.api.cycle_router import router
     from app.auth.models import Session
     engine,a,b=corrected;rid,c,n=scheduled(a);complete(a,rid,c);cid,raid=target(a,rid,c)
     app=FastAPI();register(app);app.include_router(router);app.middleware('http')(no_store)
@@ -280,7 +313,8 @@ def test_actual_synthetic_bearer_revoked_session_no_store_and_request_limit(corr
 def test_completed_archive_blocks_new_write_but_old_ack_and_new_completion_survive(corrected,monkeypatch):
     engine,a,b=corrected;rid,c,n=scheduled(a);cancel_member(a,rid,n)
     # Capture original completion command for replay after service archive.
-    from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import context, outcome_body
+    from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import context
+    from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import outcome_body
     from app.raid_rooms.outcomes import cycle_outcomes
     first=context(a,rid,c);command=uuid.uuid4();body=outcome_body(first)
     original=cycle_outcomes.execute(actor(a['uid']),None,uuid.UUID(first['data']['target_round_id']),command,body,'personal_completion')

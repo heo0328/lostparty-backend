@@ -1,25 +1,56 @@
 """Agreed F6-C contract against synthetic restricted PostgreSQL at 0029."""
 import json
 import uuid
-from datetime import date, datetime, timedelta, timezone
+from datetime import date
+from datetime import datetime
+from datetime import timedelta
+from datetime import timezone
 import pytest
-from sqlalchemy import select, func, text
-from app.core.database import session, now
-from app.game_accounts.support import GameError
+from sqlalchemy import select
+from sqlalchemy import func
+from sqlalchemy import text
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.common.support import GameError
 from app.raid_rooms.outcomes import resume_review as review
-from app.raid_rooms import resume_review_schemas as schema
-from app.raid_rooms import cycle_schemas as inputs
+from app.raid_rooms.schemas import resume_review_schemas as schema
+from app.raid_rooms.schemas import cycle_schemas as inputs
 from app.raid_rooms.reads import cycle_member_reads as reads
 from app.raid_rooms.outcomes import cycle_resume as resume
 from app.raid_rooms.schedules import cycle_schedule_service as schedules
 from app.raid_rooms.schedules import cycle_proposals as votes
 from app.raid_rooms.common import command_context as opaque
 from app.raid_rooms.participation import cycle_lifecycle as life
-from app.raid_rooms.cycle_outcome_models import CycleResume, CycleOutcome
-from app.raid_rooms.source_models import ScheduleProposal, TimeReservation
-from app.raid_rooms.cycle_consent_models import CycleConsent
-from app.raid_rooms.integrated_models import RecruitmentRound as Round
-from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import outcomes, planning, consent, lifecycle, candidate, ready, sources, imported, people, worlds, scheduled, plan, actor, complete, resume_body, resume_response, propose_resume, vote, add_member, fingerprints, commands, cycles, denied, graph
+from app.raid_rooms.models.cycle_outcome_models import CycleResume
+from app.raid_rooms.models.cycle_outcome_models import CycleOutcome
+from app.raid_rooms.models.source_models import ScheduleProposal
+from app.raid_rooms.models.source_models import TimeReservation
+from app.raid_rooms.models.cycle_consent_models import CycleConsent
+from app.raid_rooms.models.integrated_models import RecruitmentRound as Round
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import outcomes
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import planning
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import consent
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import lifecycle
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import candidate
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import ready
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import sources
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import imported
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import people
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import worlds
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import scheduled
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import plan
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import actor
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import complete
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import resume_body
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import resume_response
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import propose_resume
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import vote
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import add_member
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import fingerprints
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import commands
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import cycles
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import denied
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import graph
 from tests.raid_rooms.schedules.test_recruitment_cycle_times_http import client
 from concurrent.futures import ThreadPoolExecutor
 
@@ -356,7 +387,7 @@ def test_real_authentication_preview_and_plan_remain_scoped(outcomes):
     from fastapi.testclient import TestClient
     from app.core.errors import register
     from app.main import no_store
-    from app.raid_rooms.cycle_router import router
+    from app.raid_rooms.api.cycle_router import router
     from app.auth.models import Session
     engine, a, b = outcomes; rid, c, n = stopped(a)
     app = FastAPI(); register(app); app.include_router(router); app.middleware('http')(no_store)
@@ -377,7 +408,7 @@ def test_real_authentication_preview_and_plan_remain_scoped(outcomes):
 
 def test_whole_opt_in_plan_one_mib_limit_and_legacy_payload_stays_unchanged(outcomes):
     from sqlalchemy import insert
-    from app.raid_rooms.source_models import ScheduleAlternative
+    from app.raid_rooms.models.source_models import ScheduleAlternative
     engine, a, b = outcomes; rid, c, n = stopped(a)
     with session() as db, db.begin():
         row = db.scalar(select(commands.RoomCycle).where(commands.RoomCycle.room_id == rid,

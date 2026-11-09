@@ -5,9 +5,34 @@ import pytest
 from sqlalchemy import select
 from app.core.database import session
 from app.raid_rooms.participation import atomic_members as service
-from app.raid_rooms import atomic_member_schemas as schema
+from app.raid_rooms.schemas import atomic_member_schemas as schema
 from tests.raid_rooms.outcomes.test_completion_corrections import corrected
-from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import outcomes, planning, consent, lifecycle, candidate, ready, sources, imported, people, worlds, scheduled, plan, actor, add_member, complete, fingerprints, denied, commands, cycles, life, graph, RoomCycle, CycleMember, CycleGeneration, Assignment, cancel_member
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import outcomes
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import planning
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import consent
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import lifecycle
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import candidate
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import ready
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import sources
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import imported
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import people
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import worlds
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import scheduled
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import plan
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import actor
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import add_member
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import complete
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import fingerprints
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import denied
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import commands
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import cycles
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import life
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import graph
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import RoomCycle
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import CycleMember
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import CycleGeneration
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import Assignment
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import cancel_member
 from tests.raid_rooms.schedules.test_recruitment_cycle_times_http import client
 
 
@@ -207,7 +232,8 @@ def test_departure_stale_final_boundary_and_rollback(corrected,monkeypatch,chang
             cm=db.get(CycleMember,body.actor_cycle_member_id);row=db.get(RoomCycle,cm.cycle_id)
             assignment=life.assignments(db,row,cm)[0]
             if change=='ownership':
-                from app.game_accounts.models import Character,Account
+                from app.game_accounts.models.models import Character
+                from app.game_accounts.models.models import Account
                 char=db.get(Character,assignment.character_id);db.get(Account,char.account_id).ownership_revision+=1
             else:assignment.display={**assignment.display,'character_name':'changed synthetic display'}
     before=fingerprints(engine)
@@ -280,7 +306,7 @@ def test_http_removal_options_and_atomic_ack(corrected):
 
 def test_concurrent_removal_same_key_once(corrected):
     from concurrent.futures import ThreadPoolExecutor
-    from app.game_accounts.support import GameError
+    from app.game_accounts.common.support import GameError
     engine,a,b=corrected;rid,c,n=scheduled(a);add_member(b,rid,c)
     value=removal(a,b,rid,c);body=removal_body(value);key=uuid.uuid4()
     def call():
@@ -298,7 +324,7 @@ def test_concurrent_removal_same_key_once(corrected):
 
 
 def test_target_registration_change_requires_new_removal_confirmation(corrected):
-    from app.game_accounts.models import Registration
+    from app.game_accounts.models.models import Registration
     engine,a,b=corrected;rid,c,n=scheduled(a);add_member(b,rid,c)
     body=removal_body(removal(a,b,rid,c))
     with session() as db,db.begin():

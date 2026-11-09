@@ -1,7 +1,7 @@
 """Request-scoped opt-in; legacy commands keep their exact old payload/namespace."""
 from contextlib import contextmanager
 from contextvars import ContextVar
-from app.game_accounts.support import fail
+from app.game_accounts.common.support import fail
 
 PROFILE='beta-recruitment-1'
 _state=ContextVar('beta_recruitment_request',default=None)

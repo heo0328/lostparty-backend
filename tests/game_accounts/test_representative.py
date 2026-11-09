@@ -3,13 +3,24 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 
 import pytest
-from sqlalchemy import select, func
-from app.auth.models import User, Session
-from app.core.database import session, now
+from sqlalchemy import select
+from sqlalchemy import func
+from app.auth.models import User
+from app.auth.models import Session
+from app.core.database import session
+from app.core.database import now
 from app.game_accounts.character_profiles import representative as service
-from app.game_accounts.models import Account, Registration, Character, Configuration, Activity, RequestResult, NameClaim
-from app.game_accounts.support import GameError
-from tests.game_accounts.test_game_accounts import PrivateHeaders, change, BASE
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Configuration
+from app.game_accounts.models.models import Activity
+from app.game_accounts.models.models import RequestResult
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.common.support import GameError
+from tests.game_accounts.test_game_accounts import PrivateHeaders
+from tests.game_accounts.test_game_accounts import change
+from tests.game_accounts.test_game_accounts import BASE
 
 
 @pytest.fixture

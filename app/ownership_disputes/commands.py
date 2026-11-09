@@ -2,16 +2,33 @@
 import uuid
 from datetime import timedelta
 from sqlalchemy import select
-from app.core.database import session,now
+from app.core.database import session
+from app.core.database import now
 from app.game_accounts.rosters import service as accounts
-from app.game_accounts.verification import verification_context, equipment_proof
+from app.game_accounts.verification import verification_context
+from app.game_accounts.verification import equipment_proof
 from app.game_accounts.rosters import lifecycle
-from app.game_accounts.verification.equipment import EquipmentItem, required_slots, compare_equipment, EquipmentIncomplete
-from app.game_accounts.models import Account,Registration,Configuration,Audit,Character
-from app.game_accounts.support import authorize,fail,reserve,release,commit_result,quota
+from app.game_accounts.verification.equipment import EquipmentItem
+from app.game_accounts.verification.equipment import required_slots
+from app.game_accounts.verification.equipment import compare_equipment
+from app.game_accounts.verification.equipment import EquipmentIncomplete
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import Configuration
+from app.game_accounts.models.models import Audit
+from app.game_accounts.models.models import Character
+from app.game_accounts.common.support import authorize
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import reserve
+from app.game_accounts.common.support import release
+from app.game_accounts.common.support import commit_result
+from app.game_accounts.common.support import quota
 from app.lostark_keys import service as credentials
-from app.ownership_disputes import core,reads
-from app.ownership_disputes.models import Proof,Dispute,AccountHead
+from app.ownership_disputes import core
+from app.ownership_disputes import reads
+from app.ownership_disputes.models import Proof
+from app.ownership_disputes.models import Dispute
+from app.ownership_disputes.models import AccountHead
 
 
 def preview(principal,data):
@@ -39,7 +56,8 @@ def start_target(db,uid,data,did=None):
         name=c.character_name
     elif data['source']=='registration':
         r=core.registration(db,uid,data['registration_id'])
-        from app.game_accounts.verification import ownership_policy, verification_targets
+        from app.game_accounts.verification import ownership_policy
+        from app.game_accounts.verification import verification_targets
         ownership_policy.reject_linked(db,uid,r)
         name=verification_targets.selected(db,uid,r,data)
     else:name=data['character_name']

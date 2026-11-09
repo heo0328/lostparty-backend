@@ -2,15 +2,37 @@
 import uuid
 from datetime import timedelta
 import pytest
-from sqlalchemy import event, select, text
-from app.core.database import session, now, engine
-from app.game_accounts.models import Account, Activity, Character, CharacterRoleSummary, Registration
+from sqlalchemy import event
+from sqlalchemy import select
+from sqlalchemy import text
+from app.core.database import session
+from app.core.database import now
+from app.core.database import engine
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Activity
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import CharacterRoleSummary
+from app.game_accounts.models.models import Registration
 from app.raid_rooms.reads import queries as q
-from app.raid_rooms.common import service, policies
-from app.raid_rooms.models import Room, Round, Membership, Application
-from app.raid_rooms.commands import Admission
+from app.raid_rooms.common import service
+from app.raid_rooms.common import policies
+from app.raid_rooms.models.models import Room
+from app.raid_rooms.models.models import Round
+from app.raid_rooms.models.models import Membership
+from app.raid_rooms.models.models import Application
+from app.raid_rooms.schemas.commands import Admission
 from app.member_limits.service import Limits
-from tests.raid_rooms.common.test_raid_room_foundation import people, worlds, create, create_command, join, admission, recover, membership_command, selection, denied, decision
+from tests.raid_rooms.common.test_raid_room_foundation import people
+from tests.raid_rooms.common.test_raid_room_foundation import worlds
+from tests.raid_rooms.common.test_raid_room_foundation import create
+from tests.raid_rooms.common.test_raid_room_foundation import create_command
+from tests.raid_rooms.common.test_raid_room_foundation import join
+from tests.raid_rooms.common.test_raid_room_foundation import admission
+from tests.raid_rooms.common.test_raid_room_foundation import recover
+from tests.raid_rooms.common.test_raid_room_foundation import membership_command
+from tests.raid_rooms.common.test_raid_room_foundation import selection
+from tests.raid_rooms.common.test_raid_room_foundation import denied
+from tests.raid_rooms.common.test_raid_room_foundation import decision
 from tests.groups.test_group_foundation import actor
 from tests.member_limits.test_member_limits import change
 
@@ -270,7 +292,8 @@ def test_group_rooms_do_not_leak_through_public_or_personal_reads(people):
     room = rid(a)
     # Group-room fixture only, no enabled group adapter.
     with session() as db, db.begin():
-        from app.groups.models import Group, GroupMembership
+        from app.groups.models import Group
+        from app.groups.models import GroupMembership
         stamp = now(db); gid, mid = uuid.uuid4(), uuid.uuid4()
         db.add(Group(id=gid, name='private', revision=1, members_revision=1, leader_membership_id=mid,
             representative_character_id=uuid.UUID(a['ids'][0]), representative_user_id=a['uid'],

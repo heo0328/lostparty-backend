@@ -1,14 +1,24 @@
 """Read-only missing-character projections for own summaries and authorized targets."""
-from datetime import date, timedelta
-from sqlalchemy import and_, select
-from app.game_accounts import roster_presence
+import app.game_accounts.models.roster_presence as roster_presence_models
+from datetime import date
+from datetime import timedelta
+from sqlalchemy import and_
+from sqlalchemy import select
+from app.game_accounts.rosters import roster_presence
 from app.game_accounts.rosters.lifecycle import digest
-from app.game_accounts.models import Account, Character, NameClaim, Registration
-from app.game_accounts.support import fail
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.models.models import Registration
+from app.game_accounts.common.support import fail
 from app.raid_rooms.common import active_usage
 from app.raid_rooms.admissions import admission_service as base
-from app.raid_rooms.cycle_models import RoomCycle, CycleMember, CycleAssignment
-from app.raid_rooms.integrated_models import RecruitmentRoom as Room, RecruitmentMembership as Member, RecruitmentAssignment as Assignment
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import CycleMember
+from app.raid_rooms.models.cycle_models import CycleAssignment
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
 from app.raids.service import cycle
 
 CODE = 'ROSTER_CHARACTER_MISSING'
@@ -18,7 +28,7 @@ def rows(db, stamp, *, owner_id=None, room_id=None, target_key=None):
     if not roster_presence.enabled(db):
         fail('RECRUITMENT_COMMAND_NOT_READY', 503)
     current = date.fromisoformat(cycle(stamp).cycle_key)
-    transition = roster_presence.RosterTransition
+    transition = roster_presence_models.RosterTransition
     query = (select(Member, RoomCycle, CycleMember, Assignment, Character, transition).select_from(Member)
         .join(Room, Room.id == Member.room_id)
         .join(RoomCycle, RoomCycle.room_id == Room.id)

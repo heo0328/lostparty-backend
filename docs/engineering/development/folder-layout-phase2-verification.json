@@ -1,0 +1,399 @@
+{
+  "phase": 2,
+  "date": "2026-11-09",
+  "branch": "feat/character-lifecycle",
+  "baseline_commit": "34a2a4789c62e4beb7dccaef033e655341acb548",
+  "status": "complete with two preexisting expectation failures; phase2 uncommitted/unpushed; dev/production not deployed",
+  "mapping": {
+    "python_sources": 79,
+    "moved": 62,
+    "split": 15,
+    "retained": 2,
+    "python_destinations": 95,
+    "json_resources_moved": 1
+  },
+  "public_contracts": {
+    "legacy": {
+      "full_object_equal": true,
+      "paths": 125,
+      "operations": 142
+    },
+    "two_cycle": {
+      "full_object_equal": true,
+      "paths": 188,
+      "operations": 209
+    }
+  },
+  "draft_contracts_equal": true,
+  "orm": {
+    "scope": "all app modules imported in both images; broader than phase1 restricted registry",
+    "tables": 117,
+    "table_and_index_ddl_equal": true
+  },
+  "collection": {
+    "before": 1916,
+    "after": 1923,
+    "new_schema_identity_tests": 7,
+    "missing": 0,
+    "duplicate_introduced": 0,
+    "normalization": "only existing test_invalid_command_key uuid1 parameter value"
+  },
+  "definition_audit": {
+    "definitions_before": 3682,
+    "definitions_after": 3684,
+    "missing": [],
+    "changed": [
+      "app.main._decorate_openapi"
+    ]
+  },
+  "tools_tests": {
+    "passed": 63
+  },
+  "schema_identity_unittest": {
+    "passed": 7,
+    "included_in_business_collection": true
+  },
+  "source_image": {
+    "files_app_tests_scripts": 439,
+    "final_image_matches_source_bytes": true,
+    "regression_image": "sha256:df7c876e86c0a9e50116705dd0595bbfb3f610898ce649272d67bc6b3dd8f1fd",
+    "regression_to_final_format_only_files": 83,
+    "regression_to_final_ast_equal": false,
+    "source_manifest_sha256": "f209a4ef71c31d135598ab84d6c1065affac6e33cd034ee60270ca4c4ff36373",
+    "regression_to_final_semantic_changes": [
+      "tests/legacy_metadata.py: import model module instead of separated capture service; model_migration_consistency rerun 1PASS/4.03s"
+    ],
+    "regression_to_final_ast_equal_except_legacy_metadata": true,
+    "final_image": "sha256:183888ffbf1c8c8883659b1f0f9c4876eb506c3415a760bfa582fd1b345093d5",
+    "metadata_fix_consumers": [
+      "tests/auth/test_auth.py::test_model_migration_consistency",
+      "tests/raid_rooms/outcomes/test_record_timestamps.py::test_all_application_tables_have_database_clocks"
+    ],
+    "publication_eof_cleanup": {
+      "files": 39,
+      "ast_equal": true,
+      "source_image439_byte_equal": true,
+      "business_regression_reused": "only EOF blank lines removed; prior full regression and resolved-case reruns remain applicable"
+    }
+  },
+  "regression": {
+    "status": "complete",
+    "initial_passed": 1919,
+    "initial_failed": 4,
+    "final_unique_passed": 1921,
+    "final_unique_failed": 2,
+    "resolved_cases": [
+      "tests/auth/test_auth.py::test_model_migration_consistency",
+      "tests/raid_rooms/outcomes/test_record_timestamps.py::test_all_application_tables_have_database_clocks"
+    ],
+    "existing_failed_cases": [
+      "tests/groups/test_group_raid_lifecycle.py::test_group_leave_preserves_actual_c_but_does_not_admit_new_n",
+      "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py::test_closed_c_opening_respects_completed_archive[stopped]"
+    ],
+    "total_unique_cases": 1923,
+    "runs": [
+      {
+        "shard": 1,
+        "project": "lostparty-layout2-1-e201ed96fe",
+        "expected": 241,
+        "files": [
+          "tests/game_accounts/test_role_summaries.py",
+          "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+          "tests/raid_rooms/outcomes/test_recruitment_cycle_outcomes.py",
+          "tests/raid_rooms/admissions/test_admission_eligibility.py",
+          "tests/member_limits/test_member_limits.py",
+          "tests/game_accounts/test_lifecycle_reads.py",
+          "tests/raid_rooms/admissions/test_application_composition.py",
+          "tests/game_accounts/test_provider_diagnostics.py",
+          "tests/raid_rooms/common/test_recruitment_sources.py",
+          "tests/raid_rooms/common/test_recruitment_backup_guards.py",
+          "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+          "tests/raid_rooms/schedules/test_departure_search_minutes.py"
+        ],
+        "exit": 0,
+        "cleanup_exit": 0,
+        "seconds": 1417.83,
+        "passed": 241,
+        "failed": 0,
+        "pytest_seconds": 1407.41,
+        "failed_cases": []
+      },
+      {
+        "shard": 2,
+        "project": "lostparty-layout2-2-ac2a654f15",
+        "expected": 241,
+        "files": [
+          "tests/game_accounts/test_personal_presentation.py",
+          "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+          "tests/lostark_keys/test_lostark_keys.py",
+          "tests/game_accounts/test_lostark_retry_restore.py",
+          "tests/raid_rooms/participation/test_membership_actions.py",
+          "tests/game_accounts/test_account_bootstrap.py",
+          "tests/game_accounts/test_live_equipment_proof.py",
+          "tests/raid_rooms/compat/test_recruitment_cycle_cutover.py",
+          "tests/groups/test_group_invite_display.py",
+          "tests/raid_rooms/reads/test_recruitment_cycle_queries.py",
+          "tests/raid_rooms/common/test_schema_ids.py",
+          "tests/raid_rooms/common/test_recruitment_continuation.py",
+          "tests/raid_rooms/outcomes/test_record_timestamps.py",
+          "tests/raid_rooms/common/test_raid_room_migrations.py"
+        ],
+        "exit": 1,
+        "cleanup_exit": 0,
+        "seconds": 1253.86,
+        "passed": 240,
+        "failed": 1,
+        "pytest_seconds": 1243.11,
+        "failed_cases": [
+          "tests/raid_rooms/outcomes/test_record_timestamps.py::test_all_application_tables_have_database_clocks"
+        ]
+      },
+      {
+        "shard": 3,
+        "project": "lostparty-layout2-3-ddd522e478",
+        "expected": 240,
+        "files": [
+          "tests/raid_weekly/test_raid_weekly.py",
+          "tests/groups/test_group_foundation.py",
+          "tests/groups/test_group_admissions.py",
+          "tests/raid_rooms/schedules/test_recruitment_session_display.py",
+          "tests/raid_rooms/participation/test_activity_participation_continuity.py",
+          "tests/raid_rooms/admissions/test_application_item_level.py",
+          "tests/game_accounts/test_owned_roster_refresh.py",
+          "tests/raid_rooms/schedules/test_recruitment_cycle_times.py",
+          "tests/raid_rooms/admissions/test_recruitment_admission.py",
+          "tests/raid_rooms/schedules/test_explicit_departure_minutes.py",
+          "tests/raid_rooms/outcomes/test_recruitment_completion.py",
+          "tests/raid_rooms/reads/test_recruitment_search.py",
+          "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle_http.py"
+        ],
+        "exit": 0,
+        "cleanup_exit": 0,
+        "seconds": 1267.69,
+        "passed": 240,
+        "failed": 0,
+        "pytest_seconds": 1256.8,
+        "failed_cases": []
+      },
+      {
+        "shard": 4,
+        "project": "lostparty-layout2-4-8003495e49",
+        "expected": 241,
+        "files": [
+          "tests/game_accounts/test_game_accounts.py",
+          "tests/raid_rooms/participation/test_atomic_members.py",
+          "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+          "tests/raid_rooms/outcomes/test_completion_corrections.py",
+          "tests/groups/test_group_management_http.py",
+          "tests/game_accounts/test_activity_policy.py",
+          "tests/groups/test_group_character_candidates.py",
+          "tests/game_accounts/test_ownership_diagnostics.py",
+          "tests/auth/test_google.py",
+          "tests/game_accounts/test_power_ownership.py",
+          "tests/game_accounts/test_role_power_success.py",
+          "tests/groups/test_group_invite_eligibility.py",
+          "tests/raid_rooms/schedules/test_recruitment_cycle_times_http.py"
+        ],
+        "exit": 1,
+        "cleanup_exit": 0,
+        "seconds": 1513.82,
+        "passed": 240,
+        "failed": 1,
+        "pytest_seconds": 1502.78,
+        "failed_cases": [
+          "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py::test_closed_c_opening_respects_completed_archive[stopped]"
+        ]
+      },
+      {
+        "shard": 5,
+        "project": "lostparty-layout2-5-828be1ec6f",
+        "expected": 240,
+        "files": [
+          "tests/raid_rooms/common/test_raid_room_http.py",
+          "tests/raid_rooms/common/test_raid_room_foundation.py",
+          "tests/raids/test_raid_catalog.py",
+          "tests/raid_rooms/common/test_raid_room_preparation.py",
+          "tests/core/test_observability.py",
+          "tests/game_accounts/test_input_name_resolution.py",
+          "tests/raid_rooms/admissions/test_application_display.py",
+          "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+          "tests/game_accounts/test_lostark_diagnostics.py",
+          "tests/game_accounts/test_registration_cleanup.py",
+          "tests/raid_rooms/admissions/test_raid_room_admission_control.py",
+          "tests/raid_rooms/schedules/test_coordination_wait.py",
+          "tests/ownership_disputes/test_ownership_dispute_impact.py"
+        ],
+        "exit": 0,
+        "cleanup_exit": 0,
+        "seconds": 479.2,
+        "passed": 240,
+        "failed": 0,
+        "pytest_seconds": 469.27,
+        "failed_cases": []
+      },
+      {
+        "shard": 6,
+        "project": "lostparty-layout2-6-5fb2fd4bc3",
+        "expected": 240,
+        "files": [
+          "tests/game_accounts/test_startup_batches.py",
+          "tests/raid_rooms/outcomes/test_recruitment_weekly_summary.py",
+          "tests/raid_rooms/outcomes/test_recruitment_resume_review.py",
+          "tests/raid_rooms/group_links/test_cycle_group_policy.py",
+          "tests/ownership_disputes/test_ownership_disputes.py",
+          "tests/member_settings/test_member_settings.py",
+          "tests/raid_rooms/group_links/test_group_room_connection.py",
+          "tests/raid_rooms/admissions/test_reapplication_history.py",
+          "tests/game_accounts/test_verification_history.py",
+          "tests/groups/test_group_features_management.py",
+          "tests/raid_rooms/common/test_active_room_usage.py",
+          "tests/groups/test_group_raid_lifecycle.py",
+          "tests/raid_rooms/participation/test_recruitment_management.py"
+        ],
+        "exit": 1,
+        "cleanup_exit": 0,
+        "seconds": 1622.95,
+        "passed": 239,
+        "failed": 1,
+        "pytest_seconds": 1612.55,
+        "failed_cases": [
+          "tests/groups/test_group_raid_lifecycle.py::test_group_leave_preserves_actual_c_but_does_not_admit_new_n"
+        ]
+      },
+      {
+        "shard": 7,
+        "project": "lostparty-layout2-7-bd94f92faf",
+        "expected": 240,
+        "files": [
+          "tests/game_accounts/test_game_account_primitives.py",
+          "tests/auth/test_auth.py",
+          "tests/game_accounts/test_verification_targets.py",
+          "tests/raid_rooms/admissions/test_beta_recruitment.py",
+          "tests/groups/test_group_management.py",
+          "tests/raid_rooms/participation/test_roster_participation_issues.py",
+          "tests/raid_rooms/schedules/test_recruitment_availability.py",
+          "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+          "tests/raid_rooms/participation/test_recruitment_participation.py",
+          "tests/raid_rooms/participation/test_roster_followup_commands.py",
+          "tests/raid_rooms/common/test_integrated_recruitment_storage.py",
+          "tests/raid_rooms/common/test_recruitment_cycle_performance.py",
+          "tests/raid_rooms/participation/test_recruitment_member_reads.py"
+        ],
+        "exit": 1,
+        "cleanup_exit": 0,
+        "seconds": 1141.31,
+        "passed": 239,
+        "failed": 1,
+        "pytest_seconds": 1131.1,
+        "failed_cases": [
+          "tests/auth/test_auth.py::test_model_migration_consistency"
+        ]
+      },
+      {
+        "shard": 8,
+        "project": "lostparty-layout2-8-097ada1632",
+        "expected": 240,
+        "files": [
+          "tests/game_accounts/test_combat_power.py",
+          "tests/game_accounts/test_representative.py",
+          "tests/groups/test_groups_http.py",
+          "tests/raid_rooms/common/test_recruitment_cycles.py",
+          "tests/raid_rooms/reads/test_raid_room_queries.py",
+          "tests/game_accounts/test_ownership_policy.py",
+          "tests/game_accounts/test_character_lifecycle.py",
+          "tests/game_accounts/test_verification_context.py",
+          "tests/raid_rooms/admissions/test_application_display_references.py",
+          "tests/groups/test_group_display.py",
+          "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
+          "tests/raid_rooms/participation/test_roster_public_contract.py",
+          "tests/raid_rooms/admissions/test_recruitment_cycle_integration.py"
+        ],
+        "exit": 0,
+        "cleanup_exit": 0,
+        "seconds": 633.46,
+        "passed": 240,
+        "failed": 0,
+        "pytest_seconds": 624.69,
+        "failed_cases": []
+      }
+    ],
+    "all_cleanup_passed": true,
+    "all_passed": false,
+    "new_unresolved_failures": 0,
+    "duplicate_runs_not_added_to_unique_total": true
+  },
+  "preserved": {
+    "phase1_map_and_verification_bytes": true,
+    "both_openapi_snapshot_bytes": true,
+    "archived_bodies": 128,
+    "frozen_json": 20,
+    "dev_api_db_not_modified": true,
+    "migration_history_unchanged": true
+  },
+  "not_performed": [
+    "push",
+    "merge",
+    "phase2 commit",
+    "development server rollout",
+    "production deployment",
+    "native/device verification",
+    "data/environment/key changes"
+  ],
+  "baseline_source_image_matches_commit": {
+    "files": 413,
+    "bytes_equal": true
+  },
+  "imports": {
+    "app_python_modules": 282,
+    "all_imported": true
+  },
+  "resolved_failures": [
+    {
+      "case": "tests/auth/test_auth.py::test_model_migration_consistency",
+      "cause": "legacy metadata enumerates model definitions by module identity; power_success import still pointed to the newly separated service",
+      "fix": "point metadata enumeration to app.game_accounts.models.power_success",
+      "rerun": {
+        "project": "lostparty-check-ad5a8b7e09da",
+        "passed": 1,
+        "seconds": 4.03,
+        "exit": 0,
+        "cleanup_exit": 0
+      },
+      "counted_twice": false,
+      "related_case": "tests/raid_rooms/outcomes/test_record_timestamps.py::test_all_application_tables_have_database_clocks",
+      "related_rerun": {
+        "project": "lostparty-check-aa8471853cff",
+        "passed": 1,
+        "seconds": 3.0,
+        "exit": 0,
+        "cleanup_exit": 0
+      }
+    }
+  ],
+  "documentation_checks": {
+    "markdown_files": 262,
+    "relative_links_and_anchors": 2901,
+    "baseline_sources": 171,
+    "archived_bodies_preserved": 128,
+    "frozen_json_bytes_preserved": 20,
+    "api_operations_classified": 209,
+    "diff_check": "PASS"
+  },
+  "prepublication_source_image": {
+    "files_app_tests_scripts": 439,
+    "final_image_matches_source_bytes": true,
+    "regression_image": "sha256:df7c876e86c0a9e50116705dd0595bbfb3f610898ce649272d67bc6b3dd8f1fd",
+    "regression_to_final_format_only_files": 44,
+    "regression_to_final_ast_equal": false,
+    "source_manifest_sha256": "ab79e911d5268f824fbeba2849f75d1bf8f57e885aa16d8424db9d470113f899",
+    "regression_to_final_semantic_changes": [
+      "tests/legacy_metadata.py: import model module instead of separated capture service; model_migration_consistency rerun 1PASS/4.03s"
+    ],
+    "regression_to_final_ast_equal_except_legacy_metadata": true,
+    "final_image": "sha256:6782829fbd695117f40d06b0c5b2a38747ef4aea05cd86a09abed75d17415018",
+    "metadata_fix_consumers": [
+      "tests/auth/test_auth.py::test_model_migration_consistency",
+      "tests/raid_rooms/outcomes/test_record_timestamps.py::test_all_application_tables_have_database_clocks"
+    ]
+  }
+}

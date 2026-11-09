@@ -1,8 +1,11 @@
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter
+from fastapi import Depends
+from fastapi import Request
 
 from app.core.errors import AuthError
-from app.game_accounts.schemas import GameErrorOut
-from app.raids import schemas, service
+from app.game_accounts.schemas.schemas import GameErrorOut
+from app.raids import schemas
+from app.raids import service
 
 
 async def no_input(request: Request):

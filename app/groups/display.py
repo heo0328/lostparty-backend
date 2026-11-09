@@ -2,20 +2,38 @@
 from contextlib import contextmanager
 from decimal import Decimal
 import json
-from sqlalchemy import select, text
+from sqlalchemy import select
+from sqlalchemy import text
 from fastapi.encoders import jsonable_encoder
 from pydantic import ValidationError
 from app.auth.models import User
-from app.core.database import session, now
+from app.core.database import session
+from app.core.database import now
 from app.game_accounts.rosters import lifecycle
-from app.game_accounts.models import Account, Registration, Configuration, Activity, Character, NameClaim, CharacterRoleSummary
-from app.game_accounts.power_success import RolePowerSuccess
-from app.game_accounts.profile_schemas import RoleSummary
-from app.game_accounts.support import authorize, fail, cursor_encode, cursor_decode
-from app.groups import features, service as groups, http_service, admissions, admission_core
-from app.groups.models import Group, GroupMembership
-from app.groups.admission_models import GroupJoinSubject, GroupJoinRelation
-from app.groups.feature_models import GroupActivityHead, SubjectCharacterReference
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import Configuration
+from app.game_accounts.models.models import Activity
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.models.models import CharacterRoleSummary
+from app.game_accounts.models.power_success import RolePowerSuccess
+from app.game_accounts.schemas.profile_schemas import RoleSummary
+from app.game_accounts.common.support import authorize
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import cursor_encode
+from app.game_accounts.common.support import cursor_decode
+from app.groups import features
+from app.groups import service as groups
+from app.groups import http_service
+from app.groups import admissions
+from app.groups import admission_core
+from app.groups.models import Group
+from app.groups.models import GroupMembership
+from app.groups.admission_models import GroupJoinSubject
+from app.groups.admission_models import GroupJoinRelation
+from app.groups.feature_models import GroupActivityHead
+from app.groups.feature_models import SubjectCharacterReference
 from app.raid_rooms.admissions.application_display import _level
 
 PROFILE = 'group-display-1'

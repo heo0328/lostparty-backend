@@ -1,24 +1,53 @@
 """Mixed completed history/current selection through real isolated commands."""
 import uuid
-from datetime import date, timedelta
+from datetime import date
+from datetime import timedelta
 import pytest
-from sqlalchemy import select, inspect, delete
-from app.game_accounts.support import GameError
-from app.core.database import session, now
+from sqlalchemy import select
+from sqlalchemy import inspect
+from sqlalchemy import delete
+from app.game_accounts.common.support import GameError
+from app.core.database import session
+from app.core.database import now
 from app.raid_rooms.schedules import beta_schedule
-from app.raid_rooms.participation import cycle_lifecycle as life, cycle_character, cycle_leadership
+from app.raid_rooms.participation import cycle_lifecycle as life
+from app.raid_rooms.participation import cycle_character
+from app.raid_rooms.participation import cycle_leadership
 from app.raid_rooms.reads import cycle_member_reads
 from app.raid_rooms.participation import membership_actions
 from app.raid_rooms.admissions import cycle_continuation
-from app.raid_rooms import roster_participation as rp
-from app.raid_rooms.cycle_models import RoomCycle, CycleGeneration
-from app.raid_rooms.integrated_models import RecruitmentRoom as Room, RecruitmentAssignment as Assignment
-from app.raid_rooms.source_models import TimeReservation
-from tests.raid_rooms.participation.test_roster_public_contract import presence_db, policy_db, group_beta, beta, current, candidate, ready, sources, imported, people, worlds, bundle, change, complete, actor, P, Q, client, observe
+from app.raid_rooms.participation import roster_participation as rp
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import CycleGeneration
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from app.raid_rooms.models.source_models import TimeReservation
+from tests.raid_rooms.participation.test_roster_public_contract import presence_db
+from tests.raid_rooms.participation.test_roster_public_contract import policy_db
+from tests.raid_rooms.participation.test_roster_public_contract import group_beta
+from tests.raid_rooms.participation.test_roster_public_contract import beta
+from tests.raid_rooms.participation.test_roster_public_contract import current
+from tests.raid_rooms.participation.test_roster_public_contract import candidate
+from tests.raid_rooms.participation.test_roster_public_contract import ready
+from tests.raid_rooms.participation.test_roster_public_contract import sources
+from tests.raid_rooms.participation.test_roster_public_contract import imported
+from tests.raid_rooms.participation.test_roster_public_contract import people
+from tests.raid_rooms.participation.test_roster_public_contract import worlds
+from tests.raid_rooms.participation.test_roster_public_contract import bundle
+from tests.raid_rooms.participation.test_roster_public_contract import change
+from tests.raid_rooms.participation.test_roster_public_contract import complete
+from tests.raid_rooms.participation.test_roster_public_contract import actor
+from tests.raid_rooms.participation.test_roster_public_contract import P
+from tests.raid_rooms.participation.test_roster_public_contract import Q
+from tests.raid_rooms.participation.test_roster_public_contract import client
+from tests.raid_rooms.participation.test_roster_public_contract import observe
 from tests.raid_rooms.admissions.test_beta_recruitment import beta_join
-from tests.raid_rooms.schedules.test_recruitment_cycle_times import save_personal, submit, confirm
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import save_personal
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import submit
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import confirm
 from tests.raid_rooms.participation.test_membership_actions import body as departure_body
-from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import continue_body, cancel_member
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import continue_body
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import cancel_member
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
 
@@ -94,7 +123,7 @@ def test_mixed_departure_failure_rolls_back_history_leases_and_leadership(presen
 
 
 def test_completed_mixed_history_has_authority_but_no_current_selection(presence_db):
-    from app.raid_rooms import cycle_schemas
+    from app.raid_rooms.schemas import cycle_schemas
     _, a, b = presence_db
     rid, c, n = bundle(a)
     beta_join(b, rid, c)
@@ -235,7 +264,7 @@ def test_completed_source_requires_explicit_new_selection_through_http(presence_
             assert next_row is None if kind == 'opening' else life.actual_member(db, next_row, w['uid']) is None
         # Source history still authorizes the actor, but cannot replace a new
         # destination character's current activity requirement or stale CAS.
-        from app.game_accounts.models import Activity
+        from app.game_accounts.models.models import Activity
         with session() as db, db.begin():
             activity = db.scalar(select(Activity).where(Activity.character_id == uuid.UUID(w['ids'][1])))
             activity_values = {column.name:getattr(activity, column.name) for column in Activity.__table__.columns}

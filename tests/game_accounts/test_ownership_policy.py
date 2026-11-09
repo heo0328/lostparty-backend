@@ -1,12 +1,30 @@
 """Real collector/fake HTTP: self block, foreign challenge, same-owner restore."""
 import uuid
 import pytest
-from sqlalchemy import select,func
+from sqlalchemy import select
+from sqlalchemy import func
 from app.core.database import session
 from app.game_accounts.provider_io import provider
-from app.game_accounts.models import Account,Registration,Verification,Audit,Character,Configuration,Activity,VerificationExecution
-from tests.game_accounts.test_verification_targets import targets, body, finish, FIELDS
-from tests.game_accounts.test_game_accounts import world, change, register, page, save_data, another_user, BASE, VERIFY
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import Verification
+from app.game_accounts.models.models import Audit
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Configuration
+from app.game_accounts.models.models import Activity
+from app.game_accounts.models.models import VerificationExecution
+from tests.game_accounts.test_verification_targets import targets
+from tests.game_accounts.test_verification_targets import body
+from tests.game_accounts.test_verification_targets import finish
+from tests.game_accounts.test_verification_targets import FIELDS
+from tests.game_accounts.test_game_accounts import world
+from tests.game_accounts.test_game_accounts import change
+from tests.game_accounts.test_game_accounts import register
+from tests.game_accounts.test_game_accounts import page
+from tests.game_accounts.test_game_accounts import save_data
+from tests.game_accounts.test_game_accounts import another_user
+from tests.game_accounts.test_game_accounts import BASE
+from tests.game_accounts.test_game_accounts import VERIFY
 
 
 def seed(client,targets):

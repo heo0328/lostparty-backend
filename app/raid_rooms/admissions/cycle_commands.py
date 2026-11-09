@@ -4,27 +4,36 @@ from app.raid_rooms.common import beta_profile
 from app.raid_rooms.schedules import beta_schedule
 from app.raid_rooms.common import beta_output
 import uuid
-from datetime import datetime, time, timedelta
+from datetime import datetime
+from datetime import time
+from datetime import timedelta
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
-from app.game_accounts.support import fail, GameError
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import GameError
 from app.game_accounts.rosters.lifecycle import digest
 from app.raid_rooms.common import cycles
-from app.raid_rooms.admissions import admission_context as context, admission_service as base
+from app.raid_rooms.admissions import admission_context as context
+from app.raid_rooms.admissions import admission_service as base
 from app.raid_rooms.common import command_context as opaque
 from app.raid_rooms.admissions import cycle_admission as admission
 from app.raid_rooms.schedules import cycle_schedule as schedule
-from app.raid_rooms import cycle_wire as wire
-from app.raid_rooms.admissions.cycle_creation import scope, permission
-from app.raid_rooms.cycle_models import RoomCycle, CycleGeneration, CycleMember
-from app.raid_rooms.cycle_application_models import CycleApplication as Application
-from app.raid_rooms.integrated_models import RecruitmentRoom as Room, RecruitmentMembership as Member
-from app.raid_rooms.participation_commands import Selection, Target
+from app.raid_rooms.schemas import cycle_wire as wire
+from app.raid_rooms.admissions.cycle_creation import scope
+from app.raid_rooms.admissions.cycle_creation import permission
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import CycleGeneration
+from app.raid_rooms.models.cycle_models import CycleMember
+from app.raid_rooms.models.cycle_application_models import CycleApplication as Application
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
+from app.raid_rooms.schemas.participation_commands import Selection
+from app.raid_rooms.schemas.participation_commands import Target
 from app.raid_weekly.models import WeeklyState
 from app.raids import service as raids
 
 from app.raid_rooms.schedules import session_display as display
-from app.raid_rooms import session_display_schemas as display_schemas
+from app.raid_rooms.schemas import session_display_schemas as display_schemas
 
 
 def resolve(db, uid, rid, key, stamp, *, write=False):
@@ -37,7 +46,7 @@ def resolve(db, uid, rid, key, stamp, *, write=False):
     if row.state!='open':fail('ROOM_REVIEW_REQUIRED' if row.state=='review_required' else 'ROUND_NOT_ACTIVE')
     if room.ended_at is not None:fail('ROOM_NOT_ACTIVE')
     view=group_policy.project(db,room,row,uid)
-    from app.raid_rooms import roster_participation
+    from app.raid_rooms.participation import roster_participation
     roster_participation.require_client(db,row)
     return view,row
 
@@ -208,7 +217,7 @@ def admit(principal,rid,command_id,data,*,applying=False):
                 created_at=stamp,expires_at=datetime.combine(row.cycle_key+timedelta(days=7),time(6),raids.KST))
             db.add(app);db.flush()
             if beta_profile.enabled():
-                from app.raid_rooms.beta_models import BetaApplicationMemo
+                from app.raid_rooms.models.beta_models import BetaApplicationMemo
                 from app.raid_rooms.common import beta_text
                 saved=beta_schedule.get(db,row)
                 db.add(BetaApplicationMemo(application_id=app.id,memo=beta_text.normalize(body.get('application_memo')),
@@ -308,7 +317,7 @@ def process(principal,aid,command_id,data,*,action='approve'):
                 public_origin_application=app,unified=True)
             agreed=True
             if beta_schedule.get(db,row) is not None:
-                from app.raid_rooms.beta_models import BetaApplicationMemo
+                from app.raid_rooms.models.beta_models import BetaApplicationMemo
                 promise=db.get(BetaApplicationMemo,app.id)
                 saved=beta_schedule.get(db,row)
                 agreed=promise is not None and promise.promise_revision==db.get(schedule.Session,saved.session_id).schedule_revision

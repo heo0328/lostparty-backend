@@ -1,14 +1,28 @@
 import uuid
-from datetime import timedelta, datetime, timezone
+from datetime import timedelta
+from datetime import datetime
+from datetime import timezone
 from concurrent.futures import ThreadPoolExecutor
 from threading import Event
 
 import pytest
-from sqlalchemy import select, func, text
-from app.core.database import session, now
-from app.game_accounts.rosters import service, observations
-from app.game_accounts.models import Account, Registration, Character, Configuration, Verification, RequestResult, Audit, Activity
-from app.game_accounts.verification.equipment import parse_equipment, SLOTS
+from sqlalchemy import select
+from sqlalchemy import func
+from sqlalchemy import text
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.rosters import service
+from app.game_accounts.rosters import observations
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Configuration
+from app.game_accounts.models.models import Verification
+from app.game_accounts.models.models import RequestResult
+from app.game_accounts.models.models import Audit
+from app.game_accounts.models.models import Activity
+from app.game_accounts.verification.equipment import parse_equipment
+from app.game_accounts.verification.equipment import SLOTS
 from app.game_accounts.provider_io.provider import ProviderUnavailable
 
 class PrivateHeaders(dict):
@@ -181,7 +195,7 @@ def test_full_settings_cursor_and_suspect_recovery(client,world):
     assert len(q['settings']['ineligible_character_ids'])==1
     assert client.get(BASE+'/'+r['registration_id']+'/characters',headers=h,params={'cursor':cursor}).json()['error']['code']=='CURSOR_STALE'
     with session() as db,db.begin():
-        from app.game_accounts.models import LimitEvent
+        from app.game_accounts.models.models import LimitEvent
         db.execute(__import__('sqlalchemy').delete(LimitEvent))
     state['missing']=()
     assert change(client,h,'post',BASE+'/'+r['registration_id']+'/refresh',{}).status_code==200
@@ -256,7 +270,9 @@ def test_upstream_failure_can_retry_same_key(client,world,monkeypatch):
 def test_lease_takeover_fences_old_worker(world):
     h,_=world
     from app.auth.service import principal
-    from app.game_accounts.support import reserve,commit_result,GameError
+    from app.game_accounts.common.support import reserve
+    from app.game_accounts.common.support import commit_result
+    from app.game_accounts.common.support import GameError
     p=principal(h['Authorization'].split()[1]);key=uuid.uuid4()
     ticket,_=reserve(p,'register',key,{'sample':1})
     with pytest.raises(GameError,match='REQUEST_IN_PROGRESS'):
@@ -343,7 +359,7 @@ def test_transaction_failure_rolls_back_entire_ownership(client,world,monkeypatc
         assert db.get(Verification,uuid.UUID(v['challenge_id'])).status=='pending'
     monkeypatch.setattr(service,'commit_result',original)
     with session() as db,db.begin():
-        from app.game_accounts.models import LimitEvent
+        from app.game_accounts.models.models import LimitEvent
         db.execute(__import__('sqlalchemy').delete(LimitEvent))
     assert change(client,h,'post',VERIFY+'/'+v['challenge_id']+'/confirm',{},key).json()['status']=='verified'
 
@@ -473,7 +489,7 @@ def test_power_null_preserves_value_and_marks_stale(client,world):
 @pytest.mark.parametrize('lease_failure', ['expired', 'taken_over'])
 def test_lease_rejection_returns_retry_after_and_rolls_back(client, world, monkeypatch, lease_failure):
     from app.auth.service import principal
-    from app.game_accounts.support import reserve
+    from app.game_accounts.common.support import reserve
 
     headers, _ = world
     registration = register(client, headers)

@@ -5,18 +5,37 @@ from datetime import timedelta
 import pytest
 from pydantic import ValidationError
 from sqlalchemy import select
-from app.core.database import session, now
+from app.core.database import session
+from app.core.database import now
 from app.core.errors import AuthError
-from app.auth.models import Session, User
-from app.game_accounts.models import Account, RequestResult
-from app.game_accounts.support import GameError
-from app.groups import admissions, management
-from app.groups.commands import LeaveGroup, TransferLeadership
-from app.groups.models import Group, GroupMembership, GroupDirectoryHead
+from app.auth.models import Session
+from app.auth.models import User
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import RequestResult
+from app.game_accounts.common.support import GameError
+from app.groups import admissions
+from app.groups import management
+from app.groups.commands import LeaveGroup
+from app.groups.commands import TransferLeadership
+from app.groups.models import Group
+from app.groups.models import GroupMembership
+from app.groups.models import GroupDirectoryHead
 from app.groups.admission_models import GroupJoinRelation
 from app.member_limits.models import MemberUsageHead
 from app.member_limits.service import Limits
-from tests.groups.test_group_admissions import worlds, group, apply, action, new_code, join, invite, accept, relation, action_body, own_selection, limits, post
+from tests.groups.test_group_admissions import worlds
+from tests.groups.test_group_admissions import group
+from tests.groups.test_group_admissions import apply
+from tests.groups.test_group_admissions import action
+from tests.groups.test_group_admissions import new_code
+from tests.groups.test_group_admissions import join
+from tests.groups.test_group_admissions import invite
+from tests.groups.test_group_admissions import accept
+from tests.groups.test_group_admissions import relation
+from tests.groups.test_group_admissions import action_body
+from tests.groups.test_group_admissions import own_selection
+from tests.groups.test_group_admissions import limits
+from tests.groups.test_group_admissions import post
 from tests.groups.test_group_foundation import actor
 from tests.member_limits.test_member_limits import change
 
@@ -317,7 +336,8 @@ def test_members_cursor_invalidated_on_transfer_and_leave(client, worlds):
 def test_transfer_and_leave_pending_lease_cannot_run_twice(client, worlds):
     a, b, gid = setup(client, worlds)
     data, key = command(b, gid), uuid.uuid4()
-    from app.game_accounts.support import reserve, release
+    from app.game_accounts.common.support import reserve
+    from app.game_accounts.common.support import release
     from fastapi.encoders import jsonable_encoder
     ticket, _ = reserve(actor(b['uid']), 'group-leave', key,
                         dict(group_id=gid, body=jsonable_encoder(data)))

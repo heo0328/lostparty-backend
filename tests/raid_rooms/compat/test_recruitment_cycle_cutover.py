@@ -1,20 +1,58 @@
 """W4-D isolated cutover: exact rollover, read adapters and original ACKs."""
 import uuid
 from copy import deepcopy
-from datetime import timedelta,datetime,time
+from datetime import timedelta
+from datetime import datetime
+from datetime import time
 from concurrent.futures import ThreadPoolExecutor
 import pytest
-from sqlalchemy import select,func,text
-from app.core.database import session,now
+from sqlalchemy import select
+from sqlalchemy import func
+from sqlalchemy import text
+from app.core.database import session
+from app.core.database import now
 from app.raid_rooms.common import cycle_worker as worker
-from app.raid_rooms.compat import v1_compat, cycle_legacy
+from app.raid_rooms.compat import v1_compat
+from app.raid_rooms.compat import cycle_legacy
 from app.raid_rooms.outcomes import weekly_summary
-from app.raid_rooms import weekly_summary_schemas
+from app.raid_rooms.schemas import weekly_summary_schemas
 from app.raid_rooms.common import readiness
-from app.raid_rooms.cycle_models import CycleGeneration,LegacyCycleEvidence
-from app.raid_rooms.cycle_planning_models import CycleProposal
-from app.raid_rooms.source_models import ScheduleProposal,ContinuationChoice
-from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import outcomes, planning, consent, lifecycle, candidate, ready, sources, imported, people, worlds, scheduled, plan, actor, add_member, cancel_member, fingerprints, denied, commands, cycles, preflight, request, creation, scoped, complete, make_proposal, respond, confirm, CycleMember, RoomCycle, Reservation, Assignment
+from app.raid_rooms.models.cycle_models import CycleGeneration
+from app.raid_rooms.models.cycle_models import LegacyCycleEvidence
+from app.raid_rooms.models.cycle_planning_models import CycleProposal
+from app.raid_rooms.models.source_models import ScheduleProposal
+from app.raid_rooms.models.source_models import ContinuationChoice
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import outcomes
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import planning
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import consent
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import lifecycle
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import candidate
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import ready
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import sources
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import imported
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import people
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import worlds
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import scheduled
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import plan
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import actor
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import add_member
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import cancel_member
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import fingerprints
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import denied
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import commands
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import cycles
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import preflight
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import request
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import creation
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import scoped
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import complete
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import make_proposal
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import respond
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import confirm
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import CycleMember
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import RoomCycle
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import Reservation
+from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import Assignment
 from tests.raid_rooms.participation.test_recruitment_cycle_management import transfer_body
 from tests.raid_rooms.schedules.test_recruitment_cycle_times_http import client
 from tests.raid_rooms.admissions.test_recruitment_cycle_http import validate
@@ -56,14 +94,14 @@ def test_worker_duplicate_and_boundary_rollback(outcomes,monkeypatch):
     monkeypatch.setattr(worker,'now',lambda db:stamp)
     with ThreadPoolExecutor(max_workers=2) as pool:list(pool.map(worker.process_room,[rid,rid]))
     with session() as db,db.begin():
-        from app.raid_rooms.cycle_models import ParticipationEvent
+        from app.raid_rooms.models.cycle_models import ParticipationEvent
         assert db.scalar(select(func.count()).select_from(ParticipationEvent).where(ParticipationEvent.action=='stopped'))==1
 
 
 def test_worker_invalid_promoted_source_review_retains_leases(outcomes,monkeypatch):
     engine,a,b=outcomes;rid,c,n=scheduled(a);before=graph_snapshot(rid,n)
     with session() as db,db.begin():
-        from app.game_accounts.models import Character
+        from app.game_accounts.models.models import Character
         char=db.get(Character,uuid.UUID(a['ids'][0]));char.status='suspect'
     monkeypatch.setattr(worker,'now',lambda db:rollover_stamp());worker.process_room(rid)
     after=graph_snapshot(rid,n)
@@ -87,10 +125,11 @@ def test_legacy_choices_http_missing_target_is_readonly(outcomes):
 
 def test_v1_current_reads_never_use_n_leader_or_settings(outcomes):
     engine,a,b=outcomes;rid,c,n=scheduled(a);add_member(b,rid,n)
-    from app.raid_rooms.participation import cycle_leadership, cycle_management
+    from app.raid_rooms.participation import cycle_leadership
+    from app.raid_rooms.participation import cycle_management
     from app.raid_rooms.admissions import admission_service
     from app.raid_rooms.reads import member_reads
-    from app.raid_rooms import management
+    from app.raid_rooms.participation import management
     cycle_leadership.transfer(actor(a['uid']),rid,uuid.uuid4(),transfer_body(a,rid,n,b))
     from tests.raid_rooms.participation.test_recruitment_cycle_management import settings
     cycle_management.command(actor(b['uid']),rid,uuid.uuid4(),settings(b,rid,n,experience_level='experienced'),'settings')
@@ -124,7 +163,8 @@ def test_v1_safe_manual_guard_correction_and_original_ack(outcomes,monkeypatch):
 def test_v1_room_write_replays_ack_then_requires_upgrade(outcomes):
     _,a,b=outcomes
     from app.raid_rooms.admissions import admission_service as legacy
-    from app.game_accounts.support import reserve,commit_result
+    from app.game_accounts.common.support import reserve
+    from app.game_accounts.common.support import commit_result
     key=uuid.uuid4();payload={'synthetic':'original'};principal=actor(a['uid'])
     ticket,replay=reserve(principal,'recruitment-cutover-ack',key,payload)
     with session() as db,db.begin():original=commit_result(db,ticket,200,{'synthetic':'original'})
@@ -148,7 +188,8 @@ def test_declined_summary_then_general_join_takes_priority(outcomes):
 
 
 def test_prepared_app_startup_and_full_route_contract(outcomes):
-    from app.main import create_two_cycle_app,app
+    from app.main import create_two_cycle_app
+    from app.main import app
     from fastapi.testclient import TestClient
     candidate=create_two_cycle_app()
     with TestClient(candidate):pass
@@ -168,7 +209,7 @@ def test_prepared_app_v1_http_projections_and_unsafe_write(outcomes):
     engine,a,b=outcomes;rid,c,n=scheduled(a);add_member(b,rid,n)
     from app.main import create_two_cycle_app
     from app.auth.router import authenticated
-    from app.raid_rooms.router import optional_principal
+    from app.raid_rooms.api.router import optional_principal
     from fastapi.testclient import TestClient
     application=create_two_cycle_app();application.dependency_overrides[authenticated]=lambda:actor(a['uid'])
     application.dependency_overrides[optional_principal]=lambda:actor(a['uid'])
@@ -204,7 +245,7 @@ def test_decline_to_one_room_never_overrides_other_room_occupancy(outcomes):
 
 def test_worker_old_implementation_cannot_run_on_cutover_storage(outcomes):
     _,a,b=outcomes
-    from app.raid_rooms import continuation
+    from app.raid_rooms.admissions import continuation
     denied('SERVICE_UNAVAILABLE',continuation.process_due)
     with session() as db:readiness.require_cycle_worker(db)
 
@@ -243,8 +284,10 @@ def test_rollover_partial_completion_is_preserved(outcomes,monkeypatch):
 
 def test_old_generation_decline_is_history_after_explicit_reopen(outcomes):
     _,a,b=outcomes;rid,c,n=scheduled(a);add_member(b,rid,c)
-    from app.raid_rooms.admissions import cycle_continuation as continuation, cycle_opening as opening
-    from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import scoped as context_scoped, opening_body
+    from app.raid_rooms.admissions import cycle_continuation as continuation
+    from app.raid_rooms.admissions import cycle_opening as opening
+    from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import scoped as context_scoped
+    from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import opening_body
     ctx=continuation.get(actor(b['uid']),rid,n,'decline')
     continuation.execute(actor(b['uid']),rid,uuid.uuid4(),worker.life.wire.ScopedCommand.model_validate(context_scoped(ctx)),decline=True)
     cancel_member(a,rid,n)

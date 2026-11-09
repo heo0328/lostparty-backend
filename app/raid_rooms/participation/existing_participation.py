@@ -1,12 +1,18 @@
 """Server-proven current generation identity, never a client eligibility flag."""
 from app.auth.models import User
-from app.game_accounts.support import fail
-from app.game_accounts import roster_presence
-from app.game_accounts.models import Account, Character, NameClaim, Registration
+from app.game_accounts.common.support import fail
+from app.game_accounts.rosters import roster_presence
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.models.models import Registration
 from app.groups.admission_core import owned_selection_character
 from app.raid_rooms.admissions import admission_context
-from app.raid_rooms.cycle_models import RoomCycle, CycleMember, CycleAssignment, CycleGeneration
-from app.raid_rooms.integrated_models import RecruitmentMembership as Member
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import CycleMember
+from app.raid_rooms.models.cycle_models import CycleAssignment
+from app.raid_rooms.models.cycle_models import CycleGeneration
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
 
 
 def selection(db, room, row, cm):

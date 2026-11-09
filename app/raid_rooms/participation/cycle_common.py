@@ -1,29 +1,38 @@
+import app.raid_rooms.schemas.group_connection as group_connection_types
 from app.raid_rooms.group_links import cycle_group_policy as group_policy
 """Global commands bind every actual effect; no invented target or G1 fallback."""
 from app.raid_rooms.common import beta_profile
-from app.raid_rooms import group_connection
-from datetime import timedelta,datetime
+from app.raid_rooms.group_links import group_connection
+from datetime import timedelta
+from datetime import datetime
 from uuid import UUID
 from types import SimpleNamespace
 from sqlalchemy import select
 from fastapi.encoders import jsonable_encoder
 from app.auth.models import User
-from app.groups.models import Group,GroupMembership
-from app.game_accounts.support import fail,GameError
+from app.groups.models import Group
+from app.groups.models import GroupMembership
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import GameError
 from app.game_accounts.rosters.lifecycle import digest
 from app.raid_rooms.common import cycles
 from app.raid_rooms.admissions import cycle_commands as commands
 from app.raid_rooms.participation import cycle_lifecycle as life
 from app.raid_rooms.schedules import cycle_planning as plan
-from app.raid_rooms.participation import cycle_management as management, cycle_leadership as leadership
+from app.raid_rooms.participation import cycle_management as management
+from app.raid_rooms.participation import cycle_leadership as leadership
 from app.raid_rooms.schedules import cycle_schedule as graph
 from app.raid_rooms.outcomes import cycle_outcomes as outcomes
 from app.raid_rooms.common import command_context as opaque
-from app.raid_rooms import cycle_wire as wire
-from app.raid_rooms.cycle_models import RoomCycle,CycleMember,CycleGeneration
-from app.raid_rooms.cycle_application_models import CycleApplication
-from app.raid_rooms.source_models import TimeReservation as Reservation
-from app.raid_rooms.integrated_models import RecruitmentMembership as Member,RecruitmentRound as Round,RecruitmentItem as Item
+from app.raid_rooms.schemas import cycle_wire as wire
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import CycleMember
+from app.raid_rooms.models.cycle_models import CycleGeneration
+from app.raid_rooms.models.cycle_application_models import CycleApplication
+from app.raid_rooms.models.source_models import TimeReservation as Reservation
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
+from app.raid_rooms.models.integrated_models import RecruitmentRound as Round
+from app.raid_rooms.models.integrated_models import RecruitmentItem as Item
 from app.raid_rooms.admissions.cycle_creation import permission
 
 
@@ -94,7 +103,7 @@ def context(db,uid,rid,kind,stamp,target_group_id=None):
         effect=(kind=='edit_common_settings' and row.generation is not None) or (row.state in ('open','review_required') and (kind=='end' or mine is not None)) or bool(active)
         if kind=='end' and (any(m.membership_id!=actor.id for m in actual) or any(a.user_id!=uid and a.state=='active' for a in all_assignments)):reason=reason or 'ROOM_LAST_MEMBER_REQUIRED'
         if not effect:continue
-        from app.raid_rooms import roster_participation
+        from app.raid_rooms.participation import roster_participation
         if roster_participation.required(db,row) and not roster_participation.enabled():reason=reason or 'CLIENT_UPGRADE_REQUIRED'
         if any(m.state=='review_required' and (kind=='end' or m.membership_id==actor.id) for m in actual):reason=reason or 'ROOM_REVIEW_REQUIRED'
         if row.generation is None or row.state=='review_required':reason=reason or 'ROOM_REVIEW_REQUIRED';continue
@@ -140,8 +149,8 @@ def context(db,uid,rid,kind,stamp,target_group_id=None):
 def get(principal,rid,kind,target_group_id=None):
     with commands.base.snapshot(principal) as (db,uid,stamp):
         result,*_=context(db,uid,rid,kind,stamp,target_group_id)
-        from app.raid_rooms.cycle_group_context_schemas import TitleContext
-        model=TitleContext if group_policy.enabled(db) else group_connection.GroupConnectionContext if target_group_id is not None else wire.CommonContext
+        from app.raid_rooms.schemas.cycle_group_context_schemas import TitleContext
+        model=TitleContext if group_policy.enabled(db) else group_connection_types.GroupConnectionContext if target_group_id is not None else wire.CommonContext
         return model.model_validate(result).model_dump(mode='json')
 
 
@@ -156,7 +165,7 @@ def execute(principal,rid,key,data,kind):
         if selected is not None and (kind!='edit_common_settings' or data.group_id!=selected or data.scope!='group'):
             fail('TARGET_SCOPE_MISMATCH',400)
         result,binding,room,actor,effects=context(db,uid,rid,kind,stamp,selected)
-        from app.raid_rooms import roster_participation
+        from app.raid_rooms.participation import roster_participation
         for affected_row,_,_ in effects:roster_participation.require_client(db,affected_row)
         target_proof=group_connection.evaluate(db,uid,selected)[1] if selected is not None else None
         if body['expected_room_revision']!=room.revision or body.get('expected_persistent_membership_revision',actor.revision)!=actor.revision:fail('REVISION_CONFLICT')

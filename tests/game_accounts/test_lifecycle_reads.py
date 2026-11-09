@@ -1,12 +1,29 @@
 import uuid
-from sqlalchemy import select, func
+from sqlalchemy import select
+from sqlalchemy import func
 import pytest
-from app.core.database import session, now
+from app.core.database import session
+from app.core.database import now
 from app.game_accounts.rosters import lifecycle
-from app.game_accounts.models import (Account, Character, NameClaim, CharacterHistoryHead, CharacterRetirement,
-                                     Configuration, Activity, Registration, RequestResult, ScopedPowerCache)
-from app.game_accounts.support import lock
-from tests.game_accounts.test_game_accounts import world, register, verify, page, change, save_data, another_user, BASE
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.models.models import CharacterHistoryHead
+from app.game_accounts.models.models import CharacterRetirement
+from app.game_accounts.models.models import Configuration
+from app.game_accounts.models.models import Activity
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import RequestResult
+from app.game_accounts.models.models import ScopedPowerCache
+from app.game_accounts.common.support import lock
+from tests.game_accounts.test_game_accounts import world
+from tests.game_accounts.test_game_accounts import register
+from tests.game_accounts.test_game_accounts import verify
+from tests.game_accounts.test_game_accounts import page
+from tests.game_accounts.test_game_accounts import change
+from tests.game_accounts.test_game_accounts import save_data
+from tests.game_accounts.test_game_accounts import another_user
+from tests.game_accounts.test_game_accounts import BASE
 
 HISTORY='/v2/me/character-retirements'
 
@@ -164,7 +181,9 @@ def test_v2_required_nullable_contract_and_legacy_schema_unchanged():
 
 
 def test_preview_eligibility_never_grants_power_access(client,world,monkeypatch):
-    from tests.game_accounts.test_combat_power import seed_provider, endpoint, body
+    from tests.game_accounts.test_combat_power import seed_provider
+    from tests.game_accounts.test_combat_power import endpoint
+    from tests.game_accounts.test_combat_power import body
     h,state=world;r=register(client,h)
     seed_provider(monkeypatch,'123')
     assert change(client,h,'post',endpoint(r),body('a0')).status_code==403

@@ -5,22 +5,35 @@ from app.raid_rooms.schedules import beta_schedule
 from app.raid_rooms.common import beta_output
 from datetime import timedelta
 from contextlib import nullcontext
-from sqlalchemy import select, or_
+from sqlalchemy import select
+from sqlalchemy import or_
 from fastapi.encoders import jsonable_encoder
 from app.auth.models import User
-from app.game_accounts.support import fail, GameError
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import GameError
 from app.game_accounts.rosters.lifecycle import digest
-from app.groups.models import Group,GroupMembership
-from app.raid_rooms.admissions import admission_service as base, admission_context as context, cycle_admission as admission
+from app.groups.models import Group
+from app.groups.models import GroupMembership
+from app.raid_rooms.admissions import admission_service as base
+from app.raid_rooms.admissions import admission_context as context
+from app.raid_rooms.admissions import cycle_admission as admission
 from app.raid_rooms.reads import cycle_queries as directory
 from app.raid_rooms.admissions import cycle_commands as commands
 from app.raid_rooms.schedules import cycle_schedule as schedule
-from app.raid_rooms import cycle_wire as wire
-from app.raid_rooms.admissions.cycle_creation import scope, permission
-from app.raid_rooms.cycle_models import CycleMember, CycleAssignment, CycleSubmission, CycleRound
-from app.raid_rooms.integrated_models import RecruitmentMembership as Member, RecruitmentAssignment as Assignment
-from app.raid_rooms.source_models import (ScheduleGroup,ScheduleAlternative,SessionBinding,
-    SessionParticipation as Participation,TimeReservation as Reservation)
+from app.raid_rooms.schemas import cycle_wire as wire
+from app.raid_rooms.admissions.cycle_creation import scope
+from app.raid_rooms.admissions.cycle_creation import permission
+from app.raid_rooms.models.cycle_models import CycleMember
+from app.raid_rooms.models.cycle_models import CycleAssignment
+from app.raid_rooms.models.cycle_models import CycleSubmission
+from app.raid_rooms.models.cycle_models import CycleRound
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from app.raid_rooms.models.source_models import ScheduleGroup
+from app.raid_rooms.models.source_models import ScheduleAlternative
+from app.raid_rooms.models.source_models import SessionBinding
+from app.raid_rooms.models.source_models import SessionParticipation as Participation
+from app.raid_rooms.models.source_models import TimeReservation as Reservation
 from app.raid_rooms.schedules.schedule_views import segment_view
 from app.raid_rooms.outcomes import completed_room_lifecycle as archive
 
@@ -98,7 +111,8 @@ def settings(db,room,row,uid,stamp):
     actions=action_permissions(db,uid,room,row,stamp)
     for name in ('open_next_cycle','reopen_next_cycle'):result['permissions'][name]=actions[name]
     from app.raid_rooms.outcomes import cycle_outcomes
-    from app.raid_rooms.participation import cycle_management, cycle_common
+    from app.raid_rooms.participation import cycle_management
+    from app.raid_rooms.participation import cycle_common
     if cycle_outcomes.enabled(db):
         result['permissions']['edit_settings']=cycle_management.edit_permission(db,uid,room,row,stamp)
         result['permissions']['edit_common_settings']=cycle_common.common_permission(db,uid,room,stamp)
@@ -108,11 +122,11 @@ def settings(db,room,row,uid,stamp):
 
 def detail(principal,rid,key,*,read_snapshot=None,reader_profile=None):
     from app.raid_rooms.admissions import application_display
-    from app.raid_rooms import application_display_schemas
+    from app.raid_rooms.schemas import application_display_schemas
     if reader_profile is not None and reader_profile != application_display.PROFILE:fail('INVALID_REQUEST',400)
     with (nullcontext(read_snapshot) if read_snapshot is not None else base.snapshot(principal)) as (db,uid,stamp):
         room,row=read_target(db,uid,rid,key,stamp)
-        from app.raid_rooms import roster_participation
+        from app.raid_rooms.participation import roster_participation
         roster_participation.require_client(db,row)
         if archive.is_archived(db,rid):base.member(db,uid,room)
         mine=db.scalar(select(Member).where(Member.room_id==rid,Member.user_id==uid,Member.ended_at.is_(None)))
@@ -153,7 +167,7 @@ def detail(principal,rid,key,*,read_snapshot=None,reader_profile=None):
         model=application_display_schemas.ApplicationDisplayDetailResponse if reader_profile is not None else wire.OutputContract3GetV2RaidRoomsRoomIdDetail
         result=beta_output.render(db,uid,stamp,model,result)
         result=application_display.bounded(result) if reader_profile is not None else result
-        from app.raid_rooms import roster_api
+        from app.raid_rooms.api import roster_api
         return roster_api.publish(db,uid,stamp,result,'detail')
 
 
@@ -163,7 +177,9 @@ def schedule_fields(db,room,row,mine,stamp,include_resume_display=False):
     enabled=schedule.planning_enabled(db)
     leader=False
     if enabled:
-        from app.raid_rooms.schedules import cycle_schedule_service as service, cycle_planning, cycle_proposals
+        from app.raid_rooms.schedules import cycle_schedule_service as service
+        from app.raid_rooms.schedules import cycle_planning
+        from app.raid_rooms.schedules import cycle_proposals
         try:service.target(db,mine.user_id,room.id,row.cycle_key.isoformat(),stamp,leader=True);leader=True
         except GameError:pass
     for group in sorted(schedule.groups(db,row),key=lambda g:str(g.id)):
@@ -200,7 +216,7 @@ def schedule_fields(db,room,row,mine,stamp,include_resume_display=False):
             warnings=[]
             if any(graph.busy(db,mine.user_id,r.starts_at,r.ends_at,excluding=session.id) for r in active):warnings.append('TIME_OVERLAP')
             submission=db.get(CycleSubmission,actual.id) if actual else None
-            from app.raid_rooms.beta_models import BetaAvailabilityCopy
+            from app.raid_rooms.models.beta_models import BetaAvailabilityCopy
             copied=db.get(BetaAvailabilityCopy,actual.id) if beta and actual else None
             if session.starts_at and not (copied and copied.state=='unset') and (submission is None or not graph.time.covered(session.starts_at,session.ends_at,submission.normalized_intervals)):
                 warnings.append('OUTSIDE_AVAILABILITY')
@@ -223,7 +239,7 @@ def schedule_fields(db,room,row,mine,stamp,include_resume_display=False):
 def plan(principal,rid,key,include_resume_display=False,*,read_snapshot=None):
     with (nullcontext(read_snapshot) if read_snapshot is not None else base.snapshot(principal)) as (db,uid,stamp):
         room,row=read_target(db,uid,rid,key,stamp)
-        from app.raid_rooms import roster_participation
+        from app.raid_rooms.participation import roster_participation
         roster_participation.require_client(db,row);mine=base.member(db,uid,room)
         if own_cycle_member(db,row,mine) is None:fail('WEEKLY_PARTICIPANT_REQUIRED',403)
         items=[dict(item_id=i.id,revision=i.revision,raid_id=i.raid_id,difficulty_id=r.difficulty_id,
@@ -264,10 +280,10 @@ def plan(principal,rid,key,include_resume_display=False,*,read_snapshot=None):
         if archive.is_archived(db,rid):archive.permissions(result['data']['permissions'])
         if include_resume_display:
             from app.raid_rooms.outcomes import resume_review
-            from app.raid_rooms import resume_review_schemas
+            from app.raid_rooms.schemas import resume_review_schemas
             result=resume_review.output(resume_review_schemas.ResumePlanContext,result,snapshot=(db,uid,stamp))
-            from app.raid_rooms import roster_api
+            from app.raid_rooms.api import roster_api
             return roster_api.publish(db,uid,stamp,result,'plan')
         result=beta_output.render(db,uid,stamp,wire.OutputContract3GetV2MeRaidRoomsRoomIdPlan,jsonable_encoder(result))
-        from app.raid_rooms import roster_api
+        from app.raid_rooms.api import roster_api
         return roster_api.publish(db,uid,stamp,result,'plan')

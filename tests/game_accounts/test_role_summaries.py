@@ -5,13 +5,27 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 
 import pytest
-from sqlalchemy import select, func
-from app.core.database import session, now
+from sqlalchemy import select
+from sqlalchemy import func
+from app.core.database import session
+from app.core.database import now
 from app.game_accounts.character_profiles import profiles
-from app.game_accounts.models import (Account, Character, Registration, NameClaim, CharacterRoleSummary,
-                                     RequestResult, Configuration, Activity)
-from app.game_accounts.support import GameError
-from tests.game_accounts.test_game_accounts import world, register, verify, page, change, another_user, BASE
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.models.models import CharacterRoleSummary
+from app.game_accounts.models.models import RequestResult
+from app.game_accounts.models.models import Configuration
+from app.game_accounts.models.models import Activity
+from app.game_accounts.common.support import GameError
+from tests.game_accounts.test_game_accounts import world
+from tests.game_accounts.test_game_accounts import register
+from tests.game_accounts.test_game_accounts import verify
+from tests.game_accounts.test_game_accounts import page
+from tests.game_accounts.test_game_accounts import change
+from tests.game_accounts.test_game_accounts import another_user
+from tests.game_accounts.test_game_accounts import BASE
 
 STAMP = '2026-10-15T12:00:00Z'
 
@@ -251,7 +265,8 @@ def test_role_schema_preserved_and_preferences_now_persisted():
 
 @pytest.mark.parametrize('kind,status', [('expired',401),('revoked',401),('disabled',403)])
 def test_session_rechecked_for_reads_writes_replay(client,owned,kind,status):
-    from app.auth.models import Session,User
+    from app.auth.models import Session
+    from app.auth.models import User
     h,_,cid=owned; key=uuid.uuid4(); assert put(client,h,cid,key=key).status_code==200
     with session() as db,db.begin():
         s=db.scalar(select(Session))

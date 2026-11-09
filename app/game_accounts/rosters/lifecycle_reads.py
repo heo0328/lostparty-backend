@@ -1,10 +1,16 @@
 """V2 read-only current-state/history projections. No provider or DB writes."""
-from sqlalchemy import select, text
+from sqlalchemy import select
+from sqlalchemy import text
 from app.core.database import session
-from app.game_accounts.models import Character, CharacterRetirement, CharacterHistoryHead
-from app.game_accounts.rosters import service, lifecycle
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import CharacterRetirement
+from app.game_accounts.models.models import CharacterHistoryHead
+from app.game_accounts.rosters import service
+from app.game_accounts.rosters import lifecycle
 from app.game_accounts.power.power_service import overlay
-from app.game_accounts.support import authorize, cursor_encode, cursor_decode
+from app.game_accounts.common.support import authorize
+from app.game_accounts.common.support import cursor_encode
+from app.game_accounts.common.support import cursor_decode
 
 
 def characters(principal, rid, limit, cursor, include_roster_presence=False):

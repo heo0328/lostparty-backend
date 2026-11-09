@@ -4,6 +4,20 @@
 
 기능별 현재 동작과 정책은 아래 문서에서 확인합니다. 구체적인 요청·응답 형태는 실행 OpenAPI, 현재 담당·미완료는 [NEXT_WORK](../../project/NEXT_WORK.md)가 원본입니다. 과거 작업 순서를 읽지 않아도 각 기능의 현재 설명을 이해할 수 있게 구성했습니다.
 
+## 구현 파일 찾기
+
+[폴더 분류·이전 경로 추적 방법](../../engineering/development/source-layout.md#현재-파일을-찾는-순서)에서 전체 기준과 1·2차 대응표를 확인합니다. 다음 링크는 현재 구현 위치입니다.
+
+| 찾을 내용 | 현재 위치 |
+|---|---|
+| 현재주·다음주 HTTP 진입 | [cycle_router.py](../../../app/raid_rooms/api/cycle_router.py) |
+| 다음 주 참가 업무 | [cycle_continuation.py](../../../app/raid_rooms/admissions/cycle_continuation.py) |
+| 현재주·다음주 입출력 정의 | [cycle_schemas.py](../../../app/raid_rooms/schemas/cycle_schemas.py) |
+| 현재주·다음주 DB 모델 | [cycle_models.py](../../../app/raid_rooms/models/cycle_models.py) |
+| 원정대 경고 OpenAPI 보정·자원 로딩 | [roster_openapi.py](../../../app/raid_rooms/contracts/roster_openapi.py) |
+
+## 기능 문서
+
 | 하위 기능 |
 |---|
 | [현재주·다음주 모집 관리](weekly-cycles/README.md) |

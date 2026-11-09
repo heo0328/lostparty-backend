@@ -1,15 +1,21 @@
 """One promise per actual T. Callers hold the game mutation lock/transaction."""
 from copy import deepcopy
-from datetime import datetime, timedelta, timezone
+from datetime import datetime
+from datetime import timedelta
+from datetime import timezone
 import secrets
 import uuid
-from sqlalchemy import select, text, or_
-from app.game_accounts.support import fail
+from sqlalchemy import select
+from sqlalchemy import text
+from sqlalchemy import or_
+from app.game_accounts.common.support import fail
 from app.raid_rooms.common import beta_profile
-from app.raid_rooms import beta_schemas
+from app.raid_rooms.schemas import beta_schemas
 from app.raid_rooms.common import time_policy
-from app.raid_rooms.beta_models import (BetaSchedule, BetaAvailabilityCopy, BetaPromiseReservation,
-                                        BetaApplicationMemo)
+from app.raid_rooms.models.beta_models import BetaSchedule
+from app.raid_rooms.models.beta_models import BetaAvailabilityCopy
+from app.raid_rooms.models.beta_models import BetaPromiseReservation
+from app.raid_rooms.models.beta_models import BetaApplicationMemo
 
 HEAD='0032_beta_recruitment'
 
@@ -27,7 +33,7 @@ def get(db,row):
 
 
 def personal_revision(db,uid):
-    from app.raid_rooms.source_models import PersonalAvailability
+    from app.raid_rooms.models.source_models import PersonalAvailability
     current=db.get(PersonalAvailability,uid)
     return current.revision if current else None
 
@@ -35,7 +41,7 @@ def personal_revision(db,uid):
 
 def context_basis(db,uid):
     """Bind current own busy evidence as well as the personal table revision."""
-    from app.raid_rooms.source_models import TimeReservation
+    from app.raid_rooms.models.source_models import TimeReservation
     reservations=list(db.execute(select(TimeReservation.id,TimeReservation.schedule_revision,
         TimeReservation.starts_at,TimeReservation.ends_at).where(TimeReservation.user_id==uid,
         TimeReservation.released_at.is_(None)).order_by(TimeReservation.id)))
@@ -69,8 +75,8 @@ def query_config(prefix=''):
 
 def copy_personal(db,row,cm,stamp):
     from app.raid_rooms.schedules import availability
-    from app.raid_rooms.source_models import PersonalAvailability
-    from app.raid_rooms.cycle_models import CycleSubmission
+    from app.raid_rooms.models.source_models import PersonalAvailability
+    from app.raid_rooms.models.cycle_models import CycleSubmission
     availability.verified(db,cm.user_id)
     personal=db.get(PersonalAvailability,cm.user_id)
     if personal is not None and (not isinstance(personal.intervals,list) or not isinstance(personal.normalized_intervals,list)):
@@ -79,7 +85,7 @@ def copy_personal(db,row,cm,stamp):
     normalized=deepcopy(personal.normalized_intervals) if personal else []
     # Use the same typed interval rules as explicit personal saves. A failed or
     # inconsistent persisted normalization must never become all-available.
-    from app.raid_rooms.availability_schemas import PersonalIn
+    from app.raid_rooms.schemas.availability_schemas import PersonalIn
     from pydantic import ValidationError
     try:
         PersonalIn.model_validate(dict(expected_version=personal.revision if personal else 1,timezone='Asia/Seoul',intervals=intervals))
@@ -104,11 +110,12 @@ def copy_personal(db,row,cm,stamp):
 
 
 def install(db,room,row,config_value,member,stamp):
-    from app.raid_rooms.schedules import cycle_planning as plan, cycle_schedule as graph
+    from app.raid_rooms.schedules import cycle_planning as plan
+    from app.raid_rooms.schedules import cycle_schedule as graph
     from app.raid_rooms.participation import cycle_lifecycle as life
-    from app.raid_rooms.source_models import ScheduleGroup
-    from app.raid_rooms.schedule_heads import ScheduleHead
-    from app.raid_rooms.cycle_lifecycle_models import CycleScheduleGroup
+    from app.raid_rooms.models.source_models import ScheduleGroup
+    from app.raid_rooms.models.schedule_heads import ScheduleHead
+    from app.raid_rooms.models.cycle_lifecycle_models import CycleScheduleGroup
     duration=sum(v['duration_minutes'] for v in row.settings_snapshot['items'])
     setting=config(config_value,key=row.cycle_key.isoformat(),capacity=graph.admission.capacity(row),duration=duration,stamp=stamp)
     group=ScheduleGroup(id=uuid.uuid4(),room_id=room.id,cycle_key=row.cycle_key,client_key=uuid.uuid4().hex,
@@ -139,8 +146,9 @@ def enrol(db,row,cm,stamp,*,consent=True,copy=True):
     from app.raid_rooms.schedules import cycle_schedule as graph
     from app.raid_rooms.participation import cycle_lifecycle as life
     from app.raid_rooms.schedules import cycle_times as times
-    from app.raid_rooms.source_models import SessionParticipation, TimeReservation
-    from app.raid_rooms.integrated_models import RecruitmentMembership as Member
+    from app.raid_rooms.models.source_models import SessionParticipation
+    from app.raid_rooms.models.source_models import TimeReservation
+    from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
     saved=get(db,row)
     if saved is None:return
     if copy:copy_personal(db,row,cm,stamp)
@@ -184,10 +192,13 @@ def evaluate(db,room,row,stamp):
 
 
 def _evaluate(db,room,row,stamp):
-    from app.raid_rooms.schedules import cycle_planning as plan, cycle_schedule as graph, cycle_times as times, availability
-    from app.raid_rooms.cycle_models import CycleSubmission
-    from app.raid_rooms.source_models import TimeReservation
-    from app.raid_rooms.availability_schemas import PersonalIn
+    from app.raid_rooms.schedules import cycle_planning as plan
+    from app.raid_rooms.schedules import cycle_schedule as graph
+    from app.raid_rooms.schedules import cycle_times as times
+    from app.raid_rooms.schedules import availability
+    from app.raid_rooms.models.cycle_models import CycleSubmission
+    from app.raid_rooms.models.source_models import TimeReservation
+    from app.raid_rooms.schemas.availability_schemas import PersonalIn
     from pydantic import ValidationError
     def empty(status):return dict(state='no_candidate',earliest_start=None,latest_start=None,status=status,missing_members=None)
     saved=get(db,row)
@@ -198,8 +209,8 @@ def _evaluate(db,room,row,stamp):
         return empty('not_applicable')
     if stamp>=saved.base_starts_at-timedelta(minutes=30):return empty('pending')
     actual=plan.members(db,row,sess)
-    from app.raid_rooms.cycle_models import CycleMember
-    from app.raid_rooms.integrated_models import RecruitmentMembership as Member
+    from app.raid_rooms.models.cycle_models import CycleMember
+    from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
     declared=set(db.scalars(select(CycleMember.id).join(Member,Member.id==CycleMember.membership_id).where(
         CycleMember.cycle_id==row.id,CycleMember.generation==row.generation,
         CycleMember.state.in_(('participating','review_required')),Member.ended_at.is_(None))))
@@ -245,9 +256,11 @@ def candidate(db,room,row,stamp):
 
 
 def confirm(db,room,row,saved,start,kind,stamp,command=None):
-    from app.raid_rooms.schedules import cycle_planning as plan, cycle_schedule as graph, cycle_times as times
+    from app.raid_rooms.schedules import cycle_planning as plan
+    from app.raid_rooms.schedules import cycle_schedule as graph
+    from app.raid_rooms.schedules import cycle_times as times
     from app.raid_rooms.participation import cycle_lifecycle as life
-    from app.raid_rooms.source_models import SessionParticipation
+    from app.raid_rooms.models.source_models import SessionParticipation
     sess=db.get(graph.Session,saved.session_id)
     if saved.confirmation_kind:return
     actual=plan.members(db,row,sess)
@@ -277,7 +290,8 @@ def confirm(db,room,row,saved,start,kind,stamp,command=None):
 
 
 def initial(db,room,row,stamp,command=None):
-    from app.raid_rooms.schedules import cycle_planning as plan, cycle_schedule as graph
+    from app.raid_rooms.schedules import cycle_planning as plan
+    from app.raid_rooms.schedules import cycle_schedule as graph
     saved=get(db,row)
     if saved is None or saved.confirmation_kind or saved.needs_review or not saved.early_enabled:return
     sess=db.get(graph.Session,saved.session_id)
@@ -299,7 +313,7 @@ def reconcile(db,room,row,stamp):
 
 def view(db,row,stamp):
     from app.raid_rooms.schedules import cycle_schedule as graph
-    from app.raid_rooms.integrated_models import RecruitmentRoom
+    from app.raid_rooms.models.integrated_models import RecruitmentRoom
     saved=get(db,row)
     if saved is None or saved.generation!=row.generation:return None
     sess=db.get(graph.Session,saved.session_id)
@@ -325,12 +339,13 @@ def view(db,row,stamp):
 
 def reconcile_before(principal,payload):
     """Clock effects commit independently even when the user command then fails."""
-    from app.core.database import session,now
-    from app.game_accounts.support import authorize
+    from app.core.database import session
+    from app.core.database import now
+    from app.game_accounts.common.support import authorize
     from app.raid_rooms.outcomes import completed_room_lifecycle as archive
     from app.raid_rooms.admissions import admission_service
-    from app.raid_rooms.cycle_models import RoomCycle
-    from app.raid_rooms.integrated_models import RecruitmentRoom
+    from app.raid_rooms.models.cycle_models import RoomCycle
+    from app.raid_rooms.models.integrated_models import RecruitmentRoom
     with session() as db,db.begin():
         if not available(db):
             if beta_profile.enabled():fail('RECRUITMENT_COMMAND_NOT_READY',503)
@@ -350,7 +365,7 @@ BLOCKED_OPERATIONS=frozenset({'apply','join','approve','continue','open','charac
 
 def require_client(db,rid,operation,payload):
     if beta_profile.enabled() or rid is None or operation not in BLOCKED_OPERATIONS or not available(db):return
-    from app.raid_rooms.cycle_models import RoomCycle
+    from app.raid_rooms.models.cycle_models import RoomCycle
     from datetime import date
     key=payload.get('body',payload).get('target_cycle_key')
     query=select(BetaSchedule.cycle_id).join(RoomCycle,RoomCycle.id==BetaSchedule.cycle_id).where(RoomCycle.room_id==rid)
@@ -359,8 +374,10 @@ def require_client(db,rid,operation,payload):
 
 
 def edit(db,room,row,body,stamp,command):
-    from app.raid_rooms.schedules import cycle_planning as plan, cycle_schedule as graph
-    from app.raid_rooms.source_models import SessionBinding,ScheduleGroup
+    from app.raid_rooms.schedules import cycle_planning as plan
+    from app.raid_rooms.schedules import cycle_schedule as graph
+    from app.raid_rooms.models.source_models import SessionBinding
+    from app.raid_rooms.models.source_models import ScheduleGroup
     saved=get(db,row)
     if saved is None:fail('BETA_SCHEDULE_REQUIRED')
     if saved.needs_review:fail('SCHEDULE_REVIEW_REQUIRED')

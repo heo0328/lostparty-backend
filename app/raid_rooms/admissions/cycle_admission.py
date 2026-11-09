@@ -6,18 +6,24 @@ No current-week aliases or global room revisions are mutated here.
 """
 import uuid
 from copy import deepcopy
-from decimal import Decimal, InvalidOperation
-from sqlalchemy import select, func
+from decimal import Decimal
+from decimal import InvalidOperation
+from sqlalchemy import select
+from sqlalchemy import func
 from fastapi.encoders import jsonable_encoder
 from app.auth.models import User
-from app.game_accounts.support import fail
-from app.game_accounts.power_success import RolePowerSuccess
+from app.game_accounts.common.support import fail
+from app.game_accounts.models.power_success import RolePowerSuccess
 from app.raid_rooms.common import cycles
 from app.raid_rooms.participation import participation_core as core
-from app.raid_rooms.cycle_models import CycleMember, CycleRound, RoomCycle
-from app.raid_rooms.integrated_models import (RecruitmentItem as Item, RecruitmentRound as Round,
-    RecruitmentMembership as Member, RecruitmentAssignment as Assignment)
-from app.raid_rooms.weekly_links import WeeklyOccupancy
+from app.raid_rooms.models.cycle_models import CycleMember
+from app.raid_rooms.models.cycle_models import CycleRound
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.integrated_models import RecruitmentItem as Item
+from app.raid_rooms.models.integrated_models import RecruitmentRound as Round
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from app.raid_rooms.models.weekly_links import WeeklyOccupancy
 from app.raid_weekly.models import WeeklyState
 
 
@@ -89,7 +95,7 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
     pairs = rounds(db, target)
     choices = {t.item_id: t for t in targets}
     all_items = set(db.scalars(select(Item.id).where(Item.room_id == room.id)))
-    from app.raid_rooms import roster_participation
+    from app.raid_rooms.participation import roster_participation
     if replacing is not None and roster_participation.enabled():
         active=roster_participation.replacement(db,target,replacing)
         all_items={a.item_id for a in active}
@@ -144,7 +150,8 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
         if old is not None and (old.state!='active' if replacing else old.state!='left'):
             fail('TARGET_CONTEXT_STALE')
         if replacing is None and old is not None and old.state=='left':
-            from app.raid_rooms.cycle_models import CycleAssignment,ParticipationEvent
+            from app.raid_rooms.models.cycle_models import CycleAssignment
+            from app.raid_rooms.models.cycle_models import ParticipationEvent
             binding=db.get(CycleAssignment,old.id)
             cm=db.get(CycleMember,binding.cycle_member_id) if binding else None
             event=db.scalar(select(ParticipationEvent).where(ParticipationEvent.cycle_member_id==cm.id,ParticipationEvent.member_revision==cm.revision)) if cm else None
@@ -211,7 +218,7 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
     if replacing is not None:return member, assignments, power
     if resuming is None:cycles.record_bundle_join(db, target.id, member.id, command_id, stamp)
     else:
-        from app.raid_rooms.cycle_models import CycleAssignment
+        from app.raid_rooms.models.cycle_models import CycleAssignment
         for a in assignments:db.add(CycleAssignment(assignment_id=a.id,room_id=room.id,cycle_id=target.id,generation=target.generation,
             cycle_member_id=resuming.id,membership_id=member.id,user_id=uid,item_id=a.item_id,round_id=a.round_id))
         db.flush()

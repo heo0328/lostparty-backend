@@ -3,12 +3,15 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 
 import pytest
-from sqlalchemy import select, func
-from app.core.database import session, now
-from app.auth.models import Session, User
+from sqlalchemy import select
+from sqlalchemy import func
+from app.core.database import session
+from app.core.database import now
+from app.auth.models import Session
+from app.auth.models import User
 from app.member_settings.models import MemberSettings
 from app.member_settings import service
-from app.game_accounts.support import GameError
+from app.game_accounts.common.support import GameError
 from tests.game_accounts.test_game_accounts import PrivateHeaders
 
 URL = '/v1/me/settings'

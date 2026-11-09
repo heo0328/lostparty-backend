@@ -3,12 +3,18 @@ import json
 import uuid
 import requests
 import pytest
-from sqlalchemy import select, func
+from sqlalchemy import select
+from sqlalchemy import func
 from app.core.database import session
-from app.game_accounts.provider_io import provider, provider_diagnostics
-from app.game_accounts.models import Verification, RequestResult, VerificationExecution
+from app.game_accounts.provider_io import provider
+from app.game_accounts.provider_io import provider_diagnostics
+from app.game_accounts.models.models import Verification
+from app.game_accounts.models.models import RequestResult
+from app.game_accounts.models.models import VerificationExecution
 from tests.game_accounts.test_live_equipment_proof import live
-from tests.game_accounts.test_game_accounts import world, change, VERIFY
+from tests.game_accounts.test_game_accounts import world
+from tests.game_accounts.test_game_accounts import change
+from tests.game_accounts.test_game_accounts import VERIFY
 from tests.game_accounts.test_game_account_primitives import transport
 
 

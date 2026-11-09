@@ -3,16 +3,35 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 
 import pytest
-from sqlalchemy import select, func
-from app.core.database import session, now
-from app.game_accounts.character_profiles import profiles, presentation
+from sqlalchemy import select
+from sqlalchemy import func
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.character_profiles import profiles
+from app.game_accounts.character_profiles import presentation
 from app.game_accounts.rosters import lifecycle
-from app.game_accounts.models import (Account, Character, Registration, NameClaim, CharacterRoleSummary,
-    CharacterPersonalPreferences, AccountCharacterPresentation, RequestResult, CharacterRetirement,
-    Configuration, Activity)
-from app.game_accounts.support import GameError, lock
-from tests.game_accounts.test_role_summaries import get as profile, put as put_role
-from tests.game_accounts.test_game_accounts import world, register, verify, page, change, another_user, BASE
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.models.models import CharacterRoleSummary
+from app.game_accounts.models.models import CharacterPersonalPreferences
+from app.game_accounts.models.models import AccountCharacterPresentation
+from app.game_accounts.models.models import RequestResult
+from app.game_accounts.models.models import CharacterRetirement
+from app.game_accounts.models.models import Configuration
+from app.game_accounts.models.models import Activity
+from app.game_accounts.common.support import GameError
+from app.game_accounts.common.support import lock
+from tests.game_accounts.test_role_summaries import get as profile
+from tests.game_accounts.test_role_summaries import put as put_role
+from tests.game_accounts.test_game_accounts import world
+from tests.game_accounts.test_game_accounts import register
+from tests.game_accounts.test_game_accounts import verify
+from tests.game_accounts.test_game_accounts import page
+from tests.game_accounts.test_game_accounts import change
+from tests.game_accounts.test_game_accounts import another_user
+from tests.game_accounts.test_game_accounts import BASE
 
 
 @pytest.fixture
@@ -238,7 +257,8 @@ def test_transport_size_keys_auth_and_get_body(client,owned):
 
 @pytest.mark.parametrize('kind,status',[('revoked',401),('disabled',403)])
 def test_session_for_get_put_and_replay(client,owned,kind,status):
-    from app.auth.models import Session,User
+    from app.auth.models import Session
+    from app.auth.models import User
     h,r,cid=owned;key=uuid.uuid4();assert put_pref(client,h,cid,key=key).status_code==200
     dkey=uuid.uuid4();assert put_display(client,h,r,key=dkey).status_code==200
     with session() as db,db.begin():

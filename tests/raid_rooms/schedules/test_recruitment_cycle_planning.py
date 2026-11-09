@@ -1,21 +1,63 @@
 """W4-A2 scheduling under restricted PostgreSQL with synthetic actors."""
-import os,subprocess,uuid
-from datetime import datetime,timedelta
+import os
+import subprocess
+import uuid
+from datetime import datetime
+from datetime import timedelta
 from concurrent.futures import ThreadPoolExecutor
 import pytest
-from sqlalchemy import select,inspect,func,text
+from sqlalchemy import select
+from sqlalchemy import inspect
+from sqlalchemy import func
+from sqlalchemy import text
 from sqlalchemy.exc import DBAPIError
-from app.core.database import session,now
-from app.game_accounts.support import GameError
-from app.raid_rooms.schedules import cycle_schedule_service as service, cycle_planning as engine, cycle_proposals as proposals
-from app.raid_rooms import cycle_schemas as inputs
-from app.raid_rooms.schedules import cycle_schedule as graph, cycle_times as times
-from app.raid_rooms import cycle_wire as wire
-from app.raid_rooms.cycle_models import RoomCycle,CycleMember
-from app.raid_rooms.cycle_planning_models import CycleProposal,CycleVote,CycleScheduleEvent,CycleAlternative
-from app.raid_rooms.cycle_consent_models import CycleConsent
-from app.raid_rooms.source_models import TimeReservation as Reservation,ScheduleGroup,ScheduleAlternative,ScheduleProposal as Proposal
-from tests.raid_rooms.schedules.test_recruitment_cycle_times import consent, lifecycle, candidate, ready, sources, imported, people, worlds, scheduled, plan, preflight, request, creation, actor, add_member, cancel_member, save_personal, submit, confirm, fingerprints, denied, commands, cycles, next_key, change_body, character
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.common.support import GameError
+from app.raid_rooms.schedules import cycle_schedule_service as service
+from app.raid_rooms.schedules import cycle_planning as engine
+from app.raid_rooms.schedules import cycle_proposals as proposals
+from app.raid_rooms.schemas import cycle_schemas as inputs
+from app.raid_rooms.schedules import cycle_schedule as graph
+from app.raid_rooms.schedules import cycle_times as times
+from app.raid_rooms.schemas import cycle_wire as wire
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import CycleMember
+from app.raid_rooms.models.cycle_planning_models import CycleProposal
+from app.raid_rooms.models.cycle_planning_models import CycleVote
+from app.raid_rooms.models.cycle_planning_models import CycleScheduleEvent
+from app.raid_rooms.models.cycle_planning_models import CycleAlternative
+from app.raid_rooms.models.cycle_consent_models import CycleConsent
+from app.raid_rooms.models.source_models import TimeReservation as Reservation
+from app.raid_rooms.models.source_models import ScheduleGroup
+from app.raid_rooms.models.source_models import ScheduleAlternative
+from app.raid_rooms.models.source_models import ScheduleProposal as Proposal
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import consent
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import lifecycle
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import candidate
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import ready
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import sources
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import imported
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import people
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import worlds
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import scheduled
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import plan
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import preflight
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import request
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import creation
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import actor
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import add_member
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import cancel_member
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import save_personal
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import submit
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import confirm
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import fingerprints
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import denied
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import commands
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import cycles
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import next_key
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import change_body
+from tests.raid_rooms.schedules.test_recruitment_cycle_times import character
 from tests.raid_rooms.admissions.test_recruitment_cycle_commands import create_room
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 from app.raid_rooms.common import readiness
@@ -359,7 +401,8 @@ def test_character_change_invalidates_acceptance_without_restoring_it(planning):
 
 
 def test_all_target_session_quorums_must_pass_before_any_apply(planning):
-    from app.raid_rooms.source_models import SessionBinding,SessionParticipation
+    from app.raid_rooms.models.source_models import SessionBinding
+    from app.raid_rooms.models.source_models import SessionParticipation
     target,a,b=planning;rid,c,n=scheduled(a,alternatives=2);add_member(b,rid,n)
     # Synthetic optional second time: B participates only in the first time.
     view=plan(b,rid,n)['data'];sid=uuid.UUID(view['sessions'][1]['session_id'])

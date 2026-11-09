@@ -1,24 +1,49 @@
 """W3 lifecycle under restricted PostgreSQL, never against a development DB."""
-import os,subprocess,uuid
+import os
+import subprocess
+import uuid
 from datetime import timedelta
 from concurrent.futures import ThreadPoolExecutor
 import pytest
-from sqlalchemy import select,inspect,func
-from app.core.database import session,now
-from app.game_accounts.support import GameError
+from sqlalchemy import select
+from sqlalchemy import inspect
+from sqlalchemy import func
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.common.support import GameError
 from app.raid_rooms.admissions import cycle_opening as opening
-from app.raid_rooms import cycle_wire as wire
-from app.raid_rooms.common import readiness, cycles
-from app.raid_rooms.cycle_models import RoomCycle,CycleGeneration,CycleMember,CycleRound,ParticipationEvent
-from app.raid_rooms.integrated_models import RecruitmentRoom as Room,RecruitmentMembership as Member,RecruitmentAssignment as Assignment
-from app.raid_rooms.weekly_links import WeeklyOccupancy
-from tests.raid_rooms.admissions.test_recruitment_cycle_creation import candidate, ready, sources, imported, people, worlds, preflight, request, denied, creation
-from tests.raid_rooms.admissions.test_recruitment_cycle_commands import create_room, context, admission_request, commands
+from app.raid_rooms.schemas import cycle_wire as wire
+from app.raid_rooms.common import readiness
+from app.raid_rooms.common import cycles
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import CycleGeneration
+from app.raid_rooms.models.cycle_models import CycleMember
+from app.raid_rooms.models.cycle_models import CycleRound
+from app.raid_rooms.models.cycle_models import ParticipationEvent
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from app.raid_rooms.models.weekly_links import WeeklyOccupancy
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import candidate
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import ready
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import sources
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import imported
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import people
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import worlds
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import preflight
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import request
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import denied
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import creation
+from tests.raid_rooms.admissions.test_recruitment_cycle_commands import create_room
+from tests.raid_rooms.admissions.test_recruitment_cycle_commands import context
+from tests.raid_rooms.admissions.test_recruitment_cycle_commands import admission_request
+from tests.raid_rooms.admissions.test_recruitment_cycle_commands import commands
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 from tests.groups.test_group_foundation import actor
 from app.raid_rooms.admissions import cycle_continuation as continuation
-from app.raid_rooms.participation import cycle_leadership as leadership, cycle_character as character
-from app.raid_rooms.cycle_lifecycle_models import CycleDecision
+from app.raid_rooms.participation import cycle_leadership as leadership
+from app.raid_rooms.participation import cycle_character as character
+from app.raid_rooms.models.cycle_lifecycle_models import CycleDecision
 
 
 @pytest.fixture
@@ -162,7 +187,7 @@ def test_cancel_and_rejoin_reuses_assignment_but_new_order(lifecycle):
         row=db.get(RoomCycle,uuid.UUID(room['created_cycles'][1]['room_cycle_id']));cm=leadership.life.actual_member(db,row,b['uid'])
         cmid,old_order=cm.id,cm.joined_order;old=[a.id for a in leadership.life.assignments(db,row,cm)]
         c_revision=db.get(RoomCycle,uuid.UUID(room['created_cycles'][0]['room_cycle_id'])).revision
-        from app.raid_rooms.cycle_models import CycleSubmission
+        from app.raid_rooms.models.cycle_models import CycleSubmission
         # Synthetic W4 submission head: cancellation archives it, rejoin does not copy it.
         db.add(CycleSubmission(cycle_member_id=cm.id,room_id=rid,cycle_id=row.id,generation=row.generation,
             membership_id=cm.membership_id,user_id=cm.user_id,revision=1,source_personal_revision=1,
@@ -201,7 +226,7 @@ def test_leader_cancel_chooses_first_eligible_and_preserves_c(lifecycle,people):
 
 
 def test_successor_changed_after_context_requires_reconfirmation(lifecycle,people):
-    from app.game_accounts.models import Character
+    from app.game_accounts.models.models import Character
     _,a,b=lifecycle
     room=create_room(a);rid=uuid.UUID(room['room_id']);n=next_key()
     add_member(b,rid,n);third=people('w3-successor-next');add_member(third,rid,n)
@@ -254,7 +279,7 @@ def test_direct_transfer_retains_participants_slots_and_leases(lifecycle):
 
 def test_character_change_only_n_preserves_ids_and_old_source(lifecycle):
     from app.raid_rooms.reads import cycle_member_reads
-    from app.game_accounts.models import Character
+    from app.game_accounts.models.models import Character
     _,a,b=lifecycle
     room=create_room(a,bundle=True);rid=uuid.UUID(room['room_id']);c,n=[v['target_cycle_key'] for v in room['created_cycles']]
     plan=cycle_member_reads.plan(actor(a['uid']),rid,n)
@@ -388,7 +413,7 @@ def test_context_expiry_scope_and_original_ack(lifecycle,monkeypatch):
 
 
 def test_empty_n_cancels_only_its_pending_applications(lifecycle):
-    from app.raid_rooms.cycle_application_models import CycleApplication
+    from app.raid_rooms.models.cycle_application_models import CycleApplication
     _,a,b=lifecycle
     room=create_room(a,mode='leader_only');rid=uuid.UUID(room['room_id']);c,n=[v['target_cycle_key'] for v in room['created_cycles']]
     app_ids=[]
@@ -417,7 +442,8 @@ def test_manual_copy_reopen_and_cancel_preserve_c_reservations(lifecycle):
     from app.raid_rooms.common import time_policy
     from app.raid_rooms.schedules import cycle_schedule
     from app.raid_rooms.reads import cycle_member_reads
-    from app.raid_rooms.source_models import SessionParticipation,TimeReservation
+    from app.raid_rooms.models.source_models import SessionParticipation
+    from app.raid_rooms.models.source_models import TimeReservation
     _,a,b=lifecycle
     ctx=preflight(a)
     with session() as db,db.begin():start=time_policy.ceil_tick(now(db)+timedelta(minutes=60))
@@ -482,7 +508,7 @@ def test_character_change_failure_preserves_whole_bundle(lifecycle,monkeypatch):
 
 
 def test_invalid_only_successor_blocks_handoff_but_can_cancel_own_target(lifecycle):
-    from app.game_accounts.models import Character
+    from app.game_accounts.models.models import Character
     _,a,b=lifecycle
     room=create_room(a);rid=uuid.UUID(room['room_id']);n=next_key();add_member(b,rid,n)
     with session() as db,db.begin():db.get(Character,uuid.UUID(b['ids'][0])).lifecycle_state='retired'
@@ -496,8 +522,9 @@ def test_invalid_only_successor_blocks_handoff_but_can_cancel_own_target(lifecyc
 
 @pytest.mark.parametrize('operation',['open','continue'])
 def test_alternate_role_power_source_is_bound_to_context(lifecycle,operation):
-    from app.game_accounts.models import CharacterRoleSummary
-    from app.game_accounts.power_success import capture,RolePowerSuccess
+    from app.game_accounts.models.models import CharacterRoleSummary
+    from app.game_accounts.power.power_success import capture
+    from app.game_accounts.models.power_success import RolePowerSuccess
     from tests.game_accounts.test_role_summaries import summary
     _,a,b=lifecycle
     room=create_room(a,combined=operation=='continue');rid=uuid.UUID(room['room_id']);n=next_key()

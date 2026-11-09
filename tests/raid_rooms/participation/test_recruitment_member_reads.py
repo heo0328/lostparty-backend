@@ -2,10 +2,17 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from app.core.errors import register
-from app.raid_rooms.member_router import router
-from app.raid_rooms.admission_router import router as admissions
-from app.raid_rooms.schedule_router import router as schedules
-from tests.raid_rooms.admissions.test_recruitment_admission import ready, sources, imported, people, worlds, post, create, admission
+from app.raid_rooms.api.member_router import router
+from app.raid_rooms.api.admission_router import router as admissions
+from app.raid_rooms.api.schedule_router import router as schedules
+from tests.raid_rooms.admissions.test_recruitment_admission import ready
+from tests.raid_rooms.admissions.test_recruitment_admission import sources
+from tests.raid_rooms.admissions.test_recruitment_admission import imported
+from tests.raid_rooms.admissions.test_recruitment_admission import people
+from tests.raid_rooms.admissions.test_recruitment_admission import worlds
+from tests.raid_rooms.admissions.test_recruitment_admission import post
+from tests.raid_rooms.admissions.test_recruitment_admission import create
+from tests.raid_rooms.admissions.test_recruitment_admission import admission
 from tests.raid_rooms.outcomes.test_recruitment_completion import bundle
 from tests.raid_rooms.common.test_raid_room_http import err
 
@@ -33,7 +40,9 @@ def test_detail_and_member_only_time_context_are_distinct_read_projections(ready
 
 
 def test_explicit_overlap_preserves_both_and_busy_hides_other_room_identity(ready,http):
-    from tests.raid_rooms.schedules.test_recruitment_scheduling import future, group_at, plan
+    from tests.raid_rooms.schedules.test_recruitment_scheduling import future
+    from tests.raid_rooms.schedules.test_recruitment_scheduling import group_at
+    from tests.raid_rooms.schedules.test_recruitment_scheduling import plan
     target,a,b,_=ready;start=future();rid,_=create(http,a,schedule_groups=[group_at(start)])
     alternate=dict(a,ids=[a['ids'][1],a['ids'][0],*a['ids'][2:]])
     second,_=create(http,alternate,schedule_groups=[group_at(start)])
@@ -51,9 +60,11 @@ def test_explicit_overlap_preserves_both_and_busy_hides_other_room_identity(read
 def test_ended_membership_does_not_grant_current_private_room_disclosure(ready,http):
     import uuid
     from sqlalchemy import select
-    from app.core.database import session,now
-    from app.raid_rooms import completion
-    from app.raid_rooms.integrated_models import RecruitmentRoom as Room,RecruitmentMembership as Member
+    from app.core.database import session
+    from app.core.database import now
+    from app.raid_rooms.outcomes import completion
+    from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+    from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
     from app.groups.models import GroupMembership
     from tests.raid_rooms.reads.test_recruitment_search import groups
     target,a,b,_=ready;gid=groups(a,b)[0];rid,_=create(http,a)

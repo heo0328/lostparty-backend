@@ -3,12 +3,16 @@
 Internal authorization scope is deliberately separate from identity/transfer
 BindingEvidence. API address continuity follows the agreed observation policy.
 """
-from dataclasses import dataclass, replace
+from dataclasses import dataclass
+from dataclasses import replace
 from sqlalchemy import select
 from app.game_accounts.rosters import lifecycle
 from app.game_accounts.verification import verification_context
-from app.game_accounts.models import Account, Character, NameClaim
-from app.game_accounts.support import fail, GameError
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import GameError
 
 MAX_LOOKUPS = 3
 

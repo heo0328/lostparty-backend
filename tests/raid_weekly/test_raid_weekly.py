@@ -1,19 +1,33 @@
 import uuid
 from concurrent.futures import ThreadPoolExecutor
-from datetime import date, datetime, timedelta, timezone
+from datetime import date
+from datetime import datetime
+from datetime import timedelta
+from datetime import timezone
 from threading import Barrier
 
 import pytest
-from sqlalchemy import func, select
+from sqlalchemy import func
+from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 
-from app.auth.models import Session, User
-from app.core.database import session, now
-from app.game_accounts.models import Account, Character, Registration, RequestResult
-from app.game_accounts.support import GameError, authorize, fail
+from app.auth.models import Session
+from app.auth.models import User
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import RequestResult
+from app.game_accounts.common.support import GameError
+from app.game_accounts.common.support import authorize
+from app.game_accounts.common.support import fail
 from app.raid_weekly import service
 from app.raid_weekly.models import WeeklyState
-from tests.game_accounts.test_game_accounts import world, another_user, change, page
+from tests.game_accounts.test_game_accounts import world
+from tests.game_accounts.test_game_accounts import another_user
+from tests.game_accounts.test_game_accounts import change
+from tests.game_accounts.test_game_accounts import page
 from tests.game_accounts.test_role_summaries import owned
 
 URL = '/v1/me/raid-weekly-states'

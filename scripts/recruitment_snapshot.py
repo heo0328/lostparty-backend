@@ -12,7 +12,9 @@ import os
 from pathlib import Path
 import sys
 import tarfile
-from sqlalchemy import inspect,text,select
+from sqlalchemy import inspect
+from sqlalchemy import text
+from sqlalchemy import select
 from app.core.database import session
 
 
@@ -76,15 +78,16 @@ def extract_keys(archive):
 def projections(db,legacy=False):
     base=dict(category='all',admission_scope=None,group_ids=[],filter_context_token=None,
         member_conditions=[],raid_ids=[],difficulty_ids=[],limit=50,cursor=None)
-    from app.raid_rooms.search_router import Search
+    from app.raid_rooms.schemas.search_router import Search
     if legacy:
         from app.raid_rooms.reads import search
         return dict(public_v1_items=len(search.search(None,Search.model_validate(base))['items']))
     from app.core.database import now
     from app.raids import service as raids
     from app.raid_rooms.reads import cycle_queries
-    from app.raid_rooms import cycle_wire
-    from app.raid_rooms.reads import cycle_lists, cycle_member_reads
+    from app.raid_rooms.schemas import cycle_wire
+    from app.raid_rooms.reads import cycle_lists
+    from app.raid_rooms.reads import cycle_member_reads
     from app.raid_rooms.participation import cycle_common
     current=raids.cycle(now(db)).cycle_key
     from datetime import date
@@ -93,10 +96,11 @@ def projections(db,legacy=False):
     for label,key in [('C',current),('N',n)]:
         page=cycle_queries.search(None,cycle_wire.InputContract3PostV2RaidRoomsSearch.model_validate(base|dict(target_cycle_key=key)))
         public[label]=len(page['data']['items'])
-    from app.auth.models import User,Session
+    from app.auth.models import User
+    from app.auth.models import Session
     from app.auth.service import active
     from app.core.errors import AuthError
-    from app.raid_rooms.integrated_models import RecruitmentMembership as Member
+    from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
     principals={}
     for user,auth in db.execute(select(User,Session).join(Session,Session.user_id==User.id)):
         try:active(user,auth,now(db))
@@ -149,7 +153,8 @@ def main():
             print(json.dumps(dict(revision=list(db.scalars(text('SELECT version_num FROM alembic_version'))),
                 tables=fingerprint(db),sequences=sequences(db),database_profile=database_profile(db),keys=key_manifest(),aggregate=aggregate(db))))
         elif mode=='prepared':
-            from app.raid_rooms.common import readiness, cycle_worker
+            from app.raid_rooms.common import readiness
+            from app.raid_rooms.common import cycle_worker
             readiness.require_two_cycle_active(db)
             from app.main import create_two_cycle_app
             assert len(create_two_cycle_app().openapi()['paths'])==167
@@ -172,7 +177,8 @@ def main():
             process_due();print(json.dumps(dict(processed=True)))
         elif mode=='legacy':
             from app.raid_rooms.common import readiness
-            from app.main import app,health
+            from app.main import app
+            from app.main import health
             readiness.require_active(db)
             assert health()=={'status':'ok','database':'ok'}
             print(json.dumps(dict(paths=len(app.openapi()['paths']),revision=list(db.scalars(text('SELECT version_num FROM alembic_version'))))))

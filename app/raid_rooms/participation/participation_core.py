@@ -6,26 +6,35 @@ idempotent ACK belong to the integrating command, never inferred here.
 """
 import uuid
 from copy import deepcopy
-from decimal import Decimal, InvalidOperation
-from sqlalchemy import select, func, union
+from decimal import Decimal
+from decimal import InvalidOperation
+from sqlalchemy import select
+from sqlalchemy import func
+from sqlalchemy import union
 from app.auth.models import User
 from app.core.database import now
-from app.game_accounts.models import CharacterRoleSummary
-from app.game_accounts.power_success import RolePowerSuccess
-from app.game_accounts.support import fail
+from app.game_accounts.models.models import CharacterRoleSummary
+from app.game_accounts.models.power_success import RolePowerSuccess
+from app.game_accounts.common.support import fail
 from app.groups import admission_core as identity
-from app.groups.models import Group, GroupMembership
+from app.groups.models import Group
+from app.groups.models import GroupMembership
 from app.member_limits import service as limits
-from app.member_limits.models import MemberUsageLimits, MemberUsageHead
+from app.member_limits.models import MemberUsageLimits
+from app.member_limits.models import MemberUsageHead
 from app.raid_weekly import service as weekly
 from app.raid_weekly.models import WeeklyState
 from app.raids import service as raids
 from app.raid_rooms.common import core as legacy
-from app.raid_rooms.models import Room as OldRoom, Membership as OldMember
-from app.raid_rooms.integrated_models import (RecruitmentRoom as Room, RecruitmentItem as Item,
-    RecruitmentRound as Round, RecruitmentMembership as Member, RecruitmentAssignment as Assignment)
-from app.raid_rooms.source_models import RoomSettings
-from app.raid_rooms.weekly_links import WeeklyOccupancy
+from app.raid_rooms.models.models import Room as OldRoom
+from app.raid_rooms.models.models import Membership as OldMember
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from app.raid_rooms.models.integrated_models import RecruitmentItem as Item
+from app.raid_rooms.models.integrated_models import RecruitmentRound as Round
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from app.raid_rooms.models.source_models import RoomSettings
+from app.raid_rooms.models.weekly_links import WeeklyOccupancy
 
 
 def room_count(db, uid):
@@ -98,7 +107,7 @@ def _group(db, room, uid, allow_external=False, *, existing=False):
 def _room_restrictions(db, room):
     query=select(Member.user_id).where(Member.room_id==room.id,Member.ended_at.is_(None))
     if getattr(room,'_cycle_row',None) is not None:
-        from app.raid_rooms.cycle_models import CycleMember
+        from app.raid_rooms.models.cycle_models import CycleMember
         row=room._cycle_row
         query=query.join(CycleMember,CycleMember.membership_id==Member.id).where(
             CycleMember.cycle_id==row.id,CycleMember.generation==row.generation,CycleMember.state.in_(('participating','review_required')))

@@ -4,19 +4,37 @@ Callers own one transaction, authority/context validation and the complete bundl
 mutation. These helpers never commit or silently manufacture a missing target.
 """
 from dataclasses import dataclass
-from datetime import date, datetime, time, timedelta, timezone
+from datetime import date
+from datetime import datetime
+from datetime import time
+from datetime import timedelta
+from datetime import timezone
 import uuid
 from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert
-from app.core.database import session, now
-from app.game_accounts.support import authorize, commit_result, fail, release, reserve
-from app.raid_rooms.cycle_models import (RoomCycle, CycleGeneration, CycleMember,
-    CycleRound, CycleAssignment, CycleDirectoryHead, ParticipationEvent)
-from app.raid_rooms.integrated_models import (RecruitmentMembership as Membership,
-    RecruitmentRoom as Room, RecruitmentItem as Item, RecruitmentRound as Round, RecruitmentAssignment as Assignment)
-from app.raid_rooms.weekly_links import WeeklyOccupancy
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.common.support import authorize
+from app.game_accounts.common.support import commit_result
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import release
+from app.game_accounts.common.support import reserve
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import CycleGeneration
+from app.raid_rooms.models.cycle_models import CycleMember
+from app.raid_rooms.models.cycle_models import CycleRound
+from app.raid_rooms.models.cycle_models import CycleAssignment
+from app.raid_rooms.models.cycle_models import CycleDirectoryHead
+from app.raid_rooms.models.cycle_models import ParticipationEvent
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Membership
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from app.raid_rooms.models.integrated_models import RecruitmentItem as Item
+from app.raid_rooms.models.integrated_models import RecruitmentRound as Round
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from app.raid_rooms.models.weekly_links import WeeklyOccupancy
 from app.raid_weekly.models import WeeklyState
-from app.raids.service import cycle as actual_cycle, KST
+from app.raids.service import cycle as actual_cycle
+from app.raids.service import KST
 
 MAX_JOIN_ORDER = 2**63 - 1
 POLICY = 'two-cycle-contract-4'
@@ -231,9 +249,9 @@ lease store; do not introduce a second dedup namespace or in-memory cache.
             from app.raid_rooms.group_links import cycle_group_policy
             cycle_group_policy.require_client(db,operation,ticket=ticket)
             beta_schedule.require_client(db,rid,operation,payload)
-            from app.raid_rooms import roster_participation
+            from app.raid_rooms.participation import roster_participation
             if roster_participation.enabled():
-                from app.game_accounts import roster_presence
+                from app.game_accounts.rosters import roster_presence
                 if not roster_presence.enabled(db):fail('RECRUITMENT_COMMAND_NOT_READY',503)
             target_key=payload.get('body',payload).get('target_cycle_key')
             if rid is not None and target_key:

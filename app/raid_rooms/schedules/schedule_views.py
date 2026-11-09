@@ -1,8 +1,16 @@
 from datetime import date
 """Read-only schedule projections. No reservation, response or evaluation writes."""
 from sqlalchemy import select
-from app.raid_rooms.schedules import scheduling as graph, proposals
-from app.raid_rooms.source_models import SessionParticipation as Participation,TimeReservation as Reservation,ScheduleGroup,ScheduleAlternative,SessionBinding,ProposalTarget,ProposalResponse,AvailabilitySubmission
+from app.raid_rooms.schedules import scheduling as graph
+from app.raid_rooms.schedules import proposals
+from app.raid_rooms.models.source_models import SessionParticipation as Participation
+from app.raid_rooms.models.source_models import TimeReservation as Reservation
+from app.raid_rooms.models.source_models import ScheduleGroup
+from app.raid_rooms.models.source_models import ScheduleAlternative
+from app.raid_rooms.models.source_models import SessionBinding
+from app.raid_rooms.models.source_models import ProposalTarget
+from app.raid_rooms.models.source_models import ProposalResponse
+from app.raid_rooms.models.source_models import AvailabilitySubmission
 
 
 def permission(allowed,reason):return dict(allowed=bool(allowed),reason=None if allowed else reason)
@@ -68,8 +76,8 @@ def fields(db,room,mine,stamp):
             votes=proposals.votes(db,prop),my_response=dict(proposal_id=prop.id,proposal_plan_revision=prop.proposal_plan_revision,membership_id=mine.id,membership_generation=1,
                 response=response.response if response else 'pending',response_revision=response.revision if response else 1,responded_at=response.responded_at if response else None,
                 response_set='existing' if mine.joined_at<=prop.created_at else 'newcomer'),permissions=dict(respond_proposal=permission(prop.state=='pending' and current and eligible,'CYCLE_CHANGED' if not current else 'PROPOSAL_TARGET_REQUIRED' if not eligible else 'PROPOSAL_NOT_PENDING'))))
-    from app.raid_rooms.resume_models import ResumeProposal
-    from app.raid_rooms.resume import target_members
+    from app.raid_rooms.models.resume_models import ResumeProposal
+    from app.raid_rooms.outcomes.resume import target_members
     for prop in db.scalars(select(ResumeProposal).where(ResumeProposal.room_id==room.id).order_by(ResumeProposal.created_at,ResumeProposal.id)):
         targets=target_members(db,prop);accepted=sum(prop.responses.get(str(m.id))=='accept' for m in targets)
         current=prop.content['cycle']==cycle.cycle_key

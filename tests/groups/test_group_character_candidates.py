@@ -3,18 +3,36 @@ import json
 import uuid
 from pathlib import Path
 import pytest
-from sqlalchemy import select, inspect, delete
-from app.core.database import session, now
-from app.auth.models import User, Session
-from app.game_accounts.models import Character, Account, Activity, Registration, NameClaim, CharacterRoleSummary
-from app.game_accounts.power_success import capture
-from app.groups.models import Group, GroupMembership
+from sqlalchemy import select
+from sqlalchemy import inspect
+from sqlalchemy import delete
+from app.core.database import session
+from app.core.database import now
+from app.auth.models import User
+from app.auth.models import Session
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Activity
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.models.models import CharacterRoleSummary
+from app.game_accounts.power.power_success import capture
+from app.groups.models import Group
+from app.groups.models import GroupMembership
 from app.raid_rooms.admissions import character_candidates as service
-from app.raid_rooms import cycle_schemas as inputs
+from app.raid_rooms.schemas import cycle_schemas as inputs
 from app.raid_rooms.reads import cycle_queries
-from app.raid_rooms.candidate_schemas import CandidatePage
-from tests.raid_rooms.admissions.test_recruitment_cycle_creation import candidate, ready, sources, imported, people, worlds, denied, preflight
-from tests.groups.test_group_foundation import actor, create
+from app.raid_rooms.schemas.candidate_schemas import CandidatePage
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import candidate
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import ready
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import sources
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import imported
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import people
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import worlds
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import denied
+from tests.raid_rooms.admissions.test_recruitment_cycle_creation import preflight
+from tests.groups.test_group_foundation import actor
+from tests.groups.test_group_foundation import create
 from tests.raid_rooms.schedules.test_recruitment_cycle_times_http import client
 from tests.raid_rooms.reads.test_recruitment_cycle_queries import search_request
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
@@ -64,7 +82,8 @@ def test_http_allowlist_page_fragments_and_readonly(group_candidates):
             assert response.headers['cache-control'] == 'no-store'
             value = response.json(); CandidatePage.model_validate(value); pages.append(value)
             from jsonschema import Draft202012Validator
-            from referencing import Registry, Resource
+            from referencing import Registry
+            from referencing import Resource
             from referencing.jsonschema import DRAFT202012
             contract=json.loads(Path('docs/features/recruitment/search/examples/group-character-candidates.openapi.json').read_text())
             registry=Registry().with_resource('urn:candidates',Resource.from_contents(contract,default_specification=DRAFT202012))
@@ -201,7 +220,7 @@ def test_actual_bearer_authentication_and_foreign_group(group_candidates, people
     from fastapi.testclient import TestClient
     from app.core.errors import register
     from app.main import no_store
-    from app.raid_rooms.cycle_router import router
+    from app.raid_rooms.api.cycle_router import router
     _, a, b, gid = group_candidates
     outsider = people('candidate-outsider')
     app = FastAPI(); register(app); app.include_router(router); app.middleware('http')(no_store)
@@ -221,7 +240,9 @@ def test_actual_bearer_authentication_and_foreign_group(group_candidates, people
 
 def test_candidate_token_keeps_actual_target_sql_matching(group_candidates, people):
     from tests.raid_rooms.admissions.test_recruitment_cycle_creation import request
-    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import commands, context as admission_context, admission_request
+    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import commands
+    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import context as admission_context
+    from tests.raid_rooms.admissions.test_recruitment_cycle_commands import admission_request
     from app.raid_rooms.admissions import cycle_creation
     _,a,b,gid=group_candidates
     room=cycle_creation.create(actor(a['uid']),uuid.uuid4(),request(preflight(a,gid=gid,continuation=True),

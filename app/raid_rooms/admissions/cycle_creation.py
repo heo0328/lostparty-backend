@@ -4,26 +4,38 @@ from app.raid_rooms.common import beta_profile
 from app.raid_rooms.schedules import beta_schedule
 from app.raid_rooms.common import beta_output
 import uuid
-from datetime import datetime, timedelta, timezone
-from decimal import Decimal, InvalidOperation
+from datetime import datetime
+from datetime import timedelta
+from datetime import timezone
+from decimal import Decimal
+from decimal import InvalidOperation
 from types import SimpleNamespace
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
-from app.game_accounts.support import fail, GameError
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import GameError
 from app.game_accounts.rosters.lifecycle import digest
 from app.groups.models import GroupMembership
 from app.raid_weekly.models import WeeklyState
 from app.raid_rooms.common import cycles
 from app.raid_rooms.admissions import cycle_admission as admission
 from app.raid_rooms.schedules import cycle_schedule as schedule
-from app.raid_rooms.admissions import admission_context as context, admission_service as base
+from app.raid_rooms.admissions import admission_context as context
+from app.raid_rooms.admissions import admission_service as base
 from app.raid_rooms.common import command_context as opaque
-from app.raid_rooms import cycle_wire as wire
-from app.raid_rooms.participation_commands import Selection, Target
-from app.raid_rooms.integrated_models import (RecruitmentRoom as Room, RecruitmentMembership as Member,
-    RecruitmentItem as Item, RecruitmentRound as Round)
-from app.raid_rooms.source_models import RoomSettings, ItemSettings
-from app.raid_rooms.cycle_models import RoomCycle, CycleGeneration, CycleRound, CycleOpening
+from app.raid_rooms.schemas import cycle_wire as wire
+from app.raid_rooms.schemas.participation_commands import Selection
+from app.raid_rooms.schemas.participation_commands import Target
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
+from app.raid_rooms.models.integrated_models import RecruitmentItem as Item
+from app.raid_rooms.models.integrated_models import RecruitmentRound as Round
+from app.raid_rooms.models.source_models import RoomSettings
+from app.raid_rooms.models.source_models import ItemSettings
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import CycleGeneration
+from app.raid_rooms.models.cycle_models import CycleRound
+from app.raid_rooms.models.cycle_models import CycleOpening
 from app.raids import service as raids
 
 
@@ -111,7 +123,7 @@ def preflight(db, uid, cid, role, items, gid, key, continuation, next_cid, next_
         catalog=raids.catalog().catalog_version, power_revision=power['power_revision'],
         room_count=admission.core.room_count(db, uid)))
     if beta_profile.enabled():
-        from app.raid_rooms.beta_schemas import BetaScheduleTarget
+        from app.raid_rooms.schemas.beta_schemas import BetaScheduleTarget
         expected=[target.key]+([target.key+timedelta(days=7)] if combined else [])
         if beta_targets is None:
             if not combined and any(k.startswith('next_') and k in ('next_base_starts_at','next_early_coordination_enabled','next_early_additional_members') for k in beta_profile.query()):

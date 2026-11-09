@@ -1,6 +1,7 @@
 import pytest
 
-from app.game_accounts.power.combat_power import default_collection_target, parse_profile_power
+from app.game_accounts.power.combat_power import default_collection_target
+from app.game_accounts.power.combat_power import parse_profile_power
 from app.game_accounts.provider_io.provider import ProviderUnavailable
 
 
@@ -43,12 +44,21 @@ def test_profile_identity_must_match(raw):
         parse_profile_power(raw, 'sample-server', 'sample')
 
 # Reuse isolated PostgreSQL registration fixtures without Flutter sources.
-from tests.game_accounts.test_game_accounts import world, register, change, BASE, page, verify
-from app.core.database import session, now
-from app.game_accounts.models import ScopedPowerCache as PowerCache, Character, Registration
+from tests.game_accounts.test_game_accounts import world
+from tests.game_accounts.test_game_accounts import register
+from tests.game_accounts.test_game_accounts import change
+from tests.game_accounts.test_game_accounts import BASE
+from tests.game_accounts.test_game_accounts import page
+from tests.game_accounts.test_game_accounts import verify
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.models.models import ScopedPowerCache as PowerCache
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Registration
 from app.game_accounts.power import power_service
 from datetime import timedelta
-from sqlalchemy import select, func
+from sqlalchemy import select
+from sqlalchemy import func
 import uuid
 
 
@@ -176,7 +186,7 @@ def test_power_revision_changed_during_network_rolls_back(client, world, monkeyp
 
 
 def test_power_quota_exhaustion_deferred_no_call(client, world, monkeypatch):
-    from app.game_accounts.support import GameError
+    from app.game_accounts.common.support import GameError
     h, state = world; r = owned_registration(client, h, state)
     calls = seed_provider(monkeypatch)
     def quota(*args): raise GameError('RATE_LIMITED', 429, 2)

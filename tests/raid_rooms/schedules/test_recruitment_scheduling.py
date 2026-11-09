@@ -1,20 +1,35 @@
 import uuid
-from datetime import timedelta,datetime,timezone
+from datetime import timedelta
+from datetime import datetime
+from datetime import timezone
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from sqlalchemy import select,func
+from sqlalchemy import select
+from sqlalchemy import func
 from sqlalchemy.exc import SQLAlchemyError
-from app.core.database import session,now
+from app.core.database import session
+from app.core.database import now
 from app.core.errors import register
 from app.raid_rooms.common import time_policy as policy
-from app.raid_rooms.admission_router import router as admissions
-from app.raid_rooms.schedule_router import router
-from app.raid_rooms.availability_router import router as availability
-from app.raid_rooms.source_models import TimeReservation as Reservation,SessionParticipation as Participation
-from app.raid_rooms.integrated_models import RecruitmentSession as Session
-from app.raids.service import KST,cycle
-from tests.raid_rooms.admissions.test_recruitment_admission import ready, sources, imported, people, worlds, creation, create_body, post, create, admission
+from app.raid_rooms.api.admission_router import router as admissions
+from app.raid_rooms.api.schedule_router import router
+from app.raid_rooms.api.availability_router import router as availability
+from app.raid_rooms.models.source_models import TimeReservation as Reservation
+from app.raid_rooms.models.source_models import SessionParticipation as Participation
+from app.raid_rooms.models.integrated_models import RecruitmentSession as Session
+from app.raids.service import KST
+from app.raids.service import cycle
+from tests.raid_rooms.admissions.test_recruitment_admission import ready
+from tests.raid_rooms.admissions.test_recruitment_admission import sources
+from tests.raid_rooms.admissions.test_recruitment_admission import imported
+from tests.raid_rooms.admissions.test_recruitment_admission import people
+from tests.raid_rooms.admissions.test_recruitment_admission import worlds
+from tests.raid_rooms.admissions.test_recruitment_admission import creation
+from tests.raid_rooms.admissions.test_recruitment_admission import create_body
+from tests.raid_rooms.admissions.test_recruitment_admission import post
+from tests.raid_rooms.admissions.test_recruitment_admission import create
+from tests.raid_rooms.admissions.test_recruitment_admission import admission
 
 
 @pytest.fixture
@@ -74,7 +89,7 @@ def test_quorum(count,required):assert policy.quorum(count)==required
 
 
 def test_interval_cycle_maintenance_and_weekly_coverage():
-    from app.game_accounts.support import GameError
+    from app.game_accounts.common.support import GameError
     start=datetime(2026,10,21,0,tzinfo=timezone.utc) # KST09 maintenance
     with pytest.raises(GameError) as error:policy.interval(start,start+timedelta(minutes=10),'2026-10-21')
     assert error.value.code=='MAINTENANCE_WINDOW'
@@ -141,7 +156,7 @@ def test_each_initial_evaluation_never_recreates_already_confirmed_occurrences(r
         out=http.put('/v1/me/play-availability',json=dict(expected_version=1,timezone='Asia/Seoul',intervals=raw),headers={**w['headers'],'Idempotency-Key':str(uuid.uuid4())});assert out.status_code==200,out.text
         out=http.put(f'/v1/me/raid-rooms/{rid}/availability-submission',json=dict(expected_personal_version=2,expected_submission_revision=1,expected_membership_revision=1),headers={**w['headers'],'Idempotency-Key':str(uuid.uuid4())});assert out.status_code==200,out.text
     before=plan(http,a,rid);ids={s['session_id'] for s in before['sessions']};assert len(ids)==1
-    from app.raid_rooms.integrated_models import RecruitmentRoom
+    from app.raid_rooms.models.integrated_models import RecruitmentRoom
     with session() as db,db.begin():scheduling.evaluate_initial(db,db.get(RecruitmentRoom,uuid.UUID(rid)),now(db))
     after=plan(http,a,rid)
     assert {s['session_id'] for s in after['sessions']}==ids and after['revision']==before['revision']

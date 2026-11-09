@@ -39,7 +39,7 @@
 
 ## 측정 후 판단할 항목
 
-- `app/game_accounts/support.py`의 `game-mutations-v1` advisory lock은 여러 쓰기의 일관성을 묶는다. 잠금 범위 축소는 계정/그룹/주간/모집의 교차 불변식을 깨뜨릴 수 있다. 먼저 격리 부하에서 대기시간·트랜잭션 시간·충돌률을 측정하고 실제 병목일 때만 설계한다.
+- `app/game_accounts/common/support.py`의 `game-mutations-v1` advisory lock은 여러 쓰기의 일관성을 묶는다. 잠금 범위 축소는 계정/그룹/주간/모집의 교차 불변식을 깨뜨릴 수 있다. 먼저 격리 부하에서 대기시간·트랜잭션 시간·충돌률을 측정하고 실제 병목일 때만 설계한다.
 - provider semaphore와 `app/core/rate_limit.py`의 메모리 제한은 프로세스 단위다. provider의 DB 제한(`app/lostark_keys/rate_limits.py`)과 구분한다. 다중 worker/인스턴스 운영 전 제한의 적용 범위를 검증한다. 현 단일 실행을 곧바로 장애나 Redis 필요로 해석하지 않는다.
 - SQL/인덱스는 대표 데이터 크기와 query plan으로 판단한다. 이번 점검은 실행 DB 조회/EXPLAIN/부하시험을 하지 않았다. 응답시간 단축·누수 해소를 주장하지 않는다.
 

@@ -2,16 +2,32 @@
 import uuid
 from datetime import timedelta
 from app.raids.service import KST
-from app.raid_rooms.integrated_models import RecruitmentRoom
+from app.raid_rooms.models.integrated_models import RecruitmentRoom
 import pytest
-from sqlalchemy import select,inspect
-from app.core.database import session,now
+from sqlalchemy import select
+from sqlalchemy import inspect
+from app.core.database import session
+from app.core.database import now
 from app.raid_rooms.common import beta_profile
-from app.raid_rooms.schedules import beta_schedule, availability
+from app.raid_rooms.schedules import beta_schedule
+from app.raid_rooms.schedules import availability
 from app.raid_rooms.reads import cycle_member_reads
-from app.raid_rooms.beta_models import BetaSchedule,BetaAvailabilityCopy
-from app.raid_rooms.cycle_models import RoomCycle,CycleMember,CycleSubmission
-from tests.raid_rooms.admissions.test_beta_recruitment import beta, current, candidate, ready, sources, imported, people, worlds, create_beta, beta_join, actor
+from app.raid_rooms.models.beta_models import BetaSchedule
+from app.raid_rooms.models.beta_models import BetaAvailabilityCopy
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import CycleMember
+from app.raid_rooms.models.cycle_models import CycleSubmission
+from tests.raid_rooms.admissions.test_beta_recruitment import beta
+from tests.raid_rooms.admissions.test_beta_recruitment import current
+from tests.raid_rooms.admissions.test_beta_recruitment import candidate
+from tests.raid_rooms.admissions.test_beta_recruitment import ready
+from tests.raid_rooms.admissions.test_beta_recruitment import sources
+from tests.raid_rooms.admissions.test_beta_recruitment import imported
+from tests.raid_rooms.admissions.test_beta_recruitment import people
+from tests.raid_rooms.admissions.test_beta_recruitment import worlds
+from tests.raid_rooms.admissions.test_beta_recruitment import create_beta
+from tests.raid_rooms.admissions.test_beta_recruitment import beta_join
+from tests.raid_rooms.admissions.test_beta_recruitment import actor
 from tests.raid_rooms.schedules.test_recruitment_cycle_times_http import client
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
@@ -127,7 +143,7 @@ def test_wait_deadline_pending_and_explicit_unset_share_auto_candidate(beta):
 
 
 def test_missing_actual_participation_evidence_never_excludes_a_member_from_coordination(beta,monkeypatch):
-    from app.raid_rooms.source_models import SessionParticipation
+    from app.raid_rooms.models.source_models import SessionParticipation
     _,a,b=beta;rid,key,_,_,_=create_beta(a,enabled=True)
     monkeypatch.setattr(beta_schedule,'initial',lambda *args,**kw:None)
     beta_join(b,rid,key)

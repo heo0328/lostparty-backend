@@ -1,12 +1,16 @@
 """Current-C v1 projections. Unsafe old commands recover ACKs then require v2."""
 from functools import wraps
 from inspect import signature
-from typing import get_args,get_origin
+from typing import get_args
+from typing import get_origin
 from types import UnionType
-from pydantic import BaseModel,TypeAdapter,ValidationError
+from pydantic import BaseModel
+from pydantic import TypeAdapter
+from pydantic import ValidationError
 from sqlalchemy import text
-from app.core.database import session,now
-from app.game_accounts.support import fail
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.common.support import fail
 
 
 def enabled(db=None):
@@ -41,13 +45,13 @@ def disabled():return dict(allowed=False,reason='CLIENT_UPGRADE_REQUIRED')
 
 
 def card(value):
-    from app.raid_rooms.search_router import Card
+    from app.raid_rooms.schemas.search_router import Card
     value=dict(value);value['cycle_key']=value['target_cycle_key']
     return project(Card,value)
 
 
 def settings(value):
-    from app.raid_rooms.management_router import Settings
+    from app.raid_rooms.schemas.management_router import Settings
     value=dict(value);value['continuation']=dict(enabled=value['continuation']['enabled'],auto_open_enabled=False,
         revision=value['continuation']['revision'],auto_open_effective_cycle=None)
     value['permissions']={k:disabled() for k in ('edit_settings','edit_continuation','change_visibility')}
@@ -84,19 +88,23 @@ def read(kind):
 
 
 def dispatch(kind,v):
-    from app.raid_rooms.reads import cycle_queries as directory, cycle_member_reads as members, cycle_lists as lists
+    from app.raid_rooms.reads import cycle_queries as directory
+    from app.raid_rooms.reads import cycle_member_reads as members
+    from app.raid_rooms.reads import cycle_lists as lists
     from app.raid_rooms.admissions import cycle_commands as commands
     from app.raid_rooms.schedules import cycle_times as times
     from app.raid_rooms.compat import cycle_legacy as legacy
     from app.raid_rooms.participation import cycle_management as management
     from app.raid_rooms.schedules import cycle_schedule_service as schedules
-    from app.raid_rooms import cycle_schemas as inputs, admission_schemas as old, member_schemas as own
+    from app.raid_rooms.schemas import cycle_schemas as inputs
+    from app.raid_rooms.schemas import admission_schemas as old
+    from app.raid_rooms.schemas import member_schemas as own
     with session() as db:key=commands.raids.cycle(now(db)).cycle_key
     principal=v['principal'];rid=v.get('rid')
     if kind=='search':
         data=inputs.Search.model_validate(v['data'].model_dump(mode='json')|{'target_cycle_key':key})
         result=directory.search(principal,data)['data'];result['items']=[card(c) for c in result['items']]
-        from app.raid_rooms.search_router import Page
+        from app.raid_rooms.schemas.search_router import Page
         return project(Page,result)
     if kind=='card':return card(directory.get_card(principal,rid,key)['data'])
     if kind=='settings':return settings(management.get(principal,rid,key)['data'])
@@ -132,10 +140,10 @@ def dispatch(kind,v):
         target=v.get('target') or key
         if target!=key:fail('CLIENT_UPGRADE_REQUIRED')
         data=legacy.get(principal,rid,key)['data'];data['target_cycle']=key
-        from app.raid_rooms.continuation_router import Choices
+        from app.raid_rooms.schemas.continuation_router import Choices
         return project(Choices,data)
     if kind=='availability':
-        from app.raid_rooms.availability_schemas import SubmissionOut
+        from app.raid_rooms.schemas.availability_schemas import SubmissionOut
         return project(SubmissionOut,times.get_submission(principal,rid,key)['data'])
     if kind=='time':
         data=times.time_context(principal,rid,key,v['target_session_id'])['data'];data['cycle_key']=key
@@ -144,7 +152,7 @@ def dispatch(kind,v):
         data=times.overlaps(principal,key,v['limit'],v['cursor'])['data'];data['cycle_key']=key
         return project(own.OverlapPage,data)
     if kind=='candidates':
-        from app.raid_rooms.schedule_router import Candidate
+        from app.raid_rooms.schemas.schedule_router import Candidate
         return project(Candidate,schedules.candidates(principal,v['gid'],key)['data'])
     if kind=='projections':
         return project(own.ProjectionPage,lists.projections(principal,v['gid'],v['rids'],key,v['token'],v['group_ids'])['data'])

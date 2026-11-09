@@ -1,18 +1,24 @@
 """Enrich only typed opt-in DTO positions inside the caller's read snapshot."""
 from copy import deepcopy
-from typing import get_args, get_origin, Union, Annotated
+from typing import get_args
+from typing import get_origin
+from typing import Union
+from typing import Annotated
 import types
 import uuid
 from pydantic import BaseModel
 from sqlalchemy import select
 from fastapi.encoders import jsonable_encoder
 from app.raid_rooms.common import beta_profile
-from app.raid_rooms import beta_schemas
+from app.raid_rooms.schemas import beta_schemas
 from app.raid_rooms.schedules import beta_schedule
-from app.raid_rooms.beta_models import BetaApplicationMemo,BetaAvailabilityCopy
-from app.raid_rooms.cycle_models import RoomCycle,CycleMember
-from app.raid_rooms.cycle_application_models import CycleApplication
-from app.raid_rooms.integrated_models import RecruitmentMembership as Member,RecruitmentRoom as Room
+from app.raid_rooms.models.beta_models import BetaApplicationMemo
+from app.raid_rooms.models.beta_models import BetaAvailabilityCopy
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_models import CycleMember
+from app.raid_rooms.models.cycle_application_models import CycleApplication
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
 
 
 def identity(db,uid,row):
@@ -81,7 +87,7 @@ def render(db,uid,stamp,model,payload,*,exclude_unset=False):
     if not beta_profile.enabled():
         return model.model_validate(jsonable_encoder(payload)).model_dump(mode='json',exclude_unset=exclude_unset)
     if not beta_schedule.available(db):
-        from app.game_accounts.support import fail
+        from app.game_accounts.common.support import fail
         fail('RECRUITMENT_COMMAND_NOT_READY',503)
     value=enrich(db,uid,stamp,model,payload)
     return beta_schemas.output_model(model).model_validate(value).model_dump(mode='json',exclude_unset=exclude_unset)

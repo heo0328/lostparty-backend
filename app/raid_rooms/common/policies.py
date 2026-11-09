@@ -1,5 +1,5 @@
 """Explicit initial public/finite policy. No default injection into F1 services."""
-from app.game_accounts.support import fail
+from app.game_accounts.common.support import fail
 from app.raids import service as raids
 from app.raid_rooms.common import core
 

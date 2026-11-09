@@ -1,13 +1,27 @@
 """Current ownership gates for commands, late results and retained private cache."""
 import uuid
 import pytest
-from sqlalchemy import select, func
-from app.core.database import session, now
+from sqlalchemy import select
+from sqlalchemy import func
+from app.core.database import session
+from app.core.database import now
 from app.game_accounts.power import power_service
-from app.game_accounts.rosters import service, lifecycle, observations
-from app.game_accounts.models import Account, Registration, ScopedPowerCache, RequestResult
-from tests.game_accounts.test_game_accounts import world, register, verify, change, page, BASE
-from tests.game_accounts.test_combat_power import endpoint, body, seed_provider
+from app.game_accounts.rosters import service
+from app.game_accounts.rosters import lifecycle
+from app.game_accounts.rosters import observations
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import ScopedPowerCache
+from app.game_accounts.models.models import RequestResult
+from tests.game_accounts.test_game_accounts import world
+from tests.game_accounts.test_game_accounts import register
+from tests.game_accounts.test_game_accounts import verify
+from tests.game_accounts.test_game_accounts import change
+from tests.game_accounts.test_game_accounts import page
+from tests.game_accounts.test_game_accounts import BASE
+from tests.game_accounts.test_combat_power import endpoint
+from tests.game_accounts.test_combat_power import body
+from tests.game_accounts.test_combat_power import seed_provider
 
 
 def lose_ownership(registration):
@@ -101,7 +115,8 @@ def test_ownership_lost_during_provider_never_commits_private_result(client,worl
 
 
 def test_direct_preview_projects_old_observation_without_mutation(client,world,monkeypatch):
-    from datetime import datetime,timezone
+    from datetime import datetime
+    from datetime import timezone
     h,_=world
     rows=[dict(server_name='sample-server',character_name='a0',class_name='sample-class',
                character_level=60,item_level='1700',combat_power='123')]

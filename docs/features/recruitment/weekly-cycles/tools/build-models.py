@@ -62,7 +62,7 @@ ROOTS={
 def main():
     arguments=argparse.ArgumentParser()
     arguments.add_argument('--generator',default='datamodel-codegen')
-    arguments.add_argument('--output',default='app/raid_rooms/cycle_wire.py')
+    arguments.add_argument('--output',default='app/raid_rooms/schemas/cycle_wire.py')
     options=arguments.parse_args()
     full=json.loads(Path('docs/features/recruitment/weekly-cycles/examples/baseline/full.openapi.json').read_text())
     digest=hashlib.sha256(json.dumps(full,sort_keys=True,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()

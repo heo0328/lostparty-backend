@@ -1,23 +1,36 @@
 """W2 read slice: actor isolation, exact leases, RR preservation and contract parity."""
 import json
 import uuid
-from datetime import date, datetime, timedelta, timezone
+from datetime import date
+from datetime import datetime
+from datetime import timedelta
+from datetime import timezone
 from pathlib import Path
 import pytest
-from sqlalchemy import event, inspect, select, text
-from app.core.database import engine, session, now
-from app.game_accounts.models import Account, Character, NameClaim, Registration
+from sqlalchemy import event
+from sqlalchemy import inspect
+from sqlalchemy import select
+from sqlalchemy import text
+from app.core.database import engine
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.models.models import Registration
 from app.raid_rooms.reads import queries
 from app.raid_rooms.outcomes import weekly_summary as service
-from app.raid_rooms import weekly_summary_schemas as s
-from app.raid_rooms.integrated_models import RecruitmentMembership as Member, RecruitmentRoom as Room
-from app.raid_rooms.source_models import ContinuationChoice
-from app.raid_rooms.weekly_links import WeeklyOccupancy
+from app.raid_rooms.schemas import weekly_summary_schemas as s
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from app.raid_rooms.models.source_models import ContinuationChoice
+from app.raid_rooms.models.weekly_links import WeeklyOccupancy
 from app.raid_weekly.models import WeeklyState
 from app.raids import service as raids
 from tests.groups.test_group_admissions import worlds
 from tests.raid_rooms.common.test_raid_room_foundation import people
-from tests.raid_rooms.participation.test_recruitment_participation import make_room, admit
+from tests.raid_rooms.participation.test_recruitment_participation import make_room
+from tests.raid_rooms.participation.test_recruitment_participation import admit
 from tests.raid_rooms.common.test_recruitment_cycles import add_next_bundle
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 from tests.groups.test_group_foundation import actor
@@ -180,7 +193,7 @@ def test_current_and_next_exact_leases_with_legacy_intent_separate(client,users)
         next_rounds(db,rid,current+timedelta(days=7))
         add_next_bundle(db,rid,current,a['uid'])
         member=db.scalar(select(Member).where(Member.room_id==rid,Member.user_id==a['uid']))
-        from app.raid_rooms.integrated_models import RecruitmentItem as Item
+        from app.raid_rooms.models.integrated_models import RecruitmentItem as Item
         item=db.scalar(select(Item).where(Item.room_id==rid))
         db.add(ContinuationChoice(id=uuid.uuid4(),room_id=rid,item_id=item.id,membership_id=member.id,user_id=a['uid'],
             character_id=uuid.UUID(a['ids'][1]),raid_id=item.raid_id,selected_role='dealer',ownership_revision=1,
@@ -254,7 +267,8 @@ def test_rr_snapshot_remains_consistent_during_concurrent_leave(client,users):
 def test_summary_does_not_load_closed_generations(client,users):
     a,b,current,stamp=users
     rid=make_room(a);admit(a,rid)
-    from app.raid_rooms.integrated_models import RecruitmentAssignment as Assignment,RecruitmentRound as Round
+    from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+    from app.raid_rooms.models.integrated_models import RecruitmentRound as Round
     with session() as db,db.begin():
         original=db.scalar(select(Assignment).where(Assignment.room_id==rid))
         original_round=db.get(Round,original.round_id)
@@ -277,7 +291,8 @@ def test_summary_does_not_load_closed_generations(client,users):
 @pytest.mark.parametrize('change,status',[('disabled',403),('revoked',401)])
 def test_current_session_and_member_state_is_checked(client,users,change,status):
     a,b,current,_=users
-    from app.auth.models import User,Session
+    from app.auth.models import User
+    from app.auth.models import Session
     with session() as db,db.begin():
         if change=='disabled':db.get(User,a['uid']).status='disabled'
         else:db.scalar(select(Session).where(Session.user_id==a['uid'])).revoked_at=now(db)

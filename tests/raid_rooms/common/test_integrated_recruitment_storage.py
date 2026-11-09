@@ -2,18 +2,30 @@
 import uuid
 from datetime import timedelta
 import pytest
-from sqlalchemy import inspect, text
+from sqlalchemy import inspect
+from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
 from app.core import database
-from app.core.database import session, now
+from app.core.database import session
+from app.core.database import now
 from app.raid_rooms.common import readiness
-from app.raid_rooms.integrated_models import (
-    RecruitmentRoom, RecruitmentItem, RecruitmentRound, RecruitmentMembership,
-    RecruitmentAssignment, RecruitmentSession, RecruitmentSegment,
-)
-from tests.raid_rooms.common.test_raid_room_migrations import isolated_app_database, table_digests
-from tests.groups.test_group_admissions import worlds, group
-from tests.raid_rooms.common.test_raid_room_foundation import people, create, create_command, selection, join, recover
+from app.raid_rooms.models.integrated_models import RecruitmentRoom
+from app.raid_rooms.models.integrated_models import RecruitmentItem
+from app.raid_rooms.models.integrated_models import RecruitmentRound
+from app.raid_rooms.models.integrated_models import RecruitmentMembership
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment
+from app.raid_rooms.models.integrated_models import RecruitmentSession
+from app.raid_rooms.models.integrated_models import RecruitmentSegment
+from tests.raid_rooms.common.test_raid_room_migrations import isolated_app_database
+from tests.raid_rooms.common.test_raid_room_migrations import table_digests
+from tests.groups.test_group_admissions import worlds
+from tests.groups.test_group_admissions import group
+from tests.raid_rooms.common.test_raid_room_foundation import people
+from tests.raid_rooms.common.test_raid_room_foundation import create
+from tests.raid_rooms.common.test_raid_room_foundation import create_command
+from tests.raid_rooms.common.test_raid_room_foundation import selection
+from tests.raid_rooms.common.test_raid_room_foundation import join
+from tests.raid_rooms.common.test_raid_room_foundation import recover
 
 MODELS = (RecruitmentRoom, RecruitmentItem, RecruitmentRound, RecruitmentMembership,
           RecruitmentAssignment, RecruitmentSession, RecruitmentSegment)

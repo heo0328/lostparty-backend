@@ -1,19 +1,54 @@
 """Opt-in prejoin display: synthetic restricted PostgreSQL, no live accounts."""
 import json
 import uuid
-from datetime import date, datetime, timedelta
+from datetime import date
+from datetime import datetime
+from datetime import timedelta
 
 import pytest
-from sqlalchemy import insert, select
+from sqlalchemy import insert
+from sqlalchemy import select
 
-from app.core.database import session, now
+from app.core.database import session
+from app.core.database import now
 from app.raid_rooms.common import command_context as opaque
 from app.raid_rooms.schedules import session_display as display
-from app.raid_rooms.admissions import cycle_opening as opening, cycle_continuation as continuation
-from app.raid_rooms import cycle_wire as wire, cycle_schemas as inputs
-from tests.raid_rooms.schedules.test_recruitment_cycle_planning import planning, consent, lifecycle, candidate, ready, sources, imported, people, worlds, scheduled, plan, preflight, request, creation, actor, add_member, cancel_member, fingerprints, denied, commands, cycles, next_key, change_body, character, service, coordinated, graph
-from tests.raid_rooms.admissions.test_recruitment_cycle_commands import create_room, admission_request
-from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import opening_body, continue_body, scoped
+from app.raid_rooms.admissions import cycle_opening as opening
+from app.raid_rooms.admissions import cycle_continuation as continuation
+from app.raid_rooms.schemas import cycle_wire as wire
+from app.raid_rooms.schemas import cycle_schemas as inputs
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import planning
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import consent
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import lifecycle
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import candidate
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import ready
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import sources
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import imported
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import people
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import worlds
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import scheduled
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import plan
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import preflight
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import request
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import creation
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import actor
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import add_member
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import cancel_member
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import fingerprints
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import denied
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import commands
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import cycles
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import next_key
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import change_body
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import character
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import service
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import coordinated
+from tests.raid_rooms.schedules.test_recruitment_cycle_planning import graph
+from tests.raid_rooms.admissions.test_recruitment_cycle_commands import create_room
+from tests.raid_rooms.admissions.test_recruitment_cycle_commands import admission_request
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import opening_body
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import continue_body
+from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import scoped
 from tests.raid_rooms.schedules.test_recruitment_cycle_times_http import client
 from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import outcomes
 # The contract tool moved with the documentation; load its canonical path.
@@ -248,7 +283,7 @@ def test_real_authentication_required_and_private_plan_stays_private(planning):
     from fastapi.testclient import TestClient
     from app.core.errors import register
     from app.main import no_store
-    from app.raid_rooms.cycle_router import router
+    from app.raid_rooms.api.cycle_router import router
     _, a, b = planning
     rid, c, n = scheduled(a)
     app = FastAPI(); register(app); app.include_router(router); app.middleware('http')(no_store)
@@ -302,7 +337,7 @@ def test_nullable_actual_times_and_missing_preview_duration(planning):
 
 
 def test_real_one_mib_preview_limit_with_large_stored_intent(planning):
-    from app.raid_rooms.source_models import ScheduleAlternative
+    from app.raid_rooms.models.source_models import ScheduleAlternative
     engine, a, b = planning
     ctx = preflight(a, bundle=True)
     group = dict(client_group_key='large-preview', existing_group_id=None, expected_group_revision=None,

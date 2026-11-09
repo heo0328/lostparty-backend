@@ -6,21 +6,44 @@ from datetime import date
 from pathlib import Path
 
 import pytest
-from jsonschema import Draft202012Validator, FormatChecker
-from sqlalchemy import event, select, inspect, func
+from jsonschema import Draft202012Validator
+from jsonschema import FormatChecker
+from sqlalchemy import event
+from sqlalchemy import select
+from sqlalchemy import inspect
+from sqlalchemy import func
 
-from app.core.database import session, now
-from app.game_accounts.models import Character, Activity
-from app.game_accounts.support import GameError
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Activity
+from app.game_accounts.common.support import GameError
 from app.raid_rooms.admissions import admission_candidates as candidates
 from app.raid_rooms.participation import cycle_character as changes
 from app.raid_rooms.reads import cycle_member_reads
 from app.raid_rooms.admissions import admission_eligibility as eligibility
-from app.raid_rooms.cycle_models import RoomCycle
-from app.raid_rooms.cycle_application_models import CycleApplication
-from app.raid_rooms.integrated_models import RecruitmentAssignment as Assignment
+from app.raid_rooms.models.cycle_models import RoomCycle
+from app.raid_rooms.models.cycle_application_models import CycleApplication
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
 from app.raid_weekly.models import WeeklyState
-from tests.raid_rooms.admissions.test_application_composition import current, candidate, ready, sources, imported, people, worlds, room, change_class, leader_class, apply, approve, occupancy, commands, context, admission_request, denied, actor
+from tests.raid_rooms.admissions.test_application_composition import current
+from tests.raid_rooms.admissions.test_application_composition import candidate
+from tests.raid_rooms.admissions.test_application_composition import ready
+from tests.raid_rooms.admissions.test_application_composition import sources
+from tests.raid_rooms.admissions.test_application_composition import imported
+from tests.raid_rooms.admissions.test_application_composition import people
+from tests.raid_rooms.admissions.test_application_composition import worlds
+from tests.raid_rooms.admissions.test_application_composition import room
+from tests.raid_rooms.admissions.test_application_composition import change_class
+from tests.raid_rooms.admissions.test_application_composition import leader_class
+from tests.raid_rooms.admissions.test_application_composition import apply
+from tests.raid_rooms.admissions.test_application_composition import approve
+from tests.raid_rooms.admissions.test_application_composition import occupancy
+from tests.raid_rooms.admissions.test_application_composition import commands
+from tests.raid_rooms.admissions.test_application_composition import context
+from tests.raid_rooms.admissions.test_application_composition import admission_request
+from tests.raid_rooms.admissions.test_application_composition import denied
+from tests.raid_rooms.admissions.test_application_composition import actor
 from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import change_body
 from tests.raid_rooms.participation.test_recruitment_participation import write_power
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
@@ -182,7 +205,8 @@ def test_candidate_http_closed_queries_contract_and_no_store(current,monkeypatch
 
 
 def test_bulk_query_count_does_not_grow_with_characters(current):
-    from app.game_accounts.models import Account, NameClaim
+    from app.game_accounts.models.models import Account
+    from app.game_accounts.models.models import NameClaim
     engine,a,b=current;rid,c,n=room(a);queries=[]
     def count(*args):queries.append(1)
     event.listen(engine,'before_cursor_execute',count)
@@ -203,8 +227,8 @@ def test_bulk_query_count_does_not_grow_with_characters(current):
 
 
 def test_same_room_other_assignment_lease_not_self_excluded(current):
-    from app.raid_rooms.integrated_models import RecruitmentRound as Round
-    from app.raid_rooms.weekly_links import WeeklyOccupancy
+    from app.raid_rooms.models.integrated_models import RecruitmentRound as Round
+    from app.raid_rooms.models.weekly_links import WeeklyOccupancy
     _,a,b=current;rid,c,n=room(a)
     with session() as db,db.begin():
         target=db.scalar(select(RoomCycle).where(RoomCycle.room_id==rid,RoomCycle.cycle_key==date.fromisoformat(c)))
@@ -249,10 +273,11 @@ def test_tampered_application_party_and_unsupported_role_rejected(current):
 def test_candidate_actual_bearer_unauthenticated_foreign_and_revoked(current):
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
-    from app.auth.models import User,Session
+    from app.auth.models import User
+    from app.auth.models import Session
     from app.core.errors import register
     from app.main import no_store
-    from app.raid_rooms.cycle_router import router
+    from app.raid_rooms.api.cycle_router import router
     _,a,b=current;rid,c,n=room(a);app=FastAPI();register(app);app.include_router(router);app.middleware('http')(no_store)
     route=f'/v2/raid-rooms/{rid}/admission-character-candidates';query=dict(target_cycle_key=c,intent='apply')
     with session() as db:
@@ -288,7 +313,7 @@ def test_approval_rechecks_latest_qualification_pending_preserved(current,kind,c
 
 
 def test_change_missing_original_lease_is_not_a_valid_preview(current):
-    from app.raid_rooms.weekly_links import WeeklyOccupancy
+    from app.raid_rooms.models.weekly_links import WeeklyOccupancy
     _,a,b=current;rid,c,n=room(a)
     ctx=commands.get_context(actor(a['uid']),rid,c,uuid.UUID(a['ids'][1]),'dealer','change_character')
     plan=cycle_member_reads.plan(actor(a['uid']),rid,c);body=change_body(ctx,plan)

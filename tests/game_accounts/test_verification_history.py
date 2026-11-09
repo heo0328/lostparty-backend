@@ -2,13 +2,25 @@
 import uuid
 from datetime import timedelta
 import pytest
-from sqlalchemy import select, func
-from app.core.database import session, now
+from sqlalchemy import select
+from sqlalchemy import func
+from app.core.database import session
+from app.core.database import now
 from app.game_accounts.rosters import observations
 from app.game_accounts.verification import verification_history
-from app.game_accounts.models import VerificationExecution as Execution, Verification, Account, Audit, RequestResult
+from app.game_accounts.models.models import VerificationExecution as Execution
+from app.game_accounts.models.models import Verification
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Audit
+from app.game_accounts.models.models import RequestResult
 from app.game_accounts.provider_io.provider import ProviderUnavailable
-from tests.game_accounts.test_game_accounts import world, register, start, verify, change, another_user, VERIFY
+from tests.game_accounts.test_game_accounts import world
+from tests.game_accounts.test_game_accounts import register
+from tests.game_accounts.test_game_accounts import start
+from tests.game_accounts.test_game_accounts import verify
+from tests.game_accounts.test_game_accounts import change
+from tests.game_accounts.test_game_accounts import another_user
+from tests.game_accounts.test_game_accounts import VERIFY
 
 
 def events():

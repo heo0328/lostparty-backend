@@ -5,14 +5,18 @@ from concurrent.futures import ThreadPoolExecutor
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from sqlalchemy import text, event
+from sqlalchemy import text
+from sqlalchemy import event
 from app.core.database import session
 from app.core.errors import register
 from app.raid_rooms.schedules import availability
-from app.raid_rooms.availability_router import router
-from app.raid_rooms.availability_schemas import PersonalIn
-from app.raid_rooms.source_models import PersonalAvailability
-from tests.raid_rooms.common.test_recruitment_sources import sources, imported, people, worlds
+from app.raid_rooms.api.availability_router import router
+from app.raid_rooms.schemas.availability_schemas import PersonalIn
+from app.raid_rooms.models.source_models import PersonalAvailability
+from tests.raid_rooms.common.test_recruitment_sources import sources
+from tests.raid_rooms.common.test_recruitment_sources import imported
+from tests.raid_rooms.common.test_recruitment_sources import people
+from tests.raid_rooms.common.test_recruitment_sources import worlds
 from tests.groups.test_group_foundation import actor
 from tests.raid_rooms.common.test_raid_room_http import err
 
@@ -172,7 +176,7 @@ def test_get_transactions_are_readonly_and_body_boundary(sources,http):
 def test_draft_http_contract_and_production_contract_remain_separate(http):
     from app.main import app
     from pathlib import Path
-    from app.raid_rooms.availability_contract import draft_openapi
+    from app.raid_rooms.contracts.availability_contract import draft_openapi
     draft=draft_openapi()
     assert draft==json.loads(Path('openapi/recruitment-availability.draft.json').read_text())
     assert set(draft['paths'])==set(http.app.openapi()['paths'])

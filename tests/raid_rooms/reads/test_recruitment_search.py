@@ -3,13 +3,22 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from sqlalchemy import select
-from app.core.database import session,now
+from app.core.database import session
+from app.core.database import now
 from app.core.errors import register
-from app.groups.models import Group,GroupMembership
-from app.raid_rooms.integrated_models import RecruitmentRoom as Room
-from app.raid_rooms.admission_router import router as admissions
-from app.raid_rooms.search_router import router
-from tests.raid_rooms.admissions.test_recruitment_admission import ready, sources, imported, people, worlds, post, create, admission
+from app.groups.models import Group
+from app.groups.models import GroupMembership
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from app.raid_rooms.api.admission_router import router as admissions
+from app.raid_rooms.api.search_router import router
+from tests.raid_rooms.admissions.test_recruitment_admission import ready
+from tests.raid_rooms.admissions.test_recruitment_admission import sources
+from tests.raid_rooms.admissions.test_recruitment_admission import imported
+from tests.raid_rooms.admissions.test_recruitment_admission import people
+from tests.raid_rooms.admissions.test_recruitment_admission import worlds
+from tests.raid_rooms.admissions.test_recruitment_admission import post
+from tests.raid_rooms.admissions.test_recruitment_admission import create
+from tests.raid_rooms.admissions.test_recruitment_admission import admission
 from tests.raid_rooms.common.test_raid_room_http import err
 
 
@@ -102,7 +111,7 @@ def test_member_count_sort_remaining_slots_before_page_and_cursor_binding(ready,
     for extra in (dict(remaining_slot_counts=[True]),dict(remaining_slot_counts=[0]),dict(remaining_slot_counts=[8]),dict(remaining_slot_counts=[2,2]),dict(sort=dict(criterion='remaining_slots',direction='ascending'))):
         err(http.post('/v1/raid-rooms/search',json=dict(data,**extra),headers=a['headers']),400,'INVALID_REQUEST')
     from app.auth.models import User
-    from app.raid_rooms.integrated_models import RecruitmentMembership as Member
+    from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
     with session() as db,db.begin():
         stamp=now(db)
         for _ in range(2):

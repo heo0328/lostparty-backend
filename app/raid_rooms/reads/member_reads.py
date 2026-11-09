@@ -1,18 +1,29 @@
 """Private member reads and anonymous cross-room busy intervals, read only."""
+import app.raid_rooms.models.source_models as source_models_models
 import uuid
-from datetime import date,timedelta
+from datetime import date
+from datetime import timedelta
 from sqlalchemy import select
-from app.game_accounts.support import fail,cursor_encode,cursor_decode
-from app.game_accounts.support import GameError
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import cursor_encode
+from app.game_accounts.common.support import cursor_decode
+from app.game_accounts.common.support import GameError
 from app.game_accounts.rosters.lifecycle import digest
 from app.raid_rooms.admissions import admission_service as base
 from app.raid_rooms.reads import search
 from app.raid_rooms.schedules import scheduling as graph
-from app.raid_rooms import management
+from app.raid_rooms.participation import management
 from app.raid_rooms.participation import participation_core as core
-from app.raid_rooms.integrated_models import RecruitmentRoom as Room,RecruitmentMembership as Member,RecruitmentAssignment as Assignment,RecruitmentRound as Round
-from app.raid_rooms.source_models import AvailabilitySubmission,TimeReservation as Reservation,ContinuationChoice as Choice,RecruitmentApplication as Application
-from app.raid_rooms.models import MemberHead,DirectoryHead
+from app.raid_rooms.models.integrated_models import RecruitmentRoom as Room
+from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
+from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
+from app.raid_rooms.models.integrated_models import RecruitmentRound as Round
+from app.raid_rooms.models.source_models import AvailabilitySubmission
+from app.raid_rooms.models.source_models import TimeReservation as Reservation
+from app.raid_rooms.models.source_models import ContinuationChoice as Choice
+from app.raid_rooms.models.source_models import RecruitmentApplication as Application
+from app.raid_rooms.models.models import MemberHead
+from app.raid_rooms.models.models import DirectoryHead
 from app.groups.models import GroupMembership
 
 
@@ -40,7 +51,7 @@ def detail(principal,rid):
                     character=core.identity.selected_character(db,m.user_id,selected.model_dump(mode='json'))
                     if (selected.expected_ownership_revision,selected.expected_lifecycle_revision)!=(recent.ownership_revision,recent.lifecycle_revision):
                         fail('OWNERSHIP_REQUIRED',403)
-                    config=db.get(management.RoomSettings,room.id)
+                    config=db.get(source_models_models.RoomSettings,room.id)
                     comparison=core.power_comparison(db,m.user_id,selected,config.dealer_min if recent.selected_role=='dealer' else config.support_min)
                 except GameError as error:reason=error.code
                 build=dict(role=recent.selected_role,version=captured.get('success_summary_version'),summary=captured.get('success_summary'),saved_at=captured.get('success_saved_at'),

@@ -10,16 +10,29 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 
 import pytest
-from sqlalchemy import event, select, func, text
+from sqlalchemy import event
+from sqlalchemy import select
+from sqlalchemy import func
+from sqlalchemy import text
 from sqlalchemy.exc import OperationalError
 
-from app.core.database import engine, session, now
+from app.core.database import engine
+from app.core.database import session
+from app.core.database import now
 from app.game_accounts.rosters import batches
 from app.game_accounts.character_profiles import profiles
-from app.game_accounts.batch_schemas import RoleSummaryBatchIn
-from app.game_accounts.models import (Account, Character, Registration, NameClaim,
-    CharacterRoleSummary, RequestResult)
-from tests.game_accounts.test_role_summaries import owned, world, data, get, put
+from app.game_accounts.schemas.batch_schemas import RoleSummaryBatchIn
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.models.models import CharacterRoleSummary
+from app.game_accounts.models.models import RequestResult
+from tests.game_accounts.test_role_summaries import owned
+from tests.game_accounts.test_role_summaries import world
+from tests.game_accounts.test_role_summaries import data
+from tests.game_accounts.test_role_summaries import get
+from tests.game_accounts.test_role_summaries import put
 from tests.game_accounts.test_game_accounts import another_user
 from tests.game_accounts.test_account_bootstrap import fingerprints
 
@@ -242,7 +255,8 @@ def test_same_key_concurrent_and_expiry_lease(client, owned):
     assert write(client,h,[a]).json()['items'][0]['error']['code']=='IDEMPOTENCY_EXPIRED'
     pending=command(cid,'support')
     with session() as db:
-        from app.auth.models import User, Session
+        from app.auth.models import User
+        from app.auth.models import Session
         principal=(db.scalar(select(User)),db.scalar(select(Session)))
     ticket,_=profiles.reserve(principal,'role-summary',uuid.UUID(pending['command_id']),
         {'target':cid,'role':'support','body':data()})
@@ -298,7 +312,8 @@ def test_post_commit_response_loss_replays_without_increment(client, owned, monk
 
 @pytest.mark.parametrize('kind,status', [('expired',401),('revoked',401),('disabled',403)])
 def test_global_auth_rejects_before_reservation(client, owned, kind, status):
-    from app.auth.models import User, Session
+    from app.auth.models import User
+    from app.auth.models import Session
     h, _, cid = owned
     with session() as db, db.begin():
         s = db.scalar(select(Session))
@@ -330,24 +345,9 @@ def test_read_does_not_bypass_current_write_fences(client, owned, kind):
 def test_partial_commit_then_real_worker_exit_recovers(client, owned):
     h, _, cid=owned;ids=expand(cid,3);commands=[command(c) for c in ids]
     # Kill only an isolated test subprocess, after its first committed item.
-    code='''
-import json,os,sys,uuid
-from sqlalchemy import select
-from app.core.database import session
-from app.auth.models import User,Session
-from app.game_accounts.rosters import batches
-from app.game_accounts.character_profiles import profiles
-from app.game_accounts.batch_schemas import RoleSummaryBatchIn
-with session() as db:
-    principal=(db.get(User,uuid.UUID(sys.argv[1])),db.get(Session,uuid.UUID(sys.argv[2])))
-original=profiles.put
-def terminate(*args):
-    original(*args)
-    os._exit(23)
-profiles.put=terminate
-batches.put(principal,RoleSummaryBatchIn.model_validate(json.loads(sys.stdin.read())),'crash-test')
-'''
-    from app.auth.models import User, Session
+    code="\nimport json\nimport os\nimport sys\nimport uuid\nfrom sqlalchemy import select\nfrom app.core.database import session\nfrom app.auth.models import User\nfrom app.auth.models import Session\nfrom app.game_accounts.rosters import batches\nfrom app.game_accounts.character_profiles import profiles\nfrom app.game_accounts.schemas.batch_schemas import RoleSummaryBatchIn\nwith session() as db:\n    principal=(db.get(User,uuid.UUID(sys.argv[1])),db.get(Session,uuid.UUID(sys.argv[2])))\noriginal=profiles.put\ndef terminate(*args):\n    original(*args)\n    os._exit(23)\nprofiles.put=terminate\nbatches.put(principal,RoleSummaryBatchIn.model_validate(json.loads(sys.stdin.read())),'crash-test')\n"
+    from app.auth.models import User
+    from app.auth.models import Session
     with session() as db: uid,sid=str(db.scalar(select(User.id))),str(db.scalar(select(Session.id)))
     process=subprocess.run([sys.executable,'-c',code,uid,sid],input=json.dumps({'items':commands}),
                            text=True,capture_output=True,timeout=30)

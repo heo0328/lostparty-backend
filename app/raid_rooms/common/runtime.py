@@ -1,6 +1,6 @@
 """Admission controls for candidate HTTP; production routes remain unregistered."""
 import os
-from app.game_accounts.support import fail
+from app.game_accounts.common.support import fail
 
 SETTING = 'RAID_ROOM_ADMISSIONS_ENABLED'
 
