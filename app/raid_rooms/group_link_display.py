@@ -5,7 +5,9 @@ from app.raid_rooms.cycle_group_schemas import Metadata
 from uuid import UUID
 from app.game_accounts.schemas import DTO
 from app.groups import features
-from app.raid_rooms import admission_service as base, cycle_member_reads as members, membership_readers
+from app.raid_rooms.admissions import admission_service as base
+from app.raid_rooms.reads import cycle_member_reads as members
+from app.raid_rooms.participation import membership_readers
 from app.raid_rooms import cycle_wire, membership_action_schemas, application_display_schemas, resume_review_schemas
 from app.raid_rooms.integrated_models import RecruitmentRoom
 
@@ -50,7 +52,8 @@ def get(principal, rid, key, kind, *, reader_profile=None, membership_id=None, c
         else:
             result = members.plan(principal,rid,key,include_resume_display,read_snapshot=snap)
         room = db.get(RecruitmentRoom, rid)
-        from app.raid_rooms import cycles, cycle_group_policy as policy
+        from app.raid_rooms.common import cycles
+        from app.raid_rooms.group_links import cycle_group_policy as policy
         if policy.enabled(db):
             _,row=cycles.resolve(db,rid,key,stamp)
             target=result.get('data',{}).get('target',{})

@@ -31,7 +31,7 @@ def cleanup():
 
 def cleanup_all():
     cleanup()
-    from app.game_accounts.cleanup import clean
+    from app.game_accounts.rosters.cleanup import clean
     clean()
 
 

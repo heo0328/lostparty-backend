@@ -2,7 +2,8 @@ from typing import Annotated, Literal
 from uuid import UUID
 from fastapi import APIRouter, Depends, Query, Request
 from app.game_accounts.router import Principal, common
-from app.game_accounts import schemas as s, lifecycle_reads
+from app.game_accounts import schemas as s
+from app.game_accounts.rosters import lifecycle_reads
 from app.game_accounts.support import fail
 
 

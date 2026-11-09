@@ -9,7 +9,8 @@ from app.core.database import session, now
 from app.game_accounts.router import Principal, Key
 from app.game_accounts.support import authorize, reserve, commit_result, release, lock, fail
 from app.raid_rooms.availability_router import AvailabilityRoute
-from app.raid_rooms import beta_text, beta_profile, cycle_wire
+from app.raid_rooms.common import beta_text, beta_profile
+from app.raid_rooms import cycle_wire
 from app.raid_rooms.beta_models import ApplicationMessagePresets
 from app.raid_rooms.beta_schemas import Memo, MemoStored
 

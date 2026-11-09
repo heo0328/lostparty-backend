@@ -8,7 +8,8 @@ from typing import Annotated, Literal, Union, get_args, get_origin
 from uuid import UUID
 from pydantic import (AfterValidator, AwareDatetime, BaseModel, ConfigDict, Field, StrictBool, StrictInt,
                       StrictStr, create_model, field_validator, model_validator)
-from app.raid_rooms import cycle_schemas as legacy, beta_text
+from app.raid_rooms import cycle_schemas as legacy
+from app.raid_rooms.common import beta_text
 from app.game_accounts.support import fail
 
 Version=Annotated[StrictInt,Field(ge=1,le=2147483647)]

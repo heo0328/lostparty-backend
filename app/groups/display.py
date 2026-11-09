@@ -7,7 +7,7 @@ from fastapi.encoders import jsonable_encoder
 from pydantic import ValidationError
 from app.auth.models import User
 from app.core.database import session, now
-from app.game_accounts import lifecycle
+from app.game_accounts.rosters import lifecycle
 from app.game_accounts.models import Account, Registration, Configuration, Activity, Character, NameClaim, CharacterRoleSummary
 from app.game_accounts.power_success import RolePowerSuccess
 from app.game_accounts.profile_schemas import RoleSummary
@@ -16,7 +16,7 @@ from app.groups import features, service as groups, http_service, admissions, ad
 from app.groups.models import Group, GroupMembership
 from app.groups.admission_models import GroupJoinSubject, GroupJoinRelation
 from app.groups.feature_models import GroupActivityHead, SubjectCharacterReference
-from app.raid_rooms.application_display import _level
+from app.raid_rooms.admissions.application_display import _level
 
 PROFILE = 'group-display-1'
 MAX_RESPONSE_BYTES = 1024 * 1024

@@ -4,7 +4,8 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.routing import APIRoute
 from app.game_accounts.router import Principal, Key
 from app.game_accounts.schemas import GameErrorOut
-from app.game_accounts import profiles, presentation, profile_schemas as s
+from app.game_accounts.character_profiles import profiles, presentation
+from app.game_accounts import profile_schemas as s
 from app.game_accounts.support import fail
 
 

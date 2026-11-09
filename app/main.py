@@ -32,14 +32,14 @@ from app.raid_rooms.completion_router import router as completion_router
 from app.raid_rooms.management_router import router as recruitment_management_router
 from app.raid_rooms.search_router import router as recruitment_search_router
 from app.raid_rooms.member_router import router as recruitment_reads_router
-from app.raid_rooms.worker import run as run_recruitment_worker
+from app.raid_rooms.common.worker import run as run_recruitment_worker
 from app.raid_rooms.weekly_summary_router import router as weekly_summary_router
 
 
 @asynccontextmanager
 async def lifespan(app):
     from app.core.database import session
-    from app.raid_rooms.readiness import require_active
+    from app.raid_rooms.common.readiness import require_active
     with session() as db:require_active(db)
     task = asyncio.create_task(run())
     ownership_task = asyncio.create_task(run_ownership_worker())
@@ -419,8 +419,8 @@ def health():
 @asynccontextmanager
 async def two_cycle_lifespan(application):
     from app.core.database import session
-    from app.raid_rooms.readiness import require_two_cycle_active
-    from app.raid_rooms.cycle_worker import process_due
+    from app.raid_rooms.common.readiness import require_two_cycle_active
+    from app.raid_rooms.common.cycle_worker import process_due
     with session() as db:require_two_cycle_active(db)
     tasks=[asyncio.create_task(run()),asyncio.create_task(run_ownership_worker()),
         asyncio.create_task(run_recruitment_worker(process_due))]

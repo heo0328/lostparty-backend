@@ -1,8 +1,8 @@
 from datetime import date
 
 from app.core.database import session, now
-from app.game_accounts import lifecycle
-from app.game_accounts.profiles import owned_character
+from app.game_accounts.rosters import lifecycle
+from app.game_accounts.character_profiles.profiles import owned_character
 from app.game_accounts.support import authorize, fail, reserve, commit_result, release
 from app.raids import service as raids
 from app.raid_weekly.models import WeeklyState
@@ -45,7 +45,7 @@ def entry(db, account, character, raid, key, current_cycle, row, stamp=None):
                             difficulty_id=row.party_difficulty_id, party_id=row.completed_party_id))
     participation = (dict(party_id=row.active_party_id, difficulty_id=row.active_difficulty_id,
                           joined_at=row.joined_at) if row and row.active_party_id else None)
-    from app.raid_rooms.cycles import target
+    from app.raid_rooms.common.cycles import target
     temporal = 'PLAY_NOT_STARTED' if stamp is not None and key.isoformat()==current_cycle.cycle_key and stamp < target(stamp,key.isoformat()).playable_from else None
     reason = ('CURRENT_CYCLE_REQUIRED' if key.isoformat() != current_cycle.cycle_key else
               temporal or ('RAID_INACTIVE' if not raid.is_active else
@@ -110,7 +110,7 @@ def put(principal, cid, raid_id, key, data):
             current_cycle = raids.cycle(stamp)
             if requested_cycle.isoformat() != current_cycle.cycle_key:
                 fail('CYCLE_CHANGED')
-            from app.raid_rooms.cycle_outcomes import playable as require_playable
+            from app.raid_rooms.outcomes.cycle_outcomes import playable as require_playable
             require_playable(stamp,requested_cycle.isoformat())
             if data['expected_catalog_version'] != raids.catalog().catalog_version:
                 fail('CATALOG_VERSION_CONFLICT')

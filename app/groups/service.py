@@ -7,7 +7,7 @@ import uuid
 from typing import Protocol
 from sqlalchemy import func, select
 from app.core.database import session, now
-from app.game_accounts import lifecycle, service as accounts
+from app.game_accounts.rosters import lifecycle, service as accounts
 from app.game_accounts.models import Account, Character, Registration
 from app.game_accounts.support import authorize, fail, reserve, commit_result, release
 from app.groups.commands import CreateGroup, RenameGroup, normalize_name

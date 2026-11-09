@@ -1,5 +1,9 @@
 # LostParty Backend 기능 지도
 
+2차 구조 정리(2026-11-09): 남은 정의/혼합 모듈79개와 JSON 자원1개의 [정리 계획](../engineering/development/source-layout-phase2-plan.md)을 문서화했다. 파일별 목표·분리·계약 보존·검증 기준 수립이며 실제 2차 구현은 미착수다. 다음 실행은 [NEXT_WORK](NEXT_WORK.md)를 따른다.
+
+현재 구조 작업 완료(2026-11-09): 같은 feat/character-lifecycle에서 앱 업무95파일·테스트103파일을 기능별로 이동하고 참조/시험 발견을 수정했다. 공개 DTO/라우터·OpenAPI 자원·ORM 모델 경로는 유지하며 외부 계약/업무 로직을 보존했다. 전체1916사례 대조의 최종고유1914PASS·이동 전에도 재현된 기존 기대 불일치2FAIL을 구분한다. [분류 기준](../engineering/development/source-layout.md)·[검증 집계](../engineering/development/folder-layout-verification.json)·[다음 실행](NEXT_WORK.md)을 따른다. 미커밋·미push·실제 dev 미반영이며 기존 imagece59926c/DB0036과 새 파일 경로는 다르다. 아래 폴더 보류·실행파일 일치는 각 이전 구간 기준이다.
+
 Issue17 게시 최신: 사용자 지시로 보완 구현 `caffaf3405a53be941250132a2b50779943b15f6`를 origin/feat/character-lifecycle에 push하고 원격 SHA 일치를 확인했다. [전체27번째 Backend 고정 구현 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722956197) 기준이다. 커밋의 앱247파일은 실제 dev imagece59926c/DB0036과 일치하며 새 서버 반영은 없다. Native26 실행 지원 접수·추가 요청 없음, 다음 Native 기능 구현/연결이다. 아래 미커밋·미push/원격 기준 없음은 당시 기록이며 폴더 이동 보류·미병합/운영 미반영을 유지한다.
 
 Issue17 [전체25번째 Backend 실제 로컬 보완 반영](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722917497) 인계 완료. Native24 소비 수용·실행 지원 대기 해소, 다음 Native 기능 구현/연결이며 소스 미커밋·미push와 폴더 이동 보류를 유지한다.

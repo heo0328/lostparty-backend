@@ -9,7 +9,7 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy import ForeignKeyConstraint, Integer, UniqueConstraint, Uuid, select
 from sqlalchemy.orm import mapped_column
 from app.auth.models import Base, pk, stamp
-from app.game_accounts.lifecycle import digest
+from app.game_accounts.rosters.lifecycle import digest
 from app.game_accounts.support import fail
 from app.game_accounts import roster_presence
 
@@ -63,7 +63,7 @@ def check_marker(token):
 
 
 def split(db, row, cm):
-    from app.raid_rooms.cycle_lifecycle import assignments
+    from app.raid_rooms.participation.cycle_lifecycle import assignments
     values = assignments(db, row, cm)
     from app.raid_rooms.cycle_models import CycleAssignment
     seen=set()
@@ -124,7 +124,8 @@ def member(db, row, cm):
     # character context also signs policies, deadlines and candidate revisions.
     from app.raid_rooms.integrated_models import RecruitmentMembership as Member
     persistent=db.get(Member,cm.membership_id)
-    from app.raid_rooms import cycle_group_policy, cycle_schedule
+    from app.raid_rooms.group_links import cycle_group_policy
+    from app.raid_rooms.schedules import cycle_schedule
     policy=cycle_group_policy.get(db,row) if cycle_group_policy.enabled(db) else None
     policy_stamp=[policy.revision,policy.scope,policy.group_id] if policy else None
     sessions=[[s.id,s.revision,s.schedule_revision,s.state,s.starts_at,s.ends_at] for s in cycle_schedule.sessions(db,row)]

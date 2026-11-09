@@ -2,7 +2,7 @@
 import unicodedata
 from sqlalchemy import func, or_, select, text
 from app.core.database import session
-from app.game_accounts import service as accounts
+from app.game_accounts.rosters import service as accounts
 from app.game_accounts.models import Activity
 from app.game_accounts.support import authorize, cursor_decode, cursor_encode, fail
 from app.groups import service as core

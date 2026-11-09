@@ -234,7 +234,7 @@
       ],
       "dependent_files": [
         "app/game_accounts",
-        "tests/test_game_accounts.py"
+        "tests/game_accounts/test_game_accounts.py"
       ],
       "source_topics": [
         "rosters/registration"
@@ -320,7 +320,7 @@
       ],
       "dependent_files": [
         "app/game_accounts",
-        "tests/test_game_accounts.py"
+        "tests/game_accounts/test_game_accounts.py"
       ],
       "source_topics": [
         "rosters/registration"
@@ -428,7 +428,7 @@
       ],
       "dependent_files": [
         "app/game_accounts",
-        "tests/test_game_accounts.py"
+        "tests/game_accounts/test_game_accounts.py"
       ],
       "source_topics": [
         "rosters/registration"
@@ -530,7 +530,7 @@
       ],
       "dependent_files": [
         "app/game_accounts",
-        "tests/test_game_accounts.py"
+        "tests/game_accounts/test_game_accounts.py"
       ],
       "source_topics": [
         "rosters/registration"
@@ -596,7 +596,7 @@
       ],
       "dependent_files": [
         "app/game_accounts",
-        "tests/test_game_accounts.py"
+        "tests/game_accounts/test_game_accounts.py"
       ],
       "source_topics": [
         "rosters/registration"
@@ -719,7 +719,7 @@
       ],
       "dependent_files": [
         "app/game_accounts",
-        "tests/test_game_accounts.py"
+        "tests/game_accounts/test_game_accounts.py"
       ],
       "source_topics": [
         "rosters/registration"
@@ -794,8 +794,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_combat_power.py",
-        "tests/test_role_summaries.py"
+        "tests/game_accounts/test_combat_power.py",
+        "tests/game_accounts/test_role_summaries.py"
       ],
       "source_topics": [
         "rosters/power-and-profiles"
@@ -880,8 +880,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_combat_power.py",
-        "tests/test_role_summaries.py"
+        "tests/game_accounts/test_combat_power.py",
+        "tests/game_accounts/test_role_summaries.py"
       ],
       "source_topics": [
         "rosters/power-and-profiles"
@@ -967,7 +967,7 @@
       ],
       "dependent_files": [
         "app/member_settings",
-        "tests/test_member_settings.py"
+        "tests/member_settings/test_member_settings.py"
       ],
       "source_topics": [
         "login-account/member-settings"
@@ -1080,7 +1080,7 @@
       ],
       "dependent_files": [
         "app/lostark_keys",
-        "tests/test_lostark_keys.py"
+        "tests/lostark_keys/test_lostark_keys.py"
       ],
       "source_topics": [
         "login-account/api-keys"
@@ -1157,7 +1157,7 @@
       ],
       "dependent_files": [
         "app/lostark_keys",
-        "tests/test_lostark_keys.py"
+        "tests/lostark_keys/test_lostark_keys.py"
       ],
       "source_topics": [
         "login-account/api-keys"
@@ -1227,7 +1227,7 @@
       ],
       "dependent_files": [
         "app/lostark_keys",
-        "tests/test_lostark_keys.py"
+        "tests/lostark_keys/test_lostark_keys.py"
       ],
       "source_topics": [
         "login-account/api-keys"
@@ -1289,7 +1289,7 @@
         }
       ],
       "dependent_files": [
-        "tests/test_account_bootstrap.py"
+        "tests/game_accounts/test_account_bootstrap.py"
       ],
       "source_topics": [
         "rosters/bootstrap"
@@ -1354,8 +1354,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_personal_presentation.py",
-        "tests/test_representative.py"
+        "tests/game_accounts/test_personal_presentation.py",
+        "tests/game_accounts/test_representative.py"
       ],
       "source_topics": [
         "rosters/activity-and-presentation"
@@ -1423,8 +1423,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_personal_presentation.py",
-        "tests/test_representative.py"
+        "tests/game_accounts/test_personal_presentation.py",
+        "tests/game_accounts/test_representative.py"
       ],
       "source_topics": [
         "rosters/activity-and-presentation"
@@ -1549,8 +1549,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_personal_presentation.py",
-        "tests/test_representative.py"
+        "tests/game_accounts/test_personal_presentation.py",
+        "tests/game_accounts/test_representative.py"
       ],
       "source_topics": [
         "rosters/activity-and-presentation"
@@ -1676,10 +1676,10 @@
         }
       ],
       "dependent_files": [
-        "tests/test_combat_power.py",
-        "tests/test_personal_presentation.py",
-        "tests/test_representative.py",
-        "tests/test_role_summaries.py"
+        "tests/game_accounts/test_combat_power.py",
+        "tests/game_accounts/test_personal_presentation.py",
+        "tests/game_accounts/test_representative.py",
+        "tests/game_accounts/test_role_summaries.py"
       ],
       "source_topics": [
         "rosters/power-and-profiles",
@@ -1770,8 +1770,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_personal_presentation.py",
-        "tests/test_representative.py"
+        "tests/game_accounts/test_personal_presentation.py",
+        "tests/game_accounts/test_representative.py"
       ],
       "source_topics": [
         "rosters/activity-and-presentation"
@@ -1845,8 +1845,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_personal_presentation.py",
-        "tests/test_representative.py"
+        "tests/game_accounts/test_personal_presentation.py",
+        "tests/game_accounts/test_representative.py"
       ],
       "source_topics": [
         "rosters/activity-and-presentation"
@@ -1934,8 +1934,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_combat_power.py",
-        "tests/test_role_summaries.py"
+        "tests/game_accounts/test_combat_power.py",
+        "tests/game_accounts/test_role_summaries.py"
       ],
       "source_topics": [
         "rosters/power-and-profiles"
@@ -1967,7 +1967,7 @@
       ],
       "dependent_files": [
         "app/game_accounts",
-        "tests/test_game_accounts.py"
+        "tests/game_accounts/test_game_accounts.py"
       ],
       "source_topics": [
         "rosters/registration"
@@ -1992,7 +1992,7 @@
       ],
       "dependent_files": [
         "app/game_accounts",
-        "tests/test_game_accounts.py"
+        "tests/game_accounts/test_game_accounts.py"
       ],
       "source_topics": [
         "rosters/registration"
@@ -2008,7 +2008,7 @@
       "preserved_at": "docs/features/rosters/bootstrap/examples/account-bootstrap.json",
       "sections": [],
       "dependent_files": [
-        "tests/test_account_bootstrap.py"
+        "tests/game_accounts/test_account_bootstrap.py"
       ],
       "source_topics": [
         "rosters/bootstrap"
@@ -2076,8 +2076,8 @@
       ],
       "dependent_files": [
         "app/auth",
-        "tests/test_auth.py",
-        "tests/test_google.py"
+        "tests/auth/test_auth.py",
+        "tests/auth/test_google.py"
       ],
       "source_topics": [
         "login-account/google-login",
@@ -2199,8 +2199,8 @@
       ],
       "dependent_files": [
         "app/auth",
-        "tests/test_auth.py",
-        "tests/test_google.py"
+        "tests/auth/test_auth.py",
+        "tests/auth/test_google.py"
       ],
       "source_topics": [
         "login-account/google-login",
@@ -2261,8 +2261,8 @@
       ],
       "dependent_files": [
         "app/auth",
-        "tests/test_auth.py",
-        "tests/test_google.py"
+        "tests/auth/test_auth.py",
+        "tests/auth/test_google.py"
       ],
       "source_topics": [
         "login-account/google-login",
@@ -2357,8 +2357,8 @@
       ],
       "dependent_files": [
         "app/auth",
-        "tests/test_auth.py",
-        "tests/test_google.py"
+        "tests/auth/test_auth.py",
+        "tests/auth/test_google.py"
       ],
       "source_topics": [
         "login-account/google-login",
@@ -2445,8 +2445,8 @@
       ],
       "dependent_files": [
         "app/auth",
-        "tests/test_auth.py",
-        "tests/test_google.py"
+        "tests/auth/test_auth.py",
+        "tests/auth/test_google.py"
       ],
       "source_topics": [
         "login-account/google-login",
@@ -2533,8 +2533,8 @@
       ],
       "dependent_files": [
         "app/auth",
-        "tests/test_auth.py",
-        "tests/test_google.py"
+        "tests/auth/test_auth.py",
+        "tests/auth/test_google.py"
       ],
       "source_topics": [
         "login-account/google-login",
@@ -2567,8 +2567,8 @@
       ],
       "dependent_files": [
         "app/auth",
-        "tests/test_auth.py",
-        "tests/test_google.py"
+        "tests/auth/test_auth.py",
+        "tests/auth/test_google.py"
       ],
       "source_topics": [
         "login-account/google-login"
@@ -2634,7 +2634,7 @@
       ],
       "dependent_files": [
         "app/groups",
-        "tests/test_groups_http.py"
+        "tests/groups/test_groups_http.py"
       ],
       "source_topics": [
         "groups/discovery"
@@ -2703,7 +2703,7 @@
       ],
       "dependent_files": [
         "app/groups",
-        "tests/test_groups_http.py"
+        "tests/groups/test_groups_http.py"
       ],
       "source_topics": [
         "groups/discovery"
@@ -2805,7 +2805,7 @@
       ],
       "dependent_files": [
         "app/groups",
-        "tests/test_groups_http.py"
+        "tests/groups/test_groups_http.py"
       ],
       "source_topics": [
         "groups/discovery"
@@ -2857,7 +2857,7 @@
       ],
       "dependent_files": [
         "app/groups",
-        "tests/test_group_admissions.py"
+        "tests/groups/test_group_admissions.py"
       ],
       "source_topics": [
         "groups/joining"
@@ -2927,7 +2927,7 @@
       ],
       "dependent_files": [
         "app/groups",
-        "tests/test_group_admissions.py"
+        "tests/groups/test_group_admissions.py"
       ],
       "source_topics": [
         "groups/joining"
@@ -3047,10 +3047,10 @@
       "dependent_files": [
         "app/groups",
         "app/member_limits",
-        "tests/test_group_management.py",
-        "tests/test_member_limits.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_participation.py"
+        "tests/groups/test_group_management.py",
+        "tests/member_limits/test_member_limits.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py"
       ],
       "source_topics": [
         "login-account/usage-limits",
@@ -3082,10 +3082,10 @@
       "dependent_files": [
         "app/groups",
         "app/member_limits",
-        "tests/test_group_management.py",
-        "tests/test_member_limits.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_participation.py"
+        "tests/groups/test_group_management.py",
+        "tests/member_limits/test_member_limits.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py"
       ],
       "source_topics": [
         "login-account/usage-limits",
@@ -3132,7 +3132,7 @@
       ],
       "dependent_files": [
         "app/groups",
-        "tests/test_group_management.py"
+        "tests/groups/test_group_management.py"
       ],
       "source_topics": [
         "groups/management"
@@ -3208,7 +3208,7 @@
       ],
       "dependent_files": [
         "app/groups",
-        "tests/test_group_management.py"
+        "tests/groups/test_group_management.py"
       ],
       "source_topics": [
         "groups/management"
@@ -3292,7 +3292,7 @@
       ],
       "dependent_files": [
         "app/groups",
-        "tests/test_group_management.py"
+        "tests/groups/test_group_management.py"
       ],
       "source_topics": [
         "groups/management"
@@ -3324,7 +3324,7 @@
       ],
       "dependent_files": [
         "app/groups",
-        "tests/test_groups_http.py"
+        "tests/groups/test_groups_http.py"
       ],
       "source_topics": [
         "groups/discovery"
@@ -3384,11 +3384,11 @@
       "dependent_files": [
         "app/game_accounts",
         "app/ownership_disputes",
-        "tests/test_combat_power.py",
-        "tests/test_game_accounts.py",
-        "tests/test_live_equipment_proof.py",
-        "tests/test_ownership_disputes.py",
-        "tests/test_role_summaries.py"
+        "tests/game_accounts/test_combat_power.py",
+        "tests/game_accounts/test_game_accounts.py",
+        "tests/game_accounts/test_live_equipment_proof.py",
+        "tests/ownership_disputes/test_ownership_disputes.py",
+        "tests/game_accounts/test_role_summaries.py"
       ],
       "source_topics": [
         "rosters/registration",
@@ -3445,9 +3445,9 @@
       "dependent_files": [
         "app/game_accounts",
         "app/ownership_disputes",
-        "tests/test_game_accounts.py",
-        "tests/test_live_equipment_proof.py",
-        "tests/test_ownership_disputes.py"
+        "tests/game_accounts/test_game_accounts.py",
+        "tests/game_accounts/test_live_equipment_proof.py",
+        "tests/ownership_disputes/test_ownership_disputes.py"
       ],
       "source_topics": [
         "rosters/ownership",
@@ -3538,9 +3538,9 @@
       "dependent_files": [
         "app/game_accounts",
         "app/ownership_disputes",
-        "tests/test_game_accounts.py",
-        "tests/test_live_equipment_proof.py",
-        "tests/test_ownership_disputes.py"
+        "tests/game_accounts/test_game_accounts.py",
+        "tests/game_accounts/test_live_equipment_proof.py",
+        "tests/ownership_disputes/test_ownership_disputes.py"
       ],
       "source_topics": [
         "rosters/ownership",
@@ -3647,7 +3647,7 @@
       ],
       "dependent_files": [
         "app/game_accounts",
-        "tests/test_character_lifecycle.py"
+        "tests/game_accounts/test_character_lifecycle.py"
       ],
       "source_topics": [
         "rosters/lifecycle"
@@ -3855,7 +3855,7 @@
       ],
       "dependent_files": [
         "app/game_accounts",
-        "tests/test_character_lifecycle.py"
+        "tests/game_accounts/test_character_lifecycle.py"
       ],
       "source_topics": [
         "rosters/lifecycle"
@@ -3926,9 +3926,9 @@
       "dependent_files": [
         "app/game_accounts",
         "app/ownership_disputes",
-        "tests/test_game_accounts.py",
-        "tests/test_live_equipment_proof.py",
-        "tests/test_ownership_disputes.py"
+        "tests/game_accounts/test_game_accounts.py",
+        "tests/game_accounts/test_live_equipment_proof.py",
+        "tests/ownership_disputes/test_ownership_disputes.py"
       ],
       "source_topics": [
         "rosters/ownership",
@@ -4052,8 +4052,8 @@
       ],
       "dependent_files": [
         "app/game_accounts",
-        "tests/test_character_lifecycle.py",
-        "tests/test_game_accounts.py"
+        "tests/game_accounts/test_character_lifecycle.py",
+        "tests/game_accounts/test_game_accounts.py"
       ],
       "source_topics": [
         "rosters/registration",
@@ -4189,9 +4189,9 @@
       "dependent_files": [
         "app/game_accounts",
         "app/ownership_disputes",
-        "tests/test_game_accounts.py",
-        "tests/test_live_equipment_proof.py",
-        "tests/test_ownership_disputes.py"
+        "tests/game_accounts/test_game_accounts.py",
+        "tests/game_accounts/test_live_equipment_proof.py",
+        "tests/ownership_disputes/test_ownership_disputes.py"
       ],
       "source_topics": [
         "rosters/ownership",
@@ -4263,9 +4263,9 @@
       "dependent_files": [
         "app/game_accounts",
         "app/ownership_disputes",
-        "tests/test_game_accounts.py",
-        "tests/test_live_equipment_proof.py",
-        "tests/test_ownership_disputes.py"
+        "tests/game_accounts/test_game_accounts.py",
+        "tests/game_accounts/test_live_equipment_proof.py",
+        "tests/ownership_disputes/test_ownership_disputes.py"
       ],
       "source_topics": [
         "rosters/ownership",
@@ -4425,9 +4425,9 @@
       "dependent_files": [
         "app/game_accounts",
         "app/ownership_disputes",
-        "tests/test_game_accounts.py",
-        "tests/test_live_equipment_proof.py",
-        "tests/test_ownership_disputes.py"
+        "tests/game_accounts/test_game_accounts.py",
+        "tests/game_accounts/test_live_equipment_proof.py",
+        "tests/ownership_disputes/test_ownership_disputes.py"
       ],
       "source_topics": [
         "rosters/ownership",
@@ -4508,9 +4508,9 @@
       "dependent_files": [
         "app/game_accounts",
         "app/ownership_disputes",
-        "tests/test_game_accounts.py",
-        "tests/test_live_equipment_proof.py",
-        "tests/test_ownership_disputes.py"
+        "tests/game_accounts/test_game_accounts.py",
+        "tests/game_accounts/test_live_equipment_proof.py",
+        "tests/ownership_disputes/test_ownership_disputes.py"
       ],
       "source_topics": [
         "rosters/ownership",
@@ -4564,9 +4564,9 @@
       "dependent_files": [
         "app/game_accounts",
         "app/ownership_disputes",
-        "tests/test_game_accounts.py",
-        "tests/test_live_equipment_proof.py",
-        "tests/test_ownership_disputes.py"
+        "tests/game_accounts/test_game_accounts.py",
+        "tests/game_accounts/test_live_equipment_proof.py",
+        "tests/ownership_disputes/test_ownership_disputes.py"
       ],
       "source_topics": [
         "rosters/ownership",
@@ -4627,7 +4627,7 @@
       ],
       "dependent_files": [
         "app/game_accounts",
-        "tests/test_character_lifecycle.py"
+        "tests/game_accounts/test_character_lifecycle.py"
       ],
       "source_topics": [
         "rosters/lifecycle"
@@ -4679,9 +4679,9 @@
       "dependent_files": [
         "app/game_accounts",
         "app/ownership_disputes",
-        "tests/test_game_accounts.py",
-        "tests/test_live_equipment_proof.py",
-        "tests/test_ownership_disputes.py"
+        "tests/game_accounts/test_game_accounts.py",
+        "tests/game_accounts/test_live_equipment_proof.py",
+        "tests/ownership_disputes/test_ownership_disputes.py"
       ],
       "source_topics": [
         "rosters/ownership",
@@ -4737,9 +4737,9 @@
       "dependent_files": [
         "app/game_accounts",
         "app/ownership_disputes",
-        "tests/test_game_accounts.py",
-        "tests/test_live_equipment_proof.py",
-        "tests/test_ownership_disputes.py"
+        "tests/game_accounts/test_game_accounts.py",
+        "tests/game_accounts/test_live_equipment_proof.py",
+        "tests/ownership_disputes/test_ownership_disputes.py"
       ],
       "source_topics": [
         "rosters/ownership",
@@ -4811,9 +4811,9 @@
       "dependent_files": [
         "app/game_accounts",
         "app/ownership_disputes",
-        "tests/test_game_accounts.py",
-        "tests/test_live_equipment_proof.py",
-        "tests/test_ownership_disputes.py"
+        "tests/game_accounts/test_game_accounts.py",
+        "tests/game_accounts/test_live_equipment_proof.py",
+        "tests/ownership_disputes/test_ownership_disputes.py"
       ],
       "source_topics": [
         "rosters/ownership",
@@ -4846,8 +4846,8 @@
       ],
       "dependent_files": [
         "app/ownership_disputes",
-        "tests/test_live_equipment_proof.py",
-        "tests/test_ownership_disputes.py"
+        "tests/game_accounts/test_live_equipment_proof.py",
+        "tests/ownership_disputes/test_ownership_disputes.py"
       ],
       "source_topics": [
         "rosters/ownership"
@@ -4872,8 +4872,8 @@
       ],
       "dependent_files": [
         "app/ownership_disputes",
-        "tests/test_live_equipment_proof.py",
-        "tests/test_ownership_disputes.py"
+        "tests/game_accounts/test_live_equipment_proof.py",
+        "tests/ownership_disputes/test_ownership_disputes.py"
       ],
       "source_topics": [
         "rosters/ownership"
@@ -4890,8 +4890,8 @@
       "sections": [],
       "dependent_files": [
         "app/ownership_disputes",
-        "tests/test_live_equipment_proof.py",
-        "tests/test_ownership_disputes.py"
+        "tests/game_accounts/test_live_equipment_proof.py",
+        "tests/ownership_disputes/test_ownership_disputes.py"
       ],
       "source_topics": [
         "rosters/ownership"
@@ -4956,9 +4956,9 @@
       "dependent_files": [
         "app/raid_weekly",
         "app/raids",
-        "tests/test_raid_catalog.py",
-        "tests/test_raid_weekly.py",
-        "tests/test_recruitment_weekly_summary.py"
+        "tests/raids/test_raid_catalog.py",
+        "tests/raid_weekly/test_raid_weekly.py",
+        "tests/raid_rooms/outcomes/test_recruitment_weekly_summary.py"
       ],
       "source_topics": [
         "raids/catalog",
@@ -5018,8 +5018,8 @@
       ],
       "dependent_files": [
         "app/raid_weekly",
-        "tests/test_raid_weekly.py",
-        "tests/test_recruitment_weekly_summary.py"
+        "tests/raid_weekly/test_raid_weekly.py",
+        "tests/raid_rooms/outcomes/test_recruitment_weekly_summary.py"
       ],
       "source_topics": [
         "raids/weekly-records"
@@ -5051,7 +5051,7 @@
       ],
       "dependent_files": [
         "app/raids",
-        "tests/test_raid_catalog.py"
+        "tests/raids/test_raid_catalog.py"
       ],
       "source_topics": [
         "raids/catalog"
@@ -5089,8 +5089,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py"
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles"
@@ -5114,8 +5114,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py"
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles"
@@ -5377,8 +5377,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py"
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles"
@@ -5437,8 +5437,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py"
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles"
@@ -5454,8 +5454,8 @@
       "preserved_at": "docs/features/recruitment/weekly-cycles/tools/build-models.py",
       "sections": [],
       "dependent_files": [
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py"
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles"
@@ -5471,7 +5471,7 @@
       "preserved_at": "docs/features/recruitment/completion-and-records/examples/completion-correction.json",
       "sections": [],
       "dependent_files": [
-        "tests/test_completion_corrections.py"
+        "tests/raid_rooms/outcomes/test_completion_corrections.py"
       ],
       "source_topics": [
         "recruitment/completion-and-records"
@@ -5502,8 +5502,8 @@
       "sections": [],
       "dependent_files": [
         "docs/features/recruitment/search/tools/validate-character-candidates.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_recruitment_search.py"
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/search"
@@ -5519,8 +5519,8 @@
       "preserved_at": "docs/features/recruitment/search/validation/group-character-candidates-performance.json",
       "sections": [],
       "dependent_files": [
-        "tests/test_group_character_candidates.py",
-        "tests/test_recruitment_search.py"
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/search"
@@ -5551,8 +5551,8 @@
       "sections": [],
       "dependent_files": [
         "docs/features/recruitment/participation/tools/validate-session-display.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_participation.py"
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py"
       ],
       "source_topics": [
         "recruitment/participation"
@@ -5583,8 +5583,8 @@
       "sections": [],
       "dependent_files": [
         "docs/features/recruitment/weekly-cycles/tools/build-examples.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py"
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles"
@@ -5604,10 +5604,10 @@
         "docs/features/recruitment/weekly-cycles/tools/build-contract.py",
         "docs/features/recruitment/weekly-cycles/tools/build-examples.py",
         "docs/features/recruitment/weekly-cycles/tools/build-models.py",
-        "tests/test_recruitment_cycle_cutover.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_weekly_summary.py"
+        "tests/raid_rooms/compat/test_recruitment_cycle_cutover.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/outcomes/test_recruitment_weekly_summary.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles"
@@ -5624,8 +5624,8 @@
       "sections": [],
       "dependent_files": [
         "docs/features/recruitment/weekly-cycles/tools/build-contract.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py"
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles"
@@ -5642,8 +5642,8 @@
       "sections": [],
       "dependent_files": [
         "docs/features/recruitment/weekly-cycles/tools/build-contract.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py"
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles"
@@ -5667,8 +5667,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py"
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles"
@@ -5698,8 +5698,8 @@
       "preserved_at": "docs/features/recruitment/membership-actions/examples/atomic-member-actions.json",
       "sections": [],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_membership_actions.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/participation/test_membership_actions.py"
       ],
       "source_topics": [
         "recruitment/membership-actions"
@@ -5729,8 +5729,8 @@
       "preserved_at": "docs/features/recruitment/membership-actions/examples/membership-actions-implementation.json",
       "sections": [],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_membership_actions.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/participation/test_membership_actions.py"
       ],
       "source_topics": [
         "recruitment/membership-actions"
@@ -5746,8 +5746,8 @@
       "preserved_at": "docs/features/recruitment/search/examples/search-contract.json",
       "sections": [],
       "dependent_files": [
-        "tests/test_group_character_candidates.py",
-        "tests/test_recruitment_search.py"
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/search"
@@ -5763,8 +5763,8 @@
       "preserved_at": "docs/features/recruitment/membership-actions/examples/membership-actions-contract.json",
       "sections": [],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_membership_actions.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/participation/test_membership_actions.py"
       ],
       "source_topics": [
         "recruitment/membership-actions"
@@ -5780,8 +5780,8 @@
       "preserved_at": "docs/features/recruitment/membership-actions/examples/membership-actions.schema.json",
       "sections": [],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_membership_actions.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/participation/test_membership_actions.py"
       ],
       "source_topics": [
         "recruitment/membership-actions"
@@ -5798,8 +5798,8 @@
       "sections": [],
       "dependent_files": [
         "docs/features/recruitment/search/tools/validate-character-candidates.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_recruitment_search.py"
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/search"
@@ -5816,8 +5816,8 @@
       "sections": [],
       "dependent_files": [
         "docs/features/recruitment/participation/tools/validate-session-display.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_participation.py"
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py"
       ],
       "source_topics": [
         "recruitment/participation"
@@ -5833,8 +5833,8 @@
       "preserved_at": "docs/features/recruitment/weekly-cycles/tools/validate-contract.py",
       "sections": [],
       "dependent_files": [
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py"
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles"
@@ -5971,11 +5971,11 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/membership-actions",
@@ -6021,10 +6021,10 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_management.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py"
       ],
       "source_topics": [
         "recruitment/creation-and-settings",
@@ -6122,7 +6122,7 @@
         }
       ],
       "dependent_files": [
-        "tests/test_completion_corrections.py"
+        "tests/raid_rooms/outcomes/test_completion_corrections.py"
       ],
       "source_topics": [
         "recruitment/completion-and-records"
@@ -6364,19 +6364,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -6443,8 +6443,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_group_character_candidates.py",
-        "tests/test_recruitment_search.py"
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/search"
@@ -6520,8 +6520,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_group_character_candidates.py",
-        "tests/test_recruitment_search.py"
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/search"
@@ -6605,10 +6605,10 @@
         }
       ],
       "dependent_files": [
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py"
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py"
       ],
       "source_topics": [
         "recruitment/participation",
@@ -6889,19 +6889,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -7135,19 +7135,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -7351,19 +7351,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -7475,19 +7475,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -7624,19 +7624,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -7769,9 +7769,9 @@
         }
       ],
       "dependent_files": [
-        "tests/test_completion_corrections.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_scheduling.py"
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py"
       ],
       "source_topics": [
         "recruitment/completion-and-records",
@@ -7887,8 +7887,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_group_character_candidates.py",
-        "tests/test_recruitment_search.py"
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/search"
@@ -7969,11 +7969,11 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/membership-actions",
@@ -8006,8 +8006,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py"
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles"
@@ -8086,7 +8086,7 @@
         }
       ],
       "dependent_files": [
-        "tests/test_completion_corrections.py"
+        "tests/raid_rooms/outcomes/test_completion_corrections.py"
       ],
       "source_topics": [
         "recruitment/completion-and-records"
@@ -8180,19 +8180,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -8256,12 +8256,12 @@
         }
       ],
       "dependent_files": [
-        "tests/test_group_character_candidates.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_search.py"
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/participation",
@@ -8331,12 +8331,12 @@
         }
       ],
       "dependent_files": [
-        "tests/test_group_character_candidates.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_search.py"
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/participation",
@@ -8389,8 +8389,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_group_character_candidates.py",
-        "tests/test_recruitment_search.py"
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/search"
@@ -8442,10 +8442,10 @@
         }
       ],
       "dependent_files": [
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py"
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py"
       ],
       "source_topics": [
         "recruitment/participation",
@@ -8663,19 +8663,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -8788,19 +8788,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -8890,19 +8890,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -8960,10 +8960,10 @@
         }
       ],
       "dependent_files": [
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py"
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py"
       ],
       "source_topics": [
         "recruitment/scheduling",
@@ -9022,12 +9022,12 @@
         }
       ],
       "dependent_files": [
-        "tests/test_group_character_candidates.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_search.py"
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/participation",
@@ -9095,12 +9095,12 @@
         }
       ],
       "dependent_files": [
-        "tests/test_group_character_candidates.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_search.py"
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/participation",
@@ -9225,19 +9225,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -9294,8 +9294,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_group_character_candidates.py",
-        "tests/test_recruitment_search.py"
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/search"
@@ -9397,19 +9397,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -9493,12 +9493,12 @@
         }
       ],
       "dependent_files": [
-        "tests/test_group_character_candidates.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_search.py"
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/participation",
@@ -9588,19 +9588,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -9742,19 +9742,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -9841,10 +9841,10 @@
         }
       ],
       "dependent_files": [
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py"
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py"
       ],
       "source_topics": [
         "recruitment/scheduling",
@@ -9919,10 +9919,10 @@
         }
       ],
       "dependent_files": [
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py"
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py"
       ],
       "source_topics": [
         "recruitment/scheduling",
@@ -9986,9 +9986,9 @@
         }
       ],
       "dependent_files": [
-        "tests/test_completion_corrections.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_scheduling.py"
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py"
       ],
       "source_topics": [
         "recruitment/completion-and-records",
@@ -10041,10 +10041,10 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_management.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py"
       ],
       "source_topics": [
         "recruitment/creation-and-settings",
@@ -10108,8 +10108,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py"
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py"
       ],
       "source_topics": [
         "engineering/operations",
@@ -10185,8 +10185,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py"
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py"
       ],
       "source_topics": [
         "engineering/operations",
@@ -10240,8 +10240,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py"
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py"
       ],
       "source_topics": [
         "engineering/operations",
@@ -10303,8 +10303,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py"
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py"
       ],
       "source_topics": [
         "engineering/operations",
@@ -10365,9 +10365,9 @@
         }
       ],
       "dependent_files": [
-        "tests/test_completion_corrections.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_scheduling.py"
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py"
       ],
       "source_topics": [
         "recruitment/completion-and-records",
@@ -10431,11 +10431,11 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/membership-actions",
@@ -10479,8 +10479,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py"
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py"
       ],
       "source_topics": [
         "engineering/operations",
@@ -10538,11 +10538,11 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/membership-actions",
@@ -10578,8 +10578,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py"
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles"
@@ -10686,19 +10686,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -10784,19 +10784,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -10833,8 +10833,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py"
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles"
@@ -10945,19 +10945,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -11145,19 +11145,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -11286,19 +11286,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -11526,19 +11526,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -11659,11 +11659,11 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/membership-actions",
@@ -11899,19 +11899,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -12005,19 +12005,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -12078,8 +12078,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_group_character_candidates.py",
-        "tests/test_recruitment_search.py"
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/search"
@@ -12324,19 +12324,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -12440,19 +12440,19 @@
         }
       ],
       "dependent_files": [
-        "tests/test_atomic_members.py",
-        "tests/test_completion_corrections.py",
-        "tests/test_group_character_candidates.py",
-        "tests/test_membership_actions.py",
-        "tests/test_recruitment_admission.py",
-        "tests/test_recruitment_cycle_creation.py",
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py",
-        "tests/test_recruitment_cycle_management.py",
-        "tests/test_recruitment_cycle_planning.py",
-        "tests/test_recruitment_participation.py",
-        "tests/test_recruitment_scheduling.py",
-        "tests/test_recruitment_search.py"
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/outcomes/test_completion_corrections.py",
+        "tests/groups/test_group_character_candidates.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+        "tests/raid_rooms/reads/test_recruitment_search.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -12489,8 +12489,8 @@
         }
       ],
       "dependent_files": [
-        "tests/test_recruitment_cycle_http.py",
-        "tests/test_recruitment_cycle_lifecycle.py"
+        "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles"

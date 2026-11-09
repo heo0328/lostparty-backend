@@ -7,7 +7,7 @@ from app.game_accounts.router import Principal
 from app.raid_rooms.router import OptionalPrincipal
 from app.raid_rooms.admission_router import AdmissionRoute,errors
 from app.raid_rooms.admission_schemas import DTO,Version,Permission,Combat,Experience
-from app.raid_rooms import search as service
+from app.raid_rooms.reads import search as service
 from app.game_accounts.support import fail
 
 

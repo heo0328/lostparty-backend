@@ -1,5 +1,18 @@
 # 다음 실행
 
+## 현재 — 2차 폴더 정리 계획 수립 / 구현 미착수
+
+남은 레이드룸65개·게임 계정14개(Python79개, 기능 init2개 포함)와 연결 JSON1개의 [2차 정리 계획](../engineering/development/source-layout-phase2-plan.md)을 문서화했다. 정의 파일까지 분류하는 사용자 선택에 따라 `api`·`schemas`·`models`·`contracts`와 기존 업무 폴더의 대응표·분리 방법·참조·검증 조건을 기록했다. 다음 Backend는 별도 구현 지시를 받은 뒤 현재 Git/미커밋 상태를 확인하고 계약 식별자 보존 검증부터 진행한다. 이번은 문서만 수정했으며 실제 2차 파일 이동·코드 변경은 없다. 1차 정리 완료·미커밋/미push·실제 dev 미반영 상태는 아래와 같다. commit/push/merge·서버/운영 반영은 포함하지 않는다.
+
+## 현재 — 앱·테스트 기능별 폴더 정리 완료 / 로컬 미게시·미반영
+
+2026-11-09 사용자 승인 계획을 feat/character-lifecycle·기준dd7d68b에서 구현했다. 앱 업무95파일과 시험103파일을 기능별 하위 패키지로 이동하고 모든 참조·시험 검색을 보완했다. 공개 DTO/이를 포함한 라우터·OpenAPI 자원·ORM 모델의 기존 경로79개는 유지했다. [분류 기준](../engineering/development/source-layout.md)·[이동표](../engineering/development/folder-layout-map.json)·[최종 검증](../engineering/development/folder-layout-verification.json)을 따른다.
+
+- 완료: 이동 전후1916개 수집 일치, 업무/시험349파일 AST 보존, 앱256모듈 import, 모델116개 등록/PostgreSQL DDL 동일, 기본125/142·two-cycle188/209 전체 계약 일치, 도구63PASS와 문서/동결 자료·diff 검증. 최종 시험 소스413파일은 작업 소스와 일치한다.
+- 전체1916사례를 초기 실행+4개 독립DB 묶음으로 검증했다. 최종고유1914PASS·기존 기대값 불일치2FAIL이며 전체 통과가 아니다. 분할 중복14개·단일 재실행은 합산하지 않는다. 이동 원인의 subprocess import1은 수정 후 해당1PASS로 해소했고 시험DB/network는 모두 정리됐다.
+- 별도 후속: `tests/groups/test_group_raid_lifecycle.py::test_group_leave_preserves_actual_c_but_does_not_admit_new_n`의 활동 해제 후 기존 참가 거절 기대, `tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py::test_closed_c_opening_respects_completed_archive[stopped]`의 미선택 개설 허용 기대는 이동 전 고정 이미지에서도 동일 실패했다. 사용자 선택 시 현행 합의 정책과 기대를 대조하는 별도 구간으로 다루며 이번에 임의 변경하지 않았다.
+- 다음 Backend: 사용자 다음 지시/구체 차이에 대응. 새 업무코드 위치는 이동표를 사용한다. 현재 변경은 미커밋·미push·실제 dev 미반영이며 commit/push/merge·서버 반영·운영은 별도 지시다. 실제 dev imagece59926c/DB0036·키/환경/자료와 Native 소스/기기를 변경하지 않았다. 아래 폴더 보류/실행소스 일치는 각 이전 구간 기록이다.
+
 Issue17 게시 최신: 사용자 지시로 보완 구현 `caffaf3405a53be941250132a2b50779943b15f6`를 origin/feat/character-lifecycle에 push하고 원격 SHA 일치를 확인했다. [전체27번째 Backend 고정 구현 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722956197) 기준이다. 커밋의 앱247파일은 실제 dev imagece59926c/DB0036과 일치하며 새 서버 반영은 없다. Native26 실행 지원 접수·추가 요청 없음, 다음 Native 기능 구현/연결이다. 아래 미커밋·미push/원격 기준 없음은 당시 기록이며 폴더 이동 보류·미병합/운영 미반영을 유지한다.
 
 Issue17 [전체25번째 Backend 실제 로컬 보완 반영](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722917497) 인계 완료. Native24 소비 수용·실행 지원 대기 해소, 다음 Native 기능 구현/연결이며 소스 미커밋·미push와 폴더 이동 보류를 유지한다.

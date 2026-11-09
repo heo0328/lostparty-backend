@@ -8,7 +8,8 @@ from app.game_accounts.router import Principal,Key
 from app.game_accounts.schemas import GameErrorOut
 from app.game_accounts.support import fail
 from app.raid_rooms.availability_router import AvailabilityRoute,unique_pairs
-from app.raid_rooms import admission_schemas as s,admission_service as service
+from app.raid_rooms import admission_schemas as s
+from app.raid_rooms.admissions import admission_service as service
 
 
 class AdmissionRoute(AvailabilityRoute):

@@ -1,0 +1,1078 @@
+{
+  "base_commit": "dd7d68b1e5e005f4fe87e9fcfeab98f8ff5a2df7",
+  "branch": "feat/character-lifecycle",
+  "policy": "Business modules and tests only; public DTO/router/schema resources and ORM definitions remain at original paths",
+  "pinned_modules": [
+    "app/raid_rooms/__init__.py",
+    "app/raid_rooms/admission_candidate_schemas.py",
+    "app/raid_rooms/admission_contract.py",
+    "app/raid_rooms/admission_router.py",
+    "app/raid_rooms/admission_schemas.py",
+    "app/raid_rooms/application_display_schemas.py",
+    "app/raid_rooms/application_presets.py",
+    "app/raid_rooms/atomic_member_schemas.py",
+    "app/raid_rooms/availability_contract.py",
+    "app/raid_rooms/availability_router.py",
+    "app/raid_rooms/availability_schemas.py",
+    "app/raid_rooms/beta_models.py",
+    "app/raid_rooms/beta_schemas.py",
+    "app/raid_rooms/candidate_schemas.py",
+    "app/raid_rooms/character_change.py",
+    "app/raid_rooms/command_schemas.py",
+    "app/raid_rooms/commands.py",
+    "app/raid_rooms/completion.py",
+    "app/raid_rooms/completion_correction_models.py",
+    "app/raid_rooms/completion_correction_schemas.py",
+    "app/raid_rooms/completion_router.py",
+    "app/raid_rooms/continuation.py",
+    "app/raid_rooms/continuation_router.py",
+    "app/raid_rooms/cycle_application_models.py",
+    "app/raid_rooms/cycle_consent_models.py",
+    "app/raid_rooms/cycle_group_context_schemas.py",
+    "app/raid_rooms/cycle_group_models.py",
+    "app/raid_rooms/cycle_group_schemas.py",
+    "app/raid_rooms/cycle_lifecycle_models.py",
+    "app/raid_rooms/cycle_models.py",
+    "app/raid_rooms/cycle_outcome_models.py",
+    "app/raid_rooms/cycle_planning_models.py",
+    "app/raid_rooms/cycle_router.py",
+    "app/raid_rooms/cycle_schemas.py",
+    "app/raid_rooms/cycle_wire.py",
+    "app/raid_rooms/group_connection.py",
+    "app/raid_rooms/group_link_display.py",
+    "app/raid_rooms/http_schemas.py",
+    "app/raid_rooms/integrated_models.py",
+    "app/raid_rooms/management.py",
+    "app/raid_rooms/management_router.py",
+    "app/raid_rooms/member_router.py",
+    "app/raid_rooms/member_schemas.py",
+    "app/raid_rooms/membership_action_models.py",
+    "app/raid_rooms/membership_action_schemas.py",
+    "app/raid_rooms/models.py",
+    "app/raid_rooms/participation_commands.py",
+    "app/raid_rooms/resume.py",
+    "app/raid_rooms/resume_models.py",
+    "app/raid_rooms/resume_review_schemas.py",
+    "app/raid_rooms/roster_api.py",
+    "app/raid_rooms/roster_openapi.py",
+    "app/raid_rooms/roster_participation.py",
+    "app/raid_rooms/router.py",
+    "app/raid_rooms/schedule_heads.py",
+    "app/raid_rooms/schedule_output.py",
+    "app/raid_rooms/schedule_router.py",
+    "app/raid_rooms/schedule_schemas.py",
+    "app/raid_rooms/schemas.py",
+    "app/raid_rooms/search_router.py",
+    "app/raid_rooms/session_display_schemas.py",
+    "app/raid_rooms/source_models.py",
+    "app/raid_rooms/weekly_links.py",
+    "app/raid_rooms/weekly_summary_router.py",
+    "app/raid_rooms/weekly_summary_schemas.py",
+    "app/game_accounts/__init__.py",
+    "app/game_accounts/batch_router.py",
+    "app/game_accounts/batch_schemas.py",
+    "app/game_accounts/bootstrap_router.py",
+    "app/game_accounts/bootstrap_schemas.py",
+    "app/game_accounts/lifecycle_router.py",
+    "app/game_accounts/models.py",
+    "app/game_accounts/power_success.py",
+    "app/game_accounts/profile_router.py",
+    "app/game_accounts/profile_schemas.py",
+    "app/game_accounts/roster_presence.py",
+    "app/game_accounts/router.py",
+    "app/game_accounts/schemas.py",
+    "app/game_accounts/support.py"
+  ],
+  "moves": [
+    {
+      "old": "app/raid_rooms/active_usage.py",
+      "new": "app/raid_rooms/common/active_usage.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/admission_candidates.py",
+      "new": "app/raid_rooms/admissions/admission_candidates.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/admission_context.py",
+      "new": "app/raid_rooms/admissions/admission_context.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/admission_eligibility.py",
+      "new": "app/raid_rooms/admissions/admission_eligibility.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/admission_history.py",
+      "new": "app/raid_rooms/admissions/admission_history.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/admission_service.py",
+      "new": "app/raid_rooms/admissions/admission_service.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/application_display.py",
+      "new": "app/raid_rooms/admissions/application_display.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/atomic_members.py",
+      "new": "app/raid_rooms/participation/atomic_members.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/availability.py",
+      "new": "app/raid_rooms/schedules/availability.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/beta_output.py",
+      "new": "app/raid_rooms/common/beta_output.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/beta_profile.py",
+      "new": "app/raid_rooms/common/beta_profile.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/beta_schedule.py",
+      "new": "app/raid_rooms/schedules/beta_schedule.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/beta_search.py",
+      "new": "app/raid_rooms/admissions/beta_search.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/beta_text.py",
+      "new": "app/raid_rooms/common/beta_text.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/character_candidates.py",
+      "new": "app/raid_rooms/admissions/character_candidates.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/character_issues.py",
+      "new": "app/raid_rooms/participation/character_issues.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/command_context.py",
+      "new": "app/raid_rooms/common/command_context.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/completed_room_lifecycle.py",
+      "new": "app/raid_rooms/outcomes/completed_room_lifecycle.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/completion_correction.py",
+      "new": "app/raid_rooms/outcomes/completion_correction.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/core.py",
+      "new": "app/raid_rooms/common/core.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_admission.py",
+      "new": "app/raid_rooms/admissions/cycle_admission.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_card_batch.py",
+      "new": "app/raid_rooms/reads/cycle_card_batch.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_character.py",
+      "new": "app/raid_rooms/participation/cycle_character.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_commands.py",
+      "new": "app/raid_rooms/admissions/cycle_commands.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_common.py",
+      "new": "app/raid_rooms/participation/cycle_common.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_continuation.py",
+      "new": "app/raid_rooms/admissions/cycle_continuation.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_creation.py",
+      "new": "app/raid_rooms/admissions/cycle_creation.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_group_policy.py",
+      "new": "app/raid_rooms/group_links/cycle_group_policy.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_leadership.py",
+      "new": "app/raid_rooms/participation/cycle_leadership.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_legacy.py",
+      "new": "app/raid_rooms/compat/cycle_legacy.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_lifecycle.py",
+      "new": "app/raid_rooms/participation/cycle_lifecycle.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_lists.py",
+      "new": "app/raid_rooms/reads/cycle_lists.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_management.py",
+      "new": "app/raid_rooms/participation/cycle_management.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_member_reads.py",
+      "new": "app/raid_rooms/reads/cycle_member_reads.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_opening.py",
+      "new": "app/raid_rooms/admissions/cycle_opening.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_outcomes.py",
+      "new": "app/raid_rooms/outcomes/cycle_outcomes.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_planning.py",
+      "new": "app/raid_rooms/schedules/cycle_planning.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_proposals.py",
+      "new": "app/raid_rooms/schedules/cycle_proposals.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_queries.py",
+      "new": "app/raid_rooms/reads/cycle_queries.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_resume.py",
+      "new": "app/raid_rooms/outcomes/cycle_resume.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_schedule.py",
+      "new": "app/raid_rooms/schedules/cycle_schedule.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_schedule_service.py",
+      "new": "app/raid_rooms/schedules/cycle_schedule_service.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_times.py",
+      "new": "app/raid_rooms/schedules/cycle_times.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycle_worker.py",
+      "new": "app/raid_rooms/common/cycle_worker.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/cycles.py",
+      "new": "app/raid_rooms/common/cycles.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/existing_participation.py",
+      "new": "app/raid_rooms/participation/existing_participation.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/group_list_display.py",
+      "new": "app/raid_rooms/group_links/group_list_display.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/member_reads.py",
+      "new": "app/raid_rooms/reads/member_reads.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/membership_actions.py",
+      "new": "app/raid_rooms/participation/membership_actions.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/membership_readers.py",
+      "new": "app/raid_rooms/participation/membership_readers.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/participation_core.py",
+      "new": "app/raid_rooms/participation/participation_core.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/policies.py",
+      "new": "app/raid_rooms/common/policies.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/projections.py",
+      "new": "app/raid_rooms/reads/projections.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/proposals.py",
+      "new": "app/raid_rooms/schedules/proposals.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/queries.py",
+      "new": "app/raid_rooms/reads/queries.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/readiness.py",
+      "new": "app/raid_rooms/common/readiness.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/resume_review.py",
+      "new": "app/raid_rooms/outcomes/resume_review.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/roster_recovery.py",
+      "new": "app/raid_rooms/participation/roster_recovery.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/runtime.py",
+      "new": "app/raid_rooms/common/runtime.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/schedule_service.py",
+      "new": "app/raid_rooms/schedules/schedule_service.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/schedule_views.py",
+      "new": "app/raid_rooms/schedules/schedule_views.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/scheduling.py",
+      "new": "app/raid_rooms/schedules/scheduling.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/search.py",
+      "new": "app/raid_rooms/reads/search.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/service.py",
+      "new": "app/raid_rooms/common/service.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/session_display.py",
+      "new": "app/raid_rooms/schedules/session_display.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/time_policy.py",
+      "new": "app/raid_rooms/common/time_policy.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/usage.py",
+      "new": "app/raid_rooms/common/usage.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/v1_compat.py",
+      "new": "app/raid_rooms/compat/v1_compat.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/weekly_summary.py",
+      "new": "app/raid_rooms/outcomes/weekly_summary.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/raid_rooms/worker.py",
+      "new": "app/raid_rooms/common/worker.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/activity_policy.py",
+      "new": "app/game_accounts/character_profiles/activity_policy.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/batches.py",
+      "new": "app/game_accounts/rosters/batches.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/bootstrap.py",
+      "new": "app/game_accounts/rosters/bootstrap.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/cleanup.py",
+      "new": "app/game_accounts/rosters/cleanup.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/combat_power.py",
+      "new": "app/game_accounts/power/combat_power.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/diagnostics.py",
+      "new": "app/game_accounts/verification/diagnostics.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/equipment.py",
+      "new": "app/game_accounts/verification/equipment.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/equipment_proof.py",
+      "new": "app/game_accounts/verification/equipment_proof.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/lifecycle.py",
+      "new": "app/game_accounts/rosters/lifecycle.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/lifecycle_reads.py",
+      "new": "app/game_accounts/rosters/lifecycle_reads.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/observations.py",
+      "new": "app/game_accounts/rosters/observations.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/owned_refresh.py",
+      "new": "app/game_accounts/rosters/owned_refresh.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/ownership_diagnostics.py",
+      "new": "app/game_accounts/verification/ownership_diagnostics.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/ownership_policy.py",
+      "new": "app/game_accounts/verification/ownership_policy.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/power_service.py",
+      "new": "app/game_accounts/power/power_service.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/presence_reads.py",
+      "new": "app/game_accounts/rosters/presence_reads.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/presentation.py",
+      "new": "app/game_accounts/character_profiles/presentation.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/profiles.py",
+      "new": "app/game_accounts/character_profiles/profiles.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/provider.py",
+      "new": "app/game_accounts/provider_io/provider.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/provider_diagnostics.py",
+      "new": "app/game_accounts/provider_io/provider_diagnostics.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/representative.py",
+      "new": "app/game_accounts/character_profiles/representative.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/service.py",
+      "new": "app/game_accounts/rosters/service.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/verification_context.py",
+      "new": "app/game_accounts/verification/verification_context.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/verification_history.py",
+      "new": "app/game_accounts/verification/verification_history.py",
+      "kind": "application"
+    },
+    {
+      "old": "app/game_accounts/verification_targets.py",
+      "new": "app/game_accounts/verification/verification_targets.py",
+      "kind": "application"
+    },
+    {
+      "old": "tests/test_account_bootstrap.py",
+      "new": "tests/game_accounts/test_account_bootstrap.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_active_room_usage.py",
+      "new": "tests/raid_rooms/common/test_active_room_usage.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_activity_participation_continuity.py",
+      "new": "tests/raid_rooms/participation/test_activity_participation_continuity.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_activity_policy.py",
+      "new": "tests/game_accounts/test_activity_policy.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_admission_eligibility.py",
+      "new": "tests/raid_rooms/admissions/test_admission_eligibility.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_application_composition.py",
+      "new": "tests/raid_rooms/admissions/test_application_composition.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_application_display.py",
+      "new": "tests/raid_rooms/admissions/test_application_display.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_application_display_references.py",
+      "new": "tests/raid_rooms/admissions/test_application_display_references.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_application_item_level.py",
+      "new": "tests/raid_rooms/admissions/test_application_item_level.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_atomic_members.py",
+      "new": "tests/raid_rooms/participation/test_atomic_members.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_auth.py",
+      "new": "tests/auth/test_auth.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_beta_recruitment.py",
+      "new": "tests/raid_rooms/admissions/test_beta_recruitment.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_character_lifecycle.py",
+      "new": "tests/game_accounts/test_character_lifecycle.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_combat_power.py",
+      "new": "tests/game_accounts/test_combat_power.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_completion_corrections.py",
+      "new": "tests/raid_rooms/outcomes/test_completion_corrections.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_coordination_wait.py",
+      "new": "tests/raid_rooms/schedules/test_coordination_wait.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_cycle_group_policy.py",
+      "new": "tests/raid_rooms/group_links/test_cycle_group_policy.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_departure_search_minutes.py",
+      "new": "tests/raid_rooms/schedules/test_departure_search_minutes.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_explicit_departure_minutes.py",
+      "new": "tests/raid_rooms/schedules/test_explicit_departure_minutes.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_game_account_primitives.py",
+      "new": "tests/game_accounts/test_game_account_primitives.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_game_accounts.py",
+      "new": "tests/game_accounts/test_game_accounts.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_google.py",
+      "new": "tests/auth/test_google.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_group_admissions.py",
+      "new": "tests/groups/test_group_admissions.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_group_character_candidates.py",
+      "new": "tests/groups/test_group_character_candidates.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_group_display.py",
+      "new": "tests/groups/test_group_display.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_group_features_management.py",
+      "new": "tests/groups/test_group_features_management.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_group_foundation.py",
+      "new": "tests/groups/test_group_foundation.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_group_invite_display.py",
+      "new": "tests/groups/test_group_invite_display.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_group_invite_eligibility.py",
+      "new": "tests/groups/test_group_invite_eligibility.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_group_management.py",
+      "new": "tests/groups/test_group_management.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_group_management_http.py",
+      "new": "tests/groups/test_group_management_http.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_group_raid_lifecycle.py",
+      "new": "tests/groups/test_group_raid_lifecycle.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_group_room_connection.py",
+      "new": "tests/raid_rooms/group_links/test_group_room_connection.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_groups_http.py",
+      "new": "tests/groups/test_groups_http.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_input_name_resolution.py",
+      "new": "tests/game_accounts/test_input_name_resolution.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_integrated_recruitment_storage.py",
+      "new": "tests/raid_rooms/common/test_integrated_recruitment_storage.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_lifecycle_reads.py",
+      "new": "tests/game_accounts/test_lifecycle_reads.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_live_equipment_proof.py",
+      "new": "tests/game_accounts/test_live_equipment_proof.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_lostark_diagnostics.py",
+      "new": "tests/game_accounts/test_lostark_diagnostics.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_lostark_keys.py",
+      "new": "tests/lostark_keys/test_lostark_keys.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_lostark_retry_restore.py",
+      "new": "tests/game_accounts/test_lostark_retry_restore.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_member_limits.py",
+      "new": "tests/member_limits/test_member_limits.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_member_settings.py",
+      "new": "tests/member_settings/test_member_settings.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_membership_actions.py",
+      "new": "tests/raid_rooms/participation/test_membership_actions.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_observability.py",
+      "new": "tests/core/test_observability.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_owned_roster_refresh.py",
+      "new": "tests/game_accounts/test_owned_roster_refresh.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_ownership_diagnostics.py",
+      "new": "tests/game_accounts/test_ownership_diagnostics.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_ownership_dispute_impact.py",
+      "new": "tests/ownership_disputes/test_ownership_dispute_impact.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_ownership_disputes.py",
+      "new": "tests/ownership_disputes/test_ownership_disputes.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_ownership_policy.py",
+      "new": "tests/game_accounts/test_ownership_policy.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_personal_presentation.py",
+      "new": "tests/game_accounts/test_personal_presentation.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_power_ownership.py",
+      "new": "tests/game_accounts/test_power_ownership.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_provider_diagnostics.py",
+      "new": "tests/game_accounts/test_provider_diagnostics.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_raid_catalog.py",
+      "new": "tests/raids/test_raid_catalog.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_raid_room_admission_control.py",
+      "new": "tests/raid_rooms/admissions/test_raid_room_admission_control.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_raid_room_foundation.py",
+      "new": "tests/raid_rooms/common/test_raid_room_foundation.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_raid_room_http.py",
+      "new": "tests/raid_rooms/common/test_raid_room_http.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_raid_room_migrations.py",
+      "new": "tests/raid_rooms/common/test_raid_room_migrations.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_raid_room_preparation.py",
+      "new": "tests/raid_rooms/common/test_raid_room_preparation.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_raid_room_queries.py",
+      "new": "tests/raid_rooms/reads/test_raid_room_queries.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_raid_weekly.py",
+      "new": "tests/raid_weekly/test_raid_weekly.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_reapplication_history.py",
+      "new": "tests/raid_rooms/admissions/test_reapplication_history.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_record_timestamps.py",
+      "new": "tests/raid_rooms/outcomes/test_record_timestamps.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_admission.py",
+      "new": "tests/raid_rooms/admissions/test_recruitment_admission.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_availability.py",
+      "new": "tests/raid_rooms/schedules/test_recruitment_availability.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_backup_guards.py",
+      "new": "tests/raid_rooms/common/test_recruitment_backup_guards.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_completion.py",
+      "new": "tests/raid_rooms/outcomes/test_recruitment_completion.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_continuation.py",
+      "new": "tests/raid_rooms/common/test_recruitment_continuation.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_cycle_commands.py",
+      "new": "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_cycle_creation.py",
+      "new": "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_cycle_cutover.py",
+      "new": "tests/raid_rooms/compat/test_recruitment_cycle_cutover.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_cycle_http.py",
+      "new": "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_cycle_integration.py",
+      "new": "tests/raid_rooms/admissions/test_recruitment_cycle_integration.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_cycle_lifecycle.py",
+      "new": "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_cycle_lifecycle_http.py",
+      "new": "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle_http.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_cycle_management.py",
+      "new": "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_cycle_outcomes.py",
+      "new": "tests/raid_rooms/outcomes/test_recruitment_cycle_outcomes.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_cycle_performance.py",
+      "new": "tests/raid_rooms/common/test_recruitment_cycle_performance.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_cycle_planning.py",
+      "new": "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_cycle_queries.py",
+      "new": "tests/raid_rooms/reads/test_recruitment_cycle_queries.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_cycle_times.py",
+      "new": "tests/raid_rooms/schedules/test_recruitment_cycle_times.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_cycle_times_http.py",
+      "new": "tests/raid_rooms/schedules/test_recruitment_cycle_times_http.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_cycles.py",
+      "new": "tests/raid_rooms/common/test_recruitment_cycles.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_management.py",
+      "new": "tests/raid_rooms/participation/test_recruitment_management.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_member_reads.py",
+      "new": "tests/raid_rooms/participation/test_recruitment_member_reads.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_participation.py",
+      "new": "tests/raid_rooms/participation/test_recruitment_participation.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_resume_review.py",
+      "new": "tests/raid_rooms/outcomes/test_recruitment_resume_review.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_scheduling.py",
+      "new": "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_search.py",
+      "new": "tests/raid_rooms/reads/test_recruitment_search.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_session_display.py",
+      "new": "tests/raid_rooms/schedules/test_recruitment_session_display.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_sources.py",
+      "new": "tests/raid_rooms/common/test_recruitment_sources.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_recruitment_weekly_summary.py",
+      "new": "tests/raid_rooms/outcomes/test_recruitment_weekly_summary.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_registration_cleanup.py",
+      "new": "tests/game_accounts/test_registration_cleanup.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_representative.py",
+      "new": "tests/game_accounts/test_representative.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_role_power_success.py",
+      "new": "tests/game_accounts/test_role_power_success.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_role_summaries.py",
+      "new": "tests/game_accounts/test_role_summaries.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_roster_followup_commands.py",
+      "new": "tests/raid_rooms/participation/test_roster_followup_commands.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_roster_participation_issues.py",
+      "new": "tests/raid_rooms/participation/test_roster_participation_issues.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_roster_public_contract.py",
+      "new": "tests/raid_rooms/participation/test_roster_public_contract.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_startup_batches.py",
+      "new": "tests/game_accounts/test_startup_batches.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_verification_context.py",
+      "new": "tests/game_accounts/test_verification_context.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_verification_history.py",
+      "new": "tests/game_accounts/test_verification_history.py",
+      "kind": "test"
+    },
+    {
+      "old": "tests/test_verification_targets.py",
+      "new": "tests/game_accounts/test_verification_targets.py",
+      "kind": "test"
+    }
+  ]
+}

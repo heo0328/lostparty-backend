@@ -5,7 +5,8 @@ from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 from pydantic import UUID4
 from app.auth.router import authenticated
-from app.game_accounts import schemas as s, service
+from app.game_accounts import schemas as s
+from app.game_accounts.rosters import service
 
 def strict_query(request: Request):
     path=request.url.path
@@ -69,7 +70,7 @@ def refresh(registration_id:UUID,data:s.Empty,principal:Principal,key:Key):
 
 @router.post('/me/game-accounts/{registration_id}/combat-power/refresh',response_model=s.PowerRefreshOut,responses=common)
 def refresh_power(registration_id:UUID,data:s.PowerRefreshIn,principal:Principal,key:Key):
-    from app.game_accounts.power_service import refresh
+    from app.game_accounts.power.power_service import refresh
     status, body = refresh(principal, registration_id, key, data.model_dump())
     return JSONResponse(status_code=status,content=jsonable_encoder(s.PowerRefreshOut.model_validate(body)))
 
@@ -109,7 +110,7 @@ async def representative_request(request: Request):
             response_model=s.RepresentativeOut, responses=common,
             dependencies=[Depends(representative_request)])
 def representative(registration_id: UUID, principal: Principal):
-    from app.game_accounts import representative as rep
+    from app.game_accounts.character_profiles import representative as rep
     return rep.get(principal, registration_id)
 
 
@@ -118,6 +119,6 @@ def representative(registration_id: UUID, principal: Principal):
             dependencies=[Depends(representative_request)])
 def set_representative(registration_id: UUID, data: s.RepresentativeIn,
                        principal: Principal, key: Key):
-    from app.game_accounts import representative as rep
+    from app.game_accounts.character_profiles import representative as rep
     status, body = rep.put(principal, registration_id, key, jsonable_encoder(data))
     return JSONResponse(status_code=status, content=jsonable_encoder(s.RepresentativeOut.model_validate(body)))

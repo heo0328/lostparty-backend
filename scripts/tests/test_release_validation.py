@@ -38,6 +38,17 @@ class ValidationTests(unittest.TestCase):
         self.assertEqual(plan['mode'], 'full')
         self.assertIsNone(plan['plan_sha256'])
 
+    def test_nested_feature_tests_are_selectable_without_weakening_path_checks(self):
+        feature = self.root / 'tests' / 'raid_rooms' / 'participation'
+        feature.mkdir(parents=True)
+        (feature / 'test_nested.py').write_text('')
+        selected = 'tests/raid_rooms/participation/test_nested.py'
+        self.assertIn(selected, validation.all_tests(self.root))
+        self.assertEqual(self.load({**self.plan, 'tests': [selected]})['tests'], [selected])
+        for invalid in ('../' + selected, selected + '::test_any', selected.replace('test_nested', 'missing')):
+            with self.subTest(path=invalid), self.assertRaises(ValueError):
+                self.load({**self.plan, 'tests': [invalid]})
+
     def test_exact_files_only_and_stale_or_invalid_plan_rejected(self):
         self.assertEqual(self.load()['tests'], ['tests/test_a.py'])
         for key, value in [('version', '0.1.1'), ('mode', 'skip'), ('tests', []),
@@ -52,7 +63,7 @@ class ValidationTests(unittest.TestCase):
     def test_protected_paths_and_renames_require_full(self):
         plan = self.load()
         protected = ['app/auth/router.py', 'app/core/database.py', 'app/main.py',
-                     'app/groups/feature_models.py', 'app/game_accounts/ownership_policy.py',
+                     'app/groups/feature_models.py', 'app/game_accounts/verification/ownership_policy.py',
                      'alembic/versions/change.py', 'requirements.txt', 'Dockerfile',
                      '.github/workflows/a.yml', 'scripts/deployment/server.py',
                      'compose.lightsail.yaml', 'tests/conftest.py', '.dockerignore']

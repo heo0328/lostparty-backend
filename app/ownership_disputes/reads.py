@@ -1,7 +1,7 @@
 import uuid
 from sqlalchemy import select,or_
 from app.core.database import session,now
-from app.game_accounts import lifecycle
+from app.game_accounts.rosters import lifecycle
 from app.game_accounts.models import Registration,Account
 from app.game_accounts.support import authorize,cursor_encode,cursor_decode
 from app.ownership_disputes import core

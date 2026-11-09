@@ -7,7 +7,8 @@ from sqlalchemy import select, func, text
 from app.auth.models import User
 from app.core.database import session, now
 from app.core.rate_limit import check
-from app.game_accounts import lifecycle, verification_context
+from app.game_accounts.rosters import lifecycle
+from app.game_accounts.verification import verification_context
 from app.game_accounts.models import Account, Character, Registration
 from app.game_accounts.support import authorize, fail, reserve, release, commit_result, cursor_encode, cursor_decode
 from app.groups import service as groups, http_service

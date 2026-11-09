@@ -6,7 +6,8 @@ from fastapi.routing import APIRoute
 from app.game_accounts.router import Principal, Key
 from app.game_accounts.schemas import GameErrorOut
 from app.game_accounts.support import fail
-from app.raid_rooms import availability as service, availability_schemas as s
+from app.raid_rooms.schedules import availability as service
+from app.raid_rooms import availability_schemas as s
 
 
 def unique_pairs(pairs):

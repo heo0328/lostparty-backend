@@ -152,7 +152,7 @@ def git(*args):
 
 
 def all_tests(root=ROOT):
-    return sorted(str(p.relative_to(root)) for p in (root / 'tests').glob('test_*.py'))
+    return sorted(str(p.relative_to(root)) for p in (root / 'tests').rglob('test_*.py'))
 
 
 def load_plan(root=ROOT):

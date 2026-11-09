@@ -3,7 +3,8 @@ from fastapi import APIRouter
 from app.game_accounts.router import Principal
 from app.game_accounts.schemas import GameErrorOut
 from app.raid_rooms.availability_router import AvailabilityRoute
-from app.raid_rooms import weekly_summary as service, weekly_summary_schemas as s
+from app.raid_rooms.outcomes import weekly_summary as service
+from app.raid_rooms import weekly_summary_schemas as s
 
 router = APIRouter(prefix='/v2', tags=['recruitment-weekly-summary'], route_class=AvailabilityRoute)
 errors = {code: {'model': GameErrorOut} for code in (400, 401, 403, 404, 409, 413, 429, 503)}

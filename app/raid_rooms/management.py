@@ -5,7 +5,9 @@ from pydantic import Field
 from sqlalchemy import select
 from app.game_accounts.support import fail
 from app.groups.models import Group,GroupMembership
-from app.raid_rooms import admission_service as base,scheduling as graph,completion
+from app.raid_rooms.admissions import admission_service as base
+from app.raid_rooms.schedules import scheduling as graph
+from app.raid_rooms import completion
 from app.raid_rooms.admission_schemas import DTO,Version,Experience,Combat
 from app.raid_rooms.source_models import RoomSettings
 from app.raid_rooms.integrated_models import RecruitmentAssignment as Assignment
@@ -103,8 +105,8 @@ def command(principal,rid,key,data,operation):
                 if member.revision!=p.expected_revision:fail('REVISION_CONFLICT')
                 if p.party_no>min(room.app_capacity//4,rd.game_party_size//4):fail('ROOM_COMPOSITION_CONFLICT')
                 # Validate current ownership/lifecycle, retain original power comparison.
-                from app.game_accounts.profiles import owned_character
-                from app.game_accounts.lifecycle import require_usable
+                from app.game_accounts.character_profiles.profiles import owned_character
+                from app.game_accounts.rosters.lifecycle import require_usable
                 account,character=owned_character(db,a.user_id,a.character_id);require_usable(db,character)
                 if account.ownership_revision!=a.ownership_revision or character.lifecycle_revision!=a.lifecycle_revision:fail('REVISION_CONFLICT')
                 group=final.setdefault((a.round_id,p.party_no),[])
@@ -126,5 +128,5 @@ def command(principal,rid,key,data,operation):
 
 
 # Two-cycle storage never falls back to the legacy global room graph.
-from app.raid_rooms.v1_compat import read as _current_read
+from app.raid_rooms.compat.v1_compat import read as _current_read
 get_settings=_current_read('settings')(get_settings)

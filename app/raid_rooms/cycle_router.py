@@ -1,8 +1,9 @@
 from app.raid_rooms.cycle_group_context_schemas import TitleContext
 from app.raid_rooms import cycle_group_schemas as group_schemas
-from app.raid_rooms import cycle_group_policy as group_policy
+from app.raid_rooms.group_links import cycle_group_policy as group_policy
 """Two-cycle routes with explicit request profiles and unchanged default DTOs."""
-from app.raid_rooms import beta_profile,beta_schemas
+from app.raid_rooms.common import beta_profile
+from app.raid_rooms import beta_schemas
 import json
 from typing import Annotated, Literal
 from uuid import UUID
@@ -17,25 +18,32 @@ from app.game_accounts.support import fail
 from app.core.errors import AuthError, response
 from app.raid_rooms.availability_router import AvailabilityRoute, unique_pairs
 from app.raid_rooms.search_router import FilterContext
-from app.raid_rooms import (cycle_creation as creation, cycle_commands as commands, cycle_wire as s,
-    cycle_schemas as inputs, cycle_queries as queries, cycle_member_reads as members,cycle_lists as lists)
+from app.raid_rooms.admissions import cycle_creation as creation, cycle_commands as commands
+from app.raid_rooms import cycle_wire as s, cycle_schemas as inputs
+from app.raid_rooms.reads import cycle_queries as queries, cycle_member_reads as members, cycle_lists as lists
 from app.raid_rooms.router import OptionalPrincipal
-from app.raid_rooms import cycle_opening,cycle_continuation,cycle_leadership,cycle_character
-from app.raid_rooms import cycle_outcomes,cycle_resume,cycle_management,cycle_common
-from app.raid_rooms import cycle_times
-from app.raid_rooms import cycle_schedule_service
-from app.raid_rooms import character_candidates
+from app.raid_rooms.admissions import cycle_opening, cycle_continuation
+from app.raid_rooms.participation import cycle_leadership, cycle_character
+from app.raid_rooms.outcomes import cycle_outcomes, cycle_resume
+from app.raid_rooms.participation import cycle_management, cycle_common
+from app.raid_rooms.schedules import cycle_times
+from app.raid_rooms.schedules import cycle_schedule_service
+from app.raid_rooms.admissions import character_candidates
 from app.raid_rooms.candidate_schemas import CandidatePage
 from app.raid_rooms import session_display_schemas as display_schemas
-from app.raid_rooms import resume_review, resume_review_schemas
-from app.raid_rooms import completion_correction, completion_correction_schemas as correction_schemas
-from app.raid_rooms import admission_candidates
+from app.raid_rooms.outcomes import resume_review
+from app.raid_rooms import resume_review_schemas
+from app.raid_rooms.outcomes import completion_correction
+from app.raid_rooms import completion_correction_schemas as correction_schemas
+from app.raid_rooms.admissions import admission_candidates
 from app.raid_rooms.admission_candidate_schemas import AdmissionCandidatePage
 from app.raid_rooms import application_display_schemas, group_link_display as group_link,group_connection
 
 
-from app.raid_rooms import atomic_members, atomic_member_schemas as atomic_schemas
-from app.raid_rooms import membership_actions, membership_readers, membership_action_schemas as membership_schemas
+from app.raid_rooms.participation import atomic_members
+from app.raid_rooms import atomic_member_schemas as atomic_schemas
+from app.raid_rooms.participation import membership_actions, membership_readers
+from app.raid_rooms import membership_action_schemas as membership_schemas
 
 
 class CycleRoute(AvailabilityRoute):
@@ -478,7 +486,7 @@ def end_global(room_id:UUID,principal:Principal,key:Key,data:inputs.GlobalMember
 
 @router.get('/me/raid-rooms/{room_id}/continuation-choices',response_model=s.OutputContract3GetV2MeRaidRoomsRoomIdContinuationChoices,responses=errors)
 def legacy_choices(room_id:UUID,principal:Principal,target_cycle_key:str):
-    from app.raid_rooms import cycle_legacy
+    from app.raid_rooms.compat import cycle_legacy
     return cycle_legacy.get(principal,room_id,target_cycle_key)
 
 
@@ -557,5 +565,5 @@ for _route in router.routes:
 
 @router.get('/me/raid-room-character-issues',responses=errors)
 def character_issue_summary(principal:Principal):
-    from app.raid_rooms import character_issues
+    from app.raid_rooms.participation import character_issues
     return character_issues.summary(principal)

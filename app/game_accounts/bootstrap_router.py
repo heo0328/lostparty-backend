@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, Request, Response
 from app.game_accounts.router import Principal
 from app.game_accounts.schemas import GameErrorOut
 from app.game_accounts.bootstrap_schemas import AccountBootstrap
-from app.game_accounts import bootstrap
+from app.game_accounts.rosters import bootstrap
 from app.game_accounts.support import fail
 
 

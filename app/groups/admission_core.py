@@ -3,7 +3,7 @@ import uuid
 from sqlalchemy import func, select
 from app.auth.models import User
 from app.core.database import now
-from app.game_accounts import lifecycle, service as accounts
+from app.game_accounts.rosters import lifecycle, service as accounts
 from app.game_accounts.models import Activity, Character
 from app.game_accounts.support import fail
 from app.groups import service as groups

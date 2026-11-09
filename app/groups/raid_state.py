@@ -2,17 +2,18 @@
 from datetime import date, timedelta
 from sqlalchemy import select
 from fastapi.encoders import jsonable_encoder
-from app.game_accounts.lifecycle import digest
+from app.game_accounts.rosters.lifecycle import digest
 from app.groups import display, service as groups
 from app.groups.models import GroupMembership
-from app.raid_rooms import completed_room_lifecycle as archive, cycle_admission
+from app.raid_rooms.outcomes import completed_room_lifecycle as archive
+from app.raid_rooms.admissions import cycle_admission
 from app.raid_rooms.integrated_models import RecruitmentRoom as Room, RecruitmentMembership as Member, RecruitmentAssignment as Assignment, RecruitmentItem as Item
 from app.raid_rooms.cycle_models import RoomCycle, CycleGeneration, CycleMember, CycleAssignment
 from app.raids import service as raids
 
 
 def evaluate(db, group, stamp):
-    from app.raid_rooms import cycle_group_policy as policy
+    from app.raid_rooms.group_links import cycle_group_policy as policy
     from app.raid_rooms.cycle_group_models import CycleGroupPolicy
     selected=select(Room).where(Room.ended_at.is_(None))
     if policy.enabled(db):

@@ -1,0 +1,366 @@
+{
+  "date": "2026-11-09",
+  "branch": "feat/character-lifecycle",
+  "base_commit": "dd7d68b1e5e005f4fe87e9fcfeab98f8ff5a2df7",
+  "scope": "Business modules/tests and direct references only; DTO/router/schema/model paths retained",
+  "application_moves": 95,
+  "test_file_moves": 103,
+  "pinned_modules": 79,
+  "mapping": "docs/engineering/development/folder-layout-map.json",
+  "collection": {
+    "before": 1916,
+    "after": 1916,
+    "missing": 0,
+    "duplicates": 0,
+    "parameter_normalization": "Existing uuid.uuid1() invalid-command-key parameter in one test; no test edited for normalization",
+    "first_after_attempt": "1892 collected/1error: session-display validator still used former file depth; reference fixed",
+    "before_log_sha256": "54bf1af0f1992319ce157f59741175d82679edfa2145d9050daefd6797dcd77f",
+    "after_log_sha256": "353841267faa663be9904a004d0ffe4c95af87730a0305e52d7f5655f297c84f"
+  },
+  "semantic_check": {
+    "python_files": 349,
+    "result": "PASS",
+    "excluded": "Import declarations and moved module/path references; one relative validator root-depth reference",
+    "embedded_python_imports": "Normalized as import-only references; all parseable Python snippets checked for old moved imports"
+  },
+  "contracts": {
+    "project": "lostparty-check-f226b2ea434b",
+    "legacy_paths": 125,
+    "legacy_operations": 142,
+    "two_cycle_paths": 188,
+    "two_cycle_operations": 209,
+    "full_object_match": true,
+    "stored_contracts_modified": false,
+    "sha256": {
+      "openapi/openapi.yaml": "18491bc066d08a578aa9228cd0da85eee508288c28d14d563d788e73e324c3dd",
+      "openapi/two-cycle.openapi.yaml": "2aeca907115ffc768cad723d227f0c2339b042f56f46ffed251c1037d235b6c4"
+    }
+  },
+  "tools": {
+    "passed": 63,
+    "failed": 0,
+    "named_suite_membership_and_order_preserved": true
+  },
+  "full_regression": {
+    "project": "lostparty-check-d2f35543b192",
+    "status": "completed across initial run and four independent PostgreSQL shards; no introduced failures remain",
+    "selected_test_files": 103,
+    "image": "sha256:b8b46c173b6f75cee6b8a1e62ca4aafae1ba80590e27eff3159be73818edb4e9",
+    "initial_completed": 1012,
+    "initial_passed": 1010,
+    "initial_failed": 2,
+    "initial_exit": 2,
+    "initial_seconds": 1371.44,
+    "initial_interrupt_reason": "Normal SIGINT to isolated pytest to distribute remaining files over four independent PostgreSQL projects; original project cleaned",
+    "initial_project_cleanup": true,
+    "remaining_shards": [
+      {
+        "files": [
+          "tests/raid_rooms/admissions/test_application_display_references.py",
+          "tests/raid_rooms/admissions/test_raid_room_admission_control.py",
+          "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+          "tests/raid_rooms/admissions/test_recruitment_cycle_integration.py",
+          "tests/raid_rooms/common/test_raid_room_preparation.py",
+          "tests/raid_rooms/common/test_recruitment_continuation.py",
+          "tests/raid_rooms/common/test_recruitment_cycles.py",
+          "tests/raid_rooms/group_links/test_group_room_connection.py",
+          "tests/raid_rooms/outcomes/test_recruitment_resume_review.py",
+          "tests/raid_rooms/participation/test_membership_actions.py",
+          "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle_http.py",
+          "tests/raid_rooms/participation/test_roster_public_contract.py",
+          "tests/raid_rooms/schedules/test_explicit_departure_minutes.py",
+          "tests/raid_weekly/test_raid_weekly.py"
+        ],
+        "cases": 230
+      },
+      {
+        "files": [
+          "tests/raid_rooms/admissions/test_application_display.py",
+          "tests/raid_rooms/admissions/test_beta_recruitment.py",
+          "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+          "tests/raid_rooms/common/test_integrated_recruitment_storage.py",
+          "tests/raid_rooms/common/test_raid_room_http.py",
+          "tests/raid_rooms/common/test_raid_room_migrations.py",
+          "tests/raid_rooms/group_links/test_cycle_group_policy.py",
+          "tests/raid_rooms/outcomes/test_recruitment_completion.py",
+          "tests/raid_rooms/participation/test_activity_participation_continuity.py",
+          "tests/raid_rooms/participation/test_recruitment_management.py",
+          "tests/raid_rooms/participation/test_recruitment_participation.py",
+          "tests/raid_rooms/reads/test_recruitment_cycle_queries.py",
+          "tests/raid_rooms/reads/test_recruitment_search.py",
+          "tests/raid_rooms/schedules/test_recruitment_cycle_times.py",
+          "tests/raids/test_raid_catalog.py"
+        ],
+        "cases": 230
+      },
+      {
+        "files": [
+          "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
+          "tests/raid_rooms/common/test_active_room_usage.py",
+          "tests/raid_rooms/common/test_raid_room_foundation.py",
+          "tests/raid_rooms/common/test_recruitment_sources.py",
+          "tests/raid_rooms/compat/test_recruitment_cycle_cutover.py",
+          "tests/raid_rooms/outcomes/test_record_timestamps.py",
+          "tests/raid_rooms/outcomes/test_recruitment_cycle_outcomes.py",
+          "tests/raid_rooms/outcomes/test_recruitment_weekly_summary.py",
+          "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+          "tests/raid_rooms/participation/test_recruitment_member_reads.py",
+          "tests/raid_rooms/participation/test_roster_participation_issues.py",
+          "tests/raid_rooms/reads/test_raid_room_queries.py",
+          "tests/raid_rooms/schedules/test_coordination_wait.py",
+          "tests/raid_rooms/schedules/test_recruitment_scheduling.py"
+        ],
+        "cases": 229
+      },
+      {
+        "files": [
+          "tests/raid_rooms/admissions/test_application_item_level.py",
+          "tests/raid_rooms/admissions/test_reapplication_history.py",
+          "tests/raid_rooms/admissions/test_recruitment_admission.py",
+          "tests/raid_rooms/common/test_recruitment_backup_guards.py",
+          "tests/raid_rooms/common/test_recruitment_cycle_performance.py",
+          "tests/raid_rooms/outcomes/test_completion_corrections.py",
+          "tests/raid_rooms/participation/test_atomic_members.py",
+          "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+          "tests/raid_rooms/participation/test_roster_followup_commands.py",
+          "tests/raid_rooms/schedules/test_departure_search_minutes.py",
+          "tests/raid_rooms/schedules/test_recruitment_availability.py",
+          "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+          "tests/raid_rooms/schedules/test_recruitment_cycle_times_http.py",
+          "tests/raid_rooms/schedules/test_recruitment_session_display.py"
+        ],
+        "cases": 229
+      }
+    ],
+    "overlapping_cases": 14,
+    "coverage_target": 1916,
+    "counts_are_not_added": true,
+    "final_source_image": "lostparty-structure-final:local",
+    "shard_results": [
+      {
+        "index": 1,
+        "project": "lostparty-layout-s1-1c580d1035",
+        "files": [
+          "tests/raid_rooms/admissions/test_application_display_references.py",
+          "tests/raid_rooms/admissions/test_raid_room_admission_control.py",
+          "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+          "tests/raid_rooms/admissions/test_recruitment_cycle_integration.py",
+          "tests/raid_rooms/common/test_raid_room_preparation.py",
+          "tests/raid_rooms/common/test_recruitment_continuation.py",
+          "tests/raid_rooms/common/test_recruitment_cycles.py",
+          "tests/raid_rooms/group_links/test_group_room_connection.py",
+          "tests/raid_rooms/outcomes/test_recruitment_resume_review.py",
+          "tests/raid_rooms/participation/test_membership_actions.py",
+          "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle_http.py",
+          "tests/raid_rooms/participation/test_roster_public_contract.py",
+          "tests/raid_rooms/schedules/test_explicit_departure_minutes.py",
+          "tests/raid_weekly/test_raid_weekly.py"
+        ],
+        "collected_cases": 230,
+        "exit": 0,
+        "cleanup_exit": 0,
+        "passed": 230,
+        "failed": 0,
+        "seconds": 1715.69,
+        "failures": []
+      },
+      {
+        "index": 2,
+        "project": "lostparty-layout-s2-4fc1b1dd6d",
+        "files": [
+          "tests/raid_rooms/admissions/test_application_display.py",
+          "tests/raid_rooms/admissions/test_beta_recruitment.py",
+          "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+          "tests/raid_rooms/common/test_integrated_recruitment_storage.py",
+          "tests/raid_rooms/common/test_raid_room_http.py",
+          "tests/raid_rooms/common/test_raid_room_migrations.py",
+          "tests/raid_rooms/group_links/test_cycle_group_policy.py",
+          "tests/raid_rooms/outcomes/test_recruitment_completion.py",
+          "tests/raid_rooms/participation/test_activity_participation_continuity.py",
+          "tests/raid_rooms/participation/test_recruitment_management.py",
+          "tests/raid_rooms/participation/test_recruitment_participation.py",
+          "tests/raid_rooms/reads/test_recruitment_cycle_queries.py",
+          "tests/raid_rooms/reads/test_recruitment_search.py",
+          "tests/raid_rooms/schedules/test_recruitment_cycle_times.py",
+          "tests/raids/test_raid_catalog.py"
+        ],
+        "collected_cases": 230,
+        "exit": 0,
+        "cleanup_exit": 0,
+        "passed": 230,
+        "failed": 0,
+        "seconds": 1527.29,
+        "failures": []
+      },
+      {
+        "index": 3,
+        "project": "lostparty-layout-s3-412c6a5dcc",
+        "files": [
+          "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
+          "tests/raid_rooms/common/test_active_room_usage.py",
+          "tests/raid_rooms/common/test_raid_room_foundation.py",
+          "tests/raid_rooms/common/test_recruitment_sources.py",
+          "tests/raid_rooms/compat/test_recruitment_cycle_cutover.py",
+          "tests/raid_rooms/outcomes/test_record_timestamps.py",
+          "tests/raid_rooms/outcomes/test_recruitment_cycle_outcomes.py",
+          "tests/raid_rooms/outcomes/test_recruitment_weekly_summary.py",
+          "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+          "tests/raid_rooms/participation/test_recruitment_member_reads.py",
+          "tests/raid_rooms/participation/test_roster_participation_issues.py",
+          "tests/raid_rooms/reads/test_raid_room_queries.py",
+          "tests/raid_rooms/schedules/test_coordination_wait.py",
+          "tests/raid_rooms/schedules/test_recruitment_scheduling.py"
+        ],
+        "collected_cases": 229,
+        "exit": 0,
+        "cleanup_exit": 0,
+        "passed": 229,
+        "failed": 0,
+        "seconds": 1672.93,
+        "failures": []
+      },
+      {
+        "index": 4,
+        "project": "lostparty-layout-s4-042ae709f0",
+        "files": [
+          "tests/raid_rooms/admissions/test_application_item_level.py",
+          "tests/raid_rooms/admissions/test_reapplication_history.py",
+          "tests/raid_rooms/admissions/test_recruitment_admission.py",
+          "tests/raid_rooms/common/test_recruitment_backup_guards.py",
+          "tests/raid_rooms/common/test_recruitment_cycle_performance.py",
+          "tests/raid_rooms/outcomes/test_completion_corrections.py",
+          "tests/raid_rooms/participation/test_atomic_members.py",
+          "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+          "tests/raid_rooms/participation/test_roster_followup_commands.py",
+          "tests/raid_rooms/schedules/test_departure_search_minutes.py",
+          "tests/raid_rooms/schedules/test_recruitment_availability.py",
+          "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+          "tests/raid_rooms/schedules/test_recruitment_cycle_times_http.py",
+          "tests/raid_rooms/schedules/test_recruitment_session_display.py"
+        ],
+        "collected_cases": 229,
+        "exit": 1,
+        "cleanup_exit": 0,
+        "passed": 228,
+        "failed": 1,
+        "seconds": 2484.42,
+        "failures": [
+          "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py::test_closed_c_opening_respects_completed_archive[stopped]\n1"
+        ]
+      }
+    ],
+    "covered_unique_nodes": 1916,
+    "unique_passed_after_corrected_reference": 1914,
+    "unique_pre_existing_failures": 2,
+    "unresolved_introduced_failures": 0,
+    "all_isolated_projects_cleaned": true
+  },
+  "non_changes": {
+    "api_behavior": true,
+    "db_schema_and_migrations": true,
+    "live_development_server": true,
+    "production": true,
+    "commit_push_merge": true
+  },
+  "notes": [
+    "First baseline collection started before image availability; retried after build; no business tests ran in that attempt",
+    "Original archived bodies and frozen JSON preserved; current dependency/link destinations follow moved files"
+  ],
+  "orm_metadata": {
+    "tables": 116,
+    "registration_and_postgresql_table_index_ddl_identical": true,
+    "database_connection_used": false,
+    "baseline_image": "lostparty-structure-baseline:local",
+    "organized_image": "lostparty-check-d2f35543b192-tests:latest"
+  },
+  "targeted_reruns": [
+    {
+      "project": "lostparty-check-4003729937ca",
+      "node": "tests/game_accounts/test_startup_batches.py::test_partial_commit_then_real_worker_exit_recovers",
+      "passed": 1,
+      "failed": 0,
+      "seconds": 5.58,
+      "cause": "Embedded subprocess Python string retained old from app.game_accounts import batches,profiles; updated to new packages; business behavior unchanged"
+    }
+  ],
+  "layout": {
+    "raid_rooms_root_python_before": 135,
+    "raid_rooms_root_python_after": 65,
+    "game_accounts_root_python_before": 39,
+    "game_accounts_root_python_after": 14,
+    "tests_root_before": 105,
+    "tests_root_after_support_only": [
+      "tests/__init__.py",
+      "tests/conftest.py",
+      "tests/legacy_metadata.py"
+    ]
+  },
+  "preserved_entrypoints_and_resources": [
+    "openapi/openapi.yaml",
+    "openapi/two-cycle.openapi.yaml",
+    "alembic/env.py",
+    "Dockerfile",
+    "Dockerfile.test",
+    "compose.yaml",
+    "compose.two-cycle.yaml",
+    "requirements.txt",
+    "requirements-dev.txt",
+    "tests/conftest.py",
+    "tests/legacy_metadata.py"
+  ],
+  "move_integrity": {
+    "one_to_one_paths": 198,
+    "retained_modules": 79,
+    "new_initializers_empty": 33
+  },
+  "baseline_comparisons": [
+    {
+      "project": "lostparty-layout-base-283613a246b3",
+      "image": "sha256:dbad7727fb6f3fe62cce8e883e83567541d856c056f0924cf48a3158a0a7165d",
+      "node": "tests/test_group_raid_lifecycle.py::test_group_leave_preserves_actual_c_but_does_not_admit_new_n",
+      "passed": 0,
+      "failed": 1,
+      "seconds": 17.16,
+      "failure": "DID NOT RAISE GameError after removing activity selection from an existing participant",
+      "classification": "Pre-existing test expectation failure reproduced on unmoved base source; no expectation or business policy changed",
+      "cleanup_exit": 0
+    },
+    {
+      "project": "lostparty-layout-base-9d34203e50e6",
+      "image": "sha256:dbad7727fb6f3fe62cce8e883e83567541d856c056f0924cf48a3158a0a7165d",
+      "node": "tests/test_recruitment_cycle_lifecycle.py::test_closed_c_opening_respects_completed_archive[stopped]",
+      "passed": 0,
+      "failed": 1,
+      "seconds": 13.07,
+      "failure": "Expected opening context permission.allowed=True after active assignments become stopped; actual False",
+      "classification": "Pre-existing expectation mismatch reproduced on unmoved base; no business policy or test expectation changed",
+      "cleanup_exit": 0
+    }
+  ],
+  "application_imports": {
+    "image": "lostparty-structure-final:local",
+    "modules": 256,
+    "result": "PASS",
+    "network": "none",
+    "db_connection_used": false
+  },
+  "pre_existing_failures": [
+    {
+      "node": "tests/groups/test_group_raid_lifecycle.py::test_group_leave_preserves_actual_c_but_does_not_admit_new_n",
+      "expectation": "Activity removal should revoke existing participation; current implementation retains it",
+      "baseline_project": "lostparty-layout-base-283613a246b3"
+    },
+    {
+      "node": "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py::test_closed_c_opening_respects_completed_archive[stopped]",
+      "expectation": "Opening without explicit selection should be allowed after stopped source; current implementation returns permission rejection",
+      "baseline_project": "lostparty-layout-base-9d34203e50e6"
+    }
+  ],
+  "final_source": {
+    "image": "lostparty-structure-final:local",
+    "source_files": 413,
+    "sha256": "66a7ba116a79da7ffb48623a1424925c3f1809bb9290de01333f07cf99cb6d16",
+    "match": true
+  },
+  "completion": "File/reference reorganization complete and all1916 test cases covered;1914 unique passing cases and2 confirmed pre-existing failures; API contracts/ORM/logic preserved; no commit/push/runtime rollout"
+}

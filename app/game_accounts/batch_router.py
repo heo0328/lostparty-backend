@@ -7,7 +7,8 @@ from uuid import UUID
 from fastapi import APIRouter, Query, Request
 from fastapi.routing import APIRoute
 
-from app.game_accounts import batches, batch_schemas as s
+from app.game_accounts.rosters import batches
+from app.game_accounts import batch_schemas as s
 from app.game_accounts.profile_router import common
 from app.game_accounts.router import Principal
 from app.game_accounts.support import fail

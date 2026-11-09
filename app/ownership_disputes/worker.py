@@ -7,7 +7,7 @@ from datetime import timedelta
 from sqlalchemy import select
 from app.auth.models import User
 from app.core.database import session,now
-from app.game_accounts import observations,service as accounts,lifecycle
+from app.game_accounts.rosters import observations, service as accounts, lifecycle
 from app.game_accounts.models import Account,Character,Registration,Configuration,Audit
 from app.game_accounts.support import lock,fail,GameError
 from app.lostark_keys.models import Credential

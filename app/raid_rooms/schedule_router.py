@@ -3,7 +3,8 @@ from fastapi import APIRouter
 from app.game_accounts.router import Principal,Key
 from app.raid_rooms.admission_router import AdmissionRoute,errors
 from app.raid_rooms.admission_schemas import Ack,DTO,Version
-from app.raid_rooms import schedule_schemas as s,schedule_service as service
+from app.raid_rooms import schedule_schemas as s
+from app.raid_rooms.schedules import schedule_service as service
 from datetime import datetime
 from typing import Literal
 

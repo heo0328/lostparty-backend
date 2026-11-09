@@ -8,7 +8,7 @@ AGENTS → 협업 → NEXT_WORK → AI_CONTEXT → 계약3판 전환/4판/ACK와
 
 ## 수행과 근거
 
-[공개 집계 proof](../../../../../engineering/operations/records/weekly-cycles-restore-preflight.json), [실행 도구](../../../../../../scripts/recruitment_restore_preflight.py), [스냅샷/읽기 검사](../../../../../../scripts/recruitment_snapshot.py), [격리 Compose](../../../../../../compose.preflight.yaml), [보호 시험](../../../../../../tests/test_recruitment_backup_guards.py).
+[공개 집계 proof](../../../../../engineering/operations/records/weekly-cycles-restore-preflight.json), [실행 도구](../../../../../../scripts/recruitment_restore_preflight.py), [스냅샷/읽기 검사](../../../../../../scripts/recruitment_snapshot.py), [격리 Compose](../../../../../../compose.preflight.yaml), [보호 시험](../../../../../../tests/raid_rooms/common/test_recruitment_backup_guards.py).
 
 1. 현재 개발 API/DB의 identity·이미지·0023을 확인하고, 별도 읽기 전용 source-reader(포트/worker 없음, 구 이미지/동일 환경·읽기 전용 키 mount)의 READ ONLY/REPEATABLE READ 연결의 `pg_export_snapshot()`을 유지하며 전체 테이블 지문과 같은 snapshot의 custom-format pg_dump를 확보했다. 개발 API는 실행을 유지했다. archive에는 원래 owner/ACL metadata도 보관하며, 격리 복원에서는 `--no-owner/--no-acl`로 app 역할에 객체 소유/필요 권한을 재구성했다. PostgreSQL 전체 global role/다른 서비스 권한의 재해 복구 시험으로 확대하지 않는다.
 2. DB archive·인증 키 파일 전부·환경 파일·실행 설정은 Git/Docker build에서 제외된 `backups/`의0700 디렉터리/0600 파일로 보관했다. 실제 사용자 원본/토큰/비밀키·환경 값과 명령 원본 오류는 출력·커밋·Issue에 게시하지 않았다. 공개 proof는 집계·일치 여부/이미지ID·archive integrity hash만 포함한다.

@@ -4,7 +4,8 @@ from fastapi import APIRouter,Query
 from app.game_accounts.router import Principal
 from app.raid_rooms.router import OptionalPrincipal
 from app.raid_rooms.admission_router import AdmissionRoute,errors
-from app.raid_rooms import member_reads as service,search,member_schemas as s
+from app.raid_rooms.reads import member_reads as service, search
+from app.raid_rooms import member_schemas as s
 from app.raid_rooms.search_router import Search,Page
 from app.raid_rooms.search_router import Card
 from app.game_accounts.support import fail

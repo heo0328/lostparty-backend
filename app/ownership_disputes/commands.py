@@ -3,8 +3,10 @@ import uuid
 from datetime import timedelta
 from sqlalchemy import select
 from app.core.database import session,now
-from app.game_accounts import service as accounts,verification_context,equipment_proof,lifecycle
-from app.game_accounts.equipment import EquipmentItem,required_slots,compare_equipment,EquipmentIncomplete
+from app.game_accounts.rosters import service as accounts
+from app.game_accounts.verification import verification_context, equipment_proof
+from app.game_accounts.rosters import lifecycle
+from app.game_accounts.verification.equipment import EquipmentItem, required_slots, compare_equipment, EquipmentIncomplete
 from app.game_accounts.models import Account,Registration,Configuration,Audit,Character
 from app.game_accounts.support import authorize,fail,reserve,release,commit_result,quota
 from app.lostark_keys import service as credentials
@@ -37,7 +39,7 @@ def start_target(db,uid,data,did=None):
         name=c.character_name
     elif data['source']=='registration':
         r=core.registration(db,uid,data['registration_id'])
-        from app.game_accounts import ownership_policy,verification_targets
+        from app.game_accounts.verification import ownership_policy, verification_targets
         ownership_policy.reject_linked(db,uid,r)
         name=verification_targets.selected(db,uid,r,data)
     else:name=data['character_name']

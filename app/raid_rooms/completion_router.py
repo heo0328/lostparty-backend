@@ -4,7 +4,9 @@ from fastapi import APIRouter
 from app.game_accounts.router import Principal,Key
 from app.raid_rooms.admission_router import AdmissionRoute,errors
 from app.raid_rooms.admission_schemas import Ack
-from app.raid_rooms import completion as service,command_context,resume
+from app.raid_rooms import completion as service
+from app.raid_rooms.common import command_context
+from app.raid_rooms import resume
 from app.raid_rooms.command_schemas import Context
 
 

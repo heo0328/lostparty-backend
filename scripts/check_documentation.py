@@ -65,7 +65,7 @@ def main():
     docs = ROOT / 'docs'
     for path in docs.rglob('*.json'):
         json.loads(path.read_text())
-    python_files = list(docs.rglob('*.py')) + list((ROOT / 'tests').glob('*.py')) + [Path(__file__).resolve()]
+    python_files = list(docs.rglob('*.py')) + list((ROOT / 'tests').rglob('*.py')) + [Path(__file__).resolve()]
     for path in python_files:
         content = path.read_text()
         ast.parse(content, filename=str(path))

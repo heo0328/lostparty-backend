@@ -6,7 +6,9 @@ from pydantic import StrictBool,Field
 from sqlalchemy import select
 from app.core.database import session,now
 from app.game_accounts.support import fail,lock,GameError
-from app.raid_rooms import admission_service as base,admission_context as context,participation_core as core,scheduling as graph
+from app.raid_rooms.admissions import admission_service as base, admission_context as context
+from app.raid_rooms.participation import participation_core as core
+from app.raid_rooms.schedules import scheduling as graph
 from app.raid_rooms.availability_schemas import DTO,Version
 from app.raid_rooms.source_models import ContinuationChoice as Choice,RoomSettings,OpeningEvent,ItemSettings,ScheduleGroup,ScheduleAlternative
 from app.raid_rooms.integrated_models import RecruitmentRound as Round,RecruitmentItem as Item,RecruitmentRoom as Room,RecruitmentMembership as Member
@@ -215,7 +217,7 @@ def opening(principal,rid,key,data):
 
 def process_due():
     with session() as db:
-        from app.raid_rooms.readiness import require_legacy_worker
+        from app.raid_rooms.common.readiness import require_legacy_worker
         require_legacy_worker(db)
         ids=list(db.scalars(select(Room.id).join(RoomSettings,RoomSettings.room_id==Room.id).where(Room.ended_at.is_(None),
             Room.migration_state=='ready').order_by(Room.id)))
@@ -228,7 +230,7 @@ def process_due():
 
 def process_room(rid):
     with session() as db,db.begin():
-        from app.raid_rooms.readiness import require_legacy_worker
+        from app.raid_rooms.common.readiness import require_legacy_worker
         require_legacy_worker(db)
         lock(db,'game-mutations-v1');stamp=now(db);room=db.get(Room,rid);value=db.get(RoomSettings,rid)
         target=date.fromisoformat(raids.cycle(stamp).cycle_key)
@@ -260,5 +262,5 @@ def process_room(rid):
 
 
 # Two-cycle storage never falls back to the legacy global room graph.
-from app.raid_rooms.v1_compat import read as _current_read
+from app.raid_rooms.compat.v1_compat import read as _current_read
 get=_current_read('choices')(get)

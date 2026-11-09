@@ -13,23 +13,23 @@ sys.path.insert(0, str(ROOT))
 # These are named regression sets, not a claim that every project test ran.
 SUITES = {
     "legacy": (
-        "tests/test_auth.py", "tests/test_game_accounts.py",
-        "tests/test_account_bootstrap.py", "tests/test_member_settings.py",
-        "tests/test_lostark_keys.py", "tests/test_groups_http.py",
-        "tests/test_raid_room_http.py",
+        "tests/auth/test_auth.py", "tests/game_accounts/test_game_accounts.py",
+        "tests/game_accounts/test_account_bootstrap.py", "tests/member_settings/test_member_settings.py",
+        "tests/lostark_keys/test_lostark_keys.py", "tests/groups/test_groups_http.py",
+        "tests/raid_rooms/common/test_raid_room_http.py",
     ),
     "two-cycle": (
-        "tests/test_reapplication_history.py", "tests/test_beta_recruitment.py", "tests/test_explicit_departure_minutes.py", "tests/test_departure_search_minutes.py",
-        "tests/test_active_room_usage.py", "tests/test_coordination_wait.py",
-        "tests/test_application_composition.py", "tests/test_admission_eligibility.py",
-        "tests/test_application_display.py", "tests/test_application_display_references.py",
-        "tests/test_application_item_level.py", "tests/test_membership_actions.py",
-        "tests/test_atomic_members.py", "tests/test_completion_corrections.py",
+        "tests/raid_rooms/admissions/test_reapplication_history.py", "tests/raid_rooms/admissions/test_beta_recruitment.py", "tests/raid_rooms/schedules/test_explicit_departure_minutes.py", "tests/raid_rooms/schedules/test_departure_search_minutes.py",
+        "tests/raid_rooms/common/test_active_room_usage.py", "tests/raid_rooms/schedules/test_coordination_wait.py",
+        "tests/raid_rooms/admissions/test_application_composition.py", "tests/raid_rooms/admissions/test_admission_eligibility.py",
+        "tests/raid_rooms/admissions/test_application_display.py", "tests/raid_rooms/admissions/test_application_display_references.py",
+        "tests/raid_rooms/admissions/test_application_item_level.py", "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/participation/test_atomic_members.py", "tests/raid_rooms/outcomes/test_completion_corrections.py",
     ),
 }
 
 # Existing complete pytest file set, for broad regressions or additional selections.
-SUITES["all"] = tuple(str(path.relative_to(ROOT)) for path in sorted((ROOT / "tests").glob("test_*.py")))
+SUITES["all"] = tuple(str(path.relative_to(ROOT)) for path in sorted((ROOT / "tests").rglob("test_*.py")))
 
 
 def require_test_environment():

@@ -1,5 +1,7 @@
 # 격리 검증 실행
 
+2026-11-09 파일 분류 후 실행 방법: 테스트는 기능별 하위 패키지에 있으며 전체 발견은 재귀 검색한다. 아래 실행 예시는 새 경로를 사용한다. 기존 `legacy`·`two-cycle` 묶음 구성/순서와 격리·정확 파일/선택 안전성은 유지한다. [분류 기준](source-layout.md)·[이전→현재 대응표](folder-layout-map.json)를 참고한다.
+
 현재 적용: 2026-10-25 [개발 서버 반영](../operations/backend-improvements-rollout.md)을 완료했다. source87c2a0e/이미지366e868a·177/DB0031이며 고정패키지·API/DB 로그10m×5가 실행 중이다. 아래 미반영/별도 반영 설명은 구현 당시 이력과 후속 변경 절차로 구분한다.
 
 2026-10-25 통합: 이 문서의 개선 결과는 사용자 지시로 `feat/raid-recruitment`에 병합했다. 현재 checkout도 해당 모집 브랜치이며 아래 별도 개선 브랜치는 작업 당시 이력이다. 개선 병합과 실제 개발 서버 반영을 완료했고, 기록7d038cf도 원격 모집 브랜치에 게시·SHA 일치를 확인했다.
@@ -23,18 +25,18 @@ python3 scripts/verify_isolated.py all
 - 호스트 unittest: 실행기의 환경 거부·선택 제한·실패 전달·cleanup 제어를 검사한다. DB/서버에 접근하지 않는다.
 - `contracts`: 새 시험 이미지에서 기본116경로/133동작과 two-cycle177경로/197동작의 생성 OpenAPI 객체 전체를 비교한다. DB/lifespan/HTTP 서버를 시작하지 않는다.
 - `legacy`: 인증·계정·bootstrap·회원설정·개인키·그룹HTTP·기존모집HTTP의 지정7파일 회귀 묶음이다.
-- `two-cycle`: 구성·통합자격·표시/참조/아이템레벨·membership actions·atomic members·완료정정의 지정8파일 회귀 묶음이다.
+- `two-cycle`: 구성·통합자격·표시/참조/아이템레벨·membership actions·atomic members·완료정정의 지정 파일 회귀 묶음이다.
 
-- `all`: `tests/test_*.py` 전체 파일을 선택한다. 시간이 오래 걸릴 수 있으며 전체 선택이 전체 통과를 뜻하지 않는다. 추가 파일을 지정하면 그 파일만 실행한다.
+- `all`: `tests` 하위의 `test_*.py` 전체 파일을 선택한다. 시간이 오래 걸릴 수 있으며 전체 선택이 전체 통과를 뜻하지 않는다. 추가 파일을 지정하면 그 파일만 실행한다.
 
-legacy/two-cycle 묶음은 프로젝트 전체 시험이 아니다. 파일 목록은 [실행 정의](../../../scripts/isolated_checks.py)의 `SUITES`가 원본이며 시작 시 실제 선택을 출력한다. 특정 변경에 필요한 다른 시험은 `all tests/test_…py`로 선택할 수 있다. 기존 검증 결과의 수치를 새 실행의 통과 수에 합산하지 않는다.
+legacy/two-cycle 묶음은 프로젝트 전체 시험이 아니다. 파일 목록은 [실행 정의](../../../scripts/isolated_checks.py)의 `SUITES`가 원본이며 시작 시 실제 선택을 출력한다. 특정 변경에 필요한 다른 시험은 `all tests/<기능>/test_…py`로 선택할 수 있다. 기존 검증 결과의 수치를 새 실행의 통과 수에 합산하지 않는다.
 
 묶음 안의 파일/정확 node만 선택할 수도 있다. 선택된 항목만 검증한 결과로 보고한다.
 
 ```bash
-python3 scripts/verify_isolated.py legacy tests/test_auth.py
-python3 scripts/verify_isolated.py two-cycle tests/test_application_item_level.py
-python3 scripts/verify_isolated.py all tests/test_recruitment_cycle_queries.py
+python3 scripts/verify_isolated.py legacy tests/auth/test_auth.py
+python3 scripts/verify_isolated.py two-cycle tests/raid_rooms/admissions/test_application_item_level.py
+python3 scripts/verify_isolated.py all tests/raid_rooms/reads/test_recruitment_cycle_queries.py
 ```
 
 ## 환경·데이터 경계

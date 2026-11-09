@@ -7,7 +7,8 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
 from uuid import UUID
 from datetime import date
-from app.raid_rooms import roster_participation as participation, character_issues
+from app.raid_rooms import roster_participation as participation
+from app.raid_rooms.participation import character_issues
 from app.raid_rooms.cycle_models import RoomCycle, CycleMember
 from app.game_accounts.support import fail
 from app.game_accounts import roster_presence
@@ -83,7 +84,7 @@ def legacy_restriction(db,row,value,*,profile):
 def bind_page(db,uid,stamp,binding,epoch):
     q=participation.query()
     if not participation.enabled() and q.get('include_character_issues')!='true':return binding,epoch
-    from app.game_accounts.lifecycle import digest
+    from app.game_accounts.rosters.lifecycle import digest
     issues=character_issues.own_page(db,uid,stamp)
     marker=[participation.marker(),q.get('include_character_issues','false')]
     return [binding,marker],digest([epoch,issues['issues_revision'],marker])
