@@ -2,7 +2,7 @@
 
 2026-11-10 KST 기준. 실제 Backend 코드/Git과 각 담당의 현재 코드 확인 결과를 사용한다. Native 코드 상태·완료 판단은 Native가 작성하며 Backend가 대신 검토하지 않는다.
 
-## 현재 — 문서 최신화 완료 / 다음 Issue17 정리
+## 현재 — 문서·묶음 완료 dev 통합/게시 완료 / 다음 Issue17 정리
 
 - #47 묶음 선택 완료와 #48 복구 안내/일정 읽기는 사용자 지시로 **completed 종료**했다. 추가 구현·계약 확인·동일 시험 대기는 없다. [완료 색인](ISSUE_TRACKER.md#completed)·[개발 이력](DEV_LOG.md).
 - 다음 순차 정리 대상은 [#17](https://github.com/heo0328/lostparty-backend/issues/17)이다. 완료 오류/기존 계정 복구는 사용자 인수·양측 dev 통합 완료다. 누락/부분 완료 자료와 해당 기기 경계·원래 생명주기 요구는 별도 남아 있다. Native가 현재 코드 기준으로 최신화한 본문과 Backend 구현을 구분해 잔여 범위만 정리한다. 지금 자료 생성·DB 조정·반복 기기 시험을 시작하지 않는다.
@@ -12,13 +12,13 @@
 
 | 구분 | 확인 기준 |
 |---|---|
-| checkout/HEAD | feat/raid-batch-completion / 624ef0031a7f7141838c2ba6ed1485e7ec3b229e |
-| 업무 구현/원격 | 구현44eb4ba34844eb81801608ed5953cf3bb1ba0852·후행 기록624ef00 게시. 실제 원격 tip 일치 확인. 현재 app/tests/openapi422파일은 구현과 바이트 동일 |
+| checkout/통합 기준 | dev / 병합b1400a489d4cc785244c3abfa1ed610cc6926de6 |
+| 업무 구현/원격 | 업무44eb4ba·반영 기록624ef00·문서962c1cd9321328f19a8e1ea6b5071fa07380782b를 dev에 이력 보존 병합·push. 원격 병합 SHA 일치/전체 feature tip 포함·동일 tree 확인. app/tests/openapi422파일은 기존 검증 코드와 동일 |
 | 로컬 dev | runtime ae6b3e0a / DB0036_roster_presence, 앱288파일 소스 일치/healthy 확인. [반영 원본](../engineering/operations/records/batch-completion-local-rollout.json) |
 | 전체 계약 | 기본125경로/142동작, two-cycle192경로/213동작. 정확한 hash는 [구현/계약 근거](../features/recruitment/completion-and-records/batch-completion-implementation.md) |
-| 이번 미게시 변경 | 계약 설명·이슈 종료/정리·문서 최신화만 로컬 미커밋·미push. app/tests/openapi 변경 없음 |
+| 후행 통합 기록 | 현재 브랜치/게시 상태·기능 브랜치 정리 결과는 dev의 후행 문서 커밋으로 보존. 업무 코드/시험/계약 변경 없음 |
 
-#47의 dev/main 병합·운영 반영은 하지 않았다. 문서 최신화/Issue 종료는 commit/push·merge·배포 승인이 아니다. 실제 개발 DB의 행 수는 사용자 테스트로 변할 수 있으므로 반영 시점의 건수를 현재 고정값처럼 사용하지 않는다.
+사용자 지시로 #47의 Backend dev 병합·push를 완료하고 feat/raid-batch-completion을 로컬/원격에서 정리했다. main·로컬 서버·운영은 이번 통합에서 변경하지 않았다. 이후 새 게시/병합/배포는 별도 지시 범위다. 실제 개발 DB의 행 수는 사용자 테스트로 변할 수 있으므로 반영 시점의 건수를 현재 고정값처럼 사용하지 않는다.
 
 ## 담당별 후속을 구분
 

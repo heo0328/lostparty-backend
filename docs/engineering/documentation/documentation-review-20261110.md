@@ -29,4 +29,4 @@ Native 현재 코드/연결·잔여 판단은 Native가 #17/#47/#48 본문에 �
 
 ## 검증
 
-문서281개·링크/앵커3192개·원문128개/동결JSON20개·API213동작 분류/경로 검사와 git diff --check를 통과했다. 결과는 [DEV_LOG](../../project/DEV_LOG.md)에 기록한다. 기존 누적 작업 문서 변경을 보존해 같은 feat/raid-batch-completion에 미커밋·미push로 유지한다.
+문서281개·링크/앵커3192개·원문128개/동결JSON20개·API213동작 분류/경로 검사와 git diff --check를 통과했다. 결과는 [DEV_LOG](../../project/DEV_LOG.md)에 기록한다. 기존 누적 문서 변경을 보존해 962c1cd로 커밋했고, 후속 사용자 지시로 dev에 병합b1400a489d4cc785244c3abfa1ed610cc6926de6·push했다. 완료 기능 브랜치 정리 후 통합 결과 기록도 dev에 게시한다. 이번 문서 최신화 자체에서 실행 코드/서버 변경은 없다.

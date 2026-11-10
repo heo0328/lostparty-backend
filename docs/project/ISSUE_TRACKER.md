@@ -27,6 +27,6 @@
 
 ## 코드·게시·실행은 별개
 
-현재 Backend feat/raid-batch-completion/HEAD624ef00, 업무44eb4ba 게시/로컬 지원 완료다. 후행 설명·작업 문서는 미커밋·미push다. Native #47 게시47a30dad와 #48 후속 미게시 변경, #17 dev 통합f79443e2는 담당 보고 범위로 구분한다. 사용자 인수·Git 통합·운영 배포를 서로 대신하지 않는다.
+현재 Backend dev, 업무44eb4ba/기록624ef00·최신화 문서962c1cd를 병합b1400a489d4cc785244c3abfa1ed610cc6926de6로 통합·push했다. 원격 일치·이력/동일 tree 확인 후 완료 기능 브랜치를 로컬·원격 정리했다. 로컬 API/운영을 추가 교체한 것은 아니다. Native #47 게시47a30dad와 #48 후속 미게시 변경, #17 dev 통합f79443e2는 담당 보고 범위로 구분한다. 사용자 인수·Git 통합·운영 배포를 서로 대신하지 않는다.
 
 [점검/정리 결과](OPEN_ISSUE_REVIEW.md) · [NEXT_WORK](NEXT_WORK.md) · [DEV_LOG](DEV_LOG.md) · [최신화 전 단계/댓글 순번 기록](../archive/project/status-before-refresh-20261110/ISSUE_TRACKER.md)

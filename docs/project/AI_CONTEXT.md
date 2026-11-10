@@ -4,7 +4,7 @@
 
 ## 현재 기준
 
-- Backend checkout feat/raid-batch-completion / HEAD624ef00, 업무44eb4ba 게시·dev 지원 완료. 현재 앱/시험/전체 계약이 게시 구현과 동일함을 확인했다. 문서 후행 변경은 미커밋·미push다.
+- Backend checkout dev. 업무44eb4ba/반영 기록624ef00·문서962c1cd를 병합b1400a489d4cc785244c3abfa1ed610cc6926de6로 통합·push하고 원격 일치/feature tip 포함·동일 tree를 확인했다. 완료 기능 브랜치는 로컬·원격 삭제했다. 현재 앱/시험/전체 계약은 기존 검증 구현과 동일하며 후행 통합 기록은 같은 dev에 게시한다.
 - 로컬 two-cycle 실행·DB0036_roster_presence, runtime ae6b3e0a/앱288파일 일치. 기본125/142·two-cycle192/213 계약이며 [현재 운영/개발 구분](../engineering/operations/README.md)을 따른다. 이번 문서 작업에서 서버/DB를 변경하지 않는다.
 - 사용자 승인으로 #47/#48은 completed 종료. 다음 정리는 #17, #15/#18/#19 작업 선택은 전체 정리 뒤로 보류한다.
 

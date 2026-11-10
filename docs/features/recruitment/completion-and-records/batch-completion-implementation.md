@@ -1,5 +1,7 @@
 # Issue47 v3 공개 API·원자 명령 구현
 
+통합/게시 최신(2026-11-10): 사용자 지시로 업무44eb4ba·반영 기록624ef00·문서962c1cd를 dev에 이력 보존 병합 `b1400a489d4cc785244c3abfa1ed610cc6926de6`·push했다. 전체 기능 tip 포함/동일 tree·원격 병합 SHA 일치를 확인한 뒤 feat/raid-batch-completion을 로컬/원격 삭제했고 checkout은 dev다. 후행 통합 기록도 dev에 게시한다. main·서버/DB·운영은 이번 통합에서 변경하지 않았다. 아래 미통합/미게시·브랜치 상태는 각 단계 당시 기록이다.
+
 완료 마감: 사용자 지시로 [Issue47 전체13번째 Backend 종료 기록](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6767992300)을 남기고 completed 종료했다. 각 담당의 현재 코드 근거/계약/지원 확인 대기는 없으며 #48/디자인·갱신 등 별도 후속을 보존한다. 종료는 게시/통합/배포 승인이 아니다. 아래 단계 상태는 당시 기록이다.
 
 현재 지원: 구현 `44eb4ba34844eb81801608ed5953cf3bb1ba0852` 커밋·push/원격 일치 확인 및 실제 dev 반영 완료. [전체8번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6763005691)·[반영/보존 기록](../../../engineering/operations/records/batch-completion-local-rollout.json)을 따른다. Native 연결·기기 인수는 미완료다. 아래 미커밋/미반영 표기는 구현 검증 당시 기록이다.

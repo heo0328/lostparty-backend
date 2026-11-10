@@ -1,5 +1,15 @@
 # 영구 개발 이력
 
+## 2026-11-10 묶음 완료·문서 최신화 dev 통합/게시·완료 브랜치 정리
+
+사용자 커밋/dev 병합·push 지시로 문서29파일을 `962c1cd9321328f19a8e1ea6b5071fa07380782b`에 커밋했다. 원격 fetch 후 dev/origin 일치·작업 코드 변경0을 확인하고 feat/raid-batch-completion의 업무44eb4ba·반영 기록624ef00·문서962c1cd를 dev에 no-ff 이력 보존 병합했다. 병합은 `b1400a489d4cc785244c3abfa1ed610cc6926de6`이며 충돌 없이 feature 전체 tip 포함·전체 tree 동일을 확인했다. origin/dev push 후 원격 직접 조회의 동일 SHA를 확인했다.
+
+프로젝트 상시 정리 규칙에 따라 완료/통합/원격 반영과 다른 worktree 사용 없음이 확인된 feat/raid-batch-completion을 원격·로컬에서 삭제했다. 현재 checkout은 dev다. chore/issue-closeout-review는 이번 목적 브랜치가 아니고 사용 상태를 확정하지 않아 보존했으며 main3e3ddc1도 변경하지 않았다. 기존 공유 이력/태그는 재작성하지 않았다.
+
+병합 tree는 기존 검증 구현/후행 문서와 같아 고유123PASS·도구63PASS 및 로컬 반영/소스/전체 계약 근거를 재사용하고 같은 업무 시험/서버·DB 검사를 반복하지 않았다. 문서281개/링크·앵커3192개·원문128/동결JSON20개·API213 분류/경로와 diff 검사를 커밋 전 통과했다. 현재 브랜치·통합·게시/정리 상태를 NEXT_WORK/AI_CONTEXT/ISSUE_TRACKER·구현 설명/점검 기록에 갱신했고 이 후행 기록도 dev에 커밋·push한다.
+
+이번 작업은 Git 통합/문서 기록이며 실제 개발 API·DB/키/자료·Native 코드·운영/APK는 변경하지 않았다. #47/#48은 completed 유지, 다음 #17 정리·#15/#18/#19 선택 보류도 유지한다. main 병합·배포·새 기능/자료 삭제는 실행하지 않았다.
+
 ## 2026-11-10 프로젝트 문서 최신화·누락 연결 점검
 
 사용자 문서 점검/최신화 요청으로 현재 코드/Git·전체 계약·반영 기록과 담당이 작성한 최신 이슈 상태를 대조했다. [문서 점검 원본](../engineering/documentation/documentation-review-20261110.md)에 발견/반영 범위와 승인 경계를 정리했다. Backend 업무44eb4ba/HEAD624ef00·개발ae6b3e0a/앱288파일 일치 근거는 직전 직접 확인을 재사용했고 현재 기본125/142·two-cycle192/213 전체 파일 hash를 재계산했다. 현재 DB head0036이며 실행 코드/시험/OpenAPI는 변경하지 않았다.
