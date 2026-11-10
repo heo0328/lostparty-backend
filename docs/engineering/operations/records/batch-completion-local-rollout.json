@@ -1,0 +1,121 @@
+{
+  "date": "2026-11-10",
+  "issue": 47,
+  "branch": "feat/raid-batch-completion",
+  "source_commit": "44eb4ba34844eb81801608ed5953cf3bb1ba0852",
+  "source_pushed_remote_verified": true,
+  "scope": "local development API only",
+  "image": "sha256:ae6b3e0a2b13f7e822524436dc9350fb22929975a5cbeff75352944d15dcc7d8",
+  "started_at": "2026-11-10T08:44:08.9705036Z",
+  "health": "healthy",
+  "preserved": {
+    "api_config": true,
+    "api_mount_identity": true,
+    "api_mounts": true,
+    "database_rows": true,
+    "database_schema": true,
+    "db_config": true,
+    "db_id": true,
+    "db_image": true,
+    "db_started": true,
+    "host_env": true,
+    "keys": true,
+    "revision": true,
+    "sequences": true
+  },
+  "database": {
+    "revision": "0036_roster_presence",
+    "tables": 118,
+    "rows": 512,
+    "keys": 4,
+    "migration": false,
+    "volume_recreated": false
+  },
+  "runtime": {
+    "app_files": 288,
+    "committed_source_matches": true,
+    "health": "healthy",
+    "structured_log_errors": 0,
+    "structured_log_lines": 45
+  },
+  "http": [
+    {
+      "path": "/health",
+      "status": 200
+    },
+    {
+      "path": "/v1/raid-cycle",
+      "status": 200
+    },
+    {
+      "path": "/docs",
+      "status": 404
+    },
+    {
+      "path": "/openapi.json",
+      "status": 404
+    },
+    {
+      "code": "ACCESS_INVALID",
+      "method": "GET",
+      "no_store": true,
+      "path": "batch-completion-context",
+      "status": 401
+    },
+    {
+      "code": "ACCESS_INVALID",
+      "method": "GET",
+      "no_store": true,
+      "path": "batch-personal-completion-departure-context",
+      "status": 401
+    },
+    {
+      "code": "ACCESS_INVALID",
+      "method": "POST",
+      "no_store": true,
+      "path": "batch-completions",
+      "status": 401
+    },
+    {
+      "code": "ACCESS_INVALID",
+      "method": "POST",
+      "no_store": true,
+      "path": "batch-personal-completion-departures",
+      "status": 401
+    }
+  ],
+  "openapi": {
+    "openapi/openapi.yaml": {
+      "sha256": "18491bc066d08a578aa9228cd0da85eee508288c28d14d563d788e73e324c3dd",
+      "runtime_full_object_matches": true
+    },
+    "openapi/two-cycle.openapi.yaml": {
+      "sha256": "2c51d2f206100e9a305bafa6dd537a1b1b40cc23f9cf1ac6f65d254a4ff5faf7",
+      "runtime_full_object_matches": true
+    }
+  },
+  "issue_comment": {
+    "url": "https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6763005691",
+    "ordinal": 8,
+    "side": "Backend",
+    "stage": "fixed source publication and actual local support"
+  },
+  "recovery": {
+    "database_was_stopped": true,
+    "existing_database_started": true,
+    "first_api_attempt_rolled_back": true,
+    "reason": "Docker Desktop inherited bind resolves UNC source to internal host path; metadata expectation corrected after candidate key/mount verification",
+    "second_attempt_succeeded": true,
+    "old_image_retained": true,
+    "stopped_previous_api_container_removed": true
+  },
+  "not_run": [
+    "authenticated commands against real member data",
+    "Native integration",
+    "user device acceptance",
+    "full project regression",
+    "dev/main merge",
+    "production/APK deployment"
+  ],
+  "backup": "Existing copies reused; no DB dump/reset or key regeneration. Read-only row/schema fingerprints are preservation checks, not a backup."
+}

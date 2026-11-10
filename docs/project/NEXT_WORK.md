@@ -1,14 +1,10 @@
 # 다음 실행
 
-## 현재 — Issue47 v3 공개 API·원자 명령 로컬 구현/검증 완료 / 게시·실제 dev 반영은 별도
+## 현재 — Issue47 구현 게시·실제 dev 지원 완료 / 다음 Native 연결·기기
 
-[전체7번째 Backend 구현/검증 결과](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6762507528)를 게시하고 본문 상단을 현재 범위/담당·미완료로 갱신했다. 전체 댓글7개·Backend 작성·로컬 구현/검증 단계와 게시 본문 일치를 확인했다. [구현 원본](../features/recruitment/completion-and-records/batch-completion-implementation.md)·[검증 집계](../features/recruitment/completion-and-records/batch-completion-verification.json)를 따른다.
+[전체8번째 Backend 고정 구현/지원 인계](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6763005691): 구현 `44eb4ba34844eb81801608ed5953cf3bb1ba0852`를 feat/raid-batch-completion에 커밋·push하고 원격 일치를 확인했다. 실제 로컬 API image ae6b3e0a / healthy, 앱288파일 커밋 일치·두 전체 OpenAPI 일치·HTTP8PASS다. DB0036/118테이블512행·키4개·환경/실행 설정 보존을 확인했다. [반영 기록](../engineering/operations/records/batch-completion-local-rollout.json)·[구현 원본](../features/recruitment/completion-and-records/batch-completion-implementation.md)을 따른다.
 
-완료: 합의 v3 공개4경로·DTO/context/ACK·token/권한/CAS·공대/개인 원자 명령, 활성 효과/전체 레이드 표시·보존 이력 집계/proof, 승계/마지막 종료, 원ACK와 기존 단건 보존을 구현했다. 고유123PASS(신규/내부24+기존99)·도구63PASS이며 최종 non-null scope 이후 HTTP/두 전체 계약/profile 대조4PASS는 중복 합산하지 않았다. 기본125/142·two-cycle192/213 전체 객체 일치, 기존 경로/component 보존·4경로/22schema 추가, 최종 검증 이미지 앱288파일은 로컬과 바이트 동일하다.
-
-다음 Backend는 사용자 지시 범위에서 commit/push·원격 대조와 별도 실제 로컬 반영/API 계약/보존 검증을 이어 인계한다. 현재 checkout `feat/raid-batch-completion`·기준084a6af 위 **미커밋·미push**이며 신규 고정 구현 Git SHA/원격 계약은 없다. **실제 dev/운영 API·DB0036·키/환경은 미변경/미반영**이다. migration·자료 쓰기/삭제·태그·운영/APK·merge·Issue 종료 없음.
-
-다음 Native는 v3 기능 연결을 담당하며 코드/계약 게시·실제 지원 상태 확인 후 실제 연동/사용자 기기 결과를 연결한다. 이번 격리 HTTP/합성 검증을 실제 서버·실회원/기기 또는 전체 프로젝트 회귀 완료로 확대하지 않는다. 같은 계약 수용/정상 기기 시험을 반복 요청하지 않는다.
+다음 Native는 게시된 고정 v3 계약과 현재 debug 로컬 서버로 DTO/ACK·기존 복구·두 확인창을 연결하고 자체 검증·실제 연동 결과를 Issue47에 기록한 뒤 사용자 기기 인수를 진행한다. 같은 계약 재수용 대기는 없다. Backend는 구체 차이에 대응한다. Native 연결/기기 인수는 미완료다. 기존 고유123PASS·도구63PASS는 격리 시험이며 실제 회원 명령/기기 또는 전체 프로젝트 회귀 완료가 아니다. merge·운영/APK·자료 삭제·Issue 종료는 하지 않았다. 반영 기록 후행 문서도 같은 브랜치에 커밋·push한다.
 
 아래는 직전 완료 구간 기록이다.
 

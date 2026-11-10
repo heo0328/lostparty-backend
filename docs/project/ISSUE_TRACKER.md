@@ -1,5 +1,7 @@
 # 이슈 주제별 추적표
 
+Issue47 최신: 구현 `44eb4ba34844eb81801608ed5953cf3bb1ba0852`를 feat/raid-batch-completion에 게시·원격 일치 확인하고 실제 로컬 dev image ae6b3e0a로 반영했다. 앱288파일/두 전체 계약 일치·HTTP8PASS·DB0036/118테이블512행·키4개/환경 보존 확인. [전체8번째 Backend](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6763005691) 기준으로 Backend 구현/게시/실제 지원 완료, 다음 Native 연결·사용자 기기 인수는 미완료다. [반영 기록](../engineering/operations/records/batch-completion-local-rollout.json)·[NEXT_WORK](NEXT_WORK.md)를 따른다. merge·운영/APK·Issue 종료 없음. 아래는 이전 기록이다.
+
 Issue47 최신: [전체7번째 Backend 로컬 구현/검증 완료](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6762507528), OPEN. 공개4경로·원자 명령/격리·선택 회귀 완료, 미커밋·미push·실제 dev/운영 미반영. 다음 Backend 게시/로컬 반영은 사용자 지시 범위, Native 연결·기기는 미완료. [NEXT_WORK](NEXT_WORK.md). 아래는 이전 통합 기록이다.
 
 2026-11-10 현재 Git: 사용자 지시로 문서 afd5ba2를 커밋·push하고 feat/character-lifecycle 전체를 dev에 병합 `aa7058c`·원격 반영했다. 통합 tree/원격 tip 일치 확인 후 작업 브랜치 로컬·원격 삭제, checkout=dev다. main/실제 로컬API101cd82d·DB0036/운영은 변경하지 않았고 별도 배포·migration·태그는 없다. 완료 오류/계정 복구의 사용자 인수·Native5df515f 게시 완료, 미완료 후속/다음 작업은 [NEXT_WORK](NEXT_WORK.md)를 따른다. 아래 미커밋/feat checkout은 당시 기록이다.

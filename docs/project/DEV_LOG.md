@@ -1,5 +1,17 @@
 # 영구 개발 이력
 
+## 2026-11-10 Issue47 고정 구현 게시·실제 dev 지원 완료
+
+사용자 커밋/개발서버 반영 지시로 구현 `44eb4ba34844eb81801608ed5953cf3bb1ba0852`를 커밋했다. Native의 고정 코드/전체 계약 소비에 실제 게시가 필요하므로 AGENTS의 제한 예외를 설명하고 feat/raid-batch-completion만 push·원격 SHA 일치를 확인했다. dev/main 병합·태그·운영/APK 반영은 없다. 이전 고유123PASS·도구63PASS를 재사용하며 전체 프로젝트 회귀로 확대하지 않는다.
+
+기존 DB 중지를 확인해 같은 컨테이너를 기동하고 이전 API 정상화를 먼저 확인했다. 새 runtime image ae6b3e0a를 빌드해 앱288파일/키4개가 검증 소스·기존 키와 같음을 확인했다. Windows UNC bind는 Docker Desktop 내부 경로로 해석되므로 기존 API의 실제 읽기 전용 마운트를 상속했다. 첫 반영은 경로 표현 차이 검사로 자동 복구됐고 후보의 내부 경로/파일 내용·권한 대조로 검사 기준을 보완해 재반영에 성공했다. 이후 중지된 이전 API 컨테이너만 정리하고 이전 이미지를 보관했다.
+
+새 API는 2026-11-10 08:44:08 UTC 기동/healthy다. 교체 직전/후118테이블512행·스키마/sequence/revision0036·DB 컨테이너/볼륨/기동시각·키4개/권한·환경/실행 보안/포트 설정을 동일성 검사했다. 키/환경 재생성·migration·자료 쓰기/삭제/초기화는 없다. 기존 유효 보관본을 재사용했고 DB dump 생략을 유지했다. 읽기 fingerprint는 백업/복원 시험이 아니다.
+
+실제 컨테이너 두 전체 OpenAPI 객체 일치·HTTP8PASS(health/주차200, 신규4경로401 ACCESS_INVALID/no-store, docs/openapi404), 커밋 앱288파일 일치·구조화 오류0을 확인했다. 인증된 실제 회원 명령·Native 연결·기기는 미실행이며 성공/rollback/경합은 앞선 격리 검증 근거다. [반영 기록](../engineering/operations/records/batch-completion-local-rollout.json)을 따른다.
+
+[전체8번째 Backend 고정 구현/실제 지원 인계](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6763005691)를 게시하고 전체8댓글·작성 측·본문 일치를 확인했으며 Issue 상단을 갱신했다. 다음 Native는 고정 계약·현재 debug 로컬 서버로 기능 연결/자동 검증·실제 연동 후 사용자 기기 인수를 진행한다. Backend 구현/게시/실제 지원 완료와 Native/기기 미완료를 구분한다. 반영 기록은 같은 브랜치의 후행 문서 커밋으로 보존한다.
+
 ## 2026-11-10 Issue47 v3 공개 API·원자 명령 로컬 구현/검증 완료
 
 Native6 수용과 사용자 구현 계획 승인으로 v3 공개 DTO/4경로·context/ACK·원자 명령을 구현했다. 신규 Batch DTO 이름으로 기존 component 충돌을 피하고 target UUID/revision을 non-null로 선언했다. cycle_lifecycle.qualify/existing_participation.selection에는 optional active_rows 경계를 추가해 기존 호출자의 기본 경로를 유지하면서 신규 batch는 활성 캐릭터/점유만 자격 검증에 사용한다. 상세는 [구현 원본](../features/recruitment/completion-and-records/batch-completion-implementation.md)을 따른다.

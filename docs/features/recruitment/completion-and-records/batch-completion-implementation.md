@@ -1,5 +1,7 @@
 # Issue47 v3 공개 API·원자 명령 구현
 
+현재 지원: 구현 `44eb4ba34844eb81801608ed5953cf3bb1ba0852` 커밋·push/원격 일치 확인 및 실제 dev 반영 완료. [전체8번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6763005691)·[반영/보존 기록](../../../engineering/operations/records/batch-completion-local-rollout.json)을 따른다. Native 연결·기기 인수는 미완료다. 아래 미커밋/미반영 표기는 구현 검증 당시 기록이다.
+
 2026-11-10 / `feat/raid-batch-completion`·기준084a6af 위 로컬 변경. [Native 전체6번째 수용](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6761376813)과 사용자 구현 지시에 따른다. [v3 계약](batch-completion-wire-v3.md)을 구현했으며 코드 게시·실제 개발 서버 지원·Native 연결/기기는 별도 상태다. 미커밋·미push이므로 신규 고정 Git SHA는 없다.
 
 [전체7번째 Backend 구현/검증 결과](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6762507528)로 회신하고 전체 댓글7개/게시 본문 일치를 확인했다. 최종 고유123PASS(신규/내부24+기존99)·도구63PASS, 최종 전체 계약/HTTP 대조와 앱288파일 바이트 일치 확인이다.
