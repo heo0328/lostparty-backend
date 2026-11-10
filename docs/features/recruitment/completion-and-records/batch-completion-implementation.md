@@ -1,10 +1,22 @@
 # Issue47 v3 공개 API·원자 명령 구현
 
+완료 마감: 사용자 지시로 [Issue47 전체13번째 Backend 종료 기록](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6767992300)을 남기고 completed 종료했다. 각 담당의 현재 코드 근거/계약/지원 확인 대기는 없으며 #48/디자인·갱신 등 별도 후속을 보존한다. 종료는 게시/통합/배포 승인이 아니다. 아래 단계 상태는 당시 기록이다.
+
 현재 지원: 구현 `44eb4ba34844eb81801608ed5953cf3bb1ba0852` 커밋·push/원격 일치 확인 및 실제 dev 반영 완료. [전체8번째 Backend 인계](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6763005691)·[반영/보존 기록](../../../engineering/operations/records/batch-completion-local-rollout.json)을 따른다. Native 연결·기기 인수는 미완료다. 아래 미커밋/미반영 표기는 구현 검증 당시 기록이다.
 
 2026-11-10 / `feat/raid-batch-completion`·기준084a6af 위 로컬 변경. [Native 전체6번째 수용](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6761376813)과 사용자 구현 지시에 따른다. [v3 계약](batch-completion-wire-v3.md)을 구현했으며 코드 게시·실제 개발 서버 지원·Native 연결/기기는 별도 상태다. 미커밋·미push이므로 신규 고정 Git SHA는 없다.
 
 [전체7번째 Backend 구현/검증 결과](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6762507528)로 회신하고 전체 댓글7개/게시 본문 일치를 확인했다. 최종 고유123PASS(신규/내부24+기존99)·도구63PASS, 최종 전체 계약/HTTP 대조와 앱288파일 바이트 일치 확인이다.
+
+## 승계 ACK 정책 revision 의미 확인 (2026-11-10)
+
+[Native 현재 전체10번째 BUG-034 보완](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6766130657)에 [전체11번째 Backend 계약 의미 확인](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6766235882)을 회신했다. group_policy_effect는 context에서 계산한 정책 효과를 ACK에도 보존한다. after의 scope/group_id는 변경 후 예측 정책이며 revision은 선택적/nullable이다. 현재 State 직렬화는 None을 생략한다. 필드 부재를0 또는 before+1로 보정하지 않는다.
+
+명령에서 policy.apply 이후 policy.enrich가 읽은 같은 ACK의 group_policy가 실제 정책 상태다. state=known과 room_id/target_cycle_key/room_cycle_id/generation·after.scope/group_id 일치를 확인하고 실제 revision을 검증한다. scope/group_id 유지 시 revision 유지, 변경 시1 증가하며 승계 자체가 증가 조건은 아니다. target/members/plan/leadership revision과 구분한다. 일반 그룹 ACK 검사 완화는 필요 없다.
+
+현재 복구/지원에 새 ACK 필드나 서버 배포가 필요하지 않다. 향후 after에 확정 revision을 명시하는 변경은 context/ACK 의미와 소비 계약을 먼저 합의한 별도 보완이다. 기존 원ACK는 최신 DB/GET 값으로 보충/재구성하지 않고 원형 재생한다. 이번은 의미 확인이며 업무/DTO/OpenAPI 변경이 아니다.
+
+확인: 현재 실행 앱의 DB 없는 합성 helper/DTO2경우(정책 유지7→7, 변경7→8), 예측 효과 보존/직렬화 revision 생략·explicit null 입력 허용과 생성 OpenAPI optional/nullable 선언을 대조했다. 기존 격리 정책 fallback/원ACK 근거를 재사용하고 실제 회원 명령/기기 시험을 새로 수행하지 않았다. Native2911PASS/analyze0·47a30dad 게시와 사용자 계정 표시 정상화는 Native 보고이며 미보고 경계 전체 인수 완료가 아니다.
 
 ## 변경 동작과 책임
 
@@ -27,6 +39,12 @@
 프로젝트 전체 회귀를 새로 실행한 것은 아니다. 이번 선택 회귀의 통과를 과거 전체1921PASS/기존2FAIL이나 실제 dev/운영·회원/기기 인수로 확대하지 않는다. 기존 경고의 무관한 일괄 정리는 하지 않았다.
 
 ## 게시·실행 지원과 다음 담당
+
+### 현재 — 순차 정리 확인
+
+[전체12번째 Backend](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6767821672): 현재 app/tests/openapi422파일이 게시 구현44eb4ba와 바이트 동일, HEAD/실제 원격624ef00 확인. dev image ae6b3e0a healthy·앱288파일 동일이며 현재 Backend 추가 구현/지원 대기 없음이다. 기존123PASS/도구63PASS·두 계약/반영 근거를 재사용했다. Native ACK 설명 수용/추가 요청 없음은 담당 본문 기준이며 묶음 고유 주요 연결/잔여 구현 여부의 코드 근거 보완은 Native 담당에게 요청했다. #48은 완료 종료, Penpot/후속 갱신은 별도다. 이번 문서는 미커밋·미push다.
+
+### 구현 검증 당시 기록 — 아래 미게시/미반영은 현재 상태가 아님
 
 신규 코드/시험/계약/문서는 미커밋·미push이다. 기준084a6af는 이번 구현 커밋이 아니며 원격 OpenAPI가 신규 계약으로 갱신됐다고 안내하지 않는다. 로컬 파일 hash와 검증 이미지 소스 일치는 Git SHA와 별도 증거다.
 

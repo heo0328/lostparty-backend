@@ -1,6 +1,6 @@
 # 모집·일정
 
-2026-11-10 [Issue17 완료 오류·계정 복구 구간 인수](completion-and-records/completion-recovery-acceptance-20261110.md)와 Native5df515f 게시를 확인했다. 누락 캐릭터/부분 완료 자료·기기 검증과 일괄 완료 기획은 별도 후속이며 전체 Issue 종료는 아니다.
+2026-11-10 현재: [완료 오류·계정 복구 구간](completion-and-records/completion-recovery-acceptance-20261110.md)은 인수·양측 dev 통합 완료다. [묶음 선택 완료](completion-and-records/batch-completion-implementation.md)는 구현/게시·로컬 지원 후 #47 completed, Native 복구 안내/일정 읽기와 서버 정책 확인은 #48 completed다. 누락 캐릭터/부분 완료 자료·기기 검증은 #17의 별도 잔여이며 갱신/레드닷·웹소켓도 후속이다. 상세 현재 상태는 [이슈 추적표](../../project/ISSUE_TRACKER.md)를 따른다.
 
 [2026-10-27 통합 체크포인트](integration-checkpoint-2026-10-27.md)에 현재까지의 기능·대표 커밋·계약·검증·개발 반영·Native 수신·남은 인수를 상세히 정리했습니다. Backend 구현 구간의 완료와 전체 기기/운영 인수는 구분합니다.
 

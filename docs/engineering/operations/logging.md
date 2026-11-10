@@ -1,11 +1,13 @@
 # Backend 로깅과 조회
 
-현재 적용: 2026-10-25 [개발 서버 반영](backend-improvements-rollout.md)을 완료했다. source87c2a0e/이미지366e868a·177/DB0031이며 고정패키지·API/DB 로그10m×5가 실행 중이다. 아래 미반영/별도 반영 설명은 구현 당시 이력과 후속 변경 절차로 구분한다.
+현재 적용 확인: `app/core/observability.py`·`logging.json`의 허용 필드 JSON/요청·DB 분류·worker 관측은 현재 소스에 포함돼 있다. 실행 이미지/주차/DB 현재값은 [운영 안내](README.md)·[최신 반영 기록](records/batch-completion-local-rollout.json)을 따른다. 아래87c2a0e/366e868a·DB0031은 최초 적용 당시 기준이며 현재 실행값이 아니다. 로그 회전/운영 관측/알림 전체 완료와 구분한다.
 
-2026-10-25 통합: 이 문서의 개선 결과는 사용자 지시로 `feat/raid-recruitment`에 병합했다. 현재 checkout도 해당 모집 브랜치이며 아래 별도 개선 브랜치는 작업 당시 이력이다. 개선 병합과 실제 개발 서버 반영을 완료했고, 기록7d038cf도 원격 모집 브랜치에 게시·SHA 일치를 확인했다.
+최초 적용: 2026-10-25 [개발 서버 반영](backend-improvements-rollout.md)을 완료했다. source87c2a0e/이미지366e868a·177/DB0031이며 고정패키지·API/DB 로그10m×5가 실행 중이다. 아래 미반영/별도 반영 설명은 구현 당시 이력과 후속 변경 절차로 구분한다.
+
+2026-10-25 통합: 이 문서의 개선 결과는 사용자 지시로 `feat/raid-recruitment`에 병합했다. 당시 checkout도 해당 모집 브랜치였으며 아래 별도 개선 브랜치는 작업 당시 이력이다. 개선 병합과 실제 개발 서버 반영을 완료했고, 기록7d038cf도 원격 모집 브랜치에 게시·SHA 일치를 확인했다.
 
 2026-10-25 / 작업 구간: Backend 로깅·관측 보강 / `chore/backend-architecture-review`.
-Python 기본 logging을 사용하며 외부 서비스·새 runtime 패키지는 추가하지 않았다. 구현·후보 검증 이후 실제 개발 반영도 완료했다. 직전 개발 API sourcef471e31/이미지6d5857b3는 이전 이력이며 현재는 source87c2a0e/이미지366e868a다.
+Python 기본 logging을 사용하며 외부 서비스·새 runtime 패키지는 추가하지 않았다. 구현·후보 검증 이후 실제 개발 반영도 완료했다. 직전 개발 API sourcef471e31/이미지6d5857b3는 이전 이력이며 당시 반영값은 source87c2a0e/이미지366e868a다.
 
 ## 기록 내용
 

@@ -1,5 +1,7 @@
 # Issue17 완료 오류·계정 복구 구간 인수 결과
 
+후행 통합/범위 최신화: Native의 [전체54번째 dev 통합](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6756668809) f79443e2와 Backend dev 통합aa7058c/기록084a6af까지 완료됐다. 당시 미구현 후속으로 적은 묶음 선택 완료는 이후 #47에서 구현·종료, 복구 UI는 #48에서 종료됐다. 현재 잔여는 [추적표](../../../project/ISSUE_TRACKER.md)를 따르며 아래 자동 수치/인수 시점은 당시 근거로 보존한다.
+
 2026-11-10 / Backend 문서 최신화. 공식 Issue17 전체 댓글53개를 조회해 [전체52번째 Native 사용자 인수·시점 정정](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6756433040)과 [전체53번째 Native 커밋/푸시 결과](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6756529672)를 확인했다. 이번 완료 오류/계정 복구 구간의 최신 완료 기준이다. Issue17 전체 기능 종료·누락 캐릭터 검증 완료로 확대하지 않는다.
 
 ## 완료 범위와 근거

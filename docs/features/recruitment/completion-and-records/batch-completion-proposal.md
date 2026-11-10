@@ -1,5 +1,7 @@
 # Issue47 선택 레이드 일괄 완료 계약 제안
 
+현재 구분: 이 파일은 최초 제안/보완 경과다. [v3 계약](batch-completion-wire-v3.md)·[구현/게시/로컬 지원](batch-completion-implementation.md)이 최종 기준이며 #47은 사용자 승인 completed 종료다. 아래 미구현/Native 대기는 제안 당시 기록이다.
+
 2026-11-10 / 상태: **Native 소비 검토·합의 대기, 미구현**. [Issue47 요청 원문](https://github.com/heo0328/lostparty-backend/issues/47)을 기준으로 사용자 승인 계획을 구체화했다. 브랜치 `feat/raid-batch-completion`, 기준 `084a6af`. 문서·예시는 로컬 미커밋·미push이며 실행 OpenAPI·서버 지원을 뜻하지 않는다. 공식 제안은 Issue 댓글에 본문으로 전달한다.
 
 [공식 Backend 계약 제안](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6759461926)을 게시했다. 다음 담당은 Native 소비 검토·합의이며 현재 구현 지원은 없다.

@@ -1,5 +1,7 @@
 # Issue47 계약 보완 v2 — 전체 wire·결과 대조
 
+보관 구분: 이 문서는 이전 v2 제안이다. 최종 채택은 [v3](batch-completion-wire-v3.md)·[현재 구현/완료 근거](batch-completion-implementation.md)이며 #47은 completed 종료됐다. 아래 미구현/합의 대기·이력 상한은 당시 제안으로 현재 계약에 적용하지 않는다.
+
 ## 최신 — Native 수용·사용자 채택 보완으로 변경할 항목
 
 [전체4번째 Native](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6760758009)가 v2 기본 정의를 수용했다. 다음 Backend는 선택 round 외 완료/취소/보존 대상 전체의 레이드 표시와 활성 한도/누적 완료 이력 분리를 반영해 구현한다. 아래 display.rounds 선택 한정·역사 누적 시40/5개 상한/413 거절은 **그대로 구현하면 안 되는 이전 제안**이다. 과거 보존·다른 캐릭터 재가입 때문에 정상 완료를 거절하거나 이력 삭제·사용자 정리를 요구하지 않는다. 변경 wire·집계/보존 규칙·예시/구현은 아직 미완료이며 최신 실행은 [NEXT_WORK](../../../project/NEXT_WORK.md)를 따른다.

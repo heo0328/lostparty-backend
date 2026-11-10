@@ -1,6 +1,6 @@
 # Issue47 계약 v3 — 전체 효과 표시·누적 이력 집계
 
-2026-11-10 / **Native 소비 수용·공개 API 로컬 구현/격리 검증 완료, 미게시·실제 서버 미반영**. Native4의 사용자 채택 보완과 사용자의 레이드별 집계·해시 선택을 반영했다. [v2](batch-completion-wire-v2.md)의 권한·탈퇴·state/leadership/revision·profile·원요청 복구를 유지하고 아래 필드만 변경한다. [전체 Schema](examples/batch-completion-v3.schema.json)·[v2 대비 정의 교체](examples/batch-completion-v3.delta.json)·[전체 응답12개](examples/batch-completion-v3.examples.json)를 제공한다. v1/v2 자료는 당시 제안으로 보존한다.
+2026-11-10 현재 / **Native 소비 수용·공개 API 구현/검증·게시·로컬 지원과 담당 연결 확인 완료, Issue47 completed**. [현재 구현/지원·종료 근거](batch-completion-implementation.md)를 따른다. 아래 설계/대기 문장은 계약 작성 당시 경과이며 현재 실행 지시가 아니다. Native4의 사용자 채택 보완과 사용자의 레이드별 집계·해시 선택을 반영했다. [v2](batch-completion-wire-v2.md)의 권한·탈퇴·state/leadership/revision·profile·원요청 복구를 유지하고 아래 필드만 변경한다. [전체 Schema](examples/batch-completion-v3.schema.json)·[v2 대비 정의 교체](examples/batch-completion-v3.delta.json)·[전체 응답12개](examples/batch-completion-v3.examples.json)를 제공한다. v1/v2 자료는 당시 제안으로 보존한다.
 
 [전체5번째 Backend 회신](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6761002885)으로 변경 정의·전체 예시를 전달했다. 내부 도우미/격리4PASS는 [검증 기록](batch-completion-preparation-verification.json)을 따르며 당시 공개 wire의 Native 소비 확인은 미완료였으며 아래 Native6으로 해소했다.
 
