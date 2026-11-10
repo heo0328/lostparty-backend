@@ -14,6 +14,8 @@
 
 ## 미완료·보존
 
+2026-11-08 사용자 확정의 [원정대 목록 누락·기존 참가 유지](roster-participation-implementation.md)는 공개 API·부분 완료 교체 구현/격리 검증과 실제 로컬 API·DB0036 반영을 완료했다. [반영 집계](../../../engineering/operations/records/roster-participation-local-rollout.json) 기준이며 운영 반영·Native 신규 DTO/실제 연결·기기 인수는 미완료다. Penpot/화면·기기는 보류한다. 관찰 근거를 완전 소멸·개명 증거로 사용하지 않는다.
+
 확정 소멸 증거, suspect 해소/재등장, 이름 재사용·대표 대상404에 필요한 최소 계약은 생명주기 후속에서 검토 중이다. 근거가 부족한 `BindingEvidence`/`ROSTER_EVIDENCE_PENDING`을 문서 정리로 해제하지 않는다.
 
 기존 참가 캐릭터가 사용할 수 없어져도 회원 자리를 새 소유자에게 넘기지 않는다. 기존 관계의 명시 교체·탈퇴는 [모집 참가](../../recruitment/participation/README.md)에서 처리하고 새 캐릭터에는 현재 소유 자격을 검사한다. 퇴역·과거 자료 자동 삭제나 운영 정리는 제공 완료로 표시하지 않는다.
@@ -42,3 +44,9 @@
 |---|---|
 | GET | `/v2/me/game-accounts/{registration_id}/characters` |
 | GET | `/v2/me/character-retirements` |
+
+
+현재 #17 공개 계약은 `GET /v2/me/raid-room-character-issues`·memberships/detail/plan의 경고·참가 opt-in과 bootstrap/characters의 관찰 상태 opt-in을 포함한다. 구현·검증/로컬 반영·남은 인수는 [실행 기록](roster-participation-issues.md)을 따른다.
+
+
+[공개 계약·부분 완료 교체 구현](roster-participation-implementation.md)은 로컬 소스/자동검증 구간의 최신 원본이다. 실제 서버/DB 반영·Native 연결/기기 상태와 구분한다.

@@ -1,9 +1,15 @@
 from datetime import datetime
-from typing import Annotated, Literal
+from typing import Annotated
+from typing import Literal
 from uuid import UUID
-from pydantic import Field, StrictBool
-from app.game_accounts.schemas import DTO, Version
-from app.groups.commands import CreateGroup, RenameGroup, LeaveGroup, TransferLeadership
+from pydantic import Field
+from pydantic import StrictBool
+from app.game_accounts.schemas.schemas import DTO
+from app.game_accounts.schemas.schemas import Version
+from app.groups.commands import CreateGroup
+from app.groups.commands import RenameGroup
+from app.groups.commands import LeaveGroup
+from app.groups.commands import TransferLeadership
 from app.member_limits.schemas import Nonnegative
 
 

@@ -3,10 +3,18 @@ import uuid
 from datetime import timedelta
 from sqlalchemy import select
 from app.core.database import now
-from app.game_accounts import lifecycle, verification_context
-from app.game_accounts.models import Account, Character, Registration, NameClaim
-from app.game_accounts.support import fail
-from app.ownership_disputes.models import AccountHead, MemberHead, Proof, Dispute, Event
+from app.game_accounts.rosters import lifecycle
+from app.game_accounts.verification import verification_context
+from app.game_accounts.models.models import Account
+from app.game_accounts.models.models import Character
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import NameClaim
+from app.game_accounts.common.support import fail
+from app.ownership_disputes.models import AccountHead
+from app.ownership_disputes.models import MemberHead
+from app.ownership_disputes.models import Proof
+from app.ownership_disputes.models import Dispute
+from app.ownership_disputes.models import Event
 
 ACTIVE = ('defending','review_required')
 
@@ -104,7 +112,7 @@ def cas(row, expected):
 
 
 def registration(db, uid, rid):
-    from app.game_accounts.service import reg
+    from app.game_accounts.rosters.service import reg
     return reg(db,uid,uuid.UUID(str(rid)))
 
 

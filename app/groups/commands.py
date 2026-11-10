@@ -1,8 +1,11 @@
 """Internal commands, not a published HTTP contract."""
 import unicodedata
 from uuid import UUID
-from pydantic import Field, StrictStr, field_validator
-from app.game_accounts.schemas import DTO, Version
+from pydantic import Field
+from pydantic import StrictStr
+from pydantic import field_validator
+from app.game_accounts.schemas.schemas import DTO
+from app.game_accounts.schemas.schemas import Version
 
 
 def normalize_name(value):

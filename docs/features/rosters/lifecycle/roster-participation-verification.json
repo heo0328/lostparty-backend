@@ -1,0 +1,383 @@
+{
+  "date": "2026-11-08",
+  "issue": 17,
+  "branch": "feat/character-lifecycle",
+  "source_status": "Base4c37c2b retained; follow-up implementation caffaf3405a53be941250132a2b50779943b15f6 committed and pushed to origin/feat/character-lifecycle; historical run fields retain execution-time status",
+  "scope": "Owned-roster observation, public presence/warning contracts, exact active/preserved replacement, capability/ACK and common participation interpretation; local uncommitted implementation",
+  "runs": [
+    {
+      "project": "lostparty-check-cc2625959f58",
+      "passed": 48,
+      "failed": 1,
+      "note": "Initial snapshot: UUID/string test expectation mismatch; corrected. Not a full repository regression."
+    },
+    {
+      "project": "lostparty-check-daefcf4b3c36",
+      "passed": 20,
+      "failed": 0,
+      "selection": [
+        "tests/test_roster_participation_issues.py (17 cases at this snapshot)",
+        "tests/test_owned_roster_refresh.py::test_owned_api_roster_adds_new_ids_blocks_missing_and_preserves_selection",
+        "tests/test_activity_participation_continuity.py::test_current_and_next_existing_reads_authority_and_worker_preserve (2 cases)"
+      ]
+    },
+    {
+      "project": "lostparty-check-c042c45455b7",
+      "passed": 1,
+      "failed": 1,
+      "note": "Synthetic schedule was unconfirmed; confirmation was correctly rejected. Setup changed to a confirmed schedule."
+    },
+    {
+      "project": "lostparty-check-b194ce43de77",
+      "passed": 6,
+      "failed": 0,
+      "selection": [
+        "schedule/leader actions",
+        "new selection rejection and immutable observation ledger",
+        "4 cause-specific recovery cases"
+      ],
+      "note": "Includes latest recovery-generation FK; 4 recovery cases overlap previous passing run."
+    },
+    {
+      "project": "lostparty-check-63aa50ff5575",
+      "passed": 1,
+      "failed": 0,
+      "selection": [
+        "separate member review blocks automatic room recovery"
+      ],
+      "note": "Latest additional recovery guard."
+    }
+  ],
+  "passing_unique_relevant_scenarios": 23,
+  "contracts": {
+    "project": "lostparty-check-994791c41289",
+    "full_object_comparison": "PASS",
+    "legacy_paths": 125,
+    "legacy_operations": 142,
+    "two_cycle_paths": 187,
+    "two_cycle_operations": 208,
+    "new_public_paths": 0,
+    "change": "confirmed existing-participation policy extension only"
+  },
+  "contract_preparation_failure": "First contract check used snapshots before policy extension update; synchronized the exact extension and rechecked both full objects successfully.",
+  "environment": "Disposable restricted PostgreSQL and TestClient HTTP with synthetic actors/observations; current app/test dependency locks checked by Docker build; no host dev/production data or keys used",
+  "cleanup": "All UUID-named verification containers/networks removed; no development or production server replacement, DB migration, key or data modification",
+  "not_done": [
+    "Native new metadata DTO/runtime integration/UI/Penpot and device acceptance",
+    "live game/provider/real-user tests",
+    "full repository regression/performance acceptance",
+    "Issue closure",
+    "production migration/source rollout remains unapproved",
+    "main/dev merge remains separate user instruction"
+  ],
+  "warnings": [
+    "existing Starlette BlockingPortal deprecation warning"
+  ],
+  "historical_internal_runs_note": "The original runs/passing_unique_relevant_scenarios/contracts below record the earlier internal-only stage and are not a current full-suite total.",
+  "implementation_runs": [
+    {
+      "project": "lostparty-check-a0bd767858fc",
+      "passed": 57,
+      "failed": 1,
+      "selection": [
+        "roster_participation_issues",
+        "admission_eligibility",
+        "account_bootstrap"
+      ],
+      "note": "Positive observations now create additional immutable rows; old total-row-count assertion updated to distinguish missing rows and repetition."
+    },
+    {
+      "project": "lostparty-check-8284792f1a63",
+      "passed": 0,
+      "failed": 4,
+      "selection": [
+        "roster_public_contract initial"
+      ],
+      "note": "Bootstrap fixture selector, beta fixture setup, and real detail data.room lookup corrected; real metadata bug fixed before passing runs."
+    },
+    {
+      "project": "lostparty-check-e5e14d420189",
+      "passed": 4,
+      "failed": 1,
+      "selection": [
+        "roster_public_contract",
+        "observation repetition"
+      ],
+      "note": "Read-only fingerprint compared across creation of synthetic outsider; moved user setup before baseline."
+    },
+    {
+      "project": "lostparty-check-46153f975f6e",
+      "passed": 45,
+      "failed": 1,
+      "selection": [
+        "roster_public_contract",
+        "roster_participation_issues",
+        "activity_participation_continuity"
+      ],
+      "note": "Partial mixed bundle with one remaining eight-player item wrongly inferred a single-item capacity; preserved original bundle capacity."
+    },
+    {
+      "project": "lostparty-check-bd9de0df7de0",
+      "passed": 1,
+      "failed": 1,
+      "selection": [
+        "partial change",
+        "public issue HTTP combinations"
+      ],
+      "note": "Same capacity issue isolated; corrected in eligibility."
+    },
+    {
+      "project": "lostparty-check-9d0392dcf150",
+      "passed": 5,
+      "failed": 0,
+      "selection": [
+        "roster_public_contract at five-test snapshot"
+      ]
+    },
+    {
+      "project": "lostparty-check-1c36f16d38e7",
+      "passed": 47,
+      "failed": 1,
+      "selection": [
+        "roster_public_contract two permutations",
+        "admission_eligibility",
+        "activity_participation_continuity"
+      ],
+      "note": "Second completion-order test attempted to complete its already completed item at the end. Changed final index to the remaining item. No other failing regression."
+    },
+    {
+      "project": "lostparty-check-7da8135367c4",
+      "passed": 2,
+      "failed": 0,
+      "selection": [
+        "corrected second completion order",
+        "real completion/change race"
+      ]
+    },
+    {
+      "project": "lostparty-check-2a5f0c5a44fd",
+      "passed": 1,
+      "failed": 0,
+      "selection": [
+        "HTTP candidates/preview/POST/marker mismatch/original ACK"
+      ]
+    },
+    {
+      "project": "lostparty-check-8e3657093f01",
+      "passed": 1,
+      "failed": 0,
+      "selection": [
+        "final bounded batch presence and bootstrap/characters identical scope"
+      ]
+    },
+    {
+      "project": "lostparty-check-ae3fa00b5e8d",
+      "passed": 3,
+      "failed": 0,
+      "selection": [
+        "both completion orders",
+        "HTTP command-context upgrade guard/original ACK"
+      ]
+    },
+    {
+      "project": "lostparty-check-b11537e7d277",
+      "passed": 1,
+      "failed": 0,
+      "selection": [
+        "HTTP command and menu permissions for old/new profile"
+      ]
+    },
+    {
+      "project": "lostparty-check-f70c7fbd395c",
+      "passed": 1,
+      "failed": 0,
+      "selection": [
+        "real completion/change race with exact expected losing CAS/inactive codes"
+      ]
+    },
+    {
+      "project": "lostparty-check-1a1cb1604524",
+      "passed": 7,
+      "failed": 0,
+      "selection": [
+        "tests/test_roster_public_contract.py final complete file"
+      ],
+      "seconds": 132.14
+    },
+    {
+      "project": "lostparty-check-030c88c74b31",
+      "passed": 1,
+      "failed": 0,
+      "selection": [
+        "expanded current-week-only/opposite-week departed warning privacy"
+      ],
+      "note": "Supplement to final seven-test run; do not add as a new unique scenario."
+    }
+  ],
+  "implementation_contracts": {
+    "project": "lostparty-check-c689caba5a34",
+    "full_object_comparison": "PASS",
+    "legacy_paths": 125,
+    "legacy_operations": 142,
+    "two_cycle_paths": 188,
+    "two_cycle_operations": 209,
+    "new_public_paths": 1,
+    "legacy_sha256": "18491bc066d08a578aa9228cd0da85eee508288c28d14d563d788e73e324c3dd",
+    "two_cycle_sha256": "7a2a589f02d5d49847ce62c0f3bacbfff71ffb123076db822b4aae910666c8fd"
+  },
+  "native_evidence": {
+    "comment": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6720431541",
+    "scope": "Prior fixed review candidate only; original body parsers after metadata extraction",
+    "previous_passes_reused": 5,
+    "final_rerun_passes": 2,
+    "backend_executed_native_parser": false
+  },
+  "current_outcome": {
+    "backend_local_implementation": "Two audited follow-up gaps corrected, Native consumption accepted, local API imagece59926c/DB0036 verified, implementation caffaf3405a53be941250132a2b50779943b15f6 published",
+    "final_public_http_and_transaction_tests": "7 PASS",
+    "unresolved_test_failures": 0,
+    "full_repository_regression_executed": false,
+    "actual_server_or_db_updated": true,
+    "evidence": "Initial 57/1 and later 45/1 and 47/1 retain their actual failures; fixed cases were rerun and all final public cases pass. Passing counts overlap and are not added into a full-suite total.",
+    "actual_update_scope": "local development only; image4ac36fdb/DB0036; production unchanged",
+    "known_contract_gaps": 0,
+    "current_workspace_matches_running_image": true,
+    "followup_unresolved_test_failures": 0,
+    "followup_actual_server_or_db_updated": true,
+    "followup_evidence": "35PASS/1test-fixtureFAIL retained; corrected case1PASS; final new-selection/reopening and affected opening regressions5PASS+1PASS with overlaps; full repository not run",
+    "followup_actual_update_scope": "Local API image only; no migration/DB/environment/key changes; production unchanged"
+  },
+  "implementation_handoff": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721042421",
+  "local_rollout_handoff": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721249386",
+  "publication": {
+    "implementation_commit": "4c37c2bebbb9eb8950770a240b6e20b7b468399c",
+    "branch": "feat/character-lifecycle",
+    "origin_push": "verified",
+    "remote_sha_match": true,
+    "handoff": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721299358",
+    "app_source_matches_running_image": true,
+    "documentation_followup": "same branch; no application/server/database changes",
+    "app_source_matches_running_image_scope": "At publication time; follow-up uncommitted workspace changes are not running in development"
+  },
+  "scope_audit": {
+    "comment": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721435909",
+    "project": "lostparty-check-5cff42a6ffd3",
+    "diagnostic_cases": 1,
+    "seconds": 34.7,
+    "result": "Reproduced undesired old completed-character fallback despite active0/current_character null; not a passing product acceptance test",
+    "known_contract_gaps": 1,
+    "follow_up": "Separate historical participation authority from new-week selection; exercise mixed M/P schedule/departure/succession/new-week commands",
+    "application_or_server_modified": false,
+    "diagnostic_fixture": "temporary fixture removed after audit; reproduction steps retained in roster-participation-backend-audit.md"
+  },
+  "followup_commands": {
+    "status": "Backend follow-up complete; Native comment24 consumption accepted; actual local API imagece59926c/DB0036 supported; source still uncommitted/unpushed",
+    "branch": "feat/character-lifecycle",
+    "base_commit": "7aea6b703c9181db7d8a27c3bf455b2253ef3e25",
+    "source_status": "Published implementation caffaf3405a53be941250132a2b50779943b15f6 verified on origin; app247files match running local imagece59926c/DB0036",
+    "changes": [
+      "Active-only current character with exact persisted participation proof; historical management authority retained at active0",
+      "Opening/reopening/continuation unselected context permission CHARACTER_SELECTION_REQUIRED; schema-valid command with unselected context rejected409",
+      "Explicit current activity/ownership eligibility and stale context rejection; valid choice admits and original ACK replay preserved",
+      "Existing N seat and missing-character opening noop preserved; existing ROOM_MEMBER_EXISTS/TARGET_REOPEN_REQUIRED priorities retained"
+    ],
+    "runs": [
+      {
+        "project": "lostparty-check-ea5616cd4ebe",
+        "result": "WSL socket boundary prevented Docker execution; no test containers created; rerun with allowed host access"
+      },
+      {
+        "project": "lostparty-check-30479fafd378",
+        "passed": 4,
+        "seconds": 76.05,
+        "scope": "mixed schedule submit/confirm; mixed actor departure; mixed successor; next-week continuation; initial test revision"
+      },
+      {
+        "project": "lostparty-check-b133bb500356",
+        "passed": 1,
+        "seconds": 30.33,
+        "scope": "rollback after actual mixed departure cleanup writes and subsequent successful retry; corrected test-only variable reference"
+      },
+      {
+        "project": "lostparty-check-fba794e5ed4c",
+        "result": "PASS",
+        "scope": "full generated legacy125paths142ops and two-cycle188paths209ops equal checked-in contracts"
+      },
+      {
+        "project": "lostparty-check-18d89396de89",
+        "passed": 35,
+        "failed": 1,
+        "seconds": 685.15,
+        "scope": "six follow-up cases, seven public contract cases, twenty participation preservation cases, three completed/stopped authority cases",
+        "failure": "test-only undefined opposite variable after rollback assertions; corrected node rerun in b133bb500356"
+      },
+      {
+        "project": "lostparty-check-27a7f5c7951b",
+        "passed": 0,
+        "failed": 2,
+        "seconds": 44.7,
+        "failure": "test setup: N config sent with C-only fixture and schema-invalid empty target_items; fixture/input corrected without relaxing API"
+      },
+      {
+        "project": "lostparty-check-205ef74f905f",
+        "passed": 2,
+        "seconds": 49.08,
+        "scope": "new opening and continuation HTTP unselected409, current activity loss/stale context409, restored valid explicit choice, original ACK"
+      },
+      {
+        "project": "lostparty-check-4767a139c6d6",
+        "passed": 5,
+        "seconds": 92.78,
+        "scope": "expanded new opening/continuation cases including missing existing N noop, plus original normal opening/noop/explicit-minute opening cases"
+      },
+      {
+        "project": "lostparty-check-1b0565080497",
+        "passed": 1,
+        "seconds": 34.51,
+        "scope": "same explicit-choice and preserved N boundaries for reopening"
+      },
+      {
+        "project": "lostparty-check-39887287d214",
+        "result": "PASS",
+        "scope": "final full generated legacy125/142 and two-cycle188/209 objects equal; annotation only structural diff"
+      }
+    ],
+    "remaining": [
+      "Native feature implementation/actual connection/device acceptance remain separate",
+      "main/dev merge and production unchanged; separate user instruction",
+      "Folder classification and file moves explicitly held"
+    ],
+    "local_development_rollout_performed": true,
+    "production_changed": false,
+    "commit_push_merge_performed": false,
+    "source_manifest": {
+      "app/raid_rooms/existing_participation.py": "bb3a7d652b7a58e4765193c5b8921f01b03b42b9d155e613fa9285f50ae29e60",
+      "app/raid_rooms/cycle_lifecycle.py": "d0dd39f6dfe2b08081a024b965322c6b4678da9c256b2f8522b0c1e036685178",
+      "app/raid_rooms/cycle_opening.py": "3dc5e30bc30365052852d253132a6d424d5b121af70308566a1a9e900b618f6d",
+      "app/raid_rooms/cycle_continuation.py": "12c99740e5ede8a798f159c92da0a6c3a6622f1002f31603cba7b98eca4e3dca",
+      "app/raid_rooms/roster_openapi.py": "79a0c894dcc67895c375c60bcf9b3cd34f68324d85dba60393e19a412bac2ebc",
+      "tests/test_roster_followup_commands.py": "c2702c25c56a16b422de4b353351e6a33707c23f3383712fe2a0ccf7f1d111cf",
+      "tests/test_roster_public_contract.py": "304c22fc913cc364811ee2f173304889522e9f929deb3a38d3961d1eb4b6dc0a",
+      "openapi/openapi.yaml": "18491bc066d08a578aa9228cd0da85eee508288c28d14d563d788e73e324c3dd",
+      "openapi/two-cycle.openapi.yaml": "2aeca907115ffc768cad723d227f0c2339b042f56f46ffed251c1037d235b6c4"
+    },
+    "user_decision": "Confirmed narrow scope: explicit choice only for new N participation/opening after all C work completed; existing N seat preserved",
+    "new_direct_cases": 9,
+    "counts_are_not_added": true,
+    "handoff": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722487011",
+    "handoff_comment_order": 23,
+    "next_owner": "Native feature implementation/connection within user instruction; Backend handles concrete differences",
+    "native_acceptance": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722805010",
+    "local_rollout_record": "docs/engineering/operations/records/roster-participation-followup-local-rollout.json",
+    "local_rollout_handoff": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722917497",
+    "publication": {
+      "implementation_commit": "caffaf3405a53be941250132a2b50779943b15f6",
+      "branch": "feat/character-lifecycle",
+      "origin_push": "verified",
+      "remote_sha_match": true,
+      "handoff": "https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6722956197",
+      "app_source_matches_running_image": true,
+      "documentation_followup": "same branch; publication-result records only; no application/server/database changes"
+    }
+  }
+}

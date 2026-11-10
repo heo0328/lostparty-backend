@@ -1,13 +1,23 @@
 import re
 from datetime import datetime
 from typing import Annotated
-from fastapi import APIRouter, Depends, Query, Request
+from fastapi import APIRouter
+from fastapi import Depends
+from fastapi import Query
+from fastapi import Request
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr, Field, field_validator
-from app.game_accounts.router import Principal, Key
-from app.game_accounts.schemas import GameErrorOut
-from app.game_accounts.support import fail
+from pydantic import BaseModel
+from pydantic import ConfigDict
+from pydantic import StrictBool
+from pydantic import StrictInt
+from pydantic import StrictStr
+from pydantic import Field
+from pydantic import field_validator
+from app.game_accounts.api.router import Principal
+from app.game_accounts.api.router import Key
+from app.game_accounts.schemas.schemas import GameErrorOut
+from app.game_accounts.common.support import fail
 from app.lostark_keys import service
 
 

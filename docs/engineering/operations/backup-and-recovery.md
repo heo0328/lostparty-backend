@@ -1,5 +1,8 @@
 # 로컬·운영 백업 원장과 안내 기준
 
+로컬 최신(2026-11-08): 사용자 승인으로 #17 개발 DB0035→0036·API를 반영했다. [로컬 반영 집계](records/roster-participation-local-rollout.json) 기준 기존 자료/키·환경을 보존했고 로컬 DB dump 제외 결정은 유지했다. 신규 키/환경 생성·운영 변경은 없으며 기존 보관본을 재사용한다. ignored 감사 자료는 DB백업/복원 시험이 아니다. 아래0035는 복구 당시 기준이다.
+
+
 2026-11-07 / Backend / [Issue46](https://github.com/heo0328/lostparty-backend/issues/46). 실제 파일·보관 상태와 다음 안내 시점의 원본이다. 상세 복구/시험 이력은 [DEV_LOG](../../project/DEV_LOG.md#development-recovery-20261107), 비민감 백업 집계는 [결과 JSON](records/backup-recovery-2026-11-07.json)을 따른다.
 
 ## 현재 완료와 구분

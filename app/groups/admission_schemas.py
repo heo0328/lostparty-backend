@@ -2,8 +2,12 @@ from datetime import datetime
 from typing import Literal
 from uuid import UUID
 from pydantic import StrictBool
-from app.game_accounts.schemas import DTO, Name, Version
-from app.groups.schemas import CharacterDisplay, GroupSummary, Permission
+from app.game_accounts.schemas.schemas import DTO
+from app.game_accounts.schemas.schemas import Name
+from app.game_accounts.schemas.schemas import Version
+from app.groups.schemas import CharacterDisplay
+from app.groups.schemas import GroupSummary
+from app.groups.schemas import Permission
 from app.member_limits.schemas import Nonnegative
 
 

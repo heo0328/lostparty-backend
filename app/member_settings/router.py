@@ -1,7 +1,11 @@
-from fastapi import APIRouter, Depends
-from app.game_accounts.router import Principal, Key, strict_query
-from app.game_accounts.schemas import GameErrorOut
-from app.member_settings import schemas, service
+from fastapi import APIRouter
+from fastapi import Depends
+from app.game_accounts.api.router import Principal
+from app.game_accounts.api.router import Key
+from app.game_accounts.api.router import strict_query
+from app.game_accounts.schemas.schemas import GameErrorOut
+from app.member_settings import schemas
+from app.member_settings import service
 
 router = APIRouter(prefix='/v1/me/settings', tags=['member-settings'],
                    dependencies=[Depends(strict_query)])

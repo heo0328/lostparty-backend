@@ -47,7 +47,7 @@ FastAPI/Pydantic·동기 SQLAlchemy·Alembic·PostgreSQL 기반 모듈형 단일
 ### F03 — 예기치 않은 오류의 응답·원인 추적 공백
 
 - **판정/범위:** 확인된 문제. 공통 오류·로그와 일부 모집 라우터.
-- **근거:** `app/core/errors.py:33`에 AuthError/입력검증/SQLAlchemyError handler가 있으나 일반 예외의 표준 JSON 처리가 없다. `app/core/observability.py:31`의 분류/formatter는 일반 오류를 internal로 축약하고 타입·위치·traceback을 제거한다. `app/raid_rooms/cycle_router.py:57` 직접 SQLAlchemyError 응답은 공통 database_error 로그를 우회한다. `tests/test_observability.py:104` 부근은 비밀정보 비노출/500을 확인하지만 표준 응답을 보장하지 않는다.
+- **근거:** `app/core/errors.py:33`에 AuthError/입력검증/SQLAlchemyError handler가 있으나 일반 예외의 표준 JSON 처리가 없다. `app/core/observability.py:31`의 분류/formatter는 일반 오류를 internal로 축약하고 타입·위치·traceback을 제거한다. `app/raid_rooms/api/cycle_router.py:57` 직접 SQLAlchemyError 응답은 공통 database_error 로그를 우회한다. `tests/test_observability.py:104` 부근은 비밀정보 비노출/500을 확인하지만 표준 응답을 보장하지 않는다.
 - **영향/조건:** 예상 못한 오류에서 클라이언트의 공통 오류 해석과 운영자의 원인 구분이 어려울 수 있다. 모집503의 원인 분류도 약해진다.
 - **배경:** 민감 로그 차단은 `65ab2a9` 이력에 있는 의도적 선택이며 유지한다. 민감정보를 그대로 로깅하는 방식으로 되돌리지 않는다.
 - **선택지:** 현상 유지 비용은 작지만 진단 정보가 부족하다. 허용된 타입/코드 위치/지문을 추가하면 작게 개선 가능하다. 외부 오류수집 도구는 편리하나 전송 정보·운영 부담 검토가 추가된다.
@@ -95,7 +95,7 @@ FastAPI/Pydantic·동기 SQLAlchemy·Alembic·PostgreSQL 기반 모듈형 단일
 ### F07 — 전역 쓰기 잠금과 worker 처리량
 
 - **판정/범위:** 개선 선택지. 현재 성능 장애는 미확인.
-- **근거:** `app/game_accounts/support.py:34` 부근의 쓰기는 전역 advisory lock game-mutations-v1을 사용하며 cleanup도 공유한다. cleanup 일부 삭제는 개수 상한이 없고 `app/raid_rooms/cycle_worker.py:69` 부근은 열린/review 방을 순차 처리한다.
+- **근거:** `app/game_accounts/common/support.py:34` 부근의 쓰기는 전역 advisory lock game-mutations-v1을 사용하며 cleanup도 공유한다. cleanup 일부 삭제는 개수 상한이 없고 `app/raid_rooms/cycle_worker.py:69` 부근은 열린/review 방을 순차 처리한다.
 - **영향/조건:** 자료/동시 쓰기가 늘면 정리·주차 작업이 일반 요청 대기시간을 늘릴 수 있다. 실제 부하 수치는 없다.
 - **배경:** 초기 도메인 간 무결성 확보를 위한 직렬화는 합리적이며 잠금 제거 시 경쟁 조건을 되살릴 위험이 있다.
 - **선택지:** 유지+측정은 저비용, 배치 상한은 처리량/잠금시간 조절에 유리, 엔티티별 잠금은 병렬성 이득 대신 교착/무결성 비용이 크다.
@@ -119,7 +119,7 @@ FastAPI/Pydantic·동기 SQLAlchemy·Alembic·PostgreSQL 기반 모듈형 단일
 ### F09 — 공통 처리와 정책 조립 책임의 분산
 
 - **판정/범위:** 개선 선택지. 앱 조립·모집 라우터의 변경 비용.
-- **근거:** `app/main.py:89` 부근 앱 구성에 많은 정책/OpenAPI 장식이 섞인다. `app/raid_rooms/cycle_router.py:67` 부근은 경로별 허용 query를 수동 나열한다. cycle_common 경유 연결과 F03의 예외 처리가 중복 책임의 구체 사례다. 단지 파일이 길거나 함수명이 다르다는 이유의 문제 판정은 아니다.
+- **근거:** `app/main.py:89` 부근 앱 구성에 많은 정책/OpenAPI 장식이 섞인다. `app/raid_rooms/api/cycle_router.py:67` 부근은 경로별 허용 query를 수동 나열한다. cycle_common 경유 연결과 F03의 예외 처리가 중복 책임의 구체 사례다. 단지 파일이 길거나 함수명이 다르다는 이유의 문제 판정은 아니다.
 - **영향/조건:** 새 경로를 추가할 때 파라미터/정책/오류 처리 여러 지점을 함께 맞춰야 한다. 모든 도메인에 같은 구조 결함이 있다고 보지는 않는다.
 - **배경:** 기본/주차 프로필 호환·복구 계약으로 인한 실제 복잡성도 포함돼 있다.
 - **선택지:** 전체 계층 교체는 전환 위험이 크다. 변경 경로부터 타입/공통 오류 처리와 앱 조립·정책을 분리하면 작은 검증 단위로 개선할 수 있다. 단순 유지도 변경 빈도가 낮은 부분에는 합리적이다.

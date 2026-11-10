@@ -1,0 +1,1066 @@
+{
+  "phase": 2,
+  "baseline_commit": "34a2a4789c62e4beb7dccaef033e655341acb548",
+  "entries": [
+    {
+      "source": "app/raid_rooms/__init__.py",
+      "action": "유지",
+      "targets": [
+        "app/raid_rooms/__init__.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/admission_candidate_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/admission_candidate_schemas.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/admission_contract.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/contracts/admission_contract.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/admission_router.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/api/admission_router.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/admission_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/admission_schemas.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/application_display_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/application_display_schemas.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/application_presets.py",
+      "action": "분리",
+      "targets": [
+        "app/raid_rooms/api/application_presets.py",
+        "app/raid_rooms/schemas/application_presets.py",
+        "app/raid_rooms/admissions/application_presets.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/atomic_member_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/atomic_member_schemas.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/availability_contract.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/contracts/availability_contract.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/availability_router.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/api/availability_router.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/availability_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/availability_schemas.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/beta_models.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/models/beta_models.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/beta_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/beta_schemas.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/candidate_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/candidate_schemas.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/character_change.py",
+      "action": "분리",
+      "targets": [
+        "app/raid_rooms/schemas/character_change.py",
+        "app/raid_rooms/participation/character_change.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/command_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/command_schemas.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/commands.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/commands.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/completion.py",
+      "action": "분리",
+      "targets": [
+        "app/raid_rooms/schemas/completion.py",
+        "app/raid_rooms/outcomes/completion.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/completion_correction_models.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/models/completion_correction_models.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/completion_correction_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/completion_correction_schemas.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/completion_router.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/api/completion_router.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/continuation.py",
+      "action": "분리",
+      "targets": [
+        "app/raid_rooms/schemas/continuation.py",
+        "app/raid_rooms/admissions/continuation.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/continuation_router.py",
+      "action": "분리",
+      "targets": [
+        "app/raid_rooms/api/continuation_router.py",
+        "app/raid_rooms/schemas/continuation_router.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/cycle_application_models.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/models/cycle_application_models.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/cycle_consent_models.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/models/cycle_consent_models.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/cycle_group_context_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/cycle_group_context_schemas.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/cycle_group_models.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/models/cycle_group_models.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/cycle_group_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/cycle_group_schemas.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/cycle_lifecycle_models.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/models/cycle_lifecycle_models.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/cycle_models.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/models/cycle_models.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/cycle_outcome_models.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/models/cycle_outcome_models.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/cycle_planning_models.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/models/cycle_planning_models.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/cycle_router.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/api/cycle_router.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/cycle_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/cycle_schemas.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/cycle_wire.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/cycle_wire.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/group_connection.py",
+      "action": "분리",
+      "targets": [
+        "app/raid_rooms/schemas/group_connection.py",
+        "app/raid_rooms/group_links/group_connection.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/group_link_display.py",
+      "action": "분리",
+      "targets": [
+        "app/raid_rooms/schemas/group_link_display.py",
+        "app/raid_rooms/group_links/group_link_display.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/http_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/http_schemas.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/integrated_models.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/models/integrated_models.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/management.py",
+      "action": "분리",
+      "targets": [
+        "app/raid_rooms/schemas/management.py",
+        "app/raid_rooms/participation/management.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/management_router.py",
+      "action": "분리",
+      "targets": [
+        "app/raid_rooms/api/management_router.py",
+        "app/raid_rooms/schemas/management_router.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/member_router.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/api/member_router.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/member_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/member_schemas.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/membership_action_models.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/models/membership_action_models.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/membership_action_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/membership_action_schemas.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/models.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/models/models.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/participation_commands.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/participation_commands.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/resume.py",
+      "action": "분리",
+      "targets": [
+        "app/raid_rooms/schemas/resume.py",
+        "app/raid_rooms/outcomes/resume.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/resume_models.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/models/resume_models.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/resume_review_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/resume_review_schemas.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/roster_api.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/api/roster_api.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/roster_openapi.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/contracts/roster_openapi.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/roster_participation.py",
+      "action": "분리",
+      "targets": [
+        "app/raid_rooms/models/roster_participation.py",
+        "app/raid_rooms/participation/roster_participation.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/router.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/api/router.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/schedule_heads.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/models/schedule_heads.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/schedule_output.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/schedule_output.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/schedule_router.py",
+      "action": "분리",
+      "targets": [
+        "app/raid_rooms/api/schedule_router.py",
+        "app/raid_rooms/schemas/schedule_router.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/schedule_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/schedule_schemas.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/schemas.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/search_router.py",
+      "action": "분리",
+      "targets": [
+        "app/raid_rooms/api/search_router.py",
+        "app/raid_rooms/schemas/search_router.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/session_display_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/session_display_schemas.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/source_models.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/models/source_models.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/weekly_links.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/models/weekly_links.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/weekly_summary_router.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/api/weekly_summary_router.py"
+      ]
+    },
+    {
+      "source": "app/raid_rooms/weekly_summary_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/raid_rooms/schemas/weekly_summary_schemas.py"
+      ]
+    },
+    {
+      "source": "app/game_accounts/__init__.py",
+      "action": "유지",
+      "targets": [
+        "app/game_accounts/__init__.py"
+      ]
+    },
+    {
+      "source": "app/game_accounts/batch_router.py",
+      "action": "이동",
+      "targets": [
+        "app/game_accounts/api/batch_router.py"
+      ]
+    },
+    {
+      "source": "app/game_accounts/batch_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/game_accounts/schemas/batch_schemas.py"
+      ]
+    },
+    {
+      "source": "app/game_accounts/bootstrap_router.py",
+      "action": "이동",
+      "targets": [
+        "app/game_accounts/api/bootstrap_router.py"
+      ]
+    },
+    {
+      "source": "app/game_accounts/bootstrap_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/game_accounts/schemas/bootstrap_schemas.py"
+      ]
+    },
+    {
+      "source": "app/game_accounts/lifecycle_router.py",
+      "action": "이동",
+      "targets": [
+        "app/game_accounts/api/lifecycle_router.py"
+      ]
+    },
+    {
+      "source": "app/game_accounts/models.py",
+      "action": "이동",
+      "targets": [
+        "app/game_accounts/models/models.py"
+      ]
+    },
+    {
+      "source": "app/game_accounts/power_success.py",
+      "action": "분리",
+      "targets": [
+        "app/game_accounts/models/power_success.py",
+        "app/game_accounts/power/power_success.py"
+      ]
+    },
+    {
+      "source": "app/game_accounts/profile_router.py",
+      "action": "이동",
+      "targets": [
+        "app/game_accounts/api/profile_router.py"
+      ]
+    },
+    {
+      "source": "app/game_accounts/profile_schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/game_accounts/schemas/profile_schemas.py"
+      ]
+    },
+    {
+      "source": "app/game_accounts/roster_presence.py",
+      "action": "분리",
+      "targets": [
+        "app/game_accounts/models/roster_presence.py",
+        "app/game_accounts/rosters/roster_presence.py"
+      ]
+    },
+    {
+      "source": "app/game_accounts/router.py",
+      "action": "이동",
+      "targets": [
+        "app/game_accounts/api/router.py"
+      ]
+    },
+    {
+      "source": "app/game_accounts/schemas.py",
+      "action": "이동",
+      "targets": [
+        "app/game_accounts/schemas/schemas.py"
+      ]
+    },
+    {
+      "source": "app/game_accounts/support.py",
+      "action": "이동",
+      "targets": [
+        "app/game_accounts/common/support.py"
+      ]
+    }
+  ],
+  "resource_moves": [
+    {
+      "source": "app/raid_rooms/roster_metadata.schema.json",
+      "target": "app/raid_rooms/contracts/roster_metadata.schema.json"
+    }
+  ],
+  "module_mapping": {
+    "app.raid_rooms.admission_candidate_schemas": "app.raid_rooms.schemas.admission_candidate_schemas",
+    "app.raid_rooms.admission_contract": "app.raid_rooms.contracts.admission_contract",
+    "app.raid_rooms.admission_router": "app.raid_rooms.api.admission_router",
+    "app.raid_rooms.admission_schemas": "app.raid_rooms.schemas.admission_schemas",
+    "app.raid_rooms.application_display_schemas": "app.raid_rooms.schemas.application_display_schemas",
+    "app.raid_rooms.atomic_member_schemas": "app.raid_rooms.schemas.atomic_member_schemas",
+    "app.raid_rooms.availability_contract": "app.raid_rooms.contracts.availability_contract",
+    "app.raid_rooms.availability_router": "app.raid_rooms.api.availability_router",
+    "app.raid_rooms.availability_schemas": "app.raid_rooms.schemas.availability_schemas",
+    "app.raid_rooms.beta_models": "app.raid_rooms.models.beta_models",
+    "app.raid_rooms.beta_schemas": "app.raid_rooms.schemas.beta_schemas",
+    "app.raid_rooms.candidate_schemas": "app.raid_rooms.schemas.candidate_schemas",
+    "app.raid_rooms.command_schemas": "app.raid_rooms.schemas.command_schemas",
+    "app.raid_rooms.commands": "app.raid_rooms.schemas.commands",
+    "app.raid_rooms.completion_correction_models": "app.raid_rooms.models.completion_correction_models",
+    "app.raid_rooms.completion_correction_schemas": "app.raid_rooms.schemas.completion_correction_schemas",
+    "app.raid_rooms.completion_router": "app.raid_rooms.api.completion_router",
+    "app.raid_rooms.cycle_application_models": "app.raid_rooms.models.cycle_application_models",
+    "app.raid_rooms.cycle_consent_models": "app.raid_rooms.models.cycle_consent_models",
+    "app.raid_rooms.cycle_group_context_schemas": "app.raid_rooms.schemas.cycle_group_context_schemas",
+    "app.raid_rooms.cycle_group_models": "app.raid_rooms.models.cycle_group_models",
+    "app.raid_rooms.cycle_group_schemas": "app.raid_rooms.schemas.cycle_group_schemas",
+    "app.raid_rooms.cycle_lifecycle_models": "app.raid_rooms.models.cycle_lifecycle_models",
+    "app.raid_rooms.cycle_models": "app.raid_rooms.models.cycle_models",
+    "app.raid_rooms.cycle_outcome_models": "app.raid_rooms.models.cycle_outcome_models",
+    "app.raid_rooms.cycle_planning_models": "app.raid_rooms.models.cycle_planning_models",
+    "app.raid_rooms.cycle_router": "app.raid_rooms.api.cycle_router",
+    "app.raid_rooms.cycle_schemas": "app.raid_rooms.schemas.cycle_schemas",
+    "app.raid_rooms.cycle_wire": "app.raid_rooms.schemas.cycle_wire",
+    "app.raid_rooms.http_schemas": "app.raid_rooms.schemas.http_schemas",
+    "app.raid_rooms.integrated_models": "app.raid_rooms.models.integrated_models",
+    "app.raid_rooms.member_router": "app.raid_rooms.api.member_router",
+    "app.raid_rooms.member_schemas": "app.raid_rooms.schemas.member_schemas",
+    "app.raid_rooms.membership_action_models": "app.raid_rooms.models.membership_action_models",
+    "app.raid_rooms.membership_action_schemas": "app.raid_rooms.schemas.membership_action_schemas",
+    "app.raid_rooms.models": "app.raid_rooms.models.models",
+    "app.raid_rooms.participation_commands": "app.raid_rooms.schemas.participation_commands",
+    "app.raid_rooms.resume_models": "app.raid_rooms.models.resume_models",
+    "app.raid_rooms.resume_review_schemas": "app.raid_rooms.schemas.resume_review_schemas",
+    "app.raid_rooms.roster_api": "app.raid_rooms.api.roster_api",
+    "app.raid_rooms.roster_openapi": "app.raid_rooms.contracts.roster_openapi",
+    "app.raid_rooms.router": "app.raid_rooms.api.router",
+    "app.raid_rooms.schedule_heads": "app.raid_rooms.models.schedule_heads",
+    "app.raid_rooms.schedule_output": "app.raid_rooms.schemas.schedule_output",
+    "app.raid_rooms.schedule_schemas": "app.raid_rooms.schemas.schedule_schemas",
+    "app.raid_rooms.schemas": "app.raid_rooms.schemas.schemas",
+    "app.raid_rooms.session_display_schemas": "app.raid_rooms.schemas.session_display_schemas",
+    "app.raid_rooms.source_models": "app.raid_rooms.models.source_models",
+    "app.raid_rooms.weekly_links": "app.raid_rooms.models.weekly_links",
+    "app.raid_rooms.weekly_summary_router": "app.raid_rooms.api.weekly_summary_router",
+    "app.raid_rooms.weekly_summary_schemas": "app.raid_rooms.schemas.weekly_summary_schemas",
+    "app.game_accounts.batch_router": "app.game_accounts.api.batch_router",
+    "app.game_accounts.batch_schemas": "app.game_accounts.schemas.batch_schemas",
+    "app.game_accounts.bootstrap_router": "app.game_accounts.api.bootstrap_router",
+    "app.game_accounts.bootstrap_schemas": "app.game_accounts.schemas.bootstrap_schemas",
+    "app.game_accounts.lifecycle_router": "app.game_accounts.api.lifecycle_router",
+    "app.game_accounts.models": "app.game_accounts.models.models",
+    "app.game_accounts.profile_router": "app.game_accounts.api.profile_router",
+    "app.game_accounts.profile_schemas": "app.game_accounts.schemas.profile_schemas",
+    "app.game_accounts.router": "app.game_accounts.api.router",
+    "app.game_accounts.schemas": "app.game_accounts.schemas.schemas",
+    "app.game_accounts.support": "app.game_accounts.common.support",
+    "app.raid_rooms.application_presets": "app.raid_rooms.api.application_presets",
+    "app.raid_rooms.character_change": "app.raid_rooms.participation.character_change",
+    "app.raid_rooms.completion": "app.raid_rooms.outcomes.completion",
+    "app.raid_rooms.continuation": "app.raid_rooms.admissions.continuation",
+    "app.raid_rooms.continuation_router": "app.raid_rooms.api.continuation_router",
+    "app.raid_rooms.group_connection": "app.raid_rooms.group_links.group_connection",
+    "app.raid_rooms.group_link_display": "app.raid_rooms.group_links.group_link_display",
+    "app.raid_rooms.management": "app.raid_rooms.participation.management",
+    "app.raid_rooms.management_router": "app.raid_rooms.api.management_router",
+    "app.raid_rooms.resume": "app.raid_rooms.outcomes.resume",
+    "app.raid_rooms.roster_participation": "app.raid_rooms.participation.roster_participation",
+    "app.raid_rooms.schedule_router": "app.raid_rooms.api.schedule_router",
+    "app.raid_rooms.search_router": "app.raid_rooms.api.search_router",
+    "app.game_accounts.power_success": "app.game_accounts.power.power_success",
+    "app.game_accounts.roster_presence": "app.game_accounts.rosters.roster_presence"
+  },
+  "symbol_mapping": {
+    "app.raid_rooms.application_presets.PresetItem": "app.raid_rooms.schemas.application_presets.PresetItem",
+    "app.raid_rooms.application_presets.PresetPut": "app.raid_rooms.schemas.application_presets.PresetPut",
+    "app.raid_rooms.application_presets.StoredPresetItem": "app.raid_rooms.schemas.application_presets.StoredPresetItem",
+    "app.raid_rooms.application_presets.PresetDocument": "app.raid_rooms.schemas.application_presets.PresetDocument",
+    "app.raid_rooms.application_presets.document": "app.raid_rooms.admissions.application_presets.document",
+    "app.raid_rooms.application_presets.get": "app.raid_rooms.admissions.application_presets.get",
+    "app.raid_rooms.application_presets.put": "app.raid_rooms.admissions.application_presets.put",
+    "app.raid_rooms.application_presets.PresetRoute": "app.raid_rooms.api.application_presets.PresetRoute",
+    "app.raid_rooms.application_presets.router": "app.raid_rooms.api.application_presets.router",
+    "app.raid_rooms.application_presets.errors": "app.raid_rooms.api.application_presets.errors",
+    "app.raid_rooms.application_presets.read_presets": "app.raid_rooms.api.application_presets.read_presets",
+    "app.raid_rooms.application_presets.write_presets": "app.raid_rooms.api.application_presets.write_presets",
+    "app.raid_rooms.character_change.AssignmentCAS": "app.raid_rooms.schemas.character_change.AssignmentCAS",
+    "app.raid_rooms.character_change.ChoiceCAS": "app.raid_rooms.schemas.character_change.ChoiceCAS",
+    "app.raid_rooms.character_change.Change": "app.raid_rooms.schemas.character_change.Change",
+    "app.raid_rooms.character_change.change": "app.raid_rooms.participation.character_change.change",
+    "app.raid_rooms.completion.ContextRequest": "app.raid_rooms.schemas.completion.ContextRequest",
+    "app.raid_rooms.completion.ContinuationResolution": "app.raid_rooms.schemas.completion.ContinuationResolution",
+    "app.raid_rooms.completion.LeadershipResolution": "app.raid_rooms.schemas.completion.LeadershipResolution",
+    "app.raid_rooms.completion.Personal": "app.raid_rooms.schemas.completion.Personal",
+    "app.raid_rooms.completion.MembershipCommand": "app.raid_rooms.schemas.completion.MembershipCommand",
+    "app.raid_rooms.completion.Transfer": "app.raid_rooms.schemas.completion.Transfer",
+    "app.raid_rooms.completion.transfer": "app.raid_rooms.outcomes.completion.transfer",
+    "app.raid_rooms.completion.end_participations": "app.raid_rooms.outcomes.completion.end_participations",
+    "app.raid_rooms.completion.drop_membership": "app.raid_rooms.outcomes.completion.drop_membership",
+    "app.raid_rooms.completion.complete_assignment": "app.raid_rooms.outcomes.completion.complete_assignment",
+    "app.raid_rooms.completion.command": "app.raid_rooms.outcomes.completion.command",
+    "app.raid_rooms.completion.membership_command": "app.raid_rooms.outcomes.completion.membership_command",
+    "app.raid_rooms.continuation.ChoiceInput": "app.raid_rooms.schemas.continuation.ChoiceInput",
+    "app.raid_rooms.continuation.Replace": "app.raid_rooms.schemas.continuation.Replace",
+    "app.raid_rooms.continuation.ChoicesIn": "app.raid_rooms.schemas.continuation.ChoicesIn",
+    "app.raid_rooms.continuation.ContinuationSettingsIn": "app.raid_rooms.schemas.continuation.ContinuationSettingsIn",
+    "app.raid_rooms.continuation.OpeningIn": "app.raid_rooms.schemas.continuation.OpeningIn",
+    "app.raid_rooms.continuation.view": "app.raid_rooms.admissions.continuation.view",
+    "app.raid_rooms.continuation.get": "app.raid_rooms.admissions.continuation.get",
+    "app.raid_rooms.continuation.replace_choices": "app.raid_rooms.admissions.continuation.replace_choices",
+    "app.raid_rooms.continuation.put": "app.raid_rooms.admissions.continuation.put",
+    "app.raid_rooms.continuation.settings": "app.raid_rooms.admissions.continuation.settings",
+    "app.raid_rooms.continuation.open_current": "app.raid_rooms.admissions.continuation.open_current",
+    "app.raid_rooms.continuation.opening": "app.raid_rooms.admissions.continuation.opening",
+    "app.raid_rooms.continuation.process_due": "app.raid_rooms.admissions.continuation.process_due",
+    "app.raid_rooms.continuation.process_room": "app.raid_rooms.admissions.continuation.process_room",
+    "app.raid_rooms.continuation_router.ContinuationRoute": "app.raid_rooms.api.continuation_router.ContinuationRoute",
+    "app.raid_rooms.continuation_router.ChoiceView": "app.raid_rooms.schemas.continuation_router.ChoiceView",
+    "app.raid_rooms.continuation_router.Choices": "app.raid_rooms.schemas.continuation_router.Choices",
+    "app.raid_rooms.continuation_router.router": "app.raid_rooms.api.continuation_router.router",
+    "app.raid_rooms.continuation_router.get": "app.raid_rooms.api.continuation_router.get",
+    "app.raid_rooms.continuation_router.put": "app.raid_rooms.api.continuation_router.put",
+    "app.raid_rooms.continuation_router.settings": "app.raid_rooms.api.continuation_router.settings",
+    "app.raid_rooms.continuation_router.opening": "app.raid_rooms.api.continuation_router.opening",
+    "app.raid_rooms.group_connection.snapshot": "app.raid_rooms.group_links.group_connection.snapshot",
+    "app.raid_rooms.group_connection.TargetGroup": "app.raid_rooms.schemas.group_connection.TargetGroup",
+    "app.raid_rooms.group_connection.GroupConnectionContext": "app.raid_rooms.schemas.group_connection.GroupConnectionContext",
+    "app.raid_rooms.group_connection.evaluate": "app.raid_rooms.group_links.group_connection.evaluate",
+    "app.raid_rooms.group_link_display.GroupLinkState": "app.raid_rooms.schemas.group_link_display.GroupLinkState",
+    "app.raid_rooms.group_link_display.GroupLinkedDetail": "app.raid_rooms.schemas.group_link_display.GroupLinkedDetail",
+    "app.raid_rooms.group_link_display.GroupLinkedMembershipDetail": "app.raid_rooms.schemas.group_link_display.GroupLinkedMembershipDetail",
+    "app.raid_rooms.group_link_display.GroupLinkedApplicationDetail": "app.raid_rooms.schemas.group_link_display.GroupLinkedApplicationDetail",
+    "app.raid_rooms.group_link_display.GroupLinkedPlan": "app.raid_rooms.schemas.group_link_display.GroupLinkedPlan",
+    "app.raid_rooms.group_link_display.GroupLinkedMembershipPlan": "app.raid_rooms.schemas.group_link_display.GroupLinkedMembershipPlan",
+    "app.raid_rooms.group_link_display.get": "app.raid_rooms.group_links.group_link_display.get",
+    "app.raid_rooms.group_link_display.RoomGroupLink": "app.raid_rooms.schemas.group_link_display.RoomGroupLink",
+    "app.raid_rooms.group_link_display.ListGroupMetadata": "app.raid_rooms.schemas.group_link_display.ListGroupMetadata",
+    "app.raid_rooms.group_link_display.GroupSearchPage": "app.raid_rooms.schemas.group_link_display.GroupSearchPage",
+    "app.raid_rooms.group_link_display.GroupApplicationPage": "app.raid_rooms.schemas.group_link_display.GroupApplicationPage",
+    "app.raid_rooms.group_link_display.GroupMembershipPage": "app.raid_rooms.schemas.group_link_display.GroupMembershipPage",
+    "app.raid_rooms.group_link_display.GroupActionMembershipPage": "app.raid_rooms.schemas.group_link_display.GroupActionMembershipPage",
+    "app.raid_rooms.management.RoomSettingsIn": "app.raid_rooms.schemas.management.RoomSettingsIn",
+    "app.raid_rooms.management.Visibility": "app.raid_rooms.schemas.management.Visibility",
+    "app.raid_rooms.management.Placement": "app.raid_rooms.schemas.management.Placement",
+    "app.raid_rooms.management.Formation": "app.raid_rooms.schemas.management.Formation",
+    "app.raid_rooms.management.Removal": "app.raid_rooms.schemas.management.Removal",
+    "app.raid_rooms.management.settings_view": "app.raid_rooms.participation.management.settings_view",
+    "app.raid_rooms.management.get_settings": "app.raid_rooms.participation.management.get_settings",
+    "app.raid_rooms.management.command": "app.raid_rooms.participation.management.command",
+    "app.raid_rooms.management_router.ContinuationSettings": "app.raid_rooms.schemas.management_router.ContinuationSettings",
+    "app.raid_rooms.management_router.Settings": "app.raid_rooms.schemas.management_router.Settings",
+    "app.raid_rooms.management_router.router": "app.raid_rooms.api.management_router.router",
+    "app.raid_rooms.management_router.change_character": "app.raid_rooms.api.management_router.change_character",
+    "app.raid_rooms.management_router.settings": "app.raid_rooms.api.management_router.settings",
+    "app.raid_rooms.management_router.edit": "app.raid_rooms.api.management_router.edit",
+    "app.raid_rooms.management_router.visibility": "app.raid_rooms.api.management_router.visibility",
+    "app.raid_rooms.management_router.formation": "app.raid_rooms.api.management_router.formation",
+    "app.raid_rooms.management_router.remove": "app.raid_rooms.api.management_router.remove",
+    "app.raid_rooms.resume.ResumeRequest": "app.raid_rooms.schemas.resume.ResumeRequest",
+    "app.raid_rooms.resume.retained_groups": "app.raid_rooms.outcomes.resume.retained_groups",
+    "app.raid_rooms.resume.stopped": "app.raid_rooms.outcomes.resume.stopped",
+    "app.raid_rooms.resume.target_members": "app.raid_rooms.outcomes.resume.target_members",
+    "app.raid_rooms.resume.create": "app.raid_rooms.outcomes.resume.create",
+    "app.raid_rooms.resume.respond": "app.raid_rooms.outcomes.resume.respond",
+    "app.raid_rooms.resume.evaluate": "app.raid_rooms.outcomes.resume.evaluate",
+    "app.raid_rooms.roster_participation.PROFILE": "app.raid_rooms.participation.roster_participation.PROFILE",
+    "app.raid_rooms.roster_participation._state": "app.raid_rooms.participation.roster_participation._state",
+    "app.raid_rooms.roster_participation.Capability": "app.raid_rooms.models.roster_participation.Capability",
+    "app.raid_rooms.roster_participation.enabled": "app.raid_rooms.participation.roster_participation.enabled",
+    "app.raid_rooms.roster_participation.query": "app.raid_rooms.participation.roster_participation.query",
+    "app.raid_rooms.roster_participation.using": "app.raid_rooms.participation.roster_participation.using",
+    "app.raid_rooms.roster_participation.marker": "app.raid_rooms.participation.roster_participation.marker",
+    "app.raid_rooms.roster_participation.check_marker": "app.raid_rooms.participation.roster_participation.check_marker",
+    "app.raid_rooms.roster_participation.split": "app.raid_rooms.participation.roster_participation.split",
+    "app.raid_rooms.roster_participation.replacement": "app.raid_rooms.participation.roster_participation.replacement",
+    "app.raid_rooms.roster_participation.required": "app.raid_rooms.participation.roster_participation.required",
+    "app.raid_rooms.roster_participation.require_client": "app.raid_rooms.participation.roster_participation.require_client",
+    "app.raid_rooms.roster_participation.activate": "app.raid_rooms.participation.roster_participation.activate",
+    "app.raid_rooms.roster_participation.member": "app.raid_rooms.participation.roster_participation.member",
+    "app.raid_rooms.schedule_router.Candidate": "app.raid_rooms.schemas.schedule_router.Candidate",
+    "app.raid_rooms.schedule_router.router": "app.raid_rooms.api.schedule_router.router",
+    "app.raid_rooms.schedule_router.edit": "app.raid_rooms.api.schedule_router.edit",
+    "app.raid_rooms.schedule_router.candidates": "app.raid_rooms.api.schedule_router.candidates",
+    "app.raid_rooms.schedule_router.select": "app.raid_rooms.api.schedule_router.select",
+    "app.raid_rooms.schedule_router.propose": "app.raid_rooms.api.schedule_router.propose",
+    "app.raid_rooms.schedule_router.respond": "app.raid_rooms.api.schedule_router.respond",
+    "app.raid_rooms.schedule_router.confirm": "app.raid_rooms.api.schedule_router.confirm",
+    "app.raid_rooms.search_router.Condition": "app.raid_rooms.schemas.search_router.Condition",
+    "app.raid_rooms.search_router.Sort": "app.raid_rooms.schemas.search_router.Sort",
+    "app.raid_rooms.search_router.Search": "app.raid_rooms.schemas.search_router.Search",
+    "app.raid_rooms.search_router.FilterGroup": "app.raid_rooms.schemas.search_router.FilterGroup",
+    "app.raid_rooms.search_router.Alias": "app.raid_rooms.schemas.search_router.Alias",
+    "app.raid_rooms.search_router.FilterMember": "app.raid_rooms.schemas.search_router.FilterMember",
+    "app.raid_rooms.search_router.FilterContext": "app.raid_rooms.schemas.search_router.FilterContext",
+    "app.raid_rooms.search_router.CardItem": "app.raid_rooms.schemas.search_router.CardItem",
+    "app.raid_rooms.search_router.Summary": "app.raid_rooms.schemas.search_router.Summary",
+    "app.raid_rooms.search_router.Card": "app.raid_rooms.schemas.search_router.Card",
+    "app.raid_rooms.search_router.Page": "app.raid_rooms.schemas.search_router.Page",
+    "app.raid_rooms.search_router.SearchRoute": "app.raid_rooms.api.search_router.SearchRoute",
+    "app.raid_rooms.search_router.router": "app.raid_rooms.api.search_router.router",
+    "app.raid_rooms.search_router.filter_context": "app.raid_rooms.api.search_router.filter_context",
+    "app.raid_rooms.search_router.search": "app.raid_rooms.api.search_router.search",
+    "app.game_accounts.power_success.RolePowerSuccess": "app.game_accounts.models.power_success.RolePowerSuccess",
+    "app.game_accounts.power_success.capture": "app.game_accounts.power.power_success.capture",
+    "app.game_accounts.roster_presence.RosterTransition": "app.game_accounts.models.roster_presence.RosterTransition",
+    "app.game_accounts.roster_presence.RosterRoomRecovery": "app.game_accounts.models.roster_presence.RosterRoomRecovery",
+    "app.game_accounts.roster_presence.enabled": "app.game_accounts.rosters.roster_presence.enabled",
+    "app.game_accounts.roster_presence.latest": "app.game_accounts.rosters.roster_presence.latest",
+    "app.game_accounts.roster_presence.record": "app.game_accounts.rosters.roster_presence.record",
+    "app.game_accounts.roster_presence.missing": "app.game_accounts.rosters.roster_presence.missing",
+    "app.game_accounts.roster_presence.retained_revision": "app.game_accounts.rosters.roster_presence.retained_revision",
+    "app.raid_rooms.application_presets.deepcopy": "copy.deepcopy",
+    "app.raid_rooms.application_presets.Annotated": "typing.Annotated",
+    "app.raid_rooms.application_presets.datetime": "datetime.datetime",
+    "app.raid_rooms.application_presets.UUID": "uuid.UUID",
+    "app.raid_rooms.application_presets.APIRouter": "fastapi.APIRouter",
+    "app.raid_rooms.application_presets.BaseModel": "pydantic.BaseModel",
+    "app.raid_rooms.application_presets.ConfigDict": "pydantic.ConfigDict",
+    "app.raid_rooms.application_presets.Field": "pydantic.Field",
+    "app.raid_rooms.application_presets.StrictInt": "pydantic.StrictInt",
+    "app.raid_rooms.application_presets.UUID4": "pydantic.UUID4",
+    "app.raid_rooms.application_presets.field_validator": "pydantic.field_validator",
+    "app.raid_rooms.application_presets.session": "app.core.database.session",
+    "app.raid_rooms.application_presets.now": "app.core.database.now",
+    "app.raid_rooms.application_presets.Principal": "app.game_accounts.api.router.Principal",
+    "app.raid_rooms.application_presets.Key": "app.game_accounts.api.router.Key",
+    "app.raid_rooms.application_presets.authorize": "app.game_accounts.common.support.authorize",
+    "app.raid_rooms.application_presets.reserve": "app.game_accounts.common.support.reserve",
+    "app.raid_rooms.application_presets.commit_result": "app.game_accounts.common.support.commit_result",
+    "app.raid_rooms.application_presets.release": "app.game_accounts.common.support.release",
+    "app.raid_rooms.application_presets.lock": "app.game_accounts.common.support.lock",
+    "app.raid_rooms.application_presets.fail": "app.game_accounts.common.support.fail",
+    "app.raid_rooms.application_presets.AvailabilityRoute": "app.raid_rooms.api.availability_router.AvailabilityRoute",
+    "app.raid_rooms.application_presets.beta_text": "app.raid_rooms.common.beta_text",
+    "app.raid_rooms.application_presets.beta_profile": "app.raid_rooms.common.beta_profile",
+    "app.raid_rooms.application_presets.cycle_wire": "app.raid_rooms.schemas.cycle_wire",
+    "app.raid_rooms.application_presets.ApplicationMessagePresets": "app.raid_rooms.models.beta_models.ApplicationMessagePresets",
+    "app.raid_rooms.application_presets.Memo": "app.raid_rooms.schemas.beta_schemas.Memo",
+    "app.raid_rooms.application_presets.MemoStored": "app.raid_rooms.schemas.beta_schemas.MemoStored",
+    "app.raid_rooms.application_presets.CycleRoute": "app.raid_rooms.api.cycle_router.CycleRoute",
+    "app.raid_rooms.character_change.deepcopy": "copy.deepcopy",
+    "app.raid_rooms.character_change.date": "datetime.date",
+    "app.raid_rooms.character_change.timedelta": "datetime.timedelta",
+    "app.raid_rooms.character_change.select": "sqlalchemy.select",
+    "app.raid_rooms.character_change.jsonable_encoder": "fastapi.encoders.jsonable_encoder",
+    "app.raid_rooms.character_change.fail": "app.game_accounts.common.support.fail",
+    "app.raid_rooms.character_change.base": "app.raid_rooms.admissions.admission_service",
+    "app.raid_rooms.character_change.context": "app.raid_rooms.admissions.admission_context",
+    "app.raid_rooms.character_change.core": "app.raid_rooms.participation.participation_core",
+    "app.raid_rooms.character_change.graph": "app.raid_rooms.schedules.scheduling",
+    "app.raid_rooms.character_change.Admission": "app.raid_rooms.schemas.admission_schemas.Admission",
+    "app.raid_rooms.character_change.DTO": "app.raid_rooms.schemas.admission_schemas.DTO",
+    "app.raid_rooms.character_change.Version": "app.raid_rooms.schemas.admission_schemas.Version",
+    "app.raid_rooms.character_change.Choice": "app.raid_rooms.models.source_models.ContinuationChoice",
+    "app.raid_rooms.character_change.RoomSettings": "app.raid_rooms.models.source_models.RoomSettings",
+    "app.raid_rooms.character_change.WeeklyOccupancy": "app.raid_rooms.models.weekly_links.WeeklyOccupancy",
+    "app.raid_rooms.completion.date": "datetime.date",
+    "app.raid_rooms.completion.datetime": "datetime.datetime",
+    "app.raid_rooms.completion.timedelta": "datetime.timedelta",
+    "app.raid_rooms.completion.Literal": "typing.Literal",
+    "app.raid_rooms.completion.Annotated": "typing.Annotated",
+    "app.raid_rooms.completion.Field": "pydantic.Field",
+    "app.raid_rooms.completion.select": "sqlalchemy.select",
+    "app.raid_rooms.completion.now": "app.core.database.now",
+    "app.raid_rooms.completion.User": "app.auth.models.User",
+    "app.raid_rooms.completion.fail": "app.game_accounts.common.support.fail",
+    "app.raid_rooms.completion.base": "app.raid_rooms.admissions.admission_service",
+    "app.raid_rooms.completion.contexts": "app.raid_rooms.common.command_context",
+    "app.raid_rooms.completion.core": "app.raid_rooms.participation.participation_core",
+    "app.raid_rooms.completion.graph": "app.raid_rooms.schedules.scheduling",
+    "app.raid_rooms.completion.proposals": "app.raid_rooms.schedules.proposals",
+    "app.raid_rooms.completion.continuation": "app.raid_rooms.admissions.continuation",
+    "app.raid_rooms.completion.DTO": "app.raid_rooms.schemas.availability_schemas.DTO",
+    "app.raid_rooms.completion.Version": "app.raid_rooms.schemas.availability_schemas.Version",
+    "app.raid_rooms.completion.Assignment": "app.raid_rooms.models.integrated_models.RecruitmentAssignment",
+    "app.raid_rooms.completion.Round": "app.raid_rooms.models.integrated_models.RecruitmentRound",
+    "app.raid_rooms.completion.Item": "app.raid_rooms.models.integrated_models.RecruitmentItem",
+    "app.raid_rooms.completion.Member": "app.raid_rooms.models.integrated_models.RecruitmentMembership",
+    "app.raid_rooms.completion.RoomSettings": "app.raid_rooms.models.source_models.RoomSettings",
+    "app.raid_rooms.completion.Participation": "app.raid_rooms.models.source_models.SessionParticipation",
+    "app.raid_rooms.completion.Choice": "app.raid_rooms.models.source_models.ContinuationChoice",
+    "app.raid_rooms.completion.WeeklyState": "app.raid_weekly.models.WeeklyState",
+    "app.raid_rooms.continuation.date": "datetime.date",
+    "app.raid_rooms.continuation.timedelta": "datetime.timedelta",
+    "app.raid_rooms.continuation.Annotated": "typing.Annotated",
+    "app.raid_rooms.continuation.Literal": "typing.Literal",
+    "app.raid_rooms.continuation.StrictBool": "pydantic.StrictBool",
+    "app.raid_rooms.continuation.Field": "pydantic.Field",
+    "app.raid_rooms.continuation.select": "sqlalchemy.select",
+    "app.raid_rooms.continuation.session": "app.core.database.session",
+    "app.raid_rooms.continuation.now": "app.core.database.now",
+    "app.raid_rooms.continuation.fail": "app.game_accounts.common.support.fail",
+    "app.raid_rooms.continuation.lock": "app.game_accounts.common.support.lock",
+    "app.raid_rooms.continuation.GameError": "app.game_accounts.common.support.GameError",
+    "app.raid_rooms.continuation.base": "app.raid_rooms.admissions.admission_service",
+    "app.raid_rooms.continuation.context": "app.raid_rooms.admissions.admission_context",
+    "app.raid_rooms.continuation.core": "app.raid_rooms.participation.participation_core",
+    "app.raid_rooms.continuation.graph": "app.raid_rooms.schedules.scheduling",
+    "app.raid_rooms.continuation.DTO": "app.raid_rooms.schemas.availability_schemas.DTO",
+    "app.raid_rooms.continuation.Version": "app.raid_rooms.schemas.availability_schemas.Version",
+    "app.raid_rooms.continuation.Choice": "app.raid_rooms.models.source_models.ContinuationChoice",
+    "app.raid_rooms.continuation.RoomSettings": "app.raid_rooms.models.source_models.RoomSettings",
+    "app.raid_rooms.continuation.OpeningEvent": "app.raid_rooms.models.source_models.OpeningEvent",
+    "app.raid_rooms.continuation.ItemSettings": "app.raid_rooms.models.source_models.ItemSettings",
+    "app.raid_rooms.continuation.ScheduleGroup": "app.raid_rooms.models.source_models.ScheduleGroup",
+    "app.raid_rooms.continuation.ScheduleAlternative": "app.raid_rooms.models.source_models.ScheduleAlternative",
+    "app.raid_rooms.continuation.Round": "app.raid_rooms.models.integrated_models.RecruitmentRound",
+    "app.raid_rooms.continuation.Item": "app.raid_rooms.models.integrated_models.RecruitmentItem",
+    "app.raid_rooms.continuation.Room": "app.raid_rooms.models.integrated_models.RecruitmentRoom",
+    "app.raid_rooms.continuation.Member": "app.raid_rooms.models.integrated_models.RecruitmentMembership",
+    "app.raid_rooms.continuation.raids": "app.raids.service",
+    "app.raid_rooms.continuation._current_read": "app.raid_rooms.compat.v1_compat.read",
+    "app.raid_rooms.continuation_router.UUID": "uuid.UUID",
+    "app.raid_rooms.continuation_router.datetime": "datetime.datetime",
+    "app.raid_rooms.continuation_router.APIRouter": "fastapi.APIRouter",
+    "app.raid_rooms.continuation_router.Principal": "app.game_accounts.api.router.Principal",
+    "app.raid_rooms.continuation_router.Key": "app.game_accounts.api.router.Key",
+    "app.raid_rooms.continuation_router.service": "app.raid_rooms.admissions.continuation",
+    "app.raid_rooms.continuation_router.AdmissionRoute": "app.raid_rooms.api.admission_router.AdmissionRoute",
+    "app.raid_rooms.continuation_router.errors": "app.raid_rooms.api.admission_router.errors",
+    "app.raid_rooms.continuation_router.Ack": "app.raid_rooms.schemas.admission_schemas.Ack",
+    "app.raid_rooms.continuation_router.DTO": "app.raid_rooms.schemas.admission_schemas.DTO",
+    "app.raid_rooms.continuation_router.Version": "app.raid_rooms.schemas.admission_schemas.Version",
+    "app.raid_rooms.continuation_router.Permission": "app.raid_rooms.schemas.admission_schemas.Permission",
+    "app.raid_rooms.continuation_router.Literal": "typing.Literal",
+    "app.raid_rooms.group_connection.SimpleNamespace": "types.SimpleNamespace",
+    "app.raid_rooms.group_connection.UUID": "uuid.UUID",
+    "app.raid_rooms.group_connection.BaseModel": "pydantic.BaseModel",
+    "app.raid_rooms.group_connection.ConfigDict": "pydantic.ConfigDict",
+    "app.raid_rooms.group_connection.select": "sqlalchemy.select",
+    "app.raid_rooms.group_connection.func": "sqlalchemy.func",
+    "app.raid_rooms.group_connection.features": "app.groups.features",
+    "app.raid_rooms.group_connection.Group": "app.groups.models.Group",
+    "app.raid_rooms.group_connection.GroupMembership": "app.groups.models.GroupMembership",
+    "app.raid_rooms.group_connection.MemberUsageLimits": "app.member_limits.models.MemberUsageLimits",
+    "app.raid_rooms.group_connection.limits": "app.member_limits.service",
+    "app.raid_rooms.group_connection.fail": "app.game_accounts.common.support.fail",
+    "app.raid_rooms.group_connection.GameError": "app.game_accounts.common.support.GameError",
+    "app.raid_rooms.group_connection.wire": "app.raid_rooms.schemas.cycle_wire",
+    "app.raid_rooms.group_connection.participation_core": "app.raid_rooms.participation.participation_core",
+    "app.raid_rooms.group_connection.row_snapshot": "app.raid_rooms.schedules.cycle_planning.snapshot",
+    "app.raid_rooms.group_link_display.Literal": "typing.Literal",
+    "app.raid_rooms.group_link_display.Field": "pydantic.Field",
+    "app.raid_rooms.group_link_display.model_validator": "pydantic.model_validator",
+    "app.raid_rooms.group_link_display.Metadata": "app.raid_rooms.schemas.cycle_group_schemas.Metadata",
+    "app.raid_rooms.group_link_display.UUID": "uuid.UUID",
+    "app.raid_rooms.group_link_display.DTO": "app.game_accounts.schemas.schemas.DTO",
+    "app.raid_rooms.group_link_display.features": "app.groups.features",
+    "app.raid_rooms.group_link_display.base": "app.raid_rooms.admissions.admission_service",
+    "app.raid_rooms.group_link_display.members": "app.raid_rooms.reads.cycle_member_reads",
+    "app.raid_rooms.group_link_display.membership_readers": "app.raid_rooms.participation.membership_readers",
+    "app.raid_rooms.group_link_display.cycle_wire": "app.raid_rooms.schemas.cycle_wire",
+    "app.raid_rooms.group_link_display.membership_action_schemas": "app.raid_rooms.schemas.membership_action_schemas",
+    "app.raid_rooms.group_link_display.application_display_schemas": "app.raid_rooms.schemas.application_display_schemas",
+    "app.raid_rooms.group_link_display.resume_review_schemas": "app.raid_rooms.schemas.resume_review_schemas",
+    "app.raid_rooms.group_link_display.RecruitmentRoom": "app.raid_rooms.models.integrated_models.RecruitmentRoom",
+    "app.raid_rooms.management.Literal": "typing.Literal",
+    "app.raid_rooms.management.Annotated": "typing.Annotated",
+    "app.raid_rooms.management.Field": "pydantic.Field",
+    "app.raid_rooms.management.select": "sqlalchemy.select",
+    "app.raid_rooms.management.fail": "app.game_accounts.common.support.fail",
+    "app.raid_rooms.management.Group": "app.groups.models.Group",
+    "app.raid_rooms.management.GroupMembership": "app.groups.models.GroupMembership",
+    "app.raid_rooms.management.base": "app.raid_rooms.admissions.admission_service",
+    "app.raid_rooms.management.graph": "app.raid_rooms.schedules.scheduling",
+    "app.raid_rooms.management.completion": "app.raid_rooms.outcomes.completion",
+    "app.raid_rooms.management.DTO": "app.raid_rooms.schemas.admission_schemas.DTO",
+    "app.raid_rooms.management.Version": "app.raid_rooms.schemas.admission_schemas.Version",
+    "app.raid_rooms.management.Experience": "app.raid_rooms.schemas.admission_schemas.Experience",
+    "app.raid_rooms.management.Combat": "app.raid_rooms.schemas.admission_schemas.Combat",
+    "app.raid_rooms.management.RoomSettings": "app.raid_rooms.models.source_models.RoomSettings",
+    "app.raid_rooms.management.Assignment": "app.raid_rooms.models.integrated_models.RecruitmentAssignment",
+    "app.raid_rooms.management._current_read": "app.raid_rooms.compat.v1_compat.read",
+    "app.raid_rooms.management_router.UUID": "uuid.UUID",
+    "app.raid_rooms.management_router.date": "datetime.date",
+    "app.raid_rooms.management_router.APIRouter": "fastapi.APIRouter",
+    "app.raid_rooms.management_router.Principal": "app.game_accounts.api.router.Principal",
+    "app.raid_rooms.management_router.Key": "app.game_accounts.api.router.Key",
+    "app.raid_rooms.management_router.service": "app.raid_rooms.participation.management",
+    "app.raid_rooms.management_router.character_change": "app.raid_rooms.participation.character_change",
+    "app.raid_rooms.management_router.AdmissionRoute": "app.raid_rooms.api.admission_router.AdmissionRoute",
+    "app.raid_rooms.management_router.errors": "app.raid_rooms.api.admission_router.errors",
+    "app.raid_rooms.management_router.Ack": "app.raid_rooms.schemas.admission_schemas.Ack",
+    "app.raid_rooms.management_router.DTO": "app.raid_rooms.schemas.admission_schemas.DTO",
+    "app.raid_rooms.management_router.Version": "app.raid_rooms.schemas.admission_schemas.Version",
+    "app.raid_rooms.management_router.Permission": "app.raid_rooms.schemas.admission_schemas.Permission",
+    "app.raid_rooms.management_router.Combat": "app.raid_rooms.schemas.admission_schemas.Combat",
+    "app.raid_rooms.management_router.Experience": "app.raid_rooms.schemas.admission_schemas.Experience",
+    "app.raid_rooms.management_router.Literal": "typing.Literal",
+    "app.raid_rooms.resume.date": "datetime.date",
+    "app.raid_rooms.resume.select": "sqlalchemy.select",
+    "app.raid_rooms.resume.fail": "app.game_accounts.common.support.fail",
+    "app.raid_rooms.resume.base": "app.raid_rooms.admissions.admission_service",
+    "app.raid_rooms.resume.graph": "app.raid_rooms.schedules.scheduling",
+    "app.raid_rooms.resume.core": "app.raid_rooms.participation.participation_core",
+    "app.raid_rooms.resume.context": "app.raid_rooms.admissions.admission_context",
+    "app.raid_rooms.resume.time_policy": "app.raid_rooms.common.time_policy",
+    "app.raid_rooms.resume.Assignment": "app.raid_rooms.models.integrated_models.RecruitmentAssignment",
+    "app.raid_rooms.resume.Round": "app.raid_rooms.models.integrated_models.RecruitmentRound",
+    "app.raid_rooms.resume.ResumeProposal": "app.raid_rooms.models.resume_models.ResumeProposal",
+    "app.raid_rooms.resume.RoomSettings": "app.raid_rooms.models.source_models.RoomSettings",
+    "app.raid_rooms.resume.MembershipCommand": "app.raid_rooms.schemas.completion.MembershipCommand",
+    "app.raid_rooms.resume.EditGroup": "app.raid_rooms.schemas.schedule_schemas.EditGroup",
+    "app.raid_rooms.resume.ScheduleGroup": "app.raid_rooms.models.source_models.ScheduleGroup",
+    "app.raid_rooms.resume.ScheduleAlternative": "app.raid_rooms.models.source_models.ScheduleAlternative",
+    "app.raid_rooms.roster_participation.contextmanager": "contextlib.contextmanager",
+    "app.raid_rooms.roster_participation.ContextVar": "contextvars.ContextVar",
+    "app.raid_rooms.roster_participation.jsonable_encoder": "fastapi.encoders.jsonable_encoder",
+    "app.raid_rooms.roster_participation.ForeignKeyConstraint": "sqlalchemy.ForeignKeyConstraint",
+    "app.raid_rooms.roster_participation.Integer": "sqlalchemy.Integer",
+    "app.raid_rooms.roster_participation.UniqueConstraint": "sqlalchemy.UniqueConstraint",
+    "app.raid_rooms.roster_participation.Uuid": "sqlalchemy.Uuid",
+    "app.raid_rooms.roster_participation.select": "sqlalchemy.select",
+    "app.raid_rooms.roster_participation.mapped_column": "sqlalchemy.orm.mapped_column",
+    "app.raid_rooms.roster_participation.Base": "app.auth.models.Base",
+    "app.raid_rooms.roster_participation.pk": "app.auth.models.pk",
+    "app.raid_rooms.roster_participation.stamp": "app.auth.models.stamp",
+    "app.raid_rooms.roster_participation.digest": "app.game_accounts.rosters.lifecycle.digest",
+    "app.raid_rooms.roster_participation.fail": "app.game_accounts.common.support.fail",
+    "app.raid_rooms.roster_participation.roster_presence": "app.game_accounts.rosters.roster_presence",
+    "app.raid_rooms.schedule_router.UUID": "uuid.UUID",
+    "app.raid_rooms.schedule_router.APIRouter": "fastapi.APIRouter",
+    "app.raid_rooms.schedule_router.Principal": "app.game_accounts.api.router.Principal",
+    "app.raid_rooms.schedule_router.Key": "app.game_accounts.api.router.Key",
+    "app.raid_rooms.schedule_router.AdmissionRoute": "app.raid_rooms.api.admission_router.AdmissionRoute",
+    "app.raid_rooms.schedule_router.errors": "app.raid_rooms.api.admission_router.errors",
+    "app.raid_rooms.schedule_router.Ack": "app.raid_rooms.schemas.admission_schemas.Ack",
+    "app.raid_rooms.schedule_router.DTO": "app.raid_rooms.schemas.admission_schemas.DTO",
+    "app.raid_rooms.schedule_router.Version": "app.raid_rooms.schemas.admission_schemas.Version",
+    "app.raid_rooms.schedule_router.s": "app.raid_rooms.schemas.schedule_schemas",
+    "app.raid_rooms.schedule_router.service": "app.raid_rooms.schedules.schedule_service",
+    "app.raid_rooms.schedule_router.datetime": "datetime.datetime",
+    "app.raid_rooms.schedule_router.Literal": "typing.Literal",
+    "app.raid_rooms.search_router.UUID": "uuid.UUID",
+    "app.raid_rooms.search_router.datetime": "datetime.datetime",
+    "app.raid_rooms.search_router.Annotated": "typing.Annotated",
+    "app.raid_rooms.search_router.Literal": "typing.Literal",
+    "app.raid_rooms.search_router.Field": "pydantic.Field",
+    "app.raid_rooms.search_router.StrictInt": "pydantic.StrictInt",
+    "app.raid_rooms.search_router.field_validator": "pydantic.field_validator",
+    "app.raid_rooms.search_router.APIRouter": "fastapi.APIRouter",
+    "app.raid_rooms.search_router.Query": "fastapi.Query",
+    "app.raid_rooms.search_router.Principal": "app.game_accounts.api.router.Principal",
+    "app.raid_rooms.search_router.OptionalPrincipal": "app.raid_rooms.api.router.OptionalPrincipal",
+    "app.raid_rooms.search_router.AdmissionRoute": "app.raid_rooms.api.admission_router.AdmissionRoute",
+    "app.raid_rooms.search_router.errors": "app.raid_rooms.api.admission_router.errors",
+    "app.raid_rooms.search_router.DTO": "app.raid_rooms.schemas.admission_schemas.DTO",
+    "app.raid_rooms.search_router.Version": "app.raid_rooms.schemas.admission_schemas.Version",
+    "app.raid_rooms.search_router.Permission": "app.raid_rooms.schemas.admission_schemas.Permission",
+    "app.raid_rooms.search_router.Combat": "app.raid_rooms.schemas.admission_schemas.Combat",
+    "app.raid_rooms.search_router.Experience": "app.raid_rooms.schemas.admission_schemas.Experience",
+    "app.raid_rooms.search_router.service": "app.raid_rooms.reads.search",
+    "app.raid_rooms.search_router.fail": "app.game_accounts.common.support.fail",
+    "app.game_accounts.power_success.deepcopy": "copy.deepcopy",
+    "app.game_accounts.power_success.datetime": "datetime.datetime",
+    "app.game_accounts.power_success.CheckConstraint": "sqlalchemy.CheckConstraint",
+    "app.game_accounts.power_success.ForeignKeyConstraint": "sqlalchemy.ForeignKeyConstraint",
+    "app.game_accounts.power_success.Integer": "sqlalchemy.Integer",
+    "app.game_accounts.power_success.String": "sqlalchemy.String",
+    "app.game_accounts.power_success.UUID": "sqlalchemy.UUID",
+    "app.game_accounts.power_success.JSONB": "sqlalchemy.dialects.postgresql.JSONB",
+    "app.game_accounts.power_success.mapped_column": "sqlalchemy.orm.mapped_column",
+    "app.game_accounts.power_success.Base": "app.auth.models.Base",
+    "app.game_accounts.power_success.stamp": "app.auth.models.stamp",
+    "app.game_accounts.roster_presence.Boolean": "sqlalchemy.Boolean",
+    "app.game_accounts.roster_presence.CheckConstraint": "sqlalchemy.CheckConstraint",
+    "app.game_accounts.roster_presence.ForeignKey": "sqlalchemy.ForeignKey",
+    "app.game_accounts.roster_presence.ForeignKeyConstraint": "sqlalchemy.ForeignKeyConstraint",
+    "app.game_accounts.roster_presence.Integer": "sqlalchemy.Integer",
+    "app.game_accounts.roster_presence.String": "sqlalchemy.String",
+    "app.game_accounts.roster_presence.UniqueConstraint": "sqlalchemy.UniqueConstraint",
+    "app.game_accounts.roster_presence.select": "sqlalchemy.select",
+    "app.game_accounts.roster_presence.text": "sqlalchemy.text",
+    "app.game_accounts.roster_presence.JSONB": "sqlalchemy.dialects.postgresql.JSONB",
+    "app.game_accounts.roster_presence.mapped_column": "sqlalchemy.orm.mapped_column",
+    "app.game_accounts.roster_presence.Base": "app.auth.models.Base",
+    "app.game_accounts.roster_presence.pk": "app.auth.models.pk",
+    "app.game_accounts.roster_presence.stamp": "app.auth.models.stamp"
+  }
+}

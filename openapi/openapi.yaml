@@ -4049,6 +4049,20 @@
               ],
               "title": "Cursor"
             }
+          },
+          {
+            "name": "include_roster_presence",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "true",
+                "false"
+              ],
+              "type": "string",
+              "default": "false",
+              "title": "Include Roster Presence"
+            }
           }
         ],
         "responses": {
@@ -4057,7 +4071,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LifecycleCharactersOut"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/LifecycleCharactersOut"
+                    },
+                    {
+                      "$ref": "#/components/schemas/RosterPresence_LifecycleCharactersOut"
+                    }
+                  ]
                 }
               }
             },
@@ -15544,7 +15565,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AccountBootstrap"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/AccountBootstrap"
+                    },
+                    {
+                      "$ref": "#/components/schemas/RosterPresence_AccountBootstrap"
+                    }
+                  ]
                 }
               }
             },
@@ -15671,6 +15699,22 @@
         "security": [
           {
             "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "include_roster_presence",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "true",
+                "false"
+              ],
+              "type": "string",
+              "default": "false",
+              "title": "Include Roster Presence"
+            }
           }
         ]
       }
@@ -42814,6 +42858,1150 @@
           "error"
         ],
         "title": "RoleSummaryItem"
+      },
+      "RosterIssueOwnCycle": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "target_cycle_key": {
+            "type": "string",
+            "format": "date"
+          },
+          "has_issues": {
+            "type": "boolean"
+          },
+          "affected_room_count": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          }
+        },
+        "required": [
+          "target_cycle_key",
+          "has_issues",
+          "affected_room_count"
+        ]
+      },
+      "RosterIssueSummary": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "profile": {
+            "type": "string",
+            "const": "roster-character-issues-1"
+          },
+          "current_cycle_key": {
+            "type": "string",
+            "format": "date"
+          },
+          "next_cycle_key": {
+            "type": "string",
+            "format": "date"
+          },
+          "has_issues": {
+            "type": "boolean"
+          },
+          "affected_room_count": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "affected_target_count": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483647
+          },
+          "cycles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RosterIssueOwnCycle"
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "issues_revision": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "profile",
+          "current_cycle_key",
+          "next_cycle_key",
+          "has_issues",
+          "affected_room_count",
+          "affected_target_count",
+          "cycles",
+          "evaluated_at",
+          "issues_revision"
+        ]
+      },
+      "RosterIssueTargetSummary": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "target_cycle_key": {
+            "type": "string",
+            "format": "date"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "ready",
+              "not_authorized"
+            ]
+          },
+          "has_issues": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "affected_participant_count": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2147483647
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "target_cycle_key",
+          "state",
+          "has_issues",
+          "affected_participant_count"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "not_authorized"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "has_issues": {
+                  "type": "null"
+                },
+                "affected_participant_count": {
+                  "type": "null"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "has_issues": {
+                  "type": "boolean"
+                },
+                "affected_participant_count": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 2147483647
+                }
+              }
+            }
+          }
+        ]
+      },
+      "RosterCharacterIssue": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "const": "ROSTER_CHARACTER_MISSING"
+          },
+          "room_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "target_cycle_key": {
+            "type": "string",
+            "format": "date"
+          },
+          "room_cycle_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "target_generation": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "cycle_member_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "character_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 64
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "assignment_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "minItems": 1,
+            "maxItems": 200,
+            "uniqueItems": true
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "registration_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "room_id",
+          "target_cycle_key",
+          "room_cycle_id",
+          "target_generation",
+          "cycle_member_id",
+          "character_id",
+          "character_name",
+          "assignment_ids",
+          "observed_at",
+          "registration_id"
+        ]
+      },
+      "RosterIssuePage": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "profile": {
+            "type": "string",
+            "const": "roster-character-issues-1"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "issues_revision": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RosterCharacterIssue"
+            },
+            "minItems": 0,
+            "maxItems": 10000
+          }
+        },
+        "required": [
+          "profile",
+          "evaluated_at",
+          "issues_revision",
+          "items"
+        ]
+      },
+      "RosterIssueRoomContext": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "profile": {
+            "type": "string",
+            "const": "roster-character-issues-1"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "issues_revision": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "target_summaries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RosterIssueTargetSummary"
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "selected_target_issues": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/RosterCharacterIssue"
+                },
+                "minItems": 0,
+                "maxItems": 10000
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "profile",
+          "evaluated_at",
+          "issues_revision",
+          "target_summaries",
+          "selected_target_issues"
+        ]
+      },
+      "RosterPresence": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "present",
+              "missing",
+              "unknown"
+            ]
+          },
+          "observed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "state",
+          "observed_at"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "state": {
+                  "const": "unknown"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "observed_at": {
+                  "type": "null"
+                }
+              }
+            },
+            "else": {
+              "properties": {
+                "observed_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "RosterPresenceScope": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "profile": {
+            "type": "string",
+            "const": "roster-presence-1"
+          },
+          "registration_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "registration_version": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "ownership_revision": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 2147483647
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "roster_revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "presence_revision": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "profile",
+          "registration_id",
+          "registration_version",
+          "ownership_revision",
+          "roster_revision",
+          "presence_revision",
+          "evaluated_at"
+        ]
+      },
+      "RosterActiveAssignment": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "assignment_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "item_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "round_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "selected_role": {
+            "type": "string",
+            "enum": [
+              "dealer",
+              "support"
+            ]
+          },
+          "party_no": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2
+          },
+          "slot_no": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4
+          }
+        },
+        "required": [
+          "assignment_id",
+          "revision",
+          "item_id",
+          "round_id",
+          "character_id",
+          "selected_role",
+          "party_no",
+          "slot_no"
+        ]
+      },
+      "RosterPreservedAssignment": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "assignment_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "item_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "round_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "selected_role": {
+            "type": "string",
+            "enum": [
+              "dealer",
+              "support"
+            ]
+          },
+          "party_no": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2
+          },
+          "slot_no": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "completed",
+              "stopped_incomplete",
+              "left",
+              "legacy_ended"
+            ]
+          }
+        },
+        "required": [
+          "assignment_id",
+          "revision",
+          "item_id",
+          "round_id",
+          "character_id",
+          "selected_role",
+          "party_no",
+          "slot_no",
+          "state"
+        ]
+      },
+      "RosterCurrentCharacter": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "character_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "selected_role": {
+            "type": "string",
+            "enum": [
+              "dealer",
+              "support"
+            ]
+          },
+          "display": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "server_name": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 64
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "character_name": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 64
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "class_name": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "maxLength": 64
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "server_name",
+              "character_name",
+              "class_name"
+            ]
+          }
+        },
+        "required": [
+          "character_id",
+          "selected_role",
+          "display"
+        ]
+      },
+      "RosterParticipationMember": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "target_cycle_key": {
+            "type": "string",
+            "format": "date"
+          },
+          "room_cycle_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "target_generation": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "membership_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "cycle_member_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "cycle_member_revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "active_assignments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RosterActiveAssignment"
+            },
+            "minItems": 0,
+            "maxItems": 200
+          },
+          "preserved_assignments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RosterPreservedAssignment"
+            },
+            "minItems": 0,
+            "maxItems": 200
+          },
+          "current_character": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RosterCurrentCharacter"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "binding_revision": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "room_id",
+          "target_cycle_key",
+          "room_cycle_id",
+          "target_generation",
+          "membership_id",
+          "cycle_member_id",
+          "cycle_member_revision",
+          "active_assignments",
+          "preserved_assignments",
+          "current_character",
+          "binding_revision"
+        ]
+      },
+      "RosterParticipationChangeContext": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "profile": {
+            "type": "string",
+            "const": "remaining-active-1"
+          },
+          "actor": {
+            "$ref": "#/components/schemas/RosterParticipationMember"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "profile",
+          "actor",
+          "evaluated_at"
+        ]
+      },
+      "RosterParticipationReadContext": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "profile": {
+            "type": "string",
+            "const": "remaining-active-1"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RosterParticipationMember"
+            },
+            "minItems": 0,
+            "maxItems": 400
+          }
+        },
+        "required": [
+          "profile",
+          "evaluated_at",
+          "members"
+        ]
+      },
+      "RosterPresence_LifecycleCharacterOut": {
+        "properties": {
+          "server_name": {
+            "type": "string",
+            "title": "Server Name"
+          },
+          "character_name": {
+            "type": "string",
+            "title": "Character Name"
+          },
+          "class_name": {
+            "type": "string",
+            "title": "Class Name"
+          },
+          "character_level": {
+            "type": "integer",
+            "title": "Character Level"
+          },
+          "item_level": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Level"
+          },
+          "combat_power": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Combat Power"
+          },
+          "character_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Character Id"
+          },
+          "roster_status": {
+            "type": "string",
+            "enum": [
+              "preview",
+              "confirmed",
+              "suspect",
+              "missing"
+            ],
+            "title": "Roster Status"
+          },
+          "summary_fetched_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Summary Fetched At"
+          },
+          "last_confirmed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Confirmed At"
+          },
+          "requires_refresh": {
+            "type": "boolean",
+            "title": "Requires Refresh"
+          },
+          "eligible": {
+            "type": "boolean",
+            "title": "Eligible"
+          },
+          "power_stale": {
+            "type": "boolean",
+            "title": "Power Stale"
+          },
+          "power_fetched_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Power Fetched At"
+          },
+          "power_checked_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Power Checked At"
+          },
+          "power_status": {
+            "type": "string",
+            "enum": [
+              "unknown",
+              "available",
+              "unavailable",
+              "failed"
+            ],
+            "title": "Power Status"
+          },
+          "power_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Power Reason"
+          },
+          "lifecycle_state": {
+            "type": "string",
+            "enum": [
+              "preview",
+              "active",
+              "suspect",
+              "retired"
+            ],
+            "title": "Lifecycle State"
+          },
+          "lifecycle_revision": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lifecycle Revision"
+          },
+          "usable": {
+            "type": "boolean",
+            "title": "Usable"
+          },
+          "blocked_reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "OWNERSHIP_REQUIRED",
+                  "CHARACTER_UNUSABLE",
+                  "IDENTITY_CONFLICT"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Blocked Reason"
+          },
+          "roster_presence": {
+            "$ref": "#/components/schemas/RosterPresence"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "server_name",
+          "character_name",
+          "class_name",
+          "character_level",
+          "item_level",
+          "combat_power",
+          "character_id",
+          "roster_status",
+          "summary_fetched_at",
+          "last_confirmed_at",
+          "requires_refresh",
+          "eligible",
+          "power_stale",
+          "power_fetched_at",
+          "power_checked_at",
+          "power_status",
+          "power_reason",
+          "lifecycle_state",
+          "lifecycle_revision",
+          "usable",
+          "blocked_reason",
+          "roster_presence"
+        ],
+        "title": "RosterPresence_LifecycleCharacterOut"
+      },
+      "RosterPresence_LifecycleCharactersOut": {
+        "properties": {
+          "registration_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Registration Id"
+          },
+          "game_account_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Game Account Id"
+          },
+          "is_main": {
+            "type": "boolean",
+            "title": "Is Main"
+          },
+          "registration_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Registration Version"
+          },
+          "ownership_status": {
+            "type": "string",
+            "enum": [
+              "unverified",
+              "owned",
+              "ownership_lost"
+            ],
+            "title": "Ownership Status"
+          },
+          "ownership_revision": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ownership Revision"
+          },
+          "roster_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Roster Revision"
+          },
+          "settings": {
+            "$ref": "#/components/schemas/SettingsOut"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/RosterPresence_LifecycleCharacterOut"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          },
+          "server_fetched_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Server Fetched At"
+          },
+          "roster_presence_scope": {
+            "$ref": "#/components/schemas/RosterPresenceScope"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "registration_id",
+          "game_account_id",
+          "is_main",
+          "registration_version",
+          "ownership_status",
+          "ownership_revision",
+          "roster_revision",
+          "settings",
+          "items",
+          "next_cursor",
+          "server_fetched_at",
+          "roster_presence_scope"
+        ],
+        "title": "RosterPresence_LifecycleCharactersOut"
+      },
+      "RosterPresence_BootstrapRegistration": {
+        "properties": {
+          "registration": {
+            "$ref": "#/components/schemas/RegistrationOut"
+          },
+          "characters": {
+            "$ref": "#/components/schemas/RosterPresence_LifecycleCharactersOut"
+          },
+          "representative": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RepresentativeOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "presentation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PresentationOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "personal_profiles": {
+            "items": {
+              "$ref": "#/components/schemas/PersonalProfileOut"
+            },
+            "type": "array",
+            "title": "Personal Profiles"
+          },
+          "unavailable_characters": {
+            "items": {
+              "$ref": "#/components/schemas/BootstrapUnavailable"
+            },
+            "type": "array",
+            "title": "Unavailable Characters"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "registration",
+          "characters",
+          "representative",
+          "presentation",
+          "personal_profiles",
+          "unavailable_characters"
+        ],
+        "title": "RosterPresence_BootstrapRegistration"
+      },
+      "RosterPresence_AccountBootstrap": {
+        "properties": {
+          "server_now": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Server Now"
+          },
+          "complete": {
+            "type": "boolean",
+            "const": true,
+            "title": "Complete"
+          },
+          "registrations": {
+            "items": {
+              "$ref": "#/components/schemas/RosterPresence_BootstrapRegistration"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Registrations"
+          },
+          "weekly_states": {
+            "$ref": "#/components/schemas/WeeklyStates"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "server_now",
+          "complete",
+          "registrations",
+          "weekly_states"
+        ],
+        "title": "RosterPresence_AccountBootstrap"
       }
     },
     "securitySchemes": {
@@ -43206,6 +44394,14 @@
     "new_selection": "activity required for creation/application/join/approval/replacement target/new-week issuance",
     "other_guards": "ownership/registration/lifecycle/revisions/member/group/limits/power/item-level/occupancy unchanged",
     "compatibility": "no new API/DTO/reader profile/DDL; original key/body/ACK preserved",
-    "existing_review": "developer excluded existing dev review recovery; no repair CLI or automatic GET/worker repair"
+    "existing_review": "developer excluded existing dev review recovery; no repair CLI or automatic GET/worker repair",
+    "owned_roster_gap": {
+      "required_schema": "0036_roster_presence",
+      "evidence": "validated owned-roster missing/reappearance revision chain only; never deletion or rename proof",
+      "retained": "exact existing actual-target seat, owner, registration and name claim remain required; original assignment evidence unchanged",
+      "new_selection": "missing characters remain unusable for new admission, opening and replacement targets",
+      "review_recovery": "explicit roster refresh may recover only unchanged assignments with proven observation-only review; preserve original review evidence",
+      "readers": "public character-issue query contract pending Native review; no new path enabled"
+    }
   }
 }

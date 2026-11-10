@@ -33,19 +33,30 @@ class SafetyTests(unittest.TestCase):
                     checks.require_test_environment()
 
     def test_selection_cannot_inject_options_or_cross_suites(self):
-        for name in ('--override-ini=addopts=anything', '../tests/test_auth.py',
-                     'tests/test_application_item_level.py'):
+        for name in ('--override-ini=addopts=anything', '../tests/auth/test_auth.py',
+                     'tests/raid_rooms/admissions/test_application_item_level.py'):
             with self.subTest(name=name), self.assertRaises(ValueError):
                 checks.selected_tests('legacy', [name])
-        self.assertEqual(checks.selected_tests('legacy', ['tests/test_auth.py::test_unknown']),
-                         ['tests/test_auth.py::test_unknown'])
+        self.assertEqual(checks.selected_tests('legacy', ['tests/auth/test_auth.py::test_unknown']),
+                         ['tests/auth/test_auth.py::test_unknown'])
 
     def test_all_suite_includes_each_named_set_and_current_test_files(self):
         all_files = set(checks.SUITES['all'])
-        self.assertEqual(all_files, {str(p.relative_to(checks.ROOT)) for p in (checks.ROOT / 'tests').glob('test_*.py')})
+        self.assertEqual(all_files, {str(p.relative_to(checks.ROOT)) for p in (checks.ROOT / 'tests').rglob('test_*.py')})
         for name in ('legacy', 'two-cycle'):
             self.assertTrue(set(checks.SUITES[name]) <= all_files)
             checks.selected_tests(name, [])
+
+    def test_nested_selection_still_requires_named_suite_membership(self):
+        path = 'tests/raid_rooms/participation/test_nested.py'
+        with patch.dict(checks.SUITES, {'legacy': (path,), 'two-cycle': ()}), \
+                patch.object(Path, 'is_file', return_value=True):
+            self.assertEqual(checks.selected_tests('legacy', [path + '::test_case']),
+                             [path + '::test_case'])
+            with self.assertRaises(ValueError):
+                checks.selected_tests('two-cycle', [path])
+            with self.assertRaises(ValueError):
+                checks.selected_tests('legacy', ['../' + path])
 
     def test_compose_overrides_are_removed(self):
         with patch.dict(os.environ, {'COMPOSE_FILE': 'compose.yaml', 'COMPOSE_PROJECT_NAME': 'live'}, clear=True):
@@ -54,7 +65,7 @@ class SafetyTests(unittest.TestCase):
 
     def test_failure_is_preserved_and_cleanup_uses_same_unique_project(self):
         with patch.object(runner.subprocess, 'run'), patch.object(runner.subprocess, 'call', side_effect=[5, 0]) as call:
-            self.assertEqual(runner.main(['legacy', 'tests/test_auth.py']), 5)
+            self.assertEqual(runner.main(['legacy', 'tests/auth/test_auth.py']), 5)
         test_cmd, cleanup_cmd = [c.args[0] for c in call.call_args_list]
         self.assertEqual(test_cmd[:6], cleanup_cmd[:6])
         self.assertTrue(test_cmd[3].startswith('lostparty-check-'))

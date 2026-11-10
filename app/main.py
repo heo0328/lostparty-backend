@@ -1,6 +1,7 @@
 import os
 import asyncio
-from contextlib import asynccontextmanager, suppress
+from contextlib import asynccontextmanager
+from contextlib import suppress
 from typing import Literal
 import psycopg
 from fastapi import FastAPI
@@ -9,10 +10,12 @@ from pydantic import BaseModel
 
 from app.auth.router import router
 from app.auth.cleanup import run
-from app.game_accounts.router import router as game_router
-from app.game_accounts.lifecycle_router import router as lifecycle_router
-from app.game_accounts.profile_router import router as profile_router, preferences_router, presentation_router
-from app.game_accounts.batch_router import router as batch_router
+from app.game_accounts.api.router import router as game_router
+from app.game_accounts.api.lifecycle_router import router as lifecycle_router
+from app.game_accounts.api.profile_router import router as profile_router
+from app.game_accounts.api.profile_router import preferences_router
+from app.game_accounts.api.profile_router import presentation_router
+from app.game_accounts.api.batch_router import router as batch_router
 from app.core.errors import register
 from app.core.game_policy import DEFAULT_MIN_ITEM_LEVEL
 from app.member_settings.router import router as settings_router
@@ -23,23 +26,23 @@ from app.groups.router import router as groups_router
 from app.groups.admission_router import router as group_admissions_router
 from app.ownership_disputes.router import router as ownership_disputes_router
 from app.ownership_disputes.worker import run as run_ownership_worker
-from app.game_accounts.bootstrap_router import router as bootstrap_router
-from app.raid_rooms.admission_router import router as recruitment_router
-from app.raid_rooms.availability_router import router as availability_router
-from app.raid_rooms.schedule_router import router as schedule_router
-from app.raid_rooms.continuation_router import router as continuation_router
-from app.raid_rooms.completion_router import router as completion_router
-from app.raid_rooms.management_router import router as recruitment_management_router
-from app.raid_rooms.search_router import router as recruitment_search_router
-from app.raid_rooms.member_router import router as recruitment_reads_router
-from app.raid_rooms.worker import run as run_recruitment_worker
-from app.raid_rooms.weekly_summary_router import router as weekly_summary_router
+from app.game_accounts.api.bootstrap_router import router as bootstrap_router
+from app.raid_rooms.api.admission_router import router as recruitment_router
+from app.raid_rooms.api.availability_router import router as availability_router
+from app.raid_rooms.api.schedule_router import router as schedule_router
+from app.raid_rooms.api.continuation_router import router as continuation_router
+from app.raid_rooms.api.completion_router import router as completion_router
+from app.raid_rooms.api.management_router import router as recruitment_management_router
+from app.raid_rooms.api.search_router import router as recruitment_search_router
+from app.raid_rooms.api.member_router import router as recruitment_reads_router
+from app.raid_rooms.common.worker import run as run_recruitment_worker
+from app.raid_rooms.api.weekly_summary_router import router as weekly_summary_router
 
 
 @asynccontextmanager
 async def lifespan(app):
     from app.core.database import session
-    from app.raid_rooms.readiness import require_active
+    from app.raid_rooms.common.readiness import require_active
     with session() as db:require_active(db)
     task = asyncio.create_task(run())
     ownership_task = asyncio.create_task(run_ownership_worker())
@@ -89,6 +92,8 @@ async def no_store(request, call_next):
 
 _original_openapi = app.openapi
 def _decorate_openapi(schema):
+    from app.raid_rooms.contracts.schema_ids import preserve
+    preserve(schema)
     for path, operations in schema["paths"].items():
         if path.startswith(("/v1/", "/v2/")):
             for operation in operations.values():
@@ -356,6 +361,14 @@ def _decorate_openapi(schema):
         'retained': 'activity deselection alone does not invalidate existing participation, display/build, scheduling or authority',
         'new_selection': 'activity required for creation/application/join/approval/replacement target/new-week issuance',
         'other_guards': 'ownership/registration/lifecycle/revisions/member/group/limits/power/item-level/occupancy unchanged',
+        'owned_roster_gap': {
+            'required_schema': '0036_roster_presence',
+            'evidence': 'validated owned-roster missing/reappearance revision chain only; never deletion or rename proof',
+            'retained': 'exact existing actual-target seat, owner, registration and name claim remain required; original assignment evidence unchanged',
+            'new_selection': 'missing characters remain unusable for new admission, opening and replacement targets',
+            'review_recovery': 'explicit roster refresh may recover only unchanged assignments with proven observation-only review; preserve original review evidence',
+            'readers': 'public character-issue query contract pending Native review; no new path enabled',
+        },
         'existing_review': 'developer excluded existing dev review recovery; no repair CLI or automatic GET/worker repair',
         'compatibility': 'no new API/DTO/reader profile/DDL; original key/body/ACK preserved',
     }
@@ -372,6 +385,8 @@ def _decorate_openapi(schema):
         'search':'visibility and raid/difficulty/group OR/member AND/within-member character OR, then exact remaining slots OR, member_count ascending/descending (default descending), created_at DESC/id DESC ties, then pagination; cursor binds full normalized conditions and directory/cycle/group generations',
         'bounds':{'request_bytes':32768,'page_max':50,'cursor_max':2048,'candidate_ticks_max':2016},
     }
+    from app.raid_rooms.contracts import roster_openapi
+    roster_openapi.decorate(schema)
     schema['x-group-features'] = dict(required_schema='0034_group_features', display_profile='group-display-1', management_profile='group-management-1', group_link_query='include_group_state=true', raid_authority='existing actual-target raid leader; group role grants no raid command', legacy_default_shape='preserved', reads='stored current group-scoped data only; no provider or read-side writes')
     return schema
 def openapi():return _decorate_openapi(_original_openapi())
@@ -399,7 +414,8 @@ def health():
         if value != 1:
             raise RuntimeError("Unexpected health result")
     except (psycopg.Error, RuntimeError) as error:
-        from app.core.observability import emit, category
+        from app.core.observability import emit
+        from app.core.observability import category
         import logging
         emit("database_error", level=logging.ERROR, category=category(error))
         return JSONResponse(status_code=503, content={"status": "unhealthy", "database": "unavailable"})
@@ -409,8 +425,8 @@ def health():
 @asynccontextmanager
 async def two_cycle_lifespan(application):
     from app.core.database import session
-    from app.raid_rooms.readiness import require_two_cycle_active
-    from app.raid_rooms.cycle_worker import process_due
+    from app.raid_rooms.common.readiness import require_two_cycle_active
+    from app.raid_rooms.common.cycle_worker import process_due
     with session() as db:require_two_cycle_active(db)
     tasks=[asyncio.create_task(run()),asyncio.create_task(run_ownership_worker()),
         asyncio.create_task(run_recruitment_worker(process_due))]
@@ -426,7 +442,7 @@ def create_two_cycle_app():
 
     Preparation only: this factory never migrates DBs or edits deployment config.
     """
-    from app.raid_rooms.cycle_router import router as cycle_router
+    from app.raid_rooms.api.cycle_router import router as cycle_router
     from fastapi.routing import APIRoute
     from fastapi import APIRouter
     result=FastAPI(title="LostParty API",docs_url=None,redoc_url=None,openapi_url=None,lifespan=two_cycle_lifespan)
@@ -434,7 +450,7 @@ def create_two_cycle_app():
     legacy.routes.extend(route for route in app.routes if isinstance(route,APIRoute))
     result.include_router(legacy)
     result.include_router(cycle_router)
-    from app.raid_rooms.application_presets import router as presets_router
+    from app.raid_rooms.api.application_presets import router as presets_router
     result.include_router(presets_router)
     register(result);result.middleware('http')(no_store)
     generate=result.openapi
@@ -482,6 +498,7 @@ def create_two_cycle_app():
             required_schema='0032_beta_recruitment',default_reader='legacy shape preserved',
             promises='atomic participant/personal-copy/base reservation; earlier-only automatic confirmation; deadline fallback',
             presets='/v2/me/application-message-presets',compatibility='original ACK before unsafe new-write guard; no automatic legacy conversion')
-        return value
+        from app.raid_rooms.contracts import roster_openapi
+        return roster_openapi.decorate(value,two_cycle=True)
     result.openapi=schema
     return result

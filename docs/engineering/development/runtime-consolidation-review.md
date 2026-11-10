@@ -15,7 +15,7 @@
 - `0035_cycle_group_policy`까지 준비하고 two-cycle 구성으로 실행하는 절차를 안내한 뒤, 사용자가 API 이미지 `lostparty-backend-api:two-cycle`·factory 명령·API/DB healthy·로컬8000 `/health`의 `status=ok,database=ok`를 보고했다. 최종 `alembic current` 출력은 별도로 제공되지 않았다.
 - 원본 API 로그는 `server_event`만 반복했다. 정확한 예외 stack은 확보하지 않았으나, 빈 DB에서 시작 검사가 직접 조회하는 테이블이 없다는 실패 조건은 코드로 확인된다. 이 실행에서는 DB0035와 기본 앱0023의 불일치가 실제로 발생했다고 단정하지 않는다. 빈 DB 문제를 해소한 뒤 기본 앱을 그대로 사용하면 불일치가 추가로 발생할 수 있다.
 
-[DB 초기화 스크립트](../../../docker/init-db.sh)는 역할과 스키마 권한만 만들며 업무 테이블을 만들지 않는다. [기본 lifespan](../../../app/main.py)과 [readiness](../../../app/raid_rooms/readiness.py)는 준비된 DB를 요구하고 자동 migration을 하지 않는다. [로그 formatter](../../../app/core/observability.py)는 임의 Uvicorn 메시지/예외 원문을 그대로 출력하지 않아 현재 시작 실패 원인을 사용자에게 설명하기 어렵다.
+[DB 초기화 스크립트](../../../docker/init-db.sh)는 역할과 스키마 권한만 만들며 업무 테이블을 만들지 않는다. [기본 lifespan](../../../app/main.py)과 [readiness](../../../app/raid_rooms/common/readiness.py)는 준비된 DB를 요구하고 자동 migration을 하지 않는다. [로그 formatter](../../../app/core/observability.py)는 임의 Uvicorn 메시지/예외 원문을 그대로 출력하지 않아 현재 시작 실패 원인을 사용자에게 설명하기 어렵다.
 
 문제는 빈 DB 준비 절차와 실행 구성 선택이 함께 필요하지만, 가장 짧은 기본 실행이 과거 앱을 선택한다는 점이다. 데이터 손실이나 운영 장애를 이번 결과로 추정하지 않는다. 운영 서버에는 이번 조사에서 접속하지 않았다.
 
@@ -43,7 +43,7 @@
 | 내부 작업 | 인증 정리·분쟁 worker·기존 모집 processor | 인증 정리·분쟁 worker·cycle 모집 processor |
 | 생성 계약 | 기본 OpenAPI | two-cycle OpenAPI·추가 정책 metadata |
 
-[main](../../../app/main.py)·[readiness](../../../app/raid_rooms/readiness.py)·[worker](../../../app/raid_rooms/worker.py)가 근거다. factory는 실행할 업무 체계를 고르는 입구이지, DB migration 실행기가 아니다. 같은 DB에 두 모집 processor를 함께 실행하는 수정은 하지 않는다.
+[main](../../../app/main.py)·[readiness](../../../app/raid_rooms/common/readiness.py)·[worker](../../../app/raid_rooms/common/worker.py)가 근거다. factory는 실행할 업무 체계를 고르는 입구이지, DB migration 실행기가 아니다. 같은 DB에 두 모집 processor를 함께 실행하는 수정은 하지 않는다.
 
 ## 3. 기능·계약·도구별 비교 결과
 
@@ -64,8 +64,8 @@
 | 원정대·소유 인증/분쟁·대표/활동·분석·일괄 조회 | 동일 제공(공유 구현 기준) | 최신 앱도 기존 APIRoute 등록. 소유권 분쟁 후처리 등 기존 미완료는 단일화로 해결되지 않음. |
 | 레이드 카탈로그·개인 주간 기록 | 공통 제공·일부 변경된 방식으로 대체 | 공유 router이나 주간 서비스의 DB 단계 분기·현재 실제T/개인 수동완료 제약은 유지. |
 | 그룹 | 공통 제공·최신DB 기반 보완 | 공유 router와0034 기능/0035 주차별 그룹 정책. 같은 경로라고0023에서 최신 그룹 기능까지 이용 가능하다는 뜻은 아님. |
-| 모집 검색·명단·상세·현재주 조회 | 변경된 방식으로 대체 + 과거 호환용 유지 | [v1_compat](../../../app/raid_rooms/v1_compat.py)가 최신 DB에서 현재 실제C를 v1 DTO로 투영. N을 C로 가장하거나 GET로 참가/주차를 만들지 않음. |
-| 모집 생성·참가·관리·일정·완료 | 최신 v2 체계로 대체, 과거 일부 쓰기는 제한 | [admission_service.execute](../../../app/raid_rooms/admission_service.py)는 인증된 원 ACK 복구를 먼저 처리한 뒤 신규 위험 v1 쓰기를 `CLIENT_UPGRADE_REQUIRED`로 거절. 개인 시간표·수동완료의 합의된 경로는 유지. 전체 v1 기능이 예전과 똑같다는 판정은 불가. |
+| 모집 검색·명단·상세·현재주 조회 | 변경된 방식으로 대체 + 과거 호환용 유지 | [v1_compat](../../../app/raid_rooms/compat/v1_compat.py)가 최신 DB에서 현재 실제C를 v1 DTO로 투영. N을 C로 가장하거나 GET로 참가/주차를 만들지 않음. |
+| 모집 생성·참가·관리·일정·완료 | 최신 v2 체계로 대체, 과거 일부 쓰기는 제한 | [admission_service.execute](../../../app/raid_rooms/admissions/admission_service.py)는 인증된 원 ACK 복구를 먼저 처리한 뒤 신규 위험 v1 쓰기를 `CLIENT_UPGRADE_REQUIRED`로 거절. 개인 시간표·수동완료의 합의된 경로는 유지. 전체 v1 기능이 예전과 똑같다는 판정은 불가. |
 | 이전 요청·ACK·과거 기록 | 과거 호환용 유지 | 원 method/path/body/key와 멱등 namespace·과거 evidence/보류 상태 보존. [비활성 기능 기준](../../features/recruitment/completion-and-records/inactive-features.md)도 별도 보존 의무. 실행 입구 제거만으로 adapter·reader·원응답을 삭제하지 않음. |
 | 모집 worker | 변경된 방식으로 대체 | 구 processor는0023 guard, 새 processor는cycle guard. 인증·분쟁 worker는 공유. |
 | 미확인·누락 | 경로/메서드 누락 없음, 전체 동작 대체는 미확인 | 정적 비교와 과거 시험 근거만 확보. 모든 역할·권한·경합·실회원·업그레이드 조합을 이번에 검증하지 않음. |

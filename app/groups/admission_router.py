@@ -1,13 +1,21 @@
 from typing import Literal
 from uuid import UUID
-from fastapi import APIRouter, Depends, Request
-from app.game_accounts.router import Principal, Key
-from app.game_accounts.schemas import GameErrorOut, Name
-from app.game_accounts.support import fail
-from app.groups import admission_schemas as s, admissions, join_codes
-from app.groups.router import Limit, Cursor
+from fastapi import APIRouter
+from fastapi import Depends
+from fastapi import Request
+from app.game_accounts.api.router import Principal
+from app.game_accounts.api.router import Key
+from app.game_accounts.schemas.schemas import GameErrorOut
+from app.game_accounts.schemas.schemas import Name
+from app.game_accounts.common.support import fail
+from app.groups import admission_schemas as s
+from app.groups import admissions
+from app.groups import join_codes
+from app.groups.router import Limit
+from app.groups.router import Cursor
 from app.groups.schemas import GroupDetail
-from app.groups import display, display_schemas as ds
+from app.groups import display
+from app.groups import display_schemas as ds
 
 
 async def strict_input(request: Request):

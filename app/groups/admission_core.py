@@ -1,14 +1,18 @@
 """Shared G2 identity/admission checks; caller owns authorization and transaction."""
 import uuid
-from sqlalchemy import func, select
+from sqlalchemy import func
+from sqlalchemy import select
 from app.auth.models import User
 from app.core.database import now
-from app.game_accounts import lifecycle, service as accounts
-from app.game_accounts.models import Activity, Character
-from app.game_accounts.support import fail
+from app.game_accounts.rosters import lifecycle
+from app.game_accounts.rosters import service as accounts
+from app.game_accounts.models.models import Activity
+from app.game_accounts.models.models import Character
+from app.game_accounts.common.support import fail
 from app.groups import service as groups
 from app.groups.models import GroupMembership
-from app.groups.admission_models import GroupJoinSubject, GroupJoinRelation
+from app.groups.admission_models import GroupJoinSubject
+from app.groups.admission_models import GroupJoinRelation
 from app.member_limits import service as limits
 from app.member_limits.models import MemberUsageLimits
 

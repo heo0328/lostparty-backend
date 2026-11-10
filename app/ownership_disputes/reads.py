@@ -1,11 +1,17 @@
 import uuid
-from sqlalchemy import select,or_
-from app.core.database import session,now
-from app.game_accounts import lifecycle
-from app.game_accounts.models import Registration,Account
-from app.game_accounts.support import authorize,cursor_encode,cursor_decode
+from sqlalchemy import select
+from sqlalchemy import or_
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.rosters import lifecycle
+from app.game_accounts.models.models import Registration
+from app.game_accounts.models.models import Account
+from app.game_accounts.common.support import authorize
+from app.game_accounts.common.support import cursor_encode
+from app.game_accounts.common.support import cursor_decode
 from app.ownership_disputes import core
-from app.ownership_disputes.models import Proof,Dispute
+from app.ownership_disputes.models import Proof
+from app.ownership_disputes.models import Dispute
 
 
 def proof_out(db,p,current):

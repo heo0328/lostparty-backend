@@ -5,14 +5,22 @@ Production raid-room integration is a later stage.
 Writes share the game-mutations lock. Limit changes require an explicit trusted
 server authorization callback; this module does not grant an app user that power.
 """
-from dataclasses import asdict, dataclass
+from dataclasses import asdict
+from dataclasses import dataclass
 from typing import Callable
-from sqlalchemy import func, select
+from sqlalchemy import func
+from sqlalchemy import select
 from app.auth.models import User
-from app.core.database import session, now
-from app.game_accounts.support import authorize, fail, lock
-from app.groups.models import Group, GroupMembership
-from app.member_limits.models import MemberUsageLimits, MemberUsageHead, MemberUsageLimitAudit
+from app.core.database import session
+from app.core.database import now
+from app.game_accounts.common.support import authorize
+from app.game_accounts.common.support import fail
+from app.game_accounts.common.support import lock
+from app.groups.models import Group
+from app.groups.models import GroupMembership
+from app.member_limits.models import MemberUsageLimits
+from app.member_limits.models import MemberUsageHead
+from app.member_limits.models import MemberUsageLimitAudit
 
 
 @dataclass(frozen=True)
@@ -72,9 +80,10 @@ def snapshot(db, uid, *, room_count=None):
 def get(principal):
     with session() as db, db.begin():
         db.connection(execution_options={'isolation_level': 'REPEATABLE READ'})
-        from app.raid_rooms.participation_core import room_count
-        from app.raid_rooms.readiness import require_active,require_two_cycle_active
-        from app.raid_rooms.active_usage import enabled
+        from app.raid_rooms.participation.participation_core import room_count
+        from app.raid_rooms.common.readiness import require_active
+        from app.raid_rooms.common.readiness import require_two_cycle_active
+        from app.raid_rooms.common.active_usage import enabled
         (require_two_cycle_active if enabled(db) else require_active)(db)
         uid=authorize(db,principal);db.info['active_usage_stamp']=now(db)
         return snapshot(db,uid,room_count=room_count)

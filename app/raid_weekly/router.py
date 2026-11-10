@@ -1,11 +1,16 @@
 from typing import Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, Query, Request
-from app.game_accounts.router import Principal, Key
-from app.game_accounts.schemas import GameErrorOut
-from app.game_accounts.support import fail
-from app.raid_weekly import schemas, service
+from fastapi import APIRouter
+from fastapi import Depends
+from fastapi import Query
+from fastapi import Request
+from app.game_accounts.api.router import Principal
+from app.game_accounts.api.router import Key
+from app.game_accounts.schemas.schemas import GameErrorOut
+from app.game_accounts.common.support import fail
+from app.raid_weekly import schemas
+from app.raid_weekly import service
 
 
 async def strict_input(request: Request):

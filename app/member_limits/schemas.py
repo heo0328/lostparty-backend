@@ -1,7 +1,11 @@
 from datetime import datetime
-from typing import Annotated, Literal
-from pydantic import Field, StrictBool, StrictInt
-from app.game_accounts.schemas import DTO, Version
+from typing import Annotated
+from typing import Literal
+from pydantic import Field
+from pydantic import StrictBool
+from pydantic import StrictInt
+from app.game_accounts.schemas.schemas import DTO
+from app.game_accounts.schemas.schemas import Version
 
 Nonnegative = Annotated[StrictInt, Field(ge=0)]
 

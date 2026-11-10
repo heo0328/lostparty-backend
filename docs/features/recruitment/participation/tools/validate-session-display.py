@@ -6,10 +6,15 @@ python3 docs/features/recruitment/participation/tools/validate-session-display.p
 import copy
 import ast
 import json
-from datetime import date, datetime, time, timedelta, timezone
+from datetime import date
+from datetime import datetime
+from datetime import time
+from datetime import timedelta
+from datetime import timezone
 from pathlib import Path
 
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator
+from jsonschema import FormatChecker
 from jsonschema.exceptions import ValidationError
 
 PATH = Path('docs/features/recruitment/participation/examples/session-display.schema.json')
@@ -90,7 +95,7 @@ def main():
     assert len(DOC['x-extension']['paths']) == 3
     # Validate declared GET paths against the actual router without importing
     # the application or accessing its database/secrets.
-    router = ast.parse(Path('app/raid_rooms/cycle_router.py').read_text())
+    router = ast.parse(Path('app/raid_rooms/api/cycle_router.py').read_text())
     paths = set()
     for node in ast.walk(router):
         if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):

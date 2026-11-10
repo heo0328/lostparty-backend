@@ -1,10 +1,15 @@
-from datetime import datetime, date
+from datetime import datetime
+from datetime import date
 from typing import Literal
 from uuid import UUID
-from app.game_accounts.schemas import DTO, Version
+from app.game_accounts.schemas.schemas import DTO
+from app.game_accounts.schemas.schemas import Version
 from app.groups.commands import LeaveGroup
 from app.groups.admission_schemas import CharacterSelection
-from app.groups.schemas import MyMembership, Permission, GroupRepresentative, CharacterDisplay
+from app.groups.schemas import MyMembership
+from app.groups.schemas import Permission
+from app.groups.schemas import GroupRepresentative
+from app.groups.schemas import CharacterDisplay
 from app.member_limits.schemas import Nonnegative
 
 

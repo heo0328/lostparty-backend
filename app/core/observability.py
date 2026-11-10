@@ -84,7 +84,7 @@ class SafeJsonFormatter(logging.Formatter):
             result['failed_items'] = fields['failed_items']
         # Existing provider diagnostic vocabulary is already part of the internal contract.
         if event == 'provider_failure':
-            from app.game_accounts.provider_diagnostics import STAGES, REASONS, DETAILS, milliseconds
+            from app.game_accounts.provider_io.provider_diagnostics import STAGES, REASONS, DETAILS, milliseconds
             for key, allowed in (('stage', STAGES), ('reason', REASONS), ('detail', DETAILS)):
                 if isinstance(fields.get(key), str) and fields[key] in allowed:
                     result[key] = fields[key]

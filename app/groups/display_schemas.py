@@ -3,10 +3,15 @@ from datetime import datetime
 from typing import Literal
 from uuid import UUID
 from pydantic import Field
-from app.game_accounts.schemas import DTO, Version
-from app.game_accounts.profile_schemas import AnalysisIssue, DecimalValue
-from app.groups.schemas import GroupMember, GroupDetail, CharacterDisplay
-from app.groups.admission_schemas import JoinSubject, InviteCandidate
+from app.game_accounts.schemas.schemas import DTO
+from app.game_accounts.schemas.schemas import Version
+from app.game_accounts.schemas.profile_schemas import AnalysisIssue
+from app.game_accounts.schemas.profile_schemas import DecimalValue
+from app.groups.schemas import GroupMember
+from app.groups.schemas import GroupDetail
+from app.groups.schemas import CharacterDisplay
+from app.groups.admission_schemas import JoinSubject
+from app.groups.admission_schemas import InviteCandidate
 from app.member_limits.schemas import Nonnegative
 
 
