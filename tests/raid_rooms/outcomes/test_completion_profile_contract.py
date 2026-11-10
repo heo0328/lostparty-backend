@@ -99,7 +99,7 @@ def test_profile_declarations_match_every_runtime_route():
                 assert parameters[0]['in'] == 'query' and parameters[0]['required'] is False
                 assert parameters[0]['schema'] == {'type': 'string', 'enum': [rp.PROFILE]}
     assert supported == PARTICIPATION_OPERATIONS
-    assert len(supported) == 65
+    assert len(supported) == 69
     for method in ('get', 'put'):
         assert not any(p.get('name') == 'participation_profile' for p in
                        actual['paths']['/v2/me/application-message-presets'][method].get('parameters', []))

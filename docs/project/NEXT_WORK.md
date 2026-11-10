@@ -1,5 +1,17 @@
 # 다음 실행
 
+## 현재 — Issue47 v3 공개 API·원자 명령 로컬 구현/검증 완료 / 게시·실제 dev 반영은 별도
+
+[전체7번째 Backend 구현/검증 결과](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6762507528)를 게시하고 본문 상단을 현재 범위/담당·미완료로 갱신했다. 전체 댓글7개·Backend 작성·로컬 구현/검증 단계와 게시 본문 일치를 확인했다. [구현 원본](../features/recruitment/completion-and-records/batch-completion-implementation.md)·[검증 집계](../features/recruitment/completion-and-records/batch-completion-verification.json)를 따른다.
+
+완료: 합의 v3 공개4경로·DTO/context/ACK·token/권한/CAS·공대/개인 원자 명령, 활성 효과/전체 레이드 표시·보존 이력 집계/proof, 승계/마지막 종료, 원ACK와 기존 단건 보존을 구현했다. 고유123PASS(신규/내부24+기존99)·도구63PASS이며 최종 non-null scope 이후 HTTP/두 전체 계약/profile 대조4PASS는 중복 합산하지 않았다. 기본125/142·two-cycle192/213 전체 객체 일치, 기존 경로/component 보존·4경로/22schema 추가, 최종 검증 이미지 앱288파일은 로컬과 바이트 동일하다.
+
+다음 Backend는 사용자 지시 범위에서 commit/push·원격 대조와 별도 실제 로컬 반영/API 계약/보존 검증을 이어 인계한다. 현재 checkout `feat/raid-batch-completion`·기준084a6af 위 **미커밋·미push**이며 신규 고정 구현 Git SHA/원격 계약은 없다. **실제 dev/운영 API·DB0036·키/환경은 미변경/미반영**이다. migration·자료 쓰기/삭제·태그·운영/APK·merge·Issue 종료 없음.
+
+다음 Native는 v3 기능 연결을 담당하며 코드/계약 게시·실제 지원 상태 확인 후 실제 연동/사용자 기기 결과를 연결한다. 이번 격리 HTTP/합성 검증을 실제 서버·실회원/기기 또는 전체 프로젝트 회귀 완료로 확대하지 않는다. 같은 계약 수용/정상 기기 시험을 반복 요청하지 않는다.
+
+아래는 직전 완료 구간 기록이다.
+
 ## 현재 — 완료 기록 dev 통합·작업 브랜치 정리 완료 / 별도 배포 없음
 
 2026-11-10 사용자 지시로 완료 문서13개를 `afd5ba21d443d85f73b98d29043eefe3583b8cd7`에 커밋·push하고, feat/character-lifecycle의 기존 개발·정리·계약/검증 이력을 dev에 이력 보존 병합했다. 병합 `aa7058c5f93ad799033116608f2b3f52931b0dfe`의 origin/dev 반영과 작업 브랜치 tip 포함·전체 tree 동일을 확인했다. 통합된 feat/character-lifecycle은 로컬·원격에서 삭제했고 현재 checkout은 **dev**다. main은3e3ddc1 그대로이며 변경하지 않았다.

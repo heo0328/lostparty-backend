@@ -1,0 +1,1757 @@
+{
+  "status": "proposal-v3-consumer-review-pending",
+  "synthetic": true,
+  "examples": [
+    {
+      "name": "party_partial_context",
+      "schema": "PartyContext",
+      "http_status": 200,
+      "response": {
+        "group_policy_version": "cycle-group-policy-1",
+        "group_policy": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "target_cycle_key": "2026-11-04",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "generation": 1,
+          "scope": "public",
+          "group_id": null,
+          "revision": 1,
+          "state": "known"
+        },
+        "scope": {
+          "server_now": "2026-11-10T05:00:00Z",
+          "current_cycle_key": "2026-11-04",
+          "target_cycle_key": "2026-11-04",
+          "playable_from": "2026-11-04T01:00:00Z",
+          "phase": "current",
+          "target_revision": 7,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "action": "batch_completion",
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "actor_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+          "actor_cycle_member_revision": 4,
+          "round_ids": [
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "display": {
+            "rounds": [
+              {
+                "round_id": "00000000-0000-4000-8000-000000000011",
+                "item_id": "00000000-0000-4000-8000-000000000031",
+                "raid_id": "synthetic-raid-1",
+                "raid_name": "합성레이드1",
+                "difficulty_id": "normal",
+                "difficulty_name": "노말",
+                "catalog_version": "SYNTHETIC"
+              },
+              {
+                "round_id": "00000000-0000-4000-8000-000000000012",
+                "item_id": "00000000-0000-4000-8000-000000000032",
+                "raid_id": "synthetic-raid-2",
+                "raid_name": "합성레이드2",
+                "difficulty_id": "normal",
+                "difficulty_name": "노말",
+                "catalog_version": "SYNTHETIC"
+              },
+              {
+                "round_id": "00000000-0000-4000-8000-000000000013",
+                "item_id": "00000000-0000-4000-8000-000000000033",
+                "raid_id": "synthetic-raid-3",
+                "raid_name": "합성레이드3",
+                "difficulty_id": "normal",
+                "difficulty_name": "노말",
+                "catalog_version": "SYNTHETIC"
+              }
+            ],
+            "assignments": [
+              {
+                "assignment_id": "00000000-0000-4000-8000-000000000021",
+                "round_id": "00000000-0000-4000-8000-000000000011",
+                "membership_id": "00000000-0000-4000-8000-000000000004",
+                "cycle_member_id": "00000000-0000-4000-8000-000000000003",
+                "character_id": "00000000-0000-4000-8000-000000000008",
+                "character_name": "합성캐릭터",
+                "effect": "complete"
+              },
+              {
+                "assignment_id": "00000000-0000-4000-8000-000000000022",
+                "round_id": "00000000-0000-4000-8000-000000000012",
+                "membership_id": "00000000-0000-4000-8000-000000000004",
+                "cycle_member_id": "00000000-0000-4000-8000-000000000003",
+                "character_id": "00000000-0000-4000-8000-000000000008",
+                "character_name": "합성캐릭터",
+                "effect": "complete"
+              },
+              {
+                "assignment_id": "00000000-0000-4000-8000-000000000023",
+                "round_id": "00000000-0000-4000-8000-000000000013",
+                "membership_id": "00000000-0000-4000-8000-000000000004",
+                "cycle_member_id": "00000000-0000-4000-8000-000000000003",
+                "character_id": "00000000-0000-4000-8000-000000000008",
+                "character_name": "합성캐릭터",
+                "effect": "preserve_active"
+              }
+            ],
+            "display_revision": "b276d69ca2f9543d13119ce95d0599817126a1c56e8f7bf21195f914601802fb"
+          },
+          "impact": {
+            "completed_assignment_ids": [
+              "00000000-0000-4000-8000-000000000021",
+              "00000000-0000-4000-8000-000000000022"
+            ],
+            "cancelled_assignment_ids": [],
+            "preserved_active_assignment_ids": [
+              "00000000-0000-4000-8000-000000000023"
+            ],
+            "released_reservation_count": 2,
+            "preserves_other_cycles": true,
+            "preserves_global_membership": true,
+            "preserved_completed": {
+              "assignment_count": 63,
+              "digest": "cee4d8e6931d2ed6788fccaa67b7e8021f89669751a288bcfb1819eab48558f0",
+              "raids": [
+                {
+                  "raid_id": "synthetic-history-raid",
+                  "raid_name": "합성 과거 레이드",
+                  "assignment_count": 63,
+                  "digest": "cee4d8e6931d2ed6788fccaa67b7e8021f89669751a288bcfb1819eab48558f0"
+                }
+              ]
+            }
+          },
+          "departure": null,
+          "state": {
+            "target_state": "open",
+            "generation_state": "open",
+            "actor_cycle_member_state": "participating"
+          },
+          "leadership": {
+            "leader_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+            "leader_membership_id": "00000000-0000-4000-8000-000000000004",
+            "leadership_revision": 2
+          },
+          "expected_after": {
+            "state": {
+              "target_state": "open",
+              "generation_state": "open",
+              "actor_cycle_member_state": "participating"
+            },
+            "leader_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+            "leader_membership_id": "00000000-0000-4000-8000-000000000004"
+          },
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          },
+          "confirmation": {
+            "context_token": "SYNTHETIC-NOT-A-SIGNED-TOKEN",
+            "issued_at": "2026-11-10T05:00:00Z",
+            "expires_at": "2026-11-10T05:02:00Z"
+          },
+          "revisions": [
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000021",
+              "revision": 2
+            },
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000022",
+              "revision": 2
+            },
+            {
+              "resource": "cycle_membership",
+              "id": "00000000-0000-4000-8000-000000000003",
+              "revision": 4
+            },
+            {
+              "resource": "leadership",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 2
+            },
+            {
+              "resource": "members",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 4
+            },
+            {
+              "resource": "plan",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 8
+            },
+            {
+              "resource": "round",
+              "id": "00000000-0000-4000-8000-000000000011",
+              "revision": 2
+            },
+            {
+              "resource": "round",
+              "id": "00000000-0000-4000-8000-000000000012",
+              "revision": 2
+            },
+            {
+              "resource": "target",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 7
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "party_partial_ack",
+      "schema": "PartyAck",
+      "http_status": 200,
+      "response": {
+        "group_policy_version": "cycle-group-policy-1",
+        "group_policy": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "target_cycle_key": "2026-11-04",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "generation": 1,
+          "scope": "public",
+          "group_id": null,
+          "revision": 1,
+          "state": "known"
+        },
+        "scope": {
+          "server_now": "2026-11-10T05:00:00Z",
+          "current_cycle_key": "2026-11-04",
+          "target_cycle_key": "2026-11-04",
+          "playable_from": "2026-11-04T01:00:00Z",
+          "phase": "current",
+          "target_revision": 8,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "action": "batch_completion",
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "actor_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+          "round_ids": [
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "impact": {
+            "completed_assignment_ids": [
+              "00000000-0000-4000-8000-000000000021",
+              "00000000-0000-4000-8000-000000000022"
+            ],
+            "cancelled_assignment_ids": [],
+            "preserved_active_assignment_ids": [
+              "00000000-0000-4000-8000-000000000023"
+            ],
+            "released_reservation_count": 2,
+            "preserves_other_cycles": true,
+            "preserves_global_membership": true,
+            "preserved_completed": {
+              "assignment_count": 63,
+              "digest": "cee4d8e6931d2ed6788fccaa67b7e8021f89669751a288bcfb1819eab48558f0",
+              "raids": [
+                {
+                  "raid_id": "synthetic-history-raid",
+                  "raid_name": "합성 과거 레이드",
+                  "assignment_count": 63,
+                  "digest": "cee4d8e6931d2ed6788fccaa67b7e8021f89669751a288bcfb1819eab48558f0"
+                }
+              ]
+            }
+          },
+          "departure": null,
+          "command_id": "00000000-0000-4000-8000-000000000101",
+          "outcome": "applied",
+          "executed_at": "2026-11-10T05:00:00Z",
+          "state": {
+            "target_state": "open",
+            "generation_state": "open",
+            "actor_cycle_member_state": "participating"
+          },
+          "leadership": {
+            "leader_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+            "leader_membership_id": "00000000-0000-4000-8000-000000000004",
+            "leadership_revision": 2
+          },
+          "revisions": [
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000021",
+              "revision": 3
+            },
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000022",
+              "revision": 3
+            },
+            {
+              "resource": "cycle_membership",
+              "id": "00000000-0000-4000-8000-000000000003",
+              "revision": 5
+            },
+            {
+              "resource": "leadership",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 2
+            },
+            {
+              "resource": "members",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 5
+            },
+            {
+              "resource": "plan",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 9
+            },
+            {
+              "resource": "round",
+              "id": "00000000-0000-4000-8000-000000000011",
+              "revision": 3
+            },
+            {
+              "resource": "round",
+              "id": "00000000-0000-4000-8000-000000000012",
+              "revision": 3
+            },
+            {
+              "resource": "target",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 8
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "personal_leave_context",
+      "schema": "PersonalContext",
+      "http_status": 200,
+      "response": {
+        "group_policy_version": "cycle-group-policy-1",
+        "group_policy": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "target_cycle_key": "2026-11-04",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "generation": 1,
+          "scope": "public",
+          "group_id": null,
+          "revision": 1,
+          "state": "known"
+        },
+        "scope": {
+          "server_now": "2026-11-10T05:00:00Z",
+          "current_cycle_key": "2026-11-04",
+          "target_cycle_key": "2026-11-04",
+          "playable_from": "2026-11-04T01:00:00Z",
+          "phase": "current",
+          "target_revision": 7,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "action": "batch_personal_completion_departure",
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "actor_cycle_member_id": "00000000-0000-4000-8000-000000000005",
+          "actor_cycle_member_revision": 4,
+          "round_ids": [
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "display": {
+            "rounds": [
+              {
+                "round_id": "00000000-0000-4000-8000-000000000011",
+                "item_id": "00000000-0000-4000-8000-000000000031",
+                "raid_id": "synthetic-raid-1",
+                "raid_name": "합성레이드1",
+                "difficulty_id": "normal",
+                "difficulty_name": "노말",
+                "catalog_version": "SYNTHETIC"
+              },
+              {
+                "round_id": "00000000-0000-4000-8000-000000000012",
+                "item_id": "00000000-0000-4000-8000-000000000032",
+                "raid_id": "synthetic-raid-2",
+                "raid_name": "합성레이드2",
+                "difficulty_id": "normal",
+                "difficulty_name": "노말",
+                "catalog_version": "SYNTHETIC"
+              },
+              {
+                "round_id": "00000000-0000-4000-8000-000000000013",
+                "item_id": "00000000-0000-4000-8000-000000000033",
+                "raid_id": "synthetic-raid-3",
+                "raid_name": "합성레이드3",
+                "difficulty_id": "normal",
+                "difficulty_name": "노말",
+                "catalog_version": "SYNTHETIC"
+              }
+            ],
+            "assignments": [
+              {
+                "assignment_id": "00000000-0000-4000-8000-000000000021",
+                "round_id": "00000000-0000-4000-8000-000000000011",
+                "membership_id": "00000000-0000-4000-8000-000000000006",
+                "cycle_member_id": "00000000-0000-4000-8000-000000000005",
+                "character_id": "00000000-0000-4000-8000-000000000008",
+                "character_name": "합성캐릭터",
+                "effect": "complete"
+              },
+              {
+                "assignment_id": "00000000-0000-4000-8000-000000000022",
+                "round_id": "00000000-0000-4000-8000-000000000012",
+                "membership_id": "00000000-0000-4000-8000-000000000006",
+                "cycle_member_id": "00000000-0000-4000-8000-000000000005",
+                "character_id": "00000000-0000-4000-8000-000000000008",
+                "character_name": "합성캐릭터",
+                "effect": "complete"
+              },
+              {
+                "assignment_id": "00000000-0000-4000-8000-000000000023",
+                "round_id": "00000000-0000-4000-8000-000000000013",
+                "membership_id": "00000000-0000-4000-8000-000000000006",
+                "cycle_member_id": "00000000-0000-4000-8000-000000000005",
+                "character_id": "00000000-0000-4000-8000-000000000008",
+                "character_name": "합성캐릭터",
+                "effect": "cancel"
+              }
+            ],
+            "display_revision": "eae02c7a2710bfcef876185b7cbe7e5c8b9be32b3bd5a9f8183e893994158203"
+          },
+          "impact": {
+            "completed_assignment_ids": [
+              "00000000-0000-4000-8000-000000000021",
+              "00000000-0000-4000-8000-000000000022"
+            ],
+            "cancelled_assignment_ids": [
+              "00000000-0000-4000-8000-000000000023"
+            ],
+            "preserved_active_assignment_ids": [],
+            "released_reservation_count": 3,
+            "preserves_other_cycles": true,
+            "preserves_global_membership": true,
+            "preserved_completed": {
+              "assignment_count": 7,
+              "digest": "e0354fec330354219c0749d83f276a822c0bef9465a10936a6582ff183b5b711",
+              "raids": [
+                {
+                  "raid_id": "synthetic-history-raid",
+                  "raid_name": "합성 과거 레이드",
+                  "assignment_count": 7,
+                  "digest": "e0354fec330354219c0749d83f276a822c0bef9465a10936a6582ff183b5b711"
+                }
+              ]
+            }
+          },
+          "departure": {
+            "effect": "leave",
+            "successor": null
+          },
+          "state": {
+            "target_state": "open",
+            "generation_state": "open",
+            "actor_cycle_member_state": "participating"
+          },
+          "leadership": {
+            "leader_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+            "leader_membership_id": "00000000-0000-4000-8000-000000000004",
+            "leadership_revision": 2
+          },
+          "expected_after": {
+            "state": {
+              "target_state": "open",
+              "generation_state": "open",
+              "actor_cycle_member_state": "cancelled"
+            },
+            "leader_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+            "leader_membership_id": "00000000-0000-4000-8000-000000000004"
+          },
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          },
+          "confirmation": {
+            "context_token": "SYNTHETIC-NOT-A-SIGNED-TOKEN",
+            "issued_at": "2026-11-10T05:00:00Z",
+            "expires_at": "2026-11-10T05:02:00Z"
+          },
+          "revisions": [
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000021",
+              "revision": 2
+            },
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000022",
+              "revision": 2
+            },
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000023",
+              "revision": 2
+            },
+            {
+              "resource": "cycle_membership",
+              "id": "00000000-0000-4000-8000-000000000005",
+              "revision": 4
+            },
+            {
+              "resource": "leadership",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 2
+            },
+            {
+              "resource": "members",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 4
+            },
+            {
+              "resource": "plan",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 8
+            },
+            {
+              "resource": "target",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 7
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "personal_leave_ack",
+      "schema": "PersonalAck",
+      "http_status": 200,
+      "response": {
+        "group_policy_version": "cycle-group-policy-1",
+        "group_policy": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "target_cycle_key": "2026-11-04",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "generation": 1,
+          "scope": "public",
+          "group_id": null,
+          "revision": 1,
+          "state": "known"
+        },
+        "scope": {
+          "server_now": "2026-11-10T05:00:00Z",
+          "current_cycle_key": "2026-11-04",
+          "target_cycle_key": "2026-11-04",
+          "playable_from": "2026-11-04T01:00:00Z",
+          "phase": "current",
+          "target_revision": 8,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "action": "batch_personal_completion_departure",
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "actor_cycle_member_id": "00000000-0000-4000-8000-000000000005",
+          "round_ids": [
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "impact": {
+            "completed_assignment_ids": [
+              "00000000-0000-4000-8000-000000000021",
+              "00000000-0000-4000-8000-000000000022"
+            ],
+            "cancelled_assignment_ids": [
+              "00000000-0000-4000-8000-000000000023"
+            ],
+            "preserved_active_assignment_ids": [],
+            "released_reservation_count": 3,
+            "preserves_other_cycles": true,
+            "preserves_global_membership": true,
+            "preserved_completed": {
+              "assignment_count": 7,
+              "digest": "e0354fec330354219c0749d83f276a822c0bef9465a10936a6582ff183b5b711",
+              "raids": [
+                {
+                  "raid_id": "synthetic-history-raid",
+                  "raid_name": "합성 과거 레이드",
+                  "assignment_count": 7,
+                  "digest": "e0354fec330354219c0749d83f276a822c0bef9465a10936a6582ff183b5b711"
+                }
+              ]
+            }
+          },
+          "departure": {
+            "effect": "leave",
+            "successor": null
+          },
+          "command_id": "00000000-0000-4000-8000-000000000103",
+          "outcome": "applied",
+          "executed_at": "2026-11-10T05:00:00Z",
+          "state": {
+            "target_state": "open",
+            "generation_state": "open",
+            "actor_cycle_member_state": "cancelled"
+          },
+          "leadership": {
+            "leader_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+            "leader_membership_id": "00000000-0000-4000-8000-000000000004",
+            "leadership_revision": 2
+          },
+          "revisions": [
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000021",
+              "revision": 3
+            },
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000022",
+              "revision": 3
+            },
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000023",
+              "revision": 3
+            },
+            {
+              "resource": "cycle_membership",
+              "id": "00000000-0000-4000-8000-000000000005",
+              "revision": 5
+            },
+            {
+              "resource": "leadership",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 2
+            },
+            {
+              "resource": "members",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 5
+            },
+            {
+              "resource": "plan",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 9
+            },
+            {
+              "resource": "target",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 8
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "personal_successor_context",
+      "schema": "PersonalContext",
+      "http_status": 200,
+      "response": {
+        "group_policy_version": "cycle-group-policy-1",
+        "group_policy": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "target_cycle_key": "2026-11-04",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "generation": 1,
+          "scope": "public",
+          "group_id": null,
+          "revision": 1,
+          "state": "known"
+        },
+        "scope": {
+          "server_now": "2026-11-10T05:00:00Z",
+          "current_cycle_key": "2026-11-04",
+          "target_cycle_key": "2026-11-04",
+          "playable_from": "2026-11-04T01:00:00Z",
+          "phase": "current",
+          "target_revision": 7,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "action": "batch_personal_completion_departure",
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "actor_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+          "actor_cycle_member_revision": 4,
+          "round_ids": [
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "display": {
+            "rounds": [
+              {
+                "round_id": "00000000-0000-4000-8000-000000000011",
+                "item_id": "00000000-0000-4000-8000-000000000031",
+                "raid_id": "synthetic-raid-1",
+                "raid_name": "합성레이드1",
+                "difficulty_id": "normal",
+                "difficulty_name": "노말",
+                "catalog_version": "SYNTHETIC"
+              },
+              {
+                "round_id": "00000000-0000-4000-8000-000000000012",
+                "item_id": "00000000-0000-4000-8000-000000000032",
+                "raid_id": "synthetic-raid-2",
+                "raid_name": "합성레이드2",
+                "difficulty_id": "normal",
+                "difficulty_name": "노말",
+                "catalog_version": "SYNTHETIC"
+              },
+              {
+                "round_id": "00000000-0000-4000-8000-000000000013",
+                "item_id": "00000000-0000-4000-8000-000000000033",
+                "raid_id": "synthetic-raid-3",
+                "raid_name": "합성레이드3",
+                "difficulty_id": "normal",
+                "difficulty_name": "노말",
+                "catalog_version": "SYNTHETIC"
+              }
+            ],
+            "assignments": [
+              {
+                "assignment_id": "00000000-0000-4000-8000-000000000021",
+                "round_id": "00000000-0000-4000-8000-000000000011",
+                "membership_id": "00000000-0000-4000-8000-000000000004",
+                "cycle_member_id": "00000000-0000-4000-8000-000000000003",
+                "character_id": "00000000-0000-4000-8000-000000000008",
+                "character_name": "합성캐릭터",
+                "effect": "complete"
+              },
+              {
+                "assignment_id": "00000000-0000-4000-8000-000000000022",
+                "round_id": "00000000-0000-4000-8000-000000000012",
+                "membership_id": "00000000-0000-4000-8000-000000000004",
+                "cycle_member_id": "00000000-0000-4000-8000-000000000003",
+                "character_id": "00000000-0000-4000-8000-000000000008",
+                "character_name": "합성캐릭터",
+                "effect": "complete"
+              },
+              {
+                "assignment_id": "00000000-0000-4000-8000-000000000023",
+                "round_id": "00000000-0000-4000-8000-000000000013",
+                "membership_id": "00000000-0000-4000-8000-000000000004",
+                "cycle_member_id": "00000000-0000-4000-8000-000000000003",
+                "character_id": "00000000-0000-4000-8000-000000000008",
+                "character_name": "합성캐릭터",
+                "effect": "cancel"
+              }
+            ],
+            "display_revision": "20c20c36d8eec590a90120069bad354c0b08d18b0be8269783ac3508b1ca9915"
+          },
+          "impact": {
+            "completed_assignment_ids": [
+              "00000000-0000-4000-8000-000000000021",
+              "00000000-0000-4000-8000-000000000022"
+            ],
+            "cancelled_assignment_ids": [
+              "00000000-0000-4000-8000-000000000023"
+            ],
+            "preserved_active_assignment_ids": [],
+            "released_reservation_count": 3,
+            "preserves_other_cycles": true,
+            "preserves_global_membership": true,
+            "preserved_completed": {
+              "assignment_count": 7,
+              "digest": "e0354fec330354219c0749d83f276a822c0bef9465a10936a6582ff183b5b711",
+              "raids": [
+                {
+                  "raid_id": "synthetic-history-raid",
+                  "raid_name": "합성 과거 레이드",
+                  "assignment_count": 7,
+                  "digest": "e0354fec330354219c0749d83f276a822c0bef9465a10936a6582ff183b5b711"
+                }
+              ]
+            }
+          },
+          "departure": {
+            "effect": "automatic_successor",
+            "successor": {
+              "cycle_member_id": "00000000-0000-4000-8000-000000000005",
+              "revision": 6,
+              "joined_order": "2",
+              "character_id": "00000000-0000-4000-8000-000000000007",
+              "character_name": "합성후계자"
+            }
+          },
+          "state": {
+            "target_state": "open",
+            "generation_state": "open",
+            "actor_cycle_member_state": "participating"
+          },
+          "leadership": {
+            "leader_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+            "leader_membership_id": "00000000-0000-4000-8000-000000000004",
+            "leadership_revision": 2
+          },
+          "expected_after": {
+            "state": {
+              "target_state": "open",
+              "generation_state": "open",
+              "actor_cycle_member_state": "cancelled"
+            },
+            "leader_cycle_member_id": "00000000-0000-4000-8000-000000000005",
+            "leader_membership_id": "00000000-0000-4000-8000-000000000006"
+          },
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          },
+          "confirmation": {
+            "context_token": "SYNTHETIC-NOT-A-SIGNED-TOKEN",
+            "issued_at": "2026-11-10T05:00:00Z",
+            "expires_at": "2026-11-10T05:02:00Z"
+          },
+          "revisions": [
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000021",
+              "revision": 2
+            },
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000022",
+              "revision": 2
+            },
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000023",
+              "revision": 2
+            },
+            {
+              "resource": "cycle_membership",
+              "id": "00000000-0000-4000-8000-000000000003",
+              "revision": 4
+            },
+            {
+              "resource": "leadership",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 2
+            },
+            {
+              "resource": "members",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 4
+            },
+            {
+              "resource": "plan",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 8
+            },
+            {
+              "resource": "target",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 7
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "personal_successor_ack",
+      "schema": "PersonalAck",
+      "http_status": 200,
+      "response": {
+        "group_policy_version": "cycle-group-policy-1",
+        "group_policy": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "target_cycle_key": "2026-11-04",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "generation": 1,
+          "scope": "public",
+          "group_id": null,
+          "revision": 1,
+          "state": "known"
+        },
+        "scope": {
+          "server_now": "2026-11-10T05:00:00Z",
+          "current_cycle_key": "2026-11-04",
+          "target_cycle_key": "2026-11-04",
+          "playable_from": "2026-11-04T01:00:00Z",
+          "phase": "current",
+          "target_revision": 8,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "action": "batch_personal_completion_departure",
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "actor_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+          "round_ids": [
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "impact": {
+            "completed_assignment_ids": [
+              "00000000-0000-4000-8000-000000000021",
+              "00000000-0000-4000-8000-000000000022"
+            ],
+            "cancelled_assignment_ids": [
+              "00000000-0000-4000-8000-000000000023"
+            ],
+            "preserved_active_assignment_ids": [],
+            "released_reservation_count": 3,
+            "preserves_other_cycles": true,
+            "preserves_global_membership": true,
+            "preserved_completed": {
+              "assignment_count": 7,
+              "digest": "e0354fec330354219c0749d83f276a822c0bef9465a10936a6582ff183b5b711",
+              "raids": [
+                {
+                  "raid_id": "synthetic-history-raid",
+                  "raid_name": "합성 과거 레이드",
+                  "assignment_count": 7,
+                  "digest": "e0354fec330354219c0749d83f276a822c0bef9465a10936a6582ff183b5b711"
+                }
+              ]
+            }
+          },
+          "departure": {
+            "effect": "automatic_successor",
+            "successor": {
+              "cycle_member_id": "00000000-0000-4000-8000-000000000005",
+              "revision": 6,
+              "joined_order": "2",
+              "character_id": "00000000-0000-4000-8000-000000000007",
+              "character_name": "합성후계자"
+            }
+          },
+          "command_id": "00000000-0000-4000-8000-000000000105",
+          "outcome": "applied",
+          "executed_at": "2026-11-10T05:00:00Z",
+          "state": {
+            "target_state": "open",
+            "generation_state": "open",
+            "actor_cycle_member_state": "cancelled"
+          },
+          "leadership": {
+            "leader_cycle_member_id": "00000000-0000-4000-8000-000000000005",
+            "leader_membership_id": "00000000-0000-4000-8000-000000000006",
+            "leadership_revision": 3
+          },
+          "revisions": [
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000021",
+              "revision": 3
+            },
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000022",
+              "revision": 3
+            },
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000023",
+              "revision": 3
+            },
+            {
+              "resource": "cycle_membership",
+              "id": "00000000-0000-4000-8000-000000000003",
+              "revision": 5
+            },
+            {
+              "resource": "leadership",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 3
+            },
+            {
+              "resource": "members",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 5
+            },
+            {
+              "resource": "plan",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 9
+            },
+            {
+              "resource": "target",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 8
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "personal_last_full_context",
+      "schema": "PersonalContext",
+      "http_status": 200,
+      "response": {
+        "group_policy_version": "cycle-group-policy-1",
+        "group_policy": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "target_cycle_key": "2026-11-04",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "generation": 1,
+          "scope": "public",
+          "group_id": null,
+          "revision": 1,
+          "state": "known"
+        },
+        "scope": {
+          "server_now": "2026-11-10T05:00:00Z",
+          "current_cycle_key": "2026-11-04",
+          "target_cycle_key": "2026-11-04",
+          "playable_from": "2026-11-04T01:00:00Z",
+          "phase": "current",
+          "target_revision": 7,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "action": "batch_personal_completion_departure",
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "actor_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+          "actor_cycle_member_revision": 4,
+          "round_ids": [
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "display": {
+            "rounds": [
+              {
+                "round_id": "00000000-0000-4000-8000-000000000011",
+                "item_id": "00000000-0000-4000-8000-000000000031",
+                "raid_id": "synthetic-raid-1",
+                "raid_name": "합성레이드1",
+                "difficulty_id": "normal",
+                "difficulty_name": "노말",
+                "catalog_version": "SYNTHETIC"
+              },
+              {
+                "round_id": "00000000-0000-4000-8000-000000000012",
+                "item_id": "00000000-0000-4000-8000-000000000032",
+                "raid_id": "synthetic-raid-2",
+                "raid_name": "합성레이드2",
+                "difficulty_id": "normal",
+                "difficulty_name": "노말",
+                "catalog_version": "SYNTHETIC"
+              }
+            ],
+            "assignments": [
+              {
+                "assignment_id": "00000000-0000-4000-8000-000000000021",
+                "round_id": "00000000-0000-4000-8000-000000000011",
+                "membership_id": "00000000-0000-4000-8000-000000000004",
+                "cycle_member_id": "00000000-0000-4000-8000-000000000003",
+                "character_id": "00000000-0000-4000-8000-000000000008",
+                "character_name": "합성캐릭터",
+                "effect": "complete"
+              },
+              {
+                "assignment_id": "00000000-0000-4000-8000-000000000022",
+                "round_id": "00000000-0000-4000-8000-000000000012",
+                "membership_id": "00000000-0000-4000-8000-000000000004",
+                "cycle_member_id": "00000000-0000-4000-8000-000000000003",
+                "character_id": "00000000-0000-4000-8000-000000000008",
+                "character_name": "합성캐릭터",
+                "effect": "complete"
+              }
+            ],
+            "display_revision": "e1d82afd5eea966aa57084af552580a4ecdbffde497e7199607a089b3eaeee12"
+          },
+          "impact": {
+            "completed_assignment_ids": [
+              "00000000-0000-4000-8000-000000000021",
+              "00000000-0000-4000-8000-000000000022"
+            ],
+            "cancelled_assignment_ids": [],
+            "preserved_active_assignment_ids": [],
+            "released_reservation_count": 2,
+            "preserves_other_cycles": true,
+            "preserves_global_membership": true,
+            "preserved_completed": {
+              "assignment_count": 0,
+              "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "raids": []
+            }
+          },
+          "departure": {
+            "effect": "close_completed",
+            "successor": null
+          },
+          "state": {
+            "target_state": "open",
+            "generation_state": "open",
+            "actor_cycle_member_state": "participating"
+          },
+          "leadership": {
+            "leader_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+            "leader_membership_id": "00000000-0000-4000-8000-000000000004",
+            "leadership_revision": 2
+          },
+          "expected_after": {
+            "state": {
+              "target_state": "closed",
+              "generation_state": "completed",
+              "actor_cycle_member_state": "cancelled"
+            },
+            "leader_cycle_member_id": null,
+            "leader_membership_id": null
+          },
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          },
+          "confirmation": {
+            "context_token": "SYNTHETIC-NOT-A-SIGNED-TOKEN",
+            "issued_at": "2026-11-10T05:00:00Z",
+            "expires_at": "2026-11-10T05:02:00Z"
+          },
+          "revisions": [
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000021",
+              "revision": 2
+            },
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000022",
+              "revision": 2
+            },
+            {
+              "resource": "cycle_membership",
+              "id": "00000000-0000-4000-8000-000000000003",
+              "revision": 4
+            },
+            {
+              "resource": "leadership",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 2
+            },
+            {
+              "resource": "members",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 4
+            },
+            {
+              "resource": "plan",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 8
+            },
+            {
+              "resource": "round",
+              "id": "00000000-0000-4000-8000-000000000011",
+              "revision": 2
+            },
+            {
+              "resource": "round",
+              "id": "00000000-0000-4000-8000-000000000012",
+              "revision": 2
+            },
+            {
+              "resource": "target",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 7
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "personal_last_full_ack",
+      "schema": "PersonalAck",
+      "http_status": 200,
+      "response": {
+        "group_policy_version": "cycle-group-policy-1",
+        "group_policy": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "target_cycle_key": "2026-11-04",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "generation": 1,
+          "scope": "public",
+          "group_id": null,
+          "revision": 1,
+          "state": "known"
+        },
+        "scope": {
+          "server_now": "2026-11-10T05:00:00Z",
+          "current_cycle_key": "2026-11-04",
+          "target_cycle_key": "2026-11-04",
+          "playable_from": "2026-11-04T01:00:00Z",
+          "phase": "current",
+          "target_revision": 8,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "action": "batch_personal_completion_departure",
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "actor_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+          "round_ids": [
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "impact": {
+            "completed_assignment_ids": [
+              "00000000-0000-4000-8000-000000000021",
+              "00000000-0000-4000-8000-000000000022"
+            ],
+            "cancelled_assignment_ids": [],
+            "preserved_active_assignment_ids": [],
+            "released_reservation_count": 2,
+            "preserves_other_cycles": true,
+            "preserves_global_membership": true,
+            "preserved_completed": {
+              "assignment_count": 0,
+              "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "raids": []
+            }
+          },
+          "departure": {
+            "effect": "close_completed",
+            "successor": null
+          },
+          "command_id": "00000000-0000-4000-8000-000000000107",
+          "outcome": "applied",
+          "executed_at": "2026-11-10T05:00:00Z",
+          "state": {
+            "target_state": "closed",
+            "generation_state": "completed",
+            "actor_cycle_member_state": "cancelled"
+          },
+          "leadership": {
+            "leader_cycle_member_id": null,
+            "leader_membership_id": null,
+            "leadership_revision": 3
+          },
+          "revisions": [
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000021",
+              "revision": 3
+            },
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000022",
+              "revision": 3
+            },
+            {
+              "resource": "cycle_membership",
+              "id": "00000000-0000-4000-8000-000000000003",
+              "revision": 5
+            },
+            {
+              "resource": "leadership",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 3
+            },
+            {
+              "resource": "members",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 5
+            },
+            {
+              "resource": "plan",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 9
+            },
+            {
+              "resource": "round",
+              "id": "00000000-0000-4000-8000-000000000011",
+              "revision": 3
+            },
+            {
+              "resource": "round",
+              "id": "00000000-0000-4000-8000-000000000012",
+              "revision": 3
+            },
+            {
+              "resource": "target",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 8
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "personal_last_partial_context",
+      "schema": "PersonalContext",
+      "http_status": 200,
+      "response": {
+        "group_policy_version": "cycle-group-policy-1",
+        "group_policy": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "target_cycle_key": "2026-11-04",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "generation": 1,
+          "scope": "public",
+          "group_id": null,
+          "revision": 1,
+          "state": "known"
+        },
+        "scope": {
+          "server_now": "2026-11-10T05:00:00Z",
+          "current_cycle_key": "2026-11-04",
+          "target_cycle_key": "2026-11-04",
+          "playable_from": "2026-11-04T01:00:00Z",
+          "phase": "current",
+          "target_revision": 7,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "action": "batch_personal_completion_departure",
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "actor_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+          "actor_cycle_member_revision": 4,
+          "round_ids": [
+            "00000000-0000-4000-8000-000000000011"
+          ],
+          "display": {
+            "rounds": [
+              {
+                "round_id": "00000000-0000-4000-8000-000000000011",
+                "item_id": "00000000-0000-4000-8000-000000000031",
+                "raid_id": "synthetic-raid-1",
+                "raid_name": "합성레이드1",
+                "difficulty_id": "normal",
+                "difficulty_name": "노말",
+                "catalog_version": "SYNTHETIC"
+              },
+              {
+                "round_id": "00000000-0000-4000-8000-000000000012",
+                "item_id": "00000000-0000-4000-8000-000000000032",
+                "raid_id": "synthetic-raid-2",
+                "raid_name": "합성레이드2",
+                "difficulty_id": "normal",
+                "difficulty_name": "노말",
+                "catalog_version": "SYNTHETIC"
+              }
+            ],
+            "assignments": [
+              {
+                "assignment_id": "00000000-0000-4000-8000-000000000021",
+                "round_id": "00000000-0000-4000-8000-000000000011",
+                "membership_id": "00000000-0000-4000-8000-000000000004",
+                "cycle_member_id": "00000000-0000-4000-8000-000000000003",
+                "character_id": "00000000-0000-4000-8000-000000000008",
+                "character_name": "합성캐릭터",
+                "effect": "complete"
+              },
+              {
+                "assignment_id": "00000000-0000-4000-8000-000000000022",
+                "round_id": "00000000-0000-4000-8000-000000000012",
+                "membership_id": "00000000-0000-4000-8000-000000000004",
+                "cycle_member_id": "00000000-0000-4000-8000-000000000003",
+                "character_id": "00000000-0000-4000-8000-000000000008",
+                "character_name": "합성캐릭터",
+                "effect": "cancel"
+              }
+            ],
+            "display_revision": "ca6cc0141f3c4bee7659780f4c200c87aa1e7bd4d74b90670de8d5d33d7bb787"
+          },
+          "impact": {
+            "completed_assignment_ids": [
+              "00000000-0000-4000-8000-000000000021"
+            ],
+            "cancelled_assignment_ids": [
+              "00000000-0000-4000-8000-000000000022"
+            ],
+            "preserved_active_assignment_ids": [],
+            "released_reservation_count": 2,
+            "preserves_other_cycles": true,
+            "preserves_global_membership": true,
+            "preserved_completed": {
+              "assignment_count": 0,
+              "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "raids": []
+            }
+          },
+          "departure": {
+            "effect": "close_incomplete",
+            "successor": null
+          },
+          "state": {
+            "target_state": "open",
+            "generation_state": "open",
+            "actor_cycle_member_state": "participating"
+          },
+          "leadership": {
+            "leader_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+            "leader_membership_id": "00000000-0000-4000-8000-000000000004",
+            "leadership_revision": 2
+          },
+          "expected_after": {
+            "state": {
+              "target_state": "closed",
+              "generation_state": "cancelled",
+              "actor_cycle_member_state": "cancelled"
+            },
+            "leader_cycle_member_id": null,
+            "leader_membership_id": null
+          },
+          "permission": {
+            "allowed": true,
+            "reason": null,
+            "next_change_at": null
+          },
+          "confirmation": {
+            "context_token": "SYNTHETIC-NOT-A-SIGNED-TOKEN",
+            "issued_at": "2026-11-10T05:00:00Z",
+            "expires_at": "2026-11-10T05:02:00Z"
+          },
+          "revisions": [
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000021",
+              "revision": 2
+            },
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000022",
+              "revision": 2
+            },
+            {
+              "resource": "cycle_membership",
+              "id": "00000000-0000-4000-8000-000000000003",
+              "revision": 4
+            },
+            {
+              "resource": "leadership",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 2
+            },
+            {
+              "resource": "members",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 4
+            },
+            {
+              "resource": "plan",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 8
+            },
+            {
+              "resource": "round",
+              "id": "00000000-0000-4000-8000-000000000011",
+              "revision": 2
+            },
+            {
+              "resource": "round",
+              "id": "00000000-0000-4000-8000-000000000012",
+              "revision": 2
+            },
+            {
+              "resource": "target",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 7
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "personal_last_partial_ack",
+      "schema": "PersonalAck",
+      "http_status": 200,
+      "response": {
+        "group_policy_version": "cycle-group-policy-1",
+        "group_policy": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "target_cycle_key": "2026-11-04",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "generation": 1,
+          "scope": "public",
+          "group_id": null,
+          "revision": 1,
+          "state": "known"
+        },
+        "scope": {
+          "server_now": "2026-11-10T05:00:00Z",
+          "current_cycle_key": "2026-11-04",
+          "target_cycle_key": "2026-11-04",
+          "playable_from": "2026-11-04T01:00:00Z",
+          "phase": "current",
+          "target_revision": 8,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "action": "batch_personal_completion_departure",
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "actor_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+          "round_ids": [
+            "00000000-0000-4000-8000-000000000011"
+          ],
+          "impact": {
+            "completed_assignment_ids": [
+              "00000000-0000-4000-8000-000000000021"
+            ],
+            "cancelled_assignment_ids": [
+              "00000000-0000-4000-8000-000000000022"
+            ],
+            "preserved_active_assignment_ids": [],
+            "released_reservation_count": 2,
+            "preserves_other_cycles": true,
+            "preserves_global_membership": true,
+            "preserved_completed": {
+              "assignment_count": 0,
+              "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "raids": []
+            }
+          },
+          "departure": {
+            "effect": "close_incomplete",
+            "successor": null
+          },
+          "command_id": "00000000-0000-4000-8000-000000000109",
+          "outcome": "applied",
+          "executed_at": "2026-11-10T05:00:00Z",
+          "state": {
+            "target_state": "closed",
+            "generation_state": "cancelled",
+            "actor_cycle_member_state": "cancelled"
+          },
+          "leadership": {
+            "leader_cycle_member_id": null,
+            "leader_membership_id": null,
+            "leadership_revision": 3
+          },
+          "revisions": [
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000021",
+              "revision": 3
+            },
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000022",
+              "revision": 3
+            },
+            {
+              "resource": "cycle_membership",
+              "id": "00000000-0000-4000-8000-000000000003",
+              "revision": 5
+            },
+            {
+              "resource": "leadership",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 3
+            },
+            {
+              "resource": "members",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 5
+            },
+            {
+              "resource": "plan",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 9
+            },
+            {
+              "resource": "round",
+              "id": "00000000-0000-4000-8000-000000000011",
+              "revision": 3
+            },
+            {
+              "resource": "round",
+              "id": "00000000-0000-4000-8000-000000000012",
+              "revision": 3
+            },
+            {
+              "resource": "target",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 8
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "personal_denied_context",
+      "schema": "PersonalContext",
+      "http_status": 200,
+      "response": {
+        "group_policy_version": "cycle-group-policy-1",
+        "group_policy": {
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "target_cycle_key": "2026-11-04",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "generation": 1,
+          "scope": "public",
+          "group_id": null,
+          "revision": 1,
+          "state": "known"
+        },
+        "scope": {
+          "server_now": "2026-11-10T05:00:00Z",
+          "current_cycle_key": "2026-11-04",
+          "target_cycle_key": "2026-11-04",
+          "playable_from": "2026-11-04T01:00:00Z",
+          "phase": "current",
+          "target_revision": 7,
+          "policy_version": "two-cycle-contract-4",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1
+        },
+        "data": {
+          "action": "batch_personal_completion_departure",
+          "room_id": "00000000-0000-4000-8000-000000000001",
+          "actor_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+          "actor_cycle_member_revision": 4,
+          "round_ids": [
+            "00000000-0000-4000-8000-000000000011"
+          ],
+          "display": {
+            "rounds": [
+              {
+                "round_id": "00000000-0000-4000-8000-000000000011",
+                "item_id": "00000000-0000-4000-8000-000000000031",
+                "raid_id": "synthetic-raid-1",
+                "raid_name": "합성레이드1",
+                "difficulty_id": "normal",
+                "difficulty_name": "노말",
+                "catalog_version": "SYNTHETIC"
+              },
+              {
+                "round_id": "00000000-0000-4000-8000-000000000012",
+                "item_id": "00000000-0000-4000-8000-000000000032",
+                "raid_id": "synthetic-raid-2",
+                "raid_name": "합성레이드2",
+                "difficulty_id": "normal",
+                "difficulty_name": "노말",
+                "catalog_version": "SYNTHETIC"
+              }
+            ],
+            "assignments": [
+              {
+                "assignment_id": "00000000-0000-4000-8000-000000000021",
+                "round_id": "00000000-0000-4000-8000-000000000011",
+                "membership_id": "00000000-0000-4000-8000-000000000004",
+                "cycle_member_id": "00000000-0000-4000-8000-000000000003",
+                "character_id": "00000000-0000-4000-8000-000000000008",
+                "character_name": "합성캐릭터",
+                "effect": "complete"
+              },
+              {
+                "assignment_id": "00000000-0000-4000-8000-000000000022",
+                "round_id": "00000000-0000-4000-8000-000000000012",
+                "membership_id": "00000000-0000-4000-8000-000000000004",
+                "cycle_member_id": "00000000-0000-4000-8000-000000000003",
+                "character_id": "00000000-0000-4000-8000-000000000008",
+                "character_name": "합성캐릭터",
+                "effect": "cancel"
+              }
+            ],
+            "display_revision": "ca6cc0141f3c4bee7659780f4c200c87aa1e7bd4d74b90670de8d5d33d7bb787"
+          },
+          "impact": {
+            "completed_assignment_ids": [
+              "00000000-0000-4000-8000-000000000021"
+            ],
+            "cancelled_assignment_ids": [
+              "00000000-0000-4000-8000-000000000022"
+            ],
+            "preserved_active_assignment_ids": [],
+            "released_reservation_count": 2,
+            "preserves_other_cycles": true,
+            "preserves_global_membership": true,
+            "preserved_completed": {
+              "assignment_count": 7,
+              "digest": "e0354fec330354219c0749d83f276a822c0bef9465a10936a6582ff183b5b711",
+              "raids": [
+                {
+                  "raid_id": "synthetic-history-raid",
+                  "raid_name": "합성 과거 레이드",
+                  "assignment_count": 7,
+                  "digest": "e0354fec330354219c0749d83f276a822c0bef9465a10936a6582ff183b5b711"
+                }
+              ]
+            }
+          },
+          "departure": {
+            "effect": "automatic_successor",
+            "successor": null
+          },
+          "state": {
+            "target_state": "open",
+            "generation_state": "open",
+            "actor_cycle_member_state": "participating"
+          },
+          "leadership": {
+            "leader_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+            "leader_membership_id": "00000000-0000-4000-8000-000000000004",
+            "leadership_revision": 2
+          },
+          "expected_after": null,
+          "permission": {
+            "allowed": false,
+            "reason": "SUCCESSOR_UNAVAILABLE",
+            "next_change_at": null
+          },
+          "confirmation": null,
+          "revisions": [
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000021",
+              "revision": 2
+            },
+            {
+              "resource": "assignment",
+              "id": "00000000-0000-4000-8000-000000000022",
+              "revision": 2
+            },
+            {
+              "resource": "cycle_membership",
+              "id": "00000000-0000-4000-8000-000000000003",
+              "revision": 4
+            },
+            {
+              "resource": "leadership",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 2
+            },
+            {
+              "resource": "members",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 4
+            },
+            {
+              "resource": "plan",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 8
+            },
+            {
+              "resource": "target",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "revision": 7
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "party_forbidden",
+      "schema": "Error",
+      "http_status": 403,
+      "response": {
+        "error": {
+          "code": "TARGET_LEADER_REQUIRED",
+          "message": "TARGET_LEADER_REQUIRED",
+          "request_id": "00000000-0000-4000-8000-000000000099",
+          "details": null
+        }
+      }
+    }
+  ],
+  "history_proof_note": "Synthetic aggregate evidence, not a live server result or stored user history."
+}

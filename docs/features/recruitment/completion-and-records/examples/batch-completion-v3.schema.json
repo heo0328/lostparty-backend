@@ -1,0 +1,1689 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Issue47 batch completion proposal v3 (not runtime OpenAPI)",
+  "$defs": {
+    "Version": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2147483647
+    },
+    "UUID": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "Time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "CycleKey": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "Leadership": {
+      "type": "object",
+      "properties": {
+        "leader_cycle_member_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/UUID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "leader_membership_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/UUID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "leadership_revision": {
+          "$ref": "#/$defs/Version"
+        }
+      },
+      "required": [
+        "leader_cycle_member_id",
+        "leader_membership_id",
+        "leadership_revision"
+      ],
+      "additionalProperties": false
+    },
+    "State": {
+      "type": "object",
+      "properties": {
+        "target_state": {
+          "type": "string",
+          "enum": [
+            "open",
+            "closed"
+          ]
+        },
+        "generation_state": {
+          "type": "string",
+          "enum": [
+            "open",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "actor_cycle_member_state": {
+          "type": "string",
+          "enum": [
+            "participating",
+            "completed",
+            "cancelled"
+          ]
+        }
+      },
+      "required": [
+        "target_state",
+        "generation_state",
+        "actor_cycle_member_state"
+      ],
+      "additionalProperties": false
+    },
+    "ExpectedAfter": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/State"
+        },
+        "leader_cycle_member_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/UUID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "leader_membership_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/UUID"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "state",
+        "leader_cycle_member_id",
+        "leader_membership_id"
+      ],
+      "additionalProperties": false
+    },
+    "Successor": {
+      "type": "object",
+      "properties": {
+        "cycle_member_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "joined_order": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "character_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "character_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "cycle_member_id",
+        "revision",
+        "joined_order",
+        "character_id",
+        "character_name"
+      ],
+      "additionalProperties": false
+    },
+    "Departure": {
+      "type": "object",
+      "properties": {
+        "effect": {
+          "type": "string",
+          "enum": [
+            "leave",
+            "automatic_successor",
+            "close_completed",
+            "close_incomplete"
+          ]
+        },
+        "successor": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Successor"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "effect",
+        "successor"
+      ],
+      "additionalProperties": false
+    },
+    "Scope": {
+      "type": "object",
+      "properties": {
+        "server_now": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "current_cycle_key": {
+          "$ref": "#/$defs/CycleKey"
+        },
+        "target_cycle_key": {
+          "$ref": "#/$defs/CycleKey"
+        },
+        "playable_from": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "phase": {
+          "type": "string",
+          "enum": [
+            "current",
+            "future"
+          ]
+        },
+        "target_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "policy_version": {
+          "const": "two-cycle-contract-4"
+        },
+        "room_cycle_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "server_now",
+        "current_cycle_key",
+        "target_cycle_key",
+        "playable_from",
+        "phase",
+        "target_revision",
+        "policy_version",
+        "room_cycle_id",
+        "target_generation"
+      ],
+      "additionalProperties": false
+    },
+    "GroupMetadata": {
+      "type": "object",
+      "properties": {
+        "room_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "target_cycle_key": {
+          "$ref": "#/$defs/CycleKey"
+        },
+        "room_cycle_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "generation": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "public",
+                "group"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "known",
+            "unavailable"
+          ]
+        }
+      },
+      "required": [
+        "room_id",
+        "target_cycle_key",
+        "room_cycle_id",
+        "generation",
+        "scope",
+        "group_id",
+        "revision",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "GroupState": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "type": "string",
+          "enum": [
+            "public",
+            "group"
+          ]
+        },
+        "group_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "scope",
+        "group_id"
+      ],
+      "additionalProperties": false
+    },
+    "GroupEffect": {
+      "type": "object",
+      "properties": {
+        "room_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "target_cycle_key": {
+          "$ref": "#/$defs/CycleKey"
+        },
+        "room_cycle_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "before": {
+          "$ref": "#/$defs/GroupState"
+        },
+        "after": {
+          "$ref": "#/$defs/GroupState"
+        }
+      },
+      "required": [
+        "room_id",
+        "target_cycle_key",
+        "room_cycle_id",
+        "generation",
+        "before",
+        "after"
+      ],
+      "additionalProperties": false
+    },
+    "Permission": {
+      "type": "object",
+      "properties": {
+        "allowed": {
+          "type": "boolean"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "next_change_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "allowed",
+        "reason",
+        "next_change_at"
+      ],
+      "additionalProperties": false
+    },
+    "Confirmation": {
+      "type": "object",
+      "properties": {
+        "context_token": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "issued_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "context_token",
+        "issued_at",
+        "expires_at"
+      ],
+      "additionalProperties": false
+    },
+    "RoundDisplay": {
+      "type": "object",
+      "properties": {
+        "round_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "item_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "raid_id": {
+          "type": "string"
+        },
+        "raid_name": {
+          "type": "string"
+        },
+        "difficulty_id": {
+          "type": "string"
+        },
+        "difficulty_name": {
+          "type": "string"
+        },
+        "catalog_version": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "round_id",
+        "item_id",
+        "raid_id",
+        "raid_name",
+        "difficulty_id",
+        "difficulty_name",
+        "catalog_version"
+      ],
+      "additionalProperties": false
+    },
+    "AssignmentDisplay": {
+      "type": "object",
+      "properties": {
+        "assignment_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "round_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "membership_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "cycle_member_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "character_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "character_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "effect": {
+          "type": "string",
+          "enum": [
+            "complete",
+            "cancel",
+            "preserve_active"
+          ]
+        }
+      },
+      "required": [
+        "assignment_id",
+        "round_id",
+        "membership_id",
+        "cycle_member_id",
+        "character_id",
+        "character_name",
+        "effect"
+      ],
+      "additionalProperties": false
+    },
+    "Revision": {
+      "type": "object",
+      "properties": {
+        "resource": {
+          "type": "string",
+          "enum": [
+            "target",
+            "members",
+            "plan",
+            "leadership",
+            "cycle_membership",
+            "round",
+            "assignment"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "resource",
+        "id",
+        "revision"
+      ],
+      "additionalProperties": false
+    },
+    "Command": {
+      "type": "object",
+      "properties": {
+        "expected_cycle_key": {
+          "$ref": "#/$defs/CycleKey"
+        },
+        "target_cycle_key": {
+          "$ref": "#/$defs/CycleKey"
+        },
+        "room_cycle_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "expected_target_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "actor_cycle_member_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "expected_cycle_member_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "round_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 1,
+          "maxItems": 5,
+          "uniqueItems": true
+        },
+        "context_token": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "expected_cycle_key",
+        "target_cycle_key",
+        "room_cycle_id",
+        "target_generation",
+        "expected_target_revision",
+        "actor_cycle_member_id",
+        "expected_cycle_member_revision",
+        "round_ids",
+        "context_token"
+      ],
+      "additionalProperties": false
+    },
+    "PartyImpact": {
+      "type": "object",
+      "properties": {
+        "completed_assignment_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 1,
+          "maxItems": 40,
+          "uniqueItems": true
+        },
+        "cancelled_assignment_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 0,
+          "maxItems": 0,
+          "uniqueItems": true
+        },
+        "preserved_active_assignment_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 0,
+          "maxItems": 40,
+          "uniqueItems": true
+        },
+        "released_reservation_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "preserves_other_cycles": {
+          "const": true
+        },
+        "preserves_global_membership": {
+          "const": true
+        },
+        "preserved_completed": {
+          "$ref": "#/$defs/History"
+        }
+      },
+      "required": [
+        "completed_assignment_ids",
+        "cancelled_assignment_ids",
+        "preserved_active_assignment_ids",
+        "released_reservation_count",
+        "preserves_other_cycles",
+        "preserves_global_membership",
+        "preserved_completed"
+      ],
+      "additionalProperties": false
+    },
+    "PartyDisplay": {
+      "type": "object",
+      "properties": {
+        "rounds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RoundDisplay"
+          },
+          "minItems": 1,
+          "maxItems": 5
+        },
+        "assignments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AssignmentDisplay"
+          },
+          "minItems": 1,
+          "maxItems": 40
+        },
+        "display_revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "rounds",
+        "assignments",
+        "display_revision"
+      ],
+      "additionalProperties": false
+    },
+    "PartyContextData": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "const": "batch_completion"
+        },
+        "room_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "actor_cycle_member_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "round_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 1,
+          "maxItems": 5,
+          "uniqueItems": true
+        },
+        "impact": {
+          "$ref": "#/$defs/PartyImpact"
+        },
+        "departure": {
+          "type": "null"
+        },
+        "actor_cycle_member_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "display": {
+          "$ref": "#/$defs/PartyDisplay"
+        },
+        "state": {
+          "$ref": "#/$defs/State"
+        },
+        "leadership": {
+          "$ref": "#/$defs/Leadership"
+        },
+        "expected_after": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ExpectedAfter"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "permission": {
+          "$ref": "#/$defs/Permission"
+        },
+        "confirmation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Confirmation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "revisions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Revision"
+          },
+          "minItems": 5,
+          "maxItems": 64
+        }
+      },
+      "required": [
+        "action",
+        "room_id",
+        "actor_cycle_member_id",
+        "round_ids",
+        "impact",
+        "departure",
+        "actor_cycle_member_revision",
+        "display",
+        "state",
+        "leadership",
+        "expected_after",
+        "permission",
+        "confirmation",
+        "revisions"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "permission": {
+                "properties": {
+                  "allowed": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "confirmation": {
+                "$ref": "#/$defs/Confirmation"
+              },
+              "expected_after": {
+                "$ref": "#/$defs/ExpectedAfter"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "confirmation": {
+                "type": "null"
+              },
+              "expected_after": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "PartyAckData": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "const": "batch_completion"
+        },
+        "room_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "actor_cycle_member_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "round_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 1,
+          "maxItems": 5,
+          "uniqueItems": true
+        },
+        "impact": {
+          "$ref": "#/$defs/PartyImpact"
+        },
+        "departure": {
+          "type": "null"
+        },
+        "command_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "outcome": {
+          "const": "applied"
+        },
+        "executed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "state": {
+          "$ref": "#/$defs/State"
+        },
+        "leadership": {
+          "$ref": "#/$defs/Leadership"
+        },
+        "revisions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Revision"
+          },
+          "minItems": 5,
+          "maxItems": 64
+        }
+      },
+      "required": [
+        "action",
+        "room_id",
+        "actor_cycle_member_id",
+        "round_ids",
+        "impact",
+        "departure",
+        "command_id",
+        "outcome",
+        "executed_at",
+        "state",
+        "leadership",
+        "revisions"
+      ],
+      "additionalProperties": false
+    },
+    "PartyContext": {
+      "type": "object",
+      "properties": {
+        "group_policy_version": {
+          "anyOf": [
+            {
+              "const": "cycle-group-policy-1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group_policy": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GroupMetadata"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group_policy_effect": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GroupEffect"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group_policy_effects": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/GroupEffect"
+              },
+              "minItems": 0,
+              "maxItems": 2
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "data": {
+          "$ref": "#/$defs/PartyContextData"
+        }
+      },
+      "required": [
+        "scope",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "PartyAck": {
+      "type": "object",
+      "properties": {
+        "group_policy_version": {
+          "anyOf": [
+            {
+              "const": "cycle-group-policy-1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group_policy": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GroupMetadata"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group_policy_effect": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GroupEffect"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group_policy_effects": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/GroupEffect"
+              },
+              "minItems": 0,
+              "maxItems": 2
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "data": {
+          "$ref": "#/$defs/PartyAckData"
+        }
+      },
+      "required": [
+        "scope",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "PersonalImpact": {
+      "type": "object",
+      "properties": {
+        "completed_assignment_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 1,
+          "maxItems": 5,
+          "uniqueItems": true
+        },
+        "cancelled_assignment_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 0,
+          "maxItems": 4,
+          "uniqueItems": true
+        },
+        "preserved_active_assignment_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 0,
+          "maxItems": 0,
+          "uniqueItems": true
+        },
+        "released_reservation_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "preserves_other_cycles": {
+          "const": true
+        },
+        "preserves_global_membership": {
+          "const": true
+        },
+        "preserved_completed": {
+          "$ref": "#/$defs/History"
+        }
+      },
+      "required": [
+        "completed_assignment_ids",
+        "cancelled_assignment_ids",
+        "preserved_active_assignment_ids",
+        "released_reservation_count",
+        "preserves_other_cycles",
+        "preserves_global_membership",
+        "preserved_completed"
+      ],
+      "additionalProperties": false
+    },
+    "PersonalDisplay": {
+      "type": "object",
+      "properties": {
+        "rounds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RoundDisplay"
+          },
+          "minItems": 1,
+          "maxItems": 5
+        },
+        "assignments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AssignmentDisplay"
+          },
+          "minItems": 1,
+          "maxItems": 5
+        },
+        "display_revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "rounds",
+        "assignments",
+        "display_revision"
+      ],
+      "additionalProperties": false
+    },
+    "PersonalContextData": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "const": "batch_personal_completion_departure"
+        },
+        "room_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "actor_cycle_member_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "round_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 1,
+          "maxItems": 5,
+          "uniqueItems": true
+        },
+        "impact": {
+          "$ref": "#/$defs/PersonalImpact"
+        },
+        "departure": {
+          "$ref": "#/$defs/Departure"
+        },
+        "actor_cycle_member_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "display": {
+          "$ref": "#/$defs/PersonalDisplay"
+        },
+        "state": {
+          "$ref": "#/$defs/State"
+        },
+        "leadership": {
+          "$ref": "#/$defs/Leadership"
+        },
+        "expected_after": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ExpectedAfter"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "permission": {
+          "$ref": "#/$defs/Permission"
+        },
+        "confirmation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Confirmation"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "revisions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Revision"
+          },
+          "minItems": 5,
+          "maxItems": 64
+        }
+      },
+      "required": [
+        "action",
+        "room_id",
+        "actor_cycle_member_id",
+        "round_ids",
+        "impact",
+        "departure",
+        "actor_cycle_member_revision",
+        "display",
+        "state",
+        "leadership",
+        "expected_after",
+        "permission",
+        "confirmation",
+        "revisions"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "permission": {
+                "properties": {
+                  "allowed": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "confirmation": {
+                "$ref": "#/$defs/Confirmation"
+              },
+              "expected_after": {
+                "$ref": "#/$defs/ExpectedAfter"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "confirmation": {
+                "type": "null"
+              },
+              "expected_after": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "PersonalAckData": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "const": "batch_personal_completion_departure"
+        },
+        "room_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "actor_cycle_member_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "round_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 1,
+          "maxItems": 5,
+          "uniqueItems": true
+        },
+        "impact": {
+          "$ref": "#/$defs/PersonalImpact"
+        },
+        "departure": {
+          "$ref": "#/$defs/Departure"
+        },
+        "command_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "outcome": {
+          "const": "applied"
+        },
+        "executed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "state": {
+          "$ref": "#/$defs/State"
+        },
+        "leadership": {
+          "$ref": "#/$defs/Leadership"
+        },
+        "revisions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Revision"
+          },
+          "minItems": 5,
+          "maxItems": 64
+        }
+      },
+      "required": [
+        "action",
+        "room_id",
+        "actor_cycle_member_id",
+        "round_ids",
+        "impact",
+        "departure",
+        "command_id",
+        "outcome",
+        "executed_at",
+        "state",
+        "leadership",
+        "revisions"
+      ],
+      "additionalProperties": false
+    },
+    "PersonalContext": {
+      "type": "object",
+      "properties": {
+        "group_policy_version": {
+          "anyOf": [
+            {
+              "const": "cycle-group-policy-1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group_policy": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GroupMetadata"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group_policy_effect": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GroupEffect"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group_policy_effects": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/GroupEffect"
+              },
+              "minItems": 0,
+              "maxItems": 2
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "data": {
+          "$ref": "#/$defs/PersonalContextData"
+        }
+      },
+      "required": [
+        "scope",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "PersonalAck": {
+      "type": "object",
+      "properties": {
+        "group_policy_version": {
+          "anyOf": [
+            {
+              "const": "cycle-group-policy-1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group_policy": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GroupMetadata"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group_policy_effect": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GroupEffect"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group_policy_effects": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/GroupEffect"
+              },
+              "minItems": 0,
+              "maxItems": 2
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "data": {
+          "$ref": "#/$defs/PersonalAckData"
+        }
+      },
+      "required": [
+        "scope",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "Conflict": {
+      "type": "object",
+      "properties": {
+        "room_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uuid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "target_cycle_key": {
+          "$ref": "#/$defs/CycleKey"
+        },
+        "raid_id": {
+          "type": "string"
+        },
+        "character_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "can_view_detail": {
+          "type": "boolean"
+        },
+        "room_title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "room_id",
+        "target_cycle_key",
+        "raid_id",
+        "character_id",
+        "can_view_detail",
+        "room_title"
+      ],
+      "additionalProperties": false
+    },
+    "ErrorDetails": {
+      "type": "object",
+      "properties": {
+        "conflicts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Conflict"
+          },
+          "minItems": 0,
+          "maxItems": 5
+        },
+        "available_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "failed_cycle_key": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CycleKey"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "conflicts",
+        "available_at",
+        "failed_cycle_key"
+      ],
+      "additionalProperties": false
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            },
+            "request_id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "details": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/ErrorDetails"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "retry_after_seconds": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "retry_at": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "request_id"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "error"
+      ],
+      "additionalProperties": false
+    },
+    "HistoryRaid": {
+      "type": "object",
+      "properties": {
+        "raid_id": {
+          "type": "string"
+        },
+        "raid_name": {
+          "type": "string"
+        },
+        "assignment_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "raid_id",
+        "raid_name",
+        "assignment_count",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "History": {
+      "type": "object",
+      "properties": {
+        "assignment_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "raids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/HistoryRaid"
+          }
+        }
+      },
+      "required": [
+        "assignment_count",
+        "digest",
+        "raids"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/PartyContext"
+    },
+    {
+      "$ref": "#/$defs/PersonalContext"
+    },
+    {
+      "$ref": "#/$defs/PartyAck"
+    },
+    {
+      "$ref": "#/$defs/PersonalAck"
+    },
+    {
+      "$ref": "#/$defs/Error"
+    }
+  ]
+}

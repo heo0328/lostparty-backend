@@ -1,5 +1,67 @@
 # 영구 개발 이력
 
+## 2026-11-10 Issue47 v3 공개 API·원자 명령 로컬 구현/검증 완료
+
+Native6 수용과 사용자 구현 계획 승인으로 v3 공개 DTO/4경로·context/ACK·원자 명령을 구현했다. 신규 Batch DTO 이름으로 기존 component 충돌을 피하고 target UUID/revision을 non-null로 선언했다. cycle_lifecycle.qualify/existing_participation.selection에는 optional active_rows 경계를 추가해 기존 호출자의 기본 경로를 유지하면서 신규 batch는 활성 캐릭터/점유만 자격 검증에 사용한다. 상세는 [구현 원본](../features/recruitment/completion-and-records/batch-completion-implementation.md)을 따른다.
+
+전체 선택 scope/권한/CAS·원장/점유/예약 검증 뒤 party/manual 완료·미선택 개인 취소·정리/승계/종료·감사/ACK를 cycles.execute 한 트랜잭션으로 처리한다. 신규 operation만 추가하고 단건/계정 원요청·원ACK는 유지했다. 쓰기 후 신규 완료를 제외한 과거 proof와 최종 state/리더를 원 context에 대조한다. 누적 이력은 레이드별 집계/해시로 분리하고 과거 원본을 변경하지 않는다. 기존 생성의 인원 정책을 넓히지 않았다.
+
+최종 고유123PASS(신규 batch/내부24+기존 선택99)·scripts63PASS다. 최초 smoke7PASS/103.39s는 후속에 포함한다. 확장21PASS/1FAIL/269.98s의 실패는 변경 본문 충돌 시험이 원값과 같은 상수를 넣은1건이며 원값+1로 수정하고 해당1PASS/19.57s로 해소했다. 주차 경계 rollback·후계자 부재·과거 proof stale3PASS/46.15s는 기존2사례의 강화/신규1사례, 그룹 비공개/비그룹 후계자 fallback1PASS/18.44s는 신규다. 기존 profile/캐릭터 이력/재신청40PASS/507.68s와 기존 atomic members/주차 완료59PASS/776.78s를 확인했다. 실행/재실행을 중복 합산하지 않았다.
+
+최종 scope의 non-null 명세 보정 후 실제 HTTP2경로·두 전체 객체/profile선언4PASS/33.94s로 재확인했다. 기본 OpenAPI125경로142동작은 객체/파일 그대로이고 two-cycle192경로213동작은 기존188/209·모든 기존 component를 보존한4경로/22schema 추가다. participation_profile 지원/선언69개를 맞췄고 문서 API분류도213개다. 순서/서식을 보존해 새 항목을 추가했으며 기본 Git diff의 반복 JSON 매칭과 달리 patience diff/객체 대조상 추가만 있다.
+
+최종 검증 이미지 앱288파일은 현재 앱과 바이트 동일하며 manifest hash/계약 hash/선택 시험/cleanup·기존 경고는 [검증 JSON](../features/recruitment/completion-and-records/batch-completion-verification.json)을 따른다. 전체 프로젝트 회귀는 아니며 과거 전체1921PASS/기존2FAIL과 합산하지 않는다. 기존 Starlette deprecation·null leader SQLAlchemy 경고는 무관한 기존 코드로 보존했다. 모든 합성 시험 DB컨테이너/네트워크 cleanup을 확인했고 실제 dev/운영·DB/키/환경은 사용/교체하지 않았다.
+
+[전체7번째 Backend 구현/검증 회신](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6762507528)에 미게시/미반영·신규 source Git SHA 없음·두 전체 계약 경로/hash·검증 범위와 다음 담당을 명시했다. 게시 후 본문/전체7댓글·작성 측/순번·본문 일치를 확인하고 Issue 상단을 최신화했다. 미게시 로컬 파일을 원격 소비 가능으로 인계하거나 실제 서버/기기 시험을 요청하지 않았다. 다음 Backend 게시/로컬 반영은 사용자 지시 범위, Native는 v3 연결/이후 실제 인수 담당이다.
+
+checkout `feat/raid-batch-completion`·기준084a6af 위 변경은 미커밋·미push다. 신규 구현 커밋은 없으며 manifest/file hash와 Git SHA를 구분한다. 실제 dev API/DB0036·운영·환경/키·Native 소스·commit/push/merge·태그/운영/APK·자료 변경/삭제·Issue 종료 없음.
+
+## 2026-11-10 Issue47 Native6 v3 소비 수용 확인
+
+본문/전체 댓글6개를 재조회해 [전체6번째 Native v3 수용](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6761376813)을 확인했다. Native는 전체 활성 효과 표시·과거 이력 레이드별 건수/해시와 원context↔ACK proof 전체 동일성 소비를 수용했다. 공개 DTO/API 확정·원자 명령/격리 HTTP·권한/CAS·경합/rollback·원ACK/단건 회귀 및 고정 소스/전체 OpenAPI/SHA256·실제 로컬 지원 상태 인계를 요청했다. 다음 담당 Backend이며 Native는 계약 인계 후 연결한다. 기존 단건·계정 개별 대상·주차/권한·승계·원요청 복구 유지, 운영 배포/자료 삭제 요청 없음.
+
+이번은 회신 수신·상태 기록만 수행하며 같은 수용 안내 댓글/반복 기기 요청은 추가하지 않았다. 독립 도우미4PASS는 기존 근거로 재사용하고 공개 batch 기능/서버 완료로 확대하지 않는다. 코드/OpenAPI·실제 API/DB/환경/키·commit/push/merge/배포·Issue 종료 없음. checkout `feat/raid-batch-completion`, 기존 변경과 신규 문서는 미커밋·미push다.
+
+## 2026-11-10 Issue47 v3 이력 집계 계약 인계·내부 도우미 준비
+
+사용자 승인 계획에 따라 v2 소비 필드 차이는 Native 확인 후 공개 DTO/API를 확정하고 독립적인 내부 준비를 병행했다. Native4까지 본문/전체 댓글4개를 재확인했다. [v3 원본](../features/recruitment/completion-and-records/batch-completion-wire-v3.md)·전체 Schema/v2 교체분·전체 응답12개를 작성했다. 전체 효과 current round 표시, 보존 ID 배열 대신 레이드별 건수/전체·부분 digest, 개인 scope를 재가입 전 본인 기록까지 확장한 집계를 제안했다. 역사 행 수에 활성5/40 제한을 적용하지 않는다.
+
+[전체5번째 Backend v3](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6761002885)에 로컬 미게시 문서 없이 검토할 수 있는 교체 Schema·전체 예시를 포함했고 전체 댓글5개/본문 일치를 확인했다. 다음 Native 소비 차이 수용 뒤 Backend 공개 wire/API·원자 명령 구현이다. 내부 결과는 같은 댓글에 갱신하며 변화 없는 추가 댓글은 만들지 않는다.
+
+신규 batch_snapshot 도우미는 인증/트랜잭션을 호출자에게 맡기는 읽기 전용 함수다. 현재 active만 슬롯/항목/캐릭터 증명과 상한에 쓰고, completed는 종료된 member/비현재 round/다른 캐릭터를 포함해 scope별 순회·해시한다. 입력 원본은 변경하지 않는다. API/토큰에 연결하지 않았다.
+
+최초 격리 실행은3PASS/1FAIL/35.83s였다. 실제 fixture의 활성 round가1개인데2개로 기대한 시험1건을 정정했고 최종4PASS/34.09s, 두 합성 프로젝트의 DB컨테이너/네트워크 정리를 확인했다. 개인258/공대259 완료 이력(배치128 초과), 재가입·본인/다음T 분리·프로젝트 digest와 바이트 일치·전체 원본 hash 불변·새 완료 제외 증거·비현재 활성 round 거절·표시 fallback과 진짜 오류 전파·v3 전체 예시를 검증했다. 두 실행/예시12개를 중복 합산하지 않는다. Docker는 실행 중이었고 socket 접근 권한만 승격해 로컬 tmpfs 시험을 진행했다. 원격 CI/운영으로 우회하지 않았다.
+
+[검증 집계](../features/recruitment/completion-and-records/batch-completion-preparation-verification.json)를 남겼다. 문서/링크·동결/경로·diff 검사 통과. 공개 batch HTTP·완료/탈퇴 트랜잭션·권한/CAS/경합/원ACK·기기/실제 서버 지원은 미실행/미구현이다. checkout `feat/raid-batch-completion`·기준084a6af, 문서/코드/시험은 미커밋·미push. 기존 파일 변경을 보존했고 공개 DTO/route·기본/two-cycle OpenAPI·실제 API/DB·키/환경·Native 소스·commit/push/merge/배포/Issue 종료는 변경하지 않았다.
+
+## 2026-11-10 Issue47 Native4 v2 수용·사용자 채택 보완 요청 수신
+
+본문/전체 댓글4개를 조회해 [전체4번째 Native 회신](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6760758009)을 확인했다. v2 profile/DTO/ACK/revision/탈퇴 정의를 수용하고, 사용자가 채택한 전체 완료/취소/보존 대상 레이드 표시와 활성 참가 한도/누적 완료 이력 분리를 반영해 구현하도록 요청했다. 기존 v2의 display.rounds 선택 한정과 역사 누적 시40/5개 상한·413 거절안은 새 보완으로 교체할 대상이다. 단순 수치 확대나 이력 삭제/사용자 정리로 대체하지 않는다.
+
+다음 Backend 변경 wire/집계·보존 규칙/예시 및 구현·관련 회귀 후 고정 소스/전체 OpenAPI/SHA256·실제 로컬 지원 상태 인계다. 이번은 수신 확인·문서 기록만 수행, 추가 댓글·기능/OpenAPI·서버/DB·commit/push/배포·Issue 종료 없음. 기존 문서/예시는 미커밋·미push이며 checkout `feat/raid-batch-completion`이다.
+
+## 2026-11-10 Issue47 v2 전체 wire·revision/탈퇴 대조 보완 회신
+
+본문/전체 댓글2개와 기존 Scope/Leadership/Revision/Successor DTO·세대/멤버 모델·close_target/완료/원ACK 경로를 대조했다. [v2 원본](../features/recruitment/completion-and-records/batch-completion-wire-v2.md)에 profile 사실 정정·전체 필드/nullable/추가 필드 금지·상한·실행 거절을 명시하고, context 현재 state/leadership/revisions와 expected_after, ACK 최종 state/leadership/revisions 대조를 제안했다. 별도 generation revision이 없음을 설명하고 개인 마지막 탈퇴 cancelled 회원/완료 또는취소 세대를 구분했다. 역사 누적이 응답상한을 넘을 때413 전체 거절·무절삭도 명시했다.
+
+제안용 JSON Schema34정의·전체 응답12개를 작성했다. Schema/format·선택/효과/상태/revision 정합성12개 PASS, 필수 누락/null/추가필드/빈 선택 등36개 거절을 확인했다. 문서/링크·동결/경로·diff PASS이며 신규 기능/DB/HTTP/기기 검증이 아니다. 최초 문서 검사에서 배열 표기와 괄호가 링크로 인식된1건은 표기를 고쳐 해소했다.
+
+[전체3번째 Backend v2 회신](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6760087700)에 schema·전체 예시 전문을 접기 영역으로 포함해 미게시 로컬 문서 없이 검토할 수 있게 했다. 전체 댓글3개를 재조회해 Backend 작성·계약 보완 단계와 게시 전문 일치를 확인했다. 다음 Native 최종 수용/차이 회신 후 Backend 구현이다. 최종 합의/실행 지원 완료가 아니며 같은 정상 기기 시험은 요청하지 않았다.
+
+checkout `feat/raid-batch-completion`·기준084a6af, 신규/기존 문서는 미커밋·미push다. 코드/실행 OpenAPI·서버/DB·키/환경·Native 소스 변경·commit/push/merge·운영/APK 배포·자료 삭제·Issue 종료 없음.
+
+## 2026-11-10 Issue47 Native 계약 검토 수신·profile 사실 정정
+
+본문과 전체 댓글2개를 재조회해 [전체2번째 Native 계약 검토](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6759918260)를 확인했다. 전용4경로·선택 원자 처리·기존 복구 보존 방향은 수용, 최종 합의 전 정확한 전체 wire/예시·상한/거절 구조·revisions resource/ID·개인 탈퇴 결과 대조를 요구했다. 다음 담당 Backend 상세 계약 보완·공식 회신이며 이번은 수신 확인이다.
+
+최초 제안의 contract_profile 값을 계약 version과 혼동했다. 실제 beta_profile.PROFILE 및 기존 beta-contract-wire 원본은 `beta-recruitment-1`이고 `beta-recruitment-wire-2`는 계약 version이다. 변경 의도 없이 로컬 제안 원본만 정정했다. 남은 보완·정정 회신은 미완료이며 변화 없는 접수 댓글을 추가하지 않았다. 문서 검사/diff만 확인, 코드/OpenAPI·서버/DB·Git 게시·기기 시험 없음. checkout `feat/raid-batch-completion`, 기존/신규 문서 변경은 미커밋·미push다.
+
+## 2026-11-10 Issue47 선택 레이드 완료 계약 제안
+
+사용자 승인 계획의 계약 제안→Native 합의→구현 순서로 진행했다. Issue47 본문/전체 댓글0개·clean checkout을 확인하고 기존 cycle_outcomes/atomic_members/cycles.execute 및 profile/token 처리를 대조했다. [계약안](../features/recruitment/completion-and-records/batch-completion-proposal.md)·합성 효과 예시를 작성하고 [Backend 계약 제안](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6759461926)을 게시했다. 게시 후 전체 댓글1개를 재조회해 본문 제외 전체1번째·Backend 작성·계약 제안 단계임을 확인했다.
+
+전용 context/명령4경로·선택1~5개·공대최대40 assignment·명시적 완료/취소/보존/탈퇴 ACK·기존 profile/단건/원pending 보존을 제안했다. DB migration 계획은 없다. 다음 Native 소비 대조/합의 후 Backend 구현이며 계약/기능 완료가 아니다. 문서/링크·동결/경로·diff 검사 통과, 기능/서버/DB/기기 시험 미실행이다. checkout `feat/raid-batch-completion`·기준084a6af, 신규 문서는 미커밋·미push다. 코드/실행 OpenAPI·서버/DB/키·환경·Native 소스는 변경하지 않았고 commit/push/merge·배포·Issue 종료는 없다.
+
 ## 2026-11-10 완료 문서 게시·character-lifecycle dev 병합/브랜치 정리
 
 2026-11-10 사용자 지시로 완료 문서13개를 `afd5ba21d443d85f73b98d29043eefe3583b8cd7`에 커밋·push하고, feat/character-lifecycle의 기존 개발·정리·계약/검증 이력을 dev에 이력 보존 병합했다. 병합 `aa7058c5f93ad799033116608f2b3f52931b0dfe`의 origin/dev 반영과 작업 브랜치 tip 포함·전체 tree 동일을 확인했다. 통합된 feat/character-lifecycle은 로컬·원격에서 삭제했고 현재 checkout은 **dev**다. main은3e3ddc1 그대로이며 변경하지 않았다.

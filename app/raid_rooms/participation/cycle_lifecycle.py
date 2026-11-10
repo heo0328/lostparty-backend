@@ -65,20 +65,20 @@ def assignments(db,row,cm):
         CycleAssignment.cycle_member_id==cm.id).order_by(Assignment.item_id)))
 
 
-def qualify(db,room,row,cm):
+def qualify(db,room,row,cm,*,active_rows=None):
     room=group_policy.project(db,room,row) if not isinstance(room,group_policy.RoomView) or room._cycle_row.id!=row.id else room
     member=db.get(Member,cm.membership_id)
     if member is None or member.ended_at is not None or cm.state not in VALID_STATES:fail('SOURCE_PARTICIPATION_REQUIRED',403)
     user=db.get(User,cm.user_id)
     if user is None or user.status!='active':fail('ROOM_TARGET_UNAVAILABLE')
-    owned=assignments(db,row,cm)
-    if {a.item_id for a in owned}!={i.id for i,r in admission.rounds(db,row)} or not owned:
+    owned=assignments(db,row,cm) if active_rows is None else active_rows
+    if active_rows is None and ({a.item_id for a in owned}!={i.id for i,r in admission.rounds(db,row)} or not owned):
         fail('ROOM_REVIEW_REQUIRED')
     active=[a for a in owned if a.state=='active']
     selected_rows=active
     if active and len({(a.character_id,a.selected_role) for a in active})!=1:fail('ROOM_REVIEW_REQUIRED')
     from app.raid_rooms.participation import existing_participation
-    selected=existing_participation.selection(db,room,row,cm)
+    selected=existing_participation.selection(db,room,row,cm,active_rows=active_rows)
     admission.core._group(db,room,cm.user_id,existing=True)
     admission.core._room_restrictions(db,room)
     if selected is None:
@@ -94,8 +94,8 @@ def qualify(db,room,row,cm):
     try:level=Decimal(str(character.summary.get('item_level')))
     except (ValueError,InvalidOperation):level=None
     for item,rd in admission.rounds(db,row):
-        a=next(a for a in owned if a.item_id==item.id)
-        if a.state!='active':continue
+        a=next((a for a in owned if a.item_id==item.id and (active_rows is None or a.state=='active')),None)
+        if a is None or a.state!='active':continue
         try:difficulty=raids.difficulty(item.raid_id,rd.difficulty_id,rd.catalog_version)
         except raids.CatalogSelectionError as error:fail(error.code)
         if not raids.meets_item_level(level,difficulty):fail('RAID_ITEM_LEVEL_REQUIRED')

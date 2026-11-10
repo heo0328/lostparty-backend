@@ -2,6 +2,8 @@
 
 본인 item·공대장 전체 완료, 본인 완료 근거 정정과 완료/종료 방의 기록을 관리한다. 완료 정정은 과거 참가·편성·예약 복원과 다르다.
 
+Issue47 선택 레이드 일괄 완료는 [v3 전체 효과 표시·이력 집계](batch-completion-wire-v3.md)를 [공개 API·원자 명령으로 로컬 구현/검증](batch-completion-implementation.md)했다. 미커밋·미push·실제 서버 미반영이며 Native 연결/기기는 별도다. 기존 완료 오류/계정 복구 인수와 구분한다.
+
 <a id="behavior"></a>
 
 ## 현재 동작
@@ -71,3 +73,12 @@
 | POST | `/v2/me/characters/{character_id}/raid-weekly-states/{raid_id}/completion-corrections` |
 | GET | `/v1/raid-rooms/{room_id}/command-context` |
 | GET | `/v2/raid-rooms/{room_id}/command-context` |
+
+## Issue47 v3 실행 API
+
+| Method | 경로 |
+|---|---|
+| GET | `/v2/raid-rooms/{room_id}/batch-completion-context` |
+| POST | `/v2/raid-rooms/{room_id}/batch-completions` |
+| GET | `/v2/raid-rooms/{room_id}/batch-personal-completion-departure-context` |
+| POST | `/v2/raid-rooms/{room_id}/batch-personal-completion-departures` |

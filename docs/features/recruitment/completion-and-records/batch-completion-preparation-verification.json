@@ -1,0 +1,50 @@
+{
+  "date": "2026-11-10",
+  "stage": "v3-consumer-review-and-independent-internal-preparation",
+  "branch": "feat/raid-batch-completion",
+  "base_commit": "084a6af",
+  "committed": false,
+  "pushed": false,
+  "issue": 47,
+  "comment_url": "https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6761002885",
+  "public_api_implemented": false,
+  "execution_openapi_changed": false,
+  "dev_server_changed": false,
+  "database_migration": false,
+  "tests": {
+    "command": "python3 scripts/verify_isolated.py all tests/raid_rooms/outcomes/test_batch_snapshot.py",
+    "initial": {
+      "passed": 3,
+      "failed": 1,
+      "seconds": 35.83,
+      "project": "lostparty-check-1ba1cb6ffde4",
+      "cause": "fixture has one live round, test expected two"
+    },
+    "final": {
+      "passed": 4,
+      "failed": 0,
+      "seconds": 34.09,
+      "project": "lostparty-check-279563405d45"
+    },
+    "cleanup": "both test projects removed their containers and internal networks",
+    "schema_examples": 12,
+    "history_counts": {
+      "personal": 258,
+      "party": 259
+    },
+    "evidence": "synthetic isolated PostgreSQL; no batch public commands/HTTP/device acceptance"
+  },
+  "not_executed": [
+    "batch HTTP/token/authority/CAS transaction",
+    "batch completion/departure state transitions and concurrency",
+    "new namespace ACK replay",
+    "actual dev rollout",
+    "Native connection/device acceptance"
+  ],
+  "sha256": {
+    "app/raid_rooms/outcomes/batch_snapshot.py": "ec1f8ad8611fae3275ed4e132762e37b74c40f4aef3692b1e9da3204c3f29dda",
+    "tests/raid_rooms/outcomes/test_batch_snapshot.py": "57a7ccb9cfcc67fb4bfcf4d90f2ec31d177339a15a05b8e5b231dc5b2a32a6fc",
+    "docs/features/recruitment/completion-and-records/examples/batch-completion-v3.schema.json": "2edfa1ac3b1ca7c34fe2f6260dae1d25b212f39ef4dcd0cb3a6b49f8c0045e4c",
+    "docs/features/recruitment/completion-and-records/examples/batch-completion-v3.examples.json": "ca8413151ac6ff57392aa95b8c1b911b2c5f5ba97d171b0c9be874a287e74350"
+  }
+}
