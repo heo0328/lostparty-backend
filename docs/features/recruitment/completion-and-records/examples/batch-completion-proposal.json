@@ -1,0 +1,179 @@
+{
+  "status": "proposal-not-implemented",
+  "synthetic": true,
+  "fragment_only": true,
+  "examples": [
+    {
+      "name": "batch_completion",
+      "context_request": {
+        "method": "GET",
+        "path": "/v2/raid-rooms/00000000-0000-4000-8000-000000000001/batch-completion-context",
+        "query": {
+          "target_cycle_key": "2026-11-04",
+          "round_ids": "[\"00000000-0000-4000-8000-000000000011\",\"00000000-0000-4000-8000-000000000012\"]",
+          "group_policy_version": "cycle-group-policy-1",
+          "participation_profile": "remaining-active-1"
+        }
+      },
+      "command_request": {
+        "method": "POST",
+        "path": "/v2/raid-rooms/00000000-0000-4000-8000-000000000001/batch-completions",
+        "query": {
+          "group_policy_version": "cycle-group-policy-1",
+          "participation_profile": "remaining-active-1"
+        },
+        "body": {
+          "expected_cycle_key": "2026-11-04",
+          "target_cycle_key": "2026-11-04",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1,
+          "expected_target_revision": 7,
+          "actor_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+          "expected_cycle_member_revision": 4,
+          "round_ids": [
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "context_token": "ILLUSTRATIVE-NOT-A-SIGNED-TOKEN"
+        }
+      },
+      "context_effect_excerpt": {
+        "round_ids": [
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "impact": {
+          "completed_assignment_ids": [
+            "00000000-0000-4000-8000-000000000021",
+            "00000000-0000-4000-8000-000000000022"
+          ],
+          "cancelled_assignment_ids": [],
+          "preserved_completed_assignment_ids": [
+            "00000000-0000-4000-8000-000000000024"
+          ],
+          "preserved_active_assignment_ids": [
+            "00000000-0000-4000-8000-000000000023"
+          ],
+          "released_reservation_count": 2,
+          "preserves_other_cycles": true,
+          "preserves_global_membership": true
+        },
+        "departure": null
+      },
+      "ack_effect_excerpt": {
+        "action": "batch_completion",
+        "outcome": "applied",
+        "round_ids": [
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "impact": {
+          "completed_assignment_ids": [
+            "00000000-0000-4000-8000-000000000021",
+            "00000000-0000-4000-8000-000000000022"
+          ],
+          "cancelled_assignment_ids": [],
+          "preserved_completed_assignment_ids": [
+            "00000000-0000-4000-8000-000000000024"
+          ],
+          "preserved_active_assignment_ids": [
+            "00000000-0000-4000-8000-000000000023"
+          ],
+          "released_reservation_count": 2,
+          "preserves_other_cycles": true,
+          "preserves_global_membership": true
+        },
+        "departure": null
+      }
+    },
+    {
+      "name": "batch_personal_completion_departure",
+      "context_request": {
+        "method": "GET",
+        "path": "/v2/raid-rooms/00000000-0000-4000-8000-000000000001/batch-personal-completion-departure-context",
+        "query": {
+          "target_cycle_key": "2026-11-04",
+          "round_ids": "[\"00000000-0000-4000-8000-000000000011\",\"00000000-0000-4000-8000-000000000012\"]",
+          "group_policy_version": "cycle-group-policy-1",
+          "participation_profile": "remaining-active-1"
+        }
+      },
+      "command_request": {
+        "method": "POST",
+        "path": "/v2/raid-rooms/00000000-0000-4000-8000-000000000001/batch-personal-completion-departures",
+        "query": {
+          "group_policy_version": "cycle-group-policy-1",
+          "participation_profile": "remaining-active-1"
+        },
+        "body": {
+          "expected_cycle_key": "2026-11-04",
+          "target_cycle_key": "2026-11-04",
+          "room_cycle_id": "00000000-0000-4000-8000-000000000002",
+          "target_generation": 1,
+          "expected_target_revision": 7,
+          "actor_cycle_member_id": "00000000-0000-4000-8000-000000000003",
+          "expected_cycle_member_revision": 4,
+          "round_ids": [
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "context_token": "ILLUSTRATIVE-NOT-A-SIGNED-TOKEN"
+        }
+      },
+      "context_effect_excerpt": {
+        "round_ids": [
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "impact": {
+          "completed_assignment_ids": [
+            "00000000-0000-4000-8000-000000000021",
+            "00000000-0000-4000-8000-000000000022"
+          ],
+          "cancelled_assignment_ids": [
+            "00000000-0000-4000-8000-000000000023"
+          ],
+          "preserved_completed_assignment_ids": [
+            "00000000-0000-4000-8000-000000000024"
+          ],
+          "preserved_active_assignment_ids": [],
+          "released_reservation_count": 3,
+          "preserves_other_cycles": true,
+          "preserves_global_membership": true
+        },
+        "departure": {
+          "effect": "leave",
+          "successor": null
+        }
+      },
+      "ack_effect_excerpt": {
+        "action": "batch_personal_completion_departure",
+        "outcome": "applied",
+        "round_ids": [
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "impact": {
+          "completed_assignment_ids": [
+            "00000000-0000-4000-8000-000000000021",
+            "00000000-0000-4000-8000-000000000022"
+          ],
+          "cancelled_assignment_ids": [
+            "00000000-0000-4000-8000-000000000023"
+          ],
+          "preserved_completed_assignment_ids": [
+            "00000000-0000-4000-8000-000000000024"
+          ],
+          "preserved_active_assignment_ids": [],
+          "released_reservation_count": 3,
+          "preserves_other_cycles": true,
+          "preserves_global_membership": true
+        },
+        "departure": {
+          "effect": "leave",
+          "successor": null
+        }
+      }
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 # LostParty Backend 문서 안내
 
+2026-11-10 문서 기준: #47/#48은 완료 종료, 현재 코드·로컬 실행과 다음 정리는 [프로젝트 상태](project/README.md)에서 확인한다. 기능 안내의 오래된 미게시/미반영 표현을 정정했고 [최신화 점검](engineering/documentation/documentation-review-20261110.md)에 변경 근거를 기록했다.
+
 기능명으로 현재 동작과 계약을 찾고, 중요한 결정의 이유가 필요할 때 Issue·댓글·보관 원문으로 이동합니다.
 
 코드 위치와 새 파일 배치는 [폴더 분류·현재 파일 찾기](engineering/development/source-layout.md#현재-파일을-찾는-순서)를 따릅니다. 예전 경로의 1·2차 이동과 혼합 파일 분리도 이 안내에서 추적합니다.

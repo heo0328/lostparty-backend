@@ -1254,6 +1254,30 @@
       "path": "/v2/me/raid-room-character-issues",
       "operation_id": "character_issue_summary_v2_me_raid_room_character_issues_get",
       "topic": "rosters/lifecycle"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/raid-rooms/{room_id}/batch-completion-context",
+      "operation_id": "contract3_get__v2_raid-rooms_room_id_batch-completion-context",
+      "topic": "recruitment/completion-and-records"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/batch-completions",
+      "operation_id": "contract3_post__v2_raid-rooms_room_id_batch-completions",
+      "topic": "recruitment/completion-and-records"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/raid-rooms/{room_id}/batch-personal-completion-departure-context",
+      "operation_id": "contract3_get__v2_raid-rooms_room_id_batch-personal-completion-departure-context",
+      "topic": "recruitment/completion-and-records"
+    },
+    {
+      "method": "POST",
+      "path": "/v2/raid-rooms/{room_id}/batch-personal-completion-departures",
+      "operation_id": "contract3_post__v2_raid-rooms_room_id_batch-personal-completion-departures",
+      "topic": "recruitment/completion-and-records"
     }
   ]
 }

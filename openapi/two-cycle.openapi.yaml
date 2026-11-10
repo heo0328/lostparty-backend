@@ -46878,6 +46878,1068 @@
           }
         ]
       }
+    },
+    "/v2/raid-rooms/{room_id}/batch-completion-context": {
+      "get": {
+        "tags": [
+          "recruitment-cycle-candidate"
+        ],
+        "summary": "Batch Completion Context",
+        "operationId": "contract3_get__v2_raid-rooms_room_id_batch-completion-context",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Room Id"
+            }
+          },
+          {
+            "name": "target_cycle_key",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+              "format": "date",
+              "title": "Target Cycle Key"
+            }
+          },
+          {
+            "name": "round_ids",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 512,
+              "title": "Round Ids"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
+          },
+          {
+            "name": "group_policy_version",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "cycle-group-policy-1"
+              ]
+            },
+            "description": "Required for new writes on DB0035; omitted legacy writes only recover original stored ACKs."
+          },
+          {
+            "name": "participation_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "remaining-active-1"
+              ]
+            },
+            "description": "Explicit opt-in; omitted preserves default response."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchPartyContext"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Request Entity Too Large",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Too Many Requests",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "const": 60
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
+      }
+    },
+    "/v2/raid-rooms/{room_id}/batch-completions": {
+      "post": {
+        "tags": [
+          "recruitment-cycle-candidate"
+        ],
+        "summary": "Batch Complete",
+        "operationId": "contract3_post__v2_raid-rooms_room_id_batch-completions",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Room Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid4",
+              "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
+          },
+          {
+            "name": "group_policy_version",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "cycle-group-policy-1"
+              ]
+            },
+            "description": "Required for new writes on DB0035; omitted legacy writes only recover original stored ACKs."
+          },
+          {
+            "name": "participation_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "remaining-active-1"
+              ]
+            },
+            "description": "Explicit opt-in; omitted preserves default response."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BatchCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchPartyAck"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Request Entity Too Large",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Too Many Requests",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "const": 60
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
+      }
+    },
+    "/v2/raid-rooms/{room_id}/batch-personal-completion-departure-context": {
+      "get": {
+        "tags": [
+          "recruitment-cycle-candidate"
+        ],
+        "summary": "Batch Personal Context",
+        "operationId": "contract3_get__v2_raid-rooms_room_id_batch-personal-completion-departure-context",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Room Id"
+            }
+          },
+          {
+            "name": "target_cycle_key",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+              "format": "date",
+              "title": "Target Cycle Key"
+            }
+          },
+          {
+            "name": "round_ids",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 512,
+              "title": "Round Ids"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
+          },
+          {
+            "name": "group_policy_version",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "cycle-group-policy-1"
+              ]
+            },
+            "description": "Required for new writes on DB0035; omitted legacy writes only recover original stored ACKs."
+          },
+          {
+            "name": "participation_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "remaining-active-1"
+              ]
+            },
+            "description": "Explicit opt-in; omitted preserves default response."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchPersonalContext"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Request Entity Too Large",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Too Many Requests",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "const": 60
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
+      }
+    },
+    "/v2/raid-rooms/{room_id}/batch-personal-completion-departures": {
+      "post": {
+        "tags": [
+          "recruitment-cycle-candidate"
+        ],
+        "summary": "Batch Personal Departure",
+        "operationId": "contract3_post__v2_raid-rooms_room_id_batch-personal-completion-departures",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "room_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Room Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid4",
+              "title": "Idempotency-Key"
+            }
+          },
+          {
+            "name": "contract_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "beta-recruitment-1"
+              ]
+            }
+          },
+          {
+            "name": "group_policy_version",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "cycle-group-policy-1"
+              ]
+            },
+            "description": "Required for new writes on DB0035; omitted legacy writes only recover original stored ACKs."
+          },
+          {
+            "name": "participation_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "remaining-active-1"
+              ]
+            },
+            "description": "Explicit opt-in; omitted preserves default response."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BatchCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchPersonalAck"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "description": "REQUEST_IN_PROGRESS only",
+                "schema": {
+                  "type": "integer",
+                  "const": 2
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Request Entity Too Large",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Too Many Requests",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "const": 60
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        },
+        "x-beta-contract-profile": "beta-recruitment-1"
+      }
     }
   },
   "components": {
@@ -93367,6 +94429,1270 @@
           "character_issues"
         ],
         "title": "RosterIssues_Participation_Beta_MembershipActionMembershipPage"
+      },
+      "BatchAckData": {
+        "properties": {
+          "action": {
+            "type": "string",
+            "const": "batch_completion",
+            "title": "Action"
+          },
+          "command_id": {
+            "type": "string",
+            "format": "uuid4",
+            "title": "Command Id"
+          },
+          "outcome": {
+            "type": "string",
+            "const": "applied",
+            "title": "Outcome"
+          },
+          "executed_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Executed At"
+          },
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "actor_cycle_member_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Actor Cycle Member Id"
+          },
+          "round_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 1,
+            "uniqueItems": true,
+            "title": "Round Ids"
+          },
+          "impact": {
+            "$ref": "#/components/schemas/BatchPartyImpact"
+          },
+          "departure": {
+            "type": "null",
+            "title": "Departure"
+          },
+          "state": {
+            "$ref": "#/components/schemas/BatchState"
+          },
+          "leadership": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Leadership"
+          },
+          "revisions": {
+            "items": {
+              "$ref": "#/components/schemas/BatchRevision"
+            },
+            "type": "array",
+            "maxItems": 64,
+            "minItems": 5,
+            "title": "Revisions"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "action",
+          "command_id",
+          "outcome",
+          "executed_at",
+          "room_id",
+          "actor_cycle_member_id",
+          "round_ids",
+          "impact",
+          "departure",
+          "state",
+          "leadership",
+          "revisions"
+        ],
+        "title": "BatchAckData"
+      },
+      "BatchAssignmentDisplay": {
+        "properties": {
+          "assignment_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Assignment Id"
+          },
+          "round_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Round Id"
+          },
+          "membership_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Membership Id"
+          },
+          "cycle_member_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Cycle Member Id"
+          },
+          "character_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Character Id"
+          },
+          "character_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Character Name"
+          },
+          "effect": {
+            "type": "string",
+            "enum": [
+              "complete",
+              "cancel",
+              "preserve_active"
+            ],
+            "title": "Effect"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "assignment_id",
+          "round_id",
+          "membership_id",
+          "cycle_member_id",
+          "character_id",
+          "character_name",
+          "effect"
+        ],
+        "title": "BatchAssignmentDisplay"
+      },
+      "BatchCommand": {
+        "properties": {
+          "expected_cycle_key": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "format": "date",
+            "title": "Expected Cycle Key"
+          },
+          "target_cycle_key": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "format": "date",
+            "title": "Target Cycle Key"
+          },
+          "room_cycle_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Cycle Id"
+          },
+          "target_generation": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Target Generation"
+          },
+          "expected_target_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Target Revision"
+          },
+          "actor_cycle_member_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Actor Cycle Member Id"
+          },
+          "expected_cycle_member_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Expected Cycle Member Revision"
+          },
+          "round_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 1,
+            "uniqueItems": true,
+            "title": "Round Ids"
+          },
+          "context_token": {
+            "type": "string",
+            "maxLength": 4096,
+            "minLength": 1,
+            "title": "Context Token"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_cycle_key",
+          "target_cycle_key",
+          "room_cycle_id",
+          "target_generation",
+          "expected_target_revision",
+          "actor_cycle_member_id",
+          "expected_cycle_member_revision",
+          "round_ids",
+          "context_token"
+        ],
+        "title": "BatchCommand"
+      },
+      "BatchContextData": {
+        "properties": {
+          "action": {
+            "type": "string",
+            "const": "batch_completion",
+            "title": "Action"
+          },
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "actor_cycle_member_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Actor Cycle Member Id"
+          },
+          "actor_cycle_member_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Actor Cycle Member Revision"
+          },
+          "round_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 1,
+            "uniqueItems": true,
+            "title": "Round Ids"
+          },
+          "display": {
+            "$ref": "#/components/schemas/BatchDisplay"
+          },
+          "impact": {
+            "$ref": "#/components/schemas/BatchPartyImpact"
+          },
+          "departure": {
+            "type": "null",
+            "title": "Departure"
+          },
+          "state": {
+            "$ref": "#/components/schemas/BatchState"
+          },
+          "leadership": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Leadership"
+          },
+          "expected_after": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BatchExpectedAfter"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "revisions": {
+            "items": {
+              "$ref": "#/components/schemas/BatchRevision"
+            },
+            "type": "array",
+            "maxItems": 64,
+            "minItems": 5,
+            "title": "Revisions"
+          },
+          "permission": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Permission"
+          },
+          "confirmation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Confirmation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "action",
+          "room_id",
+          "actor_cycle_member_id",
+          "actor_cycle_member_revision",
+          "round_ids",
+          "display",
+          "impact",
+          "departure",
+          "state",
+          "leadership",
+          "expected_after",
+          "revisions",
+          "permission",
+          "confirmation"
+        ],
+        "title": "BatchContextData"
+      },
+      "BatchDeparture": {
+        "properties": {
+          "effect": {
+            "type": "string",
+            "enum": [
+              "leave",
+              "automatic_successor",
+              "close_completed",
+              "close_incomplete"
+            ],
+            "title": "Effect"
+          },
+          "successor": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Successor"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "effect",
+          "successor"
+        ],
+        "title": "BatchDeparture"
+      },
+      "BatchDisplay": {
+        "properties": {
+          "rounds": {
+            "items": {
+              "$ref": "#/components/schemas/BatchRoundDisplay"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Rounds"
+          },
+          "assignments": {
+            "items": {
+              "$ref": "#/components/schemas/BatchAssignmentDisplay"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "minItems": 1,
+            "title": "Assignments"
+          },
+          "display_revision": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Display Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "rounds",
+          "assignments",
+          "display_revision"
+        ],
+        "title": "BatchDisplay"
+      },
+      "BatchExpectedAfter": {
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/BatchState"
+          },
+          "leader_cycle_member_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Leader Cycle Member Id"
+          },
+          "leader_membership_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Leader Membership Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "state",
+          "leader_cycle_member_id",
+          "leader_membership_id"
+        ],
+        "title": "BatchExpectedAfter"
+      },
+      "BatchHistory": {
+        "properties": {
+          "assignment_count": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Assignment Count"
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Digest"
+          },
+          "raids": {
+            "items": {
+              "$ref": "#/components/schemas/BatchHistoryRaid"
+            },
+            "type": "array",
+            "title": "Raids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "assignment_count",
+          "digest",
+          "raids"
+        ],
+        "title": "BatchHistory"
+      },
+      "BatchHistoryRaid": {
+        "properties": {
+          "raid_id": {
+            "type": "string",
+            "title": "Raid Id"
+          },
+          "raid_name": {
+            "type": "string",
+            "title": "Raid Name"
+          },
+          "assignment_count": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Assignment Count"
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Digest"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "raid_id",
+          "raid_name",
+          "assignment_count",
+          "digest"
+        ],
+        "title": "BatchHistoryRaid"
+      },
+      "BatchPartyAck": {
+        "properties": {
+          "group_policy_version": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "cycle-group-policy-1"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group Policy Version"
+          },
+          "group_policy": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Metadata"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "group_policy_effect": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Effect"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "group_policy_effects": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Effect"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group Policy Effects"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/BatchScope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/BatchAckData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "BatchPartyAck"
+      },
+      "BatchPartyContext": {
+        "properties": {
+          "group_policy_version": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "cycle-group-policy-1"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group Policy Version"
+          },
+          "group_policy": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Metadata"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "group_policy_effect": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Effect"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "group_policy_effects": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Effect"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group Policy Effects"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/BatchScope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/BatchContextData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "BatchPartyContext"
+      },
+      "BatchPartyImpact": {
+        "properties": {
+          "completed_assignment_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "minItems": 1,
+            "title": "Completed Assignment Ids"
+          },
+          "cancelled_assignment_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 0,
+            "title": "Cancelled Assignment Ids"
+          },
+          "preserved_active_assignment_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "uniqueItems": true,
+            "title": "Preserved Active Assignment Ids"
+          },
+          "released_reservation_count": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Released Reservation Count"
+          },
+          "preserves_other_cycles": {
+            "type": "boolean",
+            "const": true,
+            "title": "Preserves Other Cycles"
+          },
+          "preserves_global_membership": {
+            "type": "boolean",
+            "const": true,
+            "title": "Preserves Global Membership"
+          },
+          "preserved_completed": {
+            "$ref": "#/components/schemas/BatchHistory"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "completed_assignment_ids",
+          "cancelled_assignment_ids",
+          "preserved_active_assignment_ids",
+          "released_reservation_count",
+          "preserves_other_cycles",
+          "preserves_global_membership",
+          "preserved_completed"
+        ],
+        "title": "BatchPartyImpact"
+      },
+      "BatchPersonalAck": {
+        "properties": {
+          "group_policy_version": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "cycle-group-policy-1"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group Policy Version"
+          },
+          "group_policy": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Metadata"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "group_policy_effect": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Effect"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "group_policy_effects": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Effect"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group Policy Effects"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/BatchScope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/BatchPersonalAckData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "BatchPersonalAck"
+      },
+      "BatchPersonalAckData": {
+        "properties": {
+          "action": {
+            "type": "string",
+            "const": "batch_personal_completion_departure",
+            "title": "Action"
+          },
+          "command_id": {
+            "type": "string",
+            "format": "uuid4",
+            "title": "Command Id"
+          },
+          "outcome": {
+            "type": "string",
+            "const": "applied",
+            "title": "Outcome"
+          },
+          "executed_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Executed At"
+          },
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "actor_cycle_member_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Actor Cycle Member Id"
+          },
+          "round_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 1,
+            "uniqueItems": true,
+            "title": "Round Ids"
+          },
+          "impact": {
+            "$ref": "#/components/schemas/BatchPersonalImpact"
+          },
+          "departure": {
+            "$ref": "#/components/schemas/BatchDeparture"
+          },
+          "state": {
+            "$ref": "#/components/schemas/BatchState"
+          },
+          "leadership": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Leadership"
+          },
+          "revisions": {
+            "items": {
+              "$ref": "#/components/schemas/BatchRevision"
+            },
+            "type": "array",
+            "maxItems": 64,
+            "minItems": 5,
+            "title": "Revisions"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "action",
+          "command_id",
+          "outcome",
+          "executed_at",
+          "room_id",
+          "actor_cycle_member_id",
+          "round_ids",
+          "impact",
+          "departure",
+          "state",
+          "leadership",
+          "revisions"
+        ],
+        "title": "BatchPersonalAckData"
+      },
+      "BatchPersonalContext": {
+        "properties": {
+          "group_policy_version": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "cycle-group-policy-1"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group Policy Version"
+          },
+          "group_policy": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Metadata"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "group_policy_effect": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Effect"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "group_policy_effects": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Effect"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group Policy Effects"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/BatchScope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/BatchPersonalContextData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "BatchPersonalContext"
+      },
+      "BatchPersonalContextData": {
+        "properties": {
+          "action": {
+            "type": "string",
+            "const": "batch_personal_completion_departure",
+            "title": "Action"
+          },
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "actor_cycle_member_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Actor Cycle Member Id"
+          },
+          "actor_cycle_member_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Actor Cycle Member Revision"
+          },
+          "round_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 1,
+            "uniqueItems": true,
+            "title": "Round Ids"
+          },
+          "display": {
+            "$ref": "#/components/schemas/BatchPersonalDisplay"
+          },
+          "impact": {
+            "$ref": "#/components/schemas/BatchPersonalImpact"
+          },
+          "departure": {
+            "$ref": "#/components/schemas/BatchDeparture"
+          },
+          "state": {
+            "$ref": "#/components/schemas/BatchState"
+          },
+          "leadership": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Leadership"
+          },
+          "expected_after": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BatchExpectedAfter"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "revisions": {
+            "items": {
+              "$ref": "#/components/schemas/BatchRevision"
+            },
+            "type": "array",
+            "maxItems": 64,
+            "minItems": 5,
+            "title": "Revisions"
+          },
+          "permission": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Permission"
+          },
+          "confirmation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Confirmation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "action",
+          "room_id",
+          "actor_cycle_member_id",
+          "actor_cycle_member_revision",
+          "round_ids",
+          "display",
+          "impact",
+          "departure",
+          "state",
+          "leadership",
+          "expected_after",
+          "revisions",
+          "permission",
+          "confirmation"
+        ],
+        "title": "BatchPersonalContextData"
+      },
+      "BatchPersonalDisplay": {
+        "properties": {
+          "rounds": {
+            "items": {
+              "$ref": "#/components/schemas/BatchRoundDisplay"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Rounds"
+          },
+          "assignments": {
+            "items": {
+              "$ref": "#/components/schemas/BatchAssignmentDisplay"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Assignments"
+          },
+          "display_revision": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Display Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "rounds",
+          "assignments",
+          "display_revision"
+        ],
+        "title": "BatchPersonalDisplay"
+      },
+      "BatchPersonalImpact": {
+        "properties": {
+          "completed_assignment_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Completed Assignment Ids"
+          },
+          "cancelled_assignment_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "title": "Cancelled Assignment Ids"
+          },
+          "preserved_active_assignment_ids": {
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "type": "array",
+            "maxItems": 0,
+            "title": "Preserved Active Assignment Ids"
+          },
+          "released_reservation_count": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Released Reservation Count"
+          },
+          "preserves_other_cycles": {
+            "type": "boolean",
+            "const": true,
+            "title": "Preserves Other Cycles"
+          },
+          "preserves_global_membership": {
+            "type": "boolean",
+            "const": true,
+            "title": "Preserves Global Membership"
+          },
+          "preserved_completed": {
+            "$ref": "#/components/schemas/BatchHistory"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "completed_assignment_ids",
+          "cancelled_assignment_ids",
+          "preserved_active_assignment_ids",
+          "released_reservation_count",
+          "preserves_other_cycles",
+          "preserves_global_membership",
+          "preserved_completed"
+        ],
+        "title": "BatchPersonalImpact"
+      },
+      "BatchRevision": {
+        "properties": {
+          "resource": {
+            "type": "string",
+            "enum": [
+              "target",
+              "members",
+              "plan",
+              "leadership",
+              "cycle_membership",
+              "round",
+              "assignment"
+            ],
+            "title": "Resource"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "resource",
+          "id",
+          "revision"
+        ],
+        "title": "BatchRevision"
+      },
+      "BatchRoundDisplay": {
+        "properties": {
+          "round_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Round Id"
+          },
+          "item_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Item Id"
+          },
+          "raid_id": {
+            "type": "string",
+            "title": "Raid Id"
+          },
+          "raid_name": {
+            "type": "string",
+            "title": "Raid Name"
+          },
+          "difficulty_id": {
+            "type": "string",
+            "title": "Difficulty Id"
+          },
+          "difficulty_name": {
+            "type": "string",
+            "title": "Difficulty Name"
+          },
+          "catalog_version": {
+            "type": "string",
+            "title": "Catalog Version"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "round_id",
+          "item_id",
+          "raid_id",
+          "raid_name",
+          "difficulty_id",
+          "difficulty_name",
+          "catalog_version"
+        ],
+        "title": "BatchRoundDisplay"
+      },
+      "BatchScope": {
+        "properties": {
+          "server_now": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Server Now"
+          },
+          "current_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "target_cycle_key": {
+            "$ref": "#/components/schemas/CycleKey"
+          },
+          "playable_from": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Playable From"
+          },
+          "phase": {
+            "$ref": "#/components/schemas/Phase1"
+          },
+          "target_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Target Revision"
+          },
+          "policy_version": {
+            "type": "string",
+            "const": "two-cycle-contract-4",
+            "title": "Policy Version"
+          },
+          "room_cycle_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Cycle Id"
+          },
+          "target_generation": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Target Generation"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "server_now",
+          "current_cycle_key",
+          "target_cycle_key",
+          "playable_from",
+          "phase",
+          "target_revision",
+          "policy_version",
+          "room_cycle_id",
+          "target_generation"
+        ],
+        "title": "BatchScope"
+      },
+      "BatchState": {
+        "properties": {
+          "target_state": {
+            "type": "string",
+            "enum": [
+              "open",
+              "closed"
+            ],
+            "title": "Target State"
+          },
+          "generation_state": {
+            "type": "string",
+            "enum": [
+              "open",
+              "completed",
+              "cancelled"
+            ],
+            "title": "Generation State"
+          },
+          "actor_cycle_member_state": {
+            "type": "string",
+            "enum": [
+              "participating",
+              "completed",
+              "cancelled"
+            ],
+            "title": "Actor Cycle Member State"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "target_state",
+          "generation_state",
+          "actor_cycle_member_state"
+        ],
+        "title": "BatchState"
       }
     },
     "securitySchemes": {

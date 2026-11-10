@@ -15,7 +15,7 @@ from app.raid_rooms.models.cycle_models import CycleGeneration
 from app.raid_rooms.models.integrated_models import RecruitmentMembership as Member
 
 
-def selection(db, room, row, cm):
+def selection(db, room, row, cm, *, active_rows=None):
     """Prove this generation's seat; return its active choice, or None for history."""
     from app.raid_rooms.participation.cycle_lifecycle import assignments
     current = db.get(RoomCycle, row.id)
@@ -38,9 +38,9 @@ def selection(db, room, row, cm):
     user = db.get(User, actual.user_id)
     if user is None or user.status != 'active':
         fail('ROOM_TARGET_UNAVAILABLE')
-    owned = assignments(db, current, actual)
+    owned = assignments(db, current, actual) if active_rows is None else active_rows
     active = [a for a in owned if a.state == 'active']
-    if not owned or (active and len({(a.character_id,a.selected_role) for a in active}) != 1):
+    if (not owned and active_rows is None) or (active and len({(a.character_id,a.selected_role) for a in active}) != 1):
         fail('ROOM_REVIEW_REQUIRED')
     for a in owned:
         link = db.get(CycleAssignment, a.id)

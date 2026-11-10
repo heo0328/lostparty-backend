@@ -1,13 +1,21 @@
 # 개발 서버 전환·백업·복구 기록
 
-2026-11-09 최신 로컬 실행: [완료 프로필 보정·게시/반영](../../features/recruitment/completion-and-records/completion-profile-contract-fix.md)·[집계](records/completion-profile-contract-verification.json). source16c9cd4/API image101cd82d·DB0036, 앱285파일/282모듈·새 two-cycle 계약864de38b 일치다. 117표355행·구조/sequence·키4개/환경·DB볼륨 보존과 healthy/listener7개/로그오류0을 확인했다. Native 새 계약 연결/기기 인수는 별도이며 운영은 변경하지 않았다. 아래 실행은 각 당시 기록이다.
+## 현재 개발 실행 — 2026-11-10
 
-2026-11-09 최신 로컬 실행: [구조 정리 반영](source-layout-local-rollout.md)·[집계](records/source-layout-local-rollout.json). 게시 소스ccf091d·API image2f86172d/DB0036, 앱285파일/282모듈·두 전체 계약 일치·117표357행/구조/sequence·키4개/환경/DB볼륨 보존·API/DB healthy다. 실제 회원 쓰기·기기 인수·완료 profile 선언 오류 수정은 미완료이며 운영은 변경하지 않았다. 아래 이전 최신 실행/미반영 문장은 각 당시 기록이다.
+[묶음 선택 완료 반영 기록](records/batch-completion-local-rollout.json): 업무44eb4ba/게시624ef00, runtime ae6b3e0a·DB0036_roster_presence, 앱288파일·기본125/142/two-cycle192/213 전체 계약 일치·healthy를 확인했다. 현재 코드/실행 소스 동일성도 #47 정리에서 확인했다. #47/#48은 사용자 지시로 completed 종료됐고 운영은 이번 로컬 반영과 별개다.
+
+반영 당시118테이블512행·스키마/sequence·키4개·환경/DB 컨테이너·볼륨 보존 근거는 JSON에 있다. 이후 실제 사용자 테스트로 자료가 변할 수 있으므로 당시 행 수를 현재 고정값으로 사용하지 않는다. 현재 단계와 다음 담당은 [NEXT_WORK](../../project/NEXT_WORK.md)·[AI_CONTEXT](../../project/AI_CONTEXT.md)를 따른다.
+
+### 이전 실행/복구 근거
+
+2026-11-09 당시 로컬 실행: [완료 프로필 보정·게시/반영](../../features/recruitment/completion-and-records/completion-profile-contract-fix.md)·[집계](records/completion-profile-contract-verification.json). source16c9cd4/API image101cd82d·DB0036, 앱285파일/282모듈·새 two-cycle 계약864de38b 일치다. 117표355행·구조/sequence·키4개/환경·DB볼륨 보존과 healthy/listener7개/로그오류0을 확인했다. Native 새 계약 연결/기기 인수는 별도이며 운영은 변경하지 않았다. 아래 실행은 각 당시 기록이다.
+
+2026-11-09 당시 로컬 실행: [구조 정리 반영](source-layout-local-rollout.md)·[집계](records/source-layout-local-rollout.json). 게시 소스ccf091d·API image2f86172d/DB0036, 앱285파일/282모듈·두 전체 계약 일치·117표357행/구조/sequence·키4개/환경/DB볼륨 보존·API/DB healthy다. 실제 회원 쓰기·기기 인수·완료 profile 선언 오류 수정은 미완료이며 운영은 변경하지 않았다. 아래 이전 최신 실행/미반영 문장은 각 당시 기록이다.
 
 
 ## 2026-11-07 최신 — 환경 복구·운영 기준본 보관
 
-[백업 원장·사용자 안내 시점](backup-and-recovery.md)과 [실행 집계](records/backup-recovery-2026-11-07.json)가 현재 기준이다. 로컬 two-cycle/DB0035·Google 로그인 복구, 운영v2.0.0의 온라인 dump/설정/기존 키·복구 구성과 서버 밖 PC 사본의 읽기·해시 일치를 확인했다. 실제 서비스 복원·정기 자동화·외장 매체 보관은 미확인/미실행이다. [복구·검증 이력](../../project/DEV_LOG.md#development-recovery-20261107)을 따른다. 아래 실행 소스/경로 수·DB 단계는 각 전환 당시 이력이다.
+[백업 원장·사용자 안내 시점](backup-and-recovery.md)과 [실행 집계](records/backup-recovery-2026-11-07.json)가 현재 기준이다. 2026-11-07 당시 로컬 two-cycle/DB0035·Google 로그인 복구와 운영v2.0.0의 온라인 dump/설정/기존 키·복구 구성과 서버 밖 PC 사본의 읽기·해시 일치를 확인했다. 실제 서비스 복원·정기 자동화·외장 매체 보관은 미확인/미실행이다. [복구·검증 이력](../../project/DEV_LOG.md#development-recovery-20261107)을 따른다. 아래 실행 소스/경로 수·DB 단계는 각 전환 당시 이력이다.
 
 <a id="section"></a>
 

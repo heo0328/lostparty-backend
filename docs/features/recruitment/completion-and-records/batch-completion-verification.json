@@ -1,0 +1,177 @@
+{
+  "date": "2026-11-10",
+  "issue": 47,
+  "branch": "feat/raid-batch-completion",
+  "base_commit": "084a6af76d6df9659c6cec18854005bd541e3212",
+  "implementation_commit": null,
+  "committed": false,
+  "pushed": false,
+  "public_api_implemented": true,
+  "dev_server_support": "not rolled out; actual dev API/DB unchanged",
+  "production_changed": false,
+  "migration": false,
+  "contracts": {
+    "openapi/openapi.yaml": {
+      "sha256": "18491bc066d08a578aa9228cd0da85eee508288c28d14d563d788e73e324c3dd",
+      "paths": 125,
+      "operations": 142
+    },
+    "openapi/two-cycle.openapi.yaml": {
+      "sha256": "2c51d2f206100e9a305bafa6dd537a1b1b40cc23f9cf1ac6f65d254a4ff5faf7",
+      "paths": 192,
+      "operations": 213
+    }
+  },
+  "contract_delta": {
+    "added_paths": 4,
+    "added_components": 22,
+    "all_old_paths_and_components_preserved": true,
+    "participation_profile_operations": 69
+  },
+  "source": {
+    "image": "lostparty-check-1c90695843a1-tests",
+    "app_file_count": 288,
+    "image_matches_current_app_bytes": true,
+    "app_manifest_sha256": "4b83ca196f63b0609aa6c8e055eac080622abc648ac76c315cf0ac053d3ea286",
+    "image_id": "sha256:e4835a40532eba4470ec3f9b6bb19f45f5cf3a8701433db32df4fb373f8b85e8"
+  },
+  "tests": {
+    "unique_passed": 123,
+    "unique_failed": 0,
+    "new_batch_and_internal": 24,
+    "existing_selected_regression": 99,
+    "script_unittest_passed": 63,
+    "full_project_suite": false,
+    "runs": [
+      {
+        "project": "lostparty-check-29377a2e0387",
+        "selection": [
+          "test_batch_completion.py (initial 7)"
+        ],
+        "passed": 7,
+        "failed": 0,
+        "seconds": 103.39,
+        "note": "subset of later expanded batch set; not added twice"
+      },
+      {
+        "project": "lostparty-check-8ac5f333a4d0",
+        "selection": [
+          "test_batch_completion.py (16)",
+          "test_batch_capacity.py (2)",
+          "test_batch_snapshot.py (4)"
+        ],
+        "passed": 21,
+        "failed": 1,
+        "seconds": 269.98,
+        "note": "key conflict test changed revision to same constant; fixed test to use actual old+1; business source unchanged"
+      },
+      {
+        "project": "lostparty-check-b3de98bfb4d8",
+        "selection": [
+          "test_denial_scope_cas_expiry_and_key_conflict"
+        ],
+        "passed": 1,
+        "failed": 0,
+        "seconds": 19.57,
+        "note": "replaces failed case, not an additional case"
+      },
+      {
+        "project": "lostparty-check-794298e0f546",
+        "selection": [
+          "test_full_rollback_at_middle_ack_and_commit_deadline[False/True]",
+          "test_successor_unavailable_and_history_stale_never_apply"
+        ],
+        "passed": 3,
+        "failed": 0,
+        "seconds": 46.15,
+        "note": "rollback cases include added week-boundary assertion; only successor/stale is additional unique case"
+      },
+      {
+        "project": "lostparty-check-4b9eb51fee22",
+        "selection": [
+          "test_group_visibility_and_successor_policy_fallback"
+        ],
+        "passed": 1,
+        "failed": 0,
+        "seconds": 18.44
+      },
+      {
+        "project": "lostparty-check-08e58ee44f25",
+        "selection": [
+          "test_completion_profile_contract.py",
+          "test_roster_followup_commands.py",
+          "test_reapplication_history.py"
+        ],
+        "passed": 40,
+        "failed": 0,
+        "seconds": 507.68
+      },
+      {
+        "project": "lostparty-check-c5c91469ec09",
+        "selection": [
+          "test_atomic_members.py",
+          "test_recruitment_cycle_outcomes.py"
+        ],
+        "passed": 59,
+        "failed": 0,
+        "seconds": 776.78
+      },
+      {
+        "project": "lostparty-check-74d4b44106a0",
+        "selection": [
+          "contracts"
+        ],
+        "result": "both full objects matched before final non-null BatchScope refinement"
+      },
+      {
+        "project": "lostparty-check-1c90695843a1",
+        "selection": [
+          "test_http_selection_profiles_and_ack[False/True]",
+          "test_both_complete_contract_objects_match_generated_schema",
+          "test_profile_declarations_match_every_runtime_route"
+        ],
+        "passed": 4,
+        "failed": 0,
+        "seconds": 33.94,
+        "note": "final non-null scope, both full contracts and query declarations rechecked; duplicates of prior successful nodes, not added"
+      }
+    ],
+    "cleanup": "all verification projects removed their containers/internal networks",
+    "warnings": [
+      "existing Starlette anyio deprecation",
+      "existing cycle_commands.leadership loading null leader for closed targets"
+    ]
+  },
+  "not_executed": [
+    "actual dev API rollout/listener verification",
+    "real provider/user/device acceptance",
+    "full project regression",
+    "production/APK deployment"
+  ],
+  "new_paths": [
+    "/v2/raid-rooms/{room_id}/batch-completion-context",
+    "/v2/raid-rooms/{room_id}/batch-completions",
+    "/v2/raid-rooms/{room_id}/batch-personal-completion-departure-context",
+    "/v2/raid-rooms/{room_id}/batch-personal-completion-departures"
+  ],
+  "file_sha256": {
+    "app/raid_rooms/api/cycle_router.py": "840eb23f192e65e87960b88afa569d56373bd4bc491878c9a8bb962700b8461b",
+    "app/raid_rooms/contracts/roster_openapi.py": "3352850c9cbce56846afcc66389b10c40e8a3ac4dd59e429b74350d64eb01e23",
+    "app/raid_rooms/participation/cycle_lifecycle.py": "5ce7b08861010fe0ef9abdae4b1acac4993205a0ee294bfd0f41ab374aedda71",
+    "app/raid_rooms/participation/existing_participation.py": "488022e1baabd1f020708158271808d0ed2e1d6e4c7296a3ac39fa6e5c5d12da",
+    "app/raid_rooms/outcomes/batch_completion.py": "0738c5cddb455c3c7e58ad576d0c966f80be5b8863519b8eab57b3fde68ca689",
+    "app/raid_rooms/outcomes/batch_snapshot.py": "ec1f8ad8611fae3275ed4e132762e37b74c40f4aef3692b1e9da3204c3f29dda",
+    "app/raid_rooms/schemas/batch_completion_schemas.py": "a282dd7ab5cf9d9f77c1fed9ed3d6f7488301197d39164e93a40fef9b5f5593e",
+    "tests/raid_rooms/outcomes/test_batch_completion.py": "114824da0969421e0c173a2ed70664fa34e01356d9bcb8d780639a3d72cea4a3",
+    "tests/raid_rooms/outcomes/test_batch_capacity.py": "78eabebceece9fec6249d4ee0c4a9d2bb6dd05eb0f2471c7bdeeb053c6d27c76",
+    "tests/raid_rooms/outcomes/test_batch_snapshot.py": "57a7ccb9cfcc67fb4bfcf4d90f2ec31d177339a15a05b8e5b231dc5b2a32a6fc",
+    "tests/raid_rooms/outcomes/test_completion_profile_contract.py": "9a695926252eff77386c803df4327e5eea4df45a0bfb83054cfe3440d0953aae"
+  },
+  "implementation_handoff": {
+    "comment_url": "https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6762507528",
+    "comment_order": 7,
+    "side": "Backend",
+    "stage": "local implementation and isolated verification complete",
+    "next": "Backend publishing/dev rollout only within user instructions; Native connection and device acceptance remain separate"
+  }
+}

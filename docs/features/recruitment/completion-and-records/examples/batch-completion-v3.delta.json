@@ -1,0 +1,231 @@
+{
+  "status": "proposal-v3",
+  "base_issue_comment": 6760087700,
+  "replace_defs": {
+    "HistoryRaid": {
+      "type": "object",
+      "properties": {
+        "raid_id": {
+          "type": "string"
+        },
+        "raid_name": {
+          "type": "string"
+        },
+        "assignment_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "raid_id",
+        "raid_name",
+        "assignment_count",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "History": {
+      "type": "object",
+      "properties": {
+        "assignment_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "raids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/HistoryRaid"
+          }
+        }
+      },
+      "required": [
+        "assignment_count",
+        "digest",
+        "raids"
+      ],
+      "additionalProperties": false
+    },
+    "PartyImpact": {
+      "type": "object",
+      "properties": {
+        "completed_assignment_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 1,
+          "maxItems": 40,
+          "uniqueItems": true
+        },
+        "cancelled_assignment_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 0,
+          "maxItems": 0,
+          "uniqueItems": true
+        },
+        "preserved_active_assignment_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 0,
+          "maxItems": 40,
+          "uniqueItems": true
+        },
+        "released_reservation_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "preserves_other_cycles": {
+          "const": true
+        },
+        "preserves_global_membership": {
+          "const": true
+        },
+        "preserved_completed": {
+          "$ref": "#/$defs/History"
+        }
+      },
+      "required": [
+        "completed_assignment_ids",
+        "cancelled_assignment_ids",
+        "preserved_active_assignment_ids",
+        "released_reservation_count",
+        "preserves_other_cycles",
+        "preserves_global_membership",
+        "preserved_completed"
+      ],
+      "additionalProperties": false
+    },
+    "PersonalImpact": {
+      "type": "object",
+      "properties": {
+        "completed_assignment_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 1,
+          "maxItems": 5,
+          "uniqueItems": true
+        },
+        "cancelled_assignment_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 0,
+          "maxItems": 4,
+          "uniqueItems": true
+        },
+        "preserved_active_assignment_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 0,
+          "maxItems": 0,
+          "uniqueItems": true
+        },
+        "released_reservation_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "preserves_other_cycles": {
+          "const": true
+        },
+        "preserves_global_membership": {
+          "const": true
+        },
+        "preserved_completed": {
+          "$ref": "#/$defs/History"
+        }
+      },
+      "required": [
+        "completed_assignment_ids",
+        "cancelled_assignment_ids",
+        "preserved_active_assignment_ids",
+        "released_reservation_count",
+        "preserves_other_cycles",
+        "preserves_global_membership",
+        "preserved_completed"
+      ],
+      "additionalProperties": false
+    },
+    "AssignmentDisplay": {
+      "type": "object",
+      "properties": {
+        "assignment_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "round_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "membership_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "cycle_member_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "character_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "character_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "effect": {
+          "type": "string",
+          "enum": [
+            "complete",
+            "cancel",
+            "preserve_active"
+          ]
+        }
+      },
+      "required": [
+        "assignment_id",
+        "round_id",
+        "membership_id",
+        "cycle_member_id",
+        "character_id",
+        "character_name",
+        "effect"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "semantic_changes": [
+    "display.rounds covers all active effect rounds, not selected round_ids alone",
+    "History raids have no active-count maximum; no historical ID/display arrays",
+    "Context and ACK preserve the same pre-command history proof"
+  ]
+}

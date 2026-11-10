@@ -7,6 +7,10 @@ from pathlib import Path
 # Reviewed method/template pairs. Keep query opt-in separate from read metadata.
 # Runtime/query parity is checked for every route; subclasses with no opt-in stay out.
 PARTICIPATION_OPERATIONS = frozenset({
+    ('get', '/v2/raid-rooms/{room_id}/batch-completion-context'),
+    ('get', '/v2/raid-rooms/{room_id}/batch-personal-completion-departure-context'),
+    ('post', '/v2/raid-rooms/{room_id}/batch-completions'),
+    ('post', '/v2/raid-rooms/{room_id}/batch-personal-completion-departures'),
     ('get', '/v2/groups/{group_id}/raid-room-character-candidates'),
     ('get', '/v2/groups/{group_id}/raid-room-member-projections'),
     ('get', '/v2/me/characters/{character_id}/raid-weekly-states/{raid_id}/completion-correction-context'),

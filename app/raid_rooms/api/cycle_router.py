@@ -66,6 +66,9 @@ from app.raid_rooms.participation import membership_actions
 from app.raid_rooms.participation import membership_readers
 from app.raid_rooms.schemas import membership_action_schemas as membership_schemas
 
+from app.raid_rooms.outcomes import batch_completion
+from app.raid_rooms.schemas import batch_completion_schemas as batch_schemas
+
 
 class CycleRoute(AvailabilityRoute):
     def capture_body(self,request,value):
@@ -125,6 +128,7 @@ class CycleRoute(AvailabilityRoute):
         if request.method=='POST' and request.url.path.endswith('/raid-rooms/search'):return {'include_group_state'}
         if request.method!='GET':return set()
         if request.url.path.endswith('/raid-room-character-candidates'):return {'filter_context_token','limit','cursor'}
+        if request.url.path.endswith(('/batch-completion-context','/batch-personal-completion-departure-context')):return {'target_cycle_key','round_ids'}
         if request.url.path.endswith('/personal-completion-departure-context'):return {'target_cycle_key','round_id'}
         if request.url.path.endswith('/member-removal-context'):return {'target_cycle_key','target_cycle_member_id'}
         if request.url.path.endswith('/completion-correction-context'):return {'target_cycle_key'}
@@ -509,6 +513,26 @@ def end_global(room_id:UUID,principal:Principal,key:Key,data:inputs.GlobalMember
 def legacy_choices(room_id:UUID,principal:Principal,target_cycle_key:str):
     from app.raid_rooms.compat import cycle_legacy
     return cycle_legacy.get(principal,room_id,target_cycle_key)
+
+
+@router.get('/raid-rooms/{room_id}/batch-completion-context',response_model=batch_schemas.BatchPartyContext,responses=errors)
+def batch_completion_context(room_id:UUID,principal:Principal,target_cycle_key:atomic_schemas.CycleKey,round_ids:Annotated[str,Query(max_length=512)]):
+    return batch_completion.get(principal,room_id,target_cycle_key,batch_completion.parse_rounds(round_ids))
+
+
+@router.post('/raid-rooms/{room_id}/batch-completions',response_model=batch_schemas.BatchPartyAck,responses=errors)
+def batch_complete(room_id:UUID,principal:Principal,key:Key,data:batch_schemas.BatchCommand):
+    return batch_completion.execute(principal,room_id,key,data)[1]
+
+
+@router.get('/raid-rooms/{room_id}/batch-personal-completion-departure-context',response_model=batch_schemas.BatchPersonalContext,responses=errors)
+def batch_personal_context(room_id:UUID,principal:Principal,target_cycle_key:atomic_schemas.CycleKey,round_ids:Annotated[str,Query(max_length=512)]):
+    return batch_completion.get(principal,room_id,target_cycle_key,batch_completion.parse_rounds(round_ids),personal=True)
+
+
+@router.post('/raid-rooms/{room_id}/batch-personal-completion-departures',response_model=batch_schemas.BatchPersonalAck,responses=errors)
+def batch_personal_departure(room_id:UUID,principal:Principal,key:Key,data:batch_schemas.BatchCommand):
+    return batch_completion.execute(principal,room_id,key,data,personal=True)[1]
 
 
 # Preserve the operation IDs already consumed from the fixed contract.

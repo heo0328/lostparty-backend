@@ -2,6 +2,8 @@
 
 본인 item·공대장 전체 완료, 본인 완료 근거 정정과 완료/종료 방의 기록을 관리한다. 완료 정정은 과거 참가·편성·예약 복원과 다르다.
 
+Issue47 선택 레이드 일괄 완료는 [v3 전체 효과 표시·이력 집계](batch-completion-wire-v3.md)의 [공개 API·원자 명령](batch-completion-implementation.md)을 구현·게시/로컬 지원하고 Native 담당의 실제 연결/잔여 없음 확인 후 **사용자 지시로 completed 종료**했다. Backend 업무44eb4ba/게시624ef00, Native47a30dad 게시와 #48 후속 미게시 범위는 구분한다. [로컬 반영 기록](../../../engineering/operations/records/batch-completion-local-rollout.json)·[종료 근거](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6767992300)를 따른다.
+
 <a id="behavior"></a>
 
 ## 현재 동작
@@ -17,7 +19,7 @@
 | 미해결 명령의 일반 한계/별도 공용 구조 제외 | [복구·충돌 조사](pending-recovery-and-conflicts.md) |
 | 최초 완료 차단 원인/선언 누락 재현 | [초기 조사](completion-context-profile-audit.md) |
 
-각 조사 문서의 당시 대기/실패 기록과 현재 완료 상태를 구분한다. 누락 캐릭터/부분 완료 자료 준비·기기 검증, 묶음 레이드 체크박스 선택/일괄 완료 기획은 이번 인수에 포함되지 않은 별도 후속이다. 운영 반영·dev/main 병합·Issue17 전체 종료도 수행하지 않았다.
+각 조사 문서의 당시 대기와 현재 완료를 구분한다. 누락 캐릭터/부분 완료 자료·기기 경계는 #17 잔여다. 묶음 선택 완료는 #47에서 구현·종료됐고 공통 복구 안내/일정 읽기는 #48에서 종료됐다. Penpot은 Native 차후 후속이며 두 이슈를 다시 보류하지 않는다. #17 복구 구간의 Backend/Native dev 통합은 완료됐고, #47/#48 후속 통합·운영 반영·Issue17 전체 종료와는 다르다.
 
 선택 실제T의 command-context는 현재 권한·Round/Assignment·원장·예약·시각과 영향의 snapshot을 제공한다. 현재주와 수요일10시 이후 조건을 확인하며, 개인 완료는 본인 item, 전체 완료는 실제 해당T 공대장과 명령 범위를 검사한다. 다른 item/T의 완료와 자료를 보존한다.
 
@@ -71,3 +73,12 @@
 | POST | `/v2/me/characters/{character_id}/raid-weekly-states/{raid_id}/completion-corrections` |
 | GET | `/v1/raid-rooms/{room_id}/command-context` |
 | GET | `/v2/raid-rooms/{room_id}/command-context` |
+
+## Issue47 v3 실행 API
+
+| Method | 경로 |
+|---|---|
+| GET | `/v2/raid-rooms/{room_id}/batch-completion-context` |
+| POST | `/v2/raid-rooms/{room_id}/batch-completions` |
+| GET | `/v2/raid-rooms/{room_id}/batch-personal-completion-departure-context` |
+| POST | `/v2/raid-rooms/{room_id}/batch-personal-completion-departures` |
