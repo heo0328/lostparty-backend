@@ -1,5 +1,7 @@
 # Issue17 완료 CONTEXT_INVALID 조사·오류 분류
 
+2026-11-10 현재 결과: [완료 오류·계정 복구 인수/Native 게시](completion-recovery-acceptance-20261110.md) 완료. 기존 계정은 문구 수정 전에 복구됐고 사용자 기기 테스트 통과, Native 구현5df515f push가 확인됐다. 아래 조사·회신의 복구 미확인/기기 대기·Native 미게시 표기는 당시 기록이며 현재 대기가 아니다. 누락 캐릭터/부분 완료 자료·기기 검증과 일괄 완료 기획은 별도 미완료다.
+
 최신 소비 상태: [전체35번째 Native](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6733937729)에서 오류 안내/안전한 진단·완료 성공과 후속 조회 실패 분리 구현, 자체2832PASS/analyze0을 보고했다. 미커밋·미push·실기기 미확인이며 Backend 보정 계약을 기다린다. 새 코드/필드를 추가하지 않고 현재 schema/query를 유지한다. 아래8PASS 진단과 Native의 안내 파트 통과 모두 완료 차단 수정 성공은 아니다.
 
 

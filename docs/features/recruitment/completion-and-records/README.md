@@ -6,9 +6,18 @@
 
 ## 현재 동작
 
-2026-11-09 [완료 프로필 계약 보정·검증/인계](completion-profile-contract-fix.md)를 완료했다. 구현16c9cd4 게시·로컬API101cd82d 반영·Issue17 전체36번째 Backend 인계 완료이며 다음은 Native 계약 연결/사용자 기기 확인이다. 다음 조사 문서는 수정 전 원인 근거다.
+2026-11-10 **완료 오류/계정 복구 구간의 사용자 기기 인수와 Native 게시가 완료**됐다. [인수 결과 원본](completion-recovery-acceptance-20261110.md)에서 완료 범위·시점·커밋·자동 검증·별도 후속을 확인한다. 기존 계정은 문구 수정 전에 이미 복구됐고, 최종 버튼은 ‘현재 정보로 화면갱신’이다. 같은 복구 재시험을 요구하지 않는다.
 
-2026-11-09 완료 차단 제보 조사: [Issue17 profile 선언·실제 HTTP 불일치/오류 분류](completion-context-profile-audit.md). 기존 동작과 계약의 누락을 재현한 결과이며, 수정·새 계약·기기 성공은 미완료다.
+| 찾을 내용 | 문서 |
+|---|---|
+| 완료 profile 선언 보정·실제 로컬 반영 | [계약 보정](completion-profile-contract-fix.md) |
+| 계정 정정/수동 완료의 group 옵션 | [BUG-033 최소 옵션](account-completion-group-profile-bug033.md) |
+| 기존 무옵션 v3의 현재 상태 채택·로컬 대기 해제 | [BUG-033 복구 조건](bug033-current-state-adoption.md) |
+| 두 key·공대/개인 완료의 도착 순서 | [좁힌 경합 확인](completion-retry-order-check.md) |
+| 미해결 명령의 일반 한계/별도 공용 구조 제외 | [복구·충돌 조사](pending-recovery-and-conflicts.md) |
+| 최초 완료 차단 원인/선언 누락 재현 | [초기 조사](completion-context-profile-audit.md) |
+
+각 조사 문서의 당시 대기/실패 기록과 현재 완료 상태를 구분한다. 누락 캐릭터/부분 완료 자료 준비·기기 검증, 묶음 레이드 체크박스 선택/일괄 완료 기획은 이번 인수에 포함되지 않은 별도 후속이다. 운영 반영·dev/main 병합·Issue17 전체 종료도 수행하지 않았다.
 
 선택 실제T의 command-context는 현재 권한·Round/Assignment·원장·예약·시각과 영향의 snapshot을 제공한다. 현재주와 수요일10시 이후 조건을 확인하며, 개인 완료는 본인 item, 전체 완료는 실제 해당T 공대장과 명령 범위를 검사한다. 다른 item/T의 완료와 자료를 보존한다.
 

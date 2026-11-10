@@ -1,6 +1,28 @@
 # 다음 실행
 
-## 현재 — Backend 보정·게시·로컬 반영·인계 완료 / Native 연결 대기
+## 현재 — 완료 오류·계정 복구 사용자 인수/Native 게시 완료 / 별도 후속 대기
+
+2026-11-10 [Native 전체52번째 사용자 기기 인수·시점 정정](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6756433040)·[전체53번째 단일 커밋/푸시 보고](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6756529672)를 전체 댓글53개 조회로 확인했다. **이번 완료 오류/계정 복구 구간의 사용자 디바이스 테스트 통과·기존 계정 복구 완료**다. 복구는 버튼/안내 문구 변경 요청 전에 이미 정상 완료됐으며 기존 복구 미확인/추가 기기 시험 대기는 해소한다. 원서버 과거 요청의 개별 성공/실패 이력을 확정하는 뜻은 아니다.
+
+Native 게시 구현은 `5df515f7841a7963faa7d3c6ed930cd31ab8b3bf` / feature/raid-character-missing-recovery다. 누적30파일을 단일 커밋/push했고 HEAD/origin/원격 일치·clean은 Native53 보고다. 최종 자동 근거는2856PASS/analyze0이며 사용자 기기 인수와 구분한다. 최종 버튼 ‘현재 정보로 화면갱신’과 조건부 안내 ‘현재 정보로 화면을 갱신하면 다시 사용할 수 있습니다.’는 같은 useCurrent의 문구 변경으로 기능 로직은 같다. 이미 완료한 복구를 다시 만들거나 같은 시험을 반복 요청하지 않는다.
+
+다음은 사용자 지시에 따른 후속 범위 선택이다. 누락 캐릭터/부분 완료 개발용 자료 준비·해당 기기 검증은 미완료이고, 묶음 레이드 체크박스 선택/일괄 완료는 문서에만 기록된 미구현 기획이다. 이번 인수에 포함하지 않으며 자료 변경·신규 API 구현을 자동 착수하지 않는다. 이번 구간의 추가 Backend 수정/배포 요청은 없다. dev/main 병합·운영/APK 배포·Issue 종료는 별도 지시 기준을 유지한다.
+
+[현재 인수 원본](../features/recruitment/completion-and-records/completion-recovery-acceptance-20261110.md)을 따른다. Backend의 이번 조사/인수 문서는 미커밋·미push다. 문서 검사만 수행하며 서버/DB·기기 시험/배포를 반복하지 않는다.
+
+아래는 직전 구간 기록이다.
+
+## 직전 — Backend 복구·충돌 조사 회신 완료 / Native 대조·사용자 협의 대기
+
+Issue17 [전체39번째 Backend 미해결 명령 복구·충돌 범위 조사 회신](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6737640898)을 게시하고 전체 댓글39개/본문 일치·Issue 상단 상태를 확인했다. [조사 원본](../features/recruitment/completion-and-records/pending-recovery-and-conflicts.md)은 Native38의6개 요청에 기존 지원/정의·Native 변경 필요/서버 변경 필요/현재 불가능·미결정을 구분한다. 원요청 재전송은 조회 전용이 아니며 미실행 요청을 실행할 수 있다. ACK24시간/48시간 식별 기록 삭제와 Native24시간 보류 시계도 구분했다. 현재 GET·ACK 부재나 일반 거절만으로 과거 불명 결과·늦은 실행 불가를 증명할 수 없다. 별도 시각 효과의 선행 commit도 사용자 명령 rollback과 구분한다.
+
+다음 Native는 원ACK/오류별 복구 의미와 owner 단일 slot·업무 충돌 후보를 대조하고 사용자와 최소 변경 범위를 협의한다. 같은 실제 T는 공유 일정/멤버/종료 효과를 고려하고, 다른 room/T도 주간 점유·회원 예약/한도·C/N 원천·방 전체 명령을 대조한다. 알려진 독립 작업을 허용하려면 UI뿐 아니라 Native 저장/transport 설계가 필요하다. 취소는 첫 오류부터 안내만 종료하며 원pending/늦은 ACK는 보존한다. 장기 미해결을 미처리로 종결하려면 지연/in-flight 요청 차단과 원자적 fence·보관 보장이 필요하지만 **미합의·미구현 제안**이다. 새 code/details.reason은 필요성이 확인되지 않아 추가하지 않았다.
+
+Backend 다음은 Native 대조/사용자 선택에 따른 구체 계약 질문 대응이다. 추가 계약/보관 정책을 임의 확정하거나 구현하지 않는다. Native 계약 연결·자동 검증·사용자 기기 확인은 미완료이며 기존16c9cd4/계약864de38b·로컬API101cd82d/DB0036 인계는 유지한다. 이번은 소스/계약·기존 시험 대조와 문서 검사이며 서버/DB/실자료 재실행·기능/OpenAPI 변경·commit/push·배포·Issue 종료는 없다. 회신/조사 문서는 현재 미커밋·미push다.
+
+아래는 직전 구간 기록이다.
+
+## 직전 — Backend 보정·게시·로컬 반영·인계 완료 / Native 연결 대기
 
 Issue17 [전체36번째 Backend 계약 보정·개발 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6735265341) 완료. 고정 구현 `16c9cd4b9016a881bbb26c8438f3347049603902` / feat/character-lifecycle는 origin push·원격 SHA 일치 확인, 실제 로컬 API image101cd82d와 앱285파일/282모듈·두 전체 계약이 같다. 새 two-cycle SHA256 `864de38b53ec23a305074bb3844a7a603ba1f992815427fdba3e6931793119b6`, 선택 query 누락10개 보완·지원/선언65개 일치다. 기본 계약/DTO·본문·권한·토큰·DB 동작은 유지했다. 영향 회귀 최종 고유114PASS·도구63PASS/신규 미해결0이며 과거 전체1921PASS/기존2FAIL과 합산하지 않는다.
 

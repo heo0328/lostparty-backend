@@ -1,5 +1,37 @@
 # 이슈 주제별 추적표
 
+2026-11-10 Issue17 현재: [Native52 기기 인수](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6756433040)·[Native53 게시](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6756529672)로 이번 완료 오류/계정 복구 구간의 사용자 통과·기존 막힘 해소를 확인했다. 문구 수정 전에 이미 복구됐으며 같은 복구 재시험 대기는 없다. Native 구현 5df515f7841a7963faa7d3c6ed930cd31ab8b3bf/feature/raid-character-missing-recovery push·clean은 공식 보고, 자동2856PASS/analyze0과 실제 기기 통과는 구분한다. [인수 원본](../features/recruitment/completion-and-records/completion-recovery-acceptance-20261110.md)을 따른다. 누락 캐릭터/부분 완료 자료·기기 검증과 일괄 완료 기획은 별도 미완료이며 Issue17 전체 종료는 아니다. Backend 추가 수정 요청 없음, 이번 문서는 미커밋·미push다.
+
+아래는 이전 구간 기록이다.
+
+Issue17 최신: [Native48 계정 막힘 지속](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6742031537)에 [Backend 전체49번째 현재 상태 채택 확인](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6742169727) 회신. 기존 계정 사용 복구는 미완료다. [원본](../features/recruitment/completion-and-records/bug033-current-state-adoption.md)의 좁힌 원무옵션 correction/gate 거절+GET 성공+사용자 명시 선택 조건으로 과거 결과 미확인 상태에서 로컬 활성 대기를 해제할 수 있다. 과거 전체 거절 증명을 이 경로의 필수 조건으로 뒀던 이전 안내는 정정했다. 다음 Native는 기존 v3의 현재 상태 유지 연결·검증/계정 사용 복구를 우선하고 그 전 정상 흐름 기기 재시험을 반복 요청하지 않는다. 실제 DB0036/소스 해시 읽기 확인·격리 HTTP1PASS/22.79s, 실자료/서버 변경 없음. 문서는 미커밋·미push다. [NEXT_WORK](NEXT_WORK.md)를 따른다.
+
+아래는 이전 구간 기록이다.
+
+Issue17 최신: [Native 전체46번째 진행/이력 한계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6741157735)·[전체47번째 최종 결과](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6741254789) 확인. 신규 계정 group 옵션·주간 schema4의 원옵션/불명 이력 보관·CLIENT_UPGRADE_REQUIRED 반복 안내 보완, Native 자체전체2845PASS/analyze0이다. 미커밋·미push이며 기존 v3 요청의 이력/안전 정리와 사용자 기기 인수는 미완료다. 다음 Backend는 이 특정 요청을 기존 서버 로그/저장 근거로 판별 가능한 최소 증거를 확인·회신해야 한다. 아직 추가 대조/회신은 미실행이다. 현재 API/DB·계약은 유지하며 신규 문서는 미커밋·미push다. [NEXT_WORK](NEXT_WORK.md)를 따른다.
+
+아래는 이전 구간 기록이다.
+
+Issue17 최신: [전체45번째 Backend BUG-033 회신](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6740367084) 완료. [원본](../features/recruitment/completion-and-records/account-completion-group-profile-bug033.md)에 계정 정정 GET/POST·수동 PUT의 group_policy_version 최소 연결과 기존 recruitment-v2 namespace 유지, 알려진 무옵션 원요청의 gate 전 거절을 근거로 한 조건부 failed 정리 범위를 기록했다. 격리 HTTP2PASS/48.98s이며 실제 DB/API/업무 코드/계약은 변경하지 않았다. 앞선 계정3경로 무옵션 소비안은 정정한다. 다음 Native는 옵션/원옵션 보관·해당 거절 분류/반복 안내 보완·자동 검증 후 사용자 기기 재확인이다. Native43의2840PASS·미커밋 구현을 BUG-033 해결로 표시하지 않는다. 이번 문서는 미커밋·미push다. [NEXT_WORK](NEXT_WORK.md)를 따른다.
+
+아래는 이전 구간 기록이다.
+
+Issue17 최신: [전체42번째 Backend 완료 경합 확인](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6738491069) 회신 완료. [원본](../features/recruitment/completion-and-records/completion-retry-order-check.md)에서 같은 대상/종류 두 key의 stale 거절·원ACK/반대주차 보존, 공대/개인 종류 차이를 좁혀 검증6PASS/96.21s했다. 다음 Native는 짧은 안내·취소/표시 수명·기존 복구·새 profile 계약 연결/자동 검증, Backend는 구체 차이에 대응한다. 새 종결 API/fence·복구 큐·다중 저장은 이번 범위에서 제외하며 선행 조건이 아니다. GET만으로 원pending 삭제/무조건 새 key 전송을 승인한 것은 아니다. 실제 로컬 API/DB·업무 코드/계약은 유지하고 기기 확인은 미완료다. 이번 문서는 미커밋·미push다. [NEXT_WORK](NEXT_WORK.md)를 따른다.
+
+아래는 이전 구간 기록이다.
+
+Issue17 최신: [Native 전체40번째 조사 수용](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6737786058)·[전체41번째 사용자 범위 축소](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6738162109) 확인. 명령 종결 API/fence·복구 큐·다중 저장 확대는 이번 범위에서 제외하며 앞선 제안을 선행 조건으로 두지 않는다. 다음 Backend는 완료/개인 완료만 대상으로 현재 완료 조회의 표시·미완료 조회 후 새 context/새 명령과 옛 요청 경합·기존 복구로 충분/지원 불가 구간을 짧게 대조해 답변한다. GET만으로 원pending 삭제/무조건 새 key 전송은 승인되지 않았고 단일 slot 제한도 미해결이다. Native는 확정 문구/표시·기존 복구·새 계약 연결을 설계한다. [NEXT_WORK](NEXT_WORK.md)를 따른다. 이번 회신 기록은 미커밋·미push며 코드/서버 변경은 없다.
+
+아래는 이전 구간 기록이다.
+
+Issue17 현재: [전체39번째 Backend 조사·정의 회신](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6737640898) 완료. [복구·충돌 조사 원본](../features/recruitment/completion-and-records/pending-recovery-and-conflicts.md)에 ACK24h/식별 기록48h·원요청 재송신의 실행 가능성·종결 증거/장기 미해결 한계·업무 충돌/Native slot 구분을 기록했다. 다음 담당 Native의 대조·사용자 최소 범위 협의이며 Backend는 추가 계약 질문에 대응한다. 장기 미해결 종결 fence는 미합의 제안, 새 서버 기능/계약/DB 구현·시험/배포는 없다. 기존 보정/로컬 반영은 유지하고 신규 연결/기기는 미완료다. 이번 문서는 미커밋·미push다. 자세한 다음 실행은 [NEXT_WORK](NEXT_WORK.md)를 따른다.
+
+아래는 이전 구간 기록이다.
+
+Issue17 최신: [Native 전체37번째 소비 설계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6736308942)·[전체38번째 오류 복구/충돌 범위 협의 요청](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6737308328) 확인. 기존 보정16c9cd4/계약864de38b·로컬API101cd82d 수용은 유지하며 다음 담당은 **Backend 조사·정의/회신**이다. 처리 의미·버튼 행동·복구 종료 증거·장기 미해결·업무 충돌 범위·최소 오류 세분화 필요성을 기존 코드/계약으로 대조해야 한다. 첫 오류 취소/확인창 한정 표시는 Native 사용자 확정 UX이며 원요청은 보존한다. 새 기능/API/DB 구현이나 정책 확정은 아직 없다. Native 소비 구현·기기 확인도 미완료다. 자세한 요청은 [NEXT_WORK](NEXT_WORK.md)를 따른다. 이번 기록은 미커밋·미push이며 기존 Backend 답변/코드 게시·로컬 반영은 유지한다.
+
+아래 상태는 직전 구간 기록이다.
+
 Issue17 [전체36번째 Backend 계약 보정·개발 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6735265341) 완료. 고정 구현 `16c9cd4b9016a881bbb26c8438f3347049603902` / feat/character-lifecycle는 origin push·원격 SHA 일치 확인, 실제 로컬 API image101cd82d와 앱285파일/282모듈·두 전체 계약이 같다. 새 two-cycle SHA256 `864de38b53ec23a305074bb3844a7a603ba1f992815427fdba3e6931793119b6`, 선택 query 누락10개 보완·지원/선언65개 일치다. 기본 계약/DTO·본문·권한·토큰·DB 동작은 유지했다. 영향 회귀 최종 고유114PASS·도구63PASS/신규 미해결0이며 과거 전체1921PASS/기존2FAIL과 합산하지 않는다.
 
 실제 로컬 API만 교체했고 DB0036·117표355행의 전체 hash/구조/sequence·키4개·환경/보안/포트·DB컨테이너/볼륨 보존, healthy·listener7개·새 실행 로그17이벤트 오류0을 확인했다. migration·실자료 명령·새 키/환경·dump·운영/APK 배포·merge·Issue 종료는 없다. [구현·검증·인계 원본](../features/recruitment/completion-and-records/completion-profile-contract-fix.md)·[집계](../engineering/operations/records/completion-profile-contract-verification.json)를 따른다.

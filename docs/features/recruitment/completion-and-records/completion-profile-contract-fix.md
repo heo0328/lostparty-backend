@@ -1,5 +1,9 @@
 # Issue17 완료 프로필 계약 보정
 
+2026-11-10 현재 결과: [완료 오류·계정 복구 인수/Native 게시](completion-recovery-acceptance-20261110.md) 완료. 기존 계정은 문구 수정 전에 복구됐고 사용자 기기 테스트 통과, Native 구현5df515f push가 확인됐다. 아래 조사·회신의 복구 미확인/기기 대기·Native 미게시 표기는 당시 기록이며 현재 대기가 아니다. 누락 캐릭터/부분 완료 자료·기기 검증과 일괄 완료 기획은 별도 미완료다.
+
+후속 BUG-033: [계정 정정/수동 완료의 그룹 옵션 확인](account-completion-group-profile-bug033.md)에서 계정3경로에도 DB0036 group gate가 적용됨을 확인했다. participation_profile 선택성과 별개로 신규 계정 호출에는 기존 group_policy_version을 연결해야 한다. 앞선 무옵션 소비 가정은 정정하며 계약 파일 자체를 다시 바꾸는 것은 아니다.
+
 2026-11-09 / Backend / feat/character-lifecycle. 사용자 승인 구현·격리 검증·관련 commit/push·로컬 API 반영·Issue 인계 구간이다. [원인 조사](completion-context-profile-audit.md)와 [Native 전체33번째 요청](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6733769180)을 따른다. 구현·격리 검증·게시·로컬 API 반영·Issue 인계를 완료했다. Native 계약 연결·사용자 기기 확인은 미완료다.
 
 ## 문제와 변경
