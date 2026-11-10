@@ -31,10 +31,12 @@
 - 누락 캐릭터/부분 완료 개발용 자료 준비와 해당 기기 검증은 별도 후속이다. 이번 복구 인수로 완료 처리하지 않는다. 자료 준비·실자료 변경의 대상/방법은 사용자 지시 범위에서 정한다.
 - 묶음 레이드 체크박스 선택/일괄 완료는 사용자 요청을 Native 후속 문서에 기록한 **미구현 기획**이다. 이번 구현/계약·인수에 포함하지 않으며 Backend API 설계/구현 착수로 해석하지 않는다.
 - 이번 구간에 추가 Backend 수정/배포 요청이나 동일 복구 재수용 대기는 없다. 다음은 사용자 선택 후 위 후속 범위를 구체화하거나 새 차이에 대응한다.
-- dev/main 병합·운영/APK 배포·Issue 종료는 하지 않았다. 두 작업 브랜치는 미통합/후속 작업이 있어 보존한다. Native 게시를 Backend 미커밋 문서의 commit/push 승인으로 확대하지 않는다.
+- dev/main 병합·운영/APK 배포·Issue 종료는 하지 않았다. 이후 사용자 지시로 Backend feat/character-lifecycle을 dev에 병합(aa7058c)·원격 반영한 뒤 로컬/원격 작업 브랜치를 정리했다. Native 브랜치 보존/통합은 Native 지시 범위이며 Backend가 변경하지 않는다. main과 서버/배포는 변경하지 않았다.
 
 ## 기록 상태
 
-Backend 게시 기준은 구현16c9cd4·후행 기록f744a1e이며 이후 조사/회신·인수 최신화 문서는 현재 로컬 미커밋·미push다. 기존 [보정 당시 검증 JSON](../../../engineering/operations/records/completion-profile-contract-verification.json)의 Native 대기/기기 미확인 값은 당시 시점 기록으로 보존하고, 현재 인수 상태는 이 문서와 [NEXT_WORK](../../../project/NEXT_WORK.md)를 따른다. 과거 조사·실패/대기 기록은 근거로 보존한다. 이번은 문서 최신화이며 Git 게시·서버/실자료 변경·Issue 종료를 실행하지 않는다.
+Backend 업무 구현16c9cd4·후행 기록f744a1e 이후 조사/회신·인수 문서13개를 `afd5ba21d443d85f73b98d29043eefe3583b8cd7`에 커밋·push했다. 사용자 지시로 현재 브랜치 전체를 dev에 병합 `aa7058c5f93ad799033116608f2b3f52931b0dfe`·원격 반영했고 feat/character-lifecycle은 로컬/원격 삭제, checkout은dev다. 후행 문서 커밋은 이 통합 결과를 기록한다. 별도 배포·로컬API 교체·DB/키·환경 변경은 없다.
+
+기존 [보정 당시 검증 JSON](../../../engineering/operations/records/completion-profile-contract-verification.json)의 Native 대기/기기 미확인 값은 당시 기록으로 보존하고 현재 인수·Git 상태는 이 문서와 [NEXT_WORK](../../../project/NEXT_WORK.md)를 따른다. 과거 조사·실패/대기 원본과 공유 이력을 재작성하지 않았다. Issue17 전체 종료/새 기능 착수로 확대하지 않는다.
 
 공식 Issue 본문 상단도 Native52의 기기 인수·시점 정정과 Native53 게시 결과/별도 후속으로 최신화했다. 새 댓글·Issue 종료는 실행하지 않았다.

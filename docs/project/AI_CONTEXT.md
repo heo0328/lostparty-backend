@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-2026-11-10 Issue17 현재: [Native52 기기 인수](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6756433040)·[Native53 게시](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6756529672)로 이번 완료 오류/계정 복구 구간의 사용자 통과·기존 막힘 해소를 확인했다. 문구 수정 전에 이미 복구됐으며 같은 복구 재시험 대기는 없다. Native 구현 5df515f7841a7963faa7d3c6ed930cd31ab8b3bf/feature/raid-character-missing-recovery push·clean은 공식 보고, 자동2856PASS/analyze0과 실제 기기 통과는 구분한다. [인수 원본](../features/recruitment/completion-and-records/completion-recovery-acceptance-20261110.md)을 따른다. 누락 캐릭터/부분 완료 자료·기기 검증과 일괄 완료 기획은 별도 미완료이며 Issue17 전체 종료는 아니다. Backend 추가 수정 요청 없음, 이번 문서는 미커밋·미push다.
+2026-11-10 현재 Git: 사용자 지시로 문서 afd5ba2를 커밋·push하고 feat/character-lifecycle 전체를 dev에 병합 `aa7058c`·원격 반영했다. 통합 tree/원격 tip 일치 확인 후 작업 브랜치 로컬·원격 삭제, checkout=dev다. main/실제 로컬API101cd82d·DB0036/운영은 변경하지 않았고 별도 배포·migration·태그는 없다. 완료 오류/계정 복구의 사용자 인수·Native5df515f 게시 완료, 미완료 후속/다음 작업은 [NEXT_WORK](NEXT_WORK.md)를 따른다. 아래 미커밋/feat checkout은 당시 기록이다.
 
 아래는 이전 구간 기록이다.
 

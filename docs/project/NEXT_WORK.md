@@ -1,14 +1,14 @@
 # 다음 실행
 
-## 현재 — 완료 오류·계정 복구 사용자 인수/Native 게시 완료 / 별도 후속 대기
+## 현재 — 완료 기록 dev 통합·작업 브랜치 정리 완료 / 별도 배포 없음
 
-2026-11-10 [Native 전체52번째 사용자 기기 인수·시점 정정](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6756433040)·[전체53번째 단일 커밋/푸시 보고](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6756529672)를 전체 댓글53개 조회로 확인했다. **이번 완료 오류/계정 복구 구간의 사용자 디바이스 테스트 통과·기존 계정 복구 완료**다. 복구는 버튼/안내 문구 변경 요청 전에 이미 정상 완료됐으며 기존 복구 미확인/추가 기기 시험 대기는 해소한다. 원서버 과거 요청의 개별 성공/실패 이력을 확정하는 뜻은 아니다.
+2026-11-10 사용자 지시로 완료 문서13개를 `afd5ba21d443d85f73b98d29043eefe3583b8cd7`에 커밋·push하고, feat/character-lifecycle의 기존 개발·정리·계약/검증 이력을 dev에 이력 보존 병합했다. 병합 `aa7058c5f93ad799033116608f2b3f52931b0dfe`의 origin/dev 반영과 작업 브랜치 tip 포함·전체 tree 동일을 확인했다. 통합된 feat/character-lifecycle은 로컬·원격에서 삭제했고 현재 checkout은 **dev**다. main은3e3ddc1 그대로이며 변경하지 않았다.
 
-Native 게시 구현은 `5df515f7841a7963faa7d3c6ed930cd31ab8b3bf` / feature/raid-character-missing-recovery다. 누적30파일을 단일 커밋/push했고 HEAD/origin/원격 일치·clean은 Native53 보고다. 최종 자동 근거는2856PASS/analyze0이며 사용자 기기 인수와 구분한다. 최종 버튼 ‘현재 정보로 화면갱신’과 조건부 안내 ‘현재 정보로 화면을 갱신하면 다시 사용할 수 있습니다.’는 같은 useCurrent의 문구 변경으로 기능 로직은 같다. 이미 완료한 복구를 다시 만들거나 같은 시험을 반복 요청하지 않는다.
+이번 새 변경은 문서뿐이며 기존 업무 검증 근거를 재사용했다. 문서/동결/경로·diff 검사를 통과했고 새 서버/DB·기기 시험을 반복하지 않았다. **사용자 지시대로 별도 배포·로컬 API 교체·DB migration·환경/키 변경·태그/운영/APK 배포는 하지 않았다.** release workflow는 v* 태그/수동 실행 기준이며 이번 브랜치 push는 배포 트리거가 아니다. 통합 결과/현재 브랜치 기록은 dev의 후행 문서 커밋으로 게시한다.
 
-다음은 사용자 지시에 따른 후속 범위 선택이다. 누락 캐릭터/부분 완료 개발용 자료 준비·해당 기기 검증은 미완료이고, 묶음 레이드 체크박스 선택/일괄 완료는 문서에만 기록된 미구현 기획이다. 이번 인수에 포함하지 않으며 자료 변경·신규 API 구현을 자동 착수하지 않는다. 이번 구간의 추가 Backend 수정/배포 요청은 없다. dev/main 병합·운영/APK 배포·Issue 종료는 별도 지시 기준을 유지한다.
+이번 완료 오류·계정 복구 구간은 사용자 기기 인수와 Native5df515f 게시까지 완료다. 누락 캐릭터/부분 완료 개발 자료 준비·해당 기기 검증은 별도 미완료, 묶음 레이드 체크박스 선택/일괄 완료는 기록만 된 미구현 기획이다. 다음 기능은 사용자 지시에 따라 최신 dev에서 목적 브랜치를 만들고 범위를 정한다. 이미 통과한 계정 복구 재시험·기존 구간 재수용 대기는 없다. Issue17 전체 종료·dev→main 통합·배포는 하지 않는다.
 
-[현재 인수 원본](../features/recruitment/completion-and-records/completion-recovery-acceptance-20261110.md)을 따른다. Backend의 이번 조사/인수 문서는 미커밋·미push다. 문서 검사만 수행하며 서버/DB·기기 시험/배포를 반복하지 않는다.
+[인수 결과 원본](../features/recruitment/completion-and-records/completion-recovery-acceptance-20261110.md)·[통합 이력](DEV_LOG.md)을 따른다. 아래 feat/character-lifecycle checkout·미커밋/미push 표기는 당시 구간 기록이며 현재 상태가 아니다.
 
 아래는 직전 구간 기록이다.
 
