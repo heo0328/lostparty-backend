@@ -17,6 +17,7 @@ from app.game_accounts.api.profile_router import preferences_router
 from app.game_accounts.api.profile_router import presentation_router
 from app.game_accounts.api.batch_router import router as batch_router
 from app.core.errors import register
+from app.core.cors import register as register_cors
 from app.core.game_policy import DEFAULT_MIN_ITEM_LEVEL
 from app.member_settings.router import router as settings_router
 from app.lostark_keys.router import router as lostark_keys_router
@@ -89,6 +90,8 @@ async def no_store(request, call_next):
         response.headers["Cache-Control"] = "no-store"
     return response
 
+
+register_cors(app)
 
 _original_openapi = app.openapi
 def _decorate_openapi(schema):
@@ -501,4 +504,5 @@ def create_two_cycle_app():
         from app.raid_rooms.contracts import roster_openapi
         return roster_openapi.decorate(value,two_cycle=True)
     result.openapi=schema
+    register_cors(result)
     return result

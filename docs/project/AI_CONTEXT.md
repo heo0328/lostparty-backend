@@ -1,11 +1,12 @@
 # LostParty Backend 기능 지도
 
-2026-11-10 KST 기준. 다음 실행은 [NEXT_WORK](NEXT_WORK.md), 공식 이슈 상태/담당은 [ISSUE_TRACKER](ISSUE_TRACKER.md), 완료·결정·검증은 [DEV_LOG](DEV_LOG.md)가 원본이다. Native 구현 판단은 담당자의 현재 코드 확인 결과로 구분한다.
+2026-11-11 KST 기준. 다음 실행은 [NEXT_WORK](NEXT_WORK.md), 공식 이슈 상태/담당은 [ISSUE_TRACKER](ISSUE_TRACKER.md), 완료·결정·검증은 [DEV_LOG](DEV_LOG.md)가 원본이다. Native 구현 판단은 담당자의 현재 코드 확인 결과로 구분한다.
 
 ## 현재 기준
 
-- Backend checkout dev. 업무44eb4ba/반영 기록624ef00·문서962c1cd를 병합b1400a489d4cc785244c3abfa1ed610cc6926de6로 통합·push하고 원격 일치/feature tip 포함·동일 tree를 확인했다. 완료 기능 브랜치는 로컬·원격 삭제했다. 현재 앱/시험/전체 계약은 기존 검증 구현과 동일하며 후행 통합 기록은 같은 dev에 게시한다.
-- 로컬 two-cycle 실행·DB0036_roster_presence, runtime ae6b3e0a/앱288파일 일치. 기본125/142·two-cycle192/213 계약이며 [현재 운영/개발 구분](../engineering/operations/README.md)을 따른다. 이번 문서 작업에서 서버/DB를 변경하지 않는다.
+- 현재 checkout `feat/webview-support`/dev9d6f180 분기, CORS 로컬반영·검증/미커밋·미push. #49 로컬웹로그인·모집생성 사용자보고통과/W3 공동인계합의완료. [전체21 Backend/W4](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6793947409)에서 웹실artifact 독립수령검증·로컬비활성배치완료, 운영전송/활성화미실행. [수령원본](../engineering/operations/records/web-handoff-2.1.0.json). 새Android client 운영azp미포함/기존2+1추가준비필요. 다음 Backend 첫기록정리/dev·main동기화/push 이후 배포도구·회귀/백업준비, 최종공개는웹·Backend·APK함께다.
+- 이전 dev 통합 기준: 업무44eb4ba/반영 기록624ef00·문서962c1cd를 병합b1400a489d4cc785244c3abfa1ed610cc6926de6로 통합·push하고 원격 일치/feature tip 포함·동일 tree를 확인했다. 완료 기능 브랜치는 로컬·원격 삭제했다. 현재 앱/시험/전체 계약은 기존 검증 구현과 동일하며 후행 통합 기록은 같은 dev에 게시한다.
+- 로컬 two-cycle 실행·DB0036_roster_presence 유지. 웹 CORS 추가 이미지986f8d80로 API 재생성/healthy·HTTP 및 두 전체 계약 확인. runtime ae6b3e0a/앱288파일 일치는 이전 업무 반영 근거. 기본125/142·two-cycle192/213 계약이며 [현재 운영/개발 구분](../engineering/operations/README.md)을 따른다. 이번 웹 지원에서 개발 API만 교체했으며 DB/운영은 변경하지 않았다.
 - 사용자 승인으로 #47/#48은 completed 종료. 다음 정리는 #17, #15/#18/#19 작업 선택은 전체 정리 뒤로 보류한다.
 
 ## 기능별 상태와 원본

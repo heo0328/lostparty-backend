@@ -1,5 +1,7 @@
 # 로컬·운영 백업 원장과 안내 기준
 
+현재 준비 점검(2026-11-11 / Issue49): Native 새 release 서명키는 독립사본/접근·사본서명검증·서명 Secrets/CI 확인 완료 보고이며 신규 Android OAuth/운영 Web 원본 등록도 사용자 확인으로 인계됐다. Backend는 새 공개 client의 운영 azp 1항목 추가 준비만 필요하고 실제 실행/동결 설정에는 아직 미포함이다. Backend 서비스키4개·기존 배포 SSH Secret은 재사용하며 재발급하지 않는다. 최신 운영 DB/환경·복구 구성 사본 생성/PC전송은 아직 미수행으로 기존20261107 사본을 현재최신DB로 부르지 않는다. 실제 변경 직전 기존PC백업폴더에 새날짜 사본을 보관하고 변경 후 환경/동결구성·웹 배포 식별도 추가한다. [실측/인계 근거](records/web-handoff-2.1.0.json)·[Issue49 전체21](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6793947409).
+
 현재 보관 기준(2026-11-10): #47 로컬 반영에서도 기존 환경/키 사본을 재사용했고 DB dump 제외 방침은 유지했다. 새 키/환경·운영 복구 구성을 만들지 않았다. 실행 현황은 [운영 안내](README.md), 당시 보존 비교는 [반영 기록](records/batch-completion-local-rollout.json)을 따른다. 기존 사본 보관/실제 복원 수준은 아래 원장과 같다.
 
 로컬 구조 이행 당시(2026-11-08): 사용자 승인으로 #17 개발 DB0035→0036·API를 반영했다. [로컬 반영 집계](records/roster-participation-local-rollout.json) 기준 기존 자료/키·환경을 보존했고 로컬 DB dump 제외 결정은 유지했다. 신규 키/환경 생성·운영 변경은 없으며 기존 보관본을 재사용한다. ignored 감사 자료는 DB백업/복원 시험이 아니다. 아래0035는 복구 당시 기준이다.
@@ -60,7 +62,7 @@ DB dump는 DB가 있는 상태의 별도 내보내기 파일이다. 코드 clone
 | Lightsail 기본키 | 리전별 기본키는 콘솔에서 재다운로드 가능. 시드니 기본키는 사용자 다운로드·PC 보관 보고 및 접속 확인 완료 |
 | Lightsail 사용자 지정키 | 생성 시 개인키 원본 별도 보관. 콘솔에서 개인키를 다시 받을 수 있다고 가정하지 않음 |
 | Google OAuth | 프로젝트·Web/Android 클라이언트 ID·용도·패키지명·서명 SHA-1을 기록. 사용자 화면/다운로드 JSON 보관 보고. 현재 Backend ID-token 검증에는 client secret JSON을 추가하지 않음 |
-| Native 서명자료 | Native 담당. debug 키 사용자 복사 보고, 새 release 키는 생성·백업 전이라는 인계가 있음. 생성 시 파일·alias·비밀번호·공개 지문을 보관하고 첫 게시 전에 안내. Backend 키 교체와 구분 |
+| Native 서명자료 | Native 담당. #49 전체7·19·20에서 새 release 키 독립백업·접근/사본서명검증·Secrets/CI서명 확인 완료 보고. Backend 서비스키 교체와 구분하며 실제 기기/운영로그인은 별도 |
 
 [GitHub PAT 안내](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)·[Actions Secrets API](https://docs.github.com/en/rest/actions/secrets)·[Lightsail 키 안내](https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-managing-ssh-keys.html)·[Google OAuth 클라이언트 안내](https://support.google.com/cloud/answer/15549257?hl=en).
 
