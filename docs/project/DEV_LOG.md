@@ -4247,3 +4247,15 @@ NEXT_WORK/AI_CONTEXT/추적표를 갱신했으며 기존 로컬 수정은 보존
 - 운영읽기전용기준으로다음일반배포구성까지비교해웹mount목록순서/명시bind기본옵션차이를발견. 단순표현으로보여도현재인프라보호의전체구성비교에거절될수있어후보에서제외했다. 태그v2.1.0은그대로보존하고진행중CI43021703731은운영자취소, 성공으로처리하지않는다.
 - candidate_config에서검토된raw Compose와동일한위치/옵션으로웹mount를생성하도록수정. 보호우회없음. BackendVERSION/검증·배포계획을2.1.1로증가, manifest태그검사는검토된계획version과일치하도록변경. Native웹/APK2.1.0+6와DB전환/configrevision은유지한다.
 - 수정도구80PASS·운영읽기전용정규화구성동등비교PASS. 격리실전환재검증후새소스통합·CI/full을새로수행한다. 운영서비스/DB/설정변경없음.
+
+### 2026-11-11 — Backend2.1.1 수정 후보 재게시·서버 비활성 배치
+
+- 수정1ef4cd4를d16734d86e694579cd4e4e043c2ca89cc81c1b64로dev이력보존병합/main동일화·atomic push/원격일치·v2.1.1태그게시. 새CI43022922694/full 진행, 이전취소결과재사용없음. [전체24 Backend/4단계후보보완](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6796169097)로인계했다. Native재빌드/재제출요청없음.
+- 서버에별도root소유clean checkout과검증된원본3파일을준비, 웹site를/var/lib/lostparty-web/releases 아래비활성배치했다. current/maintenance없음확인. 운영v2.0.0/DB0035/API·Caddy변경없음, 실제backup/migration/공동공개미실행.
+
+### 2026-11-11 — 고정 후보 CI·이미지 확보·운영 preflight 완료
+
+- [CI43022922694](https://github.com/heo0328/lostparty-backend/actions/runs/43022922694) exact-source d16734d86e694579cd4e4e043c2ca89cc81c1b64/full 성공. 회귀8개는311/243/246/203/283/247/206/229로합계1968PASS·전부exit0/cleanup, 도구80·두전체계약·일반제어복귀·합성웹HTTP/static·validation/publish성공, 운영자동deploy skipped. 이전취소후보결과를재사용하지않았다.
+- image7aa19edfd4c526b03b011722e59a8674ee10dfadaf68b2c9906fc442042c061d·release.json/validation.json/Compose·계약hash/DB0036독립대조PASS. [수치/hash원본](../engineering/operations/records/release-2.1.0-preparation.json). BackendRelease메타게시와운영/웹/APK공동공개는구분한다.
+- 서버고정소스·검증원본/웹비활성배치, imagepull/identity·labels/DBhead·현재baseline/공간/공개API를검사한관리자preflight ready/applied=false. 실제운영v2.0.0/DB0035유지·current/marker없음, 신규backup/migration/키·azp·서비스교체/공동공개미실행.
+- [전체25 Backend/4완료·5~6시점조정](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6796938066) 회신/본문갱신. 다음Backend직전backup/PC사본검증·점검전환, 사용자Chrome/새APK실시험·Native최종공개합류시점연결대기. 오래된dump를최신으로사용하거나미확인인수를true로채우지않는다.

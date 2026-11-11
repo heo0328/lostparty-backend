@@ -2,40 +2,33 @@
 
 2026-11-11 KST 기준. 실제 Backend 코드/Git과 각 담당의 현재 코드 확인 결과를 사용한다. Native 코드 상태·완료 판단은 Native가 작성하며 Backend가 대신 검토하지 않는다.
 
-## 현재 우선 — 승인 6단계 실행 / 4단계 Backend2.1.1 수정 후보 준비
+## 현재 우선 — 공동 릴리즈 4단계 완료 / 5~6단계 인수 시점 조정
 
-- 1~2단계 완료: 현재변경ba5b0fb를09b46f991dc18538a8b3995d6cd310d0fee4c003로dev병합/main동일화·atomic push/원격일치 확인. 현재release/2.1.0, 통합된feat/webview-support 로컬삭제(원격미생성). [실행 설계/명령](../engineering/operations/release-2.1.0.md).
-- 3단계 로컬구현: 웹receive/verify/stage/switch·Caddy API/SPA/404/cache/MIME/점검·backup/maintenance도구·configrevision보존·2.1.0/full·명시maintenance자동deploy보류. 도구80검사/실Caddy HTTP·합성CI검사/실DB0035→0036 전환·회원/키/기존표count·digest보존/전체계약비교PASS. 초기회귀1056PASS/1FAIL·정상중단1415.04초/cleanup완료. 실패는기록된옛기대값과일치, 기존2기대값을현재정책으로정정해3표적PASS. 남은59파일/919사례는3개독립DB에서311/289/319PASS·cleanup완료. 초기prefix와8중복제외·정정재검증을합쳐고유1968PASS. 단일무중단전체실행과구분하며최종SHA의CI/full은별도필수다.
-- 운영PC백업기존폴더는사용자가지정했고접근가능확인/ignored private기록에만보관했다. 운영시험PC의공인IPv4도Windows외부접속조회로직접확인해비공개보관, 실제브라우저·APK접근은운영후보단계에서확인한다. 아직실dump/전송/운영변경없음. 새로운호스트/키를만들지않는다.
+- **고정 후보:** Backend `v2.1.1` / source `d16734d86e694579cd4e4e043c2ca89cc81c1b64`. 구현을 dev/main 동일 통합·push하고 태그를 게시했다. [CI43022922694](https://github.com/heo0328/lostparty-backend/actions/runs/43022922694)의 새 full 회귀1968·도구80·두 전체 계약/게시 PASS, 운영자동deploy skipped. image `7aa19edf…c061d`·계약/DB0036·구성 식별과 최초 후보 제외/수정 근거는 [준비 기록](../engineering/operations/records/release-2.1.0-preparation.json)에 둔다.
+- **실제 상태:** 운영은 계속 v2.0.0/DB0035다. 서버 별도 clean 후보·원3파일/비활성site 배치와 관리자 preflight ready/applied=false, 다음 일반배포 구성 일치까지 확인했다. current/maintenance 없음, 새 backup·migration·azp/서비스교체·공동공개는 미실행이다. 로컬 dev는 CORS 반영/DB0036을 유지한다.
+- **공동 조합:** Native 웹/APK2.1.0+6 고정 인계를 재사용한다. 서로 다른 source·APK 검증의 Native 보고/Backend 확인 범위는 [수령 원본](../engineering/operations/records/web-handoff-2.1.0.json)을 따른다. 웹 재빌드/재압축·artifact 재제출은 불필요하다. 기존 azp2개+새Android1개 추가안·Web audience/서명/nonce 유지, 서비스키4개·기존SSH 재사용이다.
+- **현재 대기:** [전체25 Backend/4완료·5~6시점조정](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6796938066)에서 사용자 Chrome/같은Wi-Fi 새APK 시험 준비와 Native 실제 인수·최종 동일bytes 공개 합류 시점을 연결한다. 미응답을 인수 완료로 간주하지 않고 기존 서비스를 유지한다. 사용자 PC 백업 폴더·시험 공인IP는 확인해 비공개 기록에 보관했으며 다시 요구하지 않는다.
+- **다음 Backend:** 인수 시점 연결→직전IP 확인·새 날짜 DB/환경·기존키/동결구성·복구도구 backup→기존PC폴더 전송/독립hash 확인→잠금/점검/쓰기중지→0036/azp·동결구성/API·웹 전환→Backend 검사. fresh backup은 실제 변경 직전 확보하며 기존 사본을 덮어쓰지 않는다. [실행 명령·실패/복귀 원본](../engineering/operations/release-2.1.0.md)을 따른다.
+- **다음 사용자/Native:** 웹 로그인·보호조회·모집생성/재조회·새로고침·로그아웃, 새APK 운영로그인/기존회원 연결을 확인한다. 양측 실제 결과와 합의 시점에 점검해제/Native Release를 공동 공개한다. 첫 웹은 새 탭/재접속 기준, 새 앱+구0035 제외·구APK 조건부 제한은 운영 설계의 표를 따른다.
+- **완료 조건:** 실제 적용 조합·보존/검증·담당별 인수·실제 공개 상태를 배포 기록과 Issue49에 연결한다. CI/파일수령/비활성배치를 운영공개 완료로 표시하지 않는다. Issue 종료는 별도 판단이다. Git/검증 상세 이력은 [DEV_LOG](DEV_LOG.md)에 둔다.
 
-- [Native 전체17](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6792945284)로 W3 협의공백 해소 확인. 전체18 exporter/manual workflow 구현, 전체19 새OAuth·준비소스push, 전체20 웹실물/새서명APK CI성공 인계. [Backend 전체21/W4 수령결과](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6793947409)·[검증 원본](../engineering/operations/records/web-handoff-2.1.0.json).
-- 웹run43005927315/artifact13849320316/source89951f4b71e7a225d442ccaf9510c83de86aaea7·2.1.0+6·운영origin. 정확ID 인증수령/외피API digest·실ZIP hash/14,333,833bytes·고정3파일/내외manifest·site34개/35entry/POSIX안전경로/개별hash PASS. 원3파일 보존·ignored backups/web-handoff/artifact-13849320316/inactive/site **로컬비활성 배치완료**, AWS전송/서버staging/활성화 미실행. 옛1ba ZIP은 계속 제외. 실artifact 재제출 불필요.
-- 웹artifact 만료2026-11-25T10:46:33Z. 수령원본을 재압축/재빌드하지 않고 최종Native Release v2.1.0 asset에 동일bytes 승격. 일반재사용 수령/활성화 도구와실제Caddy HTTP MIME/캐시는로컬검증완료·미게시, 운영브라우저/worker/기능인수는미완료.
-- APKrun43003690946/sourcee9bfa96/artifact13847258618은 GitHub job의 빌드/서명검증/upload성공·Release skipped 직접확인. APK 자체검증/앱소스동일성은 Native 보고, Backend APK다운로드/실기기시험은 없음. 웹과APK source를조합기록에서구분한다.
-- 새Android client 574337852234-2m3nnr5jaa46okro5vpbvsgddgrloob3.apps.googleusercontent.com을 운영실행/동결Compose와대조: 미포함. 적용준비는 기존azp2항목보존+새client1개추가, Web audience/서명/nonce유지. 운영환경/동결configuration revision과함께 실제적용은미실행. 운영웹origin등록은사용자확인Native보고, 실운영로그인과구분.
-- [승인된 실행 설계](../engineering/operations/release-2.1.0.md)를 작성했다. 첫 통합은 현재 CORS/기록/설계만 포함, 도구구현은 release 브랜치에서 진행한다. 문서282/링크3202·diff PASS, CORS4·두 전체 계약은 실행 결과를 DEV_LOG에 연결한다.
-- 4단계: d51065d를a39a1ebd70a81c4dca240c57143e1af1d08e8aa1로dev병합/main동일화·atomic push/원격일치, v2.1.0 태그게시. [고정SHA CI/full](https://github.com/heo0328/lostparty-backend/actions/runs/43021703731) 는후속일반배포구성불일치발견으로취소/후보제외. Backend2.1.1로mount순서/bind옵션수정·도구80/운영읽기전용정규화비교PASS, 실제격리전환재검증PASS. 기존태그재작성없음. 자동운영교체는maintenance모드로보류. 별도서버clean checkout·웹원3파일전송/재검증만완료, 활성화/DB변경없음.
-- 다음 Backend: 2.1.1수정후보검증/재통합·push→새고정SHA의CI/full·불변이미지확보. 짧은중단허용/PC기존백업폴더재사용·기존자동화/제한SSH/DB인프라보호를유지하고 서버웹/Caddy·수령활성화도구·구APK조건부회귀/전체계약·최신백업/0036migration/복귀를준비한다. 후보구현게시완료/그이후현재진행기록은로컬미커밋·미push.
-- 최종공개는 Backend·웹·APK함께/Native안내문사용자확인완료. 새APK/웹+구0035지원제외, +신0036이번인수대상. 구APK+신Backend조건부거절/원ACK경계는로컬전체회귀PASS·실제구기기전수인수와구분. 새탭/재접속 첫공개·준비/교체탭종료/필요시강력새로고침·구탭미전송자동이전/무중단미지원. 자료초기화승인없음.
-- AWS W2는v2.0.0/source51b1cb3/imagef33f4c6c/DB0035·187/208, dev0036·192/213(새5경로). CORS로컬반영/자동4·두계약검증/사용자로컬로그인·모집생성보고유지. 운영반영/새백업/자료쓰기·기기인수는별도다.
-
-## 현재 — 문서·묶음 완료 dev 통합/게시 완료 / 다음 Issue17 정리
+## 별도 보류 — 기존 기능 이슈 정리
 
 - #47 묶음 선택 완료와 #48 복구 안내/일정 읽기는 사용자 지시로 **completed 종료**했다. 추가 구현·계약 확인·동일 시험 대기는 없다. [완료 색인](ISSUE_TRACKER.md#completed)·[개발 이력](DEV_LOG.md).
-- 다음 순차 정리 대상은 [#17](https://github.com/heo0328/lostparty-backend/issues/17)이다. 완료 오류/기존 계정 복구는 사용자 인수·양측 dev 통합 완료다. 누락/부분 완료 자료와 해당 기기 경계·원래 생명주기 요구는 별도 남아 있다. Native가 현재 코드 기준으로 최신화한 본문과 Backend 구현을 구분해 잔여 범위만 정리한다. 지금 자료 생성·DB 조정·반복 기기 시험을 시작하지 않는다.
+- 공동 릴리즈 이후 선택할 순차 정리 대상은 [#17](https://github.com/heo0328/lostparty-backend/issues/17)이다. 완료 오류/기존 계정 복구는 사용자 인수·양측 dev 통합 완료다. 누락/부분 완료 자료와 해당 기기 경계·원래 생명주기 요구는 별도 남아 있다. Native가 현재 코드 기준으로 최신화한 본문과 Backend 구현을 구분해 잔여 범위만 정리한다. 지금 자료 생성·DB 조정·반복 기기 시험을 시작하지 않는다.
 - **#15·#18·#19의 다음 작업 선택은 전체 정리가 끝난 뒤로 보류한다.** 장기 계약/미구현 요구는 [이슈 추적표](ISSUE_TRACKER.md)에 보존한다. 자동 착수·미합의 계약 추가는 없다.
 
 ## 현재 코드·게시·실행 기준
 
 | 구분 | 확인 기준 |
 |---|---|
-| checkout/통합 기준 | release/2.1.0 / 원격dev/maina39a1eb 두번째통합완료, v2.1.0 후보CI진행 |
-| 업무 구현/원격 | 업무44eb4ba·반영 기록624ef00·문서962c1cd9321328f19a8e1ea6b5071fa07380782b를 dev에 이력 보존 병합·push. 원격 병합 SHA 일치/전체 feature tip 포함·동일 tree 확인. app/tests/openapi422파일은 기존 검증 코드와 동일 |
+| checkout/배포 소스 | release/2.1.0 / 배포소스d16734d·v2.1.1 고정, 후행결과문서는같은브랜치에보존 |
+| 이전 #47 업무 통합/원격 | 업무44eb4ba·반영 기록624ef00·문서962c1cd9321328f19a8e1ea6b5071fa07380782b를 dev에 이력 보존 병합·push. 원격 병합 SHA 일치/전체 feature tip 포함·동일 tree 확인. app/tests/openapi422파일은 기존 검증 코드와 동일 |
 | 로컬 dev | 웹 CORS 추가 이미지986f8d80로 API 재생성/healthy·실제 HTTP 및 두 전체 계약 확인. DB0036 유지. 이전 업무 runtime ae6b3e0a/앱288파일 비교는 당시 근거. [반영 원본](../engineering/operations/records/batch-completion-local-rollout.json) |
 | 전체 계약 | 기본125경로/142동작, two-cycle192경로/213동작. 정확한 hash는 [구현/계약 근거](../features/recruitment/completion-and-records/batch-completion-implementation.md) |
 | 후행 통합 기록 | 현재 브랜치/게시 상태·기능 브랜치 정리 결과는 dev의 후행 문서 커밋으로 보존. 업무 코드/시험/계약 변경 없음 |
 
-사용자 지시로 #47의 Backend dev 병합·push를 완료하고 feat/raid-batch-completion을 로컬/원격에서 정리했다. main·로컬 서버·운영은 이번 통합에서 변경하지 않았다. 이후 새 게시/병합/배포는 별도 지시 범위다. 실제 개발 DB의 행 수는 사용자 테스트로 변할 수 있으므로 반영 시점의 건수를 현재 고정값처럼 사용하지 않는다.
+이전 #47 구간에서 사용자 지시로 Backend dev 병합·push를 완료하고 feat/raid-batch-completion을 로컬/원격에서 정리했다. main·로컬 서버·운영은 당시 #47 통합에서 변경하지 않았다. 이후 새 게시/병합/배포는 별도 지시 범위다. 실제 개발 DB의 행 수는 사용자 테스트로 변할 수 있으므로 반영 시점의 건수를 현재 고정값처럼 사용하지 않는다.
 
 ## 담당별 후속을 구분
 

@@ -119,3 +119,11 @@ Native 전체16 코드 근거에 따르면 구 APK 상세/생성은 업그레이
 ### 후보 보완 — 다음 일반 배포 구성 일치
 
 운영동결baseline으로전환후구성과다음일반배포raw Compose를양쪽정규화해비교했다. 최초2.1.0전환안은웹mount의목록순서와명시적bind기본옵션이달라 일반배포의인프라보호에거절될수있었다. 보호검사를완화하지않고candidate_config가검토된raw Compose와같은순서·옵션을만들도록수정했다. 수정안은운영읽기전용구성비교PASS이며 실제서비스변경없음. 기존v2.1.0태그를덮어쓰지않고Backend2.1.1후보에전체CI를새로실행한다. 초기공동릴리즈의DB0035→0036/configrevision/웹·APK식별은변경없다.
+
+## 고정 후보 확보 결과 — 운영 적용 전
+
+Backend v2.1.1/source `d16734d86e694579cd4e4e043c2ca89cc81c1b64`, image `ghcr.io/heo0328/lostparty-backend@sha256:7aa19edfd4c526b03b011722e59a8674ee10dfadaf68b2c9906fc442042c061d`를확보했다. [CI43022922694](https://github.com/heo0328/lostparty-backend/actions/runs/43022922694)의full회귀8개/1968PASS·static/도구80·계약·검증기록/이미지게시성공, 이번자동운영deploy는skipped다. release.json/validation.json/Compose·두계약hash/DB0036을독립대조했다. 상세hash·샤드별수/시간은[준비기록](records/release-2.1.0-preparation.json)에둔다.
+
+서버별도clean후보checkout·원3파일/비활성site를준비하고실제baseline/후보image·labels/DBhead·설정/공간·공개API의관리자preflight ready/applied=false를확인했다. 고정소스도구로다음일반배포구성동등성도확인했다. 실제운영은v2.0.0/DB0035, current/maintenance없음·기존API/DB/Caddy서비스유지다. Backend2.1.1/대상DB0036/config lightsail-web-2.1.0과기존Native웹/APK2.1.0+6고정조합을유지한다.
+
+[전체25 인계](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6796938066)에서사용자실시험준비와Native인수·최종동일bytes공개합류시점을연결중이다. 실제인수까지장시간503을유지하지않도록준비확인전기존서비스를유지한다. 새backup은실제변경직전확보하며아직생성하지않았다. 이후5~6단계명령·검증/복귀는위설계를따른다. 실제시험/공개가미완료인수준에서종료/공개완료로표시하지않는다.
