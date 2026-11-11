@@ -294,7 +294,15 @@ class LocalReuseTests(unittest.TestCase):
             validation.local_reuse_evidence()
 
     def test_local_release_records_scoped_reuse_without_claiming_full_tests(self):
-        plan = validation.load_plan()
+        # Preserve the historical exception independently of the active release.
+        with tempfile.TemporaryDirectory() as fixture:
+            root = Path(fixture)
+            (root / 'VERSION').write_text('2.0.0')
+            (root / validation.PLAN).write_text(json.dumps(dict(
+                version='2.0.0', mode='reuse', baseline_tag='v0.1.2',
+                change='historical scoped release', impact='existing bounded change',
+                reason='developer-approved local provenance', tests=[])))
+            plan = validation.load_plan(root)
         self.assertEqual(plan['version'], '2.0.0')
         with patch.dict(os.environ, {'GITHUB_RUN_ID': '123', 'GITHUB_RUN_ATTEMPT': '1'}), \
                 patch('validation.git', return_value='a' * 40), \

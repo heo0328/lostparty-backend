@@ -17,6 +17,7 @@ jobs:
     outputs:
       mode: ${{ steps.plan.outputs.mode }}
       shards: ${{ steps.plan.outputs.shards }}
+      deployment_mode: ${{ steps.deployment.outputs.deployment_mode }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
@@ -31,8 +32,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 scripts/deployment/validation.py prepare
+      - name: Resolve explicit deployment boundary
+        id: deployment
+        run: python3 scripts/deployment/deployment_plan.py
       - run: python3 scripts/verify_isolated.py static
       - run: python3 scripts/deployment/docker_smoke.py
+        if: steps.plan.outputs.mode == 'full'
+      - run: python3 scripts/deployment/web_smoke.py --synthetic
         if: steps.plan.outputs.mode == 'full'
       - run: python3 scripts/verify_isolated.py contracts
         if: steps.plan.outputs.mode != 'reuse'
@@ -111,7 +117,8 @@ jobs:
         if: always()
         run: docker logout ghcr.io
   deploy:
-    needs: publish
+    if: ${{ needs.verify.outputs.deployment_mode == 'standard' }}
+    needs: [verify, publish]
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     environment:

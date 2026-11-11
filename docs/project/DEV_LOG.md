@@ -1,5 +1,19 @@
 # 영구 개발 이력
 
+## 2026-11-11 릴리즈 전체회귀 분할·기존 기대값 정정
+
+초기단일격리전체1968수집중1056PASS/1FAIL·2subtests/1415.04초에서검사pytest만SIGINT 정상중단/exit2·임시DB/network cleanup0을확인했다. 실패는기존기록의그룹활동해제→참가거절기대와동일하다. 활동해제만으로기존참가를제한하지않는Issue42·stopped C에서active선택없으면명시선택이필요한현정책에맞춰기존시험2개를정정했다. 신규권한/업무코드/계약변경없음. 단건그룹+완료/중단archive3사례31.01초PASS/cleanup0으로확인, 과거실패기록은보존했다.
+
+남은파일은현재beta파일부터59개/919사례를20/20/19파일311/289/319사례의비중복3개독립tmpfs DB로나눴다. 초기완료prefix1057과8개가겹쳐합집합1968이며중복/표적재실행은통과수에합산하지않는다. 최종결과는진행중으로보존한다. 실제전환smoke에앱쓰기중지전후기존표count/digest비교와시험키보존을추가검증했다. 정확한시험IP만점검접근허용/나머지503·위조Forwarded불허를격리Caddy로검증하고개인IP는실제적용시private환경으로만쓴다.
+
+## 2026-11-11 첫통합 완료·공동릴리즈 도구 로컬 구현
+
+첫현재변경12파일을ba5b0fb로커밋/dev에09b46f991dc18538a8b3995d6cd310d0fee4c003 이력보존병합/main ff·atomic push와원격동일SHA확인. release/2.1.0 생성/통합완료feat/webview-support 로컬정리. Git충돌·원격재작성없음/태그·운영변경없음.
+
+release브랜치에웹수령/검증/비활성/활성화·복귀/Caddy·backup/관리자maintenance전환/일반자동deploy보존/이번명시보류·configrevision보존·VERSION2.1.0/full계획을작성했다. 도구77PASS·두전체계약PASS·실Caddy API/SPA/404/wasm/cache/점검503/loopback/웹복귀PASS·합성CI경로PASS. 실제임시DB0035→0036 앱역할migration/API재시작/합성회원·키보존/전체계약·edge/웹활성화·공개차단PASS. 처음Caddy응답순서문제를수정했고전환smoke어댑터키경로assertion오류는수정재검증했다. 일반제어Docker교체/복귀검사및전체앱회귀는별도로실행중이며전체회귀실패1관찰/미해결이다. actionlint1.7.12는기존queue:max미지원오류만정확제외후새workflow검사PASS.
+
+사용자PC기존백업목적지는ignored private파일로만보관하고드라이브mount존재확인, 실제백업/PC전송은미실행. 후보확정/두번째Git통합/운영적용은검증완료후이며현재도구변경은미커밋·미push다. Native자료/키·운영설정·실DB변경없음.
+
 ## 2026-11-11 승인 공동릴리즈 1단계 정리
 
 사용자가 6단계 구현을 명시 지시했다. 현재 feat/webview-support의 CORS/문서/수령기록을 보존하고 release-2.1.0 실행 설계에 단계별 책임/완료조건·일반자동배포 보존/이번 maintenance 분리·0036 이후 구이미지복귀금지를 기록했다. 최신원격 dev/main은 각로컬과0/0·worktree1개/변경충돌없음 확인. 첫통합 전 CORS unittest4PASS·실제로컬 두전체계약PASS·문서282/링크3202·diffPASS. 도구구현/운영변경은 아직 미실행이며 첫통합 후 release/2.1.0에서 이어간다.
@@ -4214,3 +4228,9 @@ NEXT_WORK/AI_CONTEXT/추적표를 갱신했으며 기존 로컬 수정은 보존
 - [PR32](https://github.com/heo0328/lostparty-backend/pull/32)의고정head eab8787/mergeable/설정검사없음을확인하고이력보존병합e3a657a0d1b98ae68c1a50eaf2f73fa24816fdde로dev원격반영·로컬ff를확인했다. 기존선택4PASS·다중원정대2PASS는소스불변으로재사용하며새기능/전체회귀결과로확대하지않는다. 문서247/상대링크·앵커2581·diff검사통과다.
 - 분쟁검토/협의eab8787 및500조사/사용자추적중단9a13af7의전체dev포함·별도worktree사용없음을확인후 feat/ownership-dispute-policy와 fix/raid-detail-errors를로컬/원격정리했다. 미완료feat/activity-selection89a3248은보존한다. 후속은최신dev 목적브랜치에서이어간다.
 - 후행통합/정리기록을dev에게시하고main을동일커밋으로fast-forward·두원격을atomic push한뒤동일SHA/미커밋0/현재dev를최종확인한다. 이력재작성/force·제품정책확정/API/DB변경·실행서버교체/실자료정리·추가Issue회신/종료·배포는실행하지않는다. #15 협의대기·과거500원인미확정/추가추적중단은유지한다.
+
+### 2026-11-11 — 2.1.0 로컬 검증 종료 / 후보 통합 준비
+
+- [준비 검증 원본](../engineering/operations/records/release-2.1.0-preparation.json): 최초1056PASS/1FAIL·정상중단/cleanup, 기존정책기대값2곳정정·3표적PASS, 남은3격리샤드311/289/319PASS·cleanup. 8중복을제외한1968고유사례PASS이며 단일무중단실행으로표시하지않는다. 최종후보SHA의CI/full은생략하지않는다.
+- 도구80PASS, 실제Caddy Native/합성HTTP·격리0035→0036/기존표digest·회원/키/계약보존·기존일반배포/복귀PASS. Backend업무구현/두계약변경없음.
+- 운영시험접속은인터넷공인IP의임시접근이며 ipconfig 내부주소가아님을설명했다. 직접확인값은비공개기록에만보관, 휴대폰은같은Wi-Fi에서새APK운영로그인인수에사용가능. 실제운영/Google·기기인수는아직미실행.

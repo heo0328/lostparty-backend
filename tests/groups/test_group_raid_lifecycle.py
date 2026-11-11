@@ -116,7 +116,11 @@ def test_group_leave_preserves_actual_c_but_does_not_admit_new_n(group_beta,clie
         assert exc.value.code=='GROUP_MEMBERSHIP_REQUIRED'
     with session() as db,db.begin():
         db.execute(delete(Activity).where(Activity.settings_id==b['cid']))
-    with beta_profile.using(),pytest.raises(GameError):qualify(b,rid,c)
+    # Issue42: activity deselection alone cannot revoke an existing seat.
+    # Group membership is still required for a new target admission above.
+    with beta_profile.using():
+        qualify(b,rid,c)
+        assert cycle_member_reads.detail(actor(b['uid']),rid,c)['data']['my_membership']['group_member'] is False
 
 
 def test_group_ended_retains_actual_leadership_plan_and_blocks_new_access(group_beta,client):

@@ -79,11 +79,13 @@ services:
     restart: unless-stopped
     environment:
       API_DOMAIN: ${API_DOMAIN:?Set API_DOMAIN}
+      MAINTENANCE_PROBE_IPS: ${MAINTENANCE_PROBE_IPS:-127.0.0.1}
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./docker/Caddyfile.lightsail:/etc/caddy/Caddyfile:ro
+      - /var/lib/lostparty-web:/srv/web:ro
       - caddy_data:/data
       - caddy_config:/config
     networks:

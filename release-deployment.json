@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "version": "2.1.0",
+  "mode": "maintenance",
+  "from_db_revision": "0035_cycle_group_policy",
+  "to_db_revision": "0036_roster_presence",
+  "configuration_revision": "lightsail-web-2.1.0",
+  "web_receipt": "docs/engineering/operations/records/web-handoff-2.1.0.json"
+}

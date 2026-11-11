@@ -1,9 +1,44 @@
-{$API_DOMAIN} {
-    # Single public edge; never trust an incoming client forwarding chain.
-    reverse_proxy api:8000 {
-        header_up X-Forwarded-For {remote_host}
-        header_up X-Forwarded-Proto {scheme}
-        header_up -Forwarded
+(application_routes) {
+    @api path /v1 /v1/* /v2 /v2/* /health /health/*
+    handle @api {
+        reverse_proxy api:8000 {
+            header_up X-Forwarded-For {remote_host}
+            header_up X-Forwarded-Proto {scheme}
+            header_up -Forwarded
+        }
     }
-    # No access log: URLs and authentication data must not enter access logs.
+    @assets path /assets/* /canvaskit/* /icons/* /*.*
+    handle @assets {
+        root * /srv/web/current
+        header Cache-Control "no-cache"
+        file_server
+    }
+    handle {
+        root * /srv/web/current
+        header Cache-Control "no-cache"
+        try_files {path} /index.html
+        file_server
+    }
+}
+
+{$API_DOMAIN} {
+    @maintenance {
+        file {
+            root /srv/web
+            try_files maintenance
+        }
+        not remote_ip 127.0.0.1 ::1 {$MAINTENANCE_PROBE_IPS:127.0.0.1}
+    }
+    route {
+        header @maintenance Retry-After "60"
+        respond @maintenance "Maintenance" 503
+        import application_routes
+    }
+    # No access log: sensitive URLs and credentials must not enter logs.
+}
+
+# Only inside the container: candidate probes while public origin stays closed.
+http://127.0.0.1:8081 {
+    bind 127.0.0.1
+    import application_routes
 }
