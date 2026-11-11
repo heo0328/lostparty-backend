@@ -1,9 +1,9 @@
 {
-  "version": "2.0.0",
-  "mode": "reuse",
-  "baseline_tag": "v0.1.2",
-  "change": "Issue41 초기 갱신 일괄 GET/POST 및 Issue42 활동 해제 후 기존 레이드 참가 유지 예방 수정",
-  "impact": "일괄 라우터/DTO/저장과 참가 검증 분리. 기존 API 보존, DB/의존성/운영 설정 변경 없음. 기존 review 복구 제외.",
-  "reason": "2026-11-04 개발자가 이번 v2.0.0에 한해 로컬 검증 재사용을 명시 승인. 검증 source0207d0f와 승인 main aa23939의 비문서 소스 일치, 고정 해시 원본 Issue41 고유144PASS와 Issue42 고유57PASS 및 두 전체 계약 일치 기록을 재사용. 신규 전체 CI 통과로 주장하지 않음. 새 제어 검사와 기존 빌드/운영 보호/health 점검 실행.",
+  "version": "2.1.0",
+  "mode": "full",
+  "baseline_tag": "v2.0.0",
+  "change": "DB0036 roster presence, atomic batch completion, browser CORS and coordinated web release",
+  "impact": "Cumulative application/common/schema layout changes since v2.0.0 plus deployment, Caddy and maintenance control",
+  "reason": "Full verification for migration/common/infrastructure changes; prior release-only reuse does not apply",
   "tests": []
 }

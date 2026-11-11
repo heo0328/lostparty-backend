@@ -117,6 +117,19 @@ class DeploymentTests(unittest.TestCase):
         self.assertEqual(calls, self.platform.calls)
         self.assertEqual(json.loads((self.state / 'current.json').read_text())['image'], IMAGE_REF)
 
+    def test_next_standard_api_release_preserves_web_and_configuration_identity(self):
+        current=json.loads((self.state/'current.json').read_text())
+        current.update(configuration_revision='lightsail-web-2.1.0',web={'bundle_sha256':'a'*64},apk={'source':'b'*40},public_open=True,native_acceptance='passed-for-old-source',joint_acceptance_sha256='c'*64)
+        atomic(self.state/'current.json',current)
+        result=self.deploy()
+        self.assertEqual(result['status'],'success')
+        after=json.loads((self.state/'current.json').read_text())
+        for key in ['configuration_revision','web','apk','public_open']:
+            self.assertEqual(after[key],current[key])
+        self.assertEqual(after['image'],IMAGE_REF)
+        self.assertEqual(after['native_acceptance'],'not_checked')
+        self.assertNotIn('joint_acceptance_sha256',after)
+
     def test_image_defaults_can_change_but_operating_env_cannot(self):
         self.platform.change_image_default = True
         self.assertEqual(self.deploy()['status'], 'success')

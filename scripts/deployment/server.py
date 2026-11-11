@@ -205,7 +205,7 @@ def execute(bundle, platform, state=STATE, *, preflight=False):
     record = {'status': 'in_progress', 'request_sha256': signature, 'started_at_utc': utc(),
               'tag': manifest['tag'], 'source': manifest['source'], 'image': manifest['image'],
               'db_revision': manifest['db_revision'], 'contract_sha256': manifest['contract_sha256'],
-              'configuration_revision': 'lightsail-release-azp-20261101',
+              'configuration_revision': current.get('configuration_revision', 'lightsail-release-azp-20261101'),
               'run_url': bundle['run_url'], 'attempt': bundle['attempt'],
               'user_acceptance': 'not_checked', 'rollback': 'not_needed'}
     atomic(result_file, record)
@@ -273,8 +273,13 @@ def execute(bundle, platform, state=STATE, *, preflight=False):
         # Preserve Compose-managed operating values; image-provided defaults (e.g. Python patch version) may change.
         if not set(expected_env).issubset(set(after['api']['Config']['Env'])) or live_api['Mounts'] != after['api']['Mounts'] or protected != platform.protected_files():
             raise DeployError('api_environment_or_mount_changed')
-        new_current = {**manifest, 'compose': str(final_compose), 'deployed_at_utc': utc(),
+        new_current = {**manifest, 'native_acceptance': 'not_checked', 'configuration_revision': record['configuration_revision'], 'compose': str(final_compose), 'deployed_at_utc': utc(),
                        'api_started_at_utc': after['api']['State']['StartedAt']}
+        # Static web/APK identity survives an API-only update; historical
+        # Native acceptance does not become acceptance of this new backend.
+        for key in ('web', 'apk', 'public_open', 'web_status'):
+            if key in current:
+                new_current[key] = current[key]
         atomic(state / 'current.json', new_current)
         record.update(status='success', api_started_at_utc=after['api']['State']['StartedAt'])
     except Exception as error:

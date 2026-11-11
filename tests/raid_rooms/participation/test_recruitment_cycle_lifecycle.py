@@ -322,10 +322,15 @@ def test_closed_c_opening_respects_completed_archive(lifecycle,state):
         # All items complete with no open N is archived; new writes stay disabled.
         denied('ROOM_NOT_ACTIVE',opening.get,actor(a['uid']),rid,next_key(),'open')
         return
+    # No active C assignment remains: history does not auto-select a new N.
     ctx=opening.get(actor(a['uid']),rid,next_key(),'open')
+    assert ctx['data']['permission']['reason']=='CHARACTER_SELECTION_REQUIRED'
+    ctx=opening.get(actor(a['uid']),rid,next_key(),'open',a['ids'][0],'dealer')
     assert ctx['data']['permission']['allowed']
     opening.execute(actor(a['uid']),rid,uuid.uuid4(),opening_body(ctx))
     nctx=continuation.get(actor(b['uid']),rid,next_key())
+    assert nctx['data']['permission']['reason']=='CHARACTER_SELECTION_REQUIRED'
+    nctx=continuation.get(actor(b['uid']),rid,next_key(),cid=b['ids'][0],role='dealer')
     assert nctx['data']['permission']['allowed']
     continuation.execute(actor(b['uid']),rid,uuid.uuid4(),continue_body(nctx))
     with session() as db,db.begin():
