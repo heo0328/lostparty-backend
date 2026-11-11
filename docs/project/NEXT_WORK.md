@@ -2,7 +2,7 @@
 
 2026-11-11 KST 기준. 실제 Backend 코드/Git과 각 담당의 현재 코드 확인 결과를 사용한다. Native 코드 상태·완료 판단은 Native가 작성하며 Backend가 대신 검토하지 않는다.
 
-## 현재 우선 — 승인 6단계 실행 / 3단계 로컬 검증 완료·4단계 후보 통합
+## 현재 우선 — 승인 6단계 실행 / 4단계 Backend2.1.1 수정 후보 준비
 
 - 1~2단계 완료: 현재변경ba5b0fb를09b46f991dc18538a8b3995d6cd310d0fee4c003로dev병합/main동일화·atomic push/원격일치 확인. 현재release/2.1.0, 통합된feat/webview-support 로컬삭제(원격미생성). [실행 설계/명령](../engineering/operations/release-2.1.0.md).
 - 3단계 로컬구현: 웹receive/verify/stage/switch·Caddy API/SPA/404/cache/MIME/점검·backup/maintenance도구·configrevision보존·2.1.0/full·명시maintenance자동deploy보류. 도구80검사/실Caddy HTTP·합성CI검사/실DB0035→0036 전환·회원/키/기존표count·digest보존/전체계약비교PASS. 초기회귀1056PASS/1FAIL·정상중단1415.04초/cleanup완료. 실패는기록된옛기대값과일치, 기존2기대값을현재정책으로정정해3표적PASS. 남은59파일/919사례는3개독립DB에서311/289/319PASS·cleanup완료. 초기prefix와8중복제외·정정재검증을합쳐고유1968PASS. 단일무중단전체실행과구분하며최종SHA의CI/full은별도필수다.
@@ -14,7 +14,8 @@
 - APKrun43003690946/sourcee9bfa96/artifact13847258618은 GitHub job의 빌드/서명검증/upload성공·Release skipped 직접확인. APK 자체검증/앱소스동일성은 Native 보고, Backend APK다운로드/실기기시험은 없음. 웹과APK source를조합기록에서구분한다.
 - 새Android client 574337852234-2m3nnr5jaa46okro5vpbvsgddgrloob3.apps.googleusercontent.com을 운영실행/동결Compose와대조: 미포함. 적용준비는 기존azp2항목보존+새client1개추가, Web audience/서명/nonce유지. 운영환경/동결configuration revision과함께 실제적용은미실행. 운영웹origin등록은사용자확인Native보고, 실운영로그인과구분.
 - [승인된 실행 설계](../engineering/operations/release-2.1.0.md)를 작성했다. 첫 통합은 현재 CORS/기록/설계만 포함, 도구구현은 release 브랜치에서 진행한다. 문서282/링크3202·diff PASS, CORS4·두 전체 계약은 실행 결과를 DEV_LOG에 연결한다.
-- 다음 Backend: 로컬최종검증결과를고정해 두번째dev/main통합·push, 고정SHA의CI/full·불변이미지확보. 짧은중단허용/PC기존백업폴더재사용·기존자동화/제한SSH/DB인프라보호를유지하고 서버웹/Caddy·수령활성화도구·구APK조건부회귀/전체계약·최신백업/0036migration/복귀를준비한다. 첫통합게시완료/현재release준비변경은로컬미커밋·미push.
+- 4단계: d51065d를a39a1ebd70a81c4dca240c57143e1af1d08e8aa1로dev병합/main동일화·atomic push/원격일치, v2.1.0 태그게시. [고정SHA CI/full](https://github.com/heo0328/lostparty-backend/actions/runs/43021703731) 는후속일반배포구성불일치발견으로취소/후보제외. Backend2.1.1로mount순서/bind옵션수정·도구80/운영읽기전용정규화비교PASS, 실제격리전환재검증PASS. 기존태그재작성없음. 자동운영교체는maintenance모드로보류. 별도서버clean checkout·웹원3파일전송/재검증만완료, 활성화/DB변경없음.
+- 다음 Backend: 2.1.1수정후보검증/재통합·push→새고정SHA의CI/full·불변이미지확보. 짧은중단허용/PC기존백업폴더재사용·기존자동화/제한SSH/DB인프라보호를유지하고 서버웹/Caddy·수령활성화도구·구APK조건부회귀/전체계약·최신백업/0036migration/복귀를준비한다. 후보구현게시완료/그이후현재진행기록은로컬미커밋·미push.
 - 최종공개는 Backend·웹·APK함께/Native안내문사용자확인완료. 새APK/웹+구0035지원제외, +신0036이번인수대상. 구APK+신Backend조건부거절/원ACK경계는로컬전체회귀PASS·실제구기기전수인수와구분. 새탭/재접속 첫공개·준비/교체탭종료/필요시강력새로고침·구탭미전송자동이전/무중단미지원. 자료초기화승인없음.
 - AWS W2는v2.0.0/source51b1cb3/imagef33f4c6c/DB0035·187/208, dev0036·192/213(새5경로). CORS로컬반영/자동4·두계약검증/사용자로컬로그인·모집생성보고유지. 운영반영/새백업/자료쓰기·기기인수는별도다.
 
@@ -28,7 +29,7 @@
 
 | 구분 | 확인 기준 |
 |---|---|
-| checkout/통합 기준 | release/2.1.0 / 원격dev/main09b46f9 첫통합완료, 후속배포도구변경은로컬 |
+| checkout/통합 기준 | release/2.1.0 / 원격dev/maina39a1eb 두번째통합완료, v2.1.0 후보CI진행 |
 | 업무 구현/원격 | 업무44eb4ba·반영 기록624ef00·문서962c1cd9321328f19a8e1ea6b5071fa07380782b를 dev에 이력 보존 병합·push. 원격 병합 SHA 일치/전체 feature tip 포함·동일 tree 확인. app/tests/openapi422파일은 기존 검증 코드와 동일 |
 | 로컬 dev | 웹 CORS 추가 이미지986f8d80로 API 재생성/healthy·실제 HTTP 및 두 전체 계약 확인. DB0036 유지. 이전 업무 runtime ae6b3e0a/앱288파일 비교는 당시 근거. [반영 원본](../engineering/operations/records/batch-completion-local-rollout.json) |
 | 전체 계약 | 기본125경로/142동작, two-cycle192경로/213동작. 정확한 hash는 [구현/계약 근거](../features/recruitment/completion-and-records/batch-completion-implementation.md) |

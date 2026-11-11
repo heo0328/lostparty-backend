@@ -4,7 +4,7 @@
 
 ## 기준과 책임
 
-- 운영 v2.0.0/source51b1cb3/imagef33f4c6c/DB0035, 후보는 DB0036·기본125/142·two-cycle192/213. Backend 버전2.1.0/full 검증, 과거 reuse 예외는 재사용하지 않는다.
+- 운영 v2.0.0/source51b1cb3/imagef33f4c6c/DB0035, 후보는 DB0036·기본125/142·two-cycle192/213. Backend 기본후보2.1.0은후속배포구성불일치로제외, 수정후보2.1.1/full 검증, 과거 reuse 예외는 재사용하지 않는다.
 - [합의/실물 인계](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6793794562)와 [독립 수령](records/web-handoff-2.1.0.json)을 기준으로 Native는 웹 build/manifest·APK·서명/기기 인수, Backend는 산출물 검증/서버배치·API/DB·백업/동결구성을 담당한다. 최종 공개는 함께 진행한다.
 - 웹 원3파일은 ignored backups/web-handoff/artifact-13849320316에 보존했다. 수령 검증/로컬비활성만 완료, AWS전송/활성화·실브라우저/운영기기 인수는 미완료다. 재빌드/재압축/다른artifact 묵시대체 금지.
 - 서비스키4개·관리자/제한배포SSH는 재사용한다. 새Android client 1개를 기존azp2개에 추가하되 Web audience·서명/nonce 검증을 유지한다. Native 백업을 Backend의 새 선행작업으로 만들지 않는다.
@@ -16,7 +16,7 @@
 | 1 현재변경 정리 | CORS·W3/W4·백업 근거와 이 설계를 기록하고 CORS/두계약/문서/JSON/diff 확인. 미완료를 구분 |
 | 2 첫 통합 | 최신원격확인→현재변경커밋→dev 이력보존병합→main 동일SHA→두원격push/일치→release/2.1.0 생성. 태그/운영변경 없음 |
 | 3 로컬 준비 | 웹수령/안전검증/inactive/활성화·Caddy·동결구성·maintenance 전환·OAuth변경안·복귀를 구현/격리검증 |
-| 4 후보 고정 | VERSION2.1.0/full 계획·Backend소스/image/계약/DB/설정·웹/APK 식별 고정→회귀/전체계약/도구검증→dev/main 재통합/push→CI·불변이미지 확보 |
+| 4 후보 고정 | VERSION2.1.1/full 계획·Backend소스/image/계약/DB/설정·웹/APK 식별 고정→회귀/전체계약/도구검증→dev/main 재통합/push→CI·불변이미지 확보 |
 | 5 운영 적용 | 최신DB/환경·키/동결구성·복구도구를 기존PC폴더 새날짜 사본으로 보관/무결성확인→잠금/점검/쓰기중지→0036 migration→환경/Backend/웹구성→정상확인 |
 | 6 공동 공개 | 점검접근으로 Backend/Native 담당별 인수→조정된 점검해제/Native Release 공개→Issue 결과/미확인/실제공개 기록. 종료는 별도판단 |
 
@@ -42,12 +42,12 @@ Caddy는 /v1·/v2·/health 정확경로/하위를 API에 우선 전달한다. �
 
 ## 실제 준비 결과와 명령
 
-첫 통합은 `ba5b0fb`를 이력 보존 병합한 `09b46f991dc18538a8b3995d6cd310d0fee4c003`이다. 원격 dev/main 일치를 확인하고 release/2.1.0을 생성했다. 현재 다음 도구는 로컬 구현이며 후보 고정/두 번째 통합 전이다.
+첫 통합은 `ba5b0fb`를 이력 보존 병합한 `09b46f991dc18538a8b3995d6cd310d0fee4c003`이다. 원격 dev/main 일치를 확인하고 release/2.1.0을 생성했다. 다음 도구를구현·로컬검증하고a39a1eb로두번째dev/main동일통합/push·v2.1.0태그를게시했다. [고정후보CI](https://github.com/heo0328/lostparty-backend/actions/runs/43021703731)는후속일반배포구성불일치발견으로취소·운영후보에서제외했다. 태그는재작성하지않고Backend2.1.1로수정검증한다. Native웹/APK2.1.0+6·기존인계원본·configuration_revision lightsail-web-2.1.0은유지한다. 운영전환/공동공개는미실행이다.
 
 - `scripts/deployment/web_release.py`: receive/verify/stage/activate/rollback. receive는 고정 GitHub artifact 메타·만료/run/source/digest를 확인하고, stage는 원3파일 보존과 안전경로·manifest·개별hash를 검증한다. activate는 Backend 호환 확인이 있어야 동작한다.
 - `scripts/deployment/backup.py`: capture/copy-confirm. 기존 키를 생성하지 않고 운영 dump/환경/4키/동결상태·복구도구를 보관한다. PC 사본 SHA256을 독립 비교한 뒤 확인 결과를 기록한다. 실제 복원 검증과 구분한다.
 - `scripts/deployment/maintenance.py`: preflight/apply/open. 기존 제한 SSH에는 추가하지 않는 관리자 전용 도구다. clean 고정소스/manifest·이미지/DB/backup을 확인하고 전환한다. apply 완료도 public_open=false이며 open은 같은 조합의 양측 인수/공개 확인이 있어야 동작한다.
-- `release-deployment.json`: 2.1.0만 maintenance로 명시한다. 기존 workflow는 full 검증/이미지게시를 유지하고 이 릴리즈의 자동 deploy만 건너뛴다. 다음 일반 릴리즈에서는 이 파일을 제거해 standard 경로로 돌아간다. 누락된 mode를 maintenance로 추정하지 않는다.
+- `release-deployment.json`: 이번공동릴리즈의Backend수정후보2.1.1을 maintenance로 명시한다. 기존 workflow는 full 검증/이미지게시를 유지하고 이 릴리즈의 자동 deploy만 건너뛴다. 다음 일반 릴리즈에서는 이 파일을 제거해 standard 경로로 돌아간다. 누락된 mode를 maintenance로 추정하지 않는다.
 
 로컬 수령/검증 예시(실제 수령물은 이미 있으므로 반복 다운로드 불필요):
 
@@ -115,3 +115,7 @@ sudo python3 "$release_root/scripts/deployment/web_release.py" rollback --root /
 | 원성공 ACK 재전송 | 동일actor/operation/key/body·현재권한/보관조건 내 원결과 복구. pending·새key·만료context는 별도이며 성공을 합성하지 않음 |
 
 Native 전체16 코드 근거에 따르면 구 APK 상세/생성은 업그레이드 안내가 있지만 주간 화면은 일반오류로 표시될 수 있다. 따라서 모든 화면에서 명확한 업데이트 안내를 보장하지 않으며 Native가 확인한2.1.0 배포 안내와 연결한다.
+
+### 후보 보완 — 다음 일반 배포 구성 일치
+
+운영동결baseline으로전환후구성과다음일반배포raw Compose를양쪽정규화해비교했다. 최초2.1.0전환안은웹mount의목록순서와명시적bind기본옵션이달라 일반배포의인프라보호에거절될수있었다. 보호검사를완화하지않고candidate_config가검토된raw Compose와같은순서·옵션을만들도록수정했다. 수정안은운영읽기전용구성비교PASS이며 실제서비스변경없음. 기존v2.1.0태그를덮어쓰지않고Backend2.1.1후보에전체CI를새로실행한다. 초기공동릴리즈의DB0035→0036/configrevision/웹·APK식별은변경없다.

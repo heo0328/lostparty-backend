@@ -13,7 +13,7 @@
     "1": "complete",
     "2": "complete",
     "3": "complete: local checks passed; real production/browser/device acceptance pending",
-    "4": "local candidate validated; final integration and exact-source CI pending",
+    "4": "2.1.0 candidate rejected; mount alignment patch2.1.1 locally verified, integration/CI pending",
     "5": "not_started",
     "6": "not_started"
   },
@@ -23,11 +23,12 @@
     "both_full_contracts": "PASS:125/142 and192/213",
     "caddy_native_bundle_http": "PASS",
     "caddy_synthetic_ci_http": "PASS",
-    "maintenance_actual_disposable_postgresql": "PASS; app-role0035->0036,existing member/keys preserved,contracts,edge,web/public closed",
+    "maintenance_actual_disposable_postgresql": "PASS original and2.1.1 corrected configuration rerun; app-role0035->0036,existing member/keys preserved,contracts,edge,web/public closed",
     "standard_docker_replace_and_rollback": "PASS",
     "actionlint": "1.7.12 PASS excluding only pre-existing unsupported concurrency.queue syntax",
     "documentation": "PASS",
-    "dependency_locks": "PASS"
+    "dependency_locks": "PASS",
+    "next_standard_production_configuration_comparison": "PASS after correction: same normalized Compose including mount list order/bind defaults; read-only production baseline"
   },
   "regression": {
     "collected": 1968,
@@ -151,6 +152,30 @@
   "private_backup_destination_received": true,
   "real_backup_created": false,
   "production_changed": false,
-  "tag_pushed": false,
-  "public_open": false
+  "tag_pushed": true,
+  "public_open": false,
+  "rejected_candidates": [
+    {
+      "implementation": "d51065d",
+      "source": "a39a1ebd70a81c4dca240c57143e1af1d08e8aa1",
+      "remote_dev_main_equal_verified": true,
+      "tag": "v2.1.0",
+      "annotated_tag_object": "839d7b0af5e8b1e32d9e8f979bf7541c446812e3",
+      "run_id": 43021703731,
+      "run_url": "https://github.com/heo0328/lostparty-backend/actions/runs/43021703731",
+      "ci": "cancelled by operator after configuration mismatch detected",
+      "image": null,
+      "server_clean_checkout_verified": true,
+      "server_original_web_verified": true,
+      "services_changed": false,
+      "rejected_for_production": true,
+      "reason": "frozen web mount order and explicit bind options differ from next standard raw Compose"
+    }
+  ],
+  "candidate": {
+    "version": "2.1.1",
+    "source": null,
+    "ci": "not_started",
+    "image": null
+  }
 }
