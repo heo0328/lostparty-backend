@@ -13,8 +13,8 @@
     "1": "complete",
     "2": "complete",
     "3": "complete: local checks passed; real production/browser/device acceptance pending",
-    "4": "2.1.0 candidate rejected; mount alignment patch2.1.1 locally verified, integration/CI pending",
-    "5": "not_started",
+    "4": "complete: exact-source full CI1968/publication/metadata verification and operating preflight PASS",
+    "5": "not_started: coordinate human testing and Native final publication availability before fresh backup/maintenance",
     "6": "not_started"
   },
   "local_checks": {
@@ -174,8 +174,93 @@
   ],
   "candidate": {
     "version": "2.1.1",
-    "source": null,
-    "ci": "not_started",
-    "image": null
-  }
+    "source": "d16734d86e694579cd4e4e043c2ca89cc81c1b64",
+    "ci": "success",
+    "image": "ghcr.io/heo0328/lostparty-backend@sha256:7aa19edfd4c526b03b011722e59a8674ee10dfadaf68b2c9906fc442042c061d",
+    "implementation": "1ef4cd4",
+    "remote_dev_main_equal_verified": true,
+    "tag": "v2.1.1",
+    "annotated_tag_object": "8f4b0f00192efb19e4430457b89594bfa858cd34",
+    "run_id": 43022922694,
+    "run_url": "https://github.com/heo0328/lostparty-backend/actions/runs/43022922694",
+    "server_clean_checkout_verified": true,
+    "server_original_web_verified": true,
+    "server_web_inactive_staged": true,
+    "web_current_exists": false,
+    "maintenance_marker_exists": false,
+    "release_manifest": {
+      "schema": 1,
+      "repository": "heo0328/lostparty-backend",
+      "tag": "v2.1.1",
+      "source": "d16734d86e694579cd4e4e043c2ca89cc81c1b64",
+      "image": "ghcr.io/heo0328/lostparty-backend@sha256:7aa19edfd4c526b03b011722e59a8674ee10dfadaf68b2c9906fc442042c061d",
+      "db_revision": "0036_roster_presence",
+      "contract_sha256": {
+        "openapi.yaml": "18491bc066d08a578aa9228cd0da85eee508288c28d14d563d788e73e324c3dd",
+        "two-cycle.openapi.yaml": "2c51d2f206100e9a305bafa6dd537a1b1b40cc23f9cf1ac6f65d254a4ff5faf7"
+      },
+      "compose_sha256": "6b92cf3359fe15aa597227b6c336dfee8769972b6fa7655bba7e2aa052514642",
+      "built_at_utc": "2026-11-11T13:17:25.758173Z"
+    },
+    "validation_mode": "full",
+    "ci_shards": {
+      "7": {
+        "passed": 229,
+        "seconds": 1157.47,
+        "job": 130531211020
+      },
+      "1": {
+        "passed": 243,
+        "seconds": 929.36,
+        "job": 130531211036
+      },
+      "2": {
+        "passed": 246,
+        "seconds": 1622.66,
+        "job": 130531211047
+      },
+      "4": {
+        "passed": 283,
+        "seconds": 1825.55,
+        "job": 130531211057
+      },
+      "0": {
+        "passed": 311,
+        "seconds": 1024.64,
+        "job": 130531211103
+      },
+      "5": {
+        "passed": 247,
+        "seconds": 939.55,
+        "job": 130531211115
+      },
+      "6": {
+        "passed": 206,
+        "seconds": 1310.07,
+        "job": 130531211291
+      },
+      "3": {
+        "passed": 203,
+        "seconds": 474.02,
+        "job": 130531211342
+      }
+    },
+    "ci_unique_cases_passed": 1968,
+    "automatic_operating_deploy": "skipped",
+    "services_changed": false,
+    "operating_preflight": {
+      "result": "ready",
+      "applied": false,
+      "baseline_tag": "v2.0.0",
+      "baseline_db_revision": "0035_cycle_group_policy",
+      "candidate_image_pulled_and_identity_verified": true
+    },
+    "configuration_revision": "lightsail-web-2.1.0",
+    "next_standard_configuration_equivalent_verified": true
+  },
+  "production_preparation_files_staged": true,
+  "handoff_comment": "https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6796938066",
+  "handoff_comment_order": 25,
+  "human_test_readiness": "awaiting user response; no maintenance until actual tests can follow promptly",
+  "native_final_publication_availability": "coordination requested in comment25; no new artifact requested"
 }
