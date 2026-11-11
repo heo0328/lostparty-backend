@@ -125,12 +125,12 @@ class ConfigTests(unittest.TestCase):
         self.assertEqual(result['services']['db'],old['services']['db'])
         self.assertEqual(result['services']['api']['volumes'],['keys'])
         self.assertEqual(result['services']['api']['environment']['GOOGLE_AZP_ALLOWLIST'],'debug,old,'+NEW_ANDROID)
-        self.assertTrue(result['services']['caddy']['volumes'][-1]['read_only'])
+        self.assertEqual(result['services']['caddy']['volumes'][1], {'type':'bind','source':'/web','target':'/srv/web','read_only':True,'bind':{}})
 
     def test_default_standard_and_explicit_maintenance_version_guard(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory);self.assertEqual(load(root)['mode'],'standard')
-            (root/'VERSION').write_text('2.1.1')
+            (root/'VERSION').write_text('999.0.0')
             record=json.loads((Path(__file__).resolve().parents[2]/'release-deployment.json').read_text())
             (root/'release-deployment.json').write_text(json.dumps(record))
             with self.assertRaises(ValueError):load(root)

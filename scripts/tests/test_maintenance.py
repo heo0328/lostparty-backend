@@ -69,6 +69,7 @@ class MaintenanceTests(unittest.TestCase):
             self.assertIn(m.NEW_ANDROID,env.read_text())
             self.assertIn(m.NEW_ANDROID,frozen['services']['api']['environment']['GOOGLE_AZP_ALLOWLIST'])
             self.assertEqual(frozen['services']['caddy']['volumes'][0]['source'],str(old))
+            self.assertEqual(frozen['services']['caddy']['volumes'][1],{'type':'bind','source':str(web),'target':'/srv/web','read_only':True,'bind':{}})
             self.assertFalse(json.loads((state/'current.json').read_text())['public_open'])
 
     def test_controller_drift_prevents_replacement(self):

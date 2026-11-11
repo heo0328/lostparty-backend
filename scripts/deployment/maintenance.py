@@ -52,7 +52,10 @@ def candidate_config(baseline, manifest, web_root, caddy_file, probe_ip="127.0.0
     files = [m for m in mounts if m.get('target') == '/etc/caddy/Caddyfile']
     require(len(files) == 1 and files[0].get('read_only') is True, 'caddy_mount_drift')
     files[0]['source'] = str(caddy_file)
-    mounts.append({'type': 'bind', 'source': str(web_root), 'target': '/srv/web', 'read_only': True})
+    # Match the reviewed raw Compose order and long-form bind defaults.
+    # The standard controller intentionally compares complete configurations.
+    mounts.insert(mounts.index(files[0])+1, {'type': 'bind', 'source': str(web_root),
+                                          'target': '/srv/web', 'read_only': True, 'bind': {}})
     return data
 
 
@@ -78,7 +81,7 @@ def preflight(platform, state, manifest, plan):
     for journal in state.glob('*/result.json'):
         require(json.loads(journal.read_text()).get('status')!='in_progress','unfinished_deployment_journal')
     require(current['tag'] == 'v2.0.0', 'unexpected_current_release')
-    require(manifest['tag'] == 'v2.1.0' and manifest['db_revision'] == plan['to_db_revision'], 'candidate_identity')
+    require(manifest['tag'] == 'v'+plan['version'] and manifest['db_revision'] == plan['to_db_revision'], 'candidate_identity')
     require(platform.healthy(current['image']), 'baseline_unhealthy')
     before = platform.containers()
     require(platform.db_revision(before['api']['Id']) == plan['from_db_revision'], 'unexpected_db_revision')

@@ -4234,3 +4234,16 @@ NEXT_WORK/AI_CONTEXT/추적표를 갱신했으며 기존 로컬 수정은 보존
 - [준비 검증 원본](../engineering/operations/records/release-2.1.0-preparation.json): 최초1056PASS/1FAIL·정상중단/cleanup, 기존정책기대값2곳정정·3표적PASS, 남은3격리샤드311/289/319PASS·cleanup. 8중복을제외한1968고유사례PASS이며 단일무중단실행으로표시하지않는다. 최종후보SHA의CI/full은생략하지않는다.
 - 도구80PASS, 실제Caddy Native/합성HTTP·격리0035→0036/기존표digest·회원/키/계약보존·기존일반배포/복귀PASS. Backend업무구현/두계약변경없음.
 - 운영시험접속은인터넷공인IP의임시접근이며 ipconfig 내부주소가아님을설명했다. 직접확인값은비공개기록에만보관, 휴대폰은같은Wi-Fi에서새APK운영로그인인수에사용가능. 실제운영/Google·기기인수는아직미실행.
+
+### 2026-11-11 — 2.1.0 고정 후보 게시 / full CI 시작
+
+- 준비구현d51065d를a39a1ebd70a81c4dca240c57143e1af1d08e8aa1로dev이력보존병합·main동일화/atomic push/원격동일SHA확인. release/2.1.0을같은커밋으로전진했고v2.1.0태그(annotated object839d7b0af5e8b1e32d9e8f979bf7541c446812e3)를게시했다. 기존태그/공유이력재작성없음.
+- [고정소스 full CI](https://github.com/heo0328/lostparty-backend/actions/runs/43021703731) 진행중, 자동운영deploy는maintenance모드보류. CI/image/Backend Release게시와운영/웹/APK공동공개를구분한다.
+- [전체23 Backend/3완료·4후보게시](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6795988608)로인계하고본문현재상태정정. 다음 Backend CI/이미지확보→직전백업·점검전환, Native는고정산출물유지/운영인수·공동공개합류.
+- 서버별도root소유clean checkout의SHA·웹원3파일전송/검증PASS. 기존서비스/DB0035/활성링크는변경없음. 시험기기준비가능시점을사용자에게확인중이며 미응답을운영인수완료로간주하지않는다.
+
+### 2026-11-11 — 최초 후보 제외·Backend2.1.1 보완
+
+- 운영읽기전용기준으로다음일반배포구성까지비교해웹mount목록순서/명시bind기본옵션차이를발견. 단순표현으로보여도현재인프라보호의전체구성비교에거절될수있어후보에서제외했다. 태그v2.1.0은그대로보존하고진행중CI43021703731은운영자취소, 성공으로처리하지않는다.
+- candidate_config에서검토된raw Compose와동일한위치/옵션으로웹mount를생성하도록수정. 보호우회없음. BackendVERSION/검증·배포계획을2.1.1로증가, manifest태그검사는검토된계획version과일치하도록변경. Native웹/APK2.1.0+6와DB전환/configrevision은유지한다.
+- 수정도구80PASS·운영읽기전용정규화구성동등비교PASS. 격리실전환재검증후새소스통합·CI/full을새로수행한다. 운영서비스/DB/설정변경없음.
