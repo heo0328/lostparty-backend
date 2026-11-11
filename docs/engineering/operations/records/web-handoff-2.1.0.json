@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "date_kst": "2026-11-11",
+  "issue": 49,
+  "receipt_comment": "https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6793947409",
+  "receipt_comment_order": 21,
+  "native_handoff_comment": "https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6793794562",
+  "web": {
+    "repository": "heo0328/LostParty_flutter",
+    "run_id": 43005927315,
+    "artifact_id": 13849320316,
+    "artifact_name": "lostparty-web-2.1.0-6-89951f4b71e7",
+    "expires_at": "2026-11-25T10:46:33Z",
+    "source": "89951f4b71e7a225d442ccaf9510c83de86aaea7",
+    "version": "2.1.0+6",
+    "origin": "https://lostparty.duckdns.org",
+    "archive_sha256": "d55b118ee7cf3b74db8fb7eeb756a8e0a4111cadcd5504a7e8084f60f7412f5c",
+    "bundle_sha256": "f8de14abf365a47101e55c3df949f6ebd24b509bd19aac25d9690a51779f4abc",
+    "bundle_bytes": 14333833,
+    "site_files": 34,
+    "bundle_entries": 35,
+    "original_three_files_preserved": true,
+    "outer_and_inner_manifest_bytes_match": true,
+    "posix_paths_unique_safe_regular_files": true,
+    "file_list_sizes_hashes_match": true,
+    "clean_release_metadata_match": true,
+    "local_inactive_staging": true,
+    "aws_uploaded": false,
+    "server_staged": false,
+    "activated": false,
+    "browser_execution_verified": false
+  },
+  "apk": {
+    "run_id": 43003690946,
+    "source": "e9bfa96cc4a6ad1dfd7c87da9f0806b171e6ded1",
+    "artifact_id": 13847258618,
+    "ci_build_signing_verification_success_checked": true,
+    "backend_downloaded_or_verified_apk": false,
+    "native_reported_sha256": "19088554d128bdd10d51988fcc1ef1486a2e5f05490b0540a14febac0410a7d0",
+    "native_reported_app_sources_unchanged_between_builds": true
+  },
+  "google": {
+    "new_android_client": "574337852234-2m3nnr5jaa46okro5vpbvsgddgrloob3.apps.googleusercontent.com",
+    "production_web_audience_matches": true,
+    "production_current_azp_count": 2,
+    "new_client_in_live_azp": false,
+    "new_client_in_frozen_azp": false,
+    "planned_change": "preserve two existing entries and append the exact new client; preserve Web audience and all proof checks",
+    "applied": false
+  },
+  "production_changed": false,
+  "published": false
+}

@@ -1,5 +1,81 @@
 # 영구 개발 이력
 
+## 2026-11-11 승인 공동릴리즈 1단계 정리
+
+사용자가 6단계 구현을 명시 지시했다. 현재 feat/webview-support의 CORS/문서/수령기록을 보존하고 release-2.1.0 실행 설계에 단계별 책임/완료조건·일반자동배포 보존/이번 maintenance 분리·0036 이후 구이미지복귀금지를 기록했다. 최신원격 dev/main은 각로컬과0/0·worktree1개/변경충돌없음 확인. 첫통합 전 CORS unittest4PASS·실제로컬 두전체계약PASS·문서282/링크3202·diffPASS. 도구구현/운영변경은 아직 미실행이며 첫통합 후 release/2.1.0에서 이어간다.
+
+## 2026-11-11 운영 게시 키·등록·백업 대상 재확인
+
+사용자 확인 요청으로 백업 원장/배포 규칙/Issue49 전체21을 대조했다. 새Android서명키는Native보관/CI완료보고이며Backend대상은공개OAuth client의azp1항목추가준비다. JWT/복구/게임암호화·fingerprint운영4키와기존배포SSHSecret/관리자키는재사용한다. 배포SSH개인키원본유실·Secret정상은기존원장대로보존하고새키재발급을자동선행조건으로추가하지않았다. 실제DB0035→0036/운영azp·Caddy·동결구성변경직전에최신dump·환경/4키·동결상태/복구도구를기존PC폴더의새날짜사본으로보관하고변경후구성도추가해야한다. 현재확보사본은20261107이며새생성/전송은미실행이다.
+
+원장의Native새키생성전표현과backend-release의외부백업미구성현재문구를완료근거로바로잡았다. 이번은문서대조/수정으로서버/키/DB/Secret변경·백업생성·추가협업댓글/commit/push없음. 문서diff검사통과.
+
+## 2026-11-11 Issue49 Native1차준비·실artifact 인계/W4 Backend독립수령검증
+
+Native전체17~20을확인했다. 전체17은공동협의공백해소, 18은POSIX exporter/manual workflow 로컬구현/경계12PASS, 19는새Android OAuth/운영Web원본사용자확인·e9bfa96push/CI착수, 20은수령가능웹실물과새서명APK CI성공인계다. Native코드/로컬경로를읽지않고GitHubAPI에서웹43005927315 build/upload성공·Android/Release skip, APK43003690946 build/signature/upload성공·Release skip과artifact13849320316/source89951f4b71e7a225d442ccaf9510c83de86aaea7/ID·만료20261125T10:46:33Z를직접확인했다.
+
+연결GitHub도구로메타/다운로드참조확인후 인증gh API의정확ID로ignored backups/web-handoff/artifact-13849320316에원artifact수령. 외피digest d55b118e…7412f5c·실ZIP14,333,833bytes/hash f8de14ab…79f4abc, 외피고정3파일/checksum파일명·내외manifest바이트동일/버전sourceclean·release/origin·worker disabled메타, 내부35entry/site34개전부크기/hash와POSIX/중복대소문자/탈출/링크·특수파일/미등재검사를통과했다. 원3파일보존/재압축재빌드없이로컬inactive/site에배치했다. 실제HTTP/browser/worker/MIME캐시/기능인수나일반수령도구구현완료로표시하지않는다. [비민감수령원본](../engineering/operations/records/web-handoff-2.1.0.json)에정확hash·식별/분리상태를기록했다.
+
+운영AWS를기존knownhosts/관리자키로읽기접속해새공개Androidclient의존재여부만필터비교했다. 실제/frozen양쪽미포함/기존azp2개·Webaudience일치를확인했다. 추가준비대상은새client 574337852234-2m3nnr5jaa46okro5vpbvsgddgrloob3.apps.googleusercontent.com 1개이며기존목록·audience·서명/nonce유지다. env/동결Compose/configrevision동시정렬·API교체는운영적용구간이며이번에는수행하지않았다. APK자체재다운로드/apksigner·기기로그인은Backend미실행/Native보고와CI근거를구분했다.
+
+[전체21번째 Backend/W4 결과](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6793947409)를같은Issue에회신/실제순번21을확인했다. 다음은이수령근거로첫현재변경/문서Git통합순서를구체화하고Backend배포도구·조건부구APK회귀/계약·최신백업/0036migration/복귀·새client환경준비다. Native에같은artifact재제출을요청하지않으며최종동일bytes승격/공동공개기준유지다. 이번Git통합/commit/push/태그·AWS전송/서버staging/활성화/DB자료쓰기·키Secret변경·운영공개/Issue종료없음. 기존CORS와기록은feat/webview-support에미커밋/미push, 문서/JSON·diff검사통과다.
+
+## 2026-11-11 Issue49 Native 전체10~14 회신 확인·W3 소비규격 수용
+
+전체10·11의 최신사용자 정정으로 최종공개는 Backend/웹/APK 함께, 안내문 사용자확인완료를 수용하고 과거APK선공개 해석을 대체했다. Native Actions artifact(run/ID/만료/내부ZIP·source/hash)→Backend수령검증/inactive배치·활성화→같은ZIP Release asset 승격, 새탭/재접속 첫공개·구탭미전송자동이전/무중단미지원 범위를 수용했다. 새APK/웹+구0035는제외, +새0036은이번검증대상이다.
+
+Native B1 요청에 코드/기존시험을 대조했다. 선택profile/원단건쌍과 기존DTO 경로보존, profile/token불일치CONTEXT_INVALID, capability 영향대상/세대와 group_version누락 신규명령CLIENT_UPGRADE_REQUIRED, 원ACK복구와pending/새key/만료의차이를 [전체12 Backend/W3](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6792858978)로 회신했다. 이는새시험PASS/구APK실기기호환확정이아니며고정후보 선택회귀/전체계약 후 최종지원표를인계한다. 운영보호를풀거나 Native fallback/성공합성을요구하지않았다.
+
+회신중 추가된전체13·14도확인했다. 전체13 manual-only Native workflow/14일보관·lostparty-web-2.1.0-6-<source앞12>·루트3파일ZIP/checksum/manifest·내부site/manifest의바이트동일·POSIX경로·실run/fullsource/hash·동일bytes승격 규격을 [전체15 Backend/W3](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6792885928)로변경없이수용했다. 전체12/13과14/15는작성시점이겹쳤으며실제댓글순번을재조회해Backend수용은15번째로확인했다. 전체14의옛1ba0b8d4 ZIP backslash entry결함을수령제외/새exporter·source/hash인계필요로기록하며검증완화를요구하지않는다. 실제artifact/수령도구는아직없고도구준비/실인계완료로표시하지않았다.
+
+[Native 전체16](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6792903944)도 후속 확인했다. 조건부 구APK호환/역할·브라우저/복귀 수용과 구APK상세/생성 helper 업그레이드안내·주간helper 일반오류의 코드근거를 전달했으며 실기기시험으로 합산하지 않는다. 전체16은 Backend전체12에 대한 회신이라 A/POSIX 수용을 재질문했으나 교차게시된전체15가 이미답변해 변화없는 반복댓글은 작성하지않았다. 본문상단/작업기록을최신합의/잔여·다음담당으로정정했다. 다음Native는규격반영·POSIX exporter/manual artifact workflow·고정source/실artifact/OAuth·서명준비, Backend는구APK조건부회귀·공동배포도구/격리검증·백업/복귀준비다. 이번은문서/협의·코드/기존시험대조, 새앱시험/Git통합/commit/push/운영·DB/키변경/Issue종료는미실행이다. feat/webview-support의기존CORS와최신기록은미커밋·미push유지, diff검사통과.
+
+<a id="joint-web-deployment-review-20261111"></a>
+
+## 2026-11-11 Issue49 W3 공동 웹 배포 인계 누락 확인
+
+사용자가 웹 추가 후 Backend/Native의 독립 게시만으로 충분한지·AWS 웹전송 담당/공동 협의 누락을 먼저 확인하도록 지시했다. 기존 기획 대화에서 현재변경/문서 우선통합→dev/main동일시점/push→release/2.1.0 준비, 짧은중단허용/기존PC백업폴더재사용을 선택했음을 보존한다. 기존 자동화를 유지하며 이번 DB/웹 변경 경계를 연결한다는 설명은 했으나 태그 게시/실제배포 분리 구현은 확정/착수하지 않았다. 최신 확인 우선 지시에 따라 이번에는 Git통합/운영작업을 실행하지 않았다.
+
+실제Issue 전체7·8 Native를 추가 확인했다. 전체7은 새release키 원본/독립사본hash·접근/실서명확인·Secrets4개갱신·CI예상지문 로컬수정/미push 보고, 새Android OAuth/client·실CI/운영로그인은 후속이다. Native의 웹코드/build/manifest·품질/화면인수와 Backend의 API/DB/Caddy/동결구성/백업/서버활성화 역할방향을 수용했다. 전체8은 사용자가 APK선게시 허용/안내문 먼저 확인하도록 지시했다는 전달로 기존 Backend→웹→APK 고정순서를 해제하며 실제 운영기능 인수로 합성하지 않는다.
+
+코드 재확인: transport는 API용 manifest/Compose 전송·submit/status뿐이며 웹zip수령/전송·검증/활성화 기능이 없다. 제한SSH도 submit/preflight/status만 허용한다. Native 로컬bundle 경로/hash는 수령/검증가능한 게시산출물이 아니므로 전달매체/최종source와 호환조합·웹캐시/기존탭·실패복귀·인수분담에 공백이 있음을 확인했다.
+
+[전체9번째 Backend/W3 인계안](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6792688560)으로 Native release고정asset(게시전 Actions artifact 인계가능)→Backend checksum/manifest·zip경로안전·파일검증→AWS inactive배치→호환확인후활성화→양측인수를 제안했다. 동일원본이어도웹/Backend 호환조합 기록이 필요하고 current교체만으로기존탭자산원자성을보장하지않음을 명시했다. 웹실패시웹만복귀/Backend·DB오류는별도복구·0036downgrade금지/APK원격회수불가를 구분했다. 다음Native에 전달안/최종위치·구신앱/서버호환·기존탭/자산/화면인수 분담의 수용/차이를 요청했으며 아직합의로표시하지않았다. 실제전체댓글9/마지막URL을재조회하고본문상단 W3상태/다음담당을최신화했다. Issue OPEN 유지.
+
+검증은Issue/실제코드·문서상태대조와diff검사다. 이번서버코드/DB/키/환경·Git통합/commit/push/태그/운영배포/새기능시험은수행하지않았다. 기존CORS·최신기록은feat/webview-support에미커밋·미push다. Native로컬소스/키/산출물은읽지않았고AWS접속도이번에는반복하지않았다.
+
+<a id="web-release-readiness-20261111"></a>
+
+## 2026-11-11 Issue49 W2 AWS 운영 준비 직접 점검·회신
+
+Native 전체1~5를 확인했다. 전체1은 Android MethodChannel이 웹에서 MissingPluginException으로 중단되는 코드 근거와 GIS 구현 착수, 전체2는 로컬 구현/2919PASS·별도Chrome합성2PASS·분석0/미커밋·미push 보고다. 전체3의 사용자 로컬 웹 Google 로그인·모집 생성 통과를 수용해 팝업 조사 대기를 해소하며 전체브라우저/운영 인수로 확대하지 않는다. 전체4~5는 사용자 통합 릴리즈 준비 착수 전달과 목표2.1.0+6/기존AWS루트웹/새서명APK, 기존자료 보존·추가초대제한/서버/도메인/초기화 없음 및 실제 적용 미요청을 명시했다. Native release/2.1.0 source1ba0b8d4·bundle35자산/hash/manifest 생성 성공·미push/미업로드는 담당 보고이며 Backend 수령/검증 근거가 아니다.
+
+기존 관리자키와 Windows known_hosts 고정 검증으로 AWS에 읽기전용 SSH 접속 성공. v2.0.0/source51b1cb3362c11f899bbbbcd4fb767c68b1c697d5·imagef33f4c6c(기존 배포 원본과 동일)/실제DB0035 확인, API/DB healthy·Caddy running, 공개 /404·/health200·catalog200·무인증me401 확인. 실제계약187/208 대 최신dev192/213(추가 캐릭터 문제1/묶음완료4)·migration0036 추가1개를 확인했다. 설치 제어기의 manual_migration_required/manual_infrastructure_change_required 차단 존재 확인. 서비스키·DB/동결구성·서버코드는 변경하지 않았다.
+
+실제 Caddy는 전경로 API프록시/정적mount없음, read-only Caddyfile과 기존 인증서volume 유지다. 루트 SPA 제공은 API /v1·/v2·/health 우선·누락자산404·화면fallback·캐시/MIME·parent read-only mount/상대current·manifest비공개·이전웹복귀를 준비해야 한다. Compose 변경과 실제current/previous 동결구성/configuration revision을 함께 정렬해야 다음 배포의 차단/복귀 기준이 일치한다. 코드/격리시험은 이번 조회에서 아직 준비하지 않았다.
+
+운영 Web audience 일치, 실제코드 azp없음/같은audience허용·nonce digest 유지 확인. 새Android client/지문 및 실제운영 Google인증은 미확인이다. 디스크 여유56027500544bytes(52.2GiB), 가용메모리1117244kB(1.07GiB)/총1951772kB, 순간load/CPU·container메모리 확인. NET은 누적 스냅샷이고 부하·월간전송량/요금 검증으로 해석하지 않는다. 최신 발견 사본은 기존20261107 기준본614400bytes+sha256이며 당시 PC/무결성 근거는 기존원장 재사용. 현재최신DB dump/새백업생성·외부전송/복원은 미수행이다.
+
+[전체6번째 Backend/W2 결과](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6792318794)를 같은Issue에 게시하고 실제6개 댓글순번/마지막ID를 재조회했다. 본문최상단을 준비범위/담당/미완료·근거로 최신화하며 최초W1원문 보존/OPEN 유지. 다음 Backend는 로컬웹/동결도구 준비·검증/백업·migration 적용순서 구체화, Native는 bundle/서명키 백업·지문 인계다. 실제 Backend→웹→APK 순서이며 운영적용/migration/Secret변경/commit/push/merge/게시·Issue종료는 실행하지 않았다. 현재기록과 기존CORS는 feat/webview-support에 미커밋·미push 유지. 문서 diff 검사 통과, 이번 점검에서 앱시험/DB자료쓰기/서비스교체 없음.
+
+## 2026-11-11 Flutter Web 로그인 Native 협업 전환
+
+사용자가 계정 선택 팝업이 아예 뜨지 않음을 확인하고 지금부터 Native 협업으로 진행하도록 지시했다. 기존 Issue 검색에서 웹 전용 주제를 찾지 못해 [#49](https://github.com/heo0328/lostparty-backend/issues/49)를 Backend/W1 진단 요청 본문으로 생성했다. 기존 Google 로그인 #2는 과거 계약 기준으로 유지하고 재개하지 않았다. 본문에 실행 명령·원본/콘솔 등록 보고·Backend 분기9d6f180/로컬 CORS 미커밋·미push·실제 개발 반영/자동 및 HTTP 검증과 미완료 브라우저 인수를 구분하고, 팝업 전 중단/예외 종류·code/웹 Client ID/nonce·최종 교환 경로를 Native에 확인 요청했다. 다음 담당 Native 조사·같은 Issue 회신 대기, 이후 사용자 브라우저 재시험·Backend 실제 차이 대응이다. Issue 생성 당시 댓글0이며 본문은 댓글1로 세지 않는다. nonce/거래 값·토큰 원문은 게시하지 않았다. 코드/서버/DB 추가 변경·commit/push/merge/운영 배포 없음.
+
+<a id="flutter-web-local-cors-20261111"></a>
+
+## 2026-11-11 Flutter Web 첫 로그인 실패 확인
+
+사용자 웹 화면의 Google 로그인 미완료 보고 후 로컬 API 로그를 읽기 전용으로 조회했다. UTC07:45 이후 최근3000줄 범위에서 UTC08:01~08:04 challenge POST 4건 모두201을 확인했고 POST /v1/auth/google 및 google_verification 이벤트는 없었다. 로그인 준비 API/브라우저 응답 수신은 확인되나 이후 Google 인증·서비스 로그인 완료는 미확인이다. 앱/Google 로그인 단계에서 중단됐을 가능성을 우선 확인하되 원인은 미확정. 다음 자료는 브라우저의 로그인 클릭 시 새 오류, 실제 웹 Client ID/nonce 사용 여부 등 최소한이며 토큰/nonce/인증헤더·전체 HAR/응답 원문을 요구하지 않는다. 사용자 제공 거래/nonce 값은 문서에 복제하지 않았다. Native 소스/서버/DB/계약 추가 변경·Issue 게시 없음.
+
+## 2026-11-11 Flutter Web 로컬 CORS 준비·개발 API 반영
+
+`feat/webview-support` / dev9d6f180 기준. 사용자 웹 실행 명령의 원본 localhost:3000/API localhost:8000과 Google 콘솔 원본 추가 보고를 기준으로 브라우저 전송 지원을 준비했다. 기본/two-cycle에 공통 CORS 등록을 추가했다. `CORS_ALLOWED_ORIGINS` 미설정/빈 값은 비활성, 전체 wildcard는 거절하며 로컬 compose에서만 기본 http://localhost:3000을 제공한다. Authorization/Content-Type/Idempotency-Key 및 GET/POST/PUT/PATCH/DELETE/OPTIONS 허용, Retry-After/WWW-Authenticate 노출, 쿠키 credentials 비활성이다. 기존 Bearer/nonce/audience/업무 API·DTO/두 OpenAPI 계약과 DB 책임은 보존했다.
+
+기존 로컬 API·DB healthy 및 health200/database ok를 확인하고, 기존 검증 이미지에서 네트워크/DB 없는 unittest4개(두 프로필 허용 preflight/401/no-store/응답헤더·비허용 원본/헤더·비활성·비브라우저·wildcard 거절)를 통과했다. 격리 상태에서 기본/two-cycle 전체 OpenAPI 객체 일치 확인 후 로컬 compose API만 build/recreate(이미지986f8d80)하여 healthy를 확인했다. 반영된 컨테이너에서도 기본/two-cycle 전체 계약 비교를 각각 통과했다. 실제 HTTP health200/API+DB, localhost3000 preflight200·3001거절400, 무인증 GET /v1/me 401과 CORS/no-store/응답헤더 노출을 확인했다. 실제 브라우저·Google 로그인/회원 업무 조회·전체 업무 회귀는 수행하지 않았다.
+
+환경 .env/기존 인증키·DB 스키마/자료·DB 컨테이너·운영 구성은 변경하지 않았다. 기존 보관본을 재사용하며 새 환경/키 파일 생성 없음. 사용자 Google 콘솔 원본 목록 변경은 기존 콘솔 보관 자료 갱신 대상으로 안내한다. 로컬 API 반영은 commit/push/merge/운영 배포와 구분하며 코드/기록은 미커밋·미push다. Native 소스 접근·GitHub Issue 게시 없음. 다음은 사용자 Flutter Web 로그인/조회 시험이며 실패 근거가 있을 때 Google Client ID/nonce 등 앱 연결 사항을 좁혀 확인한다.
+
 ## 2026-11-10 묶음 완료·문서 최신화 dev 통합/게시·완료 브랜치 정리
 
 사용자 커밋/dev 병합·push 지시로 문서29파일을 `962c1cd9321328f19a8e1ea6b5071fa07380782b`에 커밋했다. 원격 fetch 후 dev/origin 일치·작업 코드 변경0을 확인하고 feat/raid-batch-completion의 업무44eb4ba·반영 기록624ef00·문서962c1cd를 dev에 no-ff 이력 보존 병합했다. 병합은 `b1400a489d4cc785244c3abfa1ed610cc6926de6`이며 충돌 없이 feature 전체 tip 포함·전체 tree 동일을 확인했다. origin/dev push 후 원격 직접 조회의 동일 SHA를 확인했다.
