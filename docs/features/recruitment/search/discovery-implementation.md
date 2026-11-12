@@ -30,4 +30,10 @@ scope는 유지하고 data에 items/total_count/directory_revision/filter_scope_
 
 전체5 당시 미커밋/미push 기록은 당시 상태다. commit/push가 업무 소스·계약 bytes나 실행 image87a918db…5c0bd/DB0036을 바꾸지 않으므로 로컬 API 재반영/동일 시험을 반복하지 않았다. 공개 OpenAPI 파일의 GitHub blob도 로컬과 같은 e25f771885d50105c928059d89c1c06caf238378이다. 파일 SHA256은 3fdc06616d64e19aa7abf35b548cf1156fa7fbee6bcfb02c1dccf4ce9a9d7052다.
 
-다음 Native는 위고정SHA의hash/DTO를대조해소비구현·자동검증/미확인결과를같은Issue에회신한다. 로컬경로탐색·HTTP OpenAPI우회조회·새commit/push대기는없으며 앱적용/실기기인수와 Backend검증은구분한다.
+## 최종 소비 확인·미진행 점검
+
+[Native 전체12](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826309269)는 Flutter 최종 dev83a550204dd442ec2ce54a01c79c2c485106b472 게시와 discovery-1 소비/화면·캐시 연결·담당자보고2927PASS/analyze0·사용자 필터 성공 보고/Penpot02 통합을 인계했다. 목록 전체/일반/그룹·인원정렬은마지막적용조건으로즉시검색하고 상세필터초안은분리한다. 고정계약/Backend변경요청·충돌은없다.
+
+[전체13 Backend 최종점검](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826448910)으로 합의 기능 구현·Native 적용/보고된 사용자 확인 완료와 추가 협업 요청 없음을 회신했다. 미진행 기능이나 Native 대기는 없다. Native검증/사용자보고를Backend대리시험/전수기기·신청·성능인수로확대하지않는다. 현재 코드/시험/계약hash가기존검증기준과같아재검증·재반영을반복하지않았다.
+
+Backend dev/main은기반b03595a로업무커밋미포함, 작업브랜치는원격7a86291이다. Git통합/Issue종료 등마감과운영배포는사용자별도지시범위이며이번점검에서실행하지않았다. 이는미구현기능이나계약확인대기가아니다. 최종상태문서만미커밋·미push다.

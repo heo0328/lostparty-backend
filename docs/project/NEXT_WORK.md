@@ -2,21 +2,20 @@
 
 2026-11-12 KST 기준. 실제 Backend 코드/Git과 각 담당의 현재 코드 확인 결과를 사용한다. Native 코드 상태·완료 판단은 Native가 작성하며 Backend가 대신 검토하지 않는다.
 
-## 현재 우선 — Issue50 Backend 구현/로컬 지원·고정 계약 게시 완료 · Native 적용 대기
+## Issue50 합의 기능 완료 — Backend Git 통합/Issue 마감 별도
 
-- `feat/recruitment-discovery`에서 Native전체4 수용 계약으로 구현·선택검증·실제 로컬 API 반영을 완료했다. [전체5번째 Backend/구현·격리검증/로컬 결과](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6821288801)를 게시하고 실제순번5·본문일치 확인, Issue본문 상단 현재상태/다음담당을 갱신했다.
-- [구현 인계](../features/recruitment/search/discovery-implementation.md)·[검증/소스·실행식별](../features/recruitment/search/discovery-verification.json). 기존 POST의 discovery-1 profile로50개·전체count·최소카드/그룹·조율·열람권한을 제공하며 새endpoint0개, 기존 응답/GET/context/후보는 유지한다.
-- 신규13PASS(12+추가1 별도실행), 관련회귀52PASS, 두 전체계약 격리/실행컨테이너 일치·로컬HTTP·정적/문서/diff PASS. [합성 성능](../features/recruitment/search/discovery-performance.json)은 운영/밀집그룹·실기기 성능 인수와 별개다. 전체저장소회귀·실회원명령/기기시험은 미실행이다.
-- 로컬 image87a918db…5c0bd·DB0036, 기존DB컨테이너·118테이블/행·키4개·환경/포트/명령/마운트 보존. migration/초기화·운영배포는 없다. 원래 백업사본/로컬dump제외 방침 유지.
-- **게시 완료:** 사용자 직접 지시로 업무/계약/시험/문서를 `558ee6da4299dea49729ebaca5825ce9a235a42e`에 commit/push·원격일치확인했다. [전체7번째 Backend/고정계약 인계](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6821559025)와 [OpenAPI 고정파일](https://github.com/heo0328/lostparty-backend/blob/558ee6da4299dea49729ebaca5825ce9a235a42e/openapi/two-cycle.openapi.yaml)을 Native전체6 파일위치요청에 회신했다. SHA256은기존인계3fdc0661…7052와같다. 후행게시결과기록도같은목적브랜치에보존한다.
-- **다음 Native:** 고정 SHA의 실제 hash/DTO 대조·캐시/화면 연결 후 같은Issue에 구현/자동검증·미확인을 회신한다. 이제 로컬경로 탐색이나 원격게시 대기는없다. dev/main 미통합·운영/기기인수 별도이며 새배포/동일시험 반복요청은없다.
+- Backend558ee6da의 구현·선택검증·로컬 반영/계약 게시, [Native전체12 최종 인계](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826309269)의 Flutter dev83a550204dd442ec2ce54a01c79c2c485106b472 적용·담당자보고2927PASS/analyze0·사용자 필터 성공 보고/Penpot02 통합을 확인했다. [전체13 Backend 최종 점검](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826448910)으로 추가 구현/계약 충돌·Native 협업 요청 없음을 회신하고 기존Native대기를 해소했다.
+- **미진행 기능 없음.** 목록전체/일반/그룹·인원정렬은즉시검색, 상세필터는초안/적용/취소가최종UI다. 50개·60초/최근5조건·discovery-1계약은유지한다. Native자료는담당자보고로수용하며Flutter로컬소스를대신검토하지않았다.
+- **실제 미실행 절차:** Backend작업브랜치tip7a86291은push완료이나 Backend dev/main은b03595a로미통합이다. 사용자별도지시범위의Git통합/Issue종료를남은기능구현이나Native대기로표시하지않는다. 이번점검에서merge·종료·배포는없다.
+- [구현/검증](../features/recruitment/search/discovery-implementation.md)·[반영집계](../features/recruitment/search/discovery-verification.json). 코드/시험/OpenAPI hash는기존검증·게시·로컬반영기준과같아동일서버/DB시험을반복하지않았다. 모든기기/신청/성능조합의전수인수·운영반영완료로확대하지않으며보고된새결함없음에새시험대기를추가하지않는다.
+- 다음은사용자가Backend Git통합/마감또는다른업무를선택하는것이다. 현재추가Native작업/자료요청은없다. 이번최종점검/대기해소문서는미커밋·미push다.
 
 ## 공동 릴리즈 마감 완료
 
 - **완료:** Backend2.1.1/source d16734d·image7aa19edf…c061d·DB0036/config lightsail-web-2.1.0 일반공개, 실제웹/새APK인수·Native최종v2.1.0 Release 및Backend공개5파일동일성검증까지완료했다. [배포·백업·최종공개/마감 원장](../engineering/operations/records/release-2.1.0-deployment.json).
 - **마감:** 사용자 “마감 진행합니다” 지시로최종9문서를동일목적브랜치에서커밋·dev이력보존통합/main동일화·push하고작업브랜치를정리했다. #49는2026-11-12T08:57:44Z에completed종료했다. 실제Git게시/정리SHA근거는[#49 마감 댓글](https://github.com/heo0328/lostparty-backend/issues/49)에연결한다. 운영배포태그/이미지·코드·DB/키·접속정책은변경하지않는다.
 - **추가 대기 없음:** Native회신·반복기기인수·재빌드/재압축·재배포요청은없다. 백업사본/무결성과실제복원시험·정기자동화는별개이며후자를이번마감의새조건으로붙이지않는다.
-- **다음 업무:** 현재는 위 #50 구현 인계를 이어간다. 기존순차정리후보#17은아래보존범위에서별도선택한다. #15/#18/#19의미합의계약·자료/DB수정은자동착수하지않는다.
+- **다음 업무:** #50 합의 기능/협업은 완료됐고 위 마감 절차는 별도다. 기존순차정리후보#17은아래보존범위에서별도선택한다. #15/#18/#19의미합의계약·자료/DB수정은자동착수하지않는다.
 
 ## 별도 보류 — 기존 기능 이슈 정리
 
