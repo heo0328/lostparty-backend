@@ -2,7 +2,7 @@
 
 # Issue #3 내 계정 복원 계약 검토안
 
-상태: **합의 기반 로컬 구현·원본 OpenAPI 반영, 실인수 후속** (2026-10-14). 원본 요구는 [Issue #3](https://github.com/heo0328/lostparty-backend/issues/3), 인증은 기존 계약 `519c609495966a3d785c6671c09bf513b28875a6`을 재사용한다. 이 문서는 합의·제안 이력이며 현재 REST 원본은 [OpenAPI](../../../../../openapi/openapi.yaml), 실제 구현/검증 범위는 [내 계정 API 안내](ISSUE_3_DEVELOPMENT.md)이다. 아래 회신대기·미구현 설명은 설계 당시 이력이다.
+상태: **합의 기반 로컬 구현·원본 OpenAPI 반영, 실인수 후속** (2026-10-14). 원본 요구는 [Issue #3](https://github.com/heo0328/lostparty-backend/issues/3), 인증은 기존 계약 `519c609495966a3d785c6671c09bf513b28875a6`을 재사용한다. 이 문서는 합의·제안 이력이며 현재 REST 원본은 [OpenAPI](../../../../../openapi/legacy.openapi.yaml), 실제 구현/검증 범위는 [내 계정 API 안내](ISSUE_3_DEVELOPMENT.md)이다. 아래 회신대기·미구현 설명은 설계 당시 이력이다.
 
 ## 확정 요구와 독립 구현
 

@@ -1,5 +1,7 @@
 # 격리 검증 실행
 
+2026-11-13 실행 정리: 현재/legacy 명세와 실행 이름은 [현재 기준](runtime-configuration.md)을 따른다. `two-cycle`은 기존 회귀 묶음 선택 이름으로도 유지한다. 아래 도입 당시 이미지·실행 결과는 과거 이력이다.
+
 2026-11-09 파일 분류 후 실행 방법: 테스트는 기능별 하위 패키지에 있으며 전체 발견은 재귀 검색한다. 아래 실행 예시는 새 경로를 사용한다. 기존 `legacy`·`two-cycle` 묶음 구성/순서와 격리·정확 파일/선택 안전성은 유지한다. [분류 기준](source-layout.md)·[이전→현재 대응표](folder-layout-map.json)를 참고한다.
 
 현재 적용: 2026-10-25 [개발 서버 반영](../operations/backend-improvements-rollout.md)을 완료했다. source87c2a0e/이미지366e868a·177/DB0031이며 고정패키지·API/DB 로그10m×5가 실행 중이다. 아래 미반영/별도 반영 설명은 구현 당시 이력과 후속 변경 절차로 구분한다.
@@ -23,7 +25,7 @@ python3 scripts/verify_isolated.py all
 
 - `static`: [의존성 lock 정합성](dependency-locking.md), 기존 문서·동결자료·JSON/Python 경로 검사와 실행기 호스트 unittest. Docker/DB를 시작하지 않는다. 전체 lint/type 검사는 아니다.
 - 호스트 unittest: 실행기의 환경 거부·선택 제한·실패 전달·cleanup 제어를 검사한다. DB/서버에 접근하지 않는다.
-- `contracts`: 새 시험 이미지에서 기본116경로/133동작과 two-cycle177경로/197동작의 생성 OpenAPI 객체 전체를 비교한다. DB/lifespan/HTTP 서버를 시작하지 않는다.
+- `contracts`: 새 시험 이미지에서 현재192경로/213동작(`create_app`, openapi.yaml)과 legacy125경로/142동작(`create_legacy_app`, legacy.openapi.yaml)의 생성 OpenAPI 객체 전체를 비교한다. DB/lifespan/HTTP 서버를 시작하지 않는다.
 - `legacy`: 인증·계정·bootstrap·회원설정·개인키·그룹HTTP·기존모집HTTP의 지정7파일 회귀 묶음이다.
 - `two-cycle`: 구성·통합자격·표시/참조/아이템레벨·membership actions·atomic members·완료정정의 지정 파일 회귀 묶음이다.
 

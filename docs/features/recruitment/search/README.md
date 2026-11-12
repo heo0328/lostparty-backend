@@ -4,7 +4,7 @@
 
 ## 탐색 리마스터 — discovery-1
 
-Issue50 양측 수용에 따라 기존 POST의 선택 응답 profile로 전체 개수/최소 카드를 구현하고 로컬 dev에 반영했다. 새 endpoint는 없으며 기존 응답/GET adapter·context/후보 API는 유지한다. [구현·검증/게시 상태](discovery-implementation.md)·[현재 실행 계약](../../../../openapi/two-cycle.openapi.yaml). Native 적용/기기 인수·운영 배포는 별도다.
+Issue50 양측 수용에 따라 기존 POST의 선택 응답 profile로 전체 개수/최소 카드를 구현하고 로컬 dev에 반영했다. 새 endpoint는 없으며 기존 응답/GET adapter·context/후보 API는 유지한다. [구현·검증/게시 상태](discovery-implementation.md)·[현재 실행 계약](../../../../openapi/openapi.yaml). Native 적용/기기 인수·운영 배포는 별도다.
 
 ## 베타 최신 보완
 
@@ -46,7 +46,7 @@ cursor는 actor·실제T·정규화 조건·권한/목록 세대·검색 의미�
 
 ## API 계약 찾아보기
 
-표는 현재 실행 OpenAPI에서 수집한 경로입니다. v1/v2가 함께 있어도 입력·효과·ACK의 동등성을 뜻하지 않습니다. 정확한 필수/nullable·오류는 [실행 계약](../../../../openapi/two-cycle.openapi.yaml)을 확인합니다.
+표는 현재 실행 OpenAPI에서 수집한 경로입니다. v1/v2가 함께 있어도 입력·효과·ACK의 동등성을 뜻하지 않습니다. 정확한 필수/nullable·오류는 [실행 계약](../../../../openapi/openapi.yaml)을 확인합니다.
 
 | Method | 경로 |
 |---|---|

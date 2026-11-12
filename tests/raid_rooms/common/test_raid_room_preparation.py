@@ -213,6 +213,7 @@ def test_readiness_verifies_runtime_privileges_without_superuser_assumption():
 
 def test_preparation_does_not_install_routes_or_change_openapi():
     import json
-    from app.main import app
-    assert app.openapi()==json.loads(open('openapi/openapi.yaml').read())
+    from app.main import create_legacy_app
+    app = create_legacy_app()
+    assert app.openapi()==json.loads(open('openapi/legacy.openapi.yaml').read())
     assert all(getattr(route.endpoint,'__module__','')!='app.raid_rooms.api.router' for route in app.routes)

@@ -109,8 +109,9 @@ def test_role_and_stale_errors_use_existing_envelope(client, worlds):
 def test_g3_openapi_matches_published_contract():
     import json
     from pathlib import Path
-    from app.main import app
-    previous = json.loads(Path('openapi/openapi.yaml').read_text())
+    from app.main import create_legacy_app
+    app = create_legacy_app()
+    previous = json.loads(Path('openapi/legacy.openapi.yaml').read_text())
     actual = app.openapi()
     assert actual == previous
     for operation in ('management', 'leadership-transfer', 'leave'):

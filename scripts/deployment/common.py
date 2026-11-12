@@ -30,18 +30,35 @@ def canonical(value):
     return json.dumps(value, sort_keys=True, separators=(',', ':')).encode()
 
 
+def contract_names(schema):
+    """Versioned artifact identities: schema1 keeps its original name meanings."""
+    if type(schema) is not int or schema not in (1, 2):
+        raise ValueError('invalid manifest schema')
+    return ('openapi.yaml', 'two-cycle.openapi.yaml') if schema == 1 else ('openapi.yaml', 'legacy.openapi.yaml')
+
+
+def contract_probe(schema):
+    """Runs in old or new images; schema1 must still hash the legacy app first."""
+    contract_names(schema)
+    pairs = "[('openapi.yaml', legacy), ('two-cycle.openapi.yaml', current)]" if schema == 1 else "[('openapi.yaml', current), ('legacy.openapi.yaml', legacy)]"
+    return ("import json,hashlib; import app.main as entry; "
+            "legacy=entry.create_legacy_app() if hasattr(entry,'create_legacy_app') else entry.app; "
+            "current=entry.create_app() if hasattr(entry,'create_app') else entry.create_two_cycle_app(); "
+            "print(json.dumps({n:hashlib.sha256(json.dumps(a.openapi(),sort_keys=True,separators=(',',':')).encode()).hexdigest() for n,a in " + pairs + "}))")
+
+
 def validate_manifest(m):
     if set(m) != {'schema', 'repository', 'tag', 'source', 'image', 'db_revision',
                   'contract_sha256', 'compose_sha256', 'built_at_utc'}:
         raise ValueError('invalid manifest fields')
-    if m['schema'] != 1 or m['repository'] != REPOSITORY:
+    if type(m['schema']) is not int or m['schema'] not in (1,2) or m['repository'] != REPOSITORY:
         raise ValueError('invalid manifest identity')
     require(m['tag'], TAG)
     require(m['source'], SHA)
     require(m['image'], re.escape(IMAGE) + '@' + DIGEST)
     require(m['db_revision'], r'[a-zA-Z0-9_]{1,100}')
     require(m['compose_sha256'], r'[0-9a-f]{64}')
-    if set(m['contract_sha256']) != {'openapi.yaml', 'two-cycle.openapi.yaml'}:
+    if not isinstance(m['contract_sha256'],dict) or set(m['contract_sha256']) != set(contract_names(m['schema'])):
         raise ValueError('invalid contracts')
     for value in m['contract_sha256'].values():
         require(value, r'[0-9a-f]{64}')

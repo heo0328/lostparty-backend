@@ -21,7 +21,7 @@
 
 - character_candidates는 단일 READ ONLY/REPEATABLE READ에서 현재 그룹/context와 전체 후보를 배치조회한다. 쿼리 수가 캐릭터당 증가하는N+1 방식이 아니다. 전체 집합·현재근거·허용표시/전투력을HMAC에결합하고 actor/session/group/limit 범위cursor를서명한다. raw회원/원정대 매핑을token/cursor본문에노출하지않는다.
 - 검색token이 있으면 그룹1개/동일context→현재후보token→각ref/UUID 전체현재후보 소속을 검사한뒤 기존실제T 방SQL/필터/정렬/페이지를수행한다. 잘못된선택이 방0건으로정상200이되는shortcut이없다. 변경token409 GROUP_CHARACTER_CANDIDATES_STALE, 현재token의잘못된회원/캐릭터조합400, 그룹문맥변경409 FILTER_CONTEXT_STALE/접근상실404 GROUP_NOT_FOUND, 후보cursor세대변경409 CURSOR_STALE다.
-- 두주차 실행 [OpenAPI](../../../../../../openapi/two-cycle.openapi.yaml)에 후보GET1경로/6schema와 기존 Search의optional token1필드만 추가했다. 기존167경로정의와나머지기존schema 불변·총168경로다. 기본0023 앱/원본openapi.yaml은불변이다. 고정0.4.1/policy4/canonical SHA는기존두주차기본계약이며 후보보완은이추가경로/필드로별도추적한다. 원래고정53경로fixture/코드생성wire를임의변경하지않는다.
+- 두주차 실행 [OpenAPI](../../../../../../openapi/openapi.yaml)에 후보GET1경로/6schema와 기존 Search의optional token1필드만 추가했다. 기존167경로정의와나머지기존schema 불변·총168경로다. 기본0023 앱/원본openapi.yaml은불변이다. 고정0.4.1/policy4/canonical SHA는기존두주차기본계약이며 후보보완은이추가경로/필드로별도추적한다. 원래고정53경로fixture/코드생성wire를임의변경하지않는다.
 - 실행 오류 스키마는 기존 v2 cycle의 Error/Error1이며 `error.details`(nullable)를 포함한다. 검토용 초안의 GameErrorOut에는 이 필드가 빠져 있었으므로 후보 GET의 오류 parser도 실제 실행 OpenAPI의 기존 cycle envelope를 기준으로 소비한다. 새 경로에서 details는null이며, 기존 검색 오류 계약/처리에는 변경이 없다.
 - DDL/이행/데이터backfill·원천갱신·provider호출/새권한설정쓰기없음. 정상권한검사를제외한새쓰기·참가/예약/자동정리없음. 현재DB29/환경/volume/인증키로사용한다.
 

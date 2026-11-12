@@ -11,7 +11,7 @@
 | 일반 탈퇴·해산·복구 | membership-action-context / membership-actions | leave_target/leave_all/dissolve_led_targets/recover_leadership. 새 전용 Context/Result·선택 영향 검증. |
 | 기존 명령 | participation-cancellations, leave/end/removals 및 v1 경로 | 기존 입력·효과·namespace·ACK·보관 기한을 유지. |
 
-정확한 path와 required/nullable·상태코드는 [실행 계약](../../../../openapi/two-cycle.openapi.yaml)을 따른다. 위 문자열은 경로 suffix 설명이며 새 endpoint를 뜻하지 않는다.
+정확한 path와 required/nullable·상태코드는 [실행 계약](../../../../openapi/openapi.yaml)을 따른다. 위 문자열은 경로 suffix 설명이며 새 endpoint를 뜻하지 않는다.
 
 <a id="section-2"></a>
 

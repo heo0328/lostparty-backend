@@ -4,7 +4,7 @@
 
 2026-10-26 join확장은 [전체167 Flutter 수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6410375489) 기준으로구현/직접검증했다. 기존형태와actor의미를유지하며data/query의join enum만추가한다. 아래개발177/0031은이전#26당시반영이력이다. 정확소스/최신개발반영은Issue13인계와NEXT_WORK를따른다.
 
-2026-10-24 / **계약2 구현·격리 검증·실제 개발 반영 완료/실회원 인수 대기** / 작업 구간 `모집 신청·캐릭터 변경 통합 자격 보완(#26)` / `feat/raid-recruitment`. [공통 설계](eligibility-design.md)가 판정 원본이다. [제안1](candidate-proposal.md)은 이전 범위로 보존한다. 현재 구현후보의 정확한 HTTP shape는 [실행 OpenAPI](../../../../openapi/two-cycle.openapi.yaml)다. 독립 schema/작성 예시는 소비검증 자료이며 실제 개발서버 성공 근거가 아니다.
+2026-10-24 / **계약2 구현·격리 검증·실제 개발 반영 완료/실회원 인수 대기** / 작업 구간 `모집 신청·캐릭터 변경 통합 자격 보완(#26)` / `feat/raid-recruitment`. [공통 설계](eligibility-design.md)가 판정 원본이다. [제안1](candidate-proposal.md)은 이전 범위로 보존한다. 현재 구현후보의 정확한 HTTP shape는 [실행 OpenAPI](../../../../openapi/openapi.yaml)다. 독립 schema/작성 예시는 소비검증 자료이며 실제 개발서버 성공 근거가 아니다.
 
 [#26 전체9번째 Flutter · 신청/캐릭터 변경 통합 후보 연결 결과](https://github.com/heo0328/lostparty-backend/issues/26#issuecomment-6382646003) 수신: Flutter f89c009f07b45ff53a4f108247f9e856229f8455 commit/push 보고, 두intent reader·전페이지/역할·표시/선호·변경 actor/배치 확인·원명령/ACK·수락실패pending유지를 함께 연결했다. 신규60+직접영향433=493PASS/분석0은 네이티브 자체 보고이고 Backend 독립 재현이 아니다. 신규60의 작성21벡터도 합성fixture이며 Backend45/과거시험과 합산하거나 실회원 성공으로 표시하지 않는다.
 

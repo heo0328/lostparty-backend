@@ -58,7 +58,7 @@ class MaintenanceTests(unittest.TestCase):
                 if args[-1]=='http://127.0.0.1:8081/health':return '{"status":"ok","database":"ok"}'
                 if args[-1]=='http://127.0.0.1:8081/':return 'hello'
                 return json.dumps(contracts)
-            manifest={'source':'a'*40,'image':'new-image','tag':'v2.1.0'}
+            manifest={'schema':1,'source':'a'*40,'image':'new-image','tag':'v2.1.0'}
             plan={'configuration_revision':'lightsail-web-2.1.0','to_db_revision':'0036_roster_presence'}
             with patch('maintenance.preflight',return_value=(current,baseline,before)),patch('maintenance.check_backup'),patch('maintenance.table_snapshot',return_value={}),patch('maintenance.command',side_effect=command),patch('maintenance.install_controller'),patch('maintenance.urllib.request.urlopen',return_value=response):
                 result=m.transition(platform,state,manifest,plan,receipt,handoff,web,new,{},contracts)

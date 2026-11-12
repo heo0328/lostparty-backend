@@ -238,12 +238,13 @@ def test_all_reads_no_writes_and_scheduling_gate_is_atomic(ready,http):
 
 def test_draft_and_original_openapi_contracts(http):
     from pathlib import Path
-    from app.main import app
+    from app.main import create_legacy_app
+    app = create_legacy_app()
     from app.raid_rooms.contracts.admission_contract import draft_openapi
     draft=draft_openapi()
     assert draft==json.loads(Path('openapi/recruitment-admission.draft.json').read_text())
     assert set(draft['paths'])==set(http.app.openapi()['paths'])
-    assert app.openapi()==json.loads(Path('openapi/openapi.yaml').read_text())
+    assert app.openapi()==json.loads(Path('openapi/legacy.openapi.yaml').read_text())
     assert any(route.path=='/v1/raid-rooms' for route in app.routes)
 
 

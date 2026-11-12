@@ -51,7 +51,8 @@ def isolated():
 
 @pytest.fixture
 def client():
-    from app.main import app
+    from app.main import create_legacy_app
+    app = create_legacy_app()
     with TestClient(app, raise_server_exceptions=False) as c:
         yield c
 

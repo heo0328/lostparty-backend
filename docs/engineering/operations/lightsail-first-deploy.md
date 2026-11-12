@@ -1,5 +1,7 @@
 # Lightsail 첫 배포 준비
 
+이 문서는 최초 설치 당시 DB0035/명령을 보존한다. 현재 신규 설치는 검토한 이미지의 head(현재0036)로 명시적 준비하고 `create_app --factory`를 사용한다. 기존 운영은 migration 없이 자동 갱신하지 않는다. [현재 실행](../development/runtime-configuration.md)·[배포 도구 갱신 순서](runtime-release-transition.md)를 먼저 확인한다.
+
 2026-11-01 사용자 요청 기준. 작업 구간은 **Lightsail 신규 서버 설치·HTTPS 준비**, 브랜치는 `chore/lightsail-deployment`다. 최신 main `6151fa0`은 dev `ac0526f`를 포함하며 프로젝트 소개 수정까지 보존해 분기했다. 이 문서는 실행 절차이며 AWS 설치·공개·운영 인수 완료 기록이 아니다. 로컬 개발 DB·키·Firebase·기기 자료는 이관하거나 삭제하지 않는다.
 
 ## 대상과 비용 경계
@@ -15,7 +17,7 @@
 
 ## 현재 코드와 선택 이유
 
-기존 `compose.yaml`은 API/DB를 localhost에 게시하고 HTTPS가 없으며 기본 앱은 DB0023 전용이다. 최신 기능은 `app.main:create_two_cycle_app`와 DB `0035_cycle_group_policy`가 필요하다. 따라서 **독립 파일 `compose.lightsail.yaml`만** 사용한다. 기존 Compose/개발 볼륨을 변경하지 않는다.
+2026-11-01 최초 설치 당시 `compose.yaml`은 API/DB를 localhost에 게시하고 HTTPS가 없었으며 기본 앱은 DB0023 전용이었다. 현재 앱 시작점은 위 전환 안내를 따른다. 최신 기능은 `app.main:create_two_cycle_app`와 DB `0035_cycle_group_policy`가 필요하다. 따라서 **독립 파일 `compose.lightsail.yaml`만** 사용한다. 기존 Compose/개발 볼륨을 변경하지 않는다.
 
 구조: 인터넷 → Caddy(80/443) → API(8000, 호스트 게시 없음) → PostgreSQL17(5432, 호스트 게시 없음). API 1 worker로 시작해 내장 정리/모집 worker 다중 실행을 피한다. 2GB에서의 부하 수용량은 미측정이며 테스터20~50명을 동시 처리 보장으로 해석하지 않는다. JSON 로그는 서비스별10MB×5개로 제한하며 Caddy access log는 켜지 않는다.
 

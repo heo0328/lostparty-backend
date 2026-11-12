@@ -27,8 +27,8 @@ GET `/v2/me/raid-rooms/{room_id}/continuation-choices`는 actual T의 legacy 읽
 
 기본 `app.main:app`과0023 시작/worker 경계는 유지한다. 별도 ASGI factory `app.main:create_two_cycle_app`은0029 전체 준비검사를 통과해야 시작하며 새 router/worker와 v1 adapter를 함께 등록한다. factory는 DB 이행·이미지 전환·설정/자료 변경을 수행하지 않는다. route를 독립 등록하여 앱별 인증 의존성/설정을 공유하지 않는다.
 
-- 기본 실행 계약: [openapi.yaml](../../../../../../openapi/openapi.yaml),116경로. v1 수동 완료의10시/원 ACK 설명·PLAY_NOT_STARTED enum만 함께 보완했다.
-- 전환 준비 계약: [two-cycle.openapi.yaml](../../../../../../openapi/two-cycle.openapi.yaml),167경로. 기존 타 기능/v1 호환+합의된 신규 v2 경로를 포함한다. 이는 현재 개발 서버의 노출 상태가 아니다.
+- 기본 실행 계약: [openapi.yaml](../../../../../../openapi/legacy.openapi.yaml),116경로. v1 수동 완료의10시/원 ACK 설명·PLAY_NOT_STARTED enum만 함께 보완했다.
+- 전환 준비 계약: [two-cycle.openapi.yaml](../../../../../../openapi/openapi.yaml),167경로. 기존 타 기능/v1 호환+합의된 신규 v2 경로를 포함한다. 이는 현재 개발 서버의 노출 상태가 아니다.
 - `scripts/check_openapi.py --profile legacy|two-cycle`로 각 런타임 생성 객체 전체를 비교한다. 격리 runner는 `--docker docker.exe --container lostparty-w4d-runner`를 사용한다. 기본 옵션은 기존 Compose api 비교를 유지한다.
 - 실제 전환 때는 검증된 소스/이미지·대상 DB revision/지원 이행0023→0029·기존 자료/키 보존·구 API와 모든 worker 정지·ASGI factory 선택·시작/health/계약·복구 계획을 대상별로 검토한다. 새 worker는 신규 N을 자동 생성하지 않는다. 이 작업에서 실제 서버/DB 전환을 실행하지 않았다.
 

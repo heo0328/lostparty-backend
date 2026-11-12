@@ -1,5 +1,7 @@
 # 개발 서버 전환·백업·복구 기록
 
+현재 실행 이름·로컬 교체 결과는 [실행 설정 정리](../development/runtime-configuration.md), 향후 운영 도구 갱신·누적 기능은 [운영 전환 안내](runtime-release-transition.md)를 따른다. 아래 날짜별 배포/반영은 당시 기록이며 소급 변경하지 않는다.
+
 ## 현재 운영 — 2026-11-12 공동 릴리즈 최종 공개 확인
 
 Backend2.1.1/source d16734d/image7aa19edf…c061d·DB0036과고정Native웹을적용하고Backend검사를완료했다. 최신사용자지시로임시IP제한을해제해일반접속가능/public_open=true다. 웹과새APK Google로그인/기존회원자료는사용자완료보고로인수통과, Native최종v2.1.0 Release공개·Backend공개파일동일성확인도완료다. 사용자마감지시로최종문서Git통합·게시/브랜치정리와Issue49 completed종료까지마감했다. [실행설계](release-2.1.0.md)·[실제적용/보존·직전/반영후PC백업집계](records/release-2.1.0-deployment.json)·[다음실행](../../project/NEXT_WORK.md). 아래개발실행/운영경계의과거source·DB·수치는각당시기록이다.

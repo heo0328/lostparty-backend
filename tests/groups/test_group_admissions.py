@@ -309,7 +309,8 @@ def test_parallel_last_seat_approval_one_winner(client,worlds):
     a,b,c=worlds('a'),worlds('b'),worlds('c');gid=group(client,a);change(a['uid'],Limits(2,5,10))
     rids=[apply(client,w,gid).json()['relation_id'] for w in (b,c)]
     bodies=[action_body(client,a,rid) for rid in rids]
-    from app.main import app
+    from app.main import create_legacy_app
+    app = create_legacy_app()
     def attempt(pair):
         rid,data=pair
         with TestClient(app) as other:return post(other,a,'/v1/group-relations/'+rid+'/approve',data).status_code

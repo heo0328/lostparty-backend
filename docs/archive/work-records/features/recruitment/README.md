@@ -6,7 +6,7 @@
 
 ## 현재 기준 바로가기
 
-- [실행 OpenAPI](../../../../../openapi/two-cycle.openapi.yaml): 현재 개발 API 계약.
+- [실행 OpenAPI](../../../../../openapi/openapi.yaml): 현재 개발 API 계약.
 - [#24/#25 구현 안내](development/ISSUE_24_25_MEMBERSHIP_ACTIONS_DEVELOPMENT.md), [개발 반영·보존 근거](development/ISSUE_24_25_DEVELOPMENT_ROLLOUT.md).
 - [#24 검색 계약](contracts/ISSUE_24_SEARCH_CONTRACT.md), [#25 탈퇴·해산 계약 보완](contracts/ISSUE_25_CONTRACT_REVIEW_V2.md).
 - [#22/#23 원자적 참가 관리](development/ISSUE_22_23_ATOMIC_MEMBER_ACTIONS_DEVELOPMENT.md), [완료 정정·보관](development/ISSUE_13_COMPLETION_CORRECTION_DEVELOPMENT.md).

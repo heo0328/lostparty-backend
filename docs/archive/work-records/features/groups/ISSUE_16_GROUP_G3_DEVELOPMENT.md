@@ -8,7 +8,7 @@
 
 ## 제공 범위
 
-[명세](ISSUE_16_GROUP_G3_SPEC.md)와 [실행 계약](../../../../../openapi/openapi.yaml)의 관리 GET `/v1/groups/{group_id}/management`, 그룹장 이전 POST `/v1/groups/{group_id}/leadership-transfer`, 일반 탈퇴 POST `/v1/groups/{group_id}/leave`를 제공한다. 기존 G1/G2 경로·DTO·정책 객체는 그대로다. 소비 합의를 추정한 것이 아니라 원본 #12에서 Backend에 맡긴 경로/DTO 설계와 사용자 G3 착수·계속 진행 승인 범위로 구현했다. 이전 기록에서 소비 확인을 전체 구현의 선행조건으로 둔 부분은 정정한다.
+[명세](ISSUE_16_GROUP_G3_SPEC.md)와 [실행 계약](../../../../../openapi/legacy.openapi.yaml)의 관리 GET `/v1/groups/{group_id}/management`, 그룹장 이전 POST `/v1/groups/{group_id}/leadership-transfer`, 일반 탈퇴 POST `/v1/groups/{group_id}/leave`를 제공한다. 기존 G1/G2 경로·DTO·정책 객체는 그대로다. 소비 합의를 추정한 것이 아니라 원본 #12에서 Backend에 맡긴 경로/DTO 설계와 사용자 G3 착수·계속 진행 승인 범위로 구현했다. 이전 기록에서 소비 확인을 전체 구현의 선행조건으로 둔 부분은 정정한다.
 
 그룹장은 현재 유효 멤버에게 즉시 이전하고 일반 멤버로 남는다. 새 그룹장 유효 정원이 현재 인원을 수용해야 한다. 그룹 대표 기록·코드/쿨타임·가입 수는 보존하고 현재 역할 권한은 즉시 바뀐다. 일반 탈퇴는 과거 membership을 보존하며 발신 pending 초대만 cancelled/expired로 종료하고 본인 사용량·group/member/directory revision을 함께 갱신한다. 캐릭터 과거 소유/활동 상실을 본인 관계 정리의 거부 사유로 삼지 않는다.
 

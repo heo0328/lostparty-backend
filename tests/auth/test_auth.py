@@ -228,7 +228,8 @@ def test_actor_extra_and_access_forgery(client,login):
 
 
 def test_schema_contract():
-    from app.main import app
+    from app.main import create_legacy_app
+    app = create_legacy_app()
     schema=app.openapi()
     assert {'/health','/v1/auth/google/challenges','/v1/auth/google','/v1/me',
             '/v1/auth/session','/v1/auth/refresh','/v1/auth/logout'} <= set(schema['paths'])

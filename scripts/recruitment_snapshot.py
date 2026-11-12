@@ -177,7 +177,8 @@ def main():
             process_due();print(json.dumps(dict(processed=True)))
         elif mode=='legacy':
             from app.raid_rooms.common import readiness
-            from app.main import app
+            import app.main as entry
+            app = entry.create_legacy_app() if hasattr(entry, "create_legacy_app") else entry.app
             from app.main import health
             readiness.require_active(db)
             assert health()=={'status':'ok','database':'ok'}

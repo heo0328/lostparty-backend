@@ -76,7 +76,7 @@ def main():
                     (root / 'Dockerfile').write_text('FROM python:3.12-slim-bookworm\nCOPY serve.py /serve.py\nCMD ["python","/serve.py"]\n')
                     command(['docker', 'build', '--label', 'org.opencontainers.image.revision=' + source, '--label', 'org.opencontainers.image.version=' + ('v0.1.1' if tag.endswith(':bad') else 'v0.1.0'), '-t', tag, str(root)], timeout=180)
                 config = {'name': name, 'services': {
-                    'api': {'image': image_names[0], 'healthcheck': {'test': ['CMD', 'python', '-c', "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health',timeout=1)"], 'interval': '1s', 'timeout': '2s', 'retries': 2}},
+                    'api': {'image': image_names[0], 'command': ['python', '/serve.py', 'app.main:create_two_cycle_app'], 'healthcheck': {'test': ['CMD', 'python', '-c', "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health',timeout=1)"], 'interval': '1s', 'timeout': '2s', 'retries': 2}},
                     'db': {'image': image_names[0], 'command': ['sleep', '600']},
                     'caddy': {'image': image_names[0], 'command': ['sleep', '600']}}}
                 project_compose.write_text(json.dumps(config))
@@ -99,17 +99,28 @@ def main():
                           'run_url': 'https://github.com/heo0328/lostparty-backend/actions/runs/123/attempts/1'}
                 good = server.execute(bundle, platform, state)
                 assert good['status'] == 'success', good
+                platform.replace(frozen)
+                server.atomic(state / 'current.json', current)
+                config['services']['api']['command'][-1] = 'app.main:create_app'
+                raw = json.dumps(config)
+                bundle['compose'] = raw
+                bundle['manifest'].update(schema=2, compose_sha256=checksum(raw.encode()),
+                    contract_sha256={'openapi.yaml': 'd' * 64, 'legacy.openapi.yaml': 'c' * 64})
+                bundle['attempt'] = '123-2'
+                modern = server.execute(bundle, platform, state)
+                assert modern['status'] == 'success', modern
                 # Exercise the first-rollout rollback target: cached untagged image ID, not a registry tag.
                 platform.replace(frozen)
                 server.atomic(state / 'current.json', current)
                 image[0] = image_names[2]
-                bundle['attempt'] = '123-2'; bundle['manifest']['tag'] = 'v0.1.1'
+                bundle['attempt'] = '123-3'; bundle['manifest']['tag'] = 'v0.1.1'
                 bad = server.execute(bundle, platform, state)
                 assert bad['status'] == 'failed' and bad['rollback'] == 'success', bad
                 after = platform.containers()
                 assert before['db']['Id'] == after['db']['Id'] and before['caddy']['Id'] == after['caddy']['Id']
                 assert platform.healthy(old_image_id)
-                print(json.dumps({'isolated_docker': name, 'good_deploy': 'PASS', 'unhealthy_api_rollback': 'PASS', 'untagged_image_id_rollback': 'PASS', 'db_caddy_preserved': True, 'production_used': False}))
+                assert after['api']['Config']['Cmd'] == config['services']['api']['command'][:-1] + ['app.main:create_two_cycle_app']
+                print(json.dumps({'isolated_docker': name, 'schema1_deploy': 'PASS', 'schema2_alias_deploy': 'PASS', 'schema2_unhealthy_api_rollback': 'PASS', 'untagged_image_id_rollback': 'PASS', 'db_caddy_preserved': True, 'production_used': False}))
         finally:
             subprocess.run(prefix + ['-f', str(project_compose), 'down', '--remove-orphans', '--timeout', '5'], capture_output=True)
             subprocess.run([args.docker, 'image', 'rm', *image_names], capture_output=True)

@@ -18,7 +18,7 @@
 
 기존 `target_cycle_key`, 목록 `state/limit/cursor` 의미를 유지한다. limit 기본20/최대50. 새 프로필은 인증 필수·기존 room/T 접근권한, 목록은 현공대장 권한을 적용한다. 다른 사람의 신청분석은 이 권한으로만 제공한다. 미지정 응답과 `membership-actions-1`은 기존 shape 그대로다. 한 요청에는 프로필 하나만 지정한다. 새 상세 프로필은 **일반 상세**만 확장하며 membership_id/cycle_member_id 입력을 받지 않는다. 본인 신청 목록·단건 application review·카드/검색·plan에는 새 프로필을 추가하지 않는다. 알 수 없는/중복 query, GET body, 잘못된 프로필/프로필과 입력 조합은400 INVALID_REQUEST다.
 
-새 DTO는 별도 이름 `ApplicationDisplay...`를 사용한다. 기존 base/write DTO를 직접 확장하지 않는다. [실행 계약](../../../../openapi/two-cycle.openapi.yaml)의 현재 필수/nullable를 보존하며 새 필드가 있는 프로필은 [독립 closed schema](examples/application-display-v1.schema.json)를 따른다. 경로는177/기본116을 유지할 예정이지만 query/response 계약은 합의 후 별도로 변경한다. schema의 기존 구조 정의는 source484ca171 계약에서 필요한 참조만 복사한 작성 자료다.
+새 DTO는 별도 이름 `ApplicationDisplay...`를 사용한다. 기존 base/write DTO를 직접 확장하지 않는다. [실행 계약](../../../../openapi/openapi.yaml)의 현재 필수/nullable를 보존하며 새 필드가 있는 프로필은 [독립 closed schema](examples/application-display-v1.schema.json)를 따른다. 경로는177/기본116을 유지할 예정이지만 query/response 계약은 합의 후 별도로 변경한다. schema의 기존 구조 정의는 source484ca171 계약에서 필요한 참조만 복사한 작성 자료다.
 
 ## 신청 카드: 기준·필수/nullable
 

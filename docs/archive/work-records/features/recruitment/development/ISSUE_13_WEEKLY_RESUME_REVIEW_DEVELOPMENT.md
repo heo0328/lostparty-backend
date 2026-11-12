@@ -4,7 +4,7 @@
 
 2026-10-23 / Backend / `feat/raid-recruitment`.
 
-[Backend118 제안1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6355880490)을 [전체120번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6356264877)가 세 소비 방식 모두 수용했다. [합의 문서](../contracts/ISSUE_13_WEEKLY_RESUME_REVIEW_DRAFT.md)의 의미를 구현하고 정확한 닫힌 DTO/수치/nullable/응답은 [실행 OpenAPI](../../../../../../openapi/two-cycle.openapi.yaml)에 반영한다. 이전 기본0.4.1/policy4·고정 wire/기본 OpenAPI는 보존한다.
+[Backend118 제안1](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6355880490)을 [전체120번째 Flutter](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6356264877)가 세 소비 방식 모두 수용했다. [합의 문서](../contracts/ISSUE_13_WEEKLY_RESUME_REVIEW_DRAFT.md)의 의미를 구현하고 정확한 닫힌 DTO/수치/nullable/응답은 [실행 OpenAPI](../../../../../../openapi/openapi.yaml)에 반영한다. 이전 기본0.4.1/policy4·고정 wire/기본 OpenAPI는 보존한다.
 
 ## 소비 흐름
 

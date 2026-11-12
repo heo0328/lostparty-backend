@@ -29,6 +29,7 @@ services:
     ports:
       - "127.0.0.1:5432:5432"
   api:
+    image: lostparty-backend-api:latest
     build: .
     platform: linux/amd64
     restart: unless-stopped

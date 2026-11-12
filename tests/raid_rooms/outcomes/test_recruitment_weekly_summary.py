@@ -341,9 +341,10 @@ def expand(schema,document):
 
 
 def test_runtime_slice_matches_agreed_contract_and_canonical_source():
-    from app.main import app
+    from app.main import create_legacy_app
+    app = create_legacy_app()
     runtime=app.openapi()
-    assert runtime==json.loads(Path('openapi/openapi.yaml').read_text())
+    assert runtime==json.loads(Path('openapi/legacy.openapi.yaml').read_text())
     contract=json.loads(Path('docs/features/recruitment/weekly-cycles/examples/baseline/full.openapi.json').read_text())
     for path,method in ((META,'get'),(SUMMARY,'post')):
         actual=runtime['paths'][path][method];agreed=contract['paths'][path][method]

@@ -28,7 +28,9 @@
 
 작업자는 [AGENTS](../AGENTS.md) → [API 협업](engineering/collaboration/api-collaboration.md) → NEXT_WORK → AI_CONTEXT → 관련 기능 계약 순서로 확인합니다. 공식 소통 채널은 GitHub Issues이며 로컬 문서가 새로운 계약 합의를 대신하지 않습니다.
 
-현재 개발 실행 계약은 [two-cycle OpenAPI](../openapi/two-cycle.openapi.yaml), 기본 앱 보존 계약은 [기본 OpenAPI](../openapi/openapi.yaml)입니다. 프로필·시점이 다른 계약 snapshot을 최신 실행 계약으로 해석하지 않습니다.
+현재 개발 실행 계약은 [현재 OpenAPI](../openapi/openapi.yaml), DB0023 시험 계약은 [legacy OpenAPI](../openapi/legacy.openapi.yaml)입니다. 프로필·시점이 다른 계약 snapshot을 최신 실행 계약으로 해석하지 않습니다.
+
+기본 실행·명세 이름과 과거 코드 유지 조건은 [실행 설정 정리](engineering/development/runtime-configuration.md), 향후 운영 배포 도구 갱신/복귀는 [운영 전환 안내](engineering/operations/runtime-release-transition.md)를 따릅니다.
 
 ## 문서 유지 원칙
 

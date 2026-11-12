@@ -121,10 +121,11 @@ def test_membership_and_application_pages_are_target_scoped(candidate):
 
 
 def test_candidate_not_published_in_main():
-    from app.main import app
+    from app.main import create_legacy_app
+    app = create_legacy_app()
     live=app.openapi()['paths']
     assert '/v2/raid-rooms' not in live
     import json
     from pathlib import Path
     assert '/v2/raid-cycles' in live
-    assert set(live) == set(json.loads(Path('openapi/openapi.yaml').read_text())['paths'])
+    assert set(live) == set(json.loads(Path('openapi/legacy.openapi.yaml').read_text())['paths'])

@@ -1,5 +1,7 @@
 # Backend 태그 기반 Lightsail 배포
 
+새 실행 정리 이후 release.json은 schema2(현재 openapi.yaml/과거 legacy.openapi.yaml)를 생성한다. validation.json의 schema와는 별개다. 구형 release.json schema1과 기존 hash 의미도 계속 지원한다. 설치된 운영 도구 선갱신·복귀·이번 배포 포함 기능은 [실행 정리의 배포 전환](runtime-release-transition.md)을 따른다.
+
 이 문서는 자동 배포의 현재 운영 기준 원본이다. Backend 버전은 `VERSION`, 태그는 `vMAJOR.MINOR.PATCH`이며 Native·OpenAPI 버전과 독립적이다. 목적 브랜치 → dev → main 통합을 유지한다. 사용자가 승인한 태그 push가 운영 배포 승인이다. 별도 간소 배포 시스템은 두지 않고 동일 배포에서 검증 범위만 바꾼다.
 
 **개발·검증은 로컬 dev가 기본이며 운영 반영 여부·시점은 개발자가 지시한다.** 아래 절차는 운영 반영을 준비하거나 승인된 배포를 수행할 때 적용하며, 기능 수정 요청마다 실행하지 않는다. 로컬 실행 중단을 이유로 수동 배포 워크플로의 검증 경로로 임의 대체하지 않는다. Backend의 반영 시점 제안·대안 판단은 [로컬 개발과 운영 반영](../development/workflow.md#local-dev-and-production)을 따른다. 네이티브 debug는 로컬, release는 AWS를 대상으로 하며 앱 연결과 서버 반영 완료를 구분한다.
