@@ -194,6 +194,11 @@ _CURRENT_GENERATION = object()
 def metadata(db, row, generation=_CURRENT_GENERATION):
     generation=row.generation if generation is _CURRENT_GENERATION else generation
     value = get(db, row, required=False, generation=generation) if generation is not None else None
+    return metadata_value(row,generation,value)
+
+
+def metadata_value(row,generation,value):
+    """Same retained policy projection for single and batch readers."""
     return dict(room_id=row.room_id, target_cycle_key=row.cycle_key, room_cycle_id=row.id,
         generation=generation,
         scope=value.scope if value else None, group_id=value.group_id if value else None,

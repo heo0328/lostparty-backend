@@ -1,0 +1,139 @@
+{
+  "local_only": true,
+  "source_commit": null,
+  "base_commit": "b03595a8999d3bbd66a93443048d1a7f85536a1d",
+  "source_manifest_sha256": "404ccccd90cb98e28a746bab23d2b9beeece705c49772dcf1fac739eab416714",
+  "app_files": 291,
+  "image": "sha256:87a918db5245c8cbf2ab2d83df1b6e71fbdbb8473ea4d035c662c879bed5c0bd",
+  "preserved": {
+    "db_container_identity": true,
+    "db_image_started_config_mounts": true,
+    "table_counts_digests": true,
+    "schema_revision": true,
+    "schema_columns": true,
+    "keys": true,
+    "host_env": true,
+    "api_environment": true,
+    "api_mounts": true,
+    "api_ports_command": true,
+    "api_healthy": true
+  },
+  "db_revision": "0036_roster_presence",
+  "tables": 118,
+  "rows_at_application": 948,
+  "keys": 4,
+  "migration": false,
+  "scope": "local development only; no production/DB migration/deletion",
+  "publication": {
+    "branch": "feat/recruitment-discovery",
+    "new_commit_sha": null,
+    "committed": false,
+    "pushed": false,
+    "note": "Base SHA is not the implementation SHA. Local app manifest identifies uncommitted runtime source."
+  },
+  "contracts": {
+    "openapi.yaml": {
+      "sha256": "18491bc066d08a578aa9228cd0da85eee508288c28d14d563d788e73e324c3dd",
+      "isolated_full_object_matches": true,
+      "runtime_full_object_matches": true
+    },
+    "two-cycle.openapi.yaml": {
+      "sha256": "3fdc06616d64e19aa7abf35b548cf1156fa7fbee6bcfb02c1dccf4ce9a9d7052",
+      "isolated_full_object_matches": true,
+      "runtime_full_object_matches": true
+    }
+  },
+  "paths_operations": {
+    "legacy": [
+      125,
+      142
+    ],
+    "two_cycle": [
+      192,
+      213
+    ],
+    "new_endpoints": 0
+  },
+  "local_retry": "First API replacement healthy but env-array order comparison failed; automatically restored original image. Image env values and rollback health verified; normalized-order retry passed all preservation checks.",
+  "backup": "Existing valid environment/key copies reused; local DB dump excluded by user policy. Read-only preservation fingerprints are not backups or restore tests.",
+  "verification": {
+    "new_tests": {
+      "passed": 13,
+      "execution": "12-case file PASS plus separately added candidate/context test PASS; disposable PostgreSQL",
+      "full_project_regression": false
+    },
+    "related_regression": {
+      "passed": 52,
+      "files": [
+        "tests/raid_rooms/schedules/test_departure_search_minutes.py",
+        "tests/raid_rooms/schedules/test_coordination_wait.py",
+        "tests/raid_rooms/group_links/test_cycle_group_policy.py",
+        "tests/groups/test_group_character_candidates.py"
+      ],
+      "run": "Combined initial selection: 63 PASS/1 FAIL (new group-test setup ordering); corrected new-file rerun12 PASS and extra candidate test1 PASS; unique final selection65 PASS, not a single65-case rerun."
+    },
+    "dependency_locks": "PASS",
+    "documentation": "PASS",
+    "git_diff_check": "PASS",
+    "isolated_contracts": "both full objects PASS",
+    "runtime_contracts": "both full objects PASS"
+  },
+  "http": {
+    "checks": [
+      {
+        "path": "/health",
+        "method": "GET",
+        "status": 200,
+        "no_store": false
+      },
+      {
+        "path": "/v2/raid-rooms/search",
+        "method": "POST",
+        "status": 200,
+        "no_store": true
+      },
+      {
+        "path": "/v2/raid-rooms/search",
+        "method": "POST",
+        "status": 200,
+        "no_store": true
+      },
+      {
+        "path": "/v2/raid-rooms/search",
+        "method": "POST",
+        "status": 400,
+        "no_store": true
+      },
+      {
+        "path": "/v2/me/raid-room-filter-context",
+        "method": "GET",
+        "status": 401,
+        "no_store": true
+      }
+    ],
+    "discovery_schema_valid": true,
+    "legacy_schema_valid": true,
+    "items": 3,
+    "total_count": 3,
+    "actual_cycle_key": "2026-11-11",
+    "real_member_commands_tested": false
+  },
+  "implementation_files": {
+    "app/raid_rooms/api/cycle_router.py": "ebaa8ce11c563e6f5c3db2406e0b4d432da0679e6f1e822f2e8dcf33eb970187",
+    "app/raid_rooms/schemas/discovery.py": "ea87322b56fd01e4b6b42e576f140d95e3affe5a445c6210154f12165f2fdb4f",
+    "app/raid_rooms/reads/discovery.py": "69201fa383f41af1f4fae333232da04c73afa7e075061e697f77823a361b0583",
+    "app/raid_rooms/reads/cycle_queries.py": "4eeb4925d61f015a6594319cfd083e861d135c9a2522441dabd4c00651c03abb",
+    "app/raid_rooms/group_links/cycle_group_policy.py": "bbeac3dc07c83a1ef4595547587f8b88652689c0261cd98237ab80521496a33d",
+    "app/raid_rooms/group_links/group_list_display.py": "bc285d390614c3711bd1f77ae6225b886810516b395d017b4f81e3c724f55b1d",
+    "app/raid_rooms/schedules/beta_schedule.py": "d7d7a8839bdfc0ae38b3a4b910b80389eed36692cfad3978427405117ca32453",
+    "tests/raid_rooms/reads/test_discovery.py": "bd5c62e5c779ffe5d31a0f4cb5ca271379bd2b73e85af0fbb4920db986d8c2f0"
+  },
+  "result_comment": {
+    "url": "https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6821288801",
+    "order": 5,
+    "side": "Backend",
+    "stage": "implementation/isolated verification and local dev support",
+    "refetched_body_matches": true
+  },
+  "source_manifest_format": "SHA256(json.dumps({relative app path: SHA256(file bytes)}, sort_keys=True).encode()); excludes __pycache__"
+}

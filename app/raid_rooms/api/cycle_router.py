@@ -47,6 +47,7 @@ from app.raid_rooms.participation import cycle_common
 from app.raid_rooms.schedules import cycle_times
 from app.raid_rooms.schedules import cycle_schedule_service
 from app.raid_rooms.admissions import character_candidates
+from app.raid_rooms.schemas import discovery as discovery_schemas
 from app.raid_rooms.schemas.candidate_schemas import CandidatePage
 from app.raid_rooms.schemas import session_display_schemas as display_schemas
 from app.raid_rooms.outcomes import resume_review
@@ -125,7 +126,7 @@ class CycleRoute(AvailabilityRoute):
 
     def legacy_allowed_query(self, request):
         if request.method=='POST' and request.url.path.endswith('/weekly-resume-proposals'):return {'preview_only'}
-        if request.method=='POST' and request.url.path.endswith('/raid-rooms/search'):return {'include_group_state'}
+        if request.method=='POST' and request.url.path.endswith('/raid-rooms/search'):return {'include_group_state','response_profile'}
         if request.method!='GET':return set()
         if request.url.path.endswith('/raid-room-character-candidates'):return {'filter_context_token','limit','cursor'}
         if request.url.path.endswith(('/batch-completion-context','/batch-personal-completion-departure-context')):return {'target_cycle_key','round_ids'}
@@ -231,11 +232,11 @@ def withdraw(application_id:UUID,data:inputs.Withdraw,principal:Principal,key:Ke
     return commands.process(principal,application_id,key,data,action='withdraw')[1]
 
 
-@router.post('/raid-rooms/search',response_model=group_link_display_types.GroupSearchPage|s.OutputContract3PostV2RaidRoomsSearch,responses=errors,
+@router.post('/raid-rooms/search',response_model=group_link_display_types.GroupSearchPage|s.OutputContract3PostV2RaidRoomsSearch|discovery_schemas.DiscoveryGroupPage|discovery_schemas.DiscoveryPage,response_model_exclude_unset=True,responses=errors,
     description='Authenticated search excludes own active persistent membership with participating/review_required CM in the selected actual T/current generation, in SQL before sorting and pagination. Opposite-only, pending and historical relations are preserved. Cursor semantics: own-target-participation-excluded-v1; old semantics/head changes return CURSOR_STALE (409), foreign/tampered scope INVALID_REQUEST (400).')
-def search(data:inputs.Search|beta_schemas.BetaSearchRequest,principal:OptionalPrincipal=None,include_group_state:Literal['true','false']='false'):
+def search(data:inputs.Search|beta_schemas.BetaSearchRequest,principal:OptionalPrincipal=None,include_group_state:Literal['true','false']='false',response_profile:Literal['discovery-1']|None=None):
     data=beta_profile.request_model(data,inputs.Search,beta_schemas.BetaSearchRequest)
-    return queries.search(principal,data,include_group_state=='true')
+    return queries.search(principal,data,include_group_state=='true',response_profile)
 
 
 @router.get('/raid-rooms',response_model=group_link_display_types.GroupSearchPage|s.OutputContract3PostV2RaidRoomsSearch,responses=errors,description='GET adapter uses the same SQL exclusion, cursor scope and own-target-participation-excluded-v1 semantics as POST /v2/raid-rooms/search.')
@@ -606,6 +607,16 @@ for _route in router.routes:
             _parameters.append(dict(name=_key,**{'in':'query'},required=False,
                 content={'application/json':{'schema':json.loads(json.dumps(beta_schemas.BetaSearchRequest.model_json_schema()['properties'][_key]).replace('#/$defs/','#/components/schemas/'))}}))
     _route.openapi_extra={'parameters':_parameters,'x-beta-contract-profile':beta_profile.PROFILE}
+    if _route.path=='/v2/raid-rooms/search' and 'POST' in _route.methods:
+        _route.openapi_extra['x-response-profiles']={
+            'discovery-1':dict(response='DiscoveryPage or DiscoveryGroupPage when include_group_state=true',
+                compatibility='Omitted response_profile preserves the existing strict response; no additional endpoint.',
+                count='Exact distinct filtered rooms before pagination; count and cards share one repeatable-read snapshot.',
+                cursor='Actor/session/actual T/profile/normalized filters/limit/visibility and clock epoch bound; stale 409, foreign or tampered 400.',
+                groups='true requires current cycle group policy; group_states and cycle_groups required, otherwise absent.',
+                schedule='contract_profile=beta-recruitment-1 enables beta projection; otherwise schedule=null.',
+                revalidation='First page 200; no HTTP conditional validation or polling. Same result_revision requires same total_count.',
+                cache='Client memory: recent five condition sets, 60s from first receipt; commands/permissions invalidate in-flight and cached results.')}
 
 
 @router.get('/me/raid-room-character-issues',responses=errors)

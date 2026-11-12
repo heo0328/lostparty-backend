@@ -2,12 +2,20 @@
 
 2026-11-12 KST 기준. 실제 Backend 코드/Git과 각 담당의 현재 코드 확인 결과를 사용한다. Native 코드 상태·완료 판단은 Native가 작성하며 Backend가 대신 검토하지 않는다.
 
-## 공동 릴리즈 마감 완료 / 다음 업무 선택
+## 현재 우선 — Issue50 Backend 구현/로컬 지원 완료 · Native 적용 대기
+
+- `feat/recruitment-discovery`에서 Native전체4 수용 계약으로 구현·선택검증·실제 로컬 API 반영을 완료했다. [전체5번째 Backend/구현·격리검증/로컬 결과](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6821288801)를 게시하고 실제순번5·본문일치 확인, Issue본문 상단 현재상태/다음담당을 갱신했다.
+- [구현 인계](../features/recruitment/search/discovery-implementation.md)·[검증/소스·실행식별](../features/recruitment/search/discovery-verification.json). 기존 POST의 discovery-1 profile로50개·전체count·최소카드/그룹·조율·열람권한을 제공하며 새endpoint0개, 기존 응답/GET/context/후보는 유지한다.
+- 신규13PASS(12+추가1 별도실행), 관련회귀52PASS, 두 전체계약 격리/실행컨테이너 일치·로컬HTTP·정적/문서/diff PASS. [합성 성능](../features/recruitment/search/discovery-performance.json)은 운영/밀집그룹·실기기 성능 인수와 별개다. 전체저장소회귀·실회원명령/기기시험은 미실행이다.
+- 로컬 image87a918db…5c0bd·DB0036, 기존DB컨테이너·118테이블/행·키4개·환경/포트/명령/마운트 보존. migration/초기화·운영배포는 없다. 원래 백업사본/로컬dump제외 방침 유지.
+- **다음 Native:** 합의DTO/캐시/화면 연결·같은Issue 결과 회신. 원격 고정소스/계약이 필요한 단계는 사용자 게시 지시 후 인계한다. **현재 새구현SHA없음/코드·계약·문서 미커밋·미push/dev·main미통합**, b03595a는 기반SHA이며 새구현SHA가 아니다. 실제로준비된 로컬API와 원격게시를 구분한다.
+
+## 공동 릴리즈 마감 완료
 
 - **완료:** Backend2.1.1/source d16734d·image7aa19edf…c061d·DB0036/config lightsail-web-2.1.0 일반공개, 실제웹/새APK인수·Native최종v2.1.0 Release 및Backend공개5파일동일성검증까지완료했다. [배포·백업·최종공개/마감 원장](../engineering/operations/records/release-2.1.0-deployment.json).
 - **마감:** 사용자 “마감 진행합니다” 지시로최종9문서를동일목적브랜치에서커밋·dev이력보존통합/main동일화·push하고작업브랜치를정리했다. #49는2026-11-12T08:57:44Z에completed종료했다. 실제Git게시/정리SHA근거는[#49 마감 댓글](https://github.com/heo0328/lostparty-backend/issues/49)에연결한다. 운영배포태그/이미지·코드·DB/키·접속정책은변경하지않는다.
 - **추가 대기 없음:** Native회신·반복기기인수·재빌드/재압축·재배포요청은없다. 백업사본/무결성과실제복원시험·정기자동화는별개이며후자를이번마감의새조건으로붙이지않는다.
-- **다음 업무:** 아직새기능에착수하지않았다. 기존순차정리후보는#17이며아래보존범위에서별도선택한다. #15/#18/#19의미합의계약·자료/DB수정은자동착수하지않는다.
+- **다음 업무:** 현재는 위 #50 구현 인계를 이어간다. 기존순차정리후보#17은아래보존범위에서별도선택한다. #15/#18/#19의미합의계약·자료/DB수정은자동착수하지않는다.
 
 ## 별도 보류 — 기존 기능 이슈 정리
 
@@ -19,9 +27,9 @@
 
 | 구분 | 확인 기준 |
 |---|---|
-| checkout/배포 소스 | 마감후dev / 배포소스d16734d·v2.1.1 고정, 최종문서는dev/main동일통합 |
+| checkout/배포 소스 | feat/recruitment-discovery(b03595a에서 분기) / 배포소스d16734d·v2.1.1 고정, 최종문서는dev/main동일통합 |
 | 이전 #47 업무 통합/원격 | 업무44eb4ba·반영 기록624ef00·문서962c1cd9321328f19a8e1ea6b5071fa07380782b를 dev에 이력 보존 병합·push. 원격 병합 SHA 일치/전체 feature tip 포함·동일 tree 확인. app/tests/openapi422파일은 기존 검증 코드와 동일 |
-| 로컬 dev | 웹 CORS 추가 이미지986f8d80로 API 재생성/healthy·실제 HTTP 및 두 전체 계약 확인. DB0036 유지. 이전 업무 runtime ae6b3e0a/앱288파일 비교는 당시 근거. [반영 원본](../engineering/operations/records/batch-completion-local-rollout.json) |
+| 로컬 dev | discovery image87a918db…5c0bd/앱291파일·두 전체계약/실HTTP·보존 검사PASS·DB0036 유지. [최신 로컬 근거](../features/recruitment/search/discovery-verification.json). 이전986f8d80/ae6b3e0a는 당시 근거 |
 | 전체 계약 | 기본125경로/142동작, two-cycle192경로/213동작. 정확한 hash는 [구현/계약 근거](../features/recruitment/completion-and-records/batch-completion-implementation.md) |
 | 후행 통합 기록 | 현재 브랜치/게시 상태·기능 브랜치 정리 결과는 dev의 후행 문서 커밋으로 보존. 업무 코드/시험/계약 변경 없음 |
 

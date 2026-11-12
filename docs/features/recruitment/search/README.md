@@ -2,6 +2,10 @@
 
 실제 선택 주차의 모집방을 권한·레이드·그룹·캐릭터·남은 자리 조건으로 서버에서 검색한다. 단순 지속 회원 관계와 해당 주차의 실제 참가를 구분한다.
 
+## 탐색 리마스터 — discovery-1
+
+Issue50 양측 수용에 따라 기존 POST의 선택 응답 profile로 전체 개수/최소 카드를 구현하고 로컬 dev에 반영했다. 새 endpoint는 없으며 기존 응답/GET adapter·context/후보 API는 유지한다. [구현·검증/게시 상태](discovery-implementation.md)·[현재 실행 계약](../../../../openapi/two-cycle.openapi.yaml). Native 적용/기기 인수·운영 배포는 별도다.
+
 ## 베타 최신 보완
 
 베타 departure_windows는 GET/POST 모두 UTC 정수분 범위를 그대로 받는다. 시작 포함·끝 제외, 최대24시간·선택 주차 내부를 검사하고 반올림하지 않는다. 미확정은 기본 출발, 확정 후는 실제 출발을 SQL에서 필터한다. [분 검색 구현](../weekly-cycles/search-minute-precision.md).
@@ -14,7 +18,7 @@
 
 그룹 연결 여부와 입장 공개 범위는 독립 조건이다. 그룹OR·회원AND·선택 회원의 캐릭터OR 등 합의한 논리를 적용하고, 다른 그룹의 동일 회원은 권한 context의 alias/member_ref로 연결한다. 전역 user UUID·전체 개인 설정을 공개하지 않는다.
 
-정렬은 현재 지속 회원의 절대 인원 기준 member_count와 ascending/descending이다. 기본은 내림차순, 동률은 created_at DESC·room_id DESC다. remaining_slot_counts는1..7의 정확한 자리 수 OR 필터이며 []는 제한 없음이다. 역할/직업 자리 필터로 확대하지 않는다.
+정렬은 현재 실제T/세대의 활성 assignment lease를 보유한 distinct membership 인원 기준 member_count와 ascending/descending이다. 기본은 내림차순, 동률은 created_at DESC·room_id DESC다. remaining_slot_counts는1..7의 정확한 자리 수 OR 필터이며 []는 제한 없음이다. 역할/직업 자리 필터로 확대하지 않는다.
 
 <a id="section"></a>
 
