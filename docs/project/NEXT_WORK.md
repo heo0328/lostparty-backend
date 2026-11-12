@@ -2,12 +2,20 @@
 
 2026-11-12 KST 기준. 실제 Backend 코드/Git과 각 담당의 현재 코드 확인 결과를 사용한다. Native 코드 상태·완료 판단은 Native가 작성하며 Backend가 대신 검토하지 않는다.
 
-## 공동 릴리즈 마감 완료 / 다음 업무 선택
+## Issue50 합의 기능 완료 — Backend Git 통합/Issue 마감 별도
+
+- Backend558ee6da의 구현·선택검증·로컬 반영/계약 게시, [Native전체12 최종 인계](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826309269)의 Flutter dev83a550204dd442ec2ce54a01c79c2c485106b472 적용·담당자보고2927PASS/analyze0·사용자 필터 성공 보고/Penpot02 통합을 확인했다. [전체13 Backend 최종 점검](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826448910)으로 추가 구현/계약 충돌·Native 협업 요청 없음을 회신하고 기존Native대기를 해소했다.
+- **미진행 기능 없음.** 목록전체/일반/그룹·인원정렬은즉시검색, 상세필터는초안/적용/취소가최종UI다. 50개·60초/최근5조건·discovery-1계약은유지한다. Native자료는담당자보고로수용하며Flutter로컬소스를대신검토하지않았다.
+- **실제 미실행 절차:** Backend작업브랜치tip7a86291은push완료이나 Backend dev/main은b03595a로미통합이다. 사용자별도지시범위의Git통합/Issue종료를남은기능구현이나Native대기로표시하지않는다. 이번점검에서merge·종료·배포는없다.
+- [구현/검증](../features/recruitment/search/discovery-implementation.md)·[반영집계](../features/recruitment/search/discovery-verification.json). 코드/시험/OpenAPI hash는기존검증·게시·로컬반영기준과같아동일서버/DB시험을반복하지않았다. 모든기기/신청/성능조합의전수인수·운영반영완료로확대하지않으며보고된새결함없음에새시험대기를추가하지않는다.
+- 다음은사용자가Backend Git통합/마감또는다른업무를선택하는것이다. 현재추가Native작업/자료요청은없다. 이번최종점검/대기해소문서는미커밋·미push다.
+
+## 공동 릴리즈 마감 완료
 
 - **완료:** Backend2.1.1/source d16734d·image7aa19edf…c061d·DB0036/config lightsail-web-2.1.0 일반공개, 실제웹/새APK인수·Native최종v2.1.0 Release 및Backend공개5파일동일성검증까지완료했다. [배포·백업·최종공개/마감 원장](../engineering/operations/records/release-2.1.0-deployment.json).
 - **마감:** 사용자 “마감 진행합니다” 지시로최종9문서를동일목적브랜치에서커밋·dev이력보존통합/main동일화·push하고작업브랜치를정리했다. #49는2026-11-12T08:57:44Z에completed종료했다. 실제Git게시/정리SHA근거는[#49 마감 댓글](https://github.com/heo0328/lostparty-backend/issues/49)에연결한다. 운영배포태그/이미지·코드·DB/키·접속정책은변경하지않는다.
 - **추가 대기 없음:** Native회신·반복기기인수·재빌드/재압축·재배포요청은없다. 백업사본/무결성과실제복원시험·정기자동화는별개이며후자를이번마감의새조건으로붙이지않는다.
-- **다음 업무:** 아직새기능에착수하지않았다. 기존순차정리후보는#17이며아래보존범위에서별도선택한다. #15/#18/#19의미합의계약·자료/DB수정은자동착수하지않는다.
+- **다음 업무:** #50 합의 기능/협업은 완료됐고 위 마감 절차는 별도다. 기존순차정리후보#17은아래보존범위에서별도선택한다. #15/#18/#19의미합의계약·자료/DB수정은자동착수하지않는다.
 
 ## 별도 보류 — 기존 기능 이슈 정리
 
@@ -19,9 +27,9 @@
 
 | 구분 | 확인 기준 |
 |---|---|
-| checkout/배포 소스 | 마감후dev / 배포소스d16734d·v2.1.1 고정, 최종문서는dev/main동일통합 |
+| checkout/배포 소스 | feat/recruitment-discovery(b03595a에서 분기) / 배포소스d16734d·v2.1.1 고정, 최종문서는dev/main동일통합 |
 | 이전 #47 업무 통합/원격 | 업무44eb4ba·반영 기록624ef00·문서962c1cd9321328f19a8e1ea6b5071fa07380782b를 dev에 이력 보존 병합·push. 원격 병합 SHA 일치/전체 feature tip 포함·동일 tree 확인. app/tests/openapi422파일은 기존 검증 코드와 동일 |
-| 로컬 dev | 웹 CORS 추가 이미지986f8d80로 API 재생성/healthy·실제 HTTP 및 두 전체 계약 확인. DB0036 유지. 이전 업무 runtime ae6b3e0a/앱288파일 비교는 당시 근거. [반영 원본](../engineering/operations/records/batch-completion-local-rollout.json) |
+| 로컬 dev | discovery image87a918db…5c0bd/앱291파일·두 전체계약/실HTTP·보존 검사PASS·DB0036 유지. [최신 로컬 근거](../features/recruitment/search/discovery-verification.json). 이전986f8d80/ae6b3e0a는 당시 근거 |
 | 전체 계약 | 기본125경로/142동작, two-cycle192경로/213동작. 정확한 hash는 [구현/계약 근거](../features/recruitment/completion-and-records/batch-completion-implementation.md) |
 | 후행 통합 기록 | 현재 브랜치/게시 상태·기능 브랜치 정리 결과는 dev의 후행 문서 커밋으로 보존. 업무 코드/시험/계약 변경 없음 |
 

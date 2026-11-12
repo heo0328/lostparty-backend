@@ -6,6 +6,7 @@
 
 | 이슈 | 현재 상태 | 남은 작업·담당 |
 |---|---|---|
+| [#50](https://github.com/heo0328/lostparty-backend/issues/50) 모집 탐색 리마스터 | **합의 기능/협업 완료·Issue OPEN(마감 별도)**. Backend558ee6da/게시tip7a86291, Native12 dev83a55020·담당자보고2927PASS/analyze0/사용자확인. [Backend13 최종점검](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826448910) | 추가Native요청/미진행기능없음. Backend dev/main미통합·Git통합/Issue종료는사용자별도지시, 운영/전수인수별도. 문서대기해소기록미커밋·미push |
 | [#17](https://github.com/heo0328/lostparty-backend/issues/17) 누락/생명주기·기존 참가 복구 | 완료 오류/기존 계정 복구 인수·양측 dev 통합 완료. Native가 현재 경고/관리 왕복 연결과 별도 누락/부분 완료 기기 경계를 본문에 최신화 | 다음 순차 정리 대상. Backend 현재 구현과 Native 담당 근거로 완료/잔여 범위를 확정. 누락 자료/원복·기기 확인 착수는 별도 후속이며 현재 생성/DB 조정 요청 없음 |
 | [#15](https://github.com/heo0328/lostparty-backend/issues/15) 소유권 최종이전 영향 | 기본 인증/분쟁 연결 완료. 활성 참가가 있으면 최종이전 보류, 영향 정리/복구 정책·adapter 미합의/미구현 | Native 소비검토5항목·사용자 제품 정책 결정, 합의 후 Backend 원자 설계. [검토 원본](../features/rosters/ownership/dispute-impact-review.md) |
 | [#18](https://github.com/heo0328/lostparty-backend/issues/18) 활동 자동추가·명시제외 | 준비 설계/Native 접수, 영속/API 미합의·미구현 | 신규1700·설정 전 보류·제외/재등록·관찰/경합 기준 합의. [현재 제안](../features/rosters/activity-and-presentation/proposals.md). 옛5fff83b/브랜치 상태는 당시 보고이며 현재 로컬 존재로 단정하지 않음 |
@@ -28,6 +29,6 @@
 
 ## 코드·게시·실행은 별개
 
-마감후checkout은dev, 최종운영·인수·공개문서는동일목적브랜치에서이력보존통합/main동일화·push했다. 실제최종Git SHA와브랜치정리근거는Issue49마감댓글을따른다. 배포소스d16734d·태그v2.1.1/이미지는불변이며Native최종태그v2.1.0/source9019ee0과원웹/APK source는배포원장에구분한다. #49는사용자마감지시로completed종료했다.
+현재 checkout은feat/recruitment-discovery이며 #50 업무558ee6d를 사용자지시로commit/push·원격일치확인했다. 게시결과/인계기록은같은브랜치의후행문서커밋으로보존한다. dev/main통합은없다. #49 마감후checkout은dev였고, 최종운영·인수·공개문서는동일목적브랜치에서이력보존통합/main동일화·push했다. 실제최종Git SHA와브랜치정리근거는Issue49마감댓글을따른다. 배포소스d16734d·태그v2.1.1/이미지는불변이며Native최종태그v2.1.0/source9019ee0과원웹/APK source는배포원장에구분한다. #49는사용자마감지시로completed종료했다.
 
 [점검/정리 결과](OPEN_ISSUE_REVIEW.md) · [NEXT_WORK](NEXT_WORK.md) · [DEV_LOG](DEV_LOG.md) · [최신화 전 단계/댓글 순번 기록](../archive/project/status-before-refresh-20261110/ISSUE_TRACKER.md)

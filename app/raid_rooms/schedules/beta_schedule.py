@@ -311,6 +311,18 @@ def reconcile(db,room,row,stamp):
     db.flush()
 
 
+def display_state(saved,sess,row,stamp,room_ended=False):
+    """Shared clock projection; no queries, candidate evaluation or writes."""
+    ended=row.state=='closed' or room_ended or sess.state in ('finished','cancelled')
+    kind=saved.confirmation_kind
+    due=not ended and not kind and not saved.needs_review and stamp>=saved.base_starts_at-timedelta(minutes=30)
+    state=('ended' if ended else kind or ('needs_review' if saved.needs_review else 'deadline_pending' if due else 'coordinating' if saved.early_enabled else 'base_committed'))
+    actual_start=sess.starts_at if kind else None;actual_end=sess.ends_at if kind else None
+    effective=actual_start or saved.base_starts_at;effective_end=actual_end or saved.base_ends_at
+    return dict(coordination_state=state,confirmed_starts_at=actual_start,confirmed_ends_at=actual_end,
+        effective_starts_at=effective,effective_ends_at=effective_end,admission_deadline=effective-timedelta(minutes=30))
+
+
 def view(db,row,stamp):
     from app.raid_rooms.schedules import cycle_schedule as graph
     from app.raid_rooms.models.integrated_models import RecruitmentRoom
@@ -320,15 +332,13 @@ def view(db,row,stamp):
     ended=row.state=='closed' or db.get(RecruitmentRoom,row.room_id).ended_at is not None or sess.state in ('finished','cancelled')
     kind=saved.confirmation_kind
     due=not ended and not kind and not saved.needs_review and stamp>=saved.base_starts_at-timedelta(minutes=30)
-    state=('ended' if ended else kind or ('needs_review' if saved.needs_review else 'deadline_pending' if due else 'coordinating' if saved.early_enabled else 'base_committed'))
-    actual_start=sess.starts_at if kind else None;actual_end=sess.ends_at if kind else None
-    effective=actual_start or saved.base_starts_at;effective_end=actual_end or saved.base_ends_at
+    display=display_state(saved,sess,row,stamp,ended)
+    state=display['coordination_state']
     deadline_status=('obsolete' if ended or kind in ('early_confirmed','proposal_confirmed') else 'processed' if kind or saved.needs_review else 'due_unprocessed' if due else 'not_due')
     value=dict(policy_version='beta-schedule-1',revision=saved.revision,session_id=sess.id,
         base_starts_at=saved.base_starts_at,base_ends_at=saved.base_ends_at,base_deadline_at=saved.base_starts_at-timedelta(minutes=30),
         early_coordination_enabled=saved.early_enabled,early_additional_members=saved.early_additional_members,
-        coordination_state=state,coordination_active=state=='coordinating',confirmed_starts_at=actual_start,confirmed_ends_at=actual_end,
-        effective_starts_at=effective,effective_ends_at=effective_end,admission_deadline=effective-timedelta(minutes=30),
+        **display,coordination_active=state=='coordinating',
         deadline_status=deadline_status,pending_transition=('departure_review_due' if stamp>=saved.base_starts_at else 'base_confirmation_due') if due else None,
         review_reason='departure_passed_unconfirmed' if state=='needs_review' else None,evaluated_at=stamp)
     if beta_profile.query().get('include_coordination_wait')=='true':

@@ -4,10 +4,12 @@
 
 ## 현재 기준
 
+- #50 모집 탐색 합의 기능은 Backend558ee6da 구현/로컬/게시 및 [Native전체12](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826309269) Flutter dev83a55020 적용·담당자검증/사용자필터확인으로 완료다. [전체13 Backend 최종점검](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826448910)에서 추가기능/계약충돌·Native협업대기없음 확인. [구현](../features/recruitment/search/discovery-implementation.md). Backend dev/main미통합과Issue마감·운영배포는별도이며 전수기기/성능인수완료로확대하지않는다.
+
 - 공동 운영 릴리즈 완료: Backend `v2.1.1`/source `d16734d86e694579cd4e4e043c2ca89cc81c1b64`·DB0036/config lightsail-web-2.1.0·고정웹 일반공개, 웹/새APK는사용자실인수통과다. [배포·백업·최종공개 원장](../engineering/operations/records/release-2.1.0-deployment.json)·[운영/개발 구분](../engineering/operations/README.md).
 - Native [최종v2.1.0 Release](https://github.com/heo0328/LostParty_flutter/releases/tag/v2.1.0)는공개완료, [전체34 인계](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6798998431)를Backend독립다운로드/5파일hash·원본동일성확인으로수용했다. 원APK/웹source와최종태그source는원장에구분한다.
 - 실제운영원장대기표기도완료로정정·PC사본보관했다. 운영코드/태그/이미지는불변이며추가배포·기기시험대기는없다. 사용자마감지시로최종문서를dev/main에동일통합·게시하고release/2.1.0을정리했다. #49는completed종료, 추가기술·인수대기는없다. [다음 실행](NEXT_WORK.md).
-- #47/#48은사용자승인completed종료, #17정리와#15/#18/#19선택은별도구간이다. 로컬dev는CORS반영·DB0036을유지한다.
+- #47/#48은사용자승인completed종료, #17정리와#15/#18/#19선택은별도구간이다. 로컬dev는위 discovery반영·DB0036을유지한다.
 
 ## 기능별 상태와 원본
 

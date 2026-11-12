@@ -31111,6 +31111,23 @@
             }
           },
           {
+            "name": "response_profile",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "const": "discovery-1",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Response Profile"
+            }
+          },
+          {
             "name": "contract_profile",
             "in": "query",
             "required": false,
@@ -31176,6 +31193,12 @@
                     },
                     {
                       "$ref": "#/components/schemas/OutputContract3PostV2RaidRoomsSearch"
+                    },
+                    {
+                      "$ref": "#/components/schemas/DiscoveryGroupPage"
+                    },
+                    {
+                      "$ref": "#/components/schemas/DiscoveryPage"
                     },
                     {
                       "$ref": "#/components/schemas/Beta_GroupSearchPage"
@@ -31361,7 +31384,19 @@
             }
           }
         },
-        "x-beta-contract-profile": "beta-recruitment-1"
+        "x-beta-contract-profile": "beta-recruitment-1",
+        "x-response-profiles": {
+          "discovery-1": {
+            "response": "DiscoveryPage or DiscoveryGroupPage when include_group_state=true",
+            "compatibility": "Omitted response_profile preserves the existing strict response; no additional endpoint.",
+            "count": "Exact distinct filtered rooms before pagination; count and cards share one repeatable-read snapshot.",
+            "cursor": "Actor/session/actual T/profile/normalized filters/limit/visibility and clock epoch bound; stale 409, foreign or tampered 400.",
+            "groups": "true requires current cycle group policy; group_states and cycle_groups required, otherwise absent.",
+            "schedule": "contract_profile=beta-recruitment-1 enables beta projection; otherwise schedule=null.",
+            "revalidation": "First page 200; no HTTP conditional validation or polling. Same result_revision requires same total_count.",
+            "cache": "Client memory: recent five condition sets, 60s from first receipt; commands/permissions invalidate in-flight and cached results."
+          }
+        }
       }
     },
     "/v2/me/raid-room-filter-context": {
@@ -95693,6 +95728,502 @@
           "actor_cycle_member_state"
         ],
         "title": "BatchState"
+      },
+      "CoordinationProgress": {
+        "oneOf": [
+          {
+            "properties": {
+              "status": {
+                "const": "waiting_members"
+              },
+              "missing_members": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "properties": {
+              "status": {
+                "enum": [
+                  "coordinating",
+                  "not_applicable"
+                ]
+              },
+              "missing_members": {
+                "type": "null"
+              }
+            }
+          }
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "waiting_members",
+              "coordinating",
+              "not_applicable"
+            ],
+            "title": "Status"
+          },
+          "missing_members": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 8.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Missing Members"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "status",
+          "missing_members"
+        ],
+        "title": "CoordinationProgress"
+      },
+      "DiscoveryCard": {
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/Scope1"
+          },
+          "group_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group Id"
+          },
+          "admission_mode": {
+            "$ref": "#/components/schemas/AdmissionMode2"
+          },
+          "experience_level": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ExperienceLevel"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "app_capacity": {
+            "$ref": "#/components/schemas/AppCapacity"
+          },
+          "app_member_count": {
+            "type": "integer",
+            "maximum": 8.0,
+            "minimum": 0.0,
+            "title": "App Member Count",
+            "description": "Distinct target cycle members holding active assignment leases, including review-held slots, not persistent global member count or legacy choices."
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/BCardItem"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "combat_requirement": {
+            "$ref": "#/components/schemas/BCombat"
+          },
+          "continuation_enabled": {
+            "type": "boolean",
+            "title": "Continuation Enabled"
+          },
+          "room_cycle_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Cycle Id"
+          },
+          "target_cycle_key": {
+            "type": "string",
+            "title": "Target Cycle Key"
+          },
+          "target_generation": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "target_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "target_state": {
+            "$ref": "#/components/schemas/TargetState"
+          },
+          "restricted": {
+            "type": "boolean",
+            "title": "Restricted"
+          },
+          "schedule_summary": {
+            "$ref": "#/components/schemas/BAppRaidRoomsSearchRouterSummary"
+          },
+          "leader_display": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Leader Display"
+          },
+          "schedule": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DiscoverySchedule"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "view_detail_permission": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Permission"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "room_id",
+          "revision",
+          "title",
+          "scope",
+          "group_id",
+          "admission_mode",
+          "experience_level",
+          "app_capacity",
+          "app_member_count",
+          "items",
+          "combat_requirement",
+          "continuation_enabled",
+          "room_cycle_id",
+          "target_cycle_key",
+          "target_generation",
+          "target_revision",
+          "target_state",
+          "restricted",
+          "schedule_summary",
+          "leader_display",
+          "schedule",
+          "view_detail_permission"
+        ],
+        "title": "DiscoveryCard"
+      },
+      "DiscoveryData": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/DiscoveryCard"
+            },
+            "type": "array",
+            "maxItems": 50,
+            "title": "Items"
+          },
+          "total_count": {
+            "type": "integer",
+            "maximum": 9007199254740991.0,
+            "minimum": 0.0,
+            "title": "Total Count"
+          },
+          "directory_revision": {
+            "$ref": "#/components/schemas/Version"
+          },
+          "filter_scope_digest": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filter Scope Digest"
+          },
+          "result_revision": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Result Revision"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2048
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Evaluated At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "items",
+          "total_count",
+          "directory_revision",
+          "filter_scope_digest",
+          "result_revision",
+          "next_cursor",
+          "evaluated_at"
+        ],
+        "title": "DiscoveryData"
+      },
+      "DiscoveryGroupPage": {
+        "properties": {
+          "group_policy_version": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "cycle-group-policy-1"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group Policy Version"
+          },
+          "group_policy": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Metadata"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "group_policy_effect": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Effect"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "group_policy_effects": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Effect"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group Policy Effects"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/DiscoveryData"
+          },
+          "group_states": {
+            "items": {
+              "$ref": "#/components/schemas/GroupLinkState"
+            },
+            "type": "array",
+            "title": "Group States"
+          },
+          "cycle_groups": {
+            "items": {
+              "$ref": "#/components/schemas/Metadata"
+            },
+            "type": "array",
+            "title": "Cycle Groups"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data",
+          "group_states",
+          "cycle_groups"
+        ],
+        "title": "DiscoveryGroupPage"
+      },
+      "DiscoveryPage": {
+        "properties": {
+          "group_policy_version": {
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "cycle-group-policy-1"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group Policy Version"
+          },
+          "group_policy": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Metadata"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "group_policy_effect": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Effect"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "group_policy_effects": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Effect"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Group Policy Effects"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/app__raid_rooms__cycle_wire__Scope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/DiscoveryData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "DiscoveryPage"
+      },
+      "DiscoverySchedule": {
+        "properties": {
+          "coordination_state": {
+            "type": "string",
+            "enum": [
+              "base_committed",
+              "coordinating",
+              "early_confirmed",
+              "base_confirmed",
+              "proposal_confirmed",
+              "deadline_pending",
+              "needs_review",
+              "ended"
+            ],
+            "title": "Coordination State"
+          },
+          "effective_starts_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Effective Starts At"
+          },
+          "effective_ends_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Effective Ends At"
+          },
+          "admission_deadline": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Admission Deadline"
+          },
+          "confirmed_starts_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confirmed Starts At"
+          },
+          "confirmed_ends_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confirmed Ends At"
+          },
+          "coordination_progress": {
+            "$ref": "#/components/schemas/CoordinationProgress"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "coordination_state",
+          "effective_starts_at",
+          "effective_ends_at",
+          "admission_deadline",
+          "confirmed_starts_at",
+          "confirmed_ends_at",
+          "coordination_progress"
+        ],
+        "title": "DiscoverySchedule"
       }
     },
     "securitySchemes": {

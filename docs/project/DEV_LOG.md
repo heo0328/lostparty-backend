@@ -4302,3 +4302,54 @@ NEXT_WORK/AI_CONTEXT/추적표를 갱신했으며 기존 로컬 수정은 보존
 - 사용자 “마감 진행합니다” 지시로미게시최종9문서의commit·dev/main통합/push·작업브랜치정리와Issue49종료범위를명시승인받았다. 원격dev/main51ebb74·태그v2.1.1/d16734d불변, 다른worktree사용없음/원격release브랜치없음을확인했다. 기존문서변경을보존하고다른기능/브랜치는건드리지않는다.
 - 완료근거Native34·Backend35/최종원장을대조해Issue49를2026-11-12T08:57:44Z completed종료했다. 문서의미커밋/대기표기를마감상태로정리하고NEXT_WORK는다음업무선택으로전환, 추적표는#49를완료구간으로이동했다.
 - 최종문서는동일목적release/2.1.0에서커밋→dev이력보존통합/main동일화→atomic push/원격일치확인→완료작업브랜치정리절차로마감했다. 최종SHA·게시/정리결과는Issue49마감댓글과Git이력에연결한다. 운영태그·실행소스/image/DB·키/접속정책은변경없음, 문서전용이므로서버/DB·전체회귀재실행없음.
+
+
+### 2026-11-12 — Issue50 모집 탐색 계약 회신 준비
+
+- 사용자 지시로 dev b03595a에서 feat/recruitment-discovery 분기 후 Issue50 본문/댓글0개를 재확인했다. [회신 준비안](../features/recruitment/search/discovery-api-proposal.md)에 소스 경로/비용·추천/대안·DTO·count/페이지·cursor stale·캐시/지연응답 경계·검증 계획을 정리했다.
+- 기존 Backend limit1..50과 Native20개 소비를 구분하고 REPEATABLE READ·페이지전 필터·batch projection/베타 enrich 추가 비용을 확인했다. 성능 개선은 실측 전 단정하지 않는다. 새 탐색 endpoint와 DTO는 제안이며 기존 OpenAPI/업무 코드는 변경하지 않았다.
+- 사용자 요청의 회신 준비 범위에서 댓글은 미게시다. 다음 Backend 초안 검토/회신 후 Native 계약 협의. 기능/서버·DB·운영·기기 시험은 미실행이며 문서는 미커밋·미push다.
+- 검증: `python3 scripts/check_documentation.py` PASS(markdown283·상대링크/앵커3226·동결JSON20 보존), `git diff --check` PASS. 외부 링크 실제 접근/런타임 API·DB 시험은 검사 범위가 아니다.
+
+### 2026-11-12 — Issue50 기존 API 개선안 게시 / Native 검토 대기
+
+- 사용자 승인 계획을 실행해 별도 탐색 endpoint 추천을 철회하고 기존 POST의 response_profile=discovery-1 단계 전환, 기존 응답 보존·count/최소 카드·API별 역할과 소비 종료 후 정리 기준으로 제안서를 수정했다. 앞선 별도 endpoint 초안은 확정 계약/구현이 아니었다.
+- 본문/댓글0개를 다시 확인한 뒤 [전체1번째 Backend/계약 제안](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6819929998)을 게시하고 실제 전체 댓글 목록에서 순번1·본문 일치를 확인했다. 다음 Native는 최소 카드/그룹 표시·응답 전환·stale/캐시와 기존 API 사용 화면/구버전 필요 여부 회신, Backend는 합의 후 구현이다. 게시 완료와 계약 합의/기능 완료는 구분한다.
+- 문서 검사·diff 검사 PASS 후 게시했고 최종 기록 포함 재검사도 PASS(markdown283·상대링크/앵커3226·동결JSON20 보존)다. 업무 코드/OpenAPI·서버/DB/키·배포는 변경없음, 성능 실측·기능/실기기 시험은 미실행이다. 문서는 미커밋·미push이며 Issue 종료/다른 Issue 변경도 없다.
+
+### 2026-11-12 — Issue50 Native 기본 수용 / 카드 계약 보완 회신
+
+- 본문/전체 댓글2개와 실제 Git/코드를 재확인했다. Native 전체2는 동일 POST/profile·count/result_revision·stale/캐시 규칙을 수용하고 그룹/조율 표시·오류와 query 조합 보완을 요청했다. 기존 GET/v1/projection 전체 소비 종료는 확인되지 않았다.
+- 기존 group_list_display/cycle_group_policy 메타데이터를 재사용하고 서버 coordination_progress와 view_detail_permission을 제안했다. 조율 요약은 카드 app_member_count로 기존 표시식을 보존하며 상세용 가용시간/후보 계산 성공을 뜻하지 않는다. candidate token stale409와 cursor 위조400을 구분하고 query 조합/복구 우선순위·동일 result_revision/count 불일치 검증을 명시했다.
+- [전체3번째 Backend/카드 계약 보완](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6820247507) 게시 후 실제 목록에서 순번3·본문 일치를 확인했다. 다음 Native는 추가 DTO/표시·query/오류 소비 충돌 회신, 이후 Backend 고정 계약으로 구현/격리검증이다. 기본 방향 수용만으로 추가 계약을 확정/구현하지 않았다.
+- 문서 검사·diff 검사 PASS 후 게시했다. 업무 코드/공개 DTO/OpenAPI·서버/DB/키 변경, 성능 실측·API/DB/실기기 시험은 없다. 문서는 미커밋·미push이며 반복 기기 요청/다른 Issue 변경/종료/배포도 없다.
+
+### 2026-11-12 — Issue50 고정 계약 구현·선택검증/실제 로컬 지원 및 회신
+
+- Native 전체4의 추가계약 수용을 재확인하고 기존 POST에 response_profile=discovery-1과closed DTO6개를 구현했다. 기존 조건/권한 SQL 재사용·같은RR snapshot count/페이지·minimal batch projection·group metadata batch·공유 일정표시를 구현, 새endpoint0개/기존schema전부보존·기본OpenAPI변경없음이다. [구현 원본](../features/recruitment/search/discovery-implementation.md).
+- 격리 신규12PASS와 추가candidate/context1PASS, 관련4파일52PASS로 최종고유65사례를 확인했다. 관련묶음 초기63PASS/신규준비1FAIL은 그룹생성 시점 수정 후 신규파일재실행으로 해소했다. 최초보조keyword·후보요청생략필드 변형 오류도 수정했으며 업무정책 변경은 없다. 한 번의65개 재실행/전체저장소회귀 PASS로 표시하지 않는다. 두전체계약 격리/실행컨테이너 일치·dependency/docs/diff PASS, 실회원명령·기기인수/운영시험은 미실행이다.
+- 합성102target/베타1·lease1, warmup1+반복10에서 기존20개/신규20개/50개·0개·자리조건의SQL/count/projection/render/bytes와countEXPLAIN을 분리 측정했다. 새50개 p50 53.848ms/p95 177.488ms·50311bytes·31SQL/countSQL p50 3.203ms다. 운영/기기·밀집그룹/50베타·cold/깊은offset은 미측정. [측정 원본](../features/recruitment/search/discovery-performance.json).
+- 꺼진Docker Desktop을기동해기존API/DBhealthy확인, 검증image/source291파일일치후로컬API만교체했다. 첫healthy교체는env배열순서비교로자동복귀·기존image/실환경값동일성확인, 순서정규화재반영후DB컨테이너/118테이블·행/0036·schema·키4개/환경·포트/명령/마운트보존PASS다. 최신직전/직후948행은그시점값이며사용자활동으로변할수있다. migration/DB초기화·키생성·운영변경없음, 기존사본과로컬dump제외방침유지. [로컬/계약·소스식별](../features/recruitment/search/discovery-verification.json).
+- 실제로컬HTTP health200·새/기존검색200/각DTO·미지원profile400/무인증context401·업무API no-store, 두전체계약 PASS. 새업무commitSHA는없고b03595a는기반SHA다. 코드/계약/문서미커밋·미push/dev·main미통합, image87a918db…5c0bd/appmanifest404ccccd…6714로정확한로컬실행을식별한다.
+- [전체5번째 Backend/구현·격리검증/로컬 결과](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6821288801) 게시후실제댓글순번5/본문일치확인·Issue본문현재범위/상태/다음담당갱신. 다음Native합의DTO/캐시/화면연결·같은Issue결과회신, 원격고정계약/코드소비는사용자게시지시후다. 미게시코드를원격소비가능으로인계하지않으며반복기기인수/배포/Issue종료·Git통합요청없음이다.
+
+### 2026-11-12 — Issue50 사용자 commit/push 승인·게시 준비
+
+- Native 전체6의 고정 계약 파일 위치 요청을 확인한 뒤 사용자가 commit/push를 직접 지시했다. 동일 목적 feat/recruitment-discovery에서 관련 코드/계약/시험/문서를 함께 게시한다. 원격에는 동명 브랜치가 없고 dev/main은 기반b03595a다. merge/운영배포·로컬 API 재반영은 실행하지 않는다.
+- 기존 구현/시험 파일hash와 인계 OpenAPI SHA256 3fdc06616d64e19aa7abf35b548cf1156fa7fbee6bcfb02c1dccf4ce9a9d7052 동일성을 재확인했다. 게시 결과와 실제 커밋·Issue 회신 링크는 후행 기록으로 연결한다.
+
+### 2026-11-12 — Issue50 commit/push·고정 계약 원격 인계 완료
+
+- 사용자 지시 범위의18파일을 업무/계약558ee6da4299dea49729ebaca5825ce9a235a42e로커밋·feat/recruitment-discovery push/upstream설정·로컬/원격tip일치확인했다. 원격dev/main은기반b03595a로유지했고merge·배포·브랜치삭제없음이다.
+- 기존검증코드/시험파일hash·OpenAPI SHA2563fdc0661…7052동일·문서검사/diffPASS를확인했다. GitHub고정ref파일blob e25f771885d50105c928059d89c1c06caf238378도로컬과동일, [전체7번째 Backend/고정계약게시](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6821559025)로Native6파일위치요청에원격고정파일/raw링크를회신하고실제순번7을확인했다. Issue본문현재범위/상태/다음담당을게시완료로갱신했다.
+- 다음Native고정hash/DTO대조·소비구현/자동검증·미확인회신. 이번게시로업무/계약bytes·로컬image/DB/키가바뀌지않아로컬재반영/반복시험·기기인수요청없음, 운영/Issue종료·dev/main통합없음이다. 게시결과6문서는같은목적브랜치에후행문서커밋/push로남긴다.
+
+### 2026-11-12 — Issue50 합의 기능 완료·최종 인계 확인 / Native 대기 해소
+
+- 사용자 “작업 완료된거 아닙니까? 미진행작업이 있는지 확인하고 결과 회신” 지시로 Issue본문/전체댓글12개·Git/게시·검증원장을대조했다. Native8원본hash대조·9소비구현·10사용자성공/후속UI·11dev통합·12최종dev83a550204dd442ec2ce54a01c79c2c485106b472 인계로추가계약/구현충돌·Native협업요청이없다. 담당자보고2927PASS/analyze0·사용자필터확인/Penpot02통합을수용, 모든기기/신청/성능의전수인수로확대하지않는다.
+- 현재Backend코드/시험/OpenAPI hash는기존검증/로컬원장과동일하며원격작업tip7a86291·dev/main b03595a를실제조회했다. 미진행기능없음과Backend dev/main미통합을구분한다. 기존미확인전수시험/운영배포·v1/GET/projection소비종료를새완료조건으로추가하지않는다. 변경없는기능/DB/서버시험과재반영은하지않았다.
+- [전체13번째 Backend/최종인계·미진행점검](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826448910)을게시하고실제순번13/본문일치확인·Issue상단상태갱신, NEXT_WORK/AI_CONTEXT/추적표/구현문서의Native대기를해소했다. 합의기능/협업완료이며Git통합/Issue종료등마감은사용자별도지시범위다. 이번점검에서commit/push/merge·배포·자료변경/Issue종료는없고상태문서는미커밋·미push다.
+
+### 2026-11-12 — Issue50 사용자 승인 마감 착수
+
+- 사용자 “커밋하여 데브에 머지 이후 데브를 푸시하고 이슈는 종료” 지시로 최종점검 문서5개 commit·dev이력보존merge/push·Issue50 completed종료를 승인받았다. 원격dev/main은로컬과같은b03595a·작업원격7a86291, 단일worktree/기존변경5문서만확인했다. main동일화·운영배포/로컬재반영은승인범위에추가하지않는다. 실제SHA/종료·브랜치정리결과는후행마감기록으로연결한다.

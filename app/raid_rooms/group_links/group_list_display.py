@@ -28,6 +28,9 @@ def attach(db,result,room_ids,enabled):
         key=result['scope'].get('target_cycle_key') or result['scope'].get('view_cycle_key')
         key=date.fromisoformat(key) if isinstance(key,str) else key
         rows=list(db.scalars(select(RoomCycle).where(RoomCycle.room_id.in_(set(room_ids)),RoomCycle.cycle_key==key)))
+        from app.raid_rooms.models.cycle_group_models import CycleGroupPolicy
+        policies={(v.cycle_id,v.generation):v for v in db.scalars(select(CycleGroupPolicy).where(
+            CycleGroupPolicy.cycle_id.in_([row.id for row in rows])))} if rows else {}
         by_room={row.room_id:row for row in rows}
         locators={}
         for item in result.get('data',{}).get('items',[]):
@@ -37,8 +40,8 @@ def attach(db,result,room_ids,enabled):
             row=by_room.get(UUID(str(rid))) if rid else None
             if row is None:continue
             generation=locator.get('target_generation',row.generation)
-            locators[(row.id,generation)]=policy.metadata(db,row,generation=generation)
-        links=list(locators.values()) if locators else [policy.metadata(db,row) for row in rows]
+            locators[(row.id,generation)]=policy.metadata_value(row,generation,policies.get((row.id,generation)))
+        links=list(locators.values()) if locators else [policy.metadata_value(row,row.generation,policies.get((row.id,row.generation))) for row in rows]
         gids={v['group_id'] for v in links if v['group_id'] is not None}
         groups={g.id:g for g in db.scalars(select(Group).where(Group.id.in_(gids)))} if gids else {}
         labels=[dict(group_id=gid,name=groups[gid].name if gid in groups else None,

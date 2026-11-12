@@ -101,7 +101,9 @@ def get_card(principal,rid,key):
             data=card(db,room,row,uid,stamp)))
 
 
-def search(principal,data,include_group_state=False):
+def search(principal,data,include_group_state=False,response_profile=None):
+    from app.raid_rooms.schemas.discovery import PROFILE
+    if response_profile not in (None,PROFILE):fail('INVALID_REQUEST',400)
     body=data.model_dump(mode='json')
     candidate_token=body.pop('group_character_candidates_token',None)
     if candidate_token is not None:
@@ -189,12 +191,26 @@ def search(principal,data,include_group_state=False):
             binding.append(beta_profile.PROFILE)
             revision=digest([revision,beta_clock])
         binding,revision=group_list_display.bind(db,binding,revision,include_group_state,target.key)
+        total=None
+        if response_profile is not None:
+            if include_group_state and not group_policy.enabled(db):fail('GROUP_FEATURE_NOT_READY',503)
+            # Count the exact filtered set in this request's repeatable-read snapshot.
+            total=db.scalar(select(func.count()).select_from(query.with_only_columns(Room.id).distinct().subquery()))
+            binding=[*binding,PROFILE]
+            revision=digest([revision,binding,total])
         offset=cursor_decode(data.cursor,binding,revision) if data.cursor else 0
         primary=count.asc() if sort['direction']=='ascending' else count.desc()
         rows=list(db.execute(query.order_by(primary,Room.created_at.desc(),Room.id.desc()).offset(offset).limit(data.limit+1)))
         token=cursor_encode(dict(scope=binding,revision=revision,offset=offset+data.limit)) if len(rows)>data.limit else None
         from app.raid_rooms.reads.cycle_card_batch import load
         loaded=load(db,[t for _,t in rows[:data.limit]],uid)
+        if response_profile is not None:
+            from app.raid_rooms.reads import discovery
+            result=dict(scope=scope(stamp,target.key.isoformat()),data=dict(
+                items=discovery.cards(db,rows[:data.limit],uid,stamp,loaded),total_count=total,
+                directory_revision=head,filter_scope_digest=context_digest,result_revision=revision,
+                next_cursor=token,evaluated_at=stamp))
+            return discovery.render(db,result,[r.id for r,_ in rows[:data.limit]],include_group_state)
         result=dict(scope=scope(stamp,target.key.isoformat()),data=dict(items=[card(db,r,t,uid,stamp,loaded[t.id]) for r,t in rows[:data.limit]],
             directory_revision=head,filter_scope_digest=context_digest,next_cursor=token,evaluated_at=stamp))
         result=beta_output.render(db,uid,stamp,wire.OutputContract3PostV2RaidRoomsSearch,result)

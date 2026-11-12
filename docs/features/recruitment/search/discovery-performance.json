@@ -1,0 +1,183 @@
+{
+  "date_kst": "2026-11-12",
+  "kind": "synthetic isolated PostgreSQL/ASGI; not production latency",
+  "measurement": {
+    "fixture": "102 synthetic public targets, 1 beta target/101 minimal legacy graphs, one live assignment lease; ASGI TestClient, no external network",
+    "warmup": 1,
+    "samples": [
+      {
+        "case": "legacy20",
+        "n": 10,
+        "total_ms": {
+          "p50": 70.457,
+          "p95": 221.288
+        },
+        "sql_ms": {
+          "p50": 25.743,
+          "p95": 30.042
+        },
+        "sql_count": {
+          "p50": 89.0,
+          "p95": 89
+        },
+        "count_ms": {
+          "p50": 0.0,
+          "p95": 0
+        },
+        "projection_ms": {
+          "p50": 0.0,
+          "p95": 0
+        },
+        "render_ms": {
+          "p50": 0.0,
+          "p95": 0
+        },
+        "bytes": {
+          "p50": 29154.0,
+          "p95": 29154
+        }
+      },
+      {
+        "case": "discovery20",
+        "n": 10,
+        "total_ms": {
+          "p50": 45.33,
+          "p95": 46.838
+        },
+        "sql_ms": {
+          "p50": 17.07,
+          "p95": 18.134
+        },
+        "sql_count": {
+          "p50": 31.0,
+          "p95": 31
+        },
+        "count_ms": {
+          "p50": 3.164,
+          "p95": 3.27
+        },
+        "projection_ms": {
+          "p50": 1.571,
+          "p95": 1.936
+        },
+        "render_ms": {
+          "p50": 4.133,
+          "p95": 4.461
+        },
+        "bytes": {
+          "p50": 21061.0,
+          "p95": 21061
+        }
+      },
+      {
+        "case": "discovery50",
+        "n": 10,
+        "total_ms": {
+          "p50": 53.848,
+          "p95": 177.488
+        },
+        "sql_ms": {
+          "p50": 19.297,
+          "p95": 20.708
+        },
+        "sql_count": {
+          "p50": 31.0,
+          "p95": 31
+        },
+        "count_ms": {
+          "p50": 3.203,
+          "p95": 3.432
+        },
+        "projection_ms": {
+          "p50": 2.3,
+          "p95": 2.851
+        },
+        "render_ms": {
+          "p50": 8.474,
+          "p95": 15.153
+        },
+        "bytes": {
+          "p50": 50311.0,
+          "p95": 50311
+        }
+      },
+      {
+        "case": "empty50",
+        "n": 10,
+        "total_ms": {
+          "p50": 24.54,
+          "p95": 34.192
+        },
+        "sql_ms": {
+          "p50": 10.73,
+          "p95": 15.54
+        },
+        "sql_count": {
+          "p50": 19.0,
+          "p95": 19
+        },
+        "count_ms": {
+          "p50": 3.151,
+          "p95": 5.94
+        },
+        "projection_ms": {
+          "p50": 0.001,
+          "p95": 0.001
+        },
+        "render_ms": {
+          "p50": 0.664,
+          "p95": 0.874
+        },
+        "bytes": {
+          "p50": 602.0,
+          "p95": 602
+        }
+      },
+      {
+        "case": "slots50",
+        "n": 10,
+        "total_ms": {
+          "p50": 39.146,
+          "p95": 39.953
+        },
+        "sql_ms": {
+          "p50": 15.223,
+          "p95": 15.599
+        },
+        "sql_count": {
+          "p50": 31.0,
+          "p95": 31
+        },
+        "count_ms": {
+          "p50": 2.865,
+          "p95": 2.989
+        },
+        "projection_ms": {
+          "p50": 1.185,
+          "p95": 1.499
+        },
+        "render_ms": {
+          "p50": 1.323,
+          "p95": 1.568
+        },
+        "bytes": {
+          "p50": 2130.0,
+          "p95": 2130
+        }
+      }
+    ],
+    "last_count_explain": {
+      "planning_ms": 1.803,
+      "execution_ms": 0.533,
+      "shared_hit_blocks": 1023,
+      "shared_read_blocks": 0
+    }
+  },
+  "not_measured": [
+    "production traffic",
+    "cold disk cache",
+    "50 beta/group linked rooms with dense multi-character graphs",
+    "deep production-sized offsets",
+    "Native device latency"
+  ]
+}
