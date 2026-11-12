@@ -110,6 +110,29 @@ class WebTests(unittest.TestCase):
                 web.receive(self.receipt,self.root/'wrong')
         self.assertFalse((self.root/'wrong').exists())
 
+    def test_new_version_preserves_original_names_and_rolls_back_to_old(self):
+        web.stage(self.input,self.receipt,self.output)
+        web.switch(self.output,self.receipt,compatible=True)
+        old_pointer=web.pointer(self.output,'current')
+        other=self.root/'v220'
+        receipt=bundle(other,b'new version',manifest_changes={'version':'2.2.0+7'})
+        receipt['web']['version']='2.2.0+7'
+        new_name=web.bundle_name(receipt)
+        (other/web.BUNDLE).rename(other/new_name)
+        (other/(web.BUNDLE+'.sha256')).unlink()
+        (other/(new_name+'.sha256')).write_text(receipt['web']['bundle_sha256']+'  '+new_name+'\n')
+        original=(other/new_name).read_bytes()
+        web.stage(other,receipt,self.output)
+        web.switch(self.output,receipt,compatible=True)
+        self.assertEqual((self.output/'current/index.html').read_bytes(),b'new version')
+        self.assertEqual((self.output/'releases'/receipt['web']['bundle_sha256']/new_name).read_bytes(),original)
+        web.validate_active(self.output,receipt)
+        web.switch(self.output,rollback=True)
+        self.assertEqual(web.pointer(self.output,'current'),old_pointer)
+        for bad in ('../2.2.0+7','2.2.0','02.2.0+7','2.2.0+0'):
+            with self.subTest(version=bad),self.assertRaises(ValueError):
+                web.bundle_name({'web':{'version':bad}})
+
     def test_existing_input_not_overwritten_and_manifest_stays_private(self):
         name=web.stage(self.input,self.receipt,self.output)
         self.assertEqual(web.stage(self.input,self.receipt,self.output),name)
@@ -131,6 +154,6 @@ class ConfigTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory);self.assertEqual(load(root)['mode'],'standard')
             (root/'VERSION').write_text('999.0.0')
-            record=json.loads((Path(__file__).resolve().parents[2]/'release-deployment.json').read_text())
+            record=dict(schema=1,version='2.1.1',mode='maintenance',from_db_revision='0035_cycle_group_policy',to_db_revision='0036_roster_presence',configuration_revision='lightsail-web-2.1.0',web_receipt='docs/engineering/operations/records/web-handoff-2.1.0.json')
             (root/'release-deployment.json').write_text(json.dumps(record))
             with self.assertRaises(ValueError):load(root)

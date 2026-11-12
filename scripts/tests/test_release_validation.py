@@ -320,6 +320,26 @@ class LocalReuseTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 validation.load_plan(root)
 
+    def test_release220_local_proof_and_only_reviewed_tools_are_allowed(self):
+        rule=validation.LOCAL_REUSE_220
+        raw={name:(validation.ROOT/name).read_text() for name in rule['records']}
+        proof={k:v for k,v in rule.items() if k!='version'} | {'record_json':raw}
+        self.assertEqual(validation.verify_reuse_proof(proof,'2.2.0'),proof)
+        bad=copy.deepcopy(proof)
+        name=next(iter(raw));bad['record_json'][name]+=' '
+        with self.assertRaises(ValueError):validation.verify_reuse_proof(bad,'2.2.0')
+        with self.assertRaises(ValueError):validation.verify_reuse_proof(proof,'2.2.1')
+        validation.check_reuse_changes([],list(validation.RELEASE_220_TOOLS),extra_preparation=validation.RELEASE_220_TOOLS)
+        for path in ('app/main.py','alembic/new.py','scripts/deployment/server.py','compose.lightsail.yaml','tests/conftest.py'):
+            with self.subTest(path=path),self.assertRaises(ValueError):
+                validation.check_reuse_changes([],[path],extra_preparation=validation.RELEASE_220_TOOLS)
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);(root/'VERSION').write_text('2.2.0\n')
+            (root/validation.PLAN).write_text(json.dumps(dict(version='2.2.0',mode='reuse',tests=[],baseline_tag='v2.1.1',change='verified app',impact='release tools',reason='explicit Issue51 approval')))
+            plan=validation.load_plan(root)
+        self.assertEqual(validation.check_results(plan)['regression'],'reused')
+        self.assertEqual(validation.selected_tests(plan),[])
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -6,6 +6,10 @@
 
 **개발·검증은 로컬 dev가 기본이며 운영 반영 여부·시점은 개발자가 지시한다.** 아래 절차는 운영 반영을 준비하거나 승인된 배포를 수행할 때 적용하며, 기능 수정 요청마다 실행하지 않는다. 로컬 실행 중단을 이유로 수동 배포 워크플로의 검증 경로로 임의 대체하지 않는다. Backend의 반영 시점 제안·대안 판단은 [로컬 개발과 운영 반영](../development/workflow.md#local-dev-and-production)을 따른다. 네이티브 debug는 로컬, release는 AWS를 대상으로 하며 앱 연결과 서버 반영 완료를 구분한다.
 
+## 이번2.2.0 한정 검증 재사용
+
+사용자 확정은 [Issue51 전체1 Native](https://github.com/heo0328/lostparty-backend/issues/51#issuecomment-6829149247)다. dev 기능 시험을 반복하지 않으며 검증8a54c485·승인9775c1e·고정 로컬 원장 원문 hash를 강제한다. 앱/DB/의존성/Compose/기능 시험 변경은 재사용을 거절하고, 이번 버전별 웹/백업 파일명과 증거 제어만 새 도구 시험을 수행한다. 신규 executed_tests=[]와 reused 출처를 보존하며 이미지/서버/산출물 검증·배포 보호는 유지한다. [범위·실행/복귀](release-2.2.0.md). 다음 버전은 별도 승인 없으면 selected/full이다.
+
 ## 현재 적용 상태와 변경 이력
 
 - **운영 최신 v2.0.0**: 사용자 승인 PR45·source51b1cb3·imagef33f4c6c·DB0035, Actions41674801953/production Deployment7524537038 success로 한국2026-11-04 01:31:59 반영 완료. 이슈41 일괄 API·이슈42 참가 유지 예방 수정을 지원한다. [최신 배포 집계](records/backend-v2.0.0-deployment.json)·[Issue34 전체13번째 Backend 운영 결과](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6609667274)를 따른다. 아래 v0.1.x는 과거 기록이다.

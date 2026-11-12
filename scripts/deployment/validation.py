@@ -37,6 +37,23 @@ LOCAL_REUSE = {
             'e455b708c924f72f1acc6c6f5044325491f7cd60c39d0479c4cdcd96cfca000f',
     },
 }
+# Issue51, Native comment1: explicit user instruction to reuse verified dev
+# behavior for this release. Deployment/tool changes still receive fresh checks.
+LOCAL_REUSE_220 = {
+    'version': '2.2.0',
+    'approved_source': '9775c1e555b767b71610b5dad35ef84b272f2a32',
+    'source': '8a54c4858a593a1ab945d7a6900094bfbf2392f5',
+    'records': {
+        'docs/engineering/operations/records/runtime-consolidation-local-rollout.json':
+            'e8bdc76464a0ce2afc427121fd85faab12bc6b4273564b396bef14a90047e2a1',
+    },
+}
+RELEASE_220_TOOLS = {
+    'release-deployment.json', 'scripts/deployment/web_release.py',
+    'scripts/deployment/backup.py', 'scripts/tests/test_web_release.py',
+}
+
+
 RELEASE_PREPARATION = {
     'VERSION', PLAN, '.github/workflows/backend-release.yml',
     'scripts/deployment/validation.py', 'scripts/tests/test_release_validation.py',
@@ -47,42 +64,47 @@ def documentation(path):
     return path == 'AGENTS.md' or (path.startswith('docs/') and Path(path).suffix in ('.md', '.json'))
 
 
-def check_reuse_changes(validated_changes, preparation_changes):
+def check_reuse_changes(validated_changes, preparation_changes, *, extra_preparation=()):
     if any(not documentation(p) for p in validated_changes):
         raise ValueError('approved source differs from tested executable source')
-    if any(not documentation(p) and p not in RELEASE_PREPARATION for p in preparation_changes):
+    if any(not documentation(p) and p not in RELEASE_PREPARATION | set(extra_preparation) for p in preparation_changes):
         raise ValueError('release preparation changes executable source')
 
 
-def verify_local_proof(proof):
-    expected = {k: v for k, v in LOCAL_REUSE.items() if k != 'version'}
+def verify_local_proof(proof, rule=None):
+    rule = LOCAL_REUSE if rule is None else rule
+    expected = {k: v for k, v in rule.items() if k != 'version'}
     if not isinstance(proof, dict) or set(proof) != set(expected) | {'record_json'}:
         raise ValueError('invalid local provenance')
     if any(proof[k] != v for k, v in expected.items()):
         raise ValueError('local provenance differs from approved release')
     raw = proof['record_json']
-    if not isinstance(raw, dict) or set(raw) != set(LOCAL_REUSE['records']):
+    if not isinstance(raw, dict) or set(raw) != set(rule['records']):
         raise ValueError('local evidence missing')
-    for path, digest in LOCAL_REUSE['records'].items():
+    for path, digest in rule['records'].items():
         if not isinstance(raw[path], str) or checksum(raw[path].encode()) != digest:
             raise ValueError('local evidence bytes changed')
         json.loads(raw[path])
     return proof
 
 
-def local_reuse_evidence():
-    for base, head in ((LOCAL_REUSE['source'], LOCAL_REUSE['approved_source']),
-                       (LOCAL_REUSE['approved_source'], 'HEAD')):
+def local_reuse_evidence(rule=None):
+    rule = LOCAL_REUSE if rule is None else rule
+    for base, head in ((rule['source'], rule['approved_source']),
+                       (rule['approved_source'], 'HEAD')):
         if subprocess.call(['git', 'merge-base', '--is-ancestor', base, head]):
             raise ValueError('local validation ancestry changed')
     check_reuse_changes(
-        git('diff', '--name-only', '--no-renames', LOCAL_REUSE['source'], LOCAL_REUSE['approved_source']).splitlines(),
-        git('diff', '--name-only', '--no-renames', LOCAL_REUSE['approved_source'], 'HEAD').splitlines())
-    return verify_local_proof({k: v for k, v in LOCAL_REUSE.items() if k != 'version'} |
-                              {'record_json': {p: (ROOT / p).read_text() for p in LOCAL_REUSE['records']}})
+        git('diff', '--name-only', '--no-renames', rule['source'], rule['approved_source']).splitlines(),
+        git('diff', '--name-only', '--no-renames', rule['approved_source'], 'HEAD').splitlines(),
+        extra_preparation=RELEASE_220_TOOLS if rule['version']=='2.2.0' else ())
+    return verify_local_proof({k: v for k, v in rule.items() if k != 'version'} |
+                              {'record_json': {p: (ROOT / p).read_text() for p in rule['records']}}, rule)
 
 
 def verify_reuse_proof(proof, version=None):
+    if version == LOCAL_REUSE_220['version']:
+        return verify_local_proof(proof, LOCAL_REUSE_220)
     if version == LOCAL_REUSE['version']:
         return verify_local_proof(proof)
     expected = {k: v for k, v in REUSE.items() if k != 'version'}
@@ -105,6 +127,8 @@ def verify_reuse_proof(proof, version=None):
 
 
 def reuse_evidence(plan):
+    if plan['mode'] == 'reuse' and plan['version'] == LOCAL_REUSE_220['version']:
+        return local_reuse_evidence(LOCAL_REUSE_220)
     if plan['mode'] == 'reuse' and plan['version'] == LOCAL_REUSE['version']:
         return local_reuse_evidence()
     if plan['mode'] != 'reuse' or plan['version'] != REUSE['version']:
@@ -170,7 +194,7 @@ def load_plan(root=ROOT):
         raise ValueError('invalid validation plan fields')
     if plan['version'] != version or plan['mode'] not in ('selected', 'full', 'reuse'):
         raise ValueError('validation plan version or mode mismatch')
-    if plan['mode'] == 'reuse' and version not in (REUSE['version'], LOCAL_REUSE['version']):
+    if plan['mode'] == 'reuse' and version not in (REUSE['version'], LOCAL_REUSE['version'], LOCAL_REUSE_220['version']):
         raise ValueError('reuse is not enabled for this version')
     require(plan['baseline_tag'], TAG)
     for key in ('change', 'impact', 'reason'):
@@ -248,7 +272,7 @@ def verify_record(data, plan, source):
     reuse = plan['mode'] == 'reuse'
     if reuse:
         expected.add('reused_validation')
-        if plan['version'] not in (REUSE['version'], LOCAL_REUSE['version']):
+        if plan['version'] not in (REUSE['version'], LOCAL_REUSE['version'], LOCAL_REUSE_220['version']):
             raise ValueError('reuse is not enabled for this version')
     if not isinstance(data, dict) or set(data) != expected or data['schema'] != (2 if reuse else 1):
         raise ValueError('invalid validation record')
