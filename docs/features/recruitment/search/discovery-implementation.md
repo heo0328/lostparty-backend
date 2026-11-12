@@ -36,4 +36,8 @@ scope는 유지하고 data에 items/total_count/directory_revision/filter_scope_
 
 [전체13 Backend 최종점검](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826448910)으로 합의 기능 구현·Native 적용/보고된 사용자 확인 완료와 추가 협업 요청 없음을 회신했다. 미진행 기능이나 Native 대기는 없다. Native검증/사용자보고를Backend대리시험/전수기기·신청·성능인수로확대하지않는다. 현재 코드/시험/계약hash가기존검증기준과같아재검증·재반영을반복하지않았다.
 
-Backend dev/main은기반b03595a로업무커밋미포함, 작업브랜치는원격7a86291이다. Git통합/Issue종료 등마감과운영배포는사용자별도지시범위이며이번점검에서실행하지않았다. 이는미구현기능이나계약확인대기가아니다. 최종상태문서만미커밋·미push다.
+## 사용자 승인 Git 통합·마감
+
+사용자명시지시로최종확인문서011375bf를커밋하고업무558ee6da와함께dev `0dc381ae646fba062f008d26c58b20e653a6de67`에이력보존병합·push/원격일치·작업tip포함/동일tree를확인했다. Issue50은2026-11-12T14:52:57Z(KST23:52:57) completed종료. [전체14 Backend 마감](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826988036) 게시·실제순번확인, 현재checkout은dev이며feat/recruitment-discovery를로컬/원격에서정리했다. 다른작업브랜치는보존한다.
+
+마감결과기록은dev의후행문서커밋으로보존한다. 업무/계약·로컬실행은기존검증기준과같으며이번마감으로main/운영·DB/키·기기인수를변경하지않았다. 추가협업대기는없다.

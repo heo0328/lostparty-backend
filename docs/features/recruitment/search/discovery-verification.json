@@ -29,7 +29,7 @@
     "new_commit_sha": "558ee6da4299dea49729ebaca5825ce9a235a42e",
     "committed": true,
     "pushed": true,
-    "note": "User explicitly authorized commit/push. Implementation SHA fixed; later publication-record commit contains no business/contract changes. dev/main not merged.",
+    "note": "Implementation SHA fixed; dev integration and issue completion authorized separately and recorded in closeout. main/production unchanged.",
     "remote_tip_verified": true,
     "comment": {
       "url": "https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6821559025",
@@ -144,5 +144,29 @@
     "stage": "implementation/isolated verification and local dev support",
     "refetched_body_matches": true
   },
-  "source_manifest_format": "SHA256(json.dumps({relative app path: SHA256(file bytes)}, sort_keys=True).encode()); excludes __pycache__"
+  "source_manifest_format": "SHA256(json.dumps({relative app path: SHA256(file bytes)}, sort_keys=True).encode()); excludes __pycache__",
+  "closeout": {
+    "date_kst": "2026-11-12",
+    "authorized_by_user": true,
+    "final_work_commit": "011375bf3bd3be4f9a4457c0ad12247125357337",
+    "dev_merge_commit": "0dc381ae646fba062f008d26c58b20e653a6de67",
+    "remote_dev_verified": true,
+    "feature_tip_in_dev": true,
+    "merge_tree_matches_feature": true,
+    "current_checkout": "dev",
+    "work_branch_local_deleted": true,
+    "work_branch_remote_deleted": true,
+    "issue_state": "closed",
+    "state_reason": "completed",
+    "closed_at_utc": "2026-11-12T14:52:57Z",
+    "comment": {
+      "url": "https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826988036",
+      "order": 14,
+      "side": "Backend",
+      "stage": "dev integration and completed closeout"
+    },
+    "main_changed": false,
+    "production_deployed": false,
+    "source_api_contract_changed_by_closeout": false
+  }
 }
