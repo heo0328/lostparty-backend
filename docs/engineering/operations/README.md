@@ -1,5 +1,9 @@
 # 개발 서버 전환·백업·복구 기록
 
+## 현재 운영 — 2026-11-12 공동 릴리즈 최종 공개 확인
+
+Backend2.1.1/source d16734d/image7aa19edf…c061d·DB0036과고정Native웹을적용하고Backend검사를완료했다. 최신사용자지시로임시IP제한을해제해일반접속가능/public_open=true다. 웹과새APK Google로그인/기존회원자료는사용자완료보고로인수통과, Native최종v2.1.0 Release공개·Backend공개파일동일성확인도완료다. 사용자마감지시로최종문서Git통합·게시/브랜치정리와Issue49 completed종료까지마감했다. [실행설계](release-2.1.0.md)·[실제적용/보존·직전/반영후PC백업집계](records/release-2.1.0-deployment.json)·[다음실행](../../project/NEXT_WORK.md). 아래개발실행/운영경계의과거source·DB·수치는각당시기록이다.
+
 ## 현재 개발 실행 — 2026-11-10
 
 [묶음 선택 완료 반영 기록](records/batch-completion-local-rollout.json): 업무44eb4ba/게시624ef00, runtime ae6b3e0a·DB0036_roster_presence, 앱288파일·기본125/142/two-cycle192/213 전체 계약 일치·healthy를 확인했다. 현재 코드/실행 소스 동일성도 #47 정리에서 확인했다. #47/#48은 사용자 지시로 completed 종료됐고 운영은 이번 로컬 반영과 별개다.

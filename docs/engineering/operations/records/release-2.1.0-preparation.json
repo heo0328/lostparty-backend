@@ -14,8 +14,8 @@
     "2": "complete",
     "3": "complete: local checks passed; real production/browser/device acceptance pending",
     "4": "complete: exact-source full CI1968/publication/metadata verification and operating preflight PASS",
-    "5": "not_started: coordinate human testing and Native final publication availability before fresh backup/maintenance",
-    "6": "not_started"
+    "5": "complete; see release-2.1.0-deployment.json",
+    "6": "complete; Native final Release independently verified2026-11-12; see release-2.1.0-deployment.json"
   },
   "local_checks": {
     "script_unit_tests": 80,
@@ -150,10 +150,10 @@
   },
   "native_handoff_record": "web-handoff-2.1.0.json",
   "private_backup_destination_received": true,
-  "real_backup_created": false,
-  "production_changed": false,
+  "real_backup_created": true,
+  "production_changed": true,
   "tag_pushed": true,
-  "public_open": false,
+  "public_open": true,
   "rejected_candidates": [
     {
       "implementation": "d51065d",
@@ -261,6 +261,8 @@
   "production_preparation_files_staged": true,
   "handoff_comment": "https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6796938066",
   "handoff_comment_order": 25,
-  "human_test_readiness": "awaiting user response; no maintenance until actual tests can follow promptly",
-  "native_final_publication_availability": "coordination requested in comment25; no new artifact requested"
+  "human_test_readiness": "resolved by Native overall26 user report",
+  "native_final_publication_availability": "resolved: Native overall34 final public Release",
+  "deployment_record": "release-2.1.0-deployment.json",
+  "closeout_publication": "approved final document commit/dev-main integration/publication and release branch cleanup; Issue49 closed/completed"
 }
