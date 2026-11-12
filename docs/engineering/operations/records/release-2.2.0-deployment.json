@@ -1,0 +1,132 @@
+{
+  "schema": 1,
+  "issue": 51,
+  "recorded_at_utc": "2026-11-12T18:03:28.684604Z",
+  "status": "backend_and_web_public_native_android_pending",
+  "backend": {
+    "version": "2.2.0",
+    "tag": "v2.2.0",
+    "source": "c31d90da4fb5c1eaa9d731623f5648cedc8c00d2",
+    "image": "ghcr.io/heo0328/lostparty-backend@sha256:cc753718414bedc03df5a2d2c3532b5454c44382c7ba1cca306bd2eead406dae",
+    "metadata_schema": 2,
+    "db_revision": "0036_roster_presence",
+    "workflow_run": 43274053529,
+    "workflow_url": "https://github.com/heo0328/lostparty-backend/actions/runs/43274053529",
+    "workflow_result": "success",
+    "api_started_at_utc": "2026-11-12T17:54:36.267954392Z"
+  },
+  "web": {
+    "version": "2.2.0+7",
+    "source": "994db44acdc094b96b887f01a42b22caa9b28eff",
+    "bundle_sha256": "517166ca875d101a724623979e42fecd3c6ce019db02cb0f16089d35e0039ec6",
+    "artifact_id": 13963805044,
+    "run_id": 43257168045,
+    "https_assets_verified": 34,
+    "original_three_files_unchanged": true,
+    "public_open": true,
+    "previous_web_retained": true
+  },
+  "preservation": {
+    "db_caddy_container_identity": true,
+    "keys_environment_mounts": true,
+    "db_copy_tables_compared": 118,
+    "all_table_copy_rows_equal": true,
+    "changed_tables": [],
+    "db_migration": false,
+    "data_initialization_or_deletion": false,
+    "key_oauth_rotation": false
+  },
+  "controller": {
+    "updated": {
+      "common.py": "d7b37c753378cf977fb2a07a7567ee35ab75907255841bf5ef487028cd7616e9",
+      "server.py": "d1e360061fe28b34a611aa348e4060a953fc03a22730465db874c7fbe15f88d7"
+    },
+    "preflights": [
+      {
+        "schema": 1,
+        "status": "success",
+        "mode": "preflight_only"
+      },
+      {
+        "schema": 2,
+        "status": "success",
+        "mode": "preflight_only"
+      }
+    ],
+    "services_and_data_configuration_preserved": true,
+    "actual_new_image_not_yet_checked": true
+  },
+  "backup": {
+    "before": {
+      "archive_sha256": "40066825b047d8462c83d0ad586b5d6bb996ed2ffe2bbf8c1a3ce6c082d659b4",
+      "archive_bytes": 15073280,
+      "archive_members": 70,
+      "pc_copy_verified": true
+    },
+    "after": {
+      "archive_sha256": "bf7e7a9608b72d6b1dc17a19b99582a79baa7a88d1c28ceafe02bebf44b768c2",
+      "archive_bytes": 15114240,
+      "archive_members": 79,
+      "pc_copy_verified": true,
+      "db_revision": "0036_roster_presence",
+      "active_web_original_included": true,
+      "restore_tested": false
+    },
+    "pc_destination": "existing private user backup directory; path not published",
+    "database_restore_executed": false
+  },
+  "http": {
+    "http": [
+      {
+        "path": "/health",
+        "status": 200
+      },
+      {
+        "path": "/v1/raid-cycle",
+        "status": 200
+      },
+      {
+        "path": "/v1/me",
+        "status": 401
+      },
+      {
+        "path": "/v2/raid-rooms/search?contract_profile=beta-recruitment-1&group_policy_version=cycle-group-policy-1&include_group_state=true&response_profile=discovery-1",
+        "status": 200
+      },
+      {
+        "path": "/v2/raid-rooms/search?contract_profile=beta-recruitment-1&group_policy_version=cycle-group-policy-1&include_group_state=true",
+        "status": 200
+      },
+      {
+        "path": "/v2/raid-rooms/search?contract_profile=beta-recruitment-1&group_policy_version=cycle-group-policy-1&include_group_state=true&response_profile=invalid",
+        "status": 400
+      },
+      {
+        "path": "/missing-release51-file.js",
+        "status": 404
+      }
+    ],
+    "old_response_preserved": true,
+    "discovery_supported": true,
+    "writes_performed": false
+  },
+  "validation": {
+    "mode": "reuse",
+    "app_tests_newly_executed": [],
+    "local_evidence": "runtime-consolidation-local-rollout.json",
+    "prior_unique_regression_passed": 2001,
+    "after_cache_fix_prior_selected_passed": 58,
+    "fresh_script_tests_passed": 86,
+    "new_ci_full_regression": false,
+    "actual_generated_current_legacy_contracts_match": true
+  },
+  "handoff": {
+    "comment_order": 5,
+    "side": "Backend",
+    "stage": "API and web production publication complete",
+    "url": "https://github.com/heo0328/lostparty-backend/issues/51#issuecomment-6831720284",
+    "next": "Native Android2.2.0 Release publication and posted artifact verification",
+    "user_retest": "explicitly omitted by user",
+    "issue_closed": false
+  }
+}

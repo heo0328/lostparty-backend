@@ -1,5 +1,7 @@
 # 개발 서버 전환·백업·복구 기록
 
+현재 운영은 **Backend2.2.0/DB0036·웹2.2.0+7 일반공개**다. [실행/백업/보존/HTTPS집계](records/release-2.2.0-deployment.json)·[Issue51 전체5 Backend](https://github.com/heo0328/lostparty-backend/issues/51#issuecomment-6831720284). 다음Native Android공개와기록확인이남아있다. 아래날짜별운영은당시기록이다.
+
 현재 실행 이름·로컬 교체 결과는 [실행 설정 정리](../development/runtime-configuration.md), 향후 운영 도구 갱신·누적 기능은 [운영 전환 안내](runtime-release-transition.md)를 따른다. 아래 날짜별 배포/반영은 당시 기록이며 소급 변경하지 않는다.
 
 ## 현재 운영 — 2026-11-12 공동 릴리즈 최종 공개 확인
