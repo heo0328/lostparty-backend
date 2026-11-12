@@ -140,7 +140,7 @@ F3 설계(2026-10-19): [활성화 설계](../work-records/features/recruitment/p
 
 | 영역 | 현재 상태·기준 |
 |---|---|
-| 협업/API | [AGENTS](../../../AGENTS.md), [API협업](../../engineering/collaboration/api-collaboration.md). 공식채널heo0328/lostparty-backend Issues·한이슈한주제/[현재추적표](../../project/ISSUE_TRACKER.md),Flutter로컬소스접근/수정없음. [OpenAPI](../../../openapi/openapi.yaml)가REST원본이며실행객체전체비교 |
+| 협업/API | [AGENTS](../../../AGENTS.md), [API협업](../../engineering/collaboration/api-collaboration.md). 공식채널heo0328/lostparty-backend Issues·한이슈한주제/[현재추적표](../../project/ISSUE_TRACKER.md),Flutter로컬소스접근/수정없음. [OpenAPI](../../../openapi/legacy.openapi.yaml)가REST원본이며실행객체전체비교 |
 | 인증 #2 | Google로그인/세션/복구6 API·초기완료. [인증안내](../work-records/features/authentication/AUTH_DEVELOPMENT.md), [운영후속](../work-records/features/authentication/ISSUE_2_FOLLOWUP.md). Apple/Discord/탈퇴·운영인수별도 |
 | 원정대/회원 #3~#7 | 현재회원등록/복원·목록·전투력/회원설정/암호화개인키/본인키복원구현. [계정](../work-records/features/account/ISSUE_3_DEVELOPMENT.md), [전투력](../work-records/features/account/ISSUE_5_DEVELOPMENT.md), [회원설정](../work-records/features/account/ISSUE_6_MEMBER_SETTINGS.md), [키](../work-records/features/account/ISSUE_7_DEVELOPMENT.md) |
 | #8 대표/활동·표시 | 현재대표/활동선택·개인역할요약/표시서버저장구현. 수동레벨하한없음/초기기본선택1700. [대표계약](../work-records/features/account/ISSUE_8_REPRESENTATIVE_CONTRACT_DRAFT.md), [수동정책](../work-records/features/account/ISSUE_8_MANUAL_ACTIVITY_POLICY_PLAN.md), [개인표시](../work-records/features/account/ISSUE_8_PERSONAL_PRESENTATION_DEVELOPMENT.md). 신규/첫1700자동추가·수동제외영속정책은#18(122번째출처)후속/미구현 |

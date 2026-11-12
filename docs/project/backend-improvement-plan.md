@@ -12,11 +12,10 @@ F03의 안전 JSON 관측·요청/DB/worker 이벤트와 비노출 로그는 현
 
 ## 독립 후속 — Backend 실행 구성 단일화
 
-- **상태:** 2026-11-06 조사 완료 / 단일화 구현 미착수. 기존 F01~F10 번호·완료 판단은 변경하지 않는다.
-- **담당:** Backend. 다음은 개발자가 이 구간을 선택할 때 [조사 보고서](../engineering/development/runtime-consolidation-review.md)의 선행 확인과 A 수정안에 따라 구현 범위·검증을 확정한다. 즉시 착수·운영 반영 지시가 아니다.
-- **필요성·방향:** 최신 two-cycle은 개발·운영 기준이나 기본 Docker 실행은0023 앱이다. 새 로컬DB 준비 누락과 기본 실행의 혼동을 줄이기 위해 최신 실행을 기본으로 통일하고 기존 실행은 우선 명시적인 회귀 시험용으로 분리하는 안을 검토한다. 기존 fixture/계약/복원 도구 의존 때문에 과거 코드 전체 삭제는 확정하지 않는다.
-- **완료 조건:** 기본 실행·검증·안내가 최신 기준으로 일치하고 필요한 API/원 ACK·이력/DB 호환성 및 worker 분리를 보존한다. 과거 실행의 잔여 사용처·유지 이유·제거 조건을 명시한다. 조사 완료와 구현·로컬 실행·운영 반영은 구분한다.
-- **근거:** [상세 조사·비교·수정 순서·검증 시나리오](../engineering/development/runtime-consolidation-review.md), [수행 이력](DEV_LOG.md#runtime-consolidation-review). F03 로그 보완·F10 환경 안내와 겹치는 범위만 조정하며 기존 개선을 일괄 착수하지 않는다.
+- **상태:** 2026-11-13 사용자 승인으로 `refactor/backend-runtime`에서 구현·검증·로컬 API 반영 완료(미커밋·미push). 기존 F01~F10 번호·완료 판단은 변경하지 않는다.
+- **담당:** Backend. 기본 현재 앱/명시 legacy 앱·명세 재배치·배포 형식2/형식1 호환·개발/운영 안내를 정리하고 격리 검증 후 로컬 API만 교체했다.
+- **완료 조건:** 기본 실행·검증·안내가 현재 기준으로 일치하고 필요한 API/원 ACK·이력/DB 호환성과 worker 분리를 보존한다. 과거 실행의 잔여 사용처·유지 이유·제거 조건을 명시한다.
+- **근거:** [구현·검증/실행 이름](../engineering/development/runtime-configuration.md)·[운영 도구 갱신/복귀 준비](../engineering/operations/runtime-release-transition.md)·[당시 조사](../engineering/development/runtime-consolidation-review.md). 운영 배포·DB 변경·commit/push/merge는 이번 구간의 자동 후속이 아니다.
 
 ## 현재 완료와 승인 경계
 

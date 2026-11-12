@@ -36,7 +36,7 @@
 - 기존 membership·신청·배정·일정·예약·완료기록을 재생성/취소/추방하지 않는다. pending은 보존하고 이후 신규참가/승인에는 현재자격을 적용한다.
 - 원ACK 재조회는 과거성공 응답만 복구한다. 현재권한·재가입 관계에 과거명령을 재실행하지 않는다.
 
-대표 오류는 기존 TARGET_SCOPE_MISMATCH400·TARGET_CONTEXT_STALE409·REVISION_CONFLICT409·COMMAND_CONTEXT_EXPIRED409·COMMON_LEADER_REQUIRED403·GROUP_MEMBERSHIP_REQUIRED403·GROUP_NOT_ACTIVE409·GROUP_CAPACITY_EXCEEDED409·MEMBER_GROUP_LIMIT_EXCEEDED409다. 대상 query를 다른 command에 쓰면 INVALID_REQUEST400이다. 기본/최초연결의 자세한 형태는 고정 [two-cycle OpenAPI](../../../openapi/two-cycle.openapi.yaml)를 따른다.
+대표 오류는 기존 TARGET_SCOPE_MISMATCH400·TARGET_CONTEXT_STALE409·REVISION_CONFLICT409·COMMAND_CONTEXT_EXPIRED409·COMMON_LEADER_REQUIRED403·GROUP_MEMBERSHIP_REQUIRED403·GROUP_NOT_ACTIVE409·GROUP_CAPACITY_EXCEEDED409·MEMBER_GROUP_LIMIT_EXCEEDED409다. 대상 query를 다른 command에 쓰면 INVALID_REQUEST400이다. 기본/최초연결의 자세한 형태는 고정 [two-cycle OpenAPI](../../../openapi/openapi.yaml)를 따른다.
 
 ## 목록의 그룹명·현재 연결
 

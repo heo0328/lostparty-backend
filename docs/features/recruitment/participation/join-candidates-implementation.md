@@ -8,7 +8,7 @@
 
 공통 evaluator의소유/레벨/역할전투력·완료/점유·정원/파티구성을재사용한다. 후보는권한토큰이아니며선택뒤기존join context/POST로한도/일정/최신자격을확정한다. 일반characters fallback·apply위장·캐릭터별context반복·앱계산우회는없다.
 
-[실행 OpenAPI](../../../../openapi/two-cycle.openapi.yaml)는178경로/199operation이다. 기본앱116/133전체는불변. 이전611개 schema는그대로이며AdmissionCandidateData의intent enum만합의대로확장했다. [closed schema](examples/candidate-contract-v2.schema.json)·[대표예시23개](examples/candidate-contract-v2.examples.json)의join actor=null조건도동기화했다. 동결beta base-openapi.gz는보존하고wire생성/검증은합의된단일enum변경만명시적으로허용한다. 원ACK는변경하지않는다.
+[실행 OpenAPI](../../../../openapi/openapi.yaml)는178경로/199operation이다. 기본앱116/133전체는불변. 이전611개 schema는그대로이며AdmissionCandidateData의intent enum만합의대로확장했다. [closed schema](examples/candidate-contract-v2.schema.json)·[대표예시23개](examples/candidate-contract-v2.examples.json)의join actor=null조건도동기화했다. 동결beta base-openapi.gz는보존하고wire생성/검증은합의된단일enum변경만명시적으로허용한다. 원ACK는변경하지않는다.
 
 ## 직접검증
 

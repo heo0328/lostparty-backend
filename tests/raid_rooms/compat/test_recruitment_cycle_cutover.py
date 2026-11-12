@@ -189,7 +189,8 @@ def test_declined_summary_then_general_join_takes_priority(outcomes):
 
 def test_prepared_app_startup_and_full_route_contract(outcomes):
     from app.main import create_two_cycle_app
-    from app.main import app
+    from app.main import create_legacy_app
+    app = create_legacy_app()
     from fastapi.testclient import TestClient
     candidate=create_two_cycle_app()
     with TestClient(candidate):pass
@@ -198,7 +199,7 @@ def test_prepared_app_startup_and_full_route_contract(outcomes):
     import json
     from pathlib import Path
     # Compare the current legacy contract, not the historical pre-group route count.
-    assert set(app.openapi()['paths']) == set(json.loads(Path('openapi/openapi.yaml').read_text())['paths'])
+    assert set(app.openapi()['paths']) == set(json.loads(Path('openapi/legacy.openapi.yaml').read_text())['paths'])
     fixed=json.loads(Path('docs/features/recruitment/weekly-cycles/examples/baseline/full.openapi.json').read_text())
     assert set(fixed['paths'])<=set(spec['paths'])
     assert all(method in spec['paths'][path] and spec['paths'][path][method]['operationId']==operation['operationId']

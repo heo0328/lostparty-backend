@@ -103,7 +103,7 @@ def main():
         for dependency in entry['dependent_files']:
             assert (ROOT / dependency).exists(), dependency
 
-    contract = json.loads((ROOT / 'openapi/two-cycle.openapi.yaml').read_text())
+    contract = json.loads((ROOT / 'openapi/openapi.yaml').read_text())
     expected = {(method.upper(), path, operation['operationId']) for path, methods in contract['paths'].items()
                 for method, operation in methods.items() if method in {'get', 'post', 'put', 'patch', 'delete', 'head', 'options'}}
     api_map = json.loads((docs / 'engineering/documentation/api-map.json').read_text())['operations']

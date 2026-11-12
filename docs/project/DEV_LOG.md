@@ -1,5 +1,18 @@
 # 영구 개발 이력
 
+<a id="runtime-consolidation-implementation"></a>
+
+## 2026-11-13 실행 설정·명칭 정리 구현·로컬 반영
+
+- 사용자 승인 계획을 `refactor/backend-runtime`(기준 dev ffda8db8)에서 구현했다. 기본 `app.main:app`/`create_app()`을 현재 앱으로 통일하고 `create_legacy_app()`·호환 factory/Compose를 분리했다. 공통 라우터/오류/인증/CORS/health 등록을 재사용하며 앱 객체에서 라우트를 복사하지 않는다. worker 선택/예외 종료 취소·앱별 cache/override를 검증했다.
+- 현재 openapi.yaml/과거 legacy.openapi.yaml로 기존 JSON 원문 바이트·전체 객체를 보존했다. 현재192/213·legacy125/142, 기존 고정 SHA 링크·hash/동결 계약/Release/DB migration 번호·업무 cycle 이름은 변경하지 않았다. 저장소 참조·현행/역사 복원 도구 목적과 유지/제거 조건을 [구현 원본](../engineering/development/runtime-configuration.md)에 정리했다.
+- release.json schema2를 생성하고 schema1의 옛 파일명 의미·hash 검증을 유지했다. 도구84PASS·구/신 이미지의 두 형식 probe·CLI3profile PASS. 실제 격리 Docker 형식1/2 교체/실패 복귀와 합성 app-role DB0035→0036/API/Caddy/명세 검증 PASS. 설치 운영 도구는 변경하지 않았다. 다음 배포에는 #50 개선7모듈도 포함됨을 d16734d..dev diff로 확인하고 [선갱신/복귀 절차](../engineering/operations/runtime-release-transition.md)에 기록했다.
+- 전체 회귀는 최초1,988개 수집 중998PASS/하위2PASS·1,344.77초 후 해당 UUID pytest만 정상 SIGINT/exit2로 중단해 남은65파일을22/22/21로 분할했다. 366PASS/2,446.61초·325PASS/2,734.70초·311PASS/2,893.97초, 중복12개 제외한 원래1,988개 전부 포함. 현재DB 공통13사례를 더해 최종 고유2,001PASS이며 한 번의 전수 green이나 재실행 합산으로 표시하지 않는다. 매번 생성되는 UUIDv1 파라미터 ID1개만 수집 비교에서 정규화했다. 초기/분할 종료 때 해당 컨테이너/network cleanup을 확인했다.
+- 새 시험 준비 중 FastAPI가 lifespan을 합성하는 점을 객체 동일성으로 잘못 기대한1FAIL과 fixture monkeypatch 원복 순서로 다음 모듈 setup7ERROR가 있었다. 업무 코드/기대값 대신 새 시험만 보정해20PASS로 해소했다. 기존 AnyIO deprecation/SQLAlchemy null PK 경고는 보존했다.
+- 첫 실제 API 전환은 반복 OpenAPI 호출이 이미 가공된 cache를 또 가공하는 문제를 검출해 원 image/명령으로 자동 복귀했다. DB118표 982행/DDL/sequence·환경/키 전부 보존·복귀 health를 독립 확인했다. 완성 명세 cache를 앱별 한 번만 생성하고 cache 삭제 후 재생성/타 앱 생성 후 반복 호출을 추가했다. 보완 후 관련4파일 58PASS·두 전체 생성 계약·수정 후보 이미지 반복 생성 일치 PASS. 이 제한된 보완 뒤 전체2,001개를 다시 실행한 것은 아니다.
+- 최종 로컬 image `sha256:170d3a2505963e37a910bfc463092ab92239b607ff755f271aa28f639a3601bb` / 앱291파일 동일·기본 Compose 단독/기본 CMD `app.main:app`·DB0036 유지·API/DB healthy. 실제 HTTP10건·두 전체 명세·DB컨테이너/볼륨·전체 행 hash·DDL/sequence·기존4키/환경·포트/mount/보안 설정을 확인했다. [실행 집계](../engineering/operations/records/runtime-consolidation-local-rollout.json). 보존 fingerprint는 ignored private에만 저장하며 dump/원문/키는 게시하지 않았다.
+- 코드·문서는 미커밋·미push. main/dev merge·운영 배포/도구 설치·실DB migration/자료 삭제·Native 소스/기기 조작·추가 협업 요청은 없다. 기존 유효 환경/키 사본을 재사용하며 과거0023→0029 원본 복원/실제 provider·기기·운영 인수를 이번 새 통과로 표시하지 않는다. 다음은 사용자 직접 Git 게시/별도 운영 구간 선택이다.
+
 ## 2026-11-11 릴리즈 전체회귀 분할·기존 기대값 정정
 
 초기단일격리전체1968수집중1056PASS/1FAIL·2subtests/1415.04초에서검사pytest만SIGINT 정상중단/exit2·임시DB/network cleanup0을확인했다. 실패는기존기록의그룹활동해제→참가거절기대와동일하다. 활동해제만으로기존참가를제한하지않는Issue42·stopped C에서active선택없으면명시선택이필요한현정책에맞춰기존시험2개를정정했다. 신규권한/업무코드/계약변경없음. 단건그룹+완료/중단archive3사례31.01초PASS/cleanup0으로확인, 과거실패기록은보존했다.

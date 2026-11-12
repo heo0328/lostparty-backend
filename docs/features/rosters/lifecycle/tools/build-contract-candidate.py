@@ -7,7 +7,7 @@ import uuid
 
 ROOT = Path(__file__).resolve().parents[5]
 OUT = Path(__file__).resolve().parents[1] / 'examples'
-baseline = (ROOT / 'openapi/two-cycle.openapi.yaml').read_bytes()
+baseline = (ROOT / 'openapi/openapi.yaml').read_bytes()
 frozen = OUT / 'roster-participation-candidate.openapi.json'
 if frozen.exists():
     expected = json.loads(frozen.read_text()).get('x-baseline-sha256')

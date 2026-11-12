@@ -1,6 +1,6 @@
 # 모집 탐색 discovery-1 구현·로컬 인계
 
-2026-11-12 KST / Issue50 / `feat/recruitment-discovery`. 작업 구간은 기존 검색 API 개선·단계 전환이다. [Native 전체4 수용](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6820418957)으로 기본 제안과 카드 보완 계약을 고정했다. [제안/수용 전 원문](discovery-api-proposal.md), 정확한 공개 타입/상한/nullable은 [two-cycle OpenAPI](../../../../openapi/two-cycle.openapi.yaml)를 따른다.
+2026-11-12 KST / Issue50 / `feat/recruitment-discovery`. 작업 구간은 기존 검색 API 개선·단계 전환이다. [Native 전체4 수용](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6820418957)으로 기본 제안과 카드 보완 계약을 고정했다. [제안/수용 전 원문](discovery-api-proposal.md), 정확한 공개 타입/상한/nullable은 [현재 OpenAPI](../../../../openapi/openapi.yaml)를 따른다.
 
 [전체5번째 Backend 결과 회신](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6821288801) 게시·순번/본문 재확인 완료. 다음 Native 적용과 원격 게시 대기를 구분한다.
 

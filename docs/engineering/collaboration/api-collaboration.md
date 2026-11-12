@@ -85,13 +85,15 @@ Issue·댓글·PR·구현/계약 커밋을 연결합니다. Backend 완료와 Fl
 
 ## 계약 원본과 검증
 
-현재 개발 서버는 [그룹 기능 반영 기록](../../features/groups/implementation-2026-10-28.md)·[실행집계](../operations/records/raid-group-link-rollout.json)의 source2602e45/이미지5bd8dde6·DB0034·two-cycle185경로/206동작(기본123/140)이다. 기존자료·설정·키보존/실행계약·READONLY목록그룹표시/프로필·HTTP12/worker/healthy를확인했다. Native #12전체36/#16전체21의안내된기존그룹정상흐름은사용자기기보고통과로수용한다. Backend실회원쓰기검증과는구분한다. 새 [최초그룹연결·목록표시후속](../../features/groups/raid-link-contract.md)은구현/격리검증·계약인계·개발반영/실행검증완료이며새Flutter연결/기기는별도다. 이전 [재신청 반영](../operations/reapplication-history-rollout.md)·[명시출발정수분 반영](../operations/explicit-minute-rollout.md)은각시점근거로보존한다. 업무계약은 [two-cycle OpenAPI](../../../openapi/two-cycle.openapi.yaml), 기본0023보존계약은 [기본 OpenAPI](../../../openapi/openapi.yaml)를따른다. 실행프로필에맞는파일과생성객체전체를비교한다. 아래 기본 계약 설명은 기존 앱 기준입니다. `/health`, Issue #2의 6개 인증 API, Issue #3의 12개 내 계정 업무 API와 Issue #5의 전투력 갱신 API 및 Issue #6의 회원 설정 GET/PUT 및 Issue #7 회원 키 GET/PUT/DELETE·본인 복원 POST·Issue #8의 대표 전용 GET/PUT·L1b V2현재상태/퇴역이력GET·P1 역할요약GET/PUT·P2 개인설정PUT/원정대표시GET/PUT과 Issue #10의 공개 카탈로그/서버 주차 GET과 Issue #11의 본인 주간 상태 GET/개인 완료 PUT과 Issue #12의 그룹 G1 7개 동작·본인한도 GET 및 G2 초대/신청/코드/차단20동작과 Issue #16의 G3 관리조회·그룹장이전·일반탈퇴3동작을 포함하며 YAML에서 유효한 JSON 형식으로 저장합니다. FastAPI의 `app.openapi()`는 구현에서 생성되는 비교 대상입니다. HTTP OpenAPI·Swagger 경로는 비활성화되어 있습니다. 실제 연동·자동 검증의 범위는 [인증 개발 안내](../../features/login-account/google-login/README.md)와 [내 계정 API 안내](../../features/rosters/registration/README.md)에 있습니다.
+현재 계약 원본은 [openapi.yaml](../../../openapi/openapi.yaml)（현재192경로/213동작）이며 [legacy.openapi.yaml](../../../openapi/legacy.openapi.yaml)（DB0023·125경로/142동작）는 과거 시험용으로 보존한다. JSON 형식으로 저장해 YAML로도 유효하다. `create_app().openapi()`와 `create_legacy_app().openapi()`의 전체 객체를 각각 비교한다. [실행 이름과 명세 재배치](../development/runtime-configuration.md)는 응답/권한 계약 변경이 아니다. Native가 소비한 고정 commit URL/hash와 과거 배포 기록은 그대로 유효하다. 실제 로컬/운영 상태는 [NEXT_WORK](../../project/NEXT_WORK.md)와 [운영 원장](../operations/README.md)을 따른다.
+
+HTTP OpenAPI·Swagger 경로는 비활성이다. 인증·원정대·개인 설정/키·그룹·카탈로그/주간 기록과 모집의 세부 의미는 각 기능 문서와 합의된 Issue가 기준이다. 과거 그룹1차/기기 인수는 [그룹 기록](../../features/groups/implementation-2026-10-28.md)에 보존한다.
 
 API 구현·계약을 변경한 경우 최신 API 이미지에서 전체 계약을 검증합니다. 미반영 소스는 격리 후보이미지로 비교하고, 실제 교체 후 실행 컨테이너에서도 전체 계약을 비교합니다. 아래 compose 명령은 실제 API 교체를 포함하므로 별도 반영 범위가 승인된 때에 사용합니다.
 
 ```bash
-docker.exe compose -f compose.yaml -f compose.two-cycle.yaml up -d --no-deps --build --wait --wait-timeout 180 api
-python3 scripts/check_openapi.py --docker docker.exe --container lostparty-backend-api-1 --profile two-cycle
+docker.exe compose up -d --no-deps --build --wait --wait-timeout 180 api
+python3 scripts/check_openapi.py --docker docker.exe --container lostparty-backend-api-1
 ```
 
 Issue #8 V2 소유권 분쟁 11동작과 첫 화면 저장 정보 GET `/v2/me/account-bootstrap`도 원본에 포함한다. 일괄 조회의 범위·스냅샷·최대 크기/오류·실험 인계는 [개발 안내](../../features/rosters/bootstrap/README.md)를 따른다.

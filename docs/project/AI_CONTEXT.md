@@ -1,15 +1,17 @@
 # LostParty Backend 기능 지도
 
-2026-11-12 KST 기준. 다음 실행은 [NEXT_WORK](NEXT_WORK.md), 공식 이슈 상태/담당은 [ISSUE_TRACKER](ISSUE_TRACKER.md), 완료·결정·검증은 [DEV_LOG](DEV_LOG.md)가 원본이다. Native 구현 판단은 담당자의 현재 코드 확인 결과로 구분한다.
+2026-11-13 KST 기준. 다음 실행은 [NEXT_WORK](NEXT_WORK.md), 공식 이슈 상태/담당은 [ISSUE_TRACKER](ISSUE_TRACKER.md), 완료·결정·검증은 [DEV_LOG](DEV_LOG.md)가 원본이다. Native 구현 판단은 담당자의 현재 코드 확인 결과로 구분한다.
 
 ## 현재 기준
 
-- #50 모집 탐색은 양측구현/담당자검증·사용자필터확인으로합의기능완료, 사용자지시로Backend dev0dc381ae 통합/push·작업브랜치정리 및Issue completed종료까지마감했다. [전체14 Backend](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826988036)·[구현/검증](../features/recruitment/search/discovery-implementation.md). Native최종dev83a55020, 업무소비558ee6da와로컬실행은유지한다. 추가협업대기없음, main/운영·전수인수와구분한다.
+- 실행 설정·명칭 정리는 `refactor/backend-runtime`에서 구현·검증·로컬 API 반영 완료다. 기본 `app.main:app`은 현재 앱, legacy는 DB0023 시험용이다. 명세 원문/DB 이력·자료·키/환경을 보존했다. 전체 회귀 고유2,001PASS·캐시 보완 후 58PASS·도구84PASS. [실행/검증](../engineering/development/runtime-configuration.md)·[운영 도구 전환 준비](../engineering/operations/runtime-release-transition.md). 미커밋·미push, 운영은 기존 v2.1.1/DB0036을 유지한다.
+
+- #50 모집 탐색은 양측구현/담당자검증·사용자필터확인으로합의기능완료, 사용자지시로Backend dev0dc381ae 통합/push·작업브랜치정리 및Issue completed종료까지마감했다. [전체14 Backend](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826988036)·[구현/검증](../features/recruitment/search/discovery-implementation.md). Native최종dev83a55020, 업무소비558ee6da의#50계약은유지한다. 추가협업대기없음, main/운영·전수인수와구분한다.
 
 - 공동 운영 릴리즈 완료: Backend `v2.1.1`/source `d16734d86e694579cd4e4e043c2ca89cc81c1b64`·DB0036/config lightsail-web-2.1.0·고정웹 일반공개, 웹/새APK는사용자실인수통과다. [배포·백업·최종공개 원장](../engineering/operations/records/release-2.1.0-deployment.json)·[운영/개발 구분](../engineering/operations/README.md).
 - Native [최종v2.1.0 Release](https://github.com/heo0328/LostParty_flutter/releases/tag/v2.1.0)는공개완료, [전체34 인계](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6798998431)를Backend독립다운로드/5파일hash·원본동일성확인으로수용했다. 원APK/웹source와최종태그source는원장에구분한다.
 - 실제운영원장대기표기도완료로정정·PC사본보관했다. 운영코드/태그/이미지는불변이며추가배포·기기시험대기는없다. 사용자마감지시로최종문서를dev/main에동일통합·게시하고release/2.1.0을정리했다. #49는completed종료, 추가기술·인수대기는없다. [다음 실행](NEXT_WORK.md).
-- #47/#48은사용자승인completed종료, #17정리와#15/#18/#19선택은별도구간이다. 로컬dev는위 discovery반영·DB0036을유지한다.
+- #47/#48은사용자승인completed종료, #17정리와#15/#18/#19선택은별도구간이다. 로컬dev는위 실행정리·DB0036을유지한다.
 
 ## 기능별 상태와 원본
 

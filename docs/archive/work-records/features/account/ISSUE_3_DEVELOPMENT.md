@@ -2,7 +2,7 @@
 
 # Issue #3 내 계정 API 실행·검증·Flutter 인계
 
-상태: 로컬 구현·작업 브랜치 게시. 구현/계약 SHA `254cb5de125ab1bcb2aa084e091eae976e9a078a`. dev 통합 완료, main 미통합. 실provider·Flutter 등록관리 인수는 [Issue #4 계획](ISSUE_4_REGISTRATION_INTEGRATION_PLAN.md)에서 후속 추적. 원본은 [OpenAPI](../../../../../openapi/openapi.yaml), 요구·수용은 [Issue #3](https://github.com/heo0328/lostparty-backend/issues/3#issuecomment-6159847616), 설계는 [구현 계획](ISSUE_3_IMPLEMENTATION_PLAN.md)이다. 실제 검증 결과와 브랜치/게시 상태는 [DEV_LOG](../../../../project/DEV_LOG.md), 다음 실행은 [NEXT_WORK](../../../../project/NEXT_WORK.md)를 확인한다.
+상태: 로컬 구현·작업 브랜치 게시. 구현/계약 SHA `254cb5de125ab1bcb2aa084e091eae976e9a078a`. dev 통합 완료, main 미통합. 실provider·Flutter 등록관리 인수는 [Issue #4 계획](ISSUE_4_REGISTRATION_INTEGRATION_PLAN.md)에서 후속 추적. 원본은 [OpenAPI](../../../../../openapi/legacy.openapi.yaml), 요구·수용은 [Issue #3](https://github.com/heo0328/lostparty-backend/issues/3#issuecomment-6159847616), 설계는 [구현 계획](ISSUE_3_IMPLEMENTATION_PLAN.md)이다. 실제 검증 결과와 브랜치/게시 상태는 [DEV_LOG](../../../../project/DEV_LOG.md), 다음 실행은 [NEXT_WORK](../../../../project/NEXT_WORK.md)를 확인한다.
 
 ## 제공 범위와 현재 실연동 경계
 

@@ -4,7 +4,7 @@
 
 2026-10-23 / feat/raid-recruitment / #22, #23. 사용자 요청은 선택한 raid만 완료하고 해당 주차에서 실제로 나가는 행동과, 같은 사람을 현재 주차만 또는 두 주차에서 한 번에 내보내는 행동이다. 기존 개인완료/추방 명령과 별도 경로를 둬 기존 원명령·pending·ACK를 보존한다.
 
-소비 기준은 [실행 OpenAPI](../../../../../../openapi/two-cycle.openapi.yaml)의 아래 4경로와 닫힌 `DepartureContext`, `RemovalContext`, `DepartureCommand`, `RemovalCommand`, `ActionResult`다. [제안1](../contracts/ISSUE_13_ATOMIC_MEMBER_ACTIONS_DRAFT.md) 및 [#22 Backend 전체2번째 표시 보완](https://github.com/heo0328/lostparty-backend/issues/22#issuecomment-6361940655), [#23 Backend 전체2번째 review 보완](https://github.com/heo0328/lostparty-backend/issues/23#issuecomment-6361941083)을 구현한다. 기본116경로/기존두주차170경로와 그 기존 스키마는 객체 전체 대조로 보존하며 새 실행 계약은174경로다. 고정 제안 full.openapi 0.4.1과 cycle_wire 원본은 변경하지 않는다.
+소비 기준은 [실행 OpenAPI](../../../../../../openapi/openapi.yaml)의 아래 4경로와 닫힌 `DepartureContext`, `RemovalContext`, `DepartureCommand`, `RemovalCommand`, `ActionResult`다. [제안1](../contracts/ISSUE_13_ATOMIC_MEMBER_ACTIONS_DRAFT.md) 및 [#22 Backend 전체2번째 표시 보완](https://github.com/heo0328/lostparty-backend/issues/22#issuecomment-6361940655), [#23 Backend 전체2번째 review 보완](https://github.com/heo0328/lostparty-backend/issues/23#issuecomment-6361941083)을 구현한다. 기본116경로/기존두주차170경로와 그 기존 스키마는 객체 전체 대조로 보존하며 새 실행 계약은174경로다. 고정 제안 full.openapi 0.4.1과 cycle_wire 원본은 변경하지 않는다.
 
 | 목적 | GET | POST |
 |---|---|---|

@@ -174,11 +174,12 @@ def test_get_transactions_are_readonly_and_body_boundary(sources,http):
 
 
 def test_draft_http_contract_and_production_contract_remain_separate(http):
-    from app.main import app
+    from app.main import create_legacy_app
+    app = create_legacy_app()
     from pathlib import Path
     from app.raid_rooms.contracts.availability_contract import draft_openapi
     draft=draft_openapi()
     assert draft==json.loads(Path('openapi/recruitment-availability.draft.json').read_text())
     assert set(draft['paths'])==set(http.app.openapi()['paths'])
-    assert app.openapi()==json.loads(Path('openapi/openapi.yaml').read_text())
+    assert app.openapi()==json.loads(Path('openapi/legacy.openapi.yaml').read_text())
     assert any(route.path==PERSONAL for route in app.routes)

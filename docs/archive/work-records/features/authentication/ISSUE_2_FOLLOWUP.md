@@ -4,7 +4,7 @@
 
 작성: 2026-10-14. 상태: **후속 작업 등록, 구현·인수 미완료**.
 
-근거: [#2 종료 기록](https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6162337920), [최종 합의](https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6149615842), [인증 계약](ISSUE_2_AUTH_CONTRACT_DRAFT.md), [실행 안내](AUTH_DEVELOPMENT.md). 인증 원본 SHA는 `519c609495966a3d785c6671c09bf513b28875a6`, 현재 통합 계약은 [OpenAPI](../../../../../openapi/openapi.yaml)다.
+근거: [#2 종료 기록](https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6162337920), [최종 합의](https://github.com/heo0328/lostparty-backend/issues/2#issuecomment-6149615842), [인증 계약](ISSUE_2_AUTH_CONTRACT_DRAFT.md), [실행 안내](AUTH_DEVELOPMENT.md). 인증 원본 SHA는 `519c609495966a3d785c6671c09bf513b28875a6`, 현재 통합 계약은 [OpenAPI](../../../../../openapi/legacy.openapi.yaml)다.
 
 ## 완료 범위
 

@@ -57,8 +57,8 @@ def selected_tests(suite, requested):
 
 
 def contracts():
-    from app.main import app, create_two_cycle_app
-    for name, application in (("openapi.yaml", app), ("two-cycle.openapi.yaml", create_two_cycle_app())):
+    from app.main import create_app, create_legacy_app
+    for name, application in (("openapi.yaml", create_app()), ("legacy.openapi.yaml", create_legacy_app())):
         expected = json.loads((ROOT / "openapi" / name).read_text())
         actual = application.openapi()
         if expected != actual:

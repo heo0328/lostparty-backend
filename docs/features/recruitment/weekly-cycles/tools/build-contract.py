@@ -3,7 +3,7 @@ from pathlib import Path
 arguments=argparse.ArgumentParser(description='Reproduce the immutable 0.4.1 design from its cc003e9 runtime baseline')
 arguments.add_argument('--base-openapi',type=Path,help='cc003e9 OpenAPI file for an archive without Git history')
 options=arguments.parse_args()
-base=json.loads((options.base_openapi or Path('openapi/openapi.yaml')).read_text(encoding='utf-8'))
+base=json.loads((options.base_openapi or Path('openapi/legacy.openapi.yaml')).read_text(encoding='utf-8'))
 # The executable contract grows during W2. Reproduction must still use the
 # reviewed immutable base, never import newly implemented routes into the draft.
 if options.base_openapi is None and hashlib.sha256(json.dumps(base,sort_keys=True,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()!='be0bf3e1c871e031088fb7bd7bd63f3c510624e5c27125c13a4b507cdb074f40':

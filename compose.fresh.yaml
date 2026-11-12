@@ -1,7 +1,11 @@
-# New empty local environment. Use with compose.yaml; never import old DB data.
+# New empty local environment. Inherits the current app from compose.yaml.
+# Prepare its empty DB with an explicit alembic upgrade before starting api.
+# Startup never runs migrations. Never import old DB data into this project.
 # docker compose -f compose.yaml -f compose.fresh.yaml ...
 name: lostparty-fresh-dev
 services:
+  db:
+    ports: !reset []
   api:
     image: lostparty-backend-api:latest
     ports: !override

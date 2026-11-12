@@ -4,7 +4,7 @@
 
 2026-10-23 / Backend / `feat/raid-recruitment`.
 
-[Flutter110 수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6344221859)과 [Backend111 경로 정정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6344566106)을 구현 기준으로 삼았다. 세부 의미·합성 예시는 [합의된 초안1](../contracts/ISSUE_13_PREJOIN_SESSION_DISPLAY_DRAFT.md), 실행 REST 계약은 [two-cycle OpenAPI](../../../../../../openapi/two-cycle.openapi.yaml)다. 기존 고정 계약0.4.1/policy4·기본0023 앱 OpenAPI는 유지한다.
+[Flutter110 수용](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6344221859)과 [Backend111 경로 정정](https://github.com/heo0328/lostparty-backend/issues/13#issuecomment-6344566106)을 구현 기준으로 삼았다. 세부 의미·합성 예시는 [합의된 초안1](../contracts/ISSUE_13_PREJOIN_SESSION_DISPLAY_DRAFT.md), 실행 REST 계약은 [two-cycle OpenAPI](../../../../../../openapi/openapi.yaml)다. 기존 고정 계약0.4.1/policy4·기본0023 앱 OpenAPI는 유지한다.
 
 ## 소비 방법
 

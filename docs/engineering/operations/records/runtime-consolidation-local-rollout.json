@@ -1,0 +1,159 @@
+{
+  "app_files": 291,
+  "base_commit": "ffda8db8a00e50719b104605225dc5249f4ae171",
+  "branch": "refactor/backend-runtime",
+  "command": [
+    "uvicorn",
+    "app.main:app",
+    "--host",
+    "0.0.0.0",
+    "--port",
+    "8000",
+    "--no-proxy-headers",
+    "--no-access-log",
+    "--log-config",
+    "app/core/logging.json"
+  ],
+  "committed": false,
+  "contracts": {
+    "current_full_object_matches": true,
+    "legacy_full_object_matches": true,
+    "current": {
+      "file": "openapi.yaml",
+      "sha256": "3fdc06616d64e19aa7abf35b548cf1156fa7fbee6bcfb02c1dccf4ce9a9d7052",
+      "full_object_matches": true
+    },
+    "legacy": {
+      "file": "legacy.openapi.yaml",
+      "sha256": "18491bc066d08a578aa9228cd0da85eee508288c28d14d563d788e73e324c3dd",
+      "full_object_matches": true
+    }
+  },
+  "db_revision": "0036_roster_presence",
+  "http": [
+    {
+      "path": "/health",
+      "status": 200
+    },
+    {
+      "path": "/v1/raid-catalog",
+      "status": 200
+    },
+    {
+      "path": "/v1/raid-cycle",
+      "status": 200
+    },
+    {
+      "path": "/v1/me",
+      "status": 401
+    },
+    {
+      "path": "/v2/me/account-bootstrap",
+      "status": 401
+    },
+    {
+      "path": "/v2/raid-rooms/search?contract_profile=beta-recruitment-1&group_policy_version=cycle-group-policy-1&include_group_state=true&response_profile=discovery-1",
+      "status": 200
+    },
+    {
+      "path": "/v2/raid-rooms/search?contract_profile=beta-recruitment-1&group_policy_version=cycle-group-policy-1&include_group_state=true",
+      "status": 200
+    },
+    {
+      "path": "/v2/raid-rooms/search?contract_profile=beta-recruitment-1&group_policy_version=cycle-group-policy-1&include_group_state=true&response_profile=invalid",
+      "status": 400
+    },
+    {
+      "path": "/docs",
+      "status": 404
+    },
+    {
+      "path": "/openapi.json",
+      "status": 404
+    }
+  ],
+  "image": "sha256:170d3a2505963e37a910bfc463092ab92239b607ff755f271aa28f639a3601bb",
+  "migration": false,
+  "preserved": {
+    "db_container": true,
+    "keys_env": true,
+    "ports_mounts_security": true,
+    "schema": true,
+    "sequences": true,
+    "table_rows_hashes": true
+  },
+  "previous_image": "sha256:87a918db5245c8cbf2ab2d83df1b6e71fbdbb8473ea4d035c662c879bed5c0bd",
+  "production_changed": false,
+  "pushed": false,
+  "rows_at_application": 982,
+  "source_manifest_sha256": "edcc093c7141705413c39c7a6c654b9fc5bde977a2053f185732aadd954d2543",
+  "tables": 118,
+  "worker_jobs_observed": [
+    "auth_cleanup",
+    "ownership_settlement",
+    "recruitment"
+  ],
+  "error_critical_events_observed": 0,
+  "api_started_at_utc": "2026-11-12T17:23:17.684224113Z",
+  "recorded_at_utc": "2026-11-12T17:24:40.598823Z",
+  "scope": "Local development API only; no commit/push/merge/production deployment/DB migration/deletion",
+  "first_attempt": {
+    "result": "rolled_back",
+    "reason": "Repeated OpenAPI calls decorated cached schemas again; fixed by caching the final schema per app",
+    "original_image_and_command_restored": true,
+    "all_rows_schema_sequences_keys_env_preserved": true,
+    "candidate_image": "sha256:56eb1fae2a56b95a62a643b6a17fb544db56f82b74e94ffacaf12367d202d276"
+  },
+  "verification": {
+    "regression": {
+      "initial_collected": 1988,
+      "initial_passed": 998,
+      "initial_exit": 2,
+      "initial_interruption": "Intentional SIGINT of disposable pytest to redistribute remaining files; cleanup successful",
+      "shards": [
+        {
+          "passed": 366,
+          "files": 22,
+          "project": "lostparty-check-e113b896f616"
+        },
+        {
+          "passed": 325,
+          "files": 22,
+          "project": "lostparty-check-dc19ae1a9d2b"
+        },
+        {
+          "passed": 311,
+          "files": 21,
+          "project": "lostparty-check-70def8016ed9"
+        }
+      ],
+      "overlap_excluded": 12,
+      "original_unique_passed": 1988,
+      "additional_current_db_common_passed": 13,
+      "unique_passed": 2001,
+      "failed": 0,
+      "note": "Union of partial and partitioned runs, not one all-green invocation; generated UUIDv1 parameter normalized for coverage comparison",
+      "after_cache_fix_selected_passed": 58,
+      "after_cache_fix_scope": [
+        "tests/core/test_current_runtime.py",
+        "tests/raid_rooms/common/test_runtime_configuration.py",
+        "tests/raid_rooms/outcomes/test_completion_profile_contract.py",
+        "tests/raid_rooms/participation/test_membership_actions.py"
+      ],
+      "warnings": "Existing Starlette/AnyIO deprecation and SQLAlchemy null-primary-key warnings; no expectation changes",
+      "full_regression_before_cache_fix_image": "sha256:56eb1fae2a56b95a62a643b6a17fb544db56f82b74e94ffacaf12367d202d276"
+    },
+    "script_unit_tests_passed": 84,
+    "current_legacy_full_contracts": true,
+    "original_spec_bytes_preserved": true,
+    "repeat_generation_and_cache_reset": true,
+    "factories_worker_selection_and_cancellation": true,
+    "schema1_schema2_old_and_new_image_probes": true,
+    "openapi_cli_three_profiles_on_old_and_new_images": true,
+    "isolated_docker_deploy_and_failed_api_rollback": true,
+    "isolated_app_role_migration_and_maintenance_contract_probe": true
+  },
+  "backup": "Existing valid environment/key copies reused. Read-only fingerprints are not DB backups or restore tests; historical DB0023->0029 restore tool was not rerun.",
+  "production": "v2.1.1/source d16734d86e694579cd4e4e043c2ca89cc81c1b64/DB0036 remains unchanged. Future rollout also includes discovery improvements and needs controller upgrade first.",
+  "evidence_schema": 1
+}

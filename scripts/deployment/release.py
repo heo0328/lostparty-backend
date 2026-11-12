@@ -10,7 +10,7 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
-from common import IMAGE, REPOSITORY, SHA, TAG, checksum, require, utc, validate_manifest
+from common import IMAGE, REPOSITORY, SHA, TAG, checksum, require, utc, validate_manifest, contract_names
 
 
 def run(args, *, input=None):
@@ -160,10 +160,10 @@ def main():
     code = "from alembic.config import Config; from alembic.script import ScriptDirectory; print(ScriptDirectory.from_config(Config('alembic.ini')).get_current_head())"
     revision = run(['docker', 'run', '--rm', '--network', 'none', '--read-only', '--entrypoint', 'python', image, '-c', code])
     compose = Path('compose.lightsail.yaml').read_bytes()
-    m = validate_manifest({'schema': 1, 'repository': REPOSITORY, 'tag': tag, 'source': source,
+    m = validate_manifest({'schema': 2, 'repository': REPOSITORY, 'tag': tag, 'source': source,
                            'image': image, 'db_revision': revision,
                            'contract_sha256': {p: checksum((Path('openapi') / p).read_bytes())
-                                               for p in ['openapi.yaml', 'two-cycle.openapi.yaml']},
+                                               for p in contract_names(2)},
                            'compose_sha256': checksum(compose), 'built_at_utc': labels['org.opencontainers.image.created']})
     Path('dist/release.json').write_text(json.dumps(m, indent=2) + '\n')
     Path('dist/compose.lightsail.yaml').write_bytes(compose)

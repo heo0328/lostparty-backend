@@ -249,7 +249,8 @@ def test_commit_fence_rollback_then_same_key_recovery(client, owned, monkeypatch
 
 
 def test_role_schema_preserved_and_preferences_now_persisted():
-    from app.main import app
+    from app.main import create_legacy_app
+    app = create_legacy_app()
     schema=app.openapi(); models=schema['components']['schemas']
     for name in ('RoleSummary','AnalysisIssue','RoleSummaryIn','StoredRoleSummary','RoleSummaryOut',
                  'PersonalProfileOut','PersonalPreferences'):

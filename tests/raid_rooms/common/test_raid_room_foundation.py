@@ -445,8 +445,9 @@ def test_p1_analysis_cannot_override_provider_entry_level(people):
 def test_api_contract_not_extended_by_internal_models():
     import json
     from pathlib import Path
-    from app.main import app
-    assert app.openapi()==json.loads(Path('openapi/openapi.yaml').read_text())
+    from app.main import create_legacy_app
+    app = create_legacy_app()
+    assert app.openapi()==json.loads(Path('openapi/legacy.openapi.yaml').read_text())
     assert all(getattr(route.endpoint,'__module__','')!='app.raid_rooms.api.router' for route in app.routes)
 
 

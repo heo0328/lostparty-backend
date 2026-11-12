@@ -115,5 +115,6 @@ def test_pause_does_not_change_candidate_contract_or_expose_main_routes(http, mo
     monkeypatch.setenv(runtime.SETTING, 'false')
     http.app.openapi_schema = None
     assert http.app.openapi() == before
-    from app.main import app
+    from app.main import create_legacy_app
+    app = create_legacy_app()
     assert all(getattr(route.endpoint,'__module__','')!='app.raid_rooms.api.router' for route in app.routes)

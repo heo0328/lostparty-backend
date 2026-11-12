@@ -2,7 +2,7 @@
 
 # 전투력 갱신 API 실행·인계
 
-기준은 [Issue #5](https://github.com/heo0328/lostparty-backend/issues/5)와 [Flutter 동의](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6166739099)다. 브랜치 `feat/account-management`, 미커밋·미push이며 새 구현/계약 SHA는 아직 없다. 계약 원본은 [OpenAPI](../../../../../openapi/openapi.yaml). Flutter는 원격 게시 후 새 계약 SHA를 소비한다.
+기준은 [Issue #5](https://github.com/heo0328/lostparty-backend/issues/5)와 [Flutter 동의](https://github.com/heo0328/lostparty-backend/issues/5#issuecomment-6166739099)다. 브랜치 `feat/account-management`, 미커밋·미push이며 새 구현/계약 SHA는 아직 없다. 계약 원본은 [OpenAPI](../../../../../openapi/legacy.openapi.yaml). Flutter는 원격 게시 후 새 계약 SHA를 소비한다.
 
 ## 요청
 

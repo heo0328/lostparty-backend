@@ -1,5 +1,7 @@
 # Lightsail 짧은 운영 안내
 
+저장소의 기본 실행은 현재 앱으로 통일했다. 실제 운영 재시작은 아래처럼 설치된 동결 구성을 사용한다. 새 운영 배포/명령 전환은 [도구 갱신과 복귀 안내](runtime-release-transition.md)에 따른 별도 승인 대상이다.
+
 대상: 시드니 `lostparty-server` / `54.253.176.103` / **https://lostparty.duckdns.org**. 아래 명령은 서버 SSH에서 실행한다. 실제 컨테이너 라벨로 확인한 배포 경로는 `/home/ubuntu/lostparty-backend`, Compose는 `compose.lightsail.yaml`, 환경은 `.env.lightsail`, 자동배포 준비 후 현재 이미지/동결 구성은 root 전용 `/var/lib/lostparty-deploy/current.json`이 가리키는 Compose이며 프로젝트명은 `lostparty-lightsail`이다. 로컬 개발 Compose와 합치지 않는다.
 
 ## 상태·최근 로그

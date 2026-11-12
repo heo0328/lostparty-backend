@@ -12,7 +12,8 @@ from sqlalchemy import inspect, select
 from starlette.requests import Request
 
 from app.core.database import session
-from app.main import app as legacy_app, create_two_cycle_app
+from app.main import create_legacy_app, create_two_cycle_app
+legacy_app = create_legacy_app()
 from app.raid_rooms.contracts.roster_openapi import PARTICIPATION_OPERATIONS
 from app.raid_rooms.participation import roster_participation as rp
 from app.raid_rooms.participation import cycle_character
@@ -32,7 +33,7 @@ from tests.raid_rooms.schedules.test_recruitment_cycle_times import confirmation
 from tests.raid_rooms.schedules.test_recruitment_cycle_planning import scoped, make_proposal, response
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
-CONTRACT = json.loads(Path('openapi/two-cycle.openapi.yaml').read_text())
+CONTRACT = json.loads(Path('openapi/openapi.yaml').read_text())
 CONTEXT = '/v2/raid-rooms/{room_id}/command-context'
 COMPLETIONS = [('complete_item', 'completion'), ('personal_completion', 'personal-completion')]
 
@@ -106,7 +107,7 @@ def test_profile_declarations_match_every_runtime_route():
 
 
 def test_both_complete_contract_objects_match_generated_schema():
-    assert legacy_app.openapi() == json.loads(Path('openapi/openapi.yaml').read_text())
+    assert legacy_app.openapi() == json.loads(Path('openapi/legacy.openapi.yaml').read_text())
     assert create_two_cycle_app().openapi() == CONTRACT
 
 

@@ -48,7 +48,7 @@ GET opening/continuation context,200:
 
 이전에 받은 유효 선택 context로 위 자격 상실 뒤 실행한 POST는409 TARGET_CONTEXT_STALE다. 활동 자격 복구·새 context 조회 뒤 명시 선택 POST는200/applied, 원 key/body의 profile 생략 ACK 재조회도 동일200이다. 기존 N 참가 뒤 continuation context는 ROOM_MEMBER_EXISTS, opening은 already_open이며 누락 관찰 뒤에도200/noop을 확인했다. 재개설이 필요한 N에 open을 요청하면 기존 TARGET_REOPEN_REQUIRED를 우선 보존한다.
 
-[기본 OpenAPI](../../../../openapi/openapi.yaml)는 바이트 그대로다. [two-cycle](../../../../openapi/two-cycle.openapi.yaml)은 `x-roster-participation.next_cycle_selection` 의미 주석만 추가했다. paths/operations/components 전체는 이전과 같으며 양쪽 전체 생성 객체 대조를 통과했다. two-cycle SHA256은 `2aeca907115ffc768cad723d227f0c2339b042f56f46ffed251c1037d235b6c4`다.
+[기본 OpenAPI](../../../../openapi/legacy.openapi.yaml)는 바이트 그대로다. [two-cycle](../../../../openapi/openapi.yaml)은 `x-roster-participation.next_cycle_selection` 의미 주석만 추가했다. paths/operations/components 전체는 이전과 같으며 양쪽 전체 생성 객체 대조를 통과했다. two-cycle SHA256은 `2aeca907115ffc768cad723d227f0c2339b042f56f46ffed251c1037d235b6c4`다.
 
 ## 검증 근거와 한계
 

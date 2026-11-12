@@ -60,7 +60,7 @@
 
 ## 계약과 공개 범위
 
-- 실제 개발 API는 [two-cycle OpenAPI](../../../openapi/two-cycle.openapi.yaml)의178경로/199operation, DB0032를 사용한다. 기본0023 앱은 [기본 OpenAPI](../../../openapi/openapi.yaml)의116경로/133operation으로 따로 보존한다.
+- 실제 개발 API는 [two-cycle OpenAPI](../../../openapi/openapi.yaml)의178경로/199operation, DB0032를 사용한다. 기본0023 앱은 [기본 OpenAPI](../../../openapi/legacy.openapi.yaml)의116경로/133operation으로 따로 보존한다.
 - 베타 opt-in은 `contract_profile=beta-recruitment-1`, 계약 버전은 `beta-recruitment-wire-2`다. application-display/membership-actions reader와 조율 안내의 선택 확장을 구분한다. 원ACK·기존 reader·생략/false·beta_schedule=null·record content=null 경계를 유지한다.
 - 신청 메모/번호·비밀번호/개인표/예약은 기존 권한과 실제 T·세대에 귀속한다. GET에서 복구·동의·자동확정을 실행하거나 public/검색/쓰기ACK에 비공개 자료를 넓히지 않는다.
 - 저장 문자 정책은 `hangul-printable-ascii-1`이다. UTC 정수분 출발과 5분 자동탐색·개인표·진행시간을 구분하며 초/소수초를 반올림하지 않는다.

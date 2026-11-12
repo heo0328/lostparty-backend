@@ -299,7 +299,8 @@ def test_internal_retirement_cleanup_is_atomic_targeted_and_no_live_activation(c
 
 
 def test_schema_required_nullable_p1_summary_preserved():
-    from app.main import app
+    from app.main import create_legacy_app
+    app = create_legacy_app()
     definitions=app.openapi()['components']['schemas']
     for name in ('PersonalPreferences','PersonalPreferencesIn','PersonalPreferencesOut','PresentationIn','PresentationOut'):
         model=definitions[name]

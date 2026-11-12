@@ -289,8 +289,9 @@ def test_last_slot_race_rechecks_shared_room_revision(http, people):
 
 
 def test_candidate_paths_and_dtos_do_not_activate_production_api(http):
-    from app.main import app
-    baseline=json.loads(open('openapi/openapi.yaml').read())
+    from app.main import create_legacy_app
+    app = create_legacy_app()
+    baseline=json.loads(open('openapi/legacy.openapi.yaml').read())
     assert app.openapi()==baseline
     assert all(getattr(route.endpoint,'__module__','')!='app.raid_rooms.api.router' for route in app.routes)
     schema=http.app.openapi()

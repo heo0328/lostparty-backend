@@ -309,5 +309,59 @@ class DeploymentTests(unittest.TestCase):
         self.assertNotIn('alembic', args)
 
 
+class RuntimeContractVersions(unittest.TestCase):
+    def test_manifest_name_meanings_are_versioned(self):
+        from common import validate_manifest, contract_names
+        old=copy.deepcopy(MANIFEST)
+        self.assertEqual(validate_manifest(old),old)
+        new=copy.deepcopy(old);new['schema']=2
+        new['contract_sha256']={'openapi.yaml':'d'*64,'legacy.openapi.yaml':'c'*64}
+        self.assertEqual(validate_manifest(new),new)
+        for schema in (1,2):
+            bad=copy.deepcopy(new if schema==1 else old);bad['schema']=schema
+            with self.assertRaises(ValueError):validate_manifest(bad)
+        for schema in (True,False,0,3,'2',None):
+            with self.assertRaises(ValueError):contract_names(schema)
+
+    def test_schema2_allows_only_the_equivalent_entrypoint_alias(self):
+        from server import infrastructure
+        old=copy.deepcopy(CONFIG);new=copy.deepcopy(CONFIG)
+        old['services']['api']['command']=['uvicorn','app.main:create_two_cycle_app','--factory','--workers','1']
+        new['services']['api']['command']=['uvicorn','app.main:create_app','--factory','--workers','1']
+        self.assertNotEqual(infrastructure(old),infrastructure(new))
+        self.assertEqual(infrastructure(old,current_entrypoint=True),infrastructure(new,current_entrypoint=True))
+        new['services']['api']['command'][-1]='2'
+        self.assertNotEqual(infrastructure(old,current_entrypoint=True),infrastructure(new,current_entrypoint=True))
+
+    def test_schema2_deployment_and_rollback_preserve_infrastructure(self):
+        from common import validate_bundle
+        bundle=copy.deepcopy(BUNDLE);bundle['manifest']['schema']=2
+        bundle['manifest']['contract_sha256']={'openapi.yaml':'d'*64,'legacy.openapi.yaml':'c'*64}
+        validate_bundle(bundle)
+        for fail in (False,True):
+            with tempfile.TemporaryDirectory() as tmp:
+                root=Path(tmp);state=root/'state';state.mkdir()
+                platform=FakePlatform(root);platform.fail_new=fail
+                old={'tag':None,'source':'previous','image':'old','compose':'old-compose',
+                     'db_revision':MANIFEST['db_revision']}
+                atomic(state/'current.json',old)
+                with patch('server.health',side_effect=lambda p,image,deadline: (_ for _ in ()).throw(DeployError('health_timeout')) if image==IMAGE_REF and fail else None):
+                    result=execute(bundle,platform,state)
+                self.assertEqual(result['status'],'failed' if fail else 'success')
+                if fail:
+                    self.assertEqual(result['rollback'],'success')
+                    self.assertEqual(platform.image,'old')
+
+    def test_schema2_rejects_tampered_bundle_and_invalid_contract_hash(self):
+        from common import validate_bundle
+        bundle=copy.deepcopy(BUNDLE)
+        bundle['manifest'].update(schema=2,contract_sha256={'openapi.yaml':'d'*64,'legacy.openapi.yaml':'c'*64})
+        bundle['compose']+='tampered'
+        with self.assertRaises(ValueError):validate_bundle(bundle)
+        bundle['compose']=BUNDLE['compose']
+        bundle['manifest']['contract_sha256']['openapi.yaml']='invalid'
+        with self.assertRaises(ValueError):validate_bundle(bundle)
+
+
 if __name__ == '__main__':
     unittest.main()

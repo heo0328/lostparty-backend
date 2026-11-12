@@ -1,5 +1,5 @@
 {
-  "contract": "openapi/two-cycle.openapi.yaml",
+  "contract": "openapi/openapi.yaml",
   "operations": [
     {
       "method": "POST",

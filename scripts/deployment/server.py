@@ -111,11 +111,16 @@ class Platform:
                 api['State'].get('Health', {}).get('Status') == 'healthy')
 
 
-def infrastructure(config):
-    """Image is the only automatic Compose change; all other runtime config is fixed."""
+def infrastructure(config, *, current_entrypoint=False):
+    """Preserve runtime config; schema2 also permits the equivalent factory alias."""
     data = json.loads(json.dumps(config))
     data['services']['api'].pop('image', None)
     data['services']['api'].pop('build', None)
+    if current_entrypoint:
+        cmd=data['services']['api'].get('command')
+        if isinstance(cmd,list):
+            data['services']['api']['command']=[
+                'app.main:create_app' if arg=='app.main:create_two_cycle_app' else arg for arg in cmd]
     return data
 
 
@@ -231,7 +236,7 @@ def execute(bundle, platform, state=STATE, *, preflight=False):
         compose = request / 'candidate.compose.yaml'
         compose.write_text(bundle['compose']); os.chmod(compose, 0o600)
         candidate = platform.config(compose)
-        if infrastructure(candidate) != infrastructure(baseline):
+        if infrastructure(candidate,current_entrypoint=manifest['schema']==2) != infrastructure(baseline,current_entrypoint=manifest['schema']==2):
             raise DeployError('manual_infrastructure_change_required')
         if platform.db_revision(live_api['Id']) != manifest['db_revision']:
             raise DeployError('manual_migration_required')

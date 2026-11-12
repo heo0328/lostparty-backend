@@ -19,7 +19,7 @@ import urllib.request
 import urllib.error
 from datetime import datetime, timezone
 
-from common import checksum, validate_manifest
+from common import checksum, validate_manifest, contract_probe
 from deployment_plan import load
 from server import Platform, atomic, command, service_identity
 from web_release import stage, switch, validate_active
@@ -195,7 +195,7 @@ def transition(platform, state, manifest, plan, receipt, handoff, web_root, cadd
         require(service_identity(before['db']) == service_identity(after['db']), 'db_container_changed')
         require(protected == platform.protected_files(), 'protected_files_changed')
         # Exact schemas via internal container execution; HTTP checks follow separately.
-        code = "import json,hashlib; from app.main import app,create_two_cycle_app; print(json.dumps({n:hashlib.sha256(json.dumps(a.openapi(),sort_keys=True,separators=(',',':')).encode()).hexdigest() for n,a in [('openapi.yaml',app),('two-cycle.openapi.yaml',create_two_cycle_app())]}))"
+        code = contract_probe(manifest['schema'])
         generated = json.loads(command(['docker','exec',after['api']['Id'],'python','-c',code]))
         require(generated == contracts, 'generated_contract_mismatch')
         record['generated_contract_canonical_sha256']=generated

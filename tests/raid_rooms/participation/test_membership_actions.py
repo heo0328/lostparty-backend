@@ -70,7 +70,7 @@ def validate_contract(name,value):
     from referencing import Registry
     from referencing import Resource
     contract=json.loads(Path('docs/features/recruitment/membership-actions/examples/membership-actions.schema.json').read_text())
-    legacy_schema=json.loads(Path('openapi/two-cycle.openapi.yaml').read_text())
+    legacy_schema=json.loads(Path('openapi/openapi.yaml').read_text())
     legacy_schema['$schema']='https://json-schema.org/draft/2020-12/schema'
     registry=Registry().with_resource('urn:lostparty:two-cycle-0eed67c',Resource.from_contents(legacy_schema))
     Draft202012Validator({'$ref':'#/$defs/'+name,'$defs':contract['$defs']},registry=registry,format_checker=FormatChecker()).validate(value)
@@ -316,15 +316,16 @@ def test_expiry_current_cycle_scope_and_tampered_body_no_write(membership_ready,
 def test_runtime_schema_uses_closed_models_and_preserves_base_contract(membership_ready):
     import json
     from pathlib import Path
-    from app.main import app
+    from app.main import create_legacy_app
+    app = create_legacy_app()
     from app.main import create_two_cycle_app
-    original=json.loads(Path('openapi/openapi.yaml').read_text())
+    original=json.loads(Path('openapi/legacy.openapi.yaml').read_text())
     assert app.openapi()==original
     runtime=create_two_cycle_app().openapi()
     assert '/v2/raid-rooms/{room_id}/membership-actions' in runtime['paths']
     command=runtime['components']['schemas']['MembershipActionCommand']
     assert command['additionalProperties'] is False and len(command['required'])==6
-    assert runtime['components']['schemas']['BMembership']==json.loads(Path('openapi/two-cycle.openapi.yaml').read_text())['components']['schemas']['BMembership']
+    assert runtime['components']['schemas']['BMembership']==json.loads(Path('openapi/openapi.yaml').read_text())['components']['schemas']['BMembership']
 
 
 def test_eight_members_both_targets_dissolve_with_exact_cleanup(membership_ready,people):

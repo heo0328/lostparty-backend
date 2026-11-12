@@ -55,13 +55,13 @@
 
 Backend 주차 관리와 후속 검색·탈퇴 명령은 개발 API에 반영됐다. Flutter의 개별 연결 보고·합성 자동 시험과 실제 회원 명령·기기 인수는 구분한다. 현재 담당·미완료는 [NEXT_WORK](../../../project/NEXT_WORK.md)가 원본이다. 이 문서 작업에서 서버·DB·앱을 실행하거나 변경하지 않는다.
 
-[모집 안내](../../../archive/work-records/features/recruitment/README.md) · [실행 계약](../../../../openapi/two-cycle.openapi.yaml)
+[모집 안내](../../../archive/work-records/features/recruitment/README.md) · [실행 계약](../../../../openapi/openapi.yaml)
 
 <a id="api"></a>
 
 ## API 계약 찾아보기
 
-표는 현재 실행 OpenAPI에서 수집한 경로입니다. v1/v2가 함께 있어도 입력·효과·ACK의 동등성을 뜻하지 않습니다. 정확한 필수/nullable·오류는 [실행 계약](../../../../openapi/two-cycle.openapi.yaml)을 확인합니다.
+표는 현재 실행 OpenAPI에서 수집한 경로입니다. v1/v2가 함께 있어도 입력·효과·ACK의 동등성을 뜻하지 않습니다. 정확한 필수/nullable·오류는 [실행 계약](../../../../openapi/openapi.yaml)을 확인합니다.
 
 | Method | 경로 |
 |---|---|

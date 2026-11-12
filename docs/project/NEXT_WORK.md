@@ -1,13 +1,22 @@
 # 다음 실행
 
-2026-11-12 KST 기준. 실제 Backend 코드/Git과 각 담당의 현재 코드 확인 결과를 사용한다. Native 코드 상태·완료 판단은 Native가 작성하며 Backend가 대신 검토하지 않는다.
+2026-11-13 KST 기준. 실제 Backend 코드/Git과 각 담당의 현재 코드 확인 결과를 사용한다. Native 코드 상태·완료 판단은 Native가 작성하며 Backend가 대신 검토하지 않는다.
+
+## 실행 설정 정리 완료 / 다음 직접 지시 대기
+
+- `refactor/backend-runtime`에서 기본 현재 앱/명시 legacy 앱·명세 재배치·형식2/형식1 배포 호환·실행 안내를 구현하고 **로컬 dev API만 반영 완료**했다. 기본 명령은 `docker compose up -d --no-deps --build --wait api`다.
+- 전체 회귀 고유2,001PASS·캐시 보완 후 관련4파일 58PASS·도구84PASS·두 전체 계약/원문 바이트·실제 HTTP·격리 배포 교체/복귀 PASS. 첫 전환의 반복 명세 가공 문제는 자동 복귀·캐시 보완·재검증 후 해소했다.
+- 현재 로컬 image `sha256:170d3a2505963e37…3601bb` / DB0036 / 앱291파일 일치. DB 컨테이너·118표 982행/DDL/sequence·기존 키4개/환경·포트/mount/보안 설정을 보존했다. [실행 집계](../engineering/operations/records/runtime-consolidation-local-rollout.json).
+- **미커밋·미push**다. 다음 Git 게시/병합은 사용자 직접 지시 범위에서 수행한다. 추가 Native 계약/기기 재검증 요청은 없다.
+- 운영은 기존 v2.1.1/source d16734d/DB0036을 유지한다. 다음 운영 승인 전 #50 개선 포함 범위·새 full 검증 계획·설치 제어기 선갱신·교체/복귀 절차를 [운영 전환 안내](../engineering/operations/runtime-release-transition.md)로 제시한다. 이번 완료를 운영 배포·DB 변경 승인으로 확대하지 않는다.
+- [실행·명칭·유지 이유/검증](../engineering/development/runtime-configuration.md)·[개발 명령](../engineering/development/environment.md).
 
 ## Issue50 마감 완료 / 다음 업무 선택
 
-- 사용자지시로최종문서011375bf를커밋하고Backend업무558ee6da와함께dev `0dc381ae646fba062f008d26c58b20e653a6de67`에이력보존병합·push/원격일치확인했다. Issue50은2026-11-12T14:52:57Z(KST23:52:57) completed종료다. [전체14 Backend 마감](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826988036). 현재checkout은dev, 완료작업브랜치feat/recruitment-discovery는로컬/원격에서정리했다.
+- 사용자지시로최종문서011375bf를커밋하고Backend업무558ee6da와함께dev `0dc381ae646fba062f008d26c58b20e653a6de67`에이력보존병합·push/원격일치확인했다. Issue50은2026-11-12T14:52:57Z(KST23:52:57) completed종료다. [전체14 Backend 마감](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826988036). 당시checkout은dev, 완료작업브랜치feat/recruitment-discovery는로컬/원격에서정리했다.
 - Native최종dev83a55020·담당자보고2927PASS/analyze0·사용자필터성공보고/Penpot02통합과Backend13최종점검으로합의기능/협업완료를확인했다. 추가Native작업·자료/기기인수·계약확인대기는없다. [구현/검증](../features/recruitment/search/discovery-implementation.md).
 - 업무/시험/계약bytes는기존검증/로컬image87a918db…5c0bd·DB0036과같아재시험/재반영을반복하지않았다. main/운영/DB·키변경은없으며전수기기/신청/성능인수완료로확대하지않는다.
-- 다음업무는사용자선택이다. 기존#17정리후보와#15/#18/#19보류범위는아래그대로보존하며자동착수하지않는다. 마감결과기록은dev후행문서커밋으로보존한다.
+- 후속선택한실행정리는위와같이완료했다. 기존#17정리후보와#15/#18/#19보류범위는아래그대로보존하며자동착수하지않는다. 마감결과기록은dev후행문서커밋으로보존한다.
 
 ## 공동 릴리즈 마감 완료
 
@@ -26,10 +35,10 @@
 
 | 구분 | 확인 기준 |
 |---|---|
-| checkout/배포 소스 | dev(discovery 통합·push/작업브랜치 정리 완료) / 배포소스d16734d·v2.1.1 고정, 최종문서는dev/main동일통합 |
+| checkout/배포 소스 | refactor/backend-runtime(dev ffda8db 기반, 현재 변경 미커밋·미push) / 배포소스d16734d·v2.1.1 고정, #49당시최종문서는dev/main동일통합 |
 | 이전 #47 업무 통합/원격 | 업무44eb4ba·반영 기록624ef00·문서962c1cd9321328f19a8e1ea6b5071fa07380782b를 dev에 이력 보존 병합·push. 원격 병합 SHA 일치/전체 feature tip 포함·동일 tree 확인. app/tests/openapi422파일은 기존 검증 코드와 동일 |
-| 로컬 dev | discovery image87a918db…5c0bd/앱291파일·두 전체계약/실HTTP·보존 검사PASS·DB0036 유지. [최신 로컬 근거](../features/recruitment/search/discovery-verification.json). 이전986f8d80/ae6b3e0a는 당시 근거 |
-| 전체 계약 | 기본125경로/142동작, two-cycle192경로/213동작. 정확한 hash는 [구현/계약 근거](../features/recruitment/completion-and-records/batch-completion-implementation.md) |
+| 로컬 dev | runtime image sha256:170d3a2505963e37…3601bb / 현재 앱·DB0036·앱291파일/두 계약·실HTTP/보존 PASS. [근거](../engineering/operations/records/runtime-consolidation-local-rollout.json) |
+| 전체 계약 | 현재192경로/213동작(openapi.yaml), legacy125경로/142동작(legacy.openapi.yaml). 정확한 hash는 [구현/계약 근거](../features/recruitment/completion-and-records/batch-completion-implementation.md) |
 | 후행 통합 기록 | 현재 브랜치/게시 상태·기능 브랜치 정리 결과는 dev의 후행 문서 커밋으로 보존. 업무 코드/시험/계약 변경 없음 |
 
 이전 #47 구간에서 사용자 지시로 Backend dev 병합·push를 완료하고 feat/raid-batch-completion을 로컬/원격에서 정리했다. main·로컬 서버·운영은 당시 #47 통합에서 변경하지 않았다. 이후 새 게시/병합/배포는 별도 지시 범위다. 실제 개발 DB의 행 수는 사용자 테스트로 변할 수 있으므로 반영 시점의 건수를 현재 고정값처럼 사용하지 않는다.
@@ -40,9 +49,9 @@ Native #47 게시47a30dad, #48 후속 lib/test/문서의 미커밋·미push·dev
 
 <a id="runtime-consolidation-followup"></a>
 
-## 별도 선택 후속 — 실행 구성 단일화
+## 실행 구성 단일화
 
-[조사](../engineering/development/runtime-consolidation-review.md)와 [개선 대장](backend-improvement-plan.md#runtime-consolidation)은 보존한다. 기본0023 앱과 현재 two-cycle 실행을 혼용하지 않는다. 구현 착수/기존 코드 삭제·운영 반영은 별도 선택이다.
+사용자 승인으로 위 현재 작업에서 구현·검증·로컬 반영을 완료했다. [현재 구현/유지 조건](../engineering/development/runtime-configuration.md)·[당시 조사](../engineering/development/runtime-consolidation-review.md)·[개선 대장](backend-improvement-plan.md#runtime-consolidation)을 연결한다. 과거 코드 전체 삭제·운영 반영 승인은 포함하지 않는다.
 
 <a id="recovery-backup-closeout"></a>
 

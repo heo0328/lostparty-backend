@@ -22,7 +22,7 @@ from web_smoke import main as unused_web_main
 
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--docker',default='docker');args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--docker',default='docker');parser.add_argument('--image',default='lostparty-backend-api:latest');args=parser.parse_args()
     repo=Path(__file__).resolve().parents[2];name='lostparty-upgrade-test-'+uuid.uuid4().hex[:10]
     def mount(path):
         path=str(path.resolve())
@@ -36,7 +36,7 @@ def main():
         for key in ['recovery.key','lostark-credential.key','lostark-fingerprint.key']:(keys/key).write_bytes(os.urandom(32))
         for key in keys.iterdir():key.chmod(0o644)  # Disposable sandbox-only keys; no real credentials mounted.
         old_caddy=root/'Caddyfile';old_caddy.write_text('http://web.test {\n reverse_proxy api:8000\n}\n')
-        config={'name':name,'services':{'db':{'image':'postgres:17-bookworm','environment':{'POSTGRES_DB':'lostparty_test','POSTGRES_PASSWORD':'test-only-password'},'tmpfs':['/var/lib/postgresql/data'],'healthcheck':{'test':['CMD-SHELL','pg_isready -U postgres -d lostparty_test'],'interval':'1s','timeout':'2s','retries':30}},'api':{'image':'lostparty-backend-api:two-cycle','environment':{'POSTGRES_DB':'lostparty_test','APP_DB_PASSWORD':'test-only-password','GOOGLE_CLIENT_ID':maintenance.WEB_CLIENT,'GOOGLE_AZP_ALLOWLIST':'debug,old','OWNERSHIP_WORKER_ENABLED':'0','RECRUITMENT_WORKER_ENABLED':'0'},'volumes':[{'type':'bind','source':mount(keys),'target':'/run/secrets','read_only':True}],'command':['uvicorn','app.main:create_two_cycle_app','--factory','--host','0.0.0.0','--port','8000','--no-access-log','--no-proxy-headers'],'healthcheck':{'test':['CMD','python','-c',"import urllib.request;urllib.request.urlopen('http://127.0.0.1:8000/health')"],'interval':'1s','timeout':'3s','retries':30}},'caddy':{'image':'caddy:2-alpine','environment':{'API_DOMAIN':'http://web.test'},'volumes':[{'type':'bind','source':mount(old_caddy),'target':'/etc/caddy/Caddyfile','read_only':True}]},'probe':{'image':'python:3.12-slim-bookworm','command':['sleep','3600']}},'networks':{'default':{'internal':True}}}
+        config={'name':name,'services':{'db':{'image':'postgres:17-bookworm','environment':{'POSTGRES_DB':'lostparty_test','POSTGRES_PASSWORD':'test-only-password'},'tmpfs':['/var/lib/postgresql/data'],'healthcheck':{'test':['CMD-SHELL','pg_isready -U postgres -d lostparty_test'],'interval':'1s','timeout':'2s','retries':30}},'api':{'image':args.image,'environment':{'POSTGRES_DB':'lostparty_test','APP_DB_PASSWORD':'test-only-password','GOOGLE_CLIENT_ID':maintenance.WEB_CLIENT,'GOOGLE_AZP_ALLOWLIST':'debug,old','OWNERSHIP_WORKER_ENABLED':'0','RECRUITMENT_WORKER_ENABLED':'0'},'volumes':[{'type':'bind','source':mount(keys),'target':'/run/secrets','read_only':True}],'command':['uvicorn','app.main:create_app','--factory','--host','0.0.0.0','--port','8000','--no-access-log','--no-proxy-headers'],'healthcheck':{'test':['CMD','python','-c',"import urllib.request;urllib.request.urlopen('http://127.0.0.1:8000/health')"],'interval':'1s','timeout':'3s','retries':30}},'caddy':{'image':'caddy:2-alpine','environment':{'API_DOMAIN':'http://web.test'},'volumes':[{'type':'bind','source':mount(old_caddy),'target':'/etc/caddy/Caddyfile','read_only':True}]},'probe':{'image':'python:3.12-slim-bookworm','command':['sleep','3600']}},'networks':{'default':{'internal':True}}}
         subnet='172.29.'+str(100+int(uuid.uuid4().hex[:2],16)%140)
         config['networks']['default']['ipam']={'config':[{'subnet':subnet+'.0/24','ip_range':subnet+'.128/25'}]}
         config['services']['caddy']['networks']={'default':{'ipv4_address':subnet+'.2'}}
@@ -71,7 +71,7 @@ def main():
             # A pre-existing synthetic member proves that migration preserves existing rows.
             call(['docker','exec',db,'psql','-U','postgres','-d','lostparty_test','-c',"INSERT INTO users(id,status,created_at,updated_at,last_login_at) VALUES ('00000000-0000-4000-8000-000000000001','active',now(),now(),now());"])
             call(prefix+['up','-d','--wait','api','caddy'])
-            current={'tag':'v2.0.0','source':'b'*40,'image':'lostparty-backend-api:two-cycle','compose':str(compose)}
+            current={'tag':'v2.0.0','source':'b'*40,'image':args.image,'compose':str(compose)}
             server.atomic(state/'current.json',current)
             before=platform.containers();protected=platform.protected_files()
             receipt=json.loads((repo/'docs/engineering/operations/records/web-handoff-2.1.0.json').read_text())
@@ -83,13 +83,13 @@ def main():
                     status=data['status']
                     def read(self):return data['body'].encode()
                 return Response()
-            contracts={n:checksum(json.dumps(json.loads((repo/'openapi'/n).read_text()),sort_keys=True,separators=(',',':')).encode()) for n in ['openapi.yaml','two-cycle.openapi.yaml']}
+            contracts={n:checksum(json.dumps(json.loads((repo/'openapi'/n).read_text()),sort_keys=True,separators=(',',':')).encode()) for n in ['openapi.yaml','legacy.openapi.yaml']}
             # Use a local Caddy host-path spelling; unlike production Windows paths
             # cannot be opened directly by the Linux control process.
             real_config=copy.deepcopy(config)
             real_config['services']['caddy']['volumes'][0]['source']=str(old_caddy)
             with patch('maintenance.preflight',return_value=(current,real_config,before)),patch('maintenance.check_backup'),patch('maintenance.command',side_effect=call),patch('server.command',side_effect=call),patch('maintenance.install_controller'),patch('maintenance.urllib.request.urlopen',side_effect=edge):
-                result=maintenance.transition(platform,state,{'tag':'v2.1.0','source':'a'*40,'image':'lostparty-backend-api:two-cycle'}, {'configuration_revision':'lightsail-web-2.1.0','to_db_revision':'0036_roster_presence'},receipt,repo/'backups/web-handoff/artifact-13849320316',web,repo/'docker/Caddyfile.lightsail',{},contracts)
+                result=maintenance.transition(platform,state,{'schema':2,'tag':'v2.1.0','source':'a'*40,'image':args.image}, {'configuration_revision':'lightsail-web-2.1.0','to_db_revision':'0036_roster_presence'},receipt,repo/'backups/web-handoff/artifact-13849320316',web,repo/'docker/Caddyfile.lightsail',{},contracts)
             assert result['phase']=='candidate_ready' and (web/'maintenance').exists()
             assert platform.protected_files()[str(keys/'jwt.pem')]==protected[str(keys/'jwt.pem')]
             rows=call(['docker','exec',db,'psql','-U','postgres','-d','lostparty_test','-Atc',"SELECT count(*) FROM users WHERE id='00000000-0000-4000-8000-000000000001'"]).strip();assert rows=='1'

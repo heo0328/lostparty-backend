@@ -13,7 +13,7 @@
 최신: 사용자 승인 [전체18번째 로컬 반영](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721249386)으로 실제 개발 API·DB0036 지원을 완료했다. [반영/보존·실행 확인](../../../engineering/operations/records/roster-participation-local-rollout.json)을 따른다. 기존114업무표99행/sequence/키 보존·실행 소스/두 계약 일치·healthy, Native 새 연결/기기·운영은 미완료다. 실행별 검증·당시 미반영 경과는 집계/DEV_LOG에 보존하며 현재 상태는 이 문서를 따른다.
 
 
-2026-11-08 / `feat/character-lifecycle` / 구현 commit `4c37c2bebbb9eb8950770a240b6e20b7b468399c`·origin push/원격 일치 확인. [전체19번째 원격 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721299358)·[DEV_LOG](../../../project/DEV_LOG.md)의 후행 게시 기록을 따른다. 현재 실행 앱 소스247파일은 이 구현 커밋과 일치한다. [Native 전체15번째 후보 소비 수용](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6720431541) 뒤 사용자 진행·중단 구간 재개 지시에 따른 Backend 구현이다. 실행 계약은 [기본](../../../../openapi/openapi.yaml)·[two-cycle](../../../../openapi/two-cycle.openapi.yaml), 검토 당시 고정 입력은 [후보](roster-participation-contract-candidate.md)다. **실제 로컬 API·DB0036 반영 완료, 운영 서버·DB는 미변경**이다.
+2026-11-08 / `feat/character-lifecycle` / 구현 commit `4c37c2bebbb9eb8950770a240b6e20b7b468399c`·origin push/원격 일치 확인. [전체19번째 원격 인계](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6721299358)·[DEV_LOG](../../../project/DEV_LOG.md)의 후행 게시 기록을 따른다. 현재 실행 앱 소스247파일은 이 구현 커밋과 일치한다. [Native 전체15번째 후보 소비 수용](https://github.com/heo0328/lostparty-backend/issues/17#issuecomment-6720431541) 뒤 사용자 진행·중단 구간 재개 지시에 따른 Backend 구현이다. 실행 계약은 [기본](../../../../openapi/legacy.openapi.yaml)·[two-cycle](../../../../openapi/openapi.yaml), 검토 당시 고정 입력은 [후보](roster-participation-contract-candidate.md)다. **실제 로컬 API·DB0036 반영 완료, 운영 서버·DB는 미변경**이다.
 
 ## 구현한 동작
 

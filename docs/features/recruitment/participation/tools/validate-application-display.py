@@ -155,7 +155,7 @@ def validate(case):
 def main():
     # Existing copied components stay equal to the source contract; this does
     # not modify the runtime contract or validate any HTTP implementation.
-    runtime = json.loads((BASE.parents[3] / 'openapi/two-cycle.openapi.yaml').read_text())
+    runtime = json.loads((BASE.parents[3] / 'openapi/openapi.yaml').read_text())
     def refs(value):
         if isinstance(value, dict):
             return {k: v.replace('#/components/schemas/', '#/$defs/') if k == '$ref' else refs(v) for k, v in value.items()}

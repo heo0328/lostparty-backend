@@ -6,7 +6,7 @@ Flutter [전체127번째 계약 수용/최종 wire 요청](https://github.com/he
 
 ## 새 정정 경로·확인/결과
 
-정확한 schema는 [실행 OpenAPI](../../../../../../openapi/two-cycle.openapi.yaml)의 `CorrectionContext`, `CorrectionCommand`, `CorrectionResult` 및 참조 객체다. 기존 168경로에 아래 2개를 추가해 170경로이며 기존 manual·summary required/type·기존 body/hash를 변경하지 않는다. 기본0023 OpenAPI와 고정 0.4.1 wire는 보존한다. 런타임 확장 schema revision은 `0030_completion_corrections`, policy는 `two-cycle-contract-4`다.
+정확한 schema는 [실행 OpenAPI](../../../../../../openapi/openapi.yaml)의 `CorrectionContext`, `CorrectionCommand`, `CorrectionResult` 및 참조 객체다. 기존 168경로에 아래 2개를 추가해 170경로이며 기존 manual·summary required/type·기존 body/hash를 변경하지 않는다. 기본0023 OpenAPI와 고정 0.4.1 wire는 보존한다. 런타임 확장 schema revision은 `0030_completion_corrections`, policy는 `two-cycle-contract-4`다.
 
 - GET `/v2/me/characters/{character_id}/raid-weekly-states/{raid_id}/completion-correction-context?target_cycle_key=T`
 - POST `/v2/me/characters/{character_id}/raid-weekly-states/{raid_id}/completion-corrections`, UUID4 Idempotency-Key 필수

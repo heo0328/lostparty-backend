@@ -41,49 +41,22 @@ from app.raid_rooms.api.weekly_summary_router import router as weekly_summary_ro
 
 
 @asynccontextmanager
-async def lifespan(app):
+async def legacy_lifespan(application):
     from app.core.database import session
     from app.raid_rooms.common.readiness import require_active
     with session() as db:require_active(db)
-    task = asyncio.create_task(run())
-    ownership_task = asyncio.create_task(run_ownership_worker())
-    recruitment_task = asyncio.create_task(run_recruitment_worker())
-    yield
-    task.cancel()
-    ownership_task.cancel()
-    recruitment_task.cancel()
-    with suppress(asyncio.CancelledError):
-        await task
-    with suppress(asyncio.CancelledError):
-        await ownership_task
-    with suppress(asyncio.CancelledError):
-        await recruitment_task
+    tasks = [asyncio.create_task(run()), asyncio.create_task(run_ownership_worker()),
+             asyncio.create_task(run_recruitment_worker())]
+    try:
+        yield
+    finally:
+        for task in tasks:
+            task.cancel()
+        for task in tasks:
+            with suppress(asyncio.CancelledError):
+                await task
 
 
-app = FastAPI(title="LostParty API", docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
-app.include_router(router)
-app.include_router(game_router)
-app.include_router(lifecycle_router)
-app.include_router(profile_router)
-app.include_router(batch_router)
-app.include_router(preferences_router)
-app.include_router(presentation_router)
-app.include_router(settings_router)
-app.include_router(lostark_keys_router)
-app.include_router(raid_router)
-app.include_router(raid_weekly_router)
-app.include_router(groups_router)
-app.include_router(group_admissions_router)
-app.include_router(ownership_disputes_router)
-app.include_router(bootstrap_router)
-app.include_router(weekly_summary_router)
-for recruitment_api in (recruitment_search_router,recruitment_reads_router,recruitment_router,availability_router,
-                        schedule_router,continuation_router,completion_router,recruitment_management_router):
-    app.include_router(recruitment_api)
-register(app)
-
-
-@app.middleware("http")
 async def no_store(request, call_next):
     response = await call_next(request)
     if request.url.path.startswith(("/v1/", "/v2/")):
@@ -91,9 +64,6 @@ async def no_store(request, call_next):
     return response
 
 
-register_cors(app)
-
-_original_openapi = app.openapi
 def _decorate_openapi(schema):
     from app.raid_rooms.contracts.schema_ids import preserve
     preserve(schema)
@@ -392,8 +362,6 @@ def _decorate_openapi(schema):
     roster_openapi.decorate(schema)
     schema['x-group-features'] = dict(required_schema='0034_group_features', display_profile='group-display-1', management_profile='group-management-1', group_link_query='include_group_state=true', raid_authority='existing actual-target raid leader; group role grants no raid command', legacy_default_shape='preserved', reads='stored current group-scoped data only; no provider or read-side writes')
     return schema
-def openapi():return _decorate_openapi(_original_openapi())
-app.openapi = openapi
 
 class HealthResponse(BaseModel):
     status: Literal["ok"]
@@ -408,8 +376,6 @@ def connect():
                           user="lostparty_app", password=os.environ["APP_DB_PASSWORD"],
                           connect_timeout=3, options="-c statement_timeout=3000")
 
-@app.get("/health", response_model=HealthResponse,
-         responses={503: {"model": UnhealthyResponse, "description": "Database unavailable"}})
 def health():
     try:
         with connect() as conn:
@@ -426,7 +392,7 @@ def health():
 
 
 @asynccontextmanager
-async def two_cycle_lifespan(application):
+async def current_lifespan(application):
     from app.core.database import session
     from app.raid_rooms.common.readiness import require_two_cycle_active
     from app.raid_rooms.common.cycle_worker import process_due
@@ -440,24 +406,49 @@ async def two_cycle_lifespan(application):
             with suppress(asyncio.CancelledError):await task
 
 
-def create_two_cycle_app():
-    """Explicit ASGI factory for a verified 0029 cutover; default app stays 0023.
+def _base_application(lifespan):
+    """Register common HTTP behavior independently; never copy another app."""
+    result = FastAPI(title="LostParty API", docs_url=None, redoc_url=None,
+                     openapi_url=None, lifespan=lifespan)
+    for common_router in (router, game_router, lifecycle_router, profile_router, batch_router,
+            preferences_router, presentation_router, settings_router, lostark_keys_router,
+            raid_router, raid_weekly_router, groups_router, group_admissions_router,
+            ownership_disputes_router, bootstrap_router, weekly_summary_router,
+            recruitment_search_router, recruitment_reads_router, recruitment_router,
+            availability_router, schedule_router, continuation_router, completion_router,
+            recruitment_management_router):
+        result.include_router(common_router)
+    result.add_api_route('/health', health, methods=['GET'], response_model=HealthResponse,
+        responses={503: {'model': UnhealthyResponse, 'description': 'Database unavailable'}})
+    register(result)
+    result.middleware('http')(no_store)
+    register_cors(result)
+    return result
 
-    Preparation only: this factory never migrates DBs or edits deployment config.
-    """
+
+def create_legacy_app():
+    """Explicit DB0023 regression/recovery app, never the default runtime."""
+    result = _base_application(legacy_lifespan)
+    generate = result.openapi
+    def schema():
+        if result.openapi_schema is None:
+            result.openapi_schema = _decorate_openapi(generate())
+        return result.openapi_schema
+    result.openapi = schema
+    return result
+
+
+def create_app():
+    """Current production/development app; startup validates but never migrates DB."""
     from app.raid_rooms.api.cycle_router import router as cycle_router
-    from fastapi.routing import APIRoute
-    from fastapi import APIRouter
-    result=FastAPI(title="LostParty API",docs_url=None,redoc_url=None,openapi_url=None,lifespan=two_cycle_lifespan)
-    legacy=APIRouter()
-    legacy.routes.extend(route for route in app.routes if isinstance(route,APIRoute))
-    result.include_router(legacy)
+    result = _base_application(current_lifespan)
     result.include_router(cycle_router)
     from app.raid_rooms.api.application_presets import router as presets_router
     result.include_router(presets_router)
-    register(result);result.middleware('http')(no_store)
     generate=result.openapi
     def schema():
+        if result.openapi_schema is not None:
+            return result.openapi_schema
         value=_decorate_openapi(generate())
         value['x-recruitment-policy'].update(schema_revision='0035_cycle_group_policy',policy_version='two-cycle-contract-4',
             search_semantics='own-target-participation-excluded-v1',
@@ -502,7 +493,15 @@ def create_two_cycle_app():
             promises='atomic participant/personal-copy/base reservation; earlier-only automatic confirmation; deadline fallback',
             presets='/v2/me/application-message-presets',compatibility='original ACK before unsafe new-write guard; no automatic legacy conversion')
         from app.raid_rooms.contracts import roster_openapi
-        return roster_openapi.decorate(value,two_cycle=True)
+        result.openapi_schema = roster_openapi.decorate(value,two_cycle=True)
+        return result.openapi_schema
     result.openapi=schema
-    register_cors(result)
     return result
+
+
+def create_two_cycle_app():
+    """Compatibility entrypoint for existing commands; use create_app for new callers."""
+    return create_app()
+
+
+app = create_app()

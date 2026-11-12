@@ -162,7 +162,8 @@ def test_unauthenticated_and_deleted_registration(client,world):
 
 
 def test_v2_required_nullable_contract_and_legacy_schema_unchanged():
-    from app.main import app
+    from app.main import create_legacy_app
+    app = create_legacy_app()
     schema=app.openapi(); definitions=schema['components']['schemas']
     for name in ('LifecycleCharacterOut','LifecycleCharactersOut','RetirementOut','RetirementPage'):
         model=definitions[name]

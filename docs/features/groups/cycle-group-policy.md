@@ -43,7 +43,7 @@ include_group_state=true의 room_groups를 cycle_groups로 대체한다. 원소�
 
 ## 검증·게시
 
-고정 wire 원본은 [two-cycle OpenAPI](../../../openapi/two-cycle.openapi.yaml), 합성 context/전환/과거 unavailable은 [대표 예시](cycle-group-policy.examples.json)를 따른다. 예시는 전체 명령의 대체 본문이 아니며 token은 재사용 불가능한 placeholder다. [검증 기록](cycle-group-policy-verification.json)에는 실제 실행·반복/고유 시나리오와 미실행을 구분한다. 대표 오류는 CLIENT_UPGRADE_REQUIRED409, TARGET_CONTEXT_STALE409, TARGET_LEADER_REQUIRED403, GROUP_MEMBERSHIP_REQUIRED403, GROUP_NOT_ACTIVE409, REVISION_CONFLICT409, ROOM_REVIEW_REQUIRED409, ROOM_NOT_FOUND404다. group_policy 조합/대상 불일치는 INVALID_REQUEST400 또는 TARGET_SCOPE_MISMATCH400이다. 현재 개발 실행은 sourceb8542ef·이미지930c25f8·DB0035다.
+고정 wire 원본은 [two-cycle OpenAPI](../../../openapi/openapi.yaml), 합성 context/전환/과거 unavailable은 [대표 예시](cycle-group-policy.examples.json)를 따른다. 예시는 전체 명령의 대체 본문이 아니며 token은 재사용 불가능한 placeholder다. [검증 기록](cycle-group-policy-verification.json)에는 실제 실행·반복/고유 시나리오와 미실행을 구분한다. 대표 오류는 CLIENT_UPGRADE_REQUIRED409, TARGET_CONTEXT_STALE409, TARGET_LEADER_REQUIRED403, GROUP_MEMBERSHIP_REQUIRED403, GROUP_NOT_ACTIVE409, REVISION_CONFLICT409, ROOM_REVIEW_REQUIRED409, ROOM_NOT_FOUND404다. group_policy 조합/대상 불일치는 INVALID_REQUEST400 또는 TARGET_SCOPE_MISMATCH400이다. 현재 개발 실행은 sourceb8542ef·이미지930c25f8·DB0035다.
 
 
 ## 개발환경 적용 순서 (사용자 승인으로 실행 완료)
