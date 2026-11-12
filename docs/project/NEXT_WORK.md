@@ -2,13 +2,13 @@
 
 2026-11-13 KST 기준. 실제 Backend 코드/Git과 각 담당의 현재 코드 확인 결과를 사용한다. Native 코드 상태·완료 판단은 Native가 작성하며 Backend가 대신 검토하지 않는다.
 
-## 현재 작업 — Issue51 공동 운영2.2.0
+## Issue51 — Backend API·웹 운영 완료 / Native Android 공개 대기
 
-- 사용자 지시로 dev/main을9775c1e에 맞춰 atomic push·원격 일치 확인, 완료 refactor/backend-runtime 로컬 정리 후 release/2.2.0에서 진행한다.
-- #50 탐색과 실행 정리를 함께 배포한다. 운영은2.1.1·DB0036·웹2.1.0으로 정상이며 현재 자료/키/환경은 유지한다. DB migration/키 교체 없이 배포 도구 선갱신과 웹 파일명 처리 보완이 필요하다.
-- 사용자 확정에 따라 dev 기능 시험·제한 접근/임시 계정/사용자 재인수는 반복하지 않는다. 기존2001+58 근거의 고정 source/hash 재사용과 새 도구·고정 산출물·실제 배포 검증을 구분한다.
-- 다음 Backend: 새 백업/기존 PC 사본 → 설치 도구 갱신/preflight → 표준 API 배포 → 고정 웹 활성/HTTPS/hash → Issue51 실제 결과 회신. 다음 Native는 서버/웹 성공 후Android Release 공개다.
-- [실행 계획/복귀](../engineering/operations/release-2.2.0.md)·[웹 원본 수령](../engineering/operations/records/web-handoff-2.2.0.json)·[전체4 Backend 준비](https://github.com/heo0328/lostparty-backend/issues/51#issuecomment-6831158426).
+- Backend2.2.0/source c31d90da·imagecc753718…406dae·DB0036, 고정웹2.2.0+7/source994db44a·ZIP517166ca를 일반 공개했다. Actions43274053529 success·실제HTTPS/API와34자산hash/두생성계약 확인 PASS.
+- 설치common/server 선갱신·구/신메타데이터preflight PASS. 기존118표 전체 COPY행·DB/Caddy컨테이너/키·환경·mount 보존. 직전/반영후 백업과 기존PC폴더 사본hash를 확인했으며 실제복원과는 구분한다.
+- [전체5 Backend 운영 결과](https://github.com/heo0328/lostparty-backend/issues/51#issuecomment-6831720284) 게시/전체순번재조회, 본문상단현재상태갱신. **다음 담당 Native:** 같은source Android2.2.0 Release 공개와실제게시파일/서명/hash 확인. Backend는그회신확인 후 협의기록연결. 사용자재시험/제한접근요청없음. Issue는OPEN유지.
+- dev/main은배포sourcec31d90da까지동일push, 현재release/2.2.0의후행기록을통합·게시해보존한다. 태그/이미지소스는불변이며기록수정으로재배포하지않는다.
+- [실행/복귀](../engineering/operations/release-2.2.0.md)·[실제집계](../engineering/operations/records/release-2.2.0-deployment.json)·[웹원본](../engineering/operations/records/web-handoff-2.2.0.json).
 
 ## Issue50 마감 완료 / 다음 업무 선택
 

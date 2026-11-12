@@ -31,7 +31,10 @@
       }
     },
     "original_three_files_preserved": true,
-    "activated": false
+    "activated": true,
+    "aws_uploaded": true,
+    "server_staged": true,
+    "https_asset_hashes_verified": 34
   },
   "apk": {
     "run_id": 43257162413,

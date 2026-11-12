@@ -28,3 +28,9 @@
 API 실패 시 표준 제어기가 직전 DB0036 호환 image7aa19edf와 동결 명령으로 복귀한다. legacy DB0023 앱이나 DB downgrade를 사용하지 않는다. 웹 실패 시 이전 pointer의2.1.0 고정 원본으로 복귀한다. 새 서버는 기존 앱/웹도 지원하므로 웹 복귀 때문에 DB/키/환경을 되돌리지 않는다. 새 계약을 소비하는 앱이 공개되기 전 Backend/API·웹 성공을 먼저 회신한다.
 
 기존 서비스·백업/태그는 삭제하지 않는다. 서비스 교체로 사용자 자료가 초기화되지 않아야 하며 기존 PC 사본과 실제 복원 시험은 별개다. 실제 수행 결과는 DEV_LOG와 [NEXT_WORK](../../project/NEXT_WORK.md)에 기록한다.
+
+## 실제 운영 완료
+
+Backend v2.2.0/source c31d90da·image cc753718…406dae·DB0036을 표준 Actions43274053529로 반영했다. common/server 설치 갱신·schema1/2 preflight와 직전/반영후 백업·기존 PC 사본 hash를 확인했다. 기존118표의 COPY 행 전부가 직전 dump와 일치하며 DB/Caddy 컨테이너·환경/키/mount를 유지했다. 웹은 Native source994db44a/ZIP517166ca의 원본 그대로 공개했고 실제HTTPS34자산 hash·기존/신규 검색응답·health/인증 경계를 확인했다.
+
+[전체5 Backend 운영 완료](https://github.com/heo0328/lostparty-backend/issues/51#issuecomment-6831720284)를 게시하고 실제 전체 순번/작성 측/다음 Native Android 공개를 재조회했다. [공개 실행 집계](records/release-2.2.0-deployment.json). 새 사용자 재인수·자료 쓰기 시험·DB migration/키 교체는 없다. 다음 Native Android Release/실제 게시 검증과 Issue 종료는 구분한다. 고정 태그/이미지는 후행 기록 커밋으로 다시 배포하지 않는다.

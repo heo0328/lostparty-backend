@@ -1,5 +1,17 @@
 # 영구 개발 이력
 
+## 2026-11-13 Issue51 Backend2.2.0·웹 공개 완료
+
+사용자승인으로릴리즈197142e를dev/main c31d90da에이력보존통합·atomic push하고불변태그v2.2.0을게시했다.2.2.0한정로컬검증재사용은8a54c485→승인9775c1e의실행소스동일·고정원장hash와후속허용도구경로만통과하며기존기능시험을반복하지않았다. 변경도구86PASS·정적검사PASS. 초기새단위시험의fixture범위오류1은시험준비만수정후해소했다. Actions43274053529 success,신규전체CI회귀로표시하지않는다.
+
+운영읽기확인후직전백업15,073,280bytes/70멤버·기존PC사본hash40066825…659b4를확인했다. 배포잠금하에설치common/server만갱신하고schema1/2 preflight통과, 제한SSH/sudo·키·환경그대로다. 표준API배포후v2.2.0/sourcec31d90da/imagecc753718…406dae·DB0036을실제확인했고두전체생성명세원문일치·현재118표COPY행이직전dump와전부동일/변경0·DB/Caddy동일·키/환경/mount보존을확인했다.
+
+사용한도중단시점에는API배포성공/웹비활성배치까지완료돼있었다. 재개후상태/Issue최신댓글을다시읽고같은태그재실행없이실제보존검증부터이어갔다. Native원ZIP517166ca/source994db44a/2.2.0+7을그대로원자활성화했고HTTPS34자산전부hash/크기·index제목·APIhealth·구응답/신discovery·invalidprofile400/무인증401/누락asset404를확인했다. 제한접근/임시계정/사용자재인수·실회원쓰기시험은없다.
+
+[전체5 Backend API·웹 완료](https://github.com/heo0328/lostparty-backend/issues/51#issuecomment-6831720284)를게시/실제전체순번재조회하고본문상단현재완료/다음NativeAndroid공개로갱신했다. 반영후DB/환경/기존키/새제어기·동결상태/활성웹원본도새사본과기존PC폴더hash로보존했다. 개인경로/백업원문·키/DB응답은ignored private에만저장한다. [공개집계](../engineering/operations/records/release-2.2.0-deployment.json). 실제DB복원/정기자동화·Android공개완료로확대하지않는다.
+
+후행기록만같은release/2.2.0에서커밋·dev/main동일통합·push해보존한다. 태그/이미지·실행서비스는불변이며재배포하지않는다. Issue는OPEN유지,다음NativeAndroid게시결과회신확인이다.
+
 ## 2026-11-13 Issue51 공동2.2.0 운영 착수
 
 사용자가 dev push/main 동일화·필터 운영 배포를 지시하고 Native의Issue51을 지정했다. 전체1 Native의 사용자 공개 승인/기존 dev 기능 재시험·제한 접근/임시 계정/사용자 재인수 생략을 확인했다. 전체2 웹 run43257168045/artifact13963805044/source994db44a와 전체3 Android 준비를 확인했다. dev/main9775c1e atomic push·원격 동일 확인 후 완료 refactor/backend-runtime을 정리하고 release/2.2.0으로 분기했다.
