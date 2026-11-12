@@ -2,11 +2,13 @@
 
 2026-11-11 / Issue49 / 사용자 승인 6단계 실행 원본. 현재 상태는 [NEXT_WORK](../../project/NEXT_WORK.md), 실행별 근거는 [DEV_LOG](../../project/DEV_LOG.md)에 기록한다.
 
+**2026-11-12 최종 확인: 6단계 운영·실제인수·Native최종공개 완료.** 아래준비/점검/인수대기문구는각단계당시기록이며현재대기가아니다. 사용자마감지시로최종문서Git통합·게시/브랜치정리와Issue49 completed종료까지마감했다. [최종조합/검증 원장](records/release-2.1.0-deployment.json).
+
 ## 기준과 책임
 
-- 운영 v2.0.0/source51b1cb3/imagef33f4c6c/DB0035, 후보는 DB0036·기본125/142·two-cycle192/213. Backend 기본후보2.1.0은후속배포구성불일치로제외, 수정후보2.1.1/full 검증, 과거 reuse 예외는 재사용하지 않는다.
+- 전환 전 운영 v2.0.0/source51b1cb3/imagef33f4c6c/DB0035, 후보는 DB0036·기본125/142·two-cycle192/213. Backend 기본후보2.1.0은후속배포구성불일치로제외, 수정후보2.1.1/full 검증, 과거 reuse 예외는 재사용하지 않는다.
 - [합의/실물 인계](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6793794562)와 [독립 수령](records/web-handoff-2.1.0.json)을 기준으로 Native는 웹 build/manifest·APK·서명/기기 인수, Backend는 산출물 검증/서버배치·API/DB·백업/동결구성을 담당한다. 최종 공개는 함께 진행한다.
-- 웹 원3파일은 ignored backups/web-handoff/artifact-13849320316에 보존했다. 수령 검증/로컬비활성만 완료, AWS전송/활성화·실브라우저/운영기기 인수는 미완료다. 재빌드/재압축/다른artifact 묵시대체 금지.
+- 웹 원3파일은 ignored backups/web-handoff/artifact-13849320316에 보존했다. 현재AWS활성후점검상태까지적용, 실브라우저/운영기기인수·공동공개는미완료다. 재빌드/재압축/다른artifact 묵시대체 금지.
 - 서비스키4개·관리자/제한배포SSH는 재사용한다. 새Android client 1개를 기존azp2개에 추가하되 Web audience·서명/nonce 검증을 유지한다. Native 백업을 Backend의 새 선행작업으로 만들지 않는다.
 
 ## 단계와 완료 조건
@@ -57,7 +59,7 @@ python3 scripts/deployment/web_release.py verify \
   --receipt docs/engineering/operations/records/web-handoff-2.1.0.json
 ```
 
-운영 명령은 검증된 소스를 별도 clean checkout으로 확보한 뒤 실행한다. `$release_root`는 manifest source와 같은 commit의 checkout, `$handoff`는 검증 원3파일, `$manifest`는 CI에서 생성된 불변 release.json이다. 운영 루트는 기존 `/home/ubuntu/lostparty-backend`, 상태는 `/var/lib/lostparty-deploy`, 웹은 `/var/lib/lostparty-web`을 유지한다. 아래 명령은 실행 예시이며 현재 운영에서 수행하지 않았다.
+운영 명령은 검증된 소스를 별도 clean checkout으로 확보한 뒤 실행한다. `$release_root`는 manifest source와 같은 commit의 checkout, `$handoff`는 검증 원3파일, `$manifest`는 CI에서 생성된 불변 release.json이다. 운영 루트는 기존 `/home/ubuntu/lostparty-backend`, 상태는 `/var/lib/lostparty-deploy`, 웹은 `/var/lib/lostparty-web`을 유지한다. 아래는실행절차다. 현재preflight/capture/copy-confirm/apply는운영완료, open은실제인수후대기다.
 
 ```bash
 sudo python3 "$release_root/scripts/deployment/maintenance.py" preflight \
@@ -127,3 +129,35 @@ Backend v2.1.1/source `d16734d86e694579cd4e4e043c2ca89cc81c1b64`, image `ghcr.io
 서버별도clean후보checkout·원3파일/비활성site를준비하고실제baseline/후보image·labels/DBhead·설정/공간·공개API의관리자preflight ready/applied=false를확인했다. 고정소스도구로다음일반배포구성동등성도확인했다. 실제운영은v2.0.0/DB0035, current/maintenance없음·기존API/DB/Caddy서비스유지다. Backend2.1.1/대상DB0036/config lightsail-web-2.1.0과기존Native웹/APK2.1.0+6고정조합을유지한다.
 
 [전체25 인계](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6796938066)에서사용자실시험준비와Native인수·최종동일bytes공개합류시점을연결중이다. 실제인수까지장시간503을유지하지않도록준비확인전기존서비스를유지한다. 새backup은실제변경직전확보하며아직생성하지않았다. 이후5~6단계명령·검증/복귀는위설계를따른다. 실제시험/공개가미완료인수준에서종료/공개완료로표시하지않는다.
+
+## 운영 후보 적용 결과 — 실제 인수 대기
+
+[Native 전체26](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6797220771)의사용자즉시시험가능회신으로대기를해소해승인된5단계를실행했다. 현재Backend2.1.1/DB0036·고정웹활성/일반접속503이며Backend자동·실HTTPS검사완료, 실제Google/사용자업무·새APK인수는미완료다. [적용·직전/반영후백업집계](records/release-2.1.0-deployment.json)와[전체27 인계](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6797454537)가최신상태다. 위운영적용전결과는당시기록으로보존한다.
+
+첫시도는DB전실패후기존Caddy/API·DB0035로복귀확인·실패기록보존했다. 원본도구가최초예외를남기지않아첫원인을확정하지않는다. 재시도는원본clean소스/태그/image와검사게이트를유지하고관리자실행에서urllib transport오류에만20회/1초한정대기를적용했다. 실제URLError1회후점검503확인·0036전환/보존검사를통과했다. 예상HTTP503을성공200으로바꾸거나DB보호를우회하지않았다.
+
+다음은전체27의실제인수결과를수신하고고정조합/공동공개시점을확인한뒤open을실행하는것이다. 허용IP/백업원본/환경·키는비공개보관하며Git/Issue에올리지않는다. 추가기록의commit/push와최종공개/Issue종료는구분한다.
+
+## 최신 사용자 변경 — 점검 제한 해제 후 APK 인수
+
+사용자가임시IP제한의목적을확인하고 “점검 제한 해제하고 진행 합시다”라고명시지시했다. 이에APK인수완료후일반접속개방순서는변경됐으며, **웹/API일반접속을먼저개방하고APK실제인수·Native최종Release를이어확인**한다. 위점검접근/선인수게이트는이전실행설계로보존하며현재사용자지시에맞춰해석한다. APK미검증을통과로기록하지않는다.
+
+배포잠금·실제Backend/DB0036·웹원본무결성과개방전상태보존을유지하고maintenance marker만제거했다. 기존CLI open은Native완료를필수로요구하므로거짓true값을넣어호출하지않고, 명시적인운영자개방근거와미완료인수를분리해기록했다. public_open=true/일반IP제한없음/native_acceptance=pending이며인증/권한/키/DB·이미지는변경없다. [전체32 인계](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6798279634)·[공개상태/검증집계](records/release-2.1.0-deployment.json)를따른다.
+
+다음은같은Wi-Fi조건없이새APK로그인을재시험하고차이가있으면시각/단계로Backend와Native가대조하는것이다. 실제Native인수/최종Release·공동릴리즈마감은별도로확인하며일반접속개방만으로전부완료/Issue종료하지않는다.
+
+## 사용자 실제 인수 통과 — Native 최종 Release 대기
+
+일반접속개방후사용자가새APK Google로그인·기존회원자료조회까지정상이라고직접확인했다. Native전체28의웹시험완료보고와합쳐실제인수를통과로기록하고[전체33](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6798604314)에서Native에기존고정웹/서명APK동일bytes 최종Release공개와URL/태그·asset/hash회신을인계했다. 운영native_acceptance는사용자보고통과, 일반접속은계속공개다. Native최종공개확인/공동릴리즈마감은아직대기이며Issue를자동종료하지않는다. 실제확인근거와자산조합은[집계](records/release-2.1.0-deployment.json)를따른다.
+
+## 최종 공개 확인·마감 — 2026-11-12
+
+Native전체34의최종v2.1.0 공개를확인했다. Release441825178/draft=false/prerelease=false, 최종tag source9019ee060afb109684786bff62c92dece9925810, 게시CI43041814495성공이다. Native게시시각은2026-11-11T14:47:26Z(23:47:26KST), Backend일반접속개방은2026-11-11T14:18:08Z이며사용자변경지시의선개방/후인수순서를실제시각으로구분한다.
+
+Backend가공개5파일을직접다운로드해API digest/크기·실hash/체크섬과APK기존인수hash·웹원3파일동일bytes/전체manifest검증PASS. APK서명재검증·Native앱소스diff는Backend에서수행하지않았으며Native의기존근거를유지한다. 실행Backend소스/image/DB0036·healthy·일반공개/marker없음도확인하고운영원장에최종Release/joint_release_complete=true를반영·PC추가사본검증했다. 코드/키/DB/이미지·접속정책변경은없다.
+
+6단계기술완료와Git/Issue마감은구분한다. 최종문서는현재목적브랜치의로컬변경이며사용자명시게시지시후커밋·dev/main통합/push와브랜치정리를한다. Issue49는완료근거를갖춘OPEN상태로종료지시를따른다. 태그고정·기존백업보존, 추가배포/반복기기인수·실복원/정기백업자동화를마감의새선행조건으로만들지않는다.
+
+## 사용자 승인 마감 — 2026-11-12
+
+사용자 “마감 진행합니다” 지시에따라최종9문서를release/2.1.0에서커밋·dev이력보존통합/main동일화·push하고게시/다른사용여부확인후완료작업브랜치를정리했다. Issue49는완료근거와이관누락없음을확인해2026-11-12T08:57:44Z completed종료했다. 최종Git SHA/게시·브랜치정리결과는Issue49마감댓글과Git이력에연결한다. 운영Backend태그/소스·이미지와Native인수산출물은변경하지않으며새배포/반복인수는없다. 다음기능선택은별도다.

@@ -1,0 +1,263 @@
+{
+  "schema": 1,
+  "date_kst": "2026-11-11",
+  "issue": 49,
+  "phase": "joint_release_complete",
+  "steps": {
+    "5": "complete",
+    "6": "complete: general access open, actual user web/APK acceptance and Native identical-byte final Release verified"
+  },
+  "backend": {
+    "schema": 1,
+    "repository": "heo0328/lostparty-backend",
+    "tag": "v2.1.1",
+    "source": "d16734d86e694579cd4e4e043c2ca89cc81c1b64",
+    "image": "ghcr.io/heo0328/lostparty-backend@sha256:7aa19edfd4c526b03b011722e59a8674ee10dfadaf68b2c9906fc442042c061d",
+    "db_revision": "0036_roster_presence",
+    "contract_sha256": {
+      "openapi.yaml": "18491bc066d08a578aa9228cd0da85eee508288c28d14d563d788e73e324c3dd",
+      "two-cycle.openapi.yaml": "2c51d2f206100e9a305bafa6dd537a1b1b40cc23f9cf1ac6f65d254a4ff5faf7"
+    },
+    "compose_sha256": "6b92cf3359fe15aa597227b6c336dfee8769972b6fa7655bba7e2aa052514642",
+    "built_at_utc": "2026-11-11T13:17:25.758173Z"
+  },
+  "configuration_revision": "lightsail-web-2.1.0",
+  "web": {
+    "version": "2.1.0+6",
+    "source": "89951f4b71e7a225d442ccaf9510c83de86aaea7",
+    "artifact_id": 13849320316,
+    "bundle_sha256": "f8de14abf365a47101e55c3df949f6ebd24b509bd19aac25d9690a51779f4abc"
+  },
+  "apk": {
+    "source": "e9bfa96cc4a6ad1dfd7c87da9f0806b171e6ded1",
+    "artifact_id": 13847258618,
+    "native_reported_sha256": "19088554d128bdd10d51988fcc1ef1486a2e5f05490b0540a14febac0410a7d0",
+    "native_reported_app_sources_unchanged_between_builds": true
+  },
+  "native_test_readiness_comment": "https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6797220771",
+  "operating_handoff_comment": "https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6797454537",
+  "operating_handoff_comment_order": 27,
+  "public_open": true,
+  "native_final_release": {
+    "release_url": "https://github.com/heo0328/LostParty_flutter/releases/tag/v2.1.0",
+    "release_id": 441825178,
+    "tag": "v2.1.0",
+    "tag_source": "9019ee060afb109684786bff62c92dece9925810",
+    "published_at_utc": "2026-11-11T14:47:26Z",
+    "draft": false,
+    "prerelease": false,
+    "run_id": 43041814495,
+    "run_url": "https://github.com/heo0328/LostParty_flutter/actions/runs/43041814495",
+    "ci_result": "success",
+    "assets": [
+      {
+        "id": 735857612,
+        "name": "lostparty-2.1.0-6-android.apk",
+        "bytes": 91259138,
+        "sha256": "19088554d128bdd10d51988fcc1ef1486a2e5f05490b0540a14febac0410a7d0",
+        "url": "https://github.com/heo0328/LostParty_flutter/releases/download/v2.1.0/lostparty-2.1.0-6-android.apk"
+      },
+      {
+        "id": 735857614,
+        "name": "lostparty-2.1.0-6-android.apk.sha256",
+        "bytes": 96,
+        "sha256": "ae5d5d578a566024b07e97ab054d12e85aacbcdcc0f1b22515e55e8256f2eae0",
+        "url": "https://github.com/heo0328/LostParty_flutter/releases/download/v2.1.0/lostparty-2.1.0-6-android.apk.sha256"
+      },
+      {
+        "id": 735857617,
+        "name": "lostparty-v2.1.0-web.zip",
+        "bytes": 14333833,
+        "sha256": "f8de14abf365a47101e55c3df949f6ebd24b509bd19aac25d9690a51779f4abc",
+        "url": "https://github.com/heo0328/LostParty_flutter/releases/download/v2.1.0/lostparty-v2.1.0-web.zip"
+      },
+      {
+        "id": 735857613,
+        "name": "lostparty-v2.1.0-web.zip.sha256",
+        "bytes": 91,
+        "sha256": "17b47de82cca041d02705a7d49ed180e7e1893e0e3fadedf94b45cf6f853f5aa",
+        "url": "https://github.com/heo0328/LostParty_flutter/releases/download/v2.1.0/lostparty-v2.1.0-web.zip.sha256"
+      },
+      {
+        "id": 735857611,
+        "name": "release-manifest.json",
+        "bytes": 6033,
+        "sha256": "a4e0cd7cf1a2976b9f019b3830e4f8b387299b8121fd1fd43fb62333aaa51587",
+        "url": "https://github.com/heo0328/LostParty_flutter/releases/download/v2.1.0/release-manifest.json"
+      }
+    ],
+    "backend_downloaded_verified_all_five_assets": true,
+    "web_original_three_files_byte_identical": true,
+    "apk_matches_original_native_reported_hash": true,
+    "apk_signature_backend_reverification_executed": false,
+    "app_source_identity_to_final_tag": "Native reported; Backend did not inspect Native source",
+    "backend_opened_at_utc": "2026-11-11T14:18:08.840155+00:00",
+    "backend_deployed_at_utc": "2026-11-11T13:40:44.916713+00:00",
+    "backend_runtime_joint_release_complete": true,
+    "verification_date_kst": "2026-11-12"
+  },
+  "actual_google_browser_apk_acceptance": {
+    "web": "user-reported completion through Native overall28",
+    "apk": "explicit user confirmation: new APK Google login and existing member data normal after general access opening",
+    "overall": "user-reported pass; no synthetic/operator device simulation",
+    "handoff_comment": "https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6798604314",
+    "handoff_comment_order": 33
+  },
+  "backups": {
+    "pre": {
+      "db_revision": "0035_cycle_group_policy",
+      "archive_bytes": 634880,
+      "archive_members": 48,
+      "archive_sha256": "4535dec8c179b3c4698db78a461f7f3ef9a6bed28d3bfb0e230653705fd96ed8",
+      "server_windows_wsl_sha256_match": true,
+      "dump_catalog_verified": true,
+      "service_keys": 4,
+      "database_restore_executed": false
+    },
+    "post": {
+      "archive_bytes": 15032320,
+      "archive_members": 61,
+      "archive_sha256": "9b09cdc109613c6b8b55c7994a2d69c0db05e18192bbebbbb25dfeaf07f11cd0",
+      "db_revision": "0036_roster_presence",
+      "pc_copy_verified": true,
+      "active_original_web_included": true,
+      "database_restore_executed": false
+    },
+    "previous_backups_and_original_keys_preserved": true,
+    "archive_encrypted": false,
+    "personal_pc_path_omitted": true
+  },
+  "transition": {
+    "first_attempt": "failed_before_migration; initial exception not retained by CLI",
+    "first_attempt_db_revision_verified": "0035_cycle_group_policy",
+    "old_caddy_and_healthy_service_restored": true,
+    "failed_journal_preserved": true,
+    "retry": "reviewed immutable tool with bounded transport-readiness retry; status and preservation gates unchanged",
+    "retry_transport_errors": [
+      "URLError"
+    ],
+    "retry_delay_seconds": 1,
+    "retry_max_attempts": 20,
+    "original_tag_image_source_unchanged": true,
+    "existing_table_count_preserved": 114,
+    "existing_table_counts_and_digests_preserved": true,
+    "db_container_preserved": true,
+    "service_keys_preserved": true,
+    "existing_azp_preserved_and_one_added": true,
+    "azp_count": 3,
+    "web_audience_proof_validation_preserved": true
+  },
+  "backend_checks": {
+    "runtime_image_source_db0036_healthy": "PASS",
+    "both_full_generated_contracts": "PASS",
+    "configuration_and_next_standard_deployment_equivalent": "PASS",
+    "installed_controller_fixed_source_match": "PASS",
+    "actual_test_network_https": {
+      "root_exact_index": 200,
+      "/__backend_spa_probe/refresh": 200,
+      "/missing-release-asset.js": 404,
+      "/assets/missing-release-asset": 404,
+      "/release-manifest.json": 404,
+      "/health": 200,
+      "/v1/me": 401,
+      "/v2/me/account-bootstrap": 401,
+      "/v1/raid-catalog": 200,
+      "/flutter_bootstrap.js": {
+        "status": 200,
+        "cache": "no-cache",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      "/main.dart.js": {
+        "status": 200,
+        "cache": "no-cache",
+        "mime": "text/javascript; charset=utf-8"
+      },
+      "/canvaskit/canvaskit.wasm": {
+        "status": 200,
+        "cache": "no-cache",
+        "mime": "application/wasm"
+      }
+    },
+    "nonallowed_access_even_spoofed_forwarded_header": "503 Maintenance"
+  },
+  "next": "No release-specific required work remains. Other functional backlog, actual restore testing, scheduled backups and naming changes are separate choices.",
+  "acceptance_diagnostics": {
+    "native_comments": [
+      {
+        "order": 28,
+        "url": "https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6797815440"
+      },
+      {
+        "order": 29,
+        "url": "https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6797901202"
+      },
+      {
+        "order": 30,
+        "url": "https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6797918282"
+      }
+    ],
+    "backend_reply": {
+      "order": 31,
+      "url": "https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6797989314"
+    },
+    "window_utc": [
+      "2026-11-11T14:00:00Z",
+      "2026-11-11T14:06:09Z"
+    ],
+    "challenge_requests": 0,
+    "google_exchange_requests": 0,
+    "api_rejected_or_google_verification_or_database_errors": 0,
+    "apk_status_code_request_id": "unavailable: no matching API request",
+    "edge_access_logs": "disabled; historical edge503 vs not-arrived unresolved",
+    "current_pc_health": 200,
+    "configuration_or_code_changed": false,
+    "resolved_by_user_report_after_general_opening": true,
+    "historical_diagnostic_next": "same phone/Wi-Fi Chrome health status and time via Native; no secrets/IP/body required"
+  },
+  "joint_release_complete": true,
+  "public_opening": {
+    "authorization": "user explicitly instructed removal of temporary maintenance access restriction; general access before APK acceptance",
+    "opening_comment": "https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6798279634",
+    "comment_order": 32,
+    "maintenance_marker_exists": false,
+    "general_access_requires_source_ip_allowlisting": false,
+    "previously_denied_server_probes": {
+      "root": 200,
+      "health": 200,
+      "raid_catalog": 200,
+      "protected_me": 401
+    },
+    "pc_https_checks": {
+      "root": 200,
+      "health": 200,
+      "v1_v2_protected_apis": 401,
+      "missing_asset": 404
+    },
+    "image_db_keys_auth_proof_changed": false,
+    "native_acceptance_fabricated": false,
+    "opening_state_pc_copy_verified": true
+  },
+  "completion_verified_date_kst": "2026-11-12",
+  "final_publication_comment": {
+    "order": 34,
+    "side": "Native",
+    "url": "https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6798998431"
+  },
+  "closeout": {
+    "technical_release": "complete",
+    "backend_runtime_metadata": "final Release recorded; joint_release_complete=true",
+    "final_metadata_pc_copy_verified": true,
+    "local_final_documents": "included in approved final closeout history; dev/main publication evidence in Issue49 closing comment",
+    "backend_documentation_remote_tip_before_closeout": "51ebb74caf38c63912f2e8d03db10786a3291a3c",
+    "release_work_branch": "release/2.1.0 integrated and removed by approved closeout procedure",
+    "issue_state": "closed/completed",
+    "runtime_source_tag_image_unchanged": true,
+    "backend_reply": {
+      "order": 35,
+      "url": "https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6819138326"
+    },
+    "issue_closed_at_utc": "2026-11-12T08:57:44Z",
+    "closure_authorization": "user explicitly instructed: 마감 진행합니다",
+    "administrative_closeout": "complete; final integration SHA and branch verification recorded in Issue49"
+  }
+}

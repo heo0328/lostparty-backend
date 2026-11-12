@@ -4259,3 +4259,46 @@ NEXT_WORK/AI_CONTEXT/추적표를 갱신했으며 기존 로컬 수정은 보존
 - image7aa19edfd4c526b03b011722e59a8674ee10dfadaf68b2c9906fc442042c061d·release.json/validation.json/Compose·계약hash/DB0036독립대조PASS. [수치/hash원본](../engineering/operations/records/release-2.1.0-preparation.json). BackendRelease메타게시와운영/웹/APK공동공개는구분한다.
 - 서버고정소스·검증원본/웹비활성배치, imagepull/identity·labels/DBhead·현재baseline/공간/공개API를검사한관리자preflight ready/applied=false. 실제운영v2.0.0/DB0035유지·current/marker없음, 신규backup/migration/키·azp·서비스교체/공동공개미실행.
 - [전체25 Backend/4완료·5~6시점조정](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6796938066) 회신/본문갱신. 다음Backend직전backup/PC사본검증·점검전환, 사용자Chrome/새APK실시험·Native최종공개합류시점연결대기. 오래된dump를최신으로사용하거나미확인인수를true로채우지않는다.
+
+### 2026-11-11 — Native26 일정 대기 해소·운영 후보 적용 / 인수 접속 인계
+
+- [전체26 Native](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6797220771)에서사용자즉시시험가능보고를확인해일정대기해소. 승인된5단계로공인IP갱신(변화없음)·preflight/최신직전DB0035·환경/기존4키/복구구성backup·기존PC폴더새날짜사본·서버/Windows/WSLhash를확인했다. 새키/Secret생성·기존백업삭제없음.
+- 첫apply는DB변경전실패/기존Caddy·healthy API복귀·실제DB0035확인, 최초예외는원CLI가보존하지않아정확원인으로단정하지않는다. 실패journal을보존하고기존backup/키·환경/Caddy복귀를검증한후재시도했다. 원본소스/태그/image를유지하고HTTPS기동중transport 오류에만20회/1초한정대기를추가, URLError1회관측후503게이트통과. 상태/보존/migration검사를우회하지않았다.
+- 후보ready: Backend2.1.1/d16734d/image7aa19edf…c061d·DB0036. 기존114표count/digest·DB컨테이너/키·두전체생성계약보존. 기존azp2+새Android1/총3·Webaudience/서명/nonce유지, 다음일반배포구성/설치제어기일치PASS. 실제시험망HTTPS index원본/SPA/APIhealth·인증경계/누락자산404/WASM MIME/cache PASS, 비허용망위조forwarded헤더도503.
+- 반영후DB0036·환경/동결구성·복구제어기와활성원3파일도새backup/PC전송·독립hash확인. 직전634880bytes/48멤버, 반영후15032320bytes/61멤버. 실제복원/정기자동화/외장매체보관완료로확대하지않는다. [공개집계](../engineering/operations/records/release-2.1.0-deployment.json)에식별/hash/단계와자동/실제인수경계를기록했다.
+- [전체27 Backend/5적용·6시험접속](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6797454537)으로Native에주소/같은Wi-Fi/최소안내·실제웹/새APK인수를요청하고본문현재상태갱신. public_open=false·Native실제인수/공동공개대기, 자동검사로실Google성공을대신하지않는다. 이번기록은로컬미커밋·미push, 배포소스/태그는변경없음.
+
+### 2026-11-11 — Native28~30 인수 결과 / APK challenge 미도달 대조
+
+- [전체28 Native](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6797815440)의웹시험사용자완료보고수용. [전체29~30](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6797918282) 새APK23:03KST 계정선택미표시·기본문구실패. Native요청에따라운영안전로그읽기전용대조, 설정/코드/보호/점검상태변경없음.
+- UTC14:00~14:06:09 challenge/Google교환/API거절·검증·DB오류0건, 최신API로그14:06:07·healthy와Caddy실행/동결허용설정일치. 현재PC health200/database ok. Caddy접속로그는비활성이라과거edge503/미도달을확정하지않고해당APK의API status/code/request_id도없음. IP/UA기기식별로그미수집으로개별기기단정없음.
+- 웹보고시간대13:47/13:48 challenge201→교환200,13:51 모집생성201/상세200은시간상일치하는보강근거다. 각각미관찰조작/로그아웃을독립검증했다고확대하지않는다.
+- [전체31 Backend/6단계진단](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6797989314)으로회신. 다음Native/사용자는같은휴대폰/Wi-Fi Chrome health의200/503/연결오류와시각을확인한다. 웹완료반복·새키/OAuth등록/보호완화·산출물변경요청없음. APK차단/공동공개pending유지, 변경기록로컬미커밋·미push.
+
+### 2026-11-11 — 사용자 명시 지시로 임시 IP 점검 제한 해제
+
+- 사용자는휴대폰health의Maintenance를보고하고원래운영은주소를아는사람/앱설치자가접속하는방식임을재확인했다. 중단요청은유지했으며진단조회외운영변경없이설명한뒤, 최신 “점검 제한 해제하고 진행 합시다” 지시로작업재개/일반접속개방을승인받았다. 기존APK완료후개방순서를이번지시로변경, native_checks를true로합성하지않았다.
+- 배포잠금아래실행source/image·healthy/DB0036·고정웹무결성확인과기존current/journal사본보존후maintenance marker만제거. 사용자지시근거/개방상태를기록했다. public_open=true/native_acceptance=pending/joint_release_complete=false, 키·DB·이미지·인증검증변경/컨테이너재배포없음.
+- 이전비허용서버실HTTPS루트/health/카탈로그200·보호API401, PC루트/health200·v1/v2보호API401·누락자산404 PASS. 개방후상태3파일과SHA256을기존PC반영후사본에추가·Windows해시확인, 기존dump/키/백업원본덮어쓰기없음.
+- [전체32 Backend/6단계일반접속개방·APK재시험](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6798279634) 회신. IP/같은Wi-Fi조건해소·모바일데이터포함일반접속가능과APK미검증/Native최종Release대기를구분했다. 다음Native/사용자APK로그인·기존회원연결, 실패시시각/문구·단계대조. 적용·기록변경은로컬미커밋·미push, 배포태그/소스불변이다.
+
+### 2026-11-11 — 점검 해제 후 새 APK 실제 사용자 인수 통과
+
+- 사용자 “정상접속” 보고의범위를추가확인해 “새 APK 로그인·기존 자료까지 정상”이라는직접확인을받았다. 기존Native전체28의웹완료보고와합쳐실제웹/새APK인수를통과로기록. 대리조작/합성Google시험이아니며과거APK의정확한HTTP응답을새로확정한것으로과장하지않는다.
+- 현재공개조합/healthy·DB0036을읽기전용확인하고실제인수근거JSON·운영current/journal의native_acceptance를user_reported_pass로갱신. public_open=true/joint_release_complete=false, Native최종Release는대기다. 이미지/DB자료/키/접속정책·코드변경없음. 인수상태사본도기존PC백업에추가·독립hash확인했다.
+- [전체33 Backend/6단계실인수통과·최종공개](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6798604314)로Native에기존고정동일bytes 최종Release공개·URL/asset/hash/실제상태회신을인계했다. 반복인수/재빌드/재압축요청없음, 최종공개확인전전체마감/Issue종료없음. 로컬기록은미커밋·미push유지.
+
+### 2026-11-12 — 공동 릴리즈 최종 공개 독립 확인·마감 누락 정정
+
+- 사용자운영완료/마감점검요청에따라[전체34 Native](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6798998431)를확인. Nativev2.1.0 Release441825178은2026-11-11 23:47:26KST실공개·9019ee0태그/CI43041814495성공이며원웹89951f4b/APKe9bfa96과최종태그source를구분했다.
+- Backend가공개5파일105MB를직접다운로드해API digest/크기·실hash/체크섬·웹원3파일동일bytes/내외manifest·개별filehash를확인했다. APKhash19088554…a7d0·웹ZIPf8de14ab…4abc는기존인수물과동일. BackendAPK서명재검증/Native소스직접열람은없으며담당근거와구분한다. [최종원장](../engineering/operations/records/release-2.1.0-deployment.json).
+- 실행Backend2.1.1/d16734d/image7aa19edf…c061d·DB0036/healthy·공개/marker없음확인. 운영current/journal만최종Release/joint_release_complete=true로정정하고기존PC사본에3파일/해시추가확인. API/DB자료/키/이미지/설정변경·재배포없음.
+- 마감누락은Native최종공개대기표기·오래된Issue추적표·미커밋문서/브랜치/IssueOPEN이었다. NEXT_WORK/AI_CONTEXT/운영설계·원장/Issue추적표현재상태를완료로정정했다. 기술완료와최종문서Git게시/브랜치정리·Issue종료를구분하며후자는사용자직접지시전실행하지않았다. 기존문서변경을보존했고다른기능Issue/브랜치는수정하지않았다.
+
+- [전체35 Backend/기술마감·원장정정](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6819138326)로Native전체34에회신하고Issue현재상태를운영/공개완료·행정마감잔여로정정했다. 추가Native회신/반복시험요청없음.
+
+### 2026-11-12 — 사용자 승인 최종 마감
+
+- 사용자 “마감 진행합니다” 지시로미게시최종9문서의commit·dev/main통합/push·작업브랜치정리와Issue49종료범위를명시승인받았다. 원격dev/main51ebb74·태그v2.1.1/d16734d불변, 다른worktree사용없음/원격release브랜치없음을확인했다. 기존문서변경을보존하고다른기능/브랜치는건드리지않는다.
+- 완료근거Native34·Backend35/최종원장을대조해Issue49를2026-11-12T08:57:44Z completed종료했다. 문서의미커밋/대기표기를마감상태로정리하고NEXT_WORK는다음업무선택으로전환, 추적표는#49를완료구간으로이동했다.
+- 최종문서는동일목적release/2.1.0에서커밋→dev이력보존통합/main동일화→atomic push/원격일치확인→완료작업브랜치정리절차로마감했다. 최종SHA·게시/정리결과는Issue49마감댓글과Git이력에연결한다. 운영태그·실행소스/image/DB·키/접속정책은변경없음, 문서전용이므로서버/DB·전체회귀재실행없음.
