@@ -60,21 +60,36 @@ def entries(archive):
     return result
 
 
+def bundle_name(receipt):
+    """Versioned filename from the trusted pinned receipt, never archive input."""
+    version = receipt['web']['version']
+    require(isinstance(version, str) and re.fullmatch(
+        r'(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\+[1-9][0-9]*', version),
+        'invalid_web_version')
+    return 'lostparty-v' + version.split('+')[0] + '-web.zip'
+
+
+def handoff_files(receipt):
+    bundle = bundle_name(receipt)
+    return {bundle, bundle + '.sha256', 'release-manifest.json'}
+
+
 def verify(directory, receipt):
     """Receipt is the pinned Backend handoff record, never supplied by the ZIP."""
     directory = Path(directory)
     require(not directory.is_symlink(), 'symlink_input')
     expected = receipt['web']
+    bundle = bundle_name(receipt)
     raw = {}
-    for name in FILES:
+    for name in handoff_files(receipt):
         path = directory / name
         require(path.is_file() and not path.is_symlink() and path.stat().st_size <= MAX_FILE,
                 'missing_or_unsafe_handoff_file')
         raw[name] = path.read_bytes()
-    require(digest(raw[BUNDLE]) == expected['bundle_sha256'], 'bundle_hash_mismatch')
-    require(len(raw[BUNDLE]) == expected['bundle_bytes'], 'bundle_size_mismatch')
-    checksum = raw[BUNDLE + '.sha256'].decode('ascii').strip().split()
-    require(checksum == [expected['bundle_sha256'], BUNDLE], 'checksum_mismatch')
+    require(digest(raw[bundle]) == expected['bundle_sha256'], 'bundle_hash_mismatch')
+    require(len(raw[bundle]) == expected['bundle_bytes'], 'bundle_size_mismatch')
+    checksum = raw[bundle + '.sha256'].decode('ascii').strip().split()
+    require(checksum == [expected['bundle_sha256'], bundle], 'checksum_mismatch')
     manifest = json.loads(raw['release-manifest.json'])
     require(type(manifest['schema_version']) is int and manifest['schema_version'] == 1 and manifest['version'] == expected['version']
             and manifest['source_commit'] == expected['source']
@@ -95,7 +110,7 @@ def verify(directory, receipt):
                 'excluded_public_asset')
         listed['site/' + name] = item
     require(len(listed) == expected['site_files'], 'file_count_mismatch')
-    with zipfile.ZipFile(io.BytesIO(raw[BUNDLE])) as archive:
+    with zipfile.ZipFile(io.BytesIO(raw[bundle])) as archive:
         items = entries(archive)
         require(set(items) == set(listed) | {'release-manifest.json'}, 'file_list_mismatch')
         require(archive.read('release-manifest.json') == raw['release-manifest.json'],
@@ -133,8 +148,8 @@ def receive(receipt, destination, *, gh='gh'):
     temp=Path(tempfile.mkdtemp(prefix='.receive-',dir=destination.parent))
     try:
         with zipfile.ZipFile(io.BytesIO(archive)) as z:
-            require(set(entries(z))==FILES,'handoff_root_mismatch')
-            for name in FILES:(temp/name).write_bytes(z.read(name))
+            require(set(entries(z))==handoff_files(receipt),'handoff_root_mismatch')
+            for name in handoff_files(receipt):(temp/name).write_bytes(z.read(name))
         (temp/'github-artifact.zip').write_bytes(archive)
         verify(temp,receipt)
         os.rename(temp,destination)
@@ -144,6 +159,7 @@ def receive(receipt, destination, *, gh='gh'):
 
 
 def stage(directory, receipt, root):
+    bundle = bundle_name(receipt)
     raw, manifest = verify(directory, receipt)
     root = Path(root)
     require(not root.is_symlink(), 'symlink_root')
@@ -170,7 +186,7 @@ def stage(directory, receipt, root):
     try:
         for file, data in raw.items():
             (temp / file).write_bytes(data)
-        with zipfile.ZipFile(io.BytesIO(raw[BUNDLE])) as archive:
+        with zipfile.ZipFile(io.BytesIO(raw[bundle])) as archive:
             for item in manifest['files']:
                 file = temp / 'site' / item['path']
                 file.parent.mkdir(parents=True, exist_ok=True)

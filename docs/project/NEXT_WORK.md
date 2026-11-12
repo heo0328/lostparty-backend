@@ -2,14 +2,13 @@
 
 2026-11-13 KST 기준. 실제 Backend 코드/Git과 각 담당의 현재 코드 확인 결과를 사용한다. Native 코드 상태·완료 판단은 Native가 작성하며 Backend가 대신 검토하지 않는다.
 
-## 실행 설정 정리 커밋·로컬 dev 병합 완료 / 운영 배포 별도
+## 현재 작업 — Issue51 공동 운영2.2.0
 
-- `refactor/backend-runtime`에서 기본 현재 앱/명시 legacy 앱·명세 재배치·형식2/형식1 배포 호환·실행 안내를 구현하고 **로컬 dev API만 반영 완료**했다. 기본 명령은 `docker compose up -d --no-deps --build --wait api`다.
-- 전체 회귀 고유2,001PASS·캐시 보완 후 관련4파일 58PASS·도구84PASS·두 전체 계약/원문 바이트·실제 HTTP·격리 배포 교체/복귀 PASS. 첫 전환의 반복 명세 가공 문제는 자동 복귀·캐시 보완·재검증 후 해소했다.
-- 현재 로컬 image `sha256:170d3a2505963e37…3601bb` / DB0036 / 앱291파일 일치. DB 컨테이너·118표 982행/DDL/sequence·기존 키4개/환경·포트/mount/보안 설정을 보존했다. [실행 집계](../engineering/operations/records/runtime-consolidation-local-rollout.json).
-- 사용자 직접 지시로 구현 `8a54c485`을 커밋하고 로컬 dev `e1e81b76`에 이력 보존 병합했다. 현재 checkout은 **dev**, **미push**다. 통합 근거를 남기는 후행 문서 커밋을 같은 dev에 보존한다. 작업 브랜치는 원격 게시 확인 전까지 유지한다. 추가 Native 계약/기기 재검증 요청은 없다.
-- 운영은 기존 v2.1.1/source d16734d/DB0036을 유지한다. 다음 운영 승인 전 #50 개선 포함 범위·새 full 검증 계획·설치 제어기 선갱신·교체/복귀 절차를 [운영 전환 안내](../engineering/operations/runtime-release-transition.md)로 제시한다. 이번 완료를 운영 배포·DB 변경 승인으로 확대하지 않는다.
-- [실행·명칭·유지 이유/검증](../engineering/development/runtime-configuration.md)·[개발 명령](../engineering/development/environment.md).
+- 사용자 지시로 dev/main을9775c1e에 맞춰 atomic push·원격 일치 확인, 완료 refactor/backend-runtime 로컬 정리 후 release/2.2.0에서 진행한다.
+- #50 탐색과 실행 정리를 함께 배포한다. 운영은2.1.1·DB0036·웹2.1.0으로 정상이며 현재 자료/키/환경은 유지한다. DB migration/키 교체 없이 배포 도구 선갱신과 웹 파일명 처리 보완이 필요하다.
+- 사용자 확정에 따라 dev 기능 시험·제한 접근/임시 계정/사용자 재인수는 반복하지 않는다. 기존2001+58 근거의 고정 source/hash 재사용과 새 도구·고정 산출물·실제 배포 검증을 구분한다.
+- 다음 Backend: 새 백업/기존 PC 사본 → 설치 도구 갱신/preflight → 표준 API 배포 → 고정 웹 활성/HTTPS/hash → Issue51 실제 결과 회신. 다음 Native는 서버/웹 성공 후Android Release 공개다.
+- [실행 계획/복귀](../engineering/operations/release-2.2.0.md)·[웹 원본 수령](../engineering/operations/records/web-handoff-2.2.0.json)·[전체4 Backend 준비](https://github.com/heo0328/lostparty-backend/issues/51#issuecomment-6831158426).
 
 ## Issue50 마감 완료 / 다음 업무 선택
 

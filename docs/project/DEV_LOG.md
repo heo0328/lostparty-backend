@@ -1,5 +1,13 @@
 # 영구 개발 이력
 
+## 2026-11-13 Issue51 공동2.2.0 운영 착수
+
+사용자가 dev push/main 동일화·필터 운영 배포를 지시하고 Native의Issue51을 지정했다. 전체1 Native의 사용자 공개 승인/기존 dev 기능 재시험·제한 접근/임시 계정/사용자 재인수 생략을 확인했다. 전체2 웹 run43257168045/artifact13963805044/source994db44a와 전체3 Android 준비를 확인했다. dev/main9775c1e atomic push·원격 동일 확인 후 완료 refactor/backend-runtime을 정리하고 release/2.2.0으로 분기했다.
+
+운영 읽기 점검에서v2.1.1/source d16734d/image7aa19edf·DB0036·웹2.1.0+6·public_open true·미완료0·정상 서비스를 확인했다. 설치 도구의schema2/실행 별칭 선지원과 기존 웹/백업 도구의2.1 고정 파일명 보완이 필요하다. 도구를 수정하고 새2.2 버전 staging/활성/복귀·위조/재사용출처 보호를 새 시험으로 확인한다. 기존2001+58 기능 결과는 새 CI 통과로 합산하지 않는다.
+
+웹 원3파일(14,341,792byte ZIP 포함)·외피faf45170·원ZIP517166ca·manifest6a4ce734 및 내부34자산 전부를독립hash검증하고 비활성 배치했다. [인계 기록](../engineering/operations/records/web-handoff-2.2.0.json). [전체4 Backend 준비·다음 Backend](https://github.com/heo0328/lostparty-backend/issues/51#issuecomment-6831158426) 회신/실제순번 확인. 현재 운영 변경 전이며 자료/키/환경·기존 웹은 보존, 다음은 백업/도구 갱신/API→웹→Native 공개다.
+
 ## 2026-11-13 실행 설정 정리 커밋·로컬 dev 통합
 
 사용자가 필터 개선의 운영 배포 대기 상황을 알리고 커밋·dev 병합을 직접 지시했다. 작업 전 origin/dev를 명시 fetch해 local dev와0/0 일치, 검증·실제 로컬 image170d3a25의 앱291파일 manifest/현재 소스 동일성과 두 명세 원문 바이트 보존·diff를 확인했다. 구현/시험/명세/문서114파일을 `refactor/backend-runtime`의 `8a54c4858a593a1ab945d7a6900094bfbf2392f5`에 커밋하고 dev에 `--no-ff` 병합 `e1e81b768fa673b1125ed864038d8954c074d221`으로 이력을 보존했다. 충돌 없이 병합됐고 구현과 병합 후 앱/시험/도구/명세/Compose tree 동일성을 확인했다.

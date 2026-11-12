@@ -4,7 +4,7 @@
 
 ## 현재 기준
 
-- 실행 설정·명칭 정리는 `refactor/backend-runtime`에서 구현·검증·로컬 API 반영 완료다. 기본 `app.main:app`은 현재 앱, legacy는 DB0023 시험용이다. 명세 원문/DB 이력·자료·키/환경을 보존했다. 전체 회귀 고유2,001PASS·캐시 보완 후 58PASS·도구84PASS. [실행/검증](../engineering/development/runtime-configuration.md)·[운영 도구 전환 준비](../engineering/operations/runtime-release-transition.md). 사용자 직접 지시로 구현 8a54c485·로컬 dev 병합 e1e81b76 완료, 현재 checkout dev/미push. 운영은 기존 v2.1.1/DB0036을 유지한다.
+- 실행 설정·명칭 정리는 `refactor/backend-runtime`에서 구현·검증·로컬 API 반영 완료다. 기본 `app.main:app`은 현재 앱, legacy는 DB0023 시험용이다. 명세 원문/DB 이력·자료·키/환경을 보존했다. 전체 회귀 고유2,001PASS·캐시 보완 후 58PASS·도구84PASS. [실행/검증](../engineering/development/runtime-configuration.md)·[운영 도구 전환 준비](../engineering/operations/runtime-release-transition.md). 사용자 직접 지시로 구현 8a54c485·로컬 dev 병합 e1e81b76 완료, dev/main9775c1e push·원격일치 및 완료 작업 브랜치 정리 완료. 현재는 release/2.2.0에서 [Issue51 공동 배포](../engineering/operations/release-2.2.0.md)를 진행하며 실제 운영은 아직 v2.1.1/DB0036이다.
 
 - #50 모집 탐색은 양측구현/담당자검증·사용자필터확인으로합의기능완료, 사용자지시로Backend dev0dc381ae 통합/push·작업브랜치정리 및Issue completed종료까지마감했다. [전체14 Backend](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826988036)·[구현/검증](../features/recruitment/search/discovery-implementation.md). Native최종dev83a55020, 업무소비558ee6da의#50계약은유지한다. 추가협업대기없음, main/운영·전수인수와구분한다.
 

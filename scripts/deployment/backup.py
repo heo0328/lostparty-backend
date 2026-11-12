@@ -49,9 +49,11 @@ def capture(platform, state, destination, *, installed=Path('/usr/local/lib/lost
     paths += list(state.rglob('*.json'))
     paths += list(installed.glob('*.py'))
     if (web_root/'current').is_symlink():
-        from web_release import pointer, FILES
+        from web_release import pointer, handoff_files
         active=pointer(web_root,'current')
-        paths += [(web_root/active).parent/name for name in FILES]
+        active_manifest=json.loads((web_root/active).parent.joinpath('release-manifest.json').read_text())
+        files=handoff_files({'web':{'version':active_manifest['version']}})
+        paths += [(web_root/active).parent/name for name in files]
     paths += list(system_files)
     recovery_files={}
     for path in paths:

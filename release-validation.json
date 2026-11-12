@@ -1,9 +1,9 @@
 {
-  "version": "2.1.1",
-  "mode": "full",
-  "baseline_tag": "v2.0.0",
-  "change": "DB0036 roster presence, atomic batch completion, browser CORS and coordinated web release",
-  "impact": "Cumulative application/common/schema layout changes since v2.0.0 plus deployment, Caddy and maintenance control",
-  "reason": "Full verification for migration/common/infrastructure changes; prior release-only reuse does not apply",
+  "version": "2.2.0",
+  "mode": "reuse",
+  "baseline_tag": "v2.1.1",
+  "change": "Recruitment discovery and current runtime/contract naming, with fixed Native2.2.0 web handoff",
+  "impact": "Application/common/runtime changes were verified locally (2001 unique plus 58 after cache fix). Release-only changes add versioned web handoff/backup filenames and audited evidence reuse. No DB migration or key/environment change.",
+  "reason": "User instruction via Issue51 comment1: reuse verified dev behavior without repeating functional tests. Preserve pinned local evidence and source equality; perform fresh static/tool, artifact, image/contract, preservation and actual production checks.",
   "tests": []
 }
