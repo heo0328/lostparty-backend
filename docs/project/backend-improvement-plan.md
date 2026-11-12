@@ -12,7 +12,7 @@ F03의 안전 JSON 관측·요청/DB/worker 이벤트와 비노출 로그는 현
 
 ## 독립 후속 — Backend 실행 구성 단일화
 
-- **상태:** 2026-11-13 사용자 승인으로 `refactor/backend-runtime`에서 구현·검증·로컬 API 반영 완료(미커밋·미push). 기존 F01~F10 번호·완료 판단은 변경하지 않는다.
+- **상태:** 2026-11-13 사용자 승인으로 `refactor/backend-runtime`에서 구현·검증·로컬 API 반영 완료(구현 8a54c485·로컬 dev 병합 e1e81b76, 미push). 기존 F01~F10 번호·완료 판단은 변경하지 않는다.
 - **담당:** Backend. 기본 현재 앱/명시 legacy 앱·명세 재배치·배포 형식2/형식1 호환·개발/운영 안내를 정리하고 격리 검증 후 로컬 API만 교체했다.
 - **완료 조건:** 기본 실행·검증·안내가 현재 기준으로 일치하고 필요한 API/원 ACK·이력/DB 호환성과 worker 분리를 보존한다. 과거 실행의 잔여 사용처·유지 이유·제거 조건을 명시한다.
 - **근거:** [구현·검증/실행 이름](../engineering/development/runtime-configuration.md)·[운영 도구 갱신/복귀 준비](../engineering/operations/runtime-release-transition.md)·[당시 조사](../engineering/development/runtime-consolidation-review.md). 운영 배포·DB 변경·commit/push/merge는 이번 구간의 자동 후속이 아니다.

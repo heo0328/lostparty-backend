@@ -2,12 +2,12 @@
 
 2026-11-13 KST 기준. 실제 Backend 코드/Git과 각 담당의 현재 코드 확인 결과를 사용한다. Native 코드 상태·완료 판단은 Native가 작성하며 Backend가 대신 검토하지 않는다.
 
-## 실행 설정 정리 완료 / 다음 직접 지시 대기
+## 실행 설정 정리 커밋·로컬 dev 병합 완료 / 운영 배포 별도
 
 - `refactor/backend-runtime`에서 기본 현재 앱/명시 legacy 앱·명세 재배치·형식2/형식1 배포 호환·실행 안내를 구현하고 **로컬 dev API만 반영 완료**했다. 기본 명령은 `docker compose up -d --no-deps --build --wait api`다.
 - 전체 회귀 고유2,001PASS·캐시 보완 후 관련4파일 58PASS·도구84PASS·두 전체 계약/원문 바이트·실제 HTTP·격리 배포 교체/복귀 PASS. 첫 전환의 반복 명세 가공 문제는 자동 복귀·캐시 보완·재검증 후 해소했다.
 - 현재 로컬 image `sha256:170d3a2505963e37…3601bb` / DB0036 / 앱291파일 일치. DB 컨테이너·118표 982행/DDL/sequence·기존 키4개/환경·포트/mount/보안 설정을 보존했다. [실행 집계](../engineering/operations/records/runtime-consolidation-local-rollout.json).
-- **미커밋·미push**다. 다음 Git 게시/병합은 사용자 직접 지시 범위에서 수행한다. 추가 Native 계약/기기 재검증 요청은 없다.
+- 사용자 직접 지시로 구현 `8a54c485`을 커밋하고 로컬 dev `e1e81b76`에 이력 보존 병합했다. 현재 checkout은 **dev**, **미push**다. 통합 근거를 남기는 후행 문서 커밋을 같은 dev에 보존한다. 작업 브랜치는 원격 게시 확인 전까지 유지한다. 추가 Native 계약/기기 재검증 요청은 없다.
 - 운영은 기존 v2.1.1/source d16734d/DB0036을 유지한다. 다음 운영 승인 전 #50 개선 포함 범위·새 full 검증 계획·설치 제어기 선갱신·교체/복귀 절차를 [운영 전환 안내](../engineering/operations/runtime-release-transition.md)로 제시한다. 이번 완료를 운영 배포·DB 변경 승인으로 확대하지 않는다.
 - [실행·명칭·유지 이유/검증](../engineering/development/runtime-configuration.md)·[개발 명령](../engineering/development/environment.md).
 
@@ -35,7 +35,7 @@
 
 | 구분 | 확인 기준 |
 |---|---|
-| checkout/배포 소스 | refactor/backend-runtime(dev ffda8db 기반, 현재 변경 미커밋·미push) / 배포소스d16734d·v2.1.1 고정, #49당시최종문서는dev/main동일통합 |
+| checkout/배포 소스 | dev(구현 8a54c485 / 병합 e1e81b76, 미push) / 배포소스d16734d·v2.1.1 고정, #49당시최종문서는dev/main동일통합 |
 | 이전 #47 업무 통합/원격 | 업무44eb4ba·반영 기록624ef00·문서962c1cd9321328f19a8e1ea6b5071fa07380782b를 dev에 이력 보존 병합·push. 원격 병합 SHA 일치/전체 feature tip 포함·동일 tree 확인. app/tests/openapi422파일은 기존 검증 코드와 동일 |
 | 로컬 dev | runtime image sha256:170d3a2505963e37…3601bb / 현재 앱·DB0036·앱291파일/두 계약·실HTTP/보존 PASS. [근거](../engineering/operations/records/runtime-consolidation-local-rollout.json) |
 | 전체 계약 | 현재192경로/213동작(openapi.yaml), legacy125경로/142동작(legacy.openapi.yaml). 정확한 hash는 [구현/계약 근거](../features/recruitment/completion-and-records/batch-completion-implementation.md) |

@@ -14,7 +14,7 @@
     "--log-config",
     "app/core/logging.json"
   ],
-  "committed": false,
+  "committed": true,
   "contracts": {
     "current_full_object_matches": true,
     "legacy_full_object_matches": true,
@@ -96,7 +96,7 @@
   "error_critical_events_observed": 0,
   "api_started_at_utc": "2026-11-12T17:23:17.684224113Z",
   "recorded_at_utc": "2026-11-12T17:24:40.598823Z",
-  "scope": "Local development API only; no commit/push/merge/production deployment/DB migration/deletion",
+  "scope": "Local development API rollout and subsequently authorized local Git integration; no push/production deployment/DB migration/deletion",
   "first_attempt": {
     "result": "rolled_back",
     "reason": "Repeated OpenAPI calls decorated cached schemas again; fixed by caching the final schema per app",
@@ -155,5 +155,17 @@
   },
   "backup": "Existing valid environment/key copies reused. Read-only fingerprints are not DB backups or restore tests; historical DB0023->0029 restore tool was not rerun.",
   "production": "v2.1.1/source d16734d86e694579cd4e4e043c2ca89cc81c1b64/DB0036 remains unchanged. Future rollout also includes discovery improvements and needs controller upgrade first.",
-  "evidence_schema": 1
+  "evidence_schema": 1,
+  "publication": {
+    "implementation_commit": "8a54c4858a593a1ab945d7a6900094bfbf2392f5",
+    "implementation_branch": "refactor/backend-runtime",
+    "local_dev_merge": "e1e81b768fa673b1125ed864038d8954c074d221",
+    "current_branch": "dev",
+    "committed": true,
+    "merged_to_local_dev": true,
+    "pushed": false,
+    "origin_dev_at_integration": "ffda8db8a00e50719b104605225dc5249f4ae171",
+    "feature_branch_retained": "Pending remote push confirmation; no branch deletion yet",
+    "authorization": "User explicitly requested commit and dev merge; push/production deployment not included"
+  }
 }

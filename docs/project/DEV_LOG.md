@@ -1,5 +1,11 @@
 # 영구 개발 이력
 
+## 2026-11-13 실행 설정 정리 커밋·로컬 dev 통합
+
+사용자가 필터 개선의 운영 배포 대기 상황을 알리고 커밋·dev 병합을 직접 지시했다. 작업 전 origin/dev를 명시 fetch해 local dev와0/0 일치, 검증·실제 로컬 image170d3a25의 앱291파일 manifest/현재 소스 동일성과 두 명세 원문 바이트 보존·diff를 확인했다. 구현/시험/명세/문서114파일을 `refactor/backend-runtime`의 `8a54c4858a593a1ab945d7a6900094bfbf2392f5`에 커밋하고 dev에 `--no-ff` 병합 `e1e81b768fa673b1125ed864038d8954c074d221`으로 이력을 보존했다. 충돌 없이 병합됐고 구현과 병합 후 앱/시험/도구/명세/Compose tree 동일성을 확인했다.
+
+현재 checkout dev이며 통합 기록을 후행 문서 커밋으로 보존한다. push는 지시 범위에 없어 미실행, origin/dev는 `ffda8db8a00e50719b104605225dc5249f4ae171`를 유지한다. main·태그·배포 도구 설치·운영 서버/DB·키/환경·로컬 API 이미지 변경과 시험 재실행은 없다. 기록 문서만 갱신해 링크/보관자료·diff를 검증한다. 작업 브랜치는 dev 병합은 됐지만 원격 게시 확인 전이므로 삭제하지 않았다. 다음 운영 후보는 #50 탐색 개선과 이번 실행 정리를 포함하며 [설치 도구 선갱신·교체/복귀 준비](../engineering/operations/runtime-release-transition.md)는 별도 운영 승인 시 수행한다.
+
 <a id="runtime-consolidation-implementation"></a>
 
 ## 2026-11-13 실행 설정·명칭 정리 구현·로컬 반영

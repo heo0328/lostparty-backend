@@ -1,6 +1,6 @@
 # Backend 실행 설정·명칭 정리
 
-2026-11-13 / `refactor/backend-runtime` / 기준 dev `ffda8db8a00e50719b104605225dc5249f4ae171`。사용자 승인 범위는 실행·명세·도구·안내 정리와 격리 검증 후 로컬 API 교체다. commit/push/merge·운영 배포는 별도 지시 대상이다.
+2026-11-13 / `refactor/backend-runtime` / 기준 dev `ffda8db8a00e50719b104605225dc5249f4ae171`。사용자 승인 범위는 실행·명세·도구·안내 정리와 격리 검증 후 로컬 API 교체다. 이후 사용자 직접 지시로 구현 `8a54c485` 커밋과 로컬 dev `e1e81b76` 병합을 완료했다. push·운영 배포는 별도 지시 대상이다.
 
 ## 이름과 실행의 대응
 
@@ -63,4 +63,4 @@
 
 현재 앱/DB0036의 로그인·refresh·권한·설정/원ACK·원정대/소유·bootstrap·그룹·개인원장 시나리오는 기존 시험을 새 현재 앱/DB에서 재사용했다. 기존0023 fixture·업무 기대값과 migration 보존 시험은 유지했다. worker는 선택한 모집 processor 한 벌만 시작하고 오류 종료 시 세 task를 취소한다. 실제 로컬 worker 관찰 결과는 위 집계에 연결한다.
 
-기존 AnyIO deprecation·SQLAlchemy null PK 경고는 유지했다. 정상 provider/기기·운영 인수와 과거0023→0029 원본 복원 리허설은 이번에 재실행하지 않았다. 운영은 기존 v2.1.1/DB0036이며 다음 배포 포함 기능/도구/복귀는 [운영 전환 안내](../operations/runtime-release-transition.md)를 따른다. 변경은 미커밋·미push, merge/운영 배포 없음.
+기존 AnyIO deprecation·SQLAlchemy null PK 경고는 유지했다. 정상 provider/기기·운영 인수와 과거0023→0029 원본 복원 리허설은 이번에 재실행하지 않았다. 운영은 기존 v2.1.1/DB0036이며 다음 배포 포함 기능/도구/복귀는 [운영 전환 안내](../operations/runtime-release-transition.md)를 따른다. 구현 `8a54c485`은 로컬 dev `e1e81b76`에 병합했다. 미push이며 main·운영 배포는 변경하지 않았다. 원격 게시 확인 전까지 작업 브랜치를 보존한다.
