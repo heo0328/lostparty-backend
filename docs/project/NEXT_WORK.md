@@ -2,13 +2,14 @@
 
 2026-11-12 KST 기준. 실제 Backend 코드/Git과 각 담당의 현재 코드 확인 결과를 사용한다. Native 코드 상태·완료 판단은 Native가 작성하며 Backend가 대신 검토하지 않는다.
 
-## 현재 우선 — Issue50 Backend 구현/로컬 지원 완료 · Native 적용 대기
+## 현재 우선 — Issue50 Backend 구현/로컬 지원·고정 계약 게시 완료 · Native 적용 대기
 
 - `feat/recruitment-discovery`에서 Native전체4 수용 계약으로 구현·선택검증·실제 로컬 API 반영을 완료했다. [전체5번째 Backend/구현·격리검증/로컬 결과](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6821288801)를 게시하고 실제순번5·본문일치 확인, Issue본문 상단 현재상태/다음담당을 갱신했다.
 - [구현 인계](../features/recruitment/search/discovery-implementation.md)·[검증/소스·실행식별](../features/recruitment/search/discovery-verification.json). 기존 POST의 discovery-1 profile로50개·전체count·최소카드/그룹·조율·열람권한을 제공하며 새endpoint0개, 기존 응답/GET/context/후보는 유지한다.
 - 신규13PASS(12+추가1 별도실행), 관련회귀52PASS, 두 전체계약 격리/실행컨테이너 일치·로컬HTTP·정적/문서/diff PASS. [합성 성능](../features/recruitment/search/discovery-performance.json)은 운영/밀집그룹·실기기 성능 인수와 별개다. 전체저장소회귀·실회원명령/기기시험은 미실행이다.
 - 로컬 image87a918db…5c0bd·DB0036, 기존DB컨테이너·118테이블/행·키4개·환경/포트/명령/마운트 보존. migration/초기화·운영배포는 없다. 원래 백업사본/로컬dump제외 방침 유지.
-- **다음 Native:** 합의DTO/캐시/화면 연결·같은Issue 결과 회신. 원격 고정소스/계약이 필요한 단계는 사용자 게시 지시 후 인계한다. **현재 새구현SHA없음/코드·계약·문서 미커밋·미push/dev·main미통합**, b03595a는 기반SHA이며 새구현SHA가 아니다. 실제로준비된 로컬API와 원격게시를 구분한다.
+- **게시 완료:** 사용자 직접 지시로 업무/계약/시험/문서를 `558ee6da4299dea49729ebaca5825ce9a235a42e`에 commit/push·원격일치확인했다. [전체7번째 Backend/고정계약 인계](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6821559025)와 [OpenAPI 고정파일](https://github.com/heo0328/lostparty-backend/blob/558ee6da4299dea49729ebaca5825ce9a235a42e/openapi/two-cycle.openapi.yaml)을 Native전체6 파일위치요청에 회신했다. SHA256은기존인계3fdc0661…7052와같다. 후행게시결과기록도같은목적브랜치에보존한다.
+- **다음 Native:** 고정 SHA의 실제 hash/DTO 대조·캐시/화면 연결 후 같은Issue에 구현/자동검증·미확인을 회신한다. 이제 로컬경로 탐색이나 원격게시 대기는없다. dev/main 미통합·운영/기기인수 별도이며 새배포/동일시험 반복요청은없다.
 
 ## 공동 릴리즈 마감 완료
 

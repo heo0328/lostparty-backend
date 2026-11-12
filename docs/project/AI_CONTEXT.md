@@ -4,7 +4,7 @@
 
 ## 현재 기준
 
-- #50 모집 탐색은 Native전체4 수용 후 기존 POST의 discovery-1 선택 응답으로 구현·선택검증·실제 로컬 dev 반영을 완료했다. [구현 인계](../features/recruitment/search/discovery-implementation.md)·[전체5 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6821288801). 다음 Native DTO/캐시/화면 적용/회신이며 원격 고정소스는 사용자 게시 지시 후다. 새업무SHA없음/코드·계약·문서 미커밋·미push, 운영/기기인수와 별개다.
+- #50 모집 탐색은 Native전체4 수용 후 기존 POST의 discovery-1로 구현·선택검증·실제 로컬 반영 완료. 사용자 지시로 업무SHA `558ee6da4299dea49729ebaca5825ce9a235a42e` commit/push·원격일치확인, [전체7 고정계약 인계](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6821559025) 게시. [구현/검증](../features/recruitment/search/discovery-implementation.md). 다음Native 고정hash/DTO대조·앱적용/회신이며 dev/main통합·운영/기기인수는별도다.
 
 - 공동 운영 릴리즈 완료: Backend `v2.1.1`/source `d16734d86e694579cd4e4e043c2ca89cc81c1b64`·DB0036/config lightsail-web-2.1.0·고정웹 일반공개, 웹/새APK는사용자실인수통과다. [배포·백업·최종공개 원장](../engineering/operations/records/release-2.1.0-deployment.json)·[운영/개발 구분](../engineering/operations/README.md).
 - Native [최종v2.1.0 Release](https://github.com/heo0328/LostParty_flutter/releases/tag/v2.1.0)는공개완료, [전체34 인계](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6798998431)를Backend독립다운로드/5파일hash·원본동일성확인으로수용했다. 원APK/웹source와최종태그source는원장에구분한다.

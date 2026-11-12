@@ -26,6 +26,8 @@ scope는 유지하고 data에 items/total_count/directory_revision/filter_scope_
 
 실행 이미지/앱 manifest 식별과 두 전체 계약 hash는 집계에 기록한다. 실제 로컬 공개 검색의 새/기존 DTO·401/400·no-store와 두 전체 생성계약을 확인했다. 실회원 명령/기기 인수는 수행하지 않았다. 개발 DB의 반영 시점 행 수를 이후 고정값으로 보지 않는다.
 
-**새 구현 commit SHA는 아직 없다.** HEAD b03595a는 기반 커밋이며 업무 구현 SHA가 아니다. 코드/계약/문서는 로컬 미커밋·미push, dev/main 미통합이다. 실제 로컬 API 연결 가능과 원격 고정 소스/계약 게시 가능 상태는 구분한다. 사용자 직접 게시 지시 전 새 SHA/원격 계약 소비 완료로 인계하지 않는다. 운영 배포는 별도다.
+**업무/계약 고정 SHA는 `558ee6da4299dea49729ebaca5825ce9a235a42e`이며 사용자 직접 지시로 commit/push·원격 tip 일치를 확인했다.** 기반 b03595a와 구분한다. [전체7 Backend 고정계약 인계](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6821559025)로 Native전체6의 실제파일위치 요청에 [고정 OpenAPI](https://github.com/heo0328/lostparty-backend/blob/558ee6da4299dea49729ebaca5825ce9a235a42e/openapi/two-cycle.openapi.yaml)와 정적원본 다운로드 링크/hash를 회신했다. 후행게시결과기록은같은목적브랜치에보존한다. dev/main미통합이며운영배포는별도다.
 
-다음 Native는 합의된 discovery DTO/캐시/화면 연결을 진행하고 원격 고정계약 게시 전에는 이슈의 계약과 로컬 API 준비 상태를 구분한다. 구현/검증 결과를 같은 Issue에 회신하며 실제 기기 인수와 Backend 자동/로컬 시험을 구분한다. Backend의 다음 게시/통합은 사용자 지시 범위다.
+전체5 당시 미커밋/미push 기록은 당시 상태다. commit/push가 업무 소스·계약 bytes나 실행 image87a918db…5c0bd/DB0036을 바꾸지 않으므로 로컬 API 재반영/동일 시험을 반복하지 않았다. 공개 OpenAPI 파일의 GitHub blob도 로컬과 같은 e25f771885d50105c928059d89c1c06caf238378이다. 파일 SHA256은 3fdc06616d64e19aa7abf35b548cf1156fa7fbee6bcfb02c1dccf4ce9a9d7052다.
+
+다음 Native는 위고정SHA의hash/DTO를대조해소비구현·자동검증/미확인결과를같은Issue에회신한다. 로컬경로탐색·HTTP OpenAPI우회조회·새commit/push대기는없으며 앱적용/실기기인수와 Backend검증은구분한다.

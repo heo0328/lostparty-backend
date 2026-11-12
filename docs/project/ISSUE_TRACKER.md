@@ -6,7 +6,7 @@
 
 | 이슈 | 현재 상태 | 남은 작업·담당 |
 |---|---|---|
-| [#50](https://github.com/heo0328/lostparty-backend/issues/50) 모집 탐색 리마스터 | Native전체4 계약수용·[전체5 Backend 구현/격리·로컬 지원](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6821288801) 게시. [구현/게시 상태](../features/recruitment/search/discovery-implementation.md). 신규13/관련회귀52PASS·두전체계약/실HTTP 확인 | 다음 Native DTO/캐시/화면 적용·회신. 코드/계약 미커밋·미push/새SHA없음, 원격고정계약 소비는 사용자 게시 지시 후. 운영/기기인수 별도 |
+| [#50](https://github.com/heo0328/lostparty-backend/issues/50) 모집 탐색 리마스터 | Native4계약수용·Backend5구현/로컬지원·[전체7 고정계약게시](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6821559025). 업무558ee6d commit/push·원격일치. [구현](../features/recruitment/search/discovery-implementation.md) | 다음Native 고정hash/DTO대조·캐시/화면연결/검증회신. dev/main미통합·운영/기기인수별도 |
 | [#17](https://github.com/heo0328/lostparty-backend/issues/17) 누락/생명주기·기존 참가 복구 | 완료 오류/기존 계정 복구 인수·양측 dev 통합 완료. Native가 현재 경고/관리 왕복 연결과 별도 누락/부분 완료 기기 경계를 본문에 최신화 | 다음 순차 정리 대상. Backend 현재 구현과 Native 담당 근거로 완료/잔여 범위를 확정. 누락 자료/원복·기기 확인 착수는 별도 후속이며 현재 생성/DB 조정 요청 없음 |
 | [#15](https://github.com/heo0328/lostparty-backend/issues/15) 소유권 최종이전 영향 | 기본 인증/분쟁 연결 완료. 활성 참가가 있으면 최종이전 보류, 영향 정리/복구 정책·adapter 미합의/미구현 | Native 소비검토5항목·사용자 제품 정책 결정, 합의 후 Backend 원자 설계. [검토 원본](../features/rosters/ownership/dispute-impact-review.md) |
 | [#18](https://github.com/heo0328/lostparty-backend/issues/18) 활동 자동추가·명시제외 | 준비 설계/Native 접수, 영속/API 미합의·미구현 | 신규1700·설정 전 보류·제외/재등록·관찰/경합 기준 합의. [현재 제안](../features/rosters/activity-and-presentation/proposals.md). 옛5fff83b/브랜치 상태는 당시 보고이며 현재 로컬 존재로 단정하지 않음 |
@@ -29,6 +29,6 @@
 
 ## 코드·게시·실행은 별개
 
-현재 checkout은feat/recruitment-discovery이며 #50 코드/계약/문서는 미커밋·미push다. #49 마감후checkout은dev였고, 최종운영·인수·공개문서는동일목적브랜치에서이력보존통합/main동일화·push했다. 실제최종Git SHA와브랜치정리근거는Issue49마감댓글을따른다. 배포소스d16734d·태그v2.1.1/이미지는불변이며Native최종태그v2.1.0/source9019ee0과원웹/APK source는배포원장에구분한다. #49는사용자마감지시로completed종료했다.
+현재 checkout은feat/recruitment-discovery이며 #50 업무558ee6d를 사용자지시로commit/push·원격일치확인했다. 게시결과/인계기록은같은브랜치의후행문서커밋으로보존한다. dev/main통합은없다. #49 마감후checkout은dev였고, 최종운영·인수·공개문서는동일목적브랜치에서이력보존통합/main동일화·push했다. 실제최종Git SHA와브랜치정리근거는Issue49마감댓글을따른다. 배포소스d16734d·태그v2.1.1/이미지는불변이며Native최종태그v2.1.0/source9019ee0과원웹/APK source는배포원장에구분한다. #49는사용자마감지시로completed종료했다.
 
 [점검/정리 결과](OPEN_ISSUE_REVIEW.md) · [NEXT_WORK](NEXT_WORK.md) · [DEV_LOG](DEV_LOG.md) · [최신화 전 단계/댓글 순번 기록](../archive/project/status-before-refresh-20261110/ISSUE_TRACKER.md)

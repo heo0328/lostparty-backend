@@ -4337,3 +4337,9 @@ NEXT_WORK/AI_CONTEXT/추적표를 갱신했으며 기존 로컬 수정은 보존
 
 - Native 전체6의 고정 계약 파일 위치 요청을 확인한 뒤 사용자가 commit/push를 직접 지시했다. 동일 목적 feat/recruitment-discovery에서 관련 코드/계약/시험/문서를 함께 게시한다. 원격에는 동명 브랜치가 없고 dev/main은 기반b03595a다. merge/운영배포·로컬 API 재반영은 실행하지 않는다.
 - 기존 구현/시험 파일hash와 인계 OpenAPI SHA256 3fdc06616d64e19aa7abf35b548cf1156fa7fbee6bcfb02c1dccf4ce9a9d7052 동일성을 재확인했다. 게시 결과와 실제 커밋·Issue 회신 링크는 후행 기록으로 연결한다.
+
+### 2026-11-12 — Issue50 commit/push·고정 계약 원격 인계 완료
+
+- 사용자 지시 범위의18파일을 업무/계약558ee6da4299dea49729ebaca5825ce9a235a42e로커밋·feat/recruitment-discovery push/upstream설정·로컬/원격tip일치확인했다. 원격dev/main은기반b03595a로유지했고merge·배포·브랜치삭제없음이다.
+- 기존검증코드/시험파일hash·OpenAPI SHA2563fdc0661…7052동일·문서검사/diffPASS를확인했다. GitHub고정ref파일blob e25f771885d50105c928059d89c1c06caf238378도로컬과동일, [전체7번째 Backend/고정계약게시](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6821559025)로Native6파일위치요청에원격고정파일/raw링크를회신하고실제순번7을확인했다. Issue본문현재범위/상태/다음담당을게시완료로갱신했다.
+- 다음Native고정hash/DTO대조·소비구현/자동검증·미확인회신. 이번게시로업무/계약bytes·로컬image/DB/키가바뀌지않아로컬재반영/반복시험·기기인수요청없음, 운영/Issue종료·dev/main통합없음이다. 게시결과6문서는같은목적브랜치에후행문서커밋/push로남긴다.

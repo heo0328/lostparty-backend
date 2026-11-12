@@ -1,6 +1,6 @@
 {
   "local_only": true,
-  "source_commit": null,
+  "source_commit": "558ee6da4299dea49729ebaca5825ce9a235a42e",
   "base_commit": "b03595a8999d3bbd66a93443048d1a7f85536a1d",
   "source_manifest_sha256": "404ccccd90cb98e28a746bab23d2b9beeece705c49772dcf1fac739eab416714",
   "app_files": 291,
@@ -26,10 +26,19 @@
   "scope": "local development only; no production/DB migration/deletion",
   "publication": {
     "branch": "feat/recruitment-discovery",
-    "new_commit_sha": null,
-    "committed": false,
-    "pushed": false,
-    "note": "Base SHA is not the implementation SHA. Local app manifest identifies uncommitted runtime source."
+    "new_commit_sha": "558ee6da4299dea49729ebaca5825ce9a235a42e",
+    "committed": true,
+    "pushed": true,
+    "note": "User explicitly authorized commit/push. Implementation SHA fixed; later publication-record commit contains no business/contract changes. dev/main not merged.",
+    "remote_tip_verified": true,
+    "comment": {
+      "url": "https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6821559025",
+      "order": 7,
+      "side": "Backend",
+      "stage": "fixed contract publication",
+      "refetched": true
+    },
+    "openapi_blob": "e25f771885d50105c928059d89c1c06caf238378"
   },
   "contracts": {
     "openapi.yaml": {
