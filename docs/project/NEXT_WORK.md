@@ -4,11 +4,11 @@
 
 ## 운영 오류 조사 — Issue52
 
-사용자 지시로 `fix/recruitment-history-response`(기준 dev0911383e)의 조사·시험·협업 기록을 커밋/dev 병합·push한다. [조사·계약 근거](../features/recruitment/membership-actions/issue52-investigation.md).
+사용자 지시로 조사·시험·협업 기록 a790cbe를 dev dc5aab0086b81be20f8c5dfb1c8b34f4b9cfa5d6에 이력 보존 병합·push하고 원격 일치를 확인했다. 현재 checkout은 dev이며 완료 목적 브랜치는 정리한다. [조사·계약 근거](../features/recruitment/membership-actions/issue52-investigation.md).
 
 - [전체6 Native 구현·검증](https://github.com/heo0328/lostparty-backend/issues/52#issuecomment-6847142336): 합의한 선택T 표시/정책/cursor 소비 수정 연결, 직접10파일266PASS(기록27)/변경4파일 분석0은 담당자 보고다. Backend 기존 API/DB/OpenAPI 유지, 기존 회귀61/최종 합성5PASS를 재사용한다.
 - [전체7 Native 사용자 확인](https://github.com/heo0328/lostparty-backend/issues/52#issuecomment-6847809202): 기록 표시·새로고침·상세·주차/탭 왕복 dev 정상 보고. 더 보기/다중 페이지는 자료 부족으로 수동 미확인이고 합성 통과와 구분한다. 자료 생성/삭제·반복 재현은 요청하지 않는다.
-- [전체8 Backend 수신](https://github.com/heo0328/lostparty-backend/issues/52#issuecomment-6847918619) 게시·실제순번 확인. Backend 추가 코드/재검증 대기는 없다. 게시/통합은 사용자 승인되었고 Backend에서 진행한다. Native Git 게시는 담당자 회신으로 확인한다.
+- [전체8 Backend 수신](https://github.com/heo0328/lostparty-backend/issues/52#issuecomment-6847918619) 게시·실제순번 확인. Backend 추가 코드/재검증 대기는 없다. Backend 게시/통합 완료. Native Git 게시는 담당자 회신으로 확인한다.
 - 운영 웹/APK는 미반영이며 사용자가 추가 개발 후 일괄 배포하기로 결정했다. 최초 상세GET403은 과거 ACK 후보 재현/실제 원인 증거 부족을 유지한다. main 변경·운영 배포·Issue 종료는 이번 지시에 포함하지 않는다.
 
 ## Issue51 — Backend API·웹 운영 완료 / Native Android 공개 대기
