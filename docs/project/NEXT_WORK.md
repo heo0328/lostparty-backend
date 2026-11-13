@@ -9,7 +9,7 @@ feat/my-account-contracts에서 사용자 지시로 합의 계약을 구현·격
 - 현재앱 전용 GET /v2/me/raid-reservations. 신규16+기존 일정HTTP3=19PASS, 추가 실제 동시쓰기snapshot1PASS(중복사례 구분), 두 전체계약/기존path·component 보존·문서검사PASS.
 - 로컬 API image7aaba198…fffa63·DB/환경/포트/mount/키 보존. health200/예약401·생성계약/앱292파일 일치. 실제 회원 화면/Native 소비는 미확인이다.
 - 다음 Native: 게시 고정SHA와 실행 계약을 소비해 DTO/조회·한정재시도/페이지·영역오류/기존availability·원pending 영향 확인. Penpot/시안·실기기 범위는 담당자 단계와 구분한다. Backend는 구체 소비차이에 대응한다.
-- 사용자 승인 commit/push는 작업 브랜치 범위, dev/main 병합·운영 배포·Issue 종료는 하지 않는다. 운영은 추가 개발 후 별도다. 고정 게시 SHA는 Issue53 구현 인계 댓글을 기준으로 한다.
+- 사용자 승인 commit/push는 작업 브랜치 범위, dev/main 병합·운영 배포·Issue 종료는 하지 않는다. 운영은 추가 개발 후 별도다. 업무/계약 fe5e0824c28f58025af201d6ef66d8289229ae60 push·원격일치 확인. [전체9 Backend 구현 인계](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6856983342) 게시·댓글순번 확인. 후행 게시기록은 같은 브랜치에 보존한다.
 
 ## 운영 오류 조사 — Issue52
 
