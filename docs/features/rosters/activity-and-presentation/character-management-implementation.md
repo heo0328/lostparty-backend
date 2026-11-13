@@ -22,3 +22,7 @@
 로컬 dev는 API만 교체하고 DB container/환경/포트/mount/기존키hash를 보존한다. 신규키/DB migration/유저초기화·실회원설정쓰기·운영배포는 하지 않는다. DB초기화가 필요해져도사용자사전확인필수다. 기존사본을 재사용하고 로컬 DB dump 제외방침을 유지한다. 인증기능 검증은 격리 DB/HTTP이고 실제dev health/미인증401·생성명세/앱manifest 확인과 구분한다.
 
 이번 구현 지시는 commit/push/merge 승인이 아니다. **신규 관리 코드·최종계약/예시는 미커밋·미push**이며 기존게시 dd69159에는 포함되지 않는다. 고정SHA를사용하는Native인계는사용자게시지시후진행한다. 기존 게시 예약GET 지원과도구분한다. 신규 OpenAPI는로컬 실행명세이며미게시파일링크로원격소비가능하다고안내하지않는다.
+
+## 사용자 승인 고정 게시
+
+업무/정확계약 026a74fa67c36d72fb9d6d94d8bafcf707d4ffe9를 feat/my-account-contracts에 commit/push하고원격직접SHA동일·clean을확인했다. [전체20 Backend 고정인계](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6861435507)가현재게시기준이며위의미게시표기는게시전상태다. 앱/API/실행image는기존검증/로컬반영과동일하고게시만으로재배포하지않는다. 다음Native 승인범위연동검증·구체차이대응,dev/main merge·운영배포·초기화없음.

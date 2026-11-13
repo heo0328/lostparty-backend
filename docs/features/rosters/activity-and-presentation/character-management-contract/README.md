@@ -37,3 +37,7 @@ rank(null후순위)→정규decimal레벨내림차순(null후순위)→이름UTF
 동일key+본문은원ACK(24시간기존보관정책), 동일key다른본문409 IDEMPOTENCY_CONFLICT, 기존기한초과409 IDEMPOTENCY_EXPIRED이다. 복구·409·세대불확실의다음GET은현재상태확정용이며ACK를현재응답으로재작성하지않는다. GET실패를저장실패/빈값으로바꾸거나PUT를새key로자동중복실행하지않는다.
 
 모든예시의지문/ID/이름은합성이다. 지문'a'64는형식예시이며실제서명/원장hash의증명이아니다. **현재 파일은 미커밋·미push이고55923cc/fe5e082의게시파일에포함되지않는다.** 계약작성당시 미수행이던 실행/동시성 검증 결과는 최신 구현 문서를 따른다. DB초기화불필요·미실행,추후필요시대상/영향과사용자사전확인필수다.
+
+## 게시 기준
+
+최종관리구현/Schema·예시·fixture는 026a74fa67c36d72fb9d6d94d8bafcf707d4ffe9에게시됐다. [전체20 인계](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6861435507)를기준으로소비하며위미게시표기는작성당시이력이다.
