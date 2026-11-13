@@ -2,6 +2,16 @@
 
 2026-11-13 KST 기준. 실제 Backend 코드/Git과 각 담당의 현재 코드 확인 결과를 사용한다. Native 코드 상태·완료 판단은 Native가 작성하며 Backend가 대신 검토하지 않는다.
 
+## 내 계정 리메이크 — Issue53 계약 준비
+
+`feat/my-account-contracts`(dev f527c0c 기준)에서 정적 조사·답변 게시. [전체1 Backend 계약 조사](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6853018406) / [조사 원본](../features/rosters/activity-and-presentation/my-account-remake-contract-review.md).
+
+- 표시: Native에서 activity 전원 표시, 역할/순서 신규 저장은 최신 visible 보존·count 신규쓰기 중단. 기존 API·원 pending/ACK/구버전은 유지한다.
+- 예약: 현재 충돌 API는 단독예약을 누락하므로 전체예약 조회로 사용할 수 없다. 같은 GET의 선택 응답 profile 확장을 우선 제안했으나 미합의/미구현이다.
+- [전체2 Native 사용자 확정](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6853275922): 기존 표시 API 재사용·이번/다음 주 달력00시7행·인접T 새벽 포함·현재 미해제 예약만 표시 수용. 최소 상세는 레이드명/내 캐릭터/예약시간, 방제목/타회원 명단 제외. 다음 Backend: 조회 책임에 맞는 경로/profile 비교와 정확 입력/출력·표시정보 출처/nullable·페이지/세대/상한·권한·경계 검증 후보 작성. 아직 문서/계약 협의만이며 원본 API/OpenAPI 구현·Penpot 착수는 승인되지 않았다.
+- [정밀 설계안](../features/rosters/activity-and-presentation/my-account-reservations-design.md): 독립 GET /v2/me/raid-reservations 추천(profile 우선 검토에서 변경), 달력주 수00시/게임 수06시 독립 전환은 사용자 확정 완료. 전체3 Backend 설계 제안 게시, 다음 Native 경로/DTO·페이지/오류 소비 대조. 구현 전 정상/모순 원장 상태표·표시 snapshot 변형·지문 비용을 확인한다.
+- 사용자 지시로 조사/설계 문서를 작업 브랜치에 커밋·push한다. Native 소비 계약 대조가 남아 있으며 구현/원본 OpenAPI 변경·dev 병합은 이번 게시에 포함하지 않는다. 운영 배포는 기존 사용자 결정대로 추가 개발 후 별도다.
+
 ## 운영 오류 조사 — Issue52
 
 사용자 지시로 조사·시험·협업 기록 a790cbe를 dev dc5aab0086b81be20f8c5dfb1c8b34f4b9cfa5d6에 이력 보존 병합·push하고 원격 일치를 확인했다. 현재 checkout은 dev이며 완료 목적 브랜치는 정리한다. [조사·계약 근거](../features/recruitment/membership-actions/issue52-investigation.md).

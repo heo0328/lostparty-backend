@@ -4452,3 +4452,21 @@ NEXT_WORK/AI_CONTEXT/추적표를 갱신했으며 기존 로컬 수정은 보존
 - 실제 게시 결과: 업무/시험/조사 a790cbe를 dev dc5aab0086b81be20f8c5dfb1c8b34f4b9cfa5d6에 이력 보존 병합·push, ls-remote로 원격 dev 동일 확인. 작업 트리 clean·checkout dev, 목적 브랜치 원격은 없으며 로컬 완료 브랜치를 정리한다. main/운영은 보존하고 배포는 추가 개발 후 일괄 진행 대기로 유지한다. 후행 통합 기록도 같은 승인 범위에서 dev에 보존·push한다.
 
 - [전체10 Backend dev 게시 완료](https://github.com/heo0328/lostparty-backend/issues/52#issuecomment-6848125719)를 게시하고 실제순번을 확인했다. 동시 조회에서 전체9 Native가 사용자 승인에 따른 개발 작업 종료·배포 후속 이관을 회신하고 Issue52를 completed 종료한 것을 확인했다(2026-11-13T08:36:16Z). Backend가 종료를 실행한 것은 아니며 해당 상태를 보존한다. Native Git 게시 SHA는 담당자 후속 회신 기준으로 확인한다. 운영 배포는 추가 개발 후 대기다.
+
+## 2026-11-13 — Issue53 내 계정 계약 조사·답변
+
+- dev f527c0c에서 feat/my-account-contracts 분기. 표시 설정의 필수 visible/기본 true·count6/1..200·CAS·원 ACK, batch profiles1..50과 사용처를 대조했다. 최신 visible 보존/신규 count쓰기 중단으로 기존 API 재사용 가능하며 구형 계약 삭제/보정쓰기는 제안하지 않는다.
+- 전체 공개 OpenAPI와 overlap/예약원장·베타 약속·완료 해제를 조사했다. 충돌쌍은 단독 예약·과거시간 포함 전체원이 아니다. 기존 GET의 선택 응답 profile 후보를 제안했으며 원장/endpoint 신설은 확정하지 않았다. 달력 수00~다음수00과 게임 수06~다음수06 차이, 인접T 새벽과 미해제/완료이력의 의미를 구분했다.
+- [전체1 Backend 조사 답변](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6853018406) 게시. 다음 Native 재사용안·달력 경계·현재예약만 표시 여부/필드·주차 범위 확인이며 미합의 API 구현/기기 시험 요청이 아니다. 코드/OpenAPI/DB/서버 변경 없음. 문서/내용·링크/diff 검사, 동일 업무 시험은 반복하지 않는다. 문서 미커밋·미push, 배포/이슈 종료 없음.
+
+## 2026-11-13 — Native 사용자 준비 검토 결과 수신
+
+[전체2 Native](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6853275922)가 사용자 채택4항목을 회신했다. 기존 표시 API 재사용, 이번/다음 주 달력 수00~다음수00(8행 없음)/이전 실제T 새벽 교차 포함, 현재 미해제 예약만(단순 과거시간 제외 금지/완료이력 제외), 최소 레이드명·본인 캐릭터·예약시간 표시다. 다음 Backend는 경로/profile의 조회 책임·기존 충돌 소비 보존과 정확 입력/출력·출처/nullable·페이지/세대/상한·권한/해제/부분완료/자정 검증 후보를 정리한다. 이번은 회신 확인·기록이며 새 계약 후보 작성 완료나 공개 계약 확정/구현으로 보고하지 않는다. 문서/계약 협의만 진행하고 API/OpenAPI·DB·Penpot/배포/commit/push 변경 없음.
+
+## 2026-11-13 — Issue53 예약 읽기 계약 설계
+
+[정밀 설계안](../features/rosters/activity-and-presentation/my-account-reservations-design.md) 작성. 충돌쌍과 예약의 책임 차이로 독립 조회 하나를 추천하며 기존 profile 우선 검토를 변경했다. 달력 이번주 수00시/게임 수06시 독립 전환은 사용자 확인 대기다. 필드 출처/nullable·본인원장·기간/해제·keyset/전체지문·오류/상한·비용/검증 후보를 문서화하고 Issue53 전체3 Backend에 자립적인 요약을 게시했다. 상태표/표시 snapshot 변형/지문 비용은 구현 전 확인 항목이며 성능·API 공개를 보장하지 않는다. 다음 사용자 전환 기준 확인·Native 소비 대조. 문서 링크/diff PASS, 기능/API/OpenAPI/DB·시험·Penpot/commit/push/배포 없음.
+
+## 2026-11-13 — Issue53 달력 전환 확정·설계 게시 승인
+
+사용자가 그래프 달력 수00시/게임주차 수06시 독립 전환 추천을 승인하고 진행·commit/push를 지시했다. 조사/정밀 설계·협업 기록을 feat/my-account-contracts에 게시한다. 경로/DTO/오류·상한의 Native 소비 대조와 원장 상태표 기술확인은 남아 있어 미합의 API 구현으로 확대하지 않는다. 문서 링크/동결 자료·diff 검증, 앱/OpenAPI/DB 변경·서버 시험/병합/배포 없음. 실제 게시 SHA와 다음 담당은 Issue53 게시 댓글로 연결한다.
