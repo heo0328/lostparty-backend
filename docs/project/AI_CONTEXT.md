@@ -4,6 +4,8 @@
 
 ## 현재 기준
 
+- #52 운영 기록 오류 조사: 기존 관계 복구 목록 계약을 보존하고 선택 주차 기록 표시·부가정책·cursor 소비 수정은 Native 구현/자동검증·dev 사용자 정상 보고까지 수신했다. 더 보기는 수동 미확인, Backend 기록은 사용자 승인으로 dev 통합/게시하며 Native Git 상태는 담당자 회신으로 확인한다. 운영 배포는 사용자 결정으로 추가 개발 후 일괄 진행한다. 생성 상세403의 과거 원인은 별도 미확정이다. [조사·검증·담당 경계](../features/recruitment/membership-actions/issue52-investigation.md).
+
 - 실행 설정·명칭 정리는 `refactor/backend-runtime`에서 구현·검증·로컬 API 반영 완료다. 기본 `app.main:app`은 현재 앱, legacy는 DB0023 시험용이다. 명세 원문/DB 이력·자료·키/환경을 보존했다. 전체 회귀 고유2,001PASS·캐시 보완 후 58PASS·도구84PASS. [실행/검증](../engineering/development/runtime-configuration.md)·[운영 도구 전환 준비](../engineering/operations/runtime-release-transition.md). 사용자 직접 지시로 구현 8a54c485·로컬 dev 병합 e1e81b76 완료, dev/main9775c1e push·원격일치 및 완료 작업 브랜치 정리 완료. 현재는 release/2.2.0에서 [Issue51 공동 배포](../engineering/operations/release-2.2.0.md)를 진행하며 실제 운영은 v2.2.0/sourcec31d90da·DB0036·웹2.2.0+7로 반영 완료다. [전체5 Backend 운영 완료](https://github.com/heo0328/lostparty-backend/issues/51#issuecomment-6831720284)·[집계](../engineering/operations/records/release-2.2.0-deployment.json), 다음은 Native Android 공개이며 사용자 재시험 대기는 없다.
 
 - #50 모집 탐색은 양측구현/담당자검증·사용자필터확인으로합의기능완료, 사용자지시로Backend dev0dc381ae 통합/push·작업브랜치정리 및Issue completed종료까지마감했다. [전체14 Backend](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826988036)·[구현/검증](../features/recruitment/search/discovery-implementation.md). Native최종dev83a55020, 업무소비558ee6da의#50계약은유지한다. 추가협업대기없음, main/운영·전수인수와구분한다.

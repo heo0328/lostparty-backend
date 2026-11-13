@@ -579,3 +579,113 @@ def test_closed_null_leader_settings_are_readable_with_edit_denied(policy_db,cli
     assert value['data']['settings']['permissions']['edit_settings']==dict(allowed=False,reason='ROUND_NOT_ACTIVE',next_change_at=None)
     value=cycle_management.get(actor(a['uid']),rid,c)
     assert value['data']['permissions']['edit_settings']['reason']=='ROUND_NOT_ACTIVE'
+
+
+def end_history_room(w, rid, key, action='dissolve_led_targets'):
+    """Use current models; the frozen DB0031 example has no group-policy effects."""
+    from tests.raid_rooms.participation.test_membership_actions import body
+    context = membership_actions.get(actor(w['uid']), rid, key)
+    status, result = membership_actions.execute(actor(w['uid']), rid, uuid.uuid4(),
+        body(context, action))
+    assert status == 200
+    return result
+
+
+@pytest.mark.parametrize('shape', ['mixed', 'missing_only', 'empty'])
+def test_ended_membership_full_profiles_preserve_relation_only_and_cursor(policy_db, shape):
+    """Issue52: shared recovery rows are valid, but are not selected-week cards."""
+    from tests.raid_rooms.admissions.test_recruitment_cycle_http import client as http_client
+    from app.raids import service as raids
+    engine, a, b = policy_db
+    result = subprocess.run(['alembic', 'upgrade', 'head'], env={**os.environ,
+        'DATABASE_URL': engine.url.render_as_string(hide_password=False)}, capture_output=True, timeout=90)
+    assert result.returncode == 0, 'isolated latest-schema migration failed'
+    # Both rooms use real creation and dissolution commands; no fabricated policies.
+    existing = None
+    if shape == 'mixed':
+        existing, c, _, _, _ = create_beta(a, combined=True)
+        end_history_room(a, existing, c)
+    if shape != 'empty':
+        missing, c, _, _, _ = create_beta(a, combined=False)
+        end_history_room(a, missing, c)
+    else:
+        with session() as db:
+            c = raids.cycle(now(db)).cycle_key
+    n = (date.fromisoformat(c) + timedelta(days=7)).isoformat()
+    params = dict(target_cycle_key=n, state='ended', limit=1,
+        reader_profile='membership-actions-1', contract_profile='beta-recruitment-1',
+        group_policy_version='cycle-group-policy-1', participation_profile='remaining-active-1',
+        include_group_state='true', include_character_issues='true')
+    with http_client(a) as http:
+        first = http.get('/v2/me/raid-room-memberships', params=params)
+        assert first.status_code == 200, first.json()
+        page = first.json()
+        if shape == 'empty':
+            assert page['data']['items'] == []
+            assert page['data']['next_cursor'] is None
+            assert page['cycle_groups'] == []
+            return
+        item, = page['data']['items']
+        assert item['target']['room_id'] == str(missing)
+        assert item['target']['room_cycle_id'] is None
+        assert item['target']['target_cycle_key'] == n
+        assert item['viewer']['mode'] == 'relation_only'
+        assert item['viewer']['record_locator'] is None
+        assert item['content'] is None and page['cycle_groups'] == []
+        cursor = page['data']['next_cursor']
+        assert bool(cursor) == (shape == 'mixed')
+        if cursor:
+            second = http.get('/v2/me/raid-room-memberships', params=params | {'cursor': cursor})
+            assert second.status_code == 200, second.json()
+            page = second.json()
+            item, = page['data']['items']
+            assert item['target']['room_id'] == str(existing)
+            assert item['target']['room_cycle_id'] is not None
+            assert item['viewer']['mode'] == 'record'
+            assert item['viewer']['record_locator'] is not None
+            policy_row, = page['cycle_groups']
+            assert policy_row['room_cycle_id'] == item['target']['room_cycle_id']
+            assert page['data']['next_cursor'] is None
+        current_page = http.get('/v2/me/raid-room-memberships', params=params | {'target_cycle_key': c, 'limit': 20})
+        assert current_page.status_code == 200, current_page.json()
+        assert all(row['target']['room_cycle_id'] is not None for row in current_page.json()['data']['items'])
+
+
+@pytest.mark.parametrize('action', ['dissolve_led_targets', 'leave_all'])
+def test_creation_ack_survives_departure_but_is_not_detail_authorization(policy_db, action):
+    """Issue52 candidate, not attribution of the historical production request."""
+    from tests.raid_rooms.admissions.test_recruitment_cycle_http import client as http_client
+    from app.raid_rooms.schemas.beta_schemas import BetaCreateRequest
+    from app.raid_rooms.admissions import cycle_creation
+    from app.auth.models import Session
+    engine, a, b = policy_db
+    rid, key, _, request_body, command = create_beta(a, combined=True)
+    body = BetaCreateRequest.model_validate(request_body)
+    with beta_profile.using():
+        original = cycle_creation.create(actor(a['uid']), command, body)
+    params = dict(target_cycle_key=key, reader_profile='membership-actions-1',
+        contract_profile='beta-recruitment-1', group_policy_version='cycle-group-policy-1')
+    with http_client(a) as http:
+        assert http.get(f'/v2/raid-rooms/{rid}/detail', params=params).status_code == 200
+        end_history_room(a, rid, key, action)
+        with beta_profile.using():
+            assert cycle_creation.create(actor(a['uid']), command, body) == original
+        response = http.get(f'/v2/raid-rooms/{rid}/detail', params=params)
+        assert response.status_code == 403, response.json()
+        assert response.json()['error']['code'] == 'ROOM_MEMBERSHIP_REQUIRED'
+    # A fresh authenticated session of the same user must not turn the old ACK
+    # into a new creation or restore ended participation.
+    user, old_session = actor(a['uid'])
+    with session() as db, db.begin():
+        fresh = Session(id=uuid.uuid4(), user_id=user.id, remember_me=False,
+            created_at=old_session.created_at, absolute_expires_at=old_session.absolute_expires_at,
+            idle_expires_at=old_session.idle_expires_at)
+        db.add(fresh)
+        db.flush()
+        db.expunge(fresh)
+    with beta_profile.using():
+        assert cycle_creation.create((user, fresh), command, body) == original
+    from app.raid_rooms.participation import membership_readers
+    with pytest.raises(GameError) as rejected:
+        membership_readers.get((user, fresh), rid, key, 'detail')
+    assert rejected.value.code == 'ROOM_MEMBERSHIP_REQUIRED'

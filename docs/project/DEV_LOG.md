@@ -1,5 +1,28 @@
 # 영구 개발 이력
 
+## 2026-11-13 Issue52 Native 첫 회신 확인
+
+[전체1 Native 조사](https://github.com/heo0328/lostparty-backend/issues/52#issuecomment-6845321873)를 확인했다. 생성 현재 정상/기록 오류 지속이라는 최신 사용자 보고, 실제 기록GET /v2/me/raid-room-memberships(state=ended/profile 조합)을 수용했다. 주간summary POST200은 기록탭 성공 근거가 아니다. Native는 선택T 없는 종료관계의 relation_only/null target과 cycle_groups 누락을 소비거절하는 합성2PASS·기존110PASS를 보고했으며 운영 동일원인 확정은 아니다.
+
+Backend 정적 대조에서 membership_readers outer join/ended 조건·projection의null/relation_only·group_list_display.attach의cycle없으면생략 경로를 확인했다. 실제 계약의 포함 의도와 운영 원인 동일성은 미확정이다. [전체2 Backend 수신·다음 합성/계약 대조 회신](https://github.com/heo0328/lostparty-backend/issues/52#issuecomment-6845378797)을 같은 이슈에 게시했다. 다음Backend는 선택T 유무 합성 서버 사례/기존계약·시험과 실제 기록GET 안전로그 대조다. Native추가구현/권한전역완화/ACK삭제/사용자재현반복 요청없음. 이번에는 합성시험·코드/운영/DB 변경·배포·commit/push를 실행하지 않았다.
+
+## 2026-11-13 운영 오류 Backend 선조사·Issue52 협업 인계
+
+사용자가 Backend부터 조사하고 필요한 Native 확인만 Issue에 게시하도록 지시했다. 안전로그에서 요청79c4fa83의실제시각03:21:41.998KST·GET /v2/raid-rooms/{room_id}/detail·403 ROOM_MEMBERSHIP_REQUIRED를확인했다. 최초03:23~03:28추정과구분한다.03:24:54.143에도동일상세403이확인됐다. 생성POST는03:24:47.430/03:27:41.270 각201이며회원/기기별귀속은로그만으로확정하지않는다. 같은구간주간요약POST200을확인했지만기록탭실제호출/파싱정상과동일시하지않는다.
+
+상세권한코드상참가관계검사가존재하지만query/profile/대상/회원정보가안전로그에없어정확한거절분기는미확정이다. [Issue52 본문 Backend 초기조사·Native 확인 요청](https://github.com/heo0328/lostparty-backend/issues/52)을신규게시했다(댓글0개,본문게시이며댓글순번없음). 다음Native는생성진입상세GET의상태/ID/profile출처와기록탭실제API·INVALID_RESPONSE 필드/타입/요청ID를비식별근거로확인,이후Backend계약/권한대조다. 사용자재현반복을우선요청하지않았다. 코드/서버/DB/키변경·쓰기시험·commit/push없음. 읽기로그근거는ignored private에보존했다.
+
+## 2026-11-13 운영 오류 사용자 제보 — 조사 보류
+
+접수 기준: 2026-11-13 03:28:40 KST(2026-11-12 18:28:40 UTC). 사용자는 이 메시지 전5분 이내에 발생했다고 보고했다. 발생 추정 범위는03:23~03:28 KST이며 정확한 요청시각은 미확인이다. 운영 API·웹2.2.0 공개 이후의 사용자 관찰이며 서버로그/재현으로 확인한 결과가 아니다.
+
+- 웹에서 레이드 모집 생성 시 `ROOM_MEMBERSHIP_REQUIRED`, HTTP403 발생. 요청 식별자 `79c4fa83-c804-4923-8209-66418e693bdc`.
+- 레이드 현황의 기록 탭에서 `INVALID_RESPONSE` 표시. 해당 요청 식별자·HTTP상태·정확한 발생환경/응답 원문은 미제공이다.
+- 생성 오류 확인 후 사용자가 모바일에 로그인해 모집 생성을 시도했고 성공했다. 이후 다시 웹에서 확인했을 때 창 호출과 모집 생성도 정상 성공했다고 보고했다.
+- 생성 흐름의 후속 성공과 기록 탭 오류의 해소 여부는 구분한다. 기록 탭의 정상 복구 여부는 보고되지 않았다. 두 오류의 연관성·원인·재현성은 미확인이다. 모바일 로그인/생성이 웹 정상화의 원인이라고 단정하지 않는다.
+
+사용자는 지금 작업하지 않고 발생 사실만 기록하도록 요청했다. 조사/로그조회·재현·코드/계약/서버/DB 변경·시험·추가협업요청·Issue게시·commit/push는 수행하지 않았다. 향후 사용자 착수 지시가 있을 때 위 시각과 요청 식별자를 기준으로 확인한다. 현재는 로컬 기록만 보존한다.
+
 ## 2026-11-13 Issue51 Backend2.2.0·웹 공개 완료
 
 사용자승인으로릴리즈197142e를dev/main c31d90da에이력보존통합·atomic push하고불변태그v2.2.0을게시했다.2.2.0한정로컬검증재사용은8a54c485→승인9775c1e의실행소스동일·고정원장hash와후속허용도구경로만통과하며기존기능시험을반복하지않았다. 변경도구86PASS·정적검사PASS. 초기새단위시험의fixture범위오류1은시험준비만수정후해소했다. Actions43274053529 success,신규전체CI회귀로표시하지않는다.
@@ -4398,3 +4421,30 @@ NEXT_WORK/AI_CONTEXT/추적표를 갱신했으며 기존 로컬 수정은 보존
 - 최종확인문서011375bf3bd3be4f9a4457c0ad12247125357337을작업브랜치에커밋하고업무558ee6da와함께dev0dc381ae646fba062f008d26c58b20e653a6de67에no-ff병합·push·원격SHA일치/작업tip전체포함·동일tree를확인했다. main은b03595a유지다.
 - Issue50을2026-11-12T14:52:57Z(KST23:52:57) closed/completed로종료하고 [전체14 Backend/사용자승인마감](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826988036) 게시·실제순번확인했다. 단일worktree·현재dev·병합/원격게시를확인해feat/recruitment-discovery를로컬/원격삭제했다. 옛upstream에만미게시된최종문서로-d가거절되어upstream연결을해제한뒤이미병합된dev기준-d로안전삭제했으며force삭제/이력재작성은없다.
 - 미진행기능/추가Native협업대기는없다. 최종문서·구현/검증원장/상태를갱신하고dev후행문서커밋으로보존한다. 업무/시험파일hash·계약bytes보존/문서검사·diff확인, 코드변경없는서버/DB/기기시험은반복하지않았다. 로컬image/DB·키/환경/운영배포변경없음이다.
+
+## 2026-11-13 — Issue52 기존 관계 복구 계약 확인·소비 수정 협의
+
+- 사용자 승인 계획으로 dev0911383e에서 `fix/recruitment-history-response` 분기, 기존 미커밋 조사 문서를 보존했다. Backend 업무 API·DB·OpenAPI를 변경하지 않고 합성 시험/조사 기록을 추가한다.
+- 기존 확정 계약 §3은 ended 관계의 선택T 미참가 `relation_only`를 보존한다. 따라서 공용 API를 SQL 필터로 축소하지 않고 Native 기록 표시에서 RoomCycle 없는 행만 제외하며 해당 행의 정책 부재 허용·빈 표시 페이지 cursor 연속 조회를 협의한다. 실제 주차 정책 누락/중복과 기존 anchor는 유지한다.
+- 기존 운영 안전 로그(03:20–03:30 KST) 기록GET12건200, 생성context200/POST201·상세200/403 및 인증 흐름을 대조했다. query/회원/방/응답 내용을 연결할 근거는 없어 운영 동일 원인은 미확정이다. 운영 쓰기/응답 원문 로깅을 추가하지 않았다.
+- 새 합성 초기4건 PASS(59.59초): 전체 profile의 없음/혼합 cursor/빈 목록·현재 주차 비교와 생성 직후 상세200→해산 후 원ACK 동일/상세403→새 인증 세션 원ACK 동일/상세403. 최초 Docker 미기동을 기동으로 해결했고 초기 시험 helper의 구형 동결 예제/HTTP client 참조 오류를 수정했다. 시험 준비 실패를 업무 서버 결함으로 분류하지 않는다. 최종 해산/전체 탈퇴 각각의 ACK 사례로 확장한 합성5PASS(68.54초). 기존 그룹 정책·회원/기록·생성 회귀61PASS(791.31초). 초기 전체 실행은 새 준비 코드 오류4건/기존61PASS였고 해당 새 사례는 수정·확장 후 별도5PASS다. 임시 환경 정리 완료, 전체 실행 자체의 실패를 숨기거나 업무 서버 결함 수정으로 확대하지 않는다.
+- [전체3 Backend 조사·소비 계약 협의](https://github.com/heo0328/lostparty-backend/issues/52#issuecomment-6846147217) 게시 후 전체순번 재조회, 본문상단 범위/다음담당 갱신. **다음 Native:** 선택T 표시·정책·cursor 계약 수용과 최소 앱 수정·합성 회귀 결과 회신. Backend 신규 코드를 소비해야 하는 요청이 아니며 시험/문서는 미커밋·미push다.
+- [조사 원본](../features/recruitment/membership-actions/issue52-investigation.md). 실제 로그인 UI/기기 ACK 복구·운영 실제 응답 인수는 미확인, 과거403은 재현 후보와 증거 부족을 구분한다. 운영 반영 계획은 양측 결과 후 별도이며 이번 commit/push·배포·Issue 종료는 없다.
+
+## 2026-11-13 — Issue52 Native 설계 수용 회신 확인
+
+- [전체4 Native](https://github.com/heo0328/lostparty-backend/issues/52#issuecomment-6846576987)는 전체3의 소비 수정4항목을 수용한 설계이며 기능/시험 수정은 미진행이다. 명시 null 주차 행만의 예외·실제 정책 strict 검증·빈 표시 페이지 cursor 연속 처리·기존 anchor 보존 및 중복/반복 cursor·stale/늦은 응답 경계가 합의 범위와 일치한다.
+- [전체5 Backend 수용 확인](https://github.com/heo0328/lostparty-backend/issues/52#issuecomment-6846879058) 게시 후 실제 전체 댓글 순번을 재조회하고 이슈 상단·작업 기록을 갱신했다. Native의 현재 사용자 승인은 설계까지이며 새 구현 지시로 확대하지 않았다. 다음 단계는 Native 별도 승인 범위의 최소 구현/검증이고 Backend 선행 변경/재검증 요구는 없다.
+- 문서/내용·diff 검사만 수행하며 기존 서버/DB 시험을 반복하지 않는다. 미커밋·미push 유지, 운영 미해소·생성403 과거 원인 미확정. 배포/이슈 종료 없음.
+
+## 2026-11-13 — Issue52 Native 구현·dev 사용자 확인 수신
+
+[전체6 Native 구현·자동검증](https://github.com/heo0328/lostparty-backend/issues/52#issuecomment-6847142336)과 [전체7 사용자 확인 범위 정정](https://github.com/heo0328/lostparty-backend/issues/52#issuecomment-6847809202)을 확인했다. 직접10파일266PASS(기록27 포함)·변경4파일 분석0은 담당자 보고이며 Backend가 Native 로컬 소스를 읽거나 시험을 재실행한 결과가 아니다. 보고된 명시 null 행 표시 제외·정책 strict 검증·빈 페이지 cursor/원자 반영·stale/늦은 응답 처리·옛 anchor 보존은 합의 범위와 일치한다.
+
+기록 표시·새로고침·상세·주차/탭 왕복은 dev 사용자 정상 보고다. 더 보기/다중 페이지는 자료 부족으로 수동 미확인이며 합성 자동 시험 통과와 구분한다. 추가 자료 생성/삭제·반복 사용자 재현은 요청하지 않는다. 실제 운영 반영/해소·과거403 원인은 여전히 미확인이다.
+
+[전체8 Backend 수신](https://github.com/heo0328/lostparty-backend/issues/52#issuecomment-6847918619)을 게시하고 실제 순번과 이슈 상단을 갱신했다. Backend API/DB/OpenAPI 변경이나 추가 재검증은 필요 없다. 양측 미커밋·미push, Native dev/main 미반영이며 다음 단계는 개발자의 게시/통합·운영 반영 결정이다. 이 수신 확인으로 commit/push·merge·배포·이슈 종료를 실행하지 않는다. 문서·diff 검사만 수행했다.
+
+## 2026-11-13 — 사용자 게시·dev 통합 지시
+
+사용자가 버그 수정 완료를 확인하고 커밋·dev 병합·push를 지시했다. Backend의 조사·합성 회귀·협업 기록을 같은 목적 브랜치에서 게시/통합한다. 기존 회귀61/최종 합성5와 문서 검증 근거를 재사용한다. 운영 배포는 추가 개발 후 일괄 진행하기로 했으며 이번 서버/DB/키·main 변경이나 이슈 종료는 하지 않는다. Native 저장소는 담당자 게시 회신으로 추적하며 Backend가 로컬 소스를 수정하지 않는다. 실제 커밋·원격 일치는 최종 Git 확인 및 이슈 게시 결과에 연결한다.
