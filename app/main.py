@@ -445,6 +445,8 @@ def create_app():
     result.include_router(cycle_router)
     from app.raid_rooms.api.application_presets import router as presets_router
     result.include_router(presets_router)
+    from app.raid_rooms.api.personal_reservations_router import router as reservations_router
+    result.include_router(reservations_router)
     generate=result.openapi
     def schema():
         if result.openapi_schema is not None:

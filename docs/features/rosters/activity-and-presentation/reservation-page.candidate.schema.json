@@ -1,0 +1,258 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lostparty:issue53:reservation-page-candidate",
+  "title": "Issue53 proposed response; not runtime OpenAPI",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "scope",
+    "data"
+  ],
+  "properties": {
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "server_now",
+        "current_cycle_key",
+        "current_calendar_week_key",
+        "calendar_week_key",
+        "timezone",
+        "window_start",
+        "window_end",
+        "policy_version"
+      ],
+      "properties": {
+        "server_now": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+          "minLength": 20,
+          "maxLength": 27
+        },
+        "current_cycle_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "minLength": 10,
+          "maxLength": 10
+        },
+        "current_calendar_week_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "minLength": 10,
+          "maxLength": 10
+        },
+        "calendar_week_key": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "minLength": 10,
+          "maxLength": 10
+        },
+        "timezone": {
+          "const": "Asia/Seoul"
+        },
+        "window_start": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+          "minLength": 20,
+          "maxLength": 27
+        },
+        "window_end": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+          "minLength": 20,
+          "maxLength": 27
+        },
+        "policy_version": {
+          "const": "personal-reservations-1"
+        }
+      }
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "items",
+        "result_revision",
+        "next_cursor",
+        "evaluated_at"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "maxItems": 200,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "reservation_id",
+              "session_id",
+              "segment_id",
+              "room_id",
+              "cycle_key",
+              "starts_at",
+              "ends_at",
+              "schedule_revision",
+              "raid",
+              "character"
+            ],
+            "properties": {
+              "reservation_id": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+              },
+              "session_id": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+              },
+              "segment_id": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+              },
+              "room_id": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+              },
+              "cycle_key": {
+                "type": "string",
+                "format": "date",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                "minLength": 10,
+                "maxLength": 10
+              },
+              "starts_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+                "minLength": 20,
+                "maxLength": 27
+              },
+              "ends_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+                "minLength": 20,
+                "maxLength": 27
+              },
+              "schedule_revision": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 2147483647
+              },
+              "raid": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "raid_id",
+                  "difficulty_id",
+                  "display_name"
+                ],
+                "properties": {
+                  "raid_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-z0-9_]+$"
+                  },
+                  "difficulty_id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-z0-9_]+$"
+                  },
+                  "display_name": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "minLength": 1,
+                    "maxLength": 128
+                  }
+                }
+              },
+              "character": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "character_id",
+                  "display"
+                ],
+                "properties": {
+                  "character_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+                  },
+                  "display": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "name",
+                      "server_name",
+                      "class_name"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "server_name": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "minLength": 1,
+                        "maxLength": 64
+                      },
+                      "class_name": {
+                        "type": [
+                          "string",
+                          "null"
+                        ],
+                        "minLength": 1,
+                        "maxLength": 64
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "result_revision": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "next_cursor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 8192,
+          "pattern": "^[A-Za-z0-9_.-]+$"
+        },
+        "evaluated_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+          "minLength": 20,
+          "maxLength": 27
+        }
+      }
+    }
+  }
+}

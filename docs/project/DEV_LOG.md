@@ -4470,3 +4470,21 @@ NEXT_WORK/AI_CONTEXT/추적표를 갱신했으며 기존 로컬 수정은 보존
 ## 2026-11-13 — Issue53 달력 전환 확정·설계 게시 승인
 
 사용자가 그래프 달력 수00시/게임주차 수06시 독립 전환 추천을 승인하고 진행·commit/push를 지시했다. 조사/정밀 설계·협업 기록을 feat/my-account-contracts에 게시한다. 경로/DTO/오류·상한의 Native 소비 대조와 원장 상태표 기술확인은 남아 있어 미합의 API 구현으로 확대하지 않는다. 문서 링크/동결 자료·diff 검증, 앱/OpenAPI/DB 변경·서버 시험/병합/배포 없음. 실제 게시 SHA와 다음 담당은 Issue53 게시 댓글로 연결한다.
+
+## 2026-11-13 — Issue53 Native 전체5 계약 대조 수신
+
+[전체5 Native](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6853911329)는 고정55923cc를 정적 대조해 독립 GET/달력 전환·현재예약·설정 보존을 수용했다. 다음 Backend 잔여3항목(정확 schema/상한, 페이지시각/clock와 지문, 정상/모순 상태표·snapshot/비용)을 NEXT_WORK에 기록했다. 새 사용자 제품 결정 없음, Native 미구현/추가문서 미게시이며 별도 구현 지시 전 계약 정리 단계다. 이번 회신 확인은 내용·diff 검사만, 업무/시험/OpenAPI/DB·commit/push 변경 없음.
+
+## 2026-11-13 — Issue53 계약 세부3항목 정리·전체6 회신
+
+[전체6 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6854151919) 게시·실제댓글순번 확인. response 후보 JSON Schema/완전합성200, 필드길이/출처·페이지크기·clock/관측지문·상태표·조회보호상한/이론비용을 정리했다. source character_name→name과 fixture3키/null, review 시 예약 보존·정확 release 경로를 정적 대조했다. enum/옛세대만으로 미해제원장503 금지·구조모순만오류를 구체화했다. schema/합성200·거절5종/문서링크·diff PASS는 문서검증이며 신규HTTP/성능 통과 아님. 다음 Native 최종 소비대조, 별도 구현 지시 전 API/OpenAPI/DB·Penpot/배포 변경 없음. 추가문서 미커밋·미push.
+
+## 2026-11-13 — Issue53 최종 수용 확인·구현 준비
+
+[전체7 Native](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6854268594)가 정확wire/상한·시각/세대·상태표를 수용했다. 새 제품결정/설계질의 없음. 기존 cursor helper2048자/offset과 새8192/keyset/고정만료 차이, 현재앱 전용 router 등록·legacy 보존, 카탈로그 요청고정·전체지문 sentinel과 페이지limit 구분을 확인했다. 수06시 game key만의 변화는 cursor stale 사유에서 제외한다. 정밀 설계에 코드배치/구현 순서·단계별 검증/게시·로컬 인계를 정리했다. 이번은 준비문서·검사만이며 API/OpenAPI·DB/서버·commit/push/배포 변경 없음.
+
+## Issue53 — 사용자 승인 계약 구현·검증·로컬 반영
+
+합의한 GET /v2/me/raid-reservations를 현재앱에만 추가했다. 기존 원장/키 재사용·projection/nullable·전체지문/keyset/고정만료/상한·권한·달력 경계를 구현했다. 기존 모든path/component 값·legacy 계약을 보존했다. 요청마다 구조검사를 반복하던 비용은 시작시 전체검사·요청별schema head 검사로 분리하고 사용하지 않는build열을 제외했다. 최종 신규16/기존일정HTTP3=19PASS, 추가 실제 동시쓰기snapshot1PASS는 중복case 강화다. 초기 시험준비 오류와 해산해제 기대는 수정후 통과했으며 [구현근거](../features/rosters/activity-and-presentation/my-account-reservations-implementation.md)에 한계/측정을 연결했다.
+
+로컬 API image7aaba198…fffa63로 교체, DB container·환경/포트/mount/키hash 보존·health200/예약401·생성계약과app292파일 일치. 기존사본 재사용/로컬dump제외, 실회원쓰기·DBmigration/운영배포 없음. 사용자 지시로 같은 목적브랜치의 최종 설계/schema/example·업무/시험·기록을 함께 commit/push하고 고정SHA/OpenAPI/실행버전을 Issue53으로 인계한다. dev/main merge·Issue 종료는 승인에 포함하지 않는다.

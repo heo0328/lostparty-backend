@@ -1278,6 +1278,12 @@
       "path": "/v2/raid-rooms/{room_id}/batch-personal-completion-departures",
       "operation_id": "contract3_post__v2_raid-rooms_room_id_batch-personal-completion-departures",
       "topic": "recruitment/completion-and-records"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/raid-reservations",
+      "operation_id": "get_v2_me_raid_reservations_get",
+      "topic": "recruitment/scheduling"
     }
   ]
 }

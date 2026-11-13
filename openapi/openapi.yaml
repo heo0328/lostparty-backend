@@ -47975,6 +47975,218 @@
         },
         "x-beta-contract-profile": "beta-recruitment-1"
       }
+    },
+    "/v2/me/raid-reservations": {
+      "get": {
+        "tags": [
+          "personal-reservations"
+        ],
+        "summary": "Get",
+        "description": "Read-only own unreleased reservations intersecting a KST Wednesday-midnight calendar week. Current/next calendar only; no activity/ownership filtering. 10000-row scan and 1MiB page bounds. Result revision excludes observation time and the 06:00 game-cycle transition. Cursor retains its original 600-second expiry. No provider or per-room reads.",
+        "operationId": "get_v2_me_raid_reservations_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "calendar_week_key",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 10,
+              "maxLength": 10,
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "title": "Calendar Week Key"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 8192,
+                  "pattern": "^[A-Za-z0-9_.-]+$"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReservationPage"
+                }
+              }
+            },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Bad Request",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "type": "string",
+                  "const": "Bearer"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Forbidden",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Not Found",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Conflict",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Request Entity Too Large",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameErrorOut"
+                }
+              }
+            },
+            "description": "Service Unavailable",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -96224,6 +96436,320 @@
           "coordination_progress"
         ],
         "title": "DiscoverySchedule"
+      },
+      "ReservationCharacter": {
+        "properties": {
+          "character_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Character Id"
+          },
+          "display": {
+            "$ref": "#/components/schemas/ReservationDisplay"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "character_id",
+          "display"
+        ],
+        "title": "ReservationCharacter"
+      },
+      "ReservationData": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ReservationItem"
+            },
+            "type": "array",
+            "maxItems": 200,
+            "title": "Items"
+          },
+          "result_revision": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Result Revision"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 8192,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9_.-]+$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          },
+          "evaluated_at": {
+            "type": "string",
+            "maxLength": 27,
+            "minLength": 20,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+            "title": "Evaluated At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "items",
+          "result_revision",
+          "next_cursor",
+          "evaluated_at"
+        ],
+        "title": "ReservationData"
+      },
+      "ReservationDisplay": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 128,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "server_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 64,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Server Name"
+          },
+          "class_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 64,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Class Name"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "server_name",
+          "class_name"
+        ],
+        "title": "ReservationDisplay"
+      },
+      "ReservationItem": {
+        "properties": {
+          "reservation_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Reservation Id"
+          },
+          "session_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Session Id"
+          },
+          "segment_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Segment Id"
+          },
+          "room_id": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+            "title": "Room Id"
+          },
+          "cycle_key": {
+            "type": "string",
+            "maxLength": 10,
+            "minLength": 10,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Cycle Key"
+          },
+          "starts_at": {
+            "type": "string",
+            "maxLength": 27,
+            "minLength": 20,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+            "title": "Starts At"
+          },
+          "ends_at": {
+            "type": "string",
+            "maxLength": 27,
+            "minLength": 20,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+            "title": "Ends At"
+          },
+          "schedule_revision": {
+            "type": "integer",
+            "maximum": 2147483647.0,
+            "minimum": 1.0,
+            "title": "Schedule Revision"
+          },
+          "raid": {
+            "$ref": "#/components/schemas/ReservationRaid"
+          },
+          "character": {
+            "$ref": "#/components/schemas/ReservationCharacter"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "reservation_id",
+          "session_id",
+          "segment_id",
+          "room_id",
+          "cycle_key",
+          "starts_at",
+          "ends_at",
+          "schedule_revision",
+          "raid",
+          "character"
+        ],
+        "title": "ReservationItem"
+      },
+      "ReservationPage": {
+        "properties": {
+          "scope": {
+            "$ref": "#/components/schemas/ReservationScope"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ReservationData"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "scope",
+          "data"
+        ],
+        "title": "ReservationPage"
+      },
+      "ReservationRaid": {
+        "properties": {
+          "raid_id": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-z0-9_]+$",
+            "title": "Raid Id"
+          },
+          "difficulty_id": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-z0-9_]+$",
+            "title": "Difficulty Id"
+          },
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 128,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "raid_id",
+          "difficulty_id",
+          "display_name"
+        ],
+        "title": "ReservationRaid"
+      },
+      "ReservationScope": {
+        "properties": {
+          "server_now": {
+            "type": "string",
+            "maxLength": 27,
+            "minLength": 20,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+            "title": "Server Now"
+          },
+          "current_cycle_key": {
+            "type": "string",
+            "maxLength": 10,
+            "minLength": 10,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Current Cycle Key"
+          },
+          "current_calendar_week_key": {
+            "type": "string",
+            "maxLength": 10,
+            "minLength": 10,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Current Calendar Week Key"
+          },
+          "calendar_week_key": {
+            "type": "string",
+            "maxLength": 10,
+            "minLength": 10,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "title": "Calendar Week Key"
+          },
+          "timezone": {
+            "type": "string",
+            "const": "Asia/Seoul",
+            "title": "Timezone"
+          },
+          "window_start": {
+            "type": "string",
+            "maxLength": 27,
+            "minLength": 20,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+            "title": "Window Start"
+          },
+          "window_end": {
+            "type": "string",
+            "maxLength": 27,
+            "minLength": 20,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+            "title": "Window End"
+          },
+          "policy_version": {
+            "type": "string",
+            "const": "personal-reservations-1",
+            "title": "Policy Version"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "server_now",
+          "current_cycle_key",
+          "current_calendar_week_key",
+          "calendar_week_key",
+          "timezone",
+          "window_start",
+          "window_end",
+          "policy_version"
+        ],
+        "title": "ReservationScope"
       }
     },
     "securitySchemes": {
