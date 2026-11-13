@@ -1,0 +1,30 @@
+{
+  "image": "sha256:7e77c0788d2c562eedc4142c5fda2a6dc4314e8a16881a3bdd60a4e17bd937b4",
+  "previous_image": "sha256:308f82a8552d5ef80b36cae6fa80bbf5820eca418787bd5dce8081bdb0d41384",
+  "db_container_preserved": true,
+  "environment_ports_mounts_keys_preserved": true,
+  "app_python_files": 295,
+  "current_contract_equal": true,
+  "http": "health200/management401; authenticated functional checks are isolated DB/HTTP only",
+  "validation": {
+    "selected": "61 PASS / 33.76s (new management26 + legacy representative35)",
+    "document": "40 document cases PASS",
+    "contract": "current and legacy full-object PASS; old paths/components unchanged",
+    "db_reset": false,
+    "production_deploy": false,
+    "git_publication": "uncommitted/unpushed, no fixed implementation SHA"
+  },
+  "measurement": {
+    "scope": "single synthetic isolated 1000-character context; warm, no provider",
+    "seconds": 0.04244942399964202,
+    "queries": 13,
+    "bytes": 216488
+  },
+  "source_hashes": {
+    "app/main.py": "f8d46ea633057eb42295b5f02265c7c344eb478aa5ed0dd1e9854e4489c77808",
+    "app/game_accounts/api/management_router.py": "c917491119bfb8ede707577582b8291a9c1c11ecb664bb870a18d489521259ff",
+    "app/game_accounts/character_profiles/management.py": "e7e5265e5906594bd103dfbb2ce32decbd661086583b93d7eefbfb8b5aae3d32",
+    "app/game_accounts/schemas/management_schemas.py": "ca522f4c145dbbc922a370fc044711037f9e11d6c4b02f997143d2e6365283c1",
+    "openapi/openapi.yaml": "f82f720c5762c3b46b2694c044d690c6be98515aadf77a51b5b552a556ccc18c"
+  }
+}

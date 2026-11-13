@@ -1,0 +1,155 @@
+{
+  "levels": [
+    {
+      "raw": null,
+      "normalized": null
+    },
+    {
+      "raw": "",
+      "normalized": null
+    },
+    {
+      "raw": "NaN",
+      "normalized": null
+    },
+    {
+      "raw": "Infinity",
+      "normalized": null
+    },
+    {
+      "raw": "-1",
+      "normalized": null
+    },
+    {
+      "raw": "abc",
+      "normalized": null
+    },
+    {
+      "raw": "1700.00",
+      "normalized": "1700"
+    },
+    {
+      "raw": "1700.0100",
+      "normalized": "1700.01"
+    },
+    {
+      "raw": "0",
+      "normalized": "0"
+    },
+    {
+      "raw": "1e3",
+      "normalized": "1000"
+    },
+    {
+      "raw": "0e1000",
+      "normalized": "0"
+    }
+  ],
+  "cases": [
+    {
+      "name": "level_desc_null_last",
+      "items": [
+        {
+          "id": "a",
+          "rank": null,
+          "level": "1700",
+          "name": "가"
+        },
+        {
+          "id": "b",
+          "rank": null,
+          "level": null,
+          "name": "나"
+        },
+        {
+          "id": "c",
+          "rank": null,
+          "level": "1800",
+          "name": "다"
+        }
+      ],
+      "expected": [
+        "c",
+        "a",
+        "b"
+      ]
+    },
+    {
+      "name": "utf16_non_ascii",
+      "items": [
+        {
+          "id": "a",
+          "rank": null,
+          "level": "1700",
+          "name": ""
+        },
+        {
+          "id": "b",
+          "rank": null,
+          "level": "1700",
+          "name": "😀"
+        },
+        {
+          "id": "c",
+          "rank": null,
+          "level": "1700",
+          "name": "가"
+        }
+      ],
+      "expected": [
+        "c",
+        "b",
+        "a"
+      ]
+    },
+    {
+      "name": "rank_and_tie",
+      "items": [
+        {
+          "id": "b",
+          "rank": 0,
+          "level": null,
+          "name": "나"
+        },
+        {
+          "id": "c",
+          "rank": null,
+          "level": "2000",
+          "name": "가"
+        },
+        {
+          "id": "a",
+          "rank": 0,
+          "level": null,
+          "name": "나"
+        }
+      ],
+      "expected": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    {
+      "name": "exact_high_precision",
+      "items": [
+        {
+          "id": "a",
+          "rank": null,
+          "level": "1700.00000000000000000000000000001",
+          "name": "a"
+        },
+        {
+          "id": "b",
+          "rank": null,
+          "level": "1700.00000000000000000000000000002",
+          "name": "z"
+        }
+      ],
+      "expected": [
+        "b",
+        "a"
+      ]
+    }
+  ]
+}

@@ -447,6 +447,8 @@ def create_app():
     result.include_router(presets_router)
     from app.raid_rooms.api.personal_reservations_router import router as reservations_router
     result.include_router(reservations_router)
+    from app.game_accounts.api.management_router import router as management_router
+    result.include_router(management_router)
     generate=result.openapi
     def schema():
         if result.openapi_schema is not None:

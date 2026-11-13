@@ -4490,3 +4490,49 @@ NEXT_WORK/AI_CONTEXT/추적표를 갱신했으며 기존 로컬 수정은 보존
 로컬 API image7aaba198…fffa63로 교체, DB container·환경/포트/mount/키hash 보존·health200/예약401·생성계약과app292파일 일치. 기존사본 재사용/로컬dump제외, 실회원쓰기·DBmigration/운영배포 없음. 사용자 지시로 같은 목적브랜치의 최종 설계/schema/example·업무/시험·기록을 함께 commit/push하고 고정SHA/OpenAPI/실행버전을 Issue53으로 인계한다. dev/main merge·Issue 종료는 승인에 포함하지 않는다.
 
 - 실제 게시: 업무/계약 fe5e0824c28f58025af201d6ef66d8289229ae60를 feat/my-account-contracts에 push하고 원격 동일성을 확인했다. [전체9 Backend 구현 인계](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6856983342) 게시·순번/이슈상단 갱신. 후행 문서 커밋78dc0f5의 DEV_LOG 오대체를 발견해 직전 전체이력을 보존 복원했다. 공유이력 재작성 없이 정정 커밋으로 수정하며 API/실행/DB는 변경하지 않는다.
+
+## 2026-11-14 — Issue53 Native 즉시 저장 추가 계약 질의 수신
+
+[전체10 Native](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6859431815)의 원터치 관리 UX와 activity/대표 재사용·순서 원자 저장·순서scope/비활동/신규·CAS/멱등/연속조작·초기설정 질의를 확인했다. 다음 Backend 조사/정확 계약 제안, 이후Native 소비/실패UX 대조 단계다. 예약 조회 인계와 구분하며 이번 회신 확인은 새API/DB 구현·시험·commit/push 지시가 아니다. 기록/diff 검사만 수행했다.
+
+## 2026-11-14 — Issue53 즉시 저장 조사·전체11 Backend 회신
+
+기존 settings/대표/preferences writer·DTO·멱등경로를 정적대조했다. ON/OFF/대표/초기명시설정은 v1 settings 재사용가능, 대표전용API는main제약이며 SettingsOut에roster_revision은없다. 원자순서계약은없어v2 통합설정자원과기존버전+순서지문·rank부분갱신/원ACK보존·직렬조작을추천했다. [전체11 회신](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6859755753) 및 [제안](../features/rosters/activity-and-presentation/character-management-immediate-save-proposal.md). 다음Native UX/계약대조이며활동subset/비활동상대순서·대표rank분리는추천안이다. 문서검사만 수행, 업무/API/DB/서버·시험/commit/push/배포 변경없음.
+
+## 2026-11-14 — Issue53 Native 전체12 추가 대조 수신
+
+[전체12 Native](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6859935888)에서v2통합방향수용과기본정렬1건의소비차이를확인했다. 기존level/name정렬과사용자첫드롭목록을보존하도록Backend제안을보완해야하며새자동정렬/암묵rank고정을승인하지않았다. 정확schema/지원량·eligibility·옛ACK/no-op은계약고정단계에남아있다. 회신확인/기록·diff만수행,API/DB/서버·시험/commit/push 변경없음.
+
+## 2026-11-14 — 사용자 유저 데이터 초기화 허용
+
+사용자가 운영 포함 사용 중인 모든 DB의 저장 유저 정보를 초기화해도 되며 기존자료보존 때문에 구조/기능을 추가할 필요가 없다고 명시했다. 설계의기존자료보존 필수조건을해제하고필요시초기화하는단순안을검토한다. 실제초기화는이번에실행하지않았다. 실행대상/참조·세션/앱상태영향은구체화하며키/환경/볼륨·외부Firebase/기기자료삭제로확대하지않는다. 즉시저장정렬/원자성등제품정책과기존자료이관은구분한다. 문서기록만,DB/서버/commit/push 변경없음.
+
+## 2026-11-14 — 초기화 사전확인 정정·Issue53 전체13 계약 보완
+
+사용자가 DB초기화는반드시먼저확인해야하고임의진행금지라고명시했다. 앞선허용은설계의기존자료보존필수조건완화이지실행승인이아니며현재안은초기화불필요/미실행이다.
+
+[전체13 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6860182946)에실제summary.item_level/Character.name·rank기반기본정렬보존,원자GET문맥/정렬지문·첫실드롭만rank확정·1000/200지원분리·정확DTO/eligibility/ACK현재조회/no-op후보를회신했다. 기존roster/lifecycle reader의summary와poweroverlay출처를정적대조했으며Native comparator기술대조가남아있다. [원본](../features/rosters/activity-and-presentation/character-management-sorting-contract.md). 다음Native소비대조,신규API/DB/서버·시험/commit/push/배포변경없음.
+
+## 2026-11-14 — Issue53 Native 전체14·15 확인
+
+[전체15 계약산출물 요청](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6860661505)과전체14후보수용을확인했다. 정렬차이는해소됐고정확schema/예시·comparator fixture·불완전설정집합불변식의문서고정이남았다. 다음Backend 산출물고정/게시상태명시→Native DTO/수명대조. 이번회신확인으로API/DB/실행·초기화/commit/push 승인확대없음,기록/diff검사만수행했다.
+
+## 2026-11-14 — Issue53 정확 관리 Schema/합성예시 고정
+
+character-management-contract에schema/examples/comparator/검증도구/설명을작성했다. GET의상태별느슨한잔여집합·PUT엄격자격,usable/blocked_reason·정렬지문/decimalUTF16·no-op/원ACK/현재GET을명시하고문서38사례PASS. [전체16 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6860769177)에정확원문을첨부·순번확인했다. 파일은미게시로SHA없음을명시,다음Native정확대조. 신규API/OpenAPI/DB/서버·실행시험/commit/push/배포변경없음,초기화불필요/미실행·사용자사전확인필수.
+
+## 2026-11-14 — Issue53 Native 전체17 정확 계약 수용
+
+[전체17 Native](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6860821836)에서닫힌Schema/복구집합/PUT자격·no-op/원ACK·정렬fixture최종대조수용을확인했다. Native가댓글JSON을정적검사한것이며HTTP/실서버/Flutter parser시험이아니다. 설계질의해소,다음Backend 별도승인범위게시/구현인계다. 이번은확인·기록/diff만수행했으며commit/push·API/DB/서버·초기화실행없음.
+
+## 2026-11-14 — Issue53 즉시 저장 계약 구현·검증·로컬 반영
+
+관리 v2 GET/PUT를현재앱에만추가했다. 읽기잔여집합·정확decimal/UTF16·bulk문맥/지문,원자선택/대표/순서·CAS/멱등ACK·no-op·role/visible보존을구현했다. 초기fixture필수시각2누락을수정후 최종 신규26/기존대표35=61PASS(33.76초), 문서40사례/두전체계약·기존path/component보존/문서검사PASS. 실제동시2요청1성공·1충돌, ACK실패모든업무rollback·200/201활동/1000/1001문맥 경계와정렬fixture검증. [구현](../features/rosters/activity-and-presentation/character-management-implementation.md).
+
+로컬 API image7e77c078…d937b4,DB/키·환경/포트/mount보존·app295파일/현재생성계약일치·health200/관리401확인. 인증기능은격리DB/HTTP시험이며실제dev회원/NativeUI는미확인. 새키/migration/유저초기화·운영쓰기/배포없음. 기존키/환경사본재사용·로컬dump제외유지,초기화는추후에도사용자사전확인필수. 코드/문서미커밋·미push,게시SHA없음을명시해같은Issue에회신한다.
+
+- [전체18 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6861363598)를게시하고실제순번/이슈상단을갱신했다. 신규관리는미커밋·미push/고정SHA없음,기존예약게시와구분했다. 사용자게시지시후고정계약인계→승인된Native연동검증이며반복기초시험·원격미게시코드테스트는요청하지않았다.
+
+## 2026-11-14 — 사용자 v2 관리 commit/push 승인
+
+사용자가누적 v2관리구현·정확계약/schema/예시·시험·로컬반영기록을커밋·푸시하도록명시했다. feat/my-account-contracts의같은구간을게시하고고정SHA/파일링크를Issue53에인계한다. 기존61PASS/문서40사례/현재·legacy계약/로컬실행보존근거를재사용하고게시직전문서/diff검사를수행한다. 앱/계약bytes를바꾸지않아동일서버시험을반복하지않는다. dev/main merge·운영배포·DB초기화·Issue종료없음.

@@ -4,7 +4,7 @@
 
 ## 현재 기준
 
-- #53 내 계정 리메이크: 합의한 개인 예약 조회를 구현·격리검증/로컬 dev 반영했다. 기존 표시 설정/충돌·legacy 계약 보존, 다음 Native 게시 계약 소비 검증이다. [구현/한계](../features/rosters/activity-and-presentation/my-account-reservations-implementation.md).
+- #53 내 계정 리메이크: 합의한 개인 예약 조회를 구현·격리검증/로컬 dev 반영했다. 기존 표시 설정/충돌·legacy 계약 보존, 예약은 Native 게시 계약 소비 검증 단계다. 추가 관리 즉시저장도 최종계약을 구현·격리검증하고 로컬dev에 반영했다. 신규관리는 미커밋·미push/원격고정SHA없음이며 Native 연결/기기확인은별도다. [구현/한계](../features/rosters/activity-and-presentation/my-account-reservations-implementation.md).
 
 - #52 운영 기록 오류 조사: 기존 관계 복구 목록 계약을 보존하고 선택 주차 기록 표시·부가정책·cursor 소비 수정은 Native 구현/자동검증·dev 사용자 정상 보고까지 수신했다. 더 보기는 수동 미확인, Backend 기록 a790cbe는 사용자 승인으로 dev dc5aab0에 통합/push 완료했으며 Native Git 상태는 담당자 회신으로 확인한다. 운영 배포는 사용자 결정으로 추가 개발 후 일괄 진행한다. 생성 상세403의 과거 원인은 별도 미확정이다. [조사·검증·담당 경계](../features/recruitment/membership-actions/issue52-investigation.md).
 
