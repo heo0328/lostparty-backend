@@ -1,0 +1,31 @@
+{
+  "image": "sha256:add287075a37d6385ef18f6754368f19be09866fc39f5c175d3616419e1f71f2",
+  "previous_image": "sha256:9f40ecf7a06bb80e538ac5c2af31cc73c1baff6877130f1b1b87b4bfabc401c4",
+  "preserved": {
+    "db_container": true,
+    "environment": true,
+    "ports": true,
+    "mounts": true,
+    "keys": true,
+    "database_schema_and_table_count": true
+  },
+  "health": 200,
+  "app_python_files": 296,
+  "source_sha256": "1245cb5eaca1c47bb99480de373641acbd597f80b8cd8832547826cc4253f8bd",
+  "regression": {
+    "pass": 5,
+    "seconds": 73.4,
+    "before_fix": "1 passed/1 failed: AttributeError on missing target in metadata_value"
+  },
+  "schema": "0036_roster_presence",
+  "contract": "current/legacy full-object PASS; no OpenAPI changes",
+  "live_data_comparison": {
+    "equal": false,
+    "rows_before": 1327,
+    "rows_after": 1326,
+    "note": "Live database changed during observation; no attribution inferred. Whole-data equality is not established. No synthetic member writes, migration, reset or data restoration were executed."
+  },
+  "publication": "uncommitted/unpushed",
+  "production_deployment": false,
+  "db_reset": false
+}

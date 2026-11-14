@@ -2,7 +2,15 @@
 
 2026-11-13 KST 기준. 실제 Backend 코드/Git과 각 담당의 현재 코드 확인 결과를 사용한다. Native 코드 상태·완료 판단은 Native가 작성하며 Backend가 대신 검토하지 않는다.
 
-## 현재 우선 — Issue53 정책2 게시·dev 통합 완료 / Native 연결
+## 현재 우선 — BUG-036 사용자/Native 확인 완료·dev 통합
+
+[원인·수정/검증](../features/recruitment/membership-actions/unopened-next-detail.md): 미개방 다음 주 상세의 include_group_state 경로에서 없는 RoomCycle을 참조하던500을 수정했다. 격리5PASS/두 명세 불변·로컬imageadd28707…1f71f2 지원, 사용자 “참가 데이터 없음” 정상 확인과 [전체43 Native 수용](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875080366)으로 해당 화면 대기는 해소됐다. 반복 시험/추가 Backend 수정 요청은 없다.
+
+사용자가 문서 최신화·commit·dev 병합/push를 지시했다. 같은 fix/recruitment-detail의 코드/시험/기록을 게시·통합하고 원격/로컬 실행 소스 일치를 확인한다. 전체 리메이크 후속과 운영 배포·Issue 종료는 별도이며 DB초기화는 실행하지 않는다.
+
+## Issue53 정책2 게시·dev 통합 완료 / 현재 구간 인수 완료·Native 후속
+
+[전체34 Native](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6873960057)에서 정책2/관리복귀 재조회 등 현재 구간의 사용자 웹·앱 정상 확인과 Flutter 062bc467459f40cf752b174a23ef8d5a93f6b364 push를 회신했다. Native dev/main은 사용자 지시로 미병합이다. 전체2986PASS·분석0/최종직접23PASS는 Native 자동검증 보고이며 사용자 정상 흐름 확인과 구분한다. 추가 Backend 수정·재시험 요청은 없다. 이후 전체35~40에서 주간 레이드 선택/카드·Android 뒤로가기를 구현했고 사용자 정상 확인을 보고했다. 최신 최소 상세 버튼 배치/여백과 개인주간예약그래프 등 잔여는 Native가 추적하며 전체 리메이크 완료가 아니다. 운영 배포·초기화·Issue 종료는 하지 않았다.
 
 사용자 지시로 업무/정확계약 9308ce7e2fb1687f29cd378f59344dbe6fffae29를 게시하고 dev 2ca80924bbc7bda563f2b7d11a1c964e06edeca6에 이력 보존 병합·push/원격 일치를 확인했다. [전체32 Backend 고정 인계](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6873586100). app/tests/openapi는 작업 tip과 dev가 같고 로컬 image9f40ecf7…401c4의 app296파일도 게시 소스와 같다. health200 확인, 기존 고유220PASS/계약·보존 검증을 재사용했다. 완료 목적 브랜치는 정리하고 현재 checkout은 dev다. 다음 Native 정책2 연결·원 pending/ACK 복구와 진입/관리복귀 저장 설정 재조회 검증이며 실제 기기 인수·main/운영 반영은 후속이다. DB초기화·이슈종료는 실행하지 않았다.
 

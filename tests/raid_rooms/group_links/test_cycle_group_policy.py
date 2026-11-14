@@ -689,3 +689,39 @@ def test_creation_ack_survives_departure_but_is_not_detail_authorization(policy_
     with pytest.raises(GameError) as rejected:
         membership_readers.get((user, fresh), rid, key, 'detail')
     assert rejected.value.code == 'ROOM_MEMBERSHIP_REQUIRED'
+
+
+@pytest.mark.parametrize('group_state',[False,True])
+@pytest.mark.parametrize('character_issues',[False,True])
+def test_unopened_next_detail_membership_http(policy_db,group_state,character_issues):
+    from tests.raid_rooms.admissions.test_recruitment_cycle_http import client as http_client
+    engine,a,b=policy_db
+    if character_issues:
+        result=subprocess.run(['alembic','upgrade','0036_roster_presence'],env={**os.environ,'DATABASE_URL':engine.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
+        assert result.returncode==0,'presence migration failed'
+    rid,c,_,_,_=create_beta(a,combined=False)
+    n=(date.fromisoformat(c)+timedelta(days=7)).isoformat()
+    params=dict(target_cycle_key=n,reader_profile='membership-actions-1',contract_profile=beta_profile.PROFILE,
+        group_policy_version=policy.VERSION,include_coordination_wait='true')
+    if group_state:params['include_group_state']='true'
+    if character_issues:params.update(include_character_issues='true',participation_profile='remaining-active-1')
+    with http_client(a) as http:
+        response=http.get(f'/v2/raid-rooms/{rid}/detail',params=params)
+        assert response.status_code==200,response.text
+        value=response.json()['data']
+        assert value['target']['room_cycle_id'] is None
+        assert value['viewer']['mode']=='relation_only'
+        assert value['content'] is None and value['permissions']['view_detail']['allowed']
+
+        if group_state:assert response.json()['group_state'] is None
+        # Non-members gain no relation/detail access, and ordinary detail keeps
+        # its explicit not-open error rather than a fabricated target.
+        with http_client(b) as other:
+            denied_response=other.get(f'/v2/raid-rooms/{rid}/detail',params=params)
+            assert denied_response.status_code==403
+        ordinary=http.get(f'/v2/raid-rooms/{rid}/detail',params={k:v for k,v in params.items() if k!='reader_profile'})
+        assert ordinary.status_code==409 and ordinary.json()['error']['code']=='TARGET_NOT_OPEN'
+        current=http.get(f'/v2/raid-rooms/{rid}/detail',params=dict(params,target_cycle_key=c))
+        assert current.status_code==200,current.text
+        with session() as db:
+            assert db.scalar(select(RoomCycle.id).where(RoomCycle.room_id==rid,RoomCycle.cycle_key==date.fromisoformat(n))) is None
