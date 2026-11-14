@@ -1,0 +1,40 @@
+{
+  "image": "sha256:7aaba198a01f43e5405d5fef39227fefb9394b765c2d28290d0df41c64fffa63",
+  "previous_image": "sha256:170d3a2505963e37a910bfc463092ab92239b607ff755f271aa28f639a3601bb",
+  "db_container_preserved": true,
+  "environment_ports_mounts_keys_preserved": true,
+  "app_python_files": 292,
+  "current_contract_equal": true,
+  "http": "health200/reservations401; authenticated functional coverage is isolated DB only",
+  "validation": {
+    "final_selected": "19 passed / 137.75s; 16 new cases + 3 existing schedule HTTP cases",
+    "additional_snapshot": "1 passed / 26.96s; overlaps an existing normal-case test, not an additional unique case",
+    "current_legacy_contract": "full-object PASS; previous paths/components unchanged",
+    "production": "not deployed"
+  },
+  "measurements": {
+    "RESERVATION_BENCH": {
+      "seconds": 11.322092009002517,
+      "peak_bytes": 128607848,
+      "queries": 33,
+      "page_bytes": 126355
+    },
+    "RESERVATION_EXPLAIN": {
+      "Planning Time": 0.855,
+      "Execution Time": 109.59
+    },
+    "RESERVATION_SINGLE_REQUEST": {
+      "seconds": 1.9262044240022078,
+      "page_bytes": 116731
+    }
+  },
+  "measurement_scope": "Synthetic isolated PostgreSQL; 10000 owned reservations, 200-item page. Tracemalloc run is multiple reads; single request timing is without tracemalloc. No production latency claim.",
+  "source_hashes": {
+    "app/main.py": "4f9d4e8617ecea3cf3c0de6f578841a11061c2ffeb63d9aa04c746916445e75e",
+    "app/raid_rooms/api/personal_reservations_router.py": "ac63dd9950b5583b9a3e27e6f676d46f99ac8f5a6689704bf9737f2b3e946d1c",
+    "app/raid_rooms/schedules/personal_reservations.py": "285132db76ec29a00a3dabf84e6c2ee7c3403a05b4ad3bc7393d7739a63bb4b6",
+    "app/raid_rooms/schemas/personal_reservations.py": "88f082721c8d5330adb4b1343411a73cf7542ceeb8c5030befa6d6bbcb8c0729",
+    "app/raid_rooms/schedules/reservation_cursor.py": "7864f8b49b9d48371a14fc2c19dc10c89a0544b5da5886b8bd435b8eb87beca2",
+    "openapi/openapi.yaml": "e3ca169ff3c78130a7f979934c430dadc69706720a9d72b683fef3ed66c358b0"
+  }
+}

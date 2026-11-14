@@ -1,0 +1,42 @@
+{
+  "scope": {
+    "server_now": "2026-11-18T18:00:00Z",
+    "current_cycle_key": "2026-11-18",
+    "current_calendar_week_key": "2026-11-18",
+    "calendar_week_key": "2026-11-18",
+    "timezone": "Asia/Seoul",
+    "window_start": "2026-11-17T15:00:00Z",
+    "window_end": "2026-11-24T15:00:00Z",
+    "policy_version": "personal-reservations-1"
+  },
+  "data": {
+    "items": [
+      {
+        "reservation_id": "00000000-0000-4000-8000-000000000001",
+        "session_id": "00000000-0000-4000-8000-000000000002",
+        "segment_id": "00000000-0000-4000-8000-000000000003",
+        "room_id": "00000000-0000-4000-8000-000000000004",
+        "cycle_key": "2026-11-18",
+        "starts_at": "2026-11-18T12:00:00Z",
+        "ends_at": "2026-11-18T12:30:00Z",
+        "schedule_revision": 1,
+        "raid": {
+          "raid_id": "synthetic_raid",
+          "difficulty_id": "normal",
+          "display_name": "합성 레이드"
+        },
+        "character": {
+          "character_id": "00000000-0000-4000-8000-000000000005",
+          "display": {
+            "name": "합성 캐릭터",
+            "server_name": "합성 서버",
+            "class_name": null
+          }
+        }
+      }
+    ],
+    "result_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "next_cursor": null,
+    "evaluated_at": "2026-11-18T18:00:00Z"
+  }
+}

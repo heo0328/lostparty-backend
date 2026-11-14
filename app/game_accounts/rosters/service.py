@@ -15,6 +15,7 @@ from app.game_accounts.models.models import ScopedRosterCache as MemberPreview
 from app.game_accounts.models.models import ScopedRosterLease as MemberFetch
 from app.game_accounts.rosters import lifecycle
 from app.game_accounts.character_profiles import activity_policy
+from app.game_accounts.character_profiles import account_representative as rep_policy
 from app.game_accounts.verification import verification_context
 from app.game_accounts.verification import verification_history
 from app.game_accounts.verification import equipment_proof
@@ -180,12 +181,12 @@ def settings_out(db, uid, r):
     chosen = list(db.scalars(select(Activity.character_id).where(Activity.settings_id == c.id).order_by(Activity.character_id))) if c else []
     eligible = set(db.scalars(select(Character.id).where(Character.account_id == a.id, Character.status == 'confirmed'))) if c else set()
     eligible = {i for i in eligible if activity_policy.eligible(db, db.get(Character, i))}
-    return settings_value(a, c, chosen, eligible)
+    return settings_value(a, c, chosen, eligible, registration=r)
 
 
-def settings_value(a, c, chosen, eligible):
+def settings_value(a, c, chosen, eligible, *, registration=None):
     return dict(configuration_state=c.state if c else 'unconfigured', activity_character_ids=chosen,
-                representative_character_id=c.representative_id if c else None, settings_version=c.version if c else 1,
+                representative_character_id=(rep_policy.projected(registration,c,chosen,eligible) if rep_policy.current_policy.get() and registration is not None else c.representative_id if c else None), settings_version=c.version if c else 1,
                 ownership_revision=a.ownership_revision if a else None, next_change_at=None,
                 selection_complete=True, ineligible_character_ids=[i for i in chosen if i not in eligible])
 
@@ -195,6 +196,8 @@ def reg_out(db, uid, r):
     count = len(list(db.scalars(select(Character.id).where(Character.account_id == a.id, Character.lifecycle_state != 'retired')))) if a else len(r.preview)
     conf = config(db,uid,a.id) if a and state=='owned' else None
     rep = db.get(Character,conf.representative_id) if conf and conf.representative_id else None
+    if rep_policy.current_policy.get() and rep_policy.effective(db,r,conf) is None:
+        rep = None
     representative = None
     if rep and rep.lifecycle_state != 'retired':
         from app.game_accounts.power.power_service import overlay
@@ -208,12 +211,15 @@ def reg_out(db, uid, r):
 
 
 def make_main(db, uid, r):
+    transition = not r.is_main
     for other in db.scalars(select(Registration).where(Registration.user_id == uid, Registration.is_main.is_(True), Registration.deleted_at.is_(None), Registration.id != r.id)):
         other.is_main = False
         other.version += 1
         other.updated_at = now(db)
     db.flush()
     r.is_main = True
+    if rep_policy.current_policy.get():
+        rep_policy.repair(db,uid,r,transition=transition)
 
 
 def keys(rows):
@@ -502,6 +508,7 @@ def reconcile(db, a, obs, *, fresh=False, owned=False):
         suspects+=1
     a.roster_revision+=1
     db.flush()
+    rep_policy.repair_account(db,a)
     bad={c.id for c in db.scalars(select(Character).where(Character.account_id==a.id)) if not activity_policy.eligible(db,c)}
     for conf in db.scalars(select(Configuration).where(Configuration.account_id==a.id,Configuration.ended_at.is_(None))):
         selected=set(db.scalars(select(Activity.character_id).where(Activity.settings_id==conf.id)))
@@ -546,6 +553,8 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
             if config(db, uid, restored.id) is None:
                 db.add(Configuration(user_id=uid, account_id=restored.id))
             db.flush()
+        if rep_policy.current_policy.get():
+            rep_policy.repair(db,uid,r,transition=bool(data['is_main']))
         return 201,reg_out(db,uid,r)
     if op in ('patch','delete','refresh','settings'):
         r = reg(db,uid,rid)
@@ -599,7 +608,22 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
             fail('EMPTY_ACTIVITY_SELECTION',400)
         if len(set(selected))!=len(selected):
             fail('INVALID_REQUEST',400)
-        if representative not in selected:
+        if rep_policy.current_policy.get():
+            if not r.is_main:
+                if representative is not None and representative != c.representative_id:
+                    fail('MAIN_REGISTRATION_CHANGED')
+                representative = None
+            else:
+                current_rep=rep_policy.effective(db,r,c)
+                if current_rep is not None and current_rep not in selected:
+                    fail('REPRESENTATIVE_REQUIRED',400)
+                if representative is None:
+                    chars=list(db.scalars(select(Character).where(Character.account_id==a.id,Character.lifecycle_state!='retired')))
+                    chosen_rep=rep_policy.choose(rep_policy.observations(db,uid,chars),selected,current_rep)
+                    representative=uuid.UUID(chosen_rep) if chosen_rep else None
+                if representative not in selected:
+                    fail('REPRESENTATIVE_REQUIRED',400)
+        elif representative not in selected:
             fail('REPRESENTATIVE_REQUIRED',400)
         valid={c.id for c in db.scalars(select(Character).where(Character.account_id==a.id)) if lifecycle.usable(db,c)}
         if not set(selected)<=valid:
@@ -733,10 +757,14 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
         fail('REGISTRATION_EXISTS')
     reconcile(db,a,obs,fresh=candidate is None,owned=mode=='owned_registration')
     a.verified_at=current
+    representative_transition = r.account_id != a.id
     r.account_id,r.preview,r.fetched_at=a.id,obs.roster,obs.fetched_at
     r.version+=1
     if config(db,uid,a.id) is None:
         db.add(Configuration(user_id=uid,account_id=a.id))
+    if rep_policy.current_policy.get():
+        db.flush()
+        rep_policy.repair(db,uid,r,transition=representative_transition)
     audit=Audit(account_id=a.id,challenge_id=v.id,previous_owner=previous,new_owner=uid,revision=a.ownership_revision,created_at=current)
     db.add(audit); db.flush()
     v.status,v.terminal_at='verified',current

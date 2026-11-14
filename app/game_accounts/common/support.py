@@ -68,7 +68,7 @@ def quota(scope, maximum, seconds=60):
         db.add(LimitEvent(scope=scope, created_at=current))
 
 
-def reserve(principal, operation, key, payload):
+def reserve(principal, operation, key, payload, *, recovery_only=False):
     digest = hashlib.sha256(json.dumps(jsonable_encoder(payload), sort_keys=True, separators=(',',':')).encode()).hexdigest()
     with session() as db, db.begin():
         uid = authorize(db, principal)
@@ -78,16 +78,22 @@ def reserve(principal, operation, key, payload):
         if r:
             if not hmac.compare_digest(r.digest, digest):
                 fail('IDEMPOTENCY_CONFLICT')
+            if operation == 'character-management-1' and r.state == 'expired':
+                fail('IDEMPOTENCY_EXPIRED')
             if r.completed_at:
                 if current >= r.completed_at + timedelta(hours=24):
                     fail('IDEMPOTENCY_EXPIRED')
                 return None, (r.status, r.result)
             if r.state == 'running' and current < r.lease_expires_at:
                 raise GameError('REQUEST_IN_PROGRESS', 409, 2)
+            if recovery_only:
+                fail('CONTRACT_POLICY_CHANGED')
             r.generation += 1
             r.state = 'running'
             r.lease_expires_at = current + timedelta(seconds=30)
         else:
+            if recovery_only:
+                fail('CONTRACT_POLICY_CHANGED')
             r = RequestResult(actor_id=uid, operation=operation, key=key, digest=digest,
                               lease_expires_at=current+timedelta(seconds=30))
             db.add(r)

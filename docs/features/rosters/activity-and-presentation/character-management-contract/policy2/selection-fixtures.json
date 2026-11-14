@@ -1,0 +1,295 @@
+{
+  "normalization": [
+    {
+      "raw": "1.2300",
+      "expected": "1.23"
+    },
+    {
+      "raw": "0.000",
+      "expected": "0"
+    },
+    {
+      "raw": "1e3",
+      "expected": "1000"
+    },
+    {
+      "raw": "1e-129",
+      "expected": null
+    },
+    {
+      "raw": "NaN",
+      "expected": null
+    },
+    {
+      "raw": "Infinity",
+      "expected": null
+    },
+    {
+      "raw": "-1",
+      "expected": null
+    },
+    {
+      "raw": "1,700",
+      "expected": null
+    },
+    {
+      "raw": "10000000000000000000000000000000000000000000000000000000000000000",
+      "expected": null
+    },
+    {
+      "raw": 1700,
+      "expected": null
+    },
+    {
+      "raw": null,
+      "expected": null
+    }
+  ],
+  "cases": [
+    {
+      "name": "level_first",
+      "items": [
+        {
+          "id": "1",
+          "name": "가",
+          "level": "1700",
+          "power": "99999",
+          "active": true,
+          "usable": true
+        },
+        {
+          "id": "2",
+          "name": "나",
+          "level": "1700.000000000000000001",
+          "power": "1",
+          "active": true,
+          "usable": true
+        }
+      ],
+      "expected": "2"
+    },
+    {
+      "name": "power_breaks_level_tie",
+      "items": [
+        {
+          "id": "1",
+          "name": "가",
+          "level": "1700",
+          "power": "100",
+          "active": true,
+          "usable": true
+        },
+        {
+          "id": "2",
+          "name": "나",
+          "level": "1700",
+          "power": "100.000000000000000001",
+          "active": true,
+          "usable": true
+        }
+      ],
+      "expected": "2"
+    },
+    {
+      "name": "known_power_before_null",
+      "items": [
+        {
+          "id": "1",
+          "name": "1",
+          "level": "1700",
+          "power": null,
+          "active": true,
+          "usable": true
+        },
+        {
+          "id": "2",
+          "name": "가",
+          "level": "1700",
+          "power": "0",
+          "active": true,
+          "usable": true
+        }
+      ],
+      "expected": "2"
+    },
+    {
+      "name": "mixed_names_same_comparison",
+      "items": [
+        {
+          "id": "1",
+          "name": "가",
+          "level": "1700",
+          "power": "100",
+          "active": true,
+          "usable": true
+        },
+        {
+          "id": "2",
+          "name": "A",
+          "level": "1700",
+          "power": "100",
+          "active": true,
+          "usable": true
+        },
+        {
+          "id": "3",
+          "name": "1",
+          "level": "1700",
+          "power": "100",
+          "active": true,
+          "usable": true
+        },
+        {
+          "id": "4",
+          "name": "a",
+          "level": "1700",
+          "power": "100",
+          "active": true,
+          "usable": true
+        }
+      ],
+      "expected": "3",
+      "expected_order": [
+        "3",
+        "2",
+        "4",
+        "1"
+      ]
+    },
+    {
+      "name": "both_power_null_name",
+      "items": [
+        {
+          "id": "1",
+          "name": "가",
+          "level": "1700",
+          "power": null,
+          "active": true,
+          "usable": true
+        },
+        {
+          "id": "2",
+          "name": "A",
+          "level": "1700",
+          "power": null,
+          "active": true,
+          "usable": true
+        }
+      ],
+      "expected": "2"
+    },
+    {
+      "name": "utf16_not_scalar_order",
+      "items": [
+        {
+          "id": "1",
+          "name": "",
+          "level": "1700",
+          "power": "100",
+          "active": true,
+          "usable": true
+        },
+        {
+          "id": "2",
+          "name": "𐀀",
+          "level": "1700",
+          "power": "100",
+          "active": true,
+          "usable": true
+        }
+      ],
+      "expected": "2"
+    },
+    {
+      "name": "valid_existing_kept",
+      "items": [
+        {
+          "id": "1",
+          "name": "가",
+          "level": "1700",
+          "power": "100",
+          "active": true,
+          "usable": true
+        },
+        {
+          "id": "2",
+          "name": "A",
+          "level": "1800",
+          "power": "100",
+          "active": true,
+          "usable": true
+        }
+      ],
+      "existing": "1",
+      "expected": "1"
+    },
+    {
+      "name": "switch_does_not_promote_raw",
+      "items": [
+        {
+          "id": "1",
+          "name": "가",
+          "level": "1700",
+          "power": "100",
+          "active": true,
+          "usable": true
+        },
+        {
+          "id": "2",
+          "name": "A",
+          "level": "1800",
+          "power": "100",
+          "active": true,
+          "usable": true
+        }
+      ],
+      "existing": "1",
+      "main_transition": true,
+      "expected": "2"
+    },
+    {
+      "name": "no_candidates",
+      "items": [
+        {
+          "id": "1",
+          "name": "가",
+          "level": "1700",
+          "power": "100",
+          "active": true,
+          "usable": false
+        },
+        {
+          "id": "2",
+          "name": "A",
+          "level": "1700",
+          "power": "100",
+          "active": false,
+          "usable": true
+        }
+      ],
+      "expected": null
+    },
+    {
+      "name": "uuid_final_tie",
+      "items": [
+        {
+          "id": "2",
+          "name": "같음",
+          "level": "1700",
+          "power": "100",
+          "active": true,
+          "usable": true
+        },
+        {
+          "id": "1",
+          "name": "같음",
+          "level": "1700",
+          "power": "100",
+          "active": true,
+          "usable": true
+        }
+      ],
+      "expected": "1"
+    }
+  ]
+}

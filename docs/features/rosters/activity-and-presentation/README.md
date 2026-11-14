@@ -46,3 +46,5 @@
 | PUT | `/v2/me/characters/{character_id}/personal-preferences` |
 | GET | `/v2/me/game-accounts/{registration_id}/presentation-settings` |
 | PUT | `/v2/me/game-accounts/{registration_id}/presentation-settings` |
+
+- `GET/PUT /v2/me/game-accounts/{registration_id}/character-settings`: character-management-1 전체 관리 문맥·선택/대표/순서의 원자 저장. 기존 v1 설정과 독립 DTO/멱등 namespace이며 legacy 앱에는 추가하지 않는다.

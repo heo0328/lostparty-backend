@@ -125,10 +125,10 @@ def snapshot(db, uid, stamp):
         active_ids = chosen[configuration.id] if configuration else []
         current = by_account[a.id] if a and state == 'owned' else []
         eligible = {c.id for c in current if activity_policy.eligible(stored, c)}
-        settings = service.settings_value(a, configuration, active_ids, eligible)
+        settings = service.settings_value(a, configuration, active_ids, eligible, registration=r)
         items = [lifecycle_reads.current_item(stored, uid, r, c, candidates=power[c.id], at=stamp) for c in current] if state == 'owned' else [
             lifecycle_reads.preview_item(stored, uid, r, row) for row in r.preview]
-        rep = next((c for c in current if configuration and c.id == configuration.representative_id), None)
+        rep = next((c for c in current if c.id == settings['representative_character_id']), None)
         rep_summary = dict(rep.summary, combat_power=next(i['combat_power'] for i in items if i['character_id'] == rep.id)) if rep else None
         registration = dict(registration_id=r.id, label=r.label, is_main=r.is_main, version=r.version,
             game_account_id=a.id if a else None, verification_status='verified' if a else 'unverified',
@@ -154,7 +154,7 @@ def snapshot(db, uid, stamp):
             # activities from this same snapshot, never call separate HTTP batches.
             entries.extend(weekly.entry(stored, a, c, raid, key, cycle, weekly_rows.get((cid, raid.raid_id)),stamp) for raid in catalog.raids)
         bundles.append(dict(registration=registration, characters=character_list,
-            representative=representative.value(r, a, configuration) if state == 'owned' else None,
+            representative=representative.value(r, a, configuration, projected_id=settings['representative_character_id']) if state == 'owned' else None,
             presentation=presentation.output(r, a, displays.get(a.id)) if state == 'owned' else None,
             personal_profiles=personal, unavailable_characters=unavailable))
     return dict(server_now=stamp, complete=True, registrations=bundles,

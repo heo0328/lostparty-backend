@@ -72,3 +72,5 @@
 | POST | `/v2/raid-schedule-groups/{group_id}/selections` |
 | POST | `/v2/raid-rooms/{room_id}/schedule-proposals` |
 | POST | `/v2/raid-schedule-proposals/{proposal_id}/responses` |
+
+- `GET /v2/me/raid-reservations`: 본인 미해제 예약의 달력 주간 조회. 현재/다음 KST 수00시 창·전체 결과지문/커서/상한은 실행 OpenAPI를 따른다. 기존 충돌쌍 조회와 독립이다.

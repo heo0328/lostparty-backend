@@ -442,14 +442,29 @@ def create_app():
     """Current production/development app; startup validates but never migrates DB."""
     from app.raid_rooms.api.cycle_router import router as cycle_router
     result = _base_application(current_lifespan)
+    from app.game_accounts.character_profiles.account_representative import current_policy
+    @result.middleware('http')
+    async def representative_policy(request, call_next):
+        token = current_policy.set(True)
+        try:
+            return await call_next(request)
+        finally:
+            current_policy.reset(token)
+
     result.include_router(cycle_router)
     from app.raid_rooms.api.application_presets import router as presets_router
     result.include_router(presets_router)
+    from app.raid_rooms.api.personal_reservations_router import router as reservations_router
+    result.include_router(reservations_router)
+    from app.game_accounts.api.management_router import router as management_router
+    result.include_router(management_router)
     generate=result.openapi
     def schema():
         if result.openapi_schema is not None:
             return result.openapi_schema
         value=_decorate_openapi(generate())
+        management_response=value['paths']['/v2/me/game-accounts/{registration_id}/character-settings']['put']['responses']['200']['content']['application/json']['schema']
+        management_response['oneOf']=management_response.pop('anyOf')
         value['x-recruitment-policy'].update(schema_revision='0035_cycle_group_policy',policy_version='two-cycle-contract-4',
             search_semantics='own-target-participation-excluded-v1',
             room_usage_semantics='active-target-rooms-1',

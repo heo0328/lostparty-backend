@@ -1278,6 +1278,24 @@
       "path": "/v2/raid-rooms/{room_id}/batch-personal-completion-departures",
       "operation_id": "contract3_post__v2_raid-rooms_room_id_batch-personal-completion-departures",
       "topic": "recruitment/completion-and-records"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/raid-reservations",
+      "operation_id": "get_v2_me_raid_reservations_get",
+      "topic": "recruitment/scheduling"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/me/game-accounts/{registration_id}/character-settings",
+      "operation_id": "get_v2_me_game_accounts__registration_id__character_settings_get",
+      "topic": "rosters/activity-and-presentation"
+    },
+    {
+      "method": "PUT",
+      "path": "/v2/me/game-accounts/{registration_id}/character-settings",
+      "operation_id": "put_v2_me_game_accounts__registration_id__character_settings_put",
+      "topic": "rosters/activity-and-presentation"
     }
   ]
 }

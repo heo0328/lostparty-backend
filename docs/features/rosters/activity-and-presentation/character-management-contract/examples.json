@@ -1,0 +1,861 @@
+{
+  "contexts": {
+    "configured": {
+      "scope": {
+        "registration_id": "00000000-0000-4000-8000-000000000001",
+        "game_account_id": "00000000-0000-4000-8000-000000000002",
+        "registration_version": 1,
+        "settings_version": 2,
+        "ownership_revision": 1,
+        "roster_revision": 3,
+        "policy_version": "character-management-1"
+      },
+      "data": {
+        "configuration_state": "configured",
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011"
+        ],
+        "representative_character_id": "00000000-0000-4000-8000-000000000010",
+        "ordered_all_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "characters": [
+          {
+            "character_id": "00000000-0000-4000-8000-000000000010",
+            "display_order": null,
+            "item_level": "1700",
+            "character_name": "가",
+            "usable": true,
+            "blocked_reason": null
+          },
+          {
+            "character_id": "00000000-0000-4000-8000-000000000011",
+            "display_order": null,
+            "item_level": "1700",
+            "character_name": "나",
+            "usable": true,
+            "blocked_reason": null
+          },
+          {
+            "character_id": "00000000-0000-4000-8000-000000000012",
+            "display_order": null,
+            "item_level": null,
+            "character_name": "다",
+            "usable": true,
+            "blocked_reason": null
+          }
+        ],
+        "evaluated_at": "2026-11-14T00:00:00Z"
+      }
+    },
+    "unconfigured": {
+      "scope": {
+        "registration_id": "00000000-0000-4000-8000-000000000001",
+        "game_account_id": "00000000-0000-4000-8000-000000000002",
+        "registration_version": 1,
+        "settings_version": 1,
+        "ownership_revision": 1,
+        "roster_revision": 3,
+        "policy_version": "character-management-1"
+      },
+      "data": {
+        "configuration_state": "unconfigured",
+        "activity_character_ids": [],
+        "representative_character_id": null,
+        "ordered_all_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "characters": [
+          {
+            "character_id": "00000000-0000-4000-8000-000000000010",
+            "display_order": null,
+            "item_level": "1700",
+            "character_name": "가",
+            "usable": true,
+            "blocked_reason": null
+          },
+          {
+            "character_id": "00000000-0000-4000-8000-000000000011",
+            "display_order": null,
+            "item_level": "1700",
+            "character_name": "나",
+            "usable": true,
+            "blocked_reason": null
+          },
+          {
+            "character_id": "00000000-0000-4000-8000-000000000012",
+            "display_order": null,
+            "item_level": null,
+            "character_name": "다",
+            "usable": true,
+            "blocked_reason": null
+          }
+        ],
+        "evaluated_at": "2026-11-14T00:00:00Z"
+      }
+    },
+    "needs_reconfiguration": {
+      "scope": {
+        "registration_id": "00000000-0000-4000-8000-000000000001",
+        "game_account_id": "00000000-0000-4000-8000-000000000002",
+        "registration_version": 1,
+        "settings_version": 2,
+        "ownership_revision": 1,
+        "roster_revision": 3,
+        "policy_version": "character-management-1"
+      },
+      "data": {
+        "configuration_state": "needs_reconfiguration",
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000013"
+        ],
+        "representative_character_id": "00000000-0000-4000-8000-000000000013",
+        "ordered_all_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "characters": [
+          {
+            "character_id": "00000000-0000-4000-8000-000000000010",
+            "display_order": null,
+            "item_level": "1700",
+            "character_name": "가",
+            "usable": false,
+            "blocked_reason": "CHARACTER_UNUSABLE"
+          },
+          {
+            "character_id": "00000000-0000-4000-8000-000000000011",
+            "display_order": null,
+            "item_level": "1700",
+            "character_name": "나",
+            "usable": true,
+            "blocked_reason": null
+          },
+          {
+            "character_id": "00000000-0000-4000-8000-000000000012",
+            "display_order": null,
+            "item_level": null,
+            "character_name": "다",
+            "usable": true,
+            "blocked_reason": null
+          }
+        ],
+        "evaluated_at": "2026-11-14T00:00:00Z"
+      }
+    },
+    "configured_with_unusable_residue": {
+      "scope": {
+        "registration_id": "00000000-0000-4000-8000-000000000001",
+        "game_account_id": "00000000-0000-4000-8000-000000000002",
+        "registration_version": 1,
+        "settings_version": 2,
+        "ownership_revision": 1,
+        "roster_revision": 3,
+        "policy_version": "character-management-1"
+      },
+      "data": {
+        "configuration_state": "configured",
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000013"
+        ],
+        "representative_character_id": "00000000-0000-4000-8000-000000000013",
+        "ordered_all_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "characters": [
+          {
+            "character_id": "00000000-0000-4000-8000-000000000010",
+            "display_order": null,
+            "item_level": "1700",
+            "character_name": "가",
+            "usable": false,
+            "blocked_reason": "CHARACTER_UNUSABLE"
+          },
+          {
+            "character_id": "00000000-0000-4000-8000-000000000011",
+            "display_order": null,
+            "item_level": "1700",
+            "character_name": "나",
+            "usable": true,
+            "blocked_reason": null
+          },
+          {
+            "character_id": "00000000-0000-4000-8000-000000000012",
+            "display_order": null,
+            "item_level": null,
+            "character_name": "다",
+            "usable": true,
+            "blocked_reason": null
+          }
+        ],
+        "evaluated_at": "2026-11-14T00:00:00Z"
+      }
+    },
+    "unconfigured_with_residue": {
+      "scope": {
+        "registration_id": "00000000-0000-4000-8000-000000000001",
+        "game_account_id": "00000000-0000-4000-8000-000000000002",
+        "registration_version": 1,
+        "settings_version": 2,
+        "ownership_revision": 1,
+        "roster_revision": 3,
+        "policy_version": "character-management-1"
+      },
+      "data": {
+        "configuration_state": "unconfigured",
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000013"
+        ],
+        "representative_character_id": "00000000-0000-4000-8000-000000000013",
+        "ordered_all_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "characters": [
+          {
+            "character_id": "00000000-0000-4000-8000-000000000010",
+            "display_order": null,
+            "item_level": "1700",
+            "character_name": "가",
+            "usable": false,
+            "blocked_reason": "CHARACTER_UNUSABLE"
+          },
+          {
+            "character_id": "00000000-0000-4000-8000-000000000011",
+            "display_order": null,
+            "item_level": "1700",
+            "character_name": "나",
+            "usable": true,
+            "blocked_reason": null
+          },
+          {
+            "character_id": "00000000-0000-4000-8000-000000000012",
+            "display_order": null,
+            "item_level": null,
+            "character_name": "다",
+            "usable": true,
+            "blocked_reason": null
+          }
+        ],
+        "evaluated_at": "2026-11-14T00:00:00Z"
+      }
+    }
+  },
+  "puts": {
+    "order_omitted": {
+      "activity_character_ids": [
+        "00000000-0000-4000-8000-000000000010",
+        "00000000-0000-4000-8000-000000000011"
+      ],
+      "representative_character_id": "00000000-0000-4000-8000-000000000010",
+      "expected_registration_version": 1,
+      "expected_settings_version": 2,
+      "expected_ownership_revision": 1,
+      "expected_roster_revision": 3,
+      "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "empty_movable": {
+      "activity_character_ids": [
+        "00000000-0000-4000-8000-000000000010"
+      ],
+      "representative_character_id": "00000000-0000-4000-8000-000000000010",
+      "expected_registration_version": 1,
+      "expected_settings_version": 2,
+      "expected_ownership_revision": 1,
+      "expected_roster_revision": 3,
+      "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ordered_character_ids": []
+    }
+  },
+  "errors": [
+    {
+      "status": 400,
+      "body": {
+        "error": {
+          "code": "INVALID_REQUEST",
+          "message": "INVALID_REQUEST",
+          "request_id": "00000000-0000-4000-8000-000000000099"
+        }
+      }
+    },
+    {
+      "status": 400,
+      "body": {
+        "error": {
+          "code": "EMPTY_ACTIVITY_SELECTION",
+          "message": "EMPTY_ACTIVITY_SELECTION",
+          "request_id": "00000000-0000-4000-8000-000000000099"
+        }
+      }
+    },
+    {
+      "status": 400,
+      "body": {
+        "error": {
+          "code": "REPRESENTATIVE_REQUIRED",
+          "message": "REPRESENTATIVE_REQUIRED",
+          "request_id": "00000000-0000-4000-8000-000000000099"
+        }
+      }
+    },
+    {
+      "status": 403,
+      "body": {
+        "error": {
+          "code": "OWNERSHIP_REQUIRED",
+          "message": "OWNERSHIP_REQUIRED",
+          "request_id": "00000000-0000-4000-8000-000000000099"
+        }
+      }
+    },
+    {
+      "status": 404,
+      "body": {
+        "error": {
+          "code": "CHARACTER_NOT_FOUND",
+          "message": "CHARACTER_NOT_FOUND",
+          "request_id": "00000000-0000-4000-8000-000000000099"
+        }
+      }
+    },
+    {
+      "status": 409,
+      "body": {
+        "error": {
+          "code": "REVISION_CONFLICT",
+          "message": "REVISION_CONFLICT",
+          "request_id": "00000000-0000-4000-8000-000000000099"
+        }
+      }
+    },
+    {
+      "status": 409,
+      "body": {
+        "error": {
+          "code": "IDEMPOTENCY_CONFLICT",
+          "message": "IDEMPOTENCY_CONFLICT",
+          "request_id": "00000000-0000-4000-8000-000000000099"
+        }
+      }
+    },
+    {
+      "status": 409,
+      "body": {
+        "error": {
+          "code": "IDEMPOTENCY_EXPIRED",
+          "message": "IDEMPOTENCY_EXPIRED",
+          "request_id": "00000000-0000-4000-8000-000000000099"
+        }
+      }
+    },
+    {
+      "status": 409,
+      "body": {
+        "error": {
+          "code": "REQUEST_IN_PROGRESS",
+          "message": "REQUEST_IN_PROGRESS",
+          "request_id": "00000000-0000-4000-8000-000000000099"
+        }
+      }
+    },
+    {
+      "status": 413,
+      "body": {
+        "error": {
+          "code": "CHARACTER_CONTEXT_TOO_LARGE",
+          "message": "CHARACTER_CONTEXT_TOO_LARGE",
+          "request_id": "00000000-0000-4000-8000-000000000099"
+        }
+      }
+    },
+    {
+      "status": 503,
+      "body": {
+        "error": {
+          "code": "SERVICE_UNAVAILABLE",
+          "message": "SERVICE_UNAVAILABLE",
+          "request_id": "00000000-0000-4000-8000-000000000099"
+        }
+      }
+    }
+  ],
+  "semantic_rejections": [
+    {
+      "kind": "null_order",
+      "body": {
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011"
+        ],
+        "representative_character_id": "00000000-0000-4000-8000-000000000010",
+        "expected_registration_version": 1,
+        "expected_settings_version": 2,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 3,
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "ordered_character_ids": null
+      },
+      "validation": "schema"
+    },
+    {
+      "kind": "missing_movable",
+      "body": {
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011"
+        ],
+        "representative_character_id": "00000000-0000-4000-8000-000000000010",
+        "expected_registration_version": 1,
+        "expected_settings_version": 2,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 3,
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "ordered_character_ids": []
+      },
+      "validation": "semantic"
+    },
+    {
+      "kind": "representative_outside_selection",
+      "body": {
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011"
+        ],
+        "representative_character_id": "00000000-0000-4000-8000-000000000012",
+        "expected_registration_version": 1,
+        "expected_settings_version": 2,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 3,
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "validation": "semantic"
+    }
+  ],
+  "command_sequences": [
+    {
+      "name": "no_op",
+      "before": {
+        "scope": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 1,
+          "settings_version": 2,
+          "ownership_revision": 1,
+          "roster_revision": 3,
+          "policy_version": "character-management-1"
+        },
+        "data": {
+          "configuration_state": "configured",
+          "activity_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011"
+          ],
+          "representative_character_id": "00000000-0000-4000-8000-000000000010",
+          "ordered_all_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "characters": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "display_order": null,
+              "item_level": "1700",
+              "character_name": "가",
+              "usable": true,
+              "blocked_reason": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "display_order": null,
+              "item_level": "1700",
+              "character_name": "나",
+              "usable": true,
+              "blocked_reason": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "display_order": null,
+              "item_level": null,
+              "character_name": "다",
+              "usable": true,
+              "blocked_reason": null
+            }
+          ],
+          "evaluated_at": "2026-11-14T00:00:00Z"
+        }
+      },
+      "request": {
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011"
+        ],
+        "representative_character_id": "00000000-0000-4000-8000-000000000010",
+        "expected_registration_version": 1,
+        "expected_settings_version": 2,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 3,
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "ack": {
+        "scope": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 1,
+          "settings_version": 2,
+          "ownership_revision": 1,
+          "roster_revision": 3,
+          "policy_version": "character-management-1"
+        },
+        "data": {
+          "configuration_state": "configured",
+          "activity_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011"
+          ],
+          "representative_character_id": "00000000-0000-4000-8000-000000000010",
+          "ordered_all_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "characters": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "display_order": null,
+              "item_level": "1700",
+              "character_name": "가",
+              "usable": true,
+              "blocked_reason": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "display_order": null,
+              "item_level": "1700",
+              "character_name": "나",
+              "usable": true,
+              "blocked_reason": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "display_order": null,
+              "item_level": null,
+              "character_name": "다",
+              "usable": true,
+              "blocked_reason": null
+            }
+          ],
+          "evaluated_at": "2026-11-14T00:00:00Z"
+        }
+      },
+      "meaning": "No meaningful state/order change; same versions and ranks, observed timestamp may differ"
+    },
+    {
+      "name": "old_ack_then_current_get",
+      "stored_ack": {
+        "scope": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 1,
+          "settings_version": 2,
+          "ownership_revision": 1,
+          "roster_revision": 3,
+          "policy_version": "character-management-1"
+        },
+        "data": {
+          "configuration_state": "configured",
+          "activity_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011"
+          ],
+          "representative_character_id": "00000000-0000-4000-8000-000000000010",
+          "ordered_all_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "characters": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "display_order": null,
+              "item_level": "1700",
+              "character_name": "가",
+              "usable": true,
+              "blocked_reason": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "display_order": null,
+              "item_level": "1700",
+              "character_name": "나",
+              "usable": true,
+              "blocked_reason": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "display_order": null,
+              "item_level": null,
+              "character_name": "다",
+              "usable": true,
+              "blocked_reason": null
+            }
+          ],
+          "evaluated_at": "2026-11-14T00:00:00Z"
+        }
+      },
+      "current_get": {
+        "scope": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 1,
+          "settings_version": 2,
+          "ownership_revision": 1,
+          "roster_revision": 3,
+          "policy_version": "character-management-1"
+        },
+        "data": {
+          "configuration_state": "needs_reconfiguration",
+          "activity_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000013"
+          ],
+          "representative_character_id": "00000000-0000-4000-8000-000000000013",
+          "ordered_all_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "characters": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "display_order": null,
+              "item_level": "1700",
+              "character_name": "가",
+              "usable": false,
+              "blocked_reason": "CHARACTER_UNUSABLE"
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "display_order": null,
+              "item_level": "1700",
+              "character_name": "나",
+              "usable": true,
+              "blocked_reason": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "display_order": null,
+              "item_level": null,
+              "character_name": "다",
+              "usable": true,
+              "blocked_reason": null
+            }
+          ],
+          "evaluated_at": "2026-11-14T00:00:00Z"
+        }
+      },
+      "meaning": "Replay exact ACK, then GET current context; never treat old ACK as current"
+    },
+    {
+      "name": "conflict_then_explicit_retry",
+      "error": {
+        "error": {
+          "code": "REVISION_CONFLICT",
+          "message": "REVISION_CONFLICT",
+          "request_id": "00000000-0000-4000-8000-000000000099"
+        }
+      },
+      "current_get": {
+        "scope": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 1,
+          "settings_version": 2,
+          "ownership_revision": 1,
+          "roster_revision": 3,
+          "policy_version": "character-management-1"
+        },
+        "data": {
+          "configuration_state": "needs_reconfiguration",
+          "activity_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000013"
+          ],
+          "representative_character_id": "00000000-0000-4000-8000-000000000013",
+          "ordered_all_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "characters": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "display_order": null,
+              "item_level": "1700",
+              "character_name": "가",
+              "usable": false,
+              "blocked_reason": "CHARACTER_UNUSABLE"
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "display_order": null,
+              "item_level": "1700",
+              "character_name": "나",
+              "usable": true,
+              "blocked_reason": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "display_order": null,
+              "item_level": null,
+              "character_name": "다",
+              "usable": true,
+              "blocked_reason": null
+            }
+          ],
+          "evaluated_at": "2026-11-14T00:00:00Z"
+        }
+      },
+      "meaning": "Keep intent; user explicit retry with new key/body/current versions"
+    },
+    {
+      "name": "initial_explicit_action",
+      "before": {
+        "scope": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 1,
+          "settings_version": 1,
+          "ownership_revision": 1,
+          "roster_revision": 3,
+          "policy_version": "character-management-1"
+        },
+        "data": {
+          "configuration_state": "unconfigured",
+          "activity_character_ids": [],
+          "representative_character_id": null,
+          "ordered_all_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "characters": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "display_order": null,
+              "item_level": "1700",
+              "character_name": "가",
+              "usable": true,
+              "blocked_reason": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "display_order": null,
+              "item_level": "1700",
+              "character_name": "나",
+              "usable": true,
+              "blocked_reason": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "display_order": null,
+              "item_level": null,
+              "character_name": "다",
+              "usable": true,
+              "blocked_reason": null
+            }
+          ],
+          "evaluated_at": "2026-11-14T00:00:00Z"
+        }
+      },
+      "request": {
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011"
+        ],
+        "representative_character_id": "00000000-0000-4000-8000-000000000010",
+        "expected_registration_version": 1,
+        "expected_settings_version": 1,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 3,
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "ack": {
+        "scope": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 1,
+          "settings_version": 2,
+          "ownership_revision": 1,
+          "roster_revision": 3,
+          "policy_version": "character-management-1"
+        },
+        "data": {
+          "configuration_state": "configured",
+          "activity_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011"
+          ],
+          "representative_character_id": "00000000-0000-4000-8000-000000000010",
+          "ordered_all_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "characters": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "display_order": null,
+              "item_level": "1700",
+              "character_name": "가",
+              "usable": true,
+              "blocked_reason": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "display_order": null,
+              "item_level": "1700",
+              "character_name": "나",
+              "usable": true,
+              "blocked_reason": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "display_order": null,
+              "item_level": null,
+              "character_name": "다",
+              "usable": true,
+              "blocked_reason": null
+            }
+          ],
+          "evaluated_at": "2026-11-14T00:00:00Z"
+        }
+      },
+      "meaning": "Only explicit action configures; GET never writes"
+    }
+  ]
+}

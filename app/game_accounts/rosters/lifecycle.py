@@ -106,7 +106,9 @@ def retire(db, account, character, proof):
         item_level=character.summary.get('item_level'), power_fetched_at=good.fetched_at if good else character.power_fetched_at,
         item_level_fetched_at=character.confirmed_at if character.summary.get('item_level') is not None else None,
         retired_at=current, lifecycle_revision=character.lifecycle_revision+1, history_revision=head.revision))
+    versions = {}
     for conf in db.scalars(select(Configuration).where(Configuration.account_id == account.id, Configuration.ended_at.is_(None))):
+        versions[conf.id] = conf.version
         selected = db.get(Activity, (conf.id, character.id))
         if selected or conf.representative_id == character.id:
             if selected: db.delete(selected)
@@ -124,4 +126,12 @@ def retire(db, account, character, proof):
     account.roster_revision += 1
     for registration in db.scalars(select(Registration).where(Registration.account_id == account.id, Registration.deleted_at.is_(None))):
         registration.version += 1
+    db.flush()
+    from app.game_accounts.character_profiles import account_representative as rep_policy
+    if rep_policy.current_policy.get():
+        rep_policy.repair_account(db,account)
+        for cid, version in versions.items():
+            conf = db.get(Configuration,cid)
+            if conf.version > version:
+                conf.version = version + 1
     db.flush()
