@@ -2,6 +2,14 @@
 
 2026-11-15 KST 점검. 점검 기준은 dev04b0e9d였으며 사용자 지시로 최신화 문서를 게시하고 main을 dev와 같은 커밋으로 fast-forward한다. 현재 Git 기준은 dev/main 및 origin의 동일 tip으로 확인하며, 운영 소스와 구분한다. 상세 경과는 [DEV_LOG](DEV_LOG.md), 기능 지도는 [AI_CONTEXT](AI_CONTEXT.md), 협업 색인은 [ISSUE_TRACKER](ISSUE_TRACKER.md)를 따른다.
 
+## 현재 우선 — Issue54 2.3.0 공동 배포 준비
+
+release/2.3.0에서 [운영 준비 계획](../engineering/operations/release-2.3.0.md)을 작성했다. 업무 기준main/dev b7c0361, VERSION2.3.0·baselinev2.2.0/full 계획은 미커밋·미push다. app/main 보호 경로로 기존 검증 규칙상 full이 필요하며2.2.0 reuse를 연장하지 않는다. [전체4 Backend](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6885970390)에 대상/DB0036 유지·36도구시험/웹 독립 검증·보존/복귀 경계를 회신했다.
+
+Native source027f8215/2.3.0+8의 웹 artifact14137081307 원3파일·34자산 hash/기존verify·로컬 비활성 stage PASS. APK14137081624의 Native 서명검증 보고도 수신했다. [고정 receipt](../engineering/operations/records/web-handoff-2.3.0.json). AWS upload/활성화·새태그/image 게시·운영 교체는 하지 않았다.
+
+다음 Backend는 사용자 commit/push 직접 지시 범위에서 준비 source를 고정한 뒤 수동 full 검증/최종image·운영 내부baseline·최신백업/복귀를 확인한다. 현재 공개health는정상이나 운영 내부source/도구를 새로 대조한 것은 아니다. 정책2 사용 뒤2.2.0단순복귀는 계약/journal 영향검토가 필요하다. BUG-038은미해결이다. 준비완료/실배포완료·Issue 종료를 구분한다.
+
 ## 현재 다음 담당 — Issue53 Native 후속 확인
 
 Backend 예약GET(fe5e082)·정책2(9308ce7/dev2ca8092)와 BUG-036(9a61d0e/dev4be81dc)은 구현·게시/dev 통합·로컬 지원을 완료했다. 정책2와 미개방 다음 주 상세의 사용자/Native 정상 확인도 수신했다. [BUG-036 전체44 인계](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875171401). 추가 Backend 계약 변경/수정·동일 시험 대기는 없다.

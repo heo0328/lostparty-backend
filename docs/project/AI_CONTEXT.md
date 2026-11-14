@@ -4,6 +4,8 @@
 
 ## 현재 기준
 
+- #54 공동2.3.0 배포 준비: release/2.3.0에 버전/full 계획·보존/복귀 절차를 로컬 작성했다. 웹 고정 산출물 독립검증/로컬stage 완료·APK 인계수신. [준비 계획](../engineering/operations/release-2.3.0.md). full evidence/최종 image·운영preflight/최신백업은미완료·운영미반영, 준비파일미게시다.
+
 - #53 BUG-036: 미개방 다음 주 모집 상세500 수정·로컬지원·사용자/Native 정상 표시 확인을 마치고 수정9a61d0e/dev4be81dc 통합push 완료. [전체44 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875171401)·[원인/검증](../features/recruitment/membership-actions/unopened-next-detail.md). 추가 Backend 대기 없음, 전체 리메이크 후속·운영은 별도다.
 
 - #53 대표/예약: 정책2 업무9308ce7/dev2ca8092와 예약GETfe5e082는 Backend dev 게시·로컬 지원 완료. Native 전체34 정상 확인 이후 시간표/예약 알럿도 전체47에서 구현·사용자 확인/dev통합했다. 전체48 Native dev e1ce0576에는 계정/휴대폰 카드와 모집 생성 배치까지 포함된다. [최신 회신](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6884612427). 추가 Backend 요청 없음, 최종 기기 경계/운영 반영은 별도다.

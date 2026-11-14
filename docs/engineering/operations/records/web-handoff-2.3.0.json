@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "issue": 54,
+  "native_comment": "https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6885913490",
+  "native_comment_order": 2,
+  "web": {
+    "repository": "heo0328/LostParty_flutter",
+    "run_id": 43653104251,
+    "artifact_id": 14137081307,
+    "artifact_name": "lostparty-web-2.3.0-8-027f8215cfcf",
+    "expires_at": "2026-11-28T23:28:04Z",
+    "source": "027f8215cfcf65caa93d9db7aea5a33a38d5b83a",
+    "version": "2.3.0+8",
+    "origin": "https://lostparty.duckdns.org",
+    "archive_sha256": "1b9a293b84272fb46ac28b97ec5c57865cbea764bcf9a4b8329371823382101d",
+    "bundle_sha256": "e52a68806d72e14f5da80e2c16d088126d292f1619526827ea49b5c23cb14c24",
+    "bundle_bytes": 14344329,
+    "site_files": 34,
+    "original_files": {
+      "lostparty-v2.3.0-web.zip": {
+        "bytes": 14344329,
+        "sha256": "e52a68806d72e14f5da80e2c16d088126d292f1619526827ea49b5c23cb14c24"
+      },
+      "lostparty-v2.3.0-web.zip.sha256": {
+        "bytes": 91,
+        "sha256": "5ae5321eb5c9eb129c8999a41e7d75c6e9ccb5aabd1e94dd28f10130ea8d8c3c"
+      },
+      "release-manifest.json": {
+        "bytes": 6033,
+        "sha256": "4025ef0210845e332e8e16d53582567a43fa6ec3d180357ed37cb3bdab00177d"
+      }
+    },
+    "original_three_files_preserved": true,
+    "activated": false,
+    "aws_uploaded": false,
+    "server_staged": false,
+    "local_verified": true
+  },
+  "apk": {
+    "run_id": 43653096756,
+    "artifact_id": 14137081624,
+    "expires_at": "2026-11-21T23:30:49Z",
+    "source": "027f8215cfcf65caa93d9db7aea5a33a38d5b83a",
+    "native_reported_sha256": "59c80991e005768cd8cd3cd82a64993ca7f282a44965a55e42ae90af8db0a384",
+    "native_signing_verified": true,
+    "backend_downloaded_apk": false,
+    "native_comment": "https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6885949785"
+  }
+}

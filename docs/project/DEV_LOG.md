@@ -4797,3 +4797,9 @@ GitHub 이슈 본문/최신 댓글에서 #51 Android 공개·문서통합/종료
 ## 2026-11-15 — 문서 게시·main/dev 동일 지점 동기화 승인
 
 사용자가 dev 문서 최신화 변경의 commit/push와 main을 최신 dev와 같은 지점으로 맞추도록 명시했다. 원격 fetch 후 dev/origin·main/origin 일치와 main이 dev의 ancestor임을 확인해 force/rebase 없이 fast-forward로 처리한다. 문서/링크·동결자료·diff PASS를 재사용하고 같은 커밋을 두 브랜치에 게시한 뒤 checkout은 dev로 복귀한다. release workflow는 v* 태그 push 또는 workflow_dispatch만 동작하므로 branch 동기화로 운영 배포를 시작하지 않는다. 태그·실행 서버/DB·Issue 상태는 변경하지 않는다. 실제 최종 SHA와 원격 동일성은 게시 완료 응답으로 보고한다.
+
+## 2026-11-15 — Issue54 Backend2.3.0 준비·웹 고정 산출물 독립 수령
+
+사용자 진행 지시로 release/2.3.0을 분기해 VERSION2.3.0과 baselinev2.2.0/full 계획을 작성했다. b7c0361 대비 기존운영 태그의 앱15파일 변경/예약·관리정책2/BUG-036과 migration·도구·의존성/운영Compose 불변을 확인했다. app/main 보호경로 때문에selected가불가하고2.2.0전용reuse를연장하지않았다. 릴리즈/웹도구36시험PASS(초기 unittest sibling import 경로1오류는정식PYTHONPATH로해소), 문서/계획/diffPASS. 운영HTTPShealth는status/database ok지만서버내부source/digest/도구는새로확인하지않았다.
+
+Native 전체2 웹artifact14137081307을연결도구로독립다운로드해outerdigest/원3파일bytes/hash·34자산/manifest/source/version/origin·기존web.verify/stage를확인했다. /tmp로컬비활성배치만수행했고AWS미전송·미활성화다. 전체3 APK14137081624의서명검증보고를수신했고Backend APK설치/서명검사를주장하지않았다. [전체4 Backend](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6885970390)에실제순번/작성측/준비단계와다음Backend의full/불변image·운영baseline/최신백업/정책2복귀경계를명시했다. 준비파일미커밋·미push/최종release source·registrydigest없음. 새태그·CI실행·운영교체·백업/자료쓰기·키생성/초기화·Issue종료없음.
