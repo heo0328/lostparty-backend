@@ -27,3 +27,7 @@
 [반영 기록](../../../engineering/operations/records/character-management-policy2-local-rollout.json)의 새 이미지에 app Python296파일이 현재 소스와 일치한다. 실제 HTTP health200/관리401/bootstrap401·현재/legacy 생성 명세를 확인했다. DB0036·118테이블의 전후 자료 지문과 기존 DB 컨테이너/환경/포트는 동일하다. .secrets bind source의 표기만 Windows UNC에서 동일 WSL Linux 경로로 바뀌었다. 원래 UNC mount를 직전 이미지의 일회성 읽기 전용 컨테이너로 다시 열어 현재 실행의 키4개와 개별 해시가 같음을 확인했다. 키 재생성·DB migration/초기화·실회원 쓰기·운영 변경은 없다.
 
 정책2를 지원하지 않는 기존 Native의 신규 policy1 쓰기는409 CONTRACT_POLICY_CHANGED이며 원 ACK 복구는 유지한다. Native 정책2 연결과 진입/관리복귀 시 서버 저장 설정 재조회는 다음 소비 단계다. 코드가 미게시이므로 지금 원격 고정 소스 검증을 요청하지 않는다. 다음 사용자 commit/push 직접 지시 후 고정 SHA·Schema/OpenAPI·실행 버전을 연결해 인계한다. merge·운영 배포·Issue 종료는 별도이며 DB초기화는 항상 사용자 사전 확인이 필요하다.
+
+## 사용자 승인 게시·dev 통합
+
+사용자 지시로 업무/정확계약 9308ce7e2fb1687f29cd378f59344dbe6fffae29를 게시하고 dev 2ca80924bbc7bda563f2b7d11a1c964e06edeca6에 이력 보존 병합·push/원격 일치를 확인했다. [전체32 Backend 고정 인계](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6873586100). app/tests/openapi는 작업 tip과 dev가 같고 로컬 image9f40ecf7…401c4의 app296파일도 게시 소스와 같다. health200 확인, 기존 고유220PASS/계약·보존 검증을 재사용했다. 완료 목적 브랜치는 정리하고 현재 checkout은 dev다. 다음 Native 정책2 연결·원 pending/ACK 복구와 진입/관리복귀 저장 설정 재조회 검증이며 실제 기기 인수·main/운영 반영은 후속이다. DB초기화·이슈종료는 실행하지 않았다. 위 미게시 문구와 반영 원장의 publication은 반영 당시 기록이며 현재 소비는 이 절의 고정 SHA를 따른다.

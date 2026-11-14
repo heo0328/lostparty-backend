@@ -4,7 +4,7 @@
 
 ## 현재 기준
 
-- #53 후속 대표 정책: 메인 원정대만 계정대표·없으면 자동 선정하는 정책2를 구현·격리검증/로컬 반영했다. [전체31 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6873517159)·[구현/한계](../features/rosters/activity-and-presentation/character-management-policy2-implementation.md). 미커밋·미push/고정SHA없음, 다음 사용자 게시 지시 후 고정인계→Native 정책2 연결/서버 저장값 재조회. 실제 기기 인수·운영은 후속이다.
+- #53 후속 대표 정책: 정책2 구현·격리 검증/로컬 지원을 마치고 사용자 지시로 업무9308ce7·dev2ca8092 통합/push를 완료했다. [전체32 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6873586100). 작업 브랜치 정리/현재dev, 다음Native 정책2 연결·원ACK/복귀 재조회 검증이며 기기 인수·운영 반영은 후속이다.
 
 - #53 내 계정 리메이크: 합의한 개인 예약 조회를 구현·격리검증/로컬 dev 반영했다. 기존 표시 설정/충돌·legacy 계약 보존, 예약은 Native 게시 계약 소비 검증 단계다. 추가 관리 즉시저장도 최종계약을 구현·격리검증하고 로컬dev에 반영했다. 신규관리도026a74f로commit/push·원격일치확인, Native 연결/기기확인은별도다. [구현/한계](../features/rosters/activity-and-presentation/my-account-reservations-implementation.md).
 

@@ -2,11 +2,9 @@
 
 2026-11-13 KST 기준. 실제 Backend 코드/Git과 각 담당의 현재 코드 확인 결과를 사용한다. Native 코드 상태·완료 판단은 Native가 작성하며 Backend가 대신 검토하지 않는다.
 
-## 현재 우선 — Issue53 정책2 구현/로컬 지원 완료·게시 대기
+## 현재 우선 — Issue53 정책2 게시·dev 통합 완료 / Native 연결
 
-feat/my-account-contracts에서 [정책2 구현](../features/rosters/activity-and-presentation/character-management-policy2-implementation.md)·격리 검증·로컬 API 반영을 완료했다. [전체31 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6873517159)에 실제 순번31/Backend/구현·로컬지원 단계로 회신했다. 최종 고유220PASS(관련9파일219+추가1), 문서59/40·두 전체명세/legacy 불변·DB0036/118테이블 자료·키4개/환경·포트 보존 PASS다. 현재 실행 image9f40ecf7…401c4의 app296파일이 소스와 같으며 health200·관리/bootstrap401이다. 실제 Native policy2 연결/기기 인수와 구분한다.
-
-다음은 사용자 직접 commit/push 지시 후 Backend 고정 소스/Schema/OpenAPI·실행버전 인계다. 그 뒤 Native 정책2 연결과 진입/관리복귀 서버 저장 설정 재조회를 진행한다. 정책2 코드/계약은 미커밋·미push/고정SHA없음, 기존 게시026a74f는 정책1이다. 기존 Native의 신규 정책1 저장은 합의대로409 CONTRACT_POLICY_CHANGED, 원 성공ACK 복구만 지원한다. 미게시 코드의 원격 검증을 요청하지 않는다. dev/main merge·운영배포·이슈종료·초기화는 하지 않았다.
+사용자 지시로 업무/정확계약 9308ce7e2fb1687f29cd378f59344dbe6fffae29를 게시하고 dev 2ca80924bbc7bda563f2b7d11a1c964e06edeca6에 이력 보존 병합·push/원격 일치를 확인했다. [전체32 Backend 고정 인계](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6873586100). app/tests/openapi는 작업 tip과 dev가 같고 로컬 image9f40ecf7…401c4의 app296파일도 게시 소스와 같다. health200 확인, 기존 고유220PASS/계약·보존 검증을 재사용했다. 완료 목적 브랜치는 정리하고 현재 checkout은 dev다. 다음 Native 정책2 연결·원 pending/ACK 복구와 진입/관리복귀 저장 설정 재조회 검증이며 실제 기기 인수·main/운영 반영은 후속이다. DB초기화·이슈종료는 실행하지 않았다.
 
 ## 사용자 결정 — 기존 유저 데이터 초기화 허용
 

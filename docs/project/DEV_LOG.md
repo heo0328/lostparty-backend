@@ -4582,3 +4582,9 @@ Registration unique main·make_main의등록version,대표전용main검사·sett
 로컬 API image9f40ecf7…401c4/app296파일·health200/관리401/bootstrap401, DB0036/118테이블 전체 자료 지문·DB컨테이너/환경·포트 보존. secret mount UNC→동일 WSL 경로 표기 변경을 확인했다. host의 .secrets 읽기 권한 때문에 빈 순회 hash는 비교 근거에서 제외하고 원래 UNC/직전 이미지의 읽기 전용 일회성 컨테이너와 현재 실행의 실제4키 개별hash 일치로 확인했다. 보존 지문은 백업/복원 시험이 아니다. 새키/환경/migration/자료초기화·실회원쓰기·운영변경없음.
 
 [전체31 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6873517159)에 미게시/로컬 지원과 실제 Native 인수 경계를 구분해 회신하고 실제순번·이슈상단을 갱신했다. 다음 사용자 commit/push 직접 지시 후 고정코드인계, 이후 Native 연결/서버저장설정재조회. 정책1 신규 요청은409 전환 계약이며 원ACK는 유지함을 명시했다. 이번commit/push/merge·배포·Issue종료없음.
+
+## 2026-11-14 — Issue53 정책2 게시·dev 병합/push
+
+사용자 지시로 업무/정확계약 9308ce7e2fb1687f29cd378f59344dbe6fffae29를 게시하고 dev 2ca80924bbc7bda563f2b7d11a1c964e06edeca6에 이력 보존 병합·push/원격 일치를 확인했다. [전체32 Backend 고정 인계](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6873586100). app/tests/openapi는 작업 tip과 dev가 같고 로컬 image9f40ecf7…401c4의 app296파일도 게시 소스와 같다. health200 확인, 기존 고유220PASS/계약·보존 검증을 재사용했다. 완료 목적 브랜치는 정리하고 현재 checkout은 dev다. 다음 Native 정책2 연결·원 pending/ACK 복구와 진입/관리복귀 저장 설정 재조회 검증이며 실제 기기 인수·main/운영 반영은 후속이다. DB초기화·이슈종료는 실행하지 않았다.
+
+원격 선행 변경/충돌 없음, 문서59사례/링크·동결자료/경로·diff PASS. 정책2 소스는 기존 검증 코드 그대로이며 게시로 기능시험/서버교체를 반복하지 않았다. dev에는 같은 목적의 기존 개인 예약·policy1 이력도 함께 통합됐고 작업 tip과 앱/시험/명세가 동일하다. 후행 게시 기록을 dev에 commit/push한다. 다른 미완료 브랜치는 임의 정리하지 않는다.
