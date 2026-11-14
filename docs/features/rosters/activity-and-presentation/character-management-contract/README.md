@@ -1,5 +1,7 @@
 # 캐릭터 관리 v2 계약 후보 산출물
 
+이 문서는 policy1 historical Schema/원 ACK 복구 근거다. 신규 관리 요청/응답은 [정책2](policy2/README.md)를 따른다. policy1의 아래 미게시/미구현 표기는 당시 기록이다.
+
 Issue53 전체14·15의 정적 소비 대조용이다. **신규 관리 API는 로컬 구현·격리 검증/반영 단계다. [최신 구현/한계](../character-management-implementation.md)를 따른다. 미커밋·미push이므로 원격 고정 구현으로 인계하지 않는다.** 기존 예약 GET의 구현 완료와 혼동하지 않는다. 로컬 현재 앱 OpenAPI를 함께 갱신했고 기존 게시 명세는 아직 변경되지 않았다.
 
 - [Schema](schema.json): `$defs.Context`는 GET/성공PUT, `$defs.PutBody`는 요청, `$defs.Error`는 아래 기본 오류 예시용 envelope다.

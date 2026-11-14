@@ -1,14 +1,18 @@
 # 개발 서버 전환·백업·복구 기록
 
-현재 운영은 **Backend2.2.0/DB0036·웹2.2.0+7 일반공개**다. [실행/백업/보존/HTTPS집계](records/release-2.2.0-deployment.json)·[Issue51 전체5 Backend](https://github.com/heo0328/lostparty-backend/issues/51#issuecomment-6831720284). 다음Native Android공개와기록확인이남아있다. 아래날짜별운영은당시기록이다.
+현재 운영은 **Backend2.2.0/DB0036·웹2.2.0+7 일반공개**다. [실행/백업/보존/HTTPS집계](records/release-2.2.0-deployment.json)·[Issue51 전체5 Backend](https://github.com/heo0328/lostparty-backend/issues/51#issuecomment-6831720284). Native Android 공개·문서 통합도 완료 보고됐고 Issue51은 completed 종료됐다. 아래날짜별운영은당시기록이다.
 
 현재 실행 이름·로컬 교체 결과는 [실행 설정 정리](../development/runtime-configuration.md), 향후 운영 도구 갱신·누적 기능은 [운영 전환 안내](runtime-release-transition.md)를 따른다. 아래 날짜별 배포/반영은 당시 기록이며 소급 변경하지 않는다.
 
-## 현재 운영 — 2026-11-12 공동 릴리즈 최종 공개 확인
+## 현재 개발 기준 — 2026-11-15 문서 점검
+
+점검 당시 dev04b0e9d에는 정책2와 BUG-036이 통합돼 있었고, 이후 사용자 지시로 최신 문서를 게시하며 main을 같은 dev tip으로 동기화한다. 이 Git 동기화는 운영 배포가 아니다. 마지막 로컬 반영은 [미개방 다음 주 상세 원장](records/unopened-next-detail-local-rollout.json)의 imageadd28707…1f71f2/app296파일·DB0036이다. 현재 계약194경로/216동작, legacy125/142이며 이번 문서 점검에서 서버/DB를 재검증하거나 교체하지 않았다. 운영은 위 v2.2.0을 유지하고 [Issue51 종료](https://github.com/heo0328/lostparty-backend/issues/51#issuecomment-6845006123)로 Android 공개 대기는 해소됐다.
+
+## 이전 운영 기록 — 2026-11-12 공동 릴리즈 최종 공개 확인
 
 Backend2.1.1/source d16734d/image7aa19edf…c061d·DB0036과고정Native웹을적용하고Backend검사를완료했다. 최신사용자지시로임시IP제한을해제해일반접속가능/public_open=true다. 웹과새APK Google로그인/기존회원자료는사용자완료보고로인수통과, Native최종v2.1.0 Release공개·Backend공개파일동일성확인도완료다. 사용자마감지시로최종문서Git통합·게시/브랜치정리와Issue49 completed종료까지마감했다. [실행설계](release-2.1.0.md)·[실제적용/보존·직전/반영후PC백업집계](records/release-2.1.0-deployment.json)·[다음실행](../../project/NEXT_WORK.md). 아래개발실행/운영경계의과거source·DB·수치는각당시기록이다.
 
-## 현재 개발 실행 — 2026-11-10
+## 이전 개발 실행 기록 — 2026-11-10
 
 [묶음 선택 완료 반영 기록](records/batch-completion-local-rollout.json): 업무44eb4ba/게시624ef00, runtime ae6b3e0a·DB0036_roster_presence, 앱288파일·기본125/142/two-cycle192/213 전체 계약 일치·healthy를 확인했다. 현재 코드/실행 소스 동일성도 #47 정리에서 확인했다. #47/#48은 사용자 지시로 completed 종료됐고 운영은 이번 로컬 반영과 별개다.
 

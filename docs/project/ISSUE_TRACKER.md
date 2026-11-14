@@ -1,14 +1,12 @@
 # 이슈 주제별 추적표
 
-2026-11-13 KST 기준. #49의공동운영릴리즈·실제인수·Native최종공개와사용자승인마감까지완료했다. Backend는서버/공개산출물을확인하고Native앱소스동일성·기기근거는담당자보고로구분한다. 옛미구현/OPEN문구를최신실행·인수근거보다우선하지않는다.
+2026-11-15 KST 점검 기준. #49의공동운영릴리즈·실제인수·Native최종공개와사용자승인마감까지완료했다. Backend는서버/공개산출물을확인하고Native앱소스동일성·기기근거는담당자보고로구분한다. 옛미구현/OPEN문구를최신실행·인수근거보다우선하지않는다.
 
 ## 열린 이슈
 
 | 이슈 | 현재 상태 | 남은 작업·담당 |
 |---|---|---|
-| [#53 내 계정 리메이크](https://github.com/heo0328/lostparty-backend/issues/53) | 정책2 게시/dev 통합·Native 정상보고. BUG-036 수정·5PASS/로컬지원·사용자/Native 정상 확인·9a61d0e/dev4be81dc 통합push | [전체41 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875007986)·전체43 Native 수용/사용자 정상 확인. [전체44 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875171401) 게시/dev 통합 완료, 이 오류의 추가대기 없음. 정책2 현재구간은 전체34 사용자 정상 확인, 전체 리메이크 후속은 유지. 운영미반영·초기화 사전확인 필수 |
-| [#52 운영 웹 오류 조사](https://github.com/heo0328/lostparty-backend/issues/52) | Backend 합성5/기존61PASS, Native 구현266PASS/분석0·dev 사용자 정상 보고. 더 보기 수동 미확인 | [전체7 Native 확인](https://github.com/heo0328/lostparty-backend/issues/52#issuecomment-6847809202)·[전체8 Backend 수신](https://github.com/heo0328/lostparty-backend/issues/52#issuecomment-6847918619). Native 사용자 승인 completed 종료(전체9), Backend [전체10 게시](https://github.com/heo0328/lostparty-backend/issues/52#issuecomment-6848125719) a790cbe/dev dc5aab0 통합·push 완료, Native 게시 회신 확인. 운영은 추가 개발 후 일괄 배포 대기. 생성403 과거 원인 미확정 |
-| [#51 공동2.2.0 배포](https://github.com/heo0328/lostparty-backend/issues/51) | Backend2.2.0/DB0036·웹2.2.0+7 일반공개 완료. [전체5 Backend 운영결과](https://github.com/heo0328/lostparty-backend/issues/51#issuecomment-6831720284)·[실제집계](../engineering/operations/records/release-2.2.0-deployment.json). 자료/키/환경 보존·HTTPS 검증 | 다음 Native Android2.2.0 Release 공개/게시파일검증. 사용자재시험생략, IssueOPEN유지 |
+| [#53 내 계정 리메이크](https://github.com/heo0328/lostparty-backend/issues/53) | 정책2 게시/dev 통합·Native 정상보고. BUG-036 수정·5PASS/로컬지원·사용자/Native 정상 확인·9a61d0e/dev4be81dc 통합push | [전체41 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875007986)·전체43 Native 수용/사용자 정상 확인. [전체44 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875171401) 게시/dev 통합 완료, 이 오류의 추가대기 없음. 정책2 사용자 확인 후 개인시간표/예약까지 구현·확인, [전체48 Native](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6884612427) deve1ce0576 추가 통합/push. 추가 Backend 요청 없음, 최종 경계 확인/운영은 별도. 운영미반영·초기화 사전확인 필수 |
 | [#17](https://github.com/heo0328/lostparty-backend/issues/17) 누락/생명주기·기존 참가 복구 | 완료 오류/기존 계정 복구 인수·양측 dev 통합 완료. Native가 현재 경고/관리 왕복 연결과 별도 누락/부분 완료 기기 경계를 본문에 최신화 | 다음 순차 정리 대상. Backend 현재 구현과 Native 담당 근거로 완료/잔여 범위를 확정. 누락 자료/원복·기기 확인 착수는 별도 후속이며 현재 생성/DB 조정 요청 없음 |
 | [#15](https://github.com/heo0328/lostparty-backend/issues/15) 소유권 최종이전 영향 | 기본 인증/분쟁 연결 완료. 활성 참가가 있으면 최종이전 보류, 영향 정리/복구 정책·adapter 미합의/미구현 | Native 소비검토5항목·사용자 제품 정책 결정, 합의 후 Backend 원자 설계. [검토 원본](../features/rosters/ownership/dispute-impact-review.md) |
 | [#18](https://github.com/heo0328/lostparty-backend/issues/18) 활동 자동추가·명시제외 | 준비 설계/Native 접수, 영속/API 미합의·미구현 | 신규1700·설정 전 보류·제외/재등록·관찰/경합 기준 합의. [현재 제안](../features/rosters/activity-and-presentation/proposals.md). 옛5fff83b/브랜치 상태는 당시 보고이며 현재 로컬 존재로 단정하지 않음 |
@@ -22,6 +20,8 @@
 
 | 이슈/구간 | 완료 근거 | 별도 보존 |
 |---|---|---|
+| [#52 운영 웹 오류 조사](https://github.com/heo0328/lostparty-backend/issues/52) completed | Backend a790cbe/devdc5aab0·Native1a9c5304/deva7d822ad 게시·통합. [전체11 Native](https://github.com/heo0328/lostparty-backend/issues/52#issuecomment-6848167504) | 운영은 추가 개발 후 별도. 기록 다중페이지 수동 미확인/당시403 원인 미확정 보존 |
+| [#51 공동2.2.0 배포](https://github.com/heo0328/lostparty-backend/issues/51) completed | API·웹·Android 공개/Native 문서 통합 후 [전체7 종료](https://github.com/heo0328/lostparty-backend/issues/51#issuecomment-6845006123) | 고정 source/태그·백업은 기존 원장 보존. 새 dev 기능 운영 반영과 구분 |
 | [#50 모집 탐색](https://github.com/heo0328/lostparty-backend/issues/50) completed | 사용자지시·Backend업무558ee6da/최종문서011375bf를dev0dc381ae에병합/push·로컬/원격작업브랜치정리, [전체14 마감](https://github.com/heo0328/lostparty-backend/issues/50#issuecomment-6826988036). Native최종dev83a55020·담당자검증/사용자필터확인 | main통합/운영반영은#51에서완료. #50추가협업대기없음·전수기기/신청/성능인수와구분 |
 | [#49 웹·공동 릴리즈](https://github.com/heo0328/lostparty-backend/issues/49) completed | 사용자 “마감 진행합니다” 지시·2026-11-12 completed종료. [Native34 최종공개](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6798998431)·[Backend35 독립검증](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6819138326)·[최종원장](../engineering/operations/records/release-2.1.0-deployment.json). 문서dev/main통합·게시/작업브랜치정리 | 배포Backend소스d16734d·Native원웹89951f4b/APKe9bfa96·최종태그9019ee0 구분. 추가재배포/반복인수대기없음 |
 | [#47 묶음 선택 완료](https://github.com/heo0328/lostparty-backend/issues/47) completed | 사용자 종료 지시·[전체13번째 Backend](https://github.com/heo0328/lostparty-backend/issues/47#issuecomment-6767992300). Backend44eb4ba/실제 dev·Native47a30dad 및 현재 담당 연결/잔여 없음 확인 | 미보고 기기 경계는 사실대로 보존. 후속 갱신/레드닷·웹소켓·누락 자료를 새 대기로 붙이지 않음 |
@@ -32,6 +32,6 @@
 
 ## 코드·게시·실행은 별개
 
-현재운영은Backend태그v2.2.0/sourcec31d90da·웹2.2.0+7/source994db44a·DB0036이다. dev/main은배포준비까지동일push했으며후행배포기록도같은목적release/2.2.0에서통합해보존한다. 태그/이미지source는기록커밋과구분하며재배포하지않는다. #49/#50마감의과거SHA/판단은각원장에보존하고#51다음NativeAndroid공개와혼동하지않는다.
+현재운영은Backend태그v2.2.0/sourcec31d90da·웹2.2.0+7/source994db44a·DB0036이다. 배포 당시 dev/main은같은기준이었으며 이후 dev에 #52/#53 후속이 추가 통합됐고 2026-11-15 사용자 지시로 문서 게시와 main 동일 tip 동기화를 진행한다.후행배포기록도같은목적release/2.2.0에서통합해보존한다. 태그/이미지source는기록커밋과구분하며재배포하지않는다. #49/#50마감의과거SHA/판단은각원장에보존하고#51 Android공개/종료 완료와혼동하지않는다.
 
 [점검/정리 결과](OPEN_ISSUE_REVIEW.md) · [NEXT_WORK](NEXT_WORK.md) · [DEV_LOG](DEV_LOG.md) · [최신화 전 단계/댓글 순번 기록](../archive/project/status-before-refresh-20261110/ISSUE_TRACKER.md)

@@ -1,5 +1,7 @@
 # Issue53 — 개인 예약 조회 구현 결과
 
+2026-11-15 현재 상태: 개인 예약GET fe5e082/dev 통합 게시·로컬 지원 완료다. Native는 개인 시간표/예약과 정책2를 연결하고 사용자 정상 확인·후속 UI까지 dev e1ce0576 통합을 보고했다. [전체48 Native](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6884612427). 아래 구현 당시 미게시/Native 대기는 후행 완료 근거와 구분하며 운영 반영·전 기기 인수는 별도다.
+
 합의는 [설계](my-account-reservations-design.md)·[Issue53](https://github.com/heo0328/lostparty-backend/issues/53), 실행 계약은 [OpenAPI](../../../../openapi/openapi.yaml)를 따른다.
 
 ## 구현

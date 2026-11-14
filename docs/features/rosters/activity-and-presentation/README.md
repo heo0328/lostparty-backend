@@ -10,7 +10,7 @@
 
 대표 빠른 선택은 현재 본인 소유 메인 등록의 선택된 활동 대상을 받는다. registration/settings/ownership/roster revision을 검사하고 대표만 변경한다. 활동·configuration 상태를 자동 수정하지 않는다. 기존5분 대기 판정은 제거됐으며 현재 settings의 next_change_at은 null이다.
 
-개인 preferences는 preferred_role/visible/display_order와 독립 version을 가진다. 미저장 기본값은 version1/null/true/null/null이며 GET은 행을 만들지 않는다. no-op도 stale version은 충돌이고 실제 변경만 version/saved_at을 갱신한다. 숨겨진 대표를 자동 표시하거나 한 캐릭터 순서 변경으로 다른 캐릭터를 재정렬하지 않는다. 원정대 표시 개수도 별도 저장 설정이다.
+개인 preferences는 preferred_role/visible/display_order와 독립 version을 가진다. 미저장 기본값은 version1/null/true/null/null이며 GET은 행을 만들지 않는다. no-op도 stale version은 충돌이고 실제 변경만 version/saved_at을 갱신한다. 숨겨진 대표를 자동 표시하거나 한 캐릭터 순서 변경으로 다른 캐릭터를 재정렬하지 않는다. 원정대 표시 개수의 기존 저장 API는 보존하지만 Native 현재 내 계정은 활동 선택 전원을 표시하며 visible/개수 제한으로 숨기거나 새 개수 쓰기를 하지 않는다.
 
 <a id="constraints"></a>
 
@@ -47,4 +47,4 @@
 | GET | `/v2/me/game-accounts/{registration_id}/presentation-settings` |
 | PUT | `/v2/me/game-accounts/{registration_id}/presentation-settings` |
 
-- `GET/PUT /v2/me/game-accounts/{registration_id}/character-settings`: character-management-1 전체 관리 문맥·선택/대표/순서의 원자 저장. 기존 v1 설정과 독립 DTO/멱등 namespace이며 legacy 앱에는 추가하지 않는다.
+- `GET/PUT /v2/me/game-accounts/{registration_id}/character-settings`: character-management-2 전체 관리 문맥·선택/대표/순서 원자 저장. 메인 유효 대표 유지/없으면 자동 선정, 부원정대 대표null·활동 전체 순서 저장. [정확 계약](character-management-contract/policy2/README.md). 과거 character-management-1은 원 ACK/복구 DTO 및 영속 멱등 namespace로 보존하며 legacy 앱에는 이 자원을 추가하지 않는다.

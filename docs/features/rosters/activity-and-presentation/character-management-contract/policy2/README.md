@@ -1,5 +1,7 @@
 # Issue53 — character-management-2 정확 계약 제안
 
+현재 정책2는 업무9308ce7/dev2ca8092로 게시·통합됐고 Native 적용/사용자 정상 확인까지 수신했다. [게시·검증](../../character-management-policy2-implementation.md). 아래 제안/미게시 표기는 당시 이력이다.
+
 2026-11-14. [Native 전체27](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6872686921)·[전체28 사용자 자동 대표 정책](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6872855905)에 대한 Backend 산출물이다. **소비 대조용 제안·미구현·미커밋/미push**다. 실행 중인 policy1 및 게시 SHA `026a74fa67c36d72fb9d6d94d8bafcf707d4ffe9`를 대체 배포한 상태가 아니다. 기존 [policy1 Schema](../schema.json)와 ACK는 보존한다.
 
 - [정확 Schema](schema.json): Context=GET/신규 성공 PUT, PutBody=신규 요청, Error=기존 기본 오류 envelope. 모든 객체는 closed다.
