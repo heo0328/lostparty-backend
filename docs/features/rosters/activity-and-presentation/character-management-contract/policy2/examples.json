@@ -1,0 +1,1693 @@
+{
+  "contexts": {
+    "main_valid": {
+      "scope": {
+        "registration_id": "00000000-0000-4000-8000-000000000001",
+        "game_account_id": "00000000-0000-4000-8000-000000000002",
+        "registration_version": 3,
+        "settings_version": 4,
+        "ownership_revision": 1,
+        "roster_revision": 5,
+        "policy_version": "character-management-2",
+        "is_main": true
+      },
+      "data": {
+        "configuration_state": "configured",
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "representative_character_id": "00000000-0000-4000-8000-000000000010",
+        "ordered_all_character_ids": [
+          "00000000-0000-4000-8000-000000000012",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000010"
+        ],
+        "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "characters": [
+          {
+            "character_id": "00000000-0000-4000-8000-000000000012",
+            "character_name": "1",
+            "item_level": "1700.5",
+            "combat_power": null,
+            "display_order": null,
+            "usable": true,
+            "blocked_reason": null,
+            "item_level_observed_at": "2026-11-14T00:00:00Z",
+            "combat_power_observed_at": null
+          },
+          {
+            "character_id": "00000000-0000-4000-8000-000000000011",
+            "character_name": "A",
+            "item_level": "1700.5",
+            "combat_power": "200",
+            "display_order": null,
+            "usable": true,
+            "blocked_reason": null,
+            "item_level_observed_at": "2026-11-14T00:00:00Z",
+            "combat_power_observed_at": "2026-11-14T00:00:00Z"
+          },
+          {
+            "character_id": "00000000-0000-4000-8000-000000000010",
+            "character_name": "가",
+            "item_level": "1700.5",
+            "combat_power": "100",
+            "display_order": null,
+            "usable": true,
+            "blocked_reason": null,
+            "item_level_observed_at": "2026-11-14T00:00:00Z",
+            "combat_power_observed_at": "2026-11-14T00:00:00Z"
+          }
+        ],
+        "evaluated_at": "2026-11-14T00:00:00Z"
+      }
+    },
+    "subordinate_raw_hidden": {
+      "scope": {
+        "registration_id": "00000000-0000-4000-8000-000000000001",
+        "game_account_id": "00000000-0000-4000-8000-000000000002",
+        "registration_version": 3,
+        "settings_version": 4,
+        "ownership_revision": 1,
+        "roster_revision": 5,
+        "policy_version": "character-management-2",
+        "is_main": false
+      },
+      "data": {
+        "configuration_state": "configured",
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "representative_character_id": null,
+        "ordered_all_character_ids": [
+          "00000000-0000-4000-8000-000000000012",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000010"
+        ],
+        "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "characters": [
+          {
+            "character_id": "00000000-0000-4000-8000-000000000012",
+            "character_name": "1",
+            "item_level": "1700.5",
+            "combat_power": null,
+            "display_order": null,
+            "usable": true,
+            "blocked_reason": null,
+            "item_level_observed_at": "2026-11-14T00:00:00Z",
+            "combat_power_observed_at": null
+          },
+          {
+            "character_id": "00000000-0000-4000-8000-000000000011",
+            "character_name": "A",
+            "item_level": "1700.5",
+            "combat_power": "200",
+            "display_order": null,
+            "usable": true,
+            "blocked_reason": null,
+            "item_level_observed_at": "2026-11-14T00:00:00Z",
+            "combat_power_observed_at": "2026-11-14T00:00:00Z"
+          },
+          {
+            "character_id": "00000000-0000-4000-8000-000000000010",
+            "character_name": "가",
+            "item_level": "1700.5",
+            "combat_power": "100",
+            "display_order": null,
+            "usable": true,
+            "blocked_reason": null,
+            "item_level_observed_at": "2026-11-14T00:00:00Z",
+            "combat_power_observed_at": "2026-11-14T00:00:00Z"
+          }
+        ],
+        "evaluated_at": "2026-11-14T00:00:00Z"
+      }
+    },
+    "main_missing": {
+      "scope": {
+        "registration_id": "00000000-0000-4000-8000-000000000001",
+        "game_account_id": "00000000-0000-4000-8000-000000000002",
+        "registration_version": 3,
+        "settings_version": 4,
+        "ownership_revision": 1,
+        "roster_revision": 5,
+        "policy_version": "character-management-2",
+        "is_main": true
+      },
+      "data": {
+        "configuration_state": "configured",
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "representative_character_id": null,
+        "ordered_all_character_ids": [
+          "00000000-0000-4000-8000-000000000012",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000010"
+        ],
+        "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "characters": [
+          {
+            "character_id": "00000000-0000-4000-8000-000000000012",
+            "character_name": "1",
+            "item_level": "1700.5",
+            "combat_power": null,
+            "display_order": null,
+            "usable": true,
+            "blocked_reason": null,
+            "item_level_observed_at": "2026-11-14T00:00:00Z",
+            "combat_power_observed_at": null
+          },
+          {
+            "character_id": "00000000-0000-4000-8000-000000000011",
+            "character_name": "A",
+            "item_level": "1700.5",
+            "combat_power": "200",
+            "display_order": null,
+            "usable": true,
+            "blocked_reason": null,
+            "item_level_observed_at": "2026-11-14T00:00:00Z",
+            "combat_power_observed_at": "2026-11-14T00:00:00Z"
+          },
+          {
+            "character_id": "00000000-0000-4000-8000-000000000010",
+            "character_name": "가",
+            "item_level": "1700.5",
+            "combat_power": "100",
+            "display_order": null,
+            "usable": true,
+            "blocked_reason": null,
+            "item_level_observed_at": "2026-11-14T00:00:00Z",
+            "combat_power_observed_at": "2026-11-14T00:00:00Z"
+          }
+        ],
+        "evaluated_at": "2026-11-14T00:00:00Z"
+      }
+    },
+    "initial_unconfigured": {
+      "scope": {
+        "registration_id": "00000000-0000-4000-8000-000000000001",
+        "game_account_id": "00000000-0000-4000-8000-000000000002",
+        "registration_version": 3,
+        "settings_version": 4,
+        "ownership_revision": 1,
+        "roster_revision": 5,
+        "policy_version": "character-management-2",
+        "is_main": true
+      },
+      "data": {
+        "configuration_state": "unconfigured",
+        "activity_character_ids": [],
+        "representative_character_id": null,
+        "ordered_all_character_ids": [
+          "00000000-0000-4000-8000-000000000012",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000010"
+        ],
+        "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "characters": [
+          {
+            "character_id": "00000000-0000-4000-8000-000000000012",
+            "character_name": "1",
+            "item_level": "1700.5",
+            "combat_power": null,
+            "display_order": null,
+            "usable": true,
+            "blocked_reason": null,
+            "item_level_observed_at": "2026-11-14T00:00:00Z",
+            "combat_power_observed_at": null
+          },
+          {
+            "character_id": "00000000-0000-4000-8000-000000000011",
+            "character_name": "A",
+            "item_level": "1700.5",
+            "combat_power": "200",
+            "display_order": null,
+            "usable": true,
+            "blocked_reason": null,
+            "item_level_observed_at": "2026-11-14T00:00:00Z",
+            "combat_power_observed_at": "2026-11-14T00:00:00Z"
+          },
+          {
+            "character_id": "00000000-0000-4000-8000-000000000010",
+            "character_name": "가",
+            "item_level": "1700.5",
+            "combat_power": "100",
+            "display_order": null,
+            "usable": true,
+            "blocked_reason": null,
+            "item_level_observed_at": "2026-11-14T00:00:00Z",
+            "combat_power_observed_at": "2026-11-14T00:00:00Z"
+          }
+        ],
+        "evaluated_at": "2026-11-14T00:00:00Z"
+      }
+    },
+    "main_no_candidates": {
+      "scope": {
+        "registration_id": "00000000-0000-4000-8000-000000000001",
+        "game_account_id": "00000000-0000-4000-8000-000000000002",
+        "registration_version": 3,
+        "settings_version": 4,
+        "ownership_revision": 1,
+        "roster_revision": 5,
+        "policy_version": "character-management-2",
+        "is_main": true
+      },
+      "data": {
+        "configuration_state": "needs_reconfiguration",
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "representative_character_id": null,
+        "ordered_all_character_ids": [
+          "00000000-0000-4000-8000-000000000012",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000010"
+        ],
+        "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "characters": [
+          {
+            "character_id": "00000000-0000-4000-8000-000000000012",
+            "character_name": "1",
+            "item_level": "1700.5",
+            "combat_power": null,
+            "display_order": null,
+            "usable": false,
+            "blocked_reason": "CHARACTER_UNUSABLE",
+            "item_level_observed_at": "2026-11-14T00:00:00Z",
+            "combat_power_observed_at": null
+          },
+          {
+            "character_id": "00000000-0000-4000-8000-000000000011",
+            "character_name": "A",
+            "item_level": "1700.5",
+            "combat_power": "200",
+            "display_order": null,
+            "usable": false,
+            "blocked_reason": "CHARACTER_UNUSABLE",
+            "item_level_observed_at": "2026-11-14T00:00:00Z",
+            "combat_power_observed_at": "2026-11-14T00:00:00Z"
+          },
+          {
+            "character_id": "00000000-0000-4000-8000-000000000010",
+            "character_name": "가",
+            "item_level": "1700.5",
+            "combat_power": "100",
+            "display_order": null,
+            "usable": false,
+            "blocked_reason": "CHARACTER_UNUSABLE",
+            "item_level_observed_at": "2026-11-14T00:00:00Z",
+            "combat_power_observed_at": "2026-11-14T00:00:00Z"
+          }
+        ],
+        "evaluated_at": "2026-11-14T00:00:00Z"
+      }
+    }
+  },
+  "puts": {
+    "main_keep_valid": {
+      "expected_registration_version": 3,
+      "expected_settings_version": 4,
+      "expected_ownership_revision": 1,
+      "expected_roster_revision": 5,
+      "policy_version": "character-management-2",
+      "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "activity_character_ids": [
+        "00000000-0000-4000-8000-000000000010",
+        "00000000-0000-4000-8000-000000000011",
+        "00000000-0000-4000-8000-000000000012"
+      ],
+      "representative_character_id": null
+    },
+    "main_auto_fill": {
+      "expected_registration_version": 3,
+      "expected_settings_version": 4,
+      "expected_ownership_revision": 1,
+      "expected_roster_revision": 5,
+      "policy_version": "character-management-2",
+      "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "activity_character_ids": [
+        "00000000-0000-4000-8000-000000000010",
+        "00000000-0000-4000-8000-000000000011",
+        "00000000-0000-4000-8000-000000000012"
+      ],
+      "representative_character_id": null,
+      "ordered_character_ids": [
+        "00000000-0000-4000-8000-000000000010",
+        "00000000-0000-4000-8000-000000000012"
+      ]
+    },
+    "main_manual_select": {
+      "expected_registration_version": 3,
+      "expected_settings_version": 4,
+      "expected_ownership_revision": 1,
+      "expected_roster_revision": 5,
+      "policy_version": "character-management-2",
+      "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "activity_character_ids": [
+        "00000000-0000-4000-8000-000000000010",
+        "00000000-0000-4000-8000-000000000011",
+        "00000000-0000-4000-8000-000000000012"
+      ],
+      "representative_character_id": "00000000-0000-4000-8000-000000000012"
+    },
+    "subordinate_all_movable": {
+      "expected_registration_version": 3,
+      "expected_settings_version": 4,
+      "expected_ownership_revision": 1,
+      "expected_roster_revision": 5,
+      "policy_version": "character-management-2",
+      "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "activity_character_ids": [
+        "00000000-0000-4000-8000-000000000010",
+        "00000000-0000-4000-8000-000000000011",
+        "00000000-0000-4000-8000-000000000012"
+      ],
+      "representative_character_id": null,
+      "ordered_character_ids": [
+        "00000000-0000-4000-8000-000000000010",
+        "00000000-0000-4000-8000-000000000011",
+        "00000000-0000-4000-8000-000000000012"
+      ]
+    },
+    "first_selection": {
+      "expected_registration_version": 3,
+      "expected_settings_version": 4,
+      "expected_ownership_revision": 1,
+      "expected_roster_revision": 5,
+      "policy_version": "character-management-2",
+      "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "activity_character_ids": [
+        "00000000-0000-4000-8000-000000000010",
+        "00000000-0000-4000-8000-000000000011"
+      ],
+      "representative_character_id": null
+    }
+  },
+  "transitions": [
+    {
+      "name": "main_missing_autofill",
+      "before": {
+        "scope": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 3,
+          "settings_version": 4,
+          "ownership_revision": 1,
+          "roster_revision": 5,
+          "policy_version": "character-management-2",
+          "is_main": true
+        },
+        "data": {
+          "configuration_state": "configured",
+          "activity_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "representative_character_id": null,
+          "ordered_all_character_ids": [
+            "00000000-0000-4000-8000-000000000012",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000010"
+          ],
+          "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "characters": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "character_name": "1",
+              "item_level": "1700.5",
+              "combat_power": null,
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "character_name": "A",
+              "item_level": "1700.5",
+              "combat_power": "200",
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "character_name": "가",
+              "item_level": "1700.5",
+              "combat_power": "100",
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            }
+          ],
+          "evaluated_at": "2026-11-14T00:00:00Z"
+        }
+      },
+      "request": {
+        "expected_registration_version": 3,
+        "expected_settings_version": 4,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 5,
+        "policy_version": "character-management-2",
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "representative_character_id": null
+      },
+      "ack": {
+        "scope": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 3,
+          "settings_version": 5,
+          "ownership_revision": 1,
+          "roster_revision": 5,
+          "policy_version": "character-management-2",
+          "is_main": true
+        },
+        "data": {
+          "configuration_state": "configured",
+          "activity_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "representative_character_id": "00000000-0000-4000-8000-000000000011",
+          "ordered_all_character_ids": [
+            "00000000-0000-4000-8000-000000000012",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000010"
+          ],
+          "order_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "characters": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "character_name": "1",
+              "item_level": "1700.5",
+              "combat_power": null,
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "character_name": "A",
+              "item_level": "1700.5",
+              "combat_power": "200",
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "character_name": "가",
+              "item_level": "1700.5",
+              "combat_power": "100",
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            }
+          ],
+          "evaluated_at": "2026-11-14T00:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "valid_existing_preserved",
+      "before": {
+        "scope": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 3,
+          "settings_version": 4,
+          "ownership_revision": 1,
+          "roster_revision": 5,
+          "policy_version": "character-management-2",
+          "is_main": true
+        },
+        "data": {
+          "configuration_state": "configured",
+          "activity_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "representative_character_id": "00000000-0000-4000-8000-000000000010",
+          "ordered_all_character_ids": [
+            "00000000-0000-4000-8000-000000000012",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000010"
+          ],
+          "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "characters": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "character_name": "1",
+              "item_level": "1700.5",
+              "combat_power": null,
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "character_name": "A",
+              "item_level": "1700.5",
+              "combat_power": "200",
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "character_name": "가",
+              "item_level": "1700.5",
+              "combat_power": "100",
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            }
+          ],
+          "evaluated_at": "2026-11-14T00:00:00Z"
+        }
+      },
+      "request": {
+        "expected_registration_version": 3,
+        "expected_settings_version": 4,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 5,
+        "policy_version": "character-management-2",
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "representative_character_id": null
+      },
+      "ack": {
+        "scope": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 3,
+          "settings_version": 4,
+          "ownership_revision": 1,
+          "roster_revision": 5,
+          "policy_version": "character-management-2",
+          "is_main": true
+        },
+        "data": {
+          "configuration_state": "configured",
+          "activity_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "representative_character_id": "00000000-0000-4000-8000-000000000010",
+          "ordered_all_character_ids": [
+            "00000000-0000-4000-8000-000000000012",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000010"
+          ],
+          "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "characters": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "character_name": "1",
+              "item_level": "1700.5",
+              "combat_power": null,
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "character_name": "A",
+              "item_level": "1700.5",
+              "combat_power": "200",
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "character_name": "가",
+              "item_level": "1700.5",
+              "combat_power": "100",
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            }
+          ],
+          "evaluated_at": "2026-11-14T00:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "first_selection_auto",
+      "before": {
+        "scope": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 3,
+          "settings_version": 4,
+          "ownership_revision": 1,
+          "roster_revision": 5,
+          "policy_version": "character-management-2",
+          "is_main": true
+        },
+        "data": {
+          "configuration_state": "unconfigured",
+          "activity_character_ids": [],
+          "representative_character_id": null,
+          "ordered_all_character_ids": [
+            "00000000-0000-4000-8000-000000000012",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000010"
+          ],
+          "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "characters": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "character_name": "1",
+              "item_level": "1700.5",
+              "combat_power": null,
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "character_name": "A",
+              "item_level": "1700.5",
+              "combat_power": "200",
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "character_name": "가",
+              "item_level": "1700.5",
+              "combat_power": "100",
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            }
+          ],
+          "evaluated_at": "2026-11-14T00:00:00Z"
+        }
+      },
+      "request": {
+        "expected_registration_version": 3,
+        "expected_settings_version": 4,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 5,
+        "policy_version": "character-management-2",
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011"
+        ],
+        "representative_character_id": null
+      },
+      "ack": {
+        "scope": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 3,
+          "settings_version": 5,
+          "ownership_revision": 1,
+          "roster_revision": 5,
+          "policy_version": "character-management-2",
+          "is_main": true
+        },
+        "data": {
+          "configuration_state": "configured",
+          "activity_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011"
+          ],
+          "representative_character_id": "00000000-0000-4000-8000-000000000011",
+          "ordered_all_character_ids": [
+            "00000000-0000-4000-8000-000000000012",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000010"
+          ],
+          "order_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "characters": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "character_name": "1",
+              "item_level": "1700.5",
+              "combat_power": null,
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "character_name": "A",
+              "item_level": "1700.5",
+              "combat_power": "200",
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "character_name": "가",
+              "item_level": "1700.5",
+              "combat_power": "100",
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            }
+          ],
+          "evaluated_at": "2026-11-14T00:00:00Z"
+        }
+      }
+    },
+    {
+      "name": "subordinate_raw_cleared",
+      "before": {
+        "scope": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 3,
+          "settings_version": 4,
+          "ownership_revision": 1,
+          "roster_revision": 5,
+          "policy_version": "character-management-2",
+          "is_main": false
+        },
+        "data": {
+          "configuration_state": "configured",
+          "activity_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "representative_character_id": null,
+          "ordered_all_character_ids": [
+            "00000000-0000-4000-8000-000000000012",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000010"
+          ],
+          "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "characters": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "character_name": "1",
+              "item_level": "1700.5",
+              "combat_power": null,
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "character_name": "A",
+              "item_level": "1700.5",
+              "combat_power": "200",
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "character_name": "가",
+              "item_level": "1700.5",
+              "combat_power": "100",
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            }
+          ],
+          "evaluated_at": "2026-11-14T00:00:00Z"
+        }
+      },
+      "stored_raw_before": "00000000-0000-4000-8000-000000000010",
+      "request": {
+        "expected_registration_version": 3,
+        "expected_settings_version": 4,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 5,
+        "policy_version": "character-management-2",
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "representative_character_id": null
+      },
+      "ack": {
+        "scope": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 3,
+          "settings_version": 5,
+          "ownership_revision": 1,
+          "roster_revision": 5,
+          "policy_version": "character-management-2",
+          "is_main": false
+        },
+        "data": {
+          "configuration_state": "configured",
+          "activity_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "representative_character_id": null,
+          "ordered_all_character_ids": [
+            "00000000-0000-4000-8000-000000000012",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000010"
+          ],
+          "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "characters": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "character_name": "1",
+              "item_level": "1700.5",
+              "combat_power": null,
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "character_name": "A",
+              "item_level": "1700.5",
+              "combat_power": "200",
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "character_name": "가",
+              "item_level": "1700.5",
+              "combat_power": "100",
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            }
+          ],
+          "evaluated_at": "2026-11-14T00:00:00Z"
+        }
+      },
+      "stored_raw_after": null
+    },
+    {
+      "name": "main_switch_atomic",
+      "before": {
+        "scope": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 3,
+          "settings_version": 4,
+          "ownership_revision": 1,
+          "roster_revision": 5,
+          "policy_version": "character-management-2",
+          "is_main": false
+        },
+        "data": {
+          "configuration_state": "configured",
+          "activity_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "representative_character_id": null,
+          "ordered_all_character_ids": [
+            "00000000-0000-4000-8000-000000000012",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000010"
+          ],
+          "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "characters": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "character_name": "1",
+              "item_level": "1700.5",
+              "combat_power": null,
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "character_name": "A",
+              "item_level": "1700.5",
+              "combat_power": "200",
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "character_name": "가",
+              "item_level": "1700.5",
+              "combat_power": "100",
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            }
+          ],
+          "evaluated_at": "2026-11-14T00:00:00Z"
+        }
+      },
+      "request_method": "PATCH",
+      "request_path": "/v1/me/game-accounts/00000000-0000-4000-8000-000000000001",
+      "request_body": {
+        "expected_version": 3,
+        "is_main": true
+      },
+      "stored_raw_before": "00000000-0000-4000-8000-000000000010",
+      "current_get": {
+        "scope": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 4,
+          "settings_version": 5,
+          "ownership_revision": 1,
+          "roster_revision": 5,
+          "policy_version": "character-management-2",
+          "is_main": true
+        },
+        "data": {
+          "configuration_state": "configured",
+          "activity_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "representative_character_id": "00000000-0000-4000-8000-000000000011",
+          "ordered_all_character_ids": [
+            "00000000-0000-4000-8000-000000000012",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000010"
+          ],
+          "order_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "characters": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "character_name": "1",
+              "item_level": "1700.5",
+              "combat_power": null,
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "character_name": "A",
+              "item_level": "1700.5",
+              "combat_power": "200",
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "character_name": "가",
+              "item_level": "1700.5",
+              "combat_power": "100",
+              "display_order": null,
+              "usable": true,
+              "blocked_reason": null,
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            }
+          ],
+          "evaluated_at": "2026-11-14T00:00:00Z"
+        }
+      },
+      "ack_resource": "existing RegistrationOut; not ManagementContext",
+      "old_main_registration_version_before": 7,
+      "old_main_registration_version_after": 8,
+      "group_snapshot_changed": false
+    },
+    {
+      "name": "no_candidates_switch_exception",
+      "before": {
+        "scope": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 3,
+          "settings_version": 4,
+          "ownership_revision": 1,
+          "roster_revision": 5,
+          "policy_version": "character-management-2",
+          "is_main": true
+        },
+        "data": {
+          "configuration_state": "needs_reconfiguration",
+          "activity_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "representative_character_id": null,
+          "ordered_all_character_ids": [
+            "00000000-0000-4000-8000-000000000012",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000010"
+          ],
+          "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "characters": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "character_name": "1",
+              "item_level": "1700.5",
+              "combat_power": null,
+              "display_order": null,
+              "usable": false,
+              "blocked_reason": "CHARACTER_UNUSABLE",
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "character_name": "A",
+              "item_level": "1700.5",
+              "combat_power": "200",
+              "display_order": null,
+              "usable": false,
+              "blocked_reason": "CHARACTER_UNUSABLE",
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "character_name": "가",
+              "item_level": "1700.5",
+              "combat_power": "100",
+              "display_order": null,
+              "usable": false,
+              "blocked_reason": "CHARACTER_UNUSABLE",
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            }
+          ],
+          "evaluated_at": "2026-11-14T00:00:00Z"
+        }
+      },
+      "current_get": {
+        "scope": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 3,
+          "settings_version": 4,
+          "ownership_revision": 1,
+          "roster_revision": 5,
+          "policy_version": "character-management-2",
+          "is_main": true
+        },
+        "data": {
+          "configuration_state": "needs_reconfiguration",
+          "activity_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "representative_character_id": null,
+          "ordered_all_character_ids": [
+            "00000000-0000-4000-8000-000000000012",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000010"
+          ],
+          "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "characters": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "character_name": "1",
+              "item_level": "1700.5",
+              "combat_power": null,
+              "display_order": null,
+              "usable": false,
+              "blocked_reason": "CHARACTER_UNUSABLE",
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "character_name": "A",
+              "item_level": "1700.5",
+              "combat_power": "200",
+              "display_order": null,
+              "usable": false,
+              "blocked_reason": "CHARACTER_UNUSABLE",
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "character_name": "가",
+              "item_level": "1700.5",
+              "combat_power": "100",
+              "display_order": null,
+              "usable": false,
+              "blocked_reason": "CHARACTER_UNUSABLE",
+              "item_level_observed_at": "2026-11-14T00:00:00Z",
+              "combat_power_observed_at": "2026-11-14T00:00:00Z"
+            }
+          ],
+          "evaluated_at": "2026-11-14T00:00:00Z"
+        }
+      },
+      "result": "representative null, no auto-activation; existing main PATCH can complete",
+      "group_snapshot_changed": false
+    }
+  ],
+  "policy1_recovery": [
+    {
+      "server_state": "completed_fresh",
+      "journal_acknowledged": false,
+      "operation": "character-management-1",
+      "idempotency_key": "00000000-0000-4000-8000-000000000099",
+      "original_body": {
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011"
+        ],
+        "representative_character_id": "00000000-0000-4000-8000-000000000010",
+        "expected_registration_version": 1,
+        "expected_settings_version": 2,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 3,
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "status": 200,
+      "code": null,
+      "business_reexecuted": false,
+      "next": "current policy2 GET; running/transport remains unresolved until bounded recovery",
+      "original_ack": {
+        "scope": {
+          "registration_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000002",
+          "registration_version": 1,
+          "settings_version": 2,
+          "ownership_revision": 1,
+          "roster_revision": 3,
+          "policy_version": "character-management-1"
+        },
+        "data": {
+          "configuration_state": "configured",
+          "activity_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011"
+          ],
+          "representative_character_id": "00000000-0000-4000-8000-000000000010",
+          "ordered_all_character_ids": [
+            "00000000-0000-4000-8000-000000000010",
+            "00000000-0000-4000-8000-000000000011",
+            "00000000-0000-4000-8000-000000000012"
+          ],
+          "order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "characters": [
+            {
+              "character_id": "00000000-0000-4000-8000-000000000010",
+              "display_order": null,
+              "item_level": "1700",
+              "character_name": "가",
+              "usable": true,
+              "blocked_reason": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000011",
+              "display_order": null,
+              "item_level": "1700",
+              "character_name": "나",
+              "usable": true,
+              "blocked_reason": null
+            },
+            {
+              "character_id": "00000000-0000-4000-8000-000000000012",
+              "display_order": null,
+              "item_level": null,
+              "character_name": "다",
+              "usable": true,
+              "blocked_reason": null
+            }
+          ],
+          "evaluated_at": "2026-11-14T00:00:00Z"
+        }
+      }
+    },
+    {
+      "server_state": "completed_expired",
+      "journal_acknowledged": false,
+      "operation": "character-management-1",
+      "idempotency_key": "00000000-0000-4000-8000-000000000099",
+      "original_body": {
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011"
+        ],
+        "representative_character_id": "00000000-0000-4000-8000-000000000010",
+        "expected_registration_version": 1,
+        "expected_settings_version": 2,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 3,
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "status": 409,
+      "code": "IDEMPOTENCY_EXPIRED",
+      "business_reexecuted": false,
+      "next": "current policy2 GET; running/transport remains unresolved until bounded recovery"
+    },
+    {
+      "server_state": "expired",
+      "journal_acknowledged": false,
+      "operation": "character-management-1",
+      "idempotency_key": "00000000-0000-4000-8000-000000000099",
+      "original_body": {
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011"
+        ],
+        "representative_character_id": "00000000-0000-4000-8000-000000000010",
+        "expected_registration_version": 1,
+        "expected_settings_version": 2,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 3,
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "status": 409,
+      "code": "IDEMPOTENCY_EXPIRED",
+      "business_reexecuted": false,
+      "next": "current policy2 GET; running/transport remains unresolved until bounded recovery"
+    },
+    {
+      "server_state": "running_live",
+      "journal_acknowledged": false,
+      "operation": "character-management-1",
+      "idempotency_key": "00000000-0000-4000-8000-000000000099",
+      "original_body": {
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011"
+        ],
+        "representative_character_id": "00000000-0000-4000-8000-000000000010",
+        "expected_registration_version": 1,
+        "expected_settings_version": 2,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 3,
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "status": 409,
+      "code": "REQUEST_IN_PROGRESS",
+      "business_reexecuted": false,
+      "next": "current policy2 GET; running/transport remains unresolved until bounded recovery",
+      "retry_after": 2
+    },
+    {
+      "server_state": "running_expired",
+      "journal_acknowledged": false,
+      "operation": "character-management-1",
+      "idempotency_key": "00000000-0000-4000-8000-000000000099",
+      "original_body": {
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011"
+        ],
+        "representative_character_id": "00000000-0000-4000-8000-000000000010",
+        "expected_registration_version": 1,
+        "expected_settings_version": 2,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 3,
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "status": 409,
+      "code": "CONTRACT_POLICY_CHANGED",
+      "business_reexecuted": false,
+      "next": "current policy2 GET; running/transport remains unresolved until bounded recovery"
+    },
+    {
+      "server_state": "retryable",
+      "journal_acknowledged": false,
+      "operation": "character-management-1",
+      "idempotency_key": "00000000-0000-4000-8000-000000000099",
+      "original_body": {
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011"
+        ],
+        "representative_character_id": "00000000-0000-4000-8000-000000000010",
+        "expected_registration_version": 1,
+        "expected_settings_version": 2,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 3,
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "status": 409,
+      "code": "CONTRACT_POLICY_CHANGED",
+      "business_reexecuted": false,
+      "next": "current policy2 GET; running/transport remains unresolved until bounded recovery"
+    },
+    {
+      "server_state": "absent",
+      "journal_acknowledged": false,
+      "operation": "character-management-1",
+      "idempotency_key": "00000000-0000-4000-8000-000000000099",
+      "original_body": {
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011"
+        ],
+        "representative_character_id": "00000000-0000-4000-8000-000000000010",
+        "expected_registration_version": 1,
+        "expected_settings_version": 2,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 3,
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "status": 409,
+      "code": "CONTRACT_POLICY_CHANGED",
+      "business_reexecuted": false,
+      "next": "current policy2 GET; running/transport remains unresolved until bounded recovery"
+    },
+    {
+      "server_state": "different_body",
+      "journal_acknowledged": false,
+      "operation": "character-management-1",
+      "idempotency_key": "00000000-0000-4000-8000-000000000099",
+      "original_body": {
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011"
+        ],
+        "representative_character_id": "00000000-0000-4000-8000-000000000010",
+        "expected_registration_version": 1,
+        "expected_settings_version": 2,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 3,
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "status": 409,
+      "code": "IDEMPOTENCY_CONFLICT",
+      "business_reexecuted": false,
+      "next": "current policy2 GET; running/transport remains unresolved until bounded recovery"
+    },
+    {
+      "server_state": "not_queried",
+      "journal_acknowledged": true,
+      "put_sent": false,
+      "next": "current policy2 GET",
+      "business_reexecuted": false
+    }
+  ],
+  "rejections": [
+    {
+      "name": "old_body_not_new_command",
+      "body": {
+        "expected_registration_version": 3,
+        "expected_settings_version": 4,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 5,
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "representative_character_id": null
+      },
+      "code": "CONTRACT_POLICY_CHANGED",
+      "schema_rejection": true,
+      "context": "main_valid"
+    },
+    {
+      "name": "unknown_policy",
+      "body": {
+        "expected_registration_version": 3,
+        "expected_settings_version": 4,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 5,
+        "policy_version": "character-management-999",
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "representative_character_id": null
+      },
+      "code": "INVALID_REQUEST",
+      "schema_rejection": true,
+      "context": "main_valid"
+    },
+    {
+      "name": "subordinate_nonnull",
+      "body": {
+        "expected_registration_version": 3,
+        "expected_settings_version": 4,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 5,
+        "policy_version": "character-management-2",
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "representative_character_id": "00000000-0000-4000-8000-000000000010",
+        "ordered_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ]
+      },
+      "code": "MAIN_REGISTRATION_CHANGED",
+      "schema_rejection": false,
+      "context": "subordinate_raw_hidden"
+    },
+    {
+      "name": "valid_main_rep_off",
+      "body": {
+        "expected_registration_version": 3,
+        "expected_settings_version": 4,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 5,
+        "policy_version": "character-management-2",
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "representative_character_id": null
+      },
+      "code": "REPRESENTATIVE_REQUIRED",
+      "schema_rejection": false,
+      "context": "main_valid"
+    },
+    {
+      "name": "null_order",
+      "body": {
+        "expected_registration_version": 3,
+        "expected_settings_version": 4,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 5,
+        "policy_version": "character-management-2",
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "representative_character_id": null,
+        "ordered_character_ids": null
+      },
+      "code": "INVALID_REQUEST",
+      "schema_rejection": true,
+      "context": "main_valid"
+    },
+    {
+      "name": "subordinate_empty_order",
+      "body": {
+        "expected_registration_version": 3,
+        "expected_settings_version": 4,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 5,
+        "policy_version": "character-management-2",
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "representative_character_id": null,
+        "ordered_character_ids": []
+      },
+      "code": "INVALID_REQUEST",
+      "schema_rejection": false,
+      "context": "subordinate_raw_hidden"
+    },
+    {
+      "name": "empty_activity",
+      "body": {
+        "expected_registration_version": 3,
+        "expected_settings_version": 4,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 5,
+        "policy_version": "character-management-2",
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "activity_character_ids": [],
+        "representative_character_id": null
+      },
+      "code": "EMPTY_ACTIVITY_SELECTION",
+      "schema_rejection": true,
+      "context": "main_valid"
+    },
+    {
+      "name": "autofill_wrong_movable",
+      "body": {
+        "expected_registration_version": 3,
+        "expected_settings_version": 4,
+        "expected_ownership_revision": 1,
+        "expected_roster_revision": 5,
+        "policy_version": "character-management-2",
+        "expected_order_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "activity_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011",
+          "00000000-0000-4000-8000-000000000012"
+        ],
+        "representative_character_id": null,
+        "ordered_character_ids": [
+          "00000000-0000-4000-8000-000000000010",
+          "00000000-0000-4000-8000-000000000011"
+        ]
+      },
+      "code": "INVALID_REQUEST",
+      "schema_rejection": false,
+      "context": "main_missing"
+    }
+  ],
+  "errors": [
+    {
+      "status": 409,
+      "body": {
+        "error": {
+          "code": "CONTRACT_POLICY_CHANGED",
+          "message": "CONTRACT_POLICY_CHANGED",
+          "request_id": "00000000-0000-4000-8000-000000000098"
+        }
+      }
+    },
+    {
+      "status": 409,
+      "body": {
+        "error": {
+          "code": "MAIN_REGISTRATION_CHANGED",
+          "message": "MAIN_REGISTRATION_CHANGED",
+          "request_id": "00000000-0000-4000-8000-000000000098"
+        }
+      }
+    },
+    {
+      "status": 409,
+      "body": {
+        "error": {
+          "code": "IDEMPOTENCY_CONFLICT",
+          "message": "IDEMPOTENCY_CONFLICT",
+          "request_id": "00000000-0000-4000-8000-000000000098"
+        }
+      }
+    },
+    {
+      "status": 409,
+      "body": {
+        "error": {
+          "code": "IDEMPOTENCY_EXPIRED",
+          "message": "IDEMPOTENCY_EXPIRED",
+          "request_id": "00000000-0000-4000-8000-000000000098"
+        }
+      }
+    },
+    {
+      "status": 409,
+      "body": {
+        "error": {
+          "code": "REVISION_CONFLICT",
+          "message": "REVISION_CONFLICT",
+          "request_id": "00000000-0000-4000-8000-000000000098"
+        }
+      }
+    }
+  ]
+}

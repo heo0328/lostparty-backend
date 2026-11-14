@@ -6,6 +6,7 @@ from app.game_accounts.models.models import Character
 from app.game_accounts.models.models import Activity
 from app.game_accounts.rosters import service
 from app.game_accounts.character_profiles import activity_policy
+from app.game_accounts.character_profiles import account_representative as rep_policy
 from app.game_accounts.common.support import authorize
 from app.game_accounts.common.support import fail
 from app.game_accounts.common.support import reserve
@@ -23,15 +24,15 @@ def owned(db, uid, rid):
 
 def output(db, uid, registration, account):
     configuration = service.config(db, uid, account.id)
-    return value(registration, account, configuration)
+    return value(registration, account, configuration, db=db)
 
 
-def value(registration, account, configuration):
+def value(registration, account, configuration, *, db=None, projected_id=...):
     return dict(registration_id=registration.id, game_account_id=account.id,
                 is_main=registration.is_main, registration_version=registration.version,
                 settings_version=configuration.version if configuration else 1,
                 ownership_revision=account.ownership_revision, roster_revision=account.roster_revision,
-                representative_character_id=configuration.representative_id if configuration else None,
+                representative_character_id=((rep_policy.effective(db,registration,configuration) if projected_id is ... else projected_id) if rep_policy.current_policy.get() else configuration.representative_id if configuration else None),
                 configuration_state=configuration.state if configuration else 'unconfigured',
                 next_change_at=None)
 

@@ -4538,3 +4538,47 @@ character-management-contract에schema/examples/comparator/검증도구/설명�
 사용자가누적 v2관리구현·정확계약/schema/예시·시험·로컬반영기록을커밋·푸시하도록명시했다. feat/my-account-contracts의같은구간을게시하고고정SHA/파일링크를Issue53에인계한다. 기존61PASS/문서40사례/현재·legacy계약/로컬실행보존근거를재사용하고게시직전문서/diff검사를수행한다. 앱/계약bytes를바꾸지않아동일서버시험을반복하지않는다. dev/main merge·운영배포·DB초기화·Issue종료없음.
 
 - 실제게시: 업무/정확계약 026a74fa67c36d72fb9d6d94d8bafcf707d4ffe9 commit/push·원격동일·clean확인, [전체20 고정인계](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6861435507) 게시후실제순번확인. 코드/계약/로컬image가검증값과동일해시험/재반영을반복하지않았다. 후행게시기록도같은브랜치에push한다.
+
+## 2026-11-14 — Issue53 Native 전체21~25 회신 확인
+
+Native가게시계약수령/일반DI연결·전체2978PASS,사용자웹/앱변경정상확인,이후main-only 단일계정대표정책정정/UI보완·전체2982PASS/최신직접20PASS를회신했다. [전체25 최종요청](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6872476692)의부원정대대표UI완전제외와서버필수대표제약보완요청을수신했다. 다음Backend main-only authoritative/기존settings제약·메인CAS·그룹기본reader를정적조사후계약회신,이번은기록/diff만수행했다. Native미게시/최신UI수동미확인·서버보완미완료를구분하며추가API/DB·초기화/commit/push/배포변경없음.
+
+## 2026-11-14 — main-only 계정대표 정적 조사·전체26 회신
+
+Registration unique main·make_main의등록version,대표전용main검사·settings/reader/bootstrap raw노출,그룹명시selection/별도snapshot 경로를대조했다. 그룹서버가main대표를자동선택하는reader라고단정하지않았다. [전체26 회신](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6872634409)에policy2/is_main·부원정대null/활동전체movable·기존원문/ACK보존·메인변경재선택추천을게시하고순번확인했다. 다음Native journal/기본값/UX대조이며정확schema·구현은후속이다. 이번API/DB/서버·시험/초기화/commit/push/배포변경없음.
+
+## 2026-11-14 — Issue53 Native 전체27 policy2 대조 확인
+
+[전체27 Native](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6872686921)는policy2/부원정대제약해제방향을수용하고실제그룹명시선택경로와policy1 journal 구조를회신했다. 다음Backend namespace1원ACK/예약/만료→정책2중복실행방지와옛본문미도달거절·현재GET복구전이의정확산출물고정. 실제기기미확정유무는알수없어0건단정/원문변환/덤프요청하지않는다. 회신확인기록/diff만수행,신규API/DB/초기화·commit/push/배포변경없음.
+
+## 2026-11-14 — Issue53 Native 전체28 자동 대표 정책 확인
+
+[전체28 Native](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6872855905)의 사용자 최종 결정에 따라 메인 전환 후 대표 재선택 대기 추천은 대체됐다. 유효 대표가 없으면 현재 메인 원정대의 활동·소유·usable 후보에서 아이템레벨 DESC → 전투력 DESC → 이름 ASC로 자동 지정한다. 기존 유효 대표는 관측값 갱신만으로 교체하지 않는다. 메인 전환도 같은 명령·게임 쓰기 lock·트랜잭션에서 대표를 확정하며 부원정대 시절 raw 대표를 그대로 승격하지 않는다. 후보 없음은 별도 예외로 다루고 가짜 대표/비활동 자동 활성화로 우회하지 않는다. 카드 수동 순서와 그룹 snapshot은 보존한다.
+
+다음 담당 Backend: 정책2 정확 Schema/예시에 최초 확정·미설정 복구·메인 전환의 명령/버전/ACK 경계, 정규 관측값 출처·nullable/decimal/이름 비교, 동률·혼합 이름·후보 없음 예시를 고정한다. 저장 관측값 재사용·전투력 null 후순위·외부 provider 추가 호출 없음은 Native 제안으로 정확 계약 대조가 남았다. 부원정대 null/활동 전체 movable·정책1 journal/원 ACK 복구 요구는 유지한다. 이번 댓글은 기획 확정·계약 보완 요청이며 새 구현/시험/게시 결과가 아니다.
+
+제안서에 기존 추천 대체 표시와 NEXT_WORK 후속을 기록했다. 문서/diff 검사만 수행했으며 API/DB/초기화·commit/push/배포 변경 없음.
+
+## 2026-11-14 — Issue53 정책2 정확 계약·자동 선정/기존 요청 복구 제안
+
+게시026a74f의 management/rosters·대표·멱등 support·ScopedPowerCache/overlay·reconcile/소유확인 명령을 정적 조사했다. 같은 경로의 필수 policy_version=character-management-2·scope.is_main, main null 유지/자동 선정·부원정대 null/전체 movable, 정규 레벨·power 관측 출처/nullable/동률 및 메인 전환 원자 확정 경계를 고정했다. 기존 operation=character-management-1을 영속 멱등 namespace로 재사용하고 옛 본문은 복구 전용(원 ACK/진행/만료/정책 변경 무실행409)으로 분리해 namespace 변경 중복 실행을 피하는 안이다. 권위 없는 GET 보정·숨은 자동 활동·그룹 snapshot 갱신은 없다.
+
+[정확 산출물](../features/rosters/activity-and-presentation/character-management-contract/policy2/README.md)의 Schema/완전 합성 예시·비교 fixture·문서 검증도구를 작성했다. 최초 문서 검사에서 도구의 로컬 변수 shadowing을 고친 뒤 최종59사례 PASS, 기존40사례 PASS, 문서검사/보관자료·상대 링크/경로 검사 및 diff PASS. 런타임/DB/Native parser 검증이 아니다. [전체29 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6873152385)에 Schema 전문·같은 댓글 내부 참조로 중복을 줄인 합성 예시·fixture와 미구현/게시 상태를 자립적으로 게시했다. 실제 댓글 순번29/Backend/계약 제안 단계/다음 Native 대조를 확인하고 이슈 상단도 정정했다. 신규API/OpenAPI/DB/서버·초기화/commit/push/merge·운영배포 변경 없음. 산출물은 같은 목적 브랜치에 미커밋·미push이며 정책1 게시/실행은 유지한다.
+
+## 2026-11-14 — Issue53 전체30 Native 계약 수용 확인
+
+[전체30 Native](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6873213572)는 정책2 Schema/자동선정 fixture/원 ACK 복구를 수용했고 추가 제품 결정은 없다고 회신했다. 다음은 Backend 실제 구현·격리검증 및 로컬 dev 연동 준비다. 관리 복귀 시 카드 순서 반영 누락 보고에 대한 서버 저장 설정 재조회는 Native 소비 후속이며 새 endpoint/provider refresh 요청이 아니다. 이번은 순서 확인·기록이며 구현/서버·DB·commit/push/배포 변경 없음.
+
+## 2026-11-14 — Issue53 정책2 구현 기획
+
+사용자 기획 지시로 [구현 계획](../features/rosters/activity-and-presentation/character-management-policy2-plan.md)을 작성했다. 전체30 Native 수용/최신댓글30건과 기존 공유 router·서비스/대표·멱등·관측 경계를 재확인했다. current/legacy 앱 적용 분리, 메인 전환/관측과 대표·버전/ACK 원자 확정, 정책1 복구 전용 분기, 선택 검증/로컬 API 반영/게시 인계를 구체화했다. 추가 제품 결정은 없다. 기존 정책29/30 내용을 반복하는 Issue 댓글은 게시하지 않았다. 문서 상대링크/보관자료/경로 검사와 diff PASS. 코드/OpenAPI/서버·DB/초기화·commit/push/배포 변경 없음.
+
+## 2026-11-14 — Issue53 정책2 구현·격리 검증·로컬 API 반영
+
+[구현/한계](../features/rosters/activity-and-presentation/character-management-policy2-implementation.md)와 반영 원장에 책임/시험·실행 지문을 기록했다. 같은 관리자원 정책2 필수 요청 구분자·main-only/null/자동 대표·관측값/지문·200movable, 현재 요청 ContextVar와 legacy 분리, 메인/관측/원 ACK 원자 저장을 구현했다. 과거 namespace/strict DTO는 복구 전용으로 보존했다. 원 DB/키를 삭제하거나 API를 추가하지 않았다.
+
+격리 관련9파일219PASS/169.23초+추가 자동 선정/순서 원자1PASS/5.59초=최종 고유220PASS. 선행61/83은 중복이며 합산하지 않는다. 문서59/40·현재/legacy 전체명세/legacy 불변·합의 관리 경로/component diff/문서 검사PASS. 최초 잘못된 시험 파일명은 실행 전 도구가 거절했고 정식 경로로 고쳐 검증했다. bootstrap 메모리 projection 경계는 최종검증 전에 수정했다.
+
+로컬 API image9f40ecf7…401c4/app296파일·health200/관리401/bootstrap401, DB0036/118테이블 전체 자료 지문·DB컨테이너/환경·포트 보존. secret mount UNC→동일 WSL 경로 표기 변경을 확인했다. host의 .secrets 읽기 권한 때문에 빈 순회 hash는 비교 근거에서 제외하고 원래 UNC/직전 이미지의 읽기 전용 일회성 컨테이너와 현재 실행의 실제4키 개별hash 일치로 확인했다. 보존 지문은 백업/복원 시험이 아니다. 새키/환경/migration/자료초기화·실회원쓰기·운영변경없음.
+
+[전체31 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6873517159)에 미게시/로컬 지원과 실제 Native 인수 경계를 구분해 회신하고 실제순번·이슈상단을 갱신했다. 다음 사용자 commit/push 직접 지시 후 고정코드인계, 이후 Native 연결/서버저장설정재조회. 정책1 신규 요청은409 전환 계약이며 원ACK는 유지함을 명시했다. 이번commit/push/merge·배포·Issue종료없음.

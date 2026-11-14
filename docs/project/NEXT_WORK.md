@@ -2,6 +2,12 @@
 
 2026-11-13 KST 기준. 실제 Backend 코드/Git과 각 담당의 현재 코드 확인 결과를 사용한다. Native 코드 상태·완료 판단은 Native가 작성하며 Backend가 대신 검토하지 않는다.
 
+## 현재 우선 — Issue53 정책2 구현/로컬 지원 완료·게시 대기
+
+feat/my-account-contracts에서 [정책2 구현](../features/rosters/activity-and-presentation/character-management-policy2-implementation.md)·격리 검증·로컬 API 반영을 완료했다. [전체31 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6873517159)에 실제 순번31/Backend/구현·로컬지원 단계로 회신했다. 최종 고유220PASS(관련9파일219+추가1), 문서59/40·두 전체명세/legacy 불변·DB0036/118테이블 자료·키4개/환경·포트 보존 PASS다. 현재 실행 image9f40ecf7…401c4의 app296파일이 소스와 같으며 health200·관리/bootstrap401이다. 실제 Native policy2 연결/기기 인수와 구분한다.
+
+다음은 사용자 직접 commit/push 지시 후 Backend 고정 소스/Schema/OpenAPI·실행버전 인계다. 그 뒤 Native 정책2 연결과 진입/관리복귀 서버 저장 설정 재조회를 진행한다. 정책2 코드/계약은 미커밋·미push/고정SHA없음, 기존 게시026a74f는 정책1이다. 기존 Native의 신규 정책1 저장은 합의대로409 CONTRACT_POLICY_CHANGED, 원 성공ACK 복구만 지원한다. 미게시 코드의 원격 검증을 요청하지 않는다. dev/main merge·운영배포·이슈종료·초기화는 하지 않았다.
+
 ## 사용자 결정 — 기존 유저 데이터 초기화 허용
 
 2026-11-14 사용자 정정: 운영을 포함한 모든 DB 초기화는 실행 전에 반드시 사용자에게 대상·영향을 제시하고 명시 확인을 받아야 한다. 임의 실행하지 않는다. 기존자료 보존 때문에 구조/기능을 추가할 필요는 없다는 설계 기준은 유지한다. 기존 유저 자료 보존 때문에 추가 호환구조/기능을 만들 필요는 없다. 이번 개발 설계는 이를 기준으로 단순화한다.
@@ -125,3 +131,25 @@ Native #47 게시47a30dad, #48 후속 lib/test/문서의 미커밋·미push·dev
 ## Issue53 — v2 관리 게시 완료
 
 업무/정확계약 026a74fa67c36d72fb9d6d94d8bafcf707d4ffe9 commit/push·원격일치/clean확인. [전체20 Backend 고정인계](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6861435507). 신규관리미게시대기는해소됐다. 다음Native 고정파일대조/승인범위DTO·명령수명/일반DI연동검증이며실제회원/기기결과는미확인이다. 후행게시기록도동일브랜치에보존한다. dev/main 병합·운영배포·DB초기화/Issue종료는실행하지않는다.
+
+## Issue53 — Native 전체21~25 수신 / main-only 계정대표 계약 보완
+
+[전체25 Native 재확정](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6872476692): 사용자대표는연결전체중메인원정대활동캐릭터1명만,부원정대는대표버튼/안내/우선표시/자동추천모두없음. Native 일반DI 즉시저장연결·전체2982PASS/분석0·최신직접20PASS는담당자보고이며웹/앱기존변경사용자정상보고와최신UI재확인대기를구분한다. Native는미커밋·미push다.
+
+다음Backend 조사/회신: v1/v2 settings의부원정대필수대표/대표포함·OFF/대표제외movable·초기설정 제약을분리해활동/순서를저장가능하게하는최소계약; authoritative main-only 보장·is_main/메인변경CAS; 기존부원정대raw대표GET/PUT의미; 그룹생성/가입기본reader와그룹snapshot분리확인. 숨은대표자동선정·원pending본문변환·DB초기화로우회하지않는다. 이번회신확인은구현/배포/commit/push지시가아니며초기화사전확인규칙을유지한다.
+
+## Issue53 — main-only 조사·전체26 회신
+
+[전체26 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6872634409) / [계약제안](../features/rosters/activity-and-presentation/main-only-representative-proposal.md). 기존대표PUT만main검사,settings/각reader는raw대표를노출함을확인했다. 같은v2경로policy2/is_main·부원정대대표null/활동전체movable·활동최소1과대표검증분리를추천한다. 기존v1원문round-trip/원ACK와현재projection분리,메인전환시부원정대raw자동승격없이명시재선택안,그룹명시입력/snapshot과기본계정대표분리를제안했다. 다음Native policy/정확전이·v2미확정journal·그룹기본값소비대조. 메인전환재선택은추가UX협의사항이다. 조사문서미커밋·미push,API/DB/서버변경·초기화없음.
+
+## Issue53 — 전체27 Native policy2 방향수용/복구전이 요청
+
+[전체27 Native](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6872686921)는 main-only/is_main/policy2·부원정대null/활동전체movable·메인전환대표재선택 방향을수용했다. 실제그룹일반경로는항상명시캐릭터선택이며대표자동채움없음,Native가동일roster의main대표를기본후보로준비하는후속이다. 다음Backend 정확Schema/전이예시에기존character-management-1 namespace key예약/성공/만료조회·중복실행방지,정책1원문미도달/409/원ACK→현재정책2GET,ACK별strictreader를고정한다. 기기journal미확정0으로단정/원문변환/저장소덤프요청금지. 아직policy2미구현·DB/배포/게시지시아님.
+
+## Issue53 — 전체28 Native 자동 대표 정책 수신
+
+[전체28 Native](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6872855905)의 사용자 최종 결정에 따라 메인 전환 후 대표 재선택 대기 추천은 대체됐다. 유효 대표가 없으면 현재 메인 원정대의 활동·소유·usable 후보에서 아이템레벨 DESC → 전투력 DESC → 이름 ASC로 자동 지정한다. 기존 유효 대표는 관측값 갱신만으로 교체하지 않는다. 메인 전환도 같은 명령·게임 쓰기 lock·트랜잭션에서 대표를 확정하며 부원정대 시절 raw 대표를 그대로 승격하지 않는다. 후보 없음은 별도 예외로 다루고 가짜 대표/비활동 자동 활성화로 우회하지 않는다. 카드 수동 순서와 그룹 snapshot은 보존한다.
+
+다음 담당 Backend: 정책2 정확 Schema/예시에 최초 확정·미설정 복구·메인 전환의 명령/버전/ACK 경계, 정규 관측값 출처·nullable/decimal/이름 비교, 동률·혼합 이름·후보 없음 예시를 고정한다. 저장 관측값 재사용·전투력 null 후순위·외부 provider 추가 호출 없음은 Native 제안으로 정확 계약 대조가 남았다. 부원정대 null/활동 전체 movable·정책1 journal/원 ACK 복구 요구는 유지한다. 이번 댓글은 기획 확정·계약 보완 요청이며 새 구현/시험/게시 결과가 아니다.
+
+댓글 확인·문서 기록만 수행했다. API/DB/서버·commit/push/배포 변경 없음.

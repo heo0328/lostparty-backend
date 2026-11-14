@@ -27,12 +27,12 @@ def path(w):return '/v2/me/game-accounts/'+w['rid']+'/character-settings'
 def body(context,**changes):
     s,d=context['scope'],context['data']
     result={('expected_'+k):s[k] for k in ('registration_version','settings_version','ownership_revision','roster_revision')}
-    result.update(activity_character_ids=d['activity_character_ids'],representative_character_id=d['representative_character_id'],expected_order_digest=d['order_digest'])
+    result.update(policy_version='character-management-2',activity_character_ids=d['activity_character_ids'],representative_character_id=d['representative_character_id'],expected_order_digest=d['order_digest'])
     return result|changes
 
 def validate(kind,value):
     from jsonschema import Draft202012Validator,FormatChecker
-    s=json.loads((ROOT/'schema.json').read_text())
+    s=json.loads((ROOT/'policy2/schema.json').read_text())
     Draft202012Validator({'$ref':'#/$defs/'+kind,'$defs':s['$defs']},format_checker=FormatChecker()).validate(value)
 
 def test_read_noop_activation_drop_and_immutable_ack(selection):
@@ -73,7 +73,7 @@ def test_recovery_context_and_first_explicit_action(selection,state):
     with client(w) as http:
         response=http.get(path(w));assert response.status_code==200,response.json();ctx=response.json();validate('Context',ctx)
         assert ctx['data']['configuration_state']==state
-        assert ctx['data']['representative_character_id']==w['ids'][0]
+        assert ctx['data']['representative_character_id'] is None
         assert w['ids'][0] not in ctx['data']['ordered_all_character_ids']
         assert any(not r['usable'] for r in ctx['data']['characters'])
         fail=http.put(path(w),json=body(ctx),headers={'Idempotency-Key':str(uuid4())});assert fail.status_code==404
@@ -89,7 +89,7 @@ def test_reject_null_subset_queries_and_foreign_ids(selection):
             bad=http.put(path(w),json=request,headers={'Idempotency-Key':str(uuid4())});assert bad.status_code==400,bad.json()
         assert http.get(path(w),params={'extra':1}).status_code==400
         foreign=http.put(path(w),json=body(ctx,activity_character_ids=[str(uuid4())]),headers={'Idempotency-Key':str(uuid4())})
-        assert foreign.status_code==400 # representative missing is checked before eligibility
+        assert foreign.status_code==400 # current valid representative cannot be turned off
         bad=http.get('/v2/me/game-accounts/'+str(uuid4())+'/character-settings');assert bad.status_code==404
 
 def test_individual_rank_digest_and_role_visible_preserved(selection):

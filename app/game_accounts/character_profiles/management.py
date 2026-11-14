@@ -1,30 +1,20 @@
 """Atomic own-account activity, representative and movable-subset ordering."""
 import hashlib
 import json
-from decimal import Decimal, InvalidOperation, localcontext
+from decimal import Decimal
 from uuid import UUID
-from sqlalchemy import select, delete, tuple_, text
+from sqlalchemy import select, delete, text
 from pydantic import ValidationError
 from app.core.database import session, now
 from app.game_accounts.common.support import authorize, fail, reserve, commit_result, release
 from app.game_accounts.character_profiles.representative import owned
 from app.game_accounts.rosters.service import config
-from app.game_accounts.models.models import Character, NameClaim, Configuration, Activity, CharacterPersonalPreferences as Preferences
-from app.game_accounts.schemas.management_schemas import ManagementContext
-POLICY='character-management-1'
+from app.game_accounts.models.models import Character, Configuration, Activity, CharacterPersonalPreferences as Preferences
+from app.game_accounts.schemas.management_schemas import ManagementContext, HistoricalManagementContext
+from app.game_accounts.character_profiles import account_representative as policy
+POLICY='character-management-2'
 
-def level(raw):
-    if not isinstance(raw,str) or not raw.strip() or len(raw)>128:return None
-    try:
-        with localcontext() as ctx:
-            ctx.prec=128
-            v=Decimal(raw)
-            if not v.is_finite() or v<0:return None
-            if v==0:return '0'
-            if v.adjusted()>63 or v.adjusted() < -128:return None
-            result=format(v.normalize(),'f')
-            return result if len(result)<=64 else None
-    except (InvalidOperation,ValueError):return None
+level = policy.number
 
 def sort_key(row):
     rank=row['display_order'];lev=row['item_level']
@@ -36,14 +26,10 @@ def context(db,uid,rid):
     chars=list(db.scalars(select(Character).where(Character.account_id==account.id,Character.lifecycle_state!='retired').order_by(Character.id).limit(1001)))
     if len(chars)>1000:fail('CHARACTER_CONTEXT_TOO_LARGE',413)
     prefs={p.character_id:p for p in db.scalars(select(Preferences).where(Preferences.user_id==uid,Preferences.ownership_revision==account.ownership_revision,Preferences.character_id.in_([c.id for c in chars])))}
-    claims={(c.server_name,c.character_name):c.character_id for c in db.scalars(select(NameClaim).where(tuple_(NameClaim.server_name,NameClaim.character_name).in_([(c.server_name,c.character_name) for c in chars])))} if chars else {}
-    rows=[]
-    for c in chars:
-        reason=('CHARACTER_UNUSABLE' if c.lifecycle_state!='active' or c.status!='confirmed' else
-                'IDENTITY_CONFLICT' if claims.get((c.server_name,c.character_name))!=c.id else None)
-        pref=prefs.get(c.id)
-        rows.append(dict(character_id=str(c.id),display_order=pref.display_order if pref else None,
-            item_level=level(c.summary.get('item_level')),character_name=c.character_name,usable=reason is None,blocked_reason=reason))
+    rows=policy.observations(db,uid,chars)
+    for row in rows:
+        pref=prefs.get(UUID(row['character_id']))
+        row['display_order']=pref.display_order if pref else None
     rows.sort(key=sort_key)
     chosen=list(db.scalars(select(Activity.character_id).where(Activity.settings_id==configuration.id).order_by(Activity.character_id).limit(201))) if configuration else []
     if len(chosen)>200:fail('CHARACTER_CONTEXT_TOO_LARGE',413)
@@ -52,12 +38,14 @@ def context(db,uid,rid):
     if refs:
         owners=dict(db.execute(select(Character.id,Character.account_id).where(Character.id.in_(refs))).all())
         if any(owners.get(cid)!=account.id for cid in refs):fail('SERVICE_UNAVAILABLE',503)
-    fingerprint=[POLICY,str(uid),str(account.id),account.ownership_revision,
-        [[r['character_id'],r['display_order'],r['item_level'],r['character_name']] for r in rows]]
+    usable={UUID(r['character_id']) for r in rows if r['usable']}
+    rep=policy.projected(registration,configuration,chosen,usable)
+    fingerprint=[POLICY,str(uid),str(registration.id),registration.version,registration.is_main,
+        str(account.id),account.ownership_revision,rows]
     digest=hashlib.sha256(json.dumps(fingerprint,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()
     value=dict(scope=dict(registration_id=str(registration.id),game_account_id=str(account.id),registration_version=registration.version,
         settings_version=configuration.version if configuration else 1,ownership_revision=account.ownership_revision,
-        roster_revision=account.roster_revision,policy_version=POLICY),data=dict(configuration_state=configuration.state if configuration else 'unconfigured',
+        roster_revision=account.roster_revision,policy_version=POLICY,is_main=registration.is_main),data=dict(configuration_state=configuration.state if configuration else 'unconfigured',
         activity_character_ids=[str(c) for c in chosen],representative_character_id=str(rep) if rep else None,
         ordered_all_character_ids=[r['character_id'] for r in rows],order_digest=digest,characters=rows,
         evaluated_at=now(db).isoformat().replace('+00:00','Z')))
@@ -72,9 +60,15 @@ def get(principal,rid):
         return context(db,authorize(db,principal),rid)[0]
 
 def put(principal,rid,key,body):
-    ticket,replay=reserve(principal,'character-management-1',key,dict(target=str(rid),body=body))
+    with session() as db:
+        owned(db,authorize(db,principal),rid)
+    historical='policy_version' not in body
+    ticket,replay=reserve(principal,'character-management-1',key,dict(target=str(rid),body=body),recovery_only=historical)
     if replay:
         with session() as db:owned(db,authorize(db,principal),rid)
+        model=HistoricalManagementContext if historical else ManagementContext
+        try:model.model_validate(replay[1])
+        except ValidationError:fail('SERVICE_UNAVAILABLE',503)
         return replay
     try:
         with session() as db,db.begin():
@@ -86,22 +80,28 @@ def put(principal,rid,key,body):
             selected=body['activity_character_ids'];rep=body['representative_character_id']
             if not selected:fail('EMPTY_ACTIVITY_SELECTION',400)
             if len(set(selected))!=len(selected):fail('INVALID_REQUEST',400)
-            if rep not in selected:fail('REPRESENTATIVE_REQUIRED',400)
+            if scope['is_main']:
+                if data['representative_character_id'] is not None and data['representative_character_id'] not in selected:
+                    fail('REPRESENTATIVE_REQUIRED',400)
+                if rep is not None and rep not in selected:fail('REPRESENTATIVE_REQUIRED',400)
+            elif rep is not None:fail('MAIN_REGISTRATION_CHANGED')
             rows={r['character_id']:r for r in data['characters']}
             if any(cid not in rows for cid in selected):fail('CHARACTER_NOT_FOUND',404)
             if any(not rows[cid]['usable'] for cid in selected):fail('CHARACTER_UNUSABLE')
-            movable=set(selected)-{rep};baseline=[cid for cid in data['ordered_all_character_ids'] if cid in movable]
+            if scope['is_main'] and rep is None:
+                rep=policy.choose(list(rows.values()),selected,data['representative_character_id'])
+            movable=set(selected)-({rep} if scope['is_main'] else set());baseline=[cid for cid in data['ordered_all_character_ids'] if cid in movable]
             requested=body.get('ordered_character_ids')
             if 'ordered_character_ids' in body and (not isinstance(requested,list) or len(requested)!=len(movable) or set(requested)!=movable):fail('INVALID_REQUEST',400)
             reorder=requested is not None and requested!=baseline
-            changed=set(selected)!=set(data['activity_character_ids']) or rep!=data['representative_character_id'] or data['configuration_state']!='configured' or reorder
+            changed=set(selected)!=set(data['activity_character_ids']) or rep!=data['representative_character_id'] or (configuration is not None and not scope['is_main'] and configuration.representative_id is not None) or data['configuration_state']!='configured' or reorder
             if changed:
                 if configuration is None:
                     configuration=Configuration(user_id=uid,account_id=account.id);db.add(configuration);db.flush()
                 if set(selected)!=set(data['activity_character_ids']):
                     db.execute(delete(Activity).where(Activity.settings_id==configuration.id))
                     db.add_all([Activity(settings_id=configuration.id,account_id=account.id,character_id=UUID(cid)) for cid in selected])
-                configuration.representative_id=UUID(rep);configuration.state='configured';configuration.version+=1;configuration.next_change_at=None
+                configuration.representative_id=UUID(rep) if rep else None;configuration.state='configured';configuration.version+=1;configuration.next_change_at=None
                 if reorder:
                     iterator=iter(requested)
                     ordered=[next(iterator) if cid in movable else cid for cid in data['ordered_all_character_ids']]
