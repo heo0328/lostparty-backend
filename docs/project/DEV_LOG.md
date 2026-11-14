@@ -4614,3 +4614,9 @@ Registration unique main·make_main의등록version,대표전용main검사·sett
 ## 2026-11-14 — BUG-036 문서 최신화·commit/dev 통합 승인
 
 사용자가 최신 사용자/Native 정상 확인을 문서에 반영하고 수정/회귀시험·로컬 반영 기록을 커밋·dev 병합/push하도록 지시했다. 기능 수정은 검증한4줄 guard 그대로이며 격리5PASS/두 전체명세 불변·로컬지원·전체43 Native 수용을 재사용한다. 현재 미커밋 기록을 보존해 같은 목적 브랜치에서 게시 후 dev로 통합한다. 운영·DB초기화·이슈종료는 포함하지 않는다.
+
+## 2026-11-14 — BUG-036 게시·dev 통합 완료
+
+BUG-036 수정/기록 9a61d0ea55d92b8389021048ec97ab058ec2b387를 게시하고 dev4be81dc21547807e0b8339ded6f3100582dd9977에 이력 보존 병합·push/원격 일치를 확인했다. [전체44 Backend 고정 인계](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875171401). 작업 tip과 dev의 app/tests/openapi 및 로컬 실행 수정 소스가 동일하다. 기존 격리5PASS·사용자 정상 표시·전체43 Native 수용 근거를 재사용하고 문서/diff 검사를 통과했다. 완료 작업 브랜치는 정리했고 현재 checkout은 dev다. 이 오류의 추가 Backend 수정/반복시험 대기는 없다. 운영·main 변경·DB초기화·Issue 종료는 하지 않았다.
+
+Native 전체35~43에 따른 카드/뒤로가기·오류 정상 확인과 잔여 범위를 문서에 구분했다. 후행 게시 기록을 dev에 commit/push하며 source/test/OpenAPI는 변경하지 않는다. 다른 미완료 브랜치는 보존한다.

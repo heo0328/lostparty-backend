@@ -2,11 +2,11 @@
 
 2026-11-13 KST 기준. 실제 Backend 코드/Git과 각 담당의 현재 코드 확인 결과를 사용한다. Native 코드 상태·완료 판단은 Native가 작성하며 Backend가 대신 검토하지 않는다.
 
-## 현재 우선 — BUG-036 사용자/Native 확인 완료·dev 통합
+## BUG-036 수정·사용자 확인·dev 통합 완료
 
-[원인·수정/검증](../features/recruitment/membership-actions/unopened-next-detail.md): 미개방 다음 주 상세의 include_group_state 경로에서 없는 RoomCycle을 참조하던500을 수정했다. 격리5PASS/두 명세 불변·로컬imageadd28707…1f71f2 지원, 사용자 “참가 데이터 없음” 정상 확인과 [전체43 Native 수용](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875080366)으로 해당 화면 대기는 해소됐다. 반복 시험/추가 Backend 수정 요청은 없다.
+BUG-036 수정/기록 9a61d0ea55d92b8389021048ec97ab058ec2b387를 게시하고 dev4be81dc21547807e0b8339ded6f3100582dd9977에 이력 보존 병합·push/원격 일치를 확인했다. [전체44 Backend 고정 인계](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875171401). 작업 tip과 dev의 app/tests/openapi 및 로컬 실행 수정 소스가 동일하다. 기존 격리5PASS·사용자 정상 표시·전체43 Native 수용 근거를 재사용하고 문서/diff 검사를 통과했다. 완료 작업 브랜치는 정리했고 현재 checkout은 dev다. 이 오류의 추가 Backend 수정/반복시험 대기는 없다. 운영·main 변경·DB초기화·Issue 종료는 하지 않았다.
 
-사용자가 문서 최신화·commit·dev 병합/push를 지시했다. 같은 fix/recruitment-detail의 코드/시험/기록을 게시·통합하고 원격/로컬 실행 소스 일치를 확인한다. 전체 리메이크 후속과 운영 배포·Issue 종료는 별도이며 DB초기화는 실행하지 않는다.
+다음은 Native의 전체 리메이크 잔여와 이후 운영 릴리즈 계획을 각 담당 범위에서 진행하는 것이다. 이번 BUG-036 마감이 Issue53 전체 종료를 뜻하지 않는다.
 
 ## Issue53 정책2 게시·dev 통합 완료 / 현재 구간 인수 완료·Native 후속
 

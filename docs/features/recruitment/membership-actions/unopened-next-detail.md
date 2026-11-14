@@ -33,3 +33,7 @@ membership reader는 N의 RoomCycle이 없는 경우에도 기존 관계 조회 
 ## 문서 최신화·게시 승인
 
 [전체43 Native](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875080366)의 수용으로 상세500 복구를 확인했다. 사용자 지시로 수정·시험·조사/실행 기록을 커밋하고 dev에 병합·push한다. 실행 코드는 기존5PASS/로컬 반영 그대로이며 문서·Git 상태 검사를 수행한다. 게시 SHA/병합과 최종 인계는 후행 기록을 따른다. 운영·Issue 종료는 별도다.
+
+## 게시·dev 통합 완료
+
+BUG-036 수정/기록 9a61d0ea55d92b8389021048ec97ab058ec2b387를 게시하고 dev4be81dc21547807e0b8339ded6f3100582dd9977에 이력 보존 병합·push/원격 일치를 확인했다. [전체44 Backend 고정 인계](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875171401). 작업 tip과 dev의 app/tests/openapi 및 로컬 실행 수정 소스가 동일하다. 기존 격리5PASS·사용자 정상 표시·전체43 Native 수용 근거를 재사용하고 문서/diff 검사를 통과했다. 완료 작업 브랜치는 정리했고 현재 checkout은 dev다. 이 오류의 추가 Backend 수정/반복시험 대기는 없다. 운영·main 변경·DB초기화·Issue 종료는 하지 않았다. 미게시·게시 승인 대기 문구와 원장의 publication은 당시 기록이며 현재 소비 기준은 이 절의 고정 SHA다.

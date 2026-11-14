@@ -4,7 +4,7 @@
 
 ## 현재 기준
 
-- [전체41 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875007986)에 BUG-036 미개방 다음 주 모집 상세500의 합성 재현·수정/로컬 반영을 회신했다. include_group_state=true 경로가 없는 N RoomCycle을 참조한 AttributeError이며 group_state=null 정상 relation_only200으로 수정했다. [조사/한계](../features/recruitment/membership-actions/unopened-next-detail.md). 격리5PASS/73.40초·두 생성명세 불변·로컬 imageadd28707…1f71f2/app296파일·health200이다. DB 컨테이너/0036·키/환경·포트/mount 보존, 관측중 자료1행 차이로 전체자료 동일성은 미확인이다. 미커밋·미push/현재 fix/recruitment-detail, 전체43 Native가 사용자 정상 표시 확인/기존 응답 소비를 수용해 해당 화면 대기는 해소됐다. 사용자 지시로 문서·게시/dev 통합을 진행한다. 운영/merge·초기화·이슈종료는 하지 않았다.
+- #53 BUG-036: 미개방 다음 주 모집 상세500 수정·로컬지원·사용자/Native 정상 표시 확인을 마치고 수정9a61d0e/dev4be81dc 통합push 완료. [전체44 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875171401)·[원인/검증](../features/recruitment/membership-actions/unopened-next-detail.md). 추가 Backend 대기 없음, 전체 리메이크 후속·운영은 별도다.
 
 - #53 후속 대표 정책: 정책2 구현·격리 검증/로컬 지원을 마치고 사용자 지시로 업무9308ce7·dev2ca8092 통합/push를 완료했다. [전체32 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6873586100). 작업 브랜치 정리/현재dev, 다음Native 정책2 연결·원ACK/복귀 재조회 검증이며 기기 인수·운영 반영은 후속이다.
 
