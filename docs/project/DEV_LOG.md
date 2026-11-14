@@ -4588,3 +4588,29 @@ Registration unique main·make_main의등록version,대표전용main검사·sett
 사용자 지시로 업무/정확계약 9308ce7e2fb1687f29cd378f59344dbe6fffae29를 게시하고 dev 2ca80924bbc7bda563f2b7d11a1c964e06edeca6에 이력 보존 병합·push/원격 일치를 확인했다. [전체32 Backend 고정 인계](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6873586100). app/tests/openapi는 작업 tip과 dev가 같고 로컬 image9f40ecf7…401c4의 app296파일도 게시 소스와 같다. health200 확인, 기존 고유220PASS/계약·보존 검증을 재사용했다. 완료 목적 브랜치는 정리하고 현재 checkout은 dev다. 다음 Native 정책2 연결·원 pending/ACK 복구와 진입/관리복귀 저장 설정 재조회 검증이며 실제 기기 인수·main/운영 반영은 후속이다. DB초기화·이슈종료는 실행하지 않았다.
 
 원격 선행 변경/충돌 없음, 문서59사례/링크·동결자료/경로·diff PASS. 정책2 소스는 기존 검증 코드 그대로이며 게시로 기능시험/서버교체를 반복하지 않았다. dev에는 같은 목적의 기존 개인 예약·policy1 이력도 함께 통합됐고 작업 tip과 앱/시험/명세가 동일하다. 후행 게시 기록을 dev에 commit/push한다. 다른 미완료 브랜치는 임의 정리하지 않는다.
+
+## 2026-11-14 — Issue53 Native 전체33/34 구현·사용자 확인 수신
+
+[전체34 Native](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6873960057)에서 정책2/관리복귀 재조회 등 현재 구간의 사용자 웹·앱 정상 확인과 Flutter 062bc467459f40cf752b174a23ef8d5a93f6b364 push를 회신했다. Native dev/main은 사용자 지시로 미병합이다. 전체2986PASS·분석0/최종직접23PASS는 Native 자동검증 보고이며 사용자 정상 흐름 확인과 구분한다. 추가 Backend 수정·재시험 요청은 없다. 레이드종류/표시·개별/일괄/참가표시·연필 영역 및 개인주간예약그래프는 Native 후속이며 전체 리메이크 완료가 아니다. 운영 배포·초기화·Issue 종료는 하지 않았다.
+
+전체33의 미게시/인수대기는 전체34의 게시·사용자 확인으로 해소됐다. 이번은 회신 확인·로컬 기록만 수행했으며 코드/서버·commit/push/merge·배포 변경 없음.
+
+## 2026-11-14 — BUG-036 未개방 다음 주 상세500 조사·수정
+
+[전체41 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875007986)에 BUG-036 미개방 다음 주 모집 상세500의 합성 재현·수정/로컬 반영을 회신했다. include_group_state=true 경로가 없는 N RoomCycle을 참조한 AttributeError이며 group_state=null 정상 relation_only200으로 수정했다. [조사/한계](../features/recruitment/membership-actions/unopened-next-detail.md). 격리5PASS/73.40초·두 생성명세 불변·로컬 imageadd28707…1f71f2/app296파일·health200이다. DB 컨테이너/0036·키/환경·포트/mount 보존, 관측중 자료1행 차이로 전체자료 동일성은 미확인이다. 미커밋·미push/현재 fix/recruitment-detail, 다음 Native 기존 모집 상세 N탭 소비 확인. 운영/merge·초기화·이슈종료는 하지 않았다.
+
+사용자는 모집 상세의 미개방 다음 주 탭 오류 자체를 조사하도록 정정했다. 안전 로그는 해당 GET500 경로만 확인했고 회원·query 연결/개인정보 로깅을 추가하지 않았다. 수정 전1PASS/1FAIL의 합성 traceback으로 metadata_value(row=None).room_id 예외를 확정했다. 권한·기존 계약을 보존한4줄 guard와 HTTP4조합/기존그룹정책1시험을 추가했다. 합성 시험 DB는 도구가 제거했고 실개발자료 쓰기는 하지 않았다. 로컬 API 교체 후 전체자료지문이1행 달라 임의복원하지 않고 보존 확인의 한계를 명시했다. 실제 댓글41/Backend/수정·로컬지원 단계/다음 Native를 확인했다. 코드·OpenAPI 신규계약/commit/push·운영 반영 없음.
+
+## 2026-11-14 — BUG-036 사용자 정상 표시 확인
+
+사용자가 미개방 다음 주 모집 상세에서 “참가 데이터 없음” 정상 표시를 확인했다. [전체42 Backend 사용자 확인 기록](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875077805). BUG-036 화면 인수 대기는 해소됐으며 반복 시험 요청은 없다. 코드 미커밋·미push/로컬dev 반영 상태를 유지하고 운영·dev 병합·Issue 종료는 별도다.
+
+조회 시 전체41 이후 새 Native 댓글은 없었고 사용자 채팅 확인을 전체42 Backend로 전달했다. 이번코드/서버 재변경·commit/push 없음.
+
+## 2026-11-14 — BUG-036 Native 전체43 정상 표시 수용
+
+[전체43 Native](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875080366)가 사용자 정상 표시 확인과 기존200 relation_only/content=null 소비를 수용했다. 추가DTO/오류치환/자동주차생성·코드변경/반복시험 요청없음. 표시 정상 확인을 생성창 안내/모든 경계의 전수인수로 확대하지 않는다. Backend 게시/운영반영은 별도 대기이며 새 댓글 반복 회신 없이 수신 기록만 추가했다.
+
+## 2026-11-14 — BUG-036 문서 최신화·commit/dev 통합 승인
+
+사용자가 최신 사용자/Native 정상 확인을 문서에 반영하고 수정/회귀시험·로컬 반영 기록을 커밋·dev 병합/push하도록 지시했다. 기능 수정은 검증한4줄 guard 그대로이며 격리5PASS/두 전체명세 불변·로컬지원·전체43 Native 수용을 재사용한다. 현재 미커밋 기록을 보존해 같은 목적 브랜치에서 게시 후 dev로 통합한다. 운영·DB초기화·이슈종료는 포함하지 않는다.

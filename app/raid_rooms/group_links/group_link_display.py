@@ -28,6 +28,10 @@ def get(principal, rid, key, kind, *, reader_profile=None, membership_id=None, c
         from app.raid_rooms.group_links import cycle_group_policy as policy
         if policy.enabled(db):
             _,row=cycles.resolve(db,rid,key,stamp)
+            # Membership detail can legitimately be relation-only before T opens.
+            # No actual-T policy exists; never borrow the other week's group.
+            if row is None:
+                return dict(result,group_state=None)
             target=result.get('data',{}).get('target',{})
             value=policy.metadata(db,row,generation=target['target_generation']) if 'target_generation' in target else policy.metadata(db,row)
             return dict(result,group_state=features.group_state(db,value['group_id']))
