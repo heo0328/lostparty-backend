@@ -4819,3 +4819,29 @@ run43654230797 종료failure, verify success/회귀8중7success·3번258PASS1FAI
 ## 2026-11-15 — 현재앱 최초설정 회귀 분리·표적3PASS
 
 사용자 승인으로 tests/core/test_current_runtime.py에서 legacy시나리오의직접import를제거하고 현재앱메인/부원정대2분기로시험을작성했다. 최초null저장/메인자동대표/부원정대신규nonnull거절, 무대기연속저장·메인대표OFF거절과명시선택후축소, 부원정대활동축소·혼합invalid/REVISION_CONFLICT무변경·원ACK/현재GET분리·중복소유확인거절을확인한다. 원본DB0023시험은수정하지않았다. 격리실제PostgreSQL/HTTP에서새2+legacy1=3PASS/12.91초. app/OpenAPI/원본legacy시험은f1e0a16과동일하며서버검증을완화하지않았다. 다음새고정source게시/full검증이며새태그/운영변경없음.
+
+## 2026-11-15 — 시험 정정 고정 게시·full 재검증 시작
+
+표적3PASS/문서·diff확인후 cb271ffd2907d658317d4aabcf259b5751a26ce5를release/2.3.0에commit/push하고수동full43659269018의동일head/in_progress를확인했다. Issue54에원인확정/서버불변·legacy보존/표적범위와새검증실행을회신했다. 새태그·main/dev병합·운영/DB·키변경없음. 후행상태는미커밋으로남겨실행source를바꾸지않는다.
+
+## 2026-11-15 — 정정 source full 전체 성공 확인
+
+최신 결과: sourcecb271ffd2907d658317d4aabcf259b5751a26ce5의 [full43659269018](https://github.com/heo0328/lostparty-backend/actions/runs/43659269018) success. verify/회귀8분할/validation모두성공, artifact14140107526 생성(만료2026-12-15T01:09:36Z). [전체10 Backend](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6887240354)로회신했다. publish/deploy skipped·운영미교체. 다음은최종운영source/불변image확정·실제baseline/최신백업/복귀사전점검이다. 아래진행중/미확정은당시경과다.
+
+GitHub run/job상태와artifact메타데이터의동일source·미만료를확인했다. 이번은결과조회/기록이며새코드·commit/push·tag·운영/DB/키변경없음.
+
+## 2026-11-15 — Issue54 운영 읽기 사전점검과 승인 경계
+
+- 전체12 Native 요청을 확인하고 기존 관리자 키/고정 호스트 키로 운영 SSH 점검. v2.2.0/sourcec31d90da/imagecc753718…406dae·DB0036 정상, 미완료 배포0·여유55.3GB. 설치 common/server hash는 원장과 일치한다.
+- 저장소 실제 후보 Compose의 infrastructure가 활성 동결 구성과 동일함을 확인했다. 직전 이미지/설정·웹 current/previous pointer가 존재한다. 오래된 서버 루트 Compose에는 Caddy 설정 차이가 있어 복귀는 활성 동결 구성을 기준으로 한다. 원본 YAML hash와 생성 JSON raw hash의 직접 비교는 무결성 판정 기준이 아니다.
+- 최신 private backup capture 요청은 자동 승인 검토가 민감 DB/환경/키 payload 및 보관 위치의 명시적 승인 부족으로 거절했다. 실행/생성/PC 전송 없음. 우회하지 않고 사용자에게 대상과 기존 보관 폴더의 새 사본 범위를 제시한다. 기존 키 원본은 보존하며 임시 SSH 사본은 작업 후 제거한다.
+- release 준비2커밋은 main/dev 미통합이다. AGENTS의 직접 merge 지시 및 백업 승인을 받은 뒤 최종 source/태그 절차로 진행한다. full 검증 성공은 유지하며 현재 registry image/tag·운영 서비스 교체·DB 변경은 없다. 문서 최신화만 수행하고 불필요한 전체 회귀는 반복하지 않는다.
+
+- 실제 댓글 전체13·Backend·운영 사전점검 단계로 [결과 회신](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6887441821)을 게시했다. 다음 담당 Backend, 사용자 백업/통합 승인 대기다. 문서301개/링크3343개 검사 및 diff 검사 PASS.
+
+## 2026-11-15 — Issue54 백업/통합 명시 승인과 최신 보존 검증
+
+- 사용자 "1,2 둘다 승인"으로 최신 운영 DB·기존 환경/키·복구 자료의 서버/기존 PC 보관 및 준비 변경/기록 commit·dev/main 통합·push를 승인했다. 최초 capture는 서버에 maintenance 모듈이 없어 생성 전 중단됐다. 필요한 저장소 도구를 서버 임시 디렉터리에 묶어 실행/제거했으며 설치 제어기는 바꾸지 않았다.
+- 새 private backup 생성/기존 PC 폴더 새 사본 보관 완료. 서버/로컬/PC SHA256=659c6541cb2d52a2f6eda7c2b0cbbbccebb966c8454a495dca0379c7ac321e13, 15,165,440bytes/79멤버·dump 목차866항목 및 내부 복구 파일 hash 검증. 서버 영수증 PCcopy도 확인했다. [집계](../engineering/operations/records/release-2.3.0-predeployment-backup.json). 복원 실행은 없다.
+- 백업 이후 원본 환경/4키·운영 source/image 보존 및 healthy 확인. 실제 운영 v2.2.0/DB0036 유지. 새 태그·API/웹 교체·DB migration/초기화·키 재생성 없음.
+- 원격 fetch 결과 dev/main b7c0361·release cb271ff로 충돌 없음. 준비2커밋과 이번 문서/집계를 commit 후 dev/main으로 fast-forward하고 같은 tip을 push한다. release 브랜치는 배포 후속이 남아 보존한다. 앱/계약은 cb271ff와 같고 문서만 추가되어 새 전체 회귀를 반복하지 않는다.

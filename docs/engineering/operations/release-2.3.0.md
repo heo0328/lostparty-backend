@@ -1,13 +1,13 @@
 # 2.3.0 공동 운영 배포 준비
 
-2026-11-15 / release/2.3.0 / [Issue54](https://github.com/heo0328/lostparty-backend/issues/54). 사용자 진행 지시로 Backend 준비/협업 회신을 수행한다. **현재 운영 미반영, 릴리즈 준비 파일 미커밋·미push, 새 태그/registry digest/최종 배포 source 미확정**이다. Native 버전은2.3.0+8, 고정 소스027f8215cfcf65caa93d9db7aea5a33a38d5b83a다.
+2026-11-15 / release/2.3.0 / [Issue54](https://github.com/heo0328/lostparty-backend/issues/54). 사용자 진행 지시로 Backend 준비/협업 회신을 수행한다. **현재 운영 미반영, 준비 source cb271ffd2907d658317d4aabcf259b5751a26ce5 게시/full 검증 성공, 새 태그/registry digest 미확정**이다. Native 버전은2.3.0+8, 고정 소스027f8215cfcf65caa93d9db7aea5a33a38d5b83a다.
 
 ## 대상과 기준
 
 | 구분 | 확인 사실 |
 |---|---|
-| 현재 운영 기준 | v2.2.0/sourcec31d90da4fb5c1eaa9d731623f5648cedc8c00d2·imagecc753718…406dae·DB0036. 기존 [확정 원장](records/release-2.2.0-deployment.json). 이번 공개 HTTPS health는status/database ok. 서버 내부 source/digest·설치도구·동결 baseline의 새 대조는 운영 실행 전 필요 |
-| 이번 업무 source | main/dev b7c03615827ac93a6e2ec7e417afe297d13ec359의 같은 앱/계약. VERSION/검증 계획을 올린 준비 브랜치의 최종 게시 SHA는 아직 없음 |
+| 현재 운영 기준 | v2.2.0/sourcec31d90da4fb5c1eaa9d731623f5648cedc8c00d2·imagecc753718…406dae·DB0036. 기존 [확정 원장](records/release-2.2.0-deployment.json). 운영 SSH로 source/image·DB·API/DB healthy 및 Caddy running을 재확인. 설치 도구 hash와 활성 baseline도 대조 완료 |
+| 이번 업무 source | main/dev b7c03615827ac93a6e2ec7e417afe297d13ec359의 같은 앱/계약. 준비 source cb271ffd2907d658317d4aabcf259b5751a26ce5에 버전/full 계획과 현재 앱 시험 정정이 게시됨 |
 | 새 이미지 | ghcr 불변 digest 미생성. 로컬 add28707…1f71f2는 기능 검증 기준이지 운영 registry digest가 아님 |
 | 계약/DB | 현재194경로/216동작, legacy125/142. current canonical SHA256=95b2449b3c3e05970473858f97fd1388c51b0c126d1d6280f128a1fd921bb200, legacy=8936e00f6481d77772751d5fa857ca442007fbbc76ce279a0e8e08f43bf5faa6. DB0036_roster_presence 유지 |
 
@@ -17,7 +17,7 @@
 - 같은 v2 character-settings GET/PUT의 관리 정책2(9308ce7): main-only·대표 자동 선정/유효대표 유지·활동/대표/순서 원자 저장·부원정대 null/전체movable·구 원문/ACK 복구. v1 writer와 등록/bootstrap 등 현재 앱 reader도 같은 정책을 사용한다.
 - 미개방 다음 주 모집 상세의 그룹 표시 None 참조 수정(BUG-036/9a61d0e). 정상 membership relation_only200·일반 상세 TARGET_NOT_OPEN·비회원403 유지.
 - #52 기록 표시/페이지 소비 수정은 Native 범위이며 Backend API/DB 계약은 보존한다. Native의 UI/시간표/반응형/생성·상세 개선과 함께 공개한다.
-- v2.2.0..b7c0361의 변경을 대조해 migration·배포 common/server/transport·워크플로·운영 Compose/Docker 구성·의존성은 동일함을 확인했다. 새 배포 도구 설치/DB migration·키/OAuth·환경 교체는 계획하지 않는다. 실제 설치된 도구 hash가 기존 원장과 같은지는 교체 전 확인한다.
+- v2.2.0..b7c0361의 변경을 대조해 migration·배포 common/server/transport·워크플로·운영 Compose/Docker 구성·의존성은 동일함을 확인했다. 새 배포 도구 설치/DB migration·키/OAuth·환경 교체는 계획하지 않는다. 실제 설치 common/server hash는 기존 원장과 일치해 이번 갱신은 필요하지 않다.
 
 ## 검증과 게시 전 단계
 
@@ -25,7 +25,7 @@ VERSION=2.3.0, release-validation.json은baseline v2.2.0의 **full** 모드로 �
 
 기존 근거: 정책2 관련 고유220PASS, 예약19+동시 snapshot1, BUG-0365PASS, Native 전체3032PASS/analyze0 및 사용자 보고는 각 당시 검증이며 새 릴리즈 full 성공으로 표시하지 않는다. 이번 배포/웹/릴리즈 도구 선택36시험 PASS와 계획 파싱/문서/diff를 확인했다. 최초 unittest 패키지 경로 오류1건은 PYTHONPATH=scripts/tests의 정식 sibling import 경로로 재실행해 해소했고 도구 코드는 바꾸지 않았다.
 
-1. 준비 파일을 검토/게시해 최종 release source를 고정한다(commit/push는 사용자 직접 지시 기준). 해당 source의 기존 수동 workflow_dispatch는 검증/이미지 build만 하고 publish/deploy를 하지 않는다. full 8-shard·계약·static/도구·Docker 교체/복귀·synthetic web smoke의 새 evidence를 확보한다. 아직 실행하지 않았다.
+1. 준비 파일을 검토/게시해 최종 release source를 고정한다(commit/push는 사용자 직접 지시 기준). 해당 source의 기존 수동 workflow_dispatch는 검증/이미지 build만 하고 publish/deploy를 하지 않는다. full 8-shard·계약·static/도구·Docker 교체/복귀·synthetic web smoke의 새 evidence를 확보한다. 수동 run43659269018은 성공했고 publish/deploy는 skipped다.
 2. 실패가 있으면 실제 원인/영향을 해결한다. 기존 일부 PASS로 전체 성공을 대체하지 않는다. 성공한 검증 source와 배포 source가 같아야 한다.
 3. Native 고정 artifact/해시 인계와 운영 백업/복귀 준비가 갖춰진 뒤 불변 tag v2.3.0을 만든다. tag push는 publish와production deploy까지 이어지므로 단순 검증으로 실행하지 않는다. 기존 태그/Release/공개 파일은 재작성하지 않는다.
 
@@ -49,7 +49,15 @@ API/웹 공개 전 기술 실패는 표준 제어기의 직전 image·동결 설
 
 ## 완료 판단
 
-지금은 포함 범위/설정·검증/보존·복귀 계획 준비와 운영 health만 확인한 단계다. full 릴리즈 evidence·최종 source/registry image·운영 내부 preflight/최신 백업·Native APK 최종 인계도 수신했다. 웹 고정 산출물의 독립 로컬 검증은 완료했다. 최종 준비 결과와 실제 운영 교체 결과를 구분해 Issue54에 회신한다. 이번 준비 지시로 tag/push·운영 교체·자료 삭제·Issue 종료는 실행하지 않는다.
+준비 source 게시·full 성공·웹 독립 로컬 검증·운영 읽기 점검을 완료했다. 최신 백업/PC 사본 검증을 완료했으며 사용자가 commit/dev/main 통합·push를 승인했다. 태그·불변 image·실제 API/웹 반영은 남아 있다. 준비 완료나 운영 완료로 표시하지 않는다.
+
+## 2026-11-15 운영 사전점검 결과와 선행 조건
+
+- 기존 관리자 키·고정 호스트 키로 SSH/sudo 확인. 운영 v2.2.0/sourcec31d90da/imagecc753718…406dae·DB0036 유지, API/DB healthy·Caddy running. 미완료 배포0, 여유55.3GB.
+- 설치 common.py/server.py hash는 [2.2.0 원장](records/release-2.2.0-deployment.json)과 동일하다. 이번 배포 도구/DB migration·키/환경 갱신은 필요하지 않다.
+- 저장소 후보 Compose를 운영 환경으로 해석한 결과 활성 동결 구성과 infrastructure 전체가 같다(서버 표준 비교의 이미지 제외/동등 factory 처리). 직전 image·활성 동결 설정·웹 current/previous pointer가 존재한다. 서버 루트의 오래된 Compose는 Caddy 환경/mount가 달라 임의 복귀 기준으로 사용하지 않는다. release metadata의 compose_sha256은 원본 YAML의 hash이므로 생성된 동결 JSON 파일의 raw hash와 직접 비교하지 않는다.
+- **최신 백업 완료:** 최초 자동 승인 검토 거절 뒤 사용자가 대상과 보관 범위(1번)를 명시 승인했다. 서버 private backup 및 기존 PC 폴더의 새 날짜 사본을 생성했고 서버/로컬/PC SHA256 일치·dump 목차866항목·묶음79멤버/15,165,440bytes·내부 복구 파일 hash를 검증했다. 서버 영수증의 PC 사본 확인도 기록했다. 백업 뒤 원본 환경/4키 및 배포 source/image·health를 보존했다. [비민감 집계](records/release-2.3.0-predeployment-backup.json). 복원 실행·키 재생성·DB 초기화는 없다. 물리 파일은 새 날짜 폴더의 backend-production-before.tar·체크섬·README이며 실제 개인 경로는 비공개 기록에만 보관한다.
+- **통합 승인:** 사용자가 준비 변경/작업 기록의 commit·release→dev/main 통합·push(2번)를 명시 승인했다. 준비2커밋과 이번 문서/백업 집계를 같은 이력으로 통합한다. 표준 tag 검증은 main==dev 및 release source의 main 조상 관계를 요구한다. 이번 단계에서는 tag push/운영 교체를 하지 않으며 release 브랜치는 후속 배포를 위해 유지한다.
 
 ## 최초 full 검증과 시험 정정
 

@@ -1,5 +1,7 @@
 # 로컬·운영 백업 원장과 안내 기준
 
+2026-11-15 Issue54: 사용자 명시 승인으로 운영 v2.2.0/DB0036의 최신 DB·기존 환경/4키·동결 배포 기준/도구·활성 웹 원본을 새 서버 사본과 기존 PC 폴더에 보관했다. 서버/로컬/PC SHA256·dump 목차866항목·묶음 내부 복구 파일 hash를 검증했고 원본/health를 보존했다. [비민감 집계](records/release-2.3.0-predeployment-backup.json). 키/자료 변경·실제 DB 복원은 없으며 운영 교체도 아직 없다.
+
 2026-11-13 Issue51: Backend2.2.0/DB0036·웹2.2.0+7 운영 반영 전후의 DB·환경/기존4키·동결상태/배포도구·활성웹 원본을 서로다른새날짜사본으로기존PC폴더에보관하고서버/WSL/PC SHA256일치를확인했다. [실제집계](records/release-2.2.0-deployment.json). 새키/환경/OAuth·자료초기화/DBmigration없음, 기존사본보존. 실제복원·정기자동화와는구분한다.
 
 2026-11-13 실행 정리: 로컬 API만 교체하며 기존 `.env`·`.secrets`의 키4개·DB0036/행/DDL/sequence·DB 컨테이너를 보존했다. 새 환경/키·DB dump를 생성하지 않고 기존 유효 사본을 재사용했다. 읽기 전용 보존 fingerprint는 백업/복원 시험이 아니다. 운영 도구는 설치하지 않았으며 향후 설치 전 [별도 사본/갱신 순서](runtime-release-transition.md)를 따른다. [실행 집계](records/runtime-consolidation-local-rollout.json).

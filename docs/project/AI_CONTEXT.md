@@ -4,7 +4,7 @@
 
 ## 현재 기준
 
-- #54 공동2.3.0 배포 준비: release/2.3.0에 버전/full 계획·보존/복귀 절차를 로컬 작성했다. 웹 고정 산출물 독립검증/로컬stage 완료·APK 인계수신. [준비 계획](../engineering/operations/release-2.3.0.md). full evidence/최종 image·운영preflight/최신백업은미완료·운영미반영, 준비파일미게시다.
+- #54 공동2.3.0: sourcecb271ff의 full43659269018 성공·준비 source 게시 완료. 운영 v2.2.0/DB0036 정상·설치 제어기 동일/갱신 불필요·후보 구성 일치를 확인했다. 사용자가 백업과 commit/dev/main 통합·push를 명시 승인했다. 최신 백업의 서버/로컬/PC hash·목차/내부 파일·원본 보존/health 검증을 완료했고 준비 변경을 동일 tip으로 통합한다. 최종 registry image·태그/운영 교체는 미실행. [다음 실행](NEXT_WORK.md)·[준비 계획](../engineering/operations/release-2.3.0.md).
 
 - #53 BUG-036: 미개방 다음 주 모집 상세500 수정·로컬지원·사용자/Native 정상 표시 확인을 마치고 수정9a61d0e/dev4be81dc 통합push 완료. [전체44 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875171401)·[원인/검증](../features/recruitment/membership-actions/unopened-next-detail.md). 추가 Backend 대기 없음, 전체 리메이크 후속·운영은 별도다.
 

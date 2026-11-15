@@ -4,17 +4,15 @@
 
 ## 현재 우선 — Issue54 2.3.0 공동 배포 준비
 
-첫full실패원인은legacy부원정대대표시나리오를현재앱에그대로재사용한계약불일치였다. 현재앱시험을main/sub로분리하고원본legacy는보존했다. 새2+legacy1=격리3PASS/12.91초, 서버/OpenAPI변경없음. 다음새고정source게시후full재실행. 아래실패미확정/이전run진행중은당시이력이다.
+최신 source **cb271ffd2907d658317d4aabcf259b5751a26ce5**의 [full43659269018](https://github.com/heo0328/lostparty-backend/actions/runs/43659269018)은 verify·회귀8분할·validation 모두 성공했다. publish/deploy는 skipped다. [전체12 Native](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6887347191)의 운영 사전점검 요청에 대응했다.
 
-full43654230797은failure로종료. verify통과/회귀7분할성공·3번분할258PASS1FAIL: tests/core/test_current_runtime.py::test_ownership_first_seed_no_cooldown_atomicity의최초저장200기대/409 MAIN_REGISTRATION_CHANGED. 다음Backend는기존시험입력과현재main-only정책을대조해원인을확정/수정후새고정소스검증한다. validation실패·publish/deploy skipped, 운영미변경. 아래진행중표기는시작당시기록이다.
+[전체13 Backend 사전점검 회신](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6887441821)을 게시했다. 운영 SSH 점검: v2.2.0/sourcec31d90da·기존 불변 이미지·DB0036, API/DB healthy·Caddy running, 미완료 배포0·여유55.3GB. 설치 common/server hash는 기존 원장과 일치하며 갱신 불필요하다. 실제 배포 후보 Compose는 활성 동결 구성과 동일하다(이미지 제외). 직전 이미지·동결 설정·이전 웹 pointer가 존재한다. 서버 루트의 오래된 Compose에는 Caddy 설정 차이가 있으므로 복귀에 임의 사용하지 않고 활성 동결 구성을 따른다. [준비 계획](../engineering/operations/release-2.3.0.md).
 
-준비 source f1e0a16ceb74eeaa494c1577479ad7f93471af62를 release/2.3.0에 게시하고 배포 없는 [수동 full 검증43654230797](https://github.com/heo0328/lostparty-backend/actions/runs/43654230797)을 시작했다. 다음은 실행 결과/validation evidence 확인이다. 아직PASS·image게시·운영준비완료가 아니다. 아래 미게시 문구는 준비 작성 당시 상태이며 source는위고정SHA를 따른다.
+사용자가 최신 운영 백업과 준비 변경의 commit·dev/main 통합·push를 모두 명시 승인했다. 최신 DB0036·기존 환경/4키·배포 기준/도구·활성 웹 원본을 서버 private backup과 기존 PC 폴더의 새 날짜 사본에 보관했다. 서버/로컬/PC SHA256 일치, dump 목차866항목·묶음79멤버/15,165,440bytes 및 내부 파일 hash를 검증했다. 원본 키/환경·운영 기준과 health도 보존했다. [백업 집계](../engineering/operations/records/release-2.3.0-predeployment-backup.json). 실제 DB 복원은 하지 않았다.
 
-release/2.3.0에서 [운영 준비 계획](../engineering/operations/release-2.3.0.md)을 작성했다. 업무 기준main/dev b7c0361, VERSION2.3.0·baselinev2.2.0/full 계획은 미커밋·미push다. app/main 보호 경로로 기존 검증 규칙상 full이 필요하며2.2.0 reuse를 연장하지 않는다. [전체4 Backend](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6885970390)에 대상/DB0036 유지·36도구시험/웹 독립 검증·보존/복귀 경계를 회신했다.
+이번 승인 범위는 준비2커밋과 최신 문서/백업 집계의 commit·dev/main 동일 tip 통합·push다. 다음 Backend는 게시된 동일 tip과 cb271ff 조상 관계를 확인한 뒤 최종 태그/불변 image·운영 배포 절차를 이어갈 차례다. v2.3.0 tag push는 full 재검증·이미지 게시·자동 운영 배포까지 이어지며 이번 백업/통합 실행에서는 태그·배포를 실행하지 않는다. release/2.3.0은 후속 배포 작업이 남아 유지하고, 배포 구간 마감 시 정리한다.
 
-Native source027f8215/2.3.0+8의 웹 artifact14137081307 원3파일·34자산 hash/기존verify·로컬 비활성 stage PASS. APK14137081624의 Native 서명검증 보고도 수신했다. [고정 receipt](../engineering/operations/records/web-handoff-2.3.0.json). AWS upload/활성화·새태그/image 게시·운영 교체는 하지 않았다.
-
-다음 Backend는 사용자 commit/push 직접 지시 범위에서 준비 source를 고정한 뒤 수동 full 검증/최종image·운영 내부baseline·최신백업/복귀를 확인한다. 현재 공개health는정상이나 운영 내부source/도구를 새로 대조한 것은 아니다. 정책2 사용 뒤2.2.0단순복귀는 계약/journal 영향검토가 필요하다. BUG-038은미해결이다. 준비완료/실배포완료·Issue 종료를 구분한다.
+Native source027f8215/2.3.0+8 웹 원3파일·34자산의 독립 hash/로컬 stage 검증은 완료했고 APK 담당 검증 보고도 수신했다. [고정 receipt](../engineering/operations/records/web-handoff-2.3.0.json). AWS upload/활성화는 미실행이다. API-only 교체→health/명세/보존→웹 stage/pointer/HTTPS 검증→Native Android 공개 순서를 유지한다. 정책2 사용 뒤 구 서버 단순 복귀는 계약/ACK 영향 검토가 필요하며 BUG-038은 미해결이다.
 
 ## 현재 다음 담당 — Issue53 Native 후속 확인
 
@@ -31,7 +29,7 @@ Native는 [전체47](https://github.com/heo0328/lostparty-backend/issues/53#issu
 | Backend Git | 사용자 지시로 문서 최신화 게시와 dev/main 동일 tip 동기화. 정책2·BUG-036 포함. main 이전 기준0911383은 이력 보존 |
 | 로컬 dev 마지막 반영 | imageadd28707…1f71f2·현재 app.main:app·DB0036·Python296파일. [BUG-036 반영 원장](../engineering/operations/records/unopened-next-detail-local-rollout.json). 이번 문서 점검에서는 서버를 재검증/교체하지 않음 |
 | 명세 | 현재 openapi.yaml194경로/216동작, legacy.openapi.yaml125경로/142동작. 과거 policy1 Schema/ACK는 복구용, 현재 관리 계약은 character-management-2 |
-| 운영 마지막 확정 | Backendv2.2.0/sourcec31d90da·웹2.2.0+7/source994db44a·DB0036. [Issue51 원장](../engineering/operations/records/release-2.2.0-deployment.json). 이후 dev 기능의 운영 배포 승인은 없음 |
+| 운영 마지막 확정 | Backendv2.2.0/sourcec31d90da·웹2.2.0+7/source994db44a·DB0036. [Issue51 원장](../engineering/operations/records/release-2.2.0-deployment.json). Issue54 배포 준비 진행 중이며 실제 운영 교체는 미실행 |
 
 ## 종료/운영 반영 대기 구분
 

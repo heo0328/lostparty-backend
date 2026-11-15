@@ -1,0 +1,20 @@
+{
+  "created_at": "2026-11-15T01:43:08.089813+00:00",
+  "source": "c31d90da4fb5c1eaa9d731623f5648cedc8c00d2",
+  "image": "ghcr.io/heo0328/lostparty-backend@sha256:cc753718414bedc03df5a2d2c3532b5454c44382c7ba1cca306bd2eead406dae",
+  "db_revision": "0036_roster_presence",
+  "archive_sha256": "659c6541cb2d52a2f6eda7c2b0cbbbccebb966c8454a495dca0379c7ac321e13",
+  "archive_bytes": 15165440,
+  "archive_members": 79,
+  "pc_copy_verified": true,
+  "database_restore_executed": false,
+  "purpose": "before-2.3.0-production",
+  "dump_catalog_verified": true,
+  "dump_catalog_entries": 866,
+  "server_local_pc_sha256_match": true,
+  "protected_files_preserved": true,
+  "baseline_preserved": true,
+  "service_healthy_after_backup": true,
+  "archive_encrypted": false,
+  "private_material_published": false
+}
