@@ -50,3 +50,7 @@ API/웹 공개 전 기술 실패는 표준 제어기의 직전 image·동결 설
 ## 완료 판단
 
 지금은 포함 범위/설정·검증/보존·복귀 계획 준비와 운영 health만 확인한 단계다. full 릴리즈 evidence·최종 source/registry image·운영 내부 preflight/최신 백업·Native APK 최종 인계도 수신했다. 웹 고정 산출물의 독립 로컬 검증은 완료했다. 최종 준비 결과와 실제 운영 교체 결과를 구분해 Issue54에 회신한다. 이번 준비 지시로 tag/push·운영 교체·자료 삭제·Issue 종료는 실행하지 않는다.
+
+## 최초 full 검증과 시험 정정
+
+run43654230797은verify성공/회귀7분할성공·3번분할258PASS1FAIL로종료했다. legacy 최초설정 시나리오가 현재앱에서도 부원정대에 새대표nonnull을 보내200을기대한것이원인이다. 서버는합의대로409 MAIN_REGISTRATION_CHANGED를반환했다. 현재앱시험만메인/부원정대로분리해정책에맞는무대기·원자성·충돌/원ACK검증을보존하고원본legacy시험은그대로뒀다. 새2+legacy1의표적실행3PASS/12.91초. 앱/OpenAPI는불변이며새고정source로full전체를재실행한다. 실패한기존run의7성공을새source전체PASS로재사용하지않는다.

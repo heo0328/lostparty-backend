@@ -4,6 +4,12 @@
 
 ## 현재 우선 — Issue54 2.3.0 공동 배포 준비
 
+첫full실패원인은legacy부원정대대표시나리오를현재앱에그대로재사용한계약불일치였다. 현재앱시험을main/sub로분리하고원본legacy는보존했다. 새2+legacy1=격리3PASS/12.91초, 서버/OpenAPI변경없음. 다음새고정source게시후full재실행. 아래실패미확정/이전run진행중은당시이력이다.
+
+full43654230797은failure로종료. verify통과/회귀7분할성공·3번분할258PASS1FAIL: tests/core/test_current_runtime.py::test_ownership_first_seed_no_cooldown_atomicity의최초저장200기대/409 MAIN_REGISTRATION_CHANGED. 다음Backend는기존시험입력과현재main-only정책을대조해원인을확정/수정후새고정소스검증한다. validation실패·publish/deploy skipped, 운영미변경. 아래진행중표기는시작당시기록이다.
+
+준비 source f1e0a16ceb74eeaa494c1577479ad7f93471af62를 release/2.3.0에 게시하고 배포 없는 [수동 full 검증43654230797](https://github.com/heo0328/lostparty-backend/actions/runs/43654230797)을 시작했다. 다음은 실행 결과/validation evidence 확인이다. 아직PASS·image게시·운영준비완료가 아니다. 아래 미게시 문구는 준비 작성 당시 상태이며 source는위고정SHA를 따른다.
+
 release/2.3.0에서 [운영 준비 계획](../engineering/operations/release-2.3.0.md)을 작성했다. 업무 기준main/dev b7c0361, VERSION2.3.0·baselinev2.2.0/full 계획은 미커밋·미push다. app/main 보호 경로로 기존 검증 규칙상 full이 필요하며2.2.0 reuse를 연장하지 않는다. [전체4 Backend](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6885970390)에 대상/DB0036 유지·36도구시험/웹 독립 검증·보존/복귀 경계를 회신했다.
 
 Native source027f8215/2.3.0+8의 웹 artifact14137081307 원3파일·34자산 hash/기존verify·로컬 비활성 stage PASS. APK14137081624의 Native 서명검증 보고도 수신했다. [고정 receipt](../engineering/operations/records/web-handoff-2.3.0.json). AWS upload/활성화·새태그/image 게시·운영 교체는 하지 않았다.

@@ -4803,3 +4803,19 @@ GitHub 이슈 본문/최신 댓글에서 #51 Android 공개·문서통합/종료
 사용자 진행 지시로 release/2.3.0을 분기해 VERSION2.3.0과 baselinev2.2.0/full 계획을 작성했다. b7c0361 대비 기존운영 태그의 앱15파일 변경/예약·관리정책2/BUG-036과 migration·도구·의존성/운영Compose 불변을 확인했다. app/main 보호경로 때문에selected가불가하고2.2.0전용reuse를연장하지않았다. 릴리즈/웹도구36시험PASS(초기 unittest sibling import 경로1오류는정식PYTHONPATH로해소), 문서/계획/diffPASS. 운영HTTPShealth는status/database ok지만서버내부source/digest/도구는새로확인하지않았다.
 
 Native 전체2 웹artifact14137081307을연결도구로독립다운로드해outerdigest/원3파일bytes/hash·34자산/manifest/source/version/origin·기존web.verify/stage를확인했다. /tmp로컬비활성배치만수행했고AWS미전송·미활성화다. 전체3 APK14137081624의서명검증보고를수신했고Backend APK설치/서명검사를주장하지않았다. [전체4 Backend](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6885970390)에실제순번/작성측/준비단계와다음Backend의full/불변image·운영baseline/최신백업/정책2복귀경계를명시했다. 준비파일미커밋·미push/최종release source·registrydigest없음. 새태그·CI실행·운영교체·백업/자료쓰기·키생성/초기화·Issue종료없음.
+
+## 2026-11-15 — 2.3.0 고정 준비 게시·full 검증 시작
+
+사용자 다음단계 진행 지시에 따라 원격source가 실제 필요한 검증 작업의 예외 범위를 사전 설명하고 준비8파일을 f1e0a16ceb74eeaa494c1577479ad7f93471af62로 release/2.3.0에 commit/push했다. 수동 workflow_dispatch43654230797의동일head/in_progress 확인. publish/deploy 없는 실행이며태그/병합·운영/DB·키 변경없음. Native전체5 수용을확인하고 같은Issue에 검증시작을회신했다. 후행상태문서는로컬미커밋으로남겨 검증source를바꾸지않는다. 다음실행결과/전체증거확인이필요하다.
+
+## 2026-11-15 — 2.3.0 full 검증 실패 확인
+
+run43654230797 종료failure, verify success/회귀8중7success·3번258PASS1FAIL. 실패는현재앱재사용 ownership_first_seed_no_cooldown_atomicity의최초settings200기대에409 MAIN_REGISTRATION_CHANGED다. 서버결함/시험구계약불일치는미확정. validation연쇄실패,publish/deploy skipped. Issue54에실패/다음Backend조사·수정과산출물유지를회신했다. 코드수정·새commit/push/운영변경없음.
+
+## 2026-11-15 — full 실패 원인 정적 대조
+
+현재앱 회귀파일은 legacy test_ownership_first_seed_no_cooldown_atomicity를 직접 import한다. 원본register helper의 main 기본값False, save_data helper는대표를첫활동ID로자동삽입한다. 따라서부원정대의현재raw대표null과다른nonnull신규대표를보내고서비스는합의정책2대로 MAIN_REGISTRATION_CHANGED를반환한다. 실제CI최초실패와코드분기가일치해이번실패는구시나리오의현재앱재사용에따른계약불일치로판단한다. 서버권한완화대상이아니다. 원본legacy시험은보존하고현재앱시험을main/sub·대표null/명시선택·OFF제약/무대기·충돌·원자성으로분리할필요가있다. 단순main=True로바꾸면뒤의현재대표OFF의옛200기대도충돌하므로전체의미를맞춰야한다. 이번은정적대조만,시험수정/신규실행·commit/push·운영변경없음.
+
+## 2026-11-15 — 현재앱 최초설정 회귀 분리·표적3PASS
+
+사용자 승인으로 tests/core/test_current_runtime.py에서 legacy시나리오의직접import를제거하고 현재앱메인/부원정대2분기로시험을작성했다. 최초null저장/메인자동대표/부원정대신규nonnull거절, 무대기연속저장·메인대표OFF거절과명시선택후축소, 부원정대활동축소·혼합invalid/REVISION_CONFLICT무변경·원ACK/현재GET분리·중복소유확인거절을확인한다. 원본DB0023시험은수정하지않았다. 격리실제PostgreSQL/HTTP에서새2+legacy1=3PASS/12.91초. app/OpenAPI/원본legacy시험은f1e0a16과동일하며서버검증을완화하지않았다. 다음새고정source게시/full검증이며새태그/운영변경없음.
