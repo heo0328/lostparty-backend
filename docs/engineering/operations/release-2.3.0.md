@@ -57,7 +57,7 @@ API/웹 공개 전 기술 실패는 표준 제어기의 직전 image·동결 설
 - 설치 common.py/server.py hash는 [2.2.0 원장](records/release-2.2.0-deployment.json)과 동일하다. 이번 배포 도구/DB migration·키/환경 갱신은 필요하지 않다.
 - 저장소 후보 Compose를 운영 환경으로 해석한 결과 활성 동결 구성과 infrastructure 전체가 같다(서버 표준 비교의 이미지 제외/동등 factory 처리). 직전 image·활성 동결 설정·웹 current/previous pointer가 존재한다. 서버 루트의 오래된 Compose는 Caddy 환경/mount가 달라 임의 복귀 기준으로 사용하지 않는다. release metadata의 compose_sha256은 원본 YAML의 hash이므로 생성된 동결 JSON 파일의 raw hash와 직접 비교하지 않는다.
 - **최신 백업 완료:** 최초 자동 승인 검토 거절 뒤 사용자가 대상과 보관 범위(1번)를 명시 승인했다. 서버 private backup 및 기존 PC 폴더의 새 날짜 사본을 생성했고 서버/로컬/PC SHA256 일치·dump 목차866항목·묶음79멤버/15,165,440bytes·내부 복구 파일 hash를 검증했다. 서버 영수증의 PC 사본 확인도 기록했다. 백업 뒤 원본 환경/4키 및 배포 source/image·health를 보존했다. [비민감 집계](records/release-2.3.0-predeployment-backup.json). 복원 실행·키 재생성·DB 초기화는 없다. 물리 파일은 새 날짜 폴더의 backend-production-before.tar·체크섬·README이며 실제 개인 경로는 비공개 기록에만 보관한다.
-- **통합 승인:** 사용자가 준비 변경/작업 기록의 commit·release→dev/main 통합·push(2번)를 명시 승인했다. 준비2커밋과 이번 문서/백업 집계를 같은 이력으로 통합한다. 표준 tag 검증은 main==dev 및 release source의 main 조상 관계를 요구한다. 이번 단계에서는 tag push/운영 교체를 하지 않으며 release 브랜치는 후속 배포를 위해 유지한다.
+- **통합 승인:** 사용자가 준비 변경/작업 기록의 commit·release→dev/main 통합·push(2번)를 명시 승인했다. 준비2커밋과 문서/백업 집계를 454095d로 통합하고 dev/main/release 세 브랜치의 로컬/원격 동일 tip·cb271ff 조상 관계를 확인했다. [전체14 Backend 백업/통합 완료](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6887500135)로 결과를 게시했으며 후행 완료 기록도 동기화한다. 표준 tag 검증은 main==dev 및 release source의 main 조상 관계를 요구한다. 이번 단계에서는 tag push/운영 교체를 하지 않으며 release 브랜치는 후속 배포를 위해 유지한다.
 
 ## 최초 full 검증과 시험 정정
 

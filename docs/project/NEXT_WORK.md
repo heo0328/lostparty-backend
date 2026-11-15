@@ -10,7 +10,7 @@
 
 사용자가 최신 운영 백업과 준비 변경의 commit·dev/main 통합·push를 모두 명시 승인했다. 최신 DB0036·기존 환경/4키·배포 기준/도구·활성 웹 원본을 서버 private backup과 기존 PC 폴더의 새 날짜 사본에 보관했다. 서버/로컬/PC SHA256 일치, dump 목차866항목·묶음79멤버/15,165,440bytes 및 내부 파일 hash를 검증했다. 원본 키/환경·운영 기준과 health도 보존했다. [백업 집계](../engineering/operations/records/release-2.3.0-predeployment-backup.json). 실제 DB 복원은 하지 않았다.
 
-이번 승인 범위는 준비2커밋과 최신 문서/백업 집계의 commit·dev/main 동일 tip 통합·push다. 다음 Backend는 게시된 동일 tip과 cb271ff 조상 관계를 확인한 뒤 최종 태그/불변 image·운영 배포 절차를 이어갈 차례다. v2.3.0 tag push는 full 재검증·이미지 게시·자동 운영 배포까지 이어지며 이번 백업/통합 실행에서는 태그·배포를 실행하지 않는다. release/2.3.0은 후속 배포 작업이 남아 유지하고, 배포 구간 마감 시 정리한다.
+준비2커밋과 최신 문서/백업 집계를 454095d로 dev/main에 fast-forward 통합·세 브랜치 atomic push하고 로컬/원격 동일 tip과 cb271ff 조상 관계를 확인했다. [전체14 Backend 백업/통합 완료](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6887500135)로 회신했다. 후행 완료 기록도 같은 브랜치들에 동기화한다. 다음 Backend는 최종 태그/불변 image·운영 배포 절차를 이어갈 차례다. v2.3.0 tag push는 full 재검증·이미지 게시·자동 운영 배포까지 이어지며 이번 백업/통합 실행에서는 태그·배포를 실행하지 않는다. release/2.3.0은 후속 배포 작업이 남아 유지하고, 배포 구간 마감 시 정리한다.
 
 Native source027f8215/2.3.0+8 웹 원3파일·34자산의 독립 hash/로컬 stage 검증은 완료했고 APK 담당 검증 보고도 수신했다. [고정 receipt](../engineering/operations/records/web-handoff-2.3.0.json). AWS upload/활성화는 미실행이다. API-only 교체→health/명세/보존→웹 stage/pointer/HTTPS 검증→Native Android 공개 순서를 유지한다. 정책2 사용 뒤 구 서버 단순 복귀는 계약/ACK 영향 검토가 필요하며 BUG-038은 미해결이다.
 
