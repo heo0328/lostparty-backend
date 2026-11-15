@@ -1,14 +1,14 @@
 # 2.3.0 공동 운영 배포 준비
 
-2026-11-15 / release/2.3.0 / [Issue54](https://github.com/heo0328/lostparty-backend/issues/54). 사용자 진행 지시로 Backend 준비/협업 회신을 수행한다. **현재 운영 미반영, 준비 source cb271ffd2907d658317d4aabcf259b5751a26ce5 게시/full 검증 성공, 새 태그/registry digest 미확정**이다. Native 버전은2.3.0+8, 고정 소스027f8215cfcf65caa93d9db7aea5a33a38d5b83a다.
+2026-11-15 / release/2.3.0 / [Issue54](https://github.com/heo0328/lostparty-backend/issues/54). 사용자 진행 지시로 Backend 준비/협업 회신을 수행한다. **운영 API·웹 반영 완료: tagv2.3.0/source05daa42·image71e30188…834d9d·DB0036, 웹2.3.0+8**이다. Native 버전은2.3.0+8, 고정 소스027f8215cfcf65caa93d9db7aea5a33a38d5b83a다.
 
 ## 대상과 기준
 
 | 구분 | 확인 사실 |
 |---|---|
-| 현재 운영 기준 | v2.2.0/sourcec31d90da4fb5c1eaa9d731623f5648cedc8c00d2·imagecc753718…406dae·DB0036. 기존 [확정 원장](records/release-2.2.0-deployment.json). 운영 SSH로 source/image·DB·API/DB healthy 및 Caddy running을 재확인. 설치 도구 hash와 활성 baseline도 대조 완료 |
+| 배포 직전 기준 | v2.2.0/sourcec31d90da4fb5c1eaa9d731623f5648cedc8c00d2·imagecc753718…406dae·DB0036. 기존 [확정 원장](records/release-2.2.0-deployment.json). 운영 SSH로 source/image·DB·API/DB healthy 및 Caddy running을 재확인. 설치 도구 hash와 활성 baseline도 대조 완료 |
 | 이번 업무 source | main/dev b7c03615827ac93a6e2ec7e417afe297d13ec359의 같은 앱/계약. 준비 source cb271ffd2907d658317d4aabcf259b5751a26ce5에 버전/full 계획과 현재 앱 시험 정정이 게시됨 |
-| 새 이미지 | ghcr 불변 digest 미생성. 로컬 add28707…1f71f2는 기능 검증 기준이지 운영 registry digest가 아님 |
+| 새 운영 이미지 | ghcr.io/heo0328/lostparty-backend@sha256:71e30188a79d903efbe52ba5a590add4d400c47ee7d5d35f3a26646cfe834d9d |
 | 계약/DB | 현재194경로/216동작, legacy125/142. current canonical SHA256=95b2449b3c3e05970473858f97fd1388c51b0c126d1d6280f128a1fd921bb200, legacy=8936e00f6481d77772751d5fa857ca442007fbbc76ce279a0e8e08f43bf5faa6. DB0036_roster_presence 유지 |
 
 ## v2.2.0 대비 포함 범위
@@ -49,7 +49,7 @@ API/웹 공개 전 기술 실패는 표준 제어기의 직전 image·동결 설
 
 ## 완료 판단
 
-준비 source 게시·full 성공·웹 독립 로컬 검증·운영 읽기 점검을 완료했다. 최신 백업/PC 사본 검증을 완료했으며 사용자가 commit/dev/main 통합·push를 승인했다. 태그·불변 image·실제 API/웹 반영은 남아 있다. 준비 완료나 운영 완료로 표시하지 않는다.
+사용자 운영 지시로 표준43665092583 전체 성공·API-only 교체·두 명세/118테이블 행·환경/키 보존·웹 원자 전환/HTTPS34자산 검증을 완료했다. [전체16 Backend 운영 완료](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6887988908)·[실제 원장](records/release-2.3.0-deployment.json). Native 전체18에서 Android 공개/최종 파일검증 완료를 보고했고 사용자 마감 지시를 받았다. 기기 전수 인수·BUG-038 해결과 구분한다. 아래 사전점검 절의 미실행 표현은 당시 계획/승인 경계다.
 
 ## 2026-11-15 운영 사전점검 결과와 선행 조건
 

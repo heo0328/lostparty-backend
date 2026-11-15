@@ -1,12 +1,12 @@
 # 개발 서버 전환·백업·복구 기록
 
-현재 운영은 **Backend2.2.0/DB0036·웹2.2.0+7 일반공개**다. [실행/백업/보존/HTTPS집계](records/release-2.2.0-deployment.json)·[Issue51 전체5 Backend](https://github.com/heo0328/lostparty-backend/issues/51#issuecomment-6831720284). Native Android 공개·문서 통합도 완료 보고됐고 Issue51은 completed 종료됐다. 아래날짜별운영은당시기록이다.
+현재 운영은 **Backend2.3.0/DB0036·웹2.3.0+8 일반공개**다. [실행/보존/HTTPS 집계](records/release-2.3.0-deployment.json)·[전체16 Backend 운영 완료](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6887988908). 표준43665092583 전체 성공·118테이블 행/환경/키·DB/Caddy 보존·웹34자산 hash 검증을 완료했다. Native 전체18에서 Android 공개·실파일/서명·안내문 검증 완료를 보고했고 사용자 지시로 Issue54 마감을 진행한다. 아래 날짜별 운영은 당시 기록이다.
 
 현재 실행 이름·로컬 교체 결과는 [실행 설정 정리](../development/runtime-configuration.md), 향후 운영 도구 갱신·누적 기능은 [운영 전환 안내](runtime-release-transition.md)를 따른다. 아래 날짜별 배포/반영은 당시 기록이며 소급 변경하지 않는다.
 
 ## 현재 개발 기준 — 2026-11-15 문서 점검
 
-점검 당시 dev04b0e9d에는 정책2와 BUG-036이 통합돼 있었고, 이후 사용자 지시로 최신 문서를 게시하며 main을 같은 dev tip으로 동기화한다. 이 Git 동기화는 운영 배포가 아니다. 마지막 로컬 반영은 [미개방 다음 주 상세 원장](records/unopened-next-detail-local-rollout.json)의 imageadd28707…1f71f2/app296파일·DB0036이다. 현재 계약194경로/216동작, legacy125/142이며 이번 문서 점검에서 서버/DB를 재검증하거나 교체하지 않았다. 운영은 위 v2.2.0을 유지하고 [Issue51 종료](https://github.com/heo0328/lostparty-backend/issues/51#issuecomment-6845006123)로 Android 공개 대기는 해소됐다.
+점검 당시 dev04b0e9d에는 정책2와 BUG-036이 통합돼 있었고, 이후 사용자 지시로 최신 문서를 게시하며 main을 같은 dev tip으로 동기화한다. 이 Git 동기화는 운영 배포가 아니다. 마지막 로컬 반영은 [미개방 다음 주 상세 원장](records/unopened-next-detail-local-rollout.json)의 imageadd28707…1f71f2/app296파일·DB0036이다. 현재 계약194경로/216동작, legacy125/142이며 이번 문서 점검에서 서버/DB를 재검증하거나 교체하지 않았다. 이 점검 뒤 운영은 위 Issue54 v2.3.0으로 교체했다. Issue51 Android 공개 완료는 과거 이력이며 새2.3.0 Android 공개는 Native 후속이다.
 
 ## 이전 운영 기록 — 2026-11-12 공동 릴리즈 최종 공개 확인
 

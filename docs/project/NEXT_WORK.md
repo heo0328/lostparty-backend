@@ -2,17 +2,11 @@
 
 2026-11-15 KST 점검. 점검 기준은 dev04b0e9d였으며 사용자 지시로 최신화 문서를 게시하고 main을 dev와 같은 커밋으로 fast-forward한다. 현재 Git 기준은 dev/main 및 origin의 동일 tip으로 확인하며, 운영 소스와 구분한다. 상세 경과는 [DEV_LOG](DEV_LOG.md), 기능 지도는 [AI_CONTEXT](AI_CONTEXT.md), 협업 색인은 [ISSUE_TRACKER](ISSUE_TRACKER.md)를 따른다.
 
-## 현재 우선 — Issue54 2.3.0 공동 배포 준비
+## Issue54 공동2.3.0 게시 마감
 
-최신 source **cb271ffd2907d658317d4aabcf259b5751a26ce5**의 [full43659269018](https://github.com/heo0328/lostparty-backend/actions/runs/43659269018)은 verify·회귀8분할·validation 모두 성공했다. publish/deploy는 skipped다. [전체12 Native](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6887347191)의 운영 사전점검 요청에 대응했다.
+사용자 마감 진행 지시로 API·웹·Android 공개 결과와 검증 근거를 최종 정리하고 commit·dev/main 통합·push 후 Issue54를 completed 종료한다. Backend 운영 source05daa42/tagv2.3.0·image71e30188…834d9d/DB0036, 웹2.3.0+8/source027f8215 및 [Native 전체18 공개 완료](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6888362725)의 공개APK 검증 보고를 보존한다. [운영 원장](../engineering/operations/records/release-2.3.0-deployment.json). 후행 문서 통합은 운영 source/tag 이동이나 재배포가 아니다.
 
-[전체13 Backend 사전점검 회신](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6887441821)을 게시했다. 운영 SSH 점검: v2.2.0/sourcec31d90da·기존 불변 이미지·DB0036, API/DB healthy·Caddy running, 미완료 배포0·여유55.3GB. 설치 common/server hash는 기존 원장과 일치하며 갱신 불필요하다. 실제 배포 후보 Compose는 활성 동결 구성과 동일하다(이미지 제외). 직전 이미지·동결 설정·이전 웹 pointer가 존재한다. 서버 루트의 오래된 Compose에는 Caddy 설정 차이가 있으므로 복귀에 임의 사용하지 않고 활성 동결 구성을 따른다. [준비 계획](../engineering/operations/release-2.3.0.md).
-
-사용자가 최신 운영 백업과 준비 변경의 commit·dev/main 통합·push를 모두 명시 승인했다. 최신 DB0036·기존 환경/4키·배포 기준/도구·활성 웹 원본을 서버 private backup과 기존 PC 폴더의 새 날짜 사본에 보관했다. 서버/로컬/PC SHA256 일치, dump 목차866항목·묶음79멤버/15,165,440bytes 및 내부 파일 hash를 검증했다. 원본 키/환경·운영 기준과 health도 보존했다. [백업 집계](../engineering/operations/records/release-2.3.0-predeployment-backup.json). 실제 DB 복원은 하지 않았다.
-
-준비2커밋과 최신 문서/백업 집계를 454095d로 dev/main에 fast-forward 통합·세 브랜치 atomic push하고 로컬/원격 동일 tip과 cb271ff 조상 관계를 확인했다. [전체14 Backend 백업/통합 완료](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6887500135)로 회신했다. 후행 완료 기록도 같은 브랜치들에 동기화한다. 다음 Backend는 최종 태그/불변 image·운영 배포 절차를 이어갈 차례다. v2.3.0 tag push는 full 재검증·이미지 게시·자동 운영 배포까지 이어지며 이번 백업/통합 실행에서는 태그·배포를 실행하지 않는다. release/2.3.0은 후속 배포 작업이 남아 유지하고, 배포 구간 마감 시 정리한다.
-
-Native source027f8215/2.3.0+8 웹 원3파일·34자산의 독립 hash/로컬 stage 검증은 완료했고 APK 담당 검증 보고도 수신했다. [고정 receipt](../engineering/operations/records/web-handoff-2.3.0.json). AWS upload/활성화는 미실행이다. API-only 교체→health/명세/보존→웹 stage/pointer/HTTPS 검증→Native Android 공개 순서를 유지한다. 정책2 사용 뒤 구 서버 단순 복귀는 계약/ACK 영향 검토가 필요하며 BUG-038은 미해결이다.
+추가 공개·Backend 시험 대기는 없다. BUG-038은 Native 미해결 추적으로 유지하며 원문은 위 전체18 및 [배포 기록](../engineering/operations/release-2.3.0.md)에 남긴다. 사용자 기기 전수 인수/실제 DB 복원은 미실행이다. 완료 브랜치는 통합/push 확인 후 정리하고 dev에서 다음 사용자 작업 선택을 기다린다. Issue53·17·15·18·19는 이번 마감으로 종료/착수하지 않는다.
 
 ## 현재 다음 담당 — Issue53 Native 후속 확인
 
@@ -29,7 +23,7 @@ Native는 [전체47](https://github.com/heo0328/lostparty-backend/issues/53#issu
 | Backend Git | 사용자 지시로 문서 최신화 게시와 dev/main 동일 tip 동기화. 정책2·BUG-036 포함. main 이전 기준0911383은 이력 보존 |
 | 로컬 dev 마지막 반영 | imageadd28707…1f71f2·현재 app.main:app·DB0036·Python296파일. [BUG-036 반영 원장](../engineering/operations/records/unopened-next-detail-local-rollout.json). 이번 문서 점검에서는 서버를 재검증/교체하지 않음 |
 | 명세 | 현재 openapi.yaml194경로/216동작, legacy.openapi.yaml125경로/142동작. 과거 policy1 Schema/ACK는 복구용, 현재 관리 계약은 character-management-2 |
-| 운영 마지막 확정 | Backendv2.2.0/sourcec31d90da·웹2.2.0+7/source994db44a·DB0036. [Issue51 원장](../engineering/operations/records/release-2.2.0-deployment.json). Issue54 배포 준비 진행 중이며 실제 운영 교체는 미실행 |
+| 운영 마지막 확정 | Backendv2.3.0/source05daa42·웹2.3.0+8/source027f8215·DB0036. [Issue54 원장](../engineering/operations/records/release-2.3.0-deployment.json). Android 공개는 Native 후속 |
 
 ## 종료/운영 반영 대기 구분
 

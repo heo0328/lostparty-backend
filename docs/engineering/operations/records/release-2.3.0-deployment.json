@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "issue": 54,
+  "recorded_at_utc": "2026-11-15T02:34:38.220428+00:00",
+  "status": "joint_publication_complete",
+  "backend": {
+    "version": "2.3.0",
+    "tag": "v2.3.0",
+    "source": "05daa424f06aa34edd76867bac1c78f9d558b51a",
+    "image": "ghcr.io/heo0328/lostparty-backend@sha256:71e30188a79d903efbe52ba5a590add4d400c47ee7d5d35f3a26646cfe834d9d",
+    "db_revision": "0036_roster_presence",
+    "api_started_at_utc": "2026-11-15T02:28:58.341866776Z",
+    "workflow_run": 43665092583,
+    "workflow_result": "success",
+    "validation_mode": "full",
+    "regression_shards_passed": 8,
+    "executed_test_files": 115,
+    "generated_contract_canonical_sha256": {
+      "openapi.yaml": "95b2449b3c3e05970473858f97fd1388c51b0c126d1d6280f128a1fd921bb200",
+      "legacy.openapi.yaml": "8936e00f6481d77772751d5fa857ca442007fbbc76ce279a0e8e08f43bf5faa6"
+    }
+  },
+  "web": {
+    "backend_source": "05daa424f06aa34edd76867bac1c78f9d558b51a",
+    "backend_tag": "v2.3.0",
+    "web_version": "2.3.0+8",
+    "web_source": "027f8215cfcf65caa93d9db7aea5a33a38d5b83a",
+    "bundle_sha256": "e52a68806d72e14f5da80e2c16d088126d292f1619526827ea49b5c23cb14c24",
+    "previous_web_retained": true,
+    "original_three_files_unchanged": true,
+    "https_assets_verified": 34,
+    "public_open": true,
+    "api_healthy": true
+  },
+  "preservation": {
+    "db_caddy_preserved": true,
+    "keys_environment_mounts_preserved": true,
+    "db_copy_tables_compared": 118,
+    "all_table_copy_rows_equal": true,
+    "changed_table_count": 0,
+    "db_migration": false,
+    "data_initialization_or_deletion": false,
+    "key_environment_oauth_rotation": false
+  },
+  "backup": {
+    "before": {
+      "created_at": "2026-11-15T01:43:08.089813+00:00",
+      "source": "c31d90da4fb5c1eaa9d731623f5648cedc8c00d2",
+      "image": "ghcr.io/heo0328/lostparty-backend@sha256:cc753718414bedc03df5a2d2c3532b5454c44382c7ba1cca306bd2eead406dae",
+      "db_revision": "0036_roster_presence",
+      "archive_sha256": "659c6541cb2d52a2f6eda7c2b0cbbbccebb966c8454a495dca0379c7ac321e13",
+      "archive_bytes": 15165440,
+      "archive_members": 79,
+      "pc_copy_verified": true,
+      "database_restore_executed": false,
+      "purpose": "before-2.3.0-production",
+      "dump_catalog_verified": true,
+      "dump_catalog_entries": 866,
+      "server_local_pc_sha256_match": true,
+      "protected_files_preserved": true,
+      "baseline_preserved": true,
+      "service_healthy_after_backup": true,
+      "archive_encrypted": false,
+      "private_material_published": false
+    },
+    "additional_comparison_snapshot": "server private folder only; no raw rows or row digests exported",
+    "database_restore_executed": false
+  },
+  "http": [
+    {
+      "path": "/",
+      "status": 200,
+      "web_spa_fallback": false
+    },
+    {
+      "path": "/health",
+      "status": 200,
+      "web_spa_fallback": false
+    },
+    {
+      "path": "/v1/raid-catalog",
+      "status": 200,
+      "web_spa_fallback": false
+    },
+    {
+      "path": "/v1/me",
+      "status": 401,
+      "web_spa_fallback": false
+    },
+    {
+      "path": "/v2/me/account-bootstrap",
+      "status": 401,
+      "web_spa_fallback": false
+    },
+    {
+      "path": "/v2/me/raid-reservations",
+      "status": 401,
+      "web_spa_fallback": false
+    },
+    {
+      "path": "/openapi.json",
+      "status": 404,
+      "web_spa_fallback": false
+    },
+    {
+      "path": "/docs",
+      "status": 200,
+      "web_spa_fallback": true
+    }
+  ],
+  "native_android": {
+    "publication": "Native reported public and downloaded-file verification complete",
+    "backend_installed_or_verified_apk": false,
+    "reply": "https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6888362725",
+    "source": "02326960",
+    "run_id": 43670183453,
+    "public_apk_sha256": "eb30f9d96297440961f9b9ca0699e0ab0999c434373489696cafc38547cf8c20",
+    "public_apk_bytes": 91767294,
+    "native_reported_signature_version_checksum_verified": true
+  },
+  "known_limitations": [
+    "BUG-038 unresolved",
+    "No new user-device/Google-login acceptance",
+    "Post-policy2 rollback requires ACK/journal compatibility review"
+  ],
+  "deployment_reply": "https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6887988908",
+  "closeout": "User directed documentation commit/integration/push and issue closure; immutable runtime tag/source unchanged"
+}

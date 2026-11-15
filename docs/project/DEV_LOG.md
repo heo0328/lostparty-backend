@@ -4847,3 +4847,28 @@ GitHub run/job상태와artifact메타데이터의동일source·미만료를확�
 - 원격 fetch 결과 dev/main b7c0361·release cb271ff로 충돌 없음. 준비2커밋과 이번 문서/집계를 commit 후 dev/main으로 fast-forward하고 같은 tip을 push한다. release 브랜치는 배포 후속이 남아 보존한다. 앱/계약은 cb271ff와 같고 문서만 추가되어 새 전체 회귀를 반복하지 않는다.
 
 - 실제 통합 결과: commit454095dd69e8c0fbd4cbbbd4c89a76f8f1280ea3로 dev/main을 fast-forward하고 release/2.3.0·dev·main atomic push 성공, 로컬/원격6개 ref 동일·cb271ff 조상 확인. [전체14 Backend 백업/통합 완료](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6887500135)를 게시했다(본문 제외 실제14번째·Backend·백업/통합 완료 단계). 다음 Backend 태그/불변 image·운영 단계이며 Native는 API/웹 완료 전 공개 대기다. 후행 완료 기록을 동일 통합하고 작업트리는 기존 목적 release 브랜치로 복귀했다.
+
+## 2026-11-15 — Issue54 운영 API·웹 배포 진행 승인과 태그 실행
+
+사용자 진행 지시로 source05daa424f06aa34edd76867bac1c78f9d558b51a/tagv2.3.0을 게시했다. run43665092583 push/in_progress·동일 source 확인. 직전 baseline healthy/PCbackup verified·키/환경 일치·미완료 배포0 확인. 추가 상세 비교 자료의 로컬 반출 요청은 자동 승인 검토에서 거절해 서버 private 폴더 내부에만 비교 상태를 저장하고 boolean 결과만 조회하는 대안으로 진행했다. 원 DB/키/서비스 변경 없음. 웹 원3파일·34자산/hash 재검증, 업로드 묶음 준비. [Backend 시작 회신](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6887569185). 태그 run 자체 full·API 배포/웹 후속 결과는 아직 대기이며 실패 후 무단 재배포하지 않는다.
+
+## 2026-11-15 — Issue54 Backend v2.3.0·웹2.3.0+8 실제 운영 완료
+
+- tagv2.3.0/source05daa424f06aa34edd76867bac1c78f9d558b51a의 표준run43665092583 최종 success. verify/회귀8분할/validation/publish/deploy 전부 성공. Release validation.json의 동일 source·계획/full/동일 run을 검증했고 실행 시험 파일115개를 확인했다(케이스 수가 아님).
+- 운영 image71e30188a79d903efbe52ba5a590add4d400c47ee7d5d35f3a26646cfe834d9d, API시작UTC2026-11-15T02:28:58.341866776Z·DB0036 유지. 생성 두 전체 명세 canonical hash 일치, DB/Caddy 컨테이너/시각/mount·환경/키 보존. 서버 내부 최신 직전dump와 반영후dump의118테이블 COPY행 집합 전부 동일/변경0 확인, 행 원문/지문은 반출하지 않았다.
+- Native 고정027f8215/웹2.3.0+8 원3파일 AWS 업로드·재검증, 기존 web_release.stage/switch로 비활성 배치 후 원자 pointer 전환. 이전 웹 보존, 실제 HTTPS34자산 bytes/hash/no-cache 전부 통과. 외부 개발 환경에서 index 동일/health200·catalog200·미인증개인 API401 확인.
+- 최초 외부 검사에서 /docs404를 기대했으나200이었다. 실제 Caddy의 SPA fallback임을 index hash 동일성으로 확인해 검사를 정정했다. /openapi.json404, Swagger UI 노출은 없다. 서비스/API 수정 없이 검증 기대를 라우팅에 맞춘 것이다.
+- [전체16 Backend 운영 완료](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6887988908)을 게시했다(본문 제외 실제16번째·Backend·API/웹 운영 완료 단계). 이슈 본문 현재 상태/다음 Native Android 공개·최종 파일/서명/hash·승인 본문 검증과 회신을 갱신했다. 본문 결과 링크는 실제 댓글ID6887988908로 확인/정정했다.
+- [운영 원장](../engineering/operations/records/release-2.3.0-deployment.json). 최신 직전백업/기존PC사본은 기존 근거 유지, 실제 복원/신규 기기·Google로그인 인수는 하지 않았다. BUG-038 미해결·정책2 사용 후 구서버 복귀의 원ACK/journal 경계 유지. DB migration/초기화·키/환경/OAuth 갱신 없음. 임시 관리자 키 사본 제거·원본 키 보존. 후행 문서/원장은 미커밋·미push이며 Issue 종료/브랜치 삭제는 하지 않았다.
+
+## 2026-11-15 — Issue54 Native Android 공개 시작 회신 수신
+
+[전체17 Native](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6888254260)에서 API/웹 완료를 수용하고 Android 공개 시작을 보고했다. Native main/dev/release02326960·tagv2.3.0 push 완료, 앱/승인문은027f8215와 동일하다. 아직 공개 workflow 성공·최종 APK 서명/버전/hash·본문 검증 완료는 아니며 Native 후속 회신 대기다. Backend 추가 구현/재배포 요청은 없어 반복 댓글은 게시하지 않았다. 문서만 로컬 갱신, commit/push·Issue 종료 없음.
+
+## 2026-11-15 — Issue54 Native Android 공개 완료 수신
+
+[전체18 Native](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6888362725)에서 Android2.3.0 공개·실파일 검증 완료를 보고했다. tagv2.3.0/source02326960·run43670183453 success, 공개APK SHA256 eb30f9d96297440961f9b9ca0699e0ab0999c434373489696cafc38547cf8c20(준비APK와 구분), 기존 서명/버전·checksum·승인 안내문 및 공개5파일 재다운로드/웹manifest 검증은 Native 담당 확인이다. Backend 독립 APK 검증/사용자 기기 인수로 확대하지 않는다. 추가 요청이 없어 반복 댓글/시험·재배포는 하지 않았다. 후행 기록은 미커밋이며 Issue는 종료하지 않았다.
+
+## 2026-11-15 — Issue54 공동 게시 마감 지시
+
+사용자가 후행 문서 commit·dev/main 통합/push·이슈 마감 진행을 지시했다. 전체16 Backend 실제 반영과 전체18 Native 공개 검증을 근거로 완료 기록을 통합한다. BUG-038 미해결/기기 전수 인수·실제 복원 미실행은 유지한다. 신규 코드·API·태그 이동/재배포·DB/키 변경 없이 문서 검사 후 Git 통합과 completed 종료, 완료 release 브랜치 정리를 진행한다.
