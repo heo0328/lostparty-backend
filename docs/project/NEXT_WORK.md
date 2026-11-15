@@ -4,7 +4,7 @@
 
 ## Issue54 공동2.3.0 게시 마감
 
-사용자 마감 진행 지시로 API·웹·Android 공개 결과와 검증 근거를 최종 정리하고 commit·dev/main 통합·push 후 Issue54를 completed 종료한다. Backend 운영 source05daa42/tagv2.3.0·image71e30188…834d9d/DB0036, 웹2.3.0+8/source027f8215 및 [Native 전체18 공개 완료](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6888362725)의 공개APK 검증 보고를 보존한다. [운영 원장](../engineering/operations/records/release-2.3.0-deployment.json). 후행 문서 통합은 운영 source/tag 이동이나 재배포가 아니다.
+사용자 마감 진행 지시로 API·웹·Android 공개 결과와 검증 근거를 최종 정리하고 f7b7e8c로 commit·dev/main 통합·push하고 Issue54를 completed 종료했다. Backend 운영 source05daa42/tagv2.3.0·image71e30188…834d9d/DB0036, 웹2.3.0+8/source027f8215 및 [Native 전체18 공개 완료](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6888362725)의 공개APK 검증 보고를 보존한다. [운영 원장](../engineering/operations/records/release-2.3.0-deployment.json). 후행 문서 통합은 운영 source/tag 이동이나 재배포가 아니다.
 
 추가 공개·Backend 시험 대기는 없다. BUG-038은 Native 미해결 추적으로 유지하며 원문은 위 전체18 및 [배포 기록](../engineering/operations/release-2.3.0.md)에 남긴다. 사용자 기기 전수 인수/실제 DB 복원은 미실행이다. 완료 브랜치는 통합/push 확인 후 정리하고 dev에서 다음 사용자 작업 선택을 기다린다. Issue53·17·15·18·19는 이번 마감으로 종료/착수하지 않는다.
 

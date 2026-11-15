@@ -38,4 +38,4 @@
 
 ### Issue54 공동2.3.0 게시 마감
 
-Backend API·웹 실제 반영/검증 및 [Native 전체18 공개 완료](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6888362725) 수신 완료. 사용자 지시로 후행 기록 통합/push 후 completed 종료한다. BUG-038은 Native 미해결이며 배포 마감으로 해결 처리하지 않는다. [운영 원장](../engineering/operations/records/release-2.3.0-deployment.json).
+Backend API·웹 실제 반영/검증 및 [Native 전체18 공개 완료](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6888362725) 수신 완료. 사용자 지시로 후행 기록 통합/push 및 completed 종료를 완료했다. BUG-038은 Native 미해결이며 배포 마감으로 해결 처리하지 않는다. [운영 원장](../engineering/operations/records/release-2.3.0-deployment.json).
