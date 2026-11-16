@@ -1,25 +1,12 @@
 # LostParty Backend 기능 지도
 
-2026-11-17 게시 완료: 구현 `5172c7535b556997e76b9d728dc4714a1988ab60`을 origin/refactor/lostark-server-processing에 push·원격 일치 확인. [전체3번째 댓글·Backend 구현/검증/로컬 지원 인계](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6924012652). 현재 명세 SHA256 `2f0ae34849e99618e194ad158383091f71967d3c41083d17dfee32a175fd9c9f`。다음 Native 고정 명세 재생성/실제 저장·제출·기기 확인, Backend 결과 대응이며 Issue OPEN이다. 게시 상태 기록은 같은 브랜치에서 함께 보존한다.
-
-
-2026-11-17 Issue56 구현/검증·로컬 지원 완료: [근거](../features/recruitment/scheduling/personal-availability-minute-plan.md). 개인표1분·기존 일정/후보5분 분리, 고유122항목·도구87PASS·실제 dev 계약 일치/DB0037 자료 보존. 다음 Native 게시 명세 소비/실제 사용자 저장·기기, Backend 회신 대응. 아래 설계·dev0036 대기는 이전 이력이다.
-
-
-2026-11-17 실제 개발 반영 완료: 사용자 토큰 파일 준비 확인 및 로컬 DB 삭제 명시 승인 후 lostparty DB만 초기화·0037 적용, 게시 구현 b95cff5 기준 image c2b4a320…a2dc로 개발 API 전환/healthy 확인. 기존 볼륨·DB 역할·환경/키와 운영은 보존했다. OpenAPI 전체 일치·health/공개 그룹200·미로그인 주차/개인 bootstrap401·회원0·서버 키 로딩 PASS. 실제 provider·회원 수집/저장·기기 인수는 아직 미검증이다. [전체15 Backend·개발 전환 인계](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6921019988). 다음 Native I1 새 로그인·원정대 등록/서버 분석 연동, Backend는 결과 대응이다. 초기화는 이미 완료했으므로 반복하지 않는다. 아래 이전 준비/승인 대기 문구는 전환 전 이력이다. 최신 준비/반영 기록은 미커밋·미push다.
-
-
-2026-11-16 게시 갱신: 사용자 지시로 구현 `b95cff51f6eaf74d341115b2cc7868cc625ce626`을 `origin/refactor/lostark-server-processing`에 push하고 원격 일치를 확인했다. [전체10 Backend·B1/B2 게시 인계](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6914931822). 아래 미게시 설명은 게시 전 이력이다. 다음은 Backend 실제 환경 준비이며 실제 DB/키/서버·운영은 미적용이다.
-
-2026-11-16 KST 점검 기준. 다음 실행은 [NEXT_WORK](NEXT_WORK.md), 공식 이슈 상태/담당은 [ISSUE_TRACKER](ISSUE_TRACKER.md), 완료·결정·검증은 [DEV_LOG](DEV_LOG.md)가 원본이다. Native 구현 판단은 담당자의 현재 코드 확인 결과로 구분한다.
+2026-11-17 기준. 다음 실행은 [NEXT_WORK](NEXT_WORK.md), 상세 작업/검증·병합은 [통합 기록](integration-20261117.md)·[DEV_LOG](DEV_LOG.md), 공식 담당/대기는 [ISSUE_TRACKER](ISSUE_TRACKER.md)를 따른다. 현재 목적 브랜치를 사용자 지시로 dev/main 동일 tip으로 통합하며 운영은 별도다.
 
 ## 현재 기준
 
-- #56 개인 가능시간1분: Backend 조사·[설계](../features/recruitment/scheduling/personal-availability-minute-plan.md) 완료·[전체2 회신](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6923635530). 다음 Backend 구현/검증, Native 게시 명세 대조/실연동 대기. 기존 일정/자동후보5분 정책 유지·DB 변경 없음. 현재 코드/명세/서버는 미변경이며 설계 기록은 미커밋·미push다.
-
-- #55 개발환경 준비: 후보 이미지 빌드·명세 전체 비교 완료, 실제 API/DB0036 보존. [초기화 대상/필요 입력](../engineering/development/server-analysis-dev-preparation.md). 별도 로컬 DB 초기화 승인·서버 token 파일 공급 대기이며 준비 기록은 미커밋·미push다.
-
-- #55: B1/B2 Backend 로컬 구현·자동 검증 완료. [전체9 Backend 구현 결과](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6914853896). 서버 key/순수 분석·새 POST/단일head·소비 전환과 옛 writer/개인key·과거 실행을 제거했다. [구현·최종 검증/환경 경계](../features/rosters/power-and-profiles/server-processing-implementation.md)·[현재 시험 기준](../engineering/development/current-test-consolidation.md). 최종 수집1,889개 항목 모두 분할/재검증 통과 근거 확인, 누락·미해결 실패0. 확정 wire delta 없음. 미커밋·미push, 실제 개발/운영 DB·키·서버 미적용. 다음 Backend는 사용자 지시 범위의 게시/SHA 인계·실제 환경 준비이며 Native 통합/기기는 대기다.
+- #55: 서버 key·순수 분석/명령·최신 summary/detail head·소비 전환/옛 writer·개인키·과거 실행 제거와 개발 DB0037/API 반영 완료. [구현/검증](../features/rosters/power-and-profiles/server-processing-implementation.md)·[실제 반영](../engineering/development/server-analysis-dev-preparation.md).1889항목 분할 검증 근거 확인, 새 승인 없이 초기화를 반복하지 않는다.
+- #56: 개인표1분/기존 일정·후보5분 분리·BInterval 소비,122항목/도구87PASS·실제 dev 지원 완료. [근거](../features/recruitment/scheduling/personal-availability-minute-plan.md).
+- Native901de262 게시·명세 소비·최종2863PASS/analyze0·분 지정 정상 사용자 보고 수신. [#55 전체22](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6924581088)·[#56 전체5](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6924582578). 다음 Native/사용자 실제 저장/제출·야간·웹/Android 잔여 확인, Backend 결과 대응. 추가 Backend 변경/동일 시험 요청 없음, Issue55/56 OPEN.
 
 - #54: Backendv2.3.0/source05daa42·image71e30188…834d9d/DB0036와 웹2.3.0+8/source027f8215를 운영 반영했다. 표준43665092583 전체 성공, 두 명세/118테이블 행·환경/키/DB·Caddy 보존 및 HTTPS34자산 검증 완료. [전체16 Backend 운영 완료](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6887988908)·[운영 원장](../engineering/operations/records/release-2.3.0-deployment.json). Native 전체18에서 Android 공개·실파일/서명·안내문 검증 완료 보고를 수신했다. 공개 대기는 해소됐고 사용자 지시로 후행 기록 통합/push·Issue54 completed 종료를 완료했다. Backend 추가 작업 대기 없음·사용자 기기 인수/BUG-038 해결과 구분하며 후행 문서 통합은 운영 재배포와 구분한다.
 
@@ -42,7 +29,7 @@
 
 | 기능 | 현재 상태·근거 |
 |---|---|
-| 로그인·회원·게임 API 키 | 로그인/회원 기존 확인 유지. #55 로컬 구현은 서버 키 단일 공급으로 전환하고 개인키 API를 제거했으며 실제 서버는 미적용. [로그인·계정](../features/login-account/README.md) |
+| 로그인·회원·게임 API 키 | 로그인/회원 기존 확인 유지. #55 로컬 구현은 서버 키 단일 공급으로 전환하고 개인키 API를 제거했으며 실제 개발 서버는 적용 완료·운영은 별도. [로그인·계정](../features/login-account/README.md) |
 | 원정대 등록·소유 인증/분쟁 | 기본 기능 구현. 최종 소유권 이전의 활성 참가 영향 정책/후처리는 #15 미합의·미구현. [소유권](../features/rosters/ownership/README.md) |
 | 누락/재등장·참가 경고/교체 | Backend 공개 조회/active·완료 이력 분리·부분 완료 교체·후속 명령 구현/게시·dev 지원 완료. 완료 오류/계정 복구는 인수·양측 dev 통합 완료. 누락 자료/기기 경계와 원래 생명주기 요구는 #17에서 분리 정리. [구현](../features/rosters/lifecycle/roster-participation-implementation.md)·[인수](../features/recruitment/completion-and-records/completion-recovery-acceptance-20261110.md) |
 | 활동·대표·표시 | main-only 자동 대표/관리 정책2 및 Native 사용 전원 표시 적용·확인 완료. 신규/첫1700 자동추가·명시제외 영속은 #18 계약 대기. [활동 제안](../features/rosters/activity-and-presentation/proposals.md) |
