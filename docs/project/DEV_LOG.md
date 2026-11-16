@@ -4959,3 +4959,27 @@ GitHub run/job상태와artifact메타데이터의동일source·미만료를확�
 ### Issue55 사용자 승인 커밋·푸시
 
 사용자 커밋·푸시 지시로 구현 `b95cff51f6eaf74d341115b2cc7868cc625ce626`을 현재 목적 브랜치에 기록하고 origin/refactor/lostark-server-processing에 게시·원격 일치를 확인했다. [전체10 Backend·B1/B2 게시 인계](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6914931822)로 소비 SHA/명세·검증 기록을 전달했다. 다음 Backend 실제 자료/키·개발환경 준비이며 Native 실제 통합은 새 서버 준비 후 별도다. 병합·배포·실제 DB/키/서버 변경·Issue 종료는 없다. 게시 상태 갱신은 같은 목적 브랜치에 함께 보존한다.
+
+### Issue55 개발환경 준비 점검
+
+사용자 지시로 현재 목적 브랜치에서 실제 로컬 API/DB healthy와 DB0036/lostparty·업무표117·총1,562행을 읽기 확인했다. 개인키2·역할 요약21·과거 성공21·proof3·모집 배정29·주차 신청2·옛 명령425건 때문에0037은 그대로 적용할 수 없다. token 파일은 없으며 기존4키0600은 보존했다. 별도 후보 이미지 analysis-dev-prepared-e3ada17/c2b4a320…a2dc를 빌드하고 생성 OpenAPI191경로 전체 객체를 호스트 계약과 비교해 PASS했다. 첫 비교는 이미지에 현재 명세 파일이 없는 기존 배포 구조 때문에 파일 조회 실패였으며 명세를 호스트에서 대조해 해결했다. 실제 DB/키/환경/API 교체는 없다. [구체 전환 대상·초기화 영향/보관 안내](../engineering/development/server-analysis-dev-preparation.md)를 준비했으며 로컬 DB 초기화 별도 승인과 token 공급 대기다. 로컬 DB dump 제외 기존 사용자 결정을 유지한다. 문서 점검 PASS, 추가 commit/push·배포/병합/Issue 종료 없음.
+
+### 2026-11-17 Issue55 로컬 DB 초기화·개발 API 반영
+
+2026-11-17 실제 개발 반영 완료: 사용자 토큰 파일 준비 확인 및 로컬 DB 삭제 명시 승인 후 lostparty DB만 초기화·0037 적용, 게시 구현 b95cff5 기준 image c2b4a320…a2dc로 개발 API 전환/healthy 확인. 기존 볼륨·DB 역할·환경/키와 운영은 보존했다. OpenAPI 전체 일치·health/공개 그룹200·미로그인 주차/개인 bootstrap401·회원0·서버 키 로딩 PASS. 실제 provider·회원 수집/저장·기기 인수는 아직 미검증이다. [전체15 Backend·개발 전환 인계](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6921019988). 다음 Native I1 새 로그인·원정대 등록/서버 분석 연동, Backend는 결과 대응이다. 초기화는 이미 완료했으므로 반복하지 않는다. 아래 이전 준비/승인 대기 문구는 전환 전 이력이다. 최신 준비/반영 기록은 미커밋·미push다.
+
+Native 전체11~14를 확인했다. Native 구현910c0648 게시·2853PASS/후속716PASS/analyze0·웹 debug build 보고를 수신했고 실제 I1은 미완료다. 전체14의 초기화/토큰 대기는 이번 사용자 승인·준비로 해소했다. 기존 API 중지 후 lostparty DB만 DROP/CREATE(owner lostparty_app), 후보 이미지로 upgrade head·latest 태그/API 교체를 수행했다. 볼륨/역할 삭제·환경/키 재생성·운영/기기 변경·추가 commit/push 없음. 실제 서버 /v2/raid-cycles401은 Principal 계약상 정상이다.
+
+### 2026-11-17 Issue56 개인 가능시간1분 설계
+
+사용자 기획·설계 지시로 실제 Clock/Interval·BInterval·정규화/제출/복사·covered/후보/예약 참조를 조사했다. 공유 Clock이 기존 일정 DTO에도 쓰여 개인1분 시각과 기존5분 일정 시각을 분리하는 구현 계획을 정리했다. 원본/정규화 JSONB·정수분 포함/실제 예약 비교는 재사용하며 새 API/DB migration·초기화/호환 flag는 없다. account bootstrap/weekly summary에는 개인 Interval 새 필드를 만들지 않는다. [전체2번째 댓글·Backend 설계 결과](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6923635530)를 게시하고 실제 순번/작성 측을 재조회했다. Native 전체1은 직접30PASS 합성 근거이며 서버 저장/기기 완료로 해석하지 않는다. 다음 Backend 구현/격리 검증, 게시 및 실제 dev 지원은 별도 지시 범위다. 이번에는 문서/동결자료·diff 검사만 수행했고 새 앱 시험/코드·OpenAPI·서버/DB/키 변경·commit/push·Issue 종료 없음.
+
+### 2026-11-17 Issue56 개인 가능시간1분 구현·검증·로컬 지원
+
+사용자 구현/검증·commit/push 지시에 따라 기존 목적 브랜치에서 AvailabilityClock1분과 기존 일정 ScheduleClock5분을 구분하고 BInterval이 공통 개인표 시각을 참조하게 했다. OpenAPI 패턴4곳/정책 설명만 변경했고191경로211동작·DB0037을 유지했다. 기존 normalize/covered·후보5분/예약 비교·진행시간/명시 출발 업무 코드는 변경하지 않았다.
+
+관련121개 실행120PASS/1FAIL은 새 시험의 server_time/server_now를 포함한 응답 전체 비교였다. 안정된 일정 필드 비교로 수정하고 실제 베타 후보/분 원값/1분 예약 중첩·맞닿음을 추가한 신규15개 PASS. 고유122항목을 로그 ID(공백 parameter/별도 benchmark 출력 포함)로 대조해 미해결 실패0이다. 초기 future import 위치 collection 오류 및 UTC/불변 예약 fixture를 수정한 이력을 구분하며 한 번의 전체 green으로 표시하지 않는다. 도구87PASS·전체 OpenAPI/의존성·문서/보관 원문128·동결JSON20·compile/diff PASS.
+
+후보 availability-minute-dev를 빌드해 로컬 API만 교체했다. 사용자/세션·계정/등록·개인표 전후 행 수 동일, DB0037·실제 OpenAPI 전체 일치·health/공개 그룹200·개인표 미로그인401 확인. 실제 개인표 사용자 자료 PUT·DB migration/삭제·키/환경·운영 변경 없음. Native의 내장 BInterval 재생성·실제 저장/제출/복구/웹·Android 인수는 별도다. 직전 승인된 #55 개발 반영/보관 기록도 보존해 같은 브랜치에 게시한다.
+
+실행 이미지: `sha256:c720c4388ad15855bb5316baf0b6ff7c91d8981a4e4bca0427b75eb4e4d66013`。기존 API 외 DB 컨테이너 재생성은 하지 않았다.

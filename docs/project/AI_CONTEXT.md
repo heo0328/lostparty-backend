@@ -1,10 +1,20 @@
 # LostParty Backend 기능 지도
 
+2026-11-17 Issue56 구현/검증·로컬 지원 완료: [근거](../features/recruitment/scheduling/personal-availability-minute-plan.md). 개인표1분·기존 일정/후보5분 분리, 고유122항목·도구87PASS·실제 dev 계약 일치/DB0037 자료 보존. 다음 Native 게시 명세 소비/실제 사용자 저장·기기, Backend 회신 대응. 아래 설계·dev0036 대기는 이전 이력이다.
+
+
+2026-11-17 실제 개발 반영 완료: 사용자 토큰 파일 준비 확인 및 로컬 DB 삭제 명시 승인 후 lostparty DB만 초기화·0037 적용, 게시 구현 b95cff5 기준 image c2b4a320…a2dc로 개발 API 전환/healthy 확인. 기존 볼륨·DB 역할·환경/키와 운영은 보존했다. OpenAPI 전체 일치·health/공개 그룹200·미로그인 주차/개인 bootstrap401·회원0·서버 키 로딩 PASS. 실제 provider·회원 수집/저장·기기 인수는 아직 미검증이다. [전체15 Backend·개발 전환 인계](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6921019988). 다음 Native I1 새 로그인·원정대 등록/서버 분석 연동, Backend는 결과 대응이다. 초기화는 이미 완료했으므로 반복하지 않는다. 아래 이전 준비/승인 대기 문구는 전환 전 이력이다. 최신 준비/반영 기록은 미커밋·미push다.
+
+
 2026-11-16 게시 갱신: 사용자 지시로 구현 `b95cff51f6eaf74d341115b2cc7868cc625ce626`을 `origin/refactor/lostark-server-processing`에 push하고 원격 일치를 확인했다. [전체10 Backend·B1/B2 게시 인계](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6914931822). 아래 미게시 설명은 게시 전 이력이다. 다음은 Backend 실제 환경 준비이며 실제 DB/키/서버·운영은 미적용이다.
 
 2026-11-16 KST 점검 기준. 다음 실행은 [NEXT_WORK](NEXT_WORK.md), 공식 이슈 상태/담당은 [ISSUE_TRACKER](ISSUE_TRACKER.md), 완료·결정·검증은 [DEV_LOG](DEV_LOG.md)가 원본이다. Native 구현 판단은 담당자의 현재 코드 확인 결과로 구분한다.
 
 ## 현재 기준
+
+- #56 개인 가능시간1분: Backend 조사·[설계](../features/recruitment/scheduling/personal-availability-minute-plan.md) 완료·[전체2 회신](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6923635530). 다음 Backend 구현/검증, Native 게시 명세 대조/실연동 대기. 기존 일정/자동후보5분 정책 유지·DB 변경 없음. 현재 코드/명세/서버는 미변경이며 설계 기록은 미커밋·미push다.
+
+- #55 개발환경 준비: 후보 이미지 빌드·명세 전체 비교 완료, 실제 API/DB0036 보존. [초기화 대상/필요 입력](../engineering/development/server-analysis-dev-preparation.md). 별도 로컬 DB 초기화 승인·서버 token 파일 공급 대기이며 준비 기록은 미커밋·미push다.
 
 - #55: B1/B2 Backend 로컬 구현·자동 검증 완료. [전체9 Backend 구현 결과](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6914853896). 서버 key/순수 분석·새 POST/단일head·소비 전환과 옛 writer/개인key·과거 실행을 제거했다. [구현·최종 검증/환경 경계](../features/rosters/power-and-profiles/server-processing-implementation.md)·[현재 시험 기준](../engineering/development/current-test-consolidation.md). 최종 수집1,889개 항목 모두 분할/재검증 통과 근거 확인, 누락·미해결 실패0. 확정 wire delta 없음. 미커밋·미push, 실제 개발/운영 DB·키·서버 미적용. 다음 Backend는 사용자 지시 범위의 게시/SHA 인계·실제 환경 준비이며 Native 통합/기기는 대기다.
 

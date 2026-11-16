@@ -1,4 +1,5 @@
 from __future__ import annotations
+from app.raid_rooms.schemas.availability_schemas import AvailabilityClock
 from app.game_accounts.schemas.schemas import DTO
 from app.game_accounts.schemas.profile_schemas import DecimalValue
 from app.raid_rooms.schemas.cycle_group_schemas import Envelope as PolicyEnvelope
@@ -595,8 +596,8 @@ class BInterval(BaseModel):
         extra='forbid',
     )
     weekday: conint(ge=1, le=7, strict=True)
-    start: constr(pattern=r'^(?:[01][0-9]|2[0-3]):[0-5][05]$', strict=True)
-    end: constr(pattern=r'^(?:[01][0-9]|2[0-3]):[0-5][05]$', strict=True)
+    start: AvailabilityClock
+    end: AvailabilityClock
     end_day_offset: conint(ge=0, le=1, strict=True)
 
 

@@ -1,5 +1,19 @@
 # 다음 실행
 
+2026-11-17 Issue56 최신 상태: 사용자 구현·검증·게시 지시로1분 개인 가능시간을 구현했다. [변경/검증 기록](../features/recruitment/scheduling/personal-availability-minute-plan.md). 관련 고유122개·도구87개/전체 계약 비교 PASS, 실제 로컬 API 교체·DB0037/자료 집계 보존·실행 계약 일치 확인. 다음 Native는 게시 SHA의 내장 BInterval 재생성/원값·제출·ACK 소비 및 실제 저장/기기를 확인하고 Backend는 회신 대응한다. DB/키/운영 변경 없음. 아래 설계 완료/미구현 안내는 이전 단계 이력이다.
+
+
+## 현재 실행 — Issue56 개인 가능시간1분 설계 완료
+
+2026-11-17: 사용자 기획·설계 지시로 [구현 계획](../features/recruitment/scheduling/personal-availability-minute-plan.md)을 작성하고 [전체2 Backend·설계 결과](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6923635530)로 회신했다. 다음 Backend는 구현·격리 검증이다. AvailabilityClock1분/기존 일정 ScheduleClock5분 분리·BInterval 공통 참조, 원값/정규화·현재 C/N 제출/복사/ACK·후보/예약 경계를 검증하고 OpenAPI를 같은 변경에서 갱신한다. 새 API/DB migration·초기화/호환 flag는 없다. 이번에는 코드/명세/서버 미변경, 계획/기존 개발 반영 기록은 미커밋·미push다. Native는 게시 명세 수신 후 재생성/소비 대조·실제 저장 인수를 진행한다.
+
+아래 Issue55 기록은 개발 반영/Native I1 후속 기준이다.
+
+2026-11-17 실제 개발 반영 완료: 사용자 토큰 파일 준비 확인 및 로컬 DB 삭제 명시 승인 후 lostparty DB만 초기화·0037 적용, 게시 구현 b95cff5 기준 image c2b4a320…a2dc로 개발 API 전환/healthy 확인. 기존 볼륨·DB 역할·환경/키와 운영은 보존했다. OpenAPI 전체 일치·health/공개 그룹200·미로그인 주차/개인 bootstrap401·회원0·서버 키 로딩 PASS. 실제 provider·회원 수집/저장·기기 인수는 아직 미검증이다. [전체15 Backend·개발 전환 인계](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6921019988). 다음 Native I1 새 로그인·원정대 등록/서버 분석 연동, Backend는 결과 대응이다. 초기화는 이미 완료했으므로 반복하지 않는다. 아래 이전 준비/승인 대기 문구는 전환 전 이력이다. 최신 준비/반영 기록은 미커밋·미push다.
+
+
+2026-11-16 개발환경 준비: [실제 점검·전환 대상](../engineering/development/server-analysis-dev-preparation.md). 후보 이미지 빌드/전체 명세 비교 완료, 현재 API/DB0036 healthy 유지. 다음 입력은 로컬 lostparty DB 초기화(117표·1,562행) 별도 승인과 서버 token 파일 공급이다. 실제 초기화·migration/서버 교체는 미실행. 준비 기록은 미커밋·미push다.
+
 2026-11-16 게시 갱신: 사용자 지시로 구현 `b95cff51f6eaf74d341115b2cc7868cc625ce626`을 `origin/refactor/lostark-server-processing`에 push하고 원격 일치를 확인했다. [전체10 Backend·B1/B2 게시 인계](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6914931822). 아래 미게시 설명은 게시 전 이력이다. 다음은 Backend 실제 환경 준비이며 실제 DB/키/서버·운영은 미적용이다.
 
 2026-11-16 KST: Issue55 B1/B2 Backend 로컬 구현·자동 검증 완료. checkout `refactor/lostark-server-processing`, 시작 HEAD cda4db3. 코드·명세·기록은 미커밋·미push이며 실제 개발 API/DB0036·키·운영에는 미적용이다.

@@ -53686,12 +53686,12 @@
           },
           "start": {
             "type": "string",
-            "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][05]$",
+            "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][0-9]$",
             "title": "Start"
           },
           "end": {
             "type": "string",
-            "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][05]$",
+            "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][0-9]$",
             "title": "End"
           },
           "end_day_offset": {
@@ -72563,12 +72563,12 @@
           },
           "start": {
             "type": "string",
-            "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][05]$",
+            "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][0-9]$",
             "title": "Start"
           },
           "end": {
             "type": "string",
-            "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][05]$",
+            "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][0-9]$",
             "title": "End"
           },
           "end_day_offset": {
@@ -98619,7 +98619,7 @@
       "contract_profile": "beta-recruitment-1",
       "text_policy": "hangul-printable-ascii-1",
       "search_time": "UTC whole-minute bounds; start inclusive, end exclusive; no rounding; departure grids unchanged",
-      "explicit_departure": "UTC whole-minute beta creation/opening/proposal; automatic candidates, personal availability and duration retain 5-minute grids; exact 30-minute deadlines",
+      "explicit_departure": "UTC whole-minute beta creation/opening/proposal; personal availability uses whole-minute HH:mm; automatic candidates and duration retain 5-minute grids; exact 30-minute deadlines",
       "required_schema": "0032_beta_recruitment",
       "default_reader": "legacy shape preserved",
       "promises": "atomic participant/personal-copy/base reservation; earlier-only automatic confirmation; deadline fallback",

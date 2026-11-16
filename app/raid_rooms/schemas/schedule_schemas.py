@@ -9,7 +9,7 @@ from pydantic import StrictStr
 from pydantic import field_validator
 from app.raid_rooms.schemas.availability_schemas import DTO
 from app.raid_rooms.schemas.availability_schemas import Version
-from app.raid_rooms.schemas.availability_schemas import Clock
+from app.raid_rooms.schemas.availability_schemas import ScheduleClock
 from app.raid_rooms.schemas.admission_schemas import ScheduleGroup
 from app.raid_rooms.schemas.admission_schemas import Alternative
 
@@ -19,8 +19,8 @@ class EditAlternative(DTO):
     existing_session_id: UUID|None
     expected_session_revision: Version|None
     weekday: Annotated[StrictInt,Field(ge=1,le=7)]
-    starts_local: Clock|None
-    leader_latest_start_local: Clock|None
+    starts_local: ScheduleClock|None
+    leader_latest_start_local: ScheduleClock|None
     item_ids: list[UUID]
 
 
