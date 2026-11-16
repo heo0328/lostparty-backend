@@ -1,5 +1,8 @@
 # 개인 레이드 가능시간 1분 입력 설계
 
+2026-11-17 게시 완료: 구현 `5172c7535b556997e76b9d728dc4714a1988ab60`을 origin/refactor/lostark-server-processing에 push·원격 일치 확인. [전체3번째 댓글·Backend 구현/검증/로컬 지원 인계](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6924012652). 현재 명세 SHA256 `2f0ae34849e99618e194ad158383091f71967d3c41083d17dfee32a175fd9c9f`。다음 Native 고정 명세 재생성/실제 저장·제출·기기 확인, Backend 결과 대응이며 Issue OPEN이다. 게시 상태 기록은 같은 브랜치에서 함께 보존한다.
+
+
 2026-11-17 구현 갱신: 사용자 구현·검증·commit/push 지시로 아래 계획을 구현했다. AvailabilityClock/ScheduleClock 및 BInterval 공통 참조를 적용했고 저장/정규화·후보/예약 업무 로직은 재사용했다. 현재 OpenAPI 차이는 Interval/BInterval의 start/end 패턴4곳과 개인표 정책 설명이며191경로/211동작은 유지된다.
 
 검증: 관련121개 실행120PASS/1FAIL(새 HTTP 시험의 동적 server time 비교) 후 fixture를 수정하고 실제 베타 후보/예약 경계를 더한 신규15개가 모두 PASS했다. 중복 시험 ID/benchmark 출력까지 대조해 고유122개 통과·미해결 실패0을 확인했다. 최초 import 위치 오류와 불변 예약 수정 fixture도 수정했으며 제품 동작 실패로 덮거나 한 차례 전체 green으로 표시하지 않는다. 도구87PASS·의존성/문서·동결 원문/JSON·compile/diff 및 생성 OpenAPI 전체 비교 PASS.

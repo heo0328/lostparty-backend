@@ -1,5 +1,8 @@
 # LostParty Backend 기능 지도
 
+2026-11-17 게시 완료: 구현 `5172c7535b556997e76b9d728dc4714a1988ab60`을 origin/refactor/lostark-server-processing에 push·원격 일치 확인. [전체3번째 댓글·Backend 구현/검증/로컬 지원 인계](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6924012652). 현재 명세 SHA256 `2f0ae34849e99618e194ad158383091f71967d3c41083d17dfee32a175fd9c9f`。다음 Native 고정 명세 재생성/실제 저장·제출·기기 확인, Backend 결과 대응이며 Issue OPEN이다. 게시 상태 기록은 같은 브랜치에서 함께 보존한다.
+
+
 2026-11-17 Issue56 구현/검증·로컬 지원 완료: [근거](../features/recruitment/scheduling/personal-availability-minute-plan.md). 개인표1분·기존 일정/후보5분 분리, 고유122항목·도구87PASS·실제 dev 계약 일치/DB0037 자료 보존. 다음 Native 게시 명세 소비/실제 사용자 저장·기기, Backend 회신 대응. 아래 설계·dev0036 대기는 이전 이력이다.
 
 
