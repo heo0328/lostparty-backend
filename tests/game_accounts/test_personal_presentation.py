@@ -61,7 +61,7 @@ def display(client,h,r): return client.get(presentation_path(r),headers=h)
 
 def test_default_get_and_noop_no_rows_or_provider_io(client,owned,monkeypatch):
     from app.game_accounts.provider_io.provider import LostArkProvider
-    from app.lostark_keys import service as keys
+    from app.game_accounts.provider_io import credentials as keys
     h,r,cid=owned
     def forbidden(*a,**kw): raise AssertionError('Provider/credential forbidden')
     monkeypatch.setattr(LostArkProvider,'_fetch',forbidden);monkeypatch.setattr(keys,'capture',forbidden)
@@ -299,8 +299,8 @@ def test_internal_retirement_cleanup_is_atomic_targeted_and_no_live_activation(c
 
 
 def test_schema_required_nullable_p1_summary_preserved():
-    from app.main import create_legacy_app
-    app = create_legacy_app()
+    from app.main import create_app
+    app = create_app()
     definitions=app.openapi()['components']['schemas']
     for name in ('PersonalPreferences','PersonalPreferencesIn','PersonalPreferencesOut','PresentationIn','PresentationOut'):
         model=definitions[name]

@@ -177,7 +177,7 @@ def test_application_policy_isolation(selection,client):
     with current_client(w) as http:
         assert http.get('/v1/me/game-accounts/'+w['rid']+'/representative').json()['representative_character_id'] is None
     response=client.get('/v1/me/game-accounts/'+w['rid']+'/representative',headers=w['headers'])
-    assert response.status_code==200 and response.json()['representative_character_id']==w['ids'][0]
+    assert response.status_code==200 and response.json()['representative_character_id'] is None
     assert policy.current_policy.get() is False
 
 
@@ -195,7 +195,7 @@ def test_stored_power_scope_tie_and_power_only_cas(selection):
         c.summary=dict(c.summary,combat_power='10');c.power_fetched_at=stamp
         for scope,revision,power in [('a',1,'20'),('b',1,'30'),('c',2,'9999')]:
             db.add(ScopedPowerCache(actor_id=w['uid'],scope_key=scope*64,character_id=cid,lifecycle_revision=revision,
-                registration_id=rid,preview_version=None,credential_version=1,server_name=c.server_name,
+                registration_id=rid,preview_version=None,provider_generation='a'*64,server_name=c.server_name,
                 character_name=c.character_name,value=power,fetched_at=stamp,checked_at=stamp,status='failed',reason='UPSTREAM_UNAVAILABLE'))
     before=management.get(p,rid);row=next(r for r in before['data']['characters'] if r['character_id']==str(cid))
     assert row['combat_power']=='20' # same timestamp cache before summary; scope a before b; wrong lifecycle ignored

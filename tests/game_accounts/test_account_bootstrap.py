@@ -93,7 +93,7 @@ def test_current_auth_state_blocks_bootstrap(client, login, kind, status):
 
 def test_existing_projections_match_hidden_off_and_readonly(client, selected, monkeypatch):
     from app.game_accounts.provider_io.provider import LostArkProvider
-    from app.lostark_keys import service as credentials
+    from app.game_accounts.provider_io import credentials as credentials
     from app.raid_weekly import service as weekly
     h, state, r = selected
     ids = [i['character_id'] for i in page(client, h, r['registration_id'])['characters']['items']]
@@ -119,7 +119,9 @@ def test_existing_projections_match_hidden_off_and_readonly(client, selected, mo
     assert bundle['presentation'] == client.get('/v2/me/game-accounts/'+r['registration_id']+'/presentation-settings', headers=h).json()
     assert len(bundle['personal_profiles']) == 3
     for profile in bundle['personal_profiles']:
-        assert profile == client.get('/v2/me/characters/'+profile['character_id']+'/personal-profile', headers=h).json()
+        detail=client.get('/v2/me/characters/'+profile['character_id']+'/personal-profile', headers=h).json()
+        for role in ('dealer','support'):detail[role].pop('detail')
+        assert profile==detail
     old = client.get('/v1/me/raid-weekly-states', headers=h, params=[('character_id', i) for i in sorted(ids)]).json()
     assert body['weekly_states'] == old
     assert body['server_now'] == body['weekly_states']['current_cycle']['server_time']
@@ -332,7 +334,7 @@ def test_batch_power_matches_stored_latest_good_and_current_check(client, select
         ]:
             db.add(ScopedPowerCache(actor_id=registration.user_id, scope_key=scope, character_id=c.id,
                 lifecycle_revision=revision, registration_id=registration.id, preview_version=None,
-                credential_version=1, server_name=c.server_name, character_name=c.character_name,
+                provider_generation='a'*64, server_name=c.server_name, character_name=c.character_name,
                 value=value, fetched_at=fetched, checked_at=checked, status=status,
                 reason='UPSTREAM_UNAVAILABLE' if status == 'failed' else None, generation=1))
     out = client.get(URL, headers=h)

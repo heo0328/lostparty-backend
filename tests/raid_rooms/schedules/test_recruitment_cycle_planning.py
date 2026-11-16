@@ -1,10 +1,9 @@
 """W4-A2 scheduling under restricted PostgreSQL with synthetic actors."""
-import os
-import subprocess
 import uuid
 from datetime import datetime
 from datetime import timedelta
 from concurrent.futures import ThreadPoolExecutor
+from tests.concurrency import map_in_context
 import pytest
 from sqlalchemy import select
 from sqlalchemy import inspect
@@ -63,21 +62,11 @@ from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 from app.raid_rooms.common import readiness
 
 
-def upgrade_planning(target):
-    old=set(inspect(target).get_table_names())-{'alembic_version'};before=table_digests(target,old)
-    result=subprocess.run(['alembic','upgrade','0028_cycle_planning'],env={**os.environ,
-        'DATABASE_URL':target.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
-    assert result.returncode==0,result.stderr.decode()[-2200:]
-    assert table_digests(target,old)==before
-    with session() as db,db.begin():
-        readiness.require_ready(db,integrated=True)
-        with pytest.raises(GameError):readiness.require_active(db)
 
 
 @pytest.fixture
 def planning(consent):
-    target,a,b=consent;upgrade_planning(target)
-    return target,a,b
+    return consent
 
 
 def scoped(w,rid,key):
@@ -170,7 +159,7 @@ def test_n2_vote_quorum_concurrent_response_and_original_ack(planning):
     def attempt(_):
         try:return service.respond(actor(b['uid']),pid,command,body)
         except GameError as error:return error.code
-    with ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(attempt,range(2)))
+    with ThreadPoolExecutor(max_workers=2) as pool:results=list(map_in_context(pool,attempt,range(2)))
     original=service.respond(actor(b['uid']),pid,command,body)
     assert all(r==original or r=='REQUEST_IN_PROGRESS' for r in results)
     assert original[1]['data']['outcome']=='applied'
@@ -504,9 +493,8 @@ def test_newcomer_pending_and_nonacceptor_releases_only_old_target_reservations(
         assert all((db.get(Reservation,k).starts_at,db.get(Reservation,k).ends_at,db.get(Reservation,k).released_at)==v for k,v in other.items())
 
 
-def test_migration_preserves_existing_nonempty_consent_and_reservation_history(consent):
+def test_confirmed_consent_and_reservation_history_remain_available_to_planning(consent):
     target,a,b=consent;rid,c,n=scheduled(a);confirm(a,rid,n)
     with session() as db,db.begin():assert db.scalar(select(func.count()).select_from(CycleConsent))==1
-    upgrade_planning(target)
     assert plan(a,rid,n)['data']['my_participations'][0]['confirmation_state']=='confirmed'
     assert respond(a,rid,n,make_proposal(a,rid,n)[0])[1]['data']['outcome']=='applied'

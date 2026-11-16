@@ -1,10 +1,9 @@
 """W4-B actual PostgreSQL target outcomes; no development data/server mutation."""
-import os
-import subprocess
 import uuid
 from datetime import timedelta
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
+from tests.concurrency import map_in_context
 import pytest
 from sqlalchemy import select
 from sqlalchemy import func
@@ -46,7 +45,6 @@ from tests.raid_rooms.schedules.test_recruitment_cycle_planning import sources
 from tests.raid_rooms.schedules.test_recruitment_cycle_planning import imported
 from tests.raid_rooms.schedules.test_recruitment_cycle_planning import people
 from tests.raid_rooms.schedules.test_recruitment_cycle_planning import worlds
-from tests.raid_rooms.schedules.test_recruitment_cycle_planning import upgrade_planning
 from tests.raid_rooms.schedules.test_recruitment_cycle_planning import scheduled
 from tests.raid_rooms.schedules.test_recruitment_cycle_planning import plan
 from tests.raid_rooms.schedules.test_recruitment_cycle_planning import preflight
@@ -76,16 +74,7 @@ from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
 @pytest.fixture
 def outcomes(planning):
-    target,a,b=planning
-    before=table_digests(target,set(inspect(target).get_table_names())-{'alembic_version'})
-    done=subprocess.run(['alembic','upgrade','0029_cycle_outcomes'],env={**os.environ,'DATABASE_URL':target.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
-    assert done.returncode==0,done.stderr.decode()[-1500:]
-    assert table_digests(target,set(before))==before
-    with session() as db,db.begin():
-        readiness.require_ready(db,integrated=True)
-        denied('SERVICE_UNAVAILABLE',readiness.require_active,db)
-        denied('SERVICE_UNAVAILABLE',readiness.require_legacy_worker,db)
-    return target,a,b
+    return planning
 
 
 def context(w,rid,key,kind='personal_completion',index=0):
@@ -408,7 +397,7 @@ def test_duplicate_concurrent_completion_has_one_effect_and_original_receipt(out
     def attempt(_):
         try:return service.execute(actor(a['uid']),None,rd,key,body,'personal_completion')
         except GameError as error:return error.code
-    with ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(attempt,range(2)))
+    with ThreadPoolExecutor(max_workers=2) as pool:results=list(map_in_context(pool,attempt,range(2)))
     original=service.execute(actor(a['uid']),None,rd,key,body,'personal_completion')
     assert all(v==original or v=='REQUEST_IN_PROGRESS' for v in results)
     with session() as db,db.begin():assert db.scalar(select(func.count()).select_from(CycleOutcome))==1

@@ -12,8 +12,8 @@ from sqlalchemy import inspect, select
 from starlette.requests import Request
 
 from app.core.database import session
-from app.main import create_legacy_app, create_two_cycle_app
-legacy_app = create_legacy_app()
+from app.main import create_app
+current_app = create_app()
 from app.raid_rooms.contracts.roster_openapi import PARTICIPATION_OPERATIONS
 from app.raid_rooms.participation import roster_participation as rp
 from app.raid_rooms.participation import cycle_character
@@ -80,7 +80,7 @@ def completion_context(http, w, rid, cycle, kind, *, parameters=None, round_id=N
 
 
 def test_profile_declarations_match_every_runtime_route():
-    application = create_two_cycle_app()
+    application = create_app()
     actual = application.openapi()
     supported = set()
     for route in application.routes:
@@ -106,9 +106,8 @@ def test_profile_declarations_match_every_runtime_route():
                        actual['paths']['/v2/me/application-message-presets'][method].get('parameters', []))
 
 
-def test_both_complete_contract_objects_match_generated_schema():
-    assert legacy_app.openapi() == json.loads(Path('openapi/legacy.openapi.yaml').read_text())
-    assert create_two_cycle_app().openapi() == CONTRACT
+def test_current_complete_contract_matches_generated_schema():
+    assert create_app().openapi() == CONTRACT
 
 
 @pytest.mark.parametrize('kind,suffix', COMPLETIONS)

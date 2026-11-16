@@ -306,13 +306,14 @@ def test_http_removal_options_and_atomic_ack(corrected):
 
 def test_concurrent_removal_same_key_once(corrected):
     from concurrent.futures import ThreadPoolExecutor
+    from tests.concurrency import map_in_context
     from app.game_accounts.common.support import GameError
     engine,a,b=corrected;rid,c,n=scheduled(a);add_member(b,rid,c)
     value=removal(a,b,rid,c);body=removal_body(value);key=uuid.uuid4()
     def call():
         try:return service.execute(actor(a['uid']),rid,key,body)
         except GameError as error:return error.code
-    with ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(lambda _:call(),range(2)))
+    with ThreadPoolExecutor(max_workers=2) as pool:results=list(map_in_context(pool,lambda _:call(),range(2)))
     successful=[r for r in results if isinstance(r,tuple)]
     assert successful and all(r==successful[0] or r=='REQUEST_IN_PROGRESS' for r in results)
     assert service.execute(actor(a['uid']),rid,key,body)==successful[0]

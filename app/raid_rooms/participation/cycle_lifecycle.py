@@ -106,7 +106,7 @@ def qualify(db,room,row,cm,*,active_rows=None):
         if a.state=='active' and (lease is None or lease.assignment_id!=a.id or state is None or state.active_party_id!=room.id
                 or state.joined_at!=lease.joined_at):fail('WEEKLY_OCCUPANCY_CHANGED')
         ledgers.append([str(a.id),a.revision,a.state,state.revision if state else 1,str(lease.assignment_id) if lease else None])
-    return selected,[selected.model_dump(mode='json'),power['power_revision'],ledgers]
+    return selected,[selected.model_dump(mode='json'),power['summary_version'],ledgers]
 
 
 def source(db,uid,room,stamp,*,validate=True):

@@ -1,7 +1,5 @@
 """#17 observation/seat boundaries under disposable restricted PostgreSQL."""
 import app.game_accounts.models.roster_presence as roster_presence_models
-import os
-import subprocess
 import uuid
 from datetime import date
 from datetime import timedelta
@@ -44,18 +42,7 @@ from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
 @pytest.fixture
 def presence_db(policy_db):
-    engine, a, b = policy_db
-    tables = set(inspect(engine).get_table_names()) - {'alembic_version'}
-    before = table_digests(engine, tables)
-    result = subprocess.run(['alembic', 'upgrade', '0036_roster_presence'],
-        env={**os.environ, 'DATABASE_URL': engine.url.render_as_string(hide_password=False)},
-        capture_output=True, timeout=90)
-    assert result.returncode == 0, 'isolated roster-presence migration failed'
-    assert table_digests(engine, tables) == before
-    from app.raid_rooms.common.readiness import require_two_cycle_active
-    with session() as db:
-        require_two_cycle_active(db)
-    return engine, a, b
+    return policy_db
 
 
 def observe(w, *, absent=True, rollback=False):

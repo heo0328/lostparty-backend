@@ -108,7 +108,7 @@ def test_cli_errors_sanitized_without_retry(monkeypatch,capsys,error,reason):
     monkeypatch.setattr(d.sys.stdin,'isatty',lambda:True);monkeypatch.setattr(d.sys.stderr,'isatty',lambda:True)
     monkeypatch.setattr(d.getpass,'getpass',lambda *a:'private-secret')
     monkeypatch.setattr('builtins.input',lambda *a:'')
-    provider=SimpleNamespace(armory=Mock(side_effect=error));monkeypatch.setattr(d,'LostArkProvider',lambda *a:provider)
+    provider=SimpleNamespace(armory=Mock(side_effect=error));monkeypatch.setattr(d,'LostArkProvider',lambda *a,**kw:provider)
     assert d.main()==1
     output=capsys.readouterr().out
     assert json.loads(output)['reason']==reason and 'private' not in output

@@ -14,7 +14,6 @@ from sqlalchemy import union
 from app.auth.models import User
 from app.core.database import now
 from app.game_accounts.models.models import CharacterRoleSummary
-from app.game_accounts.models.power_success import RolePowerSuccess
 from app.game_accounts.common.support import fail
 from app.groups import admission_core as identity
 from app.groups.models import Group
@@ -55,22 +54,20 @@ def power_comparison(db, uid, selection, minimum):
     head=db.get(CharacterRoleSummary,key)
     if (head.version if head else 1) != selection.expected_role_summary_version:
         fail('REVISION_CONFLICT')
-    success=db.get(RolePowerSuccess,key)
-    return power_value(selection.selected_role, minimum, head, success)
+    return power_value(selection.selected_role, minimum, head, selection.expected_lifecycle_revision)
 
 
-def power_value(role, minimum, head, success):
-    """Pure projection of the existing last-success comparison policy."""
-    actual=success.combat_power if success else None
-    state=('unrestricted' if minimum is None else 'missing' if actual is None else
-           'meets' if Decimal(actual)>=Decimal(minimum) else 'below')
-    return dict(selected_role=role,requirement=minimum,actual=actual,state=state,
-        source='flutter_analysis',trust='client_submitted',current_summary_version=head.version if head else 1,
-        success_summary_version=success.source_summary_version if success else None,
-        power_revision=success.power_revision if success else 1,observed_at=success.observed_at if success else None,
-        success_saved_at=success.source_saved_at if success else None,
-        success_issues=deepcopy(success.source_summary.get('issues',[])) if success else [],
-        current_issues=deepcopy(head.summary.get('issues',[])) if head else [])
+def power_value(role, minimum, head, lifecycle=None):
+    """One latest role head; explicit null never falls back to historical power."""
+    summary = head.summary if head and (lifecycle is None or head.summary.get('observed_lifecycle_revision') == lifecycle) else None
+    actual = summary.get('combat_power') if summary else None
+    state = 'unrestricted' if minimum is None else 'missing' if actual is None else 'meets' if Decimal(actual) >= Decimal(minimum) else 'below'
+    return dict(selected_role=role, requirement=minimum, actual=actual, state=state,
+        source='server_analysis', trust='server_computed', summary_version=head.version if head else 1,
+        observed_at=summary.get('combat_power_observed_at') if summary else None,
+        saved_at=head.saved_at if summary else None,
+        integrity_status=summary.get('integrity_status') if summary else None,
+        issues=deepcopy(summary.get('issues', [])) if summary else [])
 
 
 def _limits(db, uid, selection, increasing, *, room_id=None):
@@ -217,10 +214,8 @@ def admit_bundle(db, uid, room, selection, targets, expected_cycle_key, *, valid
         member=Member(id=uuid.uuid4(),room_id=room.id,user_id=uid,revision=1,joined_at=stamp)
         db.add(member);db.flush()
     build=deepcopy(power)
-    # Use the original success provenance, including warnings, rather than current
-    # null/older head or a maximum/other-role observation.
-    success=db.get(RolePowerSuccess,(uid,character.id,selection.expected_ownership_revision,selection.selected_role))
-    if success:build['success_summary']=deepcopy(success.source_summary)
+    head=db.get(CharacterRoleSummary,(uid,character.id,selection.expected_ownership_revision,selection.selected_role))
+    if head:build['summary']=deepcopy(head.summary)
     from fastapi.encoders import jsonable_encoder
     assignments=[]
     for item,round,state,slot in plans:

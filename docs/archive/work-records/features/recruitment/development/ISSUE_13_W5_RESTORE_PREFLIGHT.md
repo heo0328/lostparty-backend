@@ -48,7 +48,7 @@ AGENTS → 협업 → NEXT_WORK → AI_CONTEXT → 계약3판 전환/4판/ACK와
 
 ## 다음 실제 전환 구간의 경계
 
-현재 source는 계속 DB0023/API114경로/구 이미지 `efde69d…`로 healthy다. 로컬 후보 이미지 `lostparty-two-cycle-preflight:f276342` / image ID `ccc787c…`를 별도로 빌드·검증했으며 실제 개발 API tag/실행은 바꾸지 않았다. 전체 image ID는 공개 proof에 있다. [전환 override](../../../../../../compose.two-cycle.yaml)는 기존 검토 상태를 유지한다.
+현재 source는 계속 DB0023/API114경로/구 이미지 `efde69d…`로 healthy다. 로컬 후보 이미지 `lostparty-two-cycle-preflight:f276342` / image ID `ccc787c…`를 별도로 빌드·검증했으며 실제 개발 API tag/실행은 바꾸지 않았다. 전체 image ID는 공개 proof에 있다. [전환 override](https://github.com/heo0328/lostparty-backend/blob/cda4db352c9ac922f269b9ec2794f0d888d4dca6/compose.two-cycle.yaml)는 기존 검토 상태를 유지한다.
 
 1. **대상/영향 확인**: 로컬 개발 DB0023→0029·API8000/worker를 함께 전환하는 대상과 위 과거7건 목록 차이를 확인한다. 기존 volume·환경·키·원본/ACK를 보존하고 임의 정리·세대/동의 복원은 하지 않는다. merge·운영배포·데이터 삭제와 구분한다.
 2. **전환 직전 checkpoint**: 구 API와 모든 worker를 정지한 뒤 같은 방식의 새 DB/키/환경 백업과 복구 기준을 확정한다. 이번 snapshot은 서비스 실행 중 확보했으므로 **실제 전환 checkpoint가 아니다**. 이후 새 쓰기를 포함하지 않으며 sequence 상태도 MVCC snapshot과 독립적이다(이번에는 복원/이행/복구에서 엄격 일치를 확인했다).

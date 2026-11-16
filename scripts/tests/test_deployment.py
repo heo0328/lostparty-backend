@@ -323,6 +323,33 @@ class RuntimeContractVersions(unittest.TestCase):
         for schema in (True,False,0,3,'2',None):
             with self.assertRaises(ValueError):contract_names(schema)
 
+    def test_contract_probe_reads_archived_file_without_starting_an_old_app(self):
+        import contextlib,io,os,tempfile,types,sys
+        from common import contract_probe,canonical,checksum
+        for mode in ('current','previous_named','historical'):
+            with self.subTest(mode=mode),tempfile.TemporaryDirectory() as tmp:
+                entry=types.ModuleType('app.main');parent=types.ModuleType('app');parent.main=entry
+                current=types.SimpleNamespace(openapi=lambda:{'current':True})
+                legacy=types.SimpleNamespace(openapi=lambda:{'legacy':True})
+                if mode=='historical':entry.create_two_cycle_app=lambda:current;entry.app=legacy
+                else:entry.create_app=lambda:current
+                if mode=='previous_named':entry.create_legacy_app=lambda:legacy
+                previous=os.getcwd();os.chdir(tmp)
+                try:
+                    if mode=='current':
+                        Path('openapi').mkdir();Path('openapi/legacy.openapi.yaml').write_text(json.dumps(legacy.openapi()))
+                    for schema in (1,2):
+                        out=io.StringIO()
+                        with patch.dict(sys.modules,{'app':parent,'app.main':entry}),contextlib.redirect_stdout(out):
+                            exec(contract_probe(schema),{})
+                        result=json.loads(out.getvalue())
+                        expected={'openapi.yaml':checksum(canonical(current.openapi())),
+                            'legacy.openapi.yaml':checksum(canonical(legacy.openapi()))} if schema==2 else {
+                            'openapi.yaml':checksum(canonical(legacy.openapi())),
+                            'two-cycle.openapi.yaml':checksum(canonical(current.openapi()))}
+                        self.assertEqual(result,expected)
+                finally:os.chdir(previous)
+
     def test_schema2_allows_only_the_equivalent_entrypoint_alias(self):
         from server import infrastructure
         old=copy.deepcopy(CONFIG);new=copy.deepcopy(CONFIG)

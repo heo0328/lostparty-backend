@@ -2,15 +2,14 @@
 import app.raid_rooms.schemas.application_presets as application_presets_types
 import app.raid_rooms.admissions.application_presets as application_presets_service
 import json
-import os
 from pathlib import Path
-import subprocess
 import uuid
 from datetime import date
 from datetime import datetime
 from datetime import timedelta
 from datetime import timezone
 from concurrent.futures import ThreadPoolExecutor
+from tests.concurrency import map_in_context
 import pytest
 from sqlalchemy import select
 from sqlalchemy import func
@@ -57,16 +56,7 @@ PROFILE={'contract_profile':beta_profile.PROFILE}
 
 @pytest.fixture
 def beta(current):
-    engine,a,b=current
-    tables=set(inspect(engine).get_table_names())-{'alembic_version'}
-    before=table_digests(engine,tables)
-    result=subprocess.run(['alembic','upgrade','0032_beta_recruitment'],env={**os.environ,
-        'DATABASE_URL':engine.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
-    assert result.returncode==0,result.stderr.decode()[-2000:]
-    assert table_digests(engine,tables)==before
-    from app.raid_rooms.common.readiness import require_two_cycle_active
-    with session() as db:require_two_cycle_active(db)
-    return engine,a,b
+    return current
 
 
 def create_beta(w,*,enabled=False,combined=False,mode='direct_join'):
@@ -194,7 +184,6 @@ def test_real_http_profile_creation_presets_and_closed_queries(beta):
     engine,a,b=beta
     rid,key,base,body,command=create_beta(a)
     with client(a) as http:
-        http.app.include_router(application_presets.router)
         replay=http.post('/v2/raid-rooms',params=PROFILE,json=body,headers={'Idempotency-Key':str(command)})
         assert replay.status_code==201,replay.json()
         assert 'recruitment_identity' not in replay.json()['data']
@@ -345,12 +334,8 @@ def test_unconfirmed_and_needs_review_use_existing_proposal_quorum(beta):
 
 
 def validate_beta_wire(path,method,status,value):
-    from jsonschema import Draft202012Validator
-    from jsonschema import FormatChecker
-    bundle=json.loads(Path('docs/features/recruitment/weekly-cycles/proposals/beta-recruitment-v2.wire.json').read_text())
-    operation=next(o for o in bundle['operations'] if o['path']==path and o['method']==method)
-    schema=operation['responses'][str(status)]['content']['application/json']['schema']
-    Draft202012Validator({'$defs':bundle['$defs'],**schema},format_checker=FormatChecker()).validate(value)
+    from tests.raid_rooms.admissions.test_recruitment_cycle_http import validate
+    validate(path,method.lower(),status,value)
 
 
 def test_actual_beta_reader_matrix_matches_agreed_closed_wire(beta):
@@ -441,7 +426,7 @@ def test_preset_concurrent_versions_only_one_writer_wins(beta):
         try:return application_presets_service.put(actor(a['uid']),uuid.uuid4(),data)[0]
         except GameError as error:return error.code
     with ThreadPoolExecutor(max_workers=2) as pool:
-        results=list(pool.map(write,['첫 문구','둘째 문구']))
+        results=list(map_in_context(pool,write,['첫 문구','둘째 문구']))
     assert sorted(map(str,results))==sorted(['200','REVISION_CONFLICT'])
     assert application_presets_service.get(actor(a['uid']))['version']==2
 
@@ -523,7 +508,6 @@ def test_printable_ascii_preset_storage_and_original_payload_replay(beta):
     key=str(uuid.uuid4());item=str(uuid.uuid4())
     body=dict(expected_version=1,items=[dict(id=item,text=text)])
     with client(a) as http:
-        http.app.include_router(application_presets.router)
         path='/v2/me/application-message-presets'
         first=http.put(path,json=body,headers={'Idempotency-Key':key})
         assert first.status_code==200,first.json()

@@ -23,7 +23,7 @@ from app.game_accounts.common.support import reserve
 from app.game_accounts.common.support import release
 from app.game_accounts.common.support import commit_result
 from app.game_accounts.common.support import quota
-from app.lostark_keys import service as credentials
+from app.game_accounts.provider_io import credentials
 from app.ownership_disputes import core
 from app.ownership_disputes import reads
 from app.ownership_disputes.models import Proof
@@ -83,7 +83,7 @@ def mutate(principal,operation,key,data,rid=None):
                 name=p.lookup_name
             if needs:
                 quota('v2-confirm:'+str(rid),1,5);quota('v2-confirm-user:'+str(uid),12)
-                snapshot=credentials.capture(principal)
+                snapshot=credentials.capture()
                 obs=accounts.lookup(principal,snapshot,name,proof=True,context=['ownership-v2-confirm',str(rid),str(ticket)])
         with session() as db,db.begin():
             uid=authorize(db,principal,write=True);current=now(db)
@@ -97,7 +97,7 @@ def mutate(principal,operation,key,data,rid=None):
                     if current>=p.expires_at:core.finish_proof(db,p,'expired','none','VERIFICATION_EXPIRED',p.expires_at)
                     else:
                         err=core.scope_error(db,p,obs.roster if obs else None)
-                        if snapshot and snapshot.version!=p.identity_snapshot['credential_version']:err='LOSTARK_KEY_CHANGED'
+                        if snapshot and snapshot.generation!=p.identity_snapshot['provider_generation']:err='SERVER_KEY_CHANGED'
                         if err:core.finish_proof(db,p,'invalidated','blocked',err,current)
                         elif obs is None:fail('UPSTREAM_UNAVAILABLE',503)
                         else:
@@ -139,7 +139,7 @@ def start(principal,operation,data,rid,ticket):
         guard=(r.id,r.version) if r else None
         generations={h.account_id:h.generation for h in db.scalars(select(AccountHead))}
     quota('v2-start:'+str(uid),3)
-    snapshot=credentials.capture(principal)
+    snapshot=credentials.capture()
     def roster_guard(rows):
         # Current ownership/capacity must be checked before an unnecessary Armory call.
         with session() as db:
@@ -180,7 +180,7 @@ def start(principal,operation,data,rid,ticket):
             source_registration_id=r.id if r else None,registration_id=r.id if r else None,dispute_id=d.id if d else None,
             candidate_id=a.id if a else None,lookup_name=canonical,baseline={k:dict(name=v.name,grade=v.grade) for k,v in obs.equipment.items()},slots=list(slots),
             identity_snapshot=dict(candidate=core.stamp(db,a,c) if a else None,registration_version=r.version if r else None,
-                proof_context=context,roster=obs.roster,credential_version=snapshot.version,server_equipment_baseline=baseline),
+                proof_context=context,roster=obs.roster,provider_generation=snapshot.generation,server_equipment_baseline=baseline),
             created_at=current,expires_at=expiry)
         db.add(p);db.flush();core.touch_proof(db,uid)
         if d:core.member_head(db,uid,True).dispute_revision+=1

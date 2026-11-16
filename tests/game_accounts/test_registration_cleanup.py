@@ -1,4 +1,4 @@
-"""Registration masking progress on disposable PostgreSQL, at both schema baselines."""
+"""Registration masking progress on disposable PostgreSQL, on the current schema."""
 import uuid
 from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
@@ -31,10 +31,10 @@ from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 MASK = {'preview': [], 'lookup_name': '[deleted]', 'label': '[deleted]'}
 
 
-@pytest.fixture(params=['0023_recruitment_resume', '0034_group_features'])
-def cleanup_db(request, monkeypatch):
+@pytest.fixture
+def cleanup_db(monkeypatch):
     with isolated_app_database() as (engine, _, upgrade):
-        upgrade(request.param)
+        upgrade('head')
         def set_timeouts(connection, record):
             with connection.cursor() as cursor:
                 cursor.execute("SET statement_timeout = '10s'")

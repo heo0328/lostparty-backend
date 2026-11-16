@@ -160,18 +160,16 @@ class ApplicationAck(DTO):
 
 class PowerComparison(DTO):
     selected_role: Literal['dealer','support']
-    requirement: DecimalValue|None
-    actual: DecimalValue|None
+    requirement: DecimalValue | None
+    actual: DecimalValue | None
     state: Literal['unrestricted','missing','below','meets']
-    source: Literal['flutter_analysis']
-    trust: Literal['client_submitted']
-    current_summary_version: Version
-    success_summary_version: Version|None
-    power_revision: Version
-    observed_at: datetime|None
-    success_saved_at: datetime|None
-    success_issues: list[AnalysisIssue]
-    current_issues: list[AnalysisIssue]
+    source: Literal['server_analysis']
+    trust: Literal['server_computed']
+    summary_version: Version
+    observed_at: datetime | None
+    saved_at: datetime | None
+    integrity_status: Literal['clean','review','error','unavailable'] | None
+    issues: list[AnalysisIssue]
 
 
 class CreateTarget(ItemChoice):

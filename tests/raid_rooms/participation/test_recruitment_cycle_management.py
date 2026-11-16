@@ -2,6 +2,7 @@
 import uuid
 from datetime import timedelta
 from concurrent.futures import ThreadPoolExecutor
+from tests.concurrency import map_in_context
 import pytest
 from sqlalchemy import select
 from sqlalchemy import func
@@ -89,7 +90,9 @@ def removal(w,other,rid,key):
 def global_body(ctx,**updates):
     c=ctx['data'];values=dict(expected_cycle_key=c['expected_cycle_key'],expected_room_revision=c['room_revision'],context_token=c['context_token'])
     if c['command']=='edit_common_settings':
-        values.update(c['current_settings']);values['expected_group_revision']=values.pop('group_revision');dto=inputs.CommonSettings
+        values.update(c['current_settings'])
+        from app.raid_rooms.schemas.cycle_group_schemas import TitleCommand
+        dto=TitleCommand
     else:values['expected_persistent_membership_revision']=c['persistent_membership_revision'];dto=inputs.GlobalMembership
     return dto.model_validate(values|updates)
 
@@ -305,12 +308,15 @@ def test_http_global_end_contract_and_scope(outcomes):
         assert 'target_revision' not in response.json()['scope']
 
 
-def test_common_group_link_is_immutable_and_group_cas_is_required(outcomes):
+def test_common_title_rejects_group_fields_without_writes(outcomes):
     engine,a,b=outcomes;rid,c,n=scheduled(a);ctx=common.get(actor(a['uid']),rid,'edit_common_settings')
     before=fingerprints(engine)
-    denied('GROUP_LINK_IMMUTABLE',common.execute,actor(a['uid']),rid,uuid.uuid4(),global_body(ctx,group_id=uuid.uuid4()),'edit_common_settings')
-    denied('INVALID_REQUEST',common.execute,actor(a['uid']),rid,uuid.uuid4(),global_body(ctx,expected_group_revision=2),'edit_common_settings')
-    denied('GROUP_MEMBERSHIP_REQUIRED',common.execute,actor(a['uid']),rid,uuid.uuid4(),global_body(ctx,scope='group'),'edit_common_settings')
+    payload=global_body(ctx).model_dump(mode='json')
+    with client(a) as http:
+        for fields in (dict(group_id=str(uuid.uuid4())),dict(expected_group_revision=2),dict(scope='group')):
+            response=http.put(f'/v2/raid-rooms/{rid}/common-settings',json=payload|fields,
+                headers={'Idempotency-Key':str(uuid.uuid4())})
+            assert response.status_code==400,response.text
     assert fingerprints(engine)==before
 
 
@@ -338,7 +344,7 @@ def test_concurrent_global_leave_has_one_effect(outcomes):
     def attempt(_):
         try:return common.execute(actor(b['uid']),rid,key,body,'leave')
         except GameError as error:return error.code
-    with ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(attempt,range(2)))
+    with ThreadPoolExecutor(max_workers=2) as pool:results=list(map_in_context(pool,attempt,range(2)))
     original=common.execute(actor(b['uid']),rid,key,body,'leave')
     assert all(r==original or r=='REQUEST_IN_PROGRESS' for r in results)
     with session() as db,db.begin():
@@ -370,16 +376,24 @@ def test_other_member_leave_keeps_completed_c_leadership(outcomes):
     assert common.get(actor(a['uid']),rid,'edit_common_settings')['data']['permission']['allowed']
 
 
-def test_linked_group_common_settings_requires_current_group_revision(outcomes):
+def test_linked_group_title_keeps_target_policies_and_group_revision(outcomes):
+    from app.groups.models import Group
+    from app.raid_rooms.models.cycle_group_models import CycleGroupPolicy
     engine,a,b=outcomes
     from tests.groups.test_group_foundation import create as group_create
     gid=uuid.UUID(group_create(a)[1]['group']['group_id'])
     ctx=preflight(a,continuation=True,gid=gid)
-    room=creation.create(actor(a['uid']),uuid.uuid4(),request(ctx,group_id=gid))[1]['data'];rid=uuid.UUID(room['room_id'])
-    ctx=common.get(actor(a['uid']),rid,'edit_common_settings');rev=ctx['data']['current_settings']['group_revision']
-    denied('REVISION_CONFLICT',common.execute,actor(a['uid']),rid,uuid.uuid4(),global_body(ctx,title='stale group',expected_group_revision=rev+1),'edit_common_settings')
+    room=creation.create(actor(a['uid']),uuid.uuid4(),request(ctx,scope='group',group_id=gid))[1]['data'];rid=uuid.UUID(room['room_id'])
+    ctx=common.get(actor(a['uid']),rid,'edit_common_settings')
+    assert set(ctx['data']['current_settings'])=={'title'}
+    with session() as db:
+        before={(p.cycle_id,p.generation):(p.scope,p.group_id,p.revision) for p in db.scalars(select(CycleGroupPolicy))}
+        revision=db.get(Group,gid).revision
     result=global_run(a,rid,'edit_common_settings',title='linked')[1]
-    assert result['data']['affected_cycle_keys']
+    assert result['data']['outcome']=='applied' and result['data']['affected_cycle_keys']
+    with session() as db:
+        assert {(p.cycle_id,p.generation):(p.scope,p.group_id,p.revision) for p in db.scalars(select(CycleGroupPolicy))}==before
+        assert db.get(Group,gid).revision==revision
 
 
 def test_http_common_unauthorized_actor_and_binding(outcomes):

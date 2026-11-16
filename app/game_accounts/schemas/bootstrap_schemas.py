@@ -7,7 +7,7 @@ from app.game_accounts.schemas.schemas import DTO
 from app.game_accounts.schemas.schemas import RegistrationOut
 from app.game_accounts.schemas.schemas import LifecycleCharactersOut
 from app.game_accounts.schemas.schemas import RepresentativeOut
-from app.game_accounts.schemas.profile_schemas import PersonalProfileOut
+from app.game_accounts.schemas.profile_schemas import BootstrapPersonalProfile
 from app.game_accounts.schemas.profile_schemas import PresentationOut
 from app.raid_weekly.schemas import WeeklyStates
 
@@ -22,7 +22,7 @@ class BootstrapRegistration(DTO):
     characters: LifecycleCharactersOut
     representative: RepresentativeOut | None
     presentation: PresentationOut | None
-    personal_profiles: list[PersonalProfileOut]
+    personal_profiles: list[BootstrapPersonalProfile]
     unavailable_characters: list[BootstrapUnavailable]
 
 

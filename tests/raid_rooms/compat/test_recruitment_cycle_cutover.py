@@ -5,6 +5,7 @@ from datetime import timedelta
 from datetime import datetime
 from datetime import time
 from concurrent.futures import ThreadPoolExecutor
+from tests.concurrency import map_in_context
 import pytest
 from sqlalchemy import select
 from sqlalchemy import func
@@ -92,7 +93,7 @@ def test_worker_duplicate_and_boundary_rollback(outcomes,monkeypatch):
         m.setattr(worker,'now',crossing);denied('CYCLE_CHANGED',worker.process_room,rid)
     assert fingerprints(engine)==before
     monkeypatch.setattr(worker,'now',lambda db:stamp)
-    with ThreadPoolExecutor(max_workers=2) as pool:list(pool.map(worker.process_room,[rid,rid]))
+    with ThreadPoolExecutor(max_workers=2) as pool:list(map_in_context(pool,worker.process_room,[rid,rid]))
     with session() as db,db.begin():
         from app.raid_rooms.models.cycle_models import ParticipationEvent
         assert db.scalar(select(func.count()).select_from(ParticipationEvent).where(ParticipationEvent.action=='stopped'))==1
@@ -188,18 +189,18 @@ def test_declined_summary_then_general_join_takes_priority(outcomes):
 
 
 def test_prepared_app_startup_and_full_route_contract(outcomes):
-    from app.main import create_two_cycle_app
-    from app.main import create_legacy_app
-    app = create_legacy_app()
+    from app.main import create_app
+    from app.main import create_app
+    app = create_app()
     from fastapi.testclient import TestClient
-    candidate=create_two_cycle_app()
+    candidate=create_app()
     with TestClient(candidate):pass
     with session() as db,db.begin():denied('SERVICE_UNAVAILABLE',readiness.require_active,db);readiness.require_two_cycle_active(db)
     spec=candidate.openapi()
     import json
     from pathlib import Path
     # Compare the current legacy contract, not the historical pre-group route count.
-    assert set(app.openapi()['paths']) == set(json.loads(Path('openapi/legacy.openapi.yaml').read_text())['paths'])
+    assert set(app.openapi()['paths']) == set(json.loads(Path('openapi/openapi.yaml').read_text())['paths'])
     fixed=json.loads(Path('docs/features/recruitment/weekly-cycles/examples/baseline/full.openapi.json').read_text())
     assert set(fixed['paths'])<=set(spec['paths'])
     assert all(method in spec['paths'][path] and spec['paths'][path][method]['operationId']==operation['operationId']
@@ -208,11 +209,11 @@ def test_prepared_app_startup_and_full_route_contract(outcomes):
 
 def test_prepared_app_v1_http_projections_and_unsafe_write(outcomes):
     engine,a,b=outcomes;rid,c,n=scheduled(a);add_member(b,rid,n)
-    from app.main import create_two_cycle_app
+    from app.main import create_app
     from app.auth.router import authenticated
     from app.raid_rooms.api.router import optional_principal
     from fastapi.testclient import TestClient
-    application=create_two_cycle_app();application.dependency_overrides[authenticated]=lambda:actor(a['uid'])
+    application=create_app();application.dependency_overrides[authenticated]=lambda:actor(a['uid'])
     application.dependency_overrides[optional_principal]=lambda:actor(a['uid'])
     before=fingerprints(engine)
     with TestClient(application) as http:

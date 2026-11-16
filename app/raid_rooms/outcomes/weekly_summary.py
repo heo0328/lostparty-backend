@@ -131,7 +131,7 @@ def participation(state, lease, candidates, by_id, account, character, visible_g
 
 def cycle_evidence(db,uid,ids,keys):
     revision=list(db.scalars(text('SELECT version_num FROM public.alembic_version')))
-    if revision not in (['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history'],['0034_group_features'],['0035_cycle_group_policy'],['0036_roster_presence']):return None,set()
+    if revision not in (['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history'],['0034_group_features'],['0035_cycle_group_policy'],['0036_roster_presence'],['0037_server_analysis']):return None,set()
     from app.raid_rooms.models.cycle_models import CycleAssignment
     from app.raid_rooms.models.cycle_models import CycleMember
     from app.raid_rooms.models.cycle_models import RoomCycle

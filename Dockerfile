@@ -9,6 +9,7 @@ RUN python scripts/check_dependencies.py && pip install --no-cache-dir --require
 COPY --chown=appuser:appuser app ./app
 COPY --chown=appuser:appuser alembic ./alembic
 COPY --chown=appuser:appuser alembic.ini .
+COPY --chown=appuser:appuser openapi/legacy.openapi.yaml ./openapi/legacy.openapi.yaml
 COPY --chown=appuser:appuser scripts/create_auth_keys.py ./scripts/create_auth_keys.py
 COPY --chown=appuser:appuser scripts/create_lightsail_secrets.py ./scripts/create_lightsail_secrets.py
 USER appuser

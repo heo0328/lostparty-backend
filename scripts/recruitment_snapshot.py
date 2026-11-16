@@ -156,8 +156,8 @@ def main():
             from app.raid_rooms.common import readiness
             from app.raid_rooms.common import cycle_worker
             readiness.require_two_cycle_active(db)
-            from app.main import create_two_cycle_app
-            assert len(create_two_cycle_app().openapi()['paths'])==167
+            from app.main import create_app
+            assert '/v2/me/character-analysis/refresh' in create_app().openapi()['paths']
             result=dict(revision=list(db.scalars(text('SELECT version_num FROM alembic_version'))),
                 restricted_login=bool(db.scalar(text('SELECT current_user=session_user AND NOT rolsuper AND NOT rolcreatedb AND NOT rolcreaterole FROM pg_roles WHERE rolname=current_user'))),
                 database_owner=bool(db.scalar(text('SELECT pg_get_userbyid(datdba)=current_user FROM pg_database WHERE datname=current_database()'))),
@@ -175,14 +175,6 @@ def main():
         elif mode=='worker':
             from app.raid_rooms.common.cycle_worker import process_due
             process_due();print(json.dumps(dict(processed=True)))
-        elif mode=='legacy':
-            from app.raid_rooms.common import readiness
-            import app.main as entry
-            app = entry.create_legacy_app() if hasattr(entry, "create_legacy_app") else entry.app
-            from app.main import health
-            readiness.require_active(db)
-            assert health()=={'status':'ok','database':'ok'}
-            print(json.dumps(dict(paths=len(app.openapi()['paths']),revision=list(db.scalars(text('SELECT version_num FROM alembic_version'))))))
         else:raise RuntimeError('Unknown helper mode')
 
 

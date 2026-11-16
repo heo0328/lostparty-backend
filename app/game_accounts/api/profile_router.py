@@ -43,12 +43,6 @@ def get(character_id: UUID, principal: Principal):
     return profiles.get(principal, character_id)
 
 
-@router.put('/{character_id}/role-summaries/{role}', response_model=s.RoleSummaryOut, responses=common)
-def put(character_id: UUID, role: s.Role, data: s.RoleSummaryIn, principal: Principal, key: Key):
-    _, body = profiles.put(principal, character_id, role, key, jsonable_encoder(data))
-    return body
-
-
 class PreferencesRoute(ProfileRoute):
     body_limit = 4096
 

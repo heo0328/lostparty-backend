@@ -1,8 +1,6 @@
 """Agreed calendar contract on a disposable, restricted-role database."""
 import copy
 import json
-import os
-import subprocess
 import time
 import tracemalloc
 from datetime import datetime, timedelta, timezone
@@ -28,10 +26,7 @@ from tests.raid_rooms.group_links.test_cycle_group_policy import (
 
 @pytest.fixture
 def calendar_db(policy_db):
-    engine, a, b = policy_db
-    result = subprocess.run(['alembic','upgrade','head'],env={**os.environ,'DATABASE_URL':engine.url.render_as_string(hide_password=False)},capture_output=True)
-    assert result.returncode == 0
-    return engine,a,b
+    return policy_db
 
 def http(w):
     app=FastAPI();register(app);app.include_router(router)

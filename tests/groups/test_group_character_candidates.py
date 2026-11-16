@@ -16,7 +16,7 @@ from app.game_accounts.models.models import Activity
 from app.game_accounts.models.models import Registration
 from app.game_accounts.models.models import NameClaim
 from app.game_accounts.models.models import CharacterRoleSummary
-from app.game_accounts.power.power_success import capture
+from tests.game_accounts.analysis.fixtures import detail_for
 from app.groups.models import Group
 from app.groups.models import GroupMembership
 from app.raid_rooms.admissions import character_candidates as service
@@ -85,7 +85,7 @@ def test_http_allowlist_page_fragments_and_readonly(group_candidates):
             from referencing import Registry
             from referencing import Resource
             from referencing.jsonschema import DRAFT202012
-            contract=json.loads(Path('docs/features/recruitment/search/examples/group-character-candidates.openapi.json').read_text())
+            contract=json.loads(Path('openapi/openapi.yaml').read_text())
             registry=Registry().with_resource('urn:candidates',Resource.from_contents(contract,default_specification=DRAFT202012))
             Draft202012Validator({'$ref':'urn:candidates#/components/schemas/CandidatePage'},registry=registry,
                 format_checker=Draft202012Validator.FORMAT_CHECKER).validate(value)
@@ -167,17 +167,18 @@ def test_power_success_provenance_and_lifecycle_boundary(group_candidates):
     with session() as db, db.begin():
         head = CharacterRoleSummary(user_id=a['uid'], character_id=cid, ownership_revision=1,
             role='dealer', version=2, summary=summary(), saved_at=now(db))
-        db.add(head); db.flush(); capture(db, head)
+        head.detail=detail_for(head.summary, head.role); db.add(head); db.flush()
     value = next(c for g in page(a, gid)['groups'] for c in g['characters'] if c['character_id'] == str(cid))
-    assert value['dealer']['value'] == '12345.00' and value['dealer']['trust'] == 'client_submitted'
+    assert value['dealer']['value'] == '12345.00' and value['dealer']['trust'] == 'server_computed'
     assert value['support']['source'] == 'unavailable' and value['support']['value'] is None
     with session() as db, db.begin():
         head = db.get(CharacterRoleSummary,(a['uid'],cid,1,'dealer'))
         head.version += 1
         head.summary = head.summary | dict(combat_power=None,combat_power_observed_at=None)
-        capture(db,head)
+        head.detail=detail_for(head.summary, head.role)
     retained = next(c for g in page(a, gid)['groups'] for c in g['characters'] if c['character_id'] == str(cid))
-    assert retained['dealer'] == value['dealer']
+    assert retained['dealer']['value'] is None and retained['dealer']['observed_at'] is None
+    assert retained['dealer']['summary_version']==3 and retained['dealer']['source']=='server_analysis'
     with session() as db, db.begin(): db.get(Character, cid).lifecycle_revision += 1
     value = next(c for g in page(a, gid)['groups'] for c in g['characters'] if c['character_id'] == str(cid))
     assert value['dealer']['source'] == 'unavailable'

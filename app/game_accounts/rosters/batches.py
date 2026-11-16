@@ -1,18 +1,11 @@
-"""Bounded snapshot read and independent, replay-compatible summary commands."""
-import logging
-from time import monotonic
+"""Bounded read-only snapshot of current personal profiles."""
 
-from fastapi.encoders import jsonable_encoder
 from pydantic import ValidationError
 from sqlalchemy import select
 from sqlalchemy import text
-from sqlalchemy.exc import SQLAlchemyError
 
 from app.core.database import session
 from app.core.database import now
-from app.core.errors import AuthError
-from app.core.observability import emit
-from app.core.observability import category
 from app.game_accounts.character_profiles import profiles
 from app.game_accounts.rosters.bootstrap import StoredRows
 from app.game_accounts.rosters.bootstrap import current_personal_rows
@@ -23,10 +16,7 @@ from app.game_accounts.models.models import NameClaim
 from app.game_accounts.models.models import CharacterRoleSummary
 from app.game_accounts.models.models import CharacterPersonalPreferences
 from app.game_accounts.schemas.profile_schemas import PersonalProfileOut
-from app.game_accounts.schemas.profile_schemas import RoleSummaryIn
 from app.game_accounts.common.support import fail
-
-BUDGET_SECONDS = 20
 
 
 def error(code, request_id, retry_after=None):
@@ -77,38 +67,3 @@ def get(principal, ids, request_id):
             items.append(dict(character_id=cid, status=status, profile=profile,
                               error=error(code, request_id) if code else None))
         return dict(evaluated_at=stamp, items=items)
-
-
-def put(principal, data, request_id):
-    started = monotonic()
-    # Global preflight, before even creating a command reservation.
-    with session() as db, db.begin():
-        profiles.authorize(db, principal)
-    stopped = False
-    items = []
-    for command in data.items:
-        result = None
-        detail = None
-        if stopped or monotonic() - started >= BUDGET_SECONDS:
-            status, detail = 503, error('BATCH_NOT_PROCESSED', request_id)
-            stopped = True
-        elif command.role not in ('dealer', 'support'):
-            status, detail = 400, error('INVALID_ROLE', request_id)
-        else:
-            # Same model/encoder as single PUT: no batch metadata in the fingerprint.
-            body = jsonable_encoder(RoleSummaryIn.model_validate(command.model_dump(
-                exclude={'character_id', 'role', 'command_id'})))
-            try:
-                status, result = profiles.put(principal, command.character_id,
-                                             command.role, command.command_id, body)
-            except AuthError as exc:
-                status = exc.status
-                detail = error(exc.code, request_id, getattr(exc, 'retry_after', None))
-                stopped = status == 401 or exc.code == 'ACCOUNT_DISABLED' or status >= 500
-            except SQLAlchemyError as exc:
-                emit('database_error', level=logging.ERROR, category=category(exc))
-                status, detail = 503, error('SERVICE_UNAVAILABLE', request_id)
-                stopped = True
-        items.append(dict(character_id=command.character_id, role=command.role,
-            command_id=command.command_id, status=status, result=result, error=detail))
-    return dict(items=items)

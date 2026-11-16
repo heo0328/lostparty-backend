@@ -15,7 +15,7 @@ def setup_database():
     private = rsa.generate_private_key(public_exponent=65537, key_size=2048)
     (directory/'jwt.pem').write_bytes(private.private_bytes(serialization.Encoding.PEM, serialization.PrivateFormat.PKCS8, serialization.NoEncryption()))
     (directory/'recovery.key').write_bytes(os.urandom(32))
-    (directory/'lostark-credential.key').write_bytes(os.urandom(32))
+    (directory/'lostark-api-token').write_text('synthetic.server.token')
     (directory/'lostark-fingerprint.key').write_bytes(os.urandom(32))
     subprocess.run(['alembic','upgrade','0001_auth'], check=True, capture_output=True)
     from app.core.database import engine
@@ -25,10 +25,8 @@ def setup_database():
         c.execute(text("INSERT INTO users (id,status,created_at,updated_at,last_login_at) VALUES (:id,'active',now(),now(),now())"),{'id':existing_id})
         c.execute(text("INSERT INTO auth_transactions (id,nonce_digest,secret_digest,expires_at) VALUES (:id,'legacy-test-nonce','legacy-test-secret',now()+interval '10 minutes')"), {'id':existing_id})
         before=dict(c.execute(text('SELECT * FROM users WHERE id=:id'),{'id':existing_id}).mappings().one())
-    # 0024 is a staged shadow migration, deliberately rejected by the old API
-    # and worker. Exercise it in disposable migration databases until cutover;
-    # the legacy HTTP regression suite must continue using its runtime schema.
-    subprocess.run(['alembic','upgrade','0023_recruitment_resume'], check=True, capture_output=True)
+    # Current schema only; historical migration scenarios own their disposable databases.
+    subprocess.run(['alembic','upgrade','head'], check=True, capture_output=True)
     with engine().connect() as c:
         after=c.execute(text('SELECT * FROM users WHERE id=:id'),{'id':existing_id}).mappings().one()
         assert {k:after[k] for k in before}==before
@@ -51,8 +49,8 @@ def isolated():
 
 @pytest.fixture
 def client():
-    from app.main import create_legacy_app
-    app = create_legacy_app()
+    from app.main import create_app
+    app = create_app()
     with TestClient(app, raise_server_exceptions=False) as c:
         yield c
 

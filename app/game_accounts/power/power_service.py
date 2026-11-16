@@ -16,8 +16,8 @@ from app.game_accounts.power.combat_power import default_collection_target
 from app.game_accounts.power.combat_power import parse_profile_power
 from app.game_accounts.provider_io.provider import LostArkProvider
 from app.game_accounts.provider_io.provider import ProviderUnavailable
-from app.lostark_keys import service as credentials
-from app.lostark_keys import rate_limits
+from app.game_accounts.provider_io import credentials
+from app.game_accounts.provider_io import rate_limits
 from app.game_accounts.common.support import authorize
 from app.game_accounts.common.support import lock
 from app.game_accounts.common.support import fail
@@ -125,7 +125,7 @@ def refresh(principal, rid, key, payload):
     try:
         with session() as db:
             current_roster(db, authorize(db, principal), rid)
-        snapshot = credentials.capture(principal)
+        snapshot = credentials.capture()
         pairs = list(dict.fromkeys((v['server_name'], v['character_name']) for v in payload['characters']))
         with session() as db, db.begin():
             scoped(db)
@@ -140,28 +140,28 @@ def refresh(principal, rid, key, payload):
                 if not default_collection_target(row.get('item_level')):
                     outcomes[pair] = ('skipped', 'ITEM_LEVEL_UNAVAILABLE' if row.get('item_level') is None else 'ITEM_LEVEL_BELOW_DEFAULT')
                     continue
-                ident = key_for(uid, pair, row['_scope'], snapshot.version)
+                ident = key_for(uid, pair, row['_scope'], snapshot.generation)
                 c = db.get(PowerCache, ident)
                 current = now(db)
-                cached = c and c.credential_version == snapshot.version and c.checked_at and c.checked_at >= row['summary_fetched_at'] and current < c.checked_at + (timedelta(seconds=10) if c.status == 'failed' else TTL)
+                cached = c and c.provider_generation == snapshot.generation and c.checked_at and c.checked_at >= row['summary_fetched_at'] and current < c.checked_at + (timedelta(seconds=10) if c.status == 'failed' else TTL)
                 if cached and c.reason == 'UPSTREAM_RATE_LIMITED':
                     _, blocked_until, _ = rate_limits.state(db, snapshot.fingerprint)
                     cached = blocked_until is not None
                 if cached:
                     outcomes[pair] = ('cached' if c.status == 'available' else c.status, c.reason)
                     continue
-                if c and c.credential_version == snapshot.version and c.lease_expires_at and current < c.lease_expires_at:
+                if c and c.provider_generation == snapshot.generation and c.lease_expires_at and current < c.lease_expires_at:
                     outcomes[pair] = ('deferred', 'FETCH_IN_PROGRESS')
                     continue
                 if not c:
-                    c = PowerCache(actor_id=uid, scope_key=ident[1], **row['_scope'], credential_version=snapshot.version,
+                    c = PowerCache(actor_id=uid, scope_key=ident[1], **row['_scope'], provider_generation=snapshot.generation,
                                    server_name=pair[0], character_name=pair[1],
                                    generation=0, status='unknown', value=row.get('combat_power'),
                                    fetched_at=row.get('power_fetched_at'))
                     db.add(c)
-                if c.credential_version != snapshot.version:
+                if c.provider_generation != snapshot.generation:
                     c.checked_at, c.status, c.reason = None, 'unknown', None
-                c.credential_version = snapshot.version
+                c.provider_generation = snapshot.generation
                 c.generation += 1
                 c.lease_expires_at = current + timedelta(seconds=30)
                 claims[pair] = ident, c.generation

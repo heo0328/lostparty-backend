@@ -145,7 +145,7 @@ def prepare(db,uid,rid,key,intent,cid,role,stamp,*,seed=None,include_session_dis
         source_proof.append(['group_policy',group_policy.state(group_policy.get(db,source)),inherited,
             group_policy.group_evidence(db,group_policy.get(db,source).group_id,uid)])
     hidden=[source_proof,room.revision,room.scope,selection_context.group_stamp(db,room.group_id,retained=True),settings,proof,
-        comparison['power_revision'] if comparison else None,
+        comparison['summary_version'] if comparison else None,
         jsonable_encoder(inputs),[row.id,row.revision,row.generation,row.state] if row else None]
     if beta_profile.enabled():
         setting=beta_schedule.config(beta_config or beta_schedule.query_config(),key=key,

@@ -97,6 +97,7 @@ class ScheduleAlternative(Base):
     session_id = mapped_column(UUID, nullable=True)
     __table_args__ = (
         UniqueConstraint('group_id', 'client_key'),
+        UniqueConstraint('group_id', 'id'),
         ForeignKeyConstraint(['room_id', 'group_id'], ['recruitment_schedule_groups.room_id', 'recruitment_schedule_groups.id']),
         ForeignKeyConstraint(['room_id', 'group_id', 'session_id'], ['recruitment_session_bindings.room_id', 'recruitment_session_bindings.group_id', 'recruitment_session_bindings.session_id']),
         CheckConstraint('weekday BETWEEN 1 AND 7'),
@@ -178,7 +179,6 @@ class TimeReservation(Base):
         # Legacy runtime (0023) uniqueness. Shadow 0027 removes this full-history
         # constraint; the active partial index below remains authoritative and
         # an immutable consent row records each later confirmation interval.
-        UniqueConstraint('participation_id', 'segment_id', 'schedule_revision'),
         ForeignKeyConstraint(['room_id', 'participation_id', 'session_id', 'membership_id', 'user_id'], ['recruitment_participations.room_id', 'recruitment_participations.id', 'recruitment_participations.session_id', 'recruitment_participations.membership_id', 'recruitment_participations.user_id']),
         ForeignKeyConstraint(['room_id', 'assignment_id', 'membership_id', 'user_id', 'item_id', 'round_id'], ['recruitment_assignments.room_id', 'recruitment_assignments.id', 'recruitment_assignments.membership_id', 'recruitment_assignments.user_id', 'recruitment_assignments.item_id', 'recruitment_assignments.round_id']),
         ForeignKeyConstraint(['room_id', 'segment_id', 'session_id', 'item_id', 'round_id'], ['recruitment_segments.room_id', 'recruitment_segments.id', 'recruitment_segments.session_id', 'recruitment_segments.item_id', 'recruitment_segments.round_id']),

@@ -228,8 +228,8 @@ def test_actor_extra_and_access_forgery(client,login):
 
 
 def test_schema_contract():
-    from app.main import create_legacy_app
-    app = create_legacy_app()
+    from app.main import create_app
+    app = create_app()
     schema=app.openapi()
     assert {'/health','/v1/auth/google/challenges','/v1/auth/google','/v1/me',
             '/v1/auth/session','/v1/auth/refresh','/v1/auth/logout'} <= set(schema['paths'])
@@ -328,9 +328,9 @@ def test_access_expiry_and_wrong_claims(client,login):
 def test_model_migration_consistency():
     from alembic.autogenerate import compare_metadata
     from alembic.migration import MigrationContext
-    from tests.legacy_metadata import legacy_metadata
+    from app.core.model_registry import metadata
     from app.core.database import engine
-    metadata = legacy_metadata()
     with engine().connect() as connection:
-        assert connection.exec_driver_sql('SELECT version_num FROM alembic_version').scalar_one() == '0023_recruitment_resume'
-        assert compare_metadata(MigrationContext.configure(connection), metadata) == []
+        assert connection.exec_driver_sql('SELECT version_num FROM alembic_version').scalar_one() == '0037_server_analysis'
+        differences = compare_metadata(MigrationContext.configure(connection), metadata)
+        assert not differences, repr(differences)

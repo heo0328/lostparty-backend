@@ -232,11 +232,12 @@ def test_challenge_old_generation_or_key_cannot_confirm(client,world,login,monke
     response=change(client,h,'post',VERIFY+'/'+v['challenge_id']+'/confirm',{})
     assert response.status_code==409 and response.json()['error']['code']=='REVISION_CONFLICT'
     state['removed']=();v=start(client,h,r['registration_id']);state['removed']=v['required_slots']
-    response=change(client,h,'put','/v1/me/lostark-api-key',{'token':'replacement.member.signature','expected_version':2})
-    assert response.status_code==200
+    from pathlib import Path
+    from app.core.config import settings
+    Path(settings.secret_dir,'lostark-api-token').write_text('replacement.server.signature')
     calls=state['calls']
     response=change(client,h,'post',VERIFY+'/'+v['challenge_id']+'/confirm',{})
-    assert response.status_code==409 and response.json()['error']['code']=='LOSTARK_KEY_CHANGED'
+    assert response.status_code==503 and response.json()['error']['code']=='SERVER_KEY_CHANGED'
     assert state['calls']==calls
 
 
@@ -246,7 +247,7 @@ def test_old_name_cache_not_imported_into_new_scope(client,world,monkeypatch):
     with session() as db,db.begin():
         uid=db.scalar(select(Registration.user_id))
         db.add(LegacyPower(actor_id=uid,server_name='sample-server',character_name='a0',value='9999',status='available',generation=0,
-                           fetched_at=now(db),checked_at=now(db),credential_version=2))
+                           fetched_at=now(db),checked_at=now(db),provider_generation='b'*64))
     assert page(client,h,r['registration_id'])['characters']['items'][0]['combat_power'] is None
     verify(client,h,state,r['registration_id'])
     seed_provider(monkeypatch,'123')

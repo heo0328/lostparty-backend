@@ -46,7 +46,7 @@ def test_manual_selection_does_not_derive_authority_from_level(client,world,leve
 def test_manual_level_independent_for_owned_subaccount(client,world,level):
     h,state=world;r=register(client,h);verify(client,h,state,r['registration_id'])
     p=page(client,h,r['registration_id']);cid=p['characters']['items'][0]['character_id'];set_level(cid,level)
-    response=change(client,h,'put',BASE+'/'+r['registration_id']+'/character-settings',save_data(p,[cid],cid))
+    response=change(client,h,'put',BASE+'/'+r['registration_id']+'/character-settings',save_data(p,[cid]))
     assert response.status_code==200 and response.json()['activity_character_ids']==[cid]
     assert client.get(BASE,headers=h).json()['items'][0]['is_main'] is False
 
@@ -76,7 +76,7 @@ def test_existing_low_selection_is_eligible_without_replacing_or_deleting(client
 
 
 def test_explicit_initial_highest_selected_is_saved_once_with_cas(client,world):
-    h,state=world;r=register(client,h);verify(client,h,state,r['registration_id'])
+    h,state=world;r=register(client,h,main=True);verify(client,h,state,r['registration_id'])
     p=page(client,h,r['registration_id']);ids=[i['character_id'] for i in p['characters']['items']]
     for cid,level in zip(ids,['1701','1799','1750']):set_level(cid,level)
     # Existing UI chooses the highest candidate within its explicit activity draft.

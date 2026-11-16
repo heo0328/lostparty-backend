@@ -29,11 +29,16 @@ def capture(platform, state, destination, *, installed=Path('/usr/local/lib/lost
     current=json.loads((state/'current.json').read_text())
     before=platform.containers()
     protected=platform.protected_files()
-    expected={'jwt.pem','recovery.key','lostark-credential.key','lostark-fingerprint.key','.env.lightsail'}
-    require({Path(p).name for p in protected}==expected,'recovery_material_missing')
     require(platform.healthy(current['image']),'baseline_unhealthy')
     revision=platform.db_revision(before['api']['Id'])
-    require(revision in ('0035_cycle_group_policy','0036_roster_presence'),'unexpected_backup_revision')
+    require(revision in ('0035_cycle_group_policy','0036_roster_presence','0037_server_analysis'),'unexpected_backup_revision')
+    names={Path(p).name for p in protected}
+    base={'jwt.pem','recovery.key','lostark-fingerprint.key','.env.lightsail'}
+    if revision=='0037_server_analysis':
+        required=base|{'lostark-api-token'}
+        require(required<=names<=required|{'lostark-credential.key'},'recovery_material_missing')
+    else:
+        require(names==base|{'lostark-credential.key'},'recovery_material_missing')
     env=dict(item.split('=',1) for item in before['db']['Config']['Env'] if '=' in item)
     destination.mkdir(mode=0o700,parents=True)
     dump=subprocess.run(['docker','exec',before['db']['Id'],'pg_dump','-U','postgres',

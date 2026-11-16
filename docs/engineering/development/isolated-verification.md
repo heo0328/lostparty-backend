@@ -1,5 +1,7 @@
 # 격리 검증 실행
 
+2026-11-16 #55: 현재 앱/DB0037 단일 시험 기준으로 전환했다. `--collect-only`로 발견만, `--verbose`로 항목별 결과, `--maxfail N`으로 실패 제한을 지정할 수 있다. 실제 dev API/DB는 교체하지 않는다. 아래 도입 당시 수치는 이력이다.
+
 2026-11-13 실행 정리: 현재/legacy 명세와 실행 이름은 [현재 기준](runtime-configuration.md)을 따른다. `two-cycle`은 기존 회귀 묶음 선택 이름으로도 유지한다. 아래 도입 당시 이미지·실행 결과는 과거 이력이다.
 
 2026-11-09 파일 분류 후 실행 방법: 테스트는 기능별 하위 패키지에 있으며 전체 발견은 재귀 검색한다. 아래 실행 예시는 새 경로를 사용한다. 기존 `legacy`·`two-cycle` 묶음 구성/순서와 격리·정확 파일/선택 안전성은 유지한다. [분류 기준](source-layout.md)·[이전→현재 대응표](folder-layout-map.json)를 참고한다.
@@ -18,26 +20,26 @@
 python3 scripts/verify_isolated.py static
 python3 -m unittest discover -s scripts/tests -v
 python3 scripts/verify_isolated.py contracts
-python3 scripts/verify_isolated.py legacy
+python3 scripts/verify_isolated.py current
 python3 scripts/verify_isolated.py two-cycle
 python3 scripts/verify_isolated.py all
 ```
 
 - `static`: [의존성 lock 정합성](dependency-locking.md), 기존 문서·동결자료·JSON/Python 경로 검사와 실행기 호스트 unittest. Docker/DB를 시작하지 않는다. 전체 lint/type 검사는 아니다.
 - 호스트 unittest: 실행기의 환경 거부·선택 제한·실패 전달·cleanup 제어를 검사한다. DB/서버에 접근하지 않는다.
-- `contracts`: 새 시험 이미지에서 현재192경로/213동작(`create_app`, openapi.yaml)과 legacy125경로/142동작(`create_legacy_app`, legacy.openapi.yaml)의 생성 OpenAPI 객체 전체를 비교한다. DB/lifespan/HTTP 서버를 시작하지 않는다.
-- `legacy`: 인증·계정·bootstrap·회원설정·개인키·그룹HTTP·기존모집HTTP의 지정7파일 회귀 묶음이다.
-- `two-cycle`: 구성·통합자격·표시/참조/아이템레벨·membership actions·atomic members·완료정정의 지정 파일 회귀 묶음이다.
+- `contracts`: 새 시험 이미지의 현재191경로/211동작(`create_app`, openapi.yaml) 생성 OpenAPI 객체 전체를 비교한다. 과거 명세 파일은 동결 검사 대상으로만 보존하며 과거 앱을 생성하지 않는다. DB/lifespan/HTTP 서버를 시작하지 않는다.
+- `current`: 인증·신규 분석/명령·서버 키·공유 제한·마이그레이션·회원설정의 지정7파일이다.
+- `two-cycle`: 현재 재참가 이력·베타 모집의 지정2파일이다.
 
 - `all`: `tests` 하위의 `test_*.py` 전체 파일을 선택한다. 시간이 오래 걸릴 수 있으며 전체 선택이 전체 통과를 뜻하지 않는다. 추가 파일을 지정하면 그 파일만 실행한다.
 
-legacy/two-cycle 묶음은 프로젝트 전체 시험이 아니다. 파일 목록은 [실행 정의](../../../scripts/isolated_checks.py)의 `SUITES`가 원본이며 시작 시 실제 선택을 출력한다. 특정 변경에 필요한 다른 시험은 `all tests/<기능>/test_…py`로 선택할 수 있다. 기존 검증 결과의 수치를 새 실행의 통과 수에 합산하지 않는다.
+current/two-cycle 묶음은 프로젝트 전체 시험이 아니다. 파일 목록은 [실행 정의](../../../scripts/isolated_checks.py)의 `SUITES`가 원본이며 시작 시 실제 선택을 출력한다. 특정 변경에 필요한 다른 시험은 `all tests/<기능>/test_…py`로 선택할 수 있다. 기존 검증 결과의 수치를 새 실행의 통과 수에 합산하지 않는다.
 
 묶음 안의 파일/정확 node만 선택할 수도 있다. 선택된 항목만 검증한 결과로 보고한다.
 
 ```bash
-python3 scripts/verify_isolated.py legacy tests/auth/test_auth.py
-python3 scripts/verify_isolated.py two-cycle tests/raid_rooms/admissions/test_application_item_level.py
+python3 scripts/verify_isolated.py current tests/auth/test_auth.py
+python3 scripts/verify_isolated.py two-cycle tests/raid_rooms/admissions/test_beta_recruitment.py
 python3 scripts/verify_isolated.py all tests/raid_rooms/reads/test_recruitment_cycle_queries.py
 ```
 
@@ -46,7 +48,7 @@ python3 scripts/verify_isolated.py all tests/raid_rooms/reads/test_recruitment_c
 - 고유 프로젝트의 `test-db`만 만들고 `lostparty_test`를 tmpfs에 저장한다. host port·host bind mount·영속 volume·실키 연결은 없다. 내부 네트워크만 사용해 시험 중 실제 provider 접근을 막는다. 이미지 최초 build의 패키지 다운로드에는 네트워크가 필요하다.
 - `.env` 자동 로딩을 끄고 상속한 `COMPOSE_*` 옵션을 제거한 뒤 `compose.test.yaml`과 고유 프로젝트를 명시한다. `DATABASE_URL`/키 디렉터리는 Compose의 합성 시험 값으로 고정한다. 기존 개발 컨테이너 이름이나 volume을 참조하지 않는다.
 - 컨테이너 진입점은 시험 표식·DB 주소/DB명/사용자·키 디렉터리·worker 비활성을 검사하며 다른 환경이면 pytest 전에 거부한다. 이것은 직접 pytest를 임의 환경에서 실행해도 안전하다는 보장이 아니다. 신규 진입점을 사용한다.
-- 공통 `tests/conftest.py`의 기본0023 준비를 유지한다. `test_model_migration_consistency`도0023의 명시적 모델 모듈만 복사해 비교하며0031에서만 생기는 index를 제외한다. 전체 collection에서 최신 모델이 import돼도 기본 시험에 섞이지 않도록 했다. 이 시험은0031 전체 metadata 일치 검증이 아니다. 최신 기능 시험은 기존 fixture로 별도 임시 DB/제한된 app role을 만들고 필요한0031 등으로 이행한다. 전체 fixture를0031로 바꾸지 않았다. 인증 cleanup은 기존 TestClient lifespan 동작을 유지하되 시험DB 안에서만 동작한다.
+- 공통 `tests/conftest.py`는 현재0037/head를 준비한다. 모델 일치 시험은 앱·Alembic 공통 metadata를 사용한다. 필요한 기능 fixture는 별도 임시 DB/제한 LOGIN role을 사용하며 migration 전후 보존은 해당 시점의 SQL 자료를 직접 준비한다. [현재 앱 시험 대응표](current-test-consolidation.md)에 종료한 DB0023 runtime 시험과 현재 기능 검증 위치를 구분한다. 인증 cleanup은 TestClient lifespan에서 시험DB 안에서만 동작한다.
 - pytest 종료/빌드 실패/일반 Ctrl-C 모두 finally에서 해당 고유 프로젝트의 컨테이너와 네트워크를 정리한다. 실패·선택 오류를 성공으로 바꾸지 않으며 cleanup 실패도 비정상 종료한다. 강제 종료·Docker 장애 때는 출력한 프로젝트 이름으로 잔존 자원을 확인해야 한다. 생성한 시험 이미지/빌드 캐시는 재사용을 위해 남으며 자동 prune하지 않는다.
 
 ## 결과 해석과 기존 도구

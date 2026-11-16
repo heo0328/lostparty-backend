@@ -1,10 +1,12 @@
 # 개인 Lost Ark API 키
 
+2026-11-16 #55 로컬 구현에서 개인키 API/암호화 저장·복원 경로를 제거했다. 현재는 서버 secret을 사용하는 단일 수집 경로이며 [구현·환경 전환 경계](../../rosters/power-and-profiles/server-processing-implementation.md)를 따른다. 실제 dev/운영은 이전 이미지이며 아래 회원키 동작은 전환 전 이력이다.
+
 회원별 Lost Ark API 키를 암호화해 저장하고 서버의 외부 호출에 사용한다. 앱 로그인 자격과 게임 API 호출 자격은 별개다.
 
 <a id="behavior"></a>
 
-## 현재 동작
+## 전환 전 동작
 
 | 명령 | 의미 |
 |---|---|

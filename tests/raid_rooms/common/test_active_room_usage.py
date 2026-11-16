@@ -6,6 +6,7 @@ from datetime import time
 from datetime import timedelta
 from datetime import timezone
 from concurrent.futures import ThreadPoolExecutor
+from tests.concurrency import map_in_context
 import pytest
 from sqlalchemy import select
 from app.core.database import session
@@ -144,7 +145,7 @@ def test_concurrent_approvals_only_fill_one_last_room_slot(beta,people):
         try:
             with beta_profile.using():return cycle_commands.process(actor(owner['uid']),aid,uuid.uuid4(),request)[0]
         except GameError as error:return error.code
-    with ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(approve,pending))
+    with ThreadPoolExecutor(max_workers=2) as pool:results=list(map_in_context(pool,approve,pending))
     assert sum(type(v) is int and 200<=v<300 for v in results)==1,results
     assert count(b['uid'])==10
 
@@ -155,7 +156,7 @@ def test_concurrent_creations_cannot_both_take_the_last_slot(beta):
     def create(w):
         try:return create_beta(w)[0]
         except GameError as error:return error.code
-    with ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(create,choices))
+    with ThreadPoolExecutor(max_workers=2) as pool:results=list(map_in_context(pool,create,choices))
     assert sum(isinstance(v,uuid.UUID) for v in results)==1,results
     assert count(a['uid'])==10
 

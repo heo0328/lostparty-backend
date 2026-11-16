@@ -63,7 +63,7 @@ def test_failure_stage_and_response_correlation(client, live, monkeypatch, caplo
 
     monkeypatch.setattr(provider.requests, 'get', get)
     response = change(client, h, 'post', VERIFY, dict(source='direct_input', character_name='a0'))
-    assert response.status_code == (409 if failure == 'key' else 503)
+    assert response.status_code == 503
     code = reason if failure in ('key', 'rate') else 'UPSTREAM_UNAVAILABLE'
     body = response.json()['error']
     assert body['code'] == code

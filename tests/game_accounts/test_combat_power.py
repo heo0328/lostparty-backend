@@ -200,6 +200,8 @@ def test_power_quota_exhaustion_deferred_no_call(client, world, monkeypatch):
 def test_power_owned_get_and_representative_overlay(client, world, monkeypatch):
     from tests.game_accounts.test_game_accounts import save_data
     h, state = world; r = owned_registration(client, h, state)
+    current=client.get(BASE,headers=h).json()['items'][0]
+    assert change(client,h,'patch',BASE+'/'+r['registration_id'],{'is_main':True,'expected_version':current['version']}).status_code==200
     p = page(client, h, r['registration_id'])
     assert change(client, h, 'put', BASE + '/' + r['registration_id'] + '/character-settings', save_data(p)).status_code == 200
     seed_provider(monkeypatch, '777')
@@ -220,8 +222,6 @@ def test_power_twenty_targets_and_membership_session_isolation(client, world, mo
     auth, _ = login()
     other = PrivateHeaders(Authorization='Bearer ' + auth['access_token'])
     assert change(client, other, 'post', endpoint(r), body('a0')).status_code == 404
-    assert client.put('/v1/me/lostark-api-key',headers={**other,'Idempotency-Key':str(uuid.uuid4())},
-                      json={'token':'other.member.signature','expected_version':1}).status_code==200
     # Another member's own preview does not inherit the first member's cache.
     other_r = register(client, other)
     assert page(client, other, other_r['registration_id'])['characters']['items'][0]['combat_power'] is None

@@ -11,9 +11,9 @@ from app.game_accounts.models.models import Account
 from app.game_accounts.models.models import Registration
 from app.game_accounts.models.models import NameClaim
 from app.game_accounts.models.models import CharacterRoleSummary
-from app.game_accounts.power.power_success import capture
+from tests.game_accounts.analysis.fixtures import detail_for
 from app.game_accounts.provider_io.provider import LostArkProvider
-from app.lostark_keys import service as credentials
+from app.game_accounts.provider_io import credentials as credentials
 from tests.groups.test_group_admissions import worlds
 from tests.groups.test_group_admissions import group
 from tests.groups.test_group_display import group_features
@@ -44,7 +44,7 @@ def store(w,index,role,power):
     with session() as db,db.begin():
         head=CharacterRoleSummary(user_id=w['uid'],character_id=uuid.UUID(w['ids'][index]),ownership_revision=1,
             role=role,version=2,summary=dict(summary(),combat_power=power),saved_at=now(db))
-        db.add(head);db.flush();capture(db,head)
+        head.detail=detail_for(head.summary, head.role);db.add(head);db.flush()
 
 
 def test_case_insensitive_exact_lookup_and_default_shape(group_features,client):
@@ -91,11 +91,12 @@ def test_unselected_activity_role_success_current_error_and_read_only(group_feat
     assert set(statements)<={'SELECT','SET'}
     assert page['profile']=='group-display-1' and page['evaluated_at']
     item=page['items'][0];spec=item['character_spec']
-    assert item['combat_power'] is None and spec['dealer']['combat_power']=='123.45'
+    assert item['combat_power'] is None and spec['dealer']['combat_power'] is None
     assert spec['support']['combat_power']=='987.65'
     assert spec['dealer']['analysis']['integrity_status']=='error'
     assert spec['support']['analysis']['integrity_status']=='clean'
-    assert spec['dealer']['source']=='stored_role_success' and spec['dealer']['observed_at']
+    assert spec['dealer']['source']=='server_analysis' and spec['dealer']['observed_at'] is None
+    assert spec['dealer']['summary_version']==3
     assert str(b['uid']) not in str(page) and b['rid'] not in str(page) and str(b['aid']) not in str(page)
 
 

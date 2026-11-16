@@ -131,7 +131,7 @@ def preflight(db,uid,room,row,cid,role,intent,stamp,*,include_session_display=Fa
     stable=jsonable_encoder([str(uid),str(room.id),str(row.id),row.generation,row.revision,
         row.settings_revision,row.members_revision,row.plan_revision,leadership(db,row),
         context.group_stamp(db,room.group_id,retained=True),room.scope,room.revision,row.settings_snapshot,
-        selection,targets,power['power_revision'],choices,context.policy(db,room)])
+        selection,targets,power['summary_version'],choices,context.policy(db,room)])
     metadata=display.existing(db,uid,row,stamp,intent,choices) if include_session_display else None
     if evaluation is not None:stable.append(evaluation['evidence'])
     if include_session_display:stable.append(metadata)

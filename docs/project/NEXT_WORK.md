@@ -1,14 +1,24 @@
 # 다음 실행
 
-2026-11-15 KST 점검. 점검 기준은 dev04b0e9d였으며 사용자 지시로 최신화 문서를 게시하고 main을 dev와 같은 커밋으로 fast-forward한다. 현재 Git 기준은 dev/main 및 origin의 동일 tip으로 확인하며, 운영 소스와 구분한다. 상세 경과는 [DEV_LOG](DEV_LOG.md), 기능 지도는 [AI_CONTEXT](AI_CONTEXT.md), 협업 색인은 [ISSUE_TRACKER](ISSUE_TRACKER.md)를 따른다.
+2026-11-16 KST: Issue55 B1/B2 Backend 로컬 구현·자동 검증 완료. checkout `refactor/lostark-server-processing`, 시작 HEAD cda4db3. 코드·명세·기록은 미커밋·미push이며 실제 개발 API/DB0036·키·운영에는 미적용이다.
+
+## 다음 실행 — Issue55 게시·실제 환경 준비
+
+[전체9번째 댓글·Backend B1/B2 구현 결과](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6914853896)를 게시하고 실제 순번을 재조회했다. Backend 로컬 단계 완료, 다음 Backend 게시/실제 환경 준비·Native 통합 대기이며 Issue는 OPEN이다.
+
+[확정 계약](../features/rosters/power-and-profiles/analysis-refresh-contract.md)의 서버 키/순수 분석·새 POST/단일head·읽기/소비 전환과 옛 writer/개인키·과거 실행 제거를 완료했다. [구현·최종 검증/자료 경계](../features/rosters/power-and-profiles/server-processing-implementation.md)·[현재 시험 대응표](../engineering/development/current-test-consolidation.md). 최종 수집1,889개 항목의 통과 근거를 분할/재검증 로그로 대조했고 누락·미해결 실패0이다. 도구87PASS·현재 OpenAPI 전체 객체 비교 PASS. 한 번의 전체 green 실행이나 실제 Native/운영 인수로 표시하지 않는다.
+
+다음 담당은 Backend다. 사용자가 게시를 지시하면 해당 범위만 commit/push하고 소비 SHA를 같은 Issue에 인계한다. 실제 환경 반영을 지시하면 백업 원장을 기준으로 token 공급/보관·기존 fingerprint 재사용과0037 비호환 표의 준비 대상을 확인한 후 승인 범위에서 dev DB/서버 전환·실제 HTTP를 검증한다. 코드 검증을 데이터 삭제/초기화·배포 승인으로 해석하지 않는다.0037은 비호환 행이 있으면 DDL 전에 거절하며 과거 자료 승계 shim은 없다.
+
+Native 공통 UI/가상 예시 구현·통합/기기 인수는 Native 담당이며 게시/실행 환경 준비 후 확인할 경계다. 미게시 코드를 대상으로 원격 시험을 요청하지 않았다. Issue55는 OPEN이고 실제 token 설정·자료 정리/DB0037 적용·개발 서버 교체·운영은 미실행이다. 지금 commit/push/merge·배포를 실행하지 않는다.
 
 ## Issue54 공동2.3.0 게시 마감
 
 사용자 마감 진행 지시로 API·웹·Android 공개 결과와 검증 근거를 최종 정리하고 f7b7e8c로 commit·dev/main 통합·push하고 Issue54를 completed 종료했다. Backend 운영 source05daa42/tagv2.3.0·image71e30188…834d9d/DB0036, 웹2.3.0+8/source027f8215 및 [Native 전체18 공개 완료](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6888362725)의 공개APK 검증 보고를 보존한다. [운영 원장](../engineering/operations/records/release-2.3.0-deployment.json). 후행 문서 통합은 운영 source/tag 이동이나 재배포가 아니다.
 
-추가 공개·Backend 시험 대기는 없다. BUG-038은 Native 미해결 추적으로 유지하며 원문은 위 전체18 및 [배포 기록](../engineering/operations/release-2.3.0.md)에 남긴다. 사용자 기기 전수 인수/실제 DB 복원은 미실행이다. 완료 브랜치는 통합/push 확인 후 정리하고 dev에서 다음 사용자 작업 선택을 기다린다. Issue53·17·15·18·19는 이번 마감으로 종료/착수하지 않는다.
+추가 공개·Backend 시험 대기는 없다. BUG-038은 Native 미해결 추적으로 유지하며 원문은 위 전체18 및 [배포 기록](../engineering/operations/release-2.3.0.md)에 남긴다. 사용자 기기 전수 인수/실제 DB 복원은 미실행이다. release/2.3.0 완료 브랜치는 통합/push 확인 후 정리됐다. 현재 선택 작업은 위 Issue55 조사·설계다. Issue53·17·15·18·19는 이번 마감으로 종료/착수하지 않는다.
 
-## 현재 다음 담당 — Issue53 Native 후속 확인
+## 별도 유효 대기 — Issue53 Native 후속 확인
 
 Backend 예약GET(fe5e082)·정책2(9308ce7/dev2ca8092)와 BUG-036(9a61d0e/dev4be81dc)은 구현·게시/dev 통합·로컬 지원을 완료했다. 정책2와 미개방 다음 주 상세의 사용자/Native 정상 확인도 수신했다. [BUG-036 전체44 인계](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875171401). 추가 Backend 계약 변경/수정·동일 시험 대기는 없다.
 
@@ -22,7 +32,7 @@ Native는 [전체47](https://github.com/heo0328/lostparty-backend/issues/53#issu
 |---|---|
 | Backend Git | 사용자 지시로 문서 최신화 게시와 dev/main 동일 tip 동기화. 정책2·BUG-036 포함. main 이전 기준0911383은 이력 보존 |
 | 로컬 dev 마지막 반영 | imageadd28707…1f71f2·현재 app.main:app·DB0036·Python296파일. [BUG-036 반영 원장](../engineering/operations/records/unopened-next-detail-local-rollout.json). 이번 문서 점검에서는 서버를 재검증/교체하지 않음 |
-| 명세 | 현재 openapi.yaml194경로/216동작, legacy.openapi.yaml125경로/142동작. 과거 policy1 Schema/ACK는 복구용, 현재 관리 계약은 character-management-2 |
+| 명세 | 로컬 구현 openapi.yaml191경로/211동작, legacy.openapi.yaml125경로/142동작. 과거 policy1 Schema/ACK는 복구용, 현재 관리 계약은 character-management-2 |
 | 운영 마지막 확정 | Backendv2.3.0/source05daa42·웹2.3.0+8/source027f8215·DB0036. [Issue54 원장](../engineering/operations/records/release-2.3.0-deployment.json). Android 공개는 Native 후속 |
 
 ## 종료/운영 반영 대기 구분
@@ -41,7 +51,7 @@ Issue17의 누락/부분 완료·기기 경계 및 원래 생명주기 잔여를
 
 <a id="runtime-consolidation-followup"></a>
 
-실행 이름 정리는 완료됐다. 현재 기본 app.main:app과 legacy DB0023 시험을 구분하며 [실행 안내](../engineering/development/runtime-configuration.md)를 따른다.
+실행 이름 정리는 완료됐다. 로컬 구현은 기본 app.main:app 단일 앱이며 DB0023 시험용 factory를 제거했다. 실제 dev/운영은 이전 원장을 유지하며 [실행 안내](../engineering/development/runtime-configuration.md)를 따른다.
 
 <a id="recovery-backup-closeout"></a>
 

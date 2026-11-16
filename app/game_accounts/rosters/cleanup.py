@@ -1,3 +1,4 @@
+from app.game_accounts.models.analysis import AnalysisFetch
 from datetime import timedelta
 from sqlalchemy import select
 from sqlalchemy import delete
@@ -8,9 +9,7 @@ from sqlalchemy import literal
 from sqlalchemy.dialects.postgresql import JSONB
 from app.core.database import session
 from app.core.database import now
-from app.lostark_keys.models import MemberPreview
-from app.lostark_keys.models import MemberFetch
-from app.lostark_keys.models import ProviderLimit
+from app.game_accounts.models.provider_limits import ProviderLimit
 from app.game_accounts.common.support import lock
 from app.game_accounts.models.models import RequestResult
 from app.game_accounts.models.models import Verification
@@ -29,6 +28,7 @@ def clean():
     with session() as db, db.begin():
         lock(db,'game-mutations-v1')
         current=now(db)
+        db.execute(delete(AnalysisFetch).where(AnalysisFetch.expires_at <= current))
         for v in db.scalars(select(Verification).where(Verification.status=='pending',Verification.expires_at<=current).with_for_update(skip_locked=True).limit(200)):
             v.status,v.terminal_at='expired',v.expires_at
         db.flush()
@@ -58,8 +58,6 @@ def clean():
         db.execute(delete(ProviderLimit).where(ProviderLimit.blocked_until<=current-timedelta(minutes=2)))
         db.execute(delete(ScopedRosterLease).where(ScopedRosterLease.expires_at<=current-timedelta(minutes=90)))
         db.execute(delete(ScopedRosterCache).where(ScopedRosterCache.fetched_at<=current-timedelta(minutes=90)))
-        db.execute(delete(MemberFetch).where(MemberFetch.expires_at<=current-timedelta(minutes=90)))
-        db.execute(delete(MemberPreview).where(MemberPreview.fetched_at<=current-timedelta(minutes=90)))
         db.execute(delete(LimitEvent).where(LimitEvent.created_at<=current-timedelta(minutes=2)))
         db.execute(delete(Audit).where(Audit.created_at<=current-timedelta(days=90)))
         for cache in (PowerCache,ScopedPowerCache):

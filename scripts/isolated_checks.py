@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Container entrypoint for explicit regression sets and both schema objects."""
+"""Container entrypoint for explicit regression sets and the current schema object."""
 import argparse
 import json
 import os
@@ -12,20 +12,15 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 # These are named regression sets, not a claim that every project test ran.
 SUITES = {
-    "legacy": (
-        "tests/auth/test_auth.py", "tests/game_accounts/test_game_accounts.py",
-        "tests/game_accounts/test_account_bootstrap.py", "tests/member_settings/test_member_settings.py",
-        "tests/lostark_keys/test_lostark_keys.py", "tests/groups/test_groups_http.py",
-        "tests/raid_rooms/common/test_raid_room_http.py",
-    ),
-    "two-cycle": (
-        "tests/raid_rooms/admissions/test_reapplication_history.py", "tests/raid_rooms/admissions/test_beta_recruitment.py", "tests/raid_rooms/schedules/test_explicit_departure_minutes.py", "tests/raid_rooms/schedules/test_departure_search_minutes.py",
-        "tests/raid_rooms/common/test_active_room_usage.py", "tests/raid_rooms/schedules/test_coordination_wait.py",
-        "tests/raid_rooms/admissions/test_application_composition.py", "tests/raid_rooms/admissions/test_admission_eligibility.py",
-        "tests/raid_rooms/admissions/test_application_display.py", "tests/raid_rooms/admissions/test_application_display_references.py",
-        "tests/raid_rooms/admissions/test_application_item_level.py", "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/participation/test_atomic_members.py", "tests/raid_rooms/outcomes/test_completion_corrections.py",
-    ),
+    'current': ('tests/auth/test_auth.py',
+                'tests/game_accounts/analysis/test_analyzer.py',
+                'tests/game_accounts/analysis/test_analysis_http.py',
+                'tests/game_accounts/analysis/test_server_credentials.py',
+                'tests/game_accounts/analysis/test_provider_limits.py',
+                'tests/game_accounts/analysis/test_analysis_migrations.py',
+                'tests/member_settings/test_member_settings.py'),
+    'two-cycle': ('tests/raid_rooms/admissions/test_reapplication_history.py',
+                  'tests/raid_rooms/admissions/test_beta_recruitment.py'),
 }
 
 # Existing complete pytest file set, for broad regressions or additional selections.
@@ -57,16 +52,13 @@ def selected_tests(suite, requested):
 
 
 def contracts():
-    from app.main import create_app, create_legacy_app
-    for name, application in (("openapi.yaml", create_app()), ("legacy.openapi.yaml", create_legacy_app())):
-        expected = json.loads((ROOT / "openapi" / name).read_text())
-        actual = application.openapi()
-        if expected != actual:
-            print(f"FAIL: {name} differs from generated OpenAPI", flush=True)
-            return 1
-        operations = sum(method in ("get", "post", "put", "patch", "delete")
-                         for path in actual["paths"].values() for method in path)
-        print(f"PASS: {name}, {len(actual['paths'])} paths, {operations} operations (full object)", flush=True)
+    from app.main import create_app
+    actual = create_app().openapi()
+    expected = json.loads((ROOT / 'openapi/openapi.yaml').read_text())
+    if expected != actual:
+        print('FAIL: current OpenAPI differs from generated schema', flush=True)
+        return 1
+    print(f"PASS: current OpenAPI full object; {len(actual['paths'])} paths", flush=True)
     return 0
 
 
@@ -74,6 +66,9 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("suite", choices=(*SUITES, "contracts"))
     parser.add_argument("tests", nargs="*")
+    parser.add_argument('--collect-only', action='store_true')
+    parser.add_argument('--maxfail', type=int, default=0)
+    parser.add_argument('--verbose', action='store_true')
     args = parser.parse_args(argv)
     try:
         require_test_environment()
@@ -86,8 +81,9 @@ def main(argv=None):
         print(str(error), file=sys.stderr)
         return 2
     print(json.dumps({"suite": args.suite, "selection": selected,
-                      "baseline": "0023; per-test fixtures migrate disposable app-role databases as needed"}), flush=True)
-    return subprocess.call([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", *selected], cwd=ROOT)
+                      "baseline": "0037_server_analysis; current app; disposable PostgreSQL only"}), flush=True)
+    return subprocess.call([sys.executable, "-m", "pytest", "-v" if args.verbose else "-q", "--tb=short", "--maxfail", str(args.maxfail),
+        *(["--collect-only"] if args.collect_only else []), "-p", "no:cacheprovider", *selected], cwd=ROOT)
 
 
 if __name__ == "__main__":

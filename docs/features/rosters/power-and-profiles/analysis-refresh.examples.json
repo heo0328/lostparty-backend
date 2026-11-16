@@ -1,0 +1,327 @@
+{
+  "contract": "character-analysis-refresh-1",
+  "request": {
+    "items": [
+      {
+        "command_id": "00000000-0000-4000-8000-000000000101",
+        "character_id": "00000000-0000-4000-8000-000000000001",
+        "expected_ownership_revision": 1,
+        "expected_lifecycle_revision": 1,
+        "expected_summary_versions": {
+          "dealer": 1,
+          "support": 1
+        },
+        "trigger": "manual"
+      },
+      {
+        "command_id": "00000000-0000-4000-8000-000000000102",
+        "character_id": "00000000-0000-4000-8000-000000000002",
+        "expected_ownership_revision": 1,
+        "expected_lifecycle_revision": 1,
+        "expected_summary_versions": {
+          "dealer": 1,
+          "support": 1
+        },
+        "trigger": "manual"
+      },
+      {
+        "command_id": "00000000-0000-4000-8000-000000000103",
+        "character_id": "00000000-0000-4000-8000-000000000003",
+        "expected_ownership_revision": 1,
+        "expected_lifecycle_revision": 1,
+        "expected_summary_versions": {
+          "dealer": 1,
+          "support": 1
+        },
+        "trigger": "automatic"
+      },
+      {
+        "command_id": "00000000-0000-4000-8000-000000000104",
+        "character_id": "00000000-0000-4000-8000-000000000004",
+        "expected_ownership_revision": 1,
+        "expected_lifecycle_revision": 1,
+        "expected_summary_versions": {
+          "dealer": 1,
+          "support": 1
+        },
+        "trigger": "manual"
+      },
+      {
+        "command_id": "00000000-0000-4000-8000-000000000105",
+        "character_id": "00000000-0000-4000-8000-000000000005",
+        "expected_ownership_revision": 1,
+        "expected_lifecycle_revision": 1,
+        "expected_summary_versions": {
+          "dealer": 1,
+          "support": 1
+        },
+        "trigger": "manual"
+      },
+      {
+        "command_id": "00000000-0000-4000-8000-000000000106",
+        "character_id": "00000000-0000-4000-8000-000000000006",
+        "expected_ownership_revision": 1,
+        "expected_lifecycle_revision": 1,
+        "expected_summary_versions": {
+          "dealer": 1,
+          "support": 1
+        },
+        "trigger": "manual"
+      },
+      {
+        "command_id": "00000000-0000-4000-8000-000000000107",
+        "character_id": "00000000-0000-4000-8000-000000000007",
+        "expected_ownership_revision": 1,
+        "expected_lifecycle_revision": 1,
+        "expected_summary_versions": {
+          "dealer": 1,
+          "support": 1
+        },
+        "trigger": "manual"
+      }
+    ]
+  },
+  "response": {
+    "evaluated_at": "2026-11-16T08:00:00Z",
+    "items": [
+      {
+        "command_id": "00000000-0000-4000-8000-000000000101",
+        "character_id": "00000000-0000-4000-8000-000000000001",
+        "status": 200,
+        "state": "saved",
+        "detected_role": "dealer",
+        "retry": "none",
+        "result": {
+          "character_id": "00000000-0000-4000-8000-000000000001",
+          "game_account_id": "00000000-0000-4000-8000-000000000900",
+          "ownership_revision": 1,
+          "lifecycle_revision": 1,
+          "role": "dealer",
+          "analysis": {
+            "version": 2,
+            "saved_at": "2026-11-16T08:00:00Z",
+            "summary": {
+              "source": "server_analysis",
+              "analysis_rules_version": "lostparty-server-role-analysis-v1",
+              "analyzed_at": "2026-11-16T08:00:00Z",
+              "combat_power": "120.50",
+              "item_level": "1700",
+              "combat_power_observed_at": "2026-11-16T08:00:00Z",
+              "item_level_observed_at": "2026-11-16T08:00:00Z",
+              "integrity_status": "error",
+              "catalog_version": "synthetic-catalog-v1",
+              "issues": [
+                {
+                  "code": "GEM_SLOT_COUNT",
+                  "severity": "error"
+                }
+              ],
+              "observed_lifecycle_revision": 1
+            },
+            "detail": {
+              "detection": {
+                "status": "detected",
+                "catalog_version": "synthetic-catalog-v1",
+                "class_id": "synthetic_class",
+                "branch_id": "synthetic_branch",
+                "branch_display_name": "가상 계열",
+                "detected_role": "dealer",
+                "matched_tier1_node": "가상 1티어",
+                "matched_related_nodes": [
+                  "가상 4티어"
+                ]
+              },
+              "rune_count": 8,
+              "equipped_gem_count": 10,
+              "gem_effects_source_available": true,
+              "gems": [],
+              "ark_grid_core_points": [],
+              "ark_grid_conditions": [],
+              "ark_grid_minimum": {
+                "order_sun_point": 14,
+                "order_moon_point": 14,
+                "required_point": 14
+              },
+              "notices": []
+            }
+          }
+        },
+        "error": null
+      },
+      {
+        "command_id": "00000000-0000-4000-8000-000000000102",
+        "character_id": "00000000-0000-4000-8000-000000000002",
+        "status": 200,
+        "state": "saved",
+        "detected_role": "dealer",
+        "retry": "none",
+        "result": {
+          "character_id": "00000000-0000-4000-8000-000000000002",
+          "game_account_id": "00000000-0000-4000-8000-000000000900",
+          "ownership_revision": 1,
+          "lifecycle_revision": 1,
+          "role": "dealer",
+          "analysis": {
+            "version": 2,
+            "saved_at": "2026-11-16T08:00:00Z",
+            "summary": {
+              "source": "server_analysis",
+              "analysis_rules_version": "lostparty-server-role-analysis-v1",
+              "analyzed_at": "2026-11-16T08:00:00Z",
+              "combat_power": null,
+              "item_level": "1700",
+              "combat_power_observed_at": null,
+              "item_level_observed_at": "2026-11-16T08:00:00Z",
+              "integrity_status": "review",
+              "catalog_version": "synthetic-catalog-v1",
+              "issues": [
+                {
+                  "code": "GEM_UNAVAILABLE",
+                  "severity": "warning"
+                }
+              ],
+              "observed_lifecycle_revision": 1
+            },
+            "detail": {
+              "detection": {
+                "status": "detected",
+                "catalog_version": "synthetic-catalog-v1",
+                "class_id": "synthetic_class",
+                "branch_id": "synthetic_branch",
+                "branch_display_name": "가상 계열",
+                "detected_role": "dealer",
+                "matched_tier1_node": "가상 1티어",
+                "matched_related_nodes": [
+                  "가상 4티어"
+                ]
+              },
+              "rune_count": 8,
+              "equipped_gem_count": null,
+              "gem_effects_source_available": false,
+              "gems": [],
+              "ark_grid_core_points": [],
+              "ark_grid_conditions": [],
+              "ark_grid_minimum": null,
+              "notices": []
+            }
+          }
+        },
+        "error": null
+      },
+      {
+        "command_id": "00000000-0000-4000-8000-000000000103",
+        "character_id": "00000000-0000-4000-8000-000000000003",
+        "status": 200,
+        "state": "skipped",
+        "detected_role": null,
+        "retry": "none",
+        "result": null,
+        "error": {
+          "code": "AUTOMATIC_TARGET_EXCLUDED",
+          "message": "AUTOMATIC_TARGET_EXCLUDED",
+          "request_id": "synthetic-contract-request",
+          "retry_after_seconds": null,
+          "retry_at": null
+        }
+      },
+      {
+        "command_id": "00000000-0000-4000-8000-000000000104",
+        "character_id": "00000000-0000-4000-8000-000000000004",
+        "status": 503,
+        "state": "failed",
+        "detected_role": null,
+        "retry": "new_command",
+        "result": null,
+        "error": {
+          "code": "UPSTREAM_RATE_LIMITED",
+          "message": "UPSTREAM_RATE_LIMITED",
+          "request_id": "synthetic-contract-request",
+          "retry_after_seconds": 60,
+          "retry_at": "2026-11-16T08:01:00Z"
+        }
+      },
+      {
+        "command_id": "00000000-0000-4000-8000-000000000105",
+        "character_id": "00000000-0000-4000-8000-000000000005",
+        "status": 503,
+        "state": "not_processed",
+        "detected_role": null,
+        "retry": "same_command",
+        "result": null,
+        "error": {
+          "code": "BATCH_NOT_PROCESSED",
+          "message": "BATCH_NOT_PROCESSED",
+          "request_id": "synthetic-contract-request",
+          "retry_after_seconds": null,
+          "retry_at": null
+        }
+      },
+      {
+        "command_id": "00000000-0000-4000-8000-000000000106",
+        "character_id": "00000000-0000-4000-8000-000000000006",
+        "status": 409,
+        "state": "in_progress",
+        "detected_role": null,
+        "retry": "same_command",
+        "result": null,
+        "error": {
+          "code": "REQUEST_IN_PROGRESS",
+          "message": "REQUEST_IN_PROGRESS",
+          "request_id": "synthetic-contract-request",
+          "retry_after_seconds": 2,
+          "retry_at": "2026-11-16T08:00:02Z"
+        }
+      },
+      {
+        "command_id": "00000000-0000-4000-8000-000000000107",
+        "character_id": "00000000-0000-4000-8000-000000000007",
+        "status": 503,
+        "state": "unknown",
+        "detected_role": null,
+        "retry": "same_command",
+        "result": null,
+        "error": {
+          "code": "SERVICE_UNAVAILABLE",
+          "message": "SERVICE_UNAVAILABLE",
+          "request_id": "synthetic-contract-request",
+          "retry_after_seconds": null,
+          "retry_at": null
+        }
+      }
+    ]
+  },
+  "semantic_scenarios": [
+    {
+      "name": "power_decrease_with_setting_error",
+      "previous_power": "250.00",
+      "current_power": "120.50",
+      "expected": "save_latest_error_and_compare_120.50"
+    },
+    {
+      "name": "explicit_source_null",
+      "previous_power": "250.00",
+      "current_power": null,
+      "expected": "save_null_and_compare_missing_without_old_success_fallback"
+    },
+    {
+      "name": "transport_or_role_detection_failure",
+      "expected": "no_role_head_or_timestamp_change"
+    },
+    {
+      "name": "opposite_role_changed",
+      "expected": "detect_dealer_ignore_support_version_and_leave_support_untouched"
+    },
+    {
+      "name": "detected_role_changed",
+      "expected": "detect_dealer_stale_dealer_version_409_no_role_write"
+    },
+    {
+      "name": "expired_ack",
+      "expected": "IDEMPOTENCY_EXPIRED_no_automatic_new_id"
+    },
+    {
+      "name": "successful_ack_then_current_get_failure",
+      "expected": "saved_ack_remains_success_do_not_resubmit_new_command"
+    }
+  ]
+}

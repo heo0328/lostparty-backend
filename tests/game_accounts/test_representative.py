@@ -78,7 +78,7 @@ def error(response, status, code):
 def test_read_only_change_noop_replay_and_no_provider(client, selection, monkeypatch):
     w = selection
     from app.game_accounts.provider_io.provider import LostArkProvider
-    from app.lostark_keys import service as credentials
+    from app.game_accounts.provider_io import credentials as credentials
     def forbidden(*args, **kwargs): raise AssertionError('No provider or credential access')
     monkeypatch.setattr(LostArkProvider, '_fetch', forbidden)
     monkeypatch.setattr(credentials, 'capture', forbidden)
@@ -184,6 +184,7 @@ def test_main_switch_aba_and_historical_replay(client, selection):
     data = body(w, w['ids'][0]); data['expected_settings_version'] = 2
     error(put(client, w, data), 409, 'REVISION_CONFLICT')  # ABA registration version
     data['expected_registration_version'] = 3
+    data['expected_settings_version']=get(client,w).json()['settings_version']
     assert put(client, w, data).status_code == 200
 
 

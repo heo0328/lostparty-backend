@@ -68,9 +68,12 @@ def main():
         print(json.dumps({'status': 'not_ready', 'reason': 'INTERACTIVE_TERMINAL_REQUIRED'}))
         return 2
     try:
-        token = getpass.getpass('Lost Ark JWT (hidden, local only): ')
+        from app.game_accounts.provider_io.credentials import capture
+        from app.game_accounts.provider_io import credentials, rate_limits
+        snapshot = capture()
         name = getpass.getpass('Test character name (hidden, local only): ').strip()
-        code, report = check_summary(LostArkProvider(token), name)
+        code, report = check_summary(LostArkProvider(snapshot.token, observer=rate_limits.observer(snapshot.fingerprint),
+            before_call=lambda:(credentials.current(snapshot),rate_limits.acquire(snapshot.fingerprint))), name)
     except (EOFError, KeyboardInterrupt):
         code, report = 2, {'status': 'cancelled'}
     except Exception:

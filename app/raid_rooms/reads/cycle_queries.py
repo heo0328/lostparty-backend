@@ -61,7 +61,7 @@ def role(db,uid,row):
 
 
 def card(db,room,row,uid,stamp,loaded=None):
-    room=group_policy.project(db,room,row)
+    room=group_policy.project(db,room,row,value=loaded.get('policy') if loaded is not None else None)
     ended=room.ended_at is not None or (loaded['archived'] if loaded is not None else archive.is_archived(db,room.id))
     settings=row.settings_snapshot
     leader=loaded['leadership'] if loaded is not None else commands.leadership(db,row)

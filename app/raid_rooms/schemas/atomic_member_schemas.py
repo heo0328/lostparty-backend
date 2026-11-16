@@ -54,7 +54,7 @@ class DepartureSubject(DTO):
     assignment_id: UUID
     assignment_revision: Version
 
-class Successor(DTO):
+class Successor(PolicyCandidate, DTO):
     cycle_member_id: UUID
     revision: Version
     joined_order: Annotated[StrictStr, Field(pattern=r'^[1-9][0-9]*$')]

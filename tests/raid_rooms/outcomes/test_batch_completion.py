@@ -5,6 +5,7 @@ import uuid
 from contextlib import contextmanager
 from datetime import date, timedelta
 from concurrent.futures import ThreadPoolExecutor
+from tests.concurrency import map_in_context
 from pathlib import Path
 
 import pytest
@@ -269,7 +270,7 @@ def test_competing_commands_have_one_atomic_winner(presence_db,other):
     def call(fn):
         try:return ('ok',fn())
         except GameError as error:return ('error',error.code)
-    with ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(call,(first,second)))
+    with ThreadPoolExecutor(max_workers=2) as pool:results=list(map_in_context(pool,call,(first,second)))
     assert sum(r[0]=='ok' for r in results)==1,results
     assert next(r[1] for r in results if r[0]=='error') in (
         'ROUND_NOT_ACTIVE','REVISION_CONFLICT','TARGET_CONTEXT_STALE','WEEKLY_PARTICIPANT_REQUIRED',

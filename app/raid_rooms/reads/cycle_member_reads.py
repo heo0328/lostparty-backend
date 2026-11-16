@@ -148,9 +148,9 @@ def detail(principal,rid,key,*,read_snapshot=None,reader_profile=None):
                     comparison=admission.core.power_comparison(db,actual.user_id,selected,minimum)
                 except GameError as error:reason=error.code
                 captured=recent.build or {}
-                build=dict(role=recent.selected_role,version=captured.get('success_summary_version'),summary=captured.get('success_summary'),
-                    saved_at=captured.get('success_saved_at'),current_summary_version=comparison['current_summary_version'] if comparison else None,
-                    stale=reason is not None or comparison is None or captured.get('success_summary_version')!=comparison['current_summary_version'])
+                build=dict(role=recent.selected_role,version=captured.get('summary_version'),summary=captured.get('summary'),
+                    saved_at=captured.get('saved_at'),current_summary_version=comparison['summary_version'] if comparison else None,
+                    stale=reason is not None or comparison is None or captured.get('summary_version')!=comparison['summary_version'])
             values.append(own_view(db,room,row,member)|dict(joined_at=actual.joined_at or member.joined_at,
                 character=dict(character_id=recent.character_id,display=recent.display,selected_role=recent.selected_role) if recent else None,
                 assignments=[dict(assignment_id=a.id,item_id=a.item_id,round_id=a.round_id,state=a.state,

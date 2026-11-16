@@ -120,7 +120,7 @@ def preflight(db, uid, cid, role, items, gid, key, continuation, next_cid, next_
     reason = first['permission']['reason'] or (second['permission']['reason'] if second else None)
     stable = jsonable_encoder(dict(actor=uid, prospective_room_id=room_id, current=target.current, target=target.key,
         continuation=continuation, first=first, second=second, group=group,
-        catalog=raids.catalog().catalog_version, power_revision=power['power_revision'],
+        catalog=raids.catalog().catalog_version, summary_version=power['summary_version'],
         room_count=admission.core.room_count(db, uid)))
     if beta_profile.enabled():
         from app.raid_rooms.schemas.beta_schemas import BetaScheduleTarget

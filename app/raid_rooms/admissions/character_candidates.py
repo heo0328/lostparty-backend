@@ -18,7 +18,7 @@ from app.game_accounts.models.models import Configuration
 from app.game_accounts.models.models import Activity
 from app.game_accounts.models.models import Character
 from app.game_accounts.models.models import NameClaim
-from app.game_accounts.models.power_success import RolePowerSuccess
+from app.game_accounts.models.models import CharacterRoleSummary
 from app.game_accounts.common.support import fail
 from app.game_accounts.common.support import cursor_encode
 from app.game_accounts.common.support import cursor_decode
@@ -42,15 +42,13 @@ def number(value):
 
 def power(row, lifecycle):
     empty = dict(value=None, source='unavailable', trust=None, observed_at=None, saved_at=None,
-                 power_revision=None, integrity_status=None)
-    if row is None or row.source_summary.get('observed_lifecycle_revision') != lifecycle:
+                 summary_version=None, integrity_status=None, issues=[])
+    if row is None or row.summary.get('observed_lifecycle_revision') != lifecycle:
         return empty
-    integrity = row.source_summary.get('integrity_status')
-    if number(row.combat_power) is None or integrity not in ('clean', 'review', 'error', 'unavailable'):
-        return empty
-    return dict(value=row.combat_power, source='stored_role_success', trust='client_submitted',
-                observed_at=row.observed_at, saved_at=row.source_saved_at,
-                power_revision=row.power_revision, integrity_status=integrity)
+    summary = row.summary
+    return dict(value=summary['combat_power'], source='server_analysis', trust='server_computed',
+                observed_at=summary['combat_power_observed_at'], saved_at=row.saved_at,
+                summary_version=row.version, integrity_status=summary['integrity_status'], issues=summary['issues'])
 
 
 def load(db, uid, sid, gid, stamp, context=None):
@@ -70,8 +68,8 @@ def load(db, uid, sid, gid, stamp, context=None):
             Configuration.ended_at.is_(None), Character.status == 'confirmed', Character.lifecycle_state == 'active')
         .order_by(Registration.user_id, Character.id))) if active else []
     ids = [c.id for _, _, _, c, _ in rows]
-    successes = {(v.user_id, v.character_id, v.ownership_revision, v.role): v for v in db.scalars(
-        select(RolePowerSuccess).where(RolePowerSuccess.user_id.in_(active), RolePowerSuccess.character_id.in_(ids)))} if ids else {}
+    heads = {(v.user_id, v.character_id, v.ownership_revision, v.role): v for v in db.scalars(
+        select(CharacterRoleSummary).where(CharacterRoleSummary.user_id.in_(active), CharacterRoleSummary.character_id.in_(ids)))} if ids else {}
     characters = {u: {} for u in active}
     evidence = []
     for reg, account, config, char, claim_revision in rows:
@@ -81,7 +79,7 @@ def load(db, uid, sid, gid, stamp, context=None):
             item_level=level, item_level_source='stored_character_summary' if level is not None else 'unavailable',
             summary_fetched_at=char.fetched_at, ownership_revision=account.ownership_revision,
             lifecycle_revision=char.lifecycle_revision, ownership_state='owned', activity_state='selected', lifecycle_state='active',
-            **{role: power(successes.get((reg.user_id, char.id, account.ownership_revision, role)), char.lifecycle_revision)
+            **{role: power(heads.get((reg.user_id, char.id, account.ownership_revision, role)), char.lifecycle_revision)
                for role in ('dealer', 'support')})
         evidence.append([reg.id, reg.version, account.id, account.ownership_revision, account.roster_revision,
                          config.id, config.version, char.id, char.lifecycle_revision, claim_revision])

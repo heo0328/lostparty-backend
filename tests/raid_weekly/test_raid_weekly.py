@@ -84,7 +84,7 @@ def seed(cid, **values):
 def test_read_defaults_are_db_only_and_do_not_write_or_change_settings(client, owned, monkeypatch):
     h, registration, cid = owned
     from app.game_accounts.provider_io.provider import LostArkProvider
-    from app.lostark_keys import service as keys
+    from app.game_accounts.provider_io import credentials as keys
     def forbidden(*args, **kwargs): raise AssertionError('Weekly API must not call provider or decrypt key')
     monkeypatch.setattr(LostArkProvider, '_fetch', forbidden)
     monkeypatch.setattr(keys, 'capture', forbidden)

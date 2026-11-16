@@ -4874,3 +4874,84 @@ GitHub run/job상태와artifact메타데이터의동일source·미만료를확�
 사용자가 후행 문서 commit·dev/main 통합/push·이슈 마감 진행을 지시했다. 전체16 Backend 실제 반영과 전체18 Native 공개 검증을 근거로 완료 기록을 통합한다. BUG-038 미해결/기기 전수 인수·실제 복원 미실행은 유지한다. 신규 코드·API·태그 이동/재배포·DB/키 변경 없이 문서 검사 후 Git 통합과 completed 종료, 완료 release 브랜치 정리를 진행한다.
 
 실제 마감: f7b7e8c dev/main 동일 tip 통합·원격 push 확인, Issue54 completed 종료 및 본문 최신화 완료. [전체19 Backend 마감](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6888441900), 다음 게시/구현 담당 대기 없음. 후행 완료 기록을 동기화하고 완료 release/2.3.0을 로컬·원격에서 정리한다.
+
+
+## 2026-11-16 — Issue55 Backend 호출 조사·단일 구조 설계
+
+- 사용자 승인 계획을 실행해 [호출 지도·최소 계약/검증 제안](../features/rosters/power-and-profiles/server-processing-design.md)을 작성했다. 시작 기준 dev/main/origin cda4db3, 작업 구간은 서버 수집·분석 전환 공동 설계, 목적 브랜치 refactor/lostark-server-processing이다. .git 쓰기 제한으로 최초 분기 실패 후 승인 실행으로 브랜치 생성, 현재 checkout 확인. commit/push 없음.
+- Issue55 본문/댓글을 재조회해 OPEN·댓글0 확인. 회원 개인키 의존이 HTTP 등록/preview/인증/전투력 외 소유권 분쟁 commands/core와 주기 worker에도 있음을 조사했다. 최근 정상 전투력/참가 비교·dynamic wire의 flutter_analysis/client_submitted 소비도 전환 대상으로 포함했다. 순수 transport/업무 권한·현재 명령 정합성과 개인키/옛 summary 업로드 호환을 구분했다.
+- 사용자 정정: 임시 베타 자료/구버전·옛 pending 결과 승계보다 단순한 단일 구조가 우선이며, 호환 코드·이중 경로를 만들지 않는다. 가능한 자료 보존은 하되 복잡도를 요구하지 않고 실제 초기화는 대상/영향을 제시한 별도 승인이다. 장기 개발 workflow와 현재 상태에 반영했다.
+- 기존 guest discovery/그룹 public summary/카탈로그·주차 재사용, 공개 요약+가상 예시, 서버 전용 키/공유 quota·키세대/업무 fence 분리 및 bounded 분석 batch 한 경로를 제안했다. 역할/수동 확인 규칙·고정 분석기/카탈로그 fixture·상세 UI 필드는 Native 대조 사항이며 현재 OpenAPI에 추가하지 않았다.
+- 로컬 docker.exe inspect는 sandbox의 WSL socket 실패 후 읽기 전용 승인 실행에서도 Docker Desktop Linux engine 연결 불가였다. 현재 실행 이미지는 미확인, 마지막 로컬 원장과 구분했다. 문서 작업이므로 기동/교체·provider 호출·DB/기기·운영 시험을 하지 않았다. 운영 접속/키·환경·자료 변경도 없다.
+- ISSUE_TRACKER의 이전 v2.2.0 현재운영 문구는 #54 최신 원장과 대조해 v2.3.0으로 정정했다. 과거 원장/검증 수치는 보존했다. 새 문서/기록은 로컬 미커밋·미push다. 문서 검증/실제 회신 결과는 아래에 누적한다.
+
+- 문서302개/상대링크·앵커3384개·과거 원문128개/동결JSON20개 보존·문서 API216동작 분류 및 diff 검사 PASS. 앱/scripts AST 정적 조사에서 직접 provider import 생산자4곳, scripts 추가0을 확인했다. 이는 실제 기능/DB/provider 시험이 아니다.
+- [전체1 Backend 조사·설계 제안 회신](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6909472129)을 게시하고 전체 댓글 재조회로 본문 제외 실제1번째·Backend 작성 측/대상ID를 확인했다. 미게시 로컬 문서에 Native가 의존하지 않도록 댓글에 조사 근거·최소 계약·사용자 우선 기준·요청4묶음을 포함했다. Backend 1차 조사/제안 완료, 다음 Native 대조/수용·질문 회신 대기이며 양측 합의/기능 구현은 미완료다. 관련 상태 문서에 링크/담당을 반영했다. Issue는 OPEN 유지·commit/push/merge/운영 변경 없음.
+
+
+## 2026-11-16 — 사용자 Docker 기동 후 로컬 상태 확인
+
+사용자가 Docker 미실행을 확인해 직접 기동했다. 읽기 전용 inspect에서 lostparty-backend-api-1 running/healthy·image sha256:add287075a37d6385ef18f6754368f19be09866fc39f5c175d3616419e1f71f2를 확인해 마지막 로컬 원장과 이미지 ID 일치를 확인했다. 초기 연결 불가 기록은 당시 사실로 보존하고 NEXT_WORK/설계의 현재 확인 상태를 갱신했다. 기능 시험/소스 전체 동일성·DB/provider 동작 검증은 하지 않았다. 문서 변경뿐이므로 서버 교체/반복 기능시험·변화 없는 Issue 댓글은 추가하지 않았다. commit/push·운영 변경 없음.
+
+
+## 2026-11-16 — Issue55 Native 전체2 대조 회신 수신
+
+- [전체2 Native 규칙·자료·상세필드 인계](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6909842470)를 Issue 본문/전체 댓글2개 조회로 확인했다. Native는 새 기능/시험·키/DB 변경 없음·문서 미커밋/미push·새 소비SHA 없음으로 보고했다. Backend 1차 방향은 수용하되 아래 수정을 요청했다.
+- 수집+역할판정 성공은 전투력 하락·보석/아크그리드 세팅error도 최신 수치/issue 저장, 실패 때만 이전값/시각 유지. source 미제공null은 실패와 분리한다. 실제 회원 preferred_role은 표시 선호이므로 강제역할 저장/선택후 재수집안을 철회했다. 양역할 version 입력 후 감지 역할만 CAS·저장, 반대역할 유지다.
+- 수동 갱신은 과거 캐시 성공 금지·동시 fresh 합류/동일 명령 ACK만 허용. 시간예산 미시도/결과불명/확정실패와 ID재사용·reserve 범위를 Backend 최종 wire에서 구분한다. 상세는 동일 UUID/role/version/관찰시각의 저장 projection GET, provider0이어야 한다.
+- 원격 고정 Flutter302243fb의 scoped_role_build_mapper와 character_build_role_policy를 plugin으로 읽어 선호역할 fallback 없음·4겸용직업 감지/4티어·issue와 수치/nullable시각 매핑을 확인했다. Flutter 로컬은 읽지 않았다. 나머지 분석기/카탈로그와 합성 builder fixture는 인계 목록으로 기록, 아직 전체 포팅·golden/동등성 실행은 아니다.
+- Backend 코드 대조: power_success.capture는 nonnull 최신 관찰을 저장하지만 null이면 과거 성공을 유지하고, participation_core.power_value는 그 성공값을 비교한다. 새 성공null/최신값 정책에 과거 고수치 fallback이 섞이지 않도록 저장/참가소비를 함께 전환할 영향으로 명시했다. 기존 실제 동작을 세팅error면 저장하지 않는 것으로 오기하지 않았다.
+- 설계/NEXT_WORK/AI_CONTEXT/ISSUE_TRACKER에 수신/수정·다음 Backend 최종명세 담당을 반영했다. 최종 JSON/오류/저장·제거 영향표와 Native 재대조가 남았으며 이번 회신을 구현/게시/키·DB/배포 승인으로 확대하지 않는다. 코드·실행계약·키/DB/운영 변경 없음, 미커밋·미push 유지.
+
+- [전체3 Backend Native 수정 수용·설계 반영 회신](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6909928494) 게시, 전체 댓글 재조회로 실제3번째·Backend/수정 수용 단계 확인. 다음 담당 Backend·최종 wire/영향표 작성 대기, Native 추가 자료 중복 요청 없음. 문서302개/상대링크3384개와 동결보존·diff PASS.
+
+
+## 2026-11-16 — Issue55 character-analysis-refresh-1 최종 계약 후보1
+
+- 사용자 승인 계획을 실행해 [최종계약 후보1](../features/rosters/power-and-profiles/analysis-refresh-contract.md), 후보 JSON Schema·합성 요청/응답·[문서검증 집계](../features/rosters/power-and-profiles/analysis-refresh-validation.json)를 작성했다. 현재 checkout refactor/lostark-server-processing/시작cda4db3, 기존 미커밋 변경을 보존했다. 기존 전체3 뒤 새회신 없음·IssueOPEN을 확인했다.
+- 양역할 version/trigger 입력·감지역할CAS, 항목 saved/skipped/failed/not_processed/in_progress/unknown·명시 retry action, reserve0 미시도/기존미확정 구분·현재ACK24h/미완료48h·fresh합류/예산·요약/상세 단일head를 구체화했다. 별도 RolePowerSuccess/capture·그룹/후보/신청/참가비교/토큰/역사snapshot 소비의 제거/전환 영향을 연결했다. 낮은값·세팅error·명시null 최신저장과 transport/대상/역할판정 실패를 구분한다.
+- Native 고정302243fb의 character_build_analysis/catalog_detection entity를 원격으로 추가 조회해 상세 DTO enum/표시자료·grid/gem/source가용성을 대조했다. Flutter 로컬은 읽지 않았고 실제 분석기 포팅/새golden/동등성 시험은 하지 않았다. synthetic-catalog-v1은 합성 wire 예시에만 사용한다.
+- 현재 rosters.service의 MemberPreview/MemberFetch import는 ScopedRosterCache/ScopedRosterLease 별칭임을 확인해 실제 active scoped_roster_cache/scoped_roster_leases와 옛 lostark_keys.models 동명 테이블을 구분했다. 개인 key버전 PK/인증snapshot·옛분석/모집snapshot의 자료정리 대상은 영향표로만 제시했으며 migration/drop/truncate·키/기기 삭제는 실행하지 않았다.
+- /tmp 생성기 최초 문법 오류를 수정한 뒤 후보 JSON을 생성했다. /tmp 정적 검증기로 Schema 자체/정상4예시·형식오류18사례/중복ID2사례 거절·요청응답 식별/역할/버전/nullable시각 상관관계를 확인해 PASS. 예시는 실제 provider 입력/분석golden이 아니며 runtime/API/DB/provider/기기/운영 시험은 미실행이다. 검증 집계에 schema/examples SHA256을 기록했다.
+- 실행 OpenAPI·app/tests/scripts/배포 구성은 바꾸지 않았다. 서버/DB/키/운영 변경·commit/push/merge 없음. 문서 최종검사와 실제 Issue 계약회신 결과는 아래에 기록한다.
+
+- [전체4 Backend 최종계약 후보1 인계](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6910288469) 게시 완료. 본문 제외 실제4번째·Backend 작성 측·최종계약 후보1 인계 단계로 전체 댓글 재조회, 게시38895문자가 준비본문과 정확히 같음을 확인했다. repo 미게시 파일 링크를 원격 인계로 가장하지 않고 댓글에 정확명세/전체Schema·합성예시·검증 집계를 포함했다. Backend 제안 인계 완료, 다음 Native exact wire/저장·제거 영향 대조→양측합의 대기다. Issue OPEN·기능 미구현·새소비SHA 없음·로컬 미커밋/미push 유지.
+- 게시 전 문서303개/상대링크3398개·원문128/동결JSON20보존·실행API216분류와 diff PASS. 게시 후 링크/담당 상태만 추가하고 최종 문서검사를 수행한다. Runtime/API/DB/provider/기기·분석golden/운영 시험 미실행은 유지한다.
+
+
+## 2026-11-16 — Issue55 Native 전체5 설계 수용·공동확정
+
+- 전체 댓글5개 재조회로 [전체5 Native 최종계약 수용](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6910545522) 확인. 추가 제품/API 재설계 요청 없이 후보1 업무/정확wire/저장·제거를 수용했다. Backend도 동일 character-analysis-refresh-1 설계확정을 기록했고 Schema/examples는 바꾸지 않았다. 구현/실행 API·분석동등성·기기 통과 보고가 아니다.
+- Native는 독립 정적23/23 PASS를 보고했으며 범용 Draft 준수·새DTO 기능/실제서버·DB/provider/Pythongolden·기기 시험은 미실행으로 구분했다. 실제 strict reader/내장 exact wire·관련fixture/문구·단일producer 교체 영향을 인계했다. 재검토/재시험 중복 요청은 하지 않는다.
+- B1 서버 수집/순수분석, B2 분석명령/단일head/읽기·소비/제거, N1 공통UI/공개예시, N2 새reader/producer·옛경로제거, I1 로컬통합의 담당·선행·완료조건을 계약7절에 연결했다. 원격 설계 전달은 전체4/5와 Backend 확정회신, repo 미커밋·미push·새소비SHA 없음으로 유지한다. 공동설계 완료·기능구현 미착수, 다음 Backend 로컬 실행계획 준비다.
+- Native semantic 경계(감지역할/result/detail·catalog/lifecycle/identity/version·오류/재시도·순서/개수/ID·bytes/duplicate·fresh합류/동일versionCAS)를 구현 검증으로 연결했다. 현재 기능코드/실행OpenAPI·키/DB/기기/운영 변경·commit/push 없음.
+
+- [전체6 Backend 수용 확인·공동설계 확정 회신](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6910714179) 게시 후 전체 댓글6개를 재조회해 실제6번째·Backend·공동설계 확정 단계 확인. 다음 Backend 로컬 구현 실행계획 준비, 설계 대조 대기는 해소했다.
+
+<a id="issue55-server-analysis-local-implementation"></a>
+
+## 2026-11-16 — Issue55 B1/B2 로컬 구현·현재 앱 회귀 전환
+
+- 사용자 `Please implement the plan`에 따라 `refactor/lostark-server-processing`/시작 HEAD cda4db3에서 구현했다. 서버 secret 공급·generation·공유 quota/장애 억제, Native302243fb 분석 규칙/카탈로그·합성8계열, 새 분석 POST/항목 ledger·fresh합류·감지역할 CAS·summary/detail 단일head, 요약 bootstrap/상세 GET 및 그룹/후보/참가/신청 소비를 연결했다. 최신 null/저수치·세팅error를 저장하며 수집/형식/역할 실패만 기존 head를 보존한다.
+- 개인 key CRUD/restore·회원키 암복호화, 클라이언트 역할 PUT/batch 및 RolePowerSuccess/nonnull fallback을 제거했다. create_app 단일 factory·현재 test metadata/DB0037로 통일하고 과거 마이그레이션은 실행 가능한 옛 앱 없이 고정 SQL로 검증하도록 옮겼다. 기존 migration/동결 계약·배포 원장은 보존한다. 과거 이미지 감사용 배포 hash 도구는 버전별 이름과 동결 파일을 확인하며 새 legacy 앱을 생성하지 않는다.
+- 0037은 비호환 개인키/분석·연계 snapshot 행을 DDL 전에 검사해 중단한다. 실제 dev/운영 DB에서 migration·초기화/삭제·키 설정을 하지 않았다. [전환·보관 경계](../features/rosters/power-and-profiles/server-processing-implementation.md)에 서버 token 파일과 기존 fingerprint 재사용, 실제 적용 전 별도 데이터 준비 결정을 기록했다.
+- [전체7 Native 공식 오류 대조 요청](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6910971244)을 확인했다. 같은 서버 키로 새 수집을 401/403·415 60초, 5xx/통신 실패30초 억제하고 429/Remaining0의 유효 Reset/Retry-After·비정상 fallback을 재사용했다. 원문/개인정보 없이 상태·code/deadline만 저장하며 일반 GET/공개 읽기는 차단하지 않는다. wire/Schema/examples delta 없음.
+- [전체8 Backend B1 중간 결과](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6911910416)를 게시하고 전체 댓글 재조회로 실제8번째·Backend 작성 측임을 확인했다. 당시 신규66PASS/13subtests·인증34PASS와 B2 회귀 진행/잔여 실패를 구분해 회신했다. Native에 미게시 코드 시험/같은 설계 재검수를 요청하지 않았다.
+- 확장한 현재 회귀 세트는 **130PASS/분석13subtests**다. 분석/키/공유 제한/마이그레이션, 자동 대상·나이스단/선호 비개입, 예산·unknown/late-write 차단, 같은 ID 복구·commit 응답유실·48h 만료를 합성 provider+실제 HTTP/일회용 PostgreSQL에서 확인했다. UUID 형식/중복·저장 class 누락 경계까지 통과했다.
+- 기존 확대 회귀 첫 실행535PASS/20FAIL은 기록 그대로 유지한다. 현재 대표/상세 제외·provider_generation·서버키 오류/과거 fixture 기대를 수정한 재검증18PASS와 대표 표시 후속53PASS를 확인했다. 모집 소비66PASS/1FAIL의 HTTP 정책 marker 누락은 별도39PASS 실행에 포함해 해소했다. 그룹176PASS/9FAIL은 최신 null/현재 그룹 정책·명세 및 과거 fixture 차이를 수정해8PASS 후 명세 enum 재생성/잔여3PASS를 확인했다. 중복 실행 결과를 고유 전체 통과 수치로 합산하지 않는다.
+- 과거 마이그레이션 SQL 시험18PASS/2FAIL에서 최신 ORM readiness를 옛 DB에 적용하던 기대를 제거하고 역사 FK/DDL 직접 검사로 바꿨으며 잔여2건과 현재 명세 비교를 합한3PASS를 확인했다. 전체 회귀는 실행 중이며 실패를 통과로 덮지 않는다.
+- 현재 OpenAPI191경로/211동작 전체 객체 비교 PASS, 도구 unittest87PASS, 문서304개·상대링크/앵커3399개·원문128개/동결JSON20개 보존·의존성/compile/diff 점검 PASS. 최종 UUID 명세 및 전체 회귀 후 수치를 갱신한다.
+- 코드·명세·문서는 미커밋·미push, 새 소비 SHA 없음. 실제 provider 장애/한도 소진·실제 dev API/DB0037 반영·Native 기기/운영·실제 복원은 미실행이다. 다음 Backend는 전체 회귀의 남은 실패/제거 참조·최종 계약을 확인하고 같은 Issue에 구현 인계를 남긴다.
+
+- 후속 최종 현재 세트129PASS/분석13subtests, UUID 엄격 경계11PASS 및 OpenAPI 전체 객체 비교 PASS. DB0037 메타데이터·표준 UUID/v4 pattern을 계약에 반영했고 수집 중 서버/이름/직업 변경도 저장 직전에 거절한다. 분석 경로의 DB 대기를 제한하고 전체 예산 경과 후 잔여 항목에 추가 DB/외부 작업을 시작하지 않는다. 전체 회귀는 별도로 계속 실행 중이다.
+
+### Issue55 최종 회귀·단일 실행 정리
+
+- 최종 수집1,889개 항목을 분할 실행/실패 수정 재검증 로그와 대조해 고유 통과1,889·누락0·미해결 실패0을 확인했다. 동적 UUID1 parameter명1건은 같은 사례로 대조했다. 겹치는 후반은 해당 일회용 pytest만 정상 SIGINT로 중단하고 별도 구간에서 완료했으며, 한 번의 전체 green 실행으로 표시하지 않는다. 앞 구간1,092PASS/15subtests, 공통·현재 compat179PASS/2subtests, 나머지 구간/재검증 결과를 단순 합산하지 않았다.
+- 기존 회귀 실패에는 종료한 DB0023 runtime/0034 공통 그룹 연결, 최신 상세/metadata/서버 generation·현재 정책과 옛 fixture의 차이가 있었다. [시험 대응표](../engineering/development/current-test-consolidation.md)에 폐기 시험/현재 범위·SQL migration 보존을 기록했다. 단계별 무효 upgrade/hash 반복을 제거하고 개인 프로필 배치 GET10개를 reader 전용으로 보존했다. 새 분석·인증·설정130PASS/13subtests, reader/입장 snapshot11PASS, 주간 요약33PASS, 관리/실제 JWT28PASS, migration/timestamp6PASS는 최종1,889개에 포함된다.
+- 실제 소비 보완: 제거한 Bundle.successes 잔여 참조, 신청/상세·후임자 DTO의 현재 그룹 metadata 누락, 카드별 정책 N+1을 보완했다. 공통 제목 noop의 affected_cycle_keys를 빈 목록으로 수정했다. 전체 표 검사에서 빠진 roster_participation_capabilities 기록시각 trigger를0037에 추가했고 과거 migration은 보존했다. 재참가/주간 요약은 실제 현재 생성·새 CM/assignment와 기존 이력 보존으로 시험한다.
+- create_app 단일 factory/DB0037·공통 metadata와 현재 계약으로 통일했다. 미사용 compose.two-cycle override를 제거하고 과거 문서 링크만 고정 source로 연결했다. 현재 dev DB0036에서 새 이미지를 준비 없이 재기동하지 않도록 환경 안내를 갱신했다. 실제 개발 API/DB는 healthy·미교체다.
+- 최종 OpenAPI191경로/211동작 생성 객체 전체 비교 PASS, 도구87PASS·의존성/compile/diff·문서 및 보관 본문128개/동결JSON20개 보존 PASS. 신규 계약/소비 SHA는 아직 게시하지 않았다. 실제 provider/DB0037 적용·자료 초기화/삭제·실키/환경·Native UI/기기·운영 인수는 미실행이다.
+- Backend 로컬 구현·자동 검증 완료. 다음 Backend는 사용자 지시 범위의 게시/SHA 인계·실제 환경 준비를 진행하고 Native 통합은 소비 코드/실행 서버 준비 후 별도 확인한다. commit/push/merge·실제 DB/키/서버 변경·Issue 종료 없음.
+
+- [Issue55 전체9번째 댓글·Backend B1/B2 로컬 구현·회귀 완료](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6914853896)로 결과를 회신했다. 전체 댓글 재조회로9번째·Backend 작성·B1/B2 단계임을 확인하고 본문 상단을 로컬 완료/다음 Backend 게시·실제 환경 준비/Native 통합 대기로 갱신했다. Issue는 OPEN이며 새 소비 SHA/원격 시험 요청은 없다.

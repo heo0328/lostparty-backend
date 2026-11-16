@@ -299,8 +299,8 @@ def test_concurrent_leave_and_invitation_accept_use_current_membership(client, w
                 expected_usage_revision=limits(client, c)['usage_revision'])
     principal = actor(b['uid'])
     from fastapi.testclient import TestClient
-    from app.main import create_legacy_app
-    app = create_legacy_app()
+    from app.main import create_app
+    app = create_app()
     def leave():
         try:
             return management.leave(principal, uuid.UUID(gid), uuid.uuid4(), leave_data)[0]

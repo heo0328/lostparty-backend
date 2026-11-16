@@ -10,6 +10,7 @@ from pydantic import StrictInt
 from app.game_accounts.schemas.profile_schemas import AnalysisIssue
 from app.game_accounts.schemas.schemas import DTO
 from app.raid_rooms.schemas import cycle_wire as wire
+from app.raid_rooms.schemas.cycle_group_schemas import Envelope
 
 Version = Annotated[StrictInt, Field(ge=1, le=2147483647)]
 
@@ -32,7 +33,7 @@ class ApplicationDisplayPage(wire.BApplicationPage):
     items: Annotated[list[ApplicationDisplayItem], Field(max_length=50)]
 
 
-class ApplicationDisplayPageResponse(DTO):
+class ApplicationDisplayPageResponse(Envelope, DTO):
     scope: wire.Scope
     data: ApplicationDisplayPage
 
@@ -48,6 +49,6 @@ class ApplicationDisplayDetail(wire.BDetail):
     my_application: ApplicationDisplayOwnApplication | None
 
 
-class ApplicationDisplayDetailResponse(DTO):
+class ApplicationDisplayDetailResponse(Envelope, DTO):
     scope: wire.Scope
     data: ApplicationDisplayDetail

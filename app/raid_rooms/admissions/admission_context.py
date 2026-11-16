@@ -107,7 +107,7 @@ def creation(db,uid,cid,role,items,gid,stamp):
         targets.append(dict(raid_id=item.raid_id,difficulty_id=item.difficulty_id,
             expected_weekly_revision=state.revision if state else 1))
     binding=['create',str(uid),cycle.cycle_key,choice.model_dump(mode='json'),targets,group,
-             comparison['power_revision'],core.room_count(db,uid),raids.catalog().catalog_version]
+             comparison['summary_version'],core.room_count(db,uid),raids.catalog().catalog_version]
     return dict(expected_cycle_key=cycle.cycle_key,server_time=stamp,catalog_version=raids.catalog().catalog_version,
         policy_snapshot=digest(binding),context_token=token(binding),selection=choice,targets=targets,
         group_revision=group[1] if group else None,comparison=comparison,
@@ -155,7 +155,7 @@ def admission(db,uid,room,cid,role,intent,stamp):
             permission=dict(allowed=not closed,reason='RECRUITMENT_CLOSED' if closed else None)))
         if closed and binding_row.required and intent!='change_character':reason=reason or 'RECRUITMENT_CLOSED'
     binding=[intent,str(uid),str(room.id),cycle.cycle_key,room.revision,room.members_revision,room.plan_revision,
-        snapshot,choice.model_dump(mode='json'),[t.model_dump(mode='json') for t in targets],comparison['power_revision'],jsonable_encoder(session_choices)]
+        snapshot,choice.model_dump(mode='json'),[t.model_dump(mode='json') for t in targets],comparison['summary_version'],jsonable_encoder(session_choices)]
     return dict(room_id=room.id,room_revision=room.revision,members_revision=room.members_revision,plan_revision=room.plan_revision,
         expected_cycle_key=cycle.cycle_key,server_time=stamp,catalog_version=raids.catalog().catalog_version,
         policy_snapshot=snapshot,context_token=token(binding),selection=choice,targets=targets,session_choices=session_choices,

@@ -17,7 +17,6 @@ from app.game_accounts.models.models import Activity
 from app.game_accounts.models.models import Character
 from app.game_accounts.models.models import NameClaim
 from app.game_accounts.models.models import CharacterRoleSummary
-from app.game_accounts.models.power_success import RolePowerSuccess
 from app.game_accounts.schemas.profile_schemas import RoleSummary
 from app.game_accounts.common.support import authorize
 from app.game_accounts.common.support import fail
@@ -70,7 +69,7 @@ def paginate(principal, path, rows, evidence, limit, cursor, **scope):
 
 def empty_role():
     return dict(combat_power=None, source='unavailable', trust=None, observed_at=None,
-                saved_at=None, power_revision=None, analysis=None, reason='ROLE_ANALYSIS_UNAVAILABLE')
+                saved_at=None, summary_version=None, issues=[], analysis=None, reason='ROLE_ANALYSIS_UNAVAILABLE')
 
 
 def absent(reason):
@@ -107,30 +106,23 @@ def character_specs(db, characters):
     users = {uid for uid, _, _ in characters}
     heads = {(v.user_id, v.character_id, v.ownership_revision, v.role): v for v in db.scalars(
         select(CharacterRoleSummary).where(CharacterRoleSummary.user_id.in_(users), CharacterRoleSummary.character_id.in_(ids)))} if ids else {}
-    successes = {(v.user_id, v.character_id, v.ownership_revision, v.role): v for v in db.scalars(
-        select(RolePowerSuccess).where(RolePowerSuccess.user_id.in_(users), RolePowerSuccess.character_id.in_(ids)))} if ids else {}
     found = {}
     for uid, account, char in characters:
         roles = {}
         for role in ('dealer', 'support'):
             out = empty_role()
             key = (uid, char.id, account.ownership_revision, role)
-            head, success = heads.get(key), successes.get(key)
+            head = heads.get(key)
             if head is not None:
                 try:
                     summary = RoleSummary.model_validate(head.summary)
                     if summary.observed_lifecycle_revision == char.lifecycle_revision:
-                        out['analysis'] = dict(version=head.version, saved_at=head.saved_at, analyzed_at=summary.analyzed_at,
-                            integrity_status=summary.integrity_status, issues=summary.model_dump(mode='json')['issues'])
-                        out['reason'] = None
-                except (ValidationError, TypeError, ValueError):
-                    out['reason'] = 'ROLE_ANALYSIS_INVALID'
-            if success is not None:
-                try:
-                    saved = RoleSummary.model_validate(success.source_summary)
-                    if saved.observed_lifecycle_revision == char.lifecycle_revision and _level(success.combat_power) is not None:
-                        out.update(combat_power=success.combat_power, source='stored_role_success', trust='client_submitted',
-                            observed_at=success.observed_at, saved_at=success.source_saved_at, power_revision=success.power_revision)
+                        issues=summary.model_dump(mode='json')['issues']
+                        out.update(combat_power=summary.combat_power, source='server_analysis', trust='server_computed',
+                            observed_at=summary.combat_power_observed_at, saved_at=head.saved_at,
+                            summary_version=head.version, issues=issues, reason=None,
+                            analysis=dict(version=head.version,saved_at=head.saved_at,analyzed_at=summary.analyzed_at,
+                                integrity_status=summary.integrity_status,issues=issues))
                 except (ValidationError, TypeError, ValueError):
                     out['reason'] = 'ROLE_ANALYSIS_INVALID'
             roles[role] = out

@@ -30,12 +30,7 @@ from tests.raid_rooms.admissions.test_recruitment_cycle_http import validate
 
 
 def client(w):
-    # The isolated candidate app must use the real runtime's cache policy too.
-    # Importing main does not run its lifespan or mount the candidate in main.
-    from app.main import no_store
-    http=candidate_client(w)
-    http.app.middleware('http')(no_store)
-    return http
+    return candidate_client(w)
 
 
 def test_submission_context_confirmation_actual_http_contract(consent):

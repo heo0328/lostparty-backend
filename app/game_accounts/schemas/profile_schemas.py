@@ -1,4 +1,4 @@
-"""P1 client analysis summaries; never provider observations or permissions."""
+"""Server analysis heads and independent personal preferences."""
 import re
 from datetime import datetime
 from datetime import timedelta
@@ -14,6 +14,7 @@ from pydantic import field_validator
 from pydantic import model_validator
 from app.game_accounts.schemas.schemas import DTO
 from app.game_accounts.schemas.schemas import Version
+from app.game_accounts.schemas.analysis_detail import AnalysisDetail
 
 Role = Literal['dealer', 'support']
 Identifier = Annotated[StrictStr, Field(min_length=1, max_length=64, pattern=r'^[A-Za-z0-9._-]+$')]
@@ -26,7 +27,7 @@ class AnalysisIssue(DTO):
 
 
 class RoleSummary(DTO):
-    source: Literal['flutter_analysis']
+    source: Literal['server_analysis']
     analysis_rules_version: Identifier
     analyzed_at: datetime
     combat_power: DecimalValue | None
@@ -72,23 +73,26 @@ class RoleSummary(DTO):
         return self
 
 
-class RoleSummaryIn(DTO):
-    expected_version: Version
-    expected_ownership_revision: Version
-    expected_lifecycle_revision: Version
-    summary: RoleSummary
-
-    @model_validator(mode='after')
-    def observed_revision(self):
-        if self.summary.observed_lifecycle_revision != self.expected_lifecycle_revision:
-            raise ValueError('Observation must match expected lifecycle')
-        return self
-
-
 class StoredRoleSummary(DTO):
     version: Version
     summary: RoleSummary | None
     saved_at: datetime | None
+
+
+class RoleAnalysis(DTO):
+    version: Version
+    saved_at: datetime | None
+    summary: RoleSummary | None
+    detail: AnalysisDetail | None
+
+    @model_validator(mode='after')
+    def consistent(self):
+        if self.summary is None:
+            if self.version != 1 or self.saved_at is not None or self.detail is not None:
+                raise ValueError('Unset analysis must have version 1 and null values')
+        elif self.version < 2 or self.saved_at is None or self.detail is None or self.summary.catalog_version != self.detail.detection.catalog_version:
+            raise ValueError('Stored summary and detail must belong to the same head')
+        return self
 
 
 class PersonalPreferences(DTO):
@@ -137,15 +141,11 @@ class PersonalProfileOut(DTO):
     ownership_revision: Version
     lifecycle_revision: Version
     lifecycle_state: Literal['active', 'suspect']
-    dealer: StoredRoleSummary
-    support: StoredRoleSummary
+    dealer: RoleAnalysis
+    support: RoleAnalysis
     preferences: PersonalPreferences
 
 
-class RoleSummaryOut(StoredRoleSummary):
-    character_id: UUID
-    role: Role
-    ownership_revision: Version
-    lifecycle_revision: Version
-    summary: RoleSummary
-    saved_at: datetime
+class BootstrapPersonalProfile(PersonalProfileOut):
+    dealer: StoredRoleSummary
+    support: StoredRoleSummary

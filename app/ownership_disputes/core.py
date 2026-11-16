@@ -128,10 +128,9 @@ def scope_error(db, p, rows=None):
         r=db.get(Registration,p.source_registration_id)
         if r is None or r.deleted_at or r.user_id!=p.actor_id or r.version!=snap['registration_version']:
             return 'REVISION_CONFLICT'
-    from app.lostark_keys.models import Credential
-    credential=db.get(Credential,p.actor_id)
-    if credential is None or credential.ciphertext is None or credential.version!=snap['credential_version']:
-        return 'LOSTARK_KEY_CHANGED'
+    from app.game_accounts.provider_io import credentials
+    if credentials.capture().generation != snap['provider_generation']:
+        return 'SERVER_KEY_CHANGED'
     saved=snap['candidate']
     if saved:
         a=db.get(Account,p.candidate_id); c=db.get(Character,uuid.UUID(saved['target_id']))

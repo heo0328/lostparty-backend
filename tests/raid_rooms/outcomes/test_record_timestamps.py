@@ -10,9 +10,9 @@ from app.core.database import engine, session
 def test_all_application_tables_have_database_clocks():
     with engine().connect() as c:
         schema = inspect(c)
-        # The fixture is 0023; later model imports must not expand its table cohort.
-        from tests.legacy_metadata import legacy_metadata
-        runtime_tables = set(legacy_metadata().tables)
+        # The same canonical current metadata is used by the application and Alembic.
+        from app.core.model_registry import metadata
+        runtime_tables = set(metadata.tables)
         assert runtime_tables == set(schema.get_table_names()) - {'alembic_version'}
         for table in runtime_tables:
             columns = {v['name']: v for v in schema.get_columns(table)}

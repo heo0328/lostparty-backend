@@ -1,9 +1,8 @@
 """W3 lifecycle under restricted PostgreSQL, never against a development DB."""
-import os
-import subprocess
 import uuid
 from datetime import timedelta
 from concurrent.futures import ThreadPoolExecutor
+from tests.concurrency import map_in_context
 import pytest
 from sqlalchemy import select
 from sqlalchemy import inspect
@@ -48,17 +47,7 @@ from app.raid_rooms.models.cycle_lifecycle_models import CycleDecision
 
 @pytest.fixture
 def lifecycle(candidate):
-    target,a,b=candidate
-    tables=set(inspect(target).get_table_names())-{'alembic_version'}
-    before=table_digests(target,tables)
-    result=subprocess.run(['alembic','upgrade','0026_cycle_lifecycle'],env={**os.environ,
-        'DATABASE_URL':target.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
-    assert result.returncode==0,result.stderr.decode()[-1800:]
-    assert table_digests(target,tables)==before
-    with session() as db,db.begin():
-        readiness.require_ready(db,integrated=True)
-        with pytest.raises(GameError):readiness.require_active(db)
-    return target,a,b
+    return candidate
 
 
 def next_key():
@@ -179,7 +168,7 @@ def test_explicit_decline_is_audit_not_occupancy(lifecycle):
         assert db.scalar(select(func.count()).select_from(WeeklyOccupancy).where(WeeklyOccupancy.user_id==b['uid']))==1
 
 
-def test_cancel_and_rejoin_reuses_assignment_but_new_order(lifecycle):
+def test_cancel_and_rejoin_preserves_history_and_creates_fresh_participation(lifecycle):
     _,a,b=lifecycle
     room=create_room(a,bundle=True);rid=uuid.UUID(room['room_id']);c,n=[v['target_cycle_key'] for v in room['created_cycles']]
     add_member(b,rid,c);continuation.execute(actor(b['uid']),rid,uuid.uuid4(),continue_body(continuation.get(actor(b['uid']),rid,n)))
@@ -195,16 +184,21 @@ def test_cancel_and_rejoin_reuses_assignment_but_new_order(lifecycle):
     cancel_member(b,rid,n)
     continuation.execute(actor(b['uid']),rid,uuid.uuid4(),continue_body(continuation.get(actor(b['uid']),rid,n)))
     with session() as db,db.begin():
-        cm=db.get(CycleMember,cmid);row=db.get(RoomCycle,cm.cycle_id)
-        assert cm.joined_order>old_order and cm.state=='participating'
-        assert [a.id for a in leadership.life.assignments(db,row,cm)]==old
+        previous=db.get(CycleMember,cmid);row=db.get(RoomCycle,previous.cycle_id)
+        cm=leadership.life.actual_member(db,row,b['uid'])
+        assert previous.state=='cancelled' and previous.joined_order==old_order
+        assert cm.id!=cmid and cm.joined_order>old_order and cm.state=='participating'
+        assert not set(old)&{a.id for a in leadership.life.assignments(db,row,cm)}
         assert db.get(RoomCycle,uuid.UUID(room['created_cycles'][0]['room_cycle_id'])).revision==c_revision
         assert db.get(Member,cm.membership_id).ended_at is None
         history=list(db.scalars(select(ParticipationEvent).where(ParticipationEvent.cycle_member_id==cmid).order_by(ParticipationEvent.member_revision)))
-        assert [e.action for e in history]==['joined','cancelled','joined']
+        assert [e.action for e in history]==['joined','cancelled']
+        assert [e.action for e in db.scalars(select(ParticipationEvent).where(
+            ParticipationEvent.cycle_member_id==cm.id))]==['joined']
         assert history[1].evidence['assignments'][0]['build'] is not None
         assert history[1].evidence['submission']['source_personal_revision']==1
         assert db.get(CycleSubmission,cmid) is None
+        assert db.get(CycleSubmission,cm.id) is None
 
 
 def test_leader_cancel_chooses_first_eligible_and_preserves_c(lifecycle,people):
@@ -374,7 +368,7 @@ def test_concurrent_explicit_openings_commit_one_generation(lifecycle):
     def execute(body):
         try:return opening.execute(actor(a['uid']),rid,uuid.uuid4(),body)[0]
         except GameError as error:return error.code
-    with ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(execute,bodies))
+    with ThreadPoolExecutor(max_workers=2) as pool:results=list(map_in_context(pool,execute,bodies))
     assert sorted(map(str,results))==['200','TARGET_CONTEXT_STALE']
     with session() as db,db.begin():
         assert db.scalar(select(func.count()).select_from(RoomCycle).where(RoomCycle.room_id==rid))==2
@@ -528,9 +522,8 @@ def test_invalid_only_successor_blocks_handoff_but_can_cancel_own_target(lifecyc
 @pytest.mark.parametrize('operation',['open','continue'])
 def test_alternate_role_power_source_is_bound_to_context(lifecycle,operation):
     from app.game_accounts.models.models import CharacterRoleSummary
-    from app.game_accounts.power.power_success import capture
-    from app.game_accounts.models.power_success import RolePowerSuccess
     from tests.game_accounts.test_role_summaries import summary
+    from tests.game_accounts.analysis.fixtures import detail_for
     _,a,b=lifecycle
     room=create_room(a,combined=operation=='continue');rid=uuid.UUID(room['room_id']);n=next_key()
     w=a if operation=='open' else b
@@ -539,13 +532,13 @@ def test_alternate_role_power_source_is_bound_to_context(lifecycle,operation):
     with session() as db,db.begin():
         head=CharacterRoleSummary(user_id=w['uid'],character_id=cid,ownership_revision=1,role='support',
             version=1,summary=summary(),saved_at=now(db))
-        db.add(head);db.flush();capture(db,head)
+        head.detail=detail_for(head.summary,head.role);db.add(head);db.flush()
     if operation=='open':ctx=opening.get(actor(w['uid']),rid,n,'open',cid,'support');body=opening_body(ctx)
     else:ctx=continuation.get(actor(w['uid']),rid,n,cid=cid,role='support');body=continue_body(ctx)
     assert ctx['data']['permission']['allowed']
     with session() as db,db.begin():
-        success=db.get(RolePowerSuccess,(w['uid'],cid,1,'support'))
-        success.power_revision+=1
-        success.observed_at+=timedelta(microseconds=1)
+        head=db.get(CharacterRoleSummary,(w['uid'],cid,1,'support'))
+        head.version+=1
+        head.saved_at+=timedelta(microseconds=1)
     execute=opening.execute if operation=='open' else continuation.execute
     denied('TARGET_CONTEXT_STALE',execute,actor(w['uid']),rid,uuid.uuid4(),body)

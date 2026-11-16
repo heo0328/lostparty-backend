@@ -13,7 +13,7 @@ from sqlalchemy import func
 from fastapi.encoders import jsonable_encoder
 from app.auth.models import User
 from app.game_accounts.common.support import fail
-from app.game_accounts.models.power_success import RolePowerSuccess
+from app.game_accounts.models.models import CharacterRoleSummary
 from app.raid_rooms.common import cycles
 from app.raid_rooms.participation import participation_core as core
 from app.raid_rooms.models.cycle_models import CycleMember
@@ -185,9 +185,9 @@ def admit_bundle(db, uid, room, target, selection, targets, command_id, stamp, *
         db.flush()
         core.legacy.touch_user(db, uid)
     build = deepcopy(power)
-    success = db.get(RolePowerSuccess, (uid, character.id, selection.expected_ownership_revision, selection.selected_role))
+    success = db.get(CharacterRoleSummary, (uid, character.id, selection.expected_ownership_revision, selection.selected_role))
     if success:
-        build['success_summary'] = deepcopy(success.source_summary)
+        build['summary'] = deepcopy(success.summary)
     assignments = []
     for item, rd, state, slot, old in plans:
         values=dict(room_id=room.id, item_id=item.id, round_id=rd.id,

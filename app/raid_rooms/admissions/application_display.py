@@ -11,7 +11,6 @@ from pydantic import ValidationError
 from app.game_accounts.models.models import Account
 from app.game_accounts.models.models import Character
 from app.game_accounts.models.models import CharacterRoleSummary
-from app.game_accounts.models.power_success import RolePowerSuccess
 from app.game_accounts.schemas.profile_schemas import RoleSummary
 from app.game_accounts.common.support import fail
 from app.raid_rooms.schemas.participation_commands import Selection
@@ -90,7 +89,7 @@ def projections(db, applications, target):
             columns = (model.user_id, model.character_id, model.ownership_revision, model.role)
             return {(v.user_id, v.character_id, v.ownership_revision, v.role): v
                     for v in db.scalars(select(model).where(tuple_(*columns).in_(keys)))}
-        heads, successes = load(CharacterRoleSummary), load(RolePowerSuccess)
+        heads = load(CharacterRoleSummary)
         result = {}
         for app in applications:
             choice = choices[app.id]
@@ -104,15 +103,11 @@ def projections(db, applications, target):
                 result[app.id] = dict(display=shown, comparison=None, analysis=None, display_reason=reason)
                 continue
             key = (app.user_id, choice.character_id, choice.expected_ownership_revision, choice.selected_role)
-            head, success = heads.get(key), successes.get(key)
-            if success is not None:
-                if head is None:
-                    fail('SERVICE_UNAVAILABLE', 503)
-                RoleSummary.model_validate(success.source_summary)
+            head = heads.get(key)
             summary = RoleSummary.model_validate(head.summary) if head is not None else None
             minimum = target.settings_snapshot['combat_requirement'][
                 'dealer_min' if choice.selected_role == 'dealer' else 'support_min']
-            projection = dict(display=shown, comparison=power_value(choice.selected_role, minimum, head, success),
+            projection = dict(display=shown, comparison=power_value(choice.selected_role, minimum, head, character.lifecycle_revision),
                 analysis=dict(version=head.version, saved_at=head.saved_at, analyzed_at=summary.analyzed_at,
                               integrity_status=summary.integrity_status,
                               issues=summary.model_dump(mode='json')['issues']) if head is not None else None,

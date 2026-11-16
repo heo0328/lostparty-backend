@@ -85,7 +85,7 @@ Issue·댓글·PR·구현/계약 커밋을 연결합니다. Backend 완료와 Fl
 
 ## 계약 원본과 검증
 
-현재 계약 원본은 [openapi.yaml](../../../openapi/openapi.yaml)（현재192경로/213동작）이며 [legacy.openapi.yaml](../../../openapi/legacy.openapi.yaml)（DB0023·125경로/142동작）는 과거 시험용으로 보존한다. JSON 형식으로 저장해 YAML로도 유효하다. `create_app().openapi()`와 `create_legacy_app().openapi()`의 전체 객체를 각각 비교한다. [실행 이름과 명세 재배치](../development/runtime-configuration.md)는 응답/권한 계약 변경이 아니다. Native가 소비한 고정 commit URL/hash와 과거 배포 기록은 그대로 유효하다. 실제 로컬/운영 상태는 [NEXT_WORK](../../project/NEXT_WORK.md)와 [운영 원장](../operations/README.md)을 따른다.
+현재 계약 원본은 [openapi.yaml](../../../openapi/openapi.yaml)（현재191경로/211동작）이며 [legacy.openapi.yaml](../../../openapi/legacy.openapi.yaml)（DB0023·125경로/142동작）는 과거 감사·복구 이력 파일로 보존한다. JSON 형식으로 저장해 YAML로도 유효하다. 현재 `create_app().openapi()`의 전체 객체를 비교하며 새 소스에서 과거 앱을 생성하지 않는다. [실행 이름과 명세 재배치](../development/runtime-configuration.md)는 응답/권한 계약 변경이 아니다. Native가 소비한 고정 commit URL/hash와 과거 배포 기록은 그대로 유효하다. 실제 로컬/운영 상태는 [NEXT_WORK](../../project/NEXT_WORK.md)와 [운영 원장](../operations/README.md)을 따른다.
 
 HTTP OpenAPI·Swagger 경로는 비활성이다. 인증·원정대·개인 설정/키·그룹·카탈로그/주간 기록과 모집의 세부 의미는 각 기능 문서와 합의된 Issue가 기준이다. 과거 그룹1차/기기 인수는 [그룹 기록](../../features/groups/implementation-2026-10-28.md)에 보존한다.
 

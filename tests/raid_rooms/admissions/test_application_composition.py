@@ -1,8 +1,7 @@
 """Confirmed composition checks for pending applications; disposable DB only."""
-import os
-import subprocess
 import uuid
 from concurrent.futures import ThreadPoolExecutor
+from tests.concurrency import map_in_context
 from datetime import date
 
 import pytest
@@ -43,11 +42,7 @@ from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
 @pytest.fixture
 def current(candidate):
-    engine,a,b=candidate
-    p=subprocess.run(['alembic','upgrade','0031_membership_actions'],env={**os.environ,
-        'DATABASE_URL':engine.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
-    assert p.returncode==0,p.stderr.decode()[-1500:]
-    return engine,a,b
+    return candidate
 
 
 def room(a, *, eight=False, bundle=False):
@@ -177,9 +172,12 @@ def test_concurrent_approval_last_slot_one_winner(current,people):
     lead=context(a,rid,c,'apply');bodies=[decision(app,lead) for app in apps]
     def run(pair):
         app,body=pair
-        try:return commands.process(actor(a['uid']),uuid.UUID(app['application_id']),uuid.uuid4(),body)[0]
+        try:
+            from app.raid_rooms.group_links import cycle_group_policy
+            with cycle_group_policy.using():
+                return commands.process(actor(a['uid']),uuid.UUID(app['application_id']),uuid.uuid4(),body)[0]
         except commands.GameError as e:return e.code
-    with ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(run,zip(apps,bodies)))
+    with ThreadPoolExecutor(max_workers=2) as pool:results=list(map_in_context(pool,run,zip(apps,bodies)))
     assert sorted(map(str,results))==['200','TARGET_CONTEXT_STALE']
     with session() as db:
         target=db.scalar(select(RoomCycle).where(RoomCycle.room_id==rid,RoomCycle.cycle_key==date.fromisoformat(c)))

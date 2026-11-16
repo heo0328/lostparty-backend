@@ -13,7 +13,7 @@ from app.game_accounts.models.models import Character
 from app.game_accounts.models.models import Activity
 from app.game_accounts.models.models import CharacterRoleSummary
 from app.game_accounts.models.models import Account
-from app.game_accounts.power.power_success import capture
+from tests.game_accounts.analysis.fixtures import detail_for
 from app.groups.feature_models import GroupActivityHead
 from app.groups.feature_models import SubjectCharacterReference
 from app.groups.admission_models import GroupJoinRelation
@@ -38,14 +38,13 @@ PROFILE = {'reader_profile': 'group-display-1'}
 @pytest.fixture
 def group_features(client, worlds, monkeypatch):
     with isolated_app_database() as (target, role, upgrade):
-        upgrade('0033_reapplication_history')
+        upgrade('head')
         with monkeypatch.context() as patch:
             patch.setattr(database, 'engine', lambda: target)
             a, b = worlds('group-display-a'), worlds('group-display-b')
             gid = group(client, a)
             tables = set(inspect(target).get_table_names()) - {'alembic_version'}
             before = table_digests(target, tables)
-            upgrade('0034_group_features')
             assert table_digests(target, tables) == before
             yield target, a, b, gid
 
@@ -62,17 +61,16 @@ def add(client, a, b, gid):
     return get(client, b, '/v1/me/groups/' + gid)['my_membership']['membership_id']
 
 
-def test_old_schema_and_profile_contract(client, worlds):
+def test_current_schema_profile_contract(client, worlds):
     a = worlds('group-old-schema'); gid = group(client, a)
     assert client.get('/v1/groups/'+gid+'/members', headers=a['headers']).status_code == 200
     response = client.get('/v1/groups/'+gid+'/members', headers=a['headers'], params=PROFILE)
-    assert response.status_code == 503
-    assert response.json()['error']['code'] == 'GROUP_FEATURE_NOT_READY'
+    assert response.status_code==200 and response.json()['profile']=='group-display-1'
 
 
-def test_migration_legacy_unknown_and_bulk_activity_read_only(group_features, client):
+def test_current_bulk_activity_read_only(group_features, client):
     target, a, b, gid = group_features
-    assert get(client, a, '/v1/me/groups/'+gid, **PROFILE)['last_activity_at'] is None
+    assert get(client, a, '/v1/me/groups/'+gid, **PROFILE)['last_activity_at'] is not None
     mid = add(client, a, b, gid)
     statements = []
     def record(conn, cursor, statement, parameters, context, executemany):
@@ -142,12 +140,13 @@ def test_role_success_current_error_and_ownership_loss(group_features, client):
     with session() as db, db.begin():
         payload=summary(); payload['combat_power']='123.45'
         head=CharacterRoleSummary(user_id=b['uid'],character_id=uuid.UUID(b['ids'][0]),ownership_revision=1,
-            role='dealer',version=2,summary=payload,saved_at=now(db));db.add(head);db.flush();capture(db,head)
+            role='dealer',version=2,summary=payload,saved_at=now(db));head.detail=detail_for(head.summary, head.role);db.add(head);db.flush()
         payload=dict(payload,combat_power=None,combat_power_observed_at=None,integrity_status='error',issues=[{'code':'GEM_INVALID','severity':'error'}])
         head.summary=payload;head.version=3
     shown=next(item['character_spec'] for item in get(client,a,
         f'/v1/groups/{gid}/members/{mid}/activity-characters')['items'] if item['character_id']==b['ids'][0])
-    assert shown['dealer']['combat_power']=='123.45'
+    assert shown['dealer']['combat_power'] is None
+    assert shown['dealer']['summary_version']==3
     assert shown['dealer']['analysis']['integrity_status']=='error'
     with session() as db,db.begin():db.get(Account,b['aid']).owner_id=None
     assert get(client,a,f'/v1/groups/{gid}/members/{mid}/activity-characters')['items']==[]

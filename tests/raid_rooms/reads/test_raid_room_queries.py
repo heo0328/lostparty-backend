@@ -13,6 +13,7 @@ from app.game_accounts.models.models import Activity
 from app.game_accounts.models.models import Character
 from app.game_accounts.models.models import CharacterRoleSummary
 from app.game_accounts.models.models import Registration
+from tests.game_accounts.analysis.fixtures import detail_for
 from app.raid_rooms.reads import queries as q
 from app.raid_rooms.common import service
 from app.raid_rooms.common import policies
@@ -227,9 +228,9 @@ def test_logical_expiry_invalidates_page_without_writes(people, monkeypatch):
 
 
 def role_summary(stamp):
-    return dict(source='flutter_analysis', analysis_rules_version='test-v1', analyzed_at=stamp.isoformat(),
+    return dict(source='server_analysis', analysis_rules_version='test-v1', analyzed_at=stamp.isoformat(),
         combat_power=None, item_level=None, combat_power_observed_at=None, item_level_observed_at=None,
-        integrity_status='unavailable', catalog_version=None, issues=[], observed_lifecycle_revision=1)
+        integrity_status='clean', catalog_version='2026.09.12.2', issues=[], observed_lifecycle_revision=1)
 
 
 def test_build_snapshots_are_immutable_and_mark_new_version_stale(people):
@@ -238,7 +239,8 @@ def test_build_snapshots_are_immutable_and_mark_new_version_stale(people):
         stamp = now(db)
         for w in (a, b):
             db.add(CharacterRoleSummary(user_id=w['uid'], character_id=uuid.UUID(w['ids'][0]),
-                ownership_revision=1, role='dealer', version=4, summary=role_summary(stamp), saved_at=stamp))
+                ownership_revision=1, role='dealer', version=4, summary=role_summary(stamp),
+                detail=detail_for(role_summary(stamp)), saved_at=stamp))
     # Reuse server source versions instead of the F1 fixture's fixed role-version=1.
     sel_a = selection(a).model_copy(update={'expected_role_summary_version': 4})
     room = rid(a, command=create_command(a, mode='leader_only', selection=sel_a))

@@ -29,7 +29,7 @@ def using(enabled=True):
 
 def enabled(db):
     if 'cycle_group_policy_enabled' not in db.info:
-        db.info['cycle_group_policy_enabled'] = db.scalar(text('SELECT version_num FROM public.alembic_version')) in ('0035_cycle_group_policy', '0036_roster_presence')
+        db.info['cycle_group_policy_enabled'] = db.scalar(text('SELECT version_num FROM public.alembic_version')) in ('0035_cycle_group_policy', '0036_roster_presence','0037_server_analysis')
     return db.info['cycle_group_policy_enabled']
 
 
@@ -88,10 +88,11 @@ class RoomView:
         return getattr(self._room, name)
 
 
-def project(db, room, row, uid=None):
+def project(db, room, row, uid=None, *, value=None):
     if not enabled(db):
         return room
-    value = get(db, row)
+    value = get(db, row) if value is None else value
+    if (value.cycle_id,value.generation)!=(row.id,row.generation):fail('ROOM_REVIEW_REQUIRED')
     view = RoomView(room, row, value)
     if uid is not None:
         authorize(db, view, row, uid)

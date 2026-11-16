@@ -16,7 +16,7 @@ from app.groups.admission_models import GroupJoinRelation
 from app.groups.admission_models import GroupJoinSubject
 from app.groups.display_schemas import EligibleInviteCandidates
 from app.groups.models import GroupMembership
-from app.lostark_keys import service as credentials
+from app.game_accounts.provider_io import credentials as credentials
 from tests.groups.test_group_admissions import worlds
 from tests.groups.test_group_admissions import group
 from tests.groups.test_group_admissions import invite
@@ -33,10 +33,10 @@ from app.core import database
 PROFILE = 'group-invite-eligibility-1'
 
 
-@pytest.fixture(params=['0034_group_features', '0035_cycle_group_policy'])
+@pytest.fixture
 def eligibility_world(request, client, worlds, monkeypatch):
     with isolated_app_database() as (target, _, upgrade):
-        upgrade(request.param)
+        upgrade('head')
         monkeypatch.setattr(database, 'engine', lambda: target)
         a, b = worlds('eligibility-a'), worlds('eligibility-b')
         yield target, a, b, group(client, a)

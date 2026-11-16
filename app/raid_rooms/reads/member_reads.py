@@ -54,9 +54,9 @@ def detail(principal,rid):
                     config=db.get(source_models_models.RoomSettings,room.id)
                     comparison=core.power_comparison(db,m.user_id,selected,config.dealer_min if recent.selected_role=='dealer' else config.support_min)
                 except GameError as error:reason=error.code
-                build=dict(role=recent.selected_role,version=captured.get('success_summary_version'),summary=captured.get('success_summary'),saved_at=captured.get('success_saved_at'),
-                    current_summary_version=comparison['current_summary_version'] if comparison else None,
-                    stale=reason is not None or comparison is None or captured.get('success_summary_version')!=comparison['current_summary_version'])
+                build=dict(role=recent.selected_role,version=captured.get('summary_version'),summary=captured.get('summary'),saved_at=captured.get('saved_at'),
+                    current_summary_version=comparison['summary_version'] if comparison else None,
+                    stale=reason is not None or comparison is None or captured.get('summary_version')!=comparison['summary_version'])
             values.append(dict(membership_id=m.id,revision=m.revision,room_role='leader' if m.id==room.leader_membership_id else 'member',group_member=badge(db,room,m.user_id),joined_at=m.joined_at,
                 character=dict(character_id=recent.character_id,display=recent.display,selected_role=recent.selected_role) if recent else None,
                 assignments=[dict(assignment_id=a.id,item_id=a.item_id,round_id=a.round_id,state=a.state,party_no=a.party_no,slot_no=a.slot_no) for a in assignments if db.get(Round,a.round_id).cycle_key==date.fromisoformat(graph.raids.cycle(stamp).cycle_key)],
