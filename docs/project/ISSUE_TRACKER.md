@@ -1,5 +1,7 @@
 # 이슈 주제별 추적표
 
+2026-11-16 게시 갱신: 사용자 지시로 구현 `b95cff51f6eaf74d341115b2cc7868cc625ce626`을 `origin/refactor/lostark-server-processing`에 push하고 원격 일치를 확인했다. [전체10 Backend·B1/B2 게시 인계](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6914931822). 아래 미게시 설명은 게시 전 이력이다. 다음은 Backend 실제 환경 준비이며 실제 DB/키/서버·운영은 미적용이다.
+
 2026-11-16 KST 점검 기준. #49의공동운영릴리즈·실제인수·Native최종공개와사용자승인마감까지완료했다. Backend는서버/공개산출물을확인하고Native앱소스동일성·기기근거는담당자보고로구분한다. 옛미구현/OPEN문구를최신실행·인수근거보다우선하지않는다.
 
 ## 열린 이슈
