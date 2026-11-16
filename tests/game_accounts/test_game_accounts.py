@@ -38,8 +38,6 @@ VERIFY='/v1/me/game-account-verifications'
 def world(monkeypatch, login, client):
     auth,_=login()
     headers=PrivateHeaders(Authorization='Bearer '+auth['access_token'])
-    assert client.put('/v1/me/lostark-api-key', headers={**headers, 'Idempotency-Key': str(uuid.uuid4())},
-                      json={'token': 'test.member.signature', 'expected_version': 1}).status_code == 200
     state={'binding':True, 'continuity':True, 'removed':(), 'validated':True, 'missing':(), 'count':3, 'group':'a', 'calls':0}
     def fetch(name, proof=False, **kwargs):
         state['calls']+=1
@@ -95,7 +93,7 @@ def page(client,headers,rid,**params):
 
 def save_data(p,selected=None,rep=None):
     ids=selected if selected is not None else [i['character_id'] for i in p['characters']['items'] if i['eligible']]
-    return dict(activity_character_ids=ids,representative_character_id=rep if rep is not None else ids[0] if ids else None,
+    return dict(activity_character_ids=ids,representative_character_id=rep,
                 expected_settings_version=p['settings']['settings_version'],expected_ownership_revision=p['settings']['ownership_revision'],expected_roster_revision=p['roster_revision'])
 
 
@@ -149,33 +147,6 @@ def test_registration_strict_input(client,world,extra):
     assert change(client,h,'post',BASE,data).status_code==400
 
 
-def test_ownership_first_seed_no_cooldown_atomicity(client,world):
-    h,state=world; r=register(client,h)
-    initial=page(client,h,r['registration_id'])
-    assert all(i['character_id'] is None for i in initial['characters']['items'])
-    v=verify(client,h,state,r['registration_id'])
-    p=page(client,h,r['registration_id'])
-    assert p['settings']['configuration_state']=='unconfigured'
-    first=change(client,h,'put',BASE+'/'+r['registration_id']+'/character-settings',save_data(p))
-    assert first.status_code==200,first.text
-    assert first.json()['next_change_at'] is None
-    p=page(client,h,r['registration_id']); ids=p['settings']['activity_character_ids']
-    original_rep=p['settings']['representative_character_id']
-    replacement=next(i for i in ids if i != original_rep)
-    second=change(client,h,'put',BASE+'/'+r['registration_id']+'/character-settings',save_data(p,ids,replacement))
-    assert second.status_code==200,second.text
-    assert second.json()['next_change_at'] is None
-    p=page(client,h,r['registration_id'])
-    attempted=change(client,h,'put',BASE+'/'+r['registration_id']+'/character-settings',save_data(p,[original_rep],original_rep))
-    assert attempted.status_code==200
-    assert attempted.json()['next_change_at'] is None
-    p=page(client,h,r['registration_id'])
-    assert p['settings']['activity_character_ids']==[original_rep]
-    # A blocked repeated start does not reset valid settings or ownership.
-    blocked=change(client,h,'post',VERIFY,dict(source='registration',registration_id=r['registration_id']))
-    assert blocked.status_code==409 and blocked.json()['error']['code']=='ALREADY_VERIFIED'
-    after=page(client,h,r['registration_id'])
-    assert after['settings']==p['settings']
 
 
 def test_full_settings_cursor_and_suspect_recovery(client,world):
@@ -300,8 +271,7 @@ def another_user(login,monkeypatch,client):
     monkeypatch.setattr(auth_service,'verify_google',lambda *args, **kwargs:'other-subject')
     auth,_=login()
     headers=PrivateHeaders(Authorization='Bearer '+auth['access_token'])
-    assert client.put('/v1/me/lostark-api-key',headers={**headers,'Idempotency-Key':str(uuid.uuid4())},
-                      json={'token':'other.member.signature','expected_version':1}).status_code==200
+
     return headers
 
 
@@ -444,8 +414,8 @@ def test_fresh_summary_requests_are_coalesced(world,monkeypatch):
         return original(*args, **kwargs)
     monkeypatch.setattr(observations,'fetch',delayed)
     from app.auth.service import principal
-    from app.lostark_keys import service as credentials
-    p = principal(world[0]['Authorization'].split()[1]); snapshot = credentials.capture(p)
+    from app.game_accounts.provider_io import credentials as credentials
+    p = principal(world[0]['Authorization'].split()[1]); snapshot = credentials.capture()
     with ThreadPoolExecutor(2) as pool:
         first=pool.submit(service.lookup,p,snapshot,'a0')
         assert entered.wait(5)

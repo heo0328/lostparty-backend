@@ -75,7 +75,7 @@ def second_actor(login, monkeypatch):
 def test_create_is_atomic_snapshot_only_and_read_only_get(selection, monkeypatch):
     w = selection
     from app.game_accounts.provider_io.provider import LostArkProvider
-    from app.lostark_keys import service as keys
+    from app.game_accounts.provider_io import credentials as keys
     def forbidden(*args, **kwargs): raise AssertionError('No external provider/key in group foundation')
     monkeypatch.setattr(LostArkProvider, '_fetch', forbidden)
     monkeypatch.setattr(keys, 'capture', forbidden)

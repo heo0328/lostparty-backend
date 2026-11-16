@@ -202,7 +202,7 @@ class PowerCache(Base):
     reason = mapped_column(String(40), nullable=True)
     generation = mapped_column(Integer, nullable=False, default=0)
     lease_expires_at = stamp(nullable=True)
-    credential_version = mapped_column(Integer, nullable=True)
+    provider_generation = mapped_column(String(64), nullable=True)
     __table_args__ = (CheckConstraint("status IN ('unknown','available','unavailable','failed') AND generation >= 0"),)
 
 
@@ -227,6 +227,7 @@ class CharacterRoleSummary(Base):
     role = mapped_column(String(16), primary_key=True)
     version = mapped_column(Integer, nullable=False)
     summary = mapped_column(JSONB, nullable=False)
+    detail = mapped_column(JSONB, nullable=False)
     saved_at = stamp()
     __table_args__ = (CheckConstraint("role IN ('dealer','support')"),
                       CheckConstraint('ownership_revision > 0 AND version >= 1'))
@@ -293,7 +294,7 @@ class ScopedPowerCache(Base):
     lifecycle_revision = mapped_column(Integer, nullable=True)
     registration_id = mapped_column(ForeignKey('game_account_registrations.id'), nullable=False)
     preview_version = mapped_column(Integer, nullable=True)
-    credential_version = mapped_column(Integer, nullable=False)
+    provider_generation = mapped_column(String(64), nullable=False)
     server_name = mapped_column(String(64), nullable=False)
     character_name = mapped_column(String(64), nullable=False)
     value = mapped_column(String(64), nullable=True)
@@ -304,7 +305,7 @@ class ScopedPowerCache(Base):
     generation = mapped_column(Integer, nullable=False, default=0)
     lease_expires_at = stamp(nullable=True)
     __table_args__ = (CheckConstraint("status IN ('unknown','available','unavailable','failed') AND generation >= 0"),
-                     CheckConstraint('credential_version > 0'),
+                     CheckConstraint("length(provider_generation) = 64"),
                      CheckConstraint('(character_id IS NOT NULL AND lifecycle_revision IS NOT NULL AND lifecycle_revision > 0 AND preview_version IS NULL) OR '
                                      '(character_id IS NULL AND lifecycle_revision IS NULL AND preview_version IS NOT NULL AND preview_version > 0)'))
 
@@ -312,7 +313,7 @@ class ScopedPowerCache(Base):
 class ScopedRosterCache(Base):
     __tablename__ = 'scoped_roster_cache'
     user_id = mapped_column(ForeignKey('users.id'), primary_key=True)
-    credential_version = mapped_column(Integer, primary_key=True)
+    provider_generation = mapped_column(String(64), primary_key=True)
     scope_key = mapped_column(String(64), primary_key=True)
     name = mapped_column(String(64), primary_key=True)
     roster = mapped_column(JSONB, nullable=False)
@@ -322,7 +323,7 @@ class ScopedRosterCache(Base):
 class ScopedRosterLease(Base):
     __tablename__ = 'scoped_roster_leases'
     user_id = mapped_column(ForeignKey('users.id'), primary_key=True)
-    credential_version = mapped_column(Integer, primary_key=True)
+    provider_generation = mapped_column(String(64), primary_key=True)
     scope_key = mapped_column(String(64), primary_key=True)
     name = mapped_column(String(64), primary_key=True)
     generation = mapped_column(Integer, nullable=False, default=1)

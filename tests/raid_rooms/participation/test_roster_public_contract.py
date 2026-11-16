@@ -89,8 +89,8 @@ def change(w,rid,key):
 def test_presence_bootstrap_http_and_page_share_scope(presence_db):
     _,a,b=presence_db
     observe(b)
-    from app.main import create_two_cycle_app
-    application=create_two_cycle_app()
+    from app.main import create_app
+    application=create_app()
     application.dependency_overrides[authenticated]=lambda:actor(b['uid'])
     with TestClient(application) as http:
         root=http.get('/v2/me/account-bootstrap',params=dict(include_roster_presence='true'))
@@ -115,8 +115,8 @@ def test_public_issue_privacy_and_default_shape(presence_db,people):
     rid,c,n=joined(a,b);observe(b)
     outsider=people('public-warning-outsider')
     before=table_digests(engine,set(inspect(engine).get_table_names())-{'alembic_version'})
-    from app.main import create_two_cycle_app
-    api=create_two_cycle_app().openapi()
+    from app.main import create_app
+    api=create_app().openapi()
     def wire(path,value):
         schema=api['paths'][path]['get']['responses']['200']['content']['application/json']['schema']
         Draft202012Validator(dict(schema,components=api['components']),format_checker=FormatChecker()).validate(value)

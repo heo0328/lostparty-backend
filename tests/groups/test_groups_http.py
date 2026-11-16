@@ -61,7 +61,7 @@ def rename(client, w, gid, name='changed', rev=1, key=None):
 
 def test_http_create_public_private_members_lists_replay_no_provider(client, selection, monkeypatch):
     from app.game_accounts.provider_io.provider import LostArkProvider
-    from app.lostark_keys import service as keys
+    from app.game_accounts.provider_io import credentials as keys
     def forbidden(*args, **kwargs): raise AssertionError('No provider/key on G1')
     monkeypatch.setattr(LostArkProvider, '_fetch', forbidden)
     monkeypatch.setattr(keys, 'capture', forbidden)
@@ -218,8 +218,8 @@ def test_paging_scope_stale_order_and_rename_noop(client,selection,login,monkeyp
 def test_http_parallel_last_group_limit_has_one_winner(client,selection):
     w=selection;change(w['uid'],Limits(15,1,10))
     data=fresh_body(client,w)
-    from app.main import create_legacy_app
-    app = create_legacy_app()
+    from app.main import create_app
+    app = create_app()
     def attempt(_):
         with TestClient(app) as c:return create(c,w,data).status_code
     with ThreadPoolExecutor(max_workers=2) as pool: codes=list(pool.map(attempt,range(2)))

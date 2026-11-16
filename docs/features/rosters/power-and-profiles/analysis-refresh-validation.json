@@ -1,0 +1,46 @@
+{
+  "contract": "character-analysis-refresh-1",
+  "scope": "Static candidate documentation/schema/examples only; not runtime or golden equivalence",
+  "schema_draft": "2020-12",
+  "schema_check": "PASS",
+  "valid_examples": [
+    "request_7_distinct_items",
+    "response_7_states_including_setting_error_and_source_null",
+    "latest_lower_error_comparison",
+    "latest_source_null_comparison"
+  ],
+  "rejected_schema_cases": [
+    "bool_revision",
+    "zero_revision",
+    "missing_opposite_version",
+    "forced_role",
+    "raw_upload",
+    "invalid_trigger",
+    "non_uuid4_command",
+    "empty_batch",
+    "oversize_item_count",
+    "saved_without_result",
+    "unknown_with_new_id",
+    "not_processed_success_status",
+    "null_power_with_old_observed_at",
+    "old_source",
+    "nan_power",
+    "detail_missing_for_stored_head",
+    "non_utc_analysis_time",
+    "legacy_role_confirmation_state"
+  ],
+  "rejected_semantic_cases": [
+    "duplicate_command_id",
+    "duplicate_character_id"
+  ],
+  "correlation_and_state_semantics": "PASS",
+  "source_hashes": {
+    "analysis-refresh.schema.json": "0cf1e867eebcd303fe51b76a2dcfe47f6fd4933d179dd6c688d7c4c4cd8f25d2",
+    "analysis-refresh.examples.json": "5e59d4cb98b45bc672e5e554f7bf7b0ffb4d0cd8ec7739ad8875e2202b188a0c"
+  },
+  "not_executed": [
+    "runtime/API/DB/provider/device tests",
+    "Python/Native analysis golden equivalence",
+    "destructive data transition"
+  ]
+}

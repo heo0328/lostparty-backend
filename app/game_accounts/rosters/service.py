@@ -9,10 +9,10 @@ from app.core.database import now
 from app.game_accounts.rosters import observations
 from app.game_accounts.provider_io import provider_diagnostics
 from app.game_accounts.verification import ownership_policy
-from app.lostark_keys import service as credentials
-from app.lostark_keys import rate_limits
-from app.game_accounts.models.models import ScopedRosterCache as MemberPreview
-from app.game_accounts.models.models import ScopedRosterLease as MemberFetch
+from app.game_accounts.provider_io import credentials
+from app.game_accounts.provider_io import rate_limits
+from app.game_accounts.models.models import ScopedRosterCache
+from app.game_accounts.models.models import ScopedRosterLease
 from app.game_accounts.rosters import lifecycle
 from app.game_accounts.character_profiles import activity_policy
 from app.game_accounts.character_profiles import account_representative as rep_policy
@@ -49,8 +49,8 @@ from app.game_accounts.verification.equipment import EquipmentIncomplete
 
 def lookup(principal, snapshot, name, proof=False, cached=False, *, context='direct', guard=None, on_roster=None):
     context_key = lifecycle.digest(context)
-    identity = snapshot.user_id, snapshot.version, context_key, name
-    scope = f'fetch:{snapshot.user_id}:{snapshot.version}:{context_key}:{name}'
+    identity = principal[0].id, snapshot.generation, context_key, name
+    scope = f'fetch:{principal[0].id}:{snapshot.generation}:{context_key}:{name}'
     def check_context(db):
         if guard:
             rid, expected = guard
@@ -63,19 +63,19 @@ def lookup(principal, snapshot, name, proof=False, cached=False, *, context='dir
         credentials.check(db, principal, snapshot)
         check_context(db)
         if cached:
-            c = db.get(MemberPreview, identity)
+            c = db.get(ScopedRosterCache, identity)
             if c and now(db) < c.fetched_at + timedelta(minutes=30):
                 return observations.Observation(c.roster, c.fetched_at)
         if not proof:
             from app.game_accounts.common.support import lock
             lock(db, scope)
-            lease = db.get(MemberFetch, identity)
+            lease = db.get(ScopedRosterLease, identity)
             current = now(db)
             if lease and not lease.completed and current < lease.expires_at:
                 owner, generation = False, lease.generation
             else:
                 if lease is None:
-                    lease = MemberFetch(user_id=snapshot.user_id, credential_version=snapshot.version, scope_key=context_key,
+                    lease = ScopedRosterLease(user_id=principal[0].id, provider_generation=snapshot.generation, scope_key=context_key,
                                         name=name, generation=1, expires_at=current+timedelta(seconds=30))
                     db.add(lease)
                 else:
@@ -90,7 +90,7 @@ def lookup(principal, snapshot, name, proof=False, cached=False, *, context='dir
                 authorize(db, principal, write=True)
                 credentials.check(db, principal, snapshot)
                 check_context(db)
-                lease = db.get(MemberFetch, identity)
+                lease = db.get(ScopedRosterLease, identity)
                 if lease is None or lease.generation != generation:
                     fail('UPSTREAM_UNAVAILABLE',503)
                 if lease.completed:
@@ -120,15 +120,15 @@ def lookup(principal, snapshot, name, proof=False, cached=False, *, context='dir
             if not proof:
                 from app.game_accounts.common.support import lock
                 lock(db, scope)
-                lease = db.get(MemberFetch, identity)
+                lease = db.get(ScopedRosterLease, identity)
                 if lease.generation != generation or now(db) >= lease.expires_at:
                     fail('UPSTREAM_UNAVAILABLE',503)
                 lease.completed, lease.roster, lease.fetched_at = True, result.roster, result.fetched_at
-                c = db.get(MemberPreview, identity)
+                c = db.get(ScopedRosterCache, identity)
                 if c:
                     c.roster,c.fetched_at = result.roster,result.fetched_at
                 else:
-                    db.add(MemberPreview(user_id=snapshot.user_id, credential_version=snapshot.version, scope_key=context_key,
+                    db.add(ScopedRosterCache(user_id=principal[0].id, provider_generation=snapshot.generation, scope_key=context_key,
                                          name=name, roster=result.roster, fetched_at=result.fetched_at))
         return result
     except Exception as error:
@@ -136,7 +136,7 @@ def lookup(principal, snapshot, name, proof=False, cached=False, *, context='dir
             with session() as db, db.begin():
                 from app.game_accounts.common.support import lock
                 lock(db, scope)
-                lease = db.get(MemberFetch, identity)
+                lease = db.get(ScopedRosterLease, identity)
                 if lease and lease.generation == generation:
                     lease.completed,lease.roster = True,None
         # A changed key takes precedence over provider failure, without applying it.
@@ -152,7 +152,7 @@ def lookup(principal, snapshot, name, proof=False, cached=False, *, context='dir
                 rejected.request_id = request_id
                 raise rejected
             rejected = GameError(error.reason if error.reason in ('LOSTARK_KEY_REJECTED', 'UPSTREAM_RATE_LIMITED') else 'UPSTREAM_UNAVAILABLE',
-                                 409 if error.reason == 'LOSTARK_KEY_REJECTED' else 503)
+                                 503)
             rejected.provider_not_found = error.http_status == 404
             rejected.request_id = request_id
             raise rejected
@@ -254,7 +254,7 @@ def create_registration(db, uid, name, label, main, obs):
 
 def preview(principal, data):
     quota('preview:'+str(principal[0].id), 30)
-    snapshot = credentials.capture(principal)
+    snapshot = credentials.capture()
     obs = lookup(principal, snapshot, data.character_name, cached=True)
     return dict(characters=[dict(row, combat_power=None) for row in obs.roster],
                 server_fetched_at=obs.fetched_at, expires_at=obs.fetched_at+timedelta(minutes=30))
@@ -351,7 +351,7 @@ def mutate(principal, operation, key, payload, rid=None):
         if operation == 'register':
             with session() as db:
                 registration_links = ownership_policy.links_stamp(db, authorize(db, principal))
-            snapshot = credentials.capture(principal)
+            snapshot = credentials.capture()
             obs = lookup(principal, snapshot, payload['lookup_character_name'], context=context)
         elif operation in ('refresh','start','confirm'):
             with session() as db:
@@ -399,12 +399,12 @@ def mutate(principal, operation, key, payload, rid=None):
                 quota('confirm-user:'+str(principal[0].id),12)
                 quota('confirm:'+str(rid),1,5)
             if name:
-                snapshot = credentials.capture(principal)
+                snapshot = credentials.capture()
                 if operation=='confirm':
                     with session() as db:
                         v=db.get(Verification,rid)
                         if v.identity_snapshot is None: fail('ACCOUNT_BINDING_EVIDENCE_PENDING')
-                        if v.identity_snapshot.get('credential_version')!=snapshot.version: fail('LOSTARK_KEY_CHANGED')
+                        if v.identity_snapshot.get('provider_generation')!=snapshot.generation: fail('SERVER_KEY_CHANGED',503)
                 if owned_scope is not None:
                     obs = owned_refresh.fetch(principal, snapshot, name, owned_scope, context=context, guard=guard)
                 else:
@@ -430,7 +430,7 @@ def mutate(principal, operation, key, payload, rid=None):
             confirmation_was_pending = (operation == 'confirm' and
                 (challenge := db.get(Verification, rid)) is not None and challenge.status == 'pending')
             with (db.begin_nested() if operation == 'confirm' else nullcontext()) as attempt:
-                status, result = apply(db, uid, operation, payload, rid, obs, baseline_revision, snapshot.version if snapshot else None)
+                status, result = apply(db, uid, operation, payload, rid, obs, baseline_revision, snapshot.generation if snapshot else None)
                 if operation == 'confirm':
                     db.flush()
                 expired = (confirmation_was_pending and obs is not None and status == 200
@@ -543,7 +543,7 @@ def verification(principal, vid):
         return verification_out(v,current)
 
 
-def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=None):
+def apply(db, uid, op, data, rid, obs, baseline_revision, provider_generation=None):
     current = now(db)
     if op == 'register':
         restored = ownership_policy.restore(db, uid, obs.roster)
@@ -672,7 +672,7 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
                        roster=obs.roster,baseline={k:dict(name=e.name,grade=e.grade) for k,e in obs.equipment.items()},
                        slots=list(slots),identity_snapshot={'registration':lifecycle.digest(lifecycle.registration_stamp(db,r)) if r else None,
                            'account':lifecycle.digest(lifecycle.account_stamp(db,candidate)) if candidate else None,
-                           'credential_version':credential_version,'proof_context':proof_context,
+                           'provider_generation':provider_generation,'proof_context':proof_context,
                            'binding_mode':mode,'claim_snapshot':verification_targets.claims(db,obs.roster),
                            'server_equipment_baseline':equipment_proof.baseline(obs,lookup_name,current)},
                        created_at=current,expires_at=current+timedelta(minutes=10))
@@ -697,8 +697,8 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, credential_version=Non
         ownership_policy.reject_observed(db, uid, obs.roster)
     if v.identity_snapshot is None:
         fail('ACCOUNT_BINDING_EVIDENCE_PENDING')
-    if v.identity_snapshot.get('credential_version') != credential_version:
-        fail('LOSTARK_KEY_CHANGED')
+    if v.identity_snapshot.get('provider_generation') != provider_generation:
+        fail('SERVER_KEY_CHANGED',503)
     source = reg(db,uid,v.registration_id) if v.registration_id else None
     if source and v.identity_snapshot['registration'] != lifecycle.digest(lifecycle.registration_stamp(db,source)):
         fail('REVISION_CONFLICT')

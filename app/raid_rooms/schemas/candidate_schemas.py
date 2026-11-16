@@ -6,6 +6,7 @@ from uuid import UUID
 from pydantic import Field
 from pydantic import StringConstraints
 from pydantic import model_validator
+from app.game_accounts.schemas.profile_schemas import AnalysisIssue
 from app.game_accounts.schemas.schemas import DTO
 from app.game_accounts.schemas.schemas import Version
 
@@ -26,20 +27,22 @@ class CandidateAlias(DTO):
 
 class CandidatePower(DTO):
     value: Number | None
-    source: Literal['stored_role_success', 'unavailable', 'not_disclosed']
-    trust: Literal['client_submitted'] | None
+    source: Literal['server_analysis', 'unavailable', 'not_disclosed']
+    trust: Literal['server_computed'] | None
     observed_at: datetime | None
     saved_at: datetime | None
-    power_revision: Version | None
+    summary_version: Version | None
     integrity_status: Literal['clean', 'review', 'error', 'unavailable'] | None
+
+    issues: list[AnalysisIssue]
 
     @model_validator(mode='after')
     def provenance(self):
-        fields = (self.value, self.trust, self.observed_at, self.saved_at, self.power_revision, self.integrity_status)
-        if self.source == 'stored_role_success':
-            if any(v is None for v in fields):
-                raise ValueError('Successful power requires provenance')
-        elif any(v is not None for v in fields):
+        provenance = (self.trust, self.saved_at, self.summary_version, self.integrity_status)
+        if self.source == 'server_analysis':
+            if any(v is None for v in provenance) or ((self.value is None) != (self.observed_at is None)):
+                raise ValueError('Stored analysis requires correlated provenance')
+        elif any(v is not None for v in (self.value,self.observed_at,*provenance)) or self.issues:
             raise ValueError('Absent power must not expose metadata')
         return self
 

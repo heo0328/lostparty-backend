@@ -25,11 +25,12 @@ class GroupAnalysis(DTO):
 
 class GroupRolePower(DTO):
     combat_power: DecimalValue | None
-    source: Literal['stored_role_success', 'unavailable']
-    trust: Literal['client_submitted'] | None
+    source: Literal['server_analysis', 'unavailable']
+    trust: Literal['server_computed'] | None
     observed_at: datetime | None
     saved_at: datetime | None
-    power_revision: Version | None
+    summary_version: Version | None
+    issues: list[AnalysisIssue]
     analysis: GroupAnalysis | None
     reason: Literal['ROLE_ANALYSIS_UNAVAILABLE', 'ROLE_ANALYSIS_INVALID'] | None
 

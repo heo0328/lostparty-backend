@@ -1,6 +1,7 @@
 """Target admission lifecycle and isolation against real PostgreSQL."""
 import uuid
 from concurrent.futures import ThreadPoolExecutor
+from tests.concurrency import map_in_context
 from datetime import timedelta
 import pytest
 from sqlalchemy import select
@@ -162,7 +163,7 @@ def test_concurrent_last_slot_has_one_winner(candidate,people):
         w,data=pair
         try:return commands.admit(actor(w['uid']),rid,uuid.uuid4(),data)[0]
         except GameError as error:return error.code
-    with ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(join,zip(contenders,requests)))
+    with ThreadPoolExecutor(max_workers=2) as pool:results=list(map_in_context(pool,join,zip(contenders,requests)))
     assert sorted(map(str,results))==['200','TARGET_CONTEXT_STALE']
     with session() as db,db.begin():
         target=db.get(RoomCycle,uuid.UUID(room['created_cycles'][0]['room_cycle_id']))

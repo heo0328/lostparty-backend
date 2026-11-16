@@ -41,10 +41,11 @@ def contract_probe(schema):
     """Runs in old or new images; schema1 must still hash the legacy app first."""
     contract_names(schema)
     pairs = "[('openapi.yaml', legacy), ('two-cycle.openapi.yaml', current)]" if schema == 1 else "[('openapi.yaml', current), ('legacy.openapi.yaml', legacy)]"
-    return ("import json,hashlib; import app.main as entry; "
-            "legacy=entry.create_legacy_app() if hasattr(entry,'create_legacy_app') else entry.app; "
-            "current=entry.create_app() if hasattr(entry,'create_app') else entry.create_two_cycle_app(); "
-            "print(json.dumps({n:hashlib.sha256(json.dumps(a.openapi(),sort_keys=True,separators=(',',':')).encode()).hexdigest() for n,a in " + pairs + "}))")
+    # Historical contracts are immutable artifacts, not another running app.
+    return ("import json,hashlib; from pathlib import Path; import app.main as entry; "
+            "current=(entry.create_app() if hasattr(entry,'create_app') else entry.create_two_cycle_app()).openapi(); "
+            "legacy=entry.create_legacy_app().openapi() if hasattr(entry,'create_legacy_app') else json.loads(Path('openapi/legacy.openapi.yaml').read_text()) if Path('openapi/legacy.openapi.yaml').is_file() else entry.app.openapi(); "
+            "print(json.dumps({n:hashlib.sha256(json.dumps(a,sort_keys=True,separators=(',',':')).encode()).hexdigest() for n,a in " + pairs + "}))")
 
 
 def validate_manifest(m):

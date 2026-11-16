@@ -1,5 +1,7 @@
 # 로컬·운영 백업 원장과 안내 기준
 
+2026-11-17 Issue55: 사용자가 로컬 lostparty DB 삭제를 명시 승인해 기존 dump 제외 방침으로 DB만 초기화/0037 적용했다. 기존 볼륨·역할·환경/4키 보존, 새 lostark-api-token 파일0600·컨테이너 읽기/구성 형식 확인. token은 기존 개인 백업 폴더에 별도로 보관할 대상이며 실제 사본 보관/외부 인증 유효성은 미확인이다. 키/DB 원문 출력·게시 없음. [개발 반영 기록](../development/server-analysis-dev-preparation.md).
+
 2026-11-15 Issue54: 사용자 명시 승인으로 운영 v2.2.0/DB0036의 최신 DB·기존 환경/4키·동결 배포 기준/도구·활성 웹 원본을 새 서버 사본과 기존 PC 폴더에 보관했다. 서버/로컬/PC SHA256·dump 목차866항목·묶음 내부 복구 파일 hash를 검증했고 원본/health를 보존했다. [비민감 집계](records/release-2.3.0-predeployment-backup.json). 백업 뒤 운영 API·웹을2.3.0으로 교체하고 직전 snapshot 대비118테이블 행/환경·키 보존을 확인했다. [운영 결과](records/release-2.3.0-deployment.json). 추가 비교 snapshot/행 지문은 서버 내부에만 보관하며 실제 DB 복원은 하지 않았다.
 
 2026-11-13 Issue51: Backend2.2.0/DB0036·웹2.2.0+7 운영 반영 전후의 DB·환경/기존4키·동결상태/배포도구·활성웹 원본을 서로다른새날짜사본으로기존PC폴더에보관하고서버/WSL/PC SHA256일치를확인했다. [실제집계](records/release-2.2.0-deployment.json). 새키/환경/OAuth·자료초기화/DBmigration없음, 기존사본보존. 실제복원·정기자동화와는구분한다.

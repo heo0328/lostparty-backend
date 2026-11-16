@@ -199,8 +199,8 @@ def admit(principal,rid,key,data,*,applying=False):
                 pending.state='expired';pending.ended_at=stamp;pending.revision+=1;db.flush()
             app_id=uuid.uuid4()
             build=jsonable_encoder(power)
-            source=db.get(core.RolePowerSuccess,(uid,data.selection.character_id,data.selection.expected_ownership_revision,data.selection.selected_role))
-            if source is not None:build['success_summary']=source.source_summary
+            source=db.get(core.CharacterRoleSummary,(uid,data.selection.character_id,data.selection.expected_ownership_revision,data.selection.selected_role))
+            if source is not None:build['summary']=source.summary
             build['admission_origin']=dict(application_id=str(app_id),room_id=str(rid),actor_id=str(uid),
                 scope=row.scope,group_id=str(row.group_id) if row.group_id else None,scope_revision=row.revision,created_at=stamp.isoformat())
             build['target_session_ids']=[str(i) for i in data.target_session_ids]

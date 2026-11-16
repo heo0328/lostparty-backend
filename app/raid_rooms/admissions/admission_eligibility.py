@@ -1,3 +1,4 @@
+from app.game_accounts.models.models import Character
 """Read-only eligibility shared by application/change commands and batch reads."""
 from dataclasses import dataclass
 from decimal import Decimal
@@ -5,7 +6,6 @@ from decimal import InvalidOperation
 import re
 from sqlalchemy import select
 from app.game_accounts.models.models import CharacterRoleSummary
-from app.game_accounts.models.power_success import RolePowerSuccess
 from app.game_accounts.common.support import fail
 from app.game_accounts.common.support import GameError
 from app.raid_rooms.participation import participation_core as core
@@ -43,7 +43,7 @@ class Bundle:
     states: dict
     leases: dict
     heads: dict
-    successes: dict
+    lifecycles: dict
     owned: tuple
     lease_sources: dict
     reentry: object = None
@@ -51,7 +51,7 @@ class Bundle:
     def comparison(self, cid, ownership, role):
         key = (cid, ownership, role)
         result = core.power_value(role, self.target.settings_snapshot['combat_requirement'][role + '_min'],
-                                  self.heads.get(key), self.successes.get(key))
+                                  self.heads.get(key), self.lifecycles.get(cid))
         for name in ('actual', 'requirement'):
             if result[name] is not None:
                 decimal(result[name])
@@ -98,8 +98,7 @@ def load(db, uid, target, character_ids, *, owned=()):
             fail('WEEKLY_OCCUPANCY_CHANGED')
     heads = {(s.character_id, s.ownership_revision, s.role): s for s in db.scalars(select(CharacterRoleSummary).where(
         CharacterRoleSummary.user_id == uid, CharacterRoleSummary.character_id.in_(ids)))} if ids else {}
-    successes = {(s.character_id, s.ownership_revision, s.role): s for s in db.scalars(select(RolePowerSuccess).where(
-        RolePowerSuccess.user_id == uid, RolePowerSuccess.character_id.in_(ids)))} if ids else {}
+    lifecycles = {c.id:c.lifecycle_revision for c in db.scalars(select(Character).where(Character.id.in_(ids)))} if ids else {}
     if owned and ({a.item_id for a in owned} != {i.id for i, _ in pairs} or len(owned) != len(pairs)
                   or any(a.state != 'active' or a.user_id != uid or a.room_id != target.room_id for a in owned)
                   or {a.id for a in owned} - {a.id for a in assignments}):
@@ -111,7 +110,7 @@ def load(db, uid, target, character_ids, *, owned=()):
             fail('WEEKLY_OCCUPANCY_CHANGED')
     from app.raid_rooms.admissions import admission_history
     history=admission_history.for_user(db,uid,target) if not owned else None
-    return Bundle(uid, target, pairs, assignments, states, leases, heads, successes, tuple(owned), lease_sources,history)
+    return Bundle(uid, target, pairs, assignments, states, leases, heads, lifecycles, tuple(owned), lease_sources,history)
 
 
 def evaluate(bundle, character, ownership, role, *, pinned=None):
@@ -217,6 +216,6 @@ def evidence(bundle):
     return digest(jsonable_encoder([POLICY, facts(bundle.target),
         [[facts(i), facts(r)] for i, r in bundle.pairs], [facts(a) for a in bundle.assignments],
         [facts(s) for _, s in sorted(bundle.states.items(), key=lambda v: str(v[0]))], [facts(s) for _, s in sorted(bundle.leases.items(), key=lambda v: str(v[0]))],
-        [facts(s) for _, s in sorted(bundle.heads.items(), key=lambda v: str(v[0]))], [facts(s) for _, s in sorted(bundle.successes.items(), key=lambda v: str(v[0]))],
+        [facts(s) for _, s in sorted(bundle.heads.items(), key=lambda v: str(v[0]))],
         [facts(a) for a in bundle.owned],
         [[facts(a),facts(r)] for _,(a,r) in sorted(bundle.lease_sources.items(),key=lambda v:str(v[0]))]] + ([bundle.reentry.evidence()] if bundle.reentry is not None else [])))

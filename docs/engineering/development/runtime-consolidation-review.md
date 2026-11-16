@@ -77,7 +77,7 @@
 | 사용처 | 현재 연결·차후 영향 |
 |---|---|
 | [Dockerfile](../../../Dockerfile), [compose.yaml](../../../compose.yaml) | 이미지 기본 CMD는 과거 앱, Compose 기본은 이를 상속. 단일화 첫 변경 대상. |
-| [compose.two-cycle.yaml](../../../compose.two-cycle.yaml) | 최신 이미지 태그와 factory 명령만 덮어써 공통 DB/키/포트를 재사용. 향후 기본과 겹치는 부분을 호환 override로 유지한 뒤 소비처 정리. |
+| [당시 compose.two-cycle.yaml](https://github.com/heo0328/lostparty-backend/blob/cda4db352c9ac922f269b9ec2794f0d888d4dca6/compose.two-cycle.yaml) | 최신 이미지 태그와 factory 명령만 덮어써 공통 DB/키/포트를 재사용. 향후 기본과 겹치는 부분을 호환 override로 유지한 뒤 소비처 정리. |
 | [compose.fresh.yaml](../../../compose.fresh.yaml) | 별도 프로젝트/8001/이미지 태그만 지정하고 최신 command는 지정하지 않음. 이름이 fresh라고 최신 DB를 준비하거나 migration하지 않음. 사용자 사용 여부는 미확인. |
 | [tests/conftest.py](../../../tests/conftest.py) | 공통 DB0023와 기본 `TestClient(app)` 사용. 전체 fixture를 즉시 최신으로 올리면 과거 회귀 의미·migration 보존 시험이 변함. |
 | [isolated_checks](../../../scripts/isolated_checks.py), [check_openapi](../../../scripts/check_openapi.py) | 두 생성 계약 모두 비교. 실행 컨테이너 비교 도구의 기본 profile은 legacy. 최신 기본 실행과 함께 기본 profile도 맞춰야 함. |

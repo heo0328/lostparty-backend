@@ -1,5 +1,7 @@
 # Backend 실행 설정·명칭 정리
 
+2026-11-16 #55 로컬 구현 변경: 현재 소스는 create_app 하나와 DB0037을 사용한다. DB0023 factory·검증 suite 및 미사용 compose.two-cycle 호환 override를 제거했고 과거 명세는 파일로만 보존한다. 실제 실행 환경은 아직 DB0036/이전 이미지다. 아래 실행 정리 당시 결과는 이력이며 최신 구현/검증은 [서버 분석 구현](../../features/rosters/power-and-profiles/server-processing-implementation.md)을 따른다.
+
 2026-11-13 / `refactor/backend-runtime` / 기준 dev `ffda8db8a00e50719b104605225dc5249f4ae171`。사용자 승인 범위는 실행·명세·도구·안내 정리와 격리 검증 후 로컬 API 교체다. 이후 사용자 직접 지시로 구현 `8a54c485` 커밋과 로컬 dev `e1e81b76` 병합을 완료했다. push·운영 배포는 별도 지시 대상이다.
 
 ## 이름과 실행의 대응

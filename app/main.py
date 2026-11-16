@@ -20,7 +20,7 @@ from app.core.errors import register
 from app.core.cors import register as register_cors
 from app.core.game_policy import DEFAULT_MIN_ITEM_LEVEL
 from app.member_settings.router import router as settings_router
-from app.lostark_keys.router import router as lostark_keys_router
+from app.game_accounts.api.analysis_router import router as analysis_router
 from app.raids.router import router as raid_router
 from app.raid_weekly.router import router as raid_weekly_router
 from app.groups.router import router as groups_router
@@ -38,23 +38,6 @@ from app.raid_rooms.api.search_router import router as recruitment_search_router
 from app.raid_rooms.api.member_router import router as recruitment_reads_router
 from app.raid_rooms.common.worker import run as run_recruitment_worker
 from app.raid_rooms.api.weekly_summary_router import router as weekly_summary_router
-
-
-@asynccontextmanager
-async def legacy_lifespan(application):
-    from app.core.database import session
-    from app.raid_rooms.common.readiness import require_active
-    with session() as db:require_active(db)
-    tasks = [asyncio.create_task(run()), asyncio.create_task(run_ownership_worker()),
-             asyncio.create_task(run_recruitment_worker())]
-    try:
-        yield
-    finally:
-        for task in tasks:
-            task.cancel()
-        for task in tasks:
-            with suppress(asyncio.CancelledError):
-                await task
 
 
 async def no_store(request, call_next):
@@ -216,45 +199,17 @@ def _decorate_openapi(schema):
         'limit': 'default/max 50; next_cursor always present nullable; history empty revision1 without inserting',
         'observations': 'structure revisions fenced; stored power observations may advance without roster revision',
     }
-    schema['x-character-profile-policy'] = {
-        'phase': 'P1 role summaries + P2 personal preferences/account presentation and internal retirement cleanup',
-        'identity': 'member + canonical character UUID + ownership_revision + role; no name-based inheritance',
-        'get': 'read-only coherent snapshot; owned active/suspect with current NameClaim; retired 409',
-        'put': 'owned active/confirmed canonical with current NameClaim and expected role/ownership/lifecycle revisions',
-        'preference_defaults': {'version': 1, 'preferred_role': None, 'visible': True, 'display_order': None, 'saved_at': None},
-        'unset_role': {'version': 1, 'summary': None, 'saved_at': None},
-        'version': 'first summary version2; change-only increment; stale expected rejected even for no-op; roles independent',
-        'source': 'flutter_analysis; never provider observations, ownership/activity/representative authority, or retirement values',
-        'integrity': {'clean': 'no issues', 'review': 'one or more warnings, no errors',
-                      'error': 'one or more errors, warnings allowed',
-                      'unavailable': 'no errors; zero or more warnings; never infer clean from empty issues'},
-        'catalog': 'required nullable opaque ASCII identifier, separate from analysis_rules_version and schema version',
-        'timestamps': 'UTC RFC3339; client analysis/observation provenance separate from server saved_at; not conflict ordering',
-        'limits': {'put_body_bytes': 32768, 'decimal_string_length': 32, 'issues': 20, 'identifier_length': 64},
-        'replay': 'historical ACK after current session/active registration/ownership/NameClaim and same ownership/lifecycle checks; no role version recheck or reapplication',
-        'idempotency': 'role-summary operation; actor/key digest includes character/role/body; 30s lease, 24h success + 24h tombstone',
-        'pending': 'immutable same-key/body recovery; conservative 24h from first send; stale pending never auto rebased on new version',
-        'nice_group': 'existing member bool controls new automatic analysis only; valid old pending and summaries preserved; no new per-character switch',
-        'provider': 'no external calls, credential lookup, or nice-group/activity prerequisites for storage',
-        'errors': {'INVALID_REQUEST': 400, 'CHARACTER_NOT_FOUND': 404, 'OWNERSHIP_REQUIRED': 403,
-                   'CHARACTER_UNUSABLE': 409, 'IDENTITY_CONFLICT': 409, 'REVISION_CONFLICT': 409,
-                   'IDEMPOTENCY_CONFLICT': 409, 'IDEMPOTENCY_EXPIRED': 409, 'REQUEST_IN_PROGRESS': 409,
-                   'REQUEST_TOO_LARGE': 413, 'SERVICE_UNAVAILABLE': 503},
-        'deployment': '0008 additive migration and isolated tests only; real DB/API transition requires separate approval',
-    }
-    schema['x-character-profile-policy']['startup_batches'] = {
-        'get': '/v2/me/characters/personal-profiles; repeated distinct character_id 1..50; read-only snapshot',
-        'post': '/v2/me/role-summary-batches; items 1..50; independent single-service transactions',
-        'limits': {'envelope_utf8_bytes': 524288, 'command_body_compact_utf8_bytes': 32768},
-        'command_bytes': 'input RoleSummaryIn fields only, ensure_ascii=false, compact JSON; before timestamp normalization',
-        'preflight': 'duplicate JSON keys, command_id, (character_id,role), invalid DTO rejected before writes',
-        'results': 'outer 200; exactly one result per input; correlate character_id+role+command_id; nullable result/error',
-        'interrupt': 'preserve previous results; stop on DB/auth failure; remaining 503 BATCH_NOT_PROCESSED; commit may be unknown on SERVICE_UNAVAILABLE',
-        'budget': '20s checked between items, no forced transaction cancellation; client response timeout 60s recommended',
-        'idempotency': 'same role-summary actor/key/body as single PUT, UUID4 command_id, no outer key; historical ACK',
-        'authority': 'single-command guards; no activity-selection prerequisite; final current state from account-bootstrap',
-        'errors': {'INVALID_ROLE': 400, 'BATCH_NOT_PROCESSED': 503, 'PERSONAL_PROFILES_DATA_UNAVAILABLE': 503},
-    }
+    schema['x-character-profile-policy'] = dict(
+        contract='character-analysis-refresh-1', required_schema='0037_server_analysis',
+        identity='member + canonical UUID + ownership_revision + detected role',
+        source='server_analysis', trust='server_computed',
+        post='/v2/me/character-analysis/refresh; command_id owns item idempotency; max50/524288bytes/20s budget/2 fresh observations',
+        get='stored summary/detail same version; bootstrap summary only; provider0',
+        latest='successful observation saves decreases, setting errors and explicit source null; fetch/identity/role failure preserves head',
+        role='server-detected only; compare detected role version; opposite role/preferences unchanged',
+        retries='not_processed/in_progress/unknown same command; terminal failure explicit new command; no old client pending conversion',
+        protection='current auth/ownership/lifecycle/claim/CAS/provider-generation/lease fences; no member key',
+        current_runtime='app.main:app; no DB0023 runtime or old client writer')
     schema['x-character-profile-policy']['personal_preferences'] = {
         'get': 'personal-profile.preferences now reads persisted member/character/ownership-lifetime values; P1 virtual const schema replaced',
         'put': 'strict full preferred_role/visible/display_order + expected preference/ownership/lifecycle versions; 409 for suspect writes',
@@ -277,7 +232,6 @@ def _decorate_openapi(schema):
     schema['x-character-profile-policy']['retirement_cleanup'] = (
         'internal validated complete retirement transaction deletes role summaries/preferences for retiring UUID across owner lifetimes; '
         'preserves account presentation, other UUIDs and history/FKs; rollback atomic; no live caller or claim-release activation')
-    schema['x-character-profile-policy']['deployment'] = '0008/0009 files/isolated tests only; no real DB migration or API transition'
     schema['x-member-settings-policy'] = {
         'scope': 'authenticated member; independent of registration/device/session',
         'default': {'nice_group_auto_refresh_enabled': False, 'version': 1},
@@ -290,40 +244,11 @@ def _decorate_openapi(schema):
         'logout': 'preserves stored preference; GET failure must never trigger default PUT',
         'provider': 'no external Lost Ark calls; no build refresh triggered',
     }
-    schema['x-lostark-key-policy'] = {
-        'scope': 'authenticated member; app Bearer distinct from PUT token',
-        'default': {'configured': False, 'version': 1, 'updated_at': None},
-        'metadata': 'configured/version/updated_at only; no token retrieval; GET read-only',
-        'validation': 'strict compact JWT format only; PUT no provider call/claims/exp validation',
-        'version': 'every new PUT increments; DELETE increments only when configured; stale version rejected',
-        'idempotency': 'UUIDv4; HMAC token fingerprint, never raw token; 24h historical metadata replay',
-        'credential_errors': {'LOSTARK_KEY_NOT_CONFIGURED': 409, 'LOSTARK_KEY_REJECTED': 409,
-                              'LOSTARK_KEY_CHANGED': 409, 'LOSTARK_KEY_UNAVAILABLE': 503},
-        'provider_401_403': 'key rejected; never app HTTP401/logout',
-        'cache': 'member + credential version; old successful power preserved for GET only',
-        'changed': '409; old in-flight observations discarded before final commit; new decision/key',
-        'power_failure': 'failed key rejection/upstream rate limit; unstarted items deferred with same reason',
-        'quota': '80/min per HMAC token fingerprint shared across members/versions; transport 2/process',
-        'quota_limit': 'provider 100/min/client includes local direct calls; server budget is not a guarantee',
-        'logout': 'preserves credential; DELETE removes current secret only',
-        'fallback': 'none; no environment Lost Ark JWT for REST or diagnostic',
-    }
-    schema['x-lostark-key-policy']['restore'] = {
-        'path': '/v1/me/lostark-api-key/restore', 'method': 'POST',
-        'body': 'strict expected_version; read-only; no Idempotency-Key/result storage',
-        'response': 'token/version from same locked member credential; no-store; secret response not logged',
-        'conflict': 'absent 409 NOT_CONFIGURED; changed 409 CHANGED; unreadable 503 UNAVAILABLE',
-        'metadata_get': 'unchanged; no token',
-    }
-    schema['x-lostark-key-policy']['provider_wait'] = {
-        'reset': 'UNIX epoch seconds; valid future <=300s; otherwise observed time +60s',
-        'trigger': '429 or successful 200 Remaining=0; successful response stays successful',
-        'scope': 'token HMAC fingerprint; deadline max; no extension without new provider observation',
-        'late': 'only independent token limiter state; never business/cache/idempotent-success writes',
-        'single': 'error retry_after_seconds/retry_at for rate limits; Retry-After matches seconds',
-        'batch': 'PowerResult required nullable retry_after_seconds/retry_at; no batch200 Retry-After',
-        'retry': 'explicit new command; historical replay keeps original retry_at; no automatic provider retries',
-    }
+    schema['x-server-lostark-policy'] = dict(
+        source='read-only server secret; never returned', scope='all HTTP/worker callers share token limiter',
+        configuration_errors='503; never request member keys', quota='project 80/min per HMAC fingerprint; not an upstream guarantee',
+        generation='check before provider calls and final commit; never replaces business authorization',
+        concurrency='2 per process; shared limiter state in PostgreSQL')
     for path, operations in schema['paths'].items():
         for operation in operations.values():
             if 'game-accounts' in operation.get('tags', []) and '503' in operation.get('responses', {}):
@@ -411,7 +336,7 @@ def _base_application(lifespan):
     result = FastAPI(title="LostParty API", docs_url=None, redoc_url=None,
                      openapi_url=None, lifespan=lifespan)
     for common_router in (router, game_router, lifecycle_router, profile_router, batch_router,
-            preferences_router, presentation_router, settings_router, lostark_keys_router,
+            preferences_router, presentation_router, settings_router, analysis_router,
             raid_router, raid_weekly_router, groups_router, group_admissions_router,
             ownership_disputes_router, bootstrap_router, weekly_summary_router,
             recruitment_search_router, recruitment_reads_router, recruitment_router,
@@ -423,18 +348,6 @@ def _base_application(lifespan):
     register(result)
     result.middleware('http')(no_store)
     register_cors(result)
-    return result
-
-
-def create_legacy_app():
-    """Explicit DB0023 regression/recovery app, never the default runtime."""
-    result = _base_application(legacy_lifespan)
-    generate = result.openapi
-    def schema():
-        if result.openapi_schema is None:
-            result.openapi_schema = _decorate_openapi(generate())
-        return result.openapi_schema
-    result.openapi = schema
     return result
 
 
@@ -465,7 +378,7 @@ def create_app():
         value=_decorate_openapi(generate())
         management_response=value['paths']['/v2/me/game-accounts/{registration_id}/character-settings']['put']['responses']['200']['content']['application/json']['schema']
         management_response['oneOf']=management_response.pop('anyOf')
-        value['x-recruitment-policy'].update(schema_revision='0035_cycle_group_policy',policy_version='two-cycle-contract-4',
+        value['x-recruitment-policy'].update(schema_revision='0037_server_analysis',policy_version='two-cycle-contract-4',
             search_semantics='own-target-participation-excluded-v1',
             room_usage_semantics='active-target-rooms-1',
             reapplication_history=dict(required_schema='0033_reapplication_history',semantics='fresh participation after proven termination; completed history and opposite cycle preserved'),
@@ -503,7 +416,7 @@ def create_app():
             contract_version='beta-recruitment-wire-2',contract_profile='beta-recruitment-1',
             text_policy='hangul-printable-ascii-1',
             search_time='UTC whole-minute bounds; start inclusive, end exclusive; no rounding; departure grids unchanged',
-            explicit_departure='UTC whole-minute beta creation/opening/proposal; automatic candidates, personal availability and duration retain 5-minute grids; exact 30-minute deadlines',
+            explicit_departure='UTC whole-minute beta creation/opening/proposal; personal availability uses whole-minute HH:mm; automatic candidates and duration retain 5-minute grids; exact 30-minute deadlines',
             required_schema='0032_beta_recruitment',default_reader='legacy shape preserved',
             promises='atomic participant/personal-copy/base reservation; earlier-only automatic confirmation; deadline fallback',
             presets='/v2/me/application-message-presets',compatibility='original ACK before unsafe new-write guard; no automatic legacy conversion')
@@ -512,11 +425,6 @@ def create_app():
         return result.openapi_schema
     result.openapi=schema
     return result
-
-
-def create_two_cycle_app():
-    """Compatibility entrypoint for existing commands; use create_app for new callers."""
-    return create_app()
 
 
 app = create_app()

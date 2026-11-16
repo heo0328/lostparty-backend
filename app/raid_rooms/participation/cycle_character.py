@@ -45,7 +45,7 @@ def prepare(db,uid,rid,key,cid,role,stamp,*,include_session_display=False):
     if any(c['required'] and not c['permission']['allowed'] for c in choices):reason=reason or 'RECRUITMENT_CLOSED'
     hidden=[room.revision,room.scope,life.selection_context.group_stamp(db,room.group_id,retained=True),cm.id,cm.revision,
         [[a.id,a.revision,a.character_id,a.selected_role,a.party_no,a.slot_no] for a in owned],
-        row.settings_snapshot,selection,targets,power['power_revision'],choices,evaluation['evidence']]
+        row.settings_snapshot,selection,targets,power['summary_version'],choices,evaluation['evidence']]
     if roster_participation.enabled():hidden.extend([roster_participation.marker(),roster_participation.member(db,row,cm)])
     metadata=display.existing(db,uid,row,stamp,"character",choices) if include_session_display else None
     if include_session_display:hidden.append(metadata)

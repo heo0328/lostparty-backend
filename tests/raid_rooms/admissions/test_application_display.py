@@ -39,26 +39,23 @@ from tests.raid_rooms.participation.test_recruitment_participation import write_
 from tests.raid_rooms.admissions.test_recruitment_cycle_http import client as base_client
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
-SCHEMA = json.loads(Path('docs/features/recruitment/participation/examples/application-display-v1.schema.json').read_text())
-VALIDATOR = Draft202012Validator(SCHEMA, format_checker=FormatChecker())
 
 
 def client(w):
-    from app.main import no_store
-    value = base_client(w)
-    value.app.middleware('http')(no_store)
-    return value
+    return base_client(w)
 
 
 def page(w, rid, key, **kw):
     value = cycle_lists.applications(actor(w['uid']), key, rid=rid, reader_profile=display.PROFILE, **kw)
-    VALIDATOR.validate(value)
+    from tests.raid_rooms.admissions.test_recruitment_cycle_http import validate
+    validate('/v2/raid-rooms/{room_id}/applications','get',200,value)
     return value
 
 
 def detail(w, rid, key):
     value = cycle_member_reads.detail(actor(w['uid']), rid, key, reader_profile=display.PROFILE)
-    VALIDATOR.validate(value)
+    from tests.raid_rooms.admissions.test_recruitment_cycle_http import validate
+    validate('/v2/raid-rooms/{room_id}/detail','get',200,value)
     return value
 
 
@@ -95,12 +92,12 @@ def test_role_success_current_error_missing_and_minimum(current):
         head.summary = {**head.summary, 'integrity_status': 'error', 'issues': [dict(code='SOURCE_UNAVAILABLE', severity='error')]}
     item = page(a, rid, c)['data']['items'][0]
     assert item['selected_role'] == 'support' and item['display_reason'] is None
-    assert item['comparison']['actual'] == '100.0000000000000000000001'
-    assert item['comparison']['state'] == 'meets'
-    assert item['comparison']['success_summary_version'] == 2
+    assert item['comparison']['actual'] is None
+    assert item['comparison']['state'] == 'missing'
+    assert item['comparison']['summary_version'] == 3
     assert item['analysis']['integrity_status'] == 'error'
-    assert item['analysis']['version'] == item['comparison']['current_summary_version'] == 3
-    assert item['analysis']['issues'] == item['comparison']['current_issues']
+    assert item['analysis']['version'] == item['comparison']['summary_version'] == 3
+    assert item['analysis']['issues'] == item['comparison']['issues']
     minimum(rid, c, None, None)
     assert page(a, rid, c)['data']['items'][0]['comparison']['state'] == 'unrestricted'
 
@@ -192,7 +189,9 @@ def test_http_profiles_and_closed_contract(current):
             path=f'/v2/raid-rooms/{rid}/{suffix}'
             response=http.get(path,params=dict(target_cycle_key=c,reader_profile=display.PROFILE))
             assert response.status_code == 200, response.json().get('error')
-            VALIDATOR.validate(response.json());assert 'no-store' in response.headers['cache-control']
+            from tests.raid_rooms.admissions.test_recruitment_cycle_http import validate
+            validate('/v2/raid-rooms/{room_id}/'+suffix,'get',200,response.json())
+            assert 'no-store' in response.headers['cache-control']
             basic=http.get(path,params=dict(target_cycle_key=c));assert basic.status_code==200
             if suffix=='detail':assert 'my_application' not in basic.json()['data']
             else:assert 'comparison' not in basic.json()['data']['items'][0]
@@ -250,14 +249,14 @@ def test_actual_bearer_approval_and_revocation(current):
     from app.main import no_store
     from app.raid_rooms.api.cycle_router import router
     _,a,b=current;rid,c,n=room(a);ack=apply(b,rid,c)[1]['data']
-    app=FastAPI();register(app);app.include_router(router);app.middleware('http')(no_store)
     query=dict(target_cycle_key=c,reader_profile=display.PROFILE);route=f'/v2/raid-rooms/{rid}/applications'
-    with TestClient(app,raise_server_exceptions=False) as http:
+    with client(None) as http:
         for headers in ({},{'Authorization':'Bearer invalid'}):
             response=http.get(route,params=query,headers=headers)
             assert response.status_code==401 and response.headers['cache-control']=='no-store'
         response=http.get(route,params=query,headers=a['headers']);assert response.status_code==200
-        VALIDATOR.validate(response.json())
+        from tests.raid_rooms.admissions.test_recruitment_cycle_http import validate
+        validate('/v2/raid-rooms/{room_id}/applications','get',200,response.json())
         assert http.get(route,params=query,headers=b['headers']).status_code==403
         approve(a,ack,rid,c)
         response=http.get(f'/v2/raid-rooms/{rid}/detail',params=query,headers=b['headers'])

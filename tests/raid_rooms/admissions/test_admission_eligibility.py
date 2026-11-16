@@ -48,7 +48,8 @@ from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import chan
 from tests.raid_rooms.participation.test_recruitment_participation import write_power
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
-SCHEMA=json.loads(Path('docs/features/recruitment/participation/examples/candidate-contract-v2.schema.json').read_text())
+from tests.raid_rooms.admissions.test_recruitment_cycle_http import CONTRACT
+SCHEMA={**CONTRACT,**CONTRACT['paths']['/v2/raid-rooms/{room_id}/admission-character-candidates']['get']['responses']['200']['content']['application/json']['schema']}
 
 
 def page(w,rid,key,intent='apply',**kw):
@@ -90,8 +91,8 @@ def test_role_power_precision_retained_success_and_no_minimum(current):
     item=picked(page(b,rid,c),b);assert item['roles']['dealer']['comparison']['state']=='below'
     write_power(b,'dealer','100','2026-10-12T00:00:00Z',4);write_power(b,'dealer',None,None,5)
     comp=picked(page(b,rid,c),b)['roles']['dealer']['comparison']
-    assert comp['state']=='meets' and comp['actual']=='100' and comp['current_summary_version']==5 and comp['success_summary_version']==4 and comp['success_issues']
-    assert context(b,rid,c,'apply')['data']['permissions']['apply']['allowed']
+    assert comp['state']=='missing' and comp['actual'] is None and comp['summary_version']==5 and comp['issues']
+    assert context(b,rid,c,'apply')['data']['permissions']['apply']['reason']=='COMBAT_POWER_REQUIRED'
     assert picked(page(b,rid,n),b)['roles']['dealer']['comparison']['state']=='unrestricted'
 
 

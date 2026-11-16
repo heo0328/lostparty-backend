@@ -2,6 +2,7 @@
 import json
 import uuid
 from concurrent.futures import ThreadPoolExecutor
+from tests.concurrency import map_in_context
 from datetime import timedelta
 import pytest
 from fastapi import FastAPI
@@ -281,7 +282,7 @@ def test_last_slot_race_rechecks_shared_room_revision(http, people):
     for w in (b,c): assert post(http,w,f'raid-rooms/{rid}/join',context(http,w,rid)).status_code==200
     bodies=[context(http,w,rid,role='support') for w in (d,e)]
     with ThreadPoolExecutor(max_workers=2) as pool:
-        results=list(pool.map(lambda pair: post(http,pair[0],f'raid-rooms/{rid}/join',pair[1]),zip((d,e),bodies)))
+        results=list(map_in_context(pool,lambda pair: post(http,pair[0],f'raid-rooms/{rid}/join',pair[1]),zip((d,e),bodies)))
     assert sorted(r.status_code for r in results)==[200,409]
     failure=next(r for r in results if r.status_code==409)
     assert failure.json()['error']['code']=='REVISION_CONFLICT'
@@ -289,9 +290,9 @@ def test_last_slot_race_rechecks_shared_room_revision(http, people):
 
 
 def test_candidate_paths_and_dtos_do_not_activate_production_api(http):
-    from app.main import create_legacy_app
-    app = create_legacy_app()
-    baseline=json.loads(open('openapi/legacy.openapi.yaml').read())
+    from app.main import create_app
+    app = create_app()
+    baseline=json.loads(open('openapi/openapi.yaml').read())
     assert app.openapi()==baseline
     assert all(getattr(route.endpoint,'__module__','')!='app.raid_rooms.api.router' for route in app.routes)
     schema=http.app.openapi()

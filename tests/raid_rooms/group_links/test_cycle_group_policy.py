@@ -1,6 +1,4 @@
 """Actual-T group policy under the new schema, using disposable app-role PostgreSQL."""
-import os
-import subprocess
 import uuid
 from datetime import date
 from datetime import datetime
@@ -8,6 +6,7 @@ from datetime import time
 from datetime import timedelta
 from datetime import timezone
 from concurrent.futures import ThreadPoolExecutor
+from tests.concurrency import map_in_context
 import pytest
 from sqlalchemy import select
 from sqlalchemy import inspect
@@ -51,18 +50,8 @@ from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
 @pytest.fixture
 def policy_db(group_beta):
-    engine,a,b=group_beta
-    before=table_digests(engine,set(inspect(engine).get_table_names())-{'alembic_version'})
-    result=subprocess.run(['alembic','upgrade','0035_cycle_group_policy'],env={**os.environ,
-        'DATABASE_URL':engine.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
-    assert result.returncode==0,'group policy migration failed'
-    assert table_digests(engine,set(before))==before
-    from app.raid_rooms.common import readiness
-    with session() as db:
-        readiness.require_two_cycle_active(db)
-        readiness.require_cycle_worker(db)
     with policy.using(), beta_profile.using():
-        yield engine,a,b
+        yield group_beta
 
 
 def state(rid,key):
@@ -130,18 +119,43 @@ def test_stale_group_context_rollback_and_old_request_rejection(policy_db,client
 
 
 @pytest.mark.parametrize('scope',['group','public'])
-def test_migration_current_generations_normalize_without_rewriting_history(group_beta,client,scope):
-    engine,a,b=group_beta;gid=group(client,a);rid,c,n=create_group_room(a,gid)
-    with session() as db,db.begin():db.get(Room,rid).scope=scope
-    tables=set(inspect(engine).get_table_names())-{'alembic_version'};before=table_digests(engine,tables)
-    result=subprocess.run(['alembic','upgrade','0035_cycle_group_policy'],env={**os.environ,
-        'DATABASE_URL':engine.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
-    assert result.returncode==0
-    assert table_digests(engine,tables)==before
-    with session() as db:
-        values=list(db.scalars(select(CycleGroupPolicy)))
-        assert len(values)==2 and all(v.scope==scope for v in values)
-        assert all(v.group_id==(uuid.UUID(gid) if scope=='group' else None) for v in values)
+def test_policy_migration_copies_only_current_generation_and_fences_pending_sql(monkeypatch,scope):
+    from app.core import database
+    from app.game_accounts.models.models import RequestResult
+    from app.raid_rooms.models.cycle_models import CycleGeneration
+    from tests.raid_rooms.common.test_raid_room_migrations import isolated_app_database
+    from tests.raid_rooms.common.migration_fixtures import sql_roster,sql_group
+    from tests.raid_rooms.participation.test_recruitment_participation import make_room
+    from app.raids import service as raids
+    with isolated_app_database() as (engine,_,upgrade):
+        upgrade('0034_group_features')
+        monkeypatch.setattr(database,'engine',lambda:engine)
+        uid,cid=sql_roster();gid=sql_group(uid,cid);rid=make_room({'uid':uid})
+        with session() as db,db.begin():
+            at=now(db);current=date.fromisoformat(raids.cycle(at).cycle_key)
+            room=db.get(Room,rid);room.scope=scope;room.group_id=gid
+            for key in (current,current+timedelta(days=7)):
+                row=RoomCycle(id=uuid.uuid4(),room_id=rid,cycle_key=key,state='review_required',generation=2,
+                    revision=1,settings_revision=1,members_revision=1,plan_revision=1,settings_snapshot={},provenance='explicit',created_at=at)
+                db.add(row);db.flush()
+                for generation,state in ((1,'completed'),(2,'review_required')):
+                    db.add(CycleGeneration(cycle_id=row.id,generation=generation,state=state,
+                        leader_cycle_member_id=None,leadership_revision=1,next_join_order=1,opened_at=at))
+                db.flush()
+            pending=RequestResult(actor_id=uid,operation='recruitment-target-settings',key=uuid.uuid4(),
+                digest='0'*64,state='running',lease_expires_at=at+timedelta(seconds=30))
+            db.add(pending);db.flush();ticket=(pending.id,pending.generation)
+        tables=set(inspect(engine).get_table_names())-{'alembic_version'}
+        before=table_digests(engine,tables)
+        upgrade('0035_cycle_group_policy')
+        assert table_digests(engine,tables)==before
+        with session() as db:
+            values=list(db.scalars(select(CycleGroupPolicy)))
+            assert len(values)==2 and all(v.generation==2 and v.scope==scope for v in values)
+            assert all(v.group_id==(gid if scope=='group' else None) for v in values)
+            with policy.using(),pytest.raises(GameError) as error:
+                policy.require_client(db,'target-settings',ticket=ticket)
+            assert error.value.code=='CLIENT_UPGRADE_REQUIRED'
 
 
 def test_private_target_visibility_search_and_group_metadata(policy_db,client,monkeypatch):
@@ -288,7 +302,7 @@ def test_concurrent_changes_one_commit_and_context_recheck_after_membership_chan
         with policy.using(),beta_profile.using():
             try:return cycle_management.command(actor(a['uid']),rid,uuid.uuid4(),body,'settings')[1]['data']['outcome']
             except GameError as e:return e.code
-    with ThreadPoolExecutor(2) as pool:results=list(pool.map(run,bodies))
+    with ThreadPoolExecutor(2) as pool:results=list(map_in_context(pool,run,bodies))
     assert results.count('applied')==1 and any(v in ('TARGET_CONTEXT_STALE','REVISION_CONFLICT') for v in results)
     target=ga if state(rid,c)['group_id']==uuid.UUID(gb) else gb
     ctx=cycle_management.group_context(actor(a['uid']),rid,c,uuid.UUID(target))
@@ -345,9 +359,9 @@ def test_eight_participants_group_priority_then_external_and_last_member_close(p
 def test_http_settings_confirmation_marker_and_original_ack(policy_db,client):
     engine,a,b=policy_db;gid=group(client,a);rid,c,_,_,_=create_beta(a)
     from fastapi.testclient import TestClient
-    from app.main import create_two_cycle_app
+    from app.main import create_app
     params={'contract_profile':beta_profile.PROFILE,'group_policy_version':policy.VERSION}
-    with TestClient(create_two_cycle_app(),raise_server_exceptions=False) as http:
+    with TestClient(create_app(),raise_server_exceptions=False) as http:
         response=http.get(f'/v2/raid-rooms/{rid}/command-context',params={**params,'target_cycle_key':c,
             'command':'edit_group_policy','target_group_id':gid},headers=a['headers'])
         assert response.status_code==200,response.text
@@ -385,34 +399,6 @@ def test_public_pending_preserved_but_approval_uses_current_group(policy_db,clie
     with session() as db:assert db.get(CycleApplication,aid).state=='pending'
 
 
-def test_pre_upgrade_ack_replay_and_old_context_cannot_execute_after_migration(group_beta):
-    engine,a,b=group_beta
-    from app.raid_rooms.admissions import cycle_creation
-    from app.raid_rooms.schemas import beta_schemas
-    rid,c,_,raw,command=create_beta(a)
-    old=beta_schemas.BetaCreateRequest.model_validate(raw)
-    with beta_profile.using():original=cycle_creation.create(actor(a['uid']),command,old)
-    from app.raid_rooms.common import cycles
-    original_settings=settings(a,rid,c)
-    pending_key=uuid.uuid4()
-    pending_payload=dict(room_id=str(rid),body=original_settings.model_dump(mode='json',exclude_unset=True))
-    def interrupted(*args):raise RuntimeError('synthetic pre-cutover failure')
-    with beta_profile.using(),pytest.raises(RuntimeError):
-        cycles.execute(actor(a['uid']),'target-settings',pending_key,pending_payload,interrupted)
-    result=subprocess.run(['alembic','upgrade','0035_cycle_group_policy'],env={**os.environ,
-        'DATABASE_URL':engine.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
-    assert result.returncode==0
-    before=table_digests(engine,set(inspect(engine).get_table_names())-{'game_account_requests'})
-    with beta_profile.using():
-        assert cycle_creation.create(actor(a['uid']),command,old)==original
-        with pytest.raises(GameError) as caught:cycle_creation.create(actor(a['uid']),uuid.uuid4(),old)
-        assert caught.value.code=='CLIENT_UPGRADE_REQUIRED'
-        with policy.using(),pytest.raises(GameError) as caught:cycle_creation.create(actor(a['uid']),uuid.uuid4(),old)
-        assert caught.value.code=='CLIENT_UPGRADE_REQUIRED'
-        with policy.using(),pytest.raises(GameError) as caught:
-            cycle_management.command(actor(a['uid']),rid,pending_key,original_settings,'settings')
-        assert caught.value.code=='CLIENT_UPGRADE_REQUIRED'
-    assert table_digests(engine,set(before))==before
 
 
 def test_leave_all_second_target_failure_rolls_back_everything(policy_db,client,monkeypatch):
@@ -597,9 +583,6 @@ def test_ended_membership_full_profiles_preserve_relation_only_and_cursor(policy
     from tests.raid_rooms.admissions.test_recruitment_cycle_http import client as http_client
     from app.raids import service as raids
     engine, a, b = policy_db
-    result = subprocess.run(['alembic', 'upgrade', 'head'], env={**os.environ,
-        'DATABASE_URL': engine.url.render_as_string(hide_password=False)}, capture_output=True, timeout=90)
-    assert result.returncode == 0, 'isolated latest-schema migration failed'
     # Both rooms use real creation and dissolution commands; no fabricated policies.
     existing = None
     if shape == 'mixed':
@@ -696,9 +679,6 @@ def test_creation_ack_survives_departure_but_is_not_detail_authorization(policy_
 def test_unopened_next_detail_membership_http(policy_db,group_state,character_issues):
     from tests.raid_rooms.admissions.test_recruitment_cycle_http import client as http_client
     engine,a,b=policy_db
-    if character_issues:
-        result=subprocess.run(['alembic','upgrade','0036_roster_presence'],env={**os.environ,'DATABASE_URL':engine.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
-        assert result.returncode==0,'presence migration failed'
     rid,c,_,_,_=create_beta(a,combined=False)
     n=(date.fromisoformat(c)+timedelta(days=7)).isoformat()
     params=dict(target_cycle_key=n,reader_profile='membership-actions-1',contract_profile=beta_profile.PROFILE,
@@ -725,3 +705,17 @@ def test_unopened_next_detail_membership_http(policy_db,group_state,character_is
         assert current.status_code==200,current.text
         with session() as db:
             assert db.scalar(select(RoomCycle.id).where(RoomCycle.room_id==rid,RoomCycle.cycle_key==date.fromisoformat(n))) is None
+
+
+def test_display_database_failure_is_503_and_not_empty_success(policy_db,monkeypatch):
+    _,a,b=policy_db;rid,c,*_=create_beta(a)
+    from sqlalchemy.exc import OperationalError
+    from app.raid_rooms.group_links import group_list_display
+    from tests.raid_rooms.admissions.test_recruitment_cycle_http import client as raid_client
+    from tests.raid_rooms.admissions.test_beta_recruitment import PROFILE
+    def unavailable(*args,**kwargs):raise OperationalError('Synthetic group read failure',{},None)
+    monkeypatch.setattr(group_list_display,'attach',unavailable)
+    with raid_client(b) as http:
+        response=http.get('/v2/raid-rooms',params={**PROFILE,'target_cycle_key':c,'include_group_state':'true'})
+        assert response.status_code==503
+        assert response.json()['error']['code']=='SERVICE_UNAVAILABLE'

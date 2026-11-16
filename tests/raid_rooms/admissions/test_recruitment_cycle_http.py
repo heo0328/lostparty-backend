@@ -31,24 +31,36 @@ from tests.raid_rooms.admissions.test_recruitment_cycle_commands import commands
 from tests.raid_rooms.admissions.test_recruitment_cycle_commands import decision
 from tests.groups.test_group_foundation import actor
 
-CONTRACT=json.loads(Path('docs/features/recruitment/weekly-cycles/examples/baseline/full.openapi.json').read_text())
+CONTRACT=json.loads(Path('openapi/openapi.yaml').read_text())
 REGISTRY=Registry().with_resource('urn:w2',Resource.from_contents(CONTRACT,default_specification=DRAFT202012))
 
 
 def validate(path,method,status,value,*,input=False):
     operation=CONTRACT['paths'][path][method]
     response=operation['requestBody'] if input else operation['responses'][str(status)]
-    if '$ref' in response:response=CONTRACT['components']['responses'][response['$ref'].rsplit('/',1)[1]]
-    schema=response['content']['application/json']['schema']
-    Draft202012Validator({'$ref':'urn:w2'+schema['$ref']},registry=REGISTRY,
+    if '$ref' in response:
+        location='urn:w2'+response['$ref']
+    else:
+        parts=['paths',path,method,*(['requestBody'] if input else ['responses',str(status)])]
+        location='urn:w2#/'+ '/'.join(p.replace('~','~0').replace('/','~1') for p in parts)
+    location+='/content/application~1json/schema'
+    Draft202012Validator({'$ref':location},registry=REGISTRY,
         format_checker=Draft202012Validator.FORMAT_CHECKER).validate(value)
 
 
 def client(w):
-    app=FastAPI();register(app);app.include_router(cycle_router.router)
-    app.dependency_overrides[authenticated]=lambda:actor(w['uid'])
-    app.dependency_overrides[optional_principal]=lambda:actor(w['uid'])
-    return TestClient(app)
+    from app.main import create_app
+    app=create_app()
+    # The suite owns the current disposable DB; TestClient validates its startup.
+    if w is not None:
+        app.dependency_overrides[authenticated]=lambda:actor(w['uid'])
+        app.dependency_overrides[optional_principal]=lambda:actor(w['uid'])
+    value=TestClient(app)
+    def current_profile(request):
+        if 'group_policy_version' not in request.url.params and any(r.path_regex.fullmatch(request.url.path) for r in cycle_router.router.routes):
+            request.url=request.url.copy_set_param('group_policy_version','cycle-group-policy-1')
+    value.event_hooks['request'].append(current_profile)
+    return value
 
 
 def test_http_create_read_join_and_fixed_contract(candidate):
@@ -120,12 +132,12 @@ def test_membership_and_application_pages_are_target_scoped(candidate):
     assert lists.memberships(actor(b['uid']),n)['data']['items'][0]['target_participation_state']=='participating'
 
 
-def test_candidate_not_published_in_main():
-    from app.main import create_legacy_app
-    app = create_legacy_app()
+def test_current_routes_are_published_in_single_app():
+    from app.main import create_app
+    app = create_app()
     live=app.openapi()['paths']
-    assert '/v2/raid-rooms' not in live
+    assert '/v2/raid-rooms' in live
     import json
     from pathlib import Path
     assert '/v2/raid-cycles' in live
-    assert set(live) == set(json.loads(Path('openapi/legacy.openapi.yaml').read_text())['paths'])
+    assert set(live) == set(json.loads(Path('openapi/openapi.yaml').read_text())['paths'])

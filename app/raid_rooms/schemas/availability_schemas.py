@@ -11,7 +11,9 @@ from pydantic import StrictStr
 from pydantic import model_validator
 
 Version = Annotated[StrictInt, Field(ge=1, le=2147483647)]
-Clock = Annotated[StrictStr, Field(pattern=r'^(?:[01][0-9]|2[0-3]):[0-5][05]$')]
+ScheduleClock = Annotated[StrictStr, Field(pattern=r'^(?:[01][0-9]|2[0-3]):[0-5][05]$')]
+
+AvailabilityClock = Annotated[StrictStr, Field(pattern=r'^(?:[01][0-9]|2[0-3]):[0-5][0-9]$')]
 
 
 class DTO(BaseModel):
@@ -20,8 +22,8 @@ class DTO(BaseModel):
 
 class Interval(DTO):
     weekday: Annotated[StrictInt, Field(ge=1, le=7)]
-    start: Clock
-    end: Clock
+    start: AvailabilityClock
+    end: AvailabilityClock
     end_day_offset: Annotated[StrictInt, Field(ge=0, le=1)]
 
     @model_validator(mode='after')

@@ -1,8 +1,7 @@
 """W4-A1 target submissions/consent; restricted synthetic PostgreSQL only."""
-import os
-import subprocess
 import uuid
 from concurrent.futures import ThreadPoolExecutor
+from tests.concurrency import map_in_context
 from datetime import timedelta
 import pytest
 from sqlalchemy import inspect
@@ -49,23 +48,11 @@ from tests.raid_rooms.participation.test_recruitment_cycle_lifecycle import char
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
 
-def upgrade(engine):
-    tables=set(inspect(engine).get_table_names())-{'alembic_version'}
-    before=table_digests(engine,tables)
-    done=subprocess.run(['alembic','upgrade','0027_cycle_consents'],env={**os.environ,
-        'DATABASE_URL':engine.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
-    assert done.returncode==0,done.stderr.decode()[-2200:]
-    assert table_digests(engine,tables)==before
-    with session() as db,db.begin():
-        readiness.require_ready(db,integrated=True)
-        with pytest.raises(GameError):readiness.require_active(db)
-        with pytest.raises(GameError):readiness.require_legacy_worker(db)
 
 
 @pytest.fixture
 def consent(lifecycle):
-    engine,a,b=lifecycle;upgrade(engine)
-    return engine,a,b
+    return lifecycle
 
 
 def scheduled(w,*,bundle=True,alternatives=1):
@@ -126,13 +113,12 @@ def fingerprints(engine):
     return table_digests(engine,set(inspect(engine).get_table_names())-{'alembic_version','game_account_requests'})
 
 
-def test_migration_keeps_existing_confirmed_reservations_and_runtime_guards(lifecycle):
+def test_confirmed_reservations_do_not_retroactively_create_consent(lifecycle):
     engine,a,b=lifecycle
     rid,c,n=scheduled(a)
     with session() as db,db.begin():
         old=list(db.scalars(select(Reservation).where(Reservation.room_id==rid)))
         assert len(old)==2 and all(r.released_at is None for r in old)
-    upgrade(engine)
     with session() as db,db.begin():
         assert db.scalar(select(func.count()).select_from(CycleConsent))==0
         assert len(list(db.scalars(select(Reservation).where(Reservation.room_id==rid))))==2
@@ -286,7 +272,7 @@ def test_concurrent_confirmation_has_one_consent_and_exact_bundle(consent):
     def attempt(_):
         try:return times.confirm(actor(a['uid']),sid,uuid.uuid4(),body)[0]
         except GameError as e:return e.code
-    with ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(attempt,range(2)))
+    with ThreadPoolExecutor(max_workers=2) as pool:results=list(map_in_context(pool,attempt,range(2)))
     assert sorted(map(str,results))==['200','TARGET_CONTEXT_STALE']
     with session() as db,db.begin():
         assert db.scalar(select(func.count()).select_from(CycleConsent))==1

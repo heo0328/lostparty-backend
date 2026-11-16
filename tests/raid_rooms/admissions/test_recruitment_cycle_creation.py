@@ -1,6 +1,4 @@
 """W2 creation: real restricted PostgreSQL, synthetic accounts, no live server."""
-import os
-import subprocess
 import uuid
 from datetime import timedelta
 import pytest
@@ -39,17 +37,7 @@ from tests.groups.test_group_foundation import actor
 
 @pytest.fixture
 def candidate(ready):
-    engine,a,b,_=ready
-    old=set(inspect(engine).get_table_names())-{'alembic_version'}
-    before=table_digests(engine,old)
-    result=subprocess.run(['alembic','upgrade','0025_cycle_admissions'],env={**os.environ,
-        'DATABASE_URL':engine.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
-    assert result.returncode==0, result.stderr.decode()[-2500:]
-    assert table_digests(engine,old)==before
-    with session() as db,db.begin():
-        readiness.require_ready(db,integrated=True)
-        with pytest.raises(GameError):readiness.require_active(db)
-    return engine,a,b
+    return ready[:3]
 
 
 def preflight(a, *, key=None, continuation=False, bundle=False, next_cid=None, next_role=None,gid=None):

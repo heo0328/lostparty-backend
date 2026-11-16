@@ -1,6 +1,6 @@
 """Uncached server-side transport. No retry, redirects or DB writes.
 
-Member REST transport; control proof and identity binding are separate callers.
+Server REST transport; control proof and identity binding are separate callers.
 """
 import json
 from time import monotonic
@@ -24,9 +24,10 @@ class ProviderUnavailable(Exception):
 
 
 class LostArkProvider:
-    def __init__(self, token: str, transport=None, observer=None):
+    def __init__(self, token: str, transport=None, observer=None, before_call=None):
         if not isinstance(token, str) or not token.strip() or '\r' in token or '\n' in token:
             raise ProviderUnavailable('UPSTREAM_NOT_CONFIGURED')
+        self._before_call = before_call
         self._observer = observer
         self._token = token
         self._transport = transport or requests
@@ -47,6 +48,7 @@ class LostArkProvider:
             raise ProviderUnavailable('UPSTREAM_BUSY')
         response_status = None
         try:
+            if self._before_call is not None:self._before_call()
             deadline = monotonic() + 8
             with self._transport.get(
                 f'{ORIGIN}/{prefix}/{quote(name, safe="")}{suffix}',
@@ -82,10 +84,13 @@ class LostArkProvider:
                 error.http_status = response_status
             raise
         except requests.Timeout:
+            if self._observer is not None:self._observer(None, {})
             raise ProviderUnavailable(diagnostic_reason='transport_timeout') from None
         except requests.ConnectionError:
+            if self._observer is not None:self._observer(None, {})
             raise ProviderUnavailable(diagnostic_reason='transport_connection') from None
         except requests.RequestException:
+            if self._observer is not None:self._observer(None, {})
             raise ProviderUnavailable(diagnostic_reason='transport_other') from None
         finally:
             _capacity.release()

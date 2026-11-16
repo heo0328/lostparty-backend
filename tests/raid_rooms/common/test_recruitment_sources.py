@@ -11,7 +11,6 @@ from sqlalchemy.exc import IntegrityError
 from app.core.database import session
 from app.core.database import now
 from app.game_accounts.models.models import CharacterRoleSummary
-from app.game_accounts.models.power_success import RolePowerSuccess
 from app.raid_rooms.common import readiness
 from app.raid_rooms.models.integrated_models import RecruitmentMembership
 from app.raid_rooms.models.integrated_models import RecruitmentRound
@@ -41,13 +40,14 @@ def sources(imported):
     with session() as db,db.begin():
         stamp=now(db)
         payload=summary();payload['combat_power']='100.50'
-        db.add(CharacterRoleSummary(user_id=a['uid'],character_id=uuid.UUID(a['ids'][0]),ownership_revision=1,
-            role='dealer',version=4,summary=payload,saved_at=stamp))
-        missing=summary();missing.update(combat_power=None,combat_power_observed_at=None)
-        db.add(CharacterRoleSummary(user_id=a['uid'],character_id=uuid.UUID(a['ids'][0]),ownership_revision=1,
-            role='support',version=5,summary=missing,saved_at=stamp))
-        db.add(CharacterRoleSummary(user_id=b['uid'],character_id=uuid.UUID(b['ids'][0]),ownership_revision=1,
-            role='dealer',version=2,summary={'combat_power':'99999'},saved_at=stamp))
+        # Historical schema has no current detail column. Seed its immutable wire via SQL.
+        import json
+        for w,role,version,payload in ((a,'dealer',4,payload),(a,'support',5,dict(payload,combat_power=None,combat_power_observed_at=None)),
+            (b,'dealer',2,{'combat_power':'99999'})):
+            db.execute(text("""INSERT INTO character_role_summaries
+                (user_id,character_id,ownership_revision,role,version,summary,saved_at)
+                VALUES (:uid,:cid,1,:role,:version,CAST(:summary AS jsonb),:at)"""),
+                dict(uid=w['uid'],cid=uuid.UUID(w['ids'][0]),role=role,version=version,summary=json.dumps(payload),at=stamp))
         round_id=db.scalar(select(RecruitmentRound.id).where(RecruitmentRound.room_id==second))
         appid=uuid.uuid4()
         db.add(Application(id=appid,room_id=second,round_id=round_id,user_id=b['uid'],
@@ -67,12 +67,8 @@ def test_preservation_and_no_fabricated_schedule_or_success(sources):
     with session() as db,db.begin():
         db.connection(execution_options={'isolation_level':'REPEATABLE READ'})
         db.execute(text('SET TRANSACTION READ ONLY'))
-        readiness.require_ready(db,integrated=True)
-        assert db.scalar(select(RolePowerSuccess.combat_power))=='100.50'
-        power=db.scalar(select(RolePowerSuccess))
-        assert power.source_summary_version==4 and power.power_revision==2
-        assert power.record_created_at==power.record_updated_at
-        assert power.source_summary['combat_power']==power.combat_power
+        assert db.scalar(text('SELECT version_num FROM alembic_version'))=='0020_recruitment_sources'
+        assert db.scalar(text("SELECT summary->>'combat_power' FROM character_role_summaries WHERE user_id=:uid AND role='dealer'"),{'uid':a['uid']})=='100.50'
         app=db.get(RecruitmentApplication,appid)
         assert app.origin_state=='legacy_unknown' and app.origin_scope is None and app.origin_group_id is None
         assert app.build is None and app.targets[0]['round_id']==str(db.get(Application,appid).round_id)
@@ -82,7 +78,7 @@ def test_preservation_and_no_fabricated_schedule_or_success(sources):
         for model in SOURCE_MODELS:
             if model not in (RoomSettings,RecruitmentApplication):
                 assert db.scalar(text('SELECT count(*) FROM '+model.__tablename__))==0
-        for model in SOURCE_MODELS+(RolePowerSuccess,):
+        for model in SOURCE_MODELS:
             columns={col['name']:col for col in inspect(db.connection()).get_columns(model.__tablename__)}
             assert set(columns)==set(model.__table__.columns.keys())
             for col in model.__table__.columns:
@@ -188,23 +184,12 @@ def test_authoritative_opening_floor_is_immutable_after_delayed_processing(sourc
         assert event.search_floor_at==effective+timedelta(minutes=30)
 
 
-def test_readiness_rejects_success_fk_that_would_block_existing_retirement(sources):
-    from app.game_accounts.common.support import GameError
+def test_historical_power_success_fk_has_cascade(sources):
     target,*_=sources
-    with session() as db,db.begin():
-        fk=inspect(db.connection()).get_foreign_keys('character_role_power_successes')[0]
-        saved=db.begin_nested()
-        try:
-            name=fk['name']
-            assert all(c.isalnum() or c=='_' for c in name)
-            db.execute(text('ALTER TABLE character_role_power_successes DROP CONSTRAINT "'+name+'"'))
-            db.execute(text('''ALTER TABLE character_role_power_successes ADD CONSTRAINT plain_power_parent
-                FOREIGN KEY (user_id,character_id,ownership_revision,role)
-                REFERENCES character_role_summaries (user_id,character_id,ownership_revision,role)'''))
-            with pytest.raises(GameError) as error:readiness.require_ready(db,integrated=True)
-            assert error.value.code=='SERVICE_UNAVAILABLE'
-        finally:saved.rollback()
-        readiness.require_ready(db,integrated=True)
+    with target.connect() as connection:
+        fks=inspect(connection).get_foreign_keys('character_role_power_successes')
+        parent=next(f for f in fks if f['referred_table']=='character_role_summaries')
+        assert parent['options']['ondelete']=='CASCADE'
 
 
 def test_applied_duration_evidence_does_not_follow_later_item_settings(sources):

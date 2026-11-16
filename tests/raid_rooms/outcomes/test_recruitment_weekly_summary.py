@@ -31,7 +31,6 @@ from tests.groups.test_group_admissions import worlds
 from tests.raid_rooms.common.test_raid_room_foundation import people
 from tests.raid_rooms.participation.test_recruitment_participation import make_room
 from tests.raid_rooms.participation.test_recruitment_participation import admit
-from tests.raid_rooms.common.test_recruitment_cycles import add_next_bundle
 from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 from tests.groups.test_group_foundation import actor
 
@@ -49,6 +48,13 @@ def users(people,monkeypatch):
     return a,b,current,stamp
 
 
+def current_room(w,*,combined=False):
+    from app.raid_rooms.group_links.cycle_group_policy import using
+    from tests.raid_rooms.admissions.test_beta_recruitment import create_beta
+    with using():
+        return create_beta(w,combined=combined)[0]
+
+
 def body(a,current,*,both=True):
     return dict(character_ids=[a['ids'][0]],target_cycle_keys=[current.isoformat()]+[(current+timedelta(days=7)).isoformat()] if both else [current.isoformat()])
 
@@ -64,7 +70,7 @@ def entry(response,key,raid='horizon_cathedral'):
 def test_actual_main_routes_no_store_and_read_only_all_tables(client,users,monkeypatch):
     a,b,current,stamp=users
     from app.game_accounts.provider_io.provider import LostArkProvider
-    from app.lostark_keys import service as keys
+    from app.game_accounts.provider_io import credentials as keys
     def forbidden(*args,**kwargs):raise AssertionError('Summary must not call provider or credential capture')
     monkeypatch.setattr(LostArkProvider,'_fetch',forbidden)
     monkeypatch.setattr(keys,'capture',forbidden)
@@ -186,12 +192,8 @@ def test_completion_sources_remain_distinct_and_time_gated(client,users,monkeypa
 
 def test_current_and_next_exact_leases_with_legacy_intent_separate(client,users):
     a,b,current,stamp=users
-    rid=make_room(a)
-    admit(a,rid)
+    rid=current_room(a,combined=True)
     with session() as db,db.begin():
-        from tests.raid_rooms.common.test_recruitment_cycles import next_rounds
-        next_rounds(db,rid,current+timedelta(days=7))
-        add_next_bundle(db,rid,current,a['uid'])
         member=db.scalar(select(Member).where(Member.room_id==rid,Member.user_id==a['uid']))
         from app.raid_rooms.models.integrated_models import RecruitmentItem as Item
         item=db.scalar(select(Item).where(Item.room_id==rid))
@@ -244,7 +246,7 @@ def test_orphan_ledger_is_not_misrepresented_as_no_participation(client,users):
 
 def test_rr_snapshot_remains_consistent_during_concurrent_leave(client,users):
     a,b,current,_=users
-    rid=make_room(a);admit(a,rid)
+    rid=current_room(a)
     changed=[]
     def after_select(connection,cursor,statement,parameters,context,many):
         if changed or 'from raid_weekly_states' not in statement.lower():return
@@ -266,7 +268,7 @@ def test_rr_snapshot_remains_consistent_during_concurrent_leave(client,users):
 
 def test_summary_does_not_load_closed_generations(client,users):
     a,b,current,stamp=users
-    rid=make_room(a);admit(a,rid)
+    rid=current_room(a)
     from app.raid_rooms.models.integrated_models import RecruitmentAssignment as Assignment
     from app.raid_rooms.models.integrated_models import RecruitmentRound as Round
     with session() as db,db.begin():
@@ -341,10 +343,10 @@ def expand(schema,document):
 
 
 def test_runtime_slice_matches_agreed_contract_and_canonical_source():
-    from app.main import create_legacy_app
-    app = create_legacy_app()
+    from app.main import create_app
+    app = create_app()
     runtime=app.openapi()
-    assert runtime==json.loads(Path('openapi/legacy.openapi.yaml').read_text())
+    assert runtime==json.loads(Path('openapi/openapi.yaml').read_text())
     contract=json.loads(Path('docs/features/recruitment/weekly-cycles/examples/baseline/full.openapi.json').read_text())
     for path,method in ((META,'get'),(SUMMARY,'post')):
         actual=runtime['paths'][path][method];agreed=contract['paths'][path][method]

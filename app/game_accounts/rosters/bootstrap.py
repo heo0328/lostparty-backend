@@ -149,7 +149,9 @@ def snapshot(db, uid, stamp):
             if reason:
                 unavailable.append(dict(character_id=cid, code=reason))
                 continue
-            personal.append(profiles.output(stored, uid, a, c))
+            profile = profiles.output(stored, uid, a, c)
+            for role in ('dealer', 'support'): profile[role].pop('detail')
+            personal.append(profile)
             # The existing 50-ID limit is a V1 request limit. Project all current
             # activities from this same snapshot, never call separate HTTP batches.
             entries.extend(weekly.entry(stored, a, c, raid, key, cycle, weekly_rows.get((cid, raid.raid_id)),stamp) for raid in catalog.raids)

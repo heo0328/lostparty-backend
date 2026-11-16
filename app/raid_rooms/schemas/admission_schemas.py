@@ -10,7 +10,7 @@ from pydantic import StrictStr
 from pydantic import model_validator
 from app.raid_rooms.schemas.availability_schemas import DTO
 from app.raid_rooms.schemas.availability_schemas import Version
-from app.raid_rooms.schemas.availability_schemas import Clock
+from app.raid_rooms.schemas.availability_schemas import ScheduleClock
 from app.raid_rooms.schemas.participation_commands import Selection
 from app.raid_rooms.schemas.participation_commands import Target
 from app.raids.schemas import Identifier
@@ -56,8 +56,8 @@ class Alternative(DTO):
     existing_session_id: UUID|None
     expected_session_revision: Version|None
     weekday: Annotated[StrictInt,Field(ge=1,le=7)]
-    starts_local: Clock|None
-    leader_latest_start_local: Clock|None
+    starts_local: ScheduleClock|None
+    leader_latest_start_local: ScheduleClock|None
     item_order: list[Identifier]
 
 
@@ -160,18 +160,16 @@ class ApplicationAck(DTO):
 
 class PowerComparison(DTO):
     selected_role: Literal['dealer','support']
-    requirement: DecimalValue|None
-    actual: DecimalValue|None
+    requirement: DecimalValue | None
+    actual: DecimalValue | None
     state: Literal['unrestricted','missing','below','meets']
-    source: Literal['flutter_analysis']
-    trust: Literal['client_submitted']
-    current_summary_version: Version
-    success_summary_version: Version|None
-    power_revision: Version
-    observed_at: datetime|None
-    success_saved_at: datetime|None
-    success_issues: list[AnalysisIssue]
-    current_issues: list[AnalysisIssue]
+    source: Literal['server_analysis']
+    trust: Literal['server_computed']
+    summary_version: Version
+    observed_at: datetime | None
+    saved_at: datetime | None
+    integrity_status: Literal['clean','review','error','unavailable'] | None
+    issues: list[AnalysisIssue]
 
 
 class CreateTarget(ItemChoice):

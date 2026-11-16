@@ -4,6 +4,8 @@ The caller selects/filters/pages RoomCycle rows inside its read-only snapshot
 before loading these bounded relations. Single-card reads retain their path.
 """
 from collections import defaultdict
+from app.raid_rooms.group_links import cycle_group_policy
+from app.raid_rooms.models.cycle_group_models import CycleGroupPolicy
 from sqlalchemy import select
 from sqlalchemy import func
 from sqlalchemy import and_
@@ -29,6 +31,9 @@ from app.raid_rooms.models.weekly_links import WeeklyOccupancy
 def load(db, rows, uid):
     if not rows:return {}
     ids=[row.id for row in rows]
+    policies={p.cycle_id:p for p in db.scalars(select(CycleGroupPolicy).join(RoomCycle,and_(
+        CycleGroupPolicy.cycle_id==RoomCycle.id,CycleGroupPolicy.generation==RoomCycle.generation)).where(
+        RoomCycle.id.in_(ids)))} if cycle_group_policy.enabled(db) else {}
     # Every join to an actual graph is scoped to the selected generation.
     current=and_(CycleGeneration.cycle_id==RoomCycle.id,CycleGeneration.generation==RoomCycle.generation)
     generations={g.cycle_id:g for g in db.scalars(select(CycleGeneration).join(RoomCycle,current).where(RoomCycle.id.in_(ids)))}
@@ -85,7 +90,7 @@ def load(db, rows, uid):
             leader_membership_id=leader.membership_id if leader else None)
         mine=own.get(row.id)
         role='none' if mine is None else 'leader' if mine.id==leadership['leader_cycle_member_id'] else 'member'
-        result[row.id]=dict(archived=row.room_id in archived_ids,leadership=leadership,leader_display=displays.get(gen.leader_cycle_member_id),
+        result[row.id]=dict(policy=policies.get(row.id),archived=row.room_id in archived_ids,leadership=leadership,leader_display=displays.get(gen.leader_cycle_member_id),
             groups=groups[row.id],starts=starts[row.id],items=items[row.id],count=counts.get(row.id,0),role=role,
             state={'cancelled':'cancelled','completed':'completed','stopped':'stopped_incomplete','review_required':'review_required'}.get(gen.state,'open'))
     return result

@@ -207,8 +207,9 @@ def test_registration_change_during_network_rejects_late_observation(client, ros
             if change_kind == 'owner':
                 a=db.get(Account,saved.account_id);a.owner_id=None;a.ownership_revision += 1
             elif change_kind == 'key':
-                from app.lostark_keys.models import Credential
-                db.scalar(select(Credential)).version += 1
+                from pathlib import Path
+                from app.core.config import settings
+                Path(settings.secret_dir,'lostark-api-token').write_text('rotated.server.token')
             else:
                 saved.version += 1
                 if change_kind == 'deleted': saved.deleted_at=now(db)
@@ -216,8 +217,8 @@ def test_registration_change_during_network_rejects_late_observation(client, ros
     monkeypatch.setattr(provider.requests,'get',changed)
     wire['names'] += ['new-name']
     response=refresh(client,h,r)
-    expected = 'LOSTARK_KEY_CHANGED' if change_kind == 'key' else 'REGISTRATION_NOT_FOUND' if change_kind == 'deleted' else 'REVISION_CONFLICT'
-    assert response.status_code == (404 if change_kind == 'deleted' else 409)
+    expected = 'SERVER_KEY_CHANGED' if change_kind == 'key' else 'REGISTRATION_NOT_FOUND' if change_kind == 'deleted' else 'REVISION_CONFLICT'
+    assert response.status_code == (503 if change_kind=='key' else 404 if change_kind == 'deleted' else 409)
     assert response.json()['error']['code'] == expected
     with session() as db:
         assert db.scalar(select(func.count()).select_from(Character).where(Character.character_name == 'new-name')) == 0

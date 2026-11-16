@@ -1,7 +1,5 @@
 """Personal departure reentry: synthetic C/N actors, isolated PostgreSQL only."""
 import uuid
-import os
-import subprocess
 from datetime import date
 from copy import deepcopy
 import pytest
@@ -58,16 +56,6 @@ def setup_reentry(data,mode='leader_only'):
 
 @pytest.fixture
 def reapplication_ready(beta):
-    engine,_,_=beta
-    from sqlalchemy import inspect
-    from tests.raid_rooms.common.test_raid_room_migrations import table_digests
-    tables=set(inspect(engine).get_table_names())-{'alembic_version'};before=table_digests(engine,tables)
-    result=subprocess.run(['alembic','upgrade','0033_reapplication_history'],env={**os.environ,
-        'DATABASE_URL':engine.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
-    assert result.returncode==0,result.stderr.decode()[-1500:]
-    assert table_digests(engine,tables)==before
-    from app.raid_rooms.common.readiness import require_two_cycle_active
-    with session() as db:require_two_cycle_active(db)
     return beta
 
 
@@ -208,6 +196,7 @@ def test_reentry_install_failure_rolls_back(reapplication_ready,monkeypatch):
 
 def test_concurrent_reentry_one_writer(reapplication_ready):
     from concurrent.futures import ThreadPoolExecutor
+    from tests.concurrency import map_in_context
     from app.game_accounts.common.support import GameError
     engine,a,b,alt,rid,c,n,old_cm,old=setup_reentry(reapplication_ready,'direct_join')
     with beta_profile.using():data=admission_request(context(alt,rid,c))
@@ -215,14 +204,14 @@ def test_concurrent_reentry_one_writer(reapplication_ready):
         with beta_profile.using():
             try:return commands.admit(actor(a['uid']),rid,uuid.uuid4(),data)[0]
             except GameError as error:return error.code
-    with ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(join,range(2)))
+    with ThreadPoolExecutor(max_workers=2) as pool:results=list(map_in_context(pool,join,range(2)))
     assert sorted(map(str,results))==['200','TARGET_CONTEXT_STALE']
     with session() as db:
         rows=list(db.scalars(select(CycleMember).where(CycleMember.room_id==rid,CycleMember.user_id==a['uid'],CycleMember.id!=old_cm)))
         assert len(rows)==2  # new C plus the original N
 
 
-def test_populated_0032_upgrade_old_event_fallback_and_schema_guards(beta,monkeypatch):
+def test_old_event_record_survives_current_reentry_and_unknown_schema_is_rejected(beta,monkeypatch):
     from sqlalchemy import inspect
     from sqlalchemy import text
     from tests.raid_rooms.common.test_raid_room_migrations import table_digests
@@ -239,10 +228,8 @@ def test_populated_0032_upgrade_old_event_fallback_and_schema_guards(beta,monkey
         m.setattr(life,'event',old_event);engine,a,b,alt,rid,c,n,old_cm,old=setup_reentry(beta,'direct_join')
     assert old['schedule_segments'] and all(v['state']=='released' for v in old['schedule_segments'])
     with beta_profile.using():
-        assert context(alt,rid,c)['data']['permissions']['join']['reason']=='RECRUITMENT_COMMAND_NOT_READY'
+        assert context(alt,rid,c)['data']['permissions']['join']['allowed']
     tables=set(inspect(engine).get_table_names())-{'alembic_version'};before=table_digests(engine,tables)
-    result=subprocess.run(['alembic','upgrade','0033_reapplication_history'],env={**os.environ,'DATABASE_URL':engine.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
-    assert result.returncode==0,result.stderr.decode()[-1200:]
     assert table_digests(engine,tables)==before
     with session() as db:
         readiness.require_two_cycle_active(db);readiness.require_cycle_worker(db);assert beta_schedule.available(db)
@@ -324,3 +311,41 @@ def test_mixed_completed_left_bundle_creates_all_fresh_assignments(reapplication
         row=db.scalar(select(RoomCycle).where(RoomCycle.room_id==rid,RoomCycle.cycle_key==date.fromisoformat(c)))
         fresh=life.actual_member(db,row,a['uid']);rows=life.assignments(db,row,fresh)
         assert len(rows)==2 and fresh.id!=old_cm and not old_ids & {v.id for v in rows}
+
+
+def test_populated_assignment_index_migration_is_sql_only(monkeypatch):
+    from app.core import database
+    from app.core.database import now
+    from app.auth.models import User
+    from app.game_accounts.models.models import Account,Character
+    from app.raid_rooms.models.integrated_models import RecruitmentMembership,RecruitmentRound,RecruitmentAssignment
+    from tests.raid_rooms.common.test_raid_room_migrations import isolated_app_database,table_digests
+    from tests.raid_rooms.participation.test_recruitment_participation import make_room
+    from sqlalchemy import select,inspect
+    from sqlalchemy.exc import IntegrityError
+    with isolated_app_database() as (engine,_,upgrade):
+        upgrade('0032_beta_recruitment')
+        monkeypatch.setattr(database,'engine',lambda:engine)
+        uid,cid=uuid.uuid4(),uuid.uuid4()
+        with session() as db,db.begin():
+            stamp=now(db)
+            db.add(User(id=uid,status='active',created_at=stamp,updated_at=stamp,last_login_at=stamp));db.flush()
+            account=Account(owner_id=uid,verified_at=stamp);db.add(account);db.flush()
+            db.add(Character(id=cid,account_id=account.id,server_name='synthetic',character_name='synthetic',summary={},fetched_at=stamp,confirmed_at=stamp))
+        rid=make_room({'uid':uid})
+        with session() as db,db.begin():
+            rd=db.scalar(select(RecruitmentRound).where(RecruitmentRound.room_id==rid))
+            member=db.scalar(select(RecruitmentMembership).where(RecruitmentMembership.room_id==rid))
+            fields=dict(room_id=rid,item_id=rd.item_id,round_id=rd.id,membership_id=member.id,user_id=uid,
+                character_id=cid,selected_role='dealer',party_no=1,slot_no=1,display={},build=None,
+                ownership_revision=1,lifecycle_revision=1,revision=1,joined_at=now(db))
+            old=RecruitmentAssignment(id=uuid.uuid4(),**fields,state='completed',ended_at=now(db));db.add(old);db.flush()
+            with pytest.raises(IntegrityError),db.begin_nested():
+                db.add(RecruitmentAssignment(id=uuid.uuid4(),**fields,state='active'));db.flush()
+        tables=set(inspect(engine).get_table_names())-{'alembic_version'}
+        before=table_digests(engine,tables)
+        upgrade('0033_reapplication_history')
+        assert table_digests(engine,tables)==before
+        with session() as db,db.begin():
+            db.add(RecruitmentAssignment(id=uuid.uuid4(),**fields,state='active'));db.flush()
+            assert db.get(RecruitmentAssignment,old.id).state=='completed'

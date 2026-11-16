@@ -56,7 +56,7 @@ def test_retained_preview_and_cache_are_masked_not_erased(client,world,lost):
         registration=db.get(Registration,uuid.UUID(r['registration_id']))
         registration.preview=[dict(row,combat_power='9876') for row in registration.preview]
         cache=ScopedPowerCache(actor_id=registration.user_id,scope_key='retained-old-preview',
-            **lifecycle.power_scope(registration),credential_version=1,server_name='sample-server',
+            **lifecycle.power_scope(registration),provider_generation='a'*64,server_name='sample-server',
             character_name='a0',value='8765',fetched_at=now(db),checked_at=now(db),
             status='available',generation=1)
         db.add(cache)

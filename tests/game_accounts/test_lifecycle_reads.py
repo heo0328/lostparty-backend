@@ -34,7 +34,7 @@ def path(r): return '/v2/me/game-accounts/'+r['registration_id']+'/characters'
 def test_preview_required_nulls_strict_v1_unchanged_and_get_writes_nothing(client,world,monkeypatch):
     h,state=world;r=register(client,h)
     from app.game_accounts.provider_io.provider import LostArkProvider
-    from app.lostark_keys import service as credentials
+    from app.game_accounts.provider_io import credentials as credentials
     def forbidden(*a,**kw): raise AssertionError('No external/read credential access')
     monkeypatch.setattr(LostArkProvider,'_fetch',forbidden)
     monkeypatch.setattr(credentials,'capture',forbidden)
@@ -162,8 +162,8 @@ def test_unauthenticated_and_deleted_registration(client,world):
 
 
 def test_v2_required_nullable_contract_and_legacy_schema_unchanged():
-    from app.main import create_legacy_app
-    app = create_legacy_app()
+    from app.main import create_app
+    app = create_app()
     schema=app.openapi(); definitions=schema['components']['schemas']
     for name in ('LifecycleCharacterOut','LifecycleCharactersOut','RetirementOut','RetirementPage'):
         model=definitions[name]

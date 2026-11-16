@@ -19,9 +19,8 @@ from app.game_accounts.models.models import Audit
 from app.game_accounts.common.support import lock
 from app.game_accounts.common.support import fail
 from app.game_accounts.common.support import GameError
-from app.lostark_keys.models import Credential
-from app.lostark_keys import service as credentials
-from app.lostark_keys import rate_limits
+from app.game_accounts.provider_io import credentials
+from app.game_accounts.provider_io import rate_limits
 from app.ownership_disputes.models import Proof
 from app.ownership_disputes.models import Dispute
 from app.ownership_disputes import core
@@ -58,21 +57,19 @@ def fetch(did):
         d=db.get(Dispute,did);p=db.get(Proof,d.proof_id);uid=d.challenger_id
         user=db.get(User,uid)
         if user is None or user.status!='active':fail('MEMBER_UNAVAILABLE')
-        row=db.get(Credential,uid)
-        if row is None or row.ciphertext is None:fail('LOSTARK_KEY_NOT_CONFIGURED')
-        snapshot=credentials.decrypt(row,uid)
+        snapshot=credentials.capture()
         name=p.lookup_name
         r=db.get(Registration,p.source_registration_id) if p.source_registration_id else None
         guard=(r.id,r.version) if r else None
     def before_call():
         with session() as db:
-            u=db.get(User,uid);row=db.get(Credential,uid)
+            u=db.get(User,uid)
             if u is None or u.status!='active':fail('MEMBER_UNAVAILABLE')
-            if row is None or row.ciphertext is None or row.version!=snapshot.version:fail('LOSTARK_KEY_NOT_CONFIGURED')
+            credentials.current(snapshot)
         rate_limits.acquire(snapshot.fingerprint)
     before_call()
     obs=observations.fetch(name,True,token=snapshot.token,before_armory=before_call,observer=rate_limits.observer(snapshot.fingerprint))
-    return obs,snapshot.version,guard
+    return obs,snapshot.generation,guard
 
 
 def apply_transfer(db,d,obs,current):
@@ -138,7 +135,7 @@ def process(ticket):
         obs,version,guard=fetch(ticket[0])
     except Exception as error:
         # No exception text, provider payloads, IDs or credentials in worker output.
-        reason=(error.code if isinstance(error,GameError) and error.code in ('LOSTARK_KEY_NOT_CONFIGURED','LOSTARK_KEY_REJECTED','MEMBER_UNAVAILABLE') else
+        reason=(error.code if isinstance(error,GameError) and error.code in ('UPSTREAM_NOT_CONFIGURED','LOSTARK_KEY_REJECTED','MEMBER_UNAVAILABLE') else
                 'LOSTARK_KEY_REJECTED' if getattr(error,'reason',None)=='LOSTARK_KEY_REJECTED' else 'UPSTREAM_UNAVAILABLE')
         with session() as db,db.begin():
             lock(db,'game-mutations-v1');d=current_claim(db,ticket)
@@ -148,10 +145,9 @@ def process(ticket):
         lock(db,'game-mutations-v1');d=current_claim(db,ticket)
         if d is None:return
         u=db.scalar(select(User).where(User.id==d.challenger_id).with_for_update())
-        row=db.scalar(select(Credential).where(Credential.user_id==d.challenger_id).with_for_update())
         if u is None or u.status!='active':core.retry(db,d,'MEMBER_UNAVAILABLE',now(db),True);return
-        if row is None or row.ciphertext is None or row.version!=version:
-            core.retry(db,d,'LOSTARK_KEY_NOT_CONFIGURED',now(db));return
+        if credentials.capture().generation!=version:
+            core.retry(db,d,'SERVER_KEY_CHANGED',now(db));return
         if guard:
             r=db.get(Registration,guard[0])
             if r is None or r.version!=guard[1] or r.deleted_at:

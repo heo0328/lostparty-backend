@@ -6,14 +6,14 @@
 
 ## 기존 로컬 DB 재기동
 
-DB0036과 환경/키가 준비된 현재 개발환경에서는 기본 Compose 하나로 현재 앱을 시작한다.
+현재 소스의 DB 요구 단계는0037이며 수집 기능에는 서버 token 파일이 필요하다. token 미설정은 수집 요청의 안전한503이고 저장자료 읽기를 막지 않는다. 실제 기존 개발환경은 아직 DB0036/이전 이미지이며 그대로 실행 중이다. 아래 재기동은 별도 승인된 자료 준비·0037 적용·서버 token 공급을 완료한 뒤 수행한다. 준비 전에는 새 이미지로 교체하지 않는다. 기본 Compose 하나를 사용한다.
 
 ```bash
 docker.exe compose up -d --no-deps --build --wait --wait-timeout 180 api
 python3 scripts/check_openapi.py --docker docker.exe --container lostparty-backend-api-1
 ```
 
-`app.main:app`과 `create_app()`은 같은 현재 앱이다. `compose.two-cycle.yaml`을 추가하던 기존 명령도 호환되지만 필수 파일은 아니다. 시작은 DB를 검사하며 migration·초기화·legacy fallback을 하지 않는다. DB가 비었거나 지원되지 않는 단계이면 API 시작이 실패한다. 기존 DB에는 신규 설치 명령을 적용하지 않는다.
+`app.main:app`과 `create_app()`은 같은 현재 앱이다. 과거 `compose.two-cycle.yaml` 호환 override와 옛 factory는 제거했다. 시작은 DB를 검사하며 migration·초기화·legacy fallback을 하지 않는다. DB가 비었거나 지원되지 않는 단계이면 API 시작이 실패한다. 기존 DB에는 신규 설치 명령을 적용하지 않는다.
 
 ## 신규 로컬 환경
 
@@ -22,7 +22,7 @@ python3 scripts/check_openapi.py --docker docker.exe --container lostparty-backe
 ```bash
 docker.exe compose -f compose.yaml -f compose.fresh.yaml up -d --wait db
 docker.exe compose -f compose.yaml -f compose.fresh.yaml build api
-docker.exe compose -f compose.yaml -f compose.fresh.yaml run --rm --no-deps api alembic upgrade 0036_roster_presence
+docker.exe compose -f compose.yaml -f compose.fresh.yaml run --rm --no-deps api alembic upgrade 0037_server_analysis
 docker.exe compose -f compose.yaml -f compose.fresh.yaml up -d --no-deps --wait --wait-timeout 180 api
 ```
 
@@ -41,15 +41,15 @@ fresh DB는 host port를 게시하지 않아 기존 로컬 DB의5432와 충돌�
 
 ## 명세·시험
 
-현재 명세는 [openapi.yaml](../../../openapi/openapi.yaml), 과거 DB0023 시험용은 [legacy.openapi.yaml](../../../openapi/legacy.openapi.yaml)이다. 현재192경로/213동작, legacy125경로/142동작이며 전체 생성 객체를 비교한다. HTTP Swagger/OpenAPI 공개 경로는 비활성이다.
+현재 명세는 [openapi.yaml](../../../openapi/openapi.yaml)의191경로/211동작이며 `create_app()` 생성 객체 전체와 비교한다. [legacy.openapi.yaml](../../../openapi/legacy.openapi.yaml)은 과거 감사·복구 이력 파일이다. HTTP Swagger/OpenAPI 공개 경로는 비활성이다.
 
 ```bash
-python3 scripts/check_openapi.py --docker docker.exe --container lostparty-backend-api-1 --profile legacy
 python3 scripts/verify_isolated.py contracts --docker docker.exe
+python3 scripts/verify_isolated.py current --docker docker.exe
 python3 scripts/verify_isolated.py all --docker docker.exe
 ```
 
-legacy 명세 생성은 DB를 연결하거나 과거 서버를 병행 실행하는 명령이 아니다. 과거 실제 앱 재현은 `uvicorn app.main:create_legacy_app --factory`를 DB0023의 격리 환경에서만 사용한다. 시험 fixture를 일괄 최신 DB로 올리지 않는다. [격리 검증](isolated-verification.md)에서 정확한 선택/환경과 결과 해석을 확인한다.
+현재 기능 시험은 DB0037/head를 사용한다. 과거 migration 보존 시험은 해당 시점의 SQL fixture로 준비하며 옛 runtime을 실행하지 않는다. 실제 개발 서버는 별도 반영 전까지 기존 DB0036/이미지를 유지한다. [격리 검증](isolated-verification.md)에서 정확한 선택/환경과 결과 해석을 확인한다.
 
 <a id="section"></a>
 

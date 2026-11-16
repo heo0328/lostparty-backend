@@ -65,7 +65,7 @@ EXPLAIN root의 실제/추정 rows·버퍼는 artifact에 기록한다. 표본 �
 1. 적용할 검증된 source SHA/이미지·대상 DB23·실행 설정과 본인 인증 키 mount를 대조한다. Compose 원본의 DB volume과 `.secrets` mount를 보존한다. 원본 비밀/사용자 자료는 문서·로그·Issue에 출력하지 않는다.
 2. 실제 자료의 legacy_unknown/review 규모와 사용 가능 projection/차단 동작을 집계해 기존 앱의 영향과 Flutter 적용 순서를 확정한다. unknown을 명시 세대로 승격/동의 복원하지 않는다. 현재 합성 측정은 실제 자료 조사/인수의 대체가 아니다.
 3. 대상별 승인 범위를 확인한 뒤 구 API와 모든 worker를 정지해 이행 중 쓰기를 막는다. DB/키 보존 백업과 별도 DB 복원 검증·복구 지점을 준비한다. 백업 파일 존재만으로 복원 완료를 표시하지 않는다. DB23 이미지로 DB29를 읽는 혼용/강제 downgrade를 복구로 쓰지 않는다.
-4. [compose.two-cycle.yaml](../../../../../../compose.two-cycle.yaml)은 검토 가능한 명시 진입점 override다. 기존 Compose에 이 파일을 더하면 API command만 factory로 바꾸고 DB volume/키 mount·보안·포트/health 설정은 유지한다. 이 파일은 생성/정적 검증만 했으며 실제 실행하지 않았다. 보존 검증한0023→0029를 적용하고 준비검사/원천 보존을 확인한다. 검증된 이미지에서 `uvicorn app.main:create_two_cycle_app --factory`를 선택하고 구 worker가 함께 돌지 않게 한다. 단순 factory 생성은 이행/배포가 아니다.
+4. [compose.two-cycle.yaml](https://github.com/heo0328/lostparty-backend/blob/cda4db352c9ac922f269b9ec2794f0d888d4dca6/compose.two-cycle.yaml)은 검토 가능한 명시 진입점 override다. 기존 Compose에 이 파일을 더하면 API command만 factory로 바꾸고 DB volume/키 mount·보안·포트/health 설정은 유지한다. 이 파일은 생성/정적 검증만 했으며 실제 실행하지 않았다. 보존 검증한0023→0029를 적용하고 준비검사/원천 보존을 확인한다. 검증된 이미지에서 `uvicorn app.main:create_two_cycle_app --factory`를 선택하고 구 worker가 함께 돌지 않게 한다. 단순 factory 생성은 이행/배포가 아니다.
 5. health·DB29 readiness·167경로의 이미지 내 계약 전체 비교·no-store/인증/기존 v1 읽기와 쓰기 upgrade·원 ACK·C/N·06/10시·review 차단을 검증하고 실행 SHA/게시 상태를 기록한다. 문제가 생기면 승인된 복구 지점/데이터 영향에 맞춰 중단/복구하며 forward 이력을 강제 재작성하지 않는다.
 6. 실제 소비 가능한 서버 주소/실행 SHA·계약과 미확인 범위를 같은 Issue로 전달하고 Flutter에 필요한 메타/summary·주차 선택/계정 캐시 격리·v1 변경 검증만 요청한다. Flutter 적용·실회원/provider·기기·운영 인수는 별도 결과를 받아 기록한다.
 

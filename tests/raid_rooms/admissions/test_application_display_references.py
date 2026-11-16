@@ -27,7 +27,10 @@ from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
 CHECKS = runpy.run_path('docs/features/recruitment/participation/tools/validate-application-display.py')
 REFERENCES = CHECKS['validate_detail_references']
-VALIDATOR = CHECKS['VALIDATOR']
+from jsonschema import Draft202012Validator, FormatChecker
+from tests.raid_rooms.admissions.test_recruitment_cycle_http import CONTRACT
+SCHEMA={**CONTRACT,**CONTRACT['paths']['/v2/raid-rooms/{room_id}/detail']['get']['responses']['200']['content']['application/json']['schema']}
+VALIDATOR=Draft202012Validator(SCHEMA,format_checker=FormatChecker())
 
 
 def normalize(value):

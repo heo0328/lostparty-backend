@@ -1,0 +1,14 @@
+{
+  "source": "owner-assisted Lost Ark API cross-validation on 2026-09-08",
+  "measuredAgainstLiveApi": true,
+  "cases": [
+    {"className":"바드","classId":"bard","role":"support","branchId":"perfect_harmony","tier1":"완벽한 화음","tier4":"세레나데 코드","gemTarget":"세레나데 스킬"},
+    {"className":"바드","classId":"bard","role":"dealer","branchId":"true_courage","tier1":"진실된 용맹","tier4":"템페스트 필드","gemTarget":"템페스트 스킬"},
+    {"className":"홀리나이트","classId":"paladin","role":"support","branchId":"divine_protection","tier1":"신성 보호","tier4":"신성 해방","gemTarget":"신앙 스킬"},
+    {"className":"홀리나이트","classId":"paladin","role":"dealer","branchId":"god_knight","tier1":"신의 기사","tier4":"심판자","gemTarget":"심판자 스킬"},
+    {"className":"발키리","classId":"valkyrie","role":"support","branchId":"liberator","tier1":"해방자","tier4":"해방의 날개","gemTarget":"신앙 스킬"},
+    {"className":"발키리","classId":"valkyrie","role":"dealer","branchId":"knight_of_light","tier1":"빛의 기사","tier4":"삼위일체","gemTarget":"종언의 빛"},
+    {"className":"도화가","classId":"artist","role":"support","branchId":"waning_moon","tier1":"저물어가는 달","tier4":"묵법 : 접무","gemTarget":"음양 스킬"},
+    {"className":"도화가","classId":"artist","role":"dealer","branchId":"recurrence","tier1":"회귀","tier4":"묵법 : 파죽","gemTarget":"떠오르는 달"}
+  ]
+}

@@ -1,6 +1,4 @@
 """Synthetic ownership-result projections; these tests do not approve cleanup policy."""
-import os
-import subprocess
 import uuid
 import pytest
 from sqlalchemy import select
@@ -18,8 +16,7 @@ from tests.groups.test_group_display import get
 from tests.groups.test_group_display import PROFILE
 
 
-@pytest.mark.parametrize('head',['0034_group_features','0035_cycle_group_policy'])
-def test_losing_one_of_three_rosters_keeps_other_activity_and_user_membership(group_features,client,worlds,head):
+def test_losing_one_of_three_rosters_keeps_other_activity_and_user_membership(group_features,client,worlds):
     engine,viewer,old,gid=group_features
     extra=[worlds('impact-extra-1'),worlds('impact-extra-2')]
     with session() as db,db.begin():
@@ -27,9 +24,6 @@ def test_losing_one_of_three_rosters_keeps_other_activity_and_user_membership(gr
             db.get(Account,w['aid']).owner_id=old['uid']
             r=db.get(Registration,uuid.UUID(w['rid']));r.is_main=False;r.user_id=old['uid']
             db.get(Configuration,w['cid']).user_id=old['uid']
-    if head=='0035_cycle_group_policy':
-        result=subprocess.run(['alembic','upgrade',head],env={**os.environ,'DATABASE_URL':engine.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
-        assert result.returncode==0,'migration failed'
     mid=add(client,viewer,old,gid)
     path=f'/v1/groups/{gid}/members/{mid}/activity-characters'
     before=get(client,viewer,path)

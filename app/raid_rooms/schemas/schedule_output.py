@@ -4,7 +4,7 @@ from uuid import UUID
 from typing import Literal
 from app.raid_rooms.schemas.availability_schemas import DTO
 from app.raid_rooms.schemas.availability_schemas import Version
-from app.raid_rooms.schemas.availability_schemas import Clock
+from app.raid_rooms.schemas.availability_schemas import ScheduleClock
 
 
 class Permission(DTO):
@@ -16,8 +16,8 @@ class Alternative(DTO):
     alternative_id: UUID
     session_id: UUID|None
     weekday: int
-    starts_local: Clock|None
-    leader_latest_start_local: Clock|None
+    starts_local: ScheduleClock|None
+    leader_latest_start_local: ScheduleClock|None
     item_ids: list[UUID]
 
 

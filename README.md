@@ -8,7 +8,7 @@ Lightsail 신규 서버 설치·무료 서브도메인 HTTPS 준비는 [첫 배�
 
 ## 주요 기능
 
-- **로그인·계정:** Google 인증, 세션 관리, 회원 설정과 개인 API 키.
+- **로그인·계정:** Google 인증, 세션 관리, 회원 설정. 게임 API는 서버 전용 키를 사용합니다.
 - **원정대·캐릭터:** 등록·소유 인증, 24시간 소유권 도전·방어, 대표·활동 선택, 전투력·분석 요약과 표시 설정.
 - **레이드·주간 기록:** 레이드 카탈로그, 서버 주차 기준과 개인 완료 기록.
 - **그룹:** 생성·검색, 초대·가입과 멤버 관리.
@@ -27,9 +27,9 @@ Lightsail 신규 서버 설치·무료 서브도메인 HTTPS 준비는 [첫 배�
 
 ## 로컬 실행과 API 명세
 
-준비된 개발 DB에서는 `docker compose up -d --no-deps --build --wait api`로 현재 서버를 시작합니다. 기본 시작점은 `app.main:app`이며 별도 two-cycle 설정은 필요하지 않습니다. 빈 DB는 자동 준비되지 않으므로 [개발 환경 안내](docs/engineering/development/environment.md)를 먼저 따릅니다.
+준비된 개발 DB에서는 `docker compose up -d --no-deps --build --wait api`로 현재 서버를 시작합니다. 기본 시작점은 `app.main:app`이며 DB0037과 서버 secret `lostark-api-token`이 필요합니다. 기존 DB0036에 즉시 적용하기 전에 [전환 경계](docs/features/rosters/power-and-profiles/server-processing-implementation.md)를 확인합니다. 빈 DB는 자동 준비되지 않으므로 [개발 환경 안내](docs/engineering/development/environment.md)를 먼저 따릅니다.
 
-[현재 OpenAPI 명세](openapi/openapi.yaml)는 Native 협업과 전체 계약 검증의 기준입니다. [legacy 명세](openapi/legacy.openapi.yaml)는 과거 DB0023 시험용으로 보존합니다. Swagger UI·외부 명세 웹페이지는 아직 연결하지 않았습니다. [이름 대응과 유지 이유](docs/engineering/development/runtime-configuration.md)에서 실행과 DB 변경 번호를 구분합니다.
+[현재 OpenAPI 명세](openapi/openapi.yaml)는 Native 협업과 전체 계약 검증의 기준입니다. [legacy 명세](openapi/legacy.openapi.yaml)는 과거 계약 파일로 보존하며 실행 가능한 별도 앱은 제공하지 않습니다. Swagger UI·외부 명세 웹페이지는 아직 연결하지 않았습니다. [이름 대응과 유지 이유](docs/engineering/development/runtime-configuration.md)에서 실행과 DB 변경 번호를 구분합니다.
 
 ## 개발·협업 방식
 
@@ -37,7 +37,7 @@ Lightsail 신규 서버 설치·무료 서브도메인 HTTPS 준비는 [첫 배�
 
 ## 개발 상태·문서
 
-레이드 모집·일정과 그룹1차, 묶음 선택 완료(#47)·복구 안내/일정 읽기(#48)·모집 탐색 개선(#50)은 합의 범위의 양측 구현과 협업 마감을 완료했습니다. 기본 실행과 현재·legacy 명세 이름을 정리하고 로컬 개발 서버에 반영했습니다. #17 잔여 범위와 소유권 이전 영향(#15)·활동 자동추가(#18)·통계(#19)는 별도 선택 후속입니다. 개인 예약 조회·캐릭터 관리 정책2·미개방 다음 주 상세 오류 수정도 dev 통합/로컬 지원을 완료했습니다. Native 시간표·후속 UI는 담당자의 dev 통합 보고까지 확인했으며 운영은 v2.2.0으로 별도입니다. 로컬 개발과 AWS 운영은 구분합니다.
+레이드 모집·일정과 그룹1차, 묶음 선택 완료(#47)·복구 안내/일정 읽기(#48)·모집 탐색 개선(#50)은 합의 범위의 양측 구현과 협업 마감을 완료했습니다. 기본 실행과 현재·legacy 명세 이름을 정리하고 로컬 개발 서버에 반영했습니다. #17 잔여 범위와 소유권 이전 영향(#15)·활동 자동추가(#18)·통계(#19)는 별도 선택 후속입니다. 개인 예약 조회·캐릭터 관리 정책2·미개방 다음 주 상세 오류 수정도 dev 통합/로컬 지원을 완료했습니다. Native 시간표·후속 UI는 담당자의 dev 통합 보고까지 확인했으며 운영 마지막 확정은 v2.3.0/DB0036이며 #55 로컬 구현과 구분합니다. 로컬 개발과 AWS 운영은 구분합니다.
 
 최신 기능별 완료·미완료 범위는 [현재 기능 상태](docs/project/AI_CONTEXT.md), 진행할 작업과 협의 사항은 [다음 작업](docs/project/NEXT_WORK.md)에서 확인할 수 있습니다.
 

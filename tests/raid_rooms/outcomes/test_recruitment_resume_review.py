@@ -53,6 +53,7 @@ from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import denied
 from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import graph
 from tests.raid_rooms.schedules.test_recruitment_cycle_times_http import client
 from concurrent.futures import ThreadPoolExecutor
+from tests.concurrency import map_in_context
 
 
 def stopped(a, b=None):
@@ -340,7 +341,7 @@ def test_concurrent_protected_submit_has_one_original_receipt(outcomes):
     def run(_):
         try: return resume.create(actor(a['uid']), rid, key, data)
         except GameError as error: return error.code
-    with ThreadPoolExecutor(max_workers=2) as pool: results = list(pool.map(run, range(2)))
+    with ThreadPoolExecutor(max_workers=2) as pool: results = list(map_in_context(pool,run, range(2)))
     ack = next(r for r in results if isinstance(r, tuple))
     assert all(r == ack or r == 'REQUEST_IN_PROGRESS' for r in results)
     assert resume.create(actor(a['uid']), rid, key, data) == ack

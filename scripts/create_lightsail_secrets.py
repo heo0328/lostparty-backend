@@ -1,4 +1,4 @@
-"""Create all four keys for a NEW Lightsail installation; never replace any key."""
+"""Create the three generated keys for a NEW Lightsail installation; never replace any key."""
 import os
 from pathlib import Path
 
@@ -17,7 +17,6 @@ def main():
             serialization.Encoding.PEM, serialization.PrivateFormat.PKCS8,
             serialization.NoEncryption()),
         "recovery.key": os.urandom(32),
-        "lostark-credential.key": os.urandom(32),
         "lostark-fingerprint.key": os.urandom(32),
     }
     for name, content in values.items():

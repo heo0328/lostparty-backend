@@ -1,6 +1,4 @@
-"""W5 non-empty legacy upgrade through 0029; all data is disposable."""
-import os
-import subprocess
+"""Current app/real JWT creation, target isolation and member reads."""
 from sqlalchemy import inspect
 from sqlalchemy import select
 from sqlalchemy import text
@@ -9,7 +7,6 @@ from app.raid_rooms.common import readiness
 from app.raid_rooms.common import cycle_worker
 from app.raid_rooms.admissions import admission_service
 from app.raid_rooms.models.cycle_models import RoomCycle
-from tests.raid_rooms.common.test_recruitment_cycles import migrated
 from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import outcomes
 from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import planning
 from tests.raid_rooms.outcomes.test_recruitment_cycle_outcomes import consent
@@ -24,35 +21,13 @@ from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 from tests.groups.test_group_foundation import actor
 
 
-def test_nonempty_legacy_upgrade_full_chain_preserves_all_columns_ack_and_review(migrated):
-    engine,a,b,rid,current,key,request,ack,*_=migrated
-    old=set(inspect(engine).get_table_names())-{'alembic_version'}
-    before=table_digests(engine,old)
-    result=subprocess.run(['alembic','upgrade','0029_cycle_outcomes'],env={**os.environ,
-        'DATABASE_URL':engine.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
-    assert result.returncode==0,'Restricted-role full two-cycle migration failed'
-    assert table_digests(engine,old)==before
-    with session() as db,db.begin():
-        db.execute(text('SET TRANSACTION READ ONLY'))
-        assert db.scalar(text('SELECT NOT rolsuper AND NOT rolcreatedb AND NOT rolcreaterole FROM pg_roles WHERE rolname=current_user'))
-        readiness.require_two_cycle_active(db)
-        rows=list(db.scalars(select(RoomCycle).where(RoomCycle.room_id==rid)))
-        assert rows and all(r.provenance=='legacy_unknown' and r.state=='review_required' and r.generation is None for r in rows)
-    tables=set(inspect(engine).get_table_names())-{'alembic_version'}
-    preserved=table_digests(engine,tables)
-    cycle_worker.process_due()
-    assert table_digests(engine,tables)==preserved
-    replay=admission_service.execute(actor(a['uid']),'w1-preserve',key,request,
-        lambda *args:(_ for _ in ()).throw(AssertionError('Must recover original ACK')))
-    assert replay==ack
-    assert table_digests(engine,old)==before
 
 
 def test_prepared_app_real_jwt_create_join_read_and_member_isolation(outcomes):
     import json
     import uuid
     from fastapi.testclient import TestClient
-    from app.main import create_two_cycle_app
+    from app.main import create_app
     from app.auth.models import User
     from tests.raid_rooms.admissions.test_recruitment_cycle_http import validate
     from tests.raid_rooms.admissions.test_recruitment_cycle_creation import preflight
@@ -62,7 +37,8 @@ def test_prepared_app_real_jwt_create_join_read_and_member_isolation(outcomes):
     ctx=preflight(a,continuation=True,bundle=True)
     params=dict(target_cycle_key=ctx['data']['target_cycle_key'],character_id=a['ids'][0],selected_role='dealer',
         continuation_enabled='true',items=json.dumps([{k:t[k] for k in ('raid_id','difficulty_id')} for t in ctx['data']['targets']]))
-    with TestClient(create_two_cycle_app()) as http:
+    from tests.raid_rooms.admissions.test_recruitment_cycle_http import client as current_http
+    with current_http(None) as http:
         response=http.get('/v2/me/raid-room-creation-context',params=params,headers=a['headers'])
         assert response.status_code==200,response.json().get('error')
         ctx=response.json();command=request(ctx).model_dump(mode='json');key=str(uuid.uuid4())

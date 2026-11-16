@@ -93,9 +93,12 @@ def main():
         with warnings.catch_warnings():
             # Never fall back to echoing credentials when terminal control fails.
             warnings.simplefilter('error', getpass.GetPassWarning)
-            token = getpass.getpass('Lost Ark JWT (hidden, local only): ')
+            from app.game_accounts.provider_io.credentials import capture
+            from app.game_accounts.provider_io import credentials, rate_limits
+            snapshot = capture()
             name = getpass.getpass('Test character name (hidden, local only): ').strip()
-        probe = EquipmentProbe(LostArkProvider(token), name)
+        probe = EquipmentProbe(LostArkProvider(snapshot.token, observer=rate_limits.observer(snapshot.fingerprint),
+            before_call=lambda:(credentials.current(snapshot),rate_limits.acquire(snapshot.fingerprint))), name)
         input('장비 6부위를 장착한 상태에서 Enter (API 1회): ')
         emit(probe.baseline())
         input('위 requested_slots만 직접 해제하고 API 반영 시간을 기다린 뒤 Enter (API 1회, 자동반복 없음): ')

@@ -46,15 +46,10 @@ def imported(people, monkeypatch, client):
                 stamp = now(db)
             unit = min(timedelta(hours=1), (raids.cycle(stamp).ends_at-stamp)/10)
             if unit < timedelta(minutes=2):pytest.skip('Insufficient interval before actual cycle boundary')
-            def future_command(w, position, index=0):
-                command = create_command(w, selection=selection(w,index=index))
-                return command.model_copy(update={'schedule':command.schedule.model_copy(update={
-                    'starts_at':stamp+unit*(1+3*position),'ends_at':stamp+unit*(2+3*position)})})
-            rid = uuid.UUID(create(a, future_command(a,0))[1]['room_id'])
-            join(b, rid)
-            second = uuid.UUID(create(a, future_command(a,1,1))[1]['room_id'])
-            third = uuid.UUID(create(b, future_command(b,2,1))[1]['room_id'])
-            recover(b, third, 'end')
+            from tests.raid_rooms.common.migration_fixtures import legacy_room
+            rid=legacy_room(a,stamp+unit,stamp+2*unit,peers=(b,))
+            second=legacy_room(a,stamp+4*unit,stamp+5*unit,index=1)
+            third=legacy_room(b,stamp+7*unit,stamp+8*unit,index=1,ended=True)
             with target.begin() as c:
                 # Preserve a legal legacy interval that has no valid new 5-minute duration.
                 c.execute(text("UPDATE raid_room_rounds SET ends_at=starts_at+interval '11 minutes' WHERE room_id=:id"), {'id': second})

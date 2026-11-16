@@ -71,11 +71,17 @@ def quota(scope, maximum, seconds=60):
 def reserve(principal, operation, key, payload, *, recovery_only=False):
     digest = hashlib.sha256(json.dumps(jsonable_encoder(payload), sort_keys=True, separators=(',',':')).encode()).hexdigest()
     with session() as db, db.begin():
+        if operation == 'character-analysis-refresh':
+            db.execute(text("SET LOCAL statement_timeout = '500ms'"))
+            db.execute(text("SET LOCAL lock_timeout = '500ms'"))
         uid = authorize(db, principal)
         lock(db, f'dedup:{uid}:{operation}:{key}')
         r = db.scalar(select(RequestResult).where(RequestResult.actor_id == uid, RequestResult.operation == operation, RequestResult.key == key).with_for_update())
         current = now(db)
         if r:
+            if operation == 'character-analysis-refresh' and (r.state == 'expired' or
+                    r.completed_at is None and r.record_created_at is not None and current >= r.record_created_at + timedelta(hours=48)):
+                fail('IDEMPOTENCY_EXPIRED')
             if not hmac.compare_digest(r.digest, digest):
                 fail('IDEMPOTENCY_CONFLICT')
             if operation == 'character-management-1' and r.state == 'expired':

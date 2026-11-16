@@ -15,7 +15,7 @@ class CorsTests(unittest.TestCase):
         with patch.dict(os.environ, {"CORS_ALLOWED_ORIGINS": origins}):
             import app.main
             module = importlib.reload(app.main)
-            return [TestClient(module.app), TestClient(module.create_two_cycle_app())]
+            return [TestClient(module.app), TestClient(module.create_app())]
 
     def test_preflight_and_auth_error_on_both_profiles(self):
         for client in self.clients():

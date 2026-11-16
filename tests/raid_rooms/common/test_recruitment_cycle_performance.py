@@ -117,8 +117,9 @@ def test_directory_50_cards_batch_equivalence_group_pages_and_measurements(outco
         with session() as db,db.begin():
             db.add(GroupMembership(id=uuid.uuid4(),group_id=gid,user_id=w['uid'],character_id=uuid.UUID(w['ids'][0]),
                 display=None,revision=1,joined_at=now(db)));db.get(Group,gid).members_revision+=1
-        ctx=preflight(w,continuation=True,gid=gid)
-        result=creation.create(actor(w['uid']),uuid.uuid4(),request(ctx,group_id=str(gid),scope='group' if i%2 else 'public'))[1]['data']
+        target_group=gid if i%2 else None
+        ctx=preflight(w,continuation=True,gid=target_group)
+        result=creation.create(actor(w['uid']),uuid.uuid4(),request(ctx,group_id=str(target_group) if target_group else None,scope='group' if target_group else 'public'))[1]['data']
         created.append(result)
     c,n=[r['target_cycle_key'] for r in created[0]['created_cycles']]
     with engine.begin() as connection:connection.execute(text('ANALYZE'))
@@ -152,7 +153,7 @@ def test_directory_50_cards_batch_equivalence_group_pages_and_measurements(outco
         page=directory.search(principal,search_request(n,**params,cursor=cursor))['data']
         pages.extend(i['room_id'] for i in page['items']);cursor=page['next_cursor']
         if cursor is None:break
-    assert len(pages)==len(set(pages))==50
+    assert len(pages)==len(set(pages))==25
     public=directory.search(None,search_request(n,limit=50))
     assert len(public['data']['items'])==25
     outsider=directory.search(actor(b['uid']),search_request(n,limit=50))

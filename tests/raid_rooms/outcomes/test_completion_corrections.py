@@ -1,9 +1,8 @@
 """Personal correction and service archive against disposable restricted PostgreSQL."""
-import os
-import subprocess
 import uuid
 from datetime import timedelta
 from concurrent.futures import ThreadPoolExecutor
+from tests.concurrency import map_in_context
 import pytest
 from sqlalchemy import select
 from sqlalchemy import text
@@ -52,16 +51,7 @@ from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
 @pytest.fixture
 def corrected(outcomes):
-    engine,a,b=outcomes
-    tables=set(inspect(engine).get_table_names())-{'alembic_version'}
-    before=table_digests(engine,tables)
-    result=subprocess.run(['alembic','upgrade','0030_completion_corrections'],env={**os.environ,
-        'DATABASE_URL':engine.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
-    assert result.returncode==0,result.stderr.decode()[-1800:]
-    assert table_digests(engine,tables)==before
-    from app.raid_rooms.common import readiness
-    with session() as db,db.begin():readiness.require_two_cycle_active(db)
-    return engine,a,b
+    return outcomes
 
 def target(w,rid,c):
     data=plan(w,rid,c)['data'];a=next(x for x in data['my_assignments'] if x['round_id']==data['game_items'][0]['round_id'])
@@ -197,7 +187,7 @@ def test_same_command_concurrent_once_and_other_member_preserved(corrected):
         except GameError as e:
             assert e.code=='REQUEST_IN_PROGRESS'
             return None
-    with ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(call,range(2)))
+    with ThreadPoolExecutor(max_workers=2) as pool:results=list(map_in_context(pool,call,range(2)))
     result=service.execute(actor(a['uid']),cid,raid,command,body)
     assert any(results) and all(x is None or x==result for x in results)
     with session() as db:
@@ -286,14 +276,13 @@ def test_final_boundaries_identity_and_source_cas(corrected,monkeypatch,case):
 
 
 def test_actual_synthetic_bearer_revoked_session_no_store_and_request_limit(corrected):
-    from fastapi import FastAPI
     from fastapi.testclient import TestClient
-    from app.core.errors import register
-    from app.main import no_store
-    from app.raid_rooms.api.cycle_router import router
+    from app.main import create_app
+    from app.raid_rooms.group_links.cycle_group_policy import VERSION
     from app.auth.models import Session
     engine,a,b=corrected;rid,c,n=scheduled(a);complete(a,rid,c);cid,raid=target(a,rid,c)
-    app=FastAPI();register(app);app.include_router(router);app.middleware('http')(no_store)
+    app=create_app()
+    params={'group_policy_version':VERSION}
     path=f'/v2/me/characters/{cid}/raid-weekly-states/{raid}'
     with TestClient(app,raise_server_exceptions=False) as http:
         for headers in ({},{'Authorization':'Bearer invalid'}):
@@ -304,10 +293,10 @@ def test_actual_synthetic_bearer_revoked_session_no_store_and_request_limit(corr
         assert http.get(path+'/completion-correction-context',params={'target_cycle_key':c},headers=b['headers']).status_code in (403,404)
         body=request(a,cid,raid,c).model_dump(mode='json');headers=dict(a['headers'])|{'Idempotency-Key':str(uuid.uuid4())}
         assert http.post(path+'/completion-corrections',headers=headers,content=' '*32769).status_code==413
-        r=http.post(path+'/completion-corrections',headers=headers,json=body)
+        r=http.post(path+'/completion-corrections',params=params,headers=headers,json=body)
         assert r.status_code==200 and r.headers['cache-control']=='no-store'
         with session() as db,db.begin():db.scalar(select(Session).where(Session.user_id==a['uid'])).revoked_at=now(db)
-        assert http.post(path+'/completion-corrections',headers=headers,json=body).status_code==401
+        assert http.post(path+'/completion-corrections',params=params,headers=headers,json=body).status_code==401
 
 
 def test_completed_archive_blocks_new_write_but_old_ack_and_new_completion_survive(corrected,monkeypatch):

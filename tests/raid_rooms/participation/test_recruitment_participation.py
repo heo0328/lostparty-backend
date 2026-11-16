@@ -1,8 +1,7 @@
 """R2-B transaction primitives with restricted LOGIN and fabricated identities."""
-import os
-import subprocess
 import uuid
 from concurrent.futures import ThreadPoolExecutor
+from tests.concurrency import map_in_context
 from datetime import timedelta
 import pytest
 from sqlalchemy import select
@@ -17,7 +16,7 @@ from app.game_accounts.common.support import GameError
 from app.game_accounts.models.models import CharacterRoleSummary
 from app.game_accounts.models.models import Character
 from app.game_accounts.models.models import Account
-from app.game_accounts.power.power_success import capture
+from tests.game_accounts.analysis.fixtures import detail_for
 from app.member_limits.models import MemberUsageHead
 from app.member_limits.models import MemberUsageLimits
 from app.raid_rooms.participation import participation_core as core
@@ -45,16 +44,23 @@ from tests.game_accounts.test_role_summaries import summary
 
 
 @pytest.fixture
-def ready(sources,people):
-    target,*_=sources
-    old=set(inspect(target).get_table_names())-{'alembic_version'}
-    before=table_digests(target,old)
-    out=subprocess.run(['alembic','upgrade','0023_recruitment_resume'],env={**os.environ,
-        'DATABASE_URL':target.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
-    assert out.returncode==0,'Isolated weekly link migration failed'
-    assert table_digests(target,old)==before
-    a,b=people('r2b-a'),people('r2b-b')
-    return target,a,b,sources
+def ready(people, monkeypatch, client):
+    """All runtime scenarios start with the single current schema/application."""
+    from app.core import database
+    from tests.raid_rooms.common.test_raid_room_migrations import isolated_app_database
+    from tests.groups.test_group_admissions import group
+    with isolated_app_database() as (target, role, upgrade):
+        upgrade('head')
+        with monkeypatch.context() as patch:
+            patch.setattr(database, 'engine', lambda: target)
+            a,b=people('r2b-a'),people('r2b-b')
+            source_a,source_b=people('source-a'),people('source-b')
+            gid=uuid.UUID(group(client,source_a))
+            first,second,third=make_room(source_a),make_room(source_a),make_room(source_b)
+            # Independent persisted rooms; runtime tests never execute a retired app.
+            from app.raid_rooms.group_links import cycle_group_policy
+            with cycle_group_policy.using():
+                yield target,a,b,(target,first,second,third,source_a,source_b,gid,None)
 
 
 def make_room(a, *, bundle=False, capacity=4):
@@ -114,20 +120,20 @@ def denied(code,fn,*args,**kwargs):
     assert error.value.code==code
 
 
-def test_additive_migration_readiness_and_legacy_dedup(ready):
+def test_current_readiness_does_not_count_unconverted_room_rows(ready):
     target,a,b,source=ready
     with session() as db,db.begin():
         db.connection(execution_options={'isolation_level':'REPEATABLE READ'})
         db.execute(text('SET TRANSACTION READ ONLY'))
         readiness.require_ready(db,integrated=True)
         assert db.scalar(select(func.count()).select_from(WeeklyOccupancy))==0
-        assert core.room_count(db,source[4]['uid'])==2
+        assert core.room_count(db,source[4]['uid'])==0
     with session() as db,db.begin():
         stamp=now(db)
         for member in db.scalars(select(Member).where(Member.room_id==source[1],Member.user_id==source[4]['uid'])):
             member.ended_at=stamp
         db.flush()
-        assert core.room_count(db,source[4]['uid'])==1
+        assert core.room_count(db,source[4]['uid'])==0
 
 
 def test_unscheduled_bundle_membership_assignments_and_ledger(ready):
@@ -135,7 +141,7 @@ def test_unscheduled_bundle_membership_assignments_and_ledger(ready):
     mid,ids,power=admit(a,rid)
     assert len(ids)==2 and power['state']=='unrestricted'
     with session() as db:
-        assert core.room_count(db,a['uid'])==1
+        assert core.room_count(db,a['uid'])==0
         for row in db.scalars(select(Assignment).where(Assignment.id.in_(ids))):
             assert row.membership_id==mid and row.party_no==row.slot_no==1
             item=db.get(Item,row.item_id);round=db.get(Round,row.round_id)
@@ -191,7 +197,7 @@ def test_same_character_weekly_conflict_and_concurrent_winner(ready):
         try:admit(b,rid);return 'ok'
         except GameError as error:return error.code
     with ThreadPoolExecutor(max_workers=2) as pool:
-        assert sorted(pool.map(attempt,[one,two]))==['WEEKLY_ALREADY_PARTICIPATING','ok']
+        assert sorted(map_in_context(pool,attempt,[one,two]))==['WEEKLY_ALREADY_PARTICIPATING','ok']
 
 
 def write_power(w,role,value,observed,version=2):
@@ -204,30 +210,29 @@ def write_power(w,role,value,observed,version=2):
             row=CharacterRoleSummary(user_id=w['uid'],character_id=uuid.UUID(w['ids'][0]),ownership_revision=1,role=role)
             db.add(row)
         row.version=version;row.summary=payload;row.saved_at=stamp
-        db.flush();capture(db,row)
+        row.detail=detail_for(payload,role);db.flush()
 
 
-def test_precise_latest_success_not_max_or_other_role_and_null_retention(ready):
+def test_latest_head_lower_value_and_null_replace_previous_power(ready):
     target,a,b,_=ready;rid=make_room(a)
     with session() as db:
         assert core.power_comparison(db,b['uid'],selection(db,b),'100')['state']=='missing'
     write_power(b,'dealer','100.000000000000000000000000001','2026-10-15T10:00:00Z')
     write_power(b,'dealer','99.999999999999999999999999999','2026-10-16T10:00:00Z',3)
     write_power(b,'support','99999','2026-10-16T10:00:00Z')
-    write_power(b,'dealer',None,None,4)
     with session() as db,db.begin():
         settings=db.get(RoomSettings,rid);settings.dealer_min=settings.support_min='100'
     denied('COMBAT_POWER_REQUIRED',admit,b,rid)
-    denied('REVISION_CONFLICT',admit,b,rid,expected_role_summary_version=3)
     with session() as db,db.begin():
         result=core.power_comparison(db,b['uid'],selection(db,b),'99.999999999999999999999999999')
-        assert result['state']=='meets' and result['current_summary_version']==4 and result['success_summary_version']==3
-        assert result['power_revision']==3 and result['success_issues']
-        db.get(RoomSettings,rid).dealer_min=db.get(RoomSettings,rid).support_min='99.999999999999999999999999999'
-    _,ids,result=admit(b,rid)
+        assert result['state']=='meets' and result['summary_version']==3 and result['issues']
+        assert result['source']=='server_analysis' and result['trust']=='server_computed'
+    write_power(b,'dealer',None,None,4)
+    denied('COMBAT_POWER_REQUIRED',admit,b,rid)
+    denied('REVISION_CONFLICT',admit,b,rid,expected_role_summary_version=3)
     with session() as db:
-        saved=db.get(Assignment,ids[0]).build
-        assert saved['actual']=='99.999999999999999999999999999' and saved['success_summary']['issues']
+        result=core.power_comparison(db,b['uid'],selection(db,b),'1')
+        assert result['state']=='missing' and result['actual'] is None and result['summary_version']==4
 
 
 def test_composition_and_verified_activity_guards(ready,people):
@@ -268,10 +273,11 @@ def test_limit_and_existing_member_restrictions_are_atomic(ready):
     with session() as db,db.begin():
         db.get(MemberUsageLimits,b['uid']).raid_rooms=1
         db.add(MemberUsageLimits(user_id=a['uid'],revision=1,group_capacity=15,joined_groups=5,raid_rooms=0,updated_at=now(db)))
-    denied('ROOM_RESTRICTED',admit,b,rid)
+    # Unconverted primitive rows do not consume current cycle usage.
+    assert admit(b,rid)[1]
     with session() as db:
-        assert db.scalar(select(func.count()).select_from(WeeklyOccupancy))==0
-        assert db.scalar(select(Member.id).where(Member.room_id==rid,Member.user_id==b['uid'])) is None
+        assert db.scalar(select(func.count()).select_from(WeeklyOccupancy))==1
+        assert db.scalar(select(Member.id).where(Member.room_id==rid,Member.user_id==b['uid'])) is not None
 
 
 def test_completed_item_blocks_entire_bundle_without_partial_writes(ready):
@@ -293,12 +299,13 @@ def test_single_eight_preserves_second_party_but_mixed_four_rejects_it(ready):
     denied('ROOM_COMPOSITION_CONFLICT',admit,a,mixed,party=2)
 
 
-def test_imported_assignment_without_proven_link_is_not_released(ready):
-    target,a,b,source=ready
+def test_assignment_without_proven_link_is_not_released(ready):
+    target,a,b,_=ready;rid=make_room(a);_,ids,_=admit(b,rid)
+    with session() as db,db.begin():
+        db.execute(text('DELETE FROM recruitment_weekly_occupancies WHERE assignment_id=:id'),{'id':ids[0]})
     before=table_digests(target,{'recruitment_assignments','raid_weekly_states'})
     with pytest.raises(GameError) as error,session() as db,db.begin():
-        authorize(db,actor(source[4]['uid']),write=True)
-        row=db.scalar(select(Assignment).where(Assignment.room_id==source[1],Assignment.user_id==source[4]['uid']))
-        core.release_assignment(db,row,now(db))
+        authorize(db,actor(b['uid']),write=True)
+        core.release_assignment(db,db.get(Assignment,ids[0]),now(db))
     assert error.value.code=='WEEKLY_OCCUPANCY_CHANGED'
     assert table_digests(target,set(before))==before

@@ -1,8 +1,8 @@
 """Ordinary departure/dissolution and profile boundaries on disposable PostgreSQL."""
 import os
-import subprocess
 import uuid
 from concurrent.futures import ThreadPoolExecutor
+from tests.concurrency import map_in_context
 from datetime import timedelta
 from datetime import date
 import pytest
@@ -51,29 +51,15 @@ from tests.raid_rooms.common.test_raid_room_migrations import table_digests
 
 @pytest.fixture
 def membership_ready(corrected):
-    engine,a,b=corrected
-    tables=set(inspect(engine).get_table_names())-{'alembic_version'};before=table_digests(engine,tables)
-    result=subprocess.run(['alembic','upgrade','0031_membership_actions'],env={**os.environ,
-        'DATABASE_URL':engine.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
-    assert result.returncode==0,result.stderr.decode()[-1800:]
-    assert table_digests(engine,tables)==before
-    from app.raid_rooms.common import readiness
-    with session() as db,db.begin():readiness.require_two_cycle_active(db)
-    return engine,a,b
+    return corrected
 
 
 def validate_contract(name,value):
-    import json
-    from pathlib import Path
-    from jsonschema import Draft202012Validator
-    from jsonschema import FormatChecker
-    from referencing import Registry
-    from referencing import Resource
-    contract=json.loads(Path('docs/features/recruitment/membership-actions/examples/membership-actions.schema.json').read_text())
-    legacy_schema=json.loads(Path('openapi/openapi.yaml').read_text())
-    legacy_schema['$schema']='https://json-schema.org/draft/2020-12/schema'
-    registry=Registry().with_resource('urn:lostparty:two-cycle-0eed67c',Resource.from_contents(legacy_schema))
-    Draft202012Validator({'$ref':'#/$defs/'+name,'$defs':contract['$defs']},registry=registry,format_checker=FormatChecker()).validate(value)
+    from jsonschema import Draft202012Validator,FormatChecker
+    from tests.raid_rooms.admissions.test_recruitment_cycle_http import REGISTRY
+    model=getattr(schema,name).__name__
+    Draft202012Validator({'$ref':'urn:w2#/components/schemas/'+model},registry=REGISTRY,
+        format_checker=FormatChecker()).validate(value)
 
 
 def export(name,value):
@@ -220,7 +206,7 @@ def test_context_stale_all_or_nothing_and_duplicate_command(membership_ready,peo
         try:return service.execute(actor(a['uid']),rid,command,request)
         except GameError as error:
             assert error.code=='REQUEST_IN_PROGRESS';return None
-    with ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(attempt,range(2)))
+    with ThreadPoolExecutor(max_workers=2) as pool:results=list(map_in_context(pool,attempt,range(2)))
     saved=service.execute(actor(a['uid']),rid,command,request)
     assert any(results) and all(r is None or r==saved for r in results)
     with session() as db:
@@ -316,12 +302,12 @@ def test_expiry_current_cycle_scope_and_tampered_body_no_write(membership_ready,
 def test_runtime_schema_uses_closed_models_and_preserves_base_contract(membership_ready):
     import json
     from pathlib import Path
-    from app.main import create_legacy_app
-    app = create_legacy_app()
-    from app.main import create_two_cycle_app
-    original=json.loads(Path('openapi/legacy.openapi.yaml').read_text())
+    from app.main import create_app
+    app = create_app()
+    from app.main import create_app
+    original=json.loads(Path('openapi/openapi.yaml').read_text())
     assert app.openapi()==original
-    runtime=create_two_cycle_app().openapi()
+    runtime=create_app().openapi()
     assert '/v2/raid-rooms/{room_id}/membership-actions' in runtime['paths']
     command=runtime['components']['schemas']['MembershipActionCommand']
     assert command['additionalProperties'] is False and len(command['required'])==6
@@ -467,14 +453,13 @@ def test_existing_atomic_commands_keep_wire_and_replay_on0031(membership_ready):
 
 
 def test_actual_bearer_auth_foreign_actor_revoked_ack_and_request_limit(membership_ready):
-    from fastapi import FastAPI
     from fastapi.testclient import TestClient
-    from app.core.errors import register
-    from app.main import no_store
-    from app.raid_rooms.api.cycle_router import router
+    from app.main import create_app
+    from app.raid_rooms.group_links.cycle_group_policy import VERSION
     from app.auth.models import Session
     engine,a,b=membership_ready;rid,c,n=scheduled(a)
-    app=FastAPI();register(app);app.include_router(router);app.middleware('http')(no_store)
+    app=create_app()
+    params={'group_policy_version':VERSION}
     menu_path=f'/v2/raid-rooms/{rid}/membership-action-context';post_path=f'/v2/raid-rooms/{rid}/membership-actions'
     with TestClient(app,raise_server_exceptions=False) as http:
         for headers in ({},{'Authorization':'Bearer invalid'}):
@@ -483,13 +468,13 @@ def test_actual_bearer_auth_foreign_actor_revoked_ack_and_request_limit(membersh
         r=http.get(menu_path,params={'target_cycle_key':c},headers=a['headers']);assert r.status_code==200,r.json()
         request=body(r.json(),'leave_target').model_dump(mode='json')
         assert http.get(menu_path,params={'target_cycle_key':c},headers=b['headers']).status_code==403
-        assert http.post(post_path,json=request,headers=b['headers']|{'Idempotency-Key':str(uuid.uuid4())}).status_code==400
+        assert http.post(post_path,params=params,json=request,headers=b['headers']|{'Idempotency-Key':str(uuid.uuid4())}).status_code==400
         headers=a['headers']|{'Idempotency-Key':str(uuid.uuid4())}
         assert http.post(post_path,content=' '*32769,headers=headers).status_code==413
-        result=http.post(post_path,json=request,headers=headers);assert result.status_code==200,result.json()
+        result=http.post(post_path,params=params,json=request,headers=headers);assert result.status_code==200,result.json()
         assert result.headers['cache-control']=='no-store'
         with session() as db,db.begin():db.scalar(select(Session).where(Session.user_id==a['uid'])).revoked_at=now(db)
-        replay=http.post(post_path,json=request,headers=headers)
+        replay=http.post(post_path,params=params,json=request,headers=headers)
         assert replay.status_code==401 and replay.headers['cache-control']=='no-store'
 
 

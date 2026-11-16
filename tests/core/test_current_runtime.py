@@ -1,7 +1,7 @@
-"""Reuse common HTTP regression scenarios on the current app and DB0036.
+"""Reuse common HTTP regression scenarios on the current app and DB0037.
 
 Provider observations/Google verification are fabricated by the original fixtures.
-The original DB0023 scenarios remain in their existing modules unchanged.
+Common scenarios and their fixtures now use the same current application.
 """
 import uuid
 import pytest
@@ -42,7 +42,7 @@ from tests.raids.test_raid_catalog import test_public_reads_need_no_session_key_
 @pytest.fixture
 def client(monkeypatch):
     with isolated_app_database() as (target, role, upgrade):
-        upgrade('0036_roster_presence')
+        upgrade('0037_server_analysis')
         monkeypatch.setattr(database, 'engine', lambda: target)
         with TestClient(create_app(), raise_server_exceptions=False) as http:
             yield http
@@ -52,7 +52,7 @@ def client(monkeypatch):
 def test_ownership_first_seed_no_cooldown_atomicity(client, world, main):
     """Current policy: no subordinate representative; main selection is explicit.
 
-    Keep the original legacy scenario untouched in test_game_accounts.py.
+    Both branches run on the same current schema without a legacy runtime.
     """
     headers, state = world
     registration = register(client, headers, main=main)
@@ -66,7 +66,7 @@ def test_ownership_first_seed_no_cooldown_atomicity(client, world, main):
 
     if not main:
         # New nonnull subordinate representative must fail without seeding data.
-        forbidden = change(client, headers, 'put', path, save_data(before))
+        forbidden = change(client, headers, 'put', path, save_data(before,rep=before['characters']['items'][0]['character_id']))
         assert forbidden.status_code == 409
         assert forbidden.json()['error']['code'] == 'MAIN_REGISTRATION_CHANGED'
         assert page(client, headers, rid)['settings'] == before['settings']

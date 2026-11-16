@@ -1,0 +1,416 @@
+{
+  "schemaVersion": 2,
+  "catalogVersion": "2026.09.12.2",
+  "updatedAt": "2026-09-12T00:00:00Z",
+  "classes": [
+    {
+      "classId": "bard",
+      "apiClassName": "바드",
+      "aliases": ["BARD"],
+      "supportedRoles": ["dealer", "support"],
+      "defaultRole": "support",
+      "enlightenmentBranches": [
+        {
+          "branchId": "perfect_harmony",
+          "tier1NodeName": "완벽한 화음",
+          "displayName": "바드",
+          "aliases": [],
+          "inferredRole": "support",
+          "relatedPassiveNodes": ["세레나데 코드"]
+        },
+        {
+          "branchId": "true_courage",
+          "tier1NodeName": "진실된 용맹",
+          "displayName": "딜바드",
+          "aliases": [],
+          "inferredRole": "dealer",
+          "relatedPassiveNodes": ["템페스트 필드"]
+        }
+      ],
+      "specialSkills": [
+        {
+          "skillId": "serenade_of_courage",
+          "name": "용맹의 세레나데",
+          "aliases": ["용맹"],
+          "category": "identity",
+          "relatedBranchIds": ["perfect_harmony"]
+        },
+        {
+          "skillId": "serenade_of_salvation",
+          "name": "구원의 세레나데",
+          "aliases": ["절구"],
+          "category": "identity",
+          "relatedBranchIds": ["perfect_harmony"]
+        },
+        {
+          "skillId": "tempest_field",
+          "name": "템페스트 필드",
+          "aliases": [],
+          "category": "arkPassive",
+          "relatedBranchIds": ["true_courage"]
+        }
+      ],
+      "gemSkillTargets": [
+        {
+          "targetId": "serenade_support_effect",
+          "name": "세레나데 스킬",
+          "aliases": [],
+          "relatedSpecialSkillIds": [
+            "serenade_of_salvation"
+          ]
+        },
+        {
+          "targetId": "tempest_dealer_effect",
+          "name": "템페스트 스킬",
+          "aliases": [],
+          "relatedSpecialSkillIds": ["tempest_field"]
+        }
+      ],
+      "arkGridPresets": []
+    },
+    {
+      "classId": "paladin",
+      "apiClassName": "홀리나이트",
+      "aliases": [],
+      "supportedRoles": ["dealer", "support"],
+      "defaultRole": "support",
+      "enlightenmentBranches": [
+        {"branchId":"divine_protection","tier1NodeName":"신성 보호","displayName":"서폿 홀리나이트","aliases":[],"inferredRole":"support","relatedPassiveNodes":["신성 해방"]},
+        {"branchId":"god_knight","tier1NodeName":"신의 기사","displayName":"딜홀나","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":["심판자"]}
+      ],
+      "specialSkills": [
+        {"skillId":"faith","name":"신앙","aliases":[],"category":"identity","relatedBranchIds":["divine_protection"]},
+        {"skillId":"judgment","name":"심판자","aliases":[],"category":"arkPassive","relatedBranchIds":["god_knight"]}
+      ],
+      "gemSkillTargets": [
+        {"targetId":"faith_gem_target","name":"신앙 스킬","aliases":[],"relatedSpecialSkillIds":["faith"]},
+        {"targetId":"judgment_gem_target","name":"심판자 스킬","aliases":[],"relatedSpecialSkillIds":["judgment"]}
+      ],
+      "arkGridPresets": []
+    },
+    {
+      "classId": "valkyrie",
+      "apiClassName": "발키리",
+      "aliases": [],
+      "supportedRoles": ["dealer", "support"],
+      "defaultRole": "support",
+      "enlightenmentBranches": [
+        {"branchId":"liberator","tier1NodeName":"해방자","displayName":"서폿 발키리","aliases":[],"inferredRole":"support","relatedPassiveNodes":["해방의 날개"]},
+        {"branchId":"knight_of_light","tier1NodeName":"빛의 기사","displayName":"딜발키리","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":["삼위일체"]}
+      ],
+      "specialSkills": [
+        {"skillId":"faith","name":"신앙","aliases":[],"category":"identity","relatedBranchIds":["liberator"]},
+        {"skillId":"light_of_the_end","name":"종언의 빛","aliases":[],"category":"arkPassive","relatedBranchIds":["knight_of_light"]}
+      ],
+      "gemSkillTargets": [
+        {"targetId":"faith_gem_target","name":"신앙 스킬","aliases":[],"relatedSpecialSkillIds":["faith"]},
+        {"targetId":"light_of_the_end_gem_target","name":"종언의 빛","aliases":[],"relatedSpecialSkillIds":["light_of_the_end"]}
+      ],
+      "arkGridPresets": []
+    },
+    {
+      "classId": "artist",
+      "apiClassName": "도화가",
+      "aliases": [],
+      "supportedRoles": ["dealer", "support"],
+      "defaultRole": "support",
+      "enlightenmentBranches": [
+        {"branchId":"waning_moon","tier1NodeName":"저물어가는 달","displayName":"서폿 도화가","aliases":[],"inferredRole":"support","relatedPassiveNodes":["묵법 : 접무"]},
+        {"branchId":"recurrence","tier1NodeName":"회귀","displayName":"딜도화가","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":["묵법 : 파죽"]}
+      ],
+      "specialSkills": [
+        {"skillId":"yin_yang","name":"음양","aliases":[],"category":"identity","relatedBranchIds":["waning_moon"]},
+        {"skillId":"rising_moon","name":"떠오르는 달","aliases":[],"category":"identity","relatedBranchIds":["recurrence"]}
+      ],
+      "gemSkillTargets": [
+        {"targetId":"yin_yang_gem_target","name":"음양 스킬","aliases":[],"relatedSpecialSkillIds":["yin_yang"]},
+        {"targetId":"rising_moon_gem_target","name":"떠오르는 달","aliases":[],"relatedSpecialSkillIds":["rising_moon"]}
+      ],
+      "arkGridPresets": []
+    },
+    {
+      "classId":"destroyer","apiClassName":"디스트로이어","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"gravity_armor","tier1NodeName":"중력 갑옷","displayName":"중력 갑옷 디스트로이어","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"gravity_impact","tier1NodeName":"중력 충격","displayName":"중력 충격 디스트로이어","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],
+      "specialSkills":[{"skillId":"gravity_charge","name":"중력 가중","aliases":[],"category":"identity","relatedBranchIds":["gravity_impact"]}],
+      "gemSkillTargets":[{"targetId":"gravity_charge_gem_target","name":"중력 가중 스킬","aliases":[],"relatedSpecialSkillIds":["gravity_charge"]}],"arkGridPresets":[]
+    },
+    {
+      "classId":"warlord","apiClassName":"워로드","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"lone_knight","tier1NodeName":"고독한 기사","displayName":"고독한 기사 워로드","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"iron_fortress","tier1NodeName":"철옹성","displayName":"철옹성 워로드","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],
+      "specialSkills":[
+        {"skillId":"battlefield_spear","name":"전장의 창","aliases":[],"category":"identity","relatedBranchIds":["lone_knight"]},
+        {"skillId":"battlefield_shield","name":"전장의 방패","aliases":[],"category":"identity","relatedBranchIds":["iron_fortress"]}
+      ],
+      "gemSkillTargets":[
+        {"targetId":"battlefield_spear_gem_target","name":"전장의 창","aliases":[],"relatedSpecialSkillIds":["battlefield_spear"]},
+        {"targetId":"battlefield_shield_gem_target","name":"전장의 방패","aliases":[],"relatedSpecialSkillIds":["battlefield_shield"]}
+      ],"arkGridPresets":[]
+    },
+    {
+      "classId":"berserker","apiClassName":"버서커","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"strong_body","tier1NodeName":"강인한 육체","displayName":"강인한 육체 버서커","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"mayhem","tier1NodeName":"광기","displayName":"광기 버서커","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],
+      "specialSkills":[
+        {"skillId":"bloody_rush","name":"블러디 러쉬","aliases":[],"category":"identity","relatedBranchIds":["strong_body"]},
+        {"skillId":"dark_rush","name":"다크 러쉬","aliases":[],"category":"identity","relatedBranchIds":["mayhem"]}
+      ],
+      "gemSkillTargets":[
+        {"targetId":"bloody_rush_gem_target","name":"블러디 러쉬","aliases":[],"relatedSpecialSkillIds":["bloody_rush"]},
+        {"targetId":"dark_rush_gem_target","name":"다크 러쉬","aliases":[],"relatedSpecialSkillIds":["dark_rush"]}
+      ],"arkGridPresets":[]
+    },
+    {
+      "classId":"slayer","apiClassName":"슬레이어","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"endless_rage","tier1NodeName":"끝나지 않는 분노","displayName":"끝나지 않는 분노 슬레이어","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"tireless_power","tier1NodeName":"지치지 않는 힘","displayName":"지치지 않는 힘 슬레이어","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],
+      "specialSkills":[{"skillId":"bloodlust","name":"블러드러스트","aliases":[],"category":"identity","relatedBranchIds":["tireless_power"]}],
+      "gemSkillTargets":[{"targetId":"bloodlust_gem_target","name":"블러드러스트","aliases":[],"relatedSpecialSkillIds":["bloodlust"]}],"arkGridPresets":[]
+    },
+    {
+      "classId":"wardancer","apiClassName":"배틀마스터","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"powerful_esoteric","tier1NodeName":"강력한 오의","displayName":"강력한 오의 배틀마스터","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"powerful_martial_arts","tier1NodeName":"강력한 체술","displayName":"강력한 체술 배틀마스터","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],"specialSkills":[],"gemSkillTargets":[],"arkGridPresets":[]
+    },
+    {
+      "classId":"scrapper","apiClassName":"인파이터","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"energy_recovery","tier1NodeName":"기력 회복","displayName":"기력 회복 인파이터","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"speed_enhancement","tier1NodeName":"속도 강화","displayName":"속도 강화 인파이터","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],"specialSkills":[],"gemSkillTargets":[],"arkGridPresets":[]
+    },
+    {
+      "classId":"soulfist","apiClassName":"기공사","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"musang_shingong","tier1NodeName":"무상신공","displayName":"무상신공 기공사","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"robust_spirit","tier1NodeName":"역천지체","displayName":"역천지체 기공사","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],
+      "specialSkills":[{"skillId":"musang_shingong_skill","name":"무상신공","aliases":[],"category":"identity","relatedBranchIds":["musang_shingong"]}],
+      "gemSkillTargets":[{"targetId":"musang_shingong_gem_target","name":"무상신공","aliases":[],"relatedSpecialSkillIds":["musang_shingong_skill"]}],"arkGridPresets":[]
+    },
+    {
+      "classId":"glaivier","apiClassName":"창술사","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"pinnacle_one","tier1NodeName":"절정 I","displayName":"절정 I 창술사","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"control","tier1NodeName":"절제","displayName":"절제 창술사","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],"specialSkills":[],"gemSkillTargets":[],"arkGridPresets":[]
+    },
+    {
+      "classId":"striker","apiClassName":"스트라이커","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"esoteric_flurry","tier1NodeName":"오의난무","displayName":"오의난무 스트라이커","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"deathblow_one","tier1NodeName":"일격필살 I","displayName":"일격필살 I 스트라이커","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],"specialSkills":[],"gemSkillTargets":[],"arkGridPresets":[]
+    },
+    {
+      "classId":"breaker","apiClassName":"브레이커","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"brawl_king_storm","tier1NodeName":"권왕파천무","displayName":"권왕파천무 브레이커","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"asura_path","tier1NodeName":"수라의 길","displayName":"수라의 길 브레이커","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],
+      "specialSkills":[
+        {"skillId":"brawl_king_twelve_forms","name":"권왕십이식","aliases":[],"category":"identity","relatedBranchIds":["brawl_king_storm"]},
+        {"skillId":"asura_basic_attack","name":"수라결 기본 공격","aliases":[],"category":"identity","relatedBranchIds":["asura_path"]}
+      ],
+      "gemSkillTargets":[
+        {"targetId":"brawl_king_twelve_forms_gem_target","name":"권왕십이식","aliases":[],"relatedSpecialSkillIds":["brawl_king_twelve_forms"]},
+        {"targetId":"asura_basic_attack_gem_target","name":"수라결 기본 공격","aliases":[],"relatedSpecialSkillIds":["asura_basic_attack"]}
+      ],"arkGridPresets":[]
+    },
+    {
+      "classId":"deadeye","apiClassName":"데빌헌터","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"tactical_bullet","tier1NodeName":"전술 탄환","displayName":"전술 탄환 데빌헌터","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"handgunner","tier1NodeName":"핸드 거너","displayName":"핸드 거너 데빌헌터","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],"specialSkills":[],"gemSkillTargets":[],"arkGridPresets":[]
+    },
+    {
+      "classId":"artillerist","apiClassName":"블래스터","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"barrage_enhancement","tier1NodeName":"포격 강화","displayName":"포격 강화 블래스터","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"firepower_enhancement","tier1NodeName":"화력 강화","displayName":"화력 강화 블래스터","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],
+      "specialSkills":[{"skillId":"barrage_skill","name":"포격","aliases":[],"category":"identity","relatedBranchIds":["barrage_enhancement"]}],
+      "gemSkillTargets":[{"targetId":"barrage_gem_target","name":"포격 스킬","aliases":[],"relatedSpecialSkillIds":["barrage_skill"]}],"arkGridPresets":[]
+    },
+    {
+      "classId":"sharpshooter","apiClassName":"호크아이","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"loyal_companion","tier1NodeName":"두 번째 동료","displayName":"두 번째 동료 호크아이","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"death_strike","tier1NodeName":"죽음의 습격","displayName":"죽음의 습격 호크아이","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],
+      "specialSkills":[{"skillId":"silverhawk","name":"실버호크","aliases":[],"category":"identity","relatedBranchIds":["loyal_companion","death_strike"]}],
+      "gemSkillTargets":[{"targetId":"silverhawk_gem_target","name":"실버호크 스킬","aliases":[],"relatedSpecialSkillIds":["silverhawk"]}],"arkGridPresets":[]
+    },
+    {
+      "classId":"machinist","apiClassName":"스카우터","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"arthetinean_skill","tier1NodeName":"아르데타인의 기술","displayName":"아르데타인의 기술 스카우터","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"evolutionary_legacy","tier1NodeName":"진화의 유산","displayName":"진화의 유산 스카우터","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],
+      "specialSkills":[
+        {"skillId":"sonic_impact","name":"소닉 임팩트","aliases":[],"category":"identity","relatedBranchIds":["evolutionary_legacy"]},
+        {"skillId":"quantum_assembly_beam","name":"퀀텀 어셈블리 빔","aliases":[],"category":"identity","relatedBranchIds":["evolutionary_legacy"]},
+        {"skillId":"ex_zero_point","name":"EX - 제로 포인트","aliases":[],"category":"identity","relatedBranchIds":["evolutionary_legacy"]}
+      ],
+      "gemSkillTargets":[
+        {"targetId":"sonic_impact_gem_target","name":"소닉 임팩트","aliases":[],"relatedSpecialSkillIds":["sonic_impact"]},
+        {"targetId":"quantum_assembly_beam_gem_target","name":"퀀텀 어셈블리 빔","aliases":[],"relatedSpecialSkillIds":["quantum_assembly_beam"]},
+        {"targetId":"ex_zero_point_gem_target","name":"EX - 제로 포인트","aliases":[],"relatedSpecialSkillIds":["ex_zero_point"]}
+      ],"arkGridPresets":[]
+    },
+    {
+      "classId":"gunslinger","apiClassName":"건슬링어","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"time_to_hunt","tier1NodeName":"사냥의 시간","displayName":"사냥의 시간 건슬링어","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"peacemaker_handgun","tier1NodeName":"피스메이커 - 핸드건","displayName":"피스메이커 건슬링어","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],
+      "specialSkills":[{"skillId":"rose_blossom","name":"로즈 블로섬","aliases":[],"category":"arkPassive","relatedBranchIds":["time_to_hunt"]}],
+      "gemSkillTargets":[{"targetId":"rose_blossom_gem_target","name":"로즈 블로섬","aliases":[],"relatedSpecialSkillIds":["rose_blossom"]}],"arkGridPresets":[]
+    },
+    {
+      "classId":"summoner","apiClassName":"서머너","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"communication_overflow","tier1NodeName":"넘치는 교감","displayName":"넘치는 교감 서머너","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"master_summoner","tier1NodeName":"상급 소환사","displayName":"상급 소환사 서머너","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],"specialSkills":[],"gemSkillTargets":[],"arkGridPresets":[]
+    },
+    {
+      "classId":"arcanist","apiClassName":"아르카나","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"emperors_edict","tier1NodeName":"황제의 칙령","displayName":"황제의 칙령 아르카나","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"empress_grace","tier1NodeName":"황후의 은총","displayName":"황후의 은총 아르카나","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],
+      "specialSkills":[{"skillId":"emperor","name":"황제","aliases":[],"category":"identity","relatedBranchIds":["emperors_edict"]}],
+      "gemSkillTargets":[{"targetId":"emperor_gem_target","name":"황제","aliases":[],"relatedSpecialSkillIds":["emperor"]}],"arkGridPresets":[]
+    },
+    {
+      "classId":"sorceress","apiClassName":"소서리스","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"igniter","tier1NodeName":"점화","displayName":"점화 소서리스","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"reflux","tier1NodeName":"환류","displayName":"환류 소서리스","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],"specialSkills":[],"gemSkillTargets":[],"arkGridPresets":[]
+    },
+    {
+      "classId":"deathblade","apiClassName":"블레이드","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"burst_enhancement","tier1NodeName":"버스트 강화","displayName":"버스트 강화 블레이드","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"swift_strike","tier1NodeName":"신속한 일격","displayName":"신속한 일격 블레이드","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],
+      "specialSkills":[{"skillId":"blade_burst","name":"블레이드 버스트","aliases":[],"category":"identity","relatedBranchIds":["burst_enhancement","swift_strike"]}],
+      "gemSkillTargets":[{"targetId":"blade_burst_gem_target","name":"블레이드 버스트","aliases":[],"relatedSpecialSkillIds":["blade_burst"]}],"arkGridPresets":[]
+    },
+    {
+      "classId":"reaper","apiClassName":"리퍼","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"lunar_voice","tier1NodeName":"달의 소리","displayName":"달의 소리 리퍼","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"blood_scent","tier1NodeName":"피냄새","displayName":"피냄새 리퍼","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],
+      "specialSkills":[{"skillId":"nightmare","name":"나이트메어","aliases":[],"category":"arkPassive","relatedBranchIds":["lunar_voice"]}],
+      "gemSkillTargets":[{"targetId":"nightmare_gem_target","name":"나이트메어","aliases":[],"relatedSpecialSkillIds":["nightmare"]}],"arkGridPresets":[]
+    },
+    {
+      "classId":"souleater","apiClassName":"소울이터","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"nights_edge","tier1NodeName":"그믐의 경계","displayName":"그믐의 경계 소울이터","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"soul_affinity","tier1NodeName":"영혼친화력","displayName":"영혼친화력 소울이터","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],"specialSkills":[],"gemSkillTargets":[],"arkGridPresets":[]
+    },
+    {
+      "classId":"aeromancer","apiClassName":"기상술사","aliases":[],"supportedRoles":["dealer"],"defaultRole":"dealer",
+      "enlightenmentBranches":[
+        {"branchId":"drizzle","tier1NodeName":"이슬비","displayName":"이슬비 기상술사","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"wind_fury","tier1NodeName":"질풍노도","displayName":"질풍노도 기상술사","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],
+      "specialSkills":[{"skillId":"sun_shower","name":"여우비","aliases":[],"category":"identity","relatedBranchIds":["drizzle","wind_fury"]}],
+      "gemSkillTargets":[{"targetId":"sun_shower_gem_target","name":"여우비 스킬","aliases":[],"relatedSpecialSkillIds":["sun_shower"]}],"arkGridPresets":[]
+    },
+    {
+      "classId": "wildsoul",
+      "apiClassName": "환수사",
+      "aliases": [],
+      "supportedRoles": ["dealer"],
+      "defaultRole": "dealer",
+      "enlightenmentBranches": [
+        {"branchId":"wild_instinct","tier1NodeName":"야성","displayName":"야성 환수사","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"beast_awakening","tier1NodeName":"환수 각성","displayName":"환수 각성 환수사","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],
+      "specialSkills": [
+        {"skillId":"transformation_secret_art","name":"둔갑 금술","aliases":[],"category":"arkPassive","relatedBranchIds":["wild_instinct"]}
+      ],
+      "gemSkillTargets": [
+        {"targetId":"transformation_secret_art_gem_target","name":"둔갑 금술 스킬","aliases":[],"relatedSpecialSkillIds":["transformation_secret_art"]}
+      ],
+      "arkGridPresets": []
+    },
+    {
+      "classId": "guardian_knight",
+      "apiClassName": "가디언나이트",
+      "aliases": [],
+      "supportedRoles": ["dealer"],
+      "defaultRole": "dealer",
+      "enlightenmentBranches": [
+        {"branchId":"dread_roar","tier1NodeName":"드레드 로어","displayName":"드레드 로어 가디언나이트","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"inheritor_of_hellfire","tier1NodeName":"업화의 계승자","displayName":"업화의 계승자 가디언나이트","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],
+      "specialSkills": [
+        {"skillId":"guardian_fear","name":"가디언 피어","aliases":[],"category":"arkPassive","relatedBranchIds":["dread_roar"]},
+        {"skillId":"inferno_burst","name":"인페르노 버스트","aliases":[],"category":"arkPassive","relatedBranchIds":["inheritor_of_hellfire"]}
+      ],
+      "gemSkillTargets": [
+        {"targetId":"guardian_fear_gem_target","name":"가디언 피어","aliases":[],"relatedSpecialSkillIds":["guardian_fear"]},
+        {"targetId":"inferno_burst_gem_target","name":"인페르노 버스트","aliases":[],"relatedSpecialSkillIds":["inferno_burst"]}
+      ],
+      "arkGridPresets": []
+    },
+    {
+      "classId": "demonic",
+      "apiClassName": "데모닉",
+      "aliases": [],
+      "supportedRoles": ["dealer"],
+      "defaultRole": "dealer",
+      "enlightenmentBranches": [
+        {"branchId":"unstoppable_impulse","tier1NodeName":"멈출 수 없는 충동","displayName":"멈출 수 없는 충동 데모닉","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"perfect_suppression","tier1NodeName":"완벽한 억제","displayName":"완벽한 억제 데모닉","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],
+      "specialSkills": [
+        {"skillId":"blood_genocide","name":"블러드 제노사이드","aliases":[],"category":"arkPassive","relatedBranchIds":["unstoppable_impulse"]}
+      ],
+      "gemSkillTargets": [
+        {"targetId":"blood_genocide_gem_target","name":"블러드 제노사이드","aliases":[],"relatedSpecialSkillIds":["blood_genocide"]}
+      ],
+      "arkGridPresets": []
+    },
+    {
+      "classId": "dimensionist",
+      "apiClassName": "차원술사",
+      "aliases": [],
+      "supportedRoles": ["dealer"],
+      "defaultRole": "dealer",
+      "enlightenmentBranches": [
+        {"branchId":"space_swordsman","tier1NodeName":"공간 검사","displayName":"공간 검사 차원술사","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]},
+        {"branchId":"time_manager","tier1NodeName":"시간 관리자","displayName":"시간 관리자 차원술사","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":[]}
+      ],
+      "specialSkills": [
+        {"skillId":"interference","name":"간섭","aliases":[],"category":"arkPassive","relatedBranchIds":["space_swordsman"]},
+        {"skillId":"timeline","name":"시간선","aliases":[],"category":"arkPassive","relatedBranchIds":["time_manager"]}
+      ],
+      "gemSkillTargets": [
+        {"targetId":"interference_gem_target","name":"간섭","aliases":[],"relatedSpecialSkillIds":["interference"]},
+        {"targetId":"timeline_gem_target","name":"시간선 스킬","aliases":[],"relatedSpecialSkillIds":["timeline"]}
+      ],
+      "arkGridPresets": []
+    }
+  ]
+}

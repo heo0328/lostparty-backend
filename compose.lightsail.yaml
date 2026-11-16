@@ -39,7 +39,6 @@ services:
       GOOGLE_AZP_ALLOWLIST: ${GOOGLE_AZP_ALLOWLIST:-}
       JWT_KEY_ID: lightsail-1
       RECOVERY_KEY_ID: lightsail-1
-      LOSTARK_CREDENTIAL_KEY_ID: lightsail-1
     command:
       - uvicorn
       - app.main:create_app

@@ -37,7 +37,7 @@ class CycleConsent(Base):
              'recruitment_participations.membership_id','recruitment_participations.user_id']),
         ForeignKeyConstraint(['room_id','cycle_id','generation','session_id'],
             ['recruitment_cycle_sessions.room_id','recruitment_cycle_sessions.cycle_id','recruitment_cycle_sessions.generation','recruitment_cycle_sessions.session_id']),
-        UniqueConstraint('user_id','command_id'),
+        UniqueConstraint('user_id','command_id','participation_id'),
         UniqueConstraint('participation_id','participation_revision'),
         CheckConstraint("member_revision>=1 AND participation_revision>=1 AND schedule_revision>=1 AND jsonb_typeof(evidence)='object'"),
     )

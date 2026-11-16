@@ -24,6 +24,9 @@ def main(argv=None):
     parser.add_argument("suite", choices=("static", "contracts", *SUITES))
     parser.add_argument("tests", nargs="*", help="Optional exact pytest nodes within the named regression set")
     parser.add_argument("--docker", default="docker", help="Docker executable, e.g. docker.exe in WSL")
+    parser.add_argument('--collect-only', action='store_true')
+    parser.add_argument('--maxfail', type=int, default=0)
+    parser.add_argument('--verbose', action='store_true')
     args = parser.parse_args(argv)
     if args.suite not in SUITES and args.tests:
         parser.error("This suite does not accept test selections")
@@ -54,7 +57,8 @@ def main(argv=None):
             subprocess.run([*base, "up", "-d", "--wait", "--wait-timeout", "90", "test-db"],
                            cwd=ROOT, env=env, check=True)
         status = subprocess.call([*base, "run", "--rm", "--no-deps", "tests",
-                                  "python", "scripts/isolated_checks.py", args.suite, *args.tests], cwd=ROOT, env=env)
+                                  "python", "scripts/isolated_checks.py", args.suite, *args.tests,
+                                  *(["--collect-only"] if args.collect_only else []), *(["--verbose"] if args.verbose else []), "--maxfail", str(args.maxfail)], cwd=ROOT, env=env)
     except subprocess.CalledProcessError as error:
         status = error.returncode or 1
     except KeyboardInterrupt:

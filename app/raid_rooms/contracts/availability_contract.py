@@ -12,7 +12,7 @@ def draft_openapi():
         'activation': 'unmounted R2 draft; integrated activation and canonical OpenAPI merge at R5',
         'timezone': 'Asia/Seoul', 'week_origin': 'ISO Monday 00:00',
         'body_bytes': 32768, 'interval_count': 'bounded by encoded request bytes; no separate arbitrary row cap',
-        'interval_minutes': 'positive, at most 1440; 5-minute alignment',
+        'interval_minutes': 'positive, at most 1440; one-minute HH:mm boundaries; automatic candidate grid stays five minutes',
         'personal_version': 'unset 1; first saved empty/nonempty 2; ordered raw change only increments',
         'submission': 'explicit snapshot; same source version is noop; GET and personal save never copy',
         'writes': 'current verified registration required; room copy requires current membership and ready active room',

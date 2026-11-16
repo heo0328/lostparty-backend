@@ -182,7 +182,7 @@ def execute(principal,rid,key,data,kind):
                 room.title=data.title;room.revision+=1
                 for row,_,_ in effects:cycles.touch_directory(db,row.cycle_key)
             value=dict(scope=scope(stamp),data=dict(command_id=key,outcome='applied' if changed else 'noop',
-                executed_at=stamp,room_id=rid,room_revision=room.revision,affected_cycle_keys=[row.cycle_key for row,_,_ in effects],
+                executed_at=stamp,room_id=rid,room_revision=room.revision,affected_cycle_keys=[row.cycle_key for row,_,_ in effects] if changed else [],
                 ))
             # The title ACK uses the existing CommonSettingsAckData fields.
             dto=wire.CommonSettingsAck

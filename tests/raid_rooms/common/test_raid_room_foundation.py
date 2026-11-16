@@ -1,6 +1,7 @@
 """F1 internal transactions with real isolated PostgreSQL and fabricated identities."""
 import uuid
 from concurrent.futures import ThreadPoolExecutor
+from tests.concurrency import map_in_context
 from datetime import timedelta
 import pytest
 from pydantic import ValidationError
@@ -174,7 +175,7 @@ def test_last_slot_competition_has_one_winner(people):
         w,data=pair
         try:return join(w,rid,data)[0]
         except AuthError as exc:return exc.code
-    with ThreadPoolExecutor(max_workers=2) as pool:results=list(pool.map(attempt,zip((d,e),commands)))
+    with ThreadPoolExecutor(max_workers=2) as pool:results=list(map_in_context(pool,attempt,zip((d,e),commands)))
     assert results.count(200)==1 and len(results)==2
     with session() as db:assert db.scalar(select(func.count()).select_from(Membership).where(Membership.room_id==rid))==4
 
@@ -340,7 +341,7 @@ def test_two_rooms_concurrent_approve_same_character_never_double_occupy(people)
         try:return service.decide(actor(w['uid']),aid,uuid.uuid4(),data,approve=True,policy=explicit_test_policy)[0]
         except AuthError as error:return error.code
     with ThreadPoolExecutor(max_workers=2) as pool:
-        out=list(pool.map(approve,zip((a,b),aids,commands)))
+        out=list(map_in_context(pool,approve,zip((a,b),aids,commands)))
     assert out.count(200)==1
     with session() as db:
         assert core.room_count(db,c['uid'])==1
@@ -433,21 +434,26 @@ def test_end_membership_never_clears_unrelated_occupancy(people):
         assert row.active_party_id==other
 
 
-def test_p1_analysis_cannot_override_provider_entry_level(people):
+def test_stored_analysis_cannot_override_provider_entry_level(people):
     a,b=people('a'),people('b');rid=uuid.UUID(create(a)[1]['room_id'])
     with session() as db,db.begin():
         c=db.get(Character,uuid.UUID(b['ids'][0]));c.summary={**c.summary,'item_level':'100'}
+        from tests.game_accounts.test_role_summaries import summary
+        from tests.game_accounts.analysis.fixtures import detail_for
+        payload=dict(summary(),item_level='9999')
         db.add(CharacterRoleSummary(user_id=b['uid'],character_id=c.id,ownership_revision=1,
-            role='dealer',version=1,summary={'source':'flutter_analysis','item_level':'9999'},saved_at=now(db)))
-    denied('RAID_ITEM_LEVEL_REQUIRED',join,b,rid)
+            role='dealer',version=2,summary=payload,detail=detail_for(payload),saved_at=now(db)))
+    data=admission(b,rid)
+    data=data.model_copy(update={'selection':data.selection.model_copy(update={'expected_role_summary_version':2})})
+    denied('RAID_ITEM_LEVEL_REQUIRED',join,b,rid,data=data)
 
 
 def test_api_contract_not_extended_by_internal_models():
     import json
     from pathlib import Path
-    from app.main import create_legacy_app
-    app = create_legacy_app()
-    assert app.openapi()==json.loads(Path('openapi/legacy.openapi.yaml').read_text())
+    from app.main import create_app
+    app = create_app()
+    assert app.openapi()==json.loads(Path('openapi/openapi.yaml').read_text())
     assert all(getattr(route.endpoint,'__module__','')!='app.raid_rooms.api.router' for route in app.routes)
 
 

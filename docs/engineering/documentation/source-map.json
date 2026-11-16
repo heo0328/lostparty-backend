@@ -1079,8 +1079,8 @@
         }
       ],
       "dependent_files": [
-        "app/lostark_keys",
-        "tests/lostark_keys/test_lostark_keys.py"
+        "app/game_accounts/provider_io",
+        "tests/game_accounts/analysis/test_server_credentials.py"
       ],
       "source_topics": [
         "login-account/api-keys"
@@ -1156,8 +1156,8 @@
         }
       ],
       "dependent_files": [
-        "app/lostark_keys",
-        "tests/lostark_keys/test_lostark_keys.py"
+        "app/game_accounts/provider_io",
+        "tests/game_accounts/analysis/test_server_credentials.py"
       ],
       "source_topics": [
         "login-account/api-keys"
@@ -1226,8 +1226,8 @@
         }
       ],
       "dependent_files": [
-        "app/lostark_keys",
-        "tests/lostark_keys/test_lostark_keys.py"
+        "app/game_accounts/provider_io",
+        "tests/game_accounts/analysis/test_server_credentials.py"
       ],
       "source_topics": [
         "login-account/api-keys"
@@ -3049,7 +3049,7 @@
         "app/member_limits",
         "tests/groups/test_group_management.py",
         "tests/member_limits/test_member_limits.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py"
       ],
       "source_topics": [
@@ -3084,7 +3084,7 @@
         "app/member_limits",
         "tests/groups/test_group_management.py",
         "tests/member_limits/test_member_limits.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py"
       ],
       "source_topics": [
@@ -5503,7 +5503,7 @@
       "dependent_files": [
         "docs/features/recruitment/search/tools/validate-character-candidates.py",
         "tests/groups/test_group_character_candidates.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/search"
@@ -5520,7 +5520,7 @@
       "sections": [],
       "dependent_files": [
         "tests/groups/test_group_character_candidates.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/search"
@@ -5551,7 +5551,7 @@
       "sections": [],
       "dependent_files": [
         "docs/features/recruitment/participation/tools/validate-session-display.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py"
       ],
       "source_topics": [
@@ -5747,7 +5747,7 @@
       "sections": [],
       "dependent_files": [
         "tests/groups/test_group_character_candidates.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/search"
@@ -5799,7 +5799,7 @@
       "dependent_files": [
         "docs/features/recruitment/search/tools/validate-character-candidates.py",
         "tests/groups/test_group_character_candidates.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/search"
@@ -5816,7 +5816,7 @@
       "sections": [],
       "dependent_files": [
         "docs/features/recruitment/participation/tools/validate-session-display.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py"
       ],
       "source_topics": [
@@ -5975,7 +5975,7 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/membership-actions",
@@ -6368,15 +6368,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -6444,7 +6443,7 @@
       ],
       "dependent_files": [
         "tests/groups/test_group_character_candidates.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/search"
@@ -6521,7 +6520,7 @@
       ],
       "dependent_files": [
         "tests/groups/test_group_character_candidates.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/search"
@@ -6605,10 +6604,9 @@
         }
       ],
       "dependent_files": [
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
-        "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py"
+        "tests/raid_rooms/participation/test_recruitment_participation.py"
       ],
       "source_topics": [
         "recruitment/participation",
@@ -6893,15 +6891,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -7139,15 +7136,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -7355,15 +7351,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -7479,15 +7474,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -7628,15 +7622,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -7770,8 +7763,7 @@
       ],
       "dependent_files": [
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
-        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py"
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py"
       ],
       "source_topics": [
         "recruitment/completion-and-records",
@@ -7888,7 +7880,7 @@
       ],
       "dependent_files": [
         "tests/groups/test_group_character_candidates.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/search"
@@ -7973,7 +7965,7 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/membership-actions",
@@ -8184,15 +8176,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -8257,11 +8248,11 @@
       ],
       "dependent_files": [
         "tests/groups/test_group_character_candidates.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/participation",
@@ -8332,11 +8323,11 @@
       ],
       "dependent_files": [
         "tests/groups/test_group_character_candidates.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/participation",
@@ -8390,7 +8381,7 @@
       ],
       "dependent_files": [
         "tests/groups/test_group_character_candidates.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/search"
@@ -8442,10 +8433,9 @@
         }
       ],
       "dependent_files": [
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
-        "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py"
+        "tests/raid_rooms/participation/test_recruitment_participation.py"
       ],
       "source_topics": [
         "recruitment/participation",
@@ -8667,15 +8657,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -8792,15 +8781,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -8894,15 +8882,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -8960,10 +8947,9 @@
         }
       ],
       "dependent_files": [
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
-        "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py"
+        "tests/raid_rooms/participation/test_recruitment_participation.py"
       ],
       "source_topics": [
         "recruitment/scheduling",
@@ -9023,11 +9009,11 @@
       ],
       "dependent_files": [
         "tests/groups/test_group_character_candidates.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/participation",
@@ -9096,11 +9082,11 @@
       ],
       "dependent_files": [
         "tests/groups/test_group_character_candidates.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/participation",
@@ -9229,15 +9215,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -9295,7 +9280,7 @@
       ],
       "dependent_files": [
         "tests/groups/test_group_character_candidates.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/search"
@@ -9401,15 +9386,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -9494,11 +9478,11 @@
       ],
       "dependent_files": [
         "tests/groups/test_group_character_candidates.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/participation",
@@ -9592,15 +9576,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -9746,15 +9729,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -9841,10 +9823,9 @@
         }
       ],
       "dependent_files": [
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
-        "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py"
+        "tests/raid_rooms/participation/test_recruitment_participation.py"
       ],
       "source_topics": [
         "recruitment/scheduling",
@@ -9919,10 +9900,9 @@
         }
       ],
       "dependent_files": [
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
-        "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py"
+        "tests/raid_rooms/participation/test_recruitment_participation.py"
       ],
       "source_topics": [
         "recruitment/scheduling",
@@ -9987,8 +9967,7 @@
       ],
       "dependent_files": [
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
-        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py"
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py"
       ],
       "source_topics": [
         "recruitment/completion-and-records",
@@ -10366,8 +10345,7 @@
       ],
       "dependent_files": [
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
-        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py"
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py"
       ],
       "source_topics": [
         "recruitment/completion-and-records",
@@ -10435,7 +10413,7 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/membership-actions",
@@ -10542,7 +10520,7 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/membership-actions",
@@ -10690,15 +10668,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -10788,15 +10765,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -10949,15 +10925,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -11149,15 +11124,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -11290,15 +11264,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -11530,15 +11503,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -11663,7 +11635,7 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/membership-actions",
@@ -11903,15 +11875,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -12009,15 +11980,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -12079,7 +12049,7 @@
       ],
       "dependent_files": [
         "tests/groups/test_group_character_candidates.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/search"
@@ -12328,15 +12298,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",
@@ -12444,15 +12413,14 @@
         "tests/raid_rooms/outcomes/test_completion_corrections.py",
         "tests/groups/test_group_character_candidates.py",
         "tests/raid_rooms/participation/test_membership_actions.py",
-        "tests/raid_rooms/admissions/test_recruitment_admission.py",
+        "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
         "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
         "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
         "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
         "tests/raid_rooms/participation/test_recruitment_participation.py",
-        "tests/raid_rooms/schedules/test_recruitment_scheduling.py",
-        "tests/raid_rooms/reads/test_recruitment_search.py"
+        "tests/raid_rooms/reads/test_discovery.py"
       ],
       "source_topics": [
         "recruitment/weekly-cycles",

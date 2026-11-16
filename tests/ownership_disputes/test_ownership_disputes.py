@@ -45,7 +45,6 @@ def environment(client,live,login,monkeypatch):
     for i in range(4):
         monkeypatch.setattr(auth_service,'verify_google',lambda *args, subject=f'v2-member-{i}', **kwargs:subject)
         auth,_=login();h=PrivateHeaders(Authorization='Bearer '+auth['access_token'])
-        assert change(client,h,'put','/v1/me/lostark-api-key',dict(token='other.member.signature',expected_version=1)).status_code==200
         users.append(h)
     return users,state
 
@@ -336,7 +335,7 @@ def test_transfer_preserves_old_private_data_and_group_membership_without_inheri
     gid=uuid.uuid4();mid=uuid.uuid4()
     with session() as db,db.begin():
         a=db.scalar(select(Account));c=db.scalar(select(Character));cid=c.id;old=a.owner_id;stamp=now(db)
-        db.add(CharacterRoleSummary(user_id=old,character_id=cid,ownership_revision=1,role='dealer',version=1,summary={'private':'old'},saved_at=stamp))
+        db.add(CharacterRoleSummary(user_id=old,character_id=cid,ownership_revision=1,role='dealer',version=1,summary={'private':'old'},detail={'private':'old-detail'},saved_at=stamp))
         db.add(CharacterPersonalPreferences(user_id=old,character_id=cid,ownership_revision=1,preferred_role='dealer',visible=False,display_order=3,version=1,saved_at=stamp))
         db.add(Group(id=gid,name='sample',leader_membership_id=mid,representative_character_id=cid,representative_user_id=old,representative_display=c.summary,created_at=stamp))
         db.flush()

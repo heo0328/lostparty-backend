@@ -1,6 +1,4 @@
 """Group/raid lifetimes remain independent on current and next actual targets."""
-import os
-import subprocess
 import uuid
 from datetime import date
 from datetime import timedelta
@@ -48,15 +46,7 @@ from tests.groups.test_group_foundation import actor
 
 @pytest.fixture
 def group_beta(beta):
-    engine,a,b=beta
-    result=subprocess.run(['alembic','upgrade','0034_group_features'],env={**os.environ,
-        'DATABASE_URL':engine.url.render_as_string(hide_password=False)},capture_output=True,timeout=90)
-    assert result.returncode==0,'restricted group migration failed'
-    from app.raid_rooms.common import readiness
-    with session() as db:
-        readiness.require_two_cycle_active(db)
-        readiness.require_cycle_worker(db)
-    return engine,a,b
+    return beta
 
 
 def create_group_room(w,gid):
@@ -109,11 +99,9 @@ def test_group_leave_preserves_actual_c_but_does_not_admit_new_n(group_beta,clie
         qualify(b,rid,c)
         value=cycle_member_reads.detail(actor(b['uid']),rid,c)['data']
         assert value['my_membership']['group_member'] is False
-        ctx=context(b,rid,n)
-        assert not ctx['data']['permissions']['join']['allowed']
         with pytest.raises(GameError) as exc:
-            cycle_commands.admit(actor(b['uid']),rid,uuid.uuid4(),admission_request(ctx))
-        assert exc.value.code=='GROUP_MEMBERSHIP_REQUIRED'
+            context(b,rid,n)
+        assert exc.value.code=='ROOM_NOT_FOUND'
     with session() as db,db.begin():
         db.execute(delete(Activity).where(Activity.settings_id==b['cid']))
     # Issue42: activity deselection alone cannot revoke an existing seat.
@@ -182,9 +170,8 @@ def test_public_link_allows_normal_group_disband_and_raid_survives(group_beta,cl
     from tests.groups.test_group_features_management import body
     _,a,b=group_beta;gid=group(client,a);rid,c,n=create_group_room(a,gid)
     with beta_profile.using():
-        ctx=cycle_common.get(actor(a['uid']),rid,'edit_common_settings')
-        value=global_body(ctx,scope='public')
-        cycle_common.execute(actor(a['uid']),rid,uuid.uuid4(),value,'edit_common_settings')
+        from tests.raid_rooms.group_links.test_cycle_group_policy import change
+        for key in (c,n):change(a,rid,key,None)
         assert raid_state.listing(actor(a['uid']),uuid.UUID(gid),20,None)['blocking_room_count']==0
         data=DisbandGroupIn(**body(client,a,gid))
         assert extended_management.command(actor(a['uid']),uuid.UUID(gid),uuid.uuid4(),data,'disband')[0]==200
