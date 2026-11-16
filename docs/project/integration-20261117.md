@@ -1,5 +1,8 @@
 # 2026-11-17 Backend 작업 통합 기록
 
+2026-11-17 통합 완료: dev no-ff 병합 `4283c2cb3bdec4bb00b8de743b6cbcbd4552fca2`·main ff-only 동기화 및 두 원격 동일 SHA를 확인했다. [Issue55 전체23 Backend 통합 게시](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6924800165)·[Issue56 전체6 Backend 통합 게시](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6924801997). 후행 기록도 dev/main 동일 tip으로 게시하고 완료 목적 브랜치는 원격/로컬 정리한다. 현재 checkout은 dev이며 운영/서버/DB/키는 이번 통합에서 변경하지 않았다.
+
+
 사용자 지시: 작업 내역을 문서에 정리하고 현재 목적 브랜치를 dev에 병합·commit/push하며 main도 같은 시점으로 최신화한다. 기준 dev/main은 cda4db3, 통합 대상 refactor/lostark-server-processing의 게시 tip은2d96eed다. 배포·태그 생성·Issue 종료는 이번 범위가 아니다.
 
 ## 변경과 검증 원본
@@ -23,4 +26,4 @@ Native [Issue55 전체22](https://github.com/heo0328/lostparty-backend/issues/55
 
 ## Git 통합 방식
 
-현재 목적 브랜치에 이 기록을 먼저 commit하고 dev에 no-ff merge한다. main은 dev로 ff-only 전진해 두 브랜치를 동일 커밋으로 유지한다. 원격 dev/main도 동일 SHA를 확인하고 완료 목적 브랜치를 로컬·원격에서 정리한다. 공유 이력 재작성/force push는 하지 않으며 다른 미통합 브랜치는 보존한다. 정확한 통합 SHA·게시 결과는 후행 통합 기록에 남긴다.
+현재 목적 브랜치에 이 기록을 먼저 commit하고 dev에 no-ff merge한다. main은 dev로 ff-only 전진해 두 브랜치를 동일 커밋으로 유지한다. 원격 dev/main도 동일 SHA를 확인하고 완료 목적 브랜치를 로컬·원격에서 정리한다. 공유 이력 재작성/force push는 하지 않으며 다른 미통합 브랜치는 보존한다. 통합 SHA·공식 게시 결과는 상단을 따른다. 후행 문서 커밋은 병합 커밋을 포함한 두 브랜치 공통 tip이다.

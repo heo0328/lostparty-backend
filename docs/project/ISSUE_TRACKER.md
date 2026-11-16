@@ -36,7 +36,7 @@
 
 ## 코드·게시·실행은 별개
 
-현재 운영 마지막 확정은 Backend v2.3.0/source05daa42·웹2.3.0+8/source027f8215·DB0036이며 Android 공개까지 #54에서 마감했다. 이번 사용자 지시로 현재 구현/기록을 dev/main 동일 tip에 통합·게시한다. [정확한 통합 근거](integration-20261117.md). 로컬은 image c720c438…66013/DB0037이며 운영 소스/태그와 구분한다. [최신 운영 원장](../engineering/operations/records/release-2.3.0-deployment.json). 과거 배포의 고정 source/검증은 각 원장에 보존한다.
+현재 운영 마지막 확정은 Backend v2.3.0/source05daa42·웹2.3.0+8/source027f8215·DB0036이며 Android 공개까지 #54에서 마감했다. 이번 사용자 지시로 현재 구현/기록을 dev/main 병합4283c2c 및 동일 tip에 통합·게시했다. [정확한 통합 근거](integration-20261117.md). 로컬은 image c720c438…66013/DB0037이며 운영 소스/태그와 구분한다. [최신 운영 원장](../engineering/operations/records/release-2.3.0-deployment.json). 과거 배포의 고정 source/검증은 각 원장에 보존한다.
 
 [점검/정리 결과](OPEN_ISSUE_REVIEW.md) · [NEXT_WORK](NEXT_WORK.md) · [DEV_LOG](DEV_LOG.md) · [최신화 전 단계/댓글 순번 기록](../archive/project/status-before-refresh-20261110/ISSUE_TRACKER.md)
 

@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-2026-11-17 기준. 다음 실행은 [NEXT_WORK](NEXT_WORK.md), 상세 작업/검증·병합은 [통합 기록](integration-20261117.md)·[DEV_LOG](DEV_LOG.md), 공식 담당/대기는 [ISSUE_TRACKER](ISSUE_TRACKER.md)를 따른다. 현재 목적 브랜치를 사용자 지시로 dev/main 동일 tip으로 통합하며 운영은 별도다.
+2026-11-17 기준. 다음 실행은 [NEXT_WORK](NEXT_WORK.md), 상세 작업/검증·병합은 [통합 기록](integration-20261117.md)·[DEV_LOG](DEV_LOG.md), 공식 담당/대기는 [ISSUE_TRACKER](ISSUE_TRACKER.md)를 따른다. 현재 목적 브랜치를 사용자 지시로 dev/main 병합4283c2c 및 동일 tip으로 통합했다. 운영은 별도다.
 
 ## 현재 기준
 
