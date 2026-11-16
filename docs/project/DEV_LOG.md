@@ -4999,3 +4999,25 @@ Native 전체11~14를 확인했다. Native 구현910c0648 게시·2853PASS/후�
 2026-11-17 통합 완료: dev no-ff 병합 `4283c2cb3bdec4bb00b8de743b6cbcbd4552fca2`·main ff-only 동기화 및 두 원격 동일 SHA를 확인했다. [Issue55 전체23 Backend 통합 게시](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6924800165)·[Issue56 전체6 Backend 통합 게시](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6924801997). 후행 기록도 dev/main 동일 tip으로 게시하고 완료 목적 브랜치는 원격/로컬 정리한다. 현재 checkout은 dev이며 운영/서버/DB/키는 이번 통합에서 변경하지 않았다.
 
 문서 정리3c43a72 후 dev에서 no-ff merge를 생성했다(부모 cda4db3/3c43a72). 병합 트리는 목적 브랜치와 diff0, main은 ff-only로 같은 SHA를 가리키며 atomic push로 두 원격을 동시에 갱신했다. 전체 댓글 재조회로55전체23·56전체6의 실제 순번/Backend 작성·통합 단계를 확인하고 본문 상단을 갱신했다. 문서/동결 원문128·JSON20 보존 및 diff 검사 PASS. 기능/실제 서버 변화가 없어 검증을 재실행하지 않았다. 후행 기록 commit/push와 정리 후에도 두 브랜치의 로컬/원격 일치와 작업 트리 clean을 확인한다. 미통합/사용 여부 불명확한 다른 브랜치는 보존한다.
+
+## 2026-11-17 사용자 실제 앱 점검 정상 보고
+
+2026-11-17 사용자 실사용 확인 완료: API 변경 후 캐릭터 조회를 포함한 앱 전반 기능 점검이 모두 정상이었고,0/5분 단위가 아닌 시간 입력도 모두 정상 통과했다고 사용자가 직접 보고했다. 해당 범위의 실제 앱 동작·분 단위 입력을 미검증/인수 대기로 안내하지 않는다. 이 근거는 사용자 실사용 보고이며 Backend 자동 시험 집계와 별도로 보존한다. 동일 점검을 반복 요청하지 않으며 추가 문제 발생 시 해당 근거에 대응한다.
+
+이전 기록의 미확인 안내는 해당 보고 전 시점의 이력이다. 현재 NEXT_WORK/AI_CONTEXT·Issue 색인·통합/기능 기록에 사용자 확인 완료를 반영했다. 앱/서버/DB/키 변경이나 시험 재실행·Issue 종료는 하지 않았으며 이번 후행 문서 수정은 아직 미커밋·미push다.
+
+Native [Issue56 전체7](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6924853807)에서 같은 사용자 정상 확인과 dev/main d8e91a49 통합·원격 일치를 보고했음을 수신했다. 공식 Issue에 동일 사실이 이미 있어 변화 없는 반복 댓글은 추가하지 않았다. Native 보고와 이번 사용자 직접 보고를 함께 근거로 유지한다.
+
+## 2026-11-17 Issue55·56 종료 가능 여부·문서 최신화 점검
+
+사용자 요청으로 최신 본문/전체 댓글55총24·56총7 및 완료 조건을 검토해 두 Issue 모두 completed 종료 가능으로 판단했다. Backend1889/122의 각 시험 근거·dev/main154a60e·실제 dev0037, Native d8e91a49/2863PASS/analyze0·명세 소비와 사용자 직접 앱 전반/비5분 입력 정상 보고를 완료 근거로 연결했다. 운영 배포·BUG-038·선택 진단 후속은 별도 원본으로 보존하며 해당 기능의 미구현이나 추가 기기 검수 대기로 붙이지 않는다. [점검 원본](issue55-56-closeout-review.md).
+
+2026-11-17 종료 가능 여부 점검: Issue55·56 모두 완료 조건 충족으로 completed 종료 가능하다. [점검 원본](issue55-56-closeout-review.md)·[Issue55 전체25 Backend 판단](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6925089683)·[Issue56 전체8 Backend 판단](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6925093036). 사용자 앱 전반/캐릭터 조회·비5분 입력 실사용 정상 확인까지 반영했으며 추가 기능/동일 시험 대기는 없다. 실제 상태는 OPEN이고 이번 요청은 판단이므로 Close는 실행하지 않았다. 다음은 사용자 종료 결정 후 상태 갱신이다. 운영/별도 후속은 종료 방해 조건으로 추가하지 않는다. 후행 문서는 미커밋·미push다.
+
+본문 상단도 현재 판정으로 정리했고 전체 댓글 재조회로55전체25·56전체8의 Backend 작성·판단 단계를 확인했다. 요청은 종료 여부 판단이므로 실제 상태는 OPEN을 유지했다. 문서/보관 원문/동결 JSON·diff 검사만 수행하며 서버/DB/키·앱 시험 재실행·commit/push는 하지 않았다.
+
+## 2026-11-17 사용자 지시 Issue55·56 completed 종료
+
+2026-11-17 최종 상태: 사용자 명시 지시로 Issue55·56을 completed 종료했다. [Issue55 전체26 Backend 종료](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6925201215)·[Issue56 전체9 Backend 종료](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6925204975). 사용자 앱 전반/캐릭터 조회·비5분 입력 정상 확인 및 종료 근거를 보존한다. 해당 기능의 추가 구현/재시험·인수 대기 없음. 아래 OPEN/종료 결정 대기는 이전 이력이다. 후행 문서는 이번 승인 범위로 commit/push하며 운영/서버/DB/키는 변경하지 않는다.
+
+전체 댓글 재조회로 실제55전체26·56전체9의 작성 측 Backend/종료 단계를 확인했다. 두 Issue API 응답 closed/completed를 확인했고 사용자 확인 후행 문서·종료 판단/최종 상태를 함께 게시한다. 기존 dev/main/origin154a60e에서 충돌/새 원격 변경 없이 동일 최종 commit으로 동기화한다. 문서/동결 보존·diff 검사만 수행하며 서버/DB/키·운영 변경이나 동일 시험 반복은 없다.
