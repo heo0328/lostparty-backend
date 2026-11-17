@@ -5189,3 +5189,7 @@ source5e0ee12/run44117486823의verify성공·회귀0/3/7성공,6번134161122895�
 2026-11-18 CI후속: 원full CI44117486823/source5e0ee12는7개회귀성공·6번1FAIL(216PASS/2subtests),verify성공·validation실패/publish·deploy skipped다. 수요일점검과충돌한명시출발시험의시계를조회/명령/reconcile모두일치하도록고정해표적1PASS·파일전체11PASS(46.30s). 앱/API변경없음. 동일승인게시/CI구간에직접필요한시험보완/기록만최소게시후새source수동full CI를실행한다. merge/공개/운영은제외다.
 
 초기시계보완/reconcile설정실패는원로그에보존하며마지막표적1PASS/파일11PASS와합산하지않는다. 실패로그/로컬검증은ignored backups/release-2.4.0-verification/에보존한다. CI원격검증에보완source게시가실제로필요하여같은승인게시구간의최소시험/문서만게시한다. 새CIsource/run은후행영수증으로분리한다.
+
+## 2026-11-18 B9 최소시험보완 게시·새full CI
+
+보완commit051895aac29bddd041803d31131b8450c109a4fd를release/2.4.0에push·원격일치확인했다. 승인된게시/CI구간의원격검증에실제로필요한시험1파일과직접기록만포함했다. 새workflow_dispatch/full run44120909602 source일치실행중이며원run44117486823 failure/성공증거0과분리한다. 표적1PASS/파일11PASS/정적115PASS·문서/diffPASS. [B9회신](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6953408984). merge/태그·Release/이미지공개/운영반영없음.

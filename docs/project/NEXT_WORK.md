@@ -1,11 +1,11 @@
 # 다음 실행
 
-2026-11-18 CI후속: 원full CI44117486823/source5e0ee12는7개회귀성공·6번1FAIL(216PASS/2subtests),verify성공·validation실패/publish·deploy skipped다. 수요일점검과충돌한명시출발시험의시계를조회/명령/reconcile모두일치하도록고정해표적1PASS·파일전체11PASS(46.30s). 앱/API변경없음. 동일승인게시/CI구간에직접필요한시험보완/기록만최소게시후새source수동full CI를실행한다. merge/공개/운영은제외다.
+2026-11-18 B9: 원full CI44117486823/source5e0ee12는verify·회귀7구간성공/6번1FAIL로전체failure·성공증거0/publish·deploy skipped. 합성출발시각의수요일점검충돌을보완해표적1PASS/파일11PASS·정적115PASS. 같은승인게시/CI구간의최소보완source051895aac29bddd041803d31131b8450c109a4fd를release/2.4.0에commit/push·원격일치후새수동full CI [44120909602](https://github.com/heo0328/lostparty-backend/actions/runs/44120909602) 실행중이다. [원실패/보완/새CI영수증](../engineering/operations/records/release-2.4.0-ci.json)·[B9회신](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6953408984).
 
 ## 다음 실행
 
-1. 최소보완커밋/원격일치후새source수동full CI의최종결과를확인한다. 원run/실패를보존하고새run/source를별도로기록한다. 원source의단순재시도는보완코드를사용하지않으므로하지않는다.
-2. 전체성공뒤merge/태그·Release/불변이미지공개는별도사용자지시범위다. 운영전환은별도승인과직전정지백업/PC확인·공동공개조건을따른다.
+1. 새source051895a/run44120909602의verify/8회귀/validation최종결과를확인한다. 원source/run실패는보존하고새결과와합치지않는다.
+2. 전체성공뒤merge/태그·Release/불변이미지공개는별도지시범위다. 운영전환은별도승인과직전정지백업/PC확인·공동공개조건을따른다. Native고정파일/기존인수재사용·동일시험요청없음.
 
 ## 코드·계약·실행 구분
 

@@ -39,9 +39,22 @@
     "production_code_changed": false,
     "local_targeted_result": "1 passed in 8.54s",
     "local_file_result": "11 passed,1warning,46.30s; cleanup complete",
-    "fix_committed": false,
-    "fix_pushed": false,
+    "fix_committed": true,
+    "fix_pushed": true,
     "original_ci_source_unchanged": true,
-    "publication_reason": "The explicitly authorized source/full-CI interval requires publishing this minimal test-only correction to validate it in Actions; no merge/tag/publication/deployment"
-  }
+    "publication_reason": "The explicitly authorized source/full-CI interval requires publishing this minimal test-only correction to validate it in Actions; no merge/tag/publication/deployment",
+    "fix_source": "051895aac29bddd041803d31131b8450c109a4fd"
+  },
+  "followup_validation": {
+    "run_id": 44120909602,
+    "attempt": 1,
+    "url": "https://github.com/heo0328/lostparty-backend/actions/runs/44120909602",
+    "source": "051895aac29bddd041803d31131b8450c109a4fd",
+    "mode": "full",
+    "event": "workflow_dispatch",
+    "status": "in_progress",
+    "conclusion": null
+  },
+  "followup_reply": "https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6953408984",
+  "followup_reply_order": 21
 }

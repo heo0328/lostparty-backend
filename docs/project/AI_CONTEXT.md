@@ -1,8 +1,6 @@
 # LostParty Backend 기능 지도
 
-2026-11-18 CI후속: 원full CI44117486823/source5e0ee12는7개회귀성공·6번1FAIL(216PASS/2subtests),verify성공·validation실패/publish·deploy skipped다. 수요일점검과충돌한명시출발시험의시계를조회/명령/reconcile모두일치하도록고정해표적1PASS·파일전체11PASS(46.30s). 앱/API변경없음. 동일승인게시/CI구간에직접필요한시험보완/기록만최소게시후새source수동full CI를실행한다. merge/공개/운영은제외다.
-
-[CI영수증](../engineering/operations/records/release-2.4.0-ci.json)·[다음실행](NEXT_WORK.md). B7전체CLI합성검증/준비백업/Native고정산출물은유지하며운영2.3.0/0036이다.
+원full CI44117486823/source5e0ee12는회귀6번fixture시각으로failure. 보완source051895aac29bddd041803d31131b8450c109a4fd commit/push·원격일치, 표적1PASS/파일11PASS·정적115PASS. 새수동full CI [44120909602](https://github.com/heo0328/lostparty-backend/actions/runs/44120909602) 실행중이며전체성공전이다. [CI영수증](../engineering/operations/records/release-2.4.0-ci.json)·[B9](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6953408984). merge/공개/운영전환없음.
 
 ## 현재 기준
 
