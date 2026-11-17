@@ -506,6 +506,8 @@ def reconcile(db, a, obs, *, fresh=False, owned=False):
             from app.game_accounts.rosters import roster_presence
             roster_presence.record(db,a,c,previous_revision,was_usable,'missing',obs.fetched_at)
         suspects+=1
+    from app.game_accounts.analysis import candidates
+    candidates.observe(db,a,obs.roster,fresh)
     a.roster_revision+=1
     db.flush()
     rep_policy.repair_account(db,a)
@@ -633,6 +635,9 @@ def apply(db, uid, op, data, rid, obs, baseline_revision, provider_generation=No
         previous=set(db.scalars(select(Activity.character_id).where(Activity.settings_id==c.id)))
         c.next_change_at=None
         if previous!=set(selected) or c.representative_id!=representative or c.state!='configured':
+            from app.game_accounts.analysis import candidates
+            prior=list(db.scalars(select(Activity.character_id).where(Activity.settings_id==c.id)))
+            candidates.delta(db,uid,a,prior,selected)
             db.execute(delete(Activity).where(Activity.settings_id==c.id))
             db.add_all([Activity(settings_id=c.id,account_id=a.id,character_id=i) for i in selected])
             c.representative_id,c.state=representative,'configured'

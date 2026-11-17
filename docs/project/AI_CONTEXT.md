@@ -1,29 +1,21 @@
 # LostParty Backend 기능 지도
 
-2026-11-17 게시 확인: 업무3910c43·기록98c6b36을 dev 병합 c4e49674e922150d125bd9573c56ac7e6109948e로 통합하고 origin/dev push·원격 SHA 일치/작업트리 clean 확인. 완료 목적 브랜치 fix/character-analysis는 로컬 삭제, 원격에는 없음을 확인했다. 병합 후 단위8PASS. Issue57은 게시 결과 회신 시 GitHub API404여서 댓글을 작성하지 못했다(삭제 여부/주체 단정 안 함). main/운영은 변경하지 않았다. 이 후행 기록도 사용자 승인 범위로 dev에 commit/push한다.
+2026-11-17 사용자 게시 지시:0038 호환복구 `08212c31215adae1c3a09cb9705409103af1ebdd` 및 누적계약/개발반영 기록을 dev에 병합·push한다. [Native 전체12 복구수용](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947614833) 수신으로 Backend 지원대기는 해소됐고 사용자 두화면 확인만 남았다. 실제실행image eadaa2cc…37b9/DB0038·계약hash12634daa…b9665는 그대로이며 이번게시를 서버재교체/운영배포로 확대하지 않는다. 정확한 병합·원격확인은 DEV_LOG 게시 영수증을 따른다. 아래 미커밋/미push 설명은 당시 이력이다.
 
-2026-11-17 사용자 commit/dev 병합/push 지시: BUG-039 업무 커밋 `3910c43` 생성 완료. 이번 기록도 같은 목적 브랜치에서 커밋해 dev로 통합·게시한다. 아래 미커밋/미push 표기는 당시 이력이다. 최종 통합 SHA·원격 일치는 Issue57 게시 회신과 사용자 완료 보고를 따른다. 개발 적용 완료·Native/사용자 저장/표시 확인 대기, 운영 배포 없음.
-
-2026-11-17 [Issue57 BUG-039](https://github.com/heo0328/lostparty-backend/issues/57) 진행: 니티얌 도화가 실제 노드 표기와 카탈로그 불일치를 별칭으로 수정·개발 API 반영 완료다. 실제 support 판별 성공, 사용자 HTTP 저장/화면 확인 대기다. 티아서버용 upstream 본문 실패는 별개다. [원인·검증·다음 담당](bug-039-analysis-refresh.md). Issue55/56 종료 상태는 유지한다.
-
-2026-11-17 최종 상태: 사용자 명시 지시로 Issue55·56을 completed 종료했다. [Issue55 전체26 Backend 종료](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6925201215)·[Issue56 전체9 Backend 종료](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6925204975). 사용자 앱 전반/캐릭터 조회·비5분 입력 정상 확인 및 종료 근거를 보존한다. 해당 기능의 추가 구현/재시험·인수 대기 없음. 아래 OPEN/종료 결정 대기는 이전 이력이다. 후행 문서는 이번 승인 범위로 commit/push하며 운영/서버/DB/키는 변경하지 않는다.
+2026-11-17 Issue58 B6:0038 모집/현황 호환 회귀 직접복구·개발API 반영 완료. [전체11 Backend B6](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947547141). 누락3곳에0038 명시지원, 기본current136PASS/하위13PASS·모집관련67PASS·계약불변. 실제인증HTTP 현재/다음주 모집검색200(각0건)·참가목록200(각2건), group policy=True/API·DBhealthy. [상세](../engineering/development/schema0038-recruitment-recovery.md)·[집계](../engineering/operations/records/schema0038-recruitment-recovery.json). 다음Native/사용자 두화면확인, Backend오류대응. 복구소스 미커밋·미push, DBmigration/자료·키/환경·운영 변경 없음.
 
 
-2026-11-17 종료 가능 여부 점검: Issue55·56 모두 완료 조건 충족으로 completed 종료 가능하다. [점검 원본](issue55-56-closeout-review.md)·[Issue55 전체25 Backend 판단](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6925089683)·[Issue56 전체8 Backend 판단](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6925093036). 사용자 앱 전반/캐릭터 조회·비5분 입력 실사용 정상 확인까지 반영했으며 추가 기능/동일 시험 대기는 없다. 실제 상태는 OPEN이고 이번 요청은 판단이므로 Close는 실행하지 않았다. 사용자 종료 지시에 따른 completed 처리를 완료했다. 운영/별도 후속은 종료 방해 조건으로 추가하지 않는다. 후행 문서는 미커밋·미push다.
+2026-11-17 현재: Issue58 Backend 구현·격리검증·실제 로컬dev0038/API 지원 완료. [계약](../features/rosters/activity-and-presentation/refresh-candidate-contract.md)·[반영 원장](../engineering/operations/records/analysis-candidates-local-rollout.json). 사용자 지시로 `feat/roster-refresh-policy` 게시 완료, 이번 사용자 지시로 dev 병합·push하며 main/운영 배포는 별도다. 구현 `8f29271d610aad83021ec3a00e5879f2adda76d5` 기준이며 정확한 문서tip/게시·검증은 [DEV_LOG](DEV_LOG.md), 다음 실행은 [NEXT_WORK](NEXT_WORK.md).
 
+Native [전체6 N1](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6945574683)은 일반 앱 연결·자동검증 완료/미커밋·미push를 보고했다. 사용자 실제 HTTP저장·웹/Android 결과는 미확인이고 같은 Issue58에서 추적한다. 추가 Backend 계약/동일시험 요청은 없다.
 
-Native [Issue56 전체7 사용자 정상 확인·통합 보고](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6924853807)도 확인했다. Native dev/main/origin은 d8e91a4951d6baa6095a47326394563e9af44c83으로 통합됐으며 추가 Backend 변경/재검증 요청은 없다.
-
-2026-11-17 사용자 실사용 확인 완료: API 변경 후 캐릭터 조회를 포함한 앱 전반 기능 점검이 모두 정상이었고,0/5분 단위가 아닌 시간 입력도 모두 정상 통과했다고 사용자가 직접 보고했다. 해당 범위의 실제 앱 동작·분 단위 입력을 미검증/인수 대기로 안내하지 않는다. 이 근거는 사용자 실사용 보고이며 Backend 자동 시험 집계와 별도로 보존한다. 동일 점검을 반복 요청하지 않으며 추가 문제 발생 시 해당 근거에 대응한다.
-
-
-2026-11-17 기준. 다음 실행은 [NEXT_WORK](NEXT_WORK.md), 상세 작업/검증·병합은 [통합 기록](integration-20261117.md)·[DEV_LOG](DEV_LOG.md), 공식 담당/대기는 [ISSUE_TRACKER](ISSUE_TRACKER.md)를 따른다. 현재 목적 브랜치를 사용자 지시로 dev/main 병합4283c2c 및 동일 tip으로 통합했다. 운영은 별도다.
+Issue55/56은 사용자 정상 확인 후 completed 종료, Issue57은 작업 완료 후 식별정보 포함으로 사용자 직접 삭제했다. 대기를 다시 만들지 않는다. Issue18 활동자동추가는 별도 미착수다. 과거0037 전환·Git 통합/운영 기록은 아래 기능별 당시 근거로 보존하며 현재 로컬0038과 구분한다.
 
 ## 현재 기준
 
 - #55: 서버 key·순수 분석/명령·최신 summary/detail head·소비 전환/옛 writer·개인키·과거 실행 제거와 개발 DB0037/API 반영 완료. [구현/검증](../features/rosters/power-and-profiles/server-processing-implementation.md)·[실제 반영](../engineering/development/server-analysis-dev-preparation.md).1889항목 분할 검증 근거 확인, 새 승인 없이 초기화를 반복하지 않는다.
 - #56: 개인표1분/기존 일정·후보5분 분리·BInterval 소비,122항목/도구87PASS·실제 dev 지원 완료. [근거](../features/recruitment/scheduling/personal-availability-minute-plan.md).
-- Native901de262 게시·명세 소비·최종2863PASS/analyze0·분 지정 정상 사용자 보고 수신. [#55 전체22](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6924581088)·[#56 전체5](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6924582578). 사용자 앱 전반·비5분 입력 실사용 확인 완료, Backend는 추가 결과 대응. 추가 Backend 변경/동일 시험 요청 없음, Issue55/56 종료 가능 판정·현재 OPEN.
+- Native901de262 게시·명세 소비·최종2863PASS/analyze0·분 지정 정상 사용자 보고 수신. [#55 전체22](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6924581088)·[#56 전체5](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6924582578). 사용자 앱 전반·비5분 입력 실사용 확인 완료, Backend는 추가 결과 대응. 추가 Backend 변경/동일 시험 요청 없음, Issue55/56 completed 종료, 추가 인수 대기 없음.
 
 - #54: Backendv2.3.0/source05daa42·image71e30188…834d9d/DB0036와 웹2.3.0+8/source027f8215를 운영 반영했다. 표준43665092583 전체 성공, 두 명세/118테이블 행·환경/키/DB·Caddy 보존 및 HTTPS34자산 검증 완료. [전체16 Backend 운영 완료](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6887988908)·[운영 원장](../engineering/operations/records/release-2.3.0-deployment.json). Native 전체18에서 Android 공개·실파일/서명·안내문 검증 완료 보고를 수신했다. 공개 대기는 해소됐고 사용자 지시로 후행 기록 통합/push·Issue54 completed 종료를 완료했다. Backend 추가 작업 대기 없음·사용자 기기 인수/BUG-038 해결과 구분하며 후행 문서 통합은 운영 재배포와 구분한다.
 
@@ -40,7 +32,7 @@ Native [Issue56 전체7 사용자 정상 확인·통합 보고](https://github.c
 - 이전 공동 운영 릴리즈 이력: Backend `v2.1.1`/source `d16734d86e694579cd4e4e043c2ca89cc81c1b64`·DB0036/config lightsail-web-2.1.0·고정웹 일반공개, 웹/새APK는사용자실인수통과다. [배포·백업·최종공개 원장](../engineering/operations/records/release-2.1.0-deployment.json)·[운영/개발 구분](../engineering/operations/README.md).
 - Native [최종v2.1.0 Release](https://github.com/heo0328/LostParty_flutter/releases/tag/v2.1.0)는공개완료, [전체34 인계](https://github.com/heo0328/lostparty-backend/issues/49#issuecomment-6798998431)를Backend독립다운로드/5파일hash·원본동일성확인으로수용했다. 원APK/웹source와최종태그source는원장에구분한다.
 - 실제운영원장대기표기도완료로정정·PC사본보관했다. 운영코드/태그/이미지는불변이며추가배포·기기시험대기는없다. 사용자마감지시로최종문서를dev/main에동일통합·게시하고release/2.1.0을정리했다. #49는completed종료, 추가기술·인수대기는없다. [다음 실행](NEXT_WORK.md).
-- #47/#48은사용자승인completed종료, #17정리와#15/#18/#19선택은별도구간이다. 로컬dev는위 실행정리·DB0036을유지한다.
+- #47/#48은사용자승인completed종료, #17정리와#15/#18/#19선택은별도구간이다. 현재 로컬dev는 Issue58의 DB0038을 사용한다.
 
 ## 기능별 상태와 원본
 

@@ -16,6 +16,14 @@ class ExpectedVersions(DTO):
     support: Version
 
 
+class CandidateContext(DTO):
+    candidate_id: UUID
+    expected_generation: Version
+    expected_policy_revision: Version
+    expected_settings_version: Version
+    purpose: Literal['automatic_candidate', 'manual_retry']
+
+
 class AnalysisCommand(DTO):
     command_id: CommandID
     character_id: UUID
@@ -23,6 +31,17 @@ class AnalysisCommand(DTO):
     expected_lifecycle_revision: Version
     expected_summary_versions: ExpectedVersions
     trigger: Literal['automatic', 'manual']
+    candidate_context: CandidateContext = Field(default_factory=lambda: None)
+
+    @model_validator(mode='after')
+    def candidate_trigger(self):
+        if 'candidate_context' in self.model_fields_set and self.candidate_context is None:
+            raise ValueError('candidate_context cannot be null')
+        if self.candidate_context and self.trigger != (
+                'automatic' if self.candidate_context.purpose == 'automatic_candidate' else 'manual'):
+            raise ValueError('candidate purpose/trigger mismatch')
+        return self
+
 
 
     @field_validator('command_id','character_id',mode='before')
@@ -69,6 +88,15 @@ class AnalysisError(DTO):
     retry_at: datetime | None
 
 
+CANDIDATE_OUTCOMES = {
+    'ANALYSIS_CANDIDATE_NOT_FOUND': ('failed',404,'none'),
+    'ANALYSIS_CANDIDATE_IN_PROGRESS': ('failed',409,'none'),
+    'ANALYSIS_CANDIDATE_RETRY_REQUIRED': ('skipped',200,'none'),
+    'ANALYSIS_CANDIDATE_COMPLETED': ('skipped',200,'none'),
+    'ANALYSIS_CANDIDATE_RECONCILED': ('failed',409,'new_command'),
+}
+
+
 class AnalysisItem(DTO):
     command_id: CommandID
     character_id: UUID
@@ -81,6 +109,9 @@ class AnalysisItem(DTO):
 
     @model_validator(mode='after')
     def consistent(self):
+        if self.error and self.error.code in CANDIDATE_OUTCOMES:
+            if (self.state,self.status,self.retry)!=CANDIDATE_OUTCOMES[self.error.code]:
+                raise ValueError('Invalid candidate outcome')
         if self.state == 'saved':
             if self.status != 200 or self.result is None or self.error is not None or self.retry != 'none':
                 raise ValueError('Invalid saved result')

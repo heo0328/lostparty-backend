@@ -1,5 +1,7 @@
 # 서버 분석 개발환경 준비
 
+2026-11-17 후행 Issue58: 로컬dev는 현재0038_analysis_candidates/API로 전환됐다. 기존자료·키/환경 보존 및 전체계약일치, [반영집계](../operations/records/analysis-candidates-local-rollout.json). 아래0037 준비/전환은 당시 이력이다.
+
 2026-11-17 실제 개발 반영 완료: 사용자 토큰 파일 준비 확인 및 로컬 DB 삭제 명시 승인 후 lostparty DB만 초기화·0037 적용, 게시 구현 b95cff5 기준 image c2b4a320…a2dc로 개발 API 전환/healthy 확인. 기존 볼륨·DB 역할·환경/키와 운영은 보존했다. OpenAPI 전체 일치·health/공개 그룹200·미로그인 주차/개인 bootstrap401·회원0·서버 키 로딩 PASS. 실제 provider·회원 수집/저장·기기 인수는 아직 미검증이다. [전체15 Backend·개발 전환 인계](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6921019988). 다음 Native I1 새 로그인·원정대 등록/서버 분석 연동, Backend는 결과 대응이다. 초기화는 이미 완료했으므로 반복하지 않는다. 아래 이전 준비/승인 대기 문구는 전환 전 이력이다. 최신 준비/반영 기록은 미커밋·미push다.
 
 

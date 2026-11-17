@@ -77,6 +77,10 @@ def put(principal,rid,key,body):
             for name in ('registration_version','settings_version','ownership_revision','roster_revision'):
                 if scope[name]!=body['expected_'+name]:fail('REVISION_CONFLICT')
             if data['order_digest']!=body['expected_order_digest']:fail('REVISION_CONFLICT')
+            from app.game_accounts.analysis import candidates
+            p=candidates.ensure_legacy(db,uid,account)
+            expected=body.get('expected_analysis_policy_revision')
+            if expected is not None and (p is None or p.revision!=expected):fail('REVISION_CONFLICT')
             selected=body['activity_character_ids'];rep=body['representative_character_id']
             if not selected:fail('EMPTY_ACTIVITY_SELECTION',400)
             if len(set(selected))!=len(selected):fail('INVALID_REQUEST',400)
@@ -99,6 +103,7 @@ def put(principal,rid,key,body):
                 if configuration is None:
                     configuration=Configuration(user_id=uid,account_id=account.id);db.add(configuration);db.flush()
                 if set(selected)!=set(data['activity_character_ids']):
+                    candidates.delta(db,uid,account,data['activity_character_ids'],selected,expected)
                     db.execute(delete(Activity).where(Activity.settings_id==configuration.id))
                     db.add_all([Activity(settings_id=configuration.id,account_id=account.id,character_id=UUID(cid)) for cid in selected])
                 configuration.representative_id=UUID(rep) if rep else None;configuration.state='configured';configuration.version+=1;configuration.next_change_at=None

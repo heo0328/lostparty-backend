@@ -18,7 +18,8 @@ SUITES = {
                 'tests/game_accounts/analysis/test_server_credentials.py',
                 'tests/game_accounts/analysis/test_provider_limits.py',
                 'tests/game_accounts/analysis/test_analysis_migrations.py',
-                'tests/member_settings/test_member_settings.py'),
+                'tests/member_settings/test_member_settings.py',
+                'tests/raid_rooms/common/test_current_head_compatibility.py'),
     'two-cycle': ('tests/raid_rooms/admissions/test_reapplication_history.py',
                   'tests/raid_rooms/admissions/test_beta_recruitment.py'),
 }
@@ -81,7 +82,7 @@ def main(argv=None):
         print(str(error), file=sys.stderr)
         return 2
     print(json.dumps({"suite": args.suite, "selection": selected,
-                      "baseline": "0037_server_analysis; current app; disposable PostgreSQL only"}), flush=True)
+                      "baseline": "0038_analysis_candidates; current app; disposable PostgreSQL only"}), flush=True)
     return subprocess.call([sys.executable, "-m", "pytest", "-v" if args.verbose else "-q", "--tb=short", "--maxfail", str(args.maxfail),
         *(["--collect-only"] if args.collect_only else []), "-p", "no:cacheprovider", *selected], cwd=ROOT)
 

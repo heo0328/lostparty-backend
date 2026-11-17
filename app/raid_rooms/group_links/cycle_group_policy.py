@@ -29,7 +29,7 @@ def using(enabled=True):
 
 def enabled(db):
     if 'cycle_group_policy_enabled' not in db.info:
-        db.info['cycle_group_policy_enabled'] = db.scalar(text('SELECT version_num FROM public.alembic_version')) in ('0035_cycle_group_policy', '0036_roster_presence','0037_server_analysis')
+        db.info['cycle_group_policy_enabled'] = db.scalar(text('SELECT version_num FROM public.alembic_version')) in ('0035_cycle_group_policy', '0036_roster_presence','0037_server_analysis','0038_analysis_candidates')
     return db.info['cycle_group_policy_enabled']
 
 

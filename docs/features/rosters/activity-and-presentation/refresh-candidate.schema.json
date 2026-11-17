@@ -1,0 +1,1299 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Issue58 additive analysis candidate command contract",
+  "$comment": "Extends the preserved Issue55 command schema; semantic CAS/lease/ownership checks remain server responsibilities.",
+  "$defs": {
+    "Command": {
+      "type": "object",
+      "properties": {
+        "command_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        },
+        "character_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "expected_ownership_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "expected_lifecycle_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "expected_summary_versions": {
+          "type": "object",
+          "properties": {
+            "dealer": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "support": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            }
+          },
+          "required": [
+            "dealer",
+            "support"
+          ],
+          "additionalProperties": false
+        },
+        "trigger": {
+          "enum": [
+            "automatic",
+            "manual"
+          ]
+        },
+        "candidate_context": {
+          "$ref": "#/$defs/CandidateContext"
+        }
+      },
+      "required": [
+        "command_id",
+        "character_id",
+        "expected_ownership_revision",
+        "expected_lifecycle_revision",
+        "expected_summary_versions",
+        "trigger"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "candidate_context"
+            ],
+            "properties": {
+              "candidate_context": {
+                "properties": {
+                  "purpose": {
+                    "const": "automatic_candidate"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "trigger": {
+                "const": "automatic"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "candidate_context"
+            ],
+            "properties": {
+              "candidate_context": {
+                "properties": {
+                  "purpose": {
+                    "const": "manual_retry"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "trigger": {
+                "const": "manual"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Request": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Command"
+          },
+          "minItems": 1,
+          "maxItems": 50
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "additionalProperties": false
+    },
+    "Issue": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[A-Z0-9_]+$",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "severity": {
+          "enum": [
+            "warning",
+            "error"
+          ]
+        }
+      },
+      "required": [
+        "code",
+        "severity"
+      ],
+      "additionalProperties": false
+    },
+    "Summary": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "const": "server_analysis"
+        },
+        "analysis_rules_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9._-]+$"
+        },
+        "analyzed_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+        },
+        "combat_power": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32,
+              "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "item_level": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32,
+              "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "combat_power_observed_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "item_level_observed_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "integrity_status": {
+          "enum": [
+            "clean",
+            "review",
+            "error",
+            "unavailable"
+          ]
+        },
+        "catalog_version": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "pattern": "^[A-Za-z0-9._-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Issue"
+          },
+          "maxItems": 20,
+          "uniqueItems": true
+        },
+        "observed_lifecycle_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "source",
+        "analysis_rules_version",
+        "analyzed_at",
+        "combat_power",
+        "item_level",
+        "combat_power_observed_at",
+        "item_level_observed_at",
+        "integrity_status",
+        "catalog_version",
+        "issues",
+        "observed_lifecycle_revision"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "combat_power": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "combat_power_observed_at": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "combat_power_observed_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "item_level": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "item_level_observed_at": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "item_level_observed_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Detection": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "detected",
+            "unsupported_class",
+            "branch_not_found",
+            "ambiguous"
+          ]
+        },
+        "catalog_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9._-]+$"
+        },
+        "class_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "pattern": "^[A-Za-z0-9._-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "branch_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64,
+              "pattern": "^[A-Za-z0-9._-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "branch_display_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "detected_role": {
+          "anyOf": [
+            {
+              "enum": [
+                "dealer",
+                "support"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "matched_tier1_node": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "matched_related_nodes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "catalog_version",
+        "class_id",
+        "branch_id",
+        "branch_display_name",
+        "detected_role",
+        "matched_tier1_node",
+        "matched_related_nodes"
+      ],
+      "additionalProperties": false
+    },
+    "Gem": {
+      "type": "object",
+      "properties": {
+        "slot": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "level": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "target": {
+          "type": "string"
+        },
+        "descriptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "category": {
+          "enum": [
+            "normal",
+            "passive_or_identity",
+            "unknown"
+          ]
+        },
+        "validation_status": {
+          "enum": [
+            "verified",
+            "same_class_target_unverified",
+            "foreign_class",
+            "unavailable"
+          ]
+        }
+      },
+      "required": [
+        "slot",
+        "level",
+        "target",
+        "descriptions",
+        "category",
+        "validation_status"
+      ],
+      "additionalProperties": false
+    },
+    "GridCore": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "grade": {
+          "type": "string"
+        },
+        "point": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "minimum_point": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "recommended_point": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "name",
+        "grade",
+        "point",
+        "minimum_point",
+        "recommended_point"
+      ],
+      "additionalProperties": false
+    },
+    "GridCondition": {
+      "type": "object",
+      "properties": {
+        "core_name": {
+          "type": "string"
+        },
+        "condition_text": {
+          "type": "string"
+        },
+        "required_passive_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "missing_passive_names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "core_name",
+        "condition_text",
+        "required_passive_names",
+        "missing_passive_names"
+      ],
+      "additionalProperties": false
+    },
+    "GridMinimum": {
+      "type": "object",
+      "properties": {
+        "order_sun_point": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "order_moon_point": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "required_point": {
+          "const": 14
+        }
+      },
+      "required": [
+        "order_sun_point",
+        "order_moon_point",
+        "required_point"
+      ],
+      "additionalProperties": false
+    },
+    "Notice": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning"
+          ]
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "severity",
+        "message"
+      ],
+      "additionalProperties": false
+    },
+    "Detail": {
+      "type": "object",
+      "properties": {
+        "detection": {
+          "$ref": "#/$defs/Detection"
+        },
+        "rune_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "equipped_gem_count": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "gem_effects_source_available": {
+          "type": "boolean"
+        },
+        "gems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Gem"
+          }
+        },
+        "ark_grid_core_points": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GridCore"
+          }
+        },
+        "ark_grid_conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GridCondition"
+          }
+        },
+        "ark_grid_minimum": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GridMinimum"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "notices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Notice"
+          }
+        }
+      },
+      "required": [
+        "detection",
+        "rune_count",
+        "equipped_gem_count",
+        "gem_effects_source_available",
+        "gems",
+        "ark_grid_core_points",
+        "ark_grid_conditions",
+        "ark_grid_minimum",
+        "notices"
+      ],
+      "additionalProperties": false
+    },
+    "StoredRole": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "saved_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "summary": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Summary"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "detail": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Detail"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "version",
+        "saved_at",
+        "summary",
+        "detail"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "summary": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "version": {
+                "const": 1
+              },
+              "saved_at": {
+                "type": "null"
+              },
+              "detail": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "version": {
+                "type": "integer",
+                "minimum": 2,
+                "maximum": 2147483647
+              },
+              "saved_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+              },
+              "detail": {
+                "$ref": "#/$defs/Detail"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "SavedResult": {
+      "type": "object",
+      "properties": {
+        "character_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "game_account_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "ownership_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "lifecycle_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "role": {
+          "enum": [
+            "dealer",
+            "support"
+          ]
+        },
+        "analysis": {
+          "$ref": "#/$defs/StoredRole"
+        }
+      },
+      "required": [
+        "character_id",
+        "game_account_id",
+        "ownership_revision",
+        "lifecycle_revision",
+        "role",
+        "analysis"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "properties": {
+            "analysis": {
+              "properties": {
+                "version": {
+                  "minimum": 2
+                },
+                "summary": {
+                  "$ref": "#/$defs/Summary"
+                },
+                "detail": {
+                  "$ref": "#/$defs/Detail"
+                },
+                "saved_at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[A-Z0-9_]+$"
+        },
+        "message": {
+          "type": "string"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "retry_after_seconds": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "retry_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "request_id",
+        "retry_after_seconds",
+        "retry_at"
+      ],
+      "additionalProperties": false
+    },
+    "Item": {
+      "type": "object",
+      "properties": {
+        "command_id": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        },
+        "character_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "status": {
+          "type": "integer"
+        },
+        "state": {
+          "enum": [
+            "saved",
+            "skipped",
+            "failed",
+            "not_processed",
+            "in_progress",
+            "unknown"
+          ]
+        },
+        "detected_role": {
+          "anyOf": [
+            {
+              "enum": [
+                "dealer",
+                "support"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "retry": {
+          "enum": [
+            "none",
+            "same_command",
+            "new_command"
+          ]
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SavedResult"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Error"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "command_id",
+        "character_id",
+        "status",
+        "state",
+        "detected_role",
+        "retry",
+        "result",
+        "error"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "saved"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": 200
+              },
+              "detected_role": {
+                "enum": [
+                  "dealer",
+                  "support"
+                ]
+              },
+              "retry": {
+                "const": "none"
+              },
+              "result": {
+                "$ref": "#/$defs/SavedResult"
+              },
+              "error": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "skipped"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": 200
+              },
+              "detected_role": {
+                "type": "null"
+              },
+              "retry": {
+                "const": "none"
+              },
+              "result": {
+                "type": "null"
+              },
+              "error": {
+                "$ref": "#/$defs/Error"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "failed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "enum": [
+                  400,
+                  401,
+                  403,
+                  404,
+                  409,
+                  429,
+                  503
+                ]
+              },
+              "retry": {
+                "enum": [
+                  "none",
+                  "new_command"
+                ]
+              },
+              "result": {
+                "type": "null"
+              },
+              "error": {
+                "$ref": "#/$defs/Error"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "not_processed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": 503
+              },
+              "detected_role": {
+                "type": "null"
+              },
+              "retry": {
+                "const": "same_command"
+              },
+              "result": {
+                "type": "null"
+              },
+              "error": {
+                "$ref": "#/$defs/Error"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "in_progress"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": 409
+              },
+              "detected_role": {
+                "type": "null"
+              },
+              "retry": {
+                "const": "same_command"
+              },
+              "result": {
+                "type": "null"
+              },
+              "error": {
+                "$ref": "#/$defs/Error"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "status": {
+                "const": 503
+              },
+              "detected_role": {
+                "type": "null"
+              },
+              "retry": {
+                "const": "same_command"
+              },
+              "result": {
+                "type": "null"
+              },
+              "error": {
+                "$ref": "#/$defs/Error"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Response": {
+      "type": "object",
+      "properties": {
+        "evaluated_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Item"
+          },
+          "minItems": 1,
+          "maxItems": 50
+        }
+      },
+      "required": [
+        "evaluated_at",
+        "items"
+      ],
+      "additionalProperties": false
+    },
+    "PowerComparison": {
+      "type": "object",
+      "properties": {
+        "selected_role": {
+          "enum": [
+            "dealer",
+            "support"
+          ]
+        },
+        "requirement": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32,
+              "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actual": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 32,
+              "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state": {
+          "enum": [
+            "unrestricted",
+            "missing",
+            "below",
+            "meets"
+          ]
+        },
+        "source": {
+          "const": "server_analysis"
+        },
+        "trust": {
+          "const": "server_computed"
+        },
+        "summary_version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "observed_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "saved_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|\\+00:00)$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "integrity_status": {
+          "anyOf": [
+            {
+              "enum": [
+                "clean",
+                "review",
+                "error",
+                "unavailable"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Issue"
+          },
+          "maxItems": 20
+        }
+      },
+      "required": [
+        "selected_role",
+        "requirement",
+        "actual",
+        "state",
+        "source",
+        "trust",
+        "summary_version",
+        "observed_at",
+        "saved_at",
+        "integrity_status",
+        "issues"
+      ],
+      "additionalProperties": false
+    },
+    "CandidateContext": {
+      "type": "object",
+      "properties": {
+        "candidate_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "expected_generation": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "expected_policy_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "expected_settings_version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "purpose": {
+          "enum": [
+            "automatic_candidate",
+            "manual_retry"
+          ]
+        }
+      },
+      "required": [
+        "candidate_id",
+        "expected_generation",
+        "expected_policy_revision",
+        "expected_settings_version",
+        "purpose"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

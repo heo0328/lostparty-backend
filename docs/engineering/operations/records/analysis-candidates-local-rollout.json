@@ -1,0 +1,54 @@
+{
+  "date_kst": "2026-11-17",
+  "issue": 58,
+  "scope": "local development only; explicit user rollout instruction",
+  "branch": "feat/roster-refresh-policy",
+  "base_commit": "4c2cff082f361bba0b6fa9ceacb524fdeaaadae1",
+  "runtime_image": "sha256:9740bd510e49c6abef2db546cf12aa9bf2af1f922b8a4d39f4eb14698f8ea018",
+  "db_before": "0037_server_analysis",
+  "db_after": "0038_analysis_candidates",
+  "preservation": {
+    "existing_tables_compared": 114,
+    "existing_rows_compared": 794,
+    "changed_existing_tables": 0,
+    "key_files_compared": 5,
+    "keys_equal": true,
+    "selected_environment_fingerprint_equal": true,
+    "local_dump_created": false,
+    "local_dump_policy": "existing user exclusion retained",
+    "actual_restore_executed": false
+  },
+  "migration_baseline": {
+    "policy_rows": 3,
+    "character_fact_rows": 47,
+    "new_analysis_candidates_from_legacy": 0
+  },
+  "checks": {
+    "api_healthy": true,
+    "db_healthy": true,
+    "health_http": 200,
+    "unauthenticated_bootstrap_http": 401,
+    "full_runtime_openapi_equal": true,
+    "openapi_paths": 191,
+    "openapi_sha256": "12634daa64a8c4cbdfecfdb53bc7c1aca3bdb721c5ea555d098aea51544b9665",
+    "stored_bootstrap_service_members": 1,
+    "false_key_omission": true,
+    "true_projection": true,
+    "roster_presence_combination": true,
+    "candidate_fact_count_unchanged_by_reads": true
+  },
+  "not_executed": [
+    "authenticated HTTP write/real provider analysis",
+    "Native/device integration acceptance",
+    "production deployment",
+    "dev/main merge"
+  ],
+  "source_status_at_rollout": "uncommitted/unpushed working tree; not a published source SHA",
+  "implementation_commit": "8f29271d610aad83021ec3a00e5879f2adda76d5",
+  "runtime_source_files_matched_to_commit": 348,
+  "publication": {
+    "branch": "feat/roster-refresh-policy",
+    "scope": "user-authorized implementation and documentation publication; dev/main merge excluded",
+    "receipt": "Issue58 Backend publication comment and git log"
+  }
+}

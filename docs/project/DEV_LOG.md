@@ -5046,3 +5046,65 @@ Native [Issue56 전체7](https://github.com/heo0328/lostparty-backend/issues/56#
 ## 2026-11-17 Issue57 dev 게시 확인
 
 2026-11-17 게시 확인: 업무3910c43·기록98c6b36을 dev 병합 c4e49674e922150d125bd9573c56ac7e6109948e로 통합하고 origin/dev push·원격 SHA 일치/작업트리 clean 확인. 완료 목적 브랜치 fix/character-analysis는 로컬 삭제, 원격에는 없음을 확인했다. 병합 후 단위8PASS. Issue57은 게시 결과 회신 시 GitHub API404여서 댓글을 작성하지 못했다(삭제 여부/주체 단정 안 함). main/운영은 변경하지 않았다. 이 후행 기록도 사용자 승인 범위로 dev에 commit/push한다.
+
+
+## 2026-11-17 Issue57 완료·사용자 삭제 확인
+
+2026-11-17 사용자 확인: Issue57 BUG-039는 작업 완료 후 계정 ID·캐릭터명이 포함되어 사용자께서 Close 대신 삭제했다. GitHub404는 이 삭제에 따른 결과이며 접근 장애/삭제 주체 미확정 상태가 아니다. 이 장애의 추가 구현·인수·회신 대기는 해소한다. 저레벨 분석 조회 제외는 별도 미착수 제안으로만 보존한다. 업무/dev 게시 최종 기준은 4c2cff0이며 이번 상태 정정 문서는 미커밋·미push다. 아래 진행/대기 문구는 당시 이력이다.
+
+
+## 2026-11-17 Issue18 상세 분석 후보 설계 회신
+
+2026-11-17 Issue18 설계 회신: Native 전체4 요청·전체5 사용자 확정4항목을 반영해 [전체6 Backend B1](https://github.com/heo0328/lostparty-backend/issues/18#issuecomment-6942884206)에 최소 공통 영속안·후보 saved 원자성/두기기 임대·automatic 권한·실패 명시재시도/ACK수명·DTO 후보를 회신했다. 다음 담당 Native는 소비/남은 제품 질문 대조, Backend는 이후 계약 고정이다. [설계 원본](../features/rosters/activity-and-presentation/refresh-candidate-review.md). 상세 분석 후보와 기존 활동 자동추가는 별개이며 구현용 독립 Issue 분리를 제안만 했다. 미커밋·미push, 코드/DDL/OpenAPI·서버/DB/provider/기능시험 변경 없음.
+현재코드정적대조·문서링크/절·diff 검사 PASS. Native 전체5의 사용자 확정 수신으로 최초 검토의 중복 제품질문을 해소했고, 설계에 확정 경계를 우선 표기했다. 기존 Issue57 미커밋 완료 정정은 보존했다.
+
+
+## 2026-11-17 Issue58 기술계약 v1·구현 계획
+
+2026-11-17 Issue58: [전체1 Backend B1 계약·구현계획 인계](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6943318871) 완료. [계약안 v1](../features/rosters/activity-and-presentation/refresh-candidate-contract.md)에 bootstrap include_analysis_candidates opt-in·분석 candidate_context/코드·설정PUT delta/CAS·이력수명·단계별검증을 구체화했다. 제품정책은 Issue58 확정 기준. 다음 Native DTO/소비 대조 후 Backend 명세/구현 고정이다. feat/roster-refresh-policy 미커밋·미push, 코드/DDL/실행OpenAPI·서버/DB/provider 변경 없음. Issue18 활동자동추가는 별도 미착수다.
+정적대조: bootstrap20원정대/200캐릭터/16MiB·strict query·management-2 CAS/delta·cleanup의 등록삭제 마스킹 및 명령24h/48h 확인. 문서검증/diff PASS. 기능시험/실제provider/서버교체 미실행.
+
+
+## 2026-11-17 Issue58 B2 구현·계약·격리검증
+
+2026-11-17 Issue58 B2: [전체3 Backend 구현·격리검증 인계](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6944474148) 완료. 복구POST/enum·합성예시를 고정하고 후보영속/opt-in조회/임대·원자저장/설정delta를 구현했다. [현재 계약·검증](../features/rosters/activity-and-presentation/refresh-candidate-contract.md). current131PASS/하위13PASS·설정/bootstrap/후보86PASS·최종표적17PASS(겹치는 집계). 최종 후보이미지 전체 OpenAPI191경로 일치. 소스 미커밋·미push, 실제개발 API/DB0037 미교체. 다음은 Native 복구/enum 소비·소스 게시 인계 및 별도 사용자 dev반영 지시 후0038 비파괴 적용/통합시험이다. 게시/서버반영 전 Native 신규실행 시험을 요청하지 않는다.
+최종 OpenAPI SHA256 12634daa64a8c4cbdfecfdb53bc7c1aca3bdb721c5ea555d098aea51544b9665. 요청/응답 고정예시를 POST OpenAPI에도 직접 포함했고 마지막 전체객체 비교 PASS. JSON Schema/DTO·문서·diff PASS. 초기 schema기동/seed/구ACK만료 호환 실패를 수정했고 실패를 PASS 집계로 세지 않았다. current/설정회귀 뒤 복구오류표시/48h투영 보완은 최종17PASS에서 검증했다. 같은 후보 중복은 CAS패자 재수집 대신 임대owner복구409로 바뀌므로 해당 기대만 갱신했다.
+변경은 feat/roster-refresh-policy에 누적했다. 앞선 Issue57 완료정정 미커밋 변경 보존. 실제provider·개발/운영 DB·키·환경·서버 이미지 변경 없으며 백업 원장의 로컬dump제외·기존키사본 기준도 유지한다. 미래0038 적용은 기존자료보존migration이고 초기화가 아니다.
+
+
+## 2026-11-17 Issue58 B3 실제 개발 반영
+
+2026-11-17 Issue58 B3: 사용자 명시 지시로 로컬dev0038/API 반영 완료. [전체4 Backend B3](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6944629650). 기존114테이블794행·키5개/주요환경 지문 보존, API/DB healthy·실제전체OpenAPI191경로 일치. 유효세션1명 저장bootstrap opt-in/기존shape/roster_presence 병용 PASS(HTTP쓰기·기기인수와 구분). [반영집계](../engineering/operations/records/analysis-candidates-local-rollout.json). 다음Native 일반경로 연결·로컬dev 통합확인, Backend 결과대응. 소스는 feat/roster-refresh-policy 미커밋·미push, 운영 변경 없음. 아래dev미반영 표기는 B3 이전 이력이다.
+API 중지→읽기전용내용지문→0038 비파괴migration→같은114테이블 모든행·키/환경 일치→API교체/healthy 순서로 검증했다. 새기준선3행/캐릭터관찰fact47행은 legacy이며 과거미선택 신규후보화 없음. 기존로컬dump제외 결정/키사본을 유지하고 새키·환경·실제복원/provider수집/운영변경/commit·push·merge를 수행하지 않았다. API 이미지9740bd510e49c6abef2db546cf12aa9bf2af1f922b8a4d39f4eb14698f8ea018, DB0038, 실제명세hash12634daa…b9665다. 유효 세션의 저장service 읽기는 실제HTTP로그인/분석저장·Native기기인수와 구분한다.
+
+## 2026-11-17 Issue58 문서 최신화·작업브랜치 게시
+
+사용자 “현재 작업 내용들을 문서 최신화 하고 커밋하여 푸시” 지시. 구현 `8f29271d610aad83021ec3a00e5879f2adda76d5` 생성, app/alembic348파일이 이미 실행 중인 개발이미지와 모두 동일함을 읽기전용 대조했다. 기능/DB/API를 반복 반영하거나 기능시험을 불필요하게 재실행하지 않았다. 앞선 current131/하위13·bootstrap/설정/후보86·최종표적17PASS 및 실행전체명세일치 근거를 재사용한다.
+
+[Native 전체5 기술수용](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6944827745)·[전체6 N1](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6945574683)을 확인했다. Native 담당 보고상 일반앱 연결·전체2873PASS·후행계정49PASS/analyze0, 미커밋·미push다. 실제회원HTTP분석저장/신규후보·재등록/웹Android결과는 미확인이다. 추가Backend계약/동일시험요청 없음, 구체 오류/사용자결과에 대응한다.
+
+NEXT_WORK는 다음행동·실행표로 정리하고 AI_CONTEXT는 기능상태/기준링크로 축약했다. Issue55/56 completed·Issue57 사용자삭제/완료 정정을 보존하고 추적표에서 완료이슈를 최근완료로 이동했다. 계약의 현재기준과 단계별당시이력, 롤아웃시점 미게시와 이후커밋기준을 구분했다. 문서링크/절·동결원문·diff 검사 PASS. 작업브랜치 `feat/roster-refresh-policy`로 구현/문서를 게시하며 dev/main병합·운영배포는 수행하지 않는다. 정확한 문서tip과 원격확인은 Issue58 게시회신 및 사용자완료보고를 따른다.
+
+
+### Issue58 게시 영수증
+
+구현8f29271d610aad83021ec3a00e5879f2adda76d5·문서a30db12fe40ba1caff3910e5073f2fcbe73a2d0c를 origin/feat/roster-refresh-policy에 push하고 원격SHA일치·차이0/0·작업트리clean 확인. [전체7 Backend B4 게시인계](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6945682966)에 고정소스/계약/예시/원장 링크와 Native N1 수신·남은사용자확인을 회신했다. 이 후행 영수증도 같은 사용자승인 범위로 commit/push하며 구현·실행이미지·계약hash는 변하지 않는다. dev/main미병합·운영미변경.
+
+
+## 2026-11-17 Issue58 B5 모집/현황503 진단
+
+2026-11-17 새 회귀 원인 확인: 모집목록/레이드현황 GROUP_FEATURE_NOT_READY503은 Native가 아니라0038 도입 시 Backend cycle_group_policy.enabled의 지원head 누락이다. [전체9 Backend B5](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6946991172). 실제DB0038에서 일반group features=True/모집group policy=False, 제보ID e8752b04-742f-4476-8950-b821eea6c68c는 GET /v2/me/raid-room-memberships503이며 모집search도같은오류다. 현재진단만, 코드/서버/DB/commit·push 변경 없음. 다음 Backend 호환수정·모집조회/이력 표적검증이 필요하며 Native 선행수정을 요청하지 않는다.
+원인 위치 app/raid_rooms/group_links/cycle_group_policy.py:32의 tuple은0035/0036/0037만허용한다.0038반영시 다른list형태의guard는 갱신했으나 이tuple을누락했다. admissions/admission_history.py의 지원head tuple2곳도추가누락을확인했으며 이번화면실패의직접원인으로확대하지않는다. 이전회귀PASS가이경계를포함한것은아니다. 읽기전용실행판정·로그/정적대조만수행, Native로컬소스 접근/기능시험/provider/자료변경없음.
+
+
+## 2026-11-17 Issue58 B6 계획 구현·0038 호환복구
+
+2026-11-17 Issue58 B6:0038 모집/현황 호환 회귀 직접복구·개발API 반영 완료. [전체11 Backend B6](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947547141). 누락3곳에0038 명시지원, 기본current136PASS/하위13PASS·모집관련67PASS·계약불변. 실제인증HTTP 현재/다음주 모집검색200(각0건)·참가목록200(각2건), group policy=True/API·DBhealthy. [상세](../engineering/development/schema0038-recruitment-recovery.md)·[집계](../engineering/operations/records/schema0038-recruitment-recovery.json). 다음Native/사용자 두화면확인, Backend오류대응. 복구소스 미커밋·미push, DBmigration/자료·키/환경·운영 변경 없음.
+수정전 새current-head 모집사례503실패를 재현한 뒤 그룹정책1곳/이력2곳만 수정했다. 기본current에 최신migration head일치/기존HTTP검색·권한/무부수효과·HTTP목록·재진입/완료이력을 재사용하는5개검증을 추가했다. API계약191경로·hash12634daa…b9665 불변, 후보와실행전체일치. 기본136/하위13PASS(148.88초)·모집관련67PASS(297.49초)는겹치는집계라합산하지않는다.
+앞선개발반영지시와계획구현승인으로 API만교체했다. eadaa2ccc5d30010054fd2fe00d9f8b4055360f77a239a0a597951a1b1d537b9·DB0038. 기존유효세션1명에메모리내단기인증을사용한읽기HTTP4회가200, 세션/refresh쓰기·인증값출력/보관·provider호출/자료조작없음. 검색0건은정상필터범위결과로기록하고 임의자료를추가하지않았다. 문서/동결원문·diff검증PASS. 이번복구 commit/push/merge·운영·DBmigration/자료·키/환경변경없음.
+
+
+## 2026-11-17 Issue58 복구 게시·dev 통합 지시
+
+2026-11-17 사용자 게시 지시:0038 호환복구 `08212c31215adae1c3a09cb9705409103af1ebdd` 및 누적계약/개발반영 기록을 dev에 병합·push한다. [Native 전체12 복구수용](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947614833) 수신으로 Backend 지원대기는 해소됐고 사용자 두화면 확인만 남았다. 실제실행image eadaa2cc…37b9/DB0038·계약hash12634daa…b9665는 그대로이며 이번게시를 서버재교체/운영배포로 확대하지 않는다. 정확한 병합·원격확인은 DEV_LOG 게시 영수증을 따른다. 아래 미커밋/미push 설명은 당시 이력이다.
+복구커밋 08212c31215adae1c3a09cb9705409103af1ebdd. Native 전체12는0038호환3곳복원/67·136·13PASS·실제개발HTTP200 결과수용을보고했고 같은Issue에서 사용자두화면확인을기다린다. 사용자 문서최신화·커밋/dev병합·push 지시범위로 목적브랜치의누적후보구현·계약/검증·개발반영·직접복구를dev에모은다. 이미통과한기능/실제서버시험은 재사용하고 문서/동결원문·diff만 다시검사한다. 이게시로 DB/키/환경·서버이미지·provider/운영을 변경하지 않는다.

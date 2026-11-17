@@ -36,7 +36,7 @@ from app.raid_rooms.reads.member_reads import paginate
 
 
 def ready(db):
-    if list(db.scalars(text('SELECT version_num FROM public.alembic_version'))) not in (['0027_cycle_consents'],['0028_cycle_planning'],['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history'],['0034_group_features'],['0035_cycle_group_policy'],['0036_roster_presence'],['0037_server_analysis']):
+    if list(db.scalars(text('SELECT version_num FROM public.alembic_version'))) not in (['0027_cycle_consents'],['0028_cycle_planning'],['0029_cycle_outcomes'],['0030_completion_corrections'],['0031_membership_actions'],['0032_beta_recruitment'],['0033_reapplication_history'],['0034_group_features'],['0035_cycle_group_policy'],['0036_roster_presence'],['0037_server_analysis'],['0038_analysis_candidates']):
         fail('RECRUITMENT_COMMAND_NOT_READY',503)
 
 
