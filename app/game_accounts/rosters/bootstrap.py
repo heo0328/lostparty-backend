@@ -163,7 +163,7 @@ def snapshot(db, uid, stamp):
         weekly_states=dict(current_cycle=cycle, cycle_key=cycle.cycle_key, catalog_version=catalog.catalog_version, entries=entries))
 
 
-def get(principal, include_roster_presence=False):
+def get(principal, include_roster_presence=False, include_analysis_candidates=False):
     with session() as db, db.begin():
         db.connection(execution_options={'isolation_level': 'REPEATABLE READ'})
         db.execute(text('SET TRANSACTION READ ONLY'))
@@ -173,15 +173,26 @@ def get(principal, include_roster_presence=False):
             result = AccountBootstrap.model_validate(snapshot(db, uid, stamp))
         except ValidationError:
             fail('BOOTSTRAP_DATA_UNAVAILABLE', 503)
-        if include_roster_presence:
+        if include_roster_presence or include_analysis_candidates:
             import json
             from fastapi.encoders import jsonable_encoder
             from app.game_accounts.rosters import presence_reads
             value=result.model_dump(mode='python')
-            presence_reads.attach(db,uid,stamp,[r['characters'] for r in value['registrations']])
+            if include_roster_presence:
+                presence_reads.attach(db,uid,stamp,[r['characters'] for r in value['registrations']])
+            for bundle in value['registrations']:
+                r=db.get(Registration,bundle['registration']['registration_id'])
+                a=db.get(Account,r.account_id) if r.account_id else None
+                if include_analysis_candidates:
+                    from app.game_accounts.analysis import candidates
+                    from app.game_accounts.schemas.candidate_schemas import CandidateProjection
+                    projected=candidates.projection(db,uid,a,r) if a and a.owner_id==uid else None
+                    bundle['analysis_candidates']=CandidateProjection.model_validate(projected).model_dump(mode='python',exclude_unset=True) if projected else None
+                else:
+                    bundle.pop('analysis_candidates',None)
             payload=json.dumps(jsonable_encoder(value),ensure_ascii=False,separators=(',',':')).encode('utf-8')
         else:
-            payload = result.model_dump_json().encode('utf-8')
+            payload = result.model_dump_json(exclude={'registrations': {'__all__': {'analysis_candidates'}}}).encode('utf-8')
         if len(payload) > MAX_BYTES:
             fail('BOOTSTRAP_RESPONSE_TOO_LARGE')
         return payload

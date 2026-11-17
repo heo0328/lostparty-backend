@@ -81,7 +81,7 @@ def main(argv=None):
         print(str(error), file=sys.stderr)
         return 2
     print(json.dumps({"suite": args.suite, "selection": selected,
-                      "baseline": "0037_server_analysis; current app; disposable PostgreSQL only"}), flush=True)
+                      "baseline": "0038_analysis_candidates; current app; disposable PostgreSQL only"}), flush=True)
     return subprocess.call([sys.executable, "-m", "pytest", "-v" if args.verbose else "-q", "--tb=short", "--maxfail", str(args.maxfail),
         *(["--collect-only"] if args.collect_only else []), "-p", "no:cacheprovider", *selected], cwd=ROOT)
 

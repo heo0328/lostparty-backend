@@ -200,7 +200,7 @@ def _decorate_openapi(schema):
         'observations': 'structure revisions fenced; stored power observations may advance without roster revision',
     }
     schema['x-character-profile-policy'] = dict(
-        contract='character-analysis-refresh-1', required_schema='0037_server_analysis',
+        contract='character-analysis-refresh-1', required_schema='0038_analysis_candidates',
         identity='member + canonical UUID + ownership_revision + detected role',
         source='server_analysis', trust='server_computed',
         post='/v2/me/character-analysis/refresh; command_id owns item idempotency; max50/524288bytes/20s budget/2 fresh observations',
@@ -378,7 +378,7 @@ def create_app():
         value=_decorate_openapi(generate())
         management_response=value['paths']['/v2/me/game-accounts/{registration_id}/character-settings']['put']['responses']['200']['content']['application/json']['schema']
         management_response['oneOf']=management_response.pop('anyOf')
-        value['x-recruitment-policy'].update(schema_revision='0037_server_analysis',policy_version='two-cycle-contract-4',
+        value['x-recruitment-policy'].update(schema_revision='0038_analysis_candidates',policy_version='two-cycle-contract-4',
             search_semantics='own-target-participation-excluded-v1',
             room_usage_semantics='active-target-rooms-1',
             reapplication_history=dict(required_schema='0033_reapplication_history',semantics='fresh participation after proven termination; completed history and opposite cycle preserved'),
@@ -420,6 +420,20 @@ def create_app():
             required_schema='0032_beta_recruitment',default_reader='legacy shape preserved',
             promises='atomic participant/personal-copy/base reservation; earlier-only automatic confirmation; deadline fallback',
             presets='/v2/me/application-message-presets',compatibility='original ACK before unsafe new-write guard; no automatic legacy conversion')
+        from app.game_accounts.contracts.candidate_openapi import REQUEST_EXAMPLES, RESPONSE_EXAMPLES
+        candidate_operation=value['paths']['/v2/me/character-analysis/refresh']['post']
+        candidate_operation['requestBody']['content']['application/json']['examples']=REQUEST_EXAMPLES
+        candidate_operation['responses']['200']['content']['application/json']['examples']=RESPONSE_EXAMPLES
+        from app.game_accounts.schemas.analysis_schemas import CANDIDATE_OUTCOMES
+        value['x-analysis-candidate-policy'] = dict(
+            contract='analysis-candidates-1',required_schema='0038_analysis_candidates',
+            read='/v2/me/account-bootstrap?include_analysis_candidates=true',
+            projection='optional; false omits key; read-only/no-store; max20 rosters/200 candidates each/16MiB; no truncation',
+            reconcile='POST /v2/me/character-analysis/refresh with original item ID/body; no provider call after ledger expiry; stale lifecycle/policy allowed only for reconciliation; current owner/usable still required',
+            outcomes={code:dict(state=v[0],status=v[1],retry=v[2]) for code,v in CANDIDATE_OUTCOMES.items()},
+            duplicate='ANALYSIS_CANDIDATE_IN_PROGRESS: read owner command from projection; do not retry rejected ID',
+            lifetime='same owner/account/ownership revision retains exclusions/completion across registration deletion; ACK24h/unresolved48h independent',
+            policy_revision='selection intent CAS only; candidate execution uses per-candidate generation and lease')
         from app.raid_rooms.contracts import roster_openapi
         result.openapi_schema = roster_openapi.decorate(value,two_cycle=True)
         return result.openapi_schema

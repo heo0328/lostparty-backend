@@ -15,6 +15,7 @@ from app.game_accounts.models.models import Character, Account, Registration, Co
 from app.member_settings.models import MemberSettings
 from app.game_accounts.provider_io import credentials
 from app.game_accounts.analysis.fresh import collect
+from app.game_accounts.analysis import candidates
 from app.game_accounts.schemas.analysis_schemas import AnalysisResult
 
 OPERATION = 'character-analysis-refresh'
@@ -32,13 +33,15 @@ def outcome(command, state, status, request_id, *, code=None, role=None, result=
                    retry_at=retry_at) if code else None)
 
 
-def eligible(db, uid, account, character, trigger):
-    if trigger == 'manual':
+def eligible(db, uid, account, character, command):
+    if command.trigger == 'manual':
         return True
-    conf = db.scalar(select(Configuration).where(Configuration.user_id==uid, Configuration.account_id==account.id,
-                                                Configuration.ended_at.is_(None)))
-    if conf is None or db.get(Activity, (conf.id, character.id)) is None:
+    if not candidates.can_automatic(db,uid,account,character,command):
         return False
+    return nice_allowed(db,uid,account,character)
+
+
+def nice_allowed(db,uid,account,character):
     settings = db.get(MemberSettings, uid)
     if settings and settings.nice_group_auto_refresh_enabled:
         return True
@@ -81,28 +84,50 @@ def existing(principal, command):
 
 
 def start(principal, command, request_id, deadline):
-    with session() as db:
+    with session() as db, db.begin():
         scoped(db)
-        target(db, principal, command)
-    if time.monotonic() >= deadline-9 and not existing(principal, command):
-        return None, outcome(command, 'not_processed', 503, request_id, code='BATCH_NOT_PROCESSED', retry='same_command'), None
-    with session() as db:
-        scoped(db)
-        uid, account, character = target(db, principal, command)
-        included = eligible(db, uid, account, character, command.trigger)
-        selection = dict(character_id=character.id, ownership_revision=account.ownership_revision,
-                    lifecycle_revision=character.lifecycle_revision, server_name=character.server_name,
-                    character_name=character.character_name, class_name=character.summary.get('class_name'))
-    ticket, replay = reserve(principal, OPERATION, command.command_id, command.model_dump(mode='json', exclude={'command_id'}))
-    if replay:
-        return None, replay[1], None
-    if time.monotonic() >= deadline-9:
-        return ticket, outcome(command, 'unknown', 503, request_id, code='SERVICE_UNAVAILABLE', retry='same_command'), None
-    if not included:
-        return ticket, outcome(command, 'skipped', 200, request_id, code='AUTOMATIC_TARGET_EXCLUDED'), None
+        uid=authorize(db,principal,write=True)
+        account,character=owned_character(db,uid,command.character_id,write=True)
+        if account.ownership_revision!=command.expected_ownership_revision:fail('REVISION_CONFLICT')
+        recovered=candidates.recover_expired(db,uid,account,character,command)
+        if recovered:
+            result=outcome(command,'skipped' if recovered=='ANALYSIS_CANDIDATE_COMPLETED' else 'failed',
+                200 if recovered=='ANALYSIS_CANDIDATE_COMPLETED' else 409,request_id,code=recovered,
+                retry='none' if recovered=='ANALYSIS_CANDIDATE_COMPLETED' else 'new_command')
+            if recovered=='ANALYSIS_CANDIDATE_RECONCILED':
+                _,fact=candidates.row(db,uid,account,character)
+                if fact.last_error is None:fact.last_error=jsonable_encoder(result['error'])
+            return None,result,None
+        known=db.scalar(select(RequestResult.id).where(RequestResult.actor_id==uid,
+            RequestResult.operation==OPERATION,RequestResult.key==command.command_id)) is not None
+    if time.monotonic()>=deadline-9 and not known:
+        return None,outcome(command,'not_processed',503,request_id,code='BATCH_NOT_PROCESSED',retry='same_command'),None
+    ticket,replay=reserve(principal,OPERATION,command.command_id,
+        command.model_dump(mode='json',exclude={'command_id'},exclude_unset=True))
+    if replay:return None,replay[1],None
+    if time.monotonic()>=deadline-9:
+        return ticket,outcome(command,'unknown',503,request_id,code='SERVICE_UNAVAILABLE',retry='same_command'),None
+    try:
+        with session() as db,db.begin():
+            scoped(db)
+            uid,account,character=target(db,principal,command,write=True)
+            skip=candidates.reserve_candidate(db,uid,account,character,command)
+            if skip:return ticket,outcome(command,'skipped',200,request_id,code=skip,retry='none'),None
+            if not eligible(db,uid,account,character,command):
+                return ticket,outcome(command,'skipped',200,request_id,code='AUTOMATIC_TARGET_EXCLUDED'),None
+            p,f=candidates.row(db,uid,account,character)
+            conf,_=candidates.selected(db,uid,account,character.id)
+            selection=dict(character_id=character.id,ownership_revision=account.ownership_revision,
+                lifecycle_revision=character.lifecycle_revision,server_name=character.server_name,
+                character_name=character.character_name,class_name=character.summary.get('class_name'),
+                candidate_lease=bool(f and f.state=='running' and f.command_id==command.command_id),
+                candidate_generation=f.generation if f else None,policy_revision=p.revision if p else None,
+                settings_version=conf.version if conf else 1)
+    except AuthError as exc:
+        return ticket,rejected(command,request_id,exc),None
     if not isinstance(selection['class_name'],str) or not selection['class_name'].strip():
-        return ticket, outcome(command,'failed',503,request_id,code='ROLE_DETECTION_UNAVAILABLE'), None
-    return ticket, None, selection
+        return ticket,outcome(command,'failed',503,request_id,code='ROLE_DETECTION_UNAVAILABLE'),None
+    return ticket,None,selection
 
 
 def save(principal, command, ticket, observed, snapshot, request_id, deadline, selection):
@@ -115,7 +140,8 @@ def save(principal, command, ticket, observed, snapshot, request_id, deadline, s
             fail('REVISION_CONFLICT')
         if time.monotonic() >= deadline:
             fail('UPSTREAM_UNAVAILABLE', 503)
-        if not eligible(db, uid, account, character, command.trigger):
+        candidates.validate_save(db,uid,account,character,command,selection)
+        if not eligible(db, uid, account, character, command):
             result = outcome(command, 'skipped', 200, request_id, code='AUTOMATIC_TARGET_EXCLUDED')
         else:
             role = observed['role']
@@ -133,6 +159,7 @@ def save(principal, command, ticket, observed, snapshot, request_id, deadline, s
                 db.add(head)
             head.version, head.summary, head.detail, head.saved_at = version+1, observed['summary'], observed['detail'], at
             result = outcome(command, 'saved', 200, request_id, role=role, result=jsonable_encoder(result))
+        candidates.settle(db,uid,account,character,command,result)
         commit_result(db, ticket, result['status'], result)
         return result
 
@@ -140,6 +167,13 @@ def save(principal, command, ticket, observed, snapshot, request_id, deadline, s
 def finish(ticket, result):
     with session() as db, db.begin():
         scoped(db)
+        ledger=db.get(RequestResult,ticket[0])
+        character=db.get(Character,result['character_id'])
+        account=db.get(Account,character.account_id) if character else None
+        if account and ledger and account.owner_id==ledger.actor_id:
+            from types import SimpleNamespace
+            candidates.settle(db,ledger.actor_id,account,character,
+                SimpleNamespace(command_id=result['command_id']),result)
         commit_result(db, ticket, result['status'], result)
     return result
 

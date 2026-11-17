@@ -331,6 +331,6 @@ def test_model_migration_consistency():
     from app.core.model_registry import metadata
     from app.core.database import engine
     with engine().connect() as connection:
-        assert connection.exec_driver_sql('SELECT version_num FROM alembic_version').scalar_one() == '0037_server_analysis'
+        assert connection.exec_driver_sql('SELECT version_num FROM alembic_version').scalar_one() == '0038_analysis_candidates'
         differences = compare_metadata(MigrationContext.configure(connection), metadata)
         assert not differences, repr(differences)

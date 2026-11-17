@@ -64,6 +64,7 @@ class ManagementContext(DTO):
     data: ManagementData
 
 class ManagementPut(HistoricalManagementPut):
+    expected_analysis_policy_revision: Version = Field(default_factory=lambda: None)
     policy_version: Literal['character-management-2']
     representative_character_id: UUIDText|None
     ordered_character_ids: list[UUIDText]=Field(default_factory=lambda:None,max_length=200)

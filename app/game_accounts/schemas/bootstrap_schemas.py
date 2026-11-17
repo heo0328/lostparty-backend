@@ -17,7 +17,11 @@ class BootstrapUnavailable(DTO):
     code: Literal['CHARACTER_UNUSABLE', 'IDENTITY_CONFLICT']
 
 
+from app.game_accounts.schemas.candidate_schemas import CandidateProjection
+
+
 class BootstrapRegistration(DTO):
+    analysis_candidates: CandidateProjection | None = None
     registration: RegistrationOut
     characters: LifecycleCharactersOut
     representative: RepresentativeOut | None

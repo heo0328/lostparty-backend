@@ -179,7 +179,7 @@ def test_expired_ack_is_not_reexecuted(client,subject):
     assert head(cid)['version']==2
 
 
-def test_fresh_concurrent_commands_join_one_observation_one_cas_winner(client,subject,monkeypatch):
+def test_fresh_concurrent_commands_reserve_one_candidate_owner(client,subject,monkeypatch):
     from app.game_accounts.models.analysis import AnalysisFetch
     h,cid,raw=subject;entered=Event();release=Event();calls=[]
     def fetch(self,name):
@@ -202,7 +202,7 @@ def test_fresh_concurrent_commands_join_one_observation_one_cas_winner(client,su
         results=[one.result(),two.result()]
     assert len(calls)==1
     assert sorted(r['state'] for r in results)==['failed','saved']
-    assert next(r for r in results if r['state']=='failed')['error']['code']=='REVISION_CONFLICT'
+    assert next(r for r in results if r['state']=='failed')['error']['code']=='ANALYSIS_CANDIDATE_IN_PROGRESS'
     assert head(cid)['version']==2
     assert post(client,h,command(cid,expected_summary_versions=dict(dealer=1,support=2)))['state']=='saved'
     assert len(calls)==2 # a completed observation is not a new command's cache

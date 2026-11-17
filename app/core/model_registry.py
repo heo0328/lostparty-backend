@@ -30,3 +30,5 @@ import app.member_limits.models
 import app.ownership_disputes.models
 
 metadata = Base.metadata
+
+from app.game_accounts.models.analysis_candidates import CandidatePolicy, AnalysisCandidate
