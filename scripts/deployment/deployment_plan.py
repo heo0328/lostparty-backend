@@ -14,6 +14,15 @@ def load(root=Path('.')):
         raise ValueError('invalid deployment plan fields')
     if data['schema'] != 1 or data['version'] != (root / 'VERSION').read_text().strip():
         raise ValueError('deployment plan version mismatch')
+    if data['mode'] == 'publish-only':
+        # A reset transition is deliberately outside the automatic deploy job.
+        if (data['version'] != '2.4.0'
+                or data['from_db_revision'] != '0036_roster_presence'
+                or data['to_db_revision'] != '0038_analysis_candidates'
+                or data['configuration_revision'] != 'lightsail-web-2.1.0'
+                or data['web_receipt'] != 'docs/engineering/operations/records/web-handoff-2.4.0.json'):
+            raise ValueError('unreviewed publication boundary')
+        return data
     if data['mode'] != 'maintenance':
         raise ValueError('invalid explicit deployment mode')
     if data['from_db_revision'] != '0035_cycle_group_policy' or data['to_db_revision'] != '0036_roster_presence':

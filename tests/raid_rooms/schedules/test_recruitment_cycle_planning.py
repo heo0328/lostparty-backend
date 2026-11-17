@@ -279,7 +279,10 @@ def test_candidate_fixed_opening_floor_and_initial_exception(planning,monkeypatc
     with session() as db,db.begin():
         row=db.get(RoomCycle,uuid.UUID(plan(a,rid,n)['scope']['room_cycle_id']));fixed=engine.floor(db,row)
         # Later threshold fulfilment uses the stored opening floor, without another +30.
-        stamp=fixed+timedelta(hours=6);start=graph.graph.time.ceil_tick(stamp+timedelta(minutes=1))
+        remaining=commands.raids.cycle(fixed).ends_at-fixed
+        if remaining<timedelta(hours=2):pytest.skip('Insufficient interval before actual cycle boundary')
+        stamp=fixed+min(timedelta(hours=6),remaining/2)
+        start=graph.graph.time.ceil_tick(stamp+timedelta(minutes=1))
     with monkeypatch.context() as m:
         m.setattr(cycles,'now',lambda db:stamp)
         submit(b,rid,n)

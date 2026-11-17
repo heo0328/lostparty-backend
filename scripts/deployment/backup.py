@@ -8,6 +8,7 @@ import argparse
 import fcntl
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -17,7 +18,46 @@ from datetime import datetime, timezone
 
 from common import checksum
 from server import Platform, atomic
-from maintenance import require
+
+
+def require(condition, code):
+    if not condition:
+        raise ValueError(code)
+
+
+def check_recovery_material(revision, names):
+    base={'jwt.pem','recovery.key','lostark-fingerprint.key','.env.lightsail'}
+    legacy=base|{'lostark-credential.key'}
+    if revision=='0035_cycle_group_policy':
+        require(names==legacy,'recovery_material_missing')
+    elif revision=='0036_roster_presence':
+        # Approved pre-cutover server token may already be staged on the old DB.
+        require(legacy<=names<=legacy|{'lostark-api-token'},'recovery_material_missing')
+    elif revision in ('0037_server_analysis','0038_analysis_candidates'):
+        required=base|{'lostark-api-token'}
+        require(required<=names<=required|{'lostark-credential.key'},'recovery_material_missing')
+    else:
+        raise ValueError('unexpected_backup_revision')
+
+
+def active_web_files(web_root):
+    """Read recovery originals without requiring the optional activation tools."""
+    current=web_root/'current'
+    if not current.is_symlink():
+        require(not current.exists(),'unsafe_web_pointer')
+        return []
+    target=os.readlink(current)
+    require(re.fullmatch(r'releases/[0-9a-f]{64}/site',target),'unsafe_web_pointer')
+    site=web_root/target
+    require(site.is_dir() and site.resolve().is_relative_to(web_root.resolve()),'unsafe_web_pointer')
+    manifest=site.parent/'release-manifest.json'
+    version=json.loads(manifest.read_text())['version']
+    require(isinstance(version,str) and re.fullmatch(
+        r'(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\+[1-9][0-9]*',version),'invalid_web_version')
+    bundle=site.parent/('lostparty-v'+version.split('+')[0]+'-web.zip')
+    paths=[bundle,Path(str(bundle)+'.sha256'),manifest]
+    require(all(p.is_file() and not p.is_symlink() for p in paths),'missing_web_recovery_originals')
+    return paths
 
 
 def capture(platform, state, destination, *, installed=Path('/usr/local/lib/lostparty-deploy'),
@@ -31,14 +71,8 @@ def capture(platform, state, destination, *, installed=Path('/usr/local/lib/lost
     protected=platform.protected_files()
     require(platform.healthy(current['image']),'baseline_unhealthy')
     revision=platform.db_revision(before['api']['Id'])
-    require(revision in ('0035_cycle_group_policy','0036_roster_presence','0037_server_analysis'),'unexpected_backup_revision')
     names={Path(p).name for p in protected}
-    base={'jwt.pem','recovery.key','lostark-fingerprint.key','.env.lightsail'}
-    if revision=='0037_server_analysis':
-        required=base|{'lostark-api-token'}
-        require(required<=names<=required|{'lostark-credential.key'},'recovery_material_missing')
-    else:
-        require(names==base|{'lostark-credential.key'},'recovery_material_missing')
+    check_recovery_material(revision,names)
     env=dict(item.split('=',1) for item in before['db']['Config']['Env'] if '=' in item)
     destination.mkdir(mode=0o700,parents=True)
     dump=subprocess.run(['docker','exec',before['db']['Id'],'pg_dump','-U','postgres',
@@ -53,12 +87,7 @@ def capture(platform, state, destination, *, installed=Path('/usr/local/lib/lost
     paths += [platform.root/'compose.lightsail.yaml',platform.root/'docker/Caddyfile.lightsail',platform.root/'docker/init-db.sh']
     paths += list(state.rglob('*.json'))
     paths += list(installed.glob('*.py'))
-    if (web_root/'current').is_symlink():
-        from web_release import pointer, handoff_files
-        active=pointer(web_root,'current')
-        active_manifest=json.loads((web_root/active).parent.joinpath('release-manifest.json').read_text())
-        files=handoff_files({'web':{'version':active_manifest['version']}})
-        paths += [(web_root/active).parent/name for name in files]
+    paths += active_web_files(web_root)
     paths += list(system_files)
     recovery_files={}
     for path in paths:

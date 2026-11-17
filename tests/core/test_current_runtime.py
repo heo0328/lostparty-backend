@@ -1,4 +1,4 @@
-"""Reuse common HTTP regression scenarios on the current app and DB0037.
+"""Reuse common HTTP regression scenarios on the current app and DB0038.
 
 Provider observations/Google verification are fabricated by the original fixtures.
 Common scenarios and their fixtures now use the same current application.
@@ -42,7 +42,7 @@ from tests.raids.test_raid_catalog import test_public_reads_need_no_session_key_
 @pytest.fixture
 def client(monkeypatch):
     with isolated_app_database() as (target, role, upgrade):
-        upgrade('0037_server_analysis')
+        upgrade('0038_analysis_candidates')
         monkeypatch.setattr(database, 'engine', lambda: target)
         with TestClient(create_app(), raise_server_exceptions=False) as http:
             yield http

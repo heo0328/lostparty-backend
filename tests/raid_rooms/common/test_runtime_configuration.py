@@ -56,10 +56,7 @@ def test_current_runtime_rejects_other_schemas_without_mutation(monkeypatch,revi
         if revision:upgrade(revision)
         monkeypatch.setattr(database,'engine',lambda:engine)
         tables=set(inspect(engine).get_table_names());before=table_digests(engine,tables)
-        if revision=='0037_server_analysis':
-            with TestClient(main.create_app()) as http:assert http.get('/docs').status_code==404
-        else:
-            with pytest.raises(Exception):
-                with TestClient(main.create_app()):pass
+        with pytest.raises(Exception):
+            with TestClient(main.create_app()):pass
         assert set(inspect(engine).get_table_names())==tables
         assert table_digests(engine,tables)==before

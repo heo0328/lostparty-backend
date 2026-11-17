@@ -4,6 +4,7 @@ import uuid
 from datetime import date
 from datetime import datetime
 from datetime import timedelta
+from datetime import timezone
 
 import pytest
 from sqlalchemy import insert
@@ -196,8 +197,15 @@ def test_continuation_and_character_bind_display_changes(planning):
     ('coordinated', 'one_of', 0, 'any_current_cycle', 'after_coordination'),
     ('unscheduled', 'one_of', 1, 'selected_weekdays', 'not_scheduled'),
 ])
-def test_opening_preview_materialization_readonly_and_target_dates(planning, mode, occurrence, count, scope, materialization):
+def test_opening_preview_materialization_readonly_and_target_dates(planning, monkeypatch, mode, occurrence, count, scope, materialization):
     engine, a, b = planning
+    # Keep creation's persisted earliest-start floor before Wednesday 00:05.
+    # The projection under test must not depend on running before Tuesday23:35.
+    with session() as db:current_key=commands.raids.cycle(now(db)).cycle_key
+    stamp=datetime.combine(date.fromisoformat(current_key)+timedelta(days=6),
+        datetime.min.time().replace(hour=22),commands.raids.KST).astimezone(timezone.utc)
+    monkeypatch.setattr(cycles,'now',lambda db:stamp)
+    monkeypatch.setattr(commands.base,'now',lambda db:stamp)
     room = create_room(a, combined=False, bundle=True)
     rid = uuid.UUID(room['room_id']); c = room['created_cycles'][0]['target_cycle_key']; n = next_key()
     item_ids = [v['item_id'] for v in plan(a, rid, c)['data']['game_items']]

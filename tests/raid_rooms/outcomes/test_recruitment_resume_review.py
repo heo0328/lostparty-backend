@@ -457,10 +457,15 @@ def test_preview_current_cycle_and_wednesday_ten_boundary(outcomes, monkeypatch,
     assert fingerprints(engine) == before
 
 
-def test_wednesday_early_preview_uses_end_of_actual_cycle(outcomes):
+def test_wednesday_early_preview_uses_end_of_actual_cycle(outcomes, monkeypatch):
     _, a, b = outcomes; rid, c, n = stopped(a)
     groups = explicit_groups(a, rid, c, 'manual', 'one_of', 1, 'selected_weekdays')
     groups[0]['alternatives'][0].update(weekday=3, starts_local='00:05')
+    # This test checks the week selected for Wednesday 00:05, independently of
+    # the real wall clock's separate 30-minute earliest-start restriction.
+    stamp=datetime.combine(date.fromisoformat(c)+timedelta(days=6),
+        datetime.min.time().replace(hour=22),commands.raids.KST).astimezone(timezone.utc)
+    monkeypatch.setattr(commands.base,'now',lambda db:stamp)
     shown = preview(a, rid, request(a, rid, c, groups))['display']
     alt = shown['groups'][0]['alternatives'][0]
     start = datetime.fromisoformat(alt['starts_at'].replace('Z','+00:00')).astimezone(commands.raids.KST)

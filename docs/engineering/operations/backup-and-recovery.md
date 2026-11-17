@@ -1,5 +1,10 @@
 # 로컬·운영 백업 원장과 안내 기준
 
+2026-11-17 Issue59 B5: 사용자 명시 승인으로 운영0036 준비백업/backup.py 신규설치를 완료했다. 서버/로컬/기존개인PC 새날짜사본의 아카이브/내부복구파일 무결성 및 dump목차866항목 검증, 운영token의별도PC사본일치 확인. 사본파일은 backend-production-before.tar·lostark-api-token이며 개인PC정확경로는 ignored backups/release-2.4.0-preparation-20261117T135434Z/receipt.private.json에서 확인한다. [비민감영수증](records/release-2.4.0-preparation-backup.json)·[상세](release-2.4.0.md). 아래 토큰PC사본/운영도구 미설치는 당시상태다. 기존3도구를 백업했고 backup.py만 추가, 서비스/키/환경/DB자료 변경없음. 실제전환직전최신dump는 재확보하며 실제운영dump복원·외장매체·정기백업은 미실행이다.
+
+
+2026-11-17 Issue59: 승인된 개발 서버용 토큰을 운영 `.secrets/lightsail/lostark-api-token`에 공급했다. 새 키 생성·개발 키 변경은 없다. 서버 `/home/ubuntu/lostparty-backend/backups/release-2.4.0-server-token/lostark-api-token`과 로컬 `backups/release-2.4.0-server-token/lostark-api-token`에0700/0600 사본·바이트일치를 확인했다. 사용자는 로컬 파일을 기존 비공개 개인 백업 폴더에 추가 보관한다. 개인PC폴더/외장매체 보관은 미확인, 공급자 인증·실제복원·최신운영DB백업은 미실행이다. 기존 운영키/환경/서비스는 유지했다. 로컬 백업도구의0036 선공급token/0038 지원은 보완했으나 운영설치는 아직이며 다음 최신백업 전 필요하다. [B4 상세](release-2.4.0.md)·[비민감 집계](records/release-2.4.0-readiness.json). 토큰 값/해시를 공개기록에 남기지 않는다.
+
 2026-11-17 Issue58: 사용자 명시 개발반영 지시로0038 비파괴migration/API 교체 완료. 기존114테이블794행·키5개·주요환경 지문 보존을 비교했고 DB/볼륨/키·환경 초기화/삭제 없음. 기존 로컬dump제외·키사본 기준을 재사용했으며 보존지문은 백업/실제복원시험이 아니다. [집계](records/analysis-candidates-local-rollout.json).
 
 2026-11-17 Issue55: 사용자가 로컬 lostparty DB 삭제를 명시 승인해 기존 dump 제외 방침으로 DB만 초기화/0037 적용했다. 기존 볼륨·역할·환경/4키 보존, 새 lostark-api-token 파일0600·컨테이너 읽기/구성 형식 확인. token은 기존 개인 백업 폴더에 별도로 보관할 대상이며 실제 사본 보관/외부 인증 유효성은 미확인이다. 키/DB 원문 출력·게시 없음. [개발 반영 기록](../development/server-analysis-dev-preparation.md).
