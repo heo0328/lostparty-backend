@@ -1,5 +1,7 @@
 # BUG-039 캐릭터 분석 갱신 실패
 
+2026-11-17 게시 확인: 업무3910c43·기록98c6b36을 dev 병합 c4e49674e922150d125bd9573c56ac7e6109948e로 통합하고 origin/dev push·원격 SHA 일치/작업트리 clean 확인. 완료 목적 브랜치 fix/character-analysis는 로컬 삭제, 원격에는 없음을 확인했다. 병합 후 단위8PASS. Issue57은 게시 결과 회신 시 GitHub API404여서 댓글을 작성하지 못했다(삭제 여부/주체 단정 안 함). main/운영은 변경하지 않았다. 이 후행 기록도 사용자 승인 범위로 dev에 commit/push한다.
+
 2026-11-17 사용자 commit/dev 병합/push 지시: BUG-039 업무 커밋 `3910c43` 생성 완료. 이번 기록도 같은 목적 브랜치에서 커밋해 dev로 통합·게시한다. 아래 미커밋/미push 표기는 당시 이력이다. 최종 통합 SHA·원격 일치는 Issue57 게시 회신과 사용자 완료 보고를 따른다. 개발 적용 완료·Native/사용자 저장/표시 확인 대기, 운영 배포 없음.
 
 2026-11-17 / [Issue57](https://github.com/heo0328/lostparty-backend/issues/57) / 목적 브랜치 `fix/character-analysis`. 사용자 작업 진행 승인으로 개발 환경 조사·직접 수정·검증·개발 API 반영을 진행한다. commit/push·운영 배포·DB 초기화/삭제는 범위가 아니다.
