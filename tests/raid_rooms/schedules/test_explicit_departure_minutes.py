@@ -202,12 +202,22 @@ def clone(row,**changes):return type(row)(**({c.name:getattr(row,c.name) for c i
 
 def test_explicit_minutes_automatic_grid_own_promise_and_other_reservation_edges(beta,monkeypatch):
     _,a,b=beta
-    with session() as db:later=time_policy.ceil_tick(now(db)+timedelta(hours=6)).astimezone(timezone.utc)+timedelta(minutes=3)
+    # Keep the six-hour automatic-search window inside a playable cycle. A
+    # real Tuesday-night run must not put its departure in Wednesday maintenance.
+    from app.raid_rooms.common import cycles
+    with session() as db:
+        current=now(db);bounds=cycle(current)
+    stamp=bounds.starts_at+timedelta(hours=28)
+    monkeypatch.setattr(cycles,'now',lambda db:stamp)
+    monkeypatch.setattr(cycle_creation.base,'now',lambda db:stamp)
+    from app.core import database
+    monkeypatch.setattr(database,'now',lambda db:stamp)
+    later=time_policy.ceil_tick(stamp+timedelta(hours=6))+timedelta(minutes=3)
     rid,key,base,_,_,_=create_at(a,base=later,enabled=True)
     original=beta_schedule.initial;monkeypatch.setattr(beta_schedule,'initial',lambda *args,**kw:None)
     beta_join(b,rid,key);monkeypatch.setattr(beta_schedule,'initial',original)
     with session() as db,db.begin():
-        row=db.scalar(select(RoomCycle).where(RoomCycle.room_id==rid));room=db.get(RecruitmentRoom,rid);stamp=now(db)
+        row=db.scalar(select(RoomCycle).where(RoomCycle.room_id==rid));room=db.get(RecruitmentRoom,rid)
         initial=beta_schedule.evaluate(db,room,row,stamp);assert initial['state']=='ready';first=initial['earliest_start'];assert first.minute%5==0 and first<base
         saved=db.get(BetaSchedule,row.id);sess=db.get(RecruitmentSession,saved.session_id)
         own=db.scalar(select(TimeReservation).where(TimeReservation.session_id==sess.id,TimeReservation.user_id==a['uid'],TimeReservation.released_at.is_(None)))

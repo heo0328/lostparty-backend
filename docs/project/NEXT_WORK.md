@@ -1,12 +1,11 @@
 # 다음 실행
 
-2026-11-18 B8: 사용자명시승인으로 release/2.4.0 누적변경을 5e0ee12e897e35f01dcf73f40eee351a15649d52에commit/push하고원격일치를확인했다. 동일source 수동full CI [44117486823](https://github.com/heo0328/lostparty-backend/actions/runs/44117486823) 실행중. 결과와실패원인을확인한다. [게시/CI영수증](../engineering/operations/records/release-2.4.0-ci.json). merge/태그·Release·이미지공개/운영배포는승인범위가아니며미실행이다.
+2026-11-18 CI후속: 원full CI44117486823/source5e0ee12는7개회귀성공·6번1FAIL(216PASS/2subtests),verify성공·validation실패/publish·deploy skipped다. 수요일점검과충돌한명시출발시험의시계를조회/명령/reconcile모두일치하도록고정해표적1PASS·파일전체11PASS(46.30s). 앱/API변경없음. 동일승인게시/CI구간에직접필요한시험보완/기록만최소게시후새source수동full CI를실행한다. merge/공개/운영은제외다.
 
-## 다음 실행과 게시 경계
+## 다음 실행
 
-1. 현재수동full CI verify/8회귀구간/validation의최종결과를확인하고필요한실패보완만한다. 실패시원run/소스를보존하고보완source와재실행결과를구분한다.
-2. 승인된이번구간은소스commit/push와수동검증이다. merge·태그/Release·불변GHCR공개는별도지시를기다린다. 수동검증의이미지빌드는runner로컬시험이며고정공개digest가아니다.
-3. 실제운영전환은새고정후보와전환직전최신백업/정지dump·독립PC확인/운영반영·공동공개승인범위에서수행한다. 운영2.3.0/0036유지, Native고정파일/기존인수재사용·같은시험요청없음.
+1. 최소보완커밋/원격일치후새source수동full CI의최종결과를확인한다. 원run/실패를보존하고새run/source를별도로기록한다. 원source의단순재시도는보완코드를사용하지않으므로하지않는다.
+2. 전체성공뒤merge/태그·Release/불변이미지공개는별도사용자지시범위다. 운영전환은별도승인과직전정지백업/PC확인·공동공개조건을따른다.
 
 ## 코드·계약·실행 구분
 

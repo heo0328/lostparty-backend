@@ -14,10 +14,14 @@
     "attempt": 1,
     "url": "https://github.com/heo0328/lostparty-backend/actions/runs/44117486823",
     "mode": "full",
-    "status": "in_progress",
-    "conclusion": null,
+    "status": "completed",
+    "conclusion": "failure",
     "verify": "success",
-    "regression": "8 shards in_progress"
+    "regression": "7 shards success; shard6 failure (216 passed,1failed,2subtests)",
+    "validation_job": "failure due to regression; no successful evidence",
+    "successful_validation_artifacts": 0,
+    "publish": "skipped",
+    "deploy": "skipped"
   },
   "merge_executed": false,
   "tag_created": false,
@@ -27,5 +31,17 @@
   "source_commit_validation": "local static115 PASS; source remote matched; CI in progress",
   "followup_documentation": "local after source commit; does not change tested source",
   "reply": "https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6952946626",
-  "reply_order": 20
+  "reply_order": 20,
+  "failure_followup": {
+    "job_id": 134161122895,
+    "test": "tests/raid_rooms/schedules/test_explicit_departure_minutes.py::test_explicit_minutes_automatic_grid_own_promise_and_other_reservation_edges",
+    "reason": "synthetic now+6h crosses Wednesday maintenance; unified fake clock across read/command/reconciliation",
+    "production_code_changed": false,
+    "local_targeted_result": "1 passed in 8.54s",
+    "local_file_result": "11 passed,1warning,46.30s; cleanup complete",
+    "fix_committed": false,
+    "fix_pushed": false,
+    "original_ci_source_unchanged": true,
+    "publication_reason": "The explicitly authorized source/full-CI interval requires publishing this minimal test-only correction to validate it in Actions; no merge/tag/publication/deployment"
+  }
 }

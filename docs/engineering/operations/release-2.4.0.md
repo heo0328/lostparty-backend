@@ -145,3 +145,10 @@ reset_release.py에 preflight→prepare(공개503/API정지/연결0/정지dump)�
 ## B8 — 승인 source게시·수동full CI
 
 사용자명시승인으로누적34파일을release/2.4.0 source5e0ee12e897e35f01dcf73f40eee351a15649d52에commit/push하고원격일치를확인했다. 로컬정적115PASS/비밀패턴·문서/diff검사와소스커밋직후clean을확인했다. 수동full CI [44117486823](https://github.com/heo0328/lostparty-backend/actions/runs/44117486823) source일치실행중이며최종성공은아니다. 수동분기는public publish/deploy를건너뛰고runner로컬빌드만검증한다. [전체20 Backend B8](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6952946626)·[CI영수증](records/release-2.4.0-ci.json). merge/태그/Release·이미지공개·운영반영은이번승인제외로미실행이다. 후행문서는검증source와구분해기록한다.
+
+
+## 원full CI 결과와 시험시계 보완
+
+2026-11-18 CI후속: 원full CI44117486823/source5e0ee12는7개회귀성공·6번1FAIL(216PASS/2subtests),verify성공·validation실패/publish·deploy skipped다. 수요일점검과충돌한명시출발시험의시계를조회/명령/reconcile모두일치하도록고정해표적1PASS·파일전체11PASS(46.30s). 앱/API변경없음. 동일승인게시/CI구간에직접필요한시험보완/기록만최소게시후새source수동full CI를실행한다. merge/공개/운영은제외다.
+
+명시출발자동후보시험만현재주차의플레이가능한동일합성시각을사용하도록보완했다. 실제시각은그대로두고늦은화요일now+6h로수요일점검창을만들던설정이원인이었다. cycles.now/admission snapshot의now/함수내import하는database.now와최종evaluate시각을일치시킨다. 모의관측/테스트자료만변경하며30분기한/실제점검거절정책은보존했다. 원full성공증거artifact0이며새고정source의full검증이필요하다.

@@ -5179,3 +5179,13 @@ open-restored로복구이후접속재개의별도승인/구source·image·DB0036
 사용자명시승인으로release/2.4.0 누적34파일을 5e0ee12e897e35f01dcf73f40eee351a15649d52 chore: prepare 2.4.0 reset release and validation에commit/push·원격일치확인, 소스commit직후작업트리clean. 스테이징전비밀경로/키·토큰패턴검사와정적115PASS·문서/diffPASS. 임시fixture Git가아닌실제프로젝트기준source다. 수동 workflow_dispatch full CI https://github.com/heo0328/lostparty-backend/actions/runs/44117486823 source일치실행중. 수동분기publish/deploy제외를검토했다. main/dev18e6bb6불변·merge/태그/Release/GHCR공개/운영반영없음. 후행영수증문서는별도기록하며검증source를섞지않는다.
 
 [Issue59 전체20 Backend B8](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6952946626)로게시·실행결과를인계했다. CI성공여부는실행중으로유지한다.
+
+## 2026-11-18 full CI 회귀6번 후속
+
+source5e0ee12/run44117486823의verify성공·회귀0/3/7성공,6번134161122895는216PASS/1FAIL/2subtests였다. 명시분단위 자동후보시험의실제now+6h가수요일점검창에걸려MAINTENANCE_WINDOW409. 같은플레이주차시각을고정한초기보완은reconcile이실제시각을써TARGET_CONTEXT_STALE,이어모듈속성대상오류로실패했다. 마지막으로함수내import하는database.now까지조회/명령과일치시켜표적1PASS8.54s/자원정리완료. 초기실패를PASS에합산하지않는다. 파일전체검증과원CI다른구간결과확인중, 보완미커밋·미push·앱/명세/운영변경없음.
+
+## 2026-11-18 원full CI 종료·시험시계보완 파일검증
+
+2026-11-18 CI후속: 원full CI44117486823/source5e0ee12는7개회귀성공·6번1FAIL(216PASS/2subtests),verify성공·validation실패/publish·deploy skipped다. 수요일점검과충돌한명시출발시험의시계를조회/명령/reconcile모두일치하도록고정해표적1PASS·파일전체11PASS(46.30s). 앱/API변경없음. 동일승인게시/CI구간에직접필요한시험보완/기록만최소게시후새source수동full CI를실행한다. merge/공개/운영은제외다.
+
+초기시계보완/reconcile설정실패는원로그에보존하며마지막표적1PASS/파일11PASS와합산하지않는다. 실패로그/로컬검증은ignored backups/release-2.4.0-verification/에보존한다. CI원격검증에보완source게시가실제로필요하여같은승인게시구간의최소시험/문서만게시한다. 새CIsource/run은후행영수증으로분리한다.

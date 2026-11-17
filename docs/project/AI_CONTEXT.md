@@ -1,10 +1,8 @@
 # LostParty Backend 기능 지도
 
-2026-11-18 B8: release/2.4.0 누적준비 5e0ee12e897e35f01dcf73f40eee351a15649d52 commit/push·원격일치. 수동full CI [44117486823](https://github.com/heo0328/lostparty-backend/actions/runs/44117486823) 실행중, 결과는 [게시/CI영수증](../engineering/operations/records/release-2.4.0-ci.json). merge/태그/Release·이미지공개·운영배포없음. 아래미게시는B7당시기록이다.
+2026-11-18 CI후속: 원full CI44117486823/source5e0ee12는7개회귀성공·6번1FAIL(216PASS/2subtests),verify성공·validation실패/publish·deploy skipped다. 수요일점검과충돌한명시출발시험의시계를조회/명령/reconcile모두일치하도록고정해표적1PASS·파일전체11PASS(46.30s). 앱/API변경없음. 동일승인게시/CI구간에직접필요한시험보완/기록만최소게시후새source수동full CI를실행한다. merge/공개/운영은제외다.
 
-2026-11-18 B8: 사용자가 release/2.4.0 누적변경 commit/push 및 해당source의 수동 full CI 실행을 명시 승인했다. 지금 게시/검증을 진행하며 merge·태그/Release·GHCR공개·운영반영은 승인범위가 아니다. 정확한 source/run/원격확인은 후행 DEV_LOG와 게시영수증을 따른다. 아래 B7 미게시는 당시 상태다.
-
-2026-11-18 Issue59 B7: 실제운영Dockerfile 기반 합성이미지로 관리자 CLI/API/PostgreSQL/Caddy 전체통합을 완료했다. 실패후0036복원/구웹재개,0038후보완료후복귀,공동승인공개와probe실패503재차단·실제구/신웹HTML·mount된합성5키보존/정리 PASS. 도구/namespace23시험·정적115PASS. [전체18 Backend B7](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6952581457)·[통합영수증](../engineering/operations/records/release-2.4.0-reset-integration.json)·[실행안](../engineering/operations/release-2.4.0-reset-runbook.md). 임시시험Git/image는운영source/digest가아니며프로젝트HEAD18e6bb6은불변이다. release/2.4.0 미커밋·미push, 새reset도구운영설치/실행·실제초기화/서비스교체/공개없음.
+[CI영수증](../engineering/operations/records/release-2.4.0-ci.json)·[다음실행](NEXT_WORK.md). B7전체CLI합성검증/준비백업/Native고정산출물은유지하며운영2.3.0/0036이다.
 
 ## 현재 기준
 
