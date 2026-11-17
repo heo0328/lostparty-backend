@@ -98,6 +98,25 @@ class AnalyzerTests(unittest.TestCase):
         raw['ArkGrid']['Slots'][0]['Tooltip']='{'
         with self.assertRaises(AnalysisUnavailable):run_analysis(raw)
 
+    def test_artist_observed_tier1_alias(self):
+        case = next(c for c in CASES if c['className'] == '도화가' and c['role'] == 'support')
+        raw = fixture(case)
+        raw['ArkPassive']['Effects'][0]['Description'] = '깨달음 1티어 저물어가는 달 Lv.1'
+        role, summary, detail = run_analysis(raw)
+        self.assertEqual(role, 'support')
+        self.assertEqual(detail['detection']['branch_id'], 'waning_moon')
+        self.assertEqual(detail['ark_grid_conditions'][0]['missing_passive_names'], [])
+        # Alias alone must not bypass related-node evidence or ambiguity checks.
+        raw['ArkPassive']['Effects'].pop()
+        with self.assertRaises(AnalysisUnavailable):
+            run_analysis(raw)
+        raw = fixture(case)
+        raw['ArkPassive']['Effects'].extend([
+            {'Description': '깨달음 1티어 저물어 가는 달 Lv.1'},
+            {'Description': '깨달음 1티어 회귀 Lv.1'}])
+        with self.assertRaises(AnalysisUnavailable):
+            run_analysis(raw)
+
     def test_input_is_not_mutated(self):
         raw=fixture(CASES[0]);before=copy.deepcopy(raw)
         run_analysis(raw)
