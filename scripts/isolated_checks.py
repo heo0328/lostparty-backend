@@ -18,7 +18,8 @@ SUITES = {
                 'tests/game_accounts/analysis/test_server_credentials.py',
                 'tests/game_accounts/analysis/test_provider_limits.py',
                 'tests/game_accounts/analysis/test_analysis_migrations.py',
-                'tests/member_settings/test_member_settings.py'),
+                'tests/member_settings/test_member_settings.py',
+                'tests/raid_rooms/common/test_current_head_compatibility.py'),
     'two-cycle': ('tests/raid_rooms/admissions/test_reapplication_history.py',
                   'tests/raid_rooms/admissions/test_beta_recruitment.py'),
 }
