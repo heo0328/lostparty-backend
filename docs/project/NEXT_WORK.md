@@ -1,14 +1,10 @@
 # 다음 실행
 
-2026-11-18 B11: 사용자의 진행지시로2.4.0 검증수용/reuse계획·고정근거·검증도구와기록을release/2.4.0에commit/push한다. 전체회귀/새CI를실행하지않고관련도구21PASS·실제근거해석/새시험목록0·문서/diff를확인했다. 실제merge/태그/공개/운영반영은제외다. 정확한게시source는이커밋과Issue인계로확정하며아래미게시는B10당시기록이다.
-
-2026-11-18 B10: 사용자지시로전체재실행44120909602 cancelled확인·기존7회귀/verify성공+보완파일11PASS수용. 2.4.0한정reuse원장/source조상/후행변경허용목록연결을로컬구현해관련도구21시험PASS·실제근거해석PASS/새회귀0. 원failure/cancelled는보존하며전체CI성공으로표시하지않는다. 추가변경미커밋·미push/새CI·merge/공개/운영전환없음.
-
-[B10회신](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6953722160)·[고정수용근거](../engineering/operations/records/release-2.4.0-accepted-validation.json).
+2026-11-18 B12: 사용자진행승인으로 release/2.4.0 게시source3ef3eaa와최신기록을dev→main에이력보존병합·push한다. 전체회귀/새CI없음, mode=reuse와고정근거/문서검사만확인한다. 실제태그/Release·이미지공개/운영반영은제외다. 정확한병합SHA/원격확인은Issue인계와후행게시영수증을따른다.
 
 ## 다음 실행
 
-사용자게시/병합지시범위에서2.4.0수용근거·reuse계획/도구를포함한source를확정한다. 필요검사는정적/고정근거만이며전체회귀는재실행하지않는다. merge/태그/Release·불변이미지공개·운영반영은별도지시를따른다. 앱/시험fixture/마이그레이션/워크플로변경이있으면이예외를자동확대하지않는다. Native고정파일/기존인수재사용·동일시험요청없음.
+사용자태그/이미지공개지시범위에서통합source를기준으로2.4.0의불변이미지/Release를준비한다. 검증은reuse고정근거와정적검사만사용하며전체회귀는다시실행하지않는다. publish-only가자동운영배포를차단한다. 실제운영은전환직전백업/정지dump·독립PC확인과별도반영/공동공개지시범위에서진행한다. Native고정파일/기존인수는재사용하며같은시험요청없음.
 
 ## 코드·계약·실행 구분
 

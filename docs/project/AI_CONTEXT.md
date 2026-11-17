@@ -1,10 +1,8 @@
 # LostParty Backend 기능 지도
 
-2026-11-18 B11: 사용자의 진행지시로2.4.0 검증수용/reuse계획·고정근거·검증도구와기록을release/2.4.0에commit/push한다. 전체회귀/새CI를실행하지않고관련도구21PASS·실제근거해석/새시험목록0·문서/diff를확인했다. 실제merge/태그/공개/운영반영은제외다. 정확한게시source는이커밋과Issue인계로확정하며아래미게시는B10당시기록이다.
+2026-11-18 B12: 사용자진행승인으로 release/2.4.0 게시source3ef3eaa와최신기록을dev→main에이력보존병합·push한다. 전체회귀/새CI없음, mode=reuse와고정근거/문서검사만확인한다. 실제태그/Release·이미지공개/운영반영은제외다. 정확한병합SHA/원격확인은Issue인계와후행게시영수증을따른다.
 
-2026-11-18 B10: 사용자지시로전체재실행44120909602 cancelled확인·기존7회귀/verify성공+보완파일11PASS수용. 2.4.0한정reuse원장/source조상/후행변경허용목록연결을로컬구현해관련도구21시험PASS·실제근거해석PASS/새회귀0. 원failure/cancelled는보존하며전체CI성공으로표시하지않는다. 추가변경미커밋·미push/새CI·merge/공개/운영전환없음.
-
-[B10](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6953722160)·[수용근거](../engineering/operations/records/release-2.4.0-accepted-validation.json). 운영2.3.0/0036유지.
+운영2.3.0/DB0036은그대로다. 원CI실패/재실행cancelled와사용자수용근거를분리한다. [다음실행](NEXT_WORK.md)·[고정수용근거](../engineering/operations/records/release-2.4.0-accepted-validation.json).
 
 ## 현재 기준
 
