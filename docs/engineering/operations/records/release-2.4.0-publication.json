@@ -1,0 +1,31 @@
+{
+  "issue": 59,
+  "date_kst": "2026-11-18",
+  "backend_stage": "B13",
+  "tag": "v2.4.0",
+  "source": "970b2f430138b95d837305ffc576eb9cbc605cb0",
+  "image": "ghcr.io/heo0328/lostparty-backend@sha256:3e7dcdc5dd8ad954a1f6ca00b098a1d246144c9d0664a7d5224d467d074adb07",
+  "db_revision": "0038_analysis_candidates",
+  "release_url": "https://github.com/heo0328/lostparty-backend/releases/tag/v2.4.0",
+  "run_id": 44125843614,
+  "run_url": "https://github.com/heo0328/lostparty-backend/actions/runs/44125843614",
+  "workflow_result": "success",
+  "validation_mode": "reuse",
+  "new_regression_files": [],
+  "new_tests_executed": 0,
+  "deploy_job": "skipped",
+  "anonymous_image_digest_verified": true,
+  "release_assets_independently_verified": true,
+  "assets": {
+    "release.json": "8285e4b28b11c832cc92f151269aa5f4b591b8ea7bdcb43119d72f50a4ceab2d",
+    "validation.json": "5e184b40f99dfd9128a2e515847f3bd315f42e90d4ff33f47c1d0b83ffefadf0",
+    "compose.lightsail.yaml": "4120fe0c361a0f43cdf92ce13e3f6ba12a241d966fd0b1c6447a9093d40dd7cc"
+  },
+  "production_activation_executed": false,
+  "production_current": "v2.3.0 / 0036; unchanged by publish-only workflow",
+  "git_tag_object": "dbb719c9337d9eb9f3ec759fc4ac70d392efb6e2",
+  "release_is_draft": false,
+  "release_is_prerelease": false,
+  "reply": "https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6954177567",
+  "reply_order": 27
+}

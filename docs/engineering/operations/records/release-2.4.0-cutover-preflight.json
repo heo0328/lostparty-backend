@@ -1,0 +1,20 @@
+{
+  "issue": 59,
+  "date_kst": "2026-11-18",
+  "stage": "production preflight passed; backup approval blocked by automatic review",
+  "source": "970b2f430138b95d837305ffc576eb9cbc605cb0",
+  "image": "ghcr.io/heo0328/lostparty-backend@sha256:3e7dcdc5dd8ad954a1f6ca00b098a1d246144c9d0664a7d5224d467d074adb07",
+  "server_release_root": "/home/ubuntu/lostparty-backend/releases/backend-v2.4.0",
+  "release_and_web_integrity_verified": true,
+  "real_preflight_passed": true,
+  "production_before": "v2.3.0/0036 healthy; no unfinished journal",
+  "fresh_backup_executed": false,
+  "maintenance_started": false,
+  "api_stopped": false,
+  "database_reset": false,
+  "new_api_activated": false,
+  "automatic_review_rejection": "requires explicit full sensitive backup payload and each destination approval",
+  "server_backup_destination": "/home/ubuntu/lostparty-backend/backups/release-2.4.0-cutover/",
+  "local_backup_destination": "backups/release-2.4.0-cutover/",
+  "pc_destination": "existing private PC backup root / release-2.4.0-cutover (exact private location not published)"
+}

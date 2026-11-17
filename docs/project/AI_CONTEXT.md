@@ -1,8 +1,6 @@
 # LostParty Backend 기능 지도
 
-2026-11-18 B12: 사용자진행승인으로 release/2.4.0 게시source3ef3eaa와최신기록을dev→main에이력보존병합·push한다. 전체회귀/새CI없음, mode=reuse와고정근거/문서검사만확인한다. 실제태그/Release·이미지공개/운영반영은제외다. 정확한병합SHA/원격확인은Issue인계와후행게시영수증을따른다.
-
-운영2.3.0/DB0036은그대로다. 원CI실패/재실행cancelled와사용자수용근거를분리한다. [다음실행](NEXT_WORK.md)·[고정수용근거](../engineering/operations/records/release-2.4.0-accepted-validation.json).
+운영 Backend v2.4.0/source970b2f4·DB0038·웹2.4.0+9 공개와 사용자 정상 작동 인수를 완료했다. 추가 인수/재배포 대기는 없다. 후행 문서를 사용자 지시로 commit/push하며 병합·Issue 종료는 별도다. [운영 결과](../engineering/operations/records/release-2.4.0-cutover-result.json)·[사용자 인수 회신](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6955590949).
 
 ## 현재 기준
 

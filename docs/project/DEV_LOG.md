@@ -1,5 +1,13 @@
 # 영구 개발 이력
 
+2026-11-18 B16: 공동 공개 후 사용자 “운영 정상적으로 작동합니다.” 확인 수신. 운영2.4.0/DB0038/웹2.4.0+9 정상 작동 인수 완료, 추가 사용자 확인/동일 시험 대기 없음. 개별 세부 동작 전수 확인으로 확대하지 않는다. 후행 문서 미커밋·미push이며 게시/병합·Issue 종료는 별도 지시 범위다.
+
+2026-11-18 B15: Native 최종 게시 확인(전체30/6954801040)·사용자 진행 승인으로 기존 open 도구 성공. 고정 Backend2.4.0/source970b2f4·DB0038/웹2.4.0+9 재확인 후 maintenance 해제, public_open=true/journal succeeded. 서버 probe 및 외부 HTTPS /·/health 모두200. 다음은 사용자 운영 로그인·재등록 최소 실사용 확인/발생 문제 대응이다. 전체회귀·추가초기화 없음. 후행 기록은 미커밋·미push, Issue 종료 별도.
+
+2026-11-18 Native 최종 게시 회신 수신: Issue59 댓글6954801040. Native v2.4.0 Release/원본5파일 공개 및 다운로드 hash 일치 보고, 최종 통합e777da4·빌드source84565024 유지. Native는 사용자 최종 진행 승인에 따른 공동공개/maintenance 해제를 요청했다. 다음 Backend는 고정 source/image/DB0038/웹 일치 확인 후 기존 open 도구로 공개하고 edge 결과를 회신한다. 이번 회신 확인에서는 운영 상태를 변경하지 않았다.
+
+2026-11-18 B14: 승인된 최신 백업과 API 정지 후 최종 dump의 서버·로컬·PC 사본 일치를 확인했다. 운영 lostparty 앱 DB 전체 자료 초기화 및 Backend v2.4.0/source970b2f4·DB0038/고정 웹2.4.0+9 적용과 후보 점검을 완료했다. candidate_ready/public_open=false, 유지보수503 유지. 다음은 Issue59 Native 공동 공개 준비 회신과 최종 공개 지시 확인 후 open이다. 전체 회귀/새 CI는 실행하지 않았다. 후행 문서는 미커밋·미push다.
+
 ## 2026-11-13 Issue52 Native 첫 회신 확인
 
 [전체1 Native 조사](https://github.com/heo0328/lostparty-backend/issues/52#issuecomment-6845321873)를 확인했다. 생성 현재 정상/기록 오류 지속이라는 최신 사용자 보고, 실제 기록GET /v2/me/raid-room-memberships(state=ended/profile 조합)을 수용했다. 주간summary POST200은 기록탭 성공 근거가 아니다. Native는 선택T 없는 종료관계의 relation_only/null target과 cycle_groups 누락을 소비거절하는 합성2PASS·기존110PASS를 보고했으며 운영 동일원인 확정은 아니다.
@@ -5215,3 +5223,15 @@ version2.4.0/source051895a·승인후행3836eea/고정원장SHA를허용규칙�
 2026-11-18 B12: 사용자진행승인으로 release/2.4.0 게시source3ef3eaa와최신기록을dev→main에이력보존병합·push한다. 전체회귀/새CI없음, mode=reuse와고정근거/문서검사만확인한다. 실제태그/Release·이미지공개/운영반영은제외다. 정확한병합SHA/원격확인은Issue인계와후행게시영수증을따른다.
 
 원격main/dev18e6bb6·release/2.4.0 3ef3eaa일치및clean확인후같은목적브랜치에최신기록을모았다. 앱/시험fixture/도구변경없는문서수정이다. dev는no-ff로그이력보존, main은검증된dev와동일위치로통합한다. 남은릴리즈게시/전환작업이있어release/2.4.0은미완료목적브랜치로보존하며이전다른브랜치는건드리지않는다.
+
+## 2026-11-18 B13 Backend v2.4.0 산출물 게시완료
+
+2026-11-18 B13: 사용자승인v2.4.0태그/Release/불변이미지게시완료. source970b2f430138b95d837305ffc576eb9cbc605cb0·image3e7dcdc5…74adb07·DB0038. publish-only run44125843614 success/deploy skipped, reuse/new_tests_executed=0 확인. 다운로드원본manifest/validation/Compose·익명GHCRdigest·태그source일치검증PASS. 전체회귀재실행없음/운영2.3.0/0036유지. [게시영수증](../engineering/operations/records/release-2.4.0-publication.json).
+
+주석태그object dbb719c9337d9eb9f3ec759fc4ac70d392efb6e2의peeledsource970b2f4일치, Release일반공개/비draft·비prerelease. release.json/validation.json/compose원본을ignored backups/release-2.4.0-publication/에수령해정확source/DB0038/계약·Composehash/고정원장reuse증거와run44125843614/attempt1을검증했다. GHCR익명digest일치확인. 기존job명regression(0)은실제근거검사로new_tests_executed0로그를확인했고전체회귀재실행없음. 게시후기록은release/2.4.0을main통합기준으로ff후로컬에모았다. 원main/dev/태그불변·운영접속/DB초기화/서비스교체없음.
+
+[전체27 Backend B13](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6954177567)로게시결과/다음단계를인계했다. 후행게시영수증문서는현재release/2.4.0 로컬변경이며태그/source원본과구분한다.
+
+## 2026-11-18 운영전환 실제사전점검·백업자동승인거절
+
+사용자운영진행지시로고정tag970b2f4 Gitbundle/공개3원본·Native웹3파일을 /home/ubuntu/lostparty-backend/releases/backend-v2.4.0에보관, clean source/manifest/validation/Compose/웹무결성확인. 실제관리자preflight PASS/고정이미지확보. 운영2.3.0/0036·서비스healthy/토큰0600읽기·배포진행0. 최신백업을서버backups/release-2.4.0-cutover·로컬동명폴더·기존PC동명하위폴더로복사하는실행은자동검토에서민감payload/목적지명시승인부재로거절됐다. 우회/재시도없고서비스정지/maintenance/DB초기화없음. 정확한개인PC목적지는사용자대화에만안내하며공개문서에는넣지않는다. [사전점검](../engineering/operations/records/release-2.4.0-cutover-preflight.json).

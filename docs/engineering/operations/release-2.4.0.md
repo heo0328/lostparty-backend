@@ -1,4 +1,12 @@
-# 2.4.0 공동 운영 게시 준비
+# 2.4.0 공동 운영 게시 기록
+
+2026-11-18 B16: 공동 공개 후 사용자 “운영 정상적으로 작동합니다.” 확인 수신. 운영2.4.0/DB0038/웹2.4.0+9 정상 작동 인수 완료, 추가 사용자 확인/동일 시험 대기 없음. 개별 세부 동작 전수 확인으로 확대하지 않는다. 후행 문서 미커밋·미push이며 게시/병합·Issue 종료는 별도 지시 범위다.
+
+2026-11-18 B15: Native 최종 게시 확인(전체30/6954801040)·사용자 진행 승인으로 기존 open 도구 성공. 고정 Backend2.4.0/source970b2f4·DB0038/웹2.4.0+9 재확인 후 maintenance 해제, public_open=true/journal succeeded. 서버 probe 및 외부 HTTPS /·/health 모두200. 다음은 사용자 운영 로그인·재등록 최소 실사용 확인/발생 문제 대응이다. 전체회귀·추가초기화 없음. 후행 기록은 미커밋·미push, Issue 종료 별도.
+
+2026-11-18 B14: 승인된 최신 백업과 API 정지 후 최종 dump의 서버·로컬·PC 사본 일치를 확인했다. 운영 lostparty 앱 DB 전체 자료 초기화 및 Backend v2.4.0/source970b2f4·DB0038/고정 웹2.4.0+9 적용과 후보 점검을 완료했다. candidate_ready/public_open=false, 유지보수503 유지. 다음은 Issue59 Native 공동 공개 준비 회신과 최종 공개 지시 확인 후 open이다. 전체 회귀/새 CI는 실행하지 않았다. 후행 문서는 미커밋·미push다.
+
+아래는 준비 당시 기록이며 현재 상태는 상단 B16과 운영 결과 원장을 따른다.
 
 2026-11-17 / Issue59 / release/2.4.0. 사용자 배포 준비 재개 지시로 진행한다. Backend2.4.0 / Native2.4.0+9이며 현재는 로컬 준비다. commit/push·태그·Release/이미지 공개·운영 키 파일 공급 외 API/DB/웹 전환은 실행하지 않았다.
 
@@ -159,3 +167,10 @@ reset_release.py에 preflight→prepare(공개503/API정지/연결0/정지dump)�
 2026-11-18 B10: 사용자지시로전체재실행44120909602 cancelled확인·기존7회귀/verify성공+보완파일11PASS수용. 2.4.0한정reuse원장/source조상/후행변경허용목록연결을로컬구현해관련도구21시험PASS·실제근거해석PASS/새회귀0. 원failure/cancelled는보존하며전체CI성공으로표시하지않는다. 추가변경미커밋·미push/새CI·merge/공개/운영전환없음.
 
 이절이이전full대기상태를대체한다. 원run은failure/후행run은cancelled, 검증판정은사용자가기존통과+보완파일11PASS를수용했다. release-validation.json은2.4.0한정reuse로전환해고정수용원장SHA/051895a→3836eea→게시source조상·후행변경허용목록을검사하고기존기능회귀를다시실행하지않는다. 새정적/근거검사만수행하며신규회귀파일목록은빈목록이다. version2.4.1등에는적용하지않는다. [고정수용원장](records/release-2.4.0-accepted-validation.json)·[B10회신](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6953722160). 이번추가변경미게시,후속게시/태그/운영은지시범위에따른다.
+
+
+## B13 — Backend산출물 게시완료·실제운영전환전
+
+2026-11-18 B13: 사용자승인v2.4.0태그/Release/불변이미지게시완료. source970b2f430138b95d837305ffc576eb9cbc605cb0·image3e7dcdc5…74adb07·DB0038. publish-only run44125843614 success/deploy skipped, reuse/new_tests_executed=0 확인. 다운로드원본manifest/validation/Compose·익명GHCRdigest·태그source일치검증PASS. 전체회귀재실행없음/운영2.3.0/0036유지. [게시영수증](records/release-2.4.0-publication.json).
+
+[Release](https://github.com/heo0328/lostparty-backend/releases/tag/v2.4.0)와불변image `ghcr.io/heo0328/lostparty-backend@sha256:3e7dcdc5dd8ad954a1f6ca00b098a1d246144c9d0664a7d5224d467d074adb07`를사용한다. 검증은원failure/cancelled를보존한사용자수용근거reuse이며GitHub전체시험성공으로표시하지않는다. 필요한정적/근거검사후publish성공,deploy skipped다. 실제운영은여전히2.3.0/0036이며사용자반영지시후직전백업/정지dump·PC확인/명시apply·비공개검증/공동open이남았다.

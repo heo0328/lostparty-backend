@@ -1,0 +1,14 @@
+{
+  "backend_source": "970b2f430138b95d837305ffc576eb9cbc605cb0",
+  "db_revision": "0038_analysis_candidates",
+  "phase": "public_open",
+  "public_open": true,
+  "fresh_backup_server_local_pc_match": true,
+  "stopped_dump_server_local_pc_match": true,
+  "apply_completed": true,
+  "joint_publication_pending": false,
+  "status": "succeeded",
+  "external_https_web": 200,
+  "external_https_health": 200,
+  "user_acceptance": "production operating normally; user confirmed 2026-11-18"
+}

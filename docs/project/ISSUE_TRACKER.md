@@ -1,12 +1,18 @@
 # 이슈 주제별 추적표
 
+2026-11-18 B16: 공동 공개 후 사용자 “운영 정상적으로 작동합니다.” 확인 수신. 운영2.4.0/DB0038/웹2.4.0+9 정상 작동 인수 완료, 추가 사용자 확인/동일 시험 대기 없음. 개별 세부 동작 전수 확인으로 확대하지 않는다. 후행 문서 미커밋·미push이며 게시/병합·Issue 종료는 별도 지시 범위다.
+
+2026-11-18 B15: Native 최종 게시 확인(전체30/6954801040)·사용자 진행 승인으로 기존 open 도구 성공. 고정 Backend2.4.0/source970b2f4·DB0038/웹2.4.0+9 재확인 후 maintenance 해제, public_open=true/journal succeeded. 서버 probe 및 외부 HTTPS /·/health 모두200. 다음은 사용자 운영 로그인·재등록 최소 실사용 확인/발생 문제 대응이다. 전체회귀·추가초기화 없음. 후행 기록은 미커밋·미push, Issue 종료 별도.
+
+2026-11-18 B14: 승인된 최신 백업과 API 정지 후 최종 dump의 서버·로컬·PC 사본 일치를 확인했다. 운영 lostparty 앱 DB 전체 자료 초기화 및 Backend v2.4.0/source970b2f4·DB0038/고정 웹2.4.0+9 적용과 후보 점검을 완료했다. candidate_ready/public_open=false, 유지보수503 유지. 다음은 Issue59 Native 공동 공개 준비 회신과 최종 공개 지시 확인 후 open이다. 전체 회귀/새 CI는 실행하지 않았다. 후행 문서는 미커밋·미push다.
+
 2026-11-18 현재: #59 B7 관리자전체통합/운영Dockerfile 합성검증 완료. 사용자게시지시후기준source/full CI·불변이미지/Release·실제전환직전백업/공동전환이남았다. #58 추가시험대기없음. [DEV_LOG](DEV_LOG.md)·[NEXT_WORK](NEXT_WORK.md).
 
 ## 열린 이슈
 
 | 이슈 | 현재 상태 | 남은 작업·담당 |
 |---|---|---|
-| [#59 공동2.4.0준비](https://github.com/heo0328/lostparty-backend/issues/59) | [전체23 Backend B10](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6953722160) 재실행취소/기존검증수용·2.4.0한정reuse연결/도구21PASS | 수용근거3ef3eaa게시완료·사용자지시dev/main통합진행, 전체재시험없음. 공개/운영별도 |
+| [#59 공동2.4.0준비](https://github.com/heo0328/lostparty-backend/issues/59) | [전체27 Backend B13](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6954177567) v2.4.0 source970b2f4/불변image게시·reuse새시험0·deploy skipped | 실제운영전환은지시후직전백업/PC확인·정지dump/명시apply·공동공개. 운영2.3.0/0036유지. [게시원장](../engineering/operations/records/release-2.4.0-publication.json) |
 | [#58 상세 분석 후보](https://github.com/heo0328/lostparty-backend/issues/58) | 복구 `08212c31`·dev통합 `2e78854e` 게시. [Native 전체13](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947638411) 사용자두화면 정상확인 | 추가Backend수정/동일시험대기없음. 신규/소멸 운영피드백후속·Native게시·Issue마감은별도. [전체14 Backend B7](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947695749) |
 | [#53 내 계정 리메이크](https://github.com/heo0328/lostparty-backend/issues/53) | 정책2 게시/dev 통합·Native 정상보고. BUG-036 수정·5PASS/로컬지원·사용자/Native 정상 확인·9a61d0e/dev4be81dc 통합push | [전체41 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875007986)·전체43 Native 수용/사용자 정상 확인. [전체44 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875171401) 게시/dev 통합 완료, 이 오류의 추가대기 없음. 정책2 사용자 확인 후 개인시간표/예약까지 구현·확인, [전체48 Native](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6884612427) deve1ce0576 추가 통합/push. 추가 Backend 요청 없음, 최종 경계 확인/운영은 별도. Issue54 API·웹/Android 게시 포함·초기화 사전확인 필수 |
 | [#17](https://github.com/heo0328/lostparty-backend/issues/17) 누락/생명주기·기존 참가 복구 | 완료 오류/기존 계정 복구 인수·양측 dev 통합 완료. Native가 현재 경고/관리 왕복 연결과 별도 누락/부분 완료 기기 경계를 본문에 최신화 | 다음 순차 정리 대상. Backend 현재 구현과 Native 담당 근거로 완료/잔여 범위를 확정. 누락 자료/원복·기기 확인 착수는 별도 후속이며 현재 생성/DB 조정 요청 없음 |
