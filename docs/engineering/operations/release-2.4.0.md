@@ -140,3 +140,8 @@ reset_release.py에 preflight→prepare(공개503/API정지/연결0/정지dump)�
 남은게시경계: release/2.4.0 누적변경은미커밋·미push다. 사용자commit/push지시후기준source를고정하고릴리즈full CI/불변GHCR이미지·Release를확보해야한다. release-validation full과release-deployment publish-only를유지하므로태그게시가승인돼도운영자동전환은없다. 실제운영반영은새백업/정지dump·독립PC확인/공동전환승인범위에서수행하며현재운영2.3.0/0036은유지한다. 이번에운영도구설치/키·환경/DB자료/서비스교체를하지않았고새키백업이나같은PC복사를요청하지않는다.
 
 [Issue59 전체18 Backend B7](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6952581457) 회신과본문상단갱신을완료했다. 다음은사용자게시지시후Backend 기준source/고정이미지확보이며Native새작업대기는없다.
+
+
+## B8 — 승인 source게시·수동full CI
+
+사용자명시승인으로누적34파일을release/2.4.0 source5e0ee12e897e35f01dcf73f40eee351a15649d52에commit/push하고원격일치를확인했다. 로컬정적115PASS/비밀패턴·문서/diff검사와소스커밋직후clean을확인했다. 수동full CI [44117486823](https://github.com/heo0328/lostparty-backend/actions/runs/44117486823) source일치실행중이며최종성공은아니다. 수동분기는public publish/deploy를건너뛰고runner로컬빌드만검증한다. [전체20 Backend B8](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6952946626)·[CI영수증](records/release-2.4.0-ci.json). merge/태그/Release·이미지공개·운영반영은이번승인제외로미실행이다. 후행문서는검증source와구분해기록한다.

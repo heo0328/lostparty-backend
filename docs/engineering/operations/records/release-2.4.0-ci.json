@@ -1,0 +1,31 @@
+{
+  "issue": 59,
+  "date_kst": "2026-11-18",
+  "backend_stage": "B8",
+  "branch": "release/2.4.0",
+  "source": "5e0ee12e897e35f01dcf73f40eee351a15649d52",
+  "remote_source_verified": "5e0ee12e897e35f01dcf73f40eee351a15649d52",
+  "pushed": true,
+  "clean_worktree_immediately_after_source_commit": true,
+  "validation": {
+    "workflow": "backend-release.yml",
+    "event": "workflow_dispatch",
+    "run_id": 44117486823,
+    "attempt": 1,
+    "url": "https://github.com/heo0328/lostparty-backend/actions/runs/44117486823",
+    "mode": "full",
+    "status": "in_progress",
+    "conclusion": null,
+    "verify": "success",
+    "regression": "8 shards in_progress"
+  },
+  "merge_executed": false,
+  "tag_created": false,
+  "release_published": false,
+  "registry_image_published": false,
+  "production_deployed": false,
+  "source_commit_validation": "local static115 PASS; source remote matched; CI in progress",
+  "followup_documentation": "local after source commit; does not change tested source",
+  "reply": "https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6952946626",
+  "reply_order": 20
+}

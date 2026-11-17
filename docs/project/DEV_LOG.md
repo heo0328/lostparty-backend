@@ -5173,3 +5173,9 @@ open-restored로복구이후접속재개의별도승인/구source·image·DB0036
 ## 2026-11-18 B8 게시·수동 full CI 승인
 
 사용자가 release/2.4.0 누적변경 commit/push·해당source 수동 릴리즈full CI 실행을 명시 승인했다. 원격 main/dev18e6bb6 일치·release/2.4.0 원격부재를확인했다. 승인범위는게시/검증이며 merge/태그·Release·이미지공개·운영반영은제외다. 누적도구/준비기록/fixture를같은목적브랜치에게시하고 정확한SHA/run/결과는 후행영수증으로연결한다.
+
+## 2026-11-18 B8 소스게시·full CI 실행
+
+사용자명시승인으로release/2.4.0 누적34파일을 5e0ee12e897e35f01dcf73f40eee351a15649d52 chore: prepare 2.4.0 reset release and validation에commit/push·원격일치확인, 소스commit직후작업트리clean. 스테이징전비밀경로/키·토큰패턴검사와정적115PASS·문서/diffPASS. 임시fixture Git가아닌실제프로젝트기준source다. 수동 workflow_dispatch full CI https://github.com/heo0328/lostparty-backend/actions/runs/44117486823 source일치실행중. 수동분기publish/deploy제외를검토했다. main/dev18e6bb6불변·merge/태그/Release/GHCR공개/운영반영없음. 후행영수증문서는별도기록하며검증source를섞지않는다.
+
+[Issue59 전체20 Backend B8](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6952946626)로게시·실행결과를인계했다. CI성공여부는실행중으로유지한다.

@@ -1,21 +1,18 @@
 # 다음 실행
 
-2026-11-18 B8: 사용자가 release/2.4.0 누적변경 commit/push 및 해당source의 수동 full CI 실행을 명시 승인했다. 지금 게시/검증을 진행하며 merge·태그/Release·GHCR공개·운영반영은 승인범위가 아니다. 정확한 source/run/원격확인은 후행 DEV_LOG와 게시영수증을 따른다. 아래 B7 미게시는 당시 상태다.
-
-2026-11-18 Issue59 B7: 실제운영Dockerfile 기반 합성이미지로 관리자 CLI/API/PostgreSQL/Caddy 전체통합을 완료했다. 실패후0036복원/구웹재개,0038후보완료후복귀,공동승인공개와probe실패503재차단·실제구/신웹HTML·mount된합성5키보존/정리 PASS. 도구/namespace23시험·정적115PASS. [전체18 Backend B7](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6952581457)·[통합영수증](../engineering/operations/records/release-2.4.0-reset-integration.json)·[실행안](../engineering/operations/release-2.4.0-reset-runbook.md). 임시시험Git/image는운영source/digest가아니며프로젝트HEAD18e6bb6은불변이다. release/2.4.0 미커밋·미push, 새reset도구운영설치/실행·실제초기화/서비스교체/공개없음.
+2026-11-18 B8: 사용자명시승인으로 release/2.4.0 누적변경을 5e0ee12e897e35f01dcf73f40eee351a15649d52에commit/push하고원격일치를확인했다. 동일source 수동full CI [44117486823](https://github.com/heo0328/lostparty-backend/actions/runs/44117486823) 실행중. 결과와실패원인을확인한다. [게시/CI영수증](../engineering/operations/records/release-2.4.0-ci.json). merge/태그·Release·이미지공개/운영배포는승인범위가아니며미실행이다.
 
 ## 다음 실행과 게시 경계
 
-1. 사용자 명시승인으로 release/2.4.0 누적변경 commit/push와 수동 full CI를 진행한다. 누적 VERSION/검증·게시경계/백업·reset도구/회귀fixture 보완과 기록은 같은 release/2.4.0에 모여 있다. 일반 작업 진행은 게시 승인이 아니므로 현재 로컬에 유지한다. 임시시험저장소 commit을 프로젝트 이력/출시 source로 대신하지 않는다.
-2. 승인된 게시 범위에서 기준source를 고정하고 release-validation full대로 CI와 불변GHCR이미지/Release를 확보한다. 현재 운영Dockerfile의 로컬 합성빌드·통합은 검증됐지만 실제release source/digest는 없다. 태그/Release·이미지공개·merge는 각 지시 범위를 확인한다. publish-only는 실제운영 자동배포를 차단한다.
-3. 실제운영반영 승인/유지보수 구간에서 최신 DB+키/환경/current/도구/활성웹 백업·PC사본을 갱신하고, API정지/연결0 뒤 정지dump/행snapshot·독립PC확인을 확보한다. 준비백업/기존PC token사본은 완료이며 같은복사/새키생성을 반복하지 않는다.
-4. 고정후보/웹·APK 공동공개를 Native와 맞춘다. Native 고정파일/기존사용자인수는 재사용하고 새구현/재빌드/동일시험 대기는 없다. 실제전환 preflight/prepare/apply/open과필요시rollback/open-restored는운영실행 승인범위에서만 진행한다.
+1. 현재수동full CI verify/8회귀구간/validation의최종결과를확인하고필요한실패보완만한다. 실패시원run/소스를보존하고보완source와재실행결과를구분한다.
+2. 승인된이번구간은소스commit/push와수동검증이다. merge·태그/Release·불변GHCR공개는별도지시를기다린다. 수동검증의이미지빌드는runner로컬시험이며고정공개digest가아니다.
+3. 실제운영전환은새고정후보와전환직전최신백업/정지dump·독립PC확인/운영반영·공동공개승인범위에서수행한다. 운영2.3.0/0036유지, Native고정파일/기존인수재사용·같은시험요청없음.
 
 ## 코드·계약·실행 구분
 
 | 구분 | 기준 |
 |---|---|
-| Git | release/2.4.0, 기능기준18e6bb66283d1eb772c4eee2431eee92c1e25a62, 준비 변경 미커밋·미push |
+| Git | release/2.4.0, 기능기준18e6bb66283d1eb772c4eee2431eee92c1e25a62, 게시source 5e0ee12e897e35f01dcf73f40eee351a15649d52 원격일치, 후행결과문서는로컬기록 |
 | 로컬 실행 | image eadaa2cc…37b9/DB0038·기존개발지원 유지. 개발키 변경/삭제 없음 |
 | 명세 | 191경로/211동작, SHA25612634daa64a8c4cbdfecfdb53bc7c1aca3bdb721c5ea555d098aea51544b9665; 이번 API 변경 없음 |
 | 운영 | v2.3.0/source05daa42·DB0036·웹2.3.0+8, 서비스재시작/DB/웹전환 없음. 새token파일/제한사본만 추가 |
