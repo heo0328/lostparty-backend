@@ -1,0 +1,72 @@
+{
+  "date_kst": "2026-11-17",
+  "issue": 58,
+  "branch": "feat/roster-refresh-policy",
+  "base_commit": "88f1f452e1108dcb2065905a0bb05edb35cf70dd",
+  "scope": "restore explicit DB0038 support in three existing gates; no public contract or DDL changes",
+  "image": "sha256:eadaa2ccc5d30010054fd2fe00d9f8b4055360f77a239a0a597951a1b1d537b9",
+  "schema": "0038_analysis_candidates",
+  "migration_rerun": false,
+  "db_container_restarted": false,
+  "tests": {
+    "before_fix_current_head_failure": "GROUP_FEATURE_NOT_READY503",
+    "recruitment_regression_passed": 67,
+    "current_regression_passed": 136,
+    "current_subtests_passed": 13,
+    "overlapping_counts_not_summed": true,
+    "candidate_and_runtime_full_openapi_equal": true,
+    "openapi_paths": 191,
+    "openapi_sha256": "12634daa64a8c4cbdfecfdb53bc7c1aca3bdb721c5ea555d098aea51544b9665"
+  },
+  "runtime": {
+    "api_healthy": true,
+    "db_healthy": true,
+    "cycle_group_policy_enabled": true,
+    "authentication": "in-memory short access token for one existing valid session; no token output/storage; no session or refresh write",
+    "http_reads": [
+      {
+        "week": "current",
+        "method": "POST",
+        "path": "/v2/raid-rooms/search",
+        "status": 200,
+        "item_count": 0
+      },
+      {
+        "week": "current",
+        "method": "GET",
+        "path": "/v2/me/raid-room-memberships",
+        "status": 200,
+        "item_count": 2
+      },
+      {
+        "week": "next",
+        "method": "POST",
+        "path": "/v2/raid-rooms/search",
+        "status": 200,
+        "item_count": 0
+      },
+      {
+        "week": "next",
+        "method": "GET",
+        "path": "/v2/me/raid-room-memberships",
+        "status": 200,
+        "item_count": 2
+      }
+    ]
+  },
+  "unchanged": [
+    "database schema and user data",
+    "keys and environment",
+    "production"
+  ],
+  "fix_status_at_rollout": "uncommitted/unpushed working tree",
+  "implementation_commit": "08212c31215adae1c3a09cb9705409103af1ebdd",
+  "integration_target": "dev; explicit user merge/push instruction",
+  "not_executed_at_rollout": [
+    "provider calls",
+    "data fabrication to populate search",
+    "commit/push/merge",
+    "Native visual acceptance"
+  ],
+  "publication_receipt": "docs/project/DEV_LOG.md and Issue58 Backend publication reply"
+}
