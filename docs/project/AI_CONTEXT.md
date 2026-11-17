@@ -1,5 +1,9 @@
 # LostParty Backend 기능 지도
 
+2026-11-17 사용자 commit/dev 병합/push 지시: BUG-039 업무 커밋 `3910c43` 생성 완료. 이번 기록도 같은 목적 브랜치에서 커밋해 dev로 통합·게시한다. 아래 미커밋/미push 표기는 당시 이력이다. 최종 통합 SHA·원격 일치는 Issue57 게시 회신과 사용자 완료 보고를 따른다. 개발 적용 완료·Native/사용자 저장/표시 확인 대기, 운영 배포 없음.
+
+2026-11-17 [Issue57 BUG-039](https://github.com/heo0328/lostparty-backend/issues/57) 진행: 니티얌 도화가 실제 노드 표기와 카탈로그 불일치를 별칭으로 수정·개발 API 반영 완료다. 실제 support 판별 성공, 사용자 HTTP 저장/화면 확인 대기다. 티아서버용 upstream 본문 실패는 별개다. [원인·검증·다음 담당](bug-039-analysis-refresh.md). Issue55/56 종료 상태는 유지한다.
+
 2026-11-17 최종 상태: 사용자 명시 지시로 Issue55·56을 completed 종료했다. [Issue55 전체26 Backend 종료](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6925201215)·[Issue56 전체9 Backend 종료](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6925204975). 사용자 앱 전반/캐릭터 조회·비5분 입력 정상 확인 및 종료 근거를 보존한다. 해당 기능의 추가 구현/재시험·인수 대기 없음. 아래 OPEN/종료 결정 대기는 이전 이력이다. 후행 문서는 이번 승인 범위로 commit/push하며 운영/서버/DB/키는 변경하지 않는다.
 
 

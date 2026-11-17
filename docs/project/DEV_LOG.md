@@ -5021,3 +5021,23 @@ Native [Issue56 전체7](https://github.com/heo0328/lostparty-backend/issues/56#
 2026-11-17 최종 상태: 사용자 명시 지시로 Issue55·56을 completed 종료했다. [Issue55 전체26 Backend 종료](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6925201215)·[Issue56 전체9 Backend 종료](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6925204975). 사용자 앱 전반/캐릭터 조회·비5분 입력 정상 확인 및 종료 근거를 보존한다. 해당 기능의 추가 구현/재시험·인수 대기 없음. 아래 OPEN/종료 결정 대기는 이전 이력이다. 후행 문서는 이번 승인 범위로 commit/push하며 운영/서버/DB/키는 변경하지 않는다.
 
 전체 댓글 재조회로 실제55전체26·56전체9의 작성 측 Backend/종료 단계를 확인했다. 두 Issue API 응답 closed/completed를 확인했고 사용자 확인 후행 문서·종료 판단/최종 상태를 함께 게시한다. 기존 dev/main/origin154a60e에서 충돌/새 원격 변경 없이 동일 최종 commit으로 동기화한다. 문서/동결 보존·diff 검사만 수행하며 서버/DB/키·운영 변경이나 동일 시험 반복은 없다.
+
+
+## 2026-11-17 Issue57 BUG-039 수정·개발 반영
+
+[상세 원본](bug-039-analysis-refresh.md). 니티얌 소유/사용 자격 정상, 실제 ‘저물어 가는 달’과 카탈로그 표기 차이로 ROLE_DETECTION_UNAVAILABLE 재현. 명시적 별칭 지원·카탈로그2026.11.17.1로 수정. 티아서버용은 별도 upstream body_shape 오류다. 단위8PASS·격리131PASS/하위13PASS·후보/실제 전체계약 일치·API healthy 및 실제 니티얌 support 판별 성공. 사용자 HTTP 저장/화면 확인 대기. [전체1 Backend B1 회신](https://github.com/heo0328/lostparty-backend/issues/57#issuecomment-6939190016). fix/character-analysis 미커밋·미push, 개발 API 적용 완료·운영/키/DB 초기화/삭제 없음.
+
+## 2026-11-17 B2 최종 표기 보완과 별도 제안
+
+카탈로그 정식 표기를 ‘저물어 가는 달’로 수정하고 기존 ‘저물어가는 달’을 호환 별칭으로 전환했다. fixture도 정식 표기로 갱신, 단위8PASS·실제 개발 API 재반영/healthy·전체 OpenAPI 일치 PASS. B1의 격리131PASS/하위13PASS는 당시 기준이며 최종 보완 후 전체 재실행 수치가 아니다. 앞선 image config는 B1 당시 이력이다. Backend 버그 수정/개발 반영 완료, Native/사용자 새 명령 저장·화면 확인 대기. 미커밋·미push.
+
+사용자 설명상 티아서버용은 생성 후 전직 전 캐릭터다. 직접 원인 단정은 보류한다. 아이템1700 미만 자동/전체 분석 제외·목록 보존·실패 집계 분리 제안은 미착수 후속으로 기록만 했다. 전투 레벨 제한·미확인 레벨/개별 갱신 처리·재포함/Native 표시는 미합의다. 현재 필터를 바꾸지 않았고 BUG-039 완료 조건에 추가하지 않는다. 별도 구현 승인 시 독립 Issue로 추적한다.
+
+[전체2 Backend B2 회신](https://github.com/heo0328/lostparty-backend/issues/57#issuecomment-6939265676).
+
+상세 원본: [BUG-039](bug-039-analysis-refresh.md).
+
+
+## 2026-11-17 Issue57 사용자 승인 게시
+
+2026-11-17 사용자 commit/dev 병합/push 지시: BUG-039 업무 커밋 `3910c43` 생성 완료. 이번 기록도 같은 목적 브랜치에서 커밋해 dev로 통합·게시한다. 아래 미커밋/미push 표기는 당시 이력이다. 최종 통합 SHA·원격 일치는 Issue57 게시 회신과 사용자 완료 보고를 따른다. 개발 적용 완료·Native/사용자 저장/표시 확인 대기, 운영 배포 없음.

@@ -1,0 +1,37 @@
+# BUG-039 캐릭터 분석 갱신 실패
+
+2026-11-17 사용자 commit/dev 병합/push 지시: BUG-039 업무 커밋 `3910c43` 생성 완료. 이번 기록도 같은 목적 브랜치에서 커밋해 dev로 통합·게시한다. 아래 미커밋/미push 표기는 당시 이력이다. 최종 통합 SHA·원격 일치는 Issue57 게시 회신과 사용자 완료 보고를 따른다. 개발 적용 완료·Native/사용자 저장/표시 확인 대기, 운영 배포 없음.
+
+2026-11-17 / [Issue57](https://github.com/heo0328/lostparty-backend/issues/57) / 목적 브랜치 `fix/character-analysis`. 사용자 작업 진행 승인으로 개발 환경 조사·직접 수정·검증·개발 API 반영을 진행한다. commit/push·운영 배포·DB 초기화/삭제는 범위가 아니다.
+
+## 실제 원인
+
+개발 DB에서 니티얌의 소유 회원·인증·confirmed/active 상태는 정상이다. 실패 기록은 AnalysisFetch가 아니라 `game_account_requests`의 `character-analysis-refresh` 결과에 남아 있다. 대표 실패 request_id는 `bee80ba6-b629-49e9-9722-802b59d3fd52`, code는 ROLE_DETECTION_UNAVAILABLE다.
+
+서버 한도 관리 경유로 캐릭터별 armory를 각 1회 조회했다. 니티얌은 프로필 식별값 일치, 실제 1티어 노드명이 ‘저물어 가는 달’이고 카탈로그는 ‘저물어가는 달’만 인식했다. 관련 노드 ‘묵법 : 접무’는 존재했다. 실제 응답의 분석 실패를 재현했다. 원문/토큰은 저장·출력·게시하지 않았다.
+
+동일 원정대의 티아서버용은 UPSTREAM_INVALID_RESPONSE이며 대표 request_id는 `36c9b941-51ad-42ab-a1ce-d247bef51e85`다. 제한된 실제 조회에서도 body_shape로 거절됐다. 니티얌의 역할 매칭과 다른 원인이며, upstream에 유효한 본문이 없는 이유(삭제/캐릭터 상태 등)는 확정하지 않는다. 잘못된 본문을 정상 저장으로 바꾸지 않는다. 과거 동시 갱신 중 UPSTREAM_BUSY도 별개로 기록돼 있다.
+
+## 수정과 검증
+
+도화가 해당 분기에 실제 표기를 명시적 별칭으로 추가하고 분석기가 별칭을 canonical 노드로 인식하게 했다. 관찰 이름도 유지해 아크그리드 조건 비교를 보존한다. 카탈로그 버전은 2026.11.17.1이다. 기본 역할 추측이나 임의 소유/사용 자격 완화는 없다. API DTO/경로/상태·rule ID는 유지한다.
+
+합성 회귀는 별칭 성공·조건 매칭·관련 노드 누락 거절·상반된 분기 동시 존재 거절을 포함한다. 단위 unittest 8PASS, 후보 이미지 전체 OpenAPI 일치 PASS. 격리 current 회귀 및 실제 개발 반영 결과는 아래에 누적한다.
+
+## 남은 완료 조건
+
+개발 반영 뒤 Native/사용자의 새 갱신 명령으로 니티얌 저장 성공과 오류 안내를 확인한다. 이전 실패 명령 재전송은 원래 ACK를 보존하므로 새 command_id가 필요하다. 티아서버용은 별도 upstream 유효 응답 여부를 구분한다. 완료 전 Issue57을 삭제하지 않으며, 삭제 지시는 Issue 본문에 기재된 내용으로 보존한다. 현재 이번 대화에서 삭제를 실행하지 않는다.
+
+## 개발 반영 결과
+
+격리 current 회귀 131PASS·하위 사례13PASS(129.75초). 후보와 실제 실행 API의 전체 OpenAPI 일치 PASS. 개발 API만 교체해 healthy 확인했다. 실행 image config는 fa96e6ef381c2a341d62a9e04a1906fe6c0bcef3b6c0b7dd977a4924f3befa79다. 반영 후 한도 관리 경유 1회 실제 응답에서 support/waning_moon·관련 노드 매칭 성공을 확인했다. 실제 사용자 HTTP 저장/화면 확인은 Native/사용자 대기다. 진단 호출 총3회, 키/환경·DB 초기화/삭제·운영 변경 없음.
+
+[전체1 Backend B1 수정·개발 반영 회신](https://github.com/heo0328/lostparty-backend/issues/57#issuecomment-6939190016). 다음 담당 Native/사용자, 새 command_id 갱신·저장/표시 확인 대기. 미커밋·미push.
+
+## 2026-11-17 B2 최종 표기 보완과 별도 제안
+
+카탈로그 정식 표기를 ‘저물어 가는 달’로 수정하고 기존 ‘저물어가는 달’을 호환 별칭으로 전환했다. fixture도 정식 표기로 갱신, 단위8PASS·실제 개발 API 재반영/healthy·전체 OpenAPI 일치 PASS. B1의 격리131PASS/하위13PASS는 당시 기준이며 최종 보완 후 전체 재실행 수치가 아니다. 앞선 image config는 B1 당시 이력이다. Backend 버그 수정/개발 반영 완료, Native/사용자 새 명령 저장·화면 확인 대기. 미커밋·미push.
+
+사용자 설명상 티아서버용은 생성 후 전직 전 캐릭터다. 직접 원인 단정은 보류한다. 아이템1700 미만 자동/전체 분석 제외·목록 보존·실패 집계 분리 제안은 미착수 후속으로 기록만 했다. 전투 레벨 제한·미확인 레벨/개별 갱신 처리·재포함/Native 표시는 미합의다. 현재 필터를 바꾸지 않았고 BUG-039 완료 조건에 추가하지 않는다. 별도 구현 승인 시 독립 Issue로 추적한다.
+
+[전체2 Backend B2 회신](https://github.com/heo0328/lostparty-backend/issues/57#issuecomment-6939265676).

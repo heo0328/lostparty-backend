@@ -1,5 +1,11 @@
 # 다음 실행
 
+2026-11-17 사용자 commit/dev 병합/push 지시: BUG-039 업무 커밋 `3910c43` 생성 완료. 이번 기록도 같은 목적 브랜치에서 커밋해 dev로 통합·게시한다. 아래 미커밋/미push 표기는 당시 이력이다. 최종 통합 SHA·원격 일치는 Issue57 게시 회신과 사용자 완료 보고를 따른다. 개발 적용 완료·Native/사용자 저장/표시 확인 대기, 운영 배포 없음.
+
+2026-11-17 B2: 정식 표기 ‘저물어 가는 달’ 보완·단위8PASS·개발 재반영/전체계약 일치 완료. [전체2 Backend B2](https://github.com/heo0328/lostparty-backend/issues/57#issuecomment-6939265676). Backend 수정 완료, 다음 Native/사용자 새 명령 저장·표시 확인. 저레벨 분석 제외는 별도 미착수 제안으로 기록만 했으며 이번 버그 완료 조건이 아니다.
+
+2026-11-17 새 장애: [Issue57 BUG-039](https://github.com/heo0328/lostparty-backend/issues/57)의 니티얌 역할 판별 실패를 조사·수정 중이다. 별도 목적 브랜치 `fix/character-analysis`, 원인/범위·검증은 [장애 기록](bug-039-analysis-refresh.md). 격리131PASS/하위13PASS·개발 API 적용·실제 니티얌 support 판별 완료. 다음은 Native/사용자가 새 command_id로 저장/상세 표시 확인이다. [전체1 Backend B1 회신](https://github.com/heo0328/lostparty-backend/issues/57#issuecomment-6939190016). 티아서버용의 upstream body_shape 실패는 별개다. Issue55/56 완료를 재개방하지 않는다. 미커밋·미push, 운영 변경 없음.
+
 2026-11-17 최종 상태: 사용자 명시 지시로 Issue55·56을 completed 종료했다. [Issue55 전체26 Backend 종료](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6925201215)·[Issue56 전체9 Backend 종료](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6925204975). 사용자 앱 전반/캐릭터 조회·비5분 입력 정상 확인 및 종료 근거를 보존한다. 해당 기능의 추가 구현/재시험·인수 대기 없음. 아래 OPEN/종료 결정 대기는 이전 이력이다. 후행 문서는 이번 승인 범위로 commit/push하며 운영/서버/DB/키는 변경하지 않는다.
 
 
