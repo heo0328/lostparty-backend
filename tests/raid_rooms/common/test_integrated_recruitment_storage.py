@@ -44,8 +44,9 @@ def imported(people, monkeypatch, client):
             from app.raids import service as raids
             with session() as db:
                 stamp = now(db)
-            unit = min(timedelta(hours=1), (raids.cycle(stamp).ends_at-stamp)/10)
-            if unit < timedelta(minutes=2):pytest.skip('Insufficient interval before actual cycle boundary')
+            available_minutes=int((raids.cycle(stamp).ends_at-stamp).total_seconds()//600)
+            unit=timedelta(minutes=min(60,available_minutes//5*5))
+            if unit < timedelta(minutes=5):pytest.skip('Insufficient interval before actual cycle boundary')
             from tests.raid_rooms.common.migration_fixtures import legacy_room
             rid=legacy_room(a,stamp+unit,stamp+2*unit,peers=(b,))
             second=legacy_room(a,stamp+4*unit,stamp+5*unit,index=1)
@@ -73,7 +74,9 @@ def test_import_preserves_all_old_rows_and_distinct_lifetimes(imported):
         assert c.scalar(text('SELECT count(*) FROM recruitment_assignments a JOIN recruitment_memberships m ON m.id=a.membership_id WHERE a.user_id<>m.user_id')) == 0
         assert c.scalar(text('SELECT count(*) FROM recruitment_assignments a JOIN raid_room_memberships m ON a.membership_id=m.id WHERE a.display IS DISTINCT FROM m.display OR a.build IS DISTINCT FROM m.build')) == 0
         assert c.execute(text('SELECT duration_minutes,duration_source FROM recruitment_segments WHERE room_id=:id'), {'id': second}).one() == (None, 'legacy_review_required')
-        assert c.scalar(text('SELECT duration_minutes FROM recruitment_segments WHERE room_id=:id'), {'id': rid}) == 60
+        expected_minutes=c.scalar(text('SELECT extract(epoch FROM (ends_at-starts_at))/60 FROM raid_room_rounds WHERE room_id=:id'),{'id':rid})
+        assert expected_minutes>0 and expected_minutes%5==0
+        assert c.scalar(text('SELECT duration_minutes FROM recruitment_segments WHERE room_id=:id'), {'id': rid}) == expected_minutes
         assert c.scalar(text('SELECT ended_at IS NOT NULL FROM recruitment_memberships WHERE room_id=:id'), {'id': third})
         assert c.scalar(text("SELECT state FROM recruitment_assignments WHERE room_id=:id"), {'id': third}) == 'legacy_ended'
         # Persistent membership contains no round/character binding.

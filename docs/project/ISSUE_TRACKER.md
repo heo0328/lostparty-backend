@@ -1,11 +1,12 @@
 # 이슈 주제별 추적표
 
-2026-11-17 현재: #58 Backend dev0038 지원·Native N1 일반연결/자동검증 완료 보고 수신, 사용자 결과 대기. 작업브랜치 게시와 dev/main·운영 반영을 구분한다. 정확한 SHA·인계는 [DEV_LOG](DEV_LOG.md), 다음 실행은 [NEXT_WORK](NEXT_WORK.md).
+2026-11-18 현재: #59 B7 관리자전체통합/운영Dockerfile 합성검증 완료. 사용자게시지시후기준source/full CI·불변이미지/Release·실제전환직전백업/공동전환이남았다. #58 추가시험대기없음. [DEV_LOG](DEV_LOG.md)·[NEXT_WORK](NEXT_WORK.md).
 
 ## 열린 이슈
 
 | 이슈 | 현재 상태 | 남은 작업·담당 |
 |---|---|---|
+| [#59 공동2.4.0준비](https://github.com/heo0328/lostparty-backend/issues/59) | [전체23 Backend B10](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6953722160) 재실행취소/기존검증수용·2.4.0한정reuse연결/도구21PASS | 수용근거3ef3eaa게시완료·사용자지시dev/main통합진행, 전체재시험없음. 공개/운영별도 |
 | [#58 상세 분석 후보](https://github.com/heo0328/lostparty-backend/issues/58) | 복구 `08212c31`·dev통합 `2e78854e` 게시. [Native 전체13](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947638411) 사용자두화면 정상확인 | 추가Backend수정/동일시험대기없음. 신규/소멸 운영피드백후속·Native게시·Issue마감은별도. [전체14 Backend B7](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947695749) |
 | [#53 내 계정 리메이크](https://github.com/heo0328/lostparty-backend/issues/53) | 정책2 게시/dev 통합·Native 정상보고. BUG-036 수정·5PASS/로컬지원·사용자/Native 정상 확인·9a61d0e/dev4be81dc 통합push | [전체41 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875007986)·전체43 Native 수용/사용자 정상 확인. [전체44 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875171401) 게시/dev 통합 완료, 이 오류의 추가대기 없음. 정책2 사용자 확인 후 개인시간표/예약까지 구현·확인, [전체48 Native](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6884612427) deve1ce0576 추가 통합/push. 추가 Backend 요청 없음, 최종 경계 확인/운영은 별도. Issue54 API·웹/Android 게시 포함·초기화 사전확인 필수 |
 | [#17](https://github.com/heo0328/lostparty-backend/issues/17) 누락/생명주기·기존 참가 복구 | 완료 오류/기존 계정 복구 인수·양측 dev 통합 완료. Native가 현재 경고/관리 왕복 연결과 별도 누락/부분 완료 기기 경계를 본문에 최신화 | 다음 순차 정리 대상. Backend 현재 구현과 Native 담당 근거로 완료/잔여 범위를 확정. 누락 자료/원복·기기 확인 착수는 별도 후속이며 현재 생성/DB 조정 요청 없음 |

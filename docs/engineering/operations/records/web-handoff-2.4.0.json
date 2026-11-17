@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "issue": 59,
+  "native_comment": "https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6949136114",
+  "native_comment_order": 10,
+  "native_ledger_commit": "f2f1b75932f3debfd62787a3d7155d7b3c89ee70",
+  "web": {
+    "repository": "heo0328/LostParty_flutter",
+    "run_id": 44087982844,
+    "artifact_id": 14330277676,
+    "artifact_name": "lostparty-web-2.4.0-9-84565024a28d",
+    "expires_at": "2026-12-01T13:00:57Z",
+    "source": "84565024a28dd67d043b09f90da5d77f0fc6aa0a",
+    "version": "2.4.0+9",
+    "origin": "https://lostparty.duckdns.org",
+    "archive_sha256": "d8c582c707d0073bc0aa2194d46a050a0acc7485d6c7519c23a7af3964de76e5",
+    "bundle_sha256": "d878a995955e540f7441e563e17b7e6ab647dd335cd7abb2777970dbd7719aa6",
+    "bundle_bytes": 14292209,
+    "site_files": 34,
+    "original_files": {
+      "lostparty-v2.4.0-web.zip": {
+        "bytes": 14292209,
+        "sha256": "d878a995955e540f7441e563e17b7e6ab647dd335cd7abb2777970dbd7719aa6"
+      },
+      "lostparty-v2.4.0-web.zip.sha256": {
+        "bytes": 91,
+        "sha256": "59400d961b4bb0f850ddf670f851dce5abfc1c6ccdae052d3d36f070b2734f13"
+      },
+      "release-manifest.json": {
+        "bytes": 6033,
+        "sha256": "045519483d0494af288cb5ad55a72731c6b151d1ce99283c4b67e3ac4d147e11"
+      }
+    },
+    "activated": false,
+    "aws_uploaded": false,
+    "server_staged": false,
+    "local_verified": true,
+    "original_three_files_preserved": true,
+    "local_staged": true,
+    "local_directory": "backups/release-2.4.0-artifacts/web",
+    "local_stage_directory": "backups/release-2.4.0-artifacts/web-stage/releases/d878a995955e540f7441e563e17b7e6ab647dd335cd7abb2777970dbd7719aa6/site"
+  },
+  "apk": {
+    "run_id": 44087977727,
+    "conclusion": "success",
+    "artifact_id": 14330278091,
+    "artifact_name": "android-apk-2.4.0-9",
+    "expires_at": "2026-11-24T13:03:21Z",
+    "package": "kr.co.heowork0921.lostparty",
+    "version_code": 9,
+    "certificate_sha256": "8ef16c58cbb605e2c74c99c4d8e9f252b00c3dd90837594d5e5ca40f0caed030",
+    "source": "84565024a28dd67d043b09f90da5d77f0fc6aa0a",
+    "version": "2.4.0+9",
+    "archive_sha256": "ce4709a8951473e826bd6cc4d2ba0d2483868b1950296880878bb137478e4e87",
+    "original_files": {
+      "lostparty-2.4.0-9-android.apk": {
+        "bytes": 90832658,
+        "sha256": "931c5e38d8058aead856bce98d8e0d757b5f49c72cdd0cbe854fc1d8ea8dea81"
+      },
+      "lostparty-2.4.0-9-android.apk.sha256": {
+        "bytes": 96,
+        "sha256": "a0e3cffd4ccb42e3189dd0a091b56b7c2f5a5e593d56236af26fbc491c800758"
+      }
+    },
+    "backend_downloaded_apk": true,
+    "backend_payload_hash_and_zip_verified": true,
+    "native_signing_verified": true,
+    "backend_signing_verified": false,
+    "backend_package_version_verified": false,
+    "local_directory": "backups/release-2.4.0-artifacts/android",
+    "published": false
+  }
+}

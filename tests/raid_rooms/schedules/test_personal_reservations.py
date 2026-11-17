@@ -34,7 +34,12 @@ def http(w):
     return TestClient(app)
 
 def key():
-    with session() as db: return service.calendar_key(now(db)).isoformat()
+    # A departure created two hours ahead may already be in the next calendar
+    # week late on Tuesday. Query the fixture's week, not an empty current page.
+    with session() as db:
+        start=db.scalar(select(TimeReservation.starts_at).where(
+            TimeReservation.released_at.is_(None)).order_by(TimeReservation.starts_at).limit(1))
+        return service.calendar_key(start or now(db)).isoformat()
 
 def clone_rows(uid, count):
     with session() as db,db.begin():

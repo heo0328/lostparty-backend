@@ -1,9 +1,9 @@
 {
-  "version": "2.3.0",
-  "mode": "full",
-  "baseline_tag": "v2.2.0",
-  "change": "Account management policy2 and automatic main representative, personal calendar reservations, unopened next-target detail fix; Native 2.3.0+8 handoff.",
-  "impact": "App/main and shared account writer/reader changes since v2.2.0; no migrations, dependencies, production Compose or deployment-controller changes. Existing policy1 ACK recovery retained.",
-  "reason": "Protected app/main path changed; existing validation guard requires full regression. The 2.2.0-specific reuse exception is not extended. Prior targeted tests are context, not fresh release evidence.",
+  "version": "2.4.0",
+  "mode": "reuse",
+  "baseline_tag": "v2.3.0",
+  "change": "Server-owned Lost Ark credential and analysis, public exploration/login gates, minute personal availability, persisted refresh candidates and recovery, artist detection and DB0038 recruitment compatibility.",
+  "impact": "Production schema0036 to0038 cutover; personal credential/client-analysis APIs removed; new server-only token and Native2.4.0+9 required. Production data-reset scope and reviewed transition remain prerequisites.",
+  "reason": "Explicit user acceptance: original verify and seven regression shards passed; sole test-clock failure corrected with11 file tests passed. Full rerun cancelled by user. Reuse pinned2.4.0 evidence; no new full regression and no claim of a successful GitHub full run.",
   "tests": []
 }

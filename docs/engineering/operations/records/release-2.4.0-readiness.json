@@ -1,0 +1,137 @@
+{
+  "date_kst": "2026-11-17",
+  "issue": 59,
+  "scope": "production server token supply with separate backups; independent fixed Native artifacts verification and local inactive staging; no activation or DB reset",
+  "production_inspection": {
+    "method": "administrator SSH, strict existing known-host verification; read-only DB queries; no environment or secret contents printed",
+    "tag": "v2.3.0",
+    "source": "05daa424f06aa34edd76867bac1c78f9d558b51a",
+    "db_revision": "0036_roster_presence",
+    "image": "ghcr.io/heo0328/lostparty-backend@sha256:71e30188a79d903efbe52ba5a590add4d400c47ee7d5d35f3a26646cfe834d9d",
+    "api_healthy": true,
+    "db_healthy": true,
+    "caddy_running": true,
+    "unfinished_deployments": 0,
+    "disk_free_bytes": 55081738240,
+    "counts": {
+      "users": 3,
+      "sessions": 10,
+      "credentials": 2,
+      "summaries": 18,
+      "assignments": 11,
+      "applications": 0
+    },
+    "server_token": {
+      "path": ".secrets/lightsail/lostark-api-token",
+      "exists": false,
+      "readable_by_api": false,
+      "provider_validity_checked": false,
+      "observation_phase": "before subsequent approved key supply; see production_key_supply"
+    },
+    "production_mutation": false
+  },
+  "rehearsal": {
+    "status": "passed",
+    "data": "synthetic; no production dump or keys copied",
+    "old_image": "fixed v2.3.0 digest matching production",
+    "initial_attempts": [
+      "health uses fixed db/lostparty_app; harness adjusted isolated DNS alias and role",
+      "tmpfs is HostConfig.Tmpfs on Docker Desktop; storage guard corrected without permitting persistent mounts"
+    ],
+    "isolation_guard_unit_tests": {
+      "passed": 2,
+      "rejection_subcases": 7
+    },
+    "result": {
+      "schema": 1,
+      "project": "lostparty-rehearsal-3e891c9653af",
+      "synthetic_only": true,
+      "old_image": "ghcr.io/heo0328/lostparty-backend@sha256:71e30188a79d903efbe52ba5a590add4d400c47ee7d5d35f3a26646cfe834d9d",
+      "production_access": false,
+      "production_backup_restored": false,
+      "candidate_image": "sha256:3979fcea4778860a576b01e49f6aefe89375b68f8d26f7d04201563b29c7e10d",
+      "old_api_before_reset_healthy": true,
+      "populated_0037_guard_preserved": true,
+      "synthetic_dump_bytes": 466632,
+      "synthetic_dump_sha256": "5eb4e30db1207b6ace045e092bdb7e9436c6866e5675a7d549b507bc047730cb",
+      "new_0038_api_healthy": true,
+      "reset_app_user_data_empty": true,
+      "role_and_synthetic_keys_preserved": true,
+      "old_0036_restored_api_healthy": true,
+      "restored_tables_equal": 118,
+      "all_restored_rows_equal": true,
+      "external_provider_calls": 0,
+      "status": "passed",
+      "cleanup_ok": true
+    }
+  },
+  "remaining": [
+    "explicit commit/push instruction and immutable release source",
+    "full release CI and fixed GHCR image/Release within authorized publication scope",
+    "fresh stopped-writer production backup and PC confirmation before separately authorized cutover",
+    "coordinated production cutover and final publication"
+  ],
+  "production_reset_or_deployment_executed": false,
+  "tool_tests_passed": 115,
+  "native_context": {
+    "source": "84565024a28dd67d043b09f90da5d77f0fc6aa0a",
+    "version": "2.4.0+9",
+    "development_reset_user_acceptance": "Native Issue59 comment6: user reconfirmed all functions after development reset/relogin/reregistration; no repeated UUID proof requested",
+    "web_artifact_id": 14330277676,
+    "web_payload_sha256": "d878a995955e540f7441e563e17b7e6ab647dd335cd7abb2777970dbd7719aa6",
+    "web_expiry_reported": "2026-12-01T13:00:57Z",
+    "web_independently_received": true,
+    "apk_reported_state": "success and signed-file verified at Native comment8",
+    "apk_artifact_id": 14330278091,
+    "apk_payload_sha256": "931c5e38d8058aead856bce98d8e0d757b5f49c72cdd0cbe854fc1d8ea8dea81",
+    "apk_expiry_reported": "2026-11-24T13:03:21Z",
+    "web_and_apk_independent_backend_verification": true,
+    "verification_scope": "web original files/34 assets/manifest and APK bytes/hash/ZIP; APK signing/package/version validation by Native only",
+    "handoff_record": "web-handoff-2.4.0.json"
+  },
+  "reply": "https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6952581457",
+  "production_key_supply": {
+    "supplied": true,
+    "mode": "0600",
+    "api_readable": true,
+    "mount_read_only": true,
+    "secret_dir": "/run/secrets",
+    "server_backup": "/home/ubuntu/lostparty-backend/backups/release-2.4.0-server-token/lostark-api-token",
+    "backup_equal": true,
+    "old_protected_files_unchanged": true,
+    "services_not_restarted": true,
+    "production_source_and_revision_unchanged": true,
+    "provider_validity_checked": false,
+    "local_backup": "/home/heowork/projects/lostparty-backend/backups/release-2.4.0-server-token/lostark-api-token",
+    "local_backup_equal": true,
+    "development_token_unchanged": true,
+    "pc_personal_folder_copy_verified": true,
+    "path": "/home/ubuntu/lostparty-backend/.secrets/lightsail/lostark-api-token",
+    "production_mutation": "new server token file and private backup only"
+  },
+  "backup_preparation": {
+    "local_tool_supports": [
+      "0036 with staged server token",
+      "0038 with required server token"
+    ],
+    "installed_on_production": true,
+    "fresh_production_database_backup_created": true,
+    "preparation_production_database_backup_created": true,
+    "pre_cutover_recapture_required": true
+  },
+  "reply_order": 18,
+  "backend_stage": "B7",
+  "preparation_backup_record": "release-2.4.0-preparation-backup.json",
+  "local_validation": {
+    "runtime_fixture_correction": "0037 to 0038 for current-runtime tests only; 14 passed",
+    "contracts": "191 paths full object PASS",
+    "docker_api_replacement_rollback": "PASS",
+    "synthetic_caddy_maintenance": "PASS",
+    "publication_boundary_and_backup_tests": 20,
+    "full_regression": "all110 files exercised using preserved completed prefix and4tail runs; observed failures fixed/rechecked; no single clean full CI claimed",
+    "local_verification_record": "release-2.4.0-local-verification.json",
+    "reset_preparation_record": "release-2.4.0-reset-preparation.json",
+    "reset_integration_record": "release-2.4.0-reset-integration.json",
+    "whole_cli_api_database_caddy_integration": "synthetic production-Dockerfile fixture PASS; no production execution"
+  }
+}

@@ -157,3 +157,20 @@ class ConfigTests(unittest.TestCase):
             record=dict(schema=1,version='2.1.1',mode='maintenance',from_db_revision='0035_cycle_group_policy',to_db_revision='0036_roster_presence',configuration_revision='lightsail-web-2.1.0',web_receipt='docs/engineering/operations/records/web-handoff-2.1.0.json')
             (root/'release-deployment.json').write_text(json.dumps(record))
             with self.assertRaises(ValueError):load(root)
+
+    def test_reset_release_publishes_without_automatic_deployment(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);(root/'VERSION').write_text('2.4.0')
+            record=dict(schema=1,version='2.4.0',mode='publish-only',
+                        from_db_revision='0036_roster_presence',to_db_revision='0038_analysis_candidates',
+                        configuration_revision='lightsail-web-2.1.0',
+                        web_receipt='docs/engineering/operations/records/web-handoff-2.4.0.json')
+            path=root/'release-deployment.json';path.write_text(json.dumps(record))
+            self.assertEqual(load(root)['mode'],'publish-only')
+            workflow=Path(__file__).resolve().parents[2]/'.github/workflows/backend-release.yml'
+            self.assertIn("needs.verify.outputs.deployment_mode == 'standard'",workflow.read_text())
+            for key,value in [('mode','maintenance'),('from_db_revision','0035_cycle_group_policy'),
+                              ('to_db_revision','0037_server_analysis'),('configuration_revision','changed'),
+                              ('web_receipt','other.json')]:
+                with self.subTest(key=key),self.assertRaises(ValueError):
+                    path.write_text(json.dumps({**record,key:value}));load(root)

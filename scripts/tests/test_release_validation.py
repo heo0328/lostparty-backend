@@ -271,6 +271,35 @@ class ValidationTests(unittest.TestCase):
 
 
 class LocalReuseTests(unittest.TestCase):
+    def test_release240_acceptance_is_pinned_and_does_not_claim_full_success(self):
+        rule=validation.LOCAL_REUSE_240
+        raw={p:(validation.ROOT/p).read_text() for p in rule['records']}
+        proof={k:v for k,v in rule.items() if k!='version'}|{'record_json':raw}
+        self.assertEqual(validation.verify_reuse_proof(proof,'2.4.0'),proof)
+        record=json.loads(next(iter(raw.values())))
+        self.assertFalse(record['github_full_run_success'])
+        self.assertEqual(record['original_ci']['conclusion'],'failure')
+        self.assertEqual(record['cancelled_rerun']['conclusion'],'cancelled')
+        self.assertEqual(record['corrected_file']['passed'],11)
+        bad=copy.deepcopy(proof);name=next(iter(raw));bad['record_json'][name]+=' '
+        with self.assertRaises(ValueError):validation.verify_reuse_proof(bad,'2.4.0')
+        with self.assertRaises(ValueError):validation.verify_reuse_proof(proof,'2.4.1')
+        with patch('validation.subprocess.call',return_value=0),patch('validation.git',side_effect=['docs/old.md','release-validation.json']):
+            self.assertEqual(validation.local_reuse_evidence(rule),proof)
+        for path in ['app/main.py','tests/conftest.py','alembic/new.py','.github/workflows/backend-release.yml','scripts/deployment/release.py']:
+            with self.subTest(path=path),patch('validation.subprocess.call',return_value=0),patch('validation.git',side_effect=['',path]),self.assertRaises(ValueError):
+                validation.local_reuse_evidence(rule)
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);(root/'VERSION').write_text('2.4.0');(root/'tests').mkdir()
+            (root/validation.PLAN).write_text(json.dumps(dict(version='2.4.0',mode='reuse',tests=[],baseline_tag='v2.3.0',change='accepted test fix',impact='no app changes',reason='explicit user acceptance')))
+            plan=validation.load_plan(root)
+        self.assertEqual(validation.selected_tests(plan),[])
+        with patch.dict(os.environ,GITHUB_RUN_ID='123',GITHUB_RUN_ATTEMPT='1'),patch('validation.git',return_value='a'*40),patch('validation.reuse_evidence',return_value=proof):
+            evidence=validation.record(plan,'success','success')
+        self.assertEqual(evidence['executed_tests'],[])
+        self.assertEqual(evidence['checks']['regression'],'reused')
+        validation.verify_record(evidence,plan,'a'*40)
+
     def proof(self):
         return {k: v for k, v in validation.LOCAL_REUSE.items() if k != 'version'} | {
             'record_json': {p: (validation.ROOT / p).read_text() for p in validation.LOCAL_REUSE['records']}}

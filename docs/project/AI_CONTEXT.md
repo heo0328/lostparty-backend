@@ -1,17 +1,8 @@
 # LostParty Backend 기능 지도
 
-2026-11-17 최종 게시/인수:복구 `08212c31215adae1c3a09cb9705409103af1ebdd`와 누적작업을 dev `2e78854ef9644a02fd7a00b4c247c79f89e25f25`에 통합·push/원격일치, 완료작업브랜치 로컬·원격정리 완료. [전체14 Backend B7](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947695749). [전체13 Native 사용자 정상확인](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947638411)으로 모집목록/레이드현황 두화면 대기도 해소됐다. 추가Backend수정/동일시험대기없음. Native게시/운영·Issue종료는별도이며 신규/삭제/소멸 실제사례는 기존운영피드백후속이다. 아래미게시/두화면대기는당시이력이다.
+2026-11-18 B12: 사용자진행승인으로 release/2.4.0 게시source3ef3eaa와최신기록을dev→main에이력보존병합·push한다. 전체회귀/새CI없음, mode=reuse와고정근거/문서검사만확인한다. 실제태그/Release·이미지공개/운영반영은제외다. 정확한병합SHA/원격확인은Issue인계와후행게시영수증을따른다.
 
-2026-11-17 사용자 게시 지시:0038 호환복구 `08212c31215adae1c3a09cb9705409103af1ebdd` 및 누적계약/개발반영 기록을 dev에 병합·push한다. [Native 전체12 복구수용](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947614833) 수신으로 Backend 지원대기는 해소됐고 사용자 두화면 확인만 남았다. 실제실행image eadaa2cc…37b9/DB0038·계약hash12634daa…b9665는 그대로이며 이번게시를 서버재교체/운영배포로 확대하지 않는다. 정확한 병합·원격확인은 DEV_LOG 게시 영수증을 따른다. 아래 미커밋/미push 설명은 당시 이력이다.
-
-2026-11-17 Issue58 B6:0038 모집/현황 호환 회귀 직접복구·개발API 반영 완료. [전체11 Backend B6](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947547141). 누락3곳에0038 명시지원, 기본current136PASS/하위13PASS·모집관련67PASS·계약불변. 실제인증HTTP 현재/다음주 모집검색200(각0건)·참가목록200(각2건), group policy=True/API·DBhealthy. [상세](../engineering/development/schema0038-recruitment-recovery.md)·[집계](../engineering/operations/records/schema0038-recruitment-recovery.json). 다음Native/사용자 두화면확인, Backend오류대응. 복구소스 미커밋·미push, DBmigration/자료·키/환경·운영 변경 없음.
-
-
-2026-11-17 현재: Issue58 Backend 구현·격리검증·실제 로컬dev0038/API 지원 완료. [계약](../features/rosters/activity-and-presentation/refresh-candidate-contract.md)·[반영 원장](../engineering/operations/records/analysis-candidates-local-rollout.json). 사용자 지시로 `feat/roster-refresh-policy` 게시 완료, 이번 사용자 지시로 dev 병합·push하며 main/운영 배포는 별도다. 구현 `8f29271d610aad83021ec3a00e5879f2adda76d5` 기준이며 정확한 문서tip/게시·검증은 [DEV_LOG](DEV_LOG.md), 다음 실행은 [NEXT_WORK](NEXT_WORK.md).
-
-Native [전체6 N1](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6945574683)은 일반 앱 연결·자동검증 완료/미커밋·미push를 보고했다. 사용자 실제 HTTP저장·웹/Android 결과는 미확인이고 같은 Issue58에서 추적한다. 추가 Backend 계약/동일시험 요청은 없다.
-
-Issue55/56은 사용자 정상 확인 후 completed 종료, Issue57은 작업 완료 후 식별정보 포함으로 사용자 직접 삭제했다. 대기를 다시 만들지 않는다. Issue18 활동자동추가는 별도 미착수다. 과거0037 전환·Git 통합/운영 기록은 아래 기능별 당시 근거로 보존하며 현재 로컬0038과 구분한다.
+운영2.3.0/DB0036은그대로다. 원CI실패/재실행cancelled와사용자수용근거를분리한다. [다음실행](NEXT_WORK.md)·[고정수용근거](../engineering/operations/records/release-2.4.0-accepted-validation.json).
 
 ## 현재 기준
 

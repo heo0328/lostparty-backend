@@ -9,12 +9,46 @@ import unittest
 from unittest.mock import patch,MagicMock
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'deployment'))
 import maintenance as m
-from backup import confirm, capture
+from backup import confirm, capture, check_recovery_material, active_web_files
 import tarfile
 import os
 
 
 class MaintenanceTests(unittest.TestCase):
+    def test_backup_reads_web_originals_without_activation_tools(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);release=root/'releases'/('a'*64);(release/'site').mkdir(parents=True)
+            (root/'current').symlink_to('releases/'+('a'*64)+'/site')
+            (release/'release-manifest.json').write_text(json.dumps({'version':'2.3.0+8'}))
+            for name in ['lostparty-v2.3.0-web.zip','lostparty-v2.3.0-web.zip.sha256']:
+                (release/name).write_bytes(b'synthetic')
+            self.assertEqual(len(active_web_files(root)),3)
+            (release/'lostparty-v2.3.0-web.zip').unlink()
+            with self.assertRaises(ValueError):active_web_files(root)
+            (root/'current').unlink();(root/'current').symlink_to('/tmp')
+            with self.assertRaises(ValueError):active_web_files(root)
+
+    def test_backup_material_follows_schema_and_accepts_staged_server_token(self):
+        base={'jwt.pem','recovery.key','lostark-fingerprint.key','.env.lightsail'}
+        legacy=base|{'lostark-credential.key'}
+        server=base|{'lostark-api-token'}
+        for revision,names in [('0035_cycle_group_policy',legacy),
+                               ('0036_roster_presence',legacy),
+                               ('0036_roster_presence',legacy|server),
+                               ('0037_server_analysis',server),
+                               ('0038_analysis_candidates',server),
+                               ('0038_analysis_candidates',legacy|server)]:
+            with self.subTest(revision=revision,names=names):
+                check_recovery_material(revision,names)
+        for revision,names in [('0035_cycle_group_policy',legacy|server),
+                               ('0036_roster_presence',server),
+                               ('0038_analysis_candidates',legacy),
+                               ('0038_analysis_candidates',server-{'jwt.pem'}),
+                               ('0038_analysis_candidates',server|{'unexpected.key'}),
+                               ('unknown',server)]:
+            with self.subTest(revision=revision,names=names),self.assertRaises(ValueError):
+                check_recovery_material(revision,names)
+
     def test_unfinished_normal_deploy_is_resolved_before_forward_transition(self):
         with tempfile.TemporaryDirectory() as directory:
             state=Path(directory)

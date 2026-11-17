@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "version": "2.4.0",
+  "mode": "publish-only",
+  "from_db_revision": "0036_roster_presence",
+  "to_db_revision": "0038_analysis_candidates",
+  "configuration_revision": "lightsail-web-2.1.0",
+  "web_receipt": "docs/engineering/operations/records/web-handoff-2.4.0.json"
+}

@@ -1,0 +1,257 @@
+{
+  "issue": 59,
+  "base_commit": "18e6bb66283d1eb772c4eee2431eee92c1e25a62",
+  "uncommitted_working_tree": true,
+  "all_collected_test_files": 110,
+  "all_collected_pytest_cases": 1927,
+  "completed_prefix_files": [
+    "tests/auth/test_auth.py",
+    "tests/auth/test_google.py",
+    "tests/core/test_cors.py",
+    "tests/core/test_current_runtime.py",
+    "tests/core/test_observability.py",
+    "tests/game_accounts/analysis/test_analysis_http.py",
+    "tests/game_accounts/analysis/test_analysis_migrations.py",
+    "tests/game_accounts/analysis/test_analyzer.py",
+    "tests/game_accounts/analysis/test_candidates.py",
+    "tests/game_accounts/analysis/test_provider_limits.py",
+    "tests/game_accounts/analysis/test_server_credentials.py",
+    "tests/game_accounts/test_account_bootstrap.py",
+    "tests/game_accounts/test_activity_policy.py",
+    "tests/game_accounts/test_character_lifecycle.py",
+    "tests/game_accounts/test_combat_power.py",
+    "tests/game_accounts/test_game_account_primitives.py",
+    "tests/game_accounts/test_game_accounts.py",
+    "tests/game_accounts/test_input_name_resolution.py",
+    "tests/game_accounts/test_lifecycle_reads.py",
+    "tests/game_accounts/test_live_equipment_proof.py",
+    "tests/game_accounts/test_lostark_diagnostics.py",
+    "tests/game_accounts/test_management.py",
+    "tests/game_accounts/test_management_policy2.py",
+    "tests/game_accounts/test_owned_roster_refresh.py",
+    "tests/game_accounts/test_ownership_diagnostics.py",
+    "tests/game_accounts/test_ownership_policy.py",
+    "tests/game_accounts/test_personal_presentation.py",
+    "tests/game_accounts/test_personal_profile_batch_reads.py",
+    "tests/game_accounts/test_power_ownership.py",
+    "tests/game_accounts/test_provider_diagnostics.py",
+    "tests/game_accounts/test_registration_cleanup.py",
+    "tests/game_accounts/test_representative.py",
+    "tests/game_accounts/test_verification_context.py",
+    "tests/game_accounts/test_verification_history.py",
+    "tests/game_accounts/test_verification_targets.py",
+    "tests/groups/test_group_admissions.py",
+    "tests/groups/test_group_character_candidates.py",
+    "tests/groups/test_group_display.py",
+    "tests/groups/test_group_features_management.py",
+    "tests/groups/test_group_foundation.py",
+    "tests/groups/test_group_invite_display.py",
+    "tests/groups/test_group_invite_eligibility.py",
+    "tests/groups/test_group_management.py",
+    "tests/groups/test_group_management_http.py",
+    "tests/groups/test_group_raid_lifecycle.py",
+    "tests/groups/test_groups_http.py",
+    "tests/member_limits/test_member_limits.py",
+    "tests/member_settings/test_member_settings.py",
+    "tests/ownership_disputes/test_ownership_dispute_impact.py",
+    "tests/ownership_disputes/test_ownership_disputes.py",
+    "tests/raid_rooms/admissions/test_admission_eligibility.py",
+    "tests/raid_rooms/admissions/test_application_composition.py",
+    "tests/raid_rooms/admissions/test_application_display.py",
+    "tests/raid_rooms/admissions/test_application_display_references.py",
+    "tests/raid_rooms/admissions/test_application_item_level.py",
+    "tests/raid_rooms/admissions/test_beta_recruitment.py",
+    "tests/raid_rooms/admissions/test_raid_room_admission_control.py",
+    "tests/raid_rooms/admissions/test_reapplication_history.py",
+    "tests/raid_rooms/admissions/test_recruitment_cycle_commands.py",
+    "tests/raid_rooms/admissions/test_recruitment_cycle_creation.py",
+    "tests/raid_rooms/admissions/test_recruitment_cycle_http.py",
+    "tests/raid_rooms/admissions/test_recruitment_cycle_integration.py",
+    "tests/raid_rooms/common/test_active_room_usage.py",
+    "tests/raid_rooms/common/test_current_head_compatibility.py",
+    "tests/raid_rooms/common/test_integrated_recruitment_storage.py",
+    "tests/raid_rooms/common/test_raid_room_foundation.py",
+    "tests/raid_rooms/common/test_raid_room_http.py",
+    "tests/raid_rooms/common/test_raid_room_migrations.py",
+    "tests/raid_rooms/common/test_raid_room_preparation.py",
+    "tests/raid_rooms/common/test_recruitment_backup_guards.py",
+    "tests/raid_rooms/common/test_recruitment_cycle_performance.py",
+    "tests/raid_rooms/common/test_recruitment_cycles.py",
+    "tests/raid_rooms/common/test_recruitment_sources.py",
+    "tests/raid_rooms/common/test_runtime_configuration.py",
+    "tests/raid_rooms/common/test_schema_ids.py",
+    "tests/raid_rooms/compat/test_recruitment_cycle_cutover.py",
+    "tests/raid_rooms/group_links/test_cycle_group_policy.py",
+    "tests/raid_rooms/outcomes/test_batch_capacity.py",
+    "tests/raid_rooms/outcomes/test_batch_completion.py",
+    "tests/raid_rooms/outcomes/test_batch_snapshot.py",
+    "tests/raid_rooms/outcomes/test_completion_corrections.py",
+    "tests/raid_rooms/outcomes/test_completion_profile_contract.py",
+    "tests/raid_rooms/outcomes/test_record_timestamps.py"
+  ],
+  "prefix_evidence": "original serial stdout completed first83 files then stopped; initial 14 fixture errors and 2 failures retained; no successful full-run exit",
+  "tail_runs": [
+    {
+      "shard": 0,
+      "files": [
+        "tests/raid_rooms/outcomes/test_recruitment_cycle_outcomes.py",
+        "tests/raid_rooms/participation/test_atomic_members.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_management.py",
+        "tests/raid_rooms/participation/test_roster_public_contract.py",
+        "tests/raid_rooms/schedules/test_coordination_wait.py",
+        "tests/raid_rooms/schedules/test_personal_reservations.py",
+        "tests/raid_rooms/schedules/test_recruitment_session_display.py"
+      ],
+      "original_summary": "5 failed, 134 passed, 6 warnings in 883.78s (0:14:43)"
+    },
+    {
+      "shard": 1,
+      "files": [
+        "tests/raid_rooms/outcomes/test_recruitment_resume_review.py",
+        "tests/raid_rooms/participation/test_membership_actions.py",
+        "tests/raid_rooms/participation/test_recruitment_participation.py",
+        "tests/raid_rooms/reads/test_discovery.py",
+        "tests/raid_rooms/schedules/test_departure_search_minutes.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+        "tests/raid_weekly/test_raid_weekly.py"
+      ],
+      "original_summary": "2 failed, 161 passed, 1 warning in 798.89s (0:13:18)"
+    },
+    {
+      "shard": 2,
+      "files": [
+        "tests/raid_rooms/outcomes/test_recruitment_weekly_summary.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle.py",
+        "tests/raid_rooms/participation/test_roster_followup_commands.py",
+        "tests/raid_rooms/reads/test_raid_room_queries.py",
+        "tests/raid_rooms/schedules/test_explicit_departure_minutes.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_times.py",
+        "tests/raids/test_raid_catalog.py"
+      ],
+      "original_summary": "150 passed, 1 warning in 503.55s (0:08:23)"
+    },
+    {
+      "shard": 3,
+      "files": [
+        "tests/raid_rooms/participation/test_activity_participation_continuity.py",
+        "tests/raid_rooms/participation/test_recruitment_cycle_lifecycle_http.py",
+        "tests/raid_rooms/participation/test_roster_participation_issues.py",
+        "tests/raid_rooms/reads/test_recruitment_cycle_queries.py",
+        "tests/raid_rooms/schedules/test_personal_availability_minutes.py",
+        "tests/raid_rooms/schedules/test_recruitment_cycle_times_http.py"
+      ],
+      "original_summary": "1 failed, 72 passed, 1 warning in 383.67s (0:06:23)"
+    }
+  ],
+  "fixed_rechecks": {
+    "current_runtime_fixture": "14 passed",
+    "legacy_import_and_runtime_guards": "15 passed",
+    "Wednesday_resume_preview": "1 passed",
+    "minute_availability_candidates": "1 passed",
+    "opening_floor_delay": "1 passed",
+    "personal_reservations_file": "16 passed",
+    "opening_display_parameters": "6 passed"
+  },
+  "coverage_status": "all110 files exercised; all observed failing cases corrected and rechecked; no single clean full CI claimed",
+  "application_code_changed_in_this_preparation": false,
+  "api_contract_changed": false,
+  "static_tool_tests_passed": 111,
+  "log_records": {
+    "full": {
+      "local_file": "backups/release-2.4.0-verification/full.log",
+      "sha256": "47f27745e4ed3996438f2b20844af864dc081d763787811853d99ce4d2eef191"
+    },
+    "collection": {
+      "local_file": "backups/release-2.4.0-verification/collection.log",
+      "sha256": "d8fed189df875ac64b59a4e1b8bdb45dc2c67fb5852223e2d2f9f1275623e00d"
+    },
+    "runtime-fixed": {
+      "local_file": "backups/release-2.4.0-verification/runtime-fixed.log",
+      "sha256": "4febd3db8338c963e5211f49d9415f2d0a18ef797bc218a4dcf909799e6272bc"
+    },
+    "additional-failures": {
+      "local_file": "backups/release-2.4.0-verification/additional-failures.log",
+      "sha256": "df20cc05ad1f099a9db515a4a2a83b393fea314c69b5cf2e4b55973b8f98f8e9"
+    },
+    "additional-fixed": {
+      "local_file": "backups/release-2.4.0-verification/additional-fixed.log",
+      "sha256": "88da9dbfb8b577b57b25cfe59de4a15e9fdec34fb17c377eb1933739fe78cfe1"
+    },
+    "wednesday-failure": {
+      "local_file": "backups/release-2.4.0-verification/wednesday-failure.log",
+      "sha256": "e9ad5a12ae494b71ba51c3f175bcad681495a51b8e254f38898bb506c8006414"
+    },
+    "wednesday-fixed": {
+      "local_file": "backups/release-2.4.0-verification/wednesday-fixed.log",
+      "sha256": "9ab6f6bf772e59436680017a90541607fa6c2c590bde59968efd13ef00133c5e"
+    },
+    "minute-fixed": {
+      "local_file": "backups/release-2.4.0-verification/minute-fixed.log",
+      "sha256": "4233bd81009fcc1a757e31530c5d3977ad4f0443fdb4795f0e762dc65914114c"
+    },
+    "planning-failure": {
+      "local_file": "backups/release-2.4.0-verification/planning-failure.log",
+      "sha256": "ca975c73b4bde9b608ebc05886ab038a94118695c5e11369bb0289612630544f"
+    },
+    "planning-fixed": {
+      "local_file": "backups/release-2.4.0-verification/planning-fixed.log",
+      "sha256": "aac08c498c1f5546c5b592130fc213299a6d3f279552ff5b59861bd469f00a9b"
+    },
+    "reservations-failure": {
+      "local_file": "backups/release-2.4.0-verification/reservations-failure.log",
+      "sha256": "2e2e35844eea914333680e04fe7edaa71853b8cf23e5ce5f45b1578d507808a7"
+    },
+    "reservations-fixed": {
+      "local_file": "backups/release-2.4.0-verification/reservations-fixed.log",
+      "sha256": "2aaa67042b2e9aa8a8ca519279b622888054aefb8cac5c720e827890fb22ae68"
+    },
+    "opening-fixed": {
+      "local_file": "backups/release-2.4.0-verification/opening-fixed.log",
+      "sha256": "595648da0b779e8d00aaa1e330b727c2c80deed5007bf3d07a62b58ce931e716"
+    },
+    "reset-tool": {
+      "local_file": "backups/release-2.4.0-verification/reset-tool.log",
+      "sha256": "d6131d7b7605a49d0be6b9b187970395fa96552b14ce69b8af9484476384eb77"
+    },
+    "static-b6-final": {
+      "local_file": "backups/release-2.4.0-verification/static-b6-final.log",
+      "sha256": "0759e1b2455e61ae43f551d2f43b2990acf094d8a49ad6e75be5bc8646dba303"
+    },
+    "tail-0": {
+      "local_file": "backups/release-2.4.0-verification/tail-0.log",
+      "sha256": "ddd8d343fd6699737a02c5450c2bcc2fa965874e60dd0126bab52ec2d382a71e"
+    },
+    "tail-1": {
+      "local_file": "backups/release-2.4.0-verification/tail-1.log",
+      "sha256": "993d8642c3ef7ffc2bb8d64ffabd16f26b3ed299fbe32be24e7a90e6090a41e3"
+    },
+    "tail-2": {
+      "local_file": "backups/release-2.4.0-verification/tail-2.log",
+      "sha256": "aef8fd51b112b4332a9c126ea386e6f4356ad18b680712aa9748adb9d2561062"
+    },
+    "tail-3": {
+      "local_file": "backups/release-2.4.0-verification/tail-3.log",
+      "sha256": "01eb4e7e36cf184b7a6f8e65d9f5a837127bcea1773799d539b21df2a35267c1"
+    }
+  },
+  "fixed_release_source_image_pending": true,
+  "original_observed_problems": {
+    "prefix_fixture_errors": 14,
+    "prefix_failures": 2,
+    "tail_failures": 8,
+    "all_corrected_and_rechecked": true
+  },
+  "modified_test_files": [
+    "tests/core/test_current_runtime.py",
+    "tests/raid_rooms/common/test_integrated_recruitment_storage.py",
+    "tests/raid_rooms/common/test_runtime_configuration.py",
+    "tests/raid_rooms/outcomes/test_recruitment_resume_review.py",
+    "tests/raid_rooms/schedules/test_personal_availability_minutes.py",
+    "tests/raid_rooms/schedules/test_personal_reservations.py",
+    "tests/raid_rooms/schedules/test_recruitment_cycle_planning.py",
+    "tests/raid_rooms/schedules/test_recruitment_session_display.py"
+  ],
+  "single_clean_full_run_passed": false,
+  "immutable_commit_ci_passed": false,
+  "remaining_known_failures": 0
+}

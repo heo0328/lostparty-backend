@@ -53,6 +53,18 @@ RELEASE_220_TOOLS = {
     'scripts/deployment/backup.py', 'scripts/tests/test_web_release.py',
 }
 
+# Explicit user acceptance for this release: preserve failed/cancelled GitHub
+# conclusions and reuse scoped evidence; never present a full run as passing.
+LOCAL_REUSE_240 = {
+    'version': '2.4.0',
+    'approved_source': '3836eea3a4376d07ab898d88227101a45272712c',
+    'source': '051895aac29bddd041803d31131b8450c109a4fd',
+    'records': {
+        'docs/engineering/operations/records/release-2.4.0-accepted-validation.json':
+            '0b68431487c40e58cd25594bc4eb6e071a939acb4d47f519dc9c07468c9a5bce',
+    },
+}
+
 
 RELEASE_PREPARATION = {
     'VERSION', PLAN, '.github/workflows/backend-release.yml',
@@ -94,15 +106,22 @@ def local_reuse_evidence(rule=None):
                        (rule['approved_source'], 'HEAD')):
         if subprocess.call(['git', 'merge-base', '--is-ancestor', base, head]):
             raise ValueError('local validation ancestry changed')
+    validated_changes=git('diff', '--name-only', '--no-renames', rule['source'], rule['approved_source']).splitlines()
+    preparation_changes=git('diff', '--name-only', '--no-renames', rule['approved_source'], 'HEAD').splitlines()
+    if rule['version']=='2.4.0':
+        allowed={PLAN,'scripts/deployment/validation.py','scripts/tests/test_release_validation.py'}
+        if any(not documentation(p) and p not in allowed for p in preparation_changes):
+            raise ValueError('2.4.0 accepted evidence excludes new executable changes')
     check_reuse_changes(
-        git('diff', '--name-only', '--no-renames', rule['source'], rule['approved_source']).splitlines(),
-        git('diff', '--name-only', '--no-renames', rule['approved_source'], 'HEAD').splitlines(),
+        validated_changes, preparation_changes,
         extra_preparation=RELEASE_220_TOOLS if rule['version']=='2.2.0' else ())
     return verify_local_proof({k: v for k, v in rule.items() if k != 'version'} |
                               {'record_json': {p: (ROOT / p).read_text() for p in rule['records']}}, rule)
 
 
 def verify_reuse_proof(proof, version=None):
+    if version == LOCAL_REUSE_240['version']:
+        return verify_local_proof(proof, LOCAL_REUSE_240)
     if version == LOCAL_REUSE_220['version']:
         return verify_local_proof(proof, LOCAL_REUSE_220)
     if version == LOCAL_REUSE['version']:
@@ -127,6 +146,8 @@ def verify_reuse_proof(proof, version=None):
 
 
 def reuse_evidence(plan):
+    if plan['mode'] == 'reuse' and plan['version'] == LOCAL_REUSE_240['version']:
+        return local_reuse_evidence(LOCAL_REUSE_240)
     if plan['mode'] == 'reuse' and plan['version'] == LOCAL_REUSE_220['version']:
         return local_reuse_evidence(LOCAL_REUSE_220)
     if plan['mode'] == 'reuse' and plan['version'] == LOCAL_REUSE['version']:
@@ -194,7 +215,7 @@ def load_plan(root=ROOT):
         raise ValueError('invalid validation plan fields')
     if plan['version'] != version or plan['mode'] not in ('selected', 'full', 'reuse'):
         raise ValueError('validation plan version or mode mismatch')
-    if plan['mode'] == 'reuse' and version not in (REUSE['version'], LOCAL_REUSE['version'], LOCAL_REUSE_220['version']):
+    if plan['mode'] == 'reuse' and version not in (REUSE['version'], LOCAL_REUSE['version'], LOCAL_REUSE_220['version'], LOCAL_REUSE_240['version']):
         raise ValueError('reuse is not enabled for this version')
     require(plan['baseline_tag'], TAG)
     for key in ('change', 'impact', 'reason'):
@@ -272,7 +293,7 @@ def verify_record(data, plan, source):
     reuse = plan['mode'] == 'reuse'
     if reuse:
         expected.add('reused_validation')
-        if plan['version'] not in (REUSE['version'], LOCAL_REUSE['version'], LOCAL_REUSE_220['version']):
+        if plan['version'] not in (REUSE['version'], LOCAL_REUSE['version'], LOCAL_REUSE_220['version'], LOCAL_REUSE_240['version']):
             raise ValueError('reuse is not enabled for this version')
     if not isinstance(data, dict) or set(data) != expected or data['schema'] != (2 if reuse else 1):
         raise ValueError('invalid validation record')

@@ -96,6 +96,13 @@ def test_actual_beta_candidates_use_minute_tables_and_exact_busy_edges(consent,m
     from tests.raid_rooms.schedules.test_recruitment_cycle_times import save_personal
     _,a,b=consent
     with session() as db:start=time_policy.ceil_tick(now(db)+timedelta(hours=2)).astimezone(KST)+timedelta(minutes=3)
+    # Keep the six-hour availability, two-hour departure gap and one-hour raid
+    # inside a single playable week even when run late on Tuesday.
+    bounds=time_policy.cycle(start)
+    if start+timedelta(hours=9)>bounds.ends_at:
+        start=(bounds.ends_at+timedelta(hours=4,minutes=3)).astimezone(KST)
+    elif start<bounds.starts_at+timedelta(hours=4):
+        start=(bounds.starts_at+timedelta(hours=4,minutes=3)).astimezone(KST)
     end=start+timedelta(hours=6)
     intervals=[span(start.strftime('%H:%M'),end.strftime('%H:%M'),start.isoweekday(),int(start.date()!=end.date()))]
     for w in (a,b):save_personal(w,intervals=intervals)

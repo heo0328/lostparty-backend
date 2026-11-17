@@ -5114,3 +5114,104 @@ NEXT_WORK는 다음행동·실행표로 정리하고 AI_CONTEXT는 기능상태/
 
 2026-11-17 최종 게시/인수:복구 `08212c31215adae1c3a09cb9705409103af1ebdd`와 누적작업을 dev `2e78854ef9644a02fd7a00b4c247c79f89e25f25`에 통합·push/원격일치, 완료작업브랜치 로컬·원격정리 완료. [전체14 Backend B7](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947695749). [전체13 Native 사용자 정상확인](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947638411)으로 모집목록/레이드현황 두화면 대기도 해소됐다. 추가Backend수정/동일시험대기없음. Native게시/운영·Issue종료는별도이며 신규/삭제/소멸 실제사례는 기존운영피드백후속이다. 아래미게시/두화면대기는당시이력이다.
 복구08212c3·기록b6105ef·기존누적8f29271/88f1f45를 dev병합2e78854에모았다. 병합전후app/alembic/OpenAPI/scripts/tests동일·원격차이0/0·clean확인후완료브랜치를삭제했다. 이후수신한Native전체13을반영해기존두화면인수대기를해소했고, B7고정링크·정상확인·기록갱신을같은승인범위로후행commit/push한다. source통합으로기존실행이미지eadaa2cc/DB0038을다시교체하지않았다. 문서/동결원문·diff검증PASS, code/DB/키/환경/provider/운영추가변경없음.
+
+
+## 2026-11-17 Issue59 2.4.0 준비 재개
+
+2026-11-17 Issue59 운영2.4.0 준비 재개: release/2.4.0·기능기준18e6bb6, VERSION2.4.0/full계획(baselinev2.3.0) 로컬준비. [전체1 Backend B1](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6948295635)·[배포준비 원본](../engineering/operations/release-2.4.0.md). 사용자초기화방향은접수했으나 앱DB전체/회원보존범위확인대기다. 운영실측·최신백업/복귀리허설·server token 공급·0036→0038 새전환절차·full릴리즈검증·Native고정APK/웹과구버전안내가남았다. 준비도구68PASS/문서검증, 실제운영/태그·공개/DB·키변경·commit/push없음. 다음은이전Issue58추가구현이아니라릴리즈전제확보다.
+운영원장2.3.0/0036·원격태그/소스기준대조, v2.3.0대비제거API6동작·0037가드및표준배포의DB불일치차단/유지보수도구0035→0036전용을확인했다. full계획파싱·배포/검증/maintenance/웹도구68PASS. 첫unittest호출의import2오류를PYTHONPATH=scripts/tests로해소한정규호출결과이며초기오류를PASS에합산하지않는다. 운영SSH·최신백업·고정이미지/fullCI·실제reset은미실행. 추가초기화범위질문의답변없이회원/세션삭제를확정하지않았다.
+
+
+## 2026-11-17 Issue59 운영 앱DB 전체 초기화 범위 확정
+
+사용자가 운영DB저장자료 전체초기화를명시해 회원/세션 포함 lostparty앱DB전체 범위질문을해소했다. 재로그인/원정대재등록 필요, 필수migration seed는정상생성한다. 최신운영백업/대응키·환경/동결구성·활성웹 및복귀검증 선행, 역할/볼륨·키·환경·인증서/웹파일보존. 개발DB/Firebase/기기자료삭제로확대하지않는다. 실제초기화·서버교체·태그/공개는미실행, 준비문서만갱신·미커밋/미push다.
+
+[Issue59 전체2 Backend B2 초기화범위확정](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6948402246)에 회신했다.
+
+
+## 2026-11-17 Issue59 운영읽기점검·격리 초기화/복원 리허설
+
+2026-11-17 Issue59 선행1·2단계완료. [전체9 Backend B3](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6948893337)·[운영실측/합성리허설집계](../engineering/operations/records/release-2.4.0-readiness.json). 운영2.3.0/0036·API/DBhealthy, 새서버token파일부재확인. 격리합성0036백업→초기화/0038새API→0036복원/구APIhealthy·118테이블모든행지문일치/역할·합성키보존, 임시자원정리완료. 도구70PASS. 실제운영초기화/키쓰기/서버교체·공개/commit/push없음. 다음은운영token공급/사본·실제apply/최신백업·full/image·Native고정파일독립수령검증이다. Native전체6의개발초기화전체기능인수는완료로유지하고반복요청하지않는다.
+운영 strict-known-host SSH+sudo 읽기만수행, 실제사용자/키원문출력없음. 임시harness두번실패는운영과별개health의고정db/lostparty_app 연결·DockerDesktop의HostConfig.Tmpfs형식차이였고각각정리후보완했다. 최종실행에서운영동일고정2.3.0image·합성dump466632bytes를실제복원해118테이블행지문전체일치와구API기동까지검증했다. 실제운영dump/키를복사하지않았고 새Backend는현재시험image3979fcea…e10d/최종공개image아님. 도구70PASS/격리거절7분기 포함. 기존개발서버재기동없음. Native전체8의고정web/APK메타데이터수신, Backend수령/stage는미실행. 최신운영백업은실제초기화직전선행할대상이며본합성복원을운영복원으로표시하지않는다.
+
+## 2026-11-17 Issue59 B4 서버 키 공급·고정 산출물 수령
+
+2026-11-17 Issue59 B4: 승인된 개발 서버용 키를 운영 비밀파일에 공급하고 API 읽기/0600·서버/로컬 사본 일치를 확인했다. 개발 키는 유지한다. Native 고정 웹/APK를 독립 수령검증하고 웹 로컬 비활성 stage 완료. 운영API2.3.0/DB0036 유지, 초기화/공개 없음. [전체12 Backend B4](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6949412430)·[배포준비 원본](../engineering/operations/release-2.4.0.md)·[수령 원장](../engineering/operations/records/web-handoff-2.4.0.json). 다음 Backend는 실제apply절차·백업도구 호환설치/직전최신백업·full검증/고정image·공동전환 준비. release/2.4.0 미커밋·미push. Native의 개발초기화 전체기능 인수는 완료로 유지한다.
+
+[Native 전체11 키 용도](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6949175839)와 사용자 진행 지시로 키를 SSH stdin 비공개 전달했다. 기존 비밀파일 소유권/0600·읽기전용mount/API읽기·서버/WSL 사본 바이트일치 확인, 개발원본과 운영기존키/환경·컨테이너시작/current source/image/DB0036 유지. provider 호출/서비스재시작/실제DB초기화 없음. 개인PC폴더 사본은 미확인으로 보관파일을 안내했다. [B4 상세](../engineering/operations/release-2.4.0.md)·[백업 원장](../engineering/operations/backup-and-recovery.md).
+
+GitHub 연결로 고정 원장/메타데이터 조회 후 기존 gh 수령기로 외피ZIP과5원본파일 검증·보관, 웹34자산/manifest/경계검증·로컬 stage만 완료했다. APK hash/ZIP 검증은 Backend, 서명/패키지·버전은 Native 동일파일 검증 근거다. backup.py0036선공급token/0038허용·누락/예상외파일/미지원거절 행렬을 보완했다. 선택 도구군72PASS, 운영설치/최신DB백업/full/CI는 미실행이다. API계약변경/commit/push/태그/공개/Issue종료 없음. Issue본문상단 현재상태도 갱신했다.
+
+## 2026-11-17 B5 중단 재개
+
+publish-only 게시 경계와 거절 행렬을 추가했고 경계/백업19시험 PASS. 계약191경로·Docker API교체/복귀·Caddy 유지보수 PASS. 전체회귀 초기14ERROR는 current_runtime fixture0037/현행0038 불일치로 최소재현했고 fixture0038로 수정·검증 중이다. 운영백업/PC사본/backup.py설치 요청은 자동승인검토에서 민감대상/목적지 명시승인부재로 거절, 실행하지 않았다. 상세와 승인 대상은 release-2.4.0.md B5에 남겼다. commit/push/배포 없음.
+
+## 2026-11-17 Issue59 B5 승인 백업·도구설치 결과
+
+2026-11-17 Issue59 B5: 사용자 명시승인으로 운영0036 준비백업·서버/로컬/기존PC 아카이브/내부원본 검증·토큰 별도PC사본 확인 및 backup.py 신규설치 완료. 운영 API/DB/Caddy·키/환경/current 유지, 실제초기화/복원/서비스교체 없음. publish-only 경계·정적도구92PASS, 계약/Docker/Caddy smoke PASS, fixture0038 수정14PASS. 최초full은 초기14ERROR를 포함해 아직진행중이며 전체통과가 아니다. [전체14 Backend B5](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6950099720)·[백업영수증](../engineering/operations/records/release-2.4.0-preparation-backup.json). 다음Backend는 full결과/실패해소·관리자apply/복귀도구·고정source/image·전환직전백업과 공동전환 준비. release/2.4.0 미커밋·미push.
+
+첫 운영파일검사/다음선택모듈import 실패는 설치 전 중단했다. 운영기존3도구를 백업하고 backup.py의maintenance/web 모듈의존을 제거해 단독설치했다. 서버 새날짜사본/WSL/PC hash·dump목차866항목·내부원본 무결성일치·tokenPC사본확인. 기존서비스재시작/키·환경/current변경 없음. 실제dump복원/DB초기화/태그·공개 없음. [원본](../engineering/operations/release-2.4.0.md).
+
+## 2026-11-17 Issue59 B6 로컬회귀 보완·reset 도구 준비
+
+2026-11-17 Issue59 B6: 로컬 회귀110파일/1927수집항목의 실행범위를 확인하고 발견한8파일의 시험설정 불일치를 수정·표적재검증했다. 최초중단/실패·분할실행과 재검증을 새커밋full CI성공으로 표시하지 않는다. 관리자reset/복구도구 로컬구현·19시험/정적111PASS·동일초기화/행snapshot SQL 합성복원118테이블일치/신·구APIhealthy. [전체16 Backend B6](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6951724684)·[회귀영수증](../engineering/operations/records/release-2.4.0-local-verification.json)·[실행안](../engineering/operations/release-2.4.0-reset-runbook.md). 운영2.3.0/DB0036 유지, reset도구운영설치/실행·실제초기화/공개없음. release/2.4.0 미커밋·미push.
+
+최초직렬의83파일 완료구간은stdout/수집목록으로보존하고긴실행을중단·지정UUID자원을정리했다. 후행27파일4구간은모두종료/정리됐고 원134PASS5FAIL·161PASS2FAIL·150PASS·72PASS1FAIL을그대로남겼다. 기존14ERROR/2FAIL과원실패를덮지않으며총110파일집합누락0을대조했다. 수정후표적은14·15·1·1·1·16·6PASS(중복합산안함), 알려진실패대기0이다. 구체적인8파일/근거는 회귀영수증과 release-2.4.0.md B6를따른다. 애플리케이션/명세/migration 변경없음. 로그는ignored backups/release-2.4.0-verification/에보존했다.
+
+reset_release.py는정확한운영DB/역할·고정source/image/계약·현재구성/키·새dump/PC확인/행불변/미완료journal을검사한다. prepare/명시ackapply/복구/publicopen을분리하고 FORCE삭제·초기화뒤구API자동재시작을금지한다. 차단/순서19PASS, recreate/private_snapshot SQL을UUID/tmpfs에만매핑한신·구API/실제dump복원/118테이블행일치PASS. 정적111PASS·문서/diff검증. 전체관리자CLI+Caddy통합/고정image는남았다. 운영접속/키·환경변경/서비스교체/DB초기화·commit/push/태그/Release/Issue종료는없다. 같은Issue전체16으로결과를회신하고본문상단상태를갱신했다.
+
+## 2026-11-18 Issue59 B7 전체 관리자CLI/운영Dockerfile 통합
+
+2026-11-18 Issue59 B7: 실제운영Dockerfile 기반 합성이미지로 관리자 CLI/API/PostgreSQL/Caddy 전체통합을 완료했다. 실패후0036복원/구웹재개,0038후보완료후복귀,공동승인공개와probe실패503재차단·실제구/신웹HTML·mount된합성5키보존/정리 PASS. 도구/namespace23시험·정적115PASS. [전체18 Backend B7](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6952581457)·[통합영수증](../engineering/operations/records/release-2.4.0-reset-integration.json)·[실행안](../engineering/operations/release-2.4.0-reset-runbook.md). 임시시험Git/image는운영source/digest가아니며프로젝트HEAD18e6bb6은불변이다. release/2.4.0 미커밋·미push, 새reset도구운영설치/실행·실제초기화/서비스교체/공개없음.
+
+reset_smoke.py는신규UUID/tmpfs DB·internal network·합성키만사용하고게시포트/운영접속을금지한다. 임시clean Gitfixture의source/UID·이미지별칭/label·운영health URL을시험어댑터로연결하며실제PostgreSQL/API/Caddy/고정Native웹34자산을사용했다. 세가지전체흐름과정확한거절코드/공개실패재차단·구/신웹바이트·실제mount합성키보존을검증하고자원을정리했다. 임시Gitcommit/fixture image와프로젝트Git/최종GHCRimage를구분한다. 로그는ignored backups/release-2.4.0-verification/b7-reset-cli-verified.log에보존했다.
+
+open-restored로복구이후접속재개의별도승인/구source·image·DB0036·current/키/환경/구웹/health확인과실패시503복귀를명시했다. private_snapshot은한READ ONLY/REPEATABLE READ의psql gexec/identifier quoting으로모든행대조를같은시점에수행하도록보완했다. 관리자도구22+namespace1=23시험PASS,정적115PASS(포함관계합산안함)·문서/diffPASS. B6의로컬110파일/원실패·보완재검증과고정커밋fullCI는계속구분한다. 앱/명세/migration변경없음.
+
+현재준비검증의미확인대기는해소됐다. 다음은사용자commit/push지시후게시source/full CI/불변이미지·Release확보이며, 실제전환은별도승인/직전백업·정지dump/PC확인구간이다. 이번운영키·환경/자료변경·도구설치·서비스교체·commit/push/태그/공개/Issue종료없음. 같은Issue전체18로회신하고본문상단최신화했다.
+
+## 2026-11-18 B8 게시·수동 full CI 승인
+
+사용자가 release/2.4.0 누적변경 commit/push·해당source 수동 릴리즈full CI 실행을 명시 승인했다. 원격 main/dev18e6bb6 일치·release/2.4.0 원격부재를확인했다. 승인범위는게시/검증이며 merge/태그·Release·이미지공개·운영반영은제외다. 누적도구/준비기록/fixture를같은목적브랜치에게시하고 정확한SHA/run/결과는 후행영수증으로연결한다.
+
+## 2026-11-18 B8 소스게시·full CI 실행
+
+사용자명시승인으로release/2.4.0 누적34파일을 5e0ee12e897e35f01dcf73f40eee351a15649d52 chore: prepare 2.4.0 reset release and validation에commit/push·원격일치확인, 소스commit직후작업트리clean. 스테이징전비밀경로/키·토큰패턴검사와정적115PASS·문서/diffPASS. 임시fixture Git가아닌실제프로젝트기준source다. 수동 workflow_dispatch full CI https://github.com/heo0328/lostparty-backend/actions/runs/44117486823 source일치실행중. 수동분기publish/deploy제외를검토했다. main/dev18e6bb6불변·merge/태그/Release/GHCR공개/운영반영없음. 후행영수증문서는별도기록하며검증source를섞지않는다.
+
+[Issue59 전체20 Backend B8](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6952946626)로게시·실행결과를인계했다. CI성공여부는실행중으로유지한다.
+
+## 2026-11-18 full CI 회귀6번 후속
+
+source5e0ee12/run44117486823의verify성공·회귀0/3/7성공,6번134161122895는216PASS/1FAIL/2subtests였다. 명시분단위 자동후보시험의실제now+6h가수요일점검창에걸려MAINTENANCE_WINDOW409. 같은플레이주차시각을고정한초기보완은reconcile이실제시각을써TARGET_CONTEXT_STALE,이어모듈속성대상오류로실패했다. 마지막으로함수내import하는database.now까지조회/명령과일치시켜표적1PASS8.54s/자원정리완료. 초기실패를PASS에합산하지않는다. 파일전체검증과원CI다른구간결과확인중, 보완미커밋·미push·앱/명세/운영변경없음.
+
+## 2026-11-18 원full CI 종료·시험시계보완 파일검증
+
+2026-11-18 CI후속: 원full CI44117486823/source5e0ee12는7개회귀성공·6번1FAIL(216PASS/2subtests),verify성공·validation실패/publish·deploy skipped다. 수요일점검과충돌한명시출발시험의시계를조회/명령/reconcile모두일치하도록고정해표적1PASS·파일전체11PASS(46.30s). 앱/API변경없음. 동일승인게시/CI구간에직접필요한시험보완/기록만최소게시후새source수동full CI를실행한다. merge/공개/운영은제외다.
+
+초기시계보완/reconcile설정실패는원로그에보존하며마지막표적1PASS/파일11PASS와합산하지않는다. 실패로그/로컬검증은ignored backups/release-2.4.0-verification/에보존한다. CI원격검증에보완source게시가실제로필요하여같은승인게시구간의최소시험/문서만게시한다. 새CIsource/run은후행영수증으로분리한다.
+
+## 2026-11-18 B9 최소시험보완 게시·새full CI
+
+보완commit051895aac29bddd041803d31131b8450c109a4fd를release/2.4.0에push·원격일치확인했다. 승인된게시/CI구간의원격검증에실제로필요한시험1파일과직접기록만포함했다. 새workflow_dispatch/full run44120909602 source일치실행중이며원run44117486823 failure/성공증거0과분리한다. 표적1PASS/파일11PASS/정적115PASS·문서/diffPASS. [B9회신](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6953408984). merge/태그·Release/이미지공개/운영반영없음.
+
+## 2026-11-18 사용자 지시: 불필요한 full 재실행 중단·기존근거 수용
+
+run44120909602 취소요청후 completed/cancelled 확인. 원run44117486823은verify/7회귀성공·시험시간설정1FAIL이며 보완파일11PASS/정적115PASS를근거로사용자가검증마감을지시했다. GitHub상태를성공으로위조하지않고사용자수용과구분한다. 전체재검증대기해소, 같은시험반복없음. 게시기의증거요구와해당수용의연결은후속에필요한범위만검토한다. 운영/merge/tag/공개없음, 이번기록미커밋.
+
+## 2026-11-18 B10 수용근거 재사용 연결
+
+2026-11-18 B10: 사용자지시로전체재실행44120909602 cancelled확인·기존7회귀/verify성공+보완파일11PASS수용. 2.4.0한정reuse원장/source조상/후행변경허용목록연결을로컬구현해관련도구21시험PASS·실제근거해석PASS/새회귀0. 원failure/cancelled는보존하며전체CI성공으로표시하지않는다. 추가변경미커밋·미push/새CI·merge/공개/운영전환없음.
+
+version2.4.0/source051895a·승인후행3836eea/고정원장SHA를허용규칙으로등록했다. 후행은문서·release-validation.json·validation.py/해당도구시험만허용하고앱/fixture/워크플로/게시기변경을거절한다. release-validation mode=reuse·executed_tests=[]·회귀/계약reused로기록하며원GitHubfailure/cancelled를success로바꾸지않는다. 근거변조/미지원버전/새실행코드거절및생성영수증소비를21시험으로검증했다. [회신](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6953722160). 새CI/commit/push/merge/운영없음.
+
+## 2026-11-18 B11 수용근거 게시
+
+2026-11-18 B11: 사용자의 진행지시로2.4.0 검증수용/reuse계획·고정근거·검증도구와기록을release/2.4.0에commit/push한다. 전체회귀/새CI를실행하지않고관련도구21PASS·실제근거해석/새시험목록0·문서/diff를확인했다. 실제merge/태그/공개/운영반영은제외다. 정확한게시source는이커밋과Issue인계로확정하며아래미게시는B10당시기록이다.
+
+원격main/dev18e6bb6·release/2.4.0의3836eea일치를확인했다. 같은목적브랜치에서검증수용근거/계획/도구/기록10파일만게시한다. 앱/fixture/migration/workflow/배포기변경없음. 전체회귀와CI는재실행하지않으며다음실제merge/태그공개는별도지시다.
+
+## 2026-11-18 B12 dev/main 통합 승인
+
+2026-11-18 B12: 사용자진행승인으로 release/2.4.0 게시source3ef3eaa와최신기록을dev→main에이력보존병합·push한다. 전체회귀/새CI없음, mode=reuse와고정근거/문서검사만확인한다. 실제태그/Release·이미지공개/운영반영은제외다. 정확한병합SHA/원격확인은Issue인계와후행게시영수증을따른다.
+
+원격main/dev18e6bb6·release/2.4.0 3ef3eaa일치및clean확인후같은목적브랜치에최신기록을모았다. 앱/시험fixture/도구변경없는문서수정이다. dev는no-ff로그이력보존, main은검증된dev와동일위치로통합한다. 남은릴리즈게시/전환작업이있어release/2.4.0은미완료목적브랜치로보존하며이전다른브랜치는건드리지않는다.

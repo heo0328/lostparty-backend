@@ -1,0 +1,138 @@
+{
+  "schema": 1,
+  "project": "lostparty-reset-smoke-1432896bd485",
+  "synthetic_only": true,
+  "production_access": false,
+  "real_production_cli_executed": false,
+  "repository_committed_or_pushed": false,
+  "registry_publication": false,
+  "fixed_release_image_created": false,
+  "image_dockerfile": "Dockerfile",
+  "synthetic_cli_entrypoint_executed": true,
+  "synthetic_fixture_git_commit": "0e9c9682cedfb33a31db03e87899638b2b81e845",
+  "local_fixture_image": "sha256:f6c08356c416def4652821cc307de5ef9c272e4c8d9a3d662b92ffc0411ebb06",
+  "failure_kept_public_closed": true,
+  "rollback_restored_0036_and_old_web": true,
+  "restored_release_reopened_explicitly": true,
+  "ready_0038_candidate_rollback_restored_old_web": true,
+  "failed_public_probe_reclosed_edge": true,
+  "successful_apply_0038_and_native_web": true,
+  "joint_open_required": true,
+  "native_web_assets_verified": 34,
+  "synthetic_keys_and_environment_preserved": true,
+  "mounted_synthetic_keys_compared": true,
+  "cli_actions": [
+    {
+      "action": "preflight",
+      "rejected_as_expected": true,
+      "reason": "administrator_required"
+    },
+    {
+      "action": "preflight",
+      "rejected_as_expected": true,
+      "reason": "clean_release_checkout_required"
+    },
+    {
+      "action": "preflight",
+      "completed": true
+    },
+    {
+      "action": "prepare",
+      "completed": true
+    },
+    {
+      "action": "apply",
+      "rejected_as_expected": true,
+      "reason": "stopped_pc_confirmation_required"
+    },
+    {
+      "action": "confirm-stopped-backup",
+      "completed": true
+    },
+    {
+      "action": "apply",
+      "rejected_as_expected": true,
+      "reason": "injected_migration_interruption"
+    },
+    {
+      "action": "rollback",
+      "completed": true
+    },
+    {
+      "action": "open-restored",
+      "completed": true
+    },
+    {
+      "action": "prepare",
+      "completed": true
+    },
+    {
+      "action": "confirm-stopped-backup",
+      "completed": true
+    },
+    {
+      "action": "apply",
+      "completed": true
+    },
+    {
+      "action": "rollback",
+      "completed": true
+    },
+    {
+      "action": "open-restored",
+      "completed": true
+    },
+    {
+      "action": "prepare",
+      "completed": true
+    },
+    {
+      "action": "confirm-stopped-backup",
+      "completed": true
+    },
+    {
+      "action": "apply",
+      "completed": true
+    },
+    {
+      "action": "open",
+      "rejected_as_expected": true,
+      "reason": "joint_acceptance_required"
+    },
+    {
+      "action": "open",
+      "rejected_as_expected": true,
+      "reason": "injected_public_probe_failure"
+    },
+    {
+      "action": "open",
+      "completed": true
+    }
+  ],
+  "status": "passed",
+  "cleanup_ok": true,
+  "issue": 59,
+  "date_kst": "2026-11-18",
+  "backend_stage": "B7",
+  "base_repository_commit": "18e6bb66283d1eb772c4eee2431eee92c1e25a62",
+  "uncommitted_working_tree": true,
+  "tool_and_namespace_unit_tests_passed": 23,
+  "static_tests_passed": 115,
+  "test_adapters": [
+    "unprivileged host maps CLI administrator uid only inside synthetic test",
+    "temporary clean Git fixture identifies copied tool inputs; primary Git history unchanged",
+    "GHCR-shaped candidate reference maps only to pinned local fixture image id",
+    "UUID container identity maps to production identity in the adapter after tmpfs/project/no-bind/no-port validation",
+    "production health URL maps only to real isolated Caddy through a separate probe container; no host ports"
+  ],
+  "tool_code_sha256": {
+    "scripts/deployment/reset_release.py": "376aad5e4406cbba7c45bb51be617ab7ca675a042c71c90dc4943e34f5d8faac",
+    "scripts/deployment/reset_smoke.py": "a6143fe9014f03dd8ba0a7a28b2da81dbc5160ad9db831572f6e90a1b0b99791"
+  },
+  "immutable_production_source_image_created": false,
+  "new_commit_full_ci_passed": false,
+  "production_cutover_executed": false,
+  "local_logs": "backups/release-2.4.0-verification/b7-reset-cli-verified.log",
+  "reply": "https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6952581457",
+  "reply_order": 18
+}
