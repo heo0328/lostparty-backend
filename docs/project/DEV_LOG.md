@@ -5108,3 +5108,9 @@ NEXT_WORK는 다음행동·실행표로 정리하고 AI_CONTEXT는 기능상태/
 
 2026-11-17 사용자 게시 지시:0038 호환복구 `08212c31215adae1c3a09cb9705409103af1ebdd` 및 누적계약/개발반영 기록을 dev에 병합·push한다. [Native 전체12 복구수용](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947614833) 수신으로 Backend 지원대기는 해소됐고 사용자 두화면 확인만 남았다. 실제실행image eadaa2cc…37b9/DB0038·계약hash12634daa…b9665는 그대로이며 이번게시를 서버재교체/운영배포로 확대하지 않는다. 정확한 병합·원격확인은 DEV_LOG 게시 영수증을 따른다. 아래 미커밋/미push 설명은 당시 이력이다.
 복구커밋 08212c31215adae1c3a09cb9705409103af1ebdd. Native 전체12는0038호환3곳복원/67·136·13PASS·실제개발HTTP200 결과수용을보고했고 같은Issue에서 사용자두화면확인을기다린다. 사용자 문서최신화·커밋/dev병합·push 지시범위로 목적브랜치의누적후보구현·계약/검증·개발반영·직접복구를dev에모은다. 이미통과한기능/실제서버시험은 재사용하고 문서/동결원문·diff만 다시검사한다. 이게시로 DB/키/환경·서버이미지·provider/운영을 변경하지 않는다.
+
+
+## 2026-11-17 Issue58 dev 통합·게시 영수증과 사용자 인수
+
+2026-11-17 최종 게시/인수:복구 `08212c31215adae1c3a09cb9705409103af1ebdd`와 누적작업을 dev `2e78854ef9644a02fd7a00b4c247c79f89e25f25`에 통합·push/원격일치, 완료작업브랜치 로컬·원격정리 완료. [전체14 Backend B7](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947695749). [전체13 Native 사용자 정상확인](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947638411)으로 모집목록/레이드현황 두화면 대기도 해소됐다. 추가Backend수정/동일시험대기없음. Native게시/운영·Issue종료는별도이며 신규/삭제/소멸 실제사례는 기존운영피드백후속이다. 아래미게시/두화면대기는당시이력이다.
+복구08212c3·기록b6105ef·기존누적8f29271/88f1f45를 dev병합2e78854에모았다. 병합전후app/alembic/OpenAPI/scripts/tests동일·원격차이0/0·clean확인후완료브랜치를삭제했다. 이후수신한Native전체13을반영해기존두화면인수대기를해소했고, B7고정링크·정상확인·기록갱신을같은승인범위로후행commit/push한다. source통합으로기존실행이미지eadaa2cc/DB0038을다시교체하지않았다. 문서/동결원문·diff검증PASS, code/DB/키/환경/provider/운영추가변경없음.

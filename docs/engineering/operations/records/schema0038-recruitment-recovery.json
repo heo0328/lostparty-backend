@@ -68,5 +68,11 @@
     "commit/push/merge",
     "Native visual acceptance"
   ],
-  "publication_receipt": "docs/project/DEV_LOG.md and Issue58 Backend publication reply"
+  "publication_receipt": "https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947695749",
+  "integration_commit": "2e78854ef9644a02fd7a00b4c247c79f89e25f25",
+  "completed_branch_cleanup": true,
+  "native_user_acceptance": {
+    "source": "https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947638411",
+    "status": "reported both affected screens no longer show the error; not all historical/search data or lifecycle cases"
+  }
 }
