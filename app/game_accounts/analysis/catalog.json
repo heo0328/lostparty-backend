@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "catalogVersion": "2026.09.12.2",
-  "updatedAt": "2026-09-12T00:00:00Z",
+  "catalogVersion": "2026.11.17.1",
+  "updatedAt": "2026-11-17T00:00:00Z",
   "classes": [
     {
       "classId": "bard",
@@ -115,7 +115,7 @@
       "supportedRoles": ["dealer", "support"],
       "defaultRole": "support",
       "enlightenmentBranches": [
-        {"branchId":"waning_moon","tier1NodeName":"저물어가는 달","displayName":"서폿 도화가","aliases":[],"inferredRole":"support","relatedPassiveNodes":["묵법 : 접무"]},
+        {"branchId":"waning_moon","tier1NodeName":"저물어 가는 달","displayName":"서폿 도화가","aliases":["저물어가는 달"],"inferredRole":"support","relatedPassiveNodes":["묵법 : 접무"]},
         {"branchId":"recurrence","tier1NodeName":"회귀","displayName":"딜도화가","aliases":[],"inferredRole":"dealer","relatedPassiveNodes":["묵법 : 파죽"]}
       ],
       "specialSkills": [

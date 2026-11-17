@@ -97,6 +97,10 @@ def analyze(raw, *, server_name, character_name, class_name, lifecycle_revision,
         match = re.search(r'\d+티어\s+(.+?)\s+Lv\.\d+', plain(description)) if isinstance(description, str) else None
         if match:
             active.add(match[1].strip())
+    # Preserve observed names for grid conditions and add explicit catalog aliases.
+    for b in definition['enlightenmentBranches']:
+        if any(alias in active for alias in b.get('aliases', [])):
+            active.add(b['tier1NodeName'])
     branches = [b for b in definition['enlightenmentBranches'] if b['tier1NodeName'] in active]
     branch = branches[0] if len(branches) == 1 else None
     related = list(dict.fromkeys(n for b in branches for n in b['relatedPassiveNodes'] if n in active))
