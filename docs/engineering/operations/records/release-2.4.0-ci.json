@@ -52,9 +52,24 @@
     "source": "051895aac29bddd041803d31131b8450c109a4fd",
     "mode": "full",
     "event": "workflow_dispatch",
-    "status": "in_progress",
-    "conclusion": null
+    "status": "completed",
+    "conclusion": "cancelled",
+    "cancel_reason": "User directed stopping unnecessary full rerun; existing seven successful shards and corrected test-file11PASS accepted"
   },
   "followup_reply": "https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6953408984",
-  "followup_reply_order": 21
+  "followup_reply_order": 21,
+  "acceptance": {
+    "status": "accepted_by_user_direction",
+    "evidence": [
+      "original verify and seven regression shards succeeded",
+      "only original shard6 test-clock failure corrected without app changes",
+      "corrected file11PASS; static115PASS"
+    ],
+    "successful_github_full_run": false,
+    "new_full_rerun_requested": false,
+    "release_plan_mode": "reuse",
+    "pinned_record": "release-2.4.0-accepted-validation.json",
+    "implementation_status": "local uncommitted;21 validation tool tests passed;no new CI",
+    "reply": "https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6953722160"
+  }
 }

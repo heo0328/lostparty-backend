@@ -1,0 +1,36 @@
+{
+  "version": "2.4.0",
+  "acceptance": "explicit user instruction: cancel unnecessary full rerun and accept seven passed CI shards plus corrected test-file results",
+  "original_ci": {
+    "run_id": 44117486823,
+    "source": "5e0ee12e897e35f01dcf73f40eee351a15649d52",
+    "conclusion": "failure",
+    "verify": "success",
+    "passed_shards": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      7
+    ],
+    "failed_shard": 6,
+    "failed_test": "tests/raid_rooms/schedules/test_explicit_departure_minutes.py::test_explicit_minutes_automatic_grid_own_promise_and_other_reservation_edges",
+    "failed_shard_passed": 216
+  },
+  "corrected_source": "051895aac29bddd041803d31131b8450c109a4fd",
+  "correction": "test clock only; application/API/migrations unchanged",
+  "corrected_file": {
+    "path": "tests/raid_rooms/schedules/test_explicit_departure_minutes.py",
+    "passed": 11,
+    "log_sha256": "f20e1c245f63951ad521eba052248f77a52b9521e685dad0307ff9925de708ba"
+  },
+  "static_tests_passed": 115,
+  "cancelled_rerun": {
+    "run_id": 44120909602,
+    "conclusion": "cancelled"
+  },
+  "github_full_run_success": false,
+  "new_full_regression_required": false
+}

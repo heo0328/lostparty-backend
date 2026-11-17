@@ -152,3 +152,10 @@ reset_release.py에 preflight→prepare(공개503/API정지/연결0/정지dump)�
 2026-11-18 CI후속: 원full CI44117486823/source5e0ee12는7개회귀성공·6번1FAIL(216PASS/2subtests),verify성공·validation실패/publish·deploy skipped다. 수요일점검과충돌한명시출발시험의시계를조회/명령/reconcile모두일치하도록고정해표적1PASS·파일전체11PASS(46.30s). 앱/API변경없음. 동일승인게시/CI구간에직접필요한시험보완/기록만최소게시후새source수동full CI를실행한다. merge/공개/운영은제외다.
 
 명시출발자동후보시험만현재주차의플레이가능한동일합성시각을사용하도록보완했다. 실제시각은그대로두고늦은화요일now+6h로수요일점검창을만들던설정이원인이었다. cycles.now/admission snapshot의now/함수내import하는database.now와최종evaluate시각을일치시킨다. 모의관측/테스트자료만변경하며30분기한/실제점검거절정책은보존했다. 원full성공증거artifact0이며새고정source의full검증이필요하다.
+
+
+## B10 — 사용자지시검증수용·전체재시험중단
+
+2026-11-18 B10: 사용자지시로전체재실행44120909602 cancelled확인·기존7회귀/verify성공+보완파일11PASS수용. 2.4.0한정reuse원장/source조상/후행변경허용목록연결을로컬구현해관련도구21시험PASS·실제근거해석PASS/새회귀0. 원failure/cancelled는보존하며전체CI성공으로표시하지않는다. 추가변경미커밋·미push/새CI·merge/공개/운영전환없음.
+
+이절이이전full대기상태를대체한다. 원run은failure/후행run은cancelled, 검증판정은사용자가기존통과+보완파일11PASS를수용했다. release-validation.json은2.4.0한정reuse로전환해고정수용원장SHA/051895a→3836eea→게시source조상·후행변경허용목록을검사하고기존기능회귀를다시실행하지않는다. 새정적/근거검사만수행하며신규회귀파일목록은빈목록이다. version2.4.1등에는적용하지않는다. [고정수용원장](records/release-2.4.0-accepted-validation.json)·[B10회신](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6953722160). 이번추가변경미게시,후속게시/태그/운영은지시범위에따른다.

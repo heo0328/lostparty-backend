@@ -1,11 +1,14 @@
 # 다음 실행
 
-2026-11-18 B9: 원full CI44117486823/source5e0ee12는verify·회귀7구간성공/6번1FAIL로전체failure·성공증거0/publish·deploy skipped. 합성출발시각의수요일점검충돌을보완해표적1PASS/파일11PASS·정적115PASS. 같은승인게시/CI구간의최소보완source051895aac29bddd041803d31131b8450c109a4fd를release/2.4.0에commit/push·원격일치후새수동full CI [44120909602](https://github.com/heo0328/lostparty-backend/actions/runs/44120909602) 실행중이다. [원실패/보완/새CI영수증](../engineering/operations/records/release-2.4.0-ci.json)·[B9회신](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6953408984).
+2026-11-18 B11: 사용자의 진행지시로2.4.0 검증수용/reuse계획·고정근거·검증도구와기록을release/2.4.0에commit/push한다. 전체회귀/새CI를실행하지않고관련도구21PASS·실제근거해석/새시험목록0·문서/diff를확인했다. 실제merge/태그/공개/운영반영은제외다. 정확한게시source는이커밋과Issue인계로확정하며아래미게시는B10당시기록이다.
+
+2026-11-18 B10: 사용자지시로전체재실행44120909602 cancelled확인·기존7회귀/verify성공+보완파일11PASS수용. 2.4.0한정reuse원장/source조상/후행변경허용목록연결을로컬구현해관련도구21시험PASS·실제근거해석PASS/새회귀0. 원failure/cancelled는보존하며전체CI성공으로표시하지않는다. 추가변경미커밋·미push/새CI·merge/공개/운영전환없음.
+
+[B10회신](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6953722160)·[고정수용근거](../engineering/operations/records/release-2.4.0-accepted-validation.json).
 
 ## 다음 실행
 
-1. 새source051895a/run44120909602의verify/8회귀/validation최종결과를확인한다. 원source/run실패는보존하고새결과와합치지않는다.
-2. 전체성공뒤merge/태그·Release/불변이미지공개는별도지시범위다. 운영전환은별도승인과직전정지백업/PC확인·공동공개조건을따른다. Native고정파일/기존인수재사용·동일시험요청없음.
+사용자게시/병합지시범위에서2.4.0수용근거·reuse계획/도구를포함한source를확정한다. 필요검사는정적/고정근거만이며전체회귀는재실행하지않는다. merge/태그/Release·불변이미지공개·운영반영은별도지시를따른다. 앱/시험fixture/마이그레이션/워크플로변경이있으면이예외를자동확대하지않는다. Native고정파일/기존인수재사용·동일시험요청없음.
 
 ## 코드·계약·실행 구분
 

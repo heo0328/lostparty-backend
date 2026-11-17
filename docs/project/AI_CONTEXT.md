@@ -1,6 +1,10 @@
 # LostParty Backend 기능 지도
 
-원full CI44117486823/source5e0ee12는회귀6번fixture시각으로failure. 보완source051895aac29bddd041803d31131b8450c109a4fd commit/push·원격일치, 표적1PASS/파일11PASS·정적115PASS. 새수동full CI [44120909602](https://github.com/heo0328/lostparty-backend/actions/runs/44120909602) 실행중이며전체성공전이다. [CI영수증](../engineering/operations/records/release-2.4.0-ci.json)·[B9](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6953408984). merge/공개/운영전환없음.
+2026-11-18 B11: 사용자의 진행지시로2.4.0 검증수용/reuse계획·고정근거·검증도구와기록을release/2.4.0에commit/push한다. 전체회귀/새CI를실행하지않고관련도구21PASS·실제근거해석/새시험목록0·문서/diff를확인했다. 실제merge/태그/공개/운영반영은제외다. 정확한게시source는이커밋과Issue인계로확정하며아래미게시는B10당시기록이다.
+
+2026-11-18 B10: 사용자지시로전체재실행44120909602 cancelled확인·기존7회귀/verify성공+보완파일11PASS수용. 2.4.0한정reuse원장/source조상/후행변경허용목록연결을로컬구현해관련도구21시험PASS·실제근거해석PASS/새회귀0. 원failure/cancelled는보존하며전체CI성공으로표시하지않는다. 추가변경미커밋·미push/새CI·merge/공개/운영전환없음.
+
+[B10](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6953722160)·[수용근거](../engineering/operations/records/release-2.4.0-accepted-validation.json). 운영2.3.0/0036유지.
 
 ## 현재 기준
 

@@ -1,9 +1,9 @@
 {
   "version": "2.4.0",
-  "mode": "full",
+  "mode": "reuse",
   "baseline_tag": "v2.3.0",
   "change": "Server-owned Lost Ark credential and analysis, public exploration/login gates, minute personal availability, persisted refresh candidates and recovery, artist detection and DB0038 recruitment compatibility.",
   "impact": "Production schema0036 to0038 cutover; personal credential/client-analysis APIs removed; new server-only token and Native2.4.0+9 required. Production data-reset scope and reviewed transition remain prerequisites.",
-  "reason": "Protected app/main, schemas, migrations and shared authorization/reader/writer changes require full validation. Prior targeted development and user acceptance are context, not a fresh full release result. No reuse exception.",
+  "reason": "Explicit user acceptance: original verify and seven regression shards passed; sole test-clock failure corrected with11 file tests passed. Full rerun cancelled by user. Reuse pinned2.4.0 evidence; no new full regression and no claim of a successful GitHub full run.",
   "tests": []
 }

@@ -5193,3 +5193,19 @@ source5e0ee12/run44117486823의verify성공·회귀0/3/7성공,6번134161122895�
 ## 2026-11-18 B9 최소시험보완 게시·새full CI
 
 보완commit051895aac29bddd041803d31131b8450c109a4fd를release/2.4.0에push·원격일치확인했다. 승인된게시/CI구간의원격검증에실제로필요한시험1파일과직접기록만포함했다. 새workflow_dispatch/full run44120909602 source일치실행중이며원run44117486823 failure/성공증거0과분리한다. 표적1PASS/파일11PASS/정적115PASS·문서/diffPASS. [B9회신](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6953408984). merge/태그·Release/이미지공개/운영반영없음.
+
+## 2026-11-18 사용자 지시: 불필요한 full 재실행 중단·기존근거 수용
+
+run44120909602 취소요청후 completed/cancelled 확인. 원run44117486823은verify/7회귀성공·시험시간설정1FAIL이며 보완파일11PASS/정적115PASS를근거로사용자가검증마감을지시했다. GitHub상태를성공으로위조하지않고사용자수용과구분한다. 전체재검증대기해소, 같은시험반복없음. 게시기의증거요구와해당수용의연결은후속에필요한범위만검토한다. 운영/merge/tag/공개없음, 이번기록미커밋.
+
+## 2026-11-18 B10 수용근거 재사용 연결
+
+2026-11-18 B10: 사용자지시로전체재실행44120909602 cancelled확인·기존7회귀/verify성공+보완파일11PASS수용. 2.4.0한정reuse원장/source조상/후행변경허용목록연결을로컬구현해관련도구21시험PASS·실제근거해석PASS/새회귀0. 원failure/cancelled는보존하며전체CI성공으로표시하지않는다. 추가변경미커밋·미push/새CI·merge/공개/운영전환없음.
+
+version2.4.0/source051895a·승인후행3836eea/고정원장SHA를허용규칙으로등록했다. 후행은문서·release-validation.json·validation.py/해당도구시험만허용하고앱/fixture/워크플로/게시기변경을거절한다. release-validation mode=reuse·executed_tests=[]·회귀/계약reused로기록하며원GitHubfailure/cancelled를success로바꾸지않는다. 근거변조/미지원버전/새실행코드거절및생성영수증소비를21시험으로검증했다. [회신](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6953722160). 새CI/commit/push/merge/운영없음.
+
+## 2026-11-18 B11 수용근거 게시
+
+2026-11-18 B11: 사용자의 진행지시로2.4.0 검증수용/reuse계획·고정근거·검증도구와기록을release/2.4.0에commit/push한다. 전체회귀/새CI를실행하지않고관련도구21PASS·실제근거해석/새시험목록0·문서/diff를확인했다. 실제merge/태그/공개/운영반영은제외다. 정확한게시source는이커밋과Issue인계로확정하며아래미게시는B10당시기록이다.
+
+원격main/dev18e6bb6·release/2.4.0의3836eea일치를확인했다. 같은목적브랜치에서검증수용근거/계획/도구/기록10파일만게시한다. 앱/fixture/migration/workflow/배포기변경없음. 전체회귀와CI는재실행하지않으며다음실제merge/태그공개는별도지시다.
