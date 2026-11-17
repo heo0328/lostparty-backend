@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-2026-11-17 현재: Issue58 Backend 구현·격리검증·실제 로컬dev0038/API 지원 완료. [계약](../features/rosters/activity-and-presentation/refresh-candidate-contract.md)·[반영 원장](../engineering/operations/records/analysis-candidates-local-rollout.json). 사용자 지시로 `feat/roster-refresh-policy`를 게시하며 dev/main 병합·운영 배포는 별도다. 구현 `8f29271d610aad83021ec3a00e5879f2adda76d5` 기준이며 정확한 문서tip/게시·검증은 [DEV_LOG](DEV_LOG.md), 다음 실행은 [NEXT_WORK](NEXT_WORK.md).
+2026-11-17 현재: Issue58 Backend 구현·격리검증·실제 로컬dev0038/API 지원 완료. [계약](../features/rosters/activity-and-presentation/refresh-candidate-contract.md)·[반영 원장](../engineering/operations/records/analysis-candidates-local-rollout.json). 사용자 지시로 `feat/roster-refresh-policy` 게시 완료, dev/main 병합·운영 배포는 별도다. 구현 `8f29271d610aad83021ec3a00e5879f2adda76d5` 기준이며 정확한 문서tip/게시·검증은 [DEV_LOG](DEV_LOG.md), 다음 실행은 [NEXT_WORK](NEXT_WORK.md).
 
 Native [전체6 N1](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6945574683)은 일반 앱 연결·자동검증 완료/미커밋·미push를 보고했다. 사용자 실제 HTTP저장·웹/Android 결과는 미확인이고 같은 Issue58에서 추적한다. 추가 Backend 계약/동일시험 요청은 없다.
 

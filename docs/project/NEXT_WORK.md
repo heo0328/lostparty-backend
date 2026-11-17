@@ -1,7 +1,7 @@
 # 다음 실행
 
 2026-11-17 / Issue58 / 목적 브랜치 `feat/roster-refresh-policy`.
-사용자 지시로 구현·계약·개발 반영·작업 기록을 정리해 현재 브랜치에 commit/push한다. dev/main 병합은 이번 범위가 아니다. 구현 SHA는 `8f29271d610aad83021ec3a00e5879f2adda76d5`, 문서tip/원격 확인은 [DEV_LOG](DEV_LOG.md)의 게시 기록과 Issue58 인계를 따른다.
+사용자 지시로 구현·계약·개발 반영·작업 기록을 현재 브랜치에 commit/push 완료했다. [전체7 Backend B4 게시인계](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6945682966). dev/main 병합은 이번 범위가 아니다. 구현 SHA는 `8f29271d610aad83021ec3a00e5879f2adda76d5`, 문서tip/원격 확인은 [DEV_LOG](DEV_LOG.md)의 게시 기록과 Issue58 인계를 따른다.
 
 ## 현재 상태와 다음 담당
 
