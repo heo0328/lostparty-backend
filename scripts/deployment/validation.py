@@ -119,7 +119,7 @@ def local_reuse_evidence(rule=None):
                               {'record_json': {p: (ROOT / p).read_text() for p in rule['records']}}, rule)
 
 
-def verify_reuse_proof(proof, version=None):
+def verify_reuse_proof(proof, version=None, *, root=ROOT):
     if version == LOCAL_REUSE_240['version']:
         return verify_local_proof(proof, LOCAL_REUSE_240)
     if version == LOCAL_REUSE_220['version']:
@@ -140,7 +140,7 @@ def verify_reuse_proof(proof, version=None):
     if (data.get('schema') != 1 or data.get('version') != '0.1.1' or data.get('mode') != 'full'
             or data.get('source') != REUSE['source'] or data.get('result') != 'success'
             or data.get('checks') != checks or data.get('run_url') != url
-            or data.get('executed_tests') != all_tests()):
+            or data.get('executed_tests') != all_tests(root)):
         raise ValueError('prior full validation does not cover this source')
     return proof
 
@@ -258,10 +258,10 @@ def validate_baseline(plan):
         raise ValueError('changed protected paths require full validation')
 
 
-def selected_tests(plan):
+def selected_tests(plan, *, root=ROOT):
     if plan['mode'] == 'reuse':
         return []  # Do not label the prior run's tests as newly executed.
-    return plan['tests'] if plan['mode'] == 'selected' else all_tests()
+    return plan['tests'] if plan['mode'] == 'selected' else all_tests(root)
 
 
 def successful(verify, regression):
@@ -287,7 +287,7 @@ def record(plan, verify, regression):
     return data
 
 
-def verify_record(data, plan, source):
+def verify_record(data, plan, source, *, root=ROOT):
     expected = {'schema', 'source', 'version', 'mode', 'baseline_tag', 'plan_sha256',
                 'change', 'impact', 'reason', 'executed_tests', 'checks', 'result', 'finished_at_utc', 'run_url'}
     reuse = plan['mode'] == 'reuse'
@@ -301,11 +301,11 @@ def verify_record(data, plan, source):
         if data[key] != plan[key]:
             raise ValueError('validation plan evidence mismatch')
     checks = check_results(plan)
-    if data['source'] != source or data['executed_tests'] != selected_tests(plan) or data['checks'] != checks or data['result'] != 'success':
+    if data['source'] != source or data['executed_tests'] != selected_tests(plan, root=root) or data['checks'] != checks or data['result'] != 'success':
         raise ValueError('successful matching validation required')
     require(data['run_url'], r'https://github\.com/heo0328/lostparty-backend/actions/runs/[0-9]+/attempts/[0-9]+')
     if reuse:
-        verify_reuse_proof(data['reused_validation'], plan['version'])
+        verify_reuse_proof(data['reused_validation'], plan['version'], root=root)
     return data
 
 

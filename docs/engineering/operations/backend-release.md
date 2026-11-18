@@ -1,8 +1,8 @@
-# Backend 태그 기반 Lightsail 배포
+# Backend 릴리즈 게시와 Lightsail 운영 배포
 
 새 실행 정리 이후 release.json은 schema2(현재 openapi.yaml/과거 legacy.openapi.yaml)를 생성한다. validation.json의 schema와는 별개다. 구형 release.json schema1과 기존 hash 의미도 계속 지원한다. 설치된 운영 도구 선갱신·복귀·이번 배포 포함 기능은 [실행 정리의 배포 전환](runtime-release-transition.md)을 따른다.
 
-이 문서는 자동 배포의 현재 운영 기준 원본이다. Backend 버전은 `VERSION`, 태그는 `vMAJOR.MINOR.PATCH`이며 Native·OpenAPI 버전과 독립적이다. 목적 브랜치 → dev → main 통합을 유지한다. 사용자가 승인한 태그 push가 운영 배포 승인이다. 별도 간소 배포 시스템은 두지 않고 동일 배포에서 검증 범위만 바꾼다.
+Backend 버전은 `VERSION`, 태그는 `vMAJOR.MINOR.PATCH`이며 Native·OpenAPI 버전과 독립적이다. 목적 브랜치 → dev → main 통합을 유지한다. 서울 배포 연결이 완료되면 태그 push는 검증·산출물 게시를 시작하고 운영 반영은 승인된 게시 버전의 수동 워크플로 실행으로 시작한다. 적용 상태는 [다음 실행](../../project/NEXT_WORK.md)을 따른다.
 
 **개발·검증은 로컬 dev가 기본이며 운영 반영 여부·시점은 개발자가 지시한다.** 아래 절차는 운영 반영을 준비하거나 승인된 배포를 수행할 때 적용하며, 기능 수정 요청마다 실행하지 않는다. 로컬 실행 중단을 이유로 수동 배포 워크플로의 검증 경로로 임의 대체하지 않는다. Backend의 반영 시점 제안·대안 판단은 [로컬 개발과 운영 반영](../development/workflow.md#local-dev-and-production)을 따른다. 네이티브 debug는 로컬, release는 AWS를 대상으로 하며 앱 연결과 서버 반영 완료를 구분한다.
 
@@ -12,7 +12,7 @@
 
 ## 현재 적용 상태와 변경 이력
 
-- **운영 최신 v2.0.0**: 사용자 승인 PR45·source51b1cb3·imagef33f4c6c·DB0035, Actions41674801953/production Deployment7524537038 success로 한국2026-11-04 01:31:59 반영 완료. 이슈41 일괄 API·이슈42 참가 유지 예방 수정을 지원한다. [최신 배포 집계](records/backend-v2.0.0-deployment.json)·[Issue34 전체13번째 Backend 운영 결과](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6609667274)를 따른다. 아래 v0.1.x는 과거 기록이다.
+- **당시 운영 v2.0.0**: 사용자 승인 PR45·source51b1cb3·imagef33f4c6c·DB0035, Actions41674801953/production Deployment7524537038 success로 한국2026-11-04 01:31:59 반영 완료. 이슈41 일괄 API·이슈42 참가 유지 예방 수정을 지원한다. [배포 집계](records/backend-v2.0.0-deployment.json)·[Issue34 전체13번째 Backend 운영 결과](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6609667274)를 따른다. 아래 v0.1.x는 과거 기록이다.
 
 - 이전 운영은 v0.1.2/source2c6070c/image7c8b8db9·DB0035다. 사용자 승인 이번 한정 재사용·Actions41608259484 success로 한국2026-11-03 18:07:53 반영 완료, [최신 배포 집계](records/backend-v0.1.2-deployment.json)를 따른다. v0.1.1/source77c9de2/image259e8234는 UTC2026-11-01T16:30:33Z 첫 자동 반영 당시 이력이다. [배포 집계](records/backend-v0.1.1-deployment.json)·[전체9번째 Backend 결과](https://github.com/heo0328/lostparty-backend/issues/34#issuecomment-6560737194)를 따른다.
 - 이번 개선은 작업 브랜치의 selected/full 검증·validation.json 기록이다. scripts52PASS·수동 전체1811PASS/검증artifact 대조를 완료했다([검증 집계](records/backend-validation-scope-verification.json)). 로컬 selected 실DB 실행은 엔진 불가로 미완료이며 선택분기/실패 차단은 단위 검증했다. 통합/수동 검증 상태는 [NEXT_WORK](../../project/NEXT_WORK.md)를 따른다. 원격 코드 게시·dev/main 통합·새 태그 배포는 구분한다. 이 문서 수정만으로 운영에 반영되지 않는다.
@@ -29,8 +29,8 @@
 
 1. 기능 수정을 요청하면 Backend 담당이 목적 브랜치에서 구현하고 로컬 dev 환경에서 변경에 필요한 개발 검증을 수행한다. 새 테스트는 재발 방지·복잡한 동작 확인이 필요한 경우에 추가하며 단순 수정마다 의무적으로 만들지 않는다. 이 단계만으로 버전·태그·배포 워크플로 실행을 시작하지 않는다.
 2. 배포 준비 시 담당이 **변경 내용 / 검증 모드·실행 검사 / 버전 / DB·설정 변경 여부**를 짧게 보고한다. 사용자가 테스트 파일이나 설정을 직접 작성할 필요는 없다.
-3. 사용자가 통합·해당 버전 배포를 승인하면 목적 브랜치→dev→main으로 통합하고 같은 main/dev 기준에서 승인 태그를 게시한다. commit/push의 상시 승인은 merge·태그·배포의 상시 승인이 아니다.
-4. 자동화가 선택된 검증·이미지 게시·서버 반영·결과 기록을 수행한다. 담당은 실행 결과와 실제 서버 결과를 구분해 보고한다.
+3. 승인된 변경을 목적 브랜치 → dev → main으로 통합하고 같은 main/dev 기준에서 승인 태그를 게시한다. `Backend release`가 선택된 검증과 이미지·Release 게시를 수행한다.
+4. 사용자가 게시된 버전의 운영 반영을 승인하면 `Deploy published release`에서 브랜치 `main`, 태그, 모드 `deploy`를 선택한다. 결과는 run summary의 릴리즈 태그·소스·digest와 운영 점검 결과로 확인한다. 검증·게시 시간과 운영 반영 시간은 각 워크플로에서 따로 확인한다.
 
 일반 selected/full 배포는 태그에서 선택 검증을 한 번 수행한다. 아래 v0.1.2 및 v2.0.0 사용자 승인 예외 외에는 과거 CI 결과를 재사용하지 않으며 파일별 테스트 자동 선택은 포함하지 않는다. patch 버전·변경 줄 수·API 추가라는 이유만으로 관련 검증을 선택하지 않는다. 권한이나 공통 영향이 있으면 전체 검증이다.
 
@@ -69,7 +69,7 @@ mode=`reuse`·schema2·executed_tests=[]이며 회귀/계약은 reused, 이번 �
 예시의 테스트 파일은 실제 존재 여부와 해당 작업의 연관성을 확인해 선택한다. full은 같은 필드에서 mode를 `full`, tests를 `[]`로 지정한다. change/impact/reason은 비밀·회원정보 없는 설명만 넣는다.
 
 - tests는 저장소 tests 아래 실제 `test_*.py` 파일 경로만 허용한다. selected는 최소 하나, full은 빈 배열이다. pytest 옵션·노드·명령·와일드카드·중복·심볼릭 링크는 거절한다.
-- baseline_tag는 **이전 운영 릴리즈**다. 게시된 정식 GitHub Release이며 현재 소스의 조상인지 자동 확인한다. 담당은 최신 성공 production Deployment/source와 직접 대조해 현재 운영 이후 누적 변경 전체를 검토한다. 단지 직전 Git 태그나 직전 작업 커밋을 기준으로 좁히지 않는다. 자동화가 최신 운영 태그를 자동 추론하는 기능은 이번 범위에 없다.
+- baseline_tag는 **이전 운영 릴리즈**다. 게시된 정식 GitHub Release이며 현재 소스의 조상인지 자동 확인한다. 담당은 최신 성공 production 배포의 run summary 또는 운영 원장에서 릴리즈 태그·소스를 확인해 누적 변경 전체를 검토한다. 수동 워크플로의 GitHub 실행 SHA는 워크플로를 실행한 main의 SHA다. 자동화가 최신 운영 태그를 자동 추론하는 기능은 이번 범위에 없다.
 - 알 수 없는 영향·다수 기능에 걸친 리팩토링이면 full이다. 파일이 없는 기본 full은 baseline이 없는 보수적 실행으로 기록한다.
 
 ### 전체 검증 필수 범위
@@ -88,7 +88,7 @@ mode=`reuse`·schema2·executed_tests=[]이며 회귀/계약은 reused, 이번 �
 | 애플리케이션 회귀 | 지정한 파일, 1개 격리 작업 | 전체 파일, 8개 비중복 그룹 |
 | 배포 제어 Docker 교체·복귀 시험 | 생략 | 실행 |
 | 이미지 빌드·게시 | 실행 | 실행 |
-| 서버 사전 확인·API 교체·health·복귀 | 실행 | 실행 |
+| 서버 사전 확인·API 교체·health·복귀 | 승인된 수동 배포에서 실행 | 승인된 수동 배포에서 실행 |
 
 `.github/workflows/backend-release.yml`은 선택한 검증 작업이 실제 success인지 별도 gate에서 확인한다. 실패·취소·예상 밖 skip을 성공으로 취급하지 않는다. 수동 workflow_dispatch는 동일 계획으로 검증·로컬 이미지 빌드·검증 artifact까지만 수행하며 GHCR/Release 게시·운영 SSH에 접근하지 않는다.
 
@@ -102,11 +102,18 @@ validation.json에는 대상 버전/소스 SHA, 계획 파일 SHA256(없으면 n
 - GitHub 표준 Linux runner에서 linux/amd64 이미지를 빌드한다. GHCR 버전·소스 태그를 덮어쓰지 않고 실제 배포는 digest로 고정한다. 최초 private package는 public/익명 digest 조회를 확인하기 전 배포하지 않는다. 현재 v0.1.1은 익명 조회 확인 완료다.
 - 기존 Release 재실행은 원래 이미지·release.json·Compose·validation.json을 재사용한다. 검증 기록을 덮어쓰거나 소급 추가하지 않는다. 이전 검증 기록이 없는 옛 소스의 Release는 읽을 수 있지만 계획 파일이 있는 새 소스의 Release에서 증거가 누락되면 중단한다.
 - 코드 수정은 새 VERSION/태그다. 전송·인증/설정 문제는 원인 확인과 수정 후 승인된 같은 태그/이미지를 재실행할 수 있다. 무작정 전체 workflow를 반복하지 않고 실패 작업만 재실행한다. artifact가 만료돼 게시 증거를 읽을 수 없으면 동일 run에서 검증 gate를 다시 수행해야 하며 증거 없이 우회하지 않는다.
-- draft 생성·첨부 후 게시한다. 불완전 draft는 자동 덮어쓰기하지 않고 수동 조사한다. 태그 수정/삭제 방지와 production의 v*태그 제한을 유지한다.
+- draft 생성·첨부 후 게시한다. 불완전 draft는 자동 덮어쓰기하지 않고 수동 조사한다. 태그 수정·삭제 방지는 유지한다. 서울 연결 후 production 환경은 `main` 브랜치만 허용한다.
 
 ## 서버 보호와 별도 운영 작업
 
-전용 SSH·고정 호스트키 검증·강제 명령 계정을 유지한다. Free plan 계정의 OIDC provider 제한으로 사용자 승인 후 전용키를 채택했으며 AWS CLI·GitHub runner를 서버에 설치하지 않는다. production Secret `LIGHTSAIL_DEPLOY_SSH_KEY`, 변수 `LIGHTSAIL_SSH_KNOWN_HOSTS`, 계정 lostparty-deploy/54.253.176.103을 사용한다. 포트 추가 개방·유료 리소스는 추가하지 않는다.
+전용 SSH·고정 호스트키 검증·강제 명령 계정을 유지한다. 서울 대상은 `lostparty-deploy@54.116.243.121`이다. production Secret `LIGHTSAIL_DEPLOY_SSH_KEY`와 환경 변수 `LIGHTSAIL_SSH_KNOWN_HOSTS`를 사용한다.
+
+### 서울 연결 순서
+
+1. 기존 태그 기반 운영 작업이 실행 중이거나 대기 중이면 전환을 보류한다. 승인된 코드가 main에 반영되면 Settings → Environments → production에서 기존 `v*` 태그 정책을 제거하고 브랜치 `main`을 추가한다. 이 순서가 끝난 뒤 배포 접속 설정을 바꾼다.
+2. 서울 Lightsail 콘솔에서 인스턴스와 고정 IP를 확인하고, 관리자 SSH에서 SSH 호스트 공개키와 지문을 대조한다. `LIGHTSAIL_SSH_KNOWN_HOSTS` 각 줄은 서울 IP·키 유형·공개키 순서로 넣는다. 기존 배포 키를 먼저 검증하고 명시적 공개키 인증 실패가 확인될 때만 제한 배포 키를 교체한다. [키 보관 기준](backup-and-recovery.md)을 따른다.
+3. `Deploy published release`를 `main`에서 태그 `v2.4.0`, 모드 `preflight`로 실행한다. 서버 결과가 `preflight_only`인지 확인하고, 운영 도메인이 서울 IP를 가리키는지와 서울 IP의 HTTPS·DB 상태를 대조한다. 점검 전후 API·DB·Caddy 식별자와 시작 시각 및 구성 보존을 확인한다. v2.4.0은 `publish-only`이므로 이 워크플로에서 `deploy`할 수 없다. 서울 스냅샷의 현재 DB를 기준으로 삼고 시드니 데이터 동기화는 범위에서 제외한다.
+4. SSH나 배포 기준이 맞지 않으면 원인을 확인하고 연결 완료를 보류한다. 모드 `preflight`는 운영 배포 기록을 생성하지 않는다. 첫 실제 운영 배포는 별도 승인 후 표준 릴리즈에서 수행한다.
 
 배포 키는 root 소유 authorized_keys의 restrict/강제 명령과 최소 sudo로 submit/preflight/status만 허용한다. 셸·PTY·포워딩은 차단한다. 개인키 등록 시 마지막 LF를 보존한다. 일반 `gh secret set < key`는 끝 CR/LF를 제거하므로 사용하지 않는다. Python에서 개인키 문자열을 JSON 인용한 dotenv 항목으로 만들어 `gh secret set --env production --env-file -`의 stdin으로 전달하고, 제한 preflight를 확인한다. rotation은 새 제한키 추가→접속 확인→Secret 갱신→이전 키 폐기 순서이며 개인키·임시 관리자 인증 복사본은 삭제한다.
 

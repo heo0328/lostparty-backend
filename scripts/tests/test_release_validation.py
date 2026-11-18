@@ -150,6 +150,13 @@ class ValidationTests(unittest.TestCase):
         self.assertIn('shard: ${{ fromJSON(needs.verify.outputs.shards) }}', workflow)
         self.assertIn('name: ${{ needs.validation.outputs.artifact }}', workflow)
         self.assertNotIn('overwrite: true', workflow)
+        self.assertNotIn('LIGHTSAIL_DEPLOY_SSH_KEY', workflow)
+        deploy = (validation.ROOT / '.github/workflows/deploy-published-release.yml').read_text()
+        self.assertIn("github.ref == 'refs/heads/main'", deploy)
+        self.assertIn('default: preflight', deploy)
+        self.assertIn("deployment: ${{ inputs.mode == 'deploy' }}", deploy)
+        self.assertNotIn('verify_isolated.py', deploy)
+        self.assertNotIn('docker build', deploy)
 
     def reuse_proof(self):
         prior = {'schema': 1, 'version': '0.1.1', 'mode': 'full',

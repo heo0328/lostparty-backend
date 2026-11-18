@@ -1,8 +1,10 @@
 """Deployment control fault injection; never connects to the production Docker/DB."""
+import contextlib
 import copy
 import fcntl
-import subprocess
 import json
+import os
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -11,6 +13,9 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'deployment'))
 from common import IMAGE, canonical, checksum, validate_bundle
+import release
+import transport
+import validation
 from release import validate_source
 from ssh_entrypoint import arguments
 from regression import shard, SUITES
@@ -29,6 +34,119 @@ CONFIG = {'name': 'lostparty-lightsail', 'services': {
     'api': {'image': 'old', 'build': {'context': '/app'}, 'environment': {'GOOGLE_CLIENT_ID': 'public-web'},
             'volumes': [{'source': '/private/keys', 'target': '/run/secrets', 'read_only': True}]},
     'db': {'image': 'postgres:17'}, 'caddy': {'image': 'caddy:2'}}, 'volumes': {'db': {}}}
+
+
+class PublishedDeploymentTests(unittest.TestCase):
+    def setUp(self):
+        self.root = Path(self.enterContext(tempfile.TemporaryDirectory()))
+        self.enterContext(contextlib.chdir(self.root))
+        self.git('init', '-q')
+        self.git('config', 'user.name', 'Release Test')
+        self.git('config', 'user.email', 'release@example.invalid')
+
+    def git(self, *args):
+        return release.run(['git', *args])
+
+    def tag(self, version, *, deployment=None):
+        Path('VERSION').write_text(version + '\n')
+        Path('compose.lightsail.yaml').write_text(COMPOSE)
+        Path('tests').mkdir()
+        Path('tests/test_tagged.py').touch()
+        if deployment is not None:
+            Path('release-deployment.json').write_text(json.dumps(deployment))
+        self.git('add', '.')
+        self.git('commit', '-qm', 'Release fixture')
+        tag = 'v' + version
+        self.git('tag', '-am', 'Release fixture', tag)
+        return tag, self.git('rev-parse', 'HEAD')
+
+    def test_download_verifies_evidence_against_tagged_tree(self):
+        tag, source = self.tag('0.1.0')
+        plan = validation.load_plan(self.root)
+        manifest = {**MANIFEST, 'source': source}
+        with patch.dict(os.environ, {'GITHUB_RUN_ID': '123', 'GITHUB_RUN_ATTEMPT': '1'}), \
+                patch('validation.all_tests', return_value=['tests/test_tagged.py']):
+            evidence = validation.record(plan, 'success', 'success')
+        Path('tests/test_later.py').touch()
+        self.git('add', '.')
+        self.git('commit', '-qm', 'Later main changes')
+        original_run = release.run
+
+        def download(args):
+            if args[0] != 'gh':
+                return original_run(args)
+            target = Path(args[args.index('--dir') + 1])
+            target.mkdir(parents=True, exist_ok=True)
+            if 'validation.json' in args:
+                (target / 'validation.json').write_text(json.dumps(evidence))
+            else:
+                (target / 'release.json').write_text(json.dumps(manifest))
+                (target / 'compose.lightsail.yaml').write_text(COMPOSE)
+
+        listing = {'draft': False, 'prerelease': False, 'assets': [{'name': 'validation.json'}]}
+        digest = IMAGE_REF.split('@')[1]
+        with patch('release.run', side_effect=download), patch('release.api', return_value=listing), \
+                patch('release.registry_digest', return_value=digest) as registry:
+            release.prepare_deployment(tag, 'deploy')
+            registry.assert_called_once_with(IMAGE + ':sha-' + source, anonymous=True)
+            registry.return_value = 'sha256:' + 'd' * 64
+            with self.assertRaisesRegex(ValueError, 'image_digest_mismatch'):
+                release.prepare_deployment(tag, 'preflight')
+            evidence['executed_tests'] = ['tests/test_later.py']
+            with self.assertRaisesRegex(ValueError, 'successful matching validation required'):
+                release.prepare_deployment(tag, 'deploy')
+            listing['assets'] = []
+            with self.assertRaisesRegex(ValueError, 'validation evidence missing'):
+                release.prepare_deployment(tag, 'deploy')
+        self.assertEqual(self.git('worktree', 'list', '--porcelain').count('worktree '), 1)
+
+    def test_publish_only_release_can_only_preflight(self):
+        tag, source = self.tag('2.4.0', deployment={
+            'schema': 1, 'version': '2.4.0', 'mode': 'publish-only',
+            'from_db_revision': '0036_roster_presence', 'to_db_revision': '0038_analysis_candidates',
+            'configuration_revision': 'lightsail-web-2.1.0',
+            'web_receipt': 'docs/engineering/operations/records/web-handoff-2.4.0.json',
+        })
+        with patch('release.existing', return_value=MANIFEST) as existing, \
+                patch('release.registry_digest', return_value=IMAGE_REF.split('@')[1]):
+            with self.assertRaisesRegex(ValueError, 'standard_release_required'):
+                release.prepare_deployment(tag, 'deploy')
+            existing.assert_not_called()
+            release.prepare_deployment(tag, 'preflight')
+            self.assertEqual(existing.call_args.args, (tag, source))
+
+
+class DeploymentTransportTests(unittest.TestCase):
+    def setUp(self):
+        root = self.enterContext(tempfile.TemporaryDirectory())
+        self.enterContext(contextlib.chdir(root))
+        self.enterContext(patch.dict(os.environ, {
+            'RELEASE_TAG': MANIFEST['tag'], 'DEPLOYMENT_MODE': 'preflight',
+            'GITHUB_RUN_ID': '123', 'GITHUB_RUN_ATTEMPT': '1', 'GITHUB_STEP_SUMMARY': os.devnull,
+            'LIGHTSAIL_DEPLOY_SSH_KEY': 'fixture',
+            'LIGHTSAIL_SSH_KNOWN_HOSTS': f'{transport.DEPLOY_HOST} ssh-ed25519 fixture\n',
+        }))
+        Path('dist').mkdir()
+        Path('dist/release.json').write_text(json.dumps(MANIFEST))
+        Path('dist/compose.lightsail.yaml').write_text(COMPOSE)
+
+    def test_preflight_only_contacts_seoul_restricted_command(self):
+        result = {'status': 'success', 'mode': 'preflight_only', 'attempt': '123-1',
+                  **{key: MANIFEST[key] for key in ('source', 'tag', 'image')}}
+        with patch('transport.run', side_effect=[SOURCE, json.dumps(result)]) as run, patch('builtins.print'):
+            transport.main()
+        self.assertEqual(run.call_count, 2)
+        args = run.call_args.args[0]
+        self.assertEqual(args[-2:], [f'lostparty-deploy@{transport.DEPLOY_HOST}', 'preflight'])
+        self.assertIn('StrictHostKeyChecking=yes', args)
+        self.assertEqual(json.loads(run.call_args.kwargs['input']), BUNDLE)
+
+    def test_seoul_transport_rejects_sydney_host_key_before_ssh(self):
+        with patch.dict(os.environ, {'LIGHTSAIL_SSH_KNOWN_HOSTS': '54.253.176.103 ssh-ed25519 fixture'}), \
+                patch('transport.run', return_value=SOURCE) as run:
+            with self.assertRaisesRegex(ValueError, 'pinned_seoul_host_keys_required'):
+                transport.main()
+        run.assert_called_once()
 
 
 class FakePlatform:

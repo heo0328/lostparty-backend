@@ -6,6 +6,7 @@ import json
 import os
 import subprocess
 import sys
+import tempfile
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -44,7 +45,7 @@ def refresh_branches():
          'refs/heads/dev:refs/remotes/origin/dev'])
 
 
-def existing(tag, source):
+def existing(tag, source, *, source_root=None):
     release = api('/releases/tags/' + tag)
     if release is None:
         return None
@@ -57,13 +58,17 @@ def existing(tag, source):
         raise ValueError('immutable release conflict')
     # New releases carry immutable validation evidence. Legacy releases stay readable.
     evidence = [a for a in release.get('assets', []) if a['name'] == 'validation.json']
-    if Path('release-validation.json').exists() and not evidence:
+    if (source_root is not None or Path('release-validation.json').exists()) and not evidence:
         raise ValueError('validation evidence missing from planned release')
     if evidence:
         from validation import load_plan, verify_record
         run(['gh', 'release', 'download', tag, '--repo', REPOSITORY, '--pattern', 'validation.json',
              '--dir', 'dist/existing-validation'])
-        verify_record(json.loads(Path('dist/existing-validation/validation.json').read_text()), load_plan(), source)
+        record = json.loads(Path('dist/existing-validation/validation.json').read_text())
+        if source_root is None:
+            verify_record(record, load_plan(), source)
+        else:
+            verify_record(record, load_plan(source_root), source, root=source_root)
     return m
 
 
@@ -95,10 +100,45 @@ def registry_digest(reference, *, anonymous=False):
         raise ValueError('registry unavailable or unauthorized') from None
 
 
+def prepare_deployment(tag, mode):
+    from deployment_plan import load as load_deployment_plan
+
+    require(tag, TAG)
+    require(mode, r'preflight|deploy')
+    source = require(run(['git', 'rev-parse', 'refs/tags/' + tag + '^{commit}']), SHA)
+    subprocess.check_call(['git', 'merge-base', '--is-ancestor', source, 'HEAD'])
+    with tempfile.TemporaryDirectory(prefix='release-source-') as directory:
+        # Read the tagged plans and tests with the trusted runner code from main.
+        root = Path(directory) / 'source'
+        run(['git', 'worktree', 'add', '--quiet', '--detach', str(root), source])
+        try:
+            if tag != 'v' + (root / 'VERSION').read_text().strip():
+                raise ValueError('tag_version_mismatch')
+            plan = load_deployment_plan(root)
+            if mode == 'deploy' and plan['mode'] != 'standard':
+                raise ValueError('standard_release_required')
+            manifest = existing(tag, source, source_root=root)
+            if manifest is None:
+                raise ValueError('published_release_required')
+            if checksum((root / 'compose.lightsail.yaml').read_bytes()) != manifest['compose_sha256']:
+                raise ValueError('release_compose_source_mismatch')
+        finally:
+            run(['git', 'worktree', 'remove', str(root)])
+    digest = manifest['image'].split('@', 1)[1]
+    if registry_digest(IMAGE + ':sha-' + source, anonymous=True) != digest:
+        raise ValueError('published_image_digest_mismatch')
+
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('action', choices=['validate', 'publish', 'download'])
+    parser.add_argument('action', choices=['validate', 'publish', 'download', 'prepare-deployment'])
     args = parser.parse_args()
+    if args.action == 'prepare-deployment':
+        if os.environ.get('GITHUB_EVENT_NAME') != 'workflow_dispatch' or os.environ.get('GITHUB_REF') != 'refs/heads/main':
+            raise ValueError('main_dispatch_required')
+        Path('dist').mkdir(exist_ok=True)
+        prepare_deployment(os.environ['RELEASE_TAG'], os.environ['DEPLOYMENT_MODE'])
+        return
     tag = os.environ.get('GITHUB_REF_NAME', '')
     source = run(['git', 'rev-parse', 'HEAD'])
     if args.action == 'validate' and os.environ.get('GITHUB_EVENT_NAME') == 'workflow_dispatch':

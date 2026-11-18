@@ -1,6 +1,6 @@
 # 개발 서버 전환·백업·복구 기록
 
-현재 운영은 **Backend2.3.0/DB0036·웹2.3.0+8 일반공개**다. [실행/보존/HTTPS 집계](records/release-2.3.0-deployment.json)·[전체16 Backend 운영 완료](https://github.com/heo0328/lostparty-backend/issues/54#issuecomment-6887988908). 표준43665092583 전체 성공·118테이블 행/환경/키·DB/Caddy 보존·웹34자산 hash 검증을 완료했다. Native 전체18에서 Android 공개·실파일/서명·안내문 검증 완료를 보고했고 사용자 지시로 Issue54를 completed 종료했다. 아래 날짜별 운영은 당시 기록이다.
+운영 기준은 **Backend v2.4.0 / DB0038 / 웹2.4.0+9**이며 사용자가 운영 정상 동작을 확인했다. 이후 사용자 인계에 따라 서울 Lightsail 스냅샷 복원과 운영 도메인 변경을 기록한다. 서울 스냅샷의 현재 DB를 운영 데이터로 사용하며 GitHub Actions 배포 연결은 별도 검증 대기다. [v2.4.0 전환 결과](records/release-2.4.0-cutover-result.json) · [서울 연결 상태](../../project/NEXT_WORK.md).
 
 현재 실행 이름·로컬 교체 결과는 [실행 설정 정리](../development/runtime-configuration.md), 향후 운영 도구 갱신·누적 기능은 [운영 전환 안내](runtime-release-transition.md)를 따른다. 아래 날짜별 배포/반영은 당시 기록이며 소급 변경하지 않는다.
 

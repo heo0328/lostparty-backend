@@ -1,0 +1,53 @@
+name: Deploy published release
+run-name: ${{ inputs.mode }} production ${{ inputs.tag }}
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Published Backend release tag
+        required: true
+        type: string
+      mode:
+        description: Check Seoul connectivity or deploy the published image
+        default: preflight
+        required: true
+        type: choice
+        options:
+          - preflight
+          - deploy
+permissions:
+  contents: read
+concurrency:
+  group: backend-release-production
+  cancel-in-progress: false
+  queue: max
+jobs:
+  production:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment:
+      name: production
+      url: https://lostparty.duckdns.org
+      deployment: ${{ inputs.mode == 'deploy' }}
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify the published release and image
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.tag }}
+          DEPLOYMENT_MODE: ${{ inputs.mode }}
+        run: python3 scripts/deployment/release.py prepare-deployment
+      - name: Run the requested operation over restricted SSH
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+          DEPLOYMENT_MODE: ${{ inputs.mode }}
+          LIGHTSAIL_DEPLOY_SSH_KEY: ${{ secrets.LIGHTSAIL_DEPLOY_SSH_KEY }}
+          LIGHTSAIL_SSH_KNOWN_HOSTS: ${{ vars.LIGHTSAIL_SSH_KNOWN_HOSTS }}
+        run: python3 scripts/deployment/transport.py

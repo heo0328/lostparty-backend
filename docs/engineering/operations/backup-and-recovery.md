@@ -81,7 +81,7 @@ DB dump는 DB가 있는 상태의 별도 내보내기 파일이다. 코드 clone
 
 [GitHub PAT 안내](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)·[Actions Secrets API](https://docs.github.com/en/rest/actions/secrets)·[Lightsail 키 안내](https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-managing-ssh-keys.html)·[Google OAuth 클라이언트 안내](https://support.google.com/cloud/answer/15549257?hl=en).
 
-시드니 관리자 기본키를 추가하고 새 SSH/sudo 접속을 확인했으며 기존 ED25519 등록키와 별도 `lostparty-deploy` 계정의 키는 유지했다. 브라우저 SSH와 관리자/배포 키의 역할은 다르다. 서울 리전 이전은 차후 작업이며 새 접속키·호스트 확인과 기존 DB/서비스키 보존을 따로 다룬다.
+시드니 관리자 기본키를 추가하고 새 SSH/sudo 접속을 확인했으며 기존 ED25519 등록키와 별도 `lostparty-deploy` 계정의 키는 유지했다. 서울 Lightsail 기본키는 관리자 접속용이며 사용자가 다운로드 가능하다고 확인했다. 필요 시 기존 비공개 PC 키 보관 폴더에 서울 관리자 키를 보관한다. 제한 배포 키를 새로 발급할 경우에만 같은 폴더의 별도 파일 `lostparty-seoul-deploy.ed25519`에 개인키 원본을 보관하고 GitHub production Secret을 갱신한다. 서울 호스트 공개키·지문 검증과 기존 배포 키 재사용 여부는 [서울 연결 절차](backend-release.md#서울-연결-순서)에 따라 확인한다.
 
 ## 2026-11-07 운영 기준본과 확인 범위
 
