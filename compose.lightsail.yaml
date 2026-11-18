@@ -37,6 +37,8 @@ services:
       APP_DB_PASSWORD: ${APP_DB_PASSWORD:?Set APP_DB_PASSWORD}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:?Set GOOGLE_CLIENT_ID}
       GOOGLE_AZP_ALLOWLIST: ${GOOGLE_AZP_ALLOWLIST:-}
+      # Keep the existing production environment compatible with image-only deployment.
+      LOSTARK_CREDENTIAL_KEY_ID: lightsail-1
       JWT_KEY_ID: lightsail-1
       RECOVERY_KEY_ID: lightsail-1
     command:

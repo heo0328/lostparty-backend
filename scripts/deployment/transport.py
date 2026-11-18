@@ -7,9 +7,10 @@ import tempfile
 import time
 from pathlib import Path
 
-from common import REPOSITORY, SHA, TAG, canonical, require, validate_bundle, validate_manifest
+from common import REPOSITORY, SHA, TAG, canonical, checksum, require, validate_bundle, validate_manifest
 
 DEPLOY_HOST = '54.116.243.121'
+SNAPSHOT_RELEASE = '970b2f430138b95d837305ffc576eb9cbc605cb0'
 
 
 def run(args, *, input=None, timeout=60):
@@ -29,6 +30,22 @@ def pinned_host_keys(value):
     if not lines or any(len(line) != 3 or line[0] != DEPLOY_HOST for line in lines):
         raise ValueError('pinned_seoul_host_keys_required')
     return value
+
+
+def preflight_bundle(bundle):
+    manifest = bundle['manifest']
+    if (manifest['tag'], manifest['source']) != ('v2.4.0', SNAPSHOT_RELEASE):
+        return bundle
+    # The v2.4.0 rollout reused the frozen production environment, which still
+    # includes this unused key identifier. The published release stays intact.
+    anchor = '      JWT_KEY_ID: lightsail-1\n'
+    compose = bundle['compose']
+    if compose.count(anchor) != 1 or 'LOSTARK_CREDENTIAL_KEY_ID' in compose:
+        raise ValueError('unexpected_snapshot_compose')
+    compose = compose.replace(anchor, '      LOSTARK_CREDENTIAL_KEY_ID: lightsail-1\n' + anchor)
+    return validate_bundle({**bundle, 'compose': compose, 'manifest': {
+        **manifest, 'compose_sha256': checksum(compose.encode()),
+    }})
 
 
 def report(result, bundle):
@@ -64,7 +81,7 @@ def main():
                '-o', 'GlobalKnownHostsFile=/dev/null', '-o', 'UserKnownHostsFile=' + str(p / 'known_hosts'),
                'lostparty-deploy@' + DEPLOY_HOST]
         if mode == 'preflight':
-            result = json.loads(run(ssh + ['preflight'], input=canonical(bundle).decode(), timeout=120))
+            result = json.loads(run(ssh + ['preflight'], input=canonical(preflight_bundle(bundle)).decode(), timeout=120))
             if result.get('mode') != 'preflight_only':
                 raise ValueError('preflight_result_required')
             report(result, bundle)

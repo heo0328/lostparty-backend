@@ -148,6 +148,20 @@ class DeploymentTransportTests(unittest.TestCase):
                 transport.main()
         run.assert_called_once()
 
+    def test_snapshot_preflight_preserves_legacy_environment_without_editing_published_bundle(self):
+        compose = 'services:\n  api:\n    environment:\n      JWT_KEY_ID: lightsail-1\n'
+        manifest = {**MANIFEST, 'tag': 'v2.4.0', 'source': transport.SNAPSHOT_RELEASE,
+                    'compose_sha256': checksum(compose.encode())}
+        published = {**BUNDLE, 'manifest': manifest, 'compose': compose}
+        preflight = transport.preflight_bundle(published)
+        self.assertEqual(published['compose'], compose)
+        self.assertEqual(published['manifest'], manifest)
+        self.assertEqual(preflight['compose'].replace('      LOSTARK_CREDENTIAL_KEY_ID: lightsail-1\n', ''),
+                         compose)
+        self.assertEqual(preflight['manifest'], {**manifest, 'compose_sha256': checksum(preflight['compose'].encode())})
+        other_release = {**published, 'manifest': {**manifest, 'source': SOURCE}}
+        self.assertIs(transport.preflight_bundle(other_release), other_release)
+
 
 class FakePlatform:
     def __init__(self, root):

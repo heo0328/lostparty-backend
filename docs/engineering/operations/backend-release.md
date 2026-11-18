@@ -110,10 +110,12 @@ validation.json에는 대상 버전/소스 SHA, 계획 파일 SHA256(없으면 n
 
 ### 서울 연결 순서
 
-1. 기존 태그 기반 운영 작업이 실행 중이거나 대기 중이면 전환을 보류한다. 승인된 코드가 main에 반영되면 Settings → Environments → production에서 기존 `v*` 태그 정책을 제거하고 브랜치 `main`을 추가한다. 이 순서가 끝난 뒤 배포 접속 설정을 바꾼다.
+1. 기존 태그 기반 운영 작업이 실행 중이거나 대기 중이면 전환을 보류한다. 승인된 코드가 main에 반영되면 Settings → Environments → production에서 브랜치 `main`을 추가하고 기존 `v*` 태그 정책을 제거한다. 이 순서가 끝난 뒤 배포 접속 설정을 바꾼다.
 2. 서울 Lightsail 콘솔에서 인스턴스와 고정 IP를 확인하고, 관리자 SSH에서 SSH 호스트 공개키와 지문을 대조한다. `LIGHTSAIL_SSH_KNOWN_HOSTS` 각 줄은 서울 IP·키 유형·공개키 순서로 넣는다. 기존 배포 키를 먼저 검증하고 명시적 공개키 인증 실패가 확인될 때만 제한 배포 키를 교체한다. [키 보관 기준](backup-and-recovery.md)을 따른다.
 3. `Deploy published release`를 `main`에서 태그 `v2.4.0`, 모드 `preflight`로 실행한다. 서버 결과가 `preflight_only`인지 확인하고, 운영 도메인이 서울 IP를 가리키는지와 서울 IP의 HTTPS·DB 상태를 대조한다. 점검 전후 API·DB·Caddy 식별자와 시작 시각 및 구성 보존을 확인한다. v2.4.0은 `publish-only`이므로 이 워크플로에서 `deploy`할 수 없다. 서울 스냅샷의 현재 DB를 기준으로 삼고 시드니 데이터 동기화는 범위에서 제외한다.
 4. SSH나 배포 기준이 맞지 않으면 원인을 확인하고 연결 완료를 보류한다. 모드 `preflight`는 운영 배포 기록을 생성하지 않는다. 첫 실제 운영 배포는 별도 승인 후 표준 릴리즈에서 수행한다.
+
+v2.4.0 운영 전환 당시 동결 Compose에 유지했던 `LOSTARK_CREDENTIAL_KEY_ID`는 현재 앱에서 사용하지 않는다. 운영 환경을 그대로 보존하도록 새 릴리즈의 Compose에 유지하며, 이미 게시한 v2.4.0은 원래 산출물을 검증한 뒤 사전 점검 요청에만 이 항목을 보완한다.
 
 배포 키는 root 소유 authorized_keys의 restrict/강제 명령과 최소 sudo로 submit/preflight/status만 허용한다. 셸·PTY·포워딩은 차단한다. 개인키 등록 시 마지막 LF를 보존한다. 일반 `gh secret set < key`는 끝 CR/LF를 제거하므로 사용하지 않는다. Python에서 개인키 문자열을 JSON 인용한 dotenv 항목으로 만들어 `gh secret set --env production --env-file -`의 stdin으로 전달하고, 제한 preflight를 확인한다. rotation은 새 제한키 추가→접속 확인→Secret 갱신→이전 키 폐기 순서이며 개인키·임시 관리자 인증 복사본은 삭제한다.
 
