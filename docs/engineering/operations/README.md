@@ -1,6 +1,6 @@
 # 개발 서버 전환·백업·복구 기록
 
-운영 기준은 **Backend v2.4.0 / DB0038 / 웹2.4.0+9**이며 사용자가 운영 정상 동작을 확인했다. 이후 사용자 인계에 따라 서울 Lightsail 스냅샷 복원과 운영 도메인 변경을 기록한다. 서울 스냅샷의 현재 DB를 운영 데이터로 사용하며 GitHub Actions 배포 연결은 별도 검증 대기다. [v2.4.0 전환 결과](records/release-2.4.0-cutover-result.json) · [서울 연결 상태](../../project/NEXT_WORK.md).
+운영 기준은 **Backend v2.4.0 / DB0038 / 웹2.4.0+9**다. 서울 Lightsail 스냅샷의 현재 DB를 운영 데이터로 사용한다. GitHub Actions의 서울 v2.4.0 사전 점검과 공개 운영 도메인의 서울 HTTPS·DB 정상 응답을 확인했다. [v2.4.0 최초 전환 결과](records/release-2.4.0-cutover-result.json) · [서울 연결 상태](../../project/NEXT_WORK.md).
 
 현재 실행 이름·로컬 교체 결과는 [실행 설정 정리](../development/runtime-configuration.md), 향후 운영 도구 갱신·누적 기능은 [운영 전환 안내](runtime-release-transition.md)를 따른다. 아래 날짜별 배포/반영은 당시 기록이며 소급 변경하지 않는다.
 

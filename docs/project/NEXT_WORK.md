@@ -1,17 +1,16 @@
 # 다음 실행
 
-2026-11-19 서울 Lightsail 배포 연결과 CI 분리는 `2475428`로 dev/main에 게시했다. GitHub production은 main만 허용하며 서울 고정 IP의 호스트 키를 등록했다. [첫 v2.4.0 사전 점검](https://github.com/heo0328/lostparty-backend/actions/runs/44346621133)은 게시 무결성 검사와 SSH 인증을 통과했고, 기존 운영 Compose의 미사용 `LOSTARK_CREDENTIAL_KEY_ID` 차이를 차단했다. 서울 IP의 HTTPS 및 DB 응답은 정상 확인했다.
+2026-11-19 서울 Lightsail 배포 연결을 완료했다. `8c57dca`가 dev/main에 반영됐고 GitHub production은 main만 허용한다. [v2.4.0 사전 점검](https://github.com/heo0328/lostparty-backend/actions/runs/44347756030)에서 기존 배포 키를 사용해 `preflight_only` 성공과 DB0038을 확인했다. 점검 후 운영 도메인은 서울 IP에서 HTTPS 정상·DB 정상 응답을 반환했다.
 
 ## 다음 실행
 
-1. 기존 운영 환경 항목을 후보 Compose에 보존한 뒤 동일한 v2.4.0 `preflight`로 서울 배포 연결을 재확인한다. 완료 기준은 [서울 연결 절차](../engineering/operations/backend-release.md#서울-연결-순서)를 따른다.
-2. 서울 연결을 확인한 뒤 첫 실제 운영 배포는 별도 승인된 표준 릴리즈에서 수행하고 검증·게시 시간과 배포 시간을 각각 기록한다. 시드니 서버 중지·삭제도 별도 승인 범위다.
+시드니 인스턴스 삭제 후 사용자가 시드니 목록에서 대상이 사라지고 서울 인스턴스가 유지된 것을 확인했다. 공개 운영 도메인의 서울 HTTPS·DB 정상도 확인했다. 다음 수정 버전은 승인 후 표준 릴리즈로 게시·배포하고 검증·게시 시간과 배포 시간을 각각 기록한다. [서울 배포 절차](../engineering/operations/backend-release.md#서울-연결-순서).
 
 ## 코드·계약·실행 구분
 
 | 구분 | 기준 |
 |---|---|
-| Git | dev/main/feat/production-deployment 모두 원격 2475428 확인, 후행 상태 기록은 로컬 |
+| Git | 서울 배포 연결 코드 8c57dca를 dev/main에 게시. 완료된 feat/production-deployment 정리 후 최종 상태 문서는 dev에 기록 |
 | 로컬 실행 | image eadaa2cc…37b9/DB0038·기존개발지원 유지. 개발키 변경/삭제 없음 |
 | 명세 | 191경로/211동작, SHA25612634daa64a8c4cbdfecfdb53bc7c1aca3bdb721c5ea555d098aea51544b9665; 이번 API 변경 없음 |
 | 운영 | v2.4.0/source970b2f4·DB0038·웹2.4.0+9 공개/사용자 정상 확인 완료 |

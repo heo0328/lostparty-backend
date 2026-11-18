@@ -1,5 +1,11 @@
 # 영구 개발 이력
 
+2026-11-19 사용자가 시드니 `lostparty-server` 삭제 후 시드니 목록에서 대상이 사라지고 서울 인스턴스는 유지된 것을 확인했다. AWS 콘솔은 삭제된 시드니 인스턴스의 상세 조회에 `GetInstance[ap-southeast-2]: The Instance does not exist`를 표시했다. 삭제 후 공개 운영 도메인이 서울 `54.116.243.121`에서 /health 200·DB 정상, /v1/raid-catalog 200, /v1/me 401을 반환했다.
+
+2026-11-19 사용자가 AWS 콘솔에서 시드니 `lostparty-server`를 중지하고 시작 버튼으로 전환됐음을 확인했다. 시드니 `54.253.176.103`의 HTTPS가 200에서 연결 실패로 바뀐 뒤 운영 도메인의 서울 `54.116.243.121` /health 200·DB 정상, /v1/raid-catalog 200, /v1/me 401을 확인했다. 사용자 중지 확인 후에도 서울 /health 200·DB 정상 응답을 재확인했다. 시드니 인스턴스 삭제는 별도 승인 대기다.
+
+2026-11-19 서울 자동 배포 연결 완료. Compose 호환 수정 `8c57dca`를 dev/main에 통합·게시한 뒤 [v2.4.0 사전 점검 44347756030](https://github.com/heo0328/lostparty-backend/actions/runs/44347756030)이 `preflight_only`로 성공했다. 기존 GitHub 배포 키로 서울 인증, v2.4.0/source970b2f4·DB0038·구성 lightsail-web-2.1.0 확인. 점검 후 공개 도메인이 서울 `54.116.243.121`에서 HTTPS 200과 DB 정상 응답을 반환했다. 로컬 도구 시험 121개·정적 검증 통과. 운영 배포와 시드니 중지·삭제는 미실행이다. 통합이 완료된 로컬·원격 작업 브랜치를 정리했다.
+
 2026-11-19 사용자 승인으로 서울 배포 연결 변경을 `2475428`에 커밋하고 dev/main 및 작업 브랜치에 게시했다. 기존 v* 태그 규칙을 main 브랜치 규칙으로 전환하고 서울 콘솔의 공개 SSH 호스트 키가 서울 IP에서 제시한 키와 일치함을 확인해 등록했다. 공개 서울 HTTPS /health 200(DB 정상)·/v1/raid-catalog 200·/v1/me 401 확인. [v2.4.0 사전 점검 44346621133](https://github.com/heo0328/lostparty-backend/actions/runs/44346621133)은 게시 무결성과 서울 SSH 인증을 통과했다. 서울 서버 로그의 `manual_infrastructure_change_required`와 필드 비교로 기존 운영 환경에 남은 `LOSTARK_CREDENTIAL_KEY_ID` 하나가 원인임을 확인했다. 이 항목을 새 릴리즈 Compose와 기존 v2.4.0 사전 점검 요청에 보존한다. 운영 배포, DB 변경, 시드니 인스턴스 중지·삭제는 실행하지 않았다.
 
 2026-11-19 서울 배포 연결 준비. 사용자 인계에 따라 서울 스냅샷의 현재 DB를 운영 기준으로 사용하고 시드니의 후속 변경분을 이관 범위에서 제외했다. `feat/production-deployment`에서 서울 SSH 주소 고정, 태그 검증·게시와 main 수동 배포 분리, 게시 증거·이미지 확인, 기본 `preflight` 및 v2.4.0 실제 배포 차단을 구현했다. 로컬 의존성·문서·워크플로 YAML 검증과 도구 시험 120개 통과. 미커밋·미push 상태다. GitHub production 설정 변경과 서울 preflight는 승인 대기, 실제 운영 배포는 별도다. [운영 절차](../engineering/operations/backend-release.md#서울-연결-순서).
