@@ -12,9 +12,6 @@
 
 | 이슈 | 현재 상태 | 남은 작업·담당 |
 |---|---|---|
-| [#59 공동2.4.0준비](https://github.com/heo0328/lostparty-backend/issues/59) | [전체27 Backend B13](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6954177567) v2.4.0 source970b2f4/불변image게시·reuse새시험0·deploy skipped | 실제운영전환은지시후직전백업/PC확인·정지dump/명시apply·공동공개. 운영2.3.0/0036유지. [게시원장](../engineering/operations/records/release-2.4.0-publication.json) |
-| [#58 상세 분석 후보](https://github.com/heo0328/lostparty-backend/issues/58) | 복구 `08212c31`·dev통합 `2e78854e` 게시. [Native 전체13](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947638411) 사용자두화면 정상확인 | 추가Backend수정/동일시험대기없음. 신규/소멸 운영피드백후속·Native게시·Issue마감은별도. [전체14 Backend B7](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947695749) |
-| [#53 내 계정 리메이크](https://github.com/heo0328/lostparty-backend/issues/53) | 정책2 게시/dev 통합·Native 정상보고. BUG-036 수정·5PASS/로컬지원·사용자/Native 정상 확인·9a61d0e/dev4be81dc 통합push | [전체41 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875007986)·전체43 Native 수용/사용자 정상 확인. [전체44 Backend](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6875171401) 게시/dev 통합 완료, 이 오류의 추가대기 없음. 정책2 사용자 확인 후 개인시간표/예약까지 구현·확인, [전체48 Native](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6884612427) deve1ce0576 추가 통합/push. 추가 Backend 요청 없음, 최종 경계 확인/운영은 별도. Issue54 API·웹/Android 게시 포함·초기화 사전확인 필수 |
 | [#17](https://github.com/heo0328/lostparty-backend/issues/17) 누락/생명주기·기존 참가 복구 | 완료 오류/기존 계정 복구 인수·양측 dev 통합 완료. Native가 현재 경고/관리 왕복 연결과 별도 누락/부분 완료 기기 경계를 본문에 최신화 | 다음 순차 정리 대상. Backend 현재 구현과 Native 담당 근거로 완료/잔여 범위를 확정. 누락 자료/원복·기기 확인 착수는 별도 후속이며 현재 생성/DB 조정 요청 없음 |
 | [#15](https://github.com/heo0328/lostparty-backend/issues/15) 소유권 최종이전 영향 | 기본 인증/분쟁 연결 완료. 활성 참가가 있으면 최종이전 보류, 영향 정리/복구 정책·adapter 미합의/미구현 | Native 소비검토5항목·사용자 제품 정책 결정, 합의 후 Backend 원자 설계. [검토 원본](../features/rosters/ownership/dispute-impact-review.md) |
 | [#18](https://github.com/heo0328/lostparty-backend/issues/18) 활동 자동추가·공통정책 | 상세 분석 후보는 #58로 분리, 추가2개 제품경계도 사용자 확정 | 원래 활동 자동추가는 미착수. 공통 관찰/제외 사실 모델은 #58 구현과 중복 생성하지 않음. [현재 계약](../features/rosters/activity-and-presentation/refresh-candidate-contract.md) |
@@ -28,6 +25,9 @@
 
 | 이슈/구간 | 완료 근거 | 별도 보존 |
 |---|---|---|
+| [#59 v2.4.0 공동 공개](https://github.com/heo0328/lostparty-backend/issues/59) completed | Android·웹·Backend 공개와 [사용자 운영 확인](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6955773142) | 웹 캐릭터 순서 변경 지연은 Flutter 후속 대장에 미조사로 유지. |
+| [#58 상세 분석 후보](https://github.com/heo0328/lostparty-backend/issues/58) completed | 양측 연동·사용자 확인 및 v2.4.0 공동 공개 | [API 한도 초과 안내·복구, 신규·소멸 사례, 진단 전송](https://github.com/heo0328/lostparty-backend/issues/58#issuecomment-6947879713)은 별도 미완료. 활동 자동 추가는 열린 #18에서 추적. |
+| [#53 내 계정 개편](https://github.com/heo0328/lostparty-backend/issues/53) completed | 개인 주간 예약·대표 정책2와 BUG-036 수정, [Flutter 연동·dev 통합](https://github.com/heo0328/lostparty-backend/issues/53#issuecomment-6884612427) | 기기 경계 전수 확인은 미실시. 추가 Backend 요청 없음. |
 | #57 BUG-039 완료·사용자 삭제 | 사용자 작업 완료 확인. 계정 ID·캐릭터명 포함으로 Close 대신 사용자 직접 삭제 | 추가 구현/인수/회신 대기 없음. 저레벨 조회 제외는 별도 미착수 제안. [보존 기록](bug-039-analysis-refresh.md) |
 | [#56 개인 가능시간1분](https://github.com/heo0328/lostparty-backend/issues/56) completed | 사용자 비5분 입력 정상 확인·양측 구현/검증/명세 소비·통합 완료, [전체9 Backend 종료](https://github.com/heo0328/lostparty-backend/issues/56#issuecomment-6925204975) | 추가 구현/인수 대기 없음. [종료 근거](issue55-56-closeout-review.md). 기존 일정/후보5분 유지. |
 | [#55 서버 수집·분석/비로그인 공통 UI](https://github.com/heo0328/lostparty-backend/issues/55) completed | 사용자 정상 확인·양측 구현/검증/개발 지원·통합 완료, [전체26 Backend 종료](https://github.com/heo0328/lostparty-backend/issues/55#issuecomment-6925201215) | 추가 구현/재시험 대기 없음. [종료 근거](issue55-56-closeout-review.md). 운영·별도 오류/진단 후속 유지. |

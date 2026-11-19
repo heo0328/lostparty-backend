@@ -1,6 +1,6 @@
 # LostParty Backend 기능 지도
 
-운영 Backend v2.4.0/source970b2f4·DB0038·웹2.4.0+9 공개와 사용자 정상 작동 인수를 완료했다. 추가 인수/재배포 대기는 없다. 후행 문서를 사용자 지시로 commit/push하며 병합·Issue 종료는 별도다. [운영 결과](../engineering/operations/records/release-2.4.0-cutover-result.json)·[사용자 인수 회신](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6955590949).
+운영 Backend v2.4.0/source970b2f4·DB0038·웹2.4.0+9 공개와 사용자 정상 작동 인수를 완료했다. 추가 인수/재배포 대기는 없다. 후행 문서는 dev에 게시했고 Issue59 공동 공개를 completed로 종료했다. [운영 결과](../engineering/operations/records/release-2.4.0-cutover-result.json)·[사용자 인수 회신](https://github.com/heo0328/lostparty-backend/issues/59#issuecomment-6955590949).
 
 ## 현재 기준
 

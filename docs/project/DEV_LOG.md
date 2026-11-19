@@ -1,5 +1,7 @@
 # 영구 개발 이력
 
+2026-11-19 사용자 마감 지시로 [#53 내 계정 개편](https://github.com/heo0328/lostparty-backend/issues/53), [#58 상세 분석 후보](https://github.com/heo0328/lostparty-backend/issues/58), [#59 v2.4.0 공동 공개](https://github.com/heo0328/lostparty-backend/issues/59)의 본문을 최신화하고 completed로 종료했다. 후속 추적과 열린 #15·#17·#18·#19는 [이슈 추적표](ISSUE_TRACKER.md)에 기록했다.
+
 2026-11-19 사용자가 시드니 `lostparty-server` 삭제 후 시드니 목록에서 대상이 사라지고 서울 인스턴스는 유지된 것을 확인했다. AWS 콘솔은 삭제된 시드니 인스턴스의 상세 조회에 `GetInstance[ap-southeast-2]: The Instance does not exist`를 표시했다. 삭제 후 공개 운영 도메인이 서울 `54.116.243.121`에서 /health 200·DB 정상, /v1/raid-catalog 200, /v1/me 401을 반환했다.
 
 2026-11-19 사용자가 AWS 콘솔에서 시드니 `lostparty-server`를 중지하고 시작 버튼으로 전환됐음을 확인했다. 시드니 `54.253.176.103`의 HTTPS가 200에서 연결 실패로 바뀐 뒤 운영 도메인의 서울 `54.116.243.121` /health 200·DB 정상, /v1/raid-catalog 200, /v1/me 401을 확인했다. 사용자 중지 확인 후에도 서울 /health 200·DB 정상 응답을 재확인했다. 시드니 인스턴스 삭제는 별도 승인 대기다.
